@@ -1,34 +1,43 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Space;
-using FrEee.Utility;
-using FrEee.Utility.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using FrEee.Game.Objects.Space;
 
 namespace FrEee.Game.Setup.WarpPointPlacementStrategies
 {
-	/// <summary>
-	/// Places warp points at the center of the system. Exploration is easy, but so is setting up chokepoints.
-	/// </summary>
-	public class CenterWarpPointPlacementStrategy : WarpPointPlacementStrategy
-	{
-		static CenterWarpPointPlacementStrategy()
-		{
-			Instance = new CenterWarpPointPlacementStrategy();
-		}
+    /// <summary>
+    /// Places warp points at the center of the system. Exploration is easy, but so is setting up chokepoints.
+    /// </summary>
+    public class CenterWarpPointPlacementStrategy : WarpPointPlacementStrategy
+    {
+        #region Public Constructors
 
-		public static CenterWarpPointPlacementStrategy Instance { get; private set; }
+        static CenterWarpPointPlacementStrategy()
+        {
+            Instance = new CenterWarpPointPlacementStrategy();
+        }
 
-		private CenterWarpPointPlacementStrategy()
-			: base("Center", "Places warp points at the center of the system. Exploration is easy, but so is setting up chokepoints.")
-		{
-		}
+        #endregion Public Constructors
 
-		public override Sector GetWarpPointSector(ObjectLocation<StarSystem> here, ObjectLocation<StarSystem> there)
-		{
-			return here.Item.GetSector(0, 0);
-		}
-	}
+        #region Private Constructors
+
+        private CenterWarpPointPlacementStrategy()
+            : base("Center", "Places warp points at the center of the system. Exploration is easy, but so is setting up chokepoints.")
+        {
+        }
+
+        #endregion Private Constructors
+
+        #region Public Properties
+
+        public static CenterWarpPointPlacementStrategy Instance { get; private set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        public override Sector GetWarpPointSector(ObjectLocation<StarSystem> here, ObjectLocation<StarSystem> there)
+        {
+            return here.Item.GetSector(0, 0);
+        }
+
+        #endregion Public Methods
+    }
 }

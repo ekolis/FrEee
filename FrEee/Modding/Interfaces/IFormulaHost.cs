@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace FrEee.Modding.Interfaces
 {
-	public interface IFormulaHost
-	{
-		IDictionary<string, object> Variables { get; }
-	}
+    public interface IFormulaHost
+    {
+        #region Public Properties
+
+        IDictionary<string, object> Variables { get; }
+
+        #endregion Public Properties
+    }
 }

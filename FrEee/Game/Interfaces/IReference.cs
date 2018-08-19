@@ -1,57 +1,78 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 
 namespace FrEee.Game.Interfaces
 {
-	/// <summary>
-	/// A lightweight reference to some object in some context (e.g. the current mod or galaxy).
-	/// Can be passed around on the network as a surrogate for said object.
-	/// </summary>
-	/// <typeparam name="TID"></typeparam>
-	/// <typeparam name="TValue"></typeparam>
-	public interface IReference<out TValue> : IPromotable
-	{
-		TValue Value { get; }
-		bool HasValue { get; }
-	}
+    /// <summary>
+    /// A lightweight reference to some object in some context (e.g. the current mod or galaxy).
+    /// Can be passed around on the network as a surrogate for said object.
+    /// </summary>
+    /// <typeparam name="TID"></typeparam>
+    /// <typeparam name="TValue"></typeparam>
+    public interface IReference<out TValue> : IPromotable
+    {
+        #region Public Properties
 
-	/// <summary>
-	/// A lightweight reference to some object in some context (e.g. the current mod or galaxy).
-	/// Can be passed around on the network as a surrogate for said object.
-	/// </summary>
-	/// <typeparam name="TID"></typeparam>
-	/// <typeparam name="TValue"></typeparam>
-	public interface IReference<out TID, out TValue> : IReference<TValue>
-	{
-		TID ID { get; }
-	}
+        bool HasValue { get; }
+        TValue Value { get; }
 
-	[Serializable]
-	public class ReferenceException<TID, TValue> : Exception, ISerializable
-	{
-		protected ReferenceException(SerializationInfo info, StreamingContext ctx)
-			: base(info, ctx)
-		{
-			ID = (TID)info.GetValue("ID", typeof(TID));
-		}
+        #endregion Public Properties
+    }
 
-		public ReferenceException(string message, TID id = default(TID))
-			: base(message)
-		{
-			ID = id;
-		}
+    /// <summary>
+    /// A lightweight reference to some object in some context (e.g. the current mod or galaxy).
+    /// Can be passed around on the network as a surrogate for said object.
+    /// </summary>
+    /// <typeparam name="TID"></typeparam>
+    /// <typeparam name="TValue"></typeparam>
+    public interface IReference<out TID, out TValue> : IReference<TValue>
+    {
+        #region Public Properties
 
-		public TID ID { get; private set; }
+        TID ID { get; }
 
-		public Type Type { get { return typeof(TValue); } }
+        #endregion Public Properties
+    }
 
-		void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
-		{
-			base.GetObjectData(info, context);
-			info.AddValue("ID", ID);
-		}
-	}
+    [Serializable]
+    public class ReferenceException<TID, TValue> : Exception, ISerializable
+    {
+        #region Public Constructors
+
+        public ReferenceException(string message, TID id = default(TID))
+            : base(message)
+        {
+            ID = id;
+        }
+
+        #endregion Public Constructors
+
+        #region Protected Constructors
+
+        protected ReferenceException(SerializationInfo info, StreamingContext ctx)
+                    : base(info, ctx)
+        {
+            ID = (TID)info.GetValue("ID", typeof(TID));
+        }
+
+        #endregion Protected Constructors
+
+        #region Public Properties
+
+        public TID ID { get; private set; }
+
+        public Type Type { get { return typeof(TValue); } }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("ID", ID);
+        }
+
+        #endregion Public Methods
+    }
 }

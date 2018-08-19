@@ -1,44 +1,53 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
 using FrEee.Modding;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace FrEee.Game.Objects.VictoryConditions
 {
-	/// <summary>
-	/// Research a specified percentage of all non-racial non-unique tech levels.
-	/// </summary>
-	public class TechnologyVictoryCondition : IVictoryCondition
-	{
-		public TechnologyVictoryCondition(int percentage)
-		{
-			Percentage = percentage;
-		}
+    /// <summary>
+    /// Research a specified percentage of all non-racial non-unique tech levels.
+    /// </summary>
+    public class TechnologyVictoryCondition : IVictoryCondition
+    {
+        #region Public Constructors
 
-		/// <summary>
-		/// The percentage needed to achieve.
-		/// </summary>
-		public int Percentage { get; set; }
+        public TechnologyVictoryCondition(int percentage)
+        {
+            Percentage = percentage;
+        }
 
-		public double GetProgress(Empire emp)
-		{
-			if (emp.IsDefeated)
-				return 0;
-			return (double)emp.ResearchedTechnologies.Where(t => !t.Key.IsRacial && !t.Key.IsUnique).Sum(t => t.Value) / (double)Mod.Current.Technologies.Where(t => !t.IsRacial && !t.IsUnique).Sum(t => t.MaximumLevel);
-		}
+        #endregion Public Constructors
 
-		public string GetVictoryMessage(Empire emp)
-		{
-			return "The " + emp + " has become a technological powerhouse! All hail " + emp.LeaderName + ", leader of the most advanced empire in the galaxy!";
-		}
+        #region Public Properties
 
-		public string GetDefeatMessage(Empire emp, IEnumerable<Empire> winners)
-		{
-			return "The " + emp + " has failed to keep up with the latest technology! The following empires have achieved a technology victory: " + string.Join(", ", winners.Select(e => e.ToString()).ToArray()) + ".";
-		}
-	}
+        /// <summary>
+        /// The percentage needed to achieve.
+        /// </summary>
+        public int Percentage { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        public string GetDefeatMessage(Empire emp, IEnumerable<Empire> winners)
+        {
+            return "The " + emp + " has failed to keep up with the latest technology! The following empires have achieved a technology victory: " + string.Join(", ", winners.Select(e => e.ToString()).ToArray()) + ".";
+        }
+
+        public double GetProgress(Empire emp)
+        {
+            if (emp.IsDefeated)
+                return 0;
+            return (double)emp.ResearchedTechnologies.Where(t => !t.Key.IsRacial && !t.Key.IsUnique).Sum(t => t.Value) / (double)Mod.Current.Technologies.Where(t => !t.IsRacial && !t.IsUnique).Sum(t => t.MaximumLevel);
+        }
+
+        public string GetVictoryMessage(Empire emp)
+        {
+            return "The " + emp + " has become a technological powerhouse! All hail " + emp.LeaderName + ", leader of the most advanced empire in the galaxy!";
+        }
+
+        #endregion Public Methods
+    }
 }

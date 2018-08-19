@@ -1,52 +1,55 @@
-﻿using FrEee.Game.Enumerations;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Combat;
-using FrEee.Game.Objects.Space;
+﻿using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Technology;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace FrEee.Game.Interfaces
 {
-	/// <summary>
-	/// An object that can fire weapons and/or targeted by weapons.
-	/// </summary>
-	public interface ICombatant : IPictorial, ITargetable, IDisposable, IFoggable, ILocated, INamed
-	{
-		/// <summary>
-		/// Can this object fire on another object?
-		/// </summary>
-		/// <param name="target"></param>
-		/// <returns>true if the target is an enemy and this combatant has weapons capable of targeting it</returns>
-		bool CanTarget(ITargetable target);
+    /// <summary>
+    /// An object that can fire weapons and/or targeted by weapons.
+    /// </summary>
+    public interface ICombatant : IPictorial, ITargetable, IDisposable, IFoggable, ILocated, INamed
+    {
+        #region Public Properties
 
-		/// <summary>
-		/// Any undamaged weapons this combatant is armed with.
-		/// </summary>
-		IEnumerable<Component> Weapons { get; }
+        /// <summary>
+        /// Accuracy rating of this combatant.
+        /// </summary>
+        int Accuracy { get; }
 
-		bool IsHostileTo(Empire emp);
+        /// <summary>
+        /// Is this combatant still alive or is it destroyed/glassed?
+        /// </summary>
+        bool IsAlive { get; }
 
-		/// <summary>
-		/// Accuracy rating of this combatant.
-		/// </summary>
-		int Accuracy { get; }
+        /// <summary>
+        /// How many targets can this combatant fire on per round (excluding point defense weapons or warheads)?
+        /// </summary>
+        int MaxTargets { get; }
 
-		/// <summary>
-		/// Is this combatant still alive or is it destroyed/glassed?
-		/// </summary>
-		bool IsAlive { get; }
+        /// <summary>
+        /// How fast can this combatant move in combat?
+        /// </summary>
+        int Speed { get; }
 
-		/// <summary>
-		/// How fast can this combatant move in combat?
-		/// </summary>
-		int Speed { get; }
+        /// <summary>
+        /// Any undamaged weapons this combatant is armed with.
+        /// </summary>
+        IEnumerable<Component> Weapons { get; }
 
-		/// <summary>
-		/// How many targets can this combatant fire on per round (excluding point defense weapons or warheads)?
-		/// </summary>
-		int MaxTargets { get; }
+        #endregion Public Properties
+
+        #region Public Methods
+
+        /// <summary>
+        /// Can this object fire on another object?
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns>true if the target is an enemy and this combatant has weapons capable of targeting it</returns>
+        bool CanTarget(ITargetable target);
+
+        bool IsHostileTo(Empire emp);
+
+        #endregion Public Methods
     }
 }

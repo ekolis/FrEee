@@ -1,134 +1,154 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using FrEee.Game.Interfaces;
+﻿using FrEee.Game.Interfaces;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility.Extensions;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FrEee.Utility
 {
-	public class ReferenceList<TRef, T> : IList<T>, IReferenceEnumerable, IPromotable
-		where TRef : IReference<T>
-	{
-		public ReferenceList()
-		{
-			list = new List<TRef>();
-		}
+    public class GalaxyReferenceList<T> : ReferenceList<GalaxyReference<T>, T>
+    {
+    }
 
-		private IList<TRef> list {get; set;}
+    public class ModReferenceList<T> : ReferenceList<ModReference<T>, T>
+        where T : IModObject
+    {
+    }
 
-		private static TRef MakeReference(T item)
-		{
-			return (TRef)typeof(TRef).Instantiate(item);
-		}
+    public class ReferenceList<TRef, T> : IList<T>, IReferenceEnumerable, IPromotable
+                where TRef : IReference<T>
+    {
+        #region Public Constructors
 
-		public int IndexOf(T item)
-		{
-			if (!list.Any(r => r.Value.Equals(item)))
-				return -1;
-			return list.Select((x, i) => new { Item = x, Index = i }).First(x => x.Item.Value.Equals(item)).Index;
-		}
+        public ReferenceList()
+        {
+            list = new List<TRef>();
+        }
 
-		public void Insert(int index, T item)
-		{
-			list.Insert(index, MakeReference(item));
-		}
+        #endregion Public Constructors
 
-		public void RemoveAt(int index)
-		{
-			list.RemoveAt(index);
-		}
+        #region Public Properties
 
-		public T this[int index]
-		{
-			get
-			{
-				return list[index].Value;
-			}
-			set
-			{
-				list[index] = MakeReference(value);
-			}
-		}
+        public int Count
+        {
+            get { return list.Count; }
+        }
 
-		public void Add(T item)
-		{
-			list.Add(MakeReference(item));
-		}
+        public bool IsReadOnly
+        {
+            get { return list.IsReadOnly; }
+        }
 
-		public void Clear()
-		{
-			list.Clear();
-		}
+        #endregion Public Properties
 
-		public bool Contains(T item)
-		{
-			return list.Any(r => r.Value.Equals(item));
-		}
+        #region Private Properties
 
-		public void CopyTo(T[] array, int arrayIndex)
-		{
-			list.Select(x => x.Value).ToList().CopyTo(array, arrayIndex);
-		}
+        private IList<TRef> list { get; set; }
 
-		public int Count
-		{
-			get { return list.Count; }
-		}
+        #endregion Private Properties
 
-		public bool IsReadOnly
-		{
-			get { return list.IsReadOnly; }
-		}
+        #region Public Indexers
 
-		public bool Remove(T item)
-		{
-			var i = IndexOf(item);
-			if (i >= 0)
-			{
-				list.RemoveAt(i);
-				return true;
-			}
-			else
-				return false;
-		}
+        public T this[int index]
+        {
+            get
+            {
+                return list[index].Value;
+            }
+            set
+            {
+                list[index] = MakeReference(value);
+            }
+        }
 
-		public IEnumerator<T> GetEnumerator()
-		{
-			return list.Select(x => x.Value).GetEnumerator();
-		}
+        #endregion Public Indexers
 
-		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
+        #region Public Methods
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
-		{
-			if (done == null)
-				done = new HashSet<IPromotable>();
-			if (!done.Contains(this))
-			{
-				done.Add(this);
-				foreach (var r in list)
-				{
-					if (r is IPromotable)
-						(r as IPromotable).ReplaceClientIDs(idmap, done);
-				}
-			}
-		}
-	}
+        public void Add(T item)
+        {
+            list.Add(MakeReference(item));
+        }
 
-	public class GalaxyReferenceList<T> : ReferenceList<GalaxyReference<T>, T>
-	{
+        public void Clear()
+        {
+            list.Clear();
+        }
 
-	}
+        public bool Contains(T item)
+        {
+            return list.Any(r => r.Value.Equals(item));
+        }
 
-	public class ModReferenceList<T> : ReferenceList<ModReference<T>, T>
-		where T : IModObject
-	{
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            list.Select(x => x.Value).ToList().CopyTo(array, arrayIndex);
+        }
 
-	}
+        public IEnumerator<T> GetEnumerator()
+        {
+            return list.Select(x => x.Value).GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public int IndexOf(T item)
+        {
+            if (!list.Any(r => r.Value.Equals(item)))
+                return -1;
+            return list.Select((x, i) => new { Item = x, Index = i }).First(x => x.Item.Value.Equals(item)).Index;
+        }
+
+        public void Insert(int index, T item)
+        {
+            list.Insert(index, MakeReference(item));
+        }
+
+        public bool Remove(T item)
+        {
+            var i = IndexOf(item);
+            if (i >= 0)
+            {
+                list.RemoveAt(i);
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public void RemoveAt(int index)
+        {
+            list.RemoveAt(index);
+        }
+
+        public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+        {
+            if (done == null)
+                done = new HashSet<IPromotable>();
+            if (!done.Contains(this))
+            {
+                done.Add(this);
+                foreach (var r in list)
+                {
+                    if (r is IPromotable)
+                        (r as IPromotable).ReplaceClientIDs(idmap, done);
+                }
+            }
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private static TRef MakeReference(T item)
+        {
+            return (TRef)typeof(TRef).Instantiate(item);
+        }
+
+        #endregion Private Methods
+    }
 }

@@ -1,54 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+﻿using FrEee.Utility;
 using FrEee.WinForms.Interfaces;
-using FrEee.Utility;
+using System.Windows.Forms;
 
 namespace FrEee.WinForms.Controls
 {
-	public partial class ResourceQuantityDisplay : UserControl, IBindable<ResourceQuantity>
-	{
-		public ResourceQuantityDisplay()
-		{
-			InitializeComponent();
-		}
+    public partial class ResourceQuantityDisplay : UserControl, IBindable<ResourceQuantity>
+    {
+        #region Private Fields
 
-		private ResourceQuantity q;
+        private ResourceQuantity q;
 
-		public ResourceQuantity ResourceQuantity
-		{
-			get { return q; }
-			set
-			{
-				q = value;
-				Bind();
-			}
-		}
+        #endregion Private Fields
 
-		public void Bind(ResourceQuantity data)
-		{
-			ResourceQuantity = data;
-		}
+        #region Public Constructors
 
-		public void Bind()
-		{
-			if (ResourceQuantity == null)
-			{
-				min.Amount = 0;
-				org.Amount = 0;
-				rad.Amount = 0;
-			}
-			else
-			{
-				min.Amount = ResourceQuantity[Resource.Minerals];
-				org.Amount = ResourceQuantity[Resource.Organics];
-				rad.Amount = ResourceQuantity[Resource.Radioactives];
-			}
-		}
-	}
+        public ResourceQuantityDisplay()
+        {
+            InitializeComponent();
+        }
+
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        public ResourceQuantity ResourceQuantity
+        {
+            get { return q; }
+            set
+            {
+                q = value;
+                Bind();
+            }
+        }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        public void Bind(ResourceQuantity data)
+        {
+            ResourceQuantity = data;
+        }
+
+        public void Bind()
+        {
+            if (ResourceQuantity == null)
+            {
+                min.Amount = 0;
+                org.Amount = 0;
+                rad.Amount = 0;
+            }
+            else
+            {
+                min.Amount = ResourceQuantity[Resource.Minerals];
+                org.Amount = ResourceQuantity[Resource.Organics];
+                rad.Amount = ResourceQuantity[Resource.Radioactives];
+            }
+        }
+
+        #endregion Public Methods
+    }
 }

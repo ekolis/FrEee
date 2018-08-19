@@ -1,24 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FrEee.Game.Interfaces;
+﻿using FrEee.Game.Interfaces;
 using FrEee.Utility;
 
 namespace FrEee.Game.Objects.Combat.Grid
 {
-	public class CombatantDisappearsEvent : IBattleEvent
-	{
-		public CombatantDisappearsEvent(ICombatant combatant)
-		{
-			Combatant = combatant;
-		}
+    public class CombatantDisappearsEvent : IBattleEvent
+    {
+        #region Public Constructors
 
-		public ICombatant Combatant { get; set; }
+        public CombatantDisappearsEvent(ICombatant combatant)
+        {
+            Combatant = combatant;
+        }
 
-		public IntVector2 StartPosition { get; set; }
+        #endregion Public Constructors
 
-		public IntVector2 EndPosition { get; set; }
-	}
+        #region Public Properties
+
+        public ICombatant Combatant { get; set; }
+
+        public IntVector2 EndPosition { get; set; }
+        public IntVector2 StartPosition { get; set; }
+
+        #endregion Public Properties
+    }
 }

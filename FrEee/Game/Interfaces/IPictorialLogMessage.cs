@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace FrEee.Game.Interfaces
+﻿namespace FrEee.Game.Interfaces
 {
-	public interface IPictorialLogMessage<out T> where T : IPictorial
-	{
-		T Context { get; }
-	}
+    public interface IPictorialLogMessage<out T> where T : IPictorial
+    {
+        #region Public Properties
+
+        T Context { get; }
+
+        #endregion Public Properties
+    }
 }

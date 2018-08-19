@@ -5,361 +5,367 @@ using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
+using System.Linq;
 
 namespace FrEee.Game.Objects.Combat
 {
-	/// <summary>
-	/// A seeking missile or torpedo.
-	/// </summary>
-	public class Seeker : ICombatant
-	{
-		public Seeker(IBattle battle, Empire owner, ICombatant attacker, Component launcher, ICombatant target)
-		{
-			Battle = battle;
-			Owner = owner;
-			if (launcher.Template.ComponentTemplate.WeaponInfo is SeekingWeaponInfo)
-				LaunchingComponent = launcher;
-			else
-				throw new Exception(launcher + " cannot launch seekers.");
-			Name = Owner.Name + " " + launcher.Name;
-			if (WeaponInfo.Targets.HasFlag(target.WeaponTargetType))
-				Target = target;
-			else
-				throw new Exception(launcher + " cannot target a " + target.WeaponTargetType + ".");
-			Hitpoints = WeaponInfo.SeekerDurability; // TODO - can mounts affect seeker durability?
-			Speed = WeaponInfo.SeekerSpeed;
-		}
+    /// <summary>
+    /// A seeking missile or torpedo.
+    /// </summary>
+    public class Seeker : ICombatant
+    {
+        #region Public Constructors
 
-		/// <summary>
-		/// The battle in which this seeker was fired.
-		/// </summary>
-		public IBattle Battle { get; set; }
+        public Seeker(IBattle battle, Empire owner, ICombatant attacker, Component launcher, ICombatant target)
+        {
+            Battle = battle;
+            Owner = owner;
+            if (launcher.Template.ComponentTemplate.WeaponInfo is SeekingWeaponInfo)
+                LaunchingComponent = launcher;
+            else
+                throw new Exception(launcher + " cannot launch seekers.");
+            Name = Owner.Name + " " + launcher.Name;
+            if (WeaponInfo.Targets.HasFlag(target.WeaponTargetType))
+                Target = target;
+            else
+                throw new Exception(launcher + " cannot target a " + target.WeaponTargetType + ".");
+            Hitpoints = WeaponInfo.SeekerDurability; // TODO - can mounts affect seeker durability?
+            Speed = WeaponInfo.SeekerSpeed;
+        }
 
-		/// <summary>
-		/// The name of the seeker.
-		/// </summary>
-		public string Name { get; private set; }
+        #endregion Public Constructors
 
-		/// <summary>
-		/// The combatant which launched the seeker.
-		/// </summary>
-		public ICombatant LaunchingCombatant { get; private set; }
+        #region Public Properties
 
-		/// <summary>
-		/// The owner of the seeker.
-		/// </summary>
-		public Empire Owner { get; set; }
+        /// <summary>
+        /// Seekers don't fire so it doesn't really matter...
+        /// </summary>
+        public int Accuracy
+        {
+            get { return 0; }
+        }
 
-		/// <summary>
-		/// The target of the seeker.
-		/// </summary>
-		public ICombatant Target { get; private set; }
+        /// <summary>
+        /// TODO - armored seekers?
+        /// </summary>
+        public int ArmorHitpoints
+        {
+            get { return 0; }
+        }
 
-		/// <summary>
-		/// The component which launched this seeker.
-		/// </summary>
-		public Component LaunchingComponent { get; private set; }
+        /// <summary>
+        /// The battle in which this seeker was fired.
+        /// </summary>
+        public IBattle Battle { get; set; }
 
-		public SeekingWeaponInfo WeaponInfo
-		{
-			get { return (SeekingWeaponInfo)LaunchingComponent.Template.ComponentTemplate.WeaponInfo; }
-		}
+        public Formula<int> Damage
+        {
+            get
+            {
+                return LaunchingComponent.Template.GetWeaponDamage(1); // TODO - seekers that do different damage based on some sort of abstracted "range"
+            }
+        }
 
-		public Formula<int> Damage
-		{
-			get
-			{
-				return LaunchingComponent.Template.GetWeaponDamage(1); // TODO - seekers that do different damage based on some sort of abstracted "range"
-			}
-		}
+        public int DistanceTraveled { get; set; }
 
-		/// <summary>
-		/// The remaining durability of this seeker.
-		/// </summary>
-		public int Hitpoints { get; set; }
+        /// <summary>
+        /// Seeker evasion is determined by Settings.txt.
+        /// TODO - add a field to Components.txt that lets seekers have custom evasion values?
+        /// </summary>
+        public int Evasion
+        {
+            get { return Mod.Current.Settings.SeekerEvasion; }
+        }
 
-		public bool CanTarget(ITargetable target)
-		{
-			return target != null && LaunchingComponent.Template.ComponentTemplate.WeaponInfo.Targets.HasFlag(target.WeaponTargetType);
-		}
+        public int HitChance
+        {
+            get { return 1; }
+        }
 
-		public WeaponTargets WeaponTargetType
-		{
-			get { return WeaponTargets.Seeker; }
-		}
+        /// <summary>
+        /// The remaining durability of this seeker.
+        /// </summary>
+        public int Hitpoints { get; set; }
 
-		/// <summary>
-		/// Seekers do not carry other weapons.
-		/// </summary>
-		public IEnumerable<Component> Weapons
-		{
-			get { return Enumerable.Empty<Component>(); }
-		}
+        public int HullHitpoints
+        {
+            get { return Hitpoints; }
+        }
 
-		public int TakeDamage(Hit hit, PRNG dice = null)
-		{
-			var damage = hit.Shot.DamageLeft;
-			damage *= hit.Shot.DamageType.SeekerDamage.Evaluate(this) / 100;
-			var pierced = damage * hit.Shot.DamageType.ComponentPiercing.Evaluate(this);
-			int realDamage;
-			realDamage = Math.Min(Hitpoints, damage);
-			Hitpoints -= realDamage;
-			if (IsDestroyed)
-				Dispose();
-			return damage - realDamage;
-		}
+        public System.Drawing.Image Icon
+        {
+            get { return Portrait; }
+        }
 
-		public bool IsDestroyed
-		{
-			get { return Hitpoints <= 0; }
-		}
+        public IEnumerable<string> IconPaths
+        {
+            get
+            {
+                return PortraitPaths;
+            }
+        }
 
-		/// <summary>
-		/// Seekers do not have shields.
-		/// TODO - maybe let seekers have shields?
-		/// </summary>
-		public int NormalShields
-		{
-			get
-			{
-				return 0;
-			}
-			set
-			{
-				// do nothing
-			}
-		}
+        public long ID
+        {
+            get;
+            set;
+        }
 
-		/// <summary>
-		/// Seekers do not have shields.
-		/// TODO - maybe let seekers have shields?
-		/// </summary>
-		public int PhasedShields
-		{
-			get
-			{
-				return 0;
-			}
-			set
-			{
-				// do nothing
-			}
-		}
+        public bool IsAlive => !IsDestroyed;
 
-		public int MaxNormalShields
-		{
-			get { return 0; }
-		}
+        public bool IsDestroyed
+        {
+            get { return Hitpoints <= 0; }
+        }
 
-		public int MaxPhasedShields
-		{
-			get { return 0; }
-		}
+        public bool IsDisposed { get; set; }
 
-		public void ReplenishShields(int? amount = null)
-		{
-			// do nothing, seekers don't have shields
-		}
+        public bool IsMemory
+        {
+            get;
+            set;
+        }
 
-		public System.Drawing.Image Icon
-		{
-			get { return Portrait; }
-		}
+        /// <summary>
+        /// The combatant which launched the seeker.
+        /// </summary>
+        public ICombatant LaunchingCombatant { get; private set; }
 
-		public System.Drawing.Image Portrait
-		{
-			// TODO - custom seeker images per shipset
-			get { return Pictures.GetGenericImage<Seeker>(1.0); }
-		}
+        /// <summary>
+        /// The component which launched this seeker.
+        /// </summary>
+        public Component LaunchingComponent { get; private set; }
 
-		public IEnumerable<string> PortraitPaths
-		{
-			get
-			{
-				var paths = new List<string>();
+        public int MaxArmorHitpoints
+        {
+            get { return 0; }
+        }
 
-				var shipsetPath = Owner.ShipsetPath;
+        public int MaxHitpoints
+        {
+            get
+            {
+                return WeaponInfo.SeekerDurability; // TODO - let mounts affect seeker HP?
+            }
+        }
 
-				if (Mod.Current?.RootPath != null)
-				{
-					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Seeker"));
-					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_" + "Seeker"));
-				}
-				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Seeker"));
-				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_" + "Seeker"));
-				return paths;
-			}
-		}
+        public int MaxHullHitpoints
+        {
+            get { return MaxHitpoints; }
+        }
 
-		public IEnumerable<string> IconPaths
-		{
-			get
-			{
-				return PortraitPaths;
-			}
-		}
+        public int MaxNormalShields
+        {
+            get { return 0; }
+        }
 
-		public override string ToString()
-		{
-			return Name;
-		}
+        public int MaxPhasedShields
+        {
+            get { return 0; }
+        }
 
+        public int MaxShieldHitpoints
+        {
+            get { return MaxNormalShields + MaxPhasedShields; }
+        }
 
-		public int MaxHitpoints
-		{
-			get
-			{
-				return WeaponInfo.SeekerDurability; // TODO - let mounts affect seeker HP?
-			}
-		}
+        public int MaxTargets => 0;
 
-		public int? Repair(int? amount = null)
-		{
-			if (amount == null)
-			{
-				Hitpoints = MaxHitpoints;
-				return amount;
-			}
-			else
-			{
-				var actual = Math.Min(MaxHitpoints - Hitpoints, amount.Value);
-				Hitpoints += actual;
-				return amount.Value - actual;
-			}
-		}
+        /// <summary>
+        /// The name of the seeker.
+        /// </summary>
+        public string Name { get; private set; }
 
+        /// <summary>
+        /// Seekers do not have shields.
+        /// TODO - maybe let seekers have shields?
+        /// </summary>
+        public int NormalShields
+        {
+            get
+            {
+                return 0;
+            }
+            set
+            {
+                // do nothing
+            }
+        }
 
-		public int HitChance
-		{
-			get { return 1; }
-		}
+        /// <summary>
+        /// The owner of the seeker.
+        /// </summary>
+        public Empire Owner { get; set; }
 
+        /// <summary>
+        /// Seekers do not have shields.
+        /// TODO - maybe let seekers have shields?
+        /// </summary>
+        public int PhasedShields
+        {
+            get
+            {
+                return 0;
+            }
+            set
+            {
+                // do nothing
+            }
+        }
 
-		public bool IsHostileTo(Empire emp)
-		{
-			return Owner == null ? false : Owner.IsEnemyOf(emp, StarSystem);
-		}
+        public System.Drawing.Image Portrait
+        {
+            // TODO - custom seeker images per shipset
+            get { return Pictures.GetGenericImage<Seeker>(1.0); }
+        }
 
-		/// <summary>
-		/// Seekers don't fire so it doesn't really matter...
-		/// </summary>
-		public int Accuracy
-		{
-			get { return 0; }
-		}
+        public IEnumerable<string> PortraitPaths
+        {
+            get
+            {
+                var paths = new List<string>();
 
-		/// <summary>
-		/// Seeker evasion is determined by Settings.txt.
-		/// TODO - add a field to Components.txt that lets seekers have custom evasion values?
-		/// </summary>
-		public int Evasion
-		{
-			get { return Mod.Current.Settings.SeekerEvasion; }
-		}
+                var shipsetPath = Owner.ShipsetPath;
 
-		public void Dispose()
-		{
-			if (IsDisposed)
-				return;
-			Target = null;
-			Owner = null;
-		}
+                if (Mod.Current?.RootPath != null)
+                {
+                    paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Seeker"));
+                    paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_" + "Seeker"));
+                }
+                paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Seeker"));
+                paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_" + "Seeker"));
+                return paths;
+            }
+        }
 
-		public Visibility CheckVisibility(Empire emp)
-		{
-			if (Owner == emp)
-				return Visibility.Owned;
-			if (Galaxy.Current.Battles.Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
-				return Visibility.Scanned;
-			return Visibility.Unknown;
-		}
+        [DoNotSerialize(false)]
+        public Sector Sector
+        {
+            get { return Battle.Sector; }
+            set { throw new NotSupportedException("Cannot set the sector of a seeker once it's been initialized."); }
+        }
 
-		public void Redact(Empire emp)
-		{
-			var vis = CheckVisibility(emp);
-			if (vis < Visibility.Fogged)
-				Dispose();
-		}
+        public int ShieldHitpoints
+        {
+            get { return NormalShields + PhasedShields; }
+        }
 
-		public bool IsMemory
-		{
-			get;
-			set;
-		}
+        public int Speed { get; set; }
 
-		public long ID
-		{
-			get;
-			set;
-		}
+        public StarSystem StarSystem
+        {
+            get { return Battle.StarSystem; }
+        }
 
-		public double Timestamp { get; set; }
+        /// <summary>
+        /// The target of the seeker.
+        /// </summary>
+        public ICombatant Target { get; private set; }
 
-		public bool IsObsoleteMemory(Empire emp)
-		{
-			return Timestamp < Galaxy.Current.Timestamp - 1;
-		}
+        public double Timestamp { get; set; }
 
-		[DoNotSerialize(false)]
-		public Sector Sector
-		{
-			get { return Battle.Sector; }
-			set { throw new NotSupportedException("Cannot set the sector of a seeker once it's been initialized."); }
-		}
+        public SeekingWeaponInfo WeaponInfo
+        {
+            get { return (SeekingWeaponInfo)LaunchingComponent.Template.ComponentTemplate.WeaponInfo; }
+        }
 
-		public StarSystem StarSystem
-		{
-			get { return Battle.StarSystem; }
-		}
+        /// <summary>
+        /// Seekers do not carry other weapons.
+        /// </summary>
+        public IEnumerable<Component> Weapons
+        {
+            get { return Enumerable.Empty<Component>(); }
+        }
 
+        public WeaponTargets WeaponTargetType
+        {
+            get { return WeaponTargets.Seeker; }
+        }
 
-		public int ShieldHitpoints
-		{
-			get { return NormalShields + PhasedShields; }
-		}
+        #endregion Public Properties
 
-		/// <summary>
-		/// TODO - armored seekers?
-		/// </summary>
-		public int ArmorHitpoints
-		{
-			get { return 0; }
-		}
+        #region Public Methods
 
-		public int HullHitpoints
-		{
-			get { return Hitpoints; }
-		}
+        public bool CanTarget(ITargetable target)
+        {
+            return target != null && LaunchingComponent.Template.ComponentTemplate.WeaponInfo.Targets.HasFlag(target.WeaponTargetType);
+        }
 
-		public int MaxShieldHitpoints
-		{
-			get { return MaxNormalShields + MaxPhasedShields; }
-		}
+        public Visibility CheckVisibility(Empire emp)
+        {
+            if (Owner == emp)
+                return Visibility.Owned;
+            if (Galaxy.Current.Battles.Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
+                return Visibility.Scanned;
+            return Visibility.Unknown;
+        }
 
-		public int MaxArmorHitpoints
-		{
-			get { return 0; }
-		}
+        public void Dispose()
+        {
+            if (IsDisposed)
+                return;
+            Target = null;
+            Owner = null;
+        }
 
-		public int MaxHullHitpoints
-		{
-			get { return MaxHitpoints; }
-		}
+        public bool IsHostileTo(Empire emp)
+        {
+            return Owner == null ? false : Owner.IsEnemyOf(emp, StarSystem);
+        }
 
-		public bool IsDisposed { get; set; }
+        public bool IsObsoleteMemory(Empire emp)
+        {
+            return Timestamp < Galaxy.Current.Timestamp - 1;
+        }
 
-		public bool IsAlive => !IsDestroyed;
+        public void Redact(Empire emp)
+        {
+            var vis = CheckVisibility(emp);
+            if (vis < Visibility.Fogged)
+                Dispose();
+        }
 
-		public int Speed { get; set; }
+        public int? Repair(int? amount = null)
+        {
+            if (amount == null)
+            {
+                Hitpoints = MaxHitpoints;
+                return amount;
+            }
+            else
+            {
+                var actual = Math.Min(MaxHitpoints - Hitpoints, amount.Value);
+                Hitpoints += actual;
+                return amount.Value - actual;
+            }
+        }
 
-		public int DistanceTraveled { get; set; }
+        public void ReplenishShields(int? amount = null)
+        {
+            // do nothing, seekers don't have shields
+        }
 
-		public int MaxTargets => 0;
-	}
+        public int TakeDamage(Hit hit, PRNG dice = null)
+        {
+            var damage = hit.Shot.DamageLeft;
+            damage *= hit.Shot.DamageType.SeekerDamage.Evaluate(this) / 100;
+            var pierced = damage * hit.Shot.DamageType.ComponentPiercing.Evaluate(this);
+            int realDamage;
+            realDamage = Math.Min(Hitpoints, damage);
+            Hitpoints -= realDamage;
+            if (IsDestroyed)
+                Dispose();
+            return damage - realDamage;
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        #endregion Public Methods
+    }
 }

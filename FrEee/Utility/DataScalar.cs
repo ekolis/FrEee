@@ -1,69 +1,79 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FrEee.Utility.Extensions;
+using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FrEee.Utility.Extensions;
-using Newtonsoft.Json;
 
 namespace FrEee.Utility
 {
-	/// <summary>
-	/// A scalar which can be converted easily to and from a string.
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	public class DataScalar<T> : IDataScalar
-	{
-		public DataScalar(T value = default(T))
-		{
-			Value = value;
-		}
+    public interface IDataScalar : IData
+    {
+    }
 
-		[JsonIgnore]
-		public T Value { get; set; }
+    public static class DataScalar
+    {
+        #region Public Methods
 
-		object IData.Value { get { return Value; } }
+        public static IDataScalar Create<T>(T o)
+        {
+            if (o == null)
+                return null;
+            var scalarType = typeof(DataScalar<>).MakeGenericType(o.GetType());
+            var scalar = scalarType.Instantiate(o);
+            return (IDataScalar)scalar;
+        }
 
-		public string Data
-		{
-			get
-			{
-				return Type.Name + ":" + Convert.ToString(Value, CultureInfo.InvariantCulture);
-			}
-			set
-			{
-				var data = value.Substring(value.IndexOf(":") + 1);
-				if (typeof(T).IsEnum)
-					Value = (T)Enum.Parse(typeof(T), data);
-				else
-					Value = (T)Convert.ChangeType(data, typeof(T), CultureInfo.InvariantCulture);
-			}
-		}
+        #endregion Public Methods
+    }
 
-		private SafeType Type
-		{
-			get
-			{
-				return new SafeType(typeof(T));
-			}
-		}
-	}
+    /// <summary>
+    /// A scalar which can be converted easily to and from a string.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class DataScalar<T> : IDataScalar
+    {
+        #region Public Constructors
 
-	public interface IDataScalar : IData
-	{
+        public DataScalar(T value = default(T))
+        {
+            Value = value;
+        }
 
-	}
+        #endregion Public Constructors
 
-	public static class DataScalar
-	{
-		public static IDataScalar Create<T>(T o)
-		{
-			if (o == null)
-				return null;
-			var scalarType = typeof(DataScalar<>).MakeGenericType(o.GetType());
-			var scalar = scalarType.Instantiate(o);
-			return (IDataScalar)scalar;
-		}
-	}
+        #region Public Properties
+
+        public string Data
+        {
+            get
+            {
+                return Type.Name + ":" + Convert.ToString(Value, CultureInfo.InvariantCulture);
+            }
+            set
+            {
+                var data = value.Substring(value.IndexOf(":") + 1);
+                if (typeof(T).IsEnum)
+                    Value = (T)Enum.Parse(typeof(T), data);
+                else
+                    Value = (T)Convert.ChangeType(data, typeof(T), CultureInfo.InvariantCulture);
+            }
+        }
+
+        [JsonIgnore]
+        public T Value { get; set; }
+
+        object IData.Value { get { return Value; } }
+
+        #endregion Public Properties
+
+        #region Private Properties
+
+        private SafeType Type
+        {
+            get
+            {
+                return new SafeType(typeof(T));
+            }
+        }
+
+        #endregion Private Properties
+    }
 }

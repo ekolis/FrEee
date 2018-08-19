@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-
-namespace FrEee.Utility
+﻿namespace FrEee.Utility
 {
-	/// <summary>
-	/// Either a data object, or a scalar.
-	/// </summary>
-	public interface IData
-	{
-		/// <summary>
-		/// The data value, as a string which can be used to find the object or parse into the scalar.
-		/// </summary>
-		string Data { get; set; }
+    /// <summary>
+    /// Either a data object, or a scalar.
+    /// </summary>
+    public interface IData
+    {
+        #region Public Properties
 
-		[JsonIgnore]
-		object Value { get; }
-	}
+        /// <summary>
+        /// The data value, as a string which can be used to find the object or parse into the scalar.
+        /// </summary>
+        string Data { get; set; }
+
+        [JsonIgnore]
+        object Value { get; }
+
+        #endregion Public Properties
+    }
 }

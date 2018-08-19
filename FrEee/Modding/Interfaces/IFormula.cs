@@ -1,39 +1,49 @@
-﻿using FrEee.Modding.Enumerations;
+﻿using FrEee.Utility;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using FrEee.Utility;
 using System.Globalization;
 
 namespace FrEee.Modding.Interfaces
 {
-	[DoNotCopy]
-	public interface IFormula : IComparable
-	{
-		string Text { get; set; }
+    [DoNotCopy]
+    public interface IFormula : IComparable
+    {
+        #region Public Properties
 
-		object Value { get; }
+        object Context { get; }
+        bool IsDynamic { get; }
+        bool IsLiteral { get; }
+        string Text { get; set; }
 
-		object Context { get; }
+        object Value { get; }
 
-		object Evaluate(IDictionary<string, object> variables);
+        #endregion Public Properties
 
-		object Evaluate(object host);
+        #region Public Methods
 
-		Formula<string> ToStringFormula(CultureInfo c = null);
+        object Evaluate(IDictionary<string, object> variables);
 
-		bool IsLiteral { get; }
+        object Evaluate(object host);
 
-		bool IsDynamic { get; }
-	}
+        Formula<string> ToStringFormula(CultureInfo c = null);
 
-	public interface IFormula<out T> : IFormula
-	{
-		new T Value { get; }
+        #endregion Public Methods
+    }
 
-		new T Evaluate(IDictionary<string, object> variables);
+    public interface IFormula<out T> : IFormula
+    {
+        #region Public Properties
 
-		new T Evaluate(object host);
-	}
+        new T Value { get; }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        new T Evaluate(IDictionary<string, object> variables);
+
+        new T Evaluate(object host);
+
+        #endregion Public Methods
+    }
 }

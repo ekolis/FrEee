@@ -1,25 +1,30 @@
-﻿using System;
+﻿using FrEee.Modding.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Loaders
 {
-	/// <summary>
-	/// Loads mod data.
-	/// </summary>
-	public interface ILoader
-	{
-		/// <summary>
-		/// Loads mod data.
-		/// </summary>
-		/// <param name="mod">The mod we are loading data into.</param>
-		/// <returns>Any mod objects which need IDs generated.</returns>
-		IEnumerable<IModObject> Load(Mod mod);
+    /// <summary>
+    /// Loads mod data.
+    /// </summary>
+    public interface ILoader
+    {
+        #region Public Properties
 
-		string ModPath { get; set; }
+        string FileName { get; set; }
 
-		string FileName { get; set; }
-	}
+        string ModPath { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        /// <summary>
+        /// Loads mod data.
+        /// </summary>
+        /// <param name="mod">The mod we are loading data into.</param>
+        /// <returns>Any mod objects which need IDs generated.</returns>
+        IEnumerable<IModObject> Load(Mod mod);
+
+        #endregion Public Methods
+    }
 }

@@ -1,25 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 
 namespace FrEee.WinForms.DataGridView
 {
-	/// <summary>
-	/// Configuration for a grid view.
-	/// </summary>
-	[Serializable]
-	public class GridConfig
-	{
-		public GridConfig()
-		{
-			Columns = new List<GridColumnConfig>();
-		}
+    /// <summary>
+    /// Configuration for a grid view.
+    /// </summary>
+    [Serializable]
+    public class GridConfig
+    {
+        #region Public Constructors
 
-		public string Name { get; set; }
+        public GridConfig()
+        {
+            Columns = new List<GridColumnConfig>();
+        }
 
-		public IList<GridColumnConfig> Columns { get; private set; }
-	}
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        public IList<GridColumnConfig> Columns { get; private set; }
+        public string Name { get; set; }
+
+        #endregion Public Properties
+    }
 }

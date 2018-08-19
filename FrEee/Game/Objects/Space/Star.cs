@@ -1,85 +1,92 @@
-using System;
-
 using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
-using FrEee.Game.Objects.Civilization;
+using System;
 
 namespace FrEee.Game.Objects.Space
 {
-	/// <summary>
-	/// A star. Normally found at the center of a star system.
-	/// </summary>
-	[Serializable]
-	public class Star : StellarObject, ITemplate<Star>, IDataObject
-	{
-		// TODO - do stars in SE4 have a size property?
+    /// <summary>
+    /// A star. Normally found at the center of a star system.
+    /// </summary>
+    [Serializable]
+    public class Star : StellarObject, ITemplate<Star>, IDataObject
+    {
+        // TODO - do stars in SE4 have a size property?
 
-		public Empire Owner
-		{
-			get
-			{
-				return null;
-			}
-		}
+        #region Public Properties
 
-		/// <summary>
-		/// The brightness of this star. (For flavor)
-		/// </summary>
-		public string Brightness { get; set; }
+        public override AbilityTargets AbilityTarget
+        {
+            get { return AbilityTargets.Star; }
+        }
 
-		/// <summary>
-		/// The color of this star. (For flavor)
-		/// </summary>
-		public string Color { get; set; }
+        /// <summary>
+        /// The age of this star. (For flavor)
+        /// </summary>
+        public string Age { get; set; }
 
-		/// <summary>
-		/// The age of this star. (For flavor)
-		/// </summary>
-		public string Age { get; set; }
+        /// <summary>
+        /// The brightness of this star. (For flavor)
+        /// </summary>
+        public string Brightness { get; set; }
 
-		/// <summary>
-		/// Is this a destroyed star?
-		/// TODO - make sure destroyed stars don't provide supplies or resources from solar generation
-		/// </summary>
-		public bool IsDestroyed { get; set; }
+        public override bool CanBeObscured => false;
 
-		/// <summary>
-		/// Just copy the star's data.
-		/// </summary>
-		/// <returns>A copy of the star.</returns>
-		public Star Instantiate()
-		{
-			return this.CopyAndAssignNewID();
-		}
+        /// <summary>
+        /// The color of this star. (For flavor)
+        /// </summary>
+        public string Color { get; set; }
 
-		public override AbilityTargets AbilityTarget
-		{
-			get { return AbilityTargets.Star; }
-		}
+        public override SafeDictionary<string, object> Data
+        {
+            get
+            {
+                var dict = base.Data;
+                dict[nameof(Brightness)] = Brightness;
+                dict[nameof(Color)] = Color;
+                dict[nameof(Age)] = Age;
+                dict[nameof(IsDestroyed)] = IsDestroyed;
+                return dict;
+            }
+            set
+            {
+                base.Data = value;
+                Brightness = value[nameof(Brightness)].Default<string>();
+                Color = value[nameof(Color)].Default<string>();
+                Age = value[nameof(Age)].Default<string>();
+                IsDestroyed = value[nameof(IsDestroyed)].Default<bool>();
+            }
+        }
 
-		public override SafeDictionary<string, object> Data
-		{
-			get
-			{
-				var dict = base.Data;
-				dict[nameof(Brightness)] = Brightness;
-				dict[nameof(Color)] = Color;
-				dict[nameof(Age)] = Age;
-				dict[nameof(IsDestroyed)] = IsDestroyed;
-				return dict;
-			}
-			set
-			{
-				base.Data = value;
-				Brightness = value[nameof(Brightness)].Default<string>();
-				Color = value[nameof(Color)].Default<string>();
-				Age = value[nameof(Age)].Default<string>();
-				IsDestroyed = value[nameof(IsDestroyed)].Default<bool>();
-			}
-		}
+        /// <summary>
+        /// Is this a destroyed star?
+        /// TODO - make sure destroyed stars don't provide supplies or resources from solar generation
+        /// </summary>
+        public bool IsDestroyed { get; set; }
 
-		public override bool CanBeObscured => false;
-	}
+        public Empire Owner
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        /// <summary>
+        /// Just copy the star's data.
+        /// </summary>
+        /// <returns>A copy of the star.</returns>
+        public Star Instantiate()
+        {
+            return this.CopyAndAssignNewID();
+        }
+
+        #endregion Public Methods
+    }
 }

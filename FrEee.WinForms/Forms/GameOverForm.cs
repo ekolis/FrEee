@@ -1,40 +1,40 @@
-﻿using FrEee.Game.Interfaces;
+﻿using FrEee.Utility;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using FrEee.WinForms.Utility.Extensions;
-using FrEee.Utility;
 using System.IO;
+using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class GameOverForm : Form
-	{
-		public GameOverForm(bool victory)
-		{
-			InitializeComponent();
+    public partial class GameOverForm : Form
+    {
+        #region Public Constructors
 
-			if (victory)
-			{
-				Text = "Victory!";
-				pic.Image = Pictures.GetModImage(Path.Combine("Pictures", "Game", "Finale", "victory"));
-			}
-			else
-			{
-				Text = "Defeat!";
-				pic.Image = Pictures.GetModImage(Path.Combine("Pictures", "Game", "Finale", "defeat"));
-			}
-		}
+        public GameOverForm(bool victory)
+        {
+            InitializeComponent();
 
-		private void btnOk_Click(object sender, EventArgs e)
-		{
-			DialogResult = DialogResult.OK;
-			Close();
-		}
-	}
+            if (victory)
+            {
+                Text = "Victory!";
+                pic.Image = Pictures.GetModImage(Path.Combine("Pictures", "Game", "Finale", "victory"));
+            }
+            else
+            {
+                Text = "Defeat!";
+                pic.Image = Pictures.GetModImage(Path.Combine("Pictures", "Game", "Finale", "defeat"));
+            }
+        }
+
+        #endregion Public Constructors
+
+        #region Private Methods
+
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        #endregion Private Methods
+    }
 }

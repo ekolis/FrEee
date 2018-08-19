@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace FrEee.Modding
+﻿namespace FrEee.Modding
 {
-	/// <summary>
-	/// A parameter for a meta record.
-	/// </summary>
-	public class MetaRecordParameter
-	{
-		public string Name { get; set; }
+    /// <summary>
+    /// A parameter for a meta record.
+    /// </summary>
+    public class MetaRecordParameter
+    {
+        #region Public Properties
 
-		public int Minimum { get; set; }
+        public int Maximum { get; set; }
+        public int Minimum { get; set; }
+        public string Name { get; set; }
 
-		public int Maximum { get; set; }
-	}
+        #endregion Public Properties
+    }
 }

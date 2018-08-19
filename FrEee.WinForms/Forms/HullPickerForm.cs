@@ -1,128 +1,140 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
-using FrEee.Modding;
+using FrEee.Utility;
+using FrEee.Utility.Extensions;
+using FrEee.WinForms.Utility.Extensions;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using FrEee.WinForms.Utility.Extensions;
-using FrEee.Utility.Extensions;
-using FrEee.Utility;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class HullPickerForm : Form
-	{
-		public HullPickerForm()
-		{
-			InitializeComponent();
-			ddlVehicleType.Items.Add(new { Name = "All", VehicleType = VehicleTypes.All });
-			ddlVehicleType.Items.Add(new { Name = "Ships", VehicleType = VehicleTypes.Ship });
-			ddlVehicleType.Items.Add(new { Name = "Bases", VehicleType = VehicleTypes.Base });
-			ddlVehicleType.Items.Add(new { Name = "Fighters", VehicleType = VehicleTypes.Fighter });
-			ddlVehicleType.Items.Add(new { Name = "Troops", VehicleType = VehicleTypes.Troop });
-			ddlVehicleType.Items.Add(new { Name = "Satellites", VehicleType = VehicleTypes.Satellite });
-			ddlVehicleType.Items.Add(new { Name = "Mines", VehicleType = VehicleTypes.Mine });
-			ddlVehicleType.Items.Add(new { Name = "Drones", VehicleType = VehicleTypes.Drone });
-			ddlVehicleType.Items.Add(new { Name = "Weapon Platforms", VehicleType = VehicleTypes.WeaponPlatform });
-			ddlVehicleType.SelectedItem = ddlVehicleType.Items[0];
+    public partial class HullPickerForm : Form
+    {
+        #region Private Fields
 
-			try {base.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
-		}
+        private IHull hull;
 
-		private IHull hull;
+        #endregion Private Fields
 
-		/// <summary>
-		/// The hull that the user selected.
-		/// </summary>
-		public IHull Hull
-		{
-			get
-			{
-				return hull;
-			}
-			private set
-			{
-				hull = value;
-				lstAbilities.Initialize(20, 20);
-				if (hull != null)
-				{
-					foreach (var abil in hull.Abilities)
-						lstAbilities.AddItemWithImage(null, abil.Description, abil, null);
-				}
-			}
-		}
+        #region Public Constructors
 
-		private void btnCancel_Click(object sender, EventArgs e)
-		{
-			DialogResult = DialogResult.Cancel;
-			Close();
-		}
+        public HullPickerForm()
+        {
+            InitializeComponent();
+            ddlVehicleType.Items.Add(new { Name = "All", VehicleType = VehicleTypes.All });
+            ddlVehicleType.Items.Add(new { Name = "Ships", VehicleType = VehicleTypes.Ship });
+            ddlVehicleType.Items.Add(new { Name = "Bases", VehicleType = VehicleTypes.Base });
+            ddlVehicleType.Items.Add(new { Name = "Fighters", VehicleType = VehicleTypes.Fighter });
+            ddlVehicleType.Items.Add(new { Name = "Troops", VehicleType = VehicleTypes.Troop });
+            ddlVehicleType.Items.Add(new { Name = "Satellites", VehicleType = VehicleTypes.Satellite });
+            ddlVehicleType.Items.Add(new { Name = "Mines", VehicleType = VehicleTypes.Mine });
+            ddlVehicleType.Items.Add(new { Name = "Drones", VehicleType = VehicleTypes.Drone });
+            ddlVehicleType.Items.Add(new { Name = "Weapon Platforms", VehicleType = VehicleTypes.WeaponPlatform });
+            ddlVehicleType.SelectedItem = ddlVehicleType.Items[0];
 
-		private void btnOk_Click(object sender, EventArgs e)
-		{
-			DialogResult = DialogResult.OK;
-			Close();
-		}
+            try { base.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); } catch { }
+        }
 
-		public VehicleTypes SelectedVehicleType
-		{
-			get
-			{
-				if (ddlVehicleType.SelectedItem == null)
-					return VehicleTypes.None;
-				return ((dynamic)ddlVehicleType.SelectedItem).VehicleType;
-			}
-			set
-			{
-				ddlVehicleType.SelectedItem = ddlVehicleType.Items.Cast<dynamic>().SingleOrDefault(item => item.VehicleType == value);
-				Bind();
-			}
-		}
+        #endregion Public Constructors
 
-		private void Bind()
-		{
-			var vt = (VehicleTypes)((dynamic)ddlVehicleType.SelectedItem).VehicleType;
-			var hulls = Empire.Current.UnlockedItems.OfType<IHull>().Where(h => vt.HasFlag(h.VehicleType));
-			lstHulls.Initialize(32, 32);
-			foreach (var hull in hulls)
-			{
-				var item = lstHulls.AddItemWithImage(ddlVehicleType.SelectedIndex > 0 ? hull.VehicleTypeName : null, hull.Name, hull, hull.Icon, hull.Size.Kilotons(), hull.Cost[Resource.Minerals].ToUnitString(), hull.Cost[Resource.Organics].ToUnitString(), hull.Cost[Resource.Radioactives].ToUnitString(), hull.Description);
-				item.UseItemStyleForSubItems = false;
-				item.SubItems[2].ForeColor = Resource.Minerals.Color;
-				item.SubItems[3].ForeColor = Resource.Organics.Color;
-				item.SubItems[4].ForeColor = Resource.Radioactives.Color;
-			}
-		}
+        #region Public Properties
 
-		private void ddlVehicleType_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			Bind();
-		}
+        /// <summary>
+        /// The hull that the user selected.
+        /// </summary>
+        public IHull Hull
+        {
+            get
+            {
+                return hull;
+            }
+            private set
+            {
+                hull = value;
+                lstAbilities.Initialize(20, 20);
+                if (hull != null)
+                {
+                    foreach (var abil in hull.Abilities)
+                        lstAbilities.AddItemWithImage(null, abil.Description, abil, null);
+                }
+            }
+        }
 
-		private void lstHulls_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (lstHulls.SelectedItems.Count == 1)
-			{
-				var item = lstHulls.SelectedItems[0];
-				Hull = (IHull)item.Tag;
-			}
-		}
+        public VehicleTypes SelectedVehicleType
+        {
+            get
+            {
+                if (ddlVehicleType.SelectedItem == null)
+                    return VehicleTypes.None;
+                return ((dynamic)ddlVehicleType.SelectedItem).VehicleType;
+            }
+            set
+            {
+                ddlVehicleType.SelectedItem = ddlVehicleType.Items.Cast<dynamic>().SingleOrDefault(item => item.VehicleType == value);
+                Bind();
+            }
+        }
 
-		private void lstHulls_MouseDoubleClick(object sender, MouseEventArgs e)
-		{
-			var item = lstHulls.GetItemAt(e.X, e.Y);
-			if (item != null)
-			{
-				Hull = (IHull)item.Tag;
-				DialogResult = DialogResult.OK;
-				Close();
-			}
-		}
-	}
+        #endregion Public Properties
+
+        #region Private Methods
+
+        private void Bind()
+        {
+            var vt = (VehicleTypes)((dynamic)ddlVehicleType.SelectedItem).VehicleType;
+            var hulls = Empire.Current.UnlockedItems.OfType<IHull>().Where(h => vt.HasFlag(h.VehicleType));
+            lstHulls.Initialize(32, 32);
+            foreach (var hull in hulls)
+            {
+                var item = lstHulls.AddItemWithImage(ddlVehicleType.SelectedIndex > 0 ? hull.VehicleTypeName : null, hull.Name, hull, hull.Icon, hull.Size.Kilotons(), hull.Cost[Resource.Minerals].ToUnitString(), hull.Cost[Resource.Organics].ToUnitString(), hull.Cost[Resource.Radioactives].ToUnitString(), hull.Description);
+                item.UseItemStyleForSubItems = false;
+                item.SubItems[2].ForeColor = Resource.Minerals.Color;
+                item.SubItems[3].ForeColor = Resource.Organics.Color;
+                item.SubItems[4].ForeColor = Resource.Radioactives.Color;
+            }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
+
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void ddlVehicleType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Bind();
+        }
+
+        private void lstHulls_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            var item = lstHulls.GetItemAt(e.X, e.Y);
+            if (item != null)
+            {
+                Hull = (IHull)item.Tag;
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+        }
+
+        private void lstHulls_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lstHulls.SelectedItems.Count == 1)
+            {
+                var item = lstHulls.SelectedItems[0];
+                Hull = (IHull)item.Tag;
+            }
+        }
+
+        #endregion Private Methods
+    }
 }

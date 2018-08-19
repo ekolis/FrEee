@@ -1,45 +1,51 @@
-﻿using FrEee.Game.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using FrEee.WinForms.Utility.Extensions;
-using FrEee.Utility;
-using System.IO;
+﻿using FrEee.Game.Objects.Combat.Grid;
 using FrEee.WinForms.Interfaces;
-using FrEee.Game.Objects.Combat.Grid;
+using System;
+using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class BattleReplayForm : Form, IBindable<Battle>
-	{
-		public BattleReplayForm(Battle b)
-		{
-			InitializeComponent();
-			Bind(b);
-		}
+    public partial class BattleReplayForm : Form, IBindable<Battle>
+    {
+        #region Public Constructors
 
-		public Battle Battle { get; private set; }
+        public BattleReplayForm(Battle b)
+        {
+            InitializeComponent();
+            Bind(b);
+        }
 
-		public void Bind(Battle data)
-		{
-			Battle = data;
-			Bind();
-		}
+        #endregion Public Constructors
 
-		public void Bind()
-		{
-			battleView1.Battle = Battle;
-		}
+        #region Public Properties
 
-		private void btnClose_Click(object sender, EventArgs e)
-		{
-			DialogResult = DialogResult.OK;
-			Close();
-		}
-	}
+        public Battle Battle { get; private set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        public void Bind(Battle data)
+        {
+            Battle = data;
+            Bind();
+        }
+
+        public void Bind()
+        {
+            battleView1.Battle = Battle;
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        #endregion Private Methods
+    }
 }

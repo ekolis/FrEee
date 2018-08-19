@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using FrEee.Utility.Extensions;
+﻿using FrEee.Utility.Extensions;
+using System;
 
 namespace FrEee.Utility
 {
@@ -12,26 +9,68 @@ namespace FrEee.Utility
     /// </summary>
     public class PRNG
     {
-        Random prng;
+        #region Private Fields
+
+        private Random prng;
+
+        #endregion Private Fields
+
+        #region Public Constructors
+
         public PRNG(int seed)
         {
             this.Seed = seed;
             prng = new Random(seed);
         }
 
-		/// <summary>
-		/// The number used to seed this PRNG.
-		/// </summary>
-		public int Seed { get; private set; }
+        #endregion Public Constructors
 
-		/// <summary>
-		/// The number of times that this PRNG has been called.
-		/// </summary>
-		public long Iteration { get; private set; }
+        #region Public Properties
+
+        /// <summary>
+        /// The number of times that this PRNG has been called.
+        /// </summary>
+        public long Iteration { get; private set; }
+
+        /// <summary>
+        /// The number used to seed this PRNG.
+        /// </summary>
+        public int Seed { get; private set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        public static bool operator !=(PRNG r1, PRNG r2)
+        {
+            return !(r1 == r2);
+        }
+
+        public static bool operator ==(PRNG r1, PRNG r2)
+        {
+            if (r1.IsNull() && r2.IsNull())
+                return true;
+            if (r1.IsNull() || r2.IsNull())
+                return false;
+            return r1.Seed == r2.Seed && r1.Iteration == r2.Iteration;
+        }
+
+        public override bool Equals(object obj)
+        {
+            // TODO - upgrade equals to use "as" operator
+            if (obj is PRNG)
+                return this == (PRNG)obj;
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCodeMasher.Mash(Seed, Iteration);
+        }
 
         public int Next(int upper)
         {
-			Iteration++;
+            Iteration++;
             return prng.Next(upper);
         }
 
@@ -44,8 +83,19 @@ namespace FrEee.Utility
         /// <returns></returns>
         public long Next(long upper)
         {
-			// don't Iteration++ here; we're already calling Next
+            // don't Iteration++ here; we're already calling Next
             return Next((int)(upper / (long)int.MaxValue / 4L)) * (long)int.MaxValue * 4L + Next((int)(upper % ((long)int.MaxValue))) * 2 + Next(2);
+        }
+
+        /// <summary>
+        /// Generates a random number >= 0 but less than the upper bound.
+        /// </summary>
+        /// <param name="upper">The upper bound.</param>
+        /// <returns></returns>
+        public double Next(double upper)
+        {
+            Iteration++;
+            return prng.NextDouble() * upper;
         }
 
         /// <summary>
@@ -56,7 +106,7 @@ namespace FrEee.Utility
         /// <returns></returns>
         public int Range(int min, int max)
         {
-			Iteration++;
+            Iteration++;
             return prng.Next(min, max + 1);
         }
 
@@ -68,51 +118,15 @@ namespace FrEee.Utility
         /// <returns></returns>
         public long Range(long min, long max)
         {
-			// don't Iteration++ here; we're already calling Next
+            // don't Iteration++ here; we're already calling Next
             return Next(max - min + 1) + min;
         }
 
-        /// <summary>
-        /// Generates a random number >= 0 but less than the upper bound.
-        /// </summary>
-        /// <param name="upper">The upper bound.</param>
-        /// <returns></returns>
-        public double Next(double upper)
+        public override string ToString()
         {
-			Iteration++;
-            return prng.NextDouble() * upper;
+            return "Seed: " + Seed + ", Iteration: " + Iteration;
         }
 
-		public static bool operator ==(PRNG r1, PRNG r2)
-		{
-			if (r1.IsNull() && r2.IsNull())
-				return true;
-			if (r1.IsNull() || r2.IsNull())
-				return false;
-			return r1.Seed == r2.Seed && r1.Iteration == r2.Iteration;
-		}
-
-		public static bool operator !=(PRNG r1, PRNG r2)
-		{
-			return !(r1 == r2);
-		}
-
-		public override bool Equals(object obj)
-		{
-			// TODO - upgrade equals to use "as" operator
-			if (obj is PRNG)
-				return this == (PRNG)obj;
-			return false;
-		}
-
-		public override int GetHashCode()
-		{
-			return HashCodeMasher.Mash(Seed, Iteration);
-		}
-
-		public override string ToString()
-		{
-			return "Seed: " + Seed + ", Iteration: " + Iteration;
-		}
+        #endregion Public Methods
     }
 }

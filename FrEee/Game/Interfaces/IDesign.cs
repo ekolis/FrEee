@@ -1,136 +1,137 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Technology;
-using FrEee.Game.Objects.Vehicles;
-using FrEee.Modding.Templates;
-using FrEee.Utility;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace FrEee.Game.Interfaces
 {
-	/// <summary>
-	/// A vehicle design.
-	/// </summary>
-	public interface IDesign : INamed, IPictorial, IOwnableAbilityObject, IConstructionTemplate, IPromotable, IFoggable, IUpgradeable<IDesign>, ICleanable
-	{
-		/// <summary>
-		/// The base name of the design, without the iteration number.
-		/// </summary>
-		string BaseName { get; set; }
+    /// <summary>
+    /// A vehicle design.
+    /// </summary>
+    public interface IDesign : INamed, IPictorial, IOwnableAbilityObject, IConstructionTemplate, IPromotable, IFoggable, IUpgradeable<IDesign>, ICleanable
+    {
+        #region Public Properties
 
-		/// <summary>
-		/// The name of the design.
-		/// </summary>
-		new string Name { get; }
+        int Accuracy { get; }
 
-		/// <summary>
-		/// The empire which created this design.
-		/// </summary>
-		new Empire Owner { get; set; }
+        int ArmorHitpoints { get; }
 
-		/// <summary>
-		/// The vehicle's components.
-		/// </summary>
-		IList<MountedComponentTemplate> Components { get; }
+        /// <summary>
+        /// The base name of the design, without the iteration number.
+        /// </summary>
+        string BaseName { get; set; }
 
-		/// <summary>
-		/// The vehicle type.
-		/// </summary>
-		VehicleTypes VehicleType { get; }
+        int CargoCapacity { get; }
 
-		/// <summary>
-		/// The name of the vehicle type.
-		/// </summary>
-		string VehicleTypeName { get; }
+        int CargoStorage { get; }
 
-		/// <summary>
-		/// The vehicle's hull.
-		/// </summary>
-		IHull Hull { get; set; }
+        /// <summary>
+        /// The vehicle's components.
+        /// </summary>
+        IList<MountedComponentTemplate> Components { get; }
 
-		/// <summary>
-		/// The ship's role (design type in SE4).
-		/// </summary>
-		string Role { get; set; }
+        int Evasion { get; }
 
-		/// <summary>
-		/// The turn this design was created (for our designs) or discovered (for alien designs).
-		/// </summary>
-		int TurnNumber { get; set; }
+        /// <summary>
+        /// The vehicle's hull.
+        /// </summary>
+        IHull Hull { get; set; }
 
-		/// <summary>
-		/// Is this design obsolete?
-		/// Note that foreign designs will never be obsoleted, since you don't know when their owner obsoleted them.
-		/// </summary>
-		new bool IsObsolete { get; set; }
+        int HullHitpoints { get; }
 
-		/// <summary>
-		/// Warnings that need to be resolved before the design can be saved.
-		/// </summary>
-		IEnumerable<string> Warnings { get; }
+        /// <summary>
+        /// Is this a newly created design on the client side that needs to be sent to the server?
+        /// </summary>
+        bool IsNew { get; set; }
 
-		/// <summary>
-		/// Unused space on the design.
-		/// </summary>
-		int SpaceFree { get; }
+        /// <summary>
+        /// Is this design obsolete?
+        /// Note that foreign designs will never be obsoleted, since you don't know when their owner obsoleted them.
+        /// </summary>
+        new bool IsObsolete { get; set; }
 
-		/// <summary>
-		/// The movement speed of the design, in sectors per turn.
-		/// </summary>
-		int Speed { get; }
+        int Iteration { get; set; }
 
-		/// <summary>
-		/// Supply used for each sector of movement.
-		/// </summary>
-		int SupplyUsagePerSector { get; }
+        /// <summary>
+        /// The name of the design.
+        /// </summary>
+        new string Name { get; }
 
-		int ShieldHitpoints { get; }
+        /// <summary>
+        /// The empire which created this design.
+        /// </summary>
+        new Empire Owner { get; set; }
 
-		int ShieldRegeneration { get; }
+        /// <summary>
+        /// The ship's role (design type in SE4).
+        /// </summary>
+        string Role { get; set; }
 
-		int ArmorHitpoints { get; }
+        int ShieldHitpoints { get; }
 
-		int HullHitpoints { get; }
+        int ShieldRegeneration { get; }
 
-		int Accuracy { get; }
+        /// <summary>
+        /// Unused space on the design.
+        /// </summary>
+        int SpaceFree { get; }
 
-		int Evasion { get; }
+        /// <summary>
+        /// The movement speed of the design, in sectors per turn.
+        /// </summary>
+        int Speed { get; }
 
-		int CargoCapacity { get; }
+        int SupplyStorage { get; }
 
-		/// <summary>
-		/// Creates a command to create this design on the server.
-		/// </summary>
-		/// <returns></returns>
-		ICreateDesignCommand CreateCreationCommand();
+        /// <summary>
+        /// Supply used for each sector of movement.
+        /// </summary>
+        int SupplyUsagePerSector { get; }
 
-		/// <summary>
-		/// Creates an order to build this design.
-		/// </summary>
-		/// <returns></returns>
-		IConstructionOrder CreateConstructionOrder(ConstructionQueue queue);
+        /// <summary>
+        /// The turn this design was created (for our designs) or discovered (for alien designs).
+        /// </summary>
+        int TurnNumber { get; set; }
 
-		int VehiclesBuilt { get; set; }
+        int VehiclesBuilt { get; set; }
 
-		int SupplyStorage { get; }
+        /// <summary>
+        /// The vehicle type.
+        /// </summary>
+        VehicleTypes VehicleType { get; }
 
-		int CargoStorage { get; }
+        /// <summary>
+        /// The name of the vehicle type.
+        /// </summary>
+        string VehicleTypeName { get; }
 
-		int Iteration { get; set; }
+        /// <summary>
+        /// Warnings that need to be resolved before the design can be saved.
+        /// </summary>
+        IEnumerable<string> Warnings { get; }
 
-		IVehicle Instantiate();
+        #endregion Public Properties
 
-		/// <summary>
-		/// Is this a newly created design on the client side that needs to be sent to the server?
-		/// </summary>
-		bool IsNew { get; set; }
-	}
+        #region Public Methods
 
-	public interface IDesign<out T> : IDesign, IPictorial, IReferrable, IUpgradeable<IDesign<T>> where T : IVehicle
-	{
-		
-	}
+        /// <summary>
+        /// Creates an order to build this design.
+        /// </summary>
+        /// <returns></returns>
+        IConstructionOrder CreateConstructionOrder(ConstructionQueue queue);
+
+        /// <summary>
+        /// Creates a command to create this design on the server.
+        /// </summary>
+        /// <returns></returns>
+        ICreateDesignCommand CreateCreationCommand();
+
+        IVehicle Instantiate();
+
+        #endregion Public Methods
+    }
+
+    public interface IDesign<out T> : IDesign, IPictorial, IReferrable, IUpgradeable<IDesign<T>> where T : IVehicle
+    {
+    }
 }

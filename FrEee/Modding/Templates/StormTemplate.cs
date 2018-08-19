@@ -1,67 +1,71 @@
-﻿using FrEee.Game;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using FrEee.Game.Enumerations;
+﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
-using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using FrEee.Modding.Interfaces;
+using FrEee.Utility.Extensions;
+using System;
+using System.Linq;
 
 namespace FrEee.Modding.Templates
 {
-	/// <summary>
-	/// A template for generating storms.
-	/// </summary>
-	[Serializable]
-	public class StormTemplate : ITemplate<Storm>, IModObject
-	{
-		public string Name { get; set; }
+    /// <summary>
+    /// A template for generating storms.
+    /// </summary>
+    [Serializable]
+    public class StormTemplate : ITemplate<Storm>, IModObject
+    {
+        #region Public Properties
 
-		/// <summary>
-		/// Abilities to assign to the storm.
-		/// </summary>
-		public RandomAbilityTemplate Abilities { get; set; }
+        /// <summary>
+        /// Abilities to assign to the storm.
+        /// </summary>
+        public RandomAbilityTemplate Abilities { get; set; }
 
-		/// <summary>
-		/// The size of the storm, or null to choose a size randomly.
-		/// </summary>
-		public StellarSize? Size { get; set; }
+        public bool IsDisposed
+        {
+            get; private set;
+        }
 
-		public Storm Instantiate()
-		{
-			var candidates = Mod.Current.StellarObjectTemplates.OfType<Storm>();
-			if (Size != null)
-				candidates = candidates.Where(p => p.StellarSize == Size.Value);
-			if (!candidates.Any())
-				throw new Exception("No storms in SectType.txt of stellar size " + Size + "!");
+        public string ModID
+        {
+            get;
+            set;
+        }
 
-			var storm = candidates.PickRandom().Instantiate();
+        public string Name { get; set; }
 
-			var abil = Abilities.Instantiate();
-			if (abil != null)
-				storm.IntrinsicAbilities.Add(abil);
+        /// <summary>
+        /// The size of the storm, or null to choose a size randomly.
+        /// </summary>
+        public StellarSize? Size { get; set; }
 
-			return storm;
-		}
+        #endregion Public Properties
 
-		public string ModID
-		{
-			get;
-			set;
-		}
+        #region Public Methods
 
-		public bool IsDisposed
-		{
-			get; private set;
-		}
+        public void Dispose()
+        {
+            // TODO - remove it from somewhere?
+            IsDisposed = true;
+        }
 
-		public void Dispose()
-		{
-			// TODO - remove it from somewhere?
-			IsDisposed = true;
-		}
-	}
+        public Storm Instantiate()
+        {
+            var candidates = Mod.Current.StellarObjectTemplates.OfType<Storm>();
+            if (Size != null)
+                candidates = candidates.Where(p => p.StellarSize == Size.Value);
+            if (!candidates.Any())
+                throw new Exception("No storms in SectType.txt of stellar size " + Size + "!");
+
+            var storm = candidates.PickRandom().Instantiate();
+
+            var abil = Abilities.Instantiate();
+            if (abil != null)
+                storm.IntrinsicAbilities.Add(abil);
+
+            return storm;
+        }
+
+        #endregion Public Methods
+    }
 }

@@ -1,84 +1,86 @@
-﻿using FrEee.Game.Enumerations;
-using FrEee.Game.Objects.Combat;
-using FrEee.Modding;
+﻿using FrEee.Game.Objects.Combat;
 using FrEee.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace FrEee.Game.Interfaces
 {
-	/// <summary>
-	/// Something which can take damage.
-	/// </summary>
-	public interface IDamageable
-	{
-		/// <summary>
-		/// Current hitpoints.
-		/// </summary>
-		int Hitpoints { get; set; }
+    /// <summary>
+    /// Something which can take damage.
+    /// </summary>
+    public interface IDamageable
+    {
+        #region Public Properties
 
-		/// <summary>
-		/// Normal shield points.
-		/// </summary>
-		int NormalShields { get; set; }
+        int ArmorHitpoints { get; }
 
-		/// <summary>
-		/// Phased shield points.
-		/// </summary>
-		int PhasedShields { get; set; }
+        /// <summary>
+        /// The chance for this object to be hit relative to another object that could also be hit by the same shot.
+        /// </summary>
+        int HitChance { get; }
 
-		int MaxHitpoints { get; }
+        /// <summary>
+        /// Current hitpoints.
+        /// </summary>
+        int Hitpoints { get; set; }
 
-		int MaxNormalShields { get; }
+        int HullHitpoints { get; }
 
-		int MaxPhasedShields { get; }
+        /// <summary>
+        /// Is this object destroyed?
+        /// </summary>
+        bool IsDestroyed { get; }
 
-		int ShieldHitpoints { get; }
+        int MaxArmorHitpoints { get; }
 
-		int ArmorHitpoints { get; }
+        int MaxHitpoints { get; }
 
-		int HullHitpoints { get; }
+        int MaxHullHitpoints { get; }
 
-		int MaxShieldHitpoints { get; }
+        int MaxNormalShields { get; }
 
-		int MaxArmorHitpoints { get; }
+        int MaxPhasedShields { get; }
 
-		int MaxHullHitpoints { get; }
+        int MaxShieldHitpoints { get; }
 
-		/// <summary>
-		/// Replenishes normal and phased shields.
-		/// </summary>
-		/// <param name="amount">How many shields to replenish, or null to replenish all of them.</param>
-		void ReplenishShields(int? amount = null);
+        /// <summary>
+        /// Normal shield points.
+        /// </summary>
+        int NormalShields { get; set; }
 
-		/// <summary>
-		/// Replenishes HP.
-		/// If amount is are not specified, replenishes all HP.
-		/// Otherwise repair points have a different effect on different objects.
-		/// E.g. on a ship a repair point repairs 1 component while on a component a repair point replenishes 1 HP.
-		/// </summary>
-		/// <returns>The amount of unused repair points left over, or null for infinite.</returns>
-		int? Repair(int? amount = null);
+        /// <summary>
+        /// Phased shield points.
+        /// </summary>
+        int PhasedShields { get; set; }
 
-		/// <summary>
-		/// Takes damage.
-		/// </summary>
-		/// <param name="dmgType"></param>
-		/// <param name="damage"></param>
-		/// <param name="dice"></param>
-		/// <returns>Leftover damage.</returns>
-		int TakeDamage(Hit hit, PRNG dice = null);
+        int ShieldHitpoints { get; }
 
-		/// <summary>
-		/// Is this object destroyed?
-		/// </summary>
-		bool IsDestroyed { get; }
+        #endregion Public Properties
 
-		/// <summary>
-		/// The chance for this object to be hit relative to another object that could also be hit by the same shot.
-		/// </summary>
-		int HitChance { get; }
-	}
+        #region Public Methods
+
+        /// <summary>
+        /// Replenishes HP.
+        /// If amount is are not specified, replenishes all HP.
+        /// Otherwise repair points have a different effect on different objects.
+        /// E.g. on a ship a repair point repairs 1 component while on a component a repair point replenishes 1 HP.
+        /// </summary>
+        /// <returns>The amount of unused repair points left over, or null for infinite.</returns>
+        int? Repair(int? amount = null);
+
+        /// <summary>
+        /// Replenishes normal and phased shields.
+        /// </summary>
+        /// <param name="amount">How many shields to replenish, or null to replenish all of them.</param>
+        void ReplenishShields(int? amount = null);
+
+        /// <summary>
+        /// Takes damage.
+        /// </summary>
+        /// <param name="dmgType"></param>
+        /// <param name="damage"></param>
+        /// <param name="dice"></param>
+        /// <returns>Leftover damage.</returns>
+        int TakeDamage(Hit hit, PRNG dice = null);
+
+        #endregion Public Methods
+    }
 }
