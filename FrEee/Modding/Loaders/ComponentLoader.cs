@@ -121,9 +121,9 @@ namespace FrEee.Modding.Loaders
 						else
 							w.Targets = ParseWeaponTargets(rec.Get<string>("Weapon Target", c), @"\", rec);
 
-						w.MinRange = rec.Get<int>(new string[] { "Min Range", "Minimum Range" }, c) ?? 1;
-						w.MaxRange = rec.Get<int>(new string[] { "Max Range", "Maximum Range" }, c) ?? 20;
-						var dmgfield = rec.FindField(new string[] { "Damage", "Weapon Damage", "Damage At Rng", "Weapon Damage At Rng" }, ref index);
+						w.MinRange = rec.Get<int>(new string[] { "Min Range", "Minimum Range", "Weapon Min Range", "Weapon Minimum Range" }, c) ?? 1;
+						w.MaxRange = rec.Get<int>(new string[] { "Max Range", "Maximum Range", "Weapon Max Range", "Weapon Maximum Range" }, c) ?? 20;
+						var dmgfield = rec.FindField(new string[] { "Damage", "Weapon Damage", "Damage At Rng", "Weapon Damage At Rng", "Damage At Range", "Weapon Damage At Range" }, ref index);
 						if (dmgfield.Value.StartsWith("="))
 							w.Damage = dmgfield.CreateFormula<int>(c);
 						else
