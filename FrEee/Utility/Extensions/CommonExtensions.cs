@@ -25,7 +25,6 @@ using FrEee.Modding.Interfaces;
 using FrEee.Modding.Enumerations;
 using System.Text.RegularExpressions;
 using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
-using NewtMath.f16;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Combat;
 using System.Threading.Tasks;
