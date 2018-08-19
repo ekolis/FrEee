@@ -159,6 +159,9 @@
     <Content Include="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeStations.txt" />
     <Content Include="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeTransports.txt" />
     <Content Include="Mods\Include Mod\Data\VehicleSize.txt" />
+    <Content Include="Mods\WeaponInfoTest\Data\Components.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
