@@ -1,383 +1,398 @@
+using FrEee.Game.Enumerations;
+using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Abilities;
+using FrEee.Game.Objects.Civilization;
+using FrEee.Modding;
+using FrEee.Modding.Templates;
+using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using FrEee.Game.Enumerations;
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Abilities;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Utility;
-using FrEee.Utility.Extensions;
-using FrEee.Modding.Templates;
 using System.Reflection;
-using FrEee.Game.Objects.Vehicles;
-using FrEee.Game.Objects.Combat;
-using FrEee.Modding;
 
 namespace FrEee.Game.Objects.Space
 {
-	/// <summary>
-	/// A star system containing a grid of sectors.
-	/// Is always square and always has an odd number of sectors across.
-	/// </summary>
-	[Serializable]
-	public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObject, IAbilityContainer
-	{
-		/// <summary>
-		/// Creates a star system.
-		/// </summary>
-		/// <param name="radius">The number of sectors counting outward from the center to the edge.</param>
-		public StarSystem(int radius)
-		{
-			Radius = radius;
-			Abilities = new List<Ability>();
-			SpaceObjectLocations = new HashSet<ObjectLocation<ISpaceObject>>();
-			ExploredByEmpires = new HashSet<Empire>();
-		}
+    /// <summary>
+    /// A star system containing a grid of sectors.
+    /// Is always square and always has an odd number of sectors across.
+    /// </summary>
+    [Serializable]
+    public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObject, IAbilityContainer
+    {
+        #region Public Constructors
 
-		/// <summary>
-		/// The name of this star system.
-		/// </summary>
-		public string Name { get; set; }
+        /// <summary>
+        /// Creates a star system.
+        /// </summary>
+        /// <param name="radius">The number of sectors counting outward from the center to the edge.</param>
+        public StarSystem(int radius)
+        {
+            Radius = radius;
+            Abilities = new List<Ability>();
+            SpaceObjectLocations = new HashSet<ObjectLocation<ISpaceObject>>();
+            ExploredByEmpires = new HashSet<Empire>();
+        }
 
-		/// <summary>
-		/// The number of sectors counting outward from the center to the edge.
-		/// </summary>
-		public int Radius { get; private set; }
+        #endregion Public Constructors
 
-		/// <summary>
-		/// The description of this star system.
-		/// </summary>
-		public string Description { get; set; }
+        #region Public Properties
 
-		/// <summary>
-		/// The path to the background image, relative to Pictures/Systems.
-		/// </summary>
-		public string BackgroundImagePath { get; set; }
+        /// <summary>
+        /// Any special abilities possessed by this star system.
+        /// </summary>
+        public IList<Ability> Abilities { get; private set; }
 
-		public IEnumerable<string> PortraitPaths
-		{
-			get
-			{
-				yield return Path.Combine("Systems", BackgroundImagePath);
-			}
-		}
+        public AbilityTargets AbilityTarget
+        {
+            get { return AbilityTargets.StarSystem; }
+        }
 
-		public IEnumerable<string> IconPaths
-		{
-			get
-			{
-				return PortraitPaths;
-			}
-		}
+        public Image BackgroundImage
+        {
+            get
+            {
+                if (BackgroundImagePath == null)
+                    return null;
+                return Pictures.GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Systems", BackgroundImagePath));
+            }
+        }
 
-		public Image BackgroundImage
-		{
-			get
-			{
-				if (BackgroundImagePath == null)
-					return null;
-				return Pictures.GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Systems", BackgroundImagePath));
-			}
-		}
+        /// <summary>
+        /// The path to the background image, relative to Pictures/Systems.
+        /// </summary>
+        public string BackgroundImagePath { get; set; }
 
-		/// <summary>
-		/// If true, empire homeworlds can be located in this system.
-		/// </summary>
-		public bool EmpiresCanStartIn { get; set; }
+        public IEnumerable<IAbilityObject> Children
+        {
+            get
+            {
+                foreach (var l in SpaceObjectLocations)
+                    yield return l.Item;
+            }
+        }
 
-		/// <summary>
-		/// If true, the background image for this system will be centered, not tiled, in combat.
-		/// </summary>
-		public bool NonTiledCenterCombatImage { get; set; }
+        public Point Coordinates
+        {
+            get
+            {
+                return Location.Location;
+            }
+        }
 
-		/// <summary>
-		/// Any special abilities possessed by this star system.
-		/// </summary>
-		public IList<Ability> Abilities { get; private set; }
+        /// <summary>
+        /// The description of this star system.
+        /// </summary>
+        public string Description { get; set; }
 
-		/// <summary>
-		/// Abilities for random warp points that appear in this system.
-		/// </summary>
-		[DoNotSerialize]
-		public RandomAbilityTemplate WarpPointAbilities { get { return warpPointAbilities; } set { warpPointAbilities = value; } }
-		private ModReference<RandomAbilityTemplate> warpPointAbilities { get; set; }
+        /// <summary>
+        /// The number of sectors across the star system.
+        /// </summary>
+        public int Diameter
+        {
+            get { return Math.Max(0, Radius * 2 + 1); }
+        }
 
-		/// <summary>
-		/// The number of sectors across the star system.
-		/// </summary>
-		public int Diameter
-		{
-			get { return Math.Max(0, Radius * 2 + 1); }
-		}
+        /// <summary>
+        /// If true, empire homeworlds can be located in this system.
+        /// </summary>
+        public bool EmpiresCanStartIn { get; set; }
 
-		public bool AreCoordsInBounds(int x, int y)
-		{
-			return x >= -Radius && x <= Radius && y >= -Radius && y <= Radius;
-		}
+        /// <summary>
+        /// Empires which have explored this star system.
+        /// </summary>
+        public ICollection<Empire> ExploredByEmpires { get; private set; }
 
-		public bool AreCoordsInBounds(Point p)
-		{
-			return AreCoordsInBounds(p.X, p.Y);
-		}
+        public Image Icon
+        {
+            get { return BackgroundImage; }
+        }
 
-		/// <summary>
-		/// The space objects contained in this star system.
-		/// </summary>
-		public ICollection<ObjectLocation<ISpaceObject>> SpaceObjectLocations { get; private set; }
+        public IEnumerable<string> IconPaths
+        {
+            get
+            {
+                return PortraitPaths;
+            }
+        }
 
-		/// <summary>
-		/// Searches for space objects matching criteria.
-		/// </summary>
-		/// <typeparam name="T">The type of space object.</typeparam>
-		/// <param name="criteria">The criteria.</param>
-		/// <returns>The matching space objects.</returns>
-		public IEnumerable<T> FindSpaceObjects<T>(Func<T, bool> criteria = null)
-		{
-			return SpaceObjectLocations.Select(l => l.Item).OfType<T>().Where(l => criteria == null || criteria(l));
-		}
+        public long ID
+        {
+            get;
+            set;
+        }
 
-		public bool Contains(ISpaceObject sobj)
-		{
-			return SpaceObjectLocations.Any(l => l.Item == sobj);
-		}
+        public IEnumerable<Ability> IntrinsicAbilities
+        {
+            get { return Abilities; }
+        }
 
-		public Point FindCoordinates(ISpaceObject sobj)
-		{
-			try
-			{
-				return SpaceObjectLocations.Single(l => l.Item == sobj).Location;
-			}
-			catch (Exception ex)
-			{
-				throw new Exception("Can't find coordinates of " + sobj + " in " + this + ".", ex);
-			}
-		}
+        public bool IsDisposed { get; set; }
 
-		/// <summary>
-		/// Empires which have explored this star system.
-		/// </summary>
-		public ICollection<Empire> ExploredByEmpires { get; private set; }
+        public bool IsMemory
+        {
+            get;
+            set;
+        }
 
-		/// <summary>
-		/// Removes any space objects, etc. that the current empire cannot see.
-		/// </summary>
-		/// <param name="galaxy">The galaxy, for context.</param>
-		public void Redact(Empire emp)
-		{
-			// hide explored-by empires
-			foreach (var e in ExploredByEmpires.Where(e => e != emp).ToArray())
-				ExploredByEmpires.Remove(e);
+        public ObjectLocation<StarSystem> Location
+        {
+            get
+            {
+                try
+                {
+                    return Galaxy.Current.StarSystemLocations.Single(l => l.Item == this);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    throw new InvalidOperationException(this + " does not appear to be located anywhere on the galaxy map, or it has multiple locations.", ex);
+                }
+            }
+        }
 
-			// hide background image and description (so player can't see what kind of system it is) and name and abilities
-			if (!ExploredByEmpires.Contains(emp))
-			{
-				BackgroundImagePath = null;
-				Name = "(Unexplored)";
-				Description = "An unexplored star system. Who knows what lies in wait here?";
-				Abilities.Clear();
-			}
-		}
+        /// <summary>
+        /// The name of this star system.
+        /// </summary>
+        public string Name { get; set; }
 
-		public override string ToString()
-		{
-			return Name;
-		}
+        /// <summary>
+        /// If true, the background image for this system will be centered, not tiled, in combat.
+        /// </summary>
+        public bool NonTiledCenterCombatImage { get; set; }
 
-		/// <summary>
-		/// Do any of the empire's space objects in this system have an ability?
-		/// </summary>
-		/// <param name="emp"></param>
-		/// <param name="name"></param>
-		/// <param name="index"></param>
-		/// <param name="filter"></param>
-		/// <returns></returns>
-		public bool HasAbility(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
-		{
-			return FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).SelectMany(o => o.UnstackedAbilities()).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Any();
-		}
+        /// <summary>
+        /// Star systems are not owned, per se.
+        /// </summary>
+        public Empire Owner
+        {
+            get { return null; }
+        }
 
-		/// <summary>
-		/// Do any of the empire's space objects in a sector have an ability?
-		/// </summary>
-		/// <param name="emp"></param>
-		/// <param name="name"></param>
-		/// <param name="index"></param>
-		/// <param name="filter"></param>
-		/// <returns></returns>
-		public bool DoesSectorHaveAbility(Point coords, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
-		{
-			var sobjs = FindSpaceObjects<ISpaceObject>().Where(o => o.Owner == emp && o.FindCoordinates() == coords);
-			return sobjs.SelectMany(o => o.UnstackedAbilities()).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Any();
-		}
+        public IEnumerable<IAbilityObject> Parents
+        {
+            get
+            {
+                yield return Galaxy.Current;
+            }
+        }
 
-		public Visibility CheckVisibility(Empire emp)
-		{
-			if (FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp && !sobj.IsMemory).Any())
-				return Visibility.Visible;
-			else if (emp.ExploredStarSystems.Contains(this))
-				return Visibility.Fogged;
-			return Visibility.Unknown;
-		}
+        public Image Portrait
+        {
+            get { return BackgroundImage; }
+        }
 
-		public long ID
-		{
-			get;
-			set;
-		}
+        public IEnumerable<string> PortraitPaths
+        {
+            get
+            {
+                yield return Path.Combine("Systems", BackgroundImagePath);
+            }
+        }
 
-		public void Dispose()
-		{
-			if (IsDisposed)
-				return;
-			if (IsDisposed)
-				return;
-			Galaxy.Current.UnassignID(this);
-			if (!IsMemory)
-				this.UpdateEmpireMemories();
-		}
+        /// <summary>
+        /// The number of sectors counting outward from the center to the edge.
+        /// </summary>
+        public int Radius { get; private set; }
 
-		/// <summary>
-		/// Star systems are not owned, per se.
-		/// </summary>
-		public Empire Owner
-		{
-			get { return null; }
-		}
+        public IEnumerable<Sector> Sectors
+        {
+            get
+            {
+                for (var x = -Radius; x <= Radius; x++)
+                {
+                    for (var y = -Radius; y <= Radius; y++)
+                    {
+                        yield return new Sector(this, new Point(x, y));
+                    }
+                }
+            }
+        }
 
-		public void Place(ISpaceObject sobj, Point coords)
-		{
-			var sys = sobj.FindStarSystem();
-			if (sys != null)
-			{
-				sys.Remove(sobj);
-				sobj.Sector = null;
-			}
-			else
-				sobj.Sector = new Sector(this, coords);
+        /// <summary>
+        /// The space objects contained in this star system.
+        /// </summary>
+        public ICollection<ObjectLocation<ISpaceObject>> SpaceObjectLocations { get; private set; }
 
-			SpaceObjectLocations.Add(new ObjectLocation<ISpaceObject>(sobj, coords));
+        public IEnumerable<ISpaceObject> SpaceObjects { get { return FindSpaceObjects<ISpaceObject>(); } }
 
-			// see if we got hit by a minefield
-			sobj.DealWithMines();
-		}
+        public double Timestamp { get; set; }
 
-		public void Remove(ISpaceObject sobj)
-		{
-			foreach (var l in SpaceObjectLocations.ToArray())
-			{
-				if (l.Item == sobj)
-					SpaceObjectLocations.Remove(l);
-			}
-		}
+        /// <summary>
+        /// Abilities for random warp points that appear in this system.
+        /// </summary>
+        [DoNotSerialize]
+        public RandomAbilityTemplate WarpPointAbilities { get { return warpPointAbilities; } set { warpPointAbilities = value; } }
 
-		public Sector GetSector(int x, int y)
-		{
-			return GetSector(new Point(x, y));
-		}
+        #endregion Public Properties
 
-		public Sector GetSector(Point p)
-		{
-			if (!AreCoordsInBounds(p))
-				throw new Exception("Sector coordinates (" + p.X + ", " + p.Y + ") are out of bounds for star system of radius " + Radius + ".");
-			return new Sector(this, p);
-		}
+        #region Private Properties
 
-		public IEnumerable<Sector> Sectors
-		{
-			get
-			{
-				for (var x = -Radius; x <= Radius; x++)
-				{
-					for (var y = -Radius; y <= Radius; y++)
-					{
-						yield return new Sector(this, new Point(x, y));
-					}
-				}
-			}
-		}
+        private ModReference<RandomAbilityTemplate> warpPointAbilities { get; set; }
 
-		public Image Icon
-		{
-			get { return BackgroundImage; }
-		}
+        #endregion Private Properties
 
-		public Image Portrait
-		{
-			get { return BackgroundImage; }
-		}
+        #region Public Methods
 
-		public bool IsMemory
-		{
-			get;
-			set;
-		}
+        public bool AreCoordsInBounds(int x, int y)
+        {
+            return x >= -Radius && x <= Radius && y >= -Radius && y <= Radius;
+        }
 
-		public double Timestamp { get; set; }
+        public bool AreCoordsInBounds(Point p)
+        {
+            return AreCoordsInBounds(p.X, p.Y);
+        }
 
-		public bool IsObsoleteMemory(Empire emp)
-		{
-			return CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
-		}
+        public Visibility CheckVisibility(Empire emp)
+        {
+            if (FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp && !sobj.IsMemory).Any())
+                return Visibility.Visible;
+            else if (emp.ExploredStarSystems.Contains(this))
+                return Visibility.Fogged;
+            return Visibility.Unknown;
+        }
 
-		public AbilityTargets AbilityTarget
-		{
-			get { return AbilityTargets.StarSystem; }
-		}
+        public bool Contains(ISpaceObject sobj)
+        {
+            return SpaceObjectLocations.Any(l => l.Item == sobj);
+        }
 
-		public IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp)
-		{
-			return SpaceObjectLocations.Select(l => l.Item).Where(sobj => sobj.Owner == emp).OfType<IAbilityObject>();
-		}
+        public void Dispose()
+        {
+            if (IsDisposed)
+                return;
+            if (IsDisposed)
+                return;
+            Galaxy.Current.UnassignID(this);
+            if (!IsMemory)
+                this.UpdateEmpireMemories();
+        }
 
-		public IEnumerable<Ability> IntrinsicAbilities
-		{
-			get { return Abilities; }
-		}
+        /// <summary>
+        /// Do any of the empire's space objects in a sector have an ability?
+        /// </summary>
+        /// <param name="emp"></param>
+        /// <param name="name"></param>
+        /// <param name="index"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public bool DoesSectorHaveAbility(Point coords, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
+        {
+            var sobjs = FindSpaceObjects<ISpaceObject>().Where(o => o.Owner == emp && o.FindCoordinates() == coords);
+            return sobjs.SelectMany(o => o.UnstackedAbilities()).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Any();
+        }
 
-		public IEnumerable<IAbilityObject> Children
-		{
-			get
-			{
-				foreach (var l in SpaceObjectLocations)
-					yield return l.Item;
-			}
-		}
+        public Point FindCoordinates(ISpaceObject sobj)
+        {
+            try
+            {
+                return SpaceObjectLocations.Single(l => l.Item == sobj).Location;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Can't find coordinates of " + sobj + " in " + this + ".", ex);
+            }
+        }
 
-		public IEnumerable<IAbilityObject> Parents
-		{
-			get
-			{
-				yield return Galaxy.Current;
-			}
-		}
+        /// <summary>
+        /// Searches for space objects matching criteria.
+        /// </summary>
+        /// <typeparam name="T">The type of space object.</typeparam>
+        /// <param name="criteria">The criteria.</param>
+        /// <returns>The matching space objects.</returns>
+        public IEnumerable<T> FindSpaceObjects<T>(Func<T, bool> criteria = null)
+        {
+            return SpaceObjectLocations.Select(l => l.Item).OfType<T>().Where(l => criteria == null || criteria(l));
+        }
 
-		public bool IsDisposed { get; set; }
+        public IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp)
+        {
+            return SpaceObjectLocations.Select(l => l.Item).Where(sobj => sobj.Owner == emp).OfType<IAbilityObject>();
+        }
 
-		public ObjectLocation<StarSystem> Location
-		{
-			get
-			{
-				try
-				{
-					return Galaxy.Current.StarSystemLocations.Single(l => l.Item == this);
-				}
-				catch (InvalidOperationException ex)
-				{
-					throw new InvalidOperationException(this + " does not appear to be located anywhere on the galaxy map, or it has multiple locations.", ex);
-				}
-			}
-		}
+        public Sector GetSector(int x, int y)
+        {
+            return GetSector(new Point(x, y));
+        }
 
-		public Point Coordinates
-		{
-			get
-			{
-				return Location.Location;
-			}
-		}
+        public Sector GetSector(Point p)
+        {
+            if (!AreCoordsInBounds(p))
+                throw new Exception("Sector coordinates (" + p.X + ", " + p.Y + ") are out of bounds for star system of radius " + Radius + ".");
+            return new Sector(this, p);
+        }
 
-		public IEnumerable<ISpaceObject> SpaceObjects { get { return FindSpaceObjects<ISpaceObject>(); } }
-	}
+        /// <summary>
+        /// Do any of the empire's space objects in this system have an ability?
+        /// </summary>
+        /// <param name="emp"></param>
+        /// <param name="name"></param>
+        /// <param name="index"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public bool HasAbility(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
+        {
+            return FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).SelectMany(o => o.UnstackedAbilities()).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Any();
+        }
+
+        public bool IsObsoleteMemory(Empire emp)
+        {
+            return CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+        }
+
+        public void Place(ISpaceObject sobj, Point coords)
+        {
+            var sys = sobj.FindStarSystem();
+            if (sys != null)
+            {
+                sys.Remove(sobj);
+                sobj.Sector = null;
+            }
+            else
+                sobj.Sector = new Sector(this, coords);
+
+            SpaceObjectLocations.Add(new ObjectLocation<ISpaceObject>(sobj, coords));
+
+            // see if we got hit by a minefield
+            sobj.DealWithMines();
+        }
+
+        /// <summary>
+        /// Removes any space objects, etc. that the current empire cannot see.
+        /// </summary>
+        /// <param name="galaxy">The galaxy, for context.</param>
+        public void Redact(Empire emp)
+        {
+            // hide explored-by empires
+            foreach (var e in ExploredByEmpires.Where(e => e != emp).ToArray())
+                ExploredByEmpires.Remove(e);
+
+            // hide background image and description (so player can't see what kind of system it is) and name and abilities
+            if (!ExploredByEmpires.Contains(emp))
+            {
+                BackgroundImagePath = null;
+                Name = "(Unexplored)";
+                Description = "An unexplored star system. Who knows what lies in wait here?";
+                Abilities.Clear();
+            }
+        }
+
+        public void Remove(ISpaceObject sobj)
+        {
+            foreach (var l in SpaceObjectLocations.ToArray())
+            {
+                if (l.Item == sobj)
+                    SpaceObjectLocations.Remove(l);
+            }
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        #endregion Public Methods
+    }
 }

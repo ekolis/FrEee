@@ -7,25 +7,7 @@ namespace FrEee.Utility.Extensions
 {
     public static class TaskFactoryExtensions
     {
-        public static Task StartNewWithExceptionHandling(this TaskFactory taskFactory, Action action)
-        {
-            return taskFactory.StartNew(action).ContinueWith(CheckForExceptions);
-        }
-
-        public static Task<TResult> StartNewWithExceptionHandling<TResult>(this TaskFactory taskFactory, Func<TResult> action)
-        {
-            return taskFactory.StartNew<TResult>(action).ContinueWith<TResult>(CheckForExceptions);
-        }
-
-        public static Task StartNewWithExceptionHandling(this TaskFactory taskFactory, Action<object> action, object state)
-        {
-            return taskFactory.StartNew(action, state).ContinueWith(CheckForExceptions);
-        }
-
-        public static Task<TResult> StartNewWithExceptionHandling<TResult>(this TaskFactory taskFactory, Func<object, TResult> action, object state)
-        {
-            return taskFactory.StartNew<TResult>(action, state).ContinueWith<TResult>(CheckForExceptions);
-        }
+        #region Public Methods
 
         public static Task ContinueWithWithExceptionHandling(this Task task, Action<Task> action)
         {
@@ -52,6 +34,30 @@ namespace FrEee.Utility.Extensions
             task.ContinueWith<TInput>(CheckForExceptions).ContinueWith(action, scheduler);
         }
 
+        public static Task StartNewWithExceptionHandling(this TaskFactory taskFactory, Action action)
+        {
+            return taskFactory.StartNew(action).ContinueWith(CheckForExceptions);
+        }
+
+        public static Task<TResult> StartNewWithExceptionHandling<TResult>(this TaskFactory taskFactory, Func<TResult> action)
+        {
+            return taskFactory.StartNew<TResult>(action).ContinueWith<TResult>(CheckForExceptions);
+        }
+
+        public static Task StartNewWithExceptionHandling(this TaskFactory taskFactory, Action<object> action, object state)
+        {
+            return taskFactory.StartNew(action, state).ContinueWith(CheckForExceptions);
+        }
+
+        public static Task<TResult> StartNewWithExceptionHandling<TResult>(this TaskFactory taskFactory, Func<object, TResult> action, object state)
+        {
+            return taskFactory.StartNew<TResult>(action, state).ContinueWith<TResult>(CheckForExceptions);
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
         private static void CheckForExceptions(Task task)
         {
             if (task.Exception != null)
@@ -77,5 +83,7 @@ namespace FrEee.Utility.Extensions
 
             return task.Result;
         }
+
+        #endregion Private Methods
     }
 }

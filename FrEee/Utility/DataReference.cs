@@ -1,114 +1,125 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FrEee.Game.Interfaces;
+﻿using FrEee.Game.Interfaces;
 using FrEee.Utility.Extensions;
-using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 
 namespace FrEee.Utility
 {
-	public class DataReference<T> : IDataReference, IReference<T>
-	{
-		public DataReference()
-		{
-			Context = new ObjectGraphContext();
-		}
+    public interface IDataReference : IData
+    {
+        #region Public Properties
 
-		public DataReference(ObjectGraphContext ctx, T t = default(T))
-		{
-			Context = ctx;
-			Value = t;
-		}
+        ObjectGraphContext Context { get; set; }
+        int ID { get; set; }
 
-		public DataReference(ObjectGraphContext ctx, int id = -1)
-		{
-			Context = ctx;
-			ID = id;
-		}
+        #endregion Public Properties
+    }
 
-		[JsonIgnore]
-		public ObjectGraphContext Context { get; set; }
+    public class DataReference<T> : IDataReference, IReference<T>
+    {
+        #region Public Constructors
 
-		public string Data
-		{
-			get; set;
-		}
+        public DataReference()
+        {
+            Context = new ObjectGraphContext();
+        }
 
-		[JsonIgnore]
-		public int ID
-		{
-			get
-			{
-				return int.Parse(Data);
-			}
-			set
-			{
-				Data = value.ToString();
-			}
-		}
+        public DataReference(ObjectGraphContext ctx, T t = default(T))
+        {
+            Context = ctx;
+            Value = t;
+        }
 
-		public bool HasValue
-		{
-			get
-			{
-				var maxid = Context.KnownObjects[typeof(T)].Count - 1;
-				return ID <= maxid;
-			}
-		}
+        public DataReference(ObjectGraphContext ctx, int id = -1)
+        {
+            Context = ctx;
+            ID = id;
+        }
 
-		[JsonIgnore]
-		public T Value
-		{
-			get
-			{
-				var kobjs = Context.KnownObjects[typeof(T)];
-				if (kobjs == null)
-					kobjs = Context.KnownObjects[typeof(T)] = new List<object>();
-				if (kobjs.Count > ID)
-					return (T)kobjs[ID];
-				else if (kobjs.Count == ID)
-				{
-					var o = typeof(T).Instantiate();
-					Context.Add(o);
-					return (T)o;
-				}
-				else
-					throw new Exception($"Too high ID {ID} specified for object of type {typeof(T)}; there are not enough objects.");
-			}
-			set
-			{
-				if (Context.GetID(value) == null)
-					ID = Context.Add(value);
-			}
-		}
+        #endregion Public Constructors
 
-		object IData.Value
-		{
-			get
-			{
-				return Value;
-			}
-		}
+        #region Public Properties
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
-		{
-			// nothing to do here, this is just used for serialization and such
-		}
+        [JsonIgnore]
+        public ObjectGraphContext Context { get; set; }
 
-		public static implicit operator T(DataReference<T> reference)
-		{
-			return reference.Value;
-		}
+        public string Data
+        {
+            get; set;
+        }
 
-		// can't implicitly convert objects to references because we need a object graph context
-	}
+        public bool HasValue
+        {
+            get
+            {
+                var maxid = Context.KnownObjects[typeof(T)].Count - 1;
+                return ID <= maxid;
+            }
+        }
 
-	public interface IDataReference : IData
-	{
-		int ID { get; set; }
+        [JsonIgnore]
+        public int ID
+        {
+            get
+            {
+                return int.Parse(Data);
+            }
+            set
+            {
+                Data = value.ToString();
+            }
+        }
 
-		ObjectGraphContext Context { get; set; }
-	}
+        [JsonIgnore]
+        public T Value
+        {
+            get
+            {
+                var kobjs = Context.KnownObjects[typeof(T)];
+                if (kobjs == null)
+                    kobjs = Context.KnownObjects[typeof(T)] = new List<object>();
+                if (kobjs.Count > ID)
+                    return (T)kobjs[ID];
+                else if (kobjs.Count == ID)
+                {
+                    var o = typeof(T).Instantiate();
+                    Context.Add(o);
+                    return (T)o;
+                }
+                else
+                    throw new Exception($"Too high ID {ID} specified for object of type {typeof(T)}; there are not enough objects.");
+            }
+            set
+            {
+                if (Context.GetID(value) == null)
+                    ID = Context.Add(value);
+            }
+        }
+
+        object IData.Value
+        {
+            get
+            {
+                return Value;
+            }
+        }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        public static implicit operator T(DataReference<T> reference)
+        {
+            return reference.Value;
+        }
+
+        public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+        {
+            // nothing to do here, this is just used for serialization and such
+        }
+
+        #endregion Public Methods
+
+        // can't implicitly convert objects to references because we need a object graph context
+    }
 }

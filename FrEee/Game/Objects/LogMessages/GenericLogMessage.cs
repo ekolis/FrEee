@@ -1,27 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace FrEee.Game.Objects.LogMessages
 {
-	/// <summary>
-	/// A generic text log message with no picture.
-	/// </summary>
-	[Serializable]
-	public class GenericLogMessage : LogMessage
-	{
-		public GenericLogMessage(string text)
-			: base(text)
-		{
-		}
+    /// <summary>
+    /// A generic text log message with no picture.
+    /// </summary>
+    [Serializable]
+    public class GenericLogMessage : LogMessage
+    {
+        #region Public Constructors
 
-		public GenericLogMessage(string text, int turn) : base(text, turn)
-		{ }
+        public GenericLogMessage(string text)
+            : base(text)
+        {
+        }
 
-		public override System.Drawing.Image Picture
-		{
-			get { return null; }
-		}
-	}
+        public GenericLogMessage(string text, int turn) : base(text, turn)
+        { }
+
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        public override System.Drawing.Image Picture
+        {
+            get { return null; }
+        }
+
+        #endregion Public Properties
+    }
 }

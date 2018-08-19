@@ -1,28 +1,28 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.LogMessages;
-using FrEee.Game.Objects.Space;
-using FrEee.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using FrEee.Game.Objects.Space;
 
 namespace FrEee.Game.Objects.Commands
 {
-	/// <summary>
-	/// A command to disband a fleet.
-	/// </summary>
-	public class DisbandFleetCommand : Command<Fleet>
-	{
-		public DisbandFleetCommand(Fleet fleet)
-			: base(fleet)
-		{
-		}
+    /// <summary>
+    /// A command to disband a fleet.
+    /// </summary>
+    public class DisbandFleetCommand : Command<Fleet>
+    {
+        #region Public Constructors
 
-		public override void Execute()
-		{
-			Executor.Dispose();
-		}
-	}
+        public DisbandFleetCommand(Fleet fleet)
+            : base(fleet)
+        {
+        }
+
+        #endregion Public Constructors
+
+        #region Public Methods
+
+        public override void Execute()
+        {
+            Executor.Dispose();
+        }
+
+        #endregion Public Methods
+    }
 }

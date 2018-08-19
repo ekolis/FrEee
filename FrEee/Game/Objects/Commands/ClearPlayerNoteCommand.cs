@@ -1,33 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using FrEee.Game.Interfaces;
+﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 
 namespace FrEee.Game.Objects.Commands
 {
-	/// <summary>
-	/// Clears a player note.
-	/// </summary>
-	public class ClearPlayerNoteCommand : Command<Empire>
-	{
-		public ClearPlayerNoteCommand(IReferrable target)
-			: base(Empire.Current)
-		{
-			Target = target;
-		}
+    /// <summary>
+    /// Clears a player note.
+    /// </summary>
+    public class ClearPlayerNoteCommand : Command<Empire>
+    {
+        #region Public Constructors
 
-		[DoNotSerialize]
-		public IReferrable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
+        public ClearPlayerNoteCommand(IReferrable target)
+            : base(Empire.Current)
+        {
+            Target = target;
+        }
 
-		private GalaxyReference<IReferrable> target { get; set; }
+        #endregion Public Constructors
 
-		public override void Execute()
-		{
-			Executor.PlayerNotes.Remove(target);
-		}
-	}
+        #region Public Properties
+
+        [DoNotSerialize]
+        public IReferrable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
+
+        #endregion Public Properties
+
+        #region Private Properties
+
+        private GalaxyReference<IReferrable> target { get; set; }
+
+        #endregion Private Properties
+
+        #region Public Methods
+
+        public override void Execute()
+        {
+            Executor.PlayerNotes.Remove(target);
+        }
+
+        #endregion Public Methods
+    }
 }

@@ -1,46 +1,54 @@
 ﻿using FrEee.Game.Objects.Civilization;
-using FrEee.Utility;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace FrEee.Game.Interfaces
 {
-	/// <summary>
-	/// A command to some object.
-	/// Commands are distinguished from orders by being instantaneous, rather than queued.
-	/// </summary>
-	public interface ICommand : IPromotable
-	{
-		/// <summary>
-		/// The empire issuing the command.
-		/// </summary>
-		Empire Issuer { get; }
+    /// <summary>
+    /// A command to some object.
+    /// Commands are distinguished from orders by being instantaneous, rather than queued.
+    /// </summary>
+    public interface ICommand : IPromotable
+    {
+        #region Public Properties
 
-		/// <summary>
-		/// Executes the command.
-		/// </summary>
-		void Execute();
+        IReferrable Executor { get; }
 
-		/// <summary>
-		/// Any new (from the client) objects referred to by this command.
-		/// </summary>
-		IEnumerable<IReferrable> NewReferrables { get; }
+        long ExecutorID { get; }
 
-		IReferrable Executor { get; }
+        /// <summary>
+        /// The empire issuing the command.
+        /// </summary>
+        Empire Issuer { get; }
 
-		long ExecutorID { get; }
-	}
+        /// <summary>
+        /// Any new (from the client) objects referred to by this command.
+        /// </summary>
+        IEnumerable<IReferrable> NewReferrables { get; }
 
-	/// <summary>
-	/// A command to some object.
-	/// </summary>
-	public interface ICommand<T> : ICommand where T : IReferrable
-	{
-		/// <summary>
-		/// The object whose queue is being manipulated.
-		/// </summary>
-		new T Executor { get; set; }
-	}
+        #endregion Public Properties
+
+        #region Public Methods
+
+        /// <summary>
+        /// Executes the command.
+        /// </summary>
+        void Execute();
+
+        #endregion Public Methods
+    }
+
+    /// <summary>
+    /// A command to some object.
+    /// </summary>
+    public interface ICommand<T> : ICommand where T : IReferrable
+    {
+        #region Public Properties
+
+        /// <summary>
+        /// The object whose queue is being manipulated.
+        /// </summary>
+        new T Executor { get; set; }
+
+        #endregion Public Properties
+    }
 }

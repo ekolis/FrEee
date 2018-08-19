@@ -1,25 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FrEee.Game.Interfaces;
+﻿using FrEee.Game.Interfaces;
 using FrEee.Utility;
 
 namespace FrEee.Game.Objects.Combat.Grid
 {
-	public class CombatantAppearsEvent : IBattleEvent
-	{
-		public CombatantAppearsEvent(ICombatant combatant, IntVector2 position)
-		{
-			Combatant = combatant;
-			StartPosition = EndPosition = position;
-		}
+    public class CombatantAppearsEvent : IBattleEvent
+    {
+        #region Public Constructors
 
-		public ICombatant Combatant { get; set; }
+        public CombatantAppearsEvent(ICombatant combatant, IntVector2 position)
+        {
+            Combatant = combatant;
+            StartPosition = EndPosition = position;
+        }
 
-		public IntVector2 StartPosition { get; set; }
+        #endregion Public Constructors
 
-		public IntVector2 EndPosition { get; set; }
-	}
+        #region Public Properties
+
+        public ICombatant Combatant { get; set; }
+
+        public IntVector2 EndPosition { get; set; }
+        public IntVector2 StartPosition { get; set; }
+
+        #endregion Public Properties
+    }
 }

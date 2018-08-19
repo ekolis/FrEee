@@ -1,411 +1,427 @@
-﻿using System;
+﻿using FrEee.Utility.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using FrEee.Utility.Extensions;
 
 namespace FrEee.Utility
 {
-	/// <summary>
-	/// A connectivity graph.
-	/// </summary>
-	/// <typeparam name="T">The type of objects being connected.</typeparam>
-	public class ConnectivityGraph<T> : ISet<T>
-	{
-		public ConnectivityGraph()
-		{
-		}
+    /// <summary>
+    /// A connectivity graph.
+    /// </summary>
+    /// <typeparam name="T">The type of objects being connected.</typeparam>
+    public class ConnectivityGraph<T> : ISet<T>
+    {
+        #region Private Fields
 
-		public ConnectivityGraph(IEnumerable<T> items)
-		{
-			foreach (var item in items)
-				Add(item);
-		}
+        private ISet<Tuple<T, T>> connections = new HashSet<Tuple<T, T>>();
 
-		public ConnectivityGraph(ConnectivityGraph<T> sub1, ConnectivityGraph<T> sub2)
-		{
-			foreach (var item in sub1.Union(sub2))
-				Add(item);
-		}
+        private ISet<T> items = new HashSet<T>();
 
-		/// <summary>
-		/// Connects two nodes.
-		/// </summary>
-		/// <param name="start"></param>
-		/// <param name="end"></param>
-		/// <param name="twoWay">Connect both ways?</param>
-		public void Connect(T start, T end, bool twoWay = false)
-		{
-			var link = Tuple.Create(start, end);
-			if (!connections.Contains(link))
-			{
-				var sub1 = Subgraphs.Single(s => s.Contains(start));
-				var sub2 = Subgraphs.Single(s => s.Contains(end));
-				if (sub1 != sub2)
-				{
-					var sub3 = new ConnectivityGraph<T>(sub1, sub2);
-					subgraphs.Remove(sub1);
-					subgraphs.Remove(sub2);
-					subgraphs.Add(sub3);
-				}
-				connections.Add(link);
-				singletons.Remove(start);
-				singletons.Remove(end);
-			}
-			if (twoWay)
-				Connect(end, start, false);
-		}
+        private List<T> singletons = new List<T>();
 
-		/// <summary>
-		/// Disconnects two nodes.
-		/// </summary>
-		/// <param name="start"></param>
-		/// <param name="end"></param>
-		/// <param name="twoWay">Disconnect both ways?</param>
-		public void Disconnect(T start, T end, bool twoWay = false)
-		{
-			var link = Tuple.Create(start, end);
-			if (connections.Contains(link))
-			{
-				var sub = Subgraphs.Single(s => s.Contains(start));
-				var subs = sub.Subdivide();
-				subgraphs.Remove(sub);
-				subgraphs.AddRange(subs);
-				connections.Remove(link);
-				if (!GetExits(start).Any() && !GetEntrances(start).Any())
-					singletons.Add(start);
-				if (!GetEntrances(end).Any() && !GetExits(end).Any())
-					singletons.Add(end);
-			}
-			if (twoWay)
-				Disconnect(end, start, false);
-		}
+        private List<ConnectivityGraph<T>> subgraphs = new List<ConnectivityGraph<T>>();
 
-		private ISet<Tuple<T, T>> connections = new HashSet<Tuple<T, T>>();
+        #endregion Private Fields
 
-		/// <summary>
-		/// Computes the distance between two nodes.
-		/// </summary>
-		/// <param name="t1"></param>
-		/// <param name="t2"></param>
-		/// <param name="traversed"></param>
-		/// <returns>The distance, or null if either the destination cannot be reached or the start node has already been traversed..</returns>
-		public int? ComputeDistance(T start, T end, ICollection<T> traversed = null)
-		{
-			if (traversed == null)
-				traversed = new HashSet<T>();
+        #region Public Constructors
 
-			if (traversed.Contains(start))
-				return null;
+        public ConnectivityGraph()
+        {
+        }
 
-			traversed.Add(start);
+        public ConnectivityGraph(IEnumerable<T> items)
+        {
+            foreach (var item in items)
+                Add(item);
+        }
 
-			if ((object)start == (object)end)
-				return 0; // we're already there!
+        public ConnectivityGraph(ConnectivityGraph<T> sub1, ConnectivityGraph<T> sub2)
+        {
+            foreach (var item in sub1.Union(sub2))
+                Add(item);
+        }
 
-			var exits = GetExits(start);
+        #endregion Public Constructors
 
-			if (!exits.Any())
-				return null; // can't get anywhere from here!
+        #region Public Properties
 
-			var path = Pathfinder.Pathfind(start, end, this);
+        /// <summary>
+        /// Any connections that have been made.
+        /// </summary>
+        public IEnumerable<Tuple<T, T>> Connections
+        {
+            get { return connections; }
+        }
 
-			if (path == null || !path.Any())
-				return null; // can't get there from here!
+        public int Count
+        {
+            get { return items.Count; }
+        }
 
-			return path.Count();
-		}
+        /// <summary>
+        /// Is the graph connected? That is, are any two nodes connected? Or, is there no more than one subgraph?
+        /// </summary>
+        public bool IsConnected
+        {
+            get
+            {
+                return Subgraphs.Count() <= 1;
+            }
+        }
 
-		/// <summary>
-		/// Computes the subgraph of nodes that are accessible from the starting location.
-		/// </summary>
-		/// <param name="start"></param>
-		/// <returns></returns>
-		public ConnectivityGraph<T> ComputeAccessFrom(T start)
-		{
-			var subgraph = new ConnectivityGraph<T>();
-			ComputeAccessFromRecursive(start, subgraph);
-			return subgraph;
-		}
+        public bool IsReadOnly
+        {
+            get { return items.IsReadOnly; }
+        }
 
-		/// <summary>
-		/// Computes the subgraph of nodes that can access the starting location.
-		/// </summary>
-		/// <param name="start"></param>
-		/// <returns></returns>
-		public ConnectivityGraph<T> ComputeAccessTo(T end)
-		{
-			var subgraph = new ConnectivityGraph<T>();
-			ComputeAccessToRecursive(end, subgraph);
-			return subgraph;
-		}
+        /// <summary>
+        /// Any discrete connected subgraphs of this graph.
+        /// </summary>
+        public IEnumerable<ConnectivityGraph<T>> Subgraphs
+        {
+            get
+            {
+                return subgraphs.Concat(singletons.Select(item =>
+                    {
+                        var sub = new ConnectivityGraph<T>();
+                        sub.Add(item);
+                        return sub;
+                    })).Where(sg => sg != null); // HACK - null subgraphs?!
+            }
+        }
 
-		/// <summary>
-		/// Computes the subgraph of nodes that are accessible from the starting location or can access it.
-		/// </summary>
-		/// <param name="start"></param>
-		/// <returns></returns>
-		public ConnectivityGraph<T> ComputeSubgraph(T node)
-		{
-			var subgraph = new ConnectivityGraph<T>();
-			ComputeSubgraphRecursive(node, subgraph);
-			return subgraph;
-		}
+        #endregion Public Properties
 
-		private void ComputeAccessFromRecursive(T start, ConnectivityGraph<T> subgraph)
-		{
-			foreach (var exit in GetExits(start).Where(exit => !subgraph.Contains(exit)))
-			{
-				subgraph.Add(exit);
-				subgraph.Connect(start, exit);
-				ComputeAccessFromRecursive(exit, subgraph);
-			}
-		}
+        #region Public Methods
 
-		private void ComputeAccessToRecursive(T end, ConnectivityGraph<T> subgraph)
-		{
-			foreach (var entrance in GetEntrances(end).Where(entrance => !subgraph.Contains(entrance)))
-			{
-				subgraph.Add(entrance);
-				subgraph.Connect(entrance, end);
-				ComputeAccessFromRecursive(entrance, subgraph);
-			}
-		}
+        public bool Add(T item)
+        {
+            singletons.Add(item);
+            return items.Add(item);
+        }
 
-		private void ComputeSubgraphRecursive(T node, ConnectivityGraph<T> subgraph)
-		{
-			foreach (var exit in GetExits(node).Where(exit => !subgraph.Contains(exit)))
-			{
-				subgraph.Add(exit);
-				subgraph.Connect(node, exit);
-				ComputeAccessFromRecursive(exit, subgraph);
-			}
-			foreach (var entrance in GetEntrances(node).Where(entrance => !subgraph.Contains(entrance)))
-			{
-				subgraph.Add(entrance);
-				subgraph.Connect(entrance, node);
-				ComputeAccessFromRecursive(entrance, subgraph);
-			}
-		}
+        void ICollection<T>.Add(T item)
+        {
+            singletons.Add(item);
+            items.Add(item);
+        }
 
-		/// <summary>
-		/// Finds the entrances to a node.
-		/// </summary>
-		/// <param name="node"></param>
-		/// <returns></returns>
-		public IEnumerable<T> GetEntrances(T node)
-		{
-			return Connections.Where(t => (object)t.Item2 == (object)node).Select(t => t.Item1);
-		}
+        /// <summary>
+        /// Are two nodes connected?
+        /// </summary>
+        /// <param name="node1"></param>
+        /// <param name="node2"></param>
+        /// <returns></returns>
+        public bool AreConnected(T node1, T node2, bool eitherWay = true)
+        {
+            if (eitherWay)
+                return ComputeDistance(node1, node2) != null || ComputeDistance(node2, node1) != null;
+            else
+                return ComputeDistance(node1, node2) != null;
+        }
 
-		/// <summary>
-		/// Finds the exits from a node.
-		/// </summary>
-		/// <param name="node"></param>
-		/// <returns></returns>
-		public IEnumerable<T> GetExits(T node)
-		{
-			return Connections.Where(t => (object)t.Item1 == (object)node).Select(t => t.Item2);
-		}
+        public void Clear()
+        {
+            singletons.Clear();
+            items.Clear();
+            connections.Clear();
+        }
 
-		/// <summary>
-		/// Are two nodes connected?
-		/// </summary>
-		/// <param name="node1"></param>
-		/// <param name="node2"></param>
-		/// <returns></returns>
-		public bool AreConnected(T node1, T node2, bool eitherWay = true)
-		{
-			if (eitherWay)
-				return ComputeDistance(node1, node2) != null || ComputeDistance(node2, node1) != null;
-			else
-				return ComputeDistance(node1, node2) != null;
-		}
+        /// <summary>
+        /// Computes the subgraph of nodes that are accessible from the starting location.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <returns></returns>
+        public ConnectivityGraph<T> ComputeAccessFrom(T start)
+        {
+            var subgraph = new ConnectivityGraph<T>();
+            ComputeAccessFromRecursive(start, subgraph);
+            return subgraph;
+        }
 
-		/// <summary>
-		/// Is the graph connected? That is, are any two nodes connected? Or, is there no more than one subgraph?
-		/// </summary>
-		public bool IsConnected
-		{
-			get
-			{
-				return Subgraphs.Count() <= 1;
-			}
-		}
+        /// <summary>
+        /// Computes the subgraph of nodes that can access the starting location.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <returns></returns>
+        public ConnectivityGraph<T> ComputeAccessTo(T end)
+        {
+            var subgraph = new ConnectivityGraph<T>();
+            ComputeAccessToRecursive(end, subgraph);
+            return subgraph;
+        }
 
-		/// <summary>
-		/// Subdivides the graph into discrete connected subgraphs.
-		/// </summary>
-		/// <returns></returns>
-		private IEnumerable<ConnectivityGraph<T>> Subdivide()
-		{
-			var subgraphs = new List<ConnectivityGraph<T>>();
-			while (true)
-			{
-				// pick a node that we haven't already covered
-				var nodes = this.Where(n => !subgraphs.Any(sg => sg.Contains(n)));
-				if (!nodes.Any())
-					break;
-				var node = nodes.PickRandom();
-				var subgraph = ComputeSubgraph(node);
-				subgraphs.Add(subgraph);
-			}
-			return subgraphs.ToList();
-		}
+        /// <summary>
+        /// Computes the distance between two nodes.
+        /// </summary>
+        /// <param name="t1"></param>
+        /// <param name="t2"></param>
+        /// <param name="traversed"></param>
+        /// <returns>The distance, or null if either the destination cannot be reached or the start node has already been traversed..</returns>
+        public int? ComputeDistance(T start, T end, ICollection<T> traversed = null)
+        {
+            if (traversed == null)
+                traversed = new HashSet<T>();
 
-		private List<ConnectivityGraph<T>> subgraphs = new List<ConnectivityGraph<T>>();
+            if (traversed.Contains(start))
+                return null;
 
-		private List<T> singletons = new List<T>();
+            traversed.Add(start);
 
-		/// <summary>
-		/// Any discrete connected subgraphs of this graph.
-		/// </summary>
-		public IEnumerable<ConnectivityGraph<T>> Subgraphs
-		{
-			get
-			{
-				return subgraphs.Concat(singletons.Select(item =>
-					{
-						var sub = new ConnectivityGraph<T>();
-						sub.Add(item);
-						return sub;
-					})).Where(sg => sg != null); // HACK - null subgraphs?!
-			}
-		}
+            if ((object)start == (object)end)
+                return 0; // we're already there!
 
-		/// <summary>
-		/// Any connections that have been made.
-		/// </summary>
-		public IEnumerable<Tuple<T, T>> Connections
-		{
-			get { return connections; }
-		}
+            var exits = GetExits(start);
 
-		private ISet<T> items = new HashSet<T>();
+            if (!exits.Any())
+                return null; // can't get anywhere from here!
 
-		#region ISet implementation
+            var path = Pathfinder.Pathfind(start, end, this);
 
-		public bool Add(T item)
-		{
-			singletons.Add(item);
-			return items.Add(item);
-		}
+            if (path == null || !path.Any())
+                return null; // can't get there from here!
 
-		public void ExceptWith(IEnumerable<T> other)
-		{
-			singletons.RemoveAll(item => other.Contains(item));
-			items.ExceptWith(other);
-			var toRemove = connections.Where(link => !(items.Contains(link.Item1) || items.Contains(link.Item2)));
-			foreach (var link in toRemove)
-				Disconnect(link.Item1, link.Item2);
-		}
+            return path.Count();
+        }
 
-		public void IntersectWith(IEnumerable<T> other)
-		{
-			singletons.RemoveAll(item => !other.Contains(item));
-			items.IntersectWith(other);
-			var toRemove = connections.Where(link => !(items.Contains(link.Item1) || items.Contains(link.Item2)));
-			foreach (var link in toRemove)
-				Disconnect(link.Item1, link.Item2);
-		}
+        /// <summary>
+        /// Computes the subgraph of nodes that are accessible from the starting location or can access it.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <returns></returns>
+        public ConnectivityGraph<T> ComputeSubgraph(T node)
+        {
+            var subgraph = new ConnectivityGraph<T>();
+            ComputeSubgraphRecursive(node, subgraph);
+            return subgraph;
+        }
 
-		public bool IsProperSubsetOf(IEnumerable<T> other)
-		{
-			return items.IsProperSubsetOf(other);
-		}
+        /// <summary>
+        /// Connects two nodes.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="twoWay">Connect both ways?</param>
+        public void Connect(T start, T end, bool twoWay = false)
+        {
+            var link = Tuple.Create(start, end);
+            if (!connections.Contains(link))
+            {
+                var sub1 = Subgraphs.Single(s => s.Contains(start));
+                var sub2 = Subgraphs.Single(s => s.Contains(end));
+                if (sub1 != sub2)
+                {
+                    var sub3 = new ConnectivityGraph<T>(sub1, sub2);
+                    subgraphs.Remove(sub1);
+                    subgraphs.Remove(sub2);
+                    subgraphs.Add(sub3);
+                }
+                connections.Add(link);
+                singletons.Remove(start);
+                singletons.Remove(end);
+            }
+            if (twoWay)
+                Connect(end, start, false);
+        }
 
-		public bool IsProperSupersetOf(IEnumerable<T> other)
-		{
-			return items.IsProperSupersetOf(other);
-		}
+        public bool Contains(T item)
+        {
+            return items.Contains(item);
+        }
 
-		public bool IsSubsetOf(IEnumerable<T> other)
-		{
-			return items.IsSupersetOf(other);
-		}
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            items.CopyTo(array, arrayIndex);
+        }
 
-		public bool IsSupersetOf(IEnumerable<T> other)
-		{
-			return items.IsSupersetOf(other);
-		}
+        /// <summary>
+        /// Disconnects two nodes.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="twoWay">Disconnect both ways?</param>
+        public void Disconnect(T start, T end, bool twoWay = false)
+        {
+            var link = Tuple.Create(start, end);
+            if (connections.Contains(link))
+            {
+                var sub = Subgraphs.Single(s => s.Contains(start));
+                var subs = sub.Subdivide();
+                subgraphs.Remove(sub);
+                subgraphs.AddRange(subs);
+                connections.Remove(link);
+                if (!GetExits(start).Any() && !GetEntrances(start).Any())
+                    singletons.Add(start);
+                if (!GetEntrances(end).Any() && !GetExits(end).Any())
+                    singletons.Add(end);
+            }
+            if (twoWay)
+                Disconnect(end, start, false);
+        }
 
-		public bool Overlaps(IEnumerable<T> other)
-		{
-			return items.Overlaps(other);
-		}
+        public void ExceptWith(IEnumerable<T> other)
+        {
+            singletons.RemoveAll(item => other.Contains(item));
+            items.ExceptWith(other);
+            var toRemove = connections.Where(link => !(items.Contains(link.Item1) || items.Contains(link.Item2)));
+            foreach (var link in toRemove)
+                Disconnect(link.Item1, link.Item2);
+        }
 
-		public bool SetEquals(IEnumerable<T> other)
-		{
-			return items.SetEquals(other);
-		}
+        /// <summary>
+        /// Finds the entrances to a node.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public IEnumerable<T> GetEntrances(T node)
+        {
+            return Connections.Where(t => (object)t.Item2 == (object)node).Select(t => t.Item1);
+        }
 
-		public void SymmetricExceptWith(IEnumerable<T> other)
-		{
-			singletons.RemoveAll(item => other.Contains(item));	
-			items.SymmetricExceptWith(other);
-			var toRemove = connections.Where(link => !(items.Contains(link.Item1) || items.Contains(link.Item2)));
-			foreach (var link in toRemove)
-				connections.Remove(link);
-		}
+        public IEnumerator<T> GetEnumerator()
+        {
+            return items.GetEnumerator();
+        }
 
-		public void UnionWith(IEnumerable<T> other)
-		{
-			singletons.AddRange(other);
-			items.UnionWith(other);
-		}
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
 
-		void ICollection<T>.Add(T item)
-		{
-			singletons.Add(item);
-			items.Add(item);
-		}
+        /// <summary>
+        /// Finds the exits from a node.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        public IEnumerable<T> GetExits(T node)
+        {
+            return Connections.Where(t => (object)t.Item1 == (object)node).Select(t => t.Item2);
+        }
 
-		public void Clear()
-		{
-			singletons.Clear();
-			items.Clear();
-			connections.Clear();
-		}
+        public void IntersectWith(IEnumerable<T> other)
+        {
+            singletons.RemoveAll(item => !other.Contains(item));
+            items.IntersectWith(other);
+            var toRemove = connections.Where(link => !(items.Contains(link.Item1) || items.Contains(link.Item2)));
+            foreach (var link in toRemove)
+                Disconnect(link.Item1, link.Item2);
+        }
 
-		public bool Contains(T item)
-		{
-			return items.Contains(item);
-		}
+        public bool IsProperSubsetOf(IEnumerable<T> other)
+        {
+            return items.IsProperSubsetOf(other);
+        }
 
-		public void CopyTo(T[] array, int arrayIndex)
-		{
-			items.CopyTo(array, arrayIndex);
-		}
+        public bool IsProperSupersetOf(IEnumerable<T> other)
+        {
+            return items.IsProperSupersetOf(other);
+        }
 
-		public int Count
-		{
-			get { return items.Count; }
-		}
+        public bool IsSubsetOf(IEnumerable<T> other)
+        {
+            return items.IsSupersetOf(other);
+        }
 
-		public bool IsReadOnly
-		{
-			get { return items.IsReadOnly; }
-		}
+        public bool IsSupersetOf(IEnumerable<T> other)
+        {
+            return items.IsSupersetOf(other);
+        }
 
-		public bool Remove(T item)
-		{
-			singletons.Remove(item);
-			var result = items.Remove(item);
-			var toRemove = connections.Where(link => (object)link.Item1 == (object)item || (object)link.Item2 == (object)item);
-			foreach (var link in toRemove)
-				connections.Remove(link);
-			return result;
-		}
+        public bool Overlaps(IEnumerable<T> other)
+        {
+            return items.Overlaps(other);
+        }
 
-		public IEnumerator<T> GetEnumerator()
-		{
-			return items.GetEnumerator();
-		}
+        public bool Remove(T item)
+        {
+            singletons.Remove(item);
+            var result = items.Remove(item);
+            var toRemove = connections.Where(link => (object)link.Item1 == (object)item || (object)link.Item2 == (object)item);
+            foreach (var link in toRemove)
+                connections.Remove(link);
+            return result;
+        }
 
-		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
-		#endregion
-	}
+        public bool SetEquals(IEnumerable<T> other)
+        {
+            return items.SetEquals(other);
+        }
+
+        public void SymmetricExceptWith(IEnumerable<T> other)
+        {
+            singletons.RemoveAll(item => other.Contains(item));
+            items.SymmetricExceptWith(other);
+            var toRemove = connections.Where(link => !(items.Contains(link.Item1) || items.Contains(link.Item2)));
+            foreach (var link in toRemove)
+                connections.Remove(link);
+        }
+
+        public void UnionWith(IEnumerable<T> other)
+        {
+            singletons.AddRange(other);
+            items.UnionWith(other);
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private void ComputeAccessFromRecursive(T start, ConnectivityGraph<T> subgraph)
+        {
+            foreach (var exit in GetExits(start).Where(exit => !subgraph.Contains(exit)))
+            {
+                subgraph.Add(exit);
+                subgraph.Connect(start, exit);
+                ComputeAccessFromRecursive(exit, subgraph);
+            }
+        }
+
+        private void ComputeAccessToRecursive(T end, ConnectivityGraph<T> subgraph)
+        {
+            foreach (var entrance in GetEntrances(end).Where(entrance => !subgraph.Contains(entrance)))
+            {
+                subgraph.Add(entrance);
+                subgraph.Connect(entrance, end);
+                ComputeAccessFromRecursive(entrance, subgraph);
+            }
+        }
+
+        private void ComputeSubgraphRecursive(T node, ConnectivityGraph<T> subgraph)
+        {
+            foreach (var exit in GetExits(node).Where(exit => !subgraph.Contains(exit)))
+            {
+                subgraph.Add(exit);
+                subgraph.Connect(node, exit);
+                ComputeAccessFromRecursive(exit, subgraph);
+            }
+            foreach (var entrance in GetEntrances(node).Where(entrance => !subgraph.Contains(entrance)))
+            {
+                subgraph.Add(entrance);
+                subgraph.Connect(entrance, node);
+                ComputeAccessFromRecursive(entrance, subgraph);
+            }
+        }
+
+        /// <summary>
+        /// Subdivides the graph into discrete connected subgraphs.
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerable<ConnectivityGraph<T>> Subdivide()
+        {
+            var subgraphs = new List<ConnectivityGraph<T>>();
+            while (true)
+            {
+                // pick a node that we haven't already covered
+                var nodes = this.Where(n => !subgraphs.Any(sg => sg.Contains(n)));
+                if (!nodes.Any())
+                    break;
+                var node = nodes.PickRandom();
+                var subgraph = ComputeSubgraph(node);
+                subgraphs.Add(subgraph);
+            }
+            return subgraphs.ToList();
+        }
+
+        #endregion Private Methods
+    }
 }

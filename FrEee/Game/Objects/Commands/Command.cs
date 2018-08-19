@@ -1,70 +1,87 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace FrEee.Game.Objects.Commands
 {
-	/// <summary>
-	/// A generic command.
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	[Serializable]
-	public abstract class Command<T> : ICommand<T>
-		where T : IReferrable
-	{
-		protected Command(T target)
-		{
-			Issuer = Empire.Current;
-			Executor = target;
-		}
+    /// <summary>
+    /// A generic command.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    [Serializable]
+    public abstract class Command<T> : ICommand<T>
+        where T : IReferrable
+    {
+        #region Protected Constructors
 
-		[DoNotSerialize]
-		public Empire Issuer { get { return issuer; } set { issuer = value; } }
+        protected Command(T target)
+        {
+            Issuer = Empire.Current;
+            Executor = target;
+        }
 
-		private GalaxyReference<Empire> issuer { get; set; }
+        #endregion Protected Constructors
 
-		[DoNotSerialize]
-		public T Executor { get { return executor; } set { executor = value; } }
+        #region Public Properties
 
-		protected GalaxyReference<T> executor { get; set; }
+        [DoNotSerialize]
+        public T Executor { get { return executor; } set { executor = value; } }
 
-		public long ExecutorID { get { return executor.ID; } }
+        IReferrable ICommand.Executor
+        {
+            get { return Executor; }
+        }
 
-		public abstract void Execute();
+        public long ExecutorID { get { return executor.ID; } }
 
-		public virtual void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
-		{
-			if (done == null)
-				done = new HashSet<IPromotable>();
-			if (!done.Contains(this))
-			{
-				done.Add(this);
-				issuer.ReplaceClientIDs(idmap, done);
-				executor.ReplaceClientIDs(idmap, done);
-				foreach (var r in NewReferrables.OfType<IPromotable>())
-					r.ReplaceClientIDs(idmap, done);
-			}
-		}
+        public bool IsDisposed { get; set; }
 
-		public virtual IEnumerable<IReferrable> NewReferrables
-		{
-			get
-			{
-				yield break;
-			}
-		}
+        [DoNotSerialize]
+        public Empire Issuer { get { return issuer; } set { issuer = value; } }
 
-		public bool IsDisposed { get; set; }
+        public virtual IEnumerable<IReferrable> NewReferrables
+        {
+            get
+            {
+                yield break;
+            }
+        }
 
+        #endregion Public Properties
 
-		IReferrable ICommand.Executor
-		{
-			get { return Executor; }
-		}
-	}
+        #region Protected Properties
+
+        protected GalaxyReference<T> executor { get; set; }
+
+        #endregion Protected Properties
+
+        #region Private Properties
+
+        private GalaxyReference<Empire> issuer { get; set; }
+
+        #endregion Private Properties
+
+        #region Public Methods
+
+        public abstract void Execute();
+
+        public virtual void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+        {
+            if (done == null)
+                done = new HashSet<IPromotable>();
+            if (!done.Contains(this))
+            {
+                done.Add(this);
+                issuer.ReplaceClientIDs(idmap, done);
+                executor.ReplaceClientIDs(idmap, done);
+                foreach (var r in NewReferrables.OfType<IPromotable>())
+                    r.ReplaceClientIDs(idmap, done);
+            }
+        }
+
+        #endregion Public Methods
+    }
 }

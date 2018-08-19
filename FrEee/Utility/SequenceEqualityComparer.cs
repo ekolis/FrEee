@@ -1,30 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace FrEee.Utility
 {
-	class SequenceEqualityComparer<T> : IEqualityComparer<IEnumerable<T>>
-	{
-		public bool Equals(IEnumerable<T> x, IEnumerable<T> y)
-		{
-			if (x.Count() != y.Count())
-				return false;
-			for (int i = 0; i < x.Count(); i++)
-			{
-				if (!x.ElementAt(i).Equals(y.ElementAt(i)))
-					return false;
-			}
-			return true;
-		}
+    internal class SequenceEqualityComparer<T> : IEqualityComparer<IEnumerable<T>>
+    {
+        #region Public Methods
 
-		public int GetHashCode(IEnumerable<T> obj)
-		{
-			var hash = 0;
-			foreach (var item in obj)
-				hash ^= obj.GetHashCode();
-			return hash;
-		}
-	}
+        public bool Equals(IEnumerable<T> x, IEnumerable<T> y)
+        {
+            if (x.Count() != y.Count())
+                return false;
+            for (int i = 0; i < x.Count(); i++)
+            {
+                if (!x.ElementAt(i).Equals(y.ElementAt(i)))
+                    return false;
+            }
+            return true;
+        }
+
+        public int GetHashCode(IEnumerable<T> obj)
+        {
+            var hash = 0;
+            foreach (var item in obj)
+                hash ^= obj.GetHashCode();
+            return hash;
+        }
+
+        #endregion Public Methods
+    }
 }

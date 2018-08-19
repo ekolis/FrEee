@@ -2,122 +2,134 @@
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 {
-	/// <summary>
-	/// A clause in a treaty.
-	/// </summary>
-	public abstract class Clause : IOwnable, IFoggable, IPromotable
-	{
-		protected Clause(Empire giver, Empire receiver)
-		{
-			Giver = giver;
-			Receiver = receiver;
-		}
+    /// <summary>
+    /// A clause in a treaty.
+    /// </summary>
+    public abstract class Clause : IOwnable, IFoggable, IPromotable
+    {
+        #region Protected Constructors
 
-		/// <summary>
-		/// Is this clause in effect, or is it still a proposal?
-		/// </summary>
-		public bool IsInEffect { get; set; }
+        protected Clause(Empire giver, Empire receiver)
+        {
+            Giver = giver;
+            Receiver = receiver;
+        }
 
-		private GalaxyReference<Empire> giver { get; set; }
+        #endregion Protected Constructors
 
-		/// <summary>
-		/// The empire that is offering something in this clause.
-		/// </summary>
-		[DoNotSerialize]
-		public Empire Giver { get { return giver; } set { giver = value; } }
-		
-		private GalaxyReference<Empire> receiver { get; set; }
+        #region Public Properties
 
-		/// <summary>
-		/// The empire that is receiving a benefit from this clause.
-		/// </summary>
-		[DoNotSerialize]
-		public Empire Receiver { get { return receiver; } set { receiver = value; } }
+        /// <summary>
+        /// A description of the effects of this clause.
+        /// </summary>
+        public abstract string BriefDescription { get; }
 
-		/// <summary>
-		/// Performs any per-turn action for this treaty clause, if applicable.
-		/// </summary>
-		public abstract void PerformAction();
+        /// <summary>
+        /// A description of the effects of this clause.
+        /// </summary>
+        public abstract string FullDescription { get; }
 
-		/// <summary>
-		/// A description of the effects of this clause.
-		/// </summary>
-		public abstract string BriefDescription { get; }
+        /// <summary>
+        /// The empire that is offering something in this clause.
+        /// </summary>
+        [DoNotSerialize]
+        public Empire Giver { get { return giver; } set { giver = value; } }
 
-		/// <summary>
-		/// A description of the effects of this clause.
-		/// </summary>
-		public abstract string FullDescription { get; }
+        public long ID
+        {
+            get;
+            set;
+        }
 
-		public Empire Owner
-		{
-			get { return Receiver; }
-		}
+        public bool IsDisposed { get; set; }
 
-		public Visibility CheckVisibility(Empire emp)
-		{
-			if (emp == Owner)
-				return Visibility.Owned;
-			if (emp == Giver)
-				return Visibility.Scanned;
-			// TODO - espionage on treaties
-			return Visibility.Unknown;
-		}
+        /// <summary>
+        /// Is this clause in effect, or is it still a proposal?
+        /// </summary>
+        public bool IsInEffect { get; set; }
 
-		public void Redact(Empire emp)
-		{
-			if (CheckVisibility(emp) < Visibility.Fogged)
-				Dispose();
-		}
+        public bool IsMemory
+        {
+            get;
+            set;
+        }
 
-		public bool IsMemory
-		{
-			get;
-			set;
-		}
+        public Empire Owner
+        {
+            get { return Receiver; }
+        }
 
-		public double Timestamp
-		{
-			get;
-			set;
-		}
+        /// <summary>
+        /// The empire that is receiving a benefit from this clause.
+        /// </summary>
+        [DoNotSerialize]
+        public Empire Receiver { get { return receiver; } set { receiver = value; } }
 
-		public bool IsObsoleteMemory(Empire emp)
-		{
-			return false;
-		}
+        public double Timestamp
+        {
+            get;
+            set;
+        }
 
-		public long ID
-		{
-			get;
-			set;
-		}
+        #endregion Public Properties
 
-		public void Dispose()
-		{
-			if (IsDisposed)
-				return;
-			Galaxy.Current.UnassignID(this);
-			IsInEffect = false;
-		}
+        #region Private Properties
 
-		public override string ToString()
-		{
-			return BriefDescription;
-		}
+        private GalaxyReference<Empire> giver { get; set; }
+        private GalaxyReference<Empire> receiver { get; set; }
 
-		public virtual void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
-		{
-			// nothing to do here...
-		}
+        #endregion Private Properties
 
-		public bool IsDisposed { get; set; }
-	}
+        #region Public Methods
+
+        public Visibility CheckVisibility(Empire emp)
+        {
+            if (emp == Owner)
+                return Visibility.Owned;
+            if (emp == Giver)
+                return Visibility.Scanned;
+            // TODO - espionage on treaties
+            return Visibility.Unknown;
+        }
+
+        public void Dispose()
+        {
+            if (IsDisposed)
+                return;
+            Galaxy.Current.UnassignID(this);
+            IsInEffect = false;
+        }
+
+        public bool IsObsoleteMemory(Empire emp)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Performs any per-turn action for this treaty clause, if applicable.
+        /// </summary>
+        public abstract void PerformAction();
+
+        public void Redact(Empire emp)
+        {
+            if (CheckVisibility(emp) < Visibility.Fogged)
+                Dispose();
+        }
+
+        public virtual void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+        {
+            // nothing to do here...
+        }
+
+        public override string ToString()
+        {
+            return BriefDescription;
+        }
+
+        #endregion Public Methods
+    }
 }

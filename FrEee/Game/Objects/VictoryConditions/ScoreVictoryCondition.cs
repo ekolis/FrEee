@@ -1,43 +1,52 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace FrEee.Game.Objects.VictoryConditions
 {
-	/// <summary>
-	/// Reach a specified score.
-	/// </summary>
-	public class ScoreVictoryCondition : IVictoryCondition
-	{
-		public ScoreVictoryCondition(long score)
-		{
-			Score = score;
-		}
+    /// <summary>
+    /// Reach a specified score.
+    /// </summary>
+    public class ScoreVictoryCondition : IVictoryCondition
+    {
+        #region Public Constructors
 
-		/// <summary>
-		/// The score needed to achieve.
-		/// </summary>
-		public long Score { get; set; }
+        public ScoreVictoryCondition(long score)
+        {
+            Score = score;
+        }
 
-		public double GetProgress(Empire emp)
-		{
-			if (emp.IsDefeated)
-				return 0;
-			return (double)(int)(emp.Score) / (double)(int)Score;
-		}
+        #endregion Public Constructors
 
-		public string GetVictoryMessage(Empire emp)
-		{
-			return "The " + emp + " has grown into a mighty power! All hail " + emp.LeaderName + ", leader of a great empire!";
-		}
+        #region Public Properties
 
-		public string GetDefeatMessage(Empire emp, IEnumerable<Empire> winners)
-		{
-			return "The " + emp + " has stumbled where others flourished! The following empires have achieved a score victory: " + string.Join(", ", winners.Select(e => e.ToString()).ToArray()) + ".";
-		}
-	}
+        /// <summary>
+        /// The score needed to achieve.
+        /// </summary>
+        public long Score { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        public string GetDefeatMessage(Empire emp, IEnumerable<Empire> winners)
+        {
+            return "The " + emp + " has stumbled where others flourished! The following empires have achieved a score victory: " + string.Join(", ", winners.Select(e => e.ToString()).ToArray()) + ".";
+        }
+
+        public double GetProgress(Empire emp)
+        {
+            if (emp.IsDefeated)
+                return 0;
+            return (double)(int)(emp.Score) / (double)(int)Score;
+        }
+
+        public string GetVictoryMessage(Empire emp)
+        {
+            return "The " + emp + " has grown into a mighty power! All hail " + emp.LeaderName + ", leader of a great empire!";
+        }
+
+        #endregion Public Methods
+    }
 }

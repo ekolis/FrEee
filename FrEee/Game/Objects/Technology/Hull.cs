@@ -10,418 +10,430 @@ using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.IO;
 
 namespace FrEee.Game.Objects.Technology
 {
-	/// <summary>
-	/// A vehicle hull.
-	/// </summary>
-	/// <typeparam name="T">The type of vehicle.</typeparam>
-	[Serializable]
-	public class Hull<T> : IHull<T> where T : IVehicle
-	{
-		public Hull()
-		{
-			PictureNames = new List<string>();
-			UnlockRequirements = new List<Requirement<Empire>>();
-			Abilities = new List<Ability>();
-			Cost = new ResourceQuantity();
-		}
+    /// <summary>
+    /// A vehicle hull.
+    /// </summary>
+    /// <typeparam name="T">The type of vehicle.</typeparam>
+    [Serializable]
+    public class Hull<T> : IHull<T> where T : IVehicle
+    {
+        #region Public Constructors
 
-		/// <summary>
-		/// The name of the hull.
-		/// </summary>
-		public string Name { get; set; }
+        public Hull()
+        {
+            PictureNames = new List<string>();
+            UnlockRequirements = new List<Requirement<Empire>>();
+            Abilities = new List<Ability>();
+            Cost = new ResourceQuantity();
+        }
 
-		/// <summary>
-		/// A shorter name for use in some places.
-		/// </summary>
-		public string ShortName { get; set; }
+        #endregion Public Constructors
 
-		/// <summary>
-		/// A description of the hull.
-		/// </summary>
-		public string Description { get; set; }
+        #region Public Properties
 
-		/// <summary>
-		/// An abbeviation for the ship's name.
-		/// </summary>
-		public string Code { get; set; }
+        public IList<Ability> Abilities { get; private set; }
 
-		/// <summary>
-		/// Names of pictures from the approrpriate shipset to use for the hull.
-		/// </summary>
-		public IList<string> PictureNames { get; private set; }
+        public AbilityTargets AbilityTarget
+        {
+            get
+            {
+                if (VehicleType == VehicleTypes.Base)
+                    return AbilityTargets.Base;
+                if (VehicleType == VehicleTypes.Ship)
+                    return AbilityTargets.Ship;
+                if (VehicleType == VehicleTypes.Fighter)
+                    return AbilityTargets.Fighter;
+                if (VehicleType == VehicleTypes.Satellite)
+                    return AbilityTargets.Satellite;
+                if (VehicleType == VehicleTypes.Mine)
+                    return AbilityTargets.Mine;
+                if (VehicleType == VehicleTypes.Drone)
+                    return AbilityTargets.Drone;
+                if (VehicleType == VehicleTypes.Troop)
+                    return AbilityTargets.Troop;
+                if (VehicleType == VehicleTypes.WeaponPlatform)
+                    return AbilityTargets.WeaponPlatform;
+                return AbilityTargets.Invalid;
+            }
+        }
 
-		/// <summary>
-		/// The icon for this hull.
-		/// </summary>
-		public Image GetIcon(string shipsetPath)
-		{
-			if (shipsetPath == null)
-				return null;
-			return Pictures.GetIcon(this, shipsetPath);
-		}
+        /// <summary>
+        /// Can this hull use components with the Ship Auxiliary Control ability?
+        /// </summary>
+        public bool CanUseAuxiliaryControl { get; set; }
 
-		/// <summary>
-		/// The portrait for this hull.
-		/// </summary>
-		public Image GetPortrait(string shipsetPath)
-		{
-			if (shipsetPath == null)
-				return null;
-			return Pictures.GetPortrait(this, shipsetPath);
-		}
+        public IEnumerable<IAbilityObject> Children
+        {
+            get { yield break; }
+        }
 
-		/// <summary>
-		/// The amount of space available for components.
-		/// </summary>
-		public int Size { get; set; }
+        /// <summary>
+        /// An abbeviation for the ship's name.
+        /// </summary>
+        public string Code { get; set; }
 
-		/// <summary>
-		/// The cost to build this hull.
-		/// </summary>
-		public ResourceQuantity Cost { get; set; }
+        /// <summary>
+        /// The cost to build this hull.
+        /// </summary>
+        public ResourceQuantity Cost { get; set; }
 
-		/// <summary>
-		/// The number of thrust points required to generate 1 movement point.
-		/// Also known as Engines Per Move, though technically engines can generate more than 1 thrust point.
-		/// </summary>
-		public int Mass { get; set; }
+        /// <summary>
+        /// A description of the hull.
+        /// </summary>
+        public string Description { get; set; }
 
-		/// <summary>
-		/// Requirements to unlock this hull.
-		/// </summary>
-		public IList<Requirement<Empire>> UnlockRequirements
-		{
-			get;
-			private set;
-		}
+        [DoNotSerialize]
+        public Image Icon
+        {
+            get
+            {
+                if (Empire.Current == null)
+                    return null;
+                return GetIcon(Empire.Current.ShipsetPath);
+            }
+        }
 
-		public IList<Ability> Abilities { get; private set; }
+        public IEnumerable<string> IconPaths
+        {
+            get
+            {
+                return GetPaths("Mini");
+            }
+        }
 
-		/// <summary>
-		/// Does this hull need a component with the Ship Bridge ability?
-		/// </summary>
-		public bool NeedsBridge { get; set; }
+        public long ID
+        {
+            get;
+            set;
+        }
 
-		/// <summary>
-		/// Can this hull use components with the Ship Auxiliary Control ability?
-		/// </summary>
-		public bool CanUseAuxiliaryControl { get; set; }
+        public IEnumerable<Ability> IntrinsicAbilities
+        {
+            get { return Abilities; }
+        }
 
-		/// <summary>
-		/// Required number of life support components.
-		/// </summary>
-		public int MinLifeSupport { get; set; }
+        public bool IsDisposed { get; set; }
 
-		/// <summary>
-		/// Required number of crew quarters components.
-		/// </summary>
-		public int MinCrewQuarters { get; set; }
+        public bool IsMemory
+        {
+            get;
+            set;
+        }
 
-		/// <summary>
-		/// Maximum number of engines allowed.
-		/// </summary>
-		public int MaxEngines { get; set; }
+        /// <summary>
+        /// Hulls cannot currently be obsoleted.
+        /// TODO - hull family field
+        /// </summary>
+        public bool IsObsolescent
+        {
+            get { return false; }
+        }
 
-		/// <summary>
-		/// Minimum percentage of space required to be used for fighter-launching components.
-		/// </summary>
-		public int MinPercentFighterBays { get; set; }
+        /// <summary>
+        /// Hulls cannot manually be obsoleted.
+        /// </summary>
+        public bool IsObsolete
+        {
+            get { return false; }
+        }
 
-		/// <summary>
-		/// Minimum percentage of space required to be used for colonizing components.
-		/// </summary>
-		public int MinPercentColonyModules { get; set; }
+        /// <summary>
+        /// Hulls cannot currently be obsoleted.
+        /// TODO - hull family field
+        /// </summary>
+        public IHull<T> LatestVersion
+        {
+            get { return this; }
+        }
 
-		/// <summary>
-		/// Minimum percentage of space required to be used for cargo-storage components.
-		/// </summary>
-		public int MinPercentCargoBays { get; set; }
+        IHull IUpgradeable<IHull>.LatestVersion
+        {
+            get { return LatestVersion; }
+        }
 
-		public override string ToString()
-		{
-			return Name;
-		}
+        /// <summary>
+        /// The number of thrust points required to generate 1 movement point.
+        /// Also known as Engines Per Move, though technically engines can generate more than 1 thrust point.
+        /// </summary>
+        public int Mass { get; set; }
 
-		public VehicleTypes VehicleType
-		{
-			get
-			{
-				if (typeof(T) == typeof(Ship))
-					return VehicleTypes.Ship;
-				if (typeof(T) == typeof(Base))
-					return VehicleTypes.Base;
-				if (typeof(T) == typeof(Fighter))
-					return VehicleTypes.Fighter;
-				if (typeof(T) == typeof(Troop))
-					return VehicleTypes.Troop;
-				if (typeof(T) == typeof(Satellite))
-					return VehicleTypes.Satellite;
-				if (typeof(T) == typeof(Drone))
-					return VehicleTypes.Drone;
-				if (typeof(T) == typeof(Mine))
-					return VehicleTypes.Mine;
-				if (typeof(T) == typeof(WeaponPlatform))
-					return VehicleTypes.WeaponPlatform;
-				return VehicleTypes.Invalid;
-			}
-		}
+        /// <summary>
+        /// Maximum number of engines allowed.
+        /// </summary>
+        public int MaxEngines { get; set; }
 
-		[DoNotSerialize]
-		public Image Icon
-		{
-			get
-			{
-				if (Empire.Current == null)
-					return null;
-				return GetIcon(Empire.Current.ShipsetPath);
-			}
-		}
+        /// <summary>
+        /// Required number of crew quarters components.
+        /// </summary>
+        public int MinCrewQuarters { get; set; }
 
-		[DoNotSerialize]
-		public Image Portrait
-		{
-			get
-			{
-				if (Empire.Current == null)
-					return null;
-				return GetPortrait(Empire.Current.ShipsetPath);
-			}
-		}
+        /// <summary>
+        /// Required number of life support components.
+        /// </summary>
+        public int MinLifeSupport { get; set; }
 
-		public long ID
-		{
-			get;
-			set;
-		}
+        /// <summary>
+        /// Minimum percentage of space required to be used for cargo-storage components.
+        /// </summary>
+        public int MinPercentCargoBays { get; set; }
 
-		public Empire Owner
-		{
-			get { return null; }
-		}
+        /// <summary>
+        /// Minimum percentage of space required to be used for colonizing components.
+        /// </summary>
+        public int MinPercentColonyModules { get; set; }
 
+        /// <summary>
+        /// Minimum percentage of space required to be used for fighter-launching components.
+        /// </summary>
+        public int MinPercentFighterBays { get; set; }
 
-		public string ResearchGroup
-		{
-			get { return "Hull"; }
-		}
+        public string ModID { get; set; }
 
-		public IDesign<T> CreateDesign()
-		{
-			return new Design<T> { Hull = this };
-		}
+        /// <summary>
+        /// The name of the hull.
+        /// </summary>
+        public string Name { get; set; }
 
-		public void Dispose()
-		{
-			if (IsDisposed)
-				return;
-			Galaxy.Current.UnassignID(this);
-			if (Mod.Current != null)
-			{
-				var h = (IHull<T>)this;
-				Mod.Current.Hulls.Remove(h);
-			}
-		}
+        /// <summary>
+        /// Does this hull need a component with the Ship Bridge ability?
+        /// </summary>
+        public bool NeedsBridge { get; set; }
 
-		public bool CanUseMount(Mount m)
-		{
-			if (m == null)
-				return true;
-			if (m.MinimumVehicleSize != null && m.MinimumVehicleSize > Size)
-				return false;
-			if (m.MaximumVehicleSize != null && m.MaximumVehicleSize < Size)
-				return false;
-			if (!m.VehicleTypes.HasFlag(VehicleType))
-				return false;
-			return true;
-		}
+        /// <summary>
+        /// Mounts cannot currently be obsoleted.
+        /// TODO - add family and roman numeral properties to mounts
+        /// </summary>
+        public IEnumerable<IHull<T>> NewerVersions
+        {
+            get { yield break; }
+        }
 
-		/// <summary>
-		/// Mod objects are fully known to everyone.
-		/// </summary>
-		/// <param name="emp"></param>
-		/// <returns></returns>
-		public Visibility CheckVisibility(Empire emp)
-		{
-			return Visibility.Scanned;
-		}
+        IEnumerable<IHull> IUpgradeable<IHull>.NewerVersions
+        {
+            get { return NewerVersions; }
+        }
 
-		public string VehicleTypeName
-		{
-			get
-			{
-				return VehicleType.ToSpacedString();
-			}
-		}
+        /// <summary>
+        /// Mounts cannot currently be obsoleted.
+        /// TODO - add family and roman numeral properties to mounts
+        /// </summary>
+        public IEnumerable<IHull<T>> OlderVersions
+        {
+            get { yield break; }
+        }
 
-		public AbilityTargets AbilityTarget
-		{
-			get
-			{
-				if (VehicleType == VehicleTypes.Base)
-					return AbilityTargets.Base;
-				if (VehicleType == VehicleTypes.Ship)
-					return AbilityTargets.Ship;
-				if (VehicleType == VehicleTypes.Fighter)
-					return AbilityTargets.Fighter;
-				if (VehicleType == VehicleTypes.Satellite)
-					return AbilityTargets.Satellite;
-				if (VehicleType == VehicleTypes.Mine)
-					return AbilityTargets.Mine;
-				if (VehicleType == VehicleTypes.Drone)
-					return AbilityTargets.Drone;
-				if (VehicleType == VehicleTypes.Troop)
-					return AbilityTargets.Troop;
-				if (VehicleType == VehicleTypes.WeaponPlatform)
-					return AbilityTargets.WeaponPlatform;
-				return AbilityTargets.Invalid;
-			}
-		}
+        IEnumerable<IHull> IUpgradeable<IHull>.OlderVersions
+        {
+            get { return OlderVersions; }
+        }
 
-		public void Redact(Empire emp)
-		{
-			// TODO - tech items that aren't visible until some requirements are met
-		}
+        public Empire Owner
+        {
+            get { return null; }
+        }
 
-		public bool IsMemory
-		{
-			get;
-			set;
-		}
+        public IEnumerable<IAbilityObject> Parents
+        {
+            get
+            {
+                yield break;
+            }
+        }
 
-		public double Timestamp
-		{
-			get;
-			set;
-		}
+        /// <summary>
+        /// Names of pictures from the approrpriate shipset to use for the hull.
+        /// </summary>
+        public IList<string> PictureNames { get; private set; }
 
-		public bool IsObsoleteMemory(Empire emp)
-		{
-			return false;
-		}
+        [DoNotSerialize]
+        public Image Portrait
+        {
+            get
+            {
+                if (Empire.Current == null)
+                    return null;
+                return GetPortrait(Empire.Current.ShipsetPath);
+            }
+        }
 
-		public IEnumerable<Ability> IntrinsicAbilities
-		{
-			get { return Abilities; }
-		}
+        public IEnumerable<string> PortraitPaths
+        {
+            get
+            {
+                return GetPaths("Portrait");
+            }
+        }
 
-		public IEnumerable<IAbilityObject> Children
-		{
-			get { yield break; }
-		}
+        public string ResearchGroup
+        {
+            get { return "Hull"; }
+        }
 
-		public IEnumerable<IAbilityObject> Parents
-		{
-			get
-			{
-				yield break;
-			}
-		}
+        /// <summary>
+        /// A shorter name for use in some places.
+        /// </summary>
+        public string ShortName { get; set; }
 
-		public string ModID { get; set; }
+        /// <summary>
+        /// The amount of space available for components.
+        /// </summary>
+        public int Size { get; set; }
 
-		public bool IsDisposed { get; set; }
+        public double Timestamp
+        {
+            get;
+            set;
+        }
 
-		/// <summary>
-		/// Hulls cannot manually be obsoleted.
-		/// </summary>
-		public bool IsObsolete
-		{
-			get { return false; }
-		}
+        /// <summary>
+        /// Requirements to unlock this hull.
+        /// </summary>
+        public IList<Requirement<Empire>> UnlockRequirements
+        {
+            get;
+            private set;
+        }
 
-		/// <summary>
-		/// Hulls cannot currently be obsoleted.
-		/// TODO - hull family field
-		/// </summary>
-		public IHull<T> LatestVersion
-		{
-			get { return this; }
-		}
+        public VehicleTypes VehicleType
+        {
+            get
+            {
+                if (typeof(T) == typeof(Ship))
+                    return VehicleTypes.Ship;
+                if (typeof(T) == typeof(Base))
+                    return VehicleTypes.Base;
+                if (typeof(T) == typeof(Fighter))
+                    return VehicleTypes.Fighter;
+                if (typeof(T) == typeof(Troop))
+                    return VehicleTypes.Troop;
+                if (typeof(T) == typeof(Satellite))
+                    return VehicleTypes.Satellite;
+                if (typeof(T) == typeof(Drone))
+                    return VehicleTypes.Drone;
+                if (typeof(T) == typeof(Mine))
+                    return VehicleTypes.Mine;
+                if (typeof(T) == typeof(WeaponPlatform))
+                    return VehicleTypes.WeaponPlatform;
+                return VehicleTypes.Invalid;
+            }
+        }
 
-		/// <summary>
-		/// Hulls cannot currently be obsoleted.
-		/// TODO - hull family field
-		/// </summary>
-		public bool IsObsolescent
-		{
-			get { return false; }
-		}
+        public string VehicleTypeName
+        {
+            get
+            {
+                return VehicleType.ToSpacedString();
+            }
+        }
 
-		/// <summary>
-		/// Mounts cannot currently be obsoleted.
-		/// TODO - add family and roman numeral properties to mounts
-		/// </summary>
-		public IEnumerable<IHull<T>> NewerVersions
-		{
-			get { yield break; }
-		}
+        #endregion Public Properties
 
-		/// <summary>
-		/// Mounts cannot currently be obsoleted.
-		/// TODO - add family and roman numeral properties to mounts
-		/// </summary>
-		public IEnumerable<IHull<T>> OlderVersions
-		{
-			get { yield break; }
-		}
+        #region Public Methods
 
+        public bool CanUseMount(Mount m)
+        {
+            if (m == null)
+                return true;
+            if (m.MinimumVehicleSize != null && m.MinimumVehicleSize > Size)
+                return false;
+            if (m.MaximumVehicleSize != null && m.MaximumVehicleSize < Size)
+                return false;
+            if (!m.VehicleTypes.HasFlag(VehicleType))
+                return false;
+            return true;
+        }
 
-		IHull IUpgradeable<IHull>.LatestVersion
-		{
-			get { return LatestVersion; }
-		}
+        /// <summary>
+        /// Mod objects are fully known to everyone.
+        /// </summary>
+        /// <param name="emp"></param>
+        /// <returns></returns>
+        public Visibility CheckVisibility(Empire emp)
+        {
+            return Visibility.Scanned;
+        }
 
-		IEnumerable<IHull> IUpgradeable<IHull>.NewerVersions
-		{
-			get { return NewerVersions; }
-		}
+        public IDesign<T> CreateDesign()
+        {
+            return new Design<T> { Hull = this };
+        }
 
-		IEnumerable<IHull> IUpgradeable<IHull>.OlderVersions
-		{
-			get { return OlderVersions; }
-		}
+        public void Dispose()
+        {
+            if (IsDisposed)
+                return;
+            Galaxy.Current.UnassignID(this);
+            if (Mod.Current != null)
+            {
+                var h = (IHull<T>)this;
+                Mod.Current.Hulls.Remove(h);
+            }
+        }
 
-		public IEnumerable<string> PortraitPaths
-		{
-			get
-			{
-				return GetPaths("Portrait");
-			}
-		}
+        /// <summary>
+        /// The icon for this hull.
+        /// </summary>
+        public Image GetIcon(string shipsetPath)
+        {
+            if (shipsetPath == null)
+                return null;
+            return Pictures.GetIcon(this, shipsetPath);
+        }
 
-		public IEnumerable<string> IconPaths
-		{
-			get
-			{
-				return GetPaths("Mini");
-			}
-		}
+        /// <summary>
+        /// The portrait for this hull.
+        /// </summary>
+        public Image GetPortrait(string shipsetPath)
+        {
+            if (shipsetPath == null)
+                return null;
+            return Pictures.GetPortrait(this, shipsetPath);
+        }
 
-		private IEnumerable<string> GetPaths(string pathtype)
-		{
-			var paths = new List<string>();
+        public bool IsObsoleteMemory(Empire emp)
+        {
+            return false;
+        }
 
-			var shipsetPath = "Default";
-			if (Empire.Current != null)
-				shipsetPath = Empire.Current.ShipsetPath;
+        public void Redact(Empire emp)
+        {
+            // TODO - tech items that aren't visible until some requirements are met
+        }
 
-			foreach (var s in PictureNames)
-			{
-				if (Mod.Current?.RootPath != null)
-				{
-					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, pathtype + "_" + s));
-					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_" + pathtype + "_" + s)); // for SE4 shipset compatibility
-				}
-				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, pathtype + "_" + s));
-				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_" + pathtype + "_" + s)); // for SE4 shipset compatibility
-			}
-			return paths;
-		}
-	}
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private IEnumerable<string> GetPaths(string pathtype)
+        {
+            var paths = new List<string>();
+
+            var shipsetPath = "Default";
+            if (Empire.Current != null)
+                shipsetPath = Empire.Current.ShipsetPath;
+
+            foreach (var s in PictureNames)
+            {
+                if (Mod.Current?.RootPath != null)
+                {
+                    paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, pathtype + "_" + s));
+                    paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_" + pathtype + "_" + s)); // for SE4 shipset compatibility
+                }
+                paths.Add(Path.Combine("Pictures", "Races", shipsetPath, pathtype + "_" + s));
+                paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_" + pathtype + "_" + s)); // for SE4 shipset compatibility
+            }
+            return paths;
+        }
+
+        #endregion Private Methods
+    }
 }

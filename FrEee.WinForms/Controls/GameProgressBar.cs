@@ -1,167 +1,196 @@
+using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using FrEee.Utility;
-using FrEee.Utility.Extensions;
-using FrEee.WinForms.Utility.Extensions;
 
 namespace FrEee.WinForms.Controls
 {
-	public partial class GameProgressBar : UserControl
-	{
-		public GameProgressBar()
-		{
-			InitializeComponent();
-			this.SizeChanged += GameProgressBar_SizeChanged;
-			Padding = new Padding(5, 5, 5, 5);
-		}
+    [Flags]
+    public enum ProgressDisplayType
+    {
+        None = 0,
+        Percentage = 1,
+        Numeric = 2,
+        Both = 3,
+    }
 
-		void GameProgressBar_SizeChanged(object sender, EventArgs e)
-		{
-			Invalidate();
-		}
+    public partial class GameProgressBar : UserControl
+    {
+        #region Private Fields
 
-		private long value = 0;
-		public long Value
-		{
-			get { return value; }
-			set
-			{
-				this.value = value;
-				Invalidate();
-			}
-		}
+        private Color barColor = Color.Blue;
 
-		private long maximum = 100;
-		public long Maximum
-		{
-			get { return maximum; }
-			set
-			{
-				maximum = value;
-				Invalidate();
-			}
-		}
+        private Color borderColor;
 
-		private long incrementalProgress = 0;
-		public long IncrementalProgress
-		{
-			get { return incrementalProgress; }
-			set
-			{
-				incrementalProgress = value;
-				Invalidate();
-			}
-		}
+        private ProgressDisplayType displayType = ProgressDisplayType.Percentage;
 
-		private Color barColor = Color.Blue;
-		public Color BarColor
-		{
-			get { return barColor; }
-			set
-			{
-				barColor = value;
-				Invalidate();
-			}
-		}
+        private long incrementalProgress = 0;
 
-		public Progress Progress
-		{
-			get
-			{
-				return new Progress(Value, Maximum, IncrementalProgress);
-			}
-			set
-			{
-				Value = value.Value;
-				Maximum = value.Maximum;
-				IncrementalProgress = value.IncrementalProgressBeforeDelay;
-			}
-		}
+        private string leftText, rightText;
 
-		private string leftText, rightText;
+        private long maximum = 100;
 
-		public string LeftText { get { return leftText; } set { leftText = value; Invalidate(); } }
+        private long value = 0;
 
-		public string RightText { get { return rightText; } set { rightText = value; Invalidate(); } }
+        #endregion Private Fields
 
-		private ProgressDisplayType displayType = ProgressDisplayType.Percentage;
-		public ProgressDisplayType ProgressDisplayType
-		{
-			get { return displayType; }
-			set
-			{
-				displayType = value;
-				Invalidate();
-			}
-		}
+        #region Public Constructors
 
-		protected override void OnPaint(PaintEventArgs e)
-		{
-			string centerText;
-			switch (ProgressDisplayType)
-			{
-				case ProgressDisplayType.None:
-					centerText = "";
-					break;
-				case ProgressDisplayType.Percentage:
-					centerText = Math.Round(((double)Value / (double)Maximum * 100)) + "%";
-					break;
-				case ProgressDisplayType.Numeric:
-					centerText = Value.ToUnitString(true) + " / " + Maximum.ToUnitString(true);
-					break;
-				case ProgressDisplayType.Both:
-					centerText = Math.Round(((double)Value / (double)Maximum * 100)) + "% (" + Value.ToUnitString(true) + " / " + Maximum.ToUnitString(true) + ")";
-					break;
-				default:
-					centerText = "";
-					break;
-			}
-			base.OnPaint(e);
-			e.Graphics.Clear(BackColor);
-			if (Maximum != 0)
-			{
-				e.Graphics.FillRectangle(new SolidBrush(BarColor), 0, 0, Value * Width / Maximum, Height);
-				e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(128, BarColor)), Value * Width / Maximum, 0, IncrementalProgress * Width / Maximum, Height);
-			}
-			if (BorderStyle == BorderStyle.FixedSingle)
-				ControlPaint.DrawBorder(e.Graphics, ClientRectangle, BorderColor, ButtonBorderStyle.Solid);
-			Brush brush;
-			if (BarColor.R + BarColor.G + BarColor.B > 128 * 3 && BackColor.R + BackColor.G + BackColor.B > 128 * 3)
-				brush = new SolidBrush(Color.Black);
-			else
-				brush = new SolidBrush(Color.White);
-			var rect = new Rectangle(0, 0, Width, Height);
-			rect.X += Padding.Left;
-			rect.Y += Padding.Top;
-			rect.Width -= Padding.Left + Padding.Right;
-			rect.Height -= Padding.Top + Padding.Bottom;
-			e.Graphics.DrawString(LeftText, Font, brush, rect, new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
-			e.Graphics.DrawString(RightText, Font, brush, rect, new StringFormat { Alignment = StringAlignment.Far, LineAlignment = StringAlignment.Center });
-			e.Graphics.DrawString(centerText, Font, brush, rect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
-		}
+        public GameProgressBar()
+        {
+            InitializeComponent();
+            this.SizeChanged += GameProgressBar_SizeChanged;
+            Padding = new Padding(5, 5, 5, 5);
+        }
 
-		private Color borderColor;
-		/// <summary>
-		/// Color of the border for BorderStyle.FixedSingle mode.
-		/// </summary>
-		public Color BorderColor
-		{
-			get { return borderColor; }
-			set
-			{
-				borderColor = value;
-				Invalidate();
-			}
-		}
-	}
+        #endregion Public Constructors
 
-	[Flags]
-	public enum ProgressDisplayType
-	{
-		None = 0,
-		Percentage = 1,
-		Numeric = 2,
-		Both = 3,
-	}
+        #region Public Properties
+
+        public Color BarColor
+        {
+            get { return barColor; }
+            set
+            {
+                barColor = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Color of the border for BorderStyle.FixedSingle mode.
+        /// </summary>
+        public Color BorderColor
+        {
+            get { return borderColor; }
+            set
+            {
+                borderColor = value;
+                Invalidate();
+            }
+        }
+
+        public long IncrementalProgress
+        {
+            get { return incrementalProgress; }
+            set
+            {
+                incrementalProgress = value;
+                Invalidate();
+            }
+        }
+
+        public string LeftText { get { return leftText; } set { leftText = value; Invalidate(); } }
+
+        public long Maximum
+        {
+            get { return maximum; }
+            set
+            {
+                maximum = value;
+                Invalidate();
+            }
+        }
+
+        public Progress Progress
+        {
+            get
+            {
+                return new Progress(Value, Maximum, IncrementalProgress);
+            }
+            set
+            {
+                Value = value.Value;
+                Maximum = value.Maximum;
+                IncrementalProgress = value.IncrementalProgressBeforeDelay;
+            }
+        }
+
+        public ProgressDisplayType ProgressDisplayType
+        {
+            get { return displayType; }
+            set
+            {
+                displayType = value;
+                Invalidate();
+            }
+        }
+
+        public string RightText { get { return rightText; } set { rightText = value; Invalidate(); } }
+
+        public long Value
+        {
+            get { return value; }
+            set
+            {
+                this.value = value;
+                Invalidate();
+            }
+        }
+
+        #endregion Public Properties
+
+        #region Protected Methods
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            string centerText;
+            switch (ProgressDisplayType)
+            {
+                case ProgressDisplayType.None:
+                    centerText = "";
+                    break;
+
+                case ProgressDisplayType.Percentage:
+                    centerText = Math.Round(((double)Value / (double)Maximum * 100)) + "%";
+                    break;
+
+                case ProgressDisplayType.Numeric:
+                    centerText = Value.ToUnitString(true) + " / " + Maximum.ToUnitString(true);
+                    break;
+
+                case ProgressDisplayType.Both:
+                    centerText = Math.Round(((double)Value / (double)Maximum * 100)) + "% (" + Value.ToUnitString(true) + " / " + Maximum.ToUnitString(true) + ")";
+                    break;
+
+                default:
+                    centerText = "";
+                    break;
+            }
+            base.OnPaint(e);
+            e.Graphics.Clear(BackColor);
+            if (Maximum != 0)
+            {
+                e.Graphics.FillRectangle(new SolidBrush(BarColor), 0, 0, Value * Width / Maximum, Height);
+                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(128, BarColor)), Value * Width / Maximum, 0, IncrementalProgress * Width / Maximum, Height);
+            }
+            if (BorderStyle == BorderStyle.FixedSingle)
+                ControlPaint.DrawBorder(e.Graphics, ClientRectangle, BorderColor, ButtonBorderStyle.Solid);
+            Brush brush;
+            if (BarColor.R + BarColor.G + BarColor.B > 128 * 3 && BackColor.R + BackColor.G + BackColor.B > 128 * 3)
+                brush = new SolidBrush(Color.Black);
+            else
+                brush = new SolidBrush(Color.White);
+            var rect = new Rectangle(0, 0, Width, Height);
+            rect.X += Padding.Left;
+            rect.Y += Padding.Top;
+            rect.Width -= Padding.Left + Padding.Right;
+            rect.Height -= Padding.Top + Padding.Bottom;
+            e.Graphics.DrawString(LeftText, Font, brush, rect, new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
+            e.Graphics.DrawString(RightText, Font, brush, rect, new StringFormat { Alignment = StringAlignment.Far, LineAlignment = StringAlignment.Center });
+            e.Graphics.DrawString(centerText, Font, brush, rect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+        }
+
+        #endregion Protected Methods
+
+        #region Private Methods
+
+        private void GameProgressBar_SizeChanged(object sender, EventArgs e)
+        {
+            Invalidate();
+        }
+
+        #endregion Private Methods
+    }
 }

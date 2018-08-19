@@ -1,160 +1,177 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Dynamic;
-using System.Globalization;
+using System.Linq;
 
 namespace FrEee.Utility
 {
-	/// <summary>
-	/// A dynamic dictionary that's dynamic dictionaries all the way down.
-	/// About as close as you can get to a Perl hash in C#.
-	/// </summary>
-	public class DynamicDictionary : DynamicObject, IDictionary<object, object>
-	{
-		public DynamicDictionary()
-		{
-			dict = new SafeDictionary<object, object>();
-		}
+    /// <summary>
+    /// A dynamic dictionary that's dynamic dictionaries all the way down.
+    /// About as close as you can get to a Perl hash in C#.
+    /// </summary>
+    public class DynamicDictionary : DynamicObject, IDictionary<object, object>
+    {
+        #region Public Constructors
 
-		private SafeDictionary<object, object> dict { get; set; }
+        public DynamicDictionary()
+        {
+            dict = new SafeDictionary<object, object>();
+        }
 
-		public override IEnumerable<string> GetDynamicMemberNames()
-		{
-			return dict.Keys.OfType<string>();
-		}
+        #endregion Public Constructors
 
-		public override bool TryGetIndex(GetIndexBinder binder, object[] indexes, out object result)
-		{
-			var key = string.Join(",", indexes.Select(o => o.ToString()).ToArray());
-			if (!dict.ContainsKey(key))
-				dict[key] = new DynamicDictionary();
-			result = dict[key];
-			return true;
-		}
+        #region Public Properties
 
-		public override bool TryGetMember(GetMemberBinder binder, out object result)
-		{
-			if (!dict.ContainsKey(binder.Name))
-				dict[binder.Name] = new DynamicDictionary();
-			result = dict[binder.Name];
-			return true;
-		}
+        public int Count
+        {
+            get { return dict.Count; }
+        }
 
-		public override bool TrySetIndex(SetIndexBinder binder, object[] indexes, object value)
-		{
-			var key = string.Join(",", indexes.Select(o => o.ToString()).ToArray());
-			dict[key] = value;
-			return true;
-		}
+        public bool IsEmpty
+        {
+            get { return dict.Count == 0; }
+        }
 
-		public override bool TrySetMember(SetMemberBinder binder, object value)
-		{
-			dict[binder.Name] = value;
-			return true;
-		}
+        public bool IsReadOnly
+        {
+            get { return dict.IsReadOnly; }
+        }
 
-		public bool IsEmpty
-		{
-			get { return dict.Count == 0; }
-		}
+        public ICollection<object> Keys
+        {
+            get { return dict.Keys; }
+        }
 
-		public bool HasProperty(string prop)
-		{
-			return dict.ContainsKey(prop);
-		}
+        public ICollection<object> Values
+        {
+            get { return dict.Values; }
+        }
 
-		public void Add(object key, object value)
-		{
-			dict.Add(key, value);
-		}
+        #endregion Public Properties
 
-		public bool ContainsKey(object key)
-		{
-			return dict.ContainsKey(key);
-		}
+        #region Private Properties
 
-		public ICollection<object> Keys
-		{
-			get { return dict.Keys; }
-		}
+        private SafeDictionary<object, object> dict { get; set; }
 
-		public bool Remove(object key)
-		{
-			return dict.Remove(key);
-		}
+        #endregion Private Properties
 
-		public bool TryGetValue(object key, out object value)
-		{
-			if (!dict.ContainsKey(key))
-				dict[key] = new DynamicDictionary();
-			value = dict[key];
-			return true;
-		}
+        #region Public Indexers
 
-		public ICollection<object> Values
-		{
-			get { return dict.Values; }
-		}
+        public object this[object key]
+        {
+            get
+            {
+                if (!dict.ContainsKey(key))
+                    dict[key] = new DynamicDictionary();
+                return dict[key];
+            }
+            set
+            {
+                dict[key] = value;
+            }
+        }
 
-		public object this[object key]
-		{
-			get
-			{
-				if (!dict.ContainsKey(key))
-					dict[key] = new DynamicDictionary();
-				return dict[key];
-			}
-			set
-			{
-				dict[key] = value;
-			}
-		}
+        #endregion Public Indexers
 
-		public void Add(KeyValuePair<object, object> item)
-		{
-			dict.Add(item);
-		}
+        #region Public Methods
 
-		public void Clear()
-		{
-			dict.Clear();
-		}
+        public void Add(object key, object value)
+        {
+            dict.Add(key, value);
+        }
 
-		public bool Contains(KeyValuePair<object, object> item)
-		{
-			return dict.Contains(item);
-		}
+        public void Add(KeyValuePair<object, object> item)
+        {
+            dict.Add(item);
+        }
 
-		public void CopyTo(KeyValuePair<object, object>[] array, int arrayIndex)
-		{
-			dict.CopyTo(array, arrayIndex);
-		}
+        public void Clear()
+        {
+            dict.Clear();
+        }
 
-		public int Count
-		{
-			get { return dict.Count; }
-		}
+        public bool Contains(KeyValuePair<object, object> item)
+        {
+            return dict.Contains(item);
+        }
 
-		public bool IsReadOnly
-		{
-			get { return dict.IsReadOnly; }
-		}
+        public bool ContainsKey(object key)
+        {
+            return dict.ContainsKey(key);
+        }
 
-		public bool Remove(KeyValuePair<object, object> item)
-		{
-			return dict.Remove(item);
-		}
+        public void CopyTo(KeyValuePair<object, object>[] array, int arrayIndex)
+        {
+            dict.CopyTo(array, arrayIndex);
+        }
 
-		public IEnumerator<KeyValuePair<object, object>> GetEnumerator()
-		{
-			return dict.GetEnumerator();
-		}
+        public override IEnumerable<string> GetDynamicMemberNames()
+        {
+            return dict.Keys.OfType<string>();
+        }
 
-		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
-	}
+        public IEnumerator<KeyValuePair<object, object>> GetEnumerator()
+        {
+            return dict.GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public bool HasProperty(string prop)
+        {
+            return dict.ContainsKey(prop);
+        }
+
+        public bool Remove(object key)
+        {
+            return dict.Remove(key);
+        }
+
+        public bool Remove(KeyValuePair<object, object> item)
+        {
+            return dict.Remove(item);
+        }
+
+        public override bool TryGetIndex(GetIndexBinder binder, object[] indexes, out object result)
+        {
+            var key = string.Join(",", indexes.Select(o => o.ToString()).ToArray());
+            if (!dict.ContainsKey(key))
+                dict[key] = new DynamicDictionary();
+            result = dict[key];
+            return true;
+        }
+
+        public override bool TryGetMember(GetMemberBinder binder, out object result)
+        {
+            if (!dict.ContainsKey(binder.Name))
+                dict[binder.Name] = new DynamicDictionary();
+            result = dict[binder.Name];
+            return true;
+        }
+
+        public bool TryGetValue(object key, out object value)
+        {
+            if (!dict.ContainsKey(key))
+                dict[key] = new DynamicDictionary();
+            value = dict[key];
+            return true;
+        }
+
+        public override bool TrySetIndex(SetIndexBinder binder, object[] indexes, object value)
+        {
+            var key = string.Join(",", indexes.Select(o => o.ToString()).ToArray());
+            dict[key] = value;
+            return true;
+        }
+
+        public override bool TrySetMember(SetMemberBinder binder, object value)
+        {
+            dict[binder.Name] = value;
+            return true;
+        }
+
+        #endregion Public Methods
+    }
 }

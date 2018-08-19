@@ -2,104 +2,122 @@
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding.Enumerations;
+using FrEee.Modding.Interfaces;
 using FrEee.Utility;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Loaders
 {
-	/// <summary>
-	/// Loads hulls from VehicleSize.txt.
-	/// </summary>
-	public class HullLoader : DataFileLoader
-	{
-		public const string Filename = "VehicleSize.txt";
+    /// <summary>
+    /// Loads hulls from VehicleSize.txt.
+    /// </summary>
+    public class HullLoader : DataFileLoader
+    {
+        #region Public Fields
 
-		public HullLoader(string modPath)
-			: base(modPath, Filename, DataFile.Load(modPath, Filename))
-		{
-		}
+        public const string Filename = "VehicleSize.txt";
 
-		public override IEnumerable<IModObject> Load(Mod mod)
-		{
-			foreach (var rec in DataFile.Records)
-			{
-				IHull<IVehicle> hull;
-				var hullname = rec.Get<string>("Name", null);
-				var hulltype = rec.Get<string>("Vehicle Type", null);
-				switch (hulltype)
-				{
-					case "Ship":
-						hull = new Hull<Ship>();
-						break;
-					case "Base":
-						hull = new Hull<Base>();
-						break;
-					case "Fighter":
-						hull = new Hull<Fighter>();
-						break;
-					case "Satellite":
-						hull = new Hull<Satellite>();
-						break;
-					case "Troop":
-						hull = new Hull<Troop>();
-						break;
-					case "Drone":
-						hull = new Hull<Drone>();
-						break;
-					case "Mine":
-						hull = new Hull<Mine>();
-						break;
-					case "Weapon Platform":
-						hull = new Hull<WeaponPlatform>();
-						break;
-					default:
-						Mod.Errors.Add(new DataParsingException("Invalid vehicle type \"" + hulltype + "\" specified for " + hullname + " hull.", Mod.CurrentFileName, rec));
-						continue;
-				}
-				hull.ModID = rec.Get<string>("ID", hull);
-				hull.Name = hullname;
-				mod.Hulls.Add(hull);
+        #endregion Public Fields
 
-				hull.ShortName = rec.Get<string>("Short Name", hull);
-				hull.Description = rec.Get<string>("Description", hull);
-				hull.Code = rec.Get<string>("Code", hull);
+        #region Public Constructors
 
-				var bitmapfields = rec.Fields.Where(f => f.Name.EndsWith("Bitmap Name"));
-				foreach (var f in bitmapfields)
-				{
-					hull.PictureNames.Add(f.Value);
-				}
+        public HullLoader(string modPath)
+            : base(modPath, Filename, DataFile.Load(modPath, Filename))
+        {
+        }
 
-				hull.Size = rec.Get<int>("Tonnage", hull);
+        #endregion Public Constructors
 
-				foreach (var costfield in rec.Fields.Where(cf => cf.Name.StartsWith("Cost ")))
-					hull.Cost[Resource.Find(costfield.Name.Substring("Cost ".Length))] = costfield.CreateFormula<int>(hull);
+        #region Public Methods
 
-				hull.Mass = rec.Get<int>("Engines Per Move", hull);
+        public override IEnumerable<IModObject> Load(Mod mod)
+        {
+            foreach (var rec in DataFile.Records)
+            {
+                IHull<IVehicle> hull;
+                var hullname = rec.Get<string>("Name", null);
+                var hulltype = rec.Get<string>("Vehicle Type", null);
+                switch (hulltype)
+                {
+                    case "Ship":
+                        hull = new Hull<Ship>();
+                        break;
 
-				foreach (var tr in RequirementLoader.LoadEmpireRequirements(rec, hull, RequirementType.Unlock))
-					hull.UnlockRequirements.Add(tr);
+                    case "Base":
+                        hull = new Hull<Base>();
+                        break;
 
-				// TODO - build and use requirements
+                    case "Fighter":
+                        hull = new Hull<Fighter>();
+                        break;
 
-				foreach (var abil in AbilityLoader.Load(Filename, rec, hull))
-					hull.Abilities.Add(abil);
+                    case "Satellite":
+                        hull = new Hull<Satellite>();
+                        break;
 
-				hull.NeedsBridge = rec.Get<bool>("Requirement Must Have Bridge", hull);
-				hull.CanUseAuxiliaryControl = rec.Get<bool>("Requirement Can Have Aux Con", hull);
-				hull.MinLifeSupport = rec.Get<int>("Requirement Min Life Support", hull);
-				hull.MinCrewQuarters = rec.Get<int>("Requirement Min Crew Quarters", hull);
-				hull.MaxEngines = rec.Get<int>("Requirement Max Engines", hull);
-				hull.MinPercentFighterBays = rec.Get<int>("Requirement Pct Fighter Bays", hull);
-				hull.MinPercentColonyModules = rec.Get<int>("Requirement Pct Colony Mods", hull);
-				hull.MinPercentCargoBays = rec.Get<int>("Requirement Pct Cargo", hull);
+                    case "Troop":
+                        hull = new Hull<Troop>();
+                        break;
 
-				yield return hull;
-			}
-		}
-	}
+                    case "Drone":
+                        hull = new Hull<Drone>();
+                        break;
+
+                    case "Mine":
+                        hull = new Hull<Mine>();
+                        break;
+
+                    case "Weapon Platform":
+                        hull = new Hull<WeaponPlatform>();
+                        break;
+
+                    default:
+                        Mod.Errors.Add(new DataParsingException("Invalid vehicle type \"" + hulltype + "\" specified for " + hullname + " hull.", Mod.CurrentFileName, rec));
+                        continue;
+                }
+                hull.ModID = rec.Get<string>("ID", hull);
+                hull.Name = hullname;
+                mod.Hulls.Add(hull);
+
+                hull.ShortName = rec.Get<string>("Short Name", hull);
+                hull.Description = rec.Get<string>("Description", hull);
+                hull.Code = rec.Get<string>("Code", hull);
+
+                var bitmapfields = rec.Fields.Where(f => f.Name.EndsWith("Bitmap Name"));
+                foreach (var f in bitmapfields)
+                {
+                    hull.PictureNames.Add(f.Value);
+                }
+
+                hull.Size = rec.Get<int>("Tonnage", hull);
+
+                foreach (var costfield in rec.Fields.Where(cf => cf.Name.StartsWith("Cost ")))
+                    hull.Cost[Resource.Find(costfield.Name.Substring("Cost ".Length))] = costfield.CreateFormula<int>(hull);
+
+                hull.Mass = rec.Get<int>("Engines Per Move", hull);
+
+                foreach (var tr in RequirementLoader.LoadEmpireRequirements(rec, hull, RequirementType.Unlock))
+                    hull.UnlockRequirements.Add(tr);
+
+                // TODO - build and use requirements
+
+                foreach (var abil in AbilityLoader.Load(Filename, rec, hull))
+                    hull.Abilities.Add(abil);
+
+                hull.NeedsBridge = rec.Get<bool>("Requirement Must Have Bridge", hull);
+                hull.CanUseAuxiliaryControl = rec.Get<bool>("Requirement Can Have Aux Con", hull);
+                hull.MinLifeSupport = rec.Get<int>("Requirement Min Life Support", hull);
+                hull.MinCrewQuarters = rec.Get<int>("Requirement Min Crew Quarters", hull);
+                hull.MaxEngines = rec.Get<int>("Requirement Max Engines", hull);
+                hull.MinPercentFighterBays = rec.Get<int>("Requirement Pct Fighter Bays", hull);
+                hull.MinPercentColonyModules = rec.Get<int>("Requirement Pct Colony Mods", hull);
+                hull.MinPercentCargoBays = rec.Get<int>("Requirement Pct Cargo", hull);
+
+                yield return hull;
+            }
+        }
+
+        #endregion Public Methods
+    }
 }

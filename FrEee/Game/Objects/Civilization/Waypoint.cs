@@ -3,129 +3,147 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace FrEee.Game.Objects.Civilization
 {
-	/// <summary>
-	/// A waypoint in space that can be used for navigation.
-	/// </summary>
-	public abstract class Waypoint : ILocated, IFoggable, IOwnable, INamed, IPromotable
-	{
-		protected Waypoint()
-		{
-			Owner = Empire.Current;
-		}
+    /// <summary>
+    /// A waypoint in space that can be used for navigation.
+    /// </summary>
+    public abstract class Waypoint : ILocated, IFoggable, IOwnable, INamed, IPromotable
+    {
+        #region Protected Constructors
 
-		public abstract Sector Sector { get; set; }
+        protected Waypoint()
+        {
+            Owner = Empire.Current;
+        }
 
-		public abstract StarSystem StarSystem { get; }
+        #endregion Protected Constructors
 
-		/// <summary>
-		/// Only the waypoint's owner can see it.
-		/// If the sector is null, it's invisible too.
-		/// </summary>
-		/// <param name="emp"></param>
-		/// <returns></returns>
-		public Visibility CheckVisibility(Empire emp)
-		{
-			if (emp == Owner && Sector != null)
-				return Visibility.Owned;
-			return Visibility.Unknown;
-		}
+        #region Public Properties
 
-		public void Redact(Empire emp)
-		{
-			if (CheckVisibility(emp) == Visibility.Unknown)
-				Dispose();
-		}
+        public long ID
+        {
+            get;
+            set;
+        }
 
-		public bool IsMemory
-		{
-			get;
-			set;
-		}
+        public bool IsDisposed
+        {
+            get;
+            set;
+        }
 
-		public double Timestamp
-		{
-			get;
-			set;
-		}
+        public bool IsMemory
+        {
+            get;
+            set;
+        }
 
-		public bool IsObsoleteMemory(Empire emp)
-		{
-			return false;
-		}
+        public abstract string Name { get; }
 
-		public long ID
-		{
-			get;
-			set;
-		}
+        [DoNotSerialize]
+        public Empire Owner { get { return owner; } set { owner = value; } }
 
-		public bool IsDisposed
-		{
-			get;
-			set;
-		}
+        public abstract Sector Sector { get; set; }
 
-		public void Dispose()
-		{
-			if (IsDisposed)
-				return;
-			Owner.Waypoints.Remove(this);
-			for (int i = 0; i < Owner.NumberedWaypoints.Length; i++)
-			{
-				if (Owner.NumberedWaypoints[i] == this)
-					Owner.NumberedWaypoints[i] = null;
-			}
-			foreach (var sobj in Galaxy.Current.FindSpaceObjects<IMobileSpaceObject>())
-			{
-				// check if space object has orders to move to this waypoint
-				// if so, delete that order and any future orders
-				bool foundWaypoint = false;
-				foreach (var order in sobj.Orders.ToArray())
-				{
-					if (order is WaypointOrder)
-					{
-						var wo = order as WaypointOrder;
-						if (wo.Target == this)
-							foundWaypoint = true;
-					}
-					if (foundWaypoint)
-						sobj.RemoveOrder(order);
-				}
-				if (foundWaypoint)
-					AlteredQueuesOnDelete++;
-			}
-			IsDisposed = true;
-			Galaxy.Current.UnassignID(this);
-		}
+        public abstract StarSystem StarSystem { get; }
 
-		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+        public double Timestamp
+        {
+            get;
+            set;
+        }
 
-		private GalaxyReference<Empire> owner { get; set; }
+        #endregion Public Properties
 
-		public abstract string Name { get; }
+        #region Internal Properties
 
-		public override string ToString()
-		{
-			return Name;
-		}
+        /// <summary>
+        /// Number of vehicles whose orders were altered when this waypoint was deleted.
+        /// </summary>
+        [DoNotSerialize]
+        internal int AlteredQueuesOnDelete { get; private set; }
 
-		/// <summary>
-		/// Number of vehicles whose orders were altered when this waypoint was deleted.
-		/// </summary>
-		[DoNotSerialize]
-		internal int AlteredQueuesOnDelete { get; private set; }
+        #endregion Internal Properties
 
-		public virtual void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
-		{
-			// doesn't use client objects, nothing to do here
-		}
-	}
+        #region Private Properties
+
+        private GalaxyReference<Empire> owner { get; set; }
+
+        #endregion Private Properties
+
+        #region Public Methods
+
+        /// <summary>
+        /// Only the waypoint's owner can see it.
+        /// If the sector is null, it's invisible too.
+        /// </summary>
+        /// <param name="emp"></param>
+        /// <returns></returns>
+        public Visibility CheckVisibility(Empire emp)
+        {
+            if (emp == Owner && Sector != null)
+                return Visibility.Owned;
+            return Visibility.Unknown;
+        }
+
+        public void Dispose()
+        {
+            if (IsDisposed)
+                return;
+            Owner.Waypoints.Remove(this);
+            for (int i = 0; i < Owner.NumberedWaypoints.Length; i++)
+            {
+                if (Owner.NumberedWaypoints[i] == this)
+                    Owner.NumberedWaypoints[i] = null;
+            }
+            foreach (var sobj in Galaxy.Current.FindSpaceObjects<IMobileSpaceObject>())
+            {
+                // check if space object has orders to move to this waypoint
+                // if so, delete that order and any future orders
+                bool foundWaypoint = false;
+                foreach (var order in sobj.Orders.ToArray())
+                {
+                    if (order is WaypointOrder)
+                    {
+                        var wo = order as WaypointOrder;
+                        if (wo.Target == this)
+                            foundWaypoint = true;
+                    }
+                    if (foundWaypoint)
+                        sobj.RemoveOrder(order);
+                }
+                if (foundWaypoint)
+                    AlteredQueuesOnDelete++;
+            }
+            IsDisposed = true;
+            Galaxy.Current.UnassignID(this);
+        }
+
+        public bool IsObsoleteMemory(Empire emp)
+        {
+            return false;
+        }
+
+        public void Redact(Empire emp)
+        {
+            if (CheckVisibility(emp) == Visibility.Unknown)
+                Dispose();
+        }
+
+        public virtual void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+        {
+            // doesn't use client objects, nothing to do here
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        #endregion Public Methods
+    }
 }

@@ -1,78 +1,96 @@
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Interfaces;
 using System;
+using System.Windows.Forms;
 
 namespace FrEee.WinForms.Controls
 {
-	public partial class StormReport : UserControl, IBindable<Storm>
-	{
-		public StormReport()
-		{
-			InitializeComponent();
-		}
+    public partial class StormReport : UserControl, IBindable<Storm>
+    {
+        #region Private Fields
 
-		public StormReport(Storm storm)
-			: this()
-		{
-			Storm = storm;
-		}
+        private Storm storm;
 
-		private Storm storm;
+        #endregion Private Fields
 
-		/// <summary>
-		/// The storm for which to display a report.
-		/// </summary>
-		public Storm Storm
-		{
-			get { return storm; }
-			set
-			{
-				storm = value;
-				Bind();
-			}
-		}
+        #region Public Constructors
 
-		public void Bind()
-		{
-			SuspendLayout();
-			if (Storm == null)
-				Visible = false;
-			else
-			{
-				Visible = true;
+        public StormReport()
+        {
+            InitializeComponent();
+        }
 
-				picPortrait.Image = Storm.Portrait;
+        public StormReport(Storm storm)
+            : this()
+        {
+            Storm = storm;
+        }
 
-				if (Storm.Timestamp == Galaxy.Current.Timestamp)
-					txtAge.Text = "Current";
-				else if (Galaxy.Current.Timestamp - Storm.Timestamp <= 1)
-					txtAge.Text = "Last turn";
-				else
-					txtAge.Text = Math.Ceiling(Galaxy.Current.Timestamp - Storm.Timestamp) + " turns ago";
+        #endregion Public Constructors
 
-				txtName.Text = Storm.Name;
-				txtSize.Text = Storm.StellarSize + " Storm";
-				txtDescription.Text = Storm.Description;
+        #region Public Properties
 
-				abilityTreeView.Abilities = Storm.AbilityTree();
-				abilityTreeView.IntrinsicAbilities = Storm.IntrinsicAbilities;
-			}
-			ResumeLayout();
-		}
+        /// <summary>
+        /// The storm for which to display a report.
+        /// </summary>
+        public Storm Storm
+        {
+            get { return storm; }
+            set
+            {
+                storm = value;
+                Bind();
+            }
+        }
 
-		public void Bind(Storm data)
-		{
-			Storm = data;
-			Bind();
-		}
+        #endregion Public Properties
 
-		private void picPortrait_Click(object sender, System.EventArgs e)
-		{
-			picPortrait.ShowFullSize(Storm.Name);
-		}
-	}
+        #region Public Methods
+
+        public void Bind()
+        {
+            SuspendLayout();
+            if (Storm == null)
+                Visible = false;
+            else
+            {
+                Visible = true;
+
+                picPortrait.Image = Storm.Portrait;
+
+                if (Storm.Timestamp == Galaxy.Current.Timestamp)
+                    txtAge.Text = "Current";
+                else if (Galaxy.Current.Timestamp - Storm.Timestamp <= 1)
+                    txtAge.Text = "Last turn";
+                else
+                    txtAge.Text = Math.Ceiling(Galaxy.Current.Timestamp - Storm.Timestamp) + " turns ago";
+
+                txtName.Text = Storm.Name;
+                txtSize.Text = Storm.StellarSize + " Storm";
+                txtDescription.Text = Storm.Description;
+
+                abilityTreeView.Abilities = Storm.AbilityTree();
+                abilityTreeView.IntrinsicAbilities = Storm.IntrinsicAbilities;
+            }
+            ResumeLayout();
+        }
+
+        public void Bind(Storm data)
+        {
+            Storm = data;
+            Bind();
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private void picPortrait_Click(object sender, System.EventArgs e)
+        {
+            picPortrait.ShowFullSize(Storm.Name);
+        }
+
+        #endregion Private Methods
+    }
 }

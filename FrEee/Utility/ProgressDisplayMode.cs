@@ -1,26 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace FrEee.WinForms.DataGridView
+﻿namespace FrEee.WinForms.DataGridView
 {
-	/// <summary>
-	/// Display modes for progress bars.
-	/// </summary>
-	public enum ProgressDisplayMode
-	{
-		/// <summary>
-		/// Displays the raw numbers.
-		/// </summary>
-		Raw,
-		/// <summary>
-		/// Displays numbers as percentages.
-		/// </summary>
-		Percentage,
-		/// <summary>
-		/// Displays estimated time to completion.
-		/// </summary>
-		Eta
-	}
+    /// <summary>
+    /// Display modes for progress bars.
+    /// </summary>
+    public enum ProgressDisplayMode
+    {
+        /// <summary>
+        /// Displays the raw numbers.
+        /// </summary>
+        Raw,
+
+        /// <summary>
+        /// Displays numbers as percentages.
+        /// </summary>
+        Percentage,
+
+        /// <summary>
+        /// Displays estimated time to completion.
+        /// </summary>
+        Eta
+    }
 }

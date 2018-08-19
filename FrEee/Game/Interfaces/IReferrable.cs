@@ -1,19 +1,18 @@
-﻿using FrEee.Game.Enumerations;
-using FrEee.Game.Objects.Civilization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 
 namespace FrEee.Game.Interfaces
 {
-	/// <summary>
-	/// Something that can be referred to from the client side using an ID.
-	/// </summary>
-	public interface IReferrable : IDisposable, IOwnable
-	{
-		long ID { get; set; }
+    /// <summary>
+    /// Something that can be referred to from the client side using an ID.
+    /// </summary>
+    public interface IReferrable : IDisposable, IOwnable
+    {
+        #region Public Properties
 
-		bool IsDisposed { get; set; }
-	}
+        long ID { get; set; }
+
+        bool IsDisposed { get; set; }
+
+        #endregion Public Properties
+    }
 }

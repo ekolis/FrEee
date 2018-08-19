@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace FrEee.Modding
 {
@@ -13,32 +12,7 @@ namespace FrEee.Modding
     [Serializable]
     public class DataFile
     {
-        /// <summary>
-        /// Loads a data file from disk.
-        /// </summary>
-        /// <param name="modpath">The mod path, relative to the FrEee/Mods folder, or null to use the stock mod.</param>
-        /// <param name="filename">The file name relative to the mod's Data folder.</param>
-        /// <returns></returns>
-        public static DataFile Load(string modpath, string filename, string subpath = "")
-        {
-            // TODO - fall back on stock data when mod data not found
-            var datapath = modpath == null ? "Data" : Path.Combine("Mods", modpath, "Data", subpath);
-
-            DataPath =  modpath;
-
-            var filepath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), datapath, filename);
-            if (File.Exists(filepath))
-                return new DataFile(File.ReadAllText(filepath));
-            // got here? then try the stock data file instead if we were loading a mod
-            if (modpath != null)
-            {
-                filepath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Data", filename);
-                if (File.Exists(filepath))
-                    return new DataFile(File.ReadAllText(filepath));
-            }
-            // got here? then data file was not found even in stock
-            throw new FileNotFoundException($"Could not find data file: {filename} at {filepath}.", filename);
-        }
+        #region Public Constructors
 
         /// <summary>
         /// Creates a data file with no records
@@ -135,6 +109,12 @@ namespace FrEee.Modding
             MetaRecords = compiledRecords;
         }
 
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        public static string DataPath { get; private set; }
+
         /// <summary>
         /// The meta records in this data file.
         /// Meta records are records that can contain parameters and static formulas.
@@ -152,11 +132,42 @@ namespace FrEee.Modding
             }
         }
 
-        public static string DataPath { get; private set; }
+        #endregion Public Properties
+
+        #region Public Methods
+
+        /// <summary>
+        /// Loads a data file from disk.
+        /// </summary>
+        /// <param name="modpath">The mod path, relative to the FrEee/Mods folder, or null to use the stock mod.</param>
+        /// <param name="filename">The file name relative to the mod's Data folder.</param>
+        /// <returns></returns>
+        public static DataFile Load(string modpath, string filename, string subpath = "")
+        {
+            // TODO - fall back on stock data when mod data not found
+            var datapath = modpath == null ? "Data" : Path.Combine("Mods", modpath, "Data", subpath);
+
+            DataPath = modpath;
+
+            var filepath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), datapath, filename);
+            if (File.Exists(filepath))
+                return new DataFile(File.ReadAllText(filepath));
+            // got here? then try the stock data file instead if we were loading a mod
+            if (modpath != null)
+            {
+                filepath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Data", filename);
+                if (File.Exists(filepath))
+                    return new DataFile(File.ReadAllText(filepath));
+            }
+            // got here? then data file was not found even in stock
+            throw new FileNotFoundException($"Could not find data file: {filename} at {filepath}.", filename);
+        }
 
         public override string ToString()
         {
             return "(" + MetaRecords.Count + " meta records)";
         }
+
+        #endregion Public Methods
     }
 }

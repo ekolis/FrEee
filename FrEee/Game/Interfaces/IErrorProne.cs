@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace FrEee.Game.Interfaces
 {
-	public interface IErrorProne
-	{
-		IEnumerable<string> Errors { get; }
-	}
+    public interface IErrorProne
+    {
+        #region Public Properties
+
+        IEnumerable<string> Errors { get; }
+
+        #endregion Public Properties
+    }
 }

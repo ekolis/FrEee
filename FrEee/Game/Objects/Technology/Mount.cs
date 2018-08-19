@@ -6,275 +6,284 @@ using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
 namespace FrEee.Game.Objects.Technology
 {
-	/// <summary>
-	/// A mount that can be applied to a component.
-	/// </summary>
-	public class Mount : IResearchable, IModObject, IUpgradeable<Mount>
-	{
-		public Mount()
-		{
-			AbilityPercentages = new Dictionary<AbilityRule, IDictionary<int, Formula<int>>>();
-			AbilityModifiers = new Dictionary<AbilityRule, IDictionary<int, Formula<int>>>();
-			UnlockRequirements = new List<Requirement<Empire>>();
-		}
+    /// <summary>
+    /// A mount that can be applied to a component.
+    /// </summary>
+    public class Mount : IResearchable, IModObject, IUpgradeable<Mount>
+    {
+        #region Public Constructors
 
-		/// <summary>
-		/// No one owns mounts; they are shared.
-		/// </summary>
-		public Empire Owner { get { return null; } }
+        public Mount()
+        {
+            AbilityPercentages = new Dictionary<AbilityRule, IDictionary<int, Formula<int>>>();
+            AbilityModifiers = new Dictionary<AbilityRule, IDictionary<int, Formula<int>>>();
+            UnlockRequirements = new List<Requirement<Empire>>();
+        }
 
-		/// <summary>
-		/// The full name of this mount.
-		/// </summary>
-		public Formula<string> Name { get; set; }
+        #endregion Public Constructors
 
-		/// <summary>
-		/// A shorter name for this mount.
-		/// </summary>
-		public Formula<string> ShortName { get; set; }
+        #region Public Properties
 
-		/// <summary>
-		/// A description of this mount.
-		/// </summary>
-		public Formula<string> Description { get; set; }
+        /// <summary>
+        /// Additive modifiers for abilities.
+        /// </summary>
+        public IDictionary<AbilityRule, IDictionary<int, Formula<int>>> AbilityModifiers
+        {
+            get;
+            set;
+        }
 
-		/// <summary>
-		/// An abbreviation for this mount.
-		/// </summary>
-		public Formula<string> Code { get; set; }
+        /// <summary>
+        /// Percentage factors for abilities.
+        /// </summary>
+        public IDictionary<AbilityRule, IDictionary<int, Formula<int>>> AbilityPercentages
+        {
+            get;
+            set;
+        }
 
-		/// <summary>
-		/// The name of the picture to use for this mount.
-		/// </summary>
-		public Formula<string> PictureName { get; set; }
+        /// <summary>
+        /// An abbreviation for this mount.
+        /// </summary>
+        public Formula<string> Code { get; set; }
 
-		/// <summary>
-		/// Percentage of normal component cost.
-		/// </summary>
-		public Formula<int> CostPercent { get; set; }
+        /// <summary>
+        /// Percentage of normal component cost.
+        /// </summary>
+        public Formula<int> CostPercent { get; set; }
 
-		/// <summary>
-		/// Percentage of normal component size.
-		/// </summary>
-		public Formula<int> SizePercent { get; set; }
+        /// <summary>
+        /// A description of this mount.
+        /// </summary>
+        public Formula<string> Description { get; set; }
 
-		/// <summary>
-		/// Percentage of normal component hitpoints.
-		/// </summary>
-		public Formula<int> DurabilityPercent { get; set; }
+        /// <summary>
+        /// Percentage of normal component hitpoints.
+        /// </summary>
+        public Formula<int> DurabilityPercent { get; set; }
 
-		/// <summary>
-		/// Percentage of normal weapon damage.
-		/// </summary>
-		public Formula<int> WeaponDamagePercent { get; set; }
+        public System.Drawing.Image Icon
+        {
+            get { return Pictures.GetIcon(this); }
+        }
 
-		/// <summary>
-		/// Percentage of normal component supply usage.
-		/// </summary>
-		public Formula<int> SupplyUsagePercent { get; set; }
+        public IEnumerable<string> IconPaths
+        {
+            get
+            {
+                return PortraitPaths;
+            }
+        }
 
-		/// <summary>
-		/// Range modifier for weapons.
-		/// </summary>
-		public Formula<int> WeaponRangeModifier { get; set; }
+        public long ID { get; set; }
 
-		/// <summary>
-		/// Accuracy modifier for weapons.
-		/// </summary>
-		public Formula<int> WeaponAccuracyModifier { get; set; }
+        public bool IsDisposed { get; set; }
 
-		/// <summary>
-		/// Minimum vehicle size to use this mount. Null means no restriction.
-		/// </summary>
-		public Formula<int> MinimumVehicleSize { get; set; }
+        public bool IsMemory
+        {
+            get;
+            set;
+        }
 
-		/// <summary>
-		/// Maximum vehicle size to use this mount. Null means no restriction.
-		/// </summary>
-		public Formula<int> MaximumVehicleSize { get; set; }
+        /// <summary>
+        /// Mounts cannot currently be obsoleted.
+        /// TODO - add family and roman numeral properties to mounts
+        /// </summary>
+        public bool IsObsolescent
+        {
+            get { return false; }
+        }
 
-		/// <summary>
-		/// Required component family. Null means no restriction.
-		/// </summary>
-		public Formula<string> RequiredComponentFamily { get; set; }
+        /// <summary>
+        /// Mounts cannot currently be manually obsoleted.
+        /// </summary>
+        public bool IsObsolete
+        {
+            get { return false; }
+        }
 
-		/// <summary>
-		/// Weapon types which can use this mount.
-		/// </summary>
-		public Formula<WeaponTypes> WeaponTypes { get; set; }
+        /// <summary>
+        /// Mounts cannot currently be obsoleted.
+        /// TODO - add family and roman numeral properties to mounts
+        /// </summary>
+        public Mount LatestVersion
+        {
+            get { return this; }
+        }
 
-		/// <summary>
-		/// Vehicle types which can use this mount.
-		/// </summary>
-		public VehicleTypes VehicleTypes { get; set; }
+        /// <summary>
+        /// Maximum vehicle size to use this mount. Null means no restriction.
+        /// </summary>
+        public Formula<int> MaximumVehicleSize { get; set; }
 
-		/// <summary>
-		/// Percentage factors for abilities.
-		/// </summary>
-		public IDictionary<AbilityRule, IDictionary<int, Formula<int>>> AbilityPercentages
-		{
-			get;
-			set;
-		}
+        /// <summary>
+        /// Minimum vehicle size to use this mount. Null means no restriction.
+        /// </summary>
+        public Formula<int> MinimumVehicleSize { get; set; }
 
-		/// <summary>
-		/// Additive modifiers for abilities.
-		/// </summary>
-		public IDictionary<AbilityRule, IDictionary<int, Formula<int>>> AbilityModifiers
-		{
-			get;
-			set;
-		}
+        public string ModID { get; set; }
 
-		/// <summary>
-		/// Requirements to unlock this mount.
-		/// </summary>
-		public IList<Requirement<Empire>> UnlockRequirements
-		{
-			get;
-			set;
-		}
+        /// <summary>
+        /// The full name of this mount.
+        /// </summary>
+        public Formula<string> Name { get; set; }
 
-		public string ResearchGroup
-		{
-			get { return "Mount"; }
-		}
+        string INamed.Name
+        {
+            get { return Name; }
+        }
 
-		public System.Drawing.Image Icon
-		{
-			get { return Pictures.GetIcon(this); }
-		}
+        /// <summary>
+        /// Mounts cannot currently be obsoleted.
+        /// TODO - add family and roman numeral properties to mounts
+        /// </summary>
+        public IEnumerable<Mount> NewerVersions
+        {
+            get { yield break; }
+        }
 
-		public System.Drawing.Image Portrait
-		{
-			get { return Pictures.GetPortrait(this); }
-		}
+        /// <summary>
+        /// Mounts cannot currently be obsoleted.
+        /// TODO - add family and roman numeral properties to mounts
+        /// </summary>
+        public IEnumerable<Mount> OlderVersions
+        {
+            get { yield break; }
+        }
 
-		public IEnumerable<string> IconPaths
-		{
-			get
-			{
-				return PortraitPaths;
-			}
-		}
+        /// <summary>
+        /// No one owns mounts; they are shared.
+        /// </summary>
+        public Empire Owner { get { return null; } }
 
-		public IEnumerable<string> PortraitPaths
-		{
-			get
-			{
-				if (Mod.Current?.RootPath != null)
-					yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Mounts", PictureName);
-				yield return Path.Combine("Pictures", "Mounts", PictureName);
-			}
-		}
+        /// <summary>
+        /// The name of the picture to use for this mount.
+        /// </summary>
+        public Formula<string> PictureName { get; set; }
 
-		public void Dispose()
-		{
-			if (IsDisposed)
-				return;
-			Galaxy.Current.UnassignID(this);
-			if (Mod.Current != null)
-				Mod.Current.Mounts.Remove(this);
-		}
+        public System.Drawing.Image Portrait
+        {
+            get { return Pictures.GetPortrait(this); }
+        }
 
-		/// <summary>
-		/// Mod objects are fully known to everyone.
-		/// </summary>
-		/// <param name="emp"></param>
-		/// <returns></returns>
-		public Visibility CheckVisibility(Empire emp)
-		{
-			return Visibility.Scanned;
-		}
+        public IEnumerable<string> PortraitPaths
+        {
+            get
+            {
+                if (Mod.Current?.RootPath != null)
+                    yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Mounts", PictureName);
+                yield return Path.Combine("Pictures", "Mounts", PictureName);
+            }
+        }
 
-		public long ID { get; set; }
+        /// <summary>
+        /// Required component family. Null means no restriction.
+        /// </summary>
+        public Formula<string> RequiredComponentFamily { get; set; }
 
-		string INamed.Name
-		{
-			get { return Name; }
-		}
+        public string ResearchGroup
+        {
+            get { return "Mount"; }
+        }
 
-		public void Redact(Empire emp)
-		{
-			// TODO - tech items that aren't visible until some requirements are met
-		}
+        /// <summary>
+        /// A shorter name for this mount.
+        /// </summary>
+        public Formula<string> ShortName { get; set; }
 
-		public bool IsMemory
-		{
-			get;
-			set;
-		}
+        /// <summary>
+        /// Percentage of normal component size.
+        /// </summary>
+        public Formula<int> SizePercent { get; set; }
 
-		public double Timestamp
-		{
-			get;
-			set;
-		}
+        /// <summary>
+        /// Percentage of normal component supply usage.
+        /// </summary>
+        public Formula<int> SupplyUsagePercent { get; set; }
 
-		public bool IsObsoleteMemory(Empire emp)
-		{
-			return false;
-		}
+        public double Timestamp
+        {
+            get;
+            set;
+        }
 
-		public string ModID { get; set; }
+        /// <summary>
+        /// Requirements to unlock this mount.
+        /// </summary>
+        public IList<Requirement<Empire>> UnlockRequirements
+        {
+            get;
+            set;
+        }
 
-		public bool IsDisposed { get; set; }
+        /// <summary>
+        /// Vehicle types which can use this mount.
+        /// </summary>
+        public VehicleTypes VehicleTypes { get; set; }
 
-		public override string ToString()
-		{
-			return Name;
-		}
+        /// <summary>
+        /// Accuracy modifier for weapons.
+        /// </summary>
+        public Formula<int> WeaponAccuracyModifier { get; set; }
 
-		/// <summary>
-		/// Mounts cannot currently be manually obsoleted.
-		/// </summary>
-		public bool IsObsolete
-		{
-			get { return false; }
-		}
+        /// <summary>
+        /// Percentage of normal weapon damage.
+        /// </summary>
+        public Formula<int> WeaponDamagePercent { get; set; }
 
-		/// <summary>
-		/// Mounts cannot currently be obsoleted.
-		/// TODO - add family and roman numeral properties to mounts
-		/// </summary>
-		public Mount LatestVersion
-		{
-			get { return this; }
-		}
+        /// <summary>
+        /// Range modifier for weapons.
+        /// </summary>
+        public Formula<int> WeaponRangeModifier { get; set; }
 
-		/// <summary>
-		/// Mounts cannot currently be obsoleted.
-		/// TODO - add family and roman numeral properties to mounts
-		/// </summary>
-		public bool IsObsolescent
-		{
-			get { return false; }
-		}
+        /// <summary>
+        /// Weapon types which can use this mount.
+        /// </summary>
+        public Formula<WeaponTypes> WeaponTypes { get; set; }
 
-		/// <summary>
-		/// Mounts cannot currently be obsoleted.
-		/// TODO - add family and roman numeral properties to mounts
-		/// </summary>
-		public IEnumerable<Mount> NewerVersions
-		{
-			get { yield break; }
-		}
+        #endregion Public Properties
 
-		/// <summary>
-		/// Mounts cannot currently be obsoleted.
-		/// TODO - add family and roman numeral properties to mounts
-		/// </summary>
-		public IEnumerable<Mount> OlderVersions
-		{
-			get { yield break; }
-		}
-	}
+        #region Public Methods
+
+        /// <summary>
+        /// Mod objects are fully known to everyone.
+        /// </summary>
+        /// <param name="emp"></param>
+        /// <returns></returns>
+        public Visibility CheckVisibility(Empire emp)
+        {
+            return Visibility.Scanned;
+        }
+
+        public void Dispose()
+        {
+            if (IsDisposed)
+                return;
+            Galaxy.Current.UnassignID(this);
+            if (Mod.Current != null)
+                Mod.Current.Mounts.Remove(this);
+        }
+
+        public bool IsObsoleteMemory(Empire emp)
+        {
+            return false;
+        }
+
+        public void Redact(Empire emp)
+        {
+            // TODO - tech items that aren't visible until some requirements are met
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        #endregion Public Methods
+    }
 }

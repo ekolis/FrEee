@@ -1,40 +1,55 @@
-﻿using System;
+﻿using FrEee.Utility.Extensions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
-using FrEee.Utility.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FrEee.Tests.Utility.Extensions
 {
-	/// <summary>
-	/// Tests extension methods.
-	/// </summary>
-	[TestClass]
-	public class CommonExtensionsTest
-	{
-		[TestMethod]
-		public void SpawnTasksAsync()
-		{
-			var nums = new List<int>();
-			for (var i = 0; i <= 5; i++)
-				nums.Add(i);
-			var squares = nums.SpawnTasksAsync(i => new Square(i)).Result;
-			for (var i = 0; i <= 5; i++)
-				Assert.AreEqual(i * i, squares.Single(s => s.Number == i).SquaredNumber);
-			Assert.IsTrue(!squares.Any(s => s.Number < 0));
-			Assert.IsTrue(!squares.Any(s => s.Number > 5));
-		}
+    /// <summary>
+    /// Tests extension methods.
+    /// </summary>
+    [TestClass]
+    public class CommonExtensionsTest
+    {
+        #region Public Methods
 
-		private class Square
-		{
-			public Square(int i)
-			{
-				Number = i;
-			}
+        [TestMethod]
+        public void SpawnTasksAsync()
+        {
+            var nums = new List<int>();
+            for (var i = 0; i <= 5; i++)
+                nums.Add(i);
+            var squares = nums.SpawnTasksAsync(i => new Square(i)).Result;
+            for (var i = 0; i <= 5; i++)
+                Assert.AreEqual(i * i, squares.Single(s => s.Number == i).SquaredNumber);
+            Assert.IsTrue(!squares.Any(s => s.Number < 0));
+            Assert.IsTrue(!squares.Any(s => s.Number > 5));
+        }
 
-			public int Number { get; private set; }
+        #endregion Public Methods
 
-			public int SquaredNumber { get { return Number * Number; } }
-		}
-	}
+        #region Private Classes
+
+        private class Square
+        {
+            #region Public Constructors
+
+            public Square(int i)
+            {
+                Number = i;
+            }
+
+            #endregion Public Constructors
+
+            #region Public Properties
+
+            public int Number { get; private set; }
+
+            public int SquaredNumber { get { return Number * Number; } }
+
+            #endregion Public Properties
+        }
+
+        #endregion Private Classes
+    }
 }

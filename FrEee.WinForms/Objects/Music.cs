@@ -1,232 +1,256 @@
-﻿using System;
+﻿using FrEee.Utility.Extensions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using FrEee.Utility.Extensions;
-using NAudio;
-using NAudio.Vorbis;
-using NAudio.Wave;
-using NAudio.Wave.SampleProviders;
 
 namespace FrEee.WinForms.Objects
 {
-	/// <summary>
-	/// Music support for the game.
-	/// </summary>
-	public static class Music
-	{
-		private static WaveOutEvent waveout = new WaveOutEvent();
+    /// <summary>
+    /// Types of music to play.
+    /// </summary>
+    public enum MusicMode
+    {
+        /// <summary>
+        /// Don't play any music!
+        /// </summary>
+        None = 0,
 
-		private static WaveFormat waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(48000, 2);
+        /// <summary>
+        /// Music to play at the main menu.
+        /// </summary>
+        Menu,
 
-		private static MixingSampleProvider mixer = new MixingSampleProvider(waveFormat);
+        /// <summary>
+        /// Music to play during the strategic game.
+        /// </summary>
+        Strategic,
 
-		private static FadeInOutSampleProvider curTrack, prevTrack;
+        /// <summary>
+        /// Music to play during combat.
+        /// </summary>
+        Combat,
+    }
 
-		private static float musicVolume = 1.0f;
+    /// <summary>
+    /// Music mood (tense, upbeat, etc.)
+    /// </summary>
+    public enum MusicMood
+    {
+        Peaceful = 0,
+        Tense,
+        Upbeat,
+        Sad,
+    }
 
-		private static MusicMode currentMode;
+    /// <summary>
+    /// Music support for the game.
+    /// </summary>
+    public static class Music
+    {
+        #region Private Fields
 
-		private const int FadeDuration = 5000; // milliseconds
+        private const int FadeDuration = 5000;
+        private static MusicMode currentMode;
+        private static MusicMood currentMood;
+        private static FadeInOutSampleProvider curTrack, prevTrack;
+        private static MixingSampleProvider mixer = new MixingSampleProvider(waveFormat);
+        private static float musicVolume = 1.0f;
+        private static WaveFormat waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(48000, 2);
+        private static WaveOutEvent waveout = new WaveOutEvent();
 
-		public static bool IsPlaying { get; private set; }
+        #endregion Private Fields
 
-		static Music()
-		{
-			waveout.Init(mixer);
-			waveout.PlaybackStopped += waveout_PlaybackStopped;
-			waveout.Play();
+        // milliseconds
+
+        #region Public Constructors
+
+        static Music()
+        {
+            waveout.Init(mixer);
+            waveout.PlaybackStopped += waveout_PlaybackStopped;
+            waveout.Play();
         }
 
-		public static MusicMode CurrentMode
-		{
-			get
-			{
-				return currentMode;
-			}
-			set
-			{
-				bool newtrack = false;
-				if (currentMode != value)
-					newtrack = true;
-				currentMode = value;
-				if (newtrack)
-					StartNewTrack();
-			}
-		}
+        #endregion Public Constructors
 
-		private static MusicMood currentMood;
+        #region Public Properties
 
-		public static MusicMood CurrentMood
-		{
-			get
-			{
-				return currentMood;
-			}
-			set
-			{
-				bool newtrack = false;
-				if (currentMood != value)
-					newtrack = true;
-				currentMood = value;
-				if (newtrack)
-					StartNewTrack();
-			}
-		}
+        public static MusicMode CurrentMode
+        {
+            get
+            {
+                return currentMode;
+            }
+            set
+            {
+                bool newtrack = false;
+                if (currentMode != value)
+                    newtrack = true;
+                currentMode = value;
+                if (newtrack)
+                    StartNewTrack();
+            }
+        }
 
-		private class Track
-		{
-			public Track(MusicMode mode, MusicMood mood, string path)
-			{
-				Mode = mode;
-				Mood = mood;
-				Path = path;
-			}
+        public static MusicMood CurrentMood
+        {
+            get
+            {
+                return currentMood;
+            }
+            set
+            {
+                bool newtrack = false;
+                if (currentMood != value)
+                    newtrack = true;
+                currentMood = value;
+                if (newtrack)
+                    StartNewTrack();
+            }
+        }
 
-			public MusicMode Mode { get; set; }
-			public MusicMood Mood { get; set; }
-			public string Path { get; set; }
-		}
+        public static bool IsPlaying { get; private set; }
 
-		private static IEnumerable<Track> FindTracks()
-		{
-			foreach (MusicMode mode in Enum.GetValues(typeof(MusicMode)))
-			{
-				if (mode != MusicMode.None)
-				{
-					foreach (MusicMood mood in Enum.GetValues(typeof(MusicMood)))
-					{
-						var folder = Path.Combine("Music", mode.ToString(), mood.ToString());
-						IEnumerable<string> files = Enumerable.Empty<string>();
-						try
-						{
-							files = Directory.GetFiles(folder, "*.ogg").Union(
-								Directory.GetFiles(folder, "*.mp3")).Union(
-								Directory.GetFiles(folder, "*.wav"));
-						}
-						catch
-						{
-							Console.Error.WriteLine("Cannot find music folder " + folder + ".");
-						}
-						foreach (var file in files)
-							yield return new Track(mode, mood, file);
-					}
-				}
-			}
-		}
+        #endregion Public Properties
 
-		public static void StartNewTrack()
-		{
-			// find out what to play
-			var tracks = FindTracks().ToArray();
-			var track = tracks.Where(t => t.Mode == CurrentMode && t.Mood == CurrentMood).PickRandom();
-			if (track == null)
-			{
-				// no music? try another mood
-				var others = tracks.Where(t => t.Mode == CurrentMode);
-				if (others.Any())
-					track = others.PickRandom();
-			}
-			if (track == null)
-			{
-				// still no music? try another mode!
-				track = tracks.PickRandom();
-			}
-			if (track == null)
-			{
-				// no music at all :(
-				return;
-			}
+        #region Public Methods
 
-			// prepare the new track
-			var tl = track.Path.ToLower();
-			WaveChannel32 wc = null;
-			if (tl.EndsWith("ogg"))
-				wc = new WaveChannel32(new VorbisWaveReader(track.Path));
-			else if (tl.EndsWith("mp3"))
-				wc = new WaveChannel32(new Mp3FileReader(track.Path));
-			else if (tl.EndsWith("wav"))
-				wc = new WaveChannel32(new WaveFileReader(track.Path));
-			else
-				throw new Exception("Unknown audio format for file " + track.Path);
+        public static void Play(MusicMode mode, MusicMood mood)
+        {
+            if (mode == CurrentMode && mood == CurrentMood)
+                return;
 
-			// convert to a standard format so we can mix them (e.g. a mp3 with an ogg)
-			var resampler = new MediaFoundationResampler(wc, waveFormat);
-			var sp = resampler.ToSampleProvider();
+            currentMode = mode;
+            currentMood = mood;
+            StartNewTrack();
+        }
 
-			// setup our track
-			wc.Volume = musicVolume;
-			wc.PadWithZeroes = false; // to allow PlaybackStopped event to fire
-			if (CurrentMode == MusicMode.None)
-				return; // no music!
+        public static void setVolume(float volume)
+        {
+            musicVolume = volume;
+        }
 
-			// fade between the two tracks
-			mixer.RemoveMixerInput(prevTrack);
-			prevTrack = curTrack;
-			if (prevTrack != null)
-				prevTrack.BeginFadeOut(FadeDuration);
-			curTrack = new FadeInOutSampleProvider(sp, true);
-			curTrack.BeginFadeIn(FadeDuration);
-			mixer.AddMixerInput(curTrack);
-			waveout.Play();
-			IsPlaying = true;
-		}
+        public static void StartNewTrack()
+        {
+            // find out what to play
+            var tracks = FindTracks().ToArray();
+            var track = tracks.Where(t => t.Mode == CurrentMode && t.Mood == CurrentMood).PickRandom();
+            if (track == null)
+            {
+                // no music? try another mood
+                var others = tracks.Where(t => t.Mode == CurrentMode);
+                if (others.Any())
+                    track = others.PickRandom();
+            }
+            if (track == null)
+            {
+                // still no music? try another mode!
+                track = tracks.PickRandom();
+            }
+            if (track == null)
+            {
+                // no music at all :(
+                return;
+            }
 
-		static void waveout_PlaybackStopped(object sender, StoppedEventArgs e)
-		{
-			// play another song
-			StartNewTrack();
-		}
+            // prepare the new track
+            var tl = track.Path.ToLower();
+            WaveChannel32 wc = null;
+            if (tl.EndsWith("ogg"))
+                wc = new WaveChannel32(new VorbisWaveReader(track.Path));
+            else if (tl.EndsWith("mp3"))
+                wc = new WaveChannel32(new Mp3FileReader(track.Path));
+            else if (tl.EndsWith("wav"))
+                wc = new WaveChannel32(new WaveFileReader(track.Path));
+            else
+                throw new Exception("Unknown audio format for file " + track.Path);
 
-		public static void Play(MusicMode mode, MusicMood mood)
-		{
-			if (mode == CurrentMode && mood == CurrentMood)
-				return;
+            // convert to a standard format so we can mix them (e.g. a mp3 with an ogg)
+            var resampler = new MediaFoundationResampler(wc, waveFormat);
+            var sp = resampler.ToSampleProvider();
 
-			currentMode = mode;
-			currentMood = mood;
-			StartNewTrack();
-		}
+            // setup our track
+            wc.Volume = musicVolume;
+            wc.PadWithZeroes = false; // to allow PlaybackStopped event to fire
+            if (CurrentMode == MusicMode.None)
+                return; // no music!
 
-		public static void setVolume(float volume)
-		{
-			musicVolume = volume;
-		}
-	}
+            // fade between the two tracks
+            mixer.RemoveMixerInput(prevTrack);
+            prevTrack = curTrack;
+            if (prevTrack != null)
+                prevTrack.BeginFadeOut(FadeDuration);
+            curTrack = new FadeInOutSampleProvider(sp, true);
+            curTrack.BeginFadeIn(FadeDuration);
+            mixer.AddMixerInput(curTrack);
+            waveout.Play();
+            IsPlaying = true;
+        }
 
-	/// <summary>
-	/// Types of music to play.
-	/// </summary>
-	public enum MusicMode
-	{
-		/// <summary>
-		/// Don't play any music!
-		/// </summary>
-		None = 0,
-		/// <summary>
-		/// Music to play at the main menu.
-		/// </summary>
-		Menu,
-		/// <summary>
-		/// Music to play during the strategic game.
-		/// </summary>
-		Strategic,
-		/// <summary>
-		/// Music to play during combat.
-		/// </summary>
-		Combat,
-	}
+        #endregion Public Methods
 
-	/// <summary>
-	/// Music mood (tense, upbeat, etc.)
-	/// </summary>
-	public enum MusicMood
-	{
-		Peaceful = 0,
-		Tense,
-		Upbeat,
-		Sad,
-	}
+        #region Private Methods
+
+        private static IEnumerable<Track> FindTracks()
+        {
+            foreach (MusicMode mode in Enum.GetValues(typeof(MusicMode)))
+            {
+                if (mode != MusicMode.None)
+                {
+                    foreach (MusicMood mood in Enum.GetValues(typeof(MusicMood)))
+                    {
+                        var folder = Path.Combine("Music", mode.ToString(), mood.ToString());
+                        IEnumerable<string> files = Enumerable.Empty<string>();
+                        try
+                        {
+                            files = Directory.GetFiles(folder, "*.ogg").Union(
+                                Directory.GetFiles(folder, "*.mp3")).Union(
+                                Directory.GetFiles(folder, "*.wav"));
+                        }
+                        catch
+                        {
+                            Console.Error.WriteLine("Cannot find music folder " + folder + ".");
+                        }
+                        foreach (var file in files)
+                            yield return new Track(mode, mood, file);
+                    }
+                }
+            }
+        }
+
+        private static void waveout_PlaybackStopped(object sender, StoppedEventArgs e)
+        {
+            // play another song
+            StartNewTrack();
+        }
+
+        #endregion Private Methods
+
+        #region Private Classes
+
+        private class Track
+        {
+            #region Public Constructors
+
+            public Track(MusicMode mode, MusicMood mood, string path)
+            {
+                Mode = mode;
+                Mood = mood;
+                Path = path;
+            }
+
+            #endregion Public Constructors
+
+            #region Public Properties
+
+            public MusicMode Mode { get; set; }
+            public MusicMood Mood { get; set; }
+            public string Path { get; set; }
+
+            #endregion Public Properties
+        }
+
+        #endregion Private Classes
+    }
 }

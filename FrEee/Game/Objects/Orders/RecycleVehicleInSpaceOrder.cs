@@ -4,94 +4,108 @@ using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Utility;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace FrEee.Game.Objects.Orders
 {
-	public class RecycleVehicleInSpaceOrder : IOrder<SpaceVehicle>
-	{
-		public RecycleVehicleInSpaceOrder(IRecycleBehavior behavior)
-		{
-			Behavior = behavior;
-		}
+    public class RecycleVehicleInSpaceOrder : IOrder<SpaceVehicle>
+    {
+        #region Public Constructors
 
-		public IRecycleBehavior Behavior { get; private set; }
+        public RecycleVehicleInSpaceOrder(IRecycleBehavior behavior)
+        {
+            Behavior = behavior;
+        }
 
-		public void Execute(SpaceVehicle executor)
-		{
-			var errors = GetErrors(executor);
-			if (errors.Any() && Owner != null)
-			{
-				foreach (var e in errors)
-					Owner.Log.Add(e);
-				return;
-			}
+        #endregion Public Constructors
 
-			Behavior.Execute(executor);
-			IsComplete = true;
-		}
+        #region Public Properties
 
-		public IEnumerable<LogMessage> GetErrors(SpaceVehicle executor)
-		{
-			return Behavior.GetErrors(executor, executor);
-		}
+        public IRecycleBehavior Behavior { get; private set; }
 
-		public bool CheckCompletion(SpaceVehicle executor)
-		{
-			return IsComplete;
-		}
+        public bool ConsumesMovement
+        {
+            get { return false; }
+        }
 
-		public bool IsComplete
-		{
-			get;
-			private set;
-		}
+        public long ID
+        {
+            get;
+            set;
+        }
 
-		public long ID
-		{
-			get;
-			set;
-		}
+        public bool IsComplete
+        {
+            get;
+            private set;
+        }
 
-		public bool IsDisposed
-		{
-			get;
-			set;
-		}
+        public bool IsDisposed
+        {
+            get;
+            set;
+        }
 
-		public void Dispose()
-		{
-			if (IsDisposed)
-				return;
-			foreach (var v in Galaxy.Current.Referrables.OfType<SpaceVehicle>())
-				v.Orders.Remove(this);
-			Galaxy.Current.UnassignID(this);
-		}
+        /// <summary>
+        /// The empire which issued the order.
+        /// </summary>
+        [DoNotSerialize]
+        public Empire Owner { get { return owner; } set { owner = value; } }
 
-		private GalaxyReference<Empire> owner { get; set; }
+        #endregion Public Properties
 
-		/// <summary>
-		/// The empire which issued the order.
-		/// </summary>
-		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+        #region Private Properties
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
-		{
-			// This type does not use client objects, so nothing to do here.
-		}
+        private GalaxyReference<Empire> owner { get; set; }
 
-		public override string ToString()
-		{
-			return Behavior.Verb;
-		}
+        #endregion Private Properties
 
-		public bool ConsumesMovement
-		{
-			get { return false; }
-		}
-	}
+        #region Public Methods
+
+        public bool CheckCompletion(SpaceVehicle executor)
+        {
+            return IsComplete;
+        }
+
+        public void Dispose()
+        {
+            if (IsDisposed)
+                return;
+            foreach (var v in Galaxy.Current.Referrables.OfType<SpaceVehicle>())
+                v.Orders.Remove(this);
+            Galaxy.Current.UnassignID(this);
+        }
+
+        public void Execute(SpaceVehicle executor)
+        {
+            var errors = GetErrors(executor);
+            if (errors.Any() && Owner != null)
+            {
+                foreach (var e in errors)
+                    Owner.Log.Add(e);
+                return;
+            }
+
+            Behavior.Execute(executor);
+            IsComplete = true;
+        }
+
+        public IEnumerable<LogMessage> GetErrors(SpaceVehicle executor)
+        {
+            return Behavior.GetErrors(executor, executor);
+        }
+
+        public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+        {
+            // This type does not use client objects, so nothing to do here.
+        }
+
+        public override string ToString()
+        {
+            return Behavior.Verb;
+        }
+
+        #endregion Public Methods
+    }
 }

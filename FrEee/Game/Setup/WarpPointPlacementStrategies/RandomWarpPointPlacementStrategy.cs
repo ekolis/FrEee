@@ -1,36 +1,46 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Space;
+﻿using FrEee.Game.Objects.Space;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace FrEee.Game.Setup.WarpPointPlacementStrategies
 {
-	/// <summary>
-	/// Places warp points randomly within a system.
-	/// </summary>
-	public class RandomWarpPointPlacementStrategy : WarpPointPlacementStrategy
-	{
-		static RandomWarpPointPlacementStrategy()
-		{
-			Instance = new RandomWarpPointPlacementStrategy();
-		}
+    /// <summary>
+    /// Places warp points randomly within a system.
+    /// </summary>
+    public class RandomWarpPointPlacementStrategy : WarpPointPlacementStrategy
+    {
+        #region Public Constructors
 
-		public static RandomWarpPointPlacementStrategy Instance { get; private set; }
+        static RandomWarpPointPlacementStrategy()
+        {
+            Instance = new RandomWarpPointPlacementStrategy();
+        }
 
-		private RandomWarpPointPlacementStrategy()
-			: base("Random", "Places warp points randomly within a system.")
-		{
-		}
+        #endregion Public Constructors
 
-		public override Sector GetWarpPointSector(ObjectLocation<StarSystem> here, ObjectLocation<StarSystem> there)
-		{
-			var x = RandomHelper.Range(-here.Item.Radius, here.Item.Radius);
-			var y = RandomHelper.Range(-here.Item.Radius, here.Item.Radius);
-			return here.Item.GetSector(x, y);
-		}
-	}
+        #region Private Constructors
+
+        private RandomWarpPointPlacementStrategy()
+            : base("Random", "Places warp points randomly within a system.")
+        {
+        }
+
+        #endregion Private Constructors
+
+        #region Public Properties
+
+        public static RandomWarpPointPlacementStrategy Instance { get; private set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
+
+        public override Sector GetWarpPointSector(ObjectLocation<StarSystem> here, ObjectLocation<StarSystem> there)
+        {
+            var x = RandomHelper.Range(-here.Item.Radius, here.Item.Radius);
+            var y = RandomHelper.Range(-here.Item.Radius, here.Item.Radius);
+            return here.Item.GetSector(x, y);
+        }
+
+        #endregion Public Methods
+    }
 }
