@@ -1,4 +1,7 @@
 ﻿using FrEee.Utility.Extensions;
+using NAudio.Vorbis;
+using NAudio.Wave;
+using NAudio.Wave.SampleProviders;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -54,9 +57,9 @@ namespace FrEee.WinForms.Objects
         private static MusicMode currentMode;
         private static MusicMood currentMood;
         private static FadeInOutSampleProvider curTrack, prevTrack;
-        private static MixingSampleProvider mixer = new MixingSampleProvider(waveFormat);
+        private static MixingSampleProvider mixer;
         private static float musicVolume = 1.0f;
-        private static WaveFormat waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(48000, 2);
+        private static WaveFormat waveFormat;
         private static WaveOutEvent waveout = new WaveOutEvent();
 
         #endregion Private Fields
@@ -67,6 +70,9 @@ namespace FrEee.WinForms.Objects
 
         static Music()
         {
+            waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(48000, 2);
+            mixer = new MixingSampleProvider(waveFormat);
+
             waveout.Init(mixer);
             waveout.PlaybackStopped += waveout_PlaybackStopped;
             waveout.Play();
