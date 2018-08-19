@@ -12,6 +12,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Game.Objects.Combat;
+using System.Collections.Generic;
 
 namespace FrEee.Tests.Game.Objects.Vehicles
 {
@@ -69,7 +70,9 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			// initialize ship's design
 			var design = new Design<Ship>();
 			design.BaseName = "Punching Bag";
-			design.Hull = new Hull<Ship>();
+			var hull = new Hull<Ship>();
+			Mod.Current.AssignID(hull, new List<string>());
+			design.Hull = hull;
 			design.Hull.Mass = 1;
 			design.Owner = empire;
 			for (var i = 0; i < numEngines; i++)
