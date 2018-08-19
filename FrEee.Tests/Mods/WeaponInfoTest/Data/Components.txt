@@ -1,0 +1,22 @@
+﻿*BEGIN*
+
+
+Name := Non-Formula Weapon
+Tonnage Space Taken := 20
+Tonnage Structure := 20
+Weapon Damage At Rng := 30 20 10
+Weapon Type := Direct Fire
+Weapon Display Type := Beam
+Pic := test
+Min Range := 3
+Max Range := 5
+
+Name := Formula Weapon
+Tonnage Space Taken := 20
+Tonnage Structure := 20
+Weapon Damage At Rng := ==60 - range * 10
+Weapon Type := Direct Fire
+Weapon Display Type := Beam
+Pic := test
+Min Range := 3
+Max Range := 5

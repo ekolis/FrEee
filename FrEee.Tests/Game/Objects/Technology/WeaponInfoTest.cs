@@ -16,6 +16,12 @@ namespace FrEee.Tests.Game.Objects.Technology
 	[TestClass]
 	public class WeaponInfoTest
 	{
+		[TestInitialize]
+		public void Init()
+		{
+			TestUtilities.SetEntryAssembly();
+		}
+
         Galaxy gal = new Galaxy();
 		/// <summary>
 		/// Tests non-formula damage values.
@@ -23,26 +29,8 @@ namespace FrEee.Tests.Game.Objects.Technology
 		[TestMethod]
 		public void NonFormulaDamage()
 		{
-			var data =
-@"*BEGIN*
-
-
-Name := Generic Weapon
-Tonnage Space Taken := 20
-Tonnage Structure := 20
-Weapon Damage At Rng := 30 20 10
-Weapon Type := Direct Fire
-Weapon Display Type := Beam
-Pic := test
-Min Range := 3
-Max Range := 5";
-			var df = new DataFile(data);
-			var loader = new ComponentLoader("Test Mod");
-			loader.DataFile = df;
-			var mod = new Mod();
-			Mod.Current = mod;
-			loader.Load(mod);
-			var ct = mod.ComponentTemplates.Single();
+			var mod = Mod.Load("WeaponInfoTest");
+			var ct = mod.ComponentTemplates.Single(x => x.Name == "Non-Formula Weapon");
 			var comp = ct.Instantiate();
 			Assert.AreEqual<int>(3, ct.WeaponInfo.MinRange);
 			Assert.AreEqual<int>(5, ct.WeaponInfo.MaxRange);
@@ -57,26 +45,8 @@ Max Range := 5";
 		[TestMethod]
 		public void FormulaDamage()
 		{
-			var data =
-@"*BEGIN*
-
-
-Name := Generic Weapon
-Tonnage Space Taken := 20
-Tonnage Structure := 20
-Weapon Damage At Rng := ==60 - range * 10
-Weapon Type := Direct Fire
-Weapon Display Type := Beam
-Pic := test
-Min Range := 3
-Max Range := 5";
-			var df = new DataFile(data);
-			var loader = new ComponentLoader("Test Mod");
-			loader.DataFile = df;
-			var mod = new Mod();
-			Mod.Current = mod;
-			loader.Load(mod);
-			var ct = mod.ComponentTemplates.Single();
+			var mod = Mod.Load("WeaponInfoTest");
+			var ct = mod.ComponentTemplates.Single(x => x.Name == "Formula Weapon");
 			var comp = ct.Instantiate();
 			Assert.AreEqual<int>(3, ct.WeaponInfo.MinRange);
 			Assert.AreEqual<int>(5, ct.WeaponInfo.MaxRange);
