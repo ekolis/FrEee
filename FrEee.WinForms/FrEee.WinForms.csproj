@@ -863,28 +863,7 @@ if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Licenses" "$(Pro
 if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Licenses" "$(ProjectDir)bin\Debug\Licenses\" /y /e /s
 
 if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Scripts" "$(ProjectDir)bin\Release\Scripts\" /y /e /s
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Scripts" "$(ProjectDir)bin\Debug\Scripts\" /y /e /s
-
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\lib\Ogrelib\*.*" "$(ProjectDir)bin\Release\" /y
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\lib\Ogrelib\*.*" "$(ProjectDir)bin\Debug\" /y
-
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\MogrePlugins\*.*" "$(ProjectDir)bin\Release\" /y
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\MogrePlugins*.*" "$(ProjectDir)bin\Debug\" /y
-
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Ogrecfg\*.*" "$(ProjectDir)bin\Release\" /y
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Ogrecfg\*.*" "$(ProjectDir)bin\Debug\" /y
-
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Media" "$(ProjectDir)bin\Release\" /y /e /s
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Media" "$(ProjectDir)bin\Debug\" /y /e /s
-if $(ConfigurationName) == Debug (
-    if EXIST "$(SolutionDir)\packages\Mogre1.7.4.1.0.6\tools\Mogre.Dependencies.Debug\Mogre.dll" (
-        copy "$(SolutionDir)\packages\Mogre1.7.4.1.0.6\tools\Mogre.Dependencies.Debug\*" "$(TargetDir))"
-    ) ELSE (
-        copy "$(SolutionDir)\packages\Mogre1.7.4.1.0.6\tools\Mogre.Dependencies.Release\*" "$(TargetDir)"
-    )
-) ELSE (
-    copy "$(SolutionDir)\packages\Mogre1.7.4.1.0.6\tools\Mogre.Dependencies.Release\*" "$(TargetDir)"
-)</PostBuildEvent>
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Scripts" "$(ProjectDir)bin\Debug\Scripts\" /y /e /s</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
