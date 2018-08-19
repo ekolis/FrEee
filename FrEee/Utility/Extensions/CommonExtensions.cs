@@ -386,11 +386,6 @@ namespace FrEee.Utility.Extensions
                 return true; // other ability containers don't use supplies
         }
 
-        public static string CamelCase(this string s)
-        {
-            return s[0].ToString().ToLowerInvariant() + s.Substring(1);
-        }
-
         /// <summary>
         /// Checks for "do not copy" attribute, even on interface properties.
         /// Returns true if there is no such attribute.
@@ -428,15 +423,6 @@ namespace FrEee.Utility.Extensions
                     return false;
             }
             return true;
-        }
-
-        public static string Capitalize(this string s)
-        {
-            if (s == null)
-                return null;
-            if (s.Length == 0)
-                return s;
-            return s[0].ToString().ToUpper() + s.Substring(1);
         }
 
         public static int CargoStorageFree(this ICargoContainer cc)
@@ -788,21 +774,6 @@ namespace FrEee.Utility.Extensions
             }
         }
 
-        public static string EscapeBackslashes(this string s)
-        {
-            return s.Replace("\\", "\\\\");
-        }
-
-        public static string EscapeNewlines(this string s)
-        {
-            return s.Replace("\r", "\\r").Replace("\n", "\\n");
-        }
-
-        public static string EscapeQuotes(this string s)
-        {
-            return s.Replace("'", "\\'").Replace("\"", "\\\"");
-        }
-
         public static IEnumerable<T> ExceptSingle<T>(this IEnumerable<T> src, T badguy)
         {
             return src.Except(new T[] { badguy });
@@ -824,17 +795,6 @@ namespace FrEee.Utility.Extensions
             else
                 o.TimeToNextMove -= Galaxy.Current.NextTickSize;
             return didStuff;
-        }
-
-        /// <summary>
-        /// More concise way of doing string.Format(format, args)
-        /// </summary>
-        /// <param name="format"></param>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        public static string F(this string format, params object[] args)
-        {
-            return string.Format(format, args);
         }
 
         /// <summary>
@@ -1745,13 +1705,6 @@ namespace FrEee.Utility.Extensions
             return null;
         }
 
-        public static string LastWord(this string s)
-        {
-            if (s == null)
-                return null;
-            return s.Split(' ').LastOrDefault();
-        }
-
         /// <summary>
         /// Limits a value to a range.
         /// Throws an exception if min is bigger than max.
@@ -2289,46 +2242,6 @@ namespace FrEee.Utility.Extensions
                 }
             }
             unit.Owner.Log.Add(unit.CreateLogMessage(unit + " was lost due to insufficient cargo space at " + target + "."));
-        }
-
-        /// <summary>
-        /// Gets a possessive form of a noun or pronoun.
-        /// </summary>
-        /// <param name="s"></param>
-        /// <param name="isStart">For "I", is this the first word? For "you" and "she", is this in the subject of the sentence?</param>
-        /// <returns></returns>
-        public static string Possessive(this string s, bool isStart = false)
-        {
-            if (s == "I")
-                return isStart ? "My" : "my";
-            if (s == "we")
-                return "our";
-            if (s == "We")
-                return "Our";
-            if (s == "you")
-                return isStart ? "your" : "yours";
-            if (s == "You")
-                return isStart ? "Your" : "Yours";
-            if (s == "he" || s == "him")
-                return "his";
-            if (s == "He")
-                return "His";
-            if (s == "she" || s == "her")
-                return isStart ? "her" : "hers";
-            if (s == "She")
-                return "Her";
-            if (s == "it")
-                return "its";
-            if (s == "they")
-                return "their";
-            if (s == "They")
-                return "Their";
-            if (s == "them")
-                return "theirs";
-
-            if (s.EndsWith("s"))
-                return s + "'";
-            return s + "'s";
         }
 
         /// <summary>
