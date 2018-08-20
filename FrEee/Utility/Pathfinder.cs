@@ -335,7 +335,7 @@ namespace FrEee.Utility
                 Galaxy.Current.EnableAbilityCache();
             if (end == null || end.StarSystem == null || start == end)
                 return Enumerable.Empty<Sector>();
-            if (me != null && me.Speed < 1)
+            if (me != null && me.StrategicSpeed < 1)
                 return Enumerable.Empty<Sector>();
 
             if (map == null)

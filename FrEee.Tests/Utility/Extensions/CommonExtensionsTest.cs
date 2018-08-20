@@ -5,51 +5,62 @@ using System.Linq;
 
 namespace FrEee.Tests.Utility.Extensions
 {
-    /// <summary>
-    /// Tests extension methods.
-    /// </summary>
-    [TestClass]
-    public class CommonExtensionsTest
-    {
-        #region Public Methods
+	/// <summary>
+	/// Tests extension methods.
+	/// </summary>
+	[TestClass]
+	public class CommonExtensionsTest
+	{
+		#region Public Methods
 
-        [TestMethod]
-        public void SpawnTasksAsync()
-        {
-            var nums = new List<int>();
-            for (var i = 0; i <= 5; i++)
-                nums.Add(i);
-            var squares = nums.SpawnTasksAsync(i => new Square(i)).Result;
-            for (var i = 0; i <= 5; i++)
-                Assert.AreEqual(i * i, squares.Single(s => s.Number == i).SquaredNumber);
-            Assert.IsTrue(!squares.Any(s => s.Number < 0));
-            Assert.IsTrue(!squares.Any(s => s.Number > 5));
-        }
+		[TestMethod]
+		public void SpawnTasksAsync()
+		{
+			var nums = new List<int>();
+			for (var i = 0; i <= 5; i++)
+				nums.Add(i);
+			var squares = nums.SpawnTasksAsync(i => new Square(i)).Result;
+			for (var i = 0; i <= 5; i++)
+				Assert.AreEqual(i * i, squares.Single(s => s.Number == i).SquaredNumber);
+			Assert.IsTrue(!squares.Any(s => s.Number < 0));
+			Assert.IsTrue(!squares.Any(s => s.Number > 5));
+		}
 
-        #endregion Public Methods
+		[TestMethod]
+		public void PercentOfRounded()
+		{
+			Assert.AreEqual(2, 50.PercentOfRounded(4));
+			Assert.AreEqual(4, 50.PercentOfRounded(7));
+			Assert.AreEqual(3, 50.PercentOfRounded(5));
+			Assert.AreEqual(-2, 50.PercentOfRounded(-4));
+			Assert.AreEqual(-4, 50.PercentOfRounded(-7));
+			Assert.AreEqual(-3, 50.PercentOfRounded(-5));
+		}
 
-        #region Private Classes
+		#endregion Public Methods
 
-        private class Square
-        {
-            #region Public Constructors
+		#region Private Classes
 
-            public Square(int i)
-            {
-                Number = i;
-            }
+		private class Square
+		{
+			#region Public Constructors
 
-            #endregion Public Constructors
+			public Square(int i)
+			{
+				Number = i;
+			}
 
-            #region Public Properties
+			#endregion Public Constructors
 
-            public int Number { get; private set; }
+			#region Public Properties
 
-            public int SquaredNumber { get { return Number * Number; } }
+			public int Number { get; private set; }
 
-            #endregion Public Properties
-        }
+			public int SquaredNumber { get { return Number * Number; } }
 
-        #endregion Private Classes
-    }
+			#endregion Public Properties
+		}
+
+		#endregion Private Classes
+	}
 }

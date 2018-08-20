@@ -132,7 +132,7 @@ namespace FrEee.Game.Objects.Orders
                     {
                         var v = executor as Vehicle;
                         v.EmergencySpeed += Ability.Value1.Value.ToInt();
-                        Owner.RecordLog(executor, executor + " has activated its emergency propulsion and has had its speed boosted to " + v.Speed + " temporarily.");
+                        Owner.RecordLog(executor, executor + " has activated its emergency propulsion and has had its speed boosted to " + v.StrategicSpeed + " temporarily.");
                     }
                     else
                     {

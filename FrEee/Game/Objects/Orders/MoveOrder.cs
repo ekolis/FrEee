@@ -178,7 +178,7 @@ namespace FrEee.Game.Objects.Orders
                 {
                     // log pathfinding error
                     string reason;
-                    if (sobj.Speed <= 0)
+                    if (sobj.StrategicSpeed <= 0)
                         reason = sobj + " is immobile";
                     else
                         reason = "there is no available path leading toward " + Destination;

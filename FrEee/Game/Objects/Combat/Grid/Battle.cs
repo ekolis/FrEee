@@ -199,7 +199,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 					}
 				}
 
-				var turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x is Seeker ? 1 : 0).ThenBy(x => x.Speed).ThenShuffle(Dice).ToArray();
+				var turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x is Seeker ? 1 : 0).ThenBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
 
 				// phase 1: combatants move starting with the slowest (so the faster ships get to react to their moves) - but seekers go last so they get a chance to hit
 				foreach (var c in turnorder)
@@ -214,8 +214,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 							Events.Last().Add(new CombatantDisappearsEvent(s));
 							continue;
 						}
-						s.DistanceTraveled += Math.Min(s.Speed, locations[s].DistanceToEightWay(locations[s.Target]));
-						locations[s] = IntVector2.InterpolateEightWay(locations[s], locations[s.Target], s.Speed);
+						s.DistanceTraveled += Math.Min(s.CombatSpeed, locations[s].DistanceToEightWay(locations[s.Target]));
+						locations[s] = IntVector2.InterpolateEightWay(locations[s], locations[s.Target], s.CombatSpeed);
 						if (s.DistanceTraveled > s.WeaponInfo.MaxRange)
 						{
 							s.Hitpoints = 0;
@@ -241,12 +241,12 @@ namespace FrEee.Game.Objects.Combat.Grid
 							{
 								int threat;
 								if (e.Weapons.Any())
-									threat = e.Speed + e.Weapons.Where(w => w.CanTarget(c)).Max(w => w.Template.WeaponMaxRange);
+									threat = e.CombatSpeed + e.Weapons.Where(w => w.CanTarget(c)).Max(w => w.Template.WeaponMaxRange);
 								else
 									threat = 0;
 								heatmap.AddLinearGradientEightWay(locations[e], threat, threat, -1);
 							}
-							locations[c] = heatmap.FindMin(locations[c], c.Speed);
+							locations[c] = heatmap.FindMin(locations[c], c.CombatSpeed);
 						}
 						else
 						{
@@ -255,7 +255,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 							if (bestTarget != null)
 							{
 								var targetPos = locations[bestTarget];
-								locations[c] = IntVector2.InterpolateEightWay(locations[c], targetPos, c.Speed);
+								locations[c] = IntVector2.InterpolateEightWay(locations[c], targetPos, c.CombatSpeed);
 							}
 						}
 						Events.Last().Add(new CombatantMovesEvent(c, oldpos, locations[c]));
@@ -300,7 +300,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 					}
 				}
 
-				turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.Speed).ThenShuffle(Dice).ToArray();
+				turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
 
 				// phase 3: combatants fire point defense weapons starting with the fastest (so the faster ships get to inflict damage first and possibly KO enemies preventing them from firing back)
 				foreach (var c in turnorder.Reverse())
@@ -309,7 +309,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 						TryFireWeapon(c, w, reloads, locations, multiplex);
 				}
 
-				turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.Speed).ThenShuffle(Dice).ToArray();
+				turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
 
 				// phase 4: combatants defense seekers detonate
 				foreach (var s in turnorder.Reverse().OfType<Seeker>().Where(s => s.WeaponInfo.IsPointDefense))
@@ -317,7 +317,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 					CheckSeekerDetonation(s, locations);
 				}
 
-				turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.Speed).ThenShuffle(Dice).ToArray();
+				turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
 
 				// phase 5: ships fire non-PD weapons starting with the fastest (so the faster ships get to inflict damage first and possibly KO enemies preventing them from firing back)
 				foreach (var c in turnorder.Reverse())
@@ -326,7 +326,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 						TryFireWeapon(c, w, reloads, locations, multiplex);
 				}
 
-				turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.Speed).ThenShuffle(Dice).ToArray();
+				turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
 
 				// phase 6: non-PD seekers detonate
 				foreach (var s in turnorder.Reverse().OfType<Seeker>().Where(s => !s.WeaponInfo.IsPointDefense))
@@ -334,7 +334,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 					CheckSeekerDetonation(s, locations);
 				}
 
-				turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.Speed).ThenShuffle(Dice).ToArray();
+				turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
 
 				// phase 7: ramming! only activates if ship has no other weapons
 				foreach (var c in turnorder.Reverse())

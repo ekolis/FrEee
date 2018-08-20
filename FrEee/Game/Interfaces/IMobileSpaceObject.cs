@@ -4,53 +4,55 @@ using System.Collections.Generic;
 
 namespace FrEee.Game.Interfaces
 {
-    /// <summary>
-    /// An object that can move about in space and/or receive orders.
-    /// </summary>
-    public interface IMobileSpaceObject : ICombatSpaceObject, IOrderable, IContainable<Fleet>, IDamageable
-    {
-        #region Public Properties
+	/// <summary>
+	/// An object that can move about in space and/or receive orders.
+	/// </summary>
+	public interface IMobileSpaceObject : ICombatSpaceObject, IOrderable, IContainable<Fleet>, IDamageable
+	{
+		#region Public Properties
 
-        new Fleet Container { get; set; }
+		new Fleet Container { get; set; }
 
-        /// <summary>
-        /// The Dijkstra map used for pathfinding.
-        /// </summary>
-        IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> DijkstraMap { get; set; }
+		/// <summary>
+		/// The Dijkstra map used for pathfinding.
+		/// </summary>
+		IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> DijkstraMap { get; set; }
 
-        ResourceQuantity MaintenanceCost { get; }
-        int MovementRemaining { get; set; }
-        new Sector Sector { get; set; }
+		ResourceQuantity MaintenanceCost { get; }
+		int MovementRemaining { get; set; }
+		new Sector Sector { get; set; }
 
-        /// <summary>
-        /// The tonnage of the object, in kT, or null if it's a planet.
-        /// </summary>
-        int? Size { get; }
+		/// <summary>
+		/// The tonnage of the object, in kT, or null if it's a planet.
+		/// </summary>
+		int? Size { get; }
 
-        int SupplyRemaining { get; set; }
-        double TimePerMove { get; }
-        double TimeToNextMove { get; set; }
+		int StrategicSpeed { get; }
 
-        #endregion Public Properties
+		int SupplyRemaining { get; set; }
+		double TimePerMove { get; }
+		double TimeToNextMove { get; set; }
 
-        #region Public Methods
+		#endregion Public Properties
 
-        /// <summary>
-        /// Burns the supplies necessary to move one sector.
-        /// </summary>
-        void BurnMovementSupplies();
+		#region Public Methods
 
-        void SpendTime(double timeElapsed);
+		/// <summary>
+		/// Burns the supplies necessary to move one sector.
+		/// </summary>
+		void BurnMovementSupplies();
 
-        #endregion Public Methods
-    }
+		void SpendTime(double timeElapsed);
 
-    public interface IMobileSpaceObject<T> : IMobileSpaceObject where T : IMobileSpaceObject<T>
-    {
-        #region Public Properties
+		#endregion Public Methods
+	}
 
-        new IList<IOrder<T>> Orders { get; }
+	public interface IMobileSpaceObject<T> : IMobileSpaceObject where T : IMobileSpaceObject<T>
+	{
+		#region Public Properties
 
-        #endregion Public Properties
-    }
+		new IList<IOrder<T>> Orders { get; }
+
+		#endregion Public Properties
+	}
 }

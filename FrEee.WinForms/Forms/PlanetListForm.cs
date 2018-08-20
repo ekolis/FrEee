@@ -171,7 +171,7 @@ namespace FrEee.WinForms.Forms
                     v.Abilities().Any(a => a.Rule.Name.StartsWith("Colonize Planet - "))
                 ));
             txtShips.Text = colonizers.Count().ToString();
-            availableColonizers = colonizers.Where(v => v.Orders.Count == 0 && v.Speed > 0);
+            availableColonizers = colonizers.Where(v => v.Orders.Count == 0 && v.StrategicSpeed > 0);
             txtAvailable.Text = availableColonizers.Count().ToString();
 
             // show population and resources

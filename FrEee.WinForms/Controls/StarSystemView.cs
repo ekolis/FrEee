@@ -423,7 +423,7 @@ namespace FrEee.WinForms.Controls
                     foreach (var cur in sobj.Path())
                     {
                         moves += 1;
-                        if (moves >= sobj.Speed)
+                        if (moves >= sobj.StrategicSpeed)
                         {
                             moves = 0;
                             turns++;

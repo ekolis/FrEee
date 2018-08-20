@@ -10,109 +10,111 @@ using System.Linq;
 
 namespace FrEee.Game.Objects.Vehicles
 {
-    [Serializable]
-    public class Troop : Vehicle, IUnit
-    {
-        #region Public Properties
+	[Serializable]
+	public class Troop : Vehicle, IUnit
+	{
+		#region Public Properties
 
-        public override AbilityTargets AbilityTarget
-        {
-            get { return AbilityTargets.Troop; }
-        }
+		public override AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.Troop; }
+		}
 
-        public ICargoContainer Container
-        {
-            get { return Galaxy.Current.FindSpaceObjects<ICargoTransferrer>().SingleOrDefault(cc => cc.Cargo.Units.Contains(this)); }
-        }
+		public override int CombatSpeed => 0;
 
-        public override int MaxTargets => int.MaxValue;
+		public ICargoContainer Container
+		{
+			get { return Galaxy.Current.FindSpaceObjects<ICargoTransferrer>().SingleOrDefault(cc => cc.Cargo.Units.Contains(this)); }
+		}
 
-        public override IEnumerable<IAbilityObject> Parents
-        {
-            get
-            {
-                if (Owner != null)
-                    yield return Owner;
-                if (Container != null && Container is IAbilityObject)
-                    yield return (IAbilityObject)Container;
-            }
-        }
+		public override int MaxTargets => int.MaxValue;
 
-        /// <summary>
-        /// Troops participate in ground combat.
-        /// </summary>
-        public override bool ParticipatesInGroundCombat
-        {
-            get { return true; }
-        }
+		public override IEnumerable<IAbilityObject> Parents
+		{
+			get
+			{
+				if (Owner != null)
+					yield return Owner;
+				if (Container != null && Container is IAbilityObject)
+					yield return (IAbilityObject)Container;
+			}
+		}
 
-        public override IMobileSpaceObject RecycleContainer
-        {
-            get { return (this as IUnit).Container as IMobileSpaceObject; }
-        }
+		/// <summary>
+		/// Troops participate in ground combat.
+		/// </summary>
+		public override bool ParticipatesInGroundCombat
+		{
+			get { return true; }
+		}
 
-        public override bool RequiresSpaceYardQueue
-        {
-            get { return false; }
-        }
+		public override IMobileSpaceObject RecycleContainer
+		{
+			get { return (this as IUnit).Container as IMobileSpaceObject; }
+		}
 
-        [DoNotSerialize]
-        public override Sector Sector
-        {
-            get { return Container == null ? null : Container.Sector; }
-            set
-            {
-                //throw new NotSupportedException("Cannot set the sector of a troop.");
-            }
-        }
+		public override bool RequiresSpaceYardQueue
+		{
+			get { return false; }
+		}
 
-        public override StarSystem StarSystem
-        {
-            get { return Container.StarSystem; }
-        }
+		[DoNotSerialize]
+		public override Sector Sector
+		{
+			get { return Container == null ? null : Container.Sector; }
+			set
+			{
+				//throw new NotSupportedException("Cannot set the sector of a troop.");
+			}
+		}
 
-        public override WeaponTargets WeaponTargetType
-        {
-            // troops cannot be targeted in space combat
-            get { return Enumerations.WeaponTargets.Invalid; }
-        }
+		public override StarSystem StarSystem
+		{
+			get { return Container.StarSystem; }
+		}
 
-        #endregion Public Properties
+		public override WeaponTargets WeaponTargetType
+		{
+			// troops cannot be targeted in space combat
+			get { return Enumerations.WeaponTargets.Invalid; }
+		}
 
-        #region Public Methods
+		#endregion Public Properties
 
-        public override Visibility CheckVisibility(Empire emp)
-        {
-            if (Owner == emp)
-                return Visibility.Owned;
-            var sobj = Container as ISpaceObject;
-            if (sobj != null && sobj.CheckVisibility(emp) >= Visibility.Scanned)
-                return Visibility.Scanned;
-            return Visibility.Unknown;
-        }
+		#region Public Methods
 
-        public override bool IsObsoleteMemory(Empire emp)
-        {
-            return Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
-        }
+		public override Visibility CheckVisibility(Empire emp)
+		{
+			if (Owner == emp)
+				return Visibility.Owned;
+			var sobj = Container as ISpaceObject;
+			if (sobj != null && sobj.CheckVisibility(emp) >= Visibility.Scanned)
+				return Visibility.Scanned;
+			return Visibility.Unknown;
+		}
 
-        public override void Place(ISpaceObject target)
-        {
-            if (target is ICargoContainer)
-            {
-                var cc = (ICargoContainer)target;
-                if (cc.AddUnit(this))
-                    return;
-            }
-            // cargo was full? then try other space objects
-            foreach (var cc in target.Sector.SpaceObjects.Where(sobj => sobj.Owner == target.Owner).OfType<ICargoContainer>())
-            {
-                if (cc.AddUnit(this))
-                    return;
-            }
-            target.Owner.Log.Add(this.CreateLogMessage(this + " could not be placed in cargo at " + target + " because there is not enough cargo space available."));
-        }
+		public override bool IsObsoleteMemory(Empire emp)
+		{
+			return Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+		}
 
-        #endregion Public Methods
-    }
+		public override void Place(ISpaceObject target)
+		{
+			if (target is ICargoContainer)
+			{
+				var cc = (ICargoContainer)target;
+				if (cc.AddUnit(this))
+					return;
+			}
+			// cargo was full? then try other space objects
+			foreach (var cc in target.Sector.SpaceObjects.Where(sobj => sobj.Owner == target.Owner).OfType<ICargoContainer>())
+			{
+				if (cc.AddUnit(this))
+					return;
+			}
+			target.Owner.Log.Add(this.CreateLogMessage(this + " could not be placed in cargo at " + target + " because there is not enough cargo space available."));
+		}
+
+		#endregion Public Methods
+	}
 }
