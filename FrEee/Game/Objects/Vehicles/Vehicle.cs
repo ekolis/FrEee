@@ -503,17 +503,17 @@ namespace FrEee.Game.Objects.Vehicles
             get
             {
                 // no Engines Per Move rating? then no movement
-                if (Design.Hull.Mass == 0)
+                if (Design.Hull.ThrustPerMove == 0)
                     return 0;
 
                 // can't go anywhere without thrust!
                 var thrust = this.GetAbilityValue("Standard Ship Movement").ToInt();
-                if (thrust < Design.Hull.Mass)
+                if (thrust < Design.Hull.ThrustPerMove)
                     return 0;
 
                 // take into account base speed plus all bonuses
                 return
-                    thrust / Design.Hull.Mass
+                    thrust / Design.Hull.ThrustPerMove
                     + this.GetAbilityValue("Movement Bonus").ToInt()
                     + this.GetAbilityValue("Extra Movement Generation").ToInt()
                     + this.GetAbilityValue("Vehicle Speed").ToInt()

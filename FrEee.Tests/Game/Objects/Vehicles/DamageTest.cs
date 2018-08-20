@@ -93,7 +93,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
             var hull = new Hull<Ship>();
             Mod.Current.AssignID(hull, new List<string>());
             design.Hull = hull;
-            design.Hull.Mass = 1;
+            design.Hull.ThrustPerMove = 1;
             design.Owner = empire;
             for (var i = 0; i < numEngines; i++)
                 design.Components.Add(new MountedComponentTemplate(design, engineTemplate));
@@ -115,9 +115,9 @@ namespace FrEee.Tests.Game.Objects.Vehicles
             // HACK - assumes standard ability rules!
             // TODO - worry about supplies
             var thrust = ship.Components.Where(c => c.Hitpoints > 0).Sum(c => c.GetAbilityValue("Standard Ship Movement").ToInt());
-            if (thrust < ship.Hull.Mass)
+            if (thrust < ship.Hull.ThrustPerMove)
                 return 0;
-            return thrust / ship.Hull.Mass
+            return thrust / ship.Hull.ThrustPerMove
                 + ship.Components.Where(c => c.Hitpoints > 0).MaxOrDefault(c => c.GetAbilityValue("Movement Bonus").ToInt())
                 + ship.Components.Where(c => c.Hitpoints > 0).MaxOrDefault(c => c.GetAbilityValue("Extra Movement Generation").ToInt())
                 + ship.Components.Where(c => c.Hitpoints > 0).MaxOrDefault(c => c.GetAbilityValue("Vehicle Speed").ToInt());
