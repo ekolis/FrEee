@@ -11,11 +11,8 @@ using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
-using Omu.ValueInjecter;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -28,2553 +25,2231 @@ using System.Threading.Tasks;
 
 namespace FrEee.Utility.Extensions
 {
-    public enum IDCopyBehavior
-    {
-        PreserveSource,
-        PreserveDestination,
-        Regenerate
-    }
-
-    public static class CommonExtensions
-    {
-        #region Private Fields
-
-        private static SafeDictionary<Type, object> defaultValueCache = new SafeDictionary<Type, object>();
-
-        private static List<Type> mappedTypes = new List<Type>();
-
-        #endregion Private Fields
-
-        #region Public Methods
-
-        /// <summary>
-        /// All abilities belonging to an object.
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public static IEnumerable<Ability> Abilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
-        {
-            if (obj == null)
-                return Enumerable.Empty<Ability>();
-
-            if (sourceFilter == null && Galaxy.Current.IsAbilityCacheEnabled)
-            {
-                // use the ability cache
-                if (Galaxy.Current.AbilityCache[obj] == null)
-                    Galaxy.Current.AbilityCache[obj] = obj.UnstackedAbilities(sourceFilter).Stack(obj).ToArray();
-                return Galaxy.Current.AbilityCache[obj];
-            }
-
-            return obj.UnstackedAbilities(sourceFilter).Stack(obj);
-        }
-
-        public static ILookup<Ability, Ability> AbilityTree(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
-        {
-            return obj.UnstackedAbilities(sourceFilter).StackToTree(obj);
-        }
-
-        /// <summary>
-        /// Gets any abilities that can be activated.
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public static IDictionary<Ability, IAbilityObject> ActivatableAbilities(this Vehicle v)
-        {
-            var dict = new Dictionary<Ability, IAbilityObject>();
-            foreach (var a in v.Hull.Abilities)
-            {
-                if (a.Rule.IsActivatable)
-                    dict.Add(a, v.Hull);
-            }
-            foreach (var c in v.Components.Where(c => !c.IsDestroyed))
-            {
-                foreach (var a in c.Abilities)
-                {
-                    if (a.Rule.IsActivatable)
-                        dict.Add(a, c);
-                }
-            }
-            return dict;
-        }
-
-        /// <summary>
-        /// Gets any abilities that can be activated.
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public static IDictionary<Ability, IAbilityObject> ActivatableAbilities(this Planet p)
-        {
-            var dict = new Dictionary<Ability, IAbilityObject>();
-            if (p.Colony == null)
-                return dict;
-            foreach (var f in p.Colony.Facilities.Where(f => !f.IsDestroyed))
-            {
-                foreach (var a in f.Abilities)
-                {
-                    if (a.Rule.IsActivatable)
-                        dict.Add(a, f);
-                }
-            }
-            return dict;
-        }
-
-        /// <summary>
-        /// Gets any abilities that can be activated.
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public static IDictionary<Ability, IAbilityObject> ActivatableAbilities(this IAbilityObject o)
-        {
-            if (o is Vehicle)
-                return ((Vehicle)o).ActivatableAbilities();
-            if (o is Planet)
-                return ((Planet)o).ActivatableAbilities();
-
-            var dict = new Dictionary<Ability, IAbilityObject>();
-            foreach (var a in o.Abilities())
-            {
-                if (a.Rule.IsActivatable)
-                    dict.Add(a, o);
-            }
-            return dict;
-        }
-
-        public static Ability AddAbility(this IAbilityContainer obj, string abilityName, params object[] vals)
-        {
-            return obj.AddAbility(Mod.Current.AbilityRules.Single(r => r.Name == abilityName || r.Aliases.Contains(abilityName)), vals);
-        }
-
-        public static Ability AddAbility(this IAbilityContainer obj, AbilityRule rule, params object[] vals)
-        {
-            var a = new Ability(obj, rule, null, vals);
-            obj.Abilities.Add(a);
-            return a;
-        }
-
-        /// <summary>
-        /// Abilities inherited from ancestor objects.
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="includeShared"></param>
-        /// <returns></returns>
-        public static IEnumerable<Ability> AncestorAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
-        {
-            var abils = new List<Ability>();
-            foreach (var p in obj.Ancestors(sourceFilter).ExceptSingle(null))
-                abils.AddRange(p.IntrinsicAbilities);
-            return abils.Where(a => a.Rule == null || a.Rule.CanTarget(obj.AbilityTarget));
-        }
-
-        public static IEnumerable<IAbilityObject> Ancestors(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
-        {
-            if (obj == null)
-                yield break;
-            // TODO - filter out duplicate ancestors
-            foreach (var p in obj.Parents.ExceptSingle(null))
-            {
-                if (p != null && (sourceFilter == null || sourceFilter(p)))
-                {
-                    yield return p;
-                    foreach (var x in p.Ancestors(sourceFilter))
-                        yield return x;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Casts an object to a type. Returns null if the type is wrong.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="o"></param>
-        /// <returns></returns>
-        public static T As<T>(this object o, bool throwExceptionIfWrongType = false)
-            where T : class
-        {
-            return o as T;
-        }
-
-        /// <summary>
-        /// Builds a delegate to wrap a MethodInfo.
-        /// http://stackoverflow.com/questions/13041674/create-func-or-action-for-any-method-using-reflection-in-c
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="method"></param>
-        /// <param name="missingParamValues"></param>
-        /// <returns></returns>
-        public static T BuildDelegate<T>(this MethodInfo method, params object[] missingParamValues)
-        {
-            var queueMissingParams = new Queue<object>(missingParamValues);
-
-            var dgtMi = typeof(T).GetMethod("Invoke");
-            var dgtRet = dgtMi.ReturnType;
-            var dgtParams = dgtMi.GetParameters();
-
-            var paramsOfDelegate = dgtParams
-                .Select(tp => Expression.Parameter(tp.ParameterType, tp.Name))
-                .ToArray();
-
-            var methodParams = method.GetParameters();
-
-            if (method.IsStatic)
-            {
-                var paramsToPass = methodParams
-                    .Select((p, i) => CreateParam(paramsOfDelegate, i, p, queueMissingParams))
-                    .ToArray();
-
-                var expr = Expression.Lambda<T>(
-                    Expression.Call(method, paramsToPass),
-                    paramsOfDelegate);
-
-                return expr.Compile();
-            }
-            else
-            {
-                var paramThis = Expression.Convert(paramsOfDelegate[0], method.DeclaringType);
-
-                var paramsToPass = methodParams
-                    .Select((p, i) => CreateParam(paramsOfDelegate, i + 1, p, queueMissingParams))
-                    .ToArray();
-
-                var expr = Expression.Lambda<T>(
-                    Expression.Call(paramThis, method, paramsToPass),
-                    paramsOfDelegate);
-
-                return expr.Compile();
-            }
-        }
-
-        public static Delegate BuildDelegate(this MethodInfo method, params object[] missingParamValues)
-        {
-            var parms = method.GetParameters();
-            var parmTypes = parms.Select(p => p.ParameterType).ToArray();
-            var delegateType = method.ReturnType == typeof(void) ? MakeActionType(parmTypes) : MakeFuncType(parmTypes, method.ReturnType);
-            var builder = typeof(CommonExtensions).GetMethods().Single(m => m.Name == "BuildDelegate" && m.GetGenericArguments().Length == 1).MakeGenericMethod(delegateType);
-            return (Delegate)builder.Invoke(null, new object[] { method, missingParamValues });
-        }
-
-        public static Formula<TValue> BuildMultiConditionalLessThanOrEqual<TKey, TValue>(this IDictionary<TKey, TValue> thresholds, object context, string variableName, TValue defaultValue)
-                    where TValue : IConvertible, IComparable, IComparable<TValue>
-        {
-            var sorted = new SortedDictionary<TKey, TValue>(thresholds);
-            var formula = "***";
-            foreach (var kvp in sorted)
-                formula = formula.Replace("***", kvp.Value.ToStringInvariant() + " if " + variableName + " <= " + kvp.Key + " else (***)");
-            formula = formula.Replace("***", defaultValue.ToStringInvariant());
-            return new ComputedFormula<TValue>(formula, context, true);
-        }
-
-        /// <summary>
-        /// Consumes supplies if possible.
-        /// </summary>
-        /// <param name="supplies">The supplies to consume.</param>
-        /// <returns>true if successful or unnecessary, otherwise false</returns>
-        public static bool BurnSupplies(this IMobileSpaceObject sobj, int supplies)
-        {
-            if (sobj.HasInfiniteSupplies)
-                return true; // no need to burn
-            else if (sobj.SupplyRemaining < supplies)
-                return false; // not enough
-            else
-            {
-                sobj.SupplyRemaining -= supplies;
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// Consumes supplies if possible.
-        /// </summary>
-        /// <param name="comp">The component consuming supplies.</param>
-        /// <returns>true if successful or unnecessary, otherwise false</returns>
-        public static bool BurnSupplies(this Component comp)
-        {
-            if (comp.Container is IMobileSpaceObject)
-                return (comp.Container as IMobileSpaceObject).BurnSupplies(comp.Template.SupplyUsage);
-            else
-                return true; // other component containers don't use supplies
-        }
-
-        /// <summary>
-        /// Consumes supplies if possible.
-        /// </summary>
-        /// <param name="a">The ability consuming supplies.</param>
-        /// <returns>true if successful or unnecessary, otherwise false</returns>
-        public static bool BurnSupplies(this Ability a)
-        {
-            if (a.Container is Component)
-                return (a.Container as Component).BurnSupplies();
-            else
-                return true; // other ability containers don't use supplies
-        }
-
-        /// <summary>
-        /// Checks for "do not copy" attribute, even on interface properties.
-        /// Returns true if there is no such attribute.
-        /// </summary>
-        /// <param name="p"></param>
-        /// <returns></returns>
-        public static bool CanCopyFully(this PropertyInfo p)
-        {
-            if (p.HasAttribute<DoNotCopyAttribute>() || p.PropertyType.HasAttribute<DoNotCopyAttribute>())
-                return false;
-            foreach (var i in p.DeclaringType.GetInterfaces())
-            {
-                var ip = i.GetProperty(p.Name);
-                if (ip != null && ip.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any())
-                    return false;
-            }
-            return true;
-        }
-
-        /// <summary>
-        /// Checks for "do not copy" attribute, even on interface properties.
-        /// Returns true if there is no such attribute, or the attribute is present but the safe-copy flag is set.
-        /// Safe copying means copying a reference but not deep copying.
-        /// </summary>
-        /// <param name="p"></param>
-        /// <returns></returns>
-        public static bool CanCopySafely(this PropertyInfo p)
-        {
-            if (p.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Union(p.PropertyType.GetCustomAttributes(true).OfType<DoNotCopyAttribute>()).Any(a => !a.AllowSafeCopy))
-                return false;
-            foreach (var i in p.DeclaringType.GetInterfaces())
-            {
-                var ip = i.GetProperty(p.Name);
-                if (ip != null && ip.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any(a => !a.AllowSafeCopy))
-                    return false;
-            }
-            return true;
-        }
-
-        public static int CargoStorageFree(this ICargoContainer cc)
-        {
-            return cc.CargoStorage - cc.Cargo.Size;
-        }
-
-        /// <summary>
-        /// Checks a command to make sure it doesn't contain any objects that are not client safe.
-        /// </summary>
-        /// <param name="cmd"></param>
-        public static void CheckForClientSafety(this ICommand cmd)
-        {
-            var vals = cmd.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(f => !f.GetCustomAttributes(true).OfType<DoNotSerializeAttribute>().Any() && f.GetGetMethod(true) != null && f.GetSetMethod(true) != null).Select(prop => new { Name = prop.Name, Value = prop.GetValue(cmd, new object[0]) });
-            var badVals = vals.Where(val => val.Value != null && !val.Value.GetType().IsClientSafe());
-            if (badVals.Any())
-                throw new Exception(cmd + " contained a non-client-safe type " + badVals.First().Value.GetType() + " in property " + badVals.First().Name);
-        }
-
-        public static void ClearAbilityCache(this IAbilityObject o)
-        {
-            Galaxy.Current.AbilityCache.Remove(o);
-        }
-
-        /// <summary>
-        /// Copies an object.
-        /// </summary>
-        /// <typeparam name="T">The type of object to copy.</typeparam>
-        /// <param name="obj">The object to copy.</param>
-        /// <returns>The copy.</returns>
-        public static T Copy<T>(this T obj)
-        {
-            if (obj == null)
-                return default(T);
-            var dest = obj.GetType().Instantiate();
-            dest.InjectFrom(new OnlySafePropertiesInjection(obj, true, IDCopyBehavior.PreserveSource, IDCopyBehavior.PreserveSource), obj);
-            return (T)dest;
-        }
-
-        /// <summary>
-        /// Copies an object and assigns the copy a new ID.
-        /// Subordinate objects are assigned new IDs too.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public static T CopyAndAssignNewID<T>(this T obj)
-        {
-            if (obj == null)
-                return default(T);
-            var dest = obj.GetType().Instantiate();
-            dest.InjectFrom(new OnlySafePropertiesInjection(obj, true, IDCopyBehavior.Regenerate, IDCopyBehavior.Regenerate), obj);
-            return (T)dest;
-        }
-
-        /// <summary>
-        /// Copies an object's data to another object.
-        /// </summary>
-        /// <typeparam name="T">The type of object to copy.</typeparam>
-        /// <param name="src">The object to copy.</param>
-        /// <param name="dest">The object to copy the source object's data to.</param>
-        public static void CopyTo(this object src, object dest, IDCopyBehavior rootBehavior = IDCopyBehavior.PreserveSource, IDCopyBehavior subordinateBehavior = IDCopyBehavior.PreserveSource)
-        {
-            if (src.GetType() != dest.GetType())
-                throw new Exception("Can only copy objects onto objects of the same type.");
-            dest.InjectFrom(new OnlySafePropertiesInjection(src, true, rootBehavior, subordinateBehavior), src);
-        }
-
-        /// <summary>
-        /// Copies an object's data to another object. Skips the ID property.
-        /// </summary>
-        /// <typeparam name="T">The type of object to copy.</typeparam>
-        /// <param name="src">The object to copy.</param>
-        /// <param name="dest">The object to copy the source object's data to.</param>
-        public static void CopyToExceptID(this IReferrable src, IReferrable dest, IDCopyBehavior subordinateBehavior)
-        {
-            src.CopyTo(dest, IDCopyBehavior.PreserveDestination, subordinateBehavior);
-        }
-
-        public static PictorialLogMessage<T> CreateLogMessage<T>(this T context, string text, int? turnNumber = null)
-                    where T : IPictorial
-        {
-            if (turnNumber == null)
-                return new PictorialLogMessage<T>(text, context);
-            else
-                return new PictorialLogMessage<T>(text, turnNumber.Value, context);
-        }
-
-        public static void DealWithMines(this ISpaceObject sobj)
-        {
-            if (sobj is IDamageable && sobj is IOwnable)
-            {
-                var d = (IDamageable)sobj;
-                var sector = sobj.Sector;
-                if (sector == null)
-                    return;
-
-                // shuffle up the mines so they hit in a random order
-                var mines = sector.SpaceObjects.OfType<Mine>().Union(sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.LeafVehicles.OfType<Mine>())).Where(m => m.IsHostileTo(sobj.Owner)).Shuffle().ToList();
-
-                // for log messages
-                var totalDamage = 0;
-                var minesSwept = new SafeDictionary<Empire, int>();
-                var minesDetonated = new SafeDictionary<Empire, int>();
-                var minesAttacking = new SafeDictionary<Empire, int>();
-
-                // can we sweep any?
-                var sweeping = sobj.GetAbilityValue("Mine Sweeping").ToInt();
-
-                // go through the minefield!
-                while (mines.Any() && !d.IsDestroyed)
-                {
-                    var mine = mines.First();
-                    if (sweeping > 0)
-                    {
-                        // sweep a mine
-                        sweeping--;
-                        minesSwept[mine.Owner]++;
-                        mine.Dispose();
-                    }
-                    else
-                    {
-                        // bang/boom!
-                        bool detonate = false;
-                        foreach (var weapon in mine.Weapons)
-                        {
-                            var shot = new Shot(mine, weapon, d, 0);
-                            var damage = weapon.Template.GetWeaponDamage(1);
-                            var hit = new Hit(shot, d, damage);
-                            var leftoverDamage = d.TakeDamage(hit);
-                            totalDamage += damage - leftoverDamage;
-                            if (weapon.Template.ComponentTemplate.WeaponInfo.IsWarhead)
-                                detonate = true; // warheads go boom, other weapons don't
-                        }
-                        if (detonate)
-                        {
-                            minesDetonated[mine.Owner]++;
-                            mine.Dispose();
-                        }
-                        else
-                            minesAttacking[mine.Owner]++;
-                    }
-
-                    // each mine can only activate or be swept once
-                    mines.Remove(mine);
-                }
-
-                // logging!
-                if (minesDetonated.Any() || minesSwept.Any() || minesAttacking.Any())
-                    sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " encountered a mine field at " + sector + " and took " + totalDamage + " points of damage, sweeping " + minesSwept.Sum(kvp => kvp.Value) + " mines."));
-                foreach (var emp in minesSwept.Keys.Union(minesDetonated.Keys).Union(minesAttacking.Keys))
-                    emp.Log.Add(sobj.CreateLogMessage(sobj + " encountered our mine field at " + sector + ". " + minesDetonated[emp] + " of our mines detonated, " + minesAttacking[emp] + " others fired weapons, and " + minesSwept[emp] + " were swept. " + sector.SpaceObjects.OfType<Mine>().Where(m => m.Owner == emp).Count() + " mines remain in the sector."));
-            }
-        }
-
-        /// <summary>
-        /// Returns a custom value if the specified value is null or the wrong type.
-        /// Otherwise returns the value itself.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="value"></param>
-        /// <param name=""></param>
-        /// <returns></returns>
-        public static T Default<T>(this object value, T def = default(T), bool throwIfWrongType = false)
-        {
-            if (throwIfWrongType && !(value is T))
-                throw new InvalidCastException($"Cannot convert {value} to type {typeof(T)}.");
-            return value == null || !(value is T) ? def : (T)value;
-        }
-
-        /// <summary>
-        /// Returns a custom value if the specified value is equal to the default value for its type.
-        /// Otherwise returns the value itself.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="value"></param>
-        /// <param name=""></param>
-        /// <returns></returns>
-        public static T DefaultTo<T>(this T value, T def)
-        {
-            return value.Equals(default(T)) ? def : value;
-        }
-
-        /// <summary>
-        /// Programmatic equivalent of the default operator.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public static object DefaultValue(this Type t)
-        {
-            if (defaultValueCache[t] == null)
-                defaultValueCache[t] = typeof(CommonExtensions).GetMethod("GetDefaultGeneric", BindingFlags.NonPublic | BindingFlags.Static).MakeGenericMethod(t).Invoke(null, null);
-            return defaultValueCache[t];
-        }
-
-        /// <summary>
-        /// Abilities passed up from descendant objects.
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="includeShared"></param>
-        /// <returns></returns>
-        public static IEnumerable<Ability> DescendantAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
-        {
-            var abils = new List<Ability>();
-            foreach (var c in obj.Descendants(sourceFilter))
-                abils.AddRange(c.IntrinsicAbilities);
-            return abils.Where(a => a.Rule == null || a.Rule.CanTarget(obj.AbilityTarget));
-        }
-
-        public static IEnumerable<IAbilityObject> Descendants(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
-        {
-            if (obj == null)
-                yield break;
-            // TODO - filter out duplicate descendants
-            foreach (var c in obj.Children)
-            {
-                if (c != null && (sourceFilter == null || sourceFilter(c)))
-                {
-                    yield return c;
-                    foreach (var x in c.Descendants(sourceFilter))
-                        yield return x;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Disposes of all objects in an enumerated list that meet a specified condition (or all items if condition is null).
-        /// Does not clear the list; if the list is a collection, you can do this yourself.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="list"></param>
-        /// <param name="condition"></param>
-        public static void DisposeAll<T>(this IEnumerable<T> list, Func<T, bool> condition = null) where T : IDisposable
-        {
-            foreach (var d in list.Where(d => condition == null || condition(d)).ToArray())
-                d.Dispose();
-        }
-
-        public static void DisposeAndLog(this IFoggable obj, string message = null, params Empire[] empiresToSkipMessage)
-        {
-            if (Empire.Current == null)
-            {
-                foreach (var emp in Galaxy.Current.Empires)
-                {
-                    if (obj.CheckVisibility(emp) >= Visibility.Visible)
-                    {
-                        if (message != null && !empiresToSkipMessage.Contains(emp))
-                            emp.RecordLog(obj, message);
-                    }
-                }
-            }
-            obj.Dispose();
-        }
-
-        /// <summary>
-        /// Copies an image and draws planet population bars on it.
-        /// </summary>
-        /// <param name="image">The image.</param>
-        /// <param name="planet">The planet whose population bars should be drawn.</param>
-        /// <returns>The copied image with the population bars.</returns>
-        public static Image DrawPopulationBars(this Image image, Planet planet)
-        {
-            var img2 = (Image)image.Clone();
-            planet.DrawPopulationBars(img2);
-            return img2;
-        }
-
-        /// <summary>
-        /// Computes the distance between two points along a grid with eight-way movement.
-        /// </summary>
-        /// <param name="p"></param>
-        /// <param name="target"></param>
-        /// <returns></returns>
-        public static int EightWayDistance(this Point p, Point target)
-        {
-            var dx = Math.Abs(target.X - p.X);
-            var dy = Math.Abs(target.Y - p.Y);
-            return Math.Max(dx, dy);
-        }
-
-        public static IEnumerable<Ability> EmpireAbilities(this ICommonAbilityObject obj, Empire emp, Func<IAbilityObject, bool> sourceFilter = null)
-        {
-            if (obj == null)
-                return Enumerable.Empty<Ability>();
-
-            if (sourceFilter == null)
-            {
-                var subobjs = obj.GetContainedAbilityObjects(emp);
-                Func<Ability[]> getabils = () =>
-                    subobjs.SelectMany(o => o.Abilities()).Where(a => a.Rule.CanTarget(obj.AbilityTarget)).ToArray();
-                if (Galaxy.Current.IsAbilityCacheEnabled)
-                {
-                    var tuple = Tuple.Create(obj, emp);
-                    if (Galaxy.Current.CommonAbilityCache[tuple] == null)
-                        Galaxy.Current.CommonAbilityCache[tuple] = getabils();
-                    return Galaxy.Current.CommonAbilityCache[tuple];
-                }
-                else
-                    return getabils();
-            }
-            else
-                return obj.GetContainedAbilityObjects(emp).Where(o => sourceFilter(o)).SelectMany(o => o.Abilities()).Where(a => a.Rule.CanTarget(obj.AbilityTarget));
-        }
-
-        /// <summary>
-        /// Finds empire-common abilities inherited by an object (e.g. empire abilities of a sector in which a ship resides).
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="sourceFilter"></param>
-        /// <returns></returns>
-        public static IEnumerable<Ability> EmpireCommonAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
-        {
-            // Unowned objects cannot empire common abilities.
-            var ownable = obj as IOwnableAbilityObject;
-            if (ownable == null || ownable.Owner == null)
-                yield break;
-
-            // Where are these abilities coming from?
-            // Right now they can only come from ancestors, since sectors and star systems are the only common ability objects.
-            // TODO - Would it make sense for them to come from descendants? What kind of common ability object could be used as a descendant of an owned object?
-            var ancestors = obj.Ancestors(sourceFilter).OfType<ICommonAbilityObject>();
-
-            // What abilities do we have?
-            foreach (var ancestor in ancestors)
-            {
-                foreach (var abil in ancestor.EmpireAbilities(ownable.Owner, sourceFilter))
-                    yield return abil;
-            }
-        }
-
-        public static bool ExecuteMobileSpaceObjectOrders<T>(this T o)
-                    where T : IMobileSpaceObject<T>
-        {
-            bool didStuff = false;
-            while (o.Orders.Any() && (o.TimeToNextMove <= 1e-15 || !o.Orders.First().ConsumesMovement))
-            {
-                o.Orders.First().Execute(o);
-                if (o.Orders.First().IsComplete)
-                    o.Orders.RemoveAt(0);
-                didStuff = true;
-            }
-            if (Galaxy.Current.NextTickSize == double.PositiveInfinity)
-                o.TimeToNextMove = 0;
-            else
-                o.TimeToNextMove -= Galaxy.Current.NextTickSize;
-            return didStuff;
-        }
-
-        /// <summary>
-        /// Finds the last sector in a space object's path, or if it has no movement-type orders, its current sector.
-        /// </summary>
-        /// <param name="sobj"></param>
-        /// <returns></returns>
-        public static Sector FinalSector<T>(this T sobj)
-            where T : IMobileSpaceObject
-        {
-            var path = sobj.Path();
-            if (path == null || !path.Any())
-                return sobj.Sector;
-            return path.Last();
-        }
-
-        /// <summary>
-        /// Finds the cargo container which contains this unit.
-        /// </summary>
-        /// <returns></returns>
-        public static ICargoContainer FindContainer(this IUnit unit)
-        {
-            var containers = Galaxy.Current.FindSpaceObjects<ICargoContainer>().Where(cc => cc.Cargo != null && cc.Cargo.Units.Contains(unit));
-            if (!containers.Any())
-            {
-                if (unit is IMobileSpaceObject)
-                {
-                    var v = (IMobileSpaceObject)unit;
-                    return v.Sector;
-                }
-                else
-                    return null; // unit is in limbo...
-            }
-            if (containers.Count() > 1)
-                throw new Exception("Unit is in multiple cargo containers?!");
-            return containers.Single();
-        }
-
-        /// <summary>
-        /// Finds the coordinates of a space object within its star system.
-        /// </summary>
-        /// <param name="sobj"></param>
-        /// <returns></returns>
-        public static Point FindCoordinates(this ISpaceObject sobj)
-        {
-            return sobj.FindStarSystem().FindCoordinates(sobj);
-        }
-
-        public static T FindMemory<T>(this T f, Empire emp) where T : IFoggable
-        {
-            return (T)emp.Memory[f.ID];
-        }
-
-        /// <summary>
-        /// Finds the original object of a memory, if it is known.
-        /// </summary>
-        /// <param name="f"></param>
-        /// <param name="emp"></param>
-        /// <returns></returns>
-        public static IFoggable FindOriginalObject(this IFoggable f, Empire emp)
-        {
-            // not a memory? it is its own real object
-            if (!(f.IsMemory))
-                return f;
-
-            // look for the real object
-            if (emp.Memory.Any(kvp => kvp.Value == f))
-                return (IFoggable)Galaxy.Current.referrables[emp.Memory.Single(kvp => kvp.Value == f).Key];
-
-            // nothing found?
-            return null;
-        }
-
-        /// <summary>
-        /// Finds a property on a type, base type, or interface.
-        /// </summary>
-        /// <param name="t"></param>
-        /// <param name="propName"></param>
-        /// <returns></returns>
-        public static PropertyInfo FindProperty(this Type type, string propName)
-        {
-            var p = type.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            if (p != null)
-                return p.DeclaringType.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            var b = type.BaseType;
-            if (b != null)
-            {
-                var bp = b.FindProperty(propName);
-                if (bp != null)
-                    return bp.DeclaringType.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            }
-            foreach (var i in type.GetInterfaces())
-            {
-                var ip = i.FindProperty(propName);
-                if (ip != null)
-                    return ip.DeclaringType.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// Finds the sector containing a space object.
-        /// </summary>
-        /// <param name="sobj"></param>
-        /// <returns></returns>
-        public static Sector FindSector(this ISpaceObject sobj)
-        {
-            var sys = sobj.FindStarSystem();
-            if (sys == null)
-                return null;
-            // TODO - this might be kind of slow; might want a reverse memory lookup
-            return new Sector(sys, sys.SpaceObjectLocations.Single(l => l.Item == sobj).Location);
-        }
-
-        /// <summary>
-        /// Finds the star system containing a space object.
-        /// </summary>
-        /// <param name="sobj"></param>
-        /// <returns></returns>
-        public static StarSystem FindStarSystem(this ISpaceObject sobj)
-        {
-            var loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.Contains(sobj));
-            /*if (loc == null)
+	public enum IDCopyBehavior
+	{
+		PreserveSource,
+		PreserveDestination,
+		Regenerate
+	}
+
+	public static class CommonExtensions
+	{
+		#region Private Fields
+
+		private static SafeDictionary<Type, object> defaultValueCache = new SafeDictionary<Type, object>();
+
+		private static List<Type> mappedTypes = new List<Type>();
+
+		#endregion Private Fields
+
+		#region Public Methods
+
+		/// <summary>
+		/// All abilities belonging to an object.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		public static IEnumerable<Ability> Abilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		{
+			if (obj == null)
+				return Enumerable.Empty<Ability>();
+
+			if (sourceFilter == null && Galaxy.Current.IsAbilityCacheEnabled)
+			{
+				// use the ability cache
+				if (Galaxy.Current.AbilityCache[obj] == null)
+					Galaxy.Current.AbilityCache[obj] = obj.UnstackedAbilities(sourceFilter).Stack(obj).ToArray();
+				return Galaxy.Current.AbilityCache[obj];
+			}
+
+			return obj.UnstackedAbilities(sourceFilter).Stack(obj);
+		}
+
+		public static ILookup<Ability, Ability> AbilityTree(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		{
+			return obj.UnstackedAbilities(sourceFilter).StackToTree(obj);
+		}
+
+		/// <summary>
+		/// Gets any abilities that can be activated.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		public static IDictionary<Ability, IAbilityObject> ActivatableAbilities(this Vehicle v)
+		{
+			var dict = new Dictionary<Ability, IAbilityObject>();
+			foreach (var a in v.Hull.Abilities)
+			{
+				if (a.Rule.IsActivatable)
+					dict.Add(a, v.Hull);
+			}
+			foreach (var c in v.Components.Where(c => !c.IsDestroyed))
+			{
+				foreach (var a in c.Abilities)
+				{
+					if (a.Rule.IsActivatable)
+						dict.Add(a, c);
+				}
+			}
+			return dict;
+		}
+
+		/// <summary>
+		/// Gets any abilities that can be activated.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		public static IDictionary<Ability, IAbilityObject> ActivatableAbilities(this Planet p)
+		{
+			var dict = new Dictionary<Ability, IAbilityObject>();
+			if (p.Colony == null)
+				return dict;
+			foreach (var f in p.Colony.Facilities.Where(f => !f.IsDestroyed))
+			{
+				foreach (var a in f.Abilities)
+				{
+					if (a.Rule.IsActivatable)
+						dict.Add(a, f);
+				}
+			}
+			return dict;
+		}
+
+		/// <summary>
+		/// Gets any abilities that can be activated.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		public static IDictionary<Ability, IAbilityObject> ActivatableAbilities(this IAbilityObject o)
+		{
+			if (o is Vehicle)
+				return ((Vehicle)o).ActivatableAbilities();
+			if (o is Planet)
+				return ((Planet)o).ActivatableAbilities();
+
+			var dict = new Dictionary<Ability, IAbilityObject>();
+			foreach (var a in o.Abilities())
+			{
+				if (a.Rule.IsActivatable)
+					dict.Add(a, o);
+			}
+			return dict;
+		}
+
+		public static Ability AddAbility(this IAbilityContainer obj, string abilityName, params object[] vals)
+		{
+			return obj.AddAbility(Mod.Current.AbilityRules.Single(r => r.Name == abilityName || r.Aliases.Contains(abilityName)), vals);
+		}
+
+		public static Ability AddAbility(this IAbilityContainer obj, AbilityRule rule, params object[] vals)
+		{
+			var a = new Ability(obj, rule, null, vals);
+			obj.Abilities.Add(a);
+			return a;
+		}
+
+		/// <summary>
+		/// Abilities inherited from ancestor objects.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <param name="includeShared"></param>
+		/// <returns></returns>
+		public static IEnumerable<Ability> AncestorAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		{
+			var abils = new List<Ability>();
+			foreach (var p in obj.Ancestors(sourceFilter).ExceptSingle(null))
+				abils.AddRange(p.IntrinsicAbilities);
+			return abils.Where(a => a.Rule == null || a.Rule.CanTarget(obj.AbilityTarget));
+		}
+
+		public static IEnumerable<IAbilityObject> Ancestors(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		{
+			if (obj == null)
+				yield break;
+			// TODO - filter out duplicate ancestors
+			foreach (var p in obj.Parents.ExceptSingle(null))
+			{
+				if (p != null && (sourceFilter == null || sourceFilter(p)))
+				{
+					yield return p;
+					foreach (var x in p.Ancestors(sourceFilter))
+						yield return x;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Casts an object to a type. Returns null if the type is wrong.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="o"></param>
+		/// <returns></returns>
+		public static T As<T>(this object o, bool throwExceptionIfWrongType = false)
+			where T : class
+		{
+			return o as T;
+		}
+
+		/// <summary>
+		/// Builds a delegate to wrap a MethodInfo.
+		/// http://stackoverflow.com/questions/13041674/create-func-or-action-for-any-method-using-reflection-in-c
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="method"></param>
+		/// <param name="missingParamValues"></param>
+		/// <returns></returns>
+		public static T BuildDelegate<T>(this MethodInfo method, params object[] missingParamValues)
+		{
+			var queueMissingParams = new Queue<object>(missingParamValues);
+
+			var dgtMi = typeof(T).GetMethod("Invoke");
+			var dgtRet = dgtMi.ReturnType;
+			var dgtParams = dgtMi.GetParameters();
+
+			var paramsOfDelegate = dgtParams
+				.Select(tp => Expression.Parameter(tp.ParameterType, tp.Name))
+				.ToArray();
+
+			var methodParams = method.GetParameters();
+
+			if (method.IsStatic)
+			{
+				var paramsToPass = methodParams
+					.Select((p, i) => CreateParam(paramsOfDelegate, i, p, queueMissingParams))
+					.ToArray();
+
+				var expr = Expression.Lambda<T>(
+					Expression.Call(method, paramsToPass),
+					paramsOfDelegate);
+
+				return expr.Compile();
+			}
+			else
+			{
+				var paramThis = Expression.Convert(paramsOfDelegate[0], method.DeclaringType);
+
+				var paramsToPass = methodParams
+					.Select((p, i) => CreateParam(paramsOfDelegate, i + 1, p, queueMissingParams))
+					.ToArray();
+
+				var expr = Expression.Lambda<T>(
+					Expression.Call(paramThis, method, paramsToPass),
+					paramsOfDelegate);
+
+				return expr.Compile();
+			}
+		}
+
+		public static Delegate BuildDelegate(this MethodInfo method, params object[] missingParamValues)
+		{
+			var parms = method.GetParameters();
+			var parmTypes = parms.Select(p => p.ParameterType).ToArray();
+			var delegateType = method.ReturnType == typeof(void) ? MakeActionType(parmTypes) : MakeFuncType(parmTypes, method.ReturnType);
+			var builder = typeof(CommonExtensions).GetMethods().Single(m => m.Name == "BuildDelegate" && m.GetGenericArguments().Length == 1).MakeGenericMethod(delegateType);
+			return (Delegate)builder.Invoke(null, new object[] { method, missingParamValues });
+		}
+
+		public static Formula<TValue> BuildMultiConditionalLessThanOrEqual<TKey, TValue>(this IDictionary<TKey, TValue> thresholds, object context, string variableName, TValue defaultValue)
+					where TValue : IConvertible, IComparable, IComparable<TValue>
+		{
+			var sorted = new SortedDictionary<TKey, TValue>(thresholds);
+			var formula = "***";
+			foreach (var kvp in sorted)
+				formula = formula.Replace("***", kvp.Value.ToStringInvariant() + " if " + variableName + " <= " + kvp.Key + " else (***)");
+			formula = formula.Replace("***", defaultValue.ToStringInvariant());
+			return new ComputedFormula<TValue>(formula, context, true);
+		}
+
+		/// <summary>
+		/// Consumes supplies if possible.
+		/// </summary>
+		/// <param name="supplies">The supplies to consume.</param>
+		/// <returns>true if successful or unnecessary, otherwise false</returns>
+		public static bool BurnSupplies(this IMobileSpaceObject sobj, int supplies)
+		{
+			if (sobj.HasInfiniteSupplies)
+				return true; // no need to burn
+			else if (sobj.SupplyRemaining < supplies)
+				return false; // not enough
+			else
+			{
+				sobj.SupplyRemaining -= supplies;
+				return true;
+			}
+		}
+
+		/// <summary>
+		/// Consumes supplies if possible.
+		/// </summary>
+		/// <param name="comp">The component consuming supplies.</param>
+		/// <returns>true if successful or unnecessary, otherwise false</returns>
+		public static bool BurnSupplies(this Component comp)
+		{
+			if (comp.Container is IMobileSpaceObject)
+				return (comp.Container as IMobileSpaceObject).BurnSupplies(comp.Template.SupplyUsage);
+			else
+				return true; // other component containers don't use supplies
+		}
+
+		/// <summary>
+		/// Consumes supplies if possible.
+		/// </summary>
+		/// <param name="a">The ability consuming supplies.</param>
+		/// <returns>true if successful or unnecessary, otherwise false</returns>
+		public static bool BurnSupplies(this Ability a)
+		{
+			if (a.Container is Component)
+				return (a.Container as Component).BurnSupplies();
+			else
+				return true; // other ability containers don't use supplies
+		}
+
+		public static int CargoStorageFree(this ICargoContainer cc)
+		{
+			return cc.CargoStorage - cc.Cargo.Size;
+		}
+
+		/// <summary>
+		/// Checks a command to make sure it doesn't contain any objects that are not client safe.
+		/// </summary>
+		/// <param name="cmd"></param>
+		public static void CheckForClientSafety(this ICommand cmd)
+		{
+			var vals = cmd.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(f => !f.GetCustomAttributes(true).OfType<DoNotSerializeAttribute>().Any() && f.GetGetMethod(true) != null && f.GetSetMethod(true) != null).Select(prop => new { Name = prop.Name, Value = prop.GetValue(cmd, new object[0]) });
+			var badVals = vals.Where(val => val.Value != null && !val.Value.GetType().IsClientSafe());
+			if (badVals.Any())
+				throw new Exception(cmd + " contained a non-client-safe type " + badVals.First().Value.GetType() + " in property " + badVals.First().Name);
+		}
+
+		public static void ClearAbilityCache(this IAbilityObject o)
+		{
+			Galaxy.Current.AbilityCache.Remove(o);
+		}
+
+		public static PictorialLogMessage<T> CreateLogMessage<T>(this T context, string text, int? turnNumber = null)
+					where T : IPictorial
+		{
+			if (turnNumber == null)
+				return new PictorialLogMessage<T>(text, context);
+			else
+				return new PictorialLogMessage<T>(text, turnNumber.Value, context);
+		}
+
+		public static void DealWithMines(this ISpaceObject sobj)
+		{
+			if (sobj is IDamageable && sobj is IOwnable)
+			{
+				var d = (IDamageable)sobj;
+				var sector = sobj.Sector;
+				if (sector == null)
+					return;
+
+				// shuffle up the mines so they hit in a random order
+				var mines = sector.SpaceObjects.OfType<Mine>().Union(sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.LeafVehicles.OfType<Mine>())).Where(m => m.IsHostileTo(sobj.Owner)).Shuffle().ToList();
+
+				// for log messages
+				var totalDamage = 0;
+				var minesSwept = new SafeDictionary<Empire, int>();
+				var minesDetonated = new SafeDictionary<Empire, int>();
+				var minesAttacking = new SafeDictionary<Empire, int>();
+
+				// can we sweep any?
+				var sweeping = sobj.GetAbilityValue("Mine Sweeping").ToInt();
+
+				// go through the minefield!
+				while (mines.Any() && !d.IsDestroyed)
+				{
+					var mine = mines.First();
+					if (sweeping > 0)
+					{
+						// sweep a mine
+						sweeping--;
+						minesSwept[mine.Owner]++;
+						mine.Dispose();
+					}
+					else
+					{
+						// bang/boom!
+						bool detonate = false;
+						foreach (var weapon in mine.Weapons)
+						{
+							var shot = new Shot(mine, weapon, d, 0);
+							var damage = weapon.Template.GetWeaponDamage(1);
+							var hit = new Hit(shot, d, damage);
+							var leftoverDamage = d.TakeDamage(hit);
+							totalDamage += damage - leftoverDamage;
+							if (weapon.Template.ComponentTemplate.WeaponInfo.IsWarhead)
+								detonate = true; // warheads go boom, other weapons don't
+						}
+						if (detonate)
+						{
+							minesDetonated[mine.Owner]++;
+							mine.Dispose();
+						}
+						else
+							minesAttacking[mine.Owner]++;
+					}
+
+					// each mine can only activate or be swept once
+					mines.Remove(mine);
+				}
+
+				// logging!
+				if (minesDetonated.Any() || minesSwept.Any() || minesAttacking.Any())
+					sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " encountered a mine field at " + sector + " and took " + totalDamage + " points of damage, sweeping " + minesSwept.Sum(kvp => kvp.Value) + " mines."));
+				foreach (var emp in minesSwept.Keys.Union(minesDetonated.Keys).Union(minesAttacking.Keys))
+					emp.Log.Add(sobj.CreateLogMessage(sobj + " encountered our mine field at " + sector + ". " + minesDetonated[emp] + " of our mines detonated, " + minesAttacking[emp] + " others fired weapons, and " + minesSwept[emp] + " were swept. " + sector.SpaceObjects.OfType<Mine>().Where(m => m.Owner == emp).Count() + " mines remain in the sector."));
+			}
+		}
+
+		/// <summary>
+		/// Returns a custom value if the specified value is null or the wrong type.
+		/// Otherwise returns the value itself.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value"></param>
+		/// <param name=""></param>
+		/// <returns></returns>
+		public static T Default<T>(this object value, T def = default(T), bool throwIfWrongType = false)
+		{
+			if (throwIfWrongType && !(value is T))
+				throw new InvalidCastException($"Cannot convert {value} to type {typeof(T)}.");
+			return value == null || !(value is T) ? def : (T)value;
+		}
+
+		/// <summary>
+		/// Returns a custom value if the specified value is equal to the default value for its type.
+		/// Otherwise returns the value itself.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value"></param>
+		/// <param name=""></param>
+		/// <returns></returns>
+		public static T DefaultTo<T>(this T value, T def)
+		{
+			return value.Equals(default(T)) ? def : value;
+		}
+
+		/// <summary>
+		/// Programmatic equivalent of the default operator.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		public static object DefaultValue(this Type t)
+		{
+			if (defaultValueCache[t] == null)
+				defaultValueCache[t] = typeof(CommonExtensions).GetMethod("GetDefaultGeneric", BindingFlags.NonPublic | BindingFlags.Static).MakeGenericMethod(t).Invoke(null, null);
+			return defaultValueCache[t];
+		}
+
+		/// <summary>
+		/// Abilities passed up from descendant objects.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <param name="includeShared"></param>
+		/// <returns></returns>
+		public static IEnumerable<Ability> DescendantAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		{
+			var abils = new List<Ability>();
+			foreach (var c in obj.Descendants(sourceFilter))
+				abils.AddRange(c.IntrinsicAbilities);
+			return abils.Where(a => a.Rule == null || a.Rule.CanTarget(obj.AbilityTarget));
+		}
+
+		public static IEnumerable<IAbilityObject> Descendants(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		{
+			if (obj == null)
+				yield break;
+			// TODO - filter out duplicate descendants
+			foreach (var c in obj.Children)
+			{
+				if (c != null && (sourceFilter == null || sourceFilter(c)))
+				{
+					yield return c;
+					foreach (var x in c.Descendants(sourceFilter))
+						yield return x;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Disposes of all objects in an enumerated list that meet a specified condition (or all items if condition is null).
+		/// Does not clear the list; if the list is a collection, you can do this yourself.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="list"></param>
+		/// <param name="condition"></param>
+		public static void DisposeAll<T>(this IEnumerable<T> list, Func<T, bool> condition = null) where T : IDisposable
+		{
+			foreach (var d in list.Where(d => condition == null || condition(d)).ToArray())
+				d.Dispose();
+		}
+
+		public static void DisposeAndLog(this IFoggable obj, string message = null, params Empire[] empiresToSkipMessage)
+		{
+			if (Empire.Current == null)
+			{
+				foreach (var emp in Galaxy.Current.Empires)
+				{
+					if (obj.CheckVisibility(emp) >= Visibility.Visible)
+					{
+						if (message != null && !empiresToSkipMessage.Contains(emp))
+							emp.RecordLog(obj, message);
+					}
+				}
+			}
+			obj.Dispose();
+		}
+
+		/// <summary>
+		/// Copies an image and draws planet population bars on it.
+		/// </summary>
+		/// <param name="image">The image.</param>
+		/// <param name="planet">The planet whose population bars should be drawn.</param>
+		/// <returns>The copied image with the population bars.</returns>
+		public static Image DrawPopulationBars(this Image image, Planet planet)
+		{
+			var img2 = (Image)image.Clone();
+			planet.DrawPopulationBars(img2);
+			return img2;
+		}
+
+		/// <summary>
+		/// Computes the distance between two points along a grid with eight-way movement.
+		/// </summary>
+		/// <param name="p"></param>
+		/// <param name="target"></param>
+		/// <returns></returns>
+		public static int EightWayDistance(this Point p, Point target)
+		{
+			var dx = Math.Abs(target.X - p.X);
+			var dy = Math.Abs(target.Y - p.Y);
+			return Math.Max(dx, dy);
+		}
+
+		public static IEnumerable<Ability> EmpireAbilities(this ICommonAbilityObject obj, Empire emp, Func<IAbilityObject, bool> sourceFilter = null)
+		{
+			if (obj == null)
+				return Enumerable.Empty<Ability>();
+
+			if (sourceFilter == null)
+			{
+				var subobjs = obj.GetContainedAbilityObjects(emp);
+				Func<Ability[]> getabils = () =>
+					subobjs.SelectMany(o => o.Abilities()).Where(a => a.Rule.CanTarget(obj.AbilityTarget)).ToArray();
+				if (Galaxy.Current.IsAbilityCacheEnabled)
+				{
+					var tuple = Tuple.Create(obj, emp);
+					if (Galaxy.Current.CommonAbilityCache[tuple] == null)
+						Galaxy.Current.CommonAbilityCache[tuple] = getabils();
+					return Galaxy.Current.CommonAbilityCache[tuple];
+				}
+				else
+					return getabils();
+			}
+			else
+				return obj.GetContainedAbilityObjects(emp).Where(o => sourceFilter(o)).SelectMany(o => o.Abilities()).Where(a => a.Rule.CanTarget(obj.AbilityTarget));
+		}
+
+		/// <summary>
+		/// Finds empire-common abilities inherited by an object (e.g. empire abilities of a sector in which a ship resides).
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <param name="sourceFilter"></param>
+		/// <returns></returns>
+		public static IEnumerable<Ability> EmpireCommonAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		{
+			// Unowned objects cannot empire common abilities.
+			var ownable = obj as IOwnableAbilityObject;
+			if (ownable == null || ownable.Owner == null)
+				yield break;
+
+			// Where are these abilities coming from?
+			// Right now they can only come from ancestors, since sectors and star systems are the only common ability objects.
+			// TODO - Would it make sense for them to come from descendants? What kind of common ability object could be used as a descendant of an owned object?
+			var ancestors = obj.Ancestors(sourceFilter).OfType<ICommonAbilityObject>();
+
+			// What abilities do we have?
+			foreach (var ancestor in ancestors)
+			{
+				foreach (var abil in ancestor.EmpireAbilities(ownable.Owner, sourceFilter))
+					yield return abil;
+			}
+		}
+
+		public static bool ExecuteMobileSpaceObjectOrders<T>(this T o)
+					where T : IMobileSpaceObject<T>
+		{
+			bool didStuff = false;
+			while (o.Orders.Any() && (o.TimeToNextMove <= 1e-15 || !o.Orders.First().ConsumesMovement))
+			{
+				o.Orders.First().Execute(o);
+				if (o.Orders.First().IsComplete)
+					o.Orders.RemoveAt(0);
+				didStuff = true;
+			}
+			if (Galaxy.Current.NextTickSize == double.PositiveInfinity)
+				o.TimeToNextMove = 0;
+			else
+				o.TimeToNextMove -= Galaxy.Current.NextTickSize;
+			return didStuff;
+		}
+
+		/// <summary>
+		/// Finds the last sector in a space object's path, or if it has no movement-type orders, its current sector.
+		/// </summary>
+		/// <param name="sobj"></param>
+		/// <returns></returns>
+		public static Sector FinalSector<T>(this T sobj)
+			where T : IMobileSpaceObject
+		{
+			var path = sobj.Path();
+			if (path == null || !path.Any())
+				return sobj.Sector;
+			return path.Last();
+		}
+
+		/// <summary>
+		/// Finds the cargo container which contains this unit.
+		/// </summary>
+		/// <returns></returns>
+		public static ICargoContainer FindContainer(this IUnit unit)
+		{
+			var containers = Galaxy.Current.FindSpaceObjects<ICargoContainer>().Where(cc => cc.Cargo != null && cc.Cargo.Units.Contains(unit));
+			if (!containers.Any())
+			{
+				if (unit is IMobileSpaceObject)
+				{
+					var v = (IMobileSpaceObject)unit;
+					return v.Sector;
+				}
+				else
+					return null; // unit is in limbo...
+			}
+			if (containers.Count() > 1)
+				throw new Exception("Unit is in multiple cargo containers?!");
+			return containers.Single();
+		}
+
+		/// <summary>
+		/// Finds the coordinates of a space object within its star system.
+		/// </summary>
+		/// <param name="sobj"></param>
+		/// <returns></returns>
+		public static Point FindCoordinates(this ISpaceObject sobj)
+		{
+			return sobj.FindStarSystem().FindCoordinates(sobj);
+		}
+
+		public static T FindMemory<T>(this T f, Empire emp) where T : IFoggable
+		{
+			return (T)emp.Memory[f.ID];
+		}
+
+		/// <summary>
+		/// Finds the original object of a memory, if it is known.
+		/// </summary>
+		/// <param name="f"></param>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public static IFoggable FindOriginalObject(this IFoggable f, Empire emp)
+		{
+			// not a memory? it is its own real object
+			if (!(f.IsMemory))
+				return f;
+
+			// look for the real object
+			if (emp.Memory.Any(kvp => kvp.Value == f))
+				return (IFoggable)Galaxy.Current.referrables[emp.Memory.Single(kvp => kvp.Value == f).Key];
+
+			// nothing found?
+			return null;
+		}
+
+		/// <summary>
+		/// Finds a property on a type, base type, or interface.
+		/// </summary>
+		/// <param name="t"></param>
+		/// <param name="propName"></param>
+		/// <returns></returns>
+		public static PropertyInfo FindProperty(this Type type, string propName)
+		{
+			var p = type.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+			if (p != null)
+				return p.DeclaringType.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+			var b = type.BaseType;
+			if (b != null)
+			{
+				var bp = b.FindProperty(propName);
+				if (bp != null)
+					return bp.DeclaringType.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+			}
+			foreach (var i in type.GetInterfaces())
+			{
+				var ip = i.FindProperty(propName);
+				if (ip != null)
+					return ip.DeclaringType.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+			}
+			return null;
+		}
+
+		/// <summary>
+		/// Finds the sector containing a space object.
+		/// </summary>
+		/// <param name="sobj"></param>
+		/// <returns></returns>
+		public static Sector FindSector(this ISpaceObject sobj)
+		{
+			var sys = sobj.FindStarSystem();
+			if (sys == null)
+				return null;
+			// TODO - this might be kind of slow; might want a reverse memory lookup
+			return new Sector(sys, sys.SpaceObjectLocations.Single(l => l.Item == sobj).Location);
+		}
+
+		/// <summary>
+		/// Finds the star system containing a space object.
+		/// </summary>
+		/// <param name="sobj"></param>
+		/// <returns></returns>
+		public static StarSystem FindStarSystem(this ISpaceObject sobj)
+		{
+			var loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.Contains(sobj));
+			/*if (loc == null)
 			{
 				// search memories too
 				// TODO - this might be kind of slow; might want a reverse memory lookup
 				loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.FindSpaceObjects<ISpaceObject>().Any(s => Galaxy.Current.Empires.ExceptSingle(null).Any(e => e.Memory[s.ID] == sobj)));
 			}*/
-            if (loc == null)
-                return null;
-            return loc.Item;
-        }
-
-        /// <summary>
-        /// Gets an ability value.
-        /// If the stacking rule in the mod is DoNotStack, an arbitrary matching ability will be chosen.
-        /// If there are no values, null will be returned.
-        /// </summary>
-        /// <param name="name">The name of the ability.</param>
-        /// <param name="obj">The object from which to get the value.</param>
-        /// <param name="index">The ability value index (usually 1 or 2).</param>
-        /// <param name="filter">A filter for the abilities. For instance, you might want to filter by the ability grouping rule's value.</param>
-        /// <returns>The ability value.</returns>
-        public static string GetAbilityValue(this IAbilityObject obj, string name, int index = 1, bool includeShared = true, bool includeEmpireCommon = true, Func<Ability, bool> filter = null)
-        {
-            if (obj == null)
-                return null;
-
-            var abils = obj.Abilities();
-            if (includeShared)
-                abils = abils.Union(obj.SharedAbilities());
-            if (includeEmpireCommon)
-                abils = abils.Union(obj.EmpireCommonAbilities());
-
-            abils = abils.Where(a => a.Rule != null && a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
-            abils = abils.Stack(obj);
-            if (!abils.Any())
-                return null;
-            return abils.First().Values[index - 1];
-        }
-
-        public static string GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name, IAbilityObject stackTo, int index = 1, bool includeShared = true, bool includeEmpireCommon = true, Func<Ability, bool> filter = null)
-        {
-            var tuples = objs.Squash(o => o.Abilities()).ToArray();
-            if (includeShared)
-                tuples = tuples.Union(objs.Squash(o => o.SharedAbilities())).ToArray();
-            if (includeEmpireCommon)
-                tuples = tuples.Union(objs.Squash(o => o.EmpireCommonAbilities())).ToArray();
-            var abils = tuples.GroupBy(t => new { Rule = t.Item2.Rule, Object = t.Item1 }).Where(g => g.Key.Rule.Matches(name) && g.Key.Rule.CanTarget(g.Key.Object.AbilityTarget)).SelectMany(x => x).Select(t => t.Item2).Where(a => filter == null || filter(a)).Stack(stackTo);
-            if (!abils.Any())
-                return null;
-            return abils.First().Values[index - 1];
-        }
-
-        /// <summary>
-        /// Gets points both on the border and in the interior of a rectangle.
-        /// </summary>
-        /// <param name="r"></param>
-        /// <returns></returns>
-        public static IEnumerable<Point> GetAllPoints(this Rectangle r)
-        {
-            for (var x = r.Left; x <= r.Right; x++)
-            {
-                for (var y = r.Top; y <= r.Bottom; y++)
-                    yield return new Point(x, y);
-            }
-        }
-
-        /// <summary>
-        /// Gets the points on the border of a rectangle.
-        /// </summary>
-        /// <param name="r"></param>
-        /// <returns></returns>
-        public static IEnumerable<Point> GetBorderPoints(this Rectangle r)
-        {
-            for (var x = r.Left; x <= r.Right; x++)
-            {
-                if (x == r.Left || x == r.Right)
-                {
-                    // get left and right sides
-                    for (var y = r.Top; y <= r.Bottom; y++)
-                        yield return new Point(x, y);
-                }
-                else
-                {
-                    // just get top and bottom
-                    yield return new Point(x, r.Top);
-                    if (r.Top != r.Bottom)
-                        yield return new Point(x, r.Bottom);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets the canonical name for a property, class, etc.
-        /// This is taken from the [CanonicalName] attribute if present, otherwise the name of the item itself.
-        /// </summary>
-        /// <param name="m"></param>
-        /// <returns></returns>
-        public static string GetCanonicalName(this MemberInfo m)
-        {
-            // TODO - use most derived class's attribute?
-            var name = m.GetAttributes<CanonicalNameAttribute>().Select(a => a.Name).SingleOrDefault();
-            if (name == null)
-                return m.Name;
-            return name;
-        }
-
-        /// <summary>
-        /// Gets a property value from an object using reflection.
-        /// If the property does not exist or the property value is not IComparable, returns an empty string.
-        /// </summary>
-        /// <param name="o"></param>
-        /// <param name="propertyName"></param>
-        /// <returns></returns>
-        public static IComparable GetComparablePropertyValue(this object o, string propertyName)
-        {
-            var pval = GetPropertyValue(o, propertyName);
-            if (pval == null || !(pval is IComparable))
-                return "";
-            return (IComparable)pval;
-        }
-
-        public static SafeDictionary<string, object> GetData(this object o, ObjectGraphContext context)
-        {
-            // serialize object type and field count
-            if (o is IDataObject)
-            {
-                // use data object code! :D
-                var dobj = (IDataObject)o;
-                return dobj.Data;
-            }
-            else if (o != null)
-            {
-                // use reflection :(
-                var dict = new SafeDictionary<string, object>();
-                var props = ObjectGraphContext.GetKnownProperties(o.GetType()).Values.Where(p => !p.GetValue(o, null).SafeEquals(p.PropertyType.DefaultValue()));
-                foreach (var p in props)
-                    dict[p.Name] = p.GetValue(o);
-                return dict;
-            }
-            else
-                return new SafeDictionary<string, object>();
-        }
-
-        /// <summary>
-        /// Aggregates abilities for an empire's space objects.
-        /// </summary>
-        /// <param name="emp"></param>
-        /// <param name="name"></param>
-        /// <param name="index"></param>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        public static string GetEmpireAbilityValue(this ICommonAbilityObject obj, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
-        {
-            if (obj == null)
-                return null;
-
-            if (filter == null && Galaxy.Current.IsAbilityCacheEnabled)
-            {
-                // use the cache
-                var cached = Galaxy.Current.CommonAbilityCache[Tuple.Create(obj, emp)];
-                if (cached != null)
-                {
-                    if (cached.Any())
-                        return cached.Where(x => x.Rule.Matches(name)).Stack(obj).FirstOrDefault()?.Values[index - 1];
-                    else
-                        return null;
-                }
-            }
-
-            IEnumerable<Ability> abils;
-            var subabils = obj.GetContainedAbilityObjects(emp).SelectMany(o => o.UnstackedAbilities().Where(a => a.Rule.Name == name));
-            if (obj is IAbilityObject)
-                abils = ((IAbilityObject)obj).Abilities().Where(a => a.Rule != null && a.Rule.Name == name).Concat(subabils).Stack(obj);
-            else
-                abils = subabils;
-            abils = abils.Where(a => a.Rule != null && a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
-            string result;
-            if (!abils.Any())
-                result = null;
-            else
-                result = abils.First().Values[index - 1];
-
-            // cache abilities if we can
-            if (filter == null && Galaxy.Current.IsAbilityCacheEnabled)
-                Galaxy.Current.CommonAbilityCache[Tuple.Create(obj, emp)] = abils.ToArray();
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets points in the interior of a rectangle.
-        /// </summary>
-        /// <param name="r"></param>
-        /// <returns></returns>
-        public static IEnumerable<Point> GetInteriorPoints(this Rectangle r)
-        {
-            for (var x = r.Left + 1; x < r.Right; x++)
-            {
-                for (var y = r.Top + 1; y < r.Bottom; y++)
-                    yield return new Point(x, y);
-            }
-        }
-
-        /// <summary>
-        /// Gets all names for a property, class, etc. including custom names and the actual item name.
-        /// </summary>
-        /// <param name="m"></param>
-        /// <returns></returns>
-        public static IEnumerable<string> GetNames(this MemberInfo m)
-        {
-            return m.GetAttributes<NameAttribute>().Select(a => a.Name).UnionSingle(m.Name);
-        }
-
-        /// <summary>
-        /// Gets a property value from an object using reflection.
-        /// If the property does not exist, returns null.
-        /// </summary>
-        /// <param name="o"></param>
-        /// <param name="propertyName"></param>
-        /// <returns></returns>
-        public static object GetPropertyValue(this object o, string propertyName)
-        {
-            var prop = o.GetType().GetProperty(propertyName);
-            if (prop == null)
-                return null;
-            return prop.GetValue(o, new object[0]);
-        }
-
-        /// <summary>
-        /// Returns an object's hash code, or 0 for null.
-        /// </summary>
-        /// <param name="o"></param>
-        public static int GetSafeHashCode(this object o)
-        {
-            return o == null ? 0 : o.GetHashCode();
-        }
-
-        public static Type GetVehicleType(this VehicleTypes vt)
-        {
-            switch (vt)
-            {
-                case VehicleTypes.Ship:
-                    return typeof(Ship);
-
-                case VehicleTypes.Base:
-                    return typeof(Base);
-
-                case VehicleTypes.Fighter:
-                    return typeof(Fighter);
-
-                case VehicleTypes.Troop:
-                    return typeof(Troop);
-
-                case VehicleTypes.Mine:
-                    return typeof(Mine);
-
-                case VehicleTypes.Satellite:
-                    return typeof(Satellite);
-
-                case VehicleTypes.Drone:
-                    return typeof(Drone);
-
-                case VehicleTypes.WeaponPlatform:
-                    return typeof(WeaponPlatform);
-
-                default:
-                    throw new Exception("No type is available for vehicle type " + vt);
-            }
-        }
-
-        /// <summary>
-        /// All income provided by an object.
-        /// </summary>
-        /// <param name="o"></param>
-        /// <returns></returns>
-        public static ResourceQuantity GrossIncome(this IIncomeProducer o)
-        {
-            return o.StandardIncome() + o.RemoteMiningIncome() + o.RawResourceIncome();
-        }
-
-        public static object Instantiate(this Type type, params object[] args)
-        {
-            if (type.GetConstructors().Where(c => c.GetParameters().Length == (args == null ? 0 : args.Length)).Any())
-                return Activator.CreateInstance(type, args);
-            else
-                return FormatterServices.GetSafeUninitializedObject(type);
-        }
-
-        public static T Instantiate<T>(params object[] args)
-        {
-            return (T)typeof(T).Instantiate(args);
-        }
-
-        /// <summary>
-        /// Limits a value to a range.
-        /// Throws an exception if min is bigger than max.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="min"></param>
-        /// <param name="max"></param>
-        /// <returns></returns>
-        public static int LimitToRange(this int value, int min, int max)
-        {
-            if (min > max)
-                throw new ArgumentOutOfRangeException("Min is {0} and can't be larger than max which is {1}!".F(min, max));
-            if (value > max)
-                value = max;
-            if (value < min)
-                value = min;
-            return value;
-        }
-
-        /// <summary>
-        /// Limits a value to a range.
-        /// Throws an exception if min is bigger than max.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="min"></param>
-        /// <param name="max"></param>
-        /// <returns></returns>
-        public static double LimitToRange(this double value, double min, double max)
-        {
-            if (min > max)
-                throw new ArgumentOutOfRangeException("Min is {0} and can't be larger than max which is {1}!".F(min, max));
-            if (value > max)
-                value = max;
-            if (value < min)
-                value = min;
-            return value;
-        }
-
-        /// <summary>
-        /// Logs an exception in errorlog.txt. Overwrites the old errorlog.txt.
-        /// </summary>
-        /// <param name="ex"></param>
-        public static void Log(this Exception ex)
-        {
-            var sw = new StreamWriter("errorlog.txt");
-            sw.WriteLine(ex.GetType().Name + " occurred at " + DateTime.Now + ":");
-            sw.WriteLine(ex.ToString());
-            sw.Close();
-        }
-
-        public static Type MakeActionType(this IEnumerable<Type> parmTypes)
-        {
-            if (parmTypes.Count() == 0)
-                return typeof(Action);
-            if (parmTypes.Count() == 1)
-                return typeof(Action<>).MakeGenericType(parmTypes.ToArray());
-            if (parmTypes.Count() == 2)
-                return typeof(Action<,>).MakeGenericType(parmTypes.ToArray());
-            if (parmTypes.Count() == 3)
-                return typeof(Action<,,>).MakeGenericType(parmTypes.ToArray());
-            if (parmTypes.Count() == 4)
-                return typeof(Action<,,,>).MakeGenericType(parmTypes.ToArray());
-            if (parmTypes.Count() == 5)
-                return typeof(Action<,,,,>).MakeGenericType(parmTypes.ToArray());
-            if (parmTypes.Count() == 6)
-                return typeof(Action<,,,,,>).MakeGenericType(parmTypes.ToArray());
-            // TODO - more parms
-            throw new Exception("MakeActionType currently supports only 0-6 parameters.");
-        }
-
-        public static Type MakeFuncType(this IEnumerable<Type> parmTypes, Type returnType)
-        {
-            var types = parmTypes.Concat(returnType.SingleItem());
-            if (parmTypes.Count() == 0)
-                return typeof(Func<>).MakeGenericType(types.ToArray());
-            if (parmTypes.Count() == 1)
-                return typeof(Func<,>).MakeGenericType(types.ToArray());
-            if (parmTypes.Count() == 2)
-                return typeof(Func<,,>).MakeGenericType(types.ToArray());
-            if (parmTypes.Count() == 3)
-                return typeof(Func<,,,>).MakeGenericType(types.ToArray());
-            if (parmTypes.Count() == 4)
-                return typeof(Func<,,,,>).MakeGenericType(types.ToArray());
-            if (parmTypes.Count() == 5)
-                return typeof(Func<,,,,,>).MakeGenericType(types.ToArray());
-            if (parmTypes.Count() == 6)
-                return typeof(Func<,,,,,,>).MakeGenericType(types.ToArray());
-            // TODO - more parms
-            throw new Exception("MakeFuncType currently supports only -16 parameters.");
-        }
-
-        /// <summary>
-        /// Computes the Manhattan (4-way grid) distance between two points.
-        /// </summary>
-        /// <param name="p"></param>
-        /// <param name="target"></param>
-        /// <returns></returns>
-        public static int ManhattanDistance(this Point p, Point target)
-        {
-            return Math.Abs(target.X - p.X) + Math.Abs(target.Y - p.Y);
-        }
-
-        /// <summary>
-        /// Who does a memory belong to?
-        /// </summary>
-        /// <param name="f">The memory.</param>
-        /// <returns>Empire to which the memory belongs (null if not memory).</returns>
-        public static Empire MemoryOwner(this IFoggable f)
-        {
-            if (!f.IsMemory)
-                return null;
-            return Galaxy.Current.Empires.ExceptSingle(null).SingleOrDefault(x => x.Memory.Values.Contains(f));
-        }
-
-        public static ILookup<TKey, TValue> MyLookup<TKey, TEnumerable, TValue>(this IEnumerable<KeyValuePair<TKey, TEnumerable>> dict)
-            where TEnumerable : IEnumerable<TValue>
-        {
-            var list = new List<KeyValuePair<TKey, TValue>>();
-            foreach (var kvp in dict)
-            {
-                foreach (var item in kvp.Value)
-                    list.Add(new KeyValuePair<TKey, TValue>(kvp.Key, item));
-            }
-            return list.ToLookup(kvp => kvp.Key, kvp => kvp.Value);
-        }
-
-        /// <summary>
-        /// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
-        /// </summary>
-        public static string NameFor(this IBattle b, Empire emp)
-        {
-            return b.ResultFor(emp).Capitalize() + " at " + b.Sector;
-        }
-
-        /// <summary>
-        /// Makes sure there aren't more supplies than we can store, or fewer than zero
-        /// </summary>
-        /// <returns>Leftover supplies (or a negative number if somehow we got negative supplies in this vehicle)</returns>
-        public static int NormalizeSupplies(this IMobileSpaceObject sobj)
-        {
-            if (sobj.SupplyRemaining > sobj.SupplyStorage)
-            {
-                var leftover = sobj.SupplyRemaining - sobj.SupplyStorage;
-                sobj.SupplyRemaining = sobj.SupplyStorage;
-                return leftover;
-            }
-            if (sobj.SupplyRemaining < 0)
-            {
-                var deficit = sobj.SupplyRemaining;
-                sobj.SupplyRemaining = 0;
-                return deficit;
-            }
-            return 0;
-        }
-
-        /// <summary>
-        /// Parses a string using the type's static Parse method.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="o"></param>
-        /// <returns></returns>
-        public static T Parse<T>(this string s)
-        {
-            var parser = typeof(T).GetMethod("Parse", BindingFlags.Static);
-            var expr = Expression.Call(parser);
-            return (T)expr.Method.Invoke(null, new object[] { s });
-        }
-
-        /// <summary>
-        /// Computes the path that this space object is ordered to follow.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="sobj"></param>
-        /// <returns></returns>
-        public static IEnumerable<Sector> Path(this IMobileSpaceObject sobj)
-        {
-            // TODO - cache paths and only recalculate them when the orders change
-            var last = sobj.Sector;
-            foreach (var order in sobj.Orders)
-            {
-                if (order is IMovementOrder)
-                {
-                    var o = (IMovementOrder)order;
-                    foreach (var s in o.Pathfind(sobj, last))
-                        yield return s;
-                    last = o.Destination;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Converts a percentage into a ratio.
-        /// </summary>
-        /// <param name="i">The percentage, e.g. 50</param>
-        /// <returns>The ratio, e.g. 0.5</returns>
-        public static double Percent(this int i)
-        {
-            return (double)i / 100d;
-        }
-
-        /// <summary>
-        /// Multiplies an integer by a percentage and rounds it.
-        /// </summary>
-        /// <param name="i"></param>
-        /// <param name="d"></param>
-        /// <returns></returns>
-        public static int PercentOfRounded(this int p, int i)
-        {
-            return i.TimesAndRound(p.Percent());
-        }
-
-        public static void Place(this IUnit unit, ISpaceObject target)
-        {
-            if (target is ICargoContainer)
-            {
-                var container = (ICargoContainer)target;
-                var cargo = container.Cargo;
-                if (cargo.Size + unit.Design.Hull.Size <= container.CargoStorage)
-                {
-                    cargo.Units.Add(unit);
-                    return;
-                }
-            }
-            foreach (var container in target.Sector.SpaceObjects.OfType<ICargoTransferrer>().Where(cc => cc.Owner == unit.Owner))
-            {
-                var cargo = container.Cargo;
-                if (cargo.Size + unit.Design.Hull.Size <= container.CargoStorage)
-                {
-                    cargo.Units.Add(unit);
-                    return;
-                }
-            }
-            unit.Owner.Log.Add(unit.CreateLogMessage(unit + " was lost due to insufficient cargo space at " + target + "."));
-        }
-
-        /// <summary>
-        /// Raises an event, but doesn't do anything if the event handler is null.
-        /// </summary>
-        /// <typeparam name="TArgs"></typeparam>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        public static void Raise<TArgs>(this EventHandler<TArgs> evt, object sender, TArgs e) where TArgs : EventArgs
-        {
-            if (evt != null)
-                evt(sender, e);
-        }
-
-        /// <summary>
-        /// Raw resource income which is not affected by any modifiers.
-        /// </summary>
-        /// <param name="o"></param>
-        /// <returns></returns>
-        public static ResourceQuantity RawResourceIncome(this IIncomeProducer o)
-        {
-            var rawResourceIncome = new ResourceQuantity();
-            foreach (var resource in Resource.All)
-            {
-                var rule = Mod.Current.AbilityRules.SingleOrDefault(r => r.Matches("Generate Points " + resource));
-                if (rule != null)
-                {
-                    var amount = o.GetAbilityValue(rule.Name).ToInt();
-                    rawResourceIncome += resource * amount;
-                }
-            }
-            return rawResourceIncome;
-        }
-
-        /// <summary>
-        /// Reads characters until the specified character is found or end of stream.
-        /// Returns all characters read except the specified character.
-        /// </summary>
-        /// <param name="r"></param>
-        /// <param name="c"></param>
-        /// <returns></returns>
-        public static string ReadTo(this TextReader r, char c, StringBuilder log)
-        {
-            var sb = new StringBuilder();
-            int data = 0;
-            bool escaping = false;
-            do
-            {
-                data = r.Read();
-                if (data <= 0)
-                    break; // end of stream
-                else if (escaping)
-                {
-                    // in an escape sequence
-                    sb.Append((char)data);
-                    if (log != null)
-                        log.Append((char)data);
-                    escaping = false;
-                }
-                else if (data == c)
-                    break; // found match
-                else if (data == '\\')
-                    escaping = true; // begin escape sequence
-                else
-                {
-                    // regular data
-                    sb.Append((char)data);
-                    if (log != null)
-                        log.Append((char)data);
-                }
-            } while (true);
-            if (data == c && log != null)
-                log.Append(c);
-            return sb.ToString();
-        }
-
-        /// <summary>
-        /// Generates new IDs for this object (unless skipRoot is true) and all subordinate objects.
-        /// TODO - take into account DoNotAssignIDAttribute
-        /// </summary>
-        /// <param name="obj"></param>
-        public static void ReassignAllIDs(this IReferrable obj, bool skipRoot = false)
-        {
-            var parser = new ObjectGraphParser();
-            var canCopy = new System.Collections.Generic.Stack<bool>(); // stack of bools indicating which objects in the current hierarchy path we can copy
-            canCopy.Push(true);
-            parser.Property += (pname, o, val) =>
-            {
-                var prop = o.GetType().FindProperty(pname);
-                var shouldRecurse = !prop.CanCopyFully();
-                if (shouldRecurse)
-                    canCopy.Push(shouldRecurse);
-                return shouldRecurse;
-            };
-            parser.Item += (o) =>
-            {
-                // can always serialize collection items
-                canCopy.Push(true);
-            };
-            parser.StartObject += (o) =>
-            {
-                var doit = canCopy.All(b => b) && (!skipRoot || o != obj);
-                if (doit && o is IReferrable)
-                {
-                    var r = (IReferrable)o;
-                    r.ReassignID();
-                }
-            };
-            parser.EndObject += (o) =>
-            {
-                canCopy.Pop();
-            };
-            parser.Null += (o) =>
-            {
-                canCopy.Pop();
-            };
-            parser.KnownObject += (o) =>
-            {
-                canCopy.Pop();
-            };
-            parser.Parse(obj);
-        }
-
-        /// <summary>
-        /// Reassigns the ID of an object, overwriting any existing ID.
-        /// </summary>
-        /// <param name="r"></param>
-        public static void ReassignID(this IReferrable r)
-        {
-            r.ID = 0;
-            Galaxy.Current.AssignID(r);
-        }
-
-        public static TRef Refer<TRef, T>(this T t) where TRef : IReference<T>
-        {
-            return (TRef)typeof(TRef).Instantiate(t);
-        }
-
-        public static GalaxyReference<T> ReferViaGalaxy<T>(this T t)
-        {
-            if (t == null)
-                return null;
-            return new GalaxyReference<T>(t);
-        }
-
-        public static ModReference<T> ReferViaMod<T>(this T t) where T : IModObject
-        {
-            if (t == null)
-                return null;
-            return new ModReference<T>(t);
-        }
-
-        /// <summary>
-        /// Refills the space object's movement points.
-        /// </summary>
-        public static void RefillMovement(this IMobileSpaceObject sobj)
-        {
-            sobj.MovementRemaining = sobj.Speed;
-            sobj.TimeToNextMove = sobj.TimePerMove;
-        }
-
-        public static void RefreshDijkstraMap(this IMobileSpaceObject sobj)
-        {
-            // create new map if necessary
-            if (sobj.DijkstraMap == null)
-                sobj.DijkstraMap = new Dictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>>();
-
-            // prune old nodes
-            var start = sobj.Sector;
-            foreach (var n in sobj.DijkstraMap.Keys.OrderBy(n => n.Cost).ToArray())
-            {
-                if ((n.PreviousNode == null || !sobj.DijkstraMap.ContainsKey(n.PreviousNode)) && n.Location != start)
-                {
-                    // already went here or it was an aborted path
-                    // delete the node (and this will mark for deletion all its children that we're not at)
-                    sobj.DijkstraMap.Remove(n);
-                    if (n.Location == start)
-                    {
-                        foreach (var n2 in sobj.DijkstraMap.Keys)
-                            n2.Cost -= 1;
-                    }
-                }
-            }
-
-            // add new nodes
-            int minCost = 0;
-            foreach (var order in sobj.Orders)
-            {
-                var last = start;
-                if (order is IMovementOrder)
-                {
-                    var o = (IMovementOrder)order;
-                    foreach (var kvp in o.CreateDijkstraMap(sobj, last))
-                    {
-                        kvp.Key.Cost += minCost;
-                        sobj.DijkstraMap.Add(kvp);
-                    }
-                    // account for cost of previous orders
-                    minCost = sobj.DijkstraMap.Keys.MaxOrDefault(n => n.MinimumCostRemaining);
-                    last = o.Destination;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Income produced by this object's remote mining abilities.
-        /// Modified by racial aptitudes.
-        /// Not affected by lack of spaceports.
-        /// </summary>
-        /// <param name="o"></param>
-        /// <returns></returns>
-        public static ResourceQuantity RemoteMiningIncome(this IIncomeProducer o)
-        {
-            return o.Owner.RemoteMiners.Where(m => m.Key.Item1 == o).Sum(m => m.Value);
-        }
-
-        /// <summary>
-        /// Removes an order from some object.
-        /// If the order was just added by the player this turn, simply deletes it.
-        /// If not, also creates a RemoveOrderCommand to remove it on the server, and adds that command to the empire's commands.
-        /// Intended only for client side use.
-        /// </summary>
-        /// <typeparam name="T">The type of orderable object.</typeparam>
-        /// <param name="obj">The object from which to remove an order.</param>
-        /// <param name="order">The order to remove.</param>
-        /// <returns>The remove-order command created, if any.</returns>
-        public static RemoveOrderCommand<T> RemoveOrderClientSide<T>(this T obj, IOrder<T> order) where T : IOrderable
-        {
-            if (Empire.Current == null)
-                throw new InvalidOperationException("RemoveOrderClientSide is intended for client side use.");
-            var addCmd = Empire.Current.Commands.OfType<AddOrderCommand<T>>().SingleOrDefault(c => c.Order == order);
-            if (addCmd == null)
-            {
-                // not a newly added order, so create a remove command to take it off the server
-                var remCmd = new RemoveOrderCommand<T>(obj, order);
-                Empire.Current.Commands.Add(remCmd);
-                obj.RemoveOrder(order);
-                return remCmd;
-            }
-            else
-            {
-                // a newly added order, so just get rid of the add command
-                Empire.Current.Commands.Remove(addCmd);
-                obj.RemoveOrder(order);
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Resizes an image. The image should be square.
-        /// </summary>
-        /// <param name="image"></param>
-        /// <param name="size"></param>
-        /// <returns></returns>
-        public static Image Resize(this Image image, int size)
-        {
-            if (image == null)
-                return null;
-            var result = new Bitmap(size, size, PixelFormat.Format32bppArgb);
-            var g = Graphics.FromImage(result);
-            g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-            g.DrawImage(image, 0, 0, size, size);
-            return result;
-        }
-
-        /// <summary>
-        /// The result (victory/defeat/stalemate) for a given empire.
-        /// If empire or its allies are not involved or no empire specified, just say "battle".
-        /// </summary>
-        /// <param name="emp"></param>
-        /// <returns></returns>
-        public static string ResultFor(this IBattle b, Empire emp)
-        {
-            if (emp == null)
-                return "battle"; // no empire specified
-            if (!b.Combatants.Any(c => c.Owner == emp || (b.OriginalOwners[c]?.IsAllyOf(emp, b.StarSystem) ?? false)))
-                return "battle"; // empire/allies not involved
-            var survivors = b.Combatants.Where(c => c.IsAlive);
-            var ourSurvivors = survivors.Where(c => c.Owner == emp);
-            var allySurvivors = survivors.Where(c => c.Owner.IsAllyOf(emp, b.StarSystem));
-            var friendlySurvivors = ourSurvivors.Union(allySurvivors);
-            var enemySurvivors = survivors.Where(c => c.Owner.IsEnemyOf(emp, b.StarSystem));
-            if (friendlySurvivors.Any() && enemySurvivors.Any())
-                return "stalemate";
-            if (friendlySurvivors.Any())
-                return "victory";
-            if (enemySurvivors.Any())
-                return "defeat";
-            return "Pyrrhic victory"; // mutual annihilation!
-        }
-
-        public static IEnumerable<TOut> RunTasks<TOut>(this IEnumerable<Func<TOut>> ops)
-        {
-            return ops.SpawnTasksAsync().Result;
-        }
-
-        public static IEnumerable<TOut> RunTasks<TIn, TOut>(this IEnumerable<TIn> objs, Func<TIn, TOut> op)
-        {
-            return objs.SpawnTasksAsync(op).Result;
-        }
-
-        public static void SafeDispose(this IDisposable d)
-        {
-            if (d != null)
-                d.Dispose();
-        }
-
-        /// <summary>
-        /// Equals method that doesn't throw an exception when objects are null.
-        /// Null is not equal to anything else, except other nulls.
-        /// </summary>
-        /// <param name="o1"></param>
-        /// <param name="o2"></param>
-        /// <returns></returns>
-        public static bool SafeEquals(this object o1, object o2)
-        {
-            if (o1 == null && o2 == null)
-                return true;
-            if (o1 == null || o2 == null)
-                return false;
-            return o1.Equals(o2);
-        }
-
-        public static bool SafeSequenceEqual<T>(this IEnumerable<T> e1, IEnumerable<T> e2)
-        {
-            if (e1.SafeEquals(null) && e2.SafeEquals(null))
-                return true;
-            if (e1.SafeEquals(null) || e2.SafeEquals(null))
-                return false;
-            return e1.SequenceEqual(e2);
-        }
-
-        public static void SetData(this object o, SafeDictionary<string, object> dict, ObjectGraphContext context)
-        {
-            if (context == null)
-                context = new ObjectGraphContext();
-            if (o is IDataObject)
-            {
-                // use data object code! :D
-                var dobj = (IDataObject)o;
-                dobj.Data = dict;
-            }
-            else if (o != null)
-            {
-                // use reflection :(
-                foreach (var kvp in dict)
-                {
-                    var pname = kvp.Key;
-                    var val = kvp.Value;
-                    var prop = ObjectGraphContext.GetKnownProperties(o.GetType())[pname];
-                    if (prop != null)
-                    {
-                        try
-                        {
-                            context.SetObjectProperty(o, prop, val);
-                        }
-                        catch (NullReferenceException ex)
-                        {
-                            if (o == null && prop == null)
-                                Console.Error.WriteLine($"Attempted to set unknown property {pname} on a null object.");
-                            else if (o == null)
-                                Console.Error.WriteLine($"Attempted to set property {pname} on a null object.");
-                            else if (prop == null)
-                                Console.Error.WriteLine($"Attempted to set unknown property {pname} on {o}.");
-                            else
-                                throw;
-                        }
-                        catch (InvalidCastException ex)
-                        {
-                            Console.Error.WriteLine($"Could not set property {pname} of object {o} of type {o.GetType()} to value {val} of type {val.GetType()}.");
-                            throw;
-                        }
-                    }
-                    else
-                        Console.Error.WriteLine($"Found unknown property {pname} in serialized data for object type {o.GetType()}.");
-                }
-            }
-            else
-                throw new NullReferenceException("Can't set data on a null object.");
-        }
-
-        /// <summary>
-        /// Sets a property value on an object using reflection.
-        /// </summary>
-        /// <param name="o"></param>
-        /// <param name="propertyName"></param>
-        /// <returns></returns>
-        public static void SetPropertyValue(this object o, string propertyName, object value)
-        {
-            o.GetType().GetProperty(propertyName).SetValue(o, value, new object[0]);
-        }
-
-        /// <summary>
-        /// Gets abilities that have been shared to an object.
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public static IEnumerable<Ability> SharedAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
-        {
-            // Unowned objects cannot have abilities shared to them.
-            var ownable = obj as IOwnableAbilityObject;
-            if (ownable == null || ownable.Owner == null)
-                yield break;
-
-            // update cache if necessary
-            foreach (var clause in ownable.Owner.ReceivedTreatyClauses.Flatten().OfType<ShareAbilityClause>())
-            {
-                var tuple = Tuple.Create(ownable, clause.Owner);
-                if (Empire.Current == null || !Galaxy.Current.SharedAbilityCache.ContainsKey(tuple))
-                    Galaxy.Current.SharedAbilityCache[tuple] = FindSharedAbilities(ownable, clause).ToArray();
-            }
-
-            // get cached abilities
-            foreach (var keyTuple in Galaxy.Current.SharedAbilityCache.Keys.Where(k => k.Item1 == ownable && (sourceFilter == null || sourceFilter(k.Item2))))
-            {
-                foreach (var abil in Galaxy.Current.SharedAbilityCache[keyTuple])
-                    yield return abil;
-            }
-        }
-
-        /// <summary>
-        /// Gets abilities that have been shared to an object.
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public static IEnumerable<Ability> SharedAbilities(this ICommonAbilityObject obj, Empire empire, Func<IAbilityObject, bool> sourceFilter = null)
-        {
-            if (obj == null)
-                yield break;
-
-            foreach (var clause in empire.ReceivedTreatyClauses.Flatten().OfType<ShareAbilityClause>())
-            {
-                var rule = clause.AbilityRule;
-                if (clause.AbilityRule.CanTarget(obj.AbilityTarget))
-                {
-                    if (rule.CanTarget(AbilityTargets.Sector) && obj is ILocated)
-                    {
-                        var sector = ((ILocated)obj).Sector;
-                        foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
-                        {
-                            foreach (var abil in sector.EmpireAbilities(emp, sourceFilter))
-                            {
-                                if (clause.AbilityRule == abil.Rule)
-                                    yield return abil;
-                            }
-                        }
-                    }
-                    else if (rule.CanTarget(AbilityTargets.StarSystem) && (obj is StarSystem || obj is ILocated))
-                    {
-                        var sys = ((ILocated)obj).StarSystem;
-                        foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
-                        {
-                            foreach (var abil in sys.EmpireAbilities(emp, sourceFilter))
-                            {
-                                if (clause.AbilityRule == abil.Rule)
-                                    yield return abil;
-                            }
-                        }
-                    }
-                    else if (rule.CanTarget(AbilityTargets.Galaxy))
-                    {
-                        foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
-                        {
-                            foreach (var abil in Galaxy.Current.EmpireAbilities(emp, sourceFilter))
-                            {
-                                if (clause.AbilityRule == abil.Rule)
-                                    yield return abil;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Spawns multiple tasks to return an enumeration of items.
-        /// </summary>
-        /// <typeparam name="TOut"></typeparam>
-        /// <param name="ops"></param>
-        /// <param name="process"></param>
-        /// <returns></returns>
-        public static async Task<IEnumerable<TOut>> SpawnTasksAsync<TOut>(this IEnumerable<Func<TOut>> ops)
-        {
-            // Enumerate the tasks we need to do and start them
-            var tasks = ops.Select(op => Task<TOut>.Factory.StartNew(op));
-
-            // Wait for them to complete
-            return await Task.WhenAll(tasks);
-        }
-
-        /// <summary>
-        /// Spawns multiple tasks to return an enumeration of items.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="objs"></param>
-        /// <param name="op"></param>
-        /// <returns></returns>
-        public static async Task<IEnumerable<TOut>> SpawnTasksAsync<TIn, TOut>(this IEnumerable<TIn> objs, Func<TIn, TOut> op)
-        {
-            return await objs.Select(obj => new Func<TOut>(() => op(obj))).SpawnTasksAsync();
-        }
-
-        /// <summary>
-        /// Spawns multiple tasks to perform a bunch of actions.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="ops"></param>
-        /// <param name="process"></param>
-        /// <returns></returns>
-        public static async Task SpawnTasksAsync(this IEnumerable<Action> ops)
-        {
-            // Enumerate the tasks we need to do and start them
-            var tasks = ops.Select(op => Task.Factory.StartNew(op));
-
-            // Wait for them to complete
-            await Task.WhenAll(tasks);
-        }
-
-        /// <summary>
-        /// Spawns multiple tasks to perform a bunch of actions.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="objs"></param>
-        /// <param name="op"></param>
-        /// <returns></returns>
-        public static async Task SpawnTasksAsync<TIn>(this IEnumerable<TIn> objs, Action<TIn> op)
-        {
-            await objs.Select(obj => new Action(() => op(obj))).SpawnTasksAsync();
-        }
-
-        /// <summary>
-        /// Standard income provided by mining, research, and intelligence.
-        /// Affected by racial aptitudes, happiness, planet value, lack of spaceport, that sort of thing.
-        /// </summary>
-        /// <param name="o"></param>
-        /// <returns></returns>
-        public static ResourceQuantity StandardIncome(this IIncomeProducer o)
-        {
-            var income = new ResourceQuantity();
-            var ratio = 1.0;
-            if (!o.StarSystem.HasAbility(o.Owner, "Spaceport"))
-                ratio = o.MerchantsRatio;
-            var prefix = "Resource Generation - ";
-            var pcts = o.StandardIncomePercentages;
-            foreach (var abil in o.Abilities().Where(abil => abil.Rule.Name.StartsWith(prefix)))
-            {
-                var resource = Resource.Find(abil.Rule.Name.Substring(prefix.Length));
-                var amount = abil.Value1.ToInt();
-
-                if (resource.HasValue)
-                    amount = Galaxy.Current.StandardMiningModel.GetRate(amount, o.ResourceValue[resource], pcts[resource] / 100d);
-
-                income.Add(resource, amount);
-            }
-            prefix = "Point Generation - ";
-            foreach (var abil in o.Abilities().Where(abil => abil.Rule.Name.StartsWith(prefix)))
-            {
-                var resource = Resource.Find(abil.Rule.Name.Substring(prefix.Length));
-                var amount = abil.Value1.ToInt() * pcts[resource] / 100;
-
-                income.Add(resource, amount);
-            }
-
-            return income * ratio;
-        }
-
-        /// <summary>
-        /// Finds all subfleets (recursively, including this fleet) that have any child space objects that are not fleets.
-        /// </summary>
-        /// <param name="rootFleet"></param>
-        /// <returns></returns>
-        public static IEnumerable<Fleet> SubfleetsWithNonFleetChildren(this Fleet rootFleet)
-        {
-            if (rootFleet.Vehicles.Any(sobj => !(sobj is Fleet)))
-                yield return rootFleet;
-            foreach (var subfleet in rootFleet.Vehicles.OfType<Fleet>())
-            {
-                foreach (var subsub in subfleet.SubfleetsWithNonFleetChildren())
-                    yield return subsub;
-            }
-        }
-
-        /// <summary>
-        /// Inflicts normal damage on an object out of the blue.
-        /// </summary>
-        /// <param name="d">The object which should take damage.</param>
-        /// <param name="dmg">The amount of normal damage to inflict.</param>
-        /// <returns>Leftover damage.</returns>
-        public static int TakeNormalDamage(this IDamageable d, int dmg)
-        {
-            return d.TakeDamage(new Hit(new Shot(null, null, d, 0), d, dmg));
-        }
-
-        /// <summary>
-        /// Multiplies an integer by a scale factor and rounds it.
-        /// </summary>
-        /// <param name="i"></param>
-        /// <param name="d"></param>
-        /// <returns></returns>
-        public static int TimesAndRound(this int i, double d)
-        {
-            return (int)Math.Round(i * d);
-        }
-
-        /// <summary>
-        /// Transfers items from this cargo container to another cargo container.
-        /// </summary>
-        public static void TransferCargo(this ICargoContainer src, CargoDelta delta, ICargoContainer dest, Empire emp)
-        {
-            // if destination is null, we are transferring to/from space
-            if (dest == null)
-                dest = src.Sector;
-            if (src == null)
-                src = dest.Sector;
-
-            // transfer per-race population
-            foreach (var kvp in delta.RacePopulation)
-            {
-                var amount = long.MaxValue;
-
-                // limit by desired amount to transfer
-                if (kvp.Value != null)
-                    amount = Math.Min(amount, kvp.Value.Value);
-                // limit by amount available
-                amount = Math.Min(amount, src.AllPopulation[kvp.Key]);
-                // limit by amount of free space
-                amount = Math.Min(amount, dest.PopulationStorageFree + (long)((dest.CargoStorage - dest.Cargo.Size) / Mod.Current.Settings.PopulationSize));
-
-                amount -= src.RemovePopulation(kvp.Key, amount);
-                dest.AddPopulation(kvp.Key, amount);
-
-                if (amount < kvp.Value)
-                    emp.Log.Add(src.CreateLogMessage(src + " could transfer only " + amount.ToUnitString(true) + " of the desired " + kvp.Value.ToUnitString(true) + " " + kvp.Key + " population to " + dest + " due to lack of population available or lack of storage space."));
-            }
-
-            // transfer any-population
-            var anyPopLeft = delta.AnyPopulation;
-            foreach (var kvp in src.AllPopulation.ToArray())
-            {
-                var amount = long.MaxValue;
-
-                // limit by desired amount to transfer
-                if (!delta.AllPopulation)
-                    amount = Math.Min(amount, anyPopLeft);
-                // limit by amount available
-                amount = Math.Min(amount, kvp.Value);
-                // limit by amount of free space
-                amount = Math.Min(amount, dest.PopulationStorageFree + (long)((dest.CargoStorage - dest.Cargo.Size) / Mod.Current.Settings.PopulationSize));
-
-                amount -= src.RemovePopulation(kvp.Key, amount);
-                dest.AddPopulation(kvp.Key, amount);
-
-                if (amount < anyPopLeft)
-                    emp.Log.Add(src.CreateLogMessage(src + " could transfer only " + amount.ToUnitString(true) + " of the desired " + kvp.Value.ToUnitString(true) + " general population to " + dest + " due to lack of population available or lack of storage space."));
-
-                if (amount == 0)
-                    continue;
-            }
-
-            // clear population that was emptied out
-            foreach (var race in src.Cargo.Population.Where(kvp => kvp.Value <= 0).Select(kvp => kvp.Key).ToArray())
-                src.Cargo.Population.Remove(race);
-            if (src is Planet)
-            {
-                var p = (Planet)src;
-                if (p.Colony != null)
-                {
-                    foreach (var race in p.Colony.Population.Where(kvp => kvp.Value <= 0).Select(kvp => kvp.Key).ToArray())
-                        p.Colony.Population.Remove(race);
-                }
-            }
-
-            // transfer specific units
-            foreach (var unit in delta.Units)
-            {
-                if (src.Cargo.Units.Contains(unit))
-                    TryTransferUnit(unit, src, dest, emp);
-                else
-                    LogUnitTransferFailedNotPresent(unit, src, dest, emp);
-            }
-
-            // transfer unit tonnage by design
-            foreach (var kvp in delta.UnitDesignTonnage)
-            {
-                int transferred = 0;
-                while (kvp.Value == null || transferred <= kvp.Value - kvp.Key.Hull.Size)
-                {
-                    var unit = src.AllUnits.FirstOrDefault(u => u.Design == kvp.Key);
-                    if (unit == null && kvp.Value != null)
-                    {
-                        // if it's not a "transfer all" order, we can log the lack of available units
-                        if (kvp.Value != null)
-                            LogUnitTransferFailed(kvp.Key, src, dest, transferred, kvp.Value.Value, emp);
-
-                        break;
-                    }
-                    if (dest.CargoStorageFree() < kvp.Key.Hull.Size)
-                    {
-                        LogUnitTransferFailedNoStorage(unit, src, dest, emp);
-                        break;
-                    }
-                    if (transferred + kvp.Key.Hull.Size > kvp.Value)
-                        break; // next unit would be too much
-                    if (unit != null)
-                    {
-                        src.RemoveUnit(unit);
-                        dest.AddUnit(unit);
-                        transferred += kvp.Key.Hull.Size;
-                    }
-                    else
-                        break;
-                }
-            }
-
-            // transfer unit tonnage by role
-            foreach (var kvp in delta.UnitRoleTonnage)
-            {
-                int transferred = 0;
-                var available = src.AllUnits.Where(u => u.Design.Role == kvp.Key);
-                while (kvp.Value == null || transferred <= kvp.Value - available.MinOrDefault(u => u.Design.Hull.Size))
-                {
-                    if (!available.Any())
-                    {
-                        // if it's not a "transfer all" order, we can log the lack of available units
-                        if (kvp.Value != null)
-                            LogUnitTransferFailed(kvp.Key, src, dest, transferred, kvp.Value.Value, emp);
-
-                        break;
-                    }
-                    var unit = available.FirstOrDefault(u => u.Design.Hull.Size <= dest.CargoStorageFree() && kvp.Value == null || u.Design.Hull.Size <= kvp.Value - transferred);
-                    if (unit != null)
-                    {
-                        src.RemoveUnit(unit);
-                        dest.AddUnit(unit);
-                        available = src.AllUnits.Where(u => u.Design.Role == kvp.Key);
-                        transferred += unit.Design.Hull.Size;
-                    }
-                    else
-                        break;
-                }
-            }
-
-            // transfer unit tonnage by hull type
-            foreach (var kvp in delta.UnitTypeTonnage)
-            {
-                int transferred = 0;
-                var available = src.AllUnits.Where(u => u.Design.VehicleType == kvp.Key);
-                while (kvp.Value == null || transferred <= kvp.Value - available.MinOrDefault(u => u.Design.Hull.Size))
-                {
-                    if (!available.Any())
-                    {
-                        // if it's not a "transfer all" order, we can log the lack of available units
-                        if (kvp.Value != null)
-                            LogUnitTransferFailed(kvp.Key, src, dest, transferred, kvp.Value.Value, emp);
-
-                        break;
-                    }
-                    var unit = available.FirstOrDefault(u => u.Design.Hull.Size <= dest.CargoStorageFree() && kvp.Value == null || u.Design.Hull.Size <= kvp.Value - transferred);
-                    if (unit != null)
-                    {
-                        src.RemoveUnit(unit);
-                        dest.AddUnit(unit);
-                        available = src.AllUnits.Where(u => u.Design.VehicleType == kvp.Key);
-                        transferred += unit.Design.Hull.Size;
-                    }
-                    else
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// All abilities belonging to an object, before stacking.
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="includeShared"></param>
-        /// <returns></returns>
-        public static IEnumerable<Ability> UnstackedAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
-        {
-            if (obj == null)
-                return Enumerable.Empty<Ability>();
-
-            // TODO - should we include shared abilities here? HasAbility has a flag to include these...
-            if (sourceFilter == null || sourceFilter(obj))
-                return obj.IntrinsicAbilities.Concat(obj.SharedAbilities(sourceFilter)).Concat(obj.DescendantAbilities(sourceFilter)).Concat(obj.AncestorAbilities(sourceFilter));
-            else
-                return obj.SharedAbilities(sourceFilter).Concat(obj.DescendantAbilities(sourceFilter)).Concat(obj.AncestorAbilities(sourceFilter));
-        }
-
-        /// <summary>
-        /// Updates the memory sight cache of any empires that can see this object.
-        /// Only makes sense on the host view, so if this is called elsewhere, nothing happens.
-        /// </summary>
-        /// <param name="obj">The object whose cache to update.</param>
-        /// <param name="message">A message to display to any empire that can see this event happen.</param>
-        /// <param name="empiresToSkipMessage">Empires to which we don't need to send a message.</param>
-        /// <param name="stillExists"></param>
-        public static void UpdateEmpireMemories(this IFoggable obj, string message = null, params Empire[] empiresToSkipMessage)
-        {
-            if (Empire.Current == null)
-            {
-                foreach (var emp in Galaxy.Current.Empires)
-                {
-                    var sys = (obj as ILocated)?.StarSystem;
-                    if (obj.CheckVisibility(emp) >= Visibility.Visible)
-                    {
-                        emp.UpdateMemory(obj);
-                        if (message != null && !empiresToSkipMessage.Contains(emp))
-                            emp.RecordLog(obj, message);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Returns "us" if the empire is the current empire, otherwise "the " followed by the empire name.
-        /// </summary>
-        /// <param name="emp"></param>
-        /// <returns></returns>
-        public static string UsOrName(this Empire emp, bool capitalize = false)
-        {
-            if (emp == Empire.Current)
-                return "us";
-            return "the " + emp.Name;
-        }
-
-        /// <summary>
-        /// Returns "We" if the empire is the current empire, otherwise "The " followed by the empire name.
-        /// </summary>
-        /// <param name="emp"></param>
-        /// <returns></returns>
-        public static string WeOrName(this Empire emp, bool capitalize = true)
-        {
-            if (emp == Empire.Current)
-                return "We";
-            return "The " + emp.Name;
-        }
-
-        #endregion Public Methods
-
-        #region Internal Methods
-
-        internal static Visibility CheckSpaceObjectVisibility(this ISpaceObject sobj, Empire emp)
-        {
-            bool hasMemory = false;
-            if (sobj.IsMemory)
-            {
-                var mowner = sobj.MemoryOwner();
-                if (mowner == emp || mowner == null)
-                    return Visibility.Fogged;
-                else
-                    return Visibility.Unknown; // can't see other players' memories
-            }
-            else
-            {
-                var mem = sobj.FindMemory(emp);
-                if (mem != null)
-                    hasMemory = true;
-            }
-
-            if (emp == sobj.Owner)
-                return Visibility.Owned;
-
-            // You can always scan space objects you are in combat with.
-            // But only their state at the time they were in combat; not for the rest of the turn!
-            // TODO - what about glassed planets, they have no owner...
-            if (Galaxy.Current.Battles.Any(b => (b.Combatants.OfType<ISpaceObject>().Contains(sobj)) && b.Combatants.Any(c => c.Owner == emp)))
-                return Visibility.Scanned;
-
-            // do we have anything that can see it?
-            var sys = sobj.FindStarSystem();
-            if (sys == null)
-                return Visibility.Unknown;
-            var seers = sys.FindSpaceObjects<ISpaceObject>(s => s.Owner == emp && !s.IsMemory);
-            if (!seers.Any() || sobj.IsHiddenFrom(emp))
-            {
-                if (Galaxy.Current.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
-                    return Visibility.Visible;
-                if (emp.AllSystemsExploredFromStart)
-                    return Visibility.Fogged;
-                var known = emp.Memory[sobj.ID];
-                if (known != null && sobj.GetType() == known.GetType())
-                    return Visibility.Fogged;
-                else if (Galaxy.Current.Battles.Any(b => b.Combatants.Any(c => c.ID == sobj.ID) && b.Combatants.Any(c => c.Owner == emp)))
-                    return Visibility.Fogged;
-                else if (hasMemory)
-                    return Visibility.Fogged;
-                else
-                    return Visibility.Unknown;
-            }
-            if (!sobj.HasAbility("Scanner Jammer"))
-            {
-                var scanners = seers.Where(s =>
-                    s.HasAbility("Long Range Scanner") && s.GetAbilityValue("Long Range Scanner").ToInt() >= s.Sector.Coordinates.EightWayDistance(sobj.FindSector().Coordinates)
-                    || s.HasAbility("Long Range Scanner - System"));
-                if (scanners.Any())
-                    return Visibility.Scanned;
-            }
-            return Visibility.Visible;
-        }
-
-        #endregion Internal Methods
-
-        #region Private Methods
-
-        private static Expression CreateParam(ParameterExpression[] paramsOfDelegate, int i, ParameterInfo callParamType, Queue<object> queueMissingParams)
-        {
-            if (i < paramsOfDelegate.Length)
-                return Expression.Convert(paramsOfDelegate[i], callParamType.ParameterType);
-
-            if (queueMissingParams.Count > 0)
-                return Expression.Constant(queueMissingParams.Dequeue());
-
-            if (callParamType.ParameterType.IsValueType)
-                return Expression.Constant(Activator.CreateInstance(callParamType.ParameterType));
-
-            return Expression.Constant(null);
-        }
-
-        private static IEnumerable<Ability> FindSharedAbilities(this IOwnableAbilityObject obj, ShareAbilityClause clause)
-        {
-            if (obj == null)
-                yield break;
-
-            var rule = clause.AbilityRule;
-            if (rule.CanTarget(obj.AbilityTarget))
-            {
-                if (rule.CanTarget(AbilityTargets.Sector) && obj is ILocated)
-                {
-                    var sector = ((ILocated)obj).Sector;
-                    foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
-                    {
-                        foreach (var abil in sector.EmpireAbilities(emp))
-                        {
-                            if (rule == abil.Rule)
-                                yield return abil;
-                        }
-                    }
-                }
-                else if (rule.CanTarget(AbilityTargets.StarSystem) && obj is ILocated)
-                {
-                    var sys = ((ILocated)obj).StarSystem;
-                    foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
-                    {
-                        foreach (var abil in sys.EmpireAbilities(emp))
-                        {
-                            if (rule == abil.Rule)
-                                yield return abil;
-                        }
-                    }
-                }
-                else if (rule.CanTarget(AbilityTargets.Galaxy))
-                {
-                    foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
-                    {
-                        foreach (var abil in Galaxy.Current.EmpireAbilities(emp))
-                        {
-                            if (rule == abil.Rule)
-                                yield return abil;
-                        }
-                    }
-                }
-            }
-        }
-
-        private static T GetDefaultGeneric<T>()
-        {
-            return default(T);
-        }
-
-        private static void LogUnitTransferFailed(IDesign<IUnit> design, ICargoContainer src, ICargoContainer dest, int actualTonnage, int desiredTonnage, Empire emp)
-        {
-            emp.Log.Add(src.CreateLogMessage("Only " + actualTonnage.Kilotons() + " of " + desiredTonnage.Kilotons() + " worth of " + design + " class " + design.VehicleTypeName + "s could be transferred from " + src + " to " + dest + " because there are not enough in " + src + "'s cargo or " + dest + "'s cargo is full."));
-        }
-
-        private static void LogUnitTransferFailed(string role, ICargoContainer src, ICargoContainer dest, int actualTonnage, int desiredTonnage, Empire emp)
-        {
-            emp.Log.Add(src.CreateLogMessage("Only " + actualTonnage.Kilotons() + " of " + desiredTonnage.Kilotons() + " worth of " + role + " units could be transferred from " + src + " to " + dest + " because there are not enough in " + src + "'s cargo or " + dest + "'s cargo is full."));
-        }
-
-        private static void LogUnitTransferFailed(VehicleTypes vt, ICargoContainer src, ICargoContainer dest, int actualTonnage, int desiredTonnage, Empire emp)
-        {
-            emp.Log.Add(src.CreateLogMessage("Only " + actualTonnage.Kilotons() + " of " + desiredTonnage.Kilotons() + " worth of " + vt.ToSpacedString().ToLower() + "s could be transferred from " + src + " to " + dest + " because there are not enough in " + src + "'s cargo or " + dest + "'s cargo is full."));
-        }
-
-        private static void LogUnitTransferFailedNoStorage(IUnit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
-        {
-            emp.Log.Add(src.CreateLogMessage(unit + " could not be transferred from " + src + " to " + dest + " because " + dest + "'s cargo is full."));
-        }
-
-        private static void LogUnitTransferFailedNotPresent(IUnit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
-        {
-            emp.Log.Add(src.CreateLogMessage(unit + " could not be transferred from " + src + " to " + dest + " because it is not in " + src + "'s cargo."));
-        }
-
-        private static void TryTransferUnit(IUnit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
-        {
-            if (dest.CargoStorageFree() >= unit.Design.Hull.Size)
-            {
-                src.RemoveUnit(unit);
-                dest.AddUnit(unit);
-            }
-            else
-                LogUnitTransferFailedNoStorage(unit, src, dest, emp);
-        }
-
-        #endregion Private Methods
-
-        #region Private Classes
-
-        private class OnlySafePropertiesInjection : ConventionInjection
-        {
-            #region Private Fields
-
-            private SafeDictionary<object, object> knownObjects = new SafeDictionary<object, object>();
-
-            #endregion Private Fields
-
-            #region Public Constructors
-
-            public OnlySafePropertiesInjection(object root, bool deep, IDCopyBehavior rootBehavior, IDCopyBehavior subordinateBehavior, IDictionary<object, object> known = null)
-            {
-                Root = root;
-                DeepCopy = deep;
-                RootBehavior = rootBehavior;
-                SubordinateBehavior = subordinateBehavior;
-
-                if (known != null)
-                {
-                    foreach (var kvp in known)
-                        knownObjects.Add(kvp);
-                }
-            }
-
-            #endregion Public Constructors
-
-            #region Public Properties
-
-            public bool DeepCopy { get; private set; }
-            public object Root { get; private set; }
-            public IDCopyBehavior RootBehavior { get; private set; }
-
-            public IDCopyBehavior SubordinateBehavior { get; private set; }
-
-            #endregion Public Properties
-
-            #region Protected Methods
-
-            protected override void Inject(object source, object target)
-            {
-                if (!knownObjects.ContainsKey(source))
-                    knownObjects.Add(source, target);
-                foreach (var sp in source.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.GetGetMethod(true) != null && p.GetIndexParameters().Count() == 0))
-                {
-                    var tp = target.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.GetSetMethod(true) != null && p.GetIndexParameters().Count() == 0 && p.Name == sp.Name).SingleOrDefault();
-                    if (tp != null)
-                    {
-                        var c = new ConventionInfo
-                        {
-                            Source = new ConventionInfo.TypeInfo { Type = sp.DeclaringType },
-                            SourceProp = new ConventionInfo.PropInfo { Name = sp.Name },
-                            Target = new ConventionInfo.TypeInfo { Type = tp.DeclaringType },
-                            TargetProp = new ConventionInfo.PropInfo { Name = tp.Name },
-                        };
-                        if (Match(c))
-                        {
-                            bool doit = true;
-                            bool regen = false;
-                            if (source is IReferrable && sp.Name == "ID")
-                            {
-                                // do special things for IDs
-                                var behavior = source == Root ? RootBehavior : SubordinateBehavior;
-                                if (behavior == IDCopyBehavior.PreserveSource)
-                                    doit = true;
-                                else if (behavior == IDCopyBehavior.PreserveDestination)
-                                    doit = false;
-                                else if (behavior == IDCopyBehavior.Regenerate)
-                                {
-                                    doit = false;
-                                    regen = true;
-                                }
-                            }
-
-                            object sv = null;
-
-                            if (doit && CanCopyFully(sp) && DeepCopy)
-                            {
-                                sv = sp.GetValue(source, null);
-                                if (sv == null)
-                                    sp.SetValue(target, null, null); // it's null, very simple
-                                else if (!knownObjects.ContainsKey(sv))
-                                {
-                                    // copy object and use the copy
-                                    var tv = CopyObject(source, sv);
-                                    sp.SetValue(target, tv, null);
-                                }
-                                else
-                                    sp.SetValue(target, knownObjects[sv], null); // known object, don't bother copying again
-                            }
-                            else if (doit && CanCopySafely(sp))
-                            {
-                                sv = sp.GetValue(source, null);
-                                if (knownObjects.ContainsKey(sv))
-                                {
-                                    sp.SetValue(target, knownObjects[sv]); // use known copy
-                                }
-                                else
-                                {
-                                    sp.SetValue(target, sv, null); // use original object
-                                    if (sv != null)
-                                        Debug.WriteLine($"{sv} ({sp.Name} of {source}) is unknown, using original object");
-                                }
-                            }
-
-                            if (regen)
-                            {
-                                // reassign ID
-                                var r = target as IReferrable;
-                                if (r.HasValidID())
-                                    r.ReassignID();
-                            }
-                        }
-                    }
-                }
-                if (target is ICleanable)
-                    (target as ICleanable).Clean();
-            }
-
-            protected override bool Match(ConventionInfo c)
-            {
-                return
-                    c.SourceProp.Name == c.TargetProp.Name &&
-                    c.Source.Type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(p => PropertyMatches(p, c.TargetProp.Name)) &&
-                    c.Target.Type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(p => PropertyMatches(p, c.TargetProp.Name));
-            }
-
-            #endregion Protected Methods
-
-            #region Private Methods
-
-            private object CopyObject(object parent, object sv)
-            {
-                if (sv == null)
-                    return null;
-                if (knownObjects.ContainsKey(sv))
-                    return knownObjects[sv];
-                var type = sv.GetType();
-
-                if (sv.GetType().IsValueType || sv is string)
-                    return sv;
-                else if (sv.GetType().IsArray)
-                {
-                    // do sub object mapping
-                    var sa = (Array)sv;
-                    Array ta = (Array)sa.Clone();
-                    Array.Clear(ta, 0, ta.Length); // no references to original objects!
-                    for (var i = 0; i < ta.Length; i++)
-                    {
-                        var sitem = sa.Cast<object>().ElementAt(i);
-                        if (sitem != null)
-                        {
-                            var titem = CopyObject(sv, sitem);
-                            if (ta.Rank == 1)
-                                ta.SetValue(titem, i);
-                            else if (ta.Rank == 2)
-                            {
-                                var width = ta.GetLength(0);
-                                ta.SetValue(titem, i / width, i % width);
-                            }
-                            else
-                                throw new InvalidOperationException("Arrays with more than 2 dimensions are not supported.");
-                        }
-                    }
-                    return ta;
-                }
-                else if (typeof(IEnumerable).IsAssignableFrom(type))
-                {
-                    var sc = (IEnumerable)sv;
-                    var tc = sv.GetType().Instantiate();
-                    if (type.GetMethods().Where(m => m.Name == "Add" && m.GetParameters().Length == 1).Any())
-                    {
-                        // collection
-                        var adder = type.GetMethods().Where(m => m.Name == "Add" && m.GetParameters().Length == 1).Single();
-                        foreach (var si in sc)
-                        {
-                            // copy object and add to collection
-                            var ti = CopyObject(sv, si);
-                            adder.Invoke(tc, new object[] { ti });
-                        }
-                    }
-                    else if (type.GetMethods().Where(m => m.Name == "Add" && m.GetParameters().Length == 2).Any())
-                    {
-                        // dictionary
-                        var adder = type.GetMethods().Where(m => m.Name == "Add" && m.GetParameters().Length == 2).Single();
-                        foreach (var skvp in sc)
-                        {
-                            // copy key-value pair and add to collection
-                            var sk = skvp.GetPropertyValue("Key");
-                            var skv = skvp.GetPropertyValue("Value");
-                            var tk = CopyObject(sv, sk);
-                            var tkv = CopyObject(sv, skv);
-                            adder.Invoke(tc, new object[] { tk, tkv });
-                        }
-                    }
-                    else
-                    {
-                        throw new ArgumentException("Unknown enumerable type " + type + "; must be string/array/collection/dictionary.");
-                    }
-                    return tc;
-                }
-                else
-                {
-                    // do sub object mapping
-                    var tv = sv.GetType().Instantiate();
-                    if (!knownObjects.ContainsKey(sv))
-                        knownObjects.Add(sv, tv);
-                    Map(sv, tv);
-                    //knownObjects.Remove(parent);
-                    return tv;
-                }
-            }
-
-            private bool PropertyMatches(PropertyInfo p, string name)
-            {
-                return
-                   p.Name == name // it's the right property
-                       && p.GetSetMethod(true) != null // has a getter, whether public or private
-                       && p.GetSetMethod(true) != null // has a setter, whether public or private
-                       && p.GetIndexParameters().Length == 0; // lacks index parameters
-            }
-
-            #endregion Private Methods
-        }
-
-        #endregion Private Classes
-
-        /*// based on http://cangencer.wordpress.com/2011/06/08/auto-ignore-non-existing-properties-with-automapper/
+			if (loc == null)
+				return null;
+			return loc.Item;
+		}
+
+		/// <summary>
+		/// Gets an ability value.
+		/// If the stacking rule in the mod is DoNotStack, an arbitrary matching ability will be chosen.
+		/// If there are no values, null will be returned.
+		/// </summary>
+		/// <param name="name">The name of the ability.</param>
+		/// <param name="obj">The object from which to get the value.</param>
+		/// <param name="index">The ability value index (usually 1 or 2).</param>
+		/// <param name="filter">A filter for the abilities. For instance, you might want to filter by the ability grouping rule's value.</param>
+		/// <returns>The ability value.</returns>
+		public static string GetAbilityValue(this IAbilityObject obj, string name, int index = 1, bool includeShared = true, bool includeEmpireCommon = true, Func<Ability, bool> filter = null)
+		{
+			if (obj == null)
+				return null;
+
+			var abils = obj.Abilities();
+			if (includeShared)
+				abils = abils.Union(obj.SharedAbilities());
+			if (includeEmpireCommon)
+				abils = abils.Union(obj.EmpireCommonAbilities());
+
+			abils = abils.Where(a => a.Rule != null && a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
+			abils = abils.Stack(obj);
+			if (!abils.Any())
+				return null;
+			return abils.First().Values[index - 1];
+		}
+
+		public static string GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name, IAbilityObject stackTo, int index = 1, bool includeShared = true, bool includeEmpireCommon = true, Func<Ability, bool> filter = null)
+		{
+			var tuples = objs.Squash(o => o.Abilities()).ToArray();
+			if (includeShared)
+				tuples = tuples.Union(objs.Squash(o => o.SharedAbilities())).ToArray();
+			if (includeEmpireCommon)
+				tuples = tuples.Union(objs.Squash(o => o.EmpireCommonAbilities())).ToArray();
+			var abils = tuples.GroupBy(t => new { Rule = t.Item2.Rule, Object = t.Item1 }).Where(g => g.Key.Rule.Matches(name) && g.Key.Rule.CanTarget(g.Key.Object.AbilityTarget)).SelectMany(x => x).Select(t => t.Item2).Where(a => filter == null || filter(a)).Stack(stackTo);
+			if (!abils.Any())
+				return null;
+			return abils.First().Values[index - 1];
+		}
+
+		/// <summary>
+		/// Gets points both on the border and in the interior of a rectangle.
+		/// </summary>
+		/// <param name="r"></param>
+		/// <returns></returns>
+		public static IEnumerable<Point> GetAllPoints(this Rectangle r)
+		{
+			for (var x = r.Left; x <= r.Right; x++)
+			{
+				for (var y = r.Top; y <= r.Bottom; y++)
+					yield return new Point(x, y);
+			}
+		}
+
+		/// <summary>
+		/// Gets the points on the border of a rectangle.
+		/// </summary>
+		/// <param name="r"></param>
+		/// <returns></returns>
+		public static IEnumerable<Point> GetBorderPoints(this Rectangle r)
+		{
+			for (var x = r.Left; x <= r.Right; x++)
+			{
+				if (x == r.Left || x == r.Right)
+				{
+					// get left and right sides
+					for (var y = r.Top; y <= r.Bottom; y++)
+						yield return new Point(x, y);
+				}
+				else
+				{
+					// just get top and bottom
+					yield return new Point(x, r.Top);
+					if (r.Top != r.Bottom)
+						yield return new Point(x, r.Bottom);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Gets the canonical name for a property, class, etc.
+		/// This is taken from the [CanonicalName] attribute if present, otherwise the name of the item itself.
+		/// </summary>
+		/// <param name="m"></param>
+		/// <returns></returns>
+		public static string GetCanonicalName(this MemberInfo m)
+		{
+			// TODO - use most derived class's attribute?
+			var name = m.GetAttributes<CanonicalNameAttribute>().Select(a => a.Name).SingleOrDefault();
+			if (name == null)
+				return m.Name;
+			return name;
+		}
+
+		/// <summary>
+		/// Gets a property value from an object using reflection.
+		/// If the property does not exist or the property value is not IComparable, returns an empty string.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <param name="propertyName"></param>
+		/// <returns></returns>
+		public static IComparable GetComparablePropertyValue(this object o, string propertyName)
+		{
+			var pval = GetPropertyValue(o, propertyName);
+			if (pval == null || !(pval is IComparable))
+				return "";
+			return (IComparable)pval;
+		}
+
+		public static SafeDictionary<string, object> GetData(this object o, ObjectGraphContext context)
+		{
+			// serialize object type and field count
+			if (o is IDataObject)
+			{
+				// use data object code! :D
+				var dobj = (IDataObject)o;
+				return dobj.Data;
+			}
+			else if (o != null)
+			{
+				// use reflection :(
+				var dict = new SafeDictionary<string, object>();
+				var props = ObjectGraphContext.GetKnownProperties(o.GetType()).Values.Where(p => !p.GetValue(o, null).SafeEquals(p.PropertyType.DefaultValue()));
+				foreach (var p in props)
+					dict[p.Name] = p.GetValue(o);
+				return dict;
+			}
+			else
+				return new SafeDictionary<string, object>();
+		}
+
+		/// <summary>
+		/// Aggregates abilities for an empire's space objects.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <param name="name"></param>
+		/// <param name="index"></param>
+		/// <param name="filter"></param>
+		/// <returns></returns>
+		public static string GetEmpireAbilityValue(this ICommonAbilityObject obj, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
+		{
+			if (obj == null)
+				return null;
+
+			if (filter == null && Galaxy.Current.IsAbilityCacheEnabled)
+			{
+				// use the cache
+				var cached = Galaxy.Current.CommonAbilityCache[Tuple.Create(obj, emp)];
+				if (cached != null)
+				{
+					if (cached.Any())
+						return cached.Where(x => x.Rule.Matches(name)).Stack(obj).FirstOrDefault()?.Values[index - 1];
+					else
+						return null;
+				}
+			}
+
+			IEnumerable<Ability> abils;
+			var subabils = obj.GetContainedAbilityObjects(emp).SelectMany(o => o.UnstackedAbilities().Where(a => a.Rule.Name == name));
+			if (obj is IAbilityObject)
+				abils = ((IAbilityObject)obj).Abilities().Where(a => a.Rule != null && a.Rule.Name == name).Concat(subabils).Stack(obj);
+			else
+				abils = subabils;
+			abils = abils.Where(a => a.Rule != null && a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
+			string result;
+			if (!abils.Any())
+				result = null;
+			else
+				result = abils.First().Values[index - 1];
+
+			// cache abilities if we can
+			if (filter == null && Galaxy.Current.IsAbilityCacheEnabled)
+				Galaxy.Current.CommonAbilityCache[Tuple.Create(obj, emp)] = abils.ToArray();
+
+			return result;
+		}
+
+		/// <summary>
+		/// Gets points in the interior of a rectangle.
+		/// </summary>
+		/// <param name="r"></param>
+		/// <returns></returns>
+		public static IEnumerable<Point> GetInteriorPoints(this Rectangle r)
+		{
+			for (var x = r.Left + 1; x < r.Right; x++)
+			{
+				for (var y = r.Top + 1; y < r.Bottom; y++)
+					yield return new Point(x, y);
+			}
+		}
+
+		/// <summary>
+		/// Gets all names for a property, class, etc. including custom names and the actual item name.
+		/// </summary>
+		/// <param name="m"></param>
+		/// <returns></returns>
+		public static IEnumerable<string> GetNames(this MemberInfo m)
+		{
+			return m.GetAttributes<NameAttribute>().Select(a => a.Name).UnionSingle(m.Name);
+		}
+
+		/// <summary>
+		/// Gets a property value from an object using reflection.
+		/// If the property does not exist, returns null.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <param name="propertyName"></param>
+		/// <returns></returns>
+		public static object GetPropertyValue(this object o, string propertyName)
+		{
+			var prop = o.GetType().GetProperty(propertyName);
+			if (prop == null)
+				return null;
+			return prop.GetValue(o, new object[0]);
+		}
+
+		/// <summary>
+		/// Returns an object's hash code, or 0 for null.
+		/// </summary>
+		/// <param name="o"></param>
+		public static int GetSafeHashCode(this object o)
+		{
+			return o == null ? 0 : o.GetHashCode();
+		}
+
+		public static Type GetVehicleType(this VehicleTypes vt)
+		{
+			switch (vt)
+			{
+				case VehicleTypes.Ship:
+					return typeof(Ship);
+
+				case VehicleTypes.Base:
+					return typeof(Base);
+
+				case VehicleTypes.Fighter:
+					return typeof(Fighter);
+
+				case VehicleTypes.Troop:
+					return typeof(Troop);
+
+				case VehicleTypes.Mine:
+					return typeof(Mine);
+
+				case VehicleTypes.Satellite:
+					return typeof(Satellite);
+
+				case VehicleTypes.Drone:
+					return typeof(Drone);
+
+				case VehicleTypes.WeaponPlatform:
+					return typeof(WeaponPlatform);
+
+				default:
+					throw new Exception("No type is available for vehicle type " + vt);
+			}
+		}
+
+		/// <summary>
+		/// All income provided by an object.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <returns></returns>
+		public static ResourceQuantity GrossIncome(this IIncomeProducer o)
+		{
+			return o.StandardIncome() + o.RemoteMiningIncome() + o.RawResourceIncome();
+		}
+
+		public static object Instantiate(this Type type, params object[] args)
+		{
+			if (type.GetConstructors().Where(c => c.GetParameters().Length == (args == null ? 0 : args.Length)).Any())
+				return Activator.CreateInstance(type, args);
+			else
+				return FormatterServices.GetSafeUninitializedObject(type);
+		}
+
+		public static T Instantiate<T>(params object[] args)
+		{
+			return (T)typeof(T).Instantiate(args);
+		}
+
+		/// <summary>
+		/// Limits a value to a range.
+		/// Throws an exception if min is bigger than max.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <param name="min"></param>
+		/// <param name="max"></param>
+		/// <returns></returns>
+		public static int LimitToRange(this int value, int min, int max)
+		{
+			if (min > max)
+				throw new ArgumentOutOfRangeException("Min is {0} and can't be larger than max which is {1}!".F(min, max));
+			if (value > max)
+				value = max;
+			if (value < min)
+				value = min;
+			return value;
+		}
+
+		/// <summary>
+		/// Limits a value to a range.
+		/// Throws an exception if min is bigger than max.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <param name="min"></param>
+		/// <param name="max"></param>
+		/// <returns></returns>
+		public static double LimitToRange(this double value, double min, double max)
+		{
+			if (min > max)
+				throw new ArgumentOutOfRangeException("Min is {0} and can't be larger than max which is {1}!".F(min, max));
+			if (value > max)
+				value = max;
+			if (value < min)
+				value = min;
+			return value;
+		}
+
+		/// <summary>
+		/// Logs an exception in errorlog.txt. Overwrites the old errorlog.txt.
+		/// </summary>
+		/// <param name="ex"></param>
+		public static void Log(this Exception ex)
+		{
+			var sw = new StreamWriter("errorlog.txt");
+			sw.WriteLine(ex.GetType().Name + " occurred at " + DateTime.Now + ":");
+			sw.WriteLine(ex.ToString());
+			sw.Close();
+		}
+
+		public static Type MakeActionType(this IEnumerable<Type> parmTypes)
+		{
+			if (parmTypes.Count() == 0)
+				return typeof(Action);
+			if (parmTypes.Count() == 1)
+				return typeof(Action<>).MakeGenericType(parmTypes.ToArray());
+			if (parmTypes.Count() == 2)
+				return typeof(Action<,>).MakeGenericType(parmTypes.ToArray());
+			if (parmTypes.Count() == 3)
+				return typeof(Action<,,>).MakeGenericType(parmTypes.ToArray());
+			if (parmTypes.Count() == 4)
+				return typeof(Action<,,,>).MakeGenericType(parmTypes.ToArray());
+			if (parmTypes.Count() == 5)
+				return typeof(Action<,,,,>).MakeGenericType(parmTypes.ToArray());
+			if (parmTypes.Count() == 6)
+				return typeof(Action<,,,,,>).MakeGenericType(parmTypes.ToArray());
+			// TODO - more parms
+			throw new Exception("MakeActionType currently supports only 0-6 parameters.");
+		}
+
+		public static Type MakeFuncType(this IEnumerable<Type> parmTypes, Type returnType)
+		{
+			var types = parmTypes.Concat(returnType.SingleItem());
+			if (parmTypes.Count() == 0)
+				return typeof(Func<>).MakeGenericType(types.ToArray());
+			if (parmTypes.Count() == 1)
+				return typeof(Func<,>).MakeGenericType(types.ToArray());
+			if (parmTypes.Count() == 2)
+				return typeof(Func<,,>).MakeGenericType(types.ToArray());
+			if (parmTypes.Count() == 3)
+				return typeof(Func<,,,>).MakeGenericType(types.ToArray());
+			if (parmTypes.Count() == 4)
+				return typeof(Func<,,,,>).MakeGenericType(types.ToArray());
+			if (parmTypes.Count() == 5)
+				return typeof(Func<,,,,,>).MakeGenericType(types.ToArray());
+			if (parmTypes.Count() == 6)
+				return typeof(Func<,,,,,,>).MakeGenericType(types.ToArray());
+			// TODO - more parms
+			throw new Exception("MakeFuncType currently supports only -16 parameters.");
+		}
+
+		/// <summary>
+		/// Computes the Manhattan (4-way grid) distance between two points.
+		/// </summary>
+		/// <param name="p"></param>
+		/// <param name="target"></param>
+		/// <returns></returns>
+		public static int ManhattanDistance(this Point p, Point target)
+		{
+			return Math.Abs(target.X - p.X) + Math.Abs(target.Y - p.Y);
+		}
+
+		/// <summary>
+		/// Who does a memory belong to?
+		/// </summary>
+		/// <param name="f">The memory.</param>
+		/// <returns>Empire to which the memory belongs (null if not memory).</returns>
+		public static Empire MemoryOwner(this IFoggable f)
+		{
+			if (!f.IsMemory)
+				return null;
+			return Galaxy.Current.Empires.ExceptSingle(null).SingleOrDefault(x => x.Memory.Values.Contains(f));
+		}
+
+		public static ILookup<TKey, TValue> MyLookup<TKey, TEnumerable, TValue>(this IEnumerable<KeyValuePair<TKey, TEnumerable>> dict)
+			where TEnumerable : IEnumerable<TValue>
+		{
+			var list = new List<KeyValuePair<TKey, TValue>>();
+			foreach (var kvp in dict)
+			{
+				foreach (var item in kvp.Value)
+					list.Add(new KeyValuePair<TKey, TValue>(kvp.Key, item));
+			}
+			return list.ToLookup(kvp => kvp.Key, kvp => kvp.Value);
+		}
+
+		/// <summary>
+		/// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
+		/// </summary>
+		public static string NameFor(this IBattle b, Empire emp)
+		{
+			return b.ResultFor(emp).Capitalize() + " at " + b.Sector;
+		}
+
+		/// <summary>
+		/// Makes sure there aren't more supplies than we can store, or fewer than zero
+		/// </summary>
+		/// <returns>Leftover supplies (or a negative number if somehow we got negative supplies in this vehicle)</returns>
+		public static int NormalizeSupplies(this IMobileSpaceObject sobj)
+		{
+			if (sobj.SupplyRemaining > sobj.SupplyStorage)
+			{
+				var leftover = sobj.SupplyRemaining - sobj.SupplyStorage;
+				sobj.SupplyRemaining = sobj.SupplyStorage;
+				return leftover;
+			}
+			if (sobj.SupplyRemaining < 0)
+			{
+				var deficit = sobj.SupplyRemaining;
+				sobj.SupplyRemaining = 0;
+				return deficit;
+			}
+			return 0;
+		}
+
+		/// <summary>
+		/// Parses a string using the type's static Parse method.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="o"></param>
+		/// <returns></returns>
+		public static T Parse<T>(this string s)
+		{
+			var parser = typeof(T).GetMethod("Parse", BindingFlags.Static);
+			var expr = Expression.Call(parser);
+			return (T)expr.Method.Invoke(null, new object[] { s });
+		}
+
+		/// <summary>
+		/// Computes the path that this space object is ordered to follow.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="sobj"></param>
+		/// <returns></returns>
+		public static IEnumerable<Sector> Path(this IMobileSpaceObject sobj)
+		{
+			// TODO - cache paths and only recalculate them when the orders change
+			var last = sobj.Sector;
+			foreach (var order in sobj.Orders)
+			{
+				if (order is IMovementOrder)
+				{
+					var o = (IMovementOrder)order;
+					foreach (var s in o.Pathfind(sobj, last))
+						yield return s;
+					last = o.Destination;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Converts a percentage into a ratio.
+		/// </summary>
+		/// <param name="i">The percentage, e.g. 50</param>
+		/// <returns>The ratio, e.g. 0.5</returns>
+		public static double Percent(this int i)
+		{
+			return (double)i / 100d;
+		}
+
+		/// <summary>
+		/// Multiplies an integer by a percentage and rounds it.
+		/// </summary>
+		/// <param name="i"></param>
+		/// <param name="d"></param>
+		/// <returns></returns>
+		public static int PercentOfRounded(this int p, int i)
+		{
+			return i.TimesAndRound(p.Percent());
+		}
+
+		public static void Place(this IUnit unit, ISpaceObject target)
+		{
+			if (target is ICargoContainer)
+			{
+				var container = (ICargoContainer)target;
+				var cargo = container.Cargo;
+				if (cargo.Size + unit.Design.Hull.Size <= container.CargoStorage)
+				{
+					cargo.Units.Add(unit);
+					return;
+				}
+			}
+			foreach (var container in target.Sector.SpaceObjects.OfType<ICargoTransferrer>().Where(cc => cc.Owner == unit.Owner))
+			{
+				var cargo = container.Cargo;
+				if (cargo.Size + unit.Design.Hull.Size <= container.CargoStorage)
+				{
+					cargo.Units.Add(unit);
+					return;
+				}
+			}
+			unit.Owner.Log.Add(unit.CreateLogMessage(unit + " was lost due to insufficient cargo space at " + target + "."));
+		}
+
+		/// <summary>
+		/// Raises an event, but doesn't do anything if the event handler is null.
+		/// </summary>
+		/// <typeparam name="TArgs"></typeparam>
+		/// <param name="sender"></param>
+		/// <param name="args"></param>
+		public static void Raise<TArgs>(this EventHandler<TArgs> evt, object sender, TArgs e) where TArgs : EventArgs
+		{
+			if (evt != null)
+				evt(sender, e);
+		}
+
+		/// <summary>
+		/// Raw resource income which is not affected by any modifiers.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <returns></returns>
+		public static ResourceQuantity RawResourceIncome(this IIncomeProducer o)
+		{
+			var rawResourceIncome = new ResourceQuantity();
+			foreach (var resource in Resource.All)
+			{
+				var rule = Mod.Current.AbilityRules.SingleOrDefault(r => r.Matches("Generate Points " + resource));
+				if (rule != null)
+				{
+					var amount = o.GetAbilityValue(rule.Name).ToInt();
+					rawResourceIncome += resource * amount;
+				}
+			}
+			return rawResourceIncome;
+		}
+
+		/// <summary>
+		/// Reads characters until the specified character is found or end of stream.
+		/// Returns all characters read except the specified character.
+		/// </summary>
+		/// <param name="r"></param>
+		/// <param name="c"></param>
+		/// <returns></returns>
+		public static string ReadTo(this TextReader r, char c, StringBuilder log)
+		{
+			var sb = new StringBuilder();
+			int data = 0;
+			bool escaping = false;
+			do
+			{
+				data = r.Read();
+				if (data <= 0)
+					break; // end of stream
+				else if (escaping)
+				{
+					// in an escape sequence
+					sb.Append((char)data);
+					if (log != null)
+						log.Append((char)data);
+					escaping = false;
+				}
+				else if (data == c)
+					break; // found match
+				else if (data == '\\')
+					escaping = true; // begin escape sequence
+				else
+				{
+					// regular data
+					sb.Append((char)data);
+					if (log != null)
+						log.Append((char)data);
+				}
+			} while (true);
+			if (data == c && log != null)
+				log.Append(c);
+			return sb.ToString();
+		}
+
+		/// <summary>
+		/// Generates new IDs for this object (unless skipRoot is true) and all subordinate objects.
+		/// TODO - take into account DoNotAssignIDAttribute
+		/// </summary>
+		/// <param name="obj"></param>
+		public static void ReassignAllIDs(this IReferrable obj, bool skipRoot = false)
+		{
+			var parser = new ObjectGraphParser();
+			var canCopy = new System.Collections.Generic.Stack<bool>(); // stack of bools indicating which objects in the current hierarchy path we can copy
+			canCopy.Push(true);
+			parser.Property += (pname, o, val) =>
+			{
+				var prop = o.GetType().FindProperty(pname);
+				var shouldRecurse = !prop.CanCopyFully();
+				if (shouldRecurse)
+					canCopy.Push(shouldRecurse);
+				return shouldRecurse;
+			};
+			parser.Item += (o) =>
+			{
+				// can always serialize collection items
+				canCopy.Push(true);
+			};
+			parser.StartObject += (o) =>
+			{
+				var doit = canCopy.All(b => b) && (!skipRoot || o != obj);
+				if (doit && o is IReferrable)
+				{
+					var r = (IReferrable)o;
+					r.ReassignID();
+				}
+			};
+			parser.EndObject += (o) =>
+			{
+				canCopy.Pop();
+			};
+			parser.Null += (o) =>
+			{
+				canCopy.Pop();
+			};
+			parser.KnownObject += (o) =>
+			{
+				canCopy.Pop();
+			};
+			parser.Parse(obj);
+		}
+
+		/// <summary>
+		/// Reassigns the ID of an object, overwriting any existing ID.
+		/// </summary>
+		/// <param name="r"></param>
+		public static void ReassignID(this IReferrable r)
+		{
+			r.ID = 0;
+			Galaxy.Current.AssignID(r);
+		}
+
+		public static TRef Refer<TRef, T>(this T t) where TRef : IReference<T>
+		{
+			return (TRef)typeof(TRef).Instantiate(t);
+		}
+
+		public static GalaxyReference<T> ReferViaGalaxy<T>(this T t)
+		{
+			if (t == null)
+				return null;
+			return new GalaxyReference<T>(t);
+		}
+
+		public static ModReference<T> ReferViaMod<T>(this T t) where T : IModObject
+		{
+			if (t == null)
+				return null;
+			return new ModReference<T>(t);
+		}
+
+		/// <summary>
+		/// Refills the space object's movement points.
+		/// </summary>
+		public static void RefillMovement(this IMobileSpaceObject sobj)
+		{
+			sobj.MovementRemaining = sobj.Speed;
+			sobj.TimeToNextMove = sobj.TimePerMove;
+		}
+
+		public static void RefreshDijkstraMap(this IMobileSpaceObject sobj)
+		{
+			// create new map if necessary
+			if (sobj.DijkstraMap == null)
+				sobj.DijkstraMap = new Dictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>>();
+
+			// prune old nodes
+			var start = sobj.Sector;
+			foreach (var n in sobj.DijkstraMap.Keys.OrderBy(n => n.Cost).ToArray())
+			{
+				if ((n.PreviousNode == null || !sobj.DijkstraMap.ContainsKey(n.PreviousNode)) && n.Location != start)
+				{
+					// already went here or it was an aborted path
+					// delete the node (and this will mark for deletion all its children that we're not at)
+					sobj.DijkstraMap.Remove(n);
+					if (n.Location == start)
+					{
+						foreach (var n2 in sobj.DijkstraMap.Keys)
+							n2.Cost -= 1;
+					}
+				}
+			}
+
+			// add new nodes
+			int minCost = 0;
+			foreach (var order in sobj.Orders)
+			{
+				var last = start;
+				if (order is IMovementOrder)
+				{
+					var o = (IMovementOrder)order;
+					foreach (var kvp in o.CreateDijkstraMap(sobj, last))
+					{
+						kvp.Key.Cost += minCost;
+						sobj.DijkstraMap.Add(kvp);
+					}
+					// account for cost of previous orders
+					minCost = sobj.DijkstraMap.Keys.MaxOrDefault(n => n.MinimumCostRemaining);
+					last = o.Destination;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Income produced by this object's remote mining abilities.
+		/// Modified by racial aptitudes.
+		/// Not affected by lack of spaceports.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <returns></returns>
+		public static ResourceQuantity RemoteMiningIncome(this IIncomeProducer o)
+		{
+			return o.Owner.RemoteMiners.Where(m => m.Key.Item1 == o).Sum(m => m.Value);
+		}
+
+		/// <summary>
+		/// Removes an order from some object.
+		/// If the order was just added by the player this turn, simply deletes it.
+		/// If not, also creates a RemoveOrderCommand to remove it on the server, and adds that command to the empire's commands.
+		/// Intended only for client side use.
+		/// </summary>
+		/// <typeparam name="T">The type of orderable object.</typeparam>
+		/// <param name="obj">The object from which to remove an order.</param>
+		/// <param name="order">The order to remove.</param>
+		/// <returns>The remove-order command created, if any.</returns>
+		public static RemoveOrderCommand<T> RemoveOrderClientSide<T>(this T obj, IOrder<T> order) where T : IOrderable
+		{
+			if (Empire.Current == null)
+				throw new InvalidOperationException("RemoveOrderClientSide is intended for client side use.");
+			var addCmd = Empire.Current.Commands.OfType<AddOrderCommand<T>>().SingleOrDefault(c => c.Order == order);
+			if (addCmd == null)
+			{
+				// not a newly added order, so create a remove command to take it off the server
+				var remCmd = new RemoveOrderCommand<T>(obj, order);
+				Empire.Current.Commands.Add(remCmd);
+				obj.RemoveOrder(order);
+				return remCmd;
+			}
+			else
+			{
+				// a newly added order, so just get rid of the add command
+				Empire.Current.Commands.Remove(addCmd);
+				obj.RemoveOrder(order);
+				return null;
+			}
+		}
+
+		/// <summary>
+		/// Resizes an image. The image should be square.
+		/// </summary>
+		/// <param name="image"></param>
+		/// <param name="size"></param>
+		/// <returns></returns>
+		public static Image Resize(this Image image, int size)
+		{
+			if (image == null)
+				return null;
+			var result = new Bitmap(size, size, PixelFormat.Format32bppArgb);
+			var g = Graphics.FromImage(result);
+			g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+			g.DrawImage(image, 0, 0, size, size);
+			return result;
+		}
+
+		/// <summary>
+		/// The result (victory/defeat/stalemate) for a given empire.
+		/// If empire or its allies are not involved or no empire specified, just say "battle".
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public static string ResultFor(this IBattle b, Empire emp)
+		{
+			if (emp == null)
+				return "battle"; // no empire specified
+			if (!b.Combatants.Any(c => c.Owner == emp || (b.OriginalOwners[c]?.IsAllyOf(emp, b.StarSystem) ?? false)))
+				return "battle"; // empire/allies not involved
+			var survivors = b.Combatants.Where(c => c.IsAlive);
+			var ourSurvivors = survivors.Where(c => c.Owner == emp);
+			var allySurvivors = survivors.Where(c => c.Owner.IsAllyOf(emp, b.StarSystem));
+			var friendlySurvivors = ourSurvivors.Union(allySurvivors);
+			var enemySurvivors = survivors.Where(c => c.Owner.IsEnemyOf(emp, b.StarSystem));
+			if (friendlySurvivors.Any() && enemySurvivors.Any())
+				return "stalemate";
+			if (friendlySurvivors.Any())
+				return "victory";
+			if (enemySurvivors.Any())
+				return "defeat";
+			return "Pyrrhic victory"; // mutual annihilation!
+		}
+
+		public static IEnumerable<TOut> RunTasks<TOut>(this IEnumerable<Func<TOut>> ops)
+		{
+			return ops.SpawnTasksAsync().Result;
+		}
+
+		public static IEnumerable<TOut> RunTasks<TIn, TOut>(this IEnumerable<TIn> objs, Func<TIn, TOut> op)
+		{
+			return objs.SpawnTasksAsync(op).Result;
+		}
+
+		public static void SafeDispose(this IDisposable d)
+		{
+			if (d != null)
+				d.Dispose();
+		}
+
+		/// <summary>
+		/// Equals method that doesn't throw an exception when objects are null.
+		/// Null is not equal to anything else, except other nulls.
+		/// </summary>
+		/// <param name="o1"></param>
+		/// <param name="o2"></param>
+		/// <returns></returns>
+		public static bool SafeEquals(this object o1, object o2)
+		{
+			if (o1 == null && o2 == null)
+				return true;
+			if (o1 == null || o2 == null)
+				return false;
+			return o1.Equals(o2);
+		}
+
+		public static bool SafeSequenceEqual<T>(this IEnumerable<T> e1, IEnumerable<T> e2)
+		{
+			if (e1.SafeEquals(null) && e2.SafeEquals(null))
+				return true;
+			if (e1.SafeEquals(null) || e2.SafeEquals(null))
+				return false;
+			return e1.SequenceEqual(e2);
+		}
+
+		public static void SetData(this object o, SafeDictionary<string, object> dict, ObjectGraphContext context)
+		{
+			if (context == null)
+				context = new ObjectGraphContext();
+			if (o is IDataObject)
+			{
+				// use data object code! :D
+				var dobj = (IDataObject)o;
+				dobj.Data = dict;
+			}
+			else if (o != null)
+			{
+				// use reflection :(
+				foreach (var kvp in dict)
+				{
+					var pname = kvp.Key;
+					var val = kvp.Value;
+					var prop = ObjectGraphContext.GetKnownProperties(o.GetType())[pname];
+					if (prop != null)
+					{
+						try
+						{
+							context.SetObjectProperty(o, prop, val);
+						}
+						catch (NullReferenceException ex)
+						{
+							if (o == null && prop == null)
+								Console.Error.WriteLine($"Attempted to set unknown property {pname} on a null object.");
+							else if (o == null)
+								Console.Error.WriteLine($"Attempted to set property {pname} on a null object.");
+							else if (prop == null)
+								Console.Error.WriteLine($"Attempted to set unknown property {pname} on {o}.");
+							else
+								throw;
+						}
+						catch (InvalidCastException ex)
+						{
+							Console.Error.WriteLine($"Could not set property {pname} of object {o} of type {o.GetType()} to value {val} of type {val.GetType()}.");
+							throw;
+						}
+					}
+					else
+						Console.Error.WriteLine($"Found unknown property {pname} in serialized data for object type {o.GetType()}.");
+				}
+			}
+			else
+				throw new NullReferenceException("Can't set data on a null object.");
+		}
+
+		/// <summary>
+		/// Sets a property value on an object using reflection.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <param name="propertyName"></param>
+		/// <returns></returns>
+		public static void SetPropertyValue(this object o, string propertyName, object value)
+		{
+			o.GetType().GetProperty(propertyName).SetValue(o, value, new object[0]);
+		}
+
+		/// <summary>
+		/// Gets abilities that have been shared to an object.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		public static IEnumerable<Ability> SharedAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		{
+			// Unowned objects cannot have abilities shared to them.
+			var ownable = obj as IOwnableAbilityObject;
+			if (ownable == null || ownable.Owner == null)
+				yield break;
+
+			// update cache if necessary
+			foreach (var clause in ownable.Owner.ReceivedTreatyClauses.Flatten().OfType<ShareAbilityClause>())
+			{
+				var tuple = Tuple.Create(ownable, clause.Owner);
+				if (Empire.Current == null || !Galaxy.Current.SharedAbilityCache.ContainsKey(tuple))
+					Galaxy.Current.SharedAbilityCache[tuple] = FindSharedAbilities(ownable, clause).ToArray();
+			}
+
+			// get cached abilities
+			foreach (var keyTuple in Galaxy.Current.SharedAbilityCache.Keys.Where(k => k.Item1 == ownable && (sourceFilter == null || sourceFilter(k.Item2))))
+			{
+				foreach (var abil in Galaxy.Current.SharedAbilityCache[keyTuple])
+					yield return abil;
+			}
+		}
+
+		/// <summary>
+		/// Gets abilities that have been shared to an object.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		public static IEnumerable<Ability> SharedAbilities(this ICommonAbilityObject obj, Empire empire, Func<IAbilityObject, bool> sourceFilter = null)
+		{
+			if (obj == null)
+				yield break;
+
+			foreach (var clause in empire.ReceivedTreatyClauses.Flatten().OfType<ShareAbilityClause>())
+			{
+				var rule = clause.AbilityRule;
+				if (clause.AbilityRule.CanTarget(obj.AbilityTarget))
+				{
+					if (rule.CanTarget(AbilityTargets.Sector) && obj is ILocated)
+					{
+						var sector = ((ILocated)obj).Sector;
+						foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
+						{
+							foreach (var abil in sector.EmpireAbilities(emp, sourceFilter))
+							{
+								if (clause.AbilityRule == abil.Rule)
+									yield return abil;
+							}
+						}
+					}
+					else if (rule.CanTarget(AbilityTargets.StarSystem) && (obj is StarSystem || obj is ILocated))
+					{
+						var sys = ((ILocated)obj).StarSystem;
+						foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
+						{
+							foreach (var abil in sys.EmpireAbilities(emp, sourceFilter))
+							{
+								if (clause.AbilityRule == abil.Rule)
+									yield return abil;
+							}
+						}
+					}
+					else if (rule.CanTarget(AbilityTargets.Galaxy))
+					{
+						foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
+						{
+							foreach (var abil in Galaxy.Current.EmpireAbilities(emp, sourceFilter))
+							{
+								if (clause.AbilityRule == abil.Rule)
+									yield return abil;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Spawns multiple tasks to return an enumeration of items.
+		/// </summary>
+		/// <typeparam name="TOut"></typeparam>
+		/// <param name="ops"></param>
+		/// <param name="process"></param>
+		/// <returns></returns>
+		public static async Task<IEnumerable<TOut>> SpawnTasksAsync<TOut>(this IEnumerable<Func<TOut>> ops)
+		{
+			// Enumerate the tasks we need to do and start them
+			var tasks = ops.Select(op => Task<TOut>.Factory.StartNew(op));
+
+			// Wait for them to complete
+			return await Task.WhenAll(tasks);
+		}
+
+		/// <summary>
+		/// Spawns multiple tasks to return an enumeration of items.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="objs"></param>
+		/// <param name="op"></param>
+		/// <returns></returns>
+		public static async Task<IEnumerable<TOut>> SpawnTasksAsync<TIn, TOut>(this IEnumerable<TIn> objs, Func<TIn, TOut> op)
+		{
+			return await objs.Select(obj => new Func<TOut>(() => op(obj))).SpawnTasksAsync();
+		}
+
+		/// <summary>
+		/// Spawns multiple tasks to perform a bunch of actions.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="ops"></param>
+		/// <param name="process"></param>
+		/// <returns></returns>
+		public static async Task SpawnTasksAsync(this IEnumerable<Action> ops)
+		{
+			// Enumerate the tasks we need to do and start them
+			var tasks = ops.Select(op => Task.Factory.StartNew(op));
+
+			// Wait for them to complete
+			await Task.WhenAll(tasks);
+		}
+
+		/// <summary>
+		/// Spawns multiple tasks to perform a bunch of actions.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="objs"></param>
+		/// <param name="op"></param>
+		/// <returns></returns>
+		public static async Task SpawnTasksAsync<TIn>(this IEnumerable<TIn> objs, Action<TIn> op)
+		{
+			await objs.Select(obj => new Action(() => op(obj))).SpawnTasksAsync();
+		}
+
+		/// <summary>
+		/// Standard income provided by mining, research, and intelligence.
+		/// Affected by racial aptitudes, happiness, planet value, lack of spaceport, that sort of thing.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <returns></returns>
+		public static ResourceQuantity StandardIncome(this IIncomeProducer o)
+		{
+			var income = new ResourceQuantity();
+			var ratio = 1.0;
+			if (!o.StarSystem.HasAbility(o.Owner, "Spaceport"))
+				ratio = o.MerchantsRatio;
+			var prefix = "Resource Generation - ";
+			var pcts = o.StandardIncomePercentages;
+			foreach (var abil in o.Abilities().Where(abil => abil.Rule.Name.StartsWith(prefix)))
+			{
+				var resource = Resource.Find(abil.Rule.Name.Substring(prefix.Length));
+				var amount = abil.Value1.ToInt();
+
+				if (resource.HasValue)
+					amount = Galaxy.Current.StandardMiningModel.GetRate(amount, o.ResourceValue[resource], pcts[resource] / 100d);
+
+				income.Add(resource, amount);
+			}
+			prefix = "Point Generation - ";
+			foreach (var abil in o.Abilities().Where(abil => abil.Rule.Name.StartsWith(prefix)))
+			{
+				var resource = Resource.Find(abil.Rule.Name.Substring(prefix.Length));
+				var amount = abil.Value1.ToInt() * pcts[resource] / 100;
+
+				income.Add(resource, amount);
+			}
+
+			return income * ratio;
+		}
+
+		/// <summary>
+		/// Finds all subfleets (recursively, including this fleet) that have any child space objects that are not fleets.
+		/// </summary>
+		/// <param name="rootFleet"></param>
+		/// <returns></returns>
+		public static IEnumerable<Fleet> SubfleetsWithNonFleetChildren(this Fleet rootFleet)
+		{
+			if (rootFleet.Vehicles.Any(sobj => !(sobj is Fleet)))
+				yield return rootFleet;
+			foreach (var subfleet in rootFleet.Vehicles.OfType<Fleet>())
+			{
+				foreach (var subsub in subfleet.SubfleetsWithNonFleetChildren())
+					yield return subsub;
+			}
+		}
+
+		/// <summary>
+		/// Inflicts normal damage on an object out of the blue.
+		/// </summary>
+		/// <param name="d">The object which should take damage.</param>
+		/// <param name="dmg">The amount of normal damage to inflict.</param>
+		/// <returns>Leftover damage.</returns>
+		public static int TakeNormalDamage(this IDamageable d, int dmg)
+		{
+			return d.TakeDamage(new Hit(new Shot(null, null, d, 0), d, dmg));
+		}
+
+		/// <summary>
+		/// Multiplies an integer by a scale factor and rounds it.
+		/// </summary>
+		/// <param name="i"></param>
+		/// <param name="d"></param>
+		/// <returns></returns>
+		public static int TimesAndRound(this int i, double d)
+		{
+			return (int)Math.Round(i * d);
+		}
+
+		/// <summary>
+		/// Transfers items from this cargo container to another cargo container.
+		/// </summary>
+		public static void TransferCargo(this ICargoContainer src, CargoDelta delta, ICargoContainer dest, Empire emp)
+		{
+			// if destination is null, we are transferring to/from space
+			if (dest == null)
+				dest = src.Sector;
+			if (src == null)
+				src = dest.Sector;
+
+			// transfer per-race population
+			foreach (var kvp in delta.RacePopulation)
+			{
+				var amount = long.MaxValue;
+
+				// limit by desired amount to transfer
+				if (kvp.Value != null)
+					amount = Math.Min(amount, kvp.Value.Value);
+				// limit by amount available
+				amount = Math.Min(amount, src.AllPopulation[kvp.Key]);
+				// limit by amount of free space
+				amount = Math.Min(amount, dest.PopulationStorageFree + (long)((dest.CargoStorage - dest.Cargo.Size) / Mod.Current.Settings.PopulationSize));
+
+				amount -= src.RemovePopulation(kvp.Key, amount);
+				dest.AddPopulation(kvp.Key, amount);
+
+				if (amount < kvp.Value)
+					emp.Log.Add(src.CreateLogMessage(src + " could transfer only " + amount.ToUnitString(true) + " of the desired " + kvp.Value.ToUnitString(true) + " " + kvp.Key + " population to " + dest + " due to lack of population available or lack of storage space."));
+			}
+
+			// transfer any-population
+			var anyPopLeft = delta.AnyPopulation;
+			foreach (var kvp in src.AllPopulation.ToArray())
+			{
+				var amount = long.MaxValue;
+
+				// limit by desired amount to transfer
+				if (!delta.AllPopulation)
+					amount = Math.Min(amount, anyPopLeft);
+				// limit by amount available
+				amount = Math.Min(amount, kvp.Value);
+				// limit by amount of free space
+				amount = Math.Min(amount, dest.PopulationStorageFree + (long)((dest.CargoStorage - dest.Cargo.Size) / Mod.Current.Settings.PopulationSize));
+
+				amount -= src.RemovePopulation(kvp.Key, amount);
+				dest.AddPopulation(kvp.Key, amount);
+
+				if (amount < anyPopLeft)
+					emp.Log.Add(src.CreateLogMessage(src + " could transfer only " + amount.ToUnitString(true) + " of the desired " + kvp.Value.ToUnitString(true) + " general population to " + dest + " due to lack of population available or lack of storage space."));
+
+				if (amount == 0)
+					continue;
+			}
+
+			// clear population that was emptied out
+			foreach (var race in src.Cargo.Population.Where(kvp => kvp.Value <= 0).Select(kvp => kvp.Key).ToArray())
+				src.Cargo.Population.Remove(race);
+			if (src is Planet)
+			{
+				var p = (Planet)src;
+				if (p.Colony != null)
+				{
+					foreach (var race in p.Colony.Population.Where(kvp => kvp.Value <= 0).Select(kvp => kvp.Key).ToArray())
+						p.Colony.Population.Remove(race);
+				}
+			}
+
+			// transfer specific units
+			foreach (var unit in delta.Units)
+			{
+				if (src.Cargo.Units.Contains(unit))
+					TryTransferUnit(unit, src, dest, emp);
+				else
+					LogUnitTransferFailedNotPresent(unit, src, dest, emp);
+			}
+
+			// transfer unit tonnage by design
+			foreach (var kvp in delta.UnitDesignTonnage)
+			{
+				int transferred = 0;
+				while (kvp.Value == null || transferred <= kvp.Value - kvp.Key.Hull.Size)
+				{
+					var unit = src.AllUnits.FirstOrDefault(u => u.Design == kvp.Key);
+					if (unit == null && kvp.Value != null)
+					{
+						// if it's not a "transfer all" order, we can log the lack of available units
+						if (kvp.Value != null)
+							LogUnitTransferFailed(kvp.Key, src, dest, transferred, kvp.Value.Value, emp);
+
+						break;
+					}
+					if (dest.CargoStorageFree() < kvp.Key.Hull.Size)
+					{
+						LogUnitTransferFailedNoStorage(unit, src, dest, emp);
+						break;
+					}
+					if (transferred + kvp.Key.Hull.Size > kvp.Value)
+						break; // next unit would be too much
+					if (unit != null)
+					{
+						src.RemoveUnit(unit);
+						dest.AddUnit(unit);
+						transferred += kvp.Key.Hull.Size;
+					}
+					else
+						break;
+				}
+			}
+
+			// transfer unit tonnage by role
+			foreach (var kvp in delta.UnitRoleTonnage)
+			{
+				int transferred = 0;
+				var available = src.AllUnits.Where(u => u.Design.Role == kvp.Key);
+				while (kvp.Value == null || transferred <= kvp.Value - available.MinOrDefault(u => u.Design.Hull.Size))
+				{
+					if (!available.Any())
+					{
+						// if it's not a "transfer all" order, we can log the lack of available units
+						if (kvp.Value != null)
+							LogUnitTransferFailed(kvp.Key, src, dest, transferred, kvp.Value.Value, emp);
+
+						break;
+					}
+					var unit = available.FirstOrDefault(u => u.Design.Hull.Size <= dest.CargoStorageFree() && kvp.Value == null || u.Design.Hull.Size <= kvp.Value - transferred);
+					if (unit != null)
+					{
+						src.RemoveUnit(unit);
+						dest.AddUnit(unit);
+						available = src.AllUnits.Where(u => u.Design.Role == kvp.Key);
+						transferred += unit.Design.Hull.Size;
+					}
+					else
+						break;
+				}
+			}
+
+			// transfer unit tonnage by hull type
+			foreach (var kvp in delta.UnitTypeTonnage)
+			{
+				int transferred = 0;
+				var available = src.AllUnits.Where(u => u.Design.VehicleType == kvp.Key);
+				while (kvp.Value == null || transferred <= kvp.Value - available.MinOrDefault(u => u.Design.Hull.Size))
+				{
+					if (!available.Any())
+					{
+						// if it's not a "transfer all" order, we can log the lack of available units
+						if (kvp.Value != null)
+							LogUnitTransferFailed(kvp.Key, src, dest, transferred, kvp.Value.Value, emp);
+
+						break;
+					}
+					var unit = available.FirstOrDefault(u => u.Design.Hull.Size <= dest.CargoStorageFree() && kvp.Value == null || u.Design.Hull.Size <= kvp.Value - transferred);
+					if (unit != null)
+					{
+						src.RemoveUnit(unit);
+						dest.AddUnit(unit);
+						available = src.AllUnits.Where(u => u.Design.VehicleType == kvp.Key);
+						transferred += unit.Design.Hull.Size;
+					}
+					else
+						break;
+				}
+			}
+		}
+
+		/// <summary>
+		/// All abilities belonging to an object, before stacking.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <param name="includeShared"></param>
+		/// <returns></returns>
+		public static IEnumerable<Ability> UnstackedAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		{
+			if (obj == null)
+				return Enumerable.Empty<Ability>();
+
+			// TODO - should we include shared abilities here? HasAbility has a flag to include these...
+			if (sourceFilter == null || sourceFilter(obj))
+				return obj.IntrinsicAbilities.Concat(obj.SharedAbilities(sourceFilter)).Concat(obj.DescendantAbilities(sourceFilter)).Concat(obj.AncestorAbilities(sourceFilter));
+			else
+				return obj.SharedAbilities(sourceFilter).Concat(obj.DescendantAbilities(sourceFilter)).Concat(obj.AncestorAbilities(sourceFilter));
+		}
+
+		/// <summary>
+		/// Updates the memory sight cache of any empires that can see this object.
+		/// Only makes sense on the host view, so if this is called elsewhere, nothing happens.
+		/// </summary>
+		/// <param name="obj">The object whose cache to update.</param>
+		/// <param name="message">A message to display to any empire that can see this event happen.</param>
+		/// <param name="empiresToSkipMessage">Empires to which we don't need to send a message.</param>
+		/// <param name="stillExists"></param>
+		public static void UpdateEmpireMemories(this IFoggable obj, string message = null, params Empire[] empiresToSkipMessage)
+		{
+			if (Empire.Current == null)
+			{
+				foreach (var emp in Galaxy.Current.Empires)
+				{
+					var sys = (obj as ILocated)?.StarSystem;
+					if (obj.CheckVisibility(emp) >= Visibility.Visible)
+					{
+						emp.UpdateMemory(obj);
+						if (message != null && !empiresToSkipMessage.Contains(emp))
+							emp.RecordLog(obj, message);
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Returns "us" if the empire is the current empire, otherwise "the " followed by the empire name.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public static string UsOrName(this Empire emp, bool capitalize = false)
+		{
+			if (emp == Empire.Current)
+				return "us";
+			return "the " + emp.Name;
+		}
+
+		/// <summary>
+		/// Returns "We" if the empire is the current empire, otherwise "The " followed by the empire name.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public static string WeOrName(this Empire emp, bool capitalize = true)
+		{
+			if (emp == Empire.Current)
+				return "We";
+			return "The " + emp.Name;
+		}
+
+		#endregion Public Methods
+
+		#region Internal Methods
+
+		internal static Visibility CheckSpaceObjectVisibility(this ISpaceObject sobj, Empire emp)
+		{
+			bool hasMemory = false;
+			if (sobj.IsMemory)
+			{
+				var mowner = sobj.MemoryOwner();
+				if (mowner == emp || mowner == null)
+					return Visibility.Fogged;
+				else
+					return Visibility.Unknown; // can't see other players' memories
+			}
+			else
+			{
+				var mem = sobj.FindMemory(emp);
+				if (mem != null)
+					hasMemory = true;
+			}
+
+			if (emp == sobj.Owner)
+				return Visibility.Owned;
+
+			// You can always scan space objects you are in combat with.
+			// But only their state at the time they were in combat; not for the rest of the turn!
+			// TODO - what about glassed planets, they have no owner...
+			if (Galaxy.Current.Battles.Any(b => (b.Combatants.OfType<ISpaceObject>().Contains(sobj)) && b.Combatants.Any(c => c.Owner == emp)))
+				return Visibility.Scanned;
+
+			// do we have anything that can see it?
+			var sys = sobj.FindStarSystem();
+			if (sys == null)
+				return Visibility.Unknown;
+			var seers = sys.FindSpaceObjects<ISpaceObject>(s => s.Owner == emp && !s.IsMemory);
+			if (!seers.Any() || sobj.IsHiddenFrom(emp))
+			{
+				if (Galaxy.Current.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
+					return Visibility.Visible;
+				if (emp.AllSystemsExploredFromStart)
+					return Visibility.Fogged;
+				var known = emp.Memory[sobj.ID];
+				if (known != null && sobj.GetType() == known.GetType())
+					return Visibility.Fogged;
+				else if (Galaxy.Current.Battles.Any(b => b.Combatants.Any(c => c.ID == sobj.ID) && b.Combatants.Any(c => c.Owner == emp)))
+					return Visibility.Fogged;
+				else if (hasMemory)
+					return Visibility.Fogged;
+				else
+					return Visibility.Unknown;
+			}
+			if (!sobj.HasAbility("Scanner Jammer"))
+			{
+				var scanners = seers.Where(s =>
+					s.HasAbility("Long Range Scanner") && s.GetAbilityValue("Long Range Scanner").ToInt() >= s.Sector.Coordinates.EightWayDistance(sobj.FindSector().Coordinates)
+					|| s.HasAbility("Long Range Scanner - System"));
+				if (scanners.Any())
+					return Visibility.Scanned;
+			}
+			return Visibility.Visible;
+		}
+
+		#endregion Internal Methods
+
+		#region Private Methods
+
+		private static Expression CreateParam(ParameterExpression[] paramsOfDelegate, int i, ParameterInfo callParamType, Queue<object> queueMissingParams)
+		{
+			if (i < paramsOfDelegate.Length)
+				return Expression.Convert(paramsOfDelegate[i], callParamType.ParameterType);
+
+			if (queueMissingParams.Count > 0)
+				return Expression.Constant(queueMissingParams.Dequeue());
+
+			if (callParamType.ParameterType.IsValueType)
+				return Expression.Constant(Activator.CreateInstance(callParamType.ParameterType));
+
+			return Expression.Constant(null);
+		}
+
+		private static IEnumerable<Ability> FindSharedAbilities(this IOwnableAbilityObject obj, ShareAbilityClause clause)
+		{
+			if (obj == null)
+				yield break;
+
+			var rule = clause.AbilityRule;
+			if (rule.CanTarget(obj.AbilityTarget))
+			{
+				if (rule.CanTarget(AbilityTargets.Sector) && obj is ILocated)
+				{
+					var sector = ((ILocated)obj).Sector;
+					foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
+					{
+						foreach (var abil in sector.EmpireAbilities(emp))
+						{
+							if (rule == abil.Rule)
+								yield return abil;
+						}
+					}
+				}
+				else if (rule.CanTarget(AbilityTargets.StarSystem) && obj is ILocated)
+				{
+					var sys = ((ILocated)obj).StarSystem;
+					foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
+					{
+						foreach (var abil in sys.EmpireAbilities(emp))
+						{
+							if (rule == abil.Rule)
+								yield return abil;
+						}
+					}
+				}
+				else if (rule.CanTarget(AbilityTargets.Galaxy))
+				{
+					foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
+					{
+						foreach (var abil in Galaxy.Current.EmpireAbilities(emp))
+						{
+							if (rule == abil.Rule)
+								yield return abil;
+						}
+					}
+				}
+			}
+		}
+
+		private static T GetDefaultGeneric<T>()
+		{
+			return default(T);
+		}
+
+		private static void LogUnitTransferFailed(IDesign<IUnit> design, ICargoContainer src, ICargoContainer dest, int actualTonnage, int desiredTonnage, Empire emp)
+		{
+			emp.Log.Add(src.CreateLogMessage("Only " + actualTonnage.Kilotons() + " of " + desiredTonnage.Kilotons() + " worth of " + design + " class " + design.VehicleTypeName + "s could be transferred from " + src + " to " + dest + " because there are not enough in " + src + "'s cargo or " + dest + "'s cargo is full."));
+		}
+
+		private static void LogUnitTransferFailed(string role, ICargoContainer src, ICargoContainer dest, int actualTonnage, int desiredTonnage, Empire emp)
+		{
+			emp.Log.Add(src.CreateLogMessage("Only " + actualTonnage.Kilotons() + " of " + desiredTonnage.Kilotons() + " worth of " + role + " units could be transferred from " + src + " to " + dest + " because there are not enough in " + src + "'s cargo or " + dest + "'s cargo is full."));
+		}
+
+		private static void LogUnitTransferFailed(VehicleTypes vt, ICargoContainer src, ICargoContainer dest, int actualTonnage, int desiredTonnage, Empire emp)
+		{
+			emp.Log.Add(src.CreateLogMessage("Only " + actualTonnage.Kilotons() + " of " + desiredTonnage.Kilotons() + " worth of " + vt.ToSpacedString().ToLower() + "s could be transferred from " + src + " to " + dest + " because there are not enough in " + src + "'s cargo or " + dest + "'s cargo is full."));
+		}
+
+		private static void LogUnitTransferFailedNoStorage(IUnit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
+		{
+			emp.Log.Add(src.CreateLogMessage(unit + " could not be transferred from " + src + " to " + dest + " because " + dest + "'s cargo is full."));
+		}
+
+		private static void LogUnitTransferFailedNotPresent(IUnit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
+		{
+			emp.Log.Add(src.CreateLogMessage(unit + " could not be transferred from " + src + " to " + dest + " because it is not in " + src + "'s cargo."));
+		}
+
+		private static void TryTransferUnit(IUnit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
+		{
+			if (dest.CargoStorageFree() >= unit.Design.Hull.Size)
+			{
+				src.RemoveUnit(unit);
+				dest.AddUnit(unit);
+			}
+			else
+				LogUnitTransferFailedNoStorage(unit, src, dest, emp);
+		}
+
+		#endregion Private Methods
+
+		/*// based on http://cangencer.wordpress.com/2011/06/08/auto-ignore-non-existing-properties-with-automapper/
 		private static IMappingExpression<T, T> IgnoreReadOnlyAndNonSerializableProperties<T>(this IMappingExpression<T, T> expression)
 		{
 			var type = typeof(T);
@@ -2600,7 +2275,7 @@ namespace FrEee.Utility.Extensions
 				expression.ForMember(property.DestinationProperty.Name, opt => opt.Ignore());
 			return expression;
 		}*/
-        /*/// <summary>
+		/*/// <summary>
 		/// XXX don't use this function, it seems to skip some of the tasks
 		/// </summary>
 		/// <param name="ops">The ops.</param>
@@ -2631,5 +2306,5 @@ namespace FrEee.Utility.Extensions
 			})).Unwrap();
 			runSync.Wait();
 		}*/
-    }
+	}
 }
