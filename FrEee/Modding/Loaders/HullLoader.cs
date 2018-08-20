@@ -95,7 +95,7 @@ namespace FrEee.Modding.Loaders
                 foreach (var costfield in rec.Fields.Where(cf => cf.Name.StartsWith("Cost ")))
                     hull.Cost[Resource.Find(costfield.Name.Substring("Cost ".Length))] = costfield.CreateFormula<int>(hull);
 
-                hull.Mass = rec.Get<int>("Engines Per Move", hull);
+                hull.ThrustPerMove = rec.Get<int>("Engines Per Move", hull);
 
                 foreach (var tr in RequirementLoader.LoadEmpireRequirements(rec, hull, RequirementType.Unlock))
                     hull.UnlockRequirements.Add(tr);
