@@ -55,6 +55,11 @@ namespace FrEee.Game.Interfaces
 		/// </summary>
 		new bool IsObsolete { get; set; }
 
+		/// <summary>
+		/// Is this design valid in the current mod? Or is it using techs from other mods?
+		/// </summary>
+		bool IsValidInMod { get; }
+
 		int Iteration { get; set; }
 
 		/// <summary>
