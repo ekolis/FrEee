@@ -57,6 +57,21 @@ namespace FrEee.WinForms.Controls
 
 		#region Public Properties
 
+		private bool autoZoom;
+
+		/// <summary>
+		/// Automatically zoom to show the entire battle?
+		/// </summary>
+		public bool AutoZoom
+		{
+			get => autoZoom;
+			set
+			{
+				autoZoom = value;
+				Invalidate();
+			}
+		}
+
 		public Battle Battle
 		{
 			get => battle;
@@ -64,6 +79,21 @@ namespace FrEee.WinForms.Controls
 			{
 				battle = value;
 				UpdateData();
+				Invalidate();
+			}
+		}
+
+		private IntVector2 focusedLocation;
+
+		/// <summary>
+		/// The combat sector which is focused.
+		/// </summary>
+		public IntVector2 FocusedLocation
+		{
+			get => focusedLocation;
+			set
+			{
+				focusedLocation = value;
 				Invalidate();
 			}
 		}
@@ -78,7 +108,24 @@ namespace FrEee.WinForms.Controls
 				if (Battle == null)
 					return 0;
 				// TODO - scale differently on X and Y axes for non-square views
-				return Math.Min(Width - SectorBorderSize, Height - SectorBorderSize) / Battle.GetDiameter(round) - SectorBorderSize;
+				if (AutoZoom)
+					return Math.Min(Width - SectorBorderSize, Height - SectorBorderSize) / Battle.GetDiameter(round) - SectorBorderSize;
+				return 36; // se4 shipsets have 36 pixel minis :)
+			}
+		}
+
+		private bool useSquares;
+
+		/// <summary>
+		/// Display everything as a square rather than an icon?
+		/// </summary>
+		public bool UseSquares
+		{
+			get => useSquares;
+			set
+			{
+				useSquares = value;
+				Invalidate();
 			}
 		}
 
@@ -103,9 +150,9 @@ namespace FrEee.WinForms.Controls
 			var littleFontSize = Math.Max(SectorDrawSize / 8, 1);
 			var littleFont = new Font("Sans Serif", littleFontSize);
 
-			pe.Graphics.DrawRectangle(Pens.White, 0, 0,
+			/*pe.Graphics.DrawRectangle(Pens.White, 0, 0,
 				(Battle.LowerRight[round].X - Battle.UpperLeft[round].X) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize,
-				(Battle.LowerRight[round].Y - Battle.UpperLeft[round].Y) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize);
+				(Battle.LowerRight[round].Y - Battle.UpperLeft[round].Y) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize);*/
 
 			if (Battle != null)
 			{
@@ -140,7 +187,10 @@ namespace FrEee.WinForms.Controls
 									else
 										p.DrawStatusIcons(pic);
 								}
-								pe.Graphics.DrawImage(pic, drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
+								if (useSquares)
+									pe.Graphics.FillRectangle(new SolidBrush(largest.Owner.Color), drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
+								else
+									pe.Graphics.DrawImage(pic, drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
 							}
 							// also draw seekers on top
 							if (here.OfType<Seeker>().Any())
@@ -209,9 +259,36 @@ namespace FrEee.WinForms.Controls
 
 		private PointF GetDrawPoint(int x, int y)
 		{
-			var drawx = (x - Battle.UpperLeft[round].X) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize;
-			var drawy = (y - Battle.UpperLeft[round].Y) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize;
-			return new PointF(drawx, drawy);
+			if (AutoZoom)
+			{
+				var drawx = (x - Battle.UpperLeft[round].X) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize;
+				var drawy = (y - Battle.UpperLeft[round].Y) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize;
+				return new PointF(drawx, drawy);
+			}
+			else
+			{
+				if (FocusedLocation == null)
+					FocusedLocation = (Battle.LowerRight[round] - Battle.UpperLeft[round]) / 2;
+				var drawx = (x - FocusedLocation.X) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize + Width / 2;
+				var drawy = (y - FocusedLocation.Y) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize + Height / 2;
+				return new PointF(drawx, drawy);
+			}
+		}
+
+		private IntVector2 GetClickPoint(int x, int y)
+		{
+			if (AutoZoom)
+			{
+				var clickx = (x - SectorBorderSize) / (SectorDrawSize + SectorBorderSize) + Battle.UpperLeft[round].X;
+				var clicky = (y - SectorBorderSize) / (SectorDrawSize + SectorBorderSize) + Battle.UpperLeft[round].Y;
+				return new IntVector2(clickx, clicky);
+			}
+			else
+			{
+				var clickx = (x - (SectorBorderSize - Width / 2)) / (SectorDrawSize + SectorBorderSize) + SectorBorderSize;
+				var clicky = (y - (SectorBorderSize - Height / 2)) / (SectorDrawSize + SectorBorderSize) + SectorBorderSize;
+				return new IntVector2(clickx, clicky);
+			}
 		}
 
 		private void timer1_Tick(object sender, EventArgs e)
@@ -307,5 +384,12 @@ namespace FrEee.WinForms.Controls
 		}
 
 		#endregion Private Classes
+
+		private void BattleView_MouseDown(object sender, MouseEventArgs e)
+		{
+			ClickLocation = GetClickPoint(e.X, e.Y);
+		}
+
+		public IntVector2 ClickLocation { get; private set; }
 	}
 }

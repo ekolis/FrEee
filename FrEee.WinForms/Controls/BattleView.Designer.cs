@@ -30,7 +30,7 @@ namespace FrEee.WinForms.Controls
 		{
 			this.components = new System.ComponentModel.Container();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-			this.timer1 = new System.Windows.Forms.Timer(this.components);
+			this.roundTimer = new System.Windows.Forms.Timer(this.components);
 			this.SuspendLayout();
 			// 
 			// toolTip
@@ -41,11 +41,15 @@ namespace FrEee.WinForms.Controls
 			this.toolTip.ReshowDelay = 99999999;
 			this.toolTip.UseAnimation = false;
 			// 
-			// timer1
+			// roundTimer
 			// 
-			this.timer1.Enabled = true;
-			this.timer1.Interval = 250;
-			this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+			this.roundTimer.Enabled = true;
+			this.roundTimer.Interval = 250;
+			this.roundTimer.Tick += new System.EventHandler(this.timer1_Tick);
+			// 
+			// BattleView
+			// 
+			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BattleView_MouseDown);
 			this.ResumeLayout(false);
 
 		}
@@ -53,6 +57,6 @@ namespace FrEee.WinForms.Controls
 		#endregion
 
 		private System.Windows.Forms.ToolTip toolTip;
-		private System.Windows.Forms.Timer timer1;
+		private System.Windows.Forms.Timer roundTimer;
 	}
 }

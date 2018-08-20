@@ -5,47 +5,53 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-    public partial class BattleReplayForm : Form, IBindable<Battle>
-    {
-        #region Public Constructors
+	public partial class BattleReplayForm : Form, IBindable<Battle>
+	{
+		#region Public Constructors
 
-        public BattleReplayForm(Battle b)
-        {
-            InitializeComponent();
-            Bind(b);
-        }
+		public BattleReplayForm(Battle b)
+		{
+			InitializeComponent();
+			Bind(b);
+		}
 
-        #endregion Public Constructors
+		#endregion Public Constructors
 
-        #region Public Properties
+		#region Public Properties
 
-        public Battle Battle { get; private set; }
+		public Battle Battle { get; private set; }
 
-        #endregion Public Properties
+		#endregion Public Properties
 
-        #region Public Methods
+		#region Public Methods
 
-        public void Bind(Battle data)
-        {
-            Battle = data;
-            Bind();
-        }
+		public void Bind(Battle data)
+		{
+			Battle = data;
+			Bind();
+		}
 
-        public void Bind()
-        {
-            battleView1.Battle = Battle;
-        }
+		public void Bind()
+		{
+			battleView.Battle = Battle;
+			minimap.Battle = Battle;
+		}
 
-        #endregion Public Methods
+		#endregion Public Methods
 
-        #region Private Methods
+		#region Private Methods
 
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.OK;
-            Close();
-        }
+		private void btnClose_Click(object sender, EventArgs e)
+		{
+			DialogResult = DialogResult.OK;
+			Close();
+		}
 
-        #endregion Private Methods
-    }
+		#endregion Private Methods
+
+		private void minimap_MouseDown(object sender, MouseEventArgs e)
+		{
+			battleView.FocusedLocation = minimap.ClickLocation;
+		}
+	}
 }
