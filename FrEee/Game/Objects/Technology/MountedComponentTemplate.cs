@@ -145,6 +145,11 @@ namespace FrEee.Game.Objects.Technology
 			get { yield break; }
 		}
 
+		/// <summary>
+		/// Does this template have valid component and mount templates? (Or a null mount template)
+		/// </summary>
+		public bool IsValidInMod => componentTemplate.HasValue && (mount == null || mount.HasValue);
+
 		public bool IsObsolescent
 		{
 			get { return this != LatestVersion; }

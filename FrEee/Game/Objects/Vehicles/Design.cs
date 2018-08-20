@@ -120,6 +120,8 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public int CombatSpeed => Mod.Current.Settings.CombatSpeedPercentPerStrategicSpeed.PercentOfRounded(StrategicSpeed) + this.GetAbilityValue("Combat Movement").ToInt();
 
+		public bool IsValidInMod => Components.All(q => q.IsValidInMod);
+
 		public string Name
 		{
 			get
