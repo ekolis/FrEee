@@ -94,7 +94,7 @@
 			this.btnBack.Name = "btnBack";
 			this.btnBack.Size = new System.Drawing.Size(75, 23);
 			this.btnBack.TabIndex = 29;
-			this.btnBack.Text = "<";
+			this.btnBack.Text = "|<";
 			this.btnBack.UseVisualStyleBackColor = false;
 			this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
 			// 
@@ -120,7 +120,7 @@
 			this.btnForward.Name = "btnForward";
 			this.btnForward.Size = new System.Drawing.Size(75, 23);
 			this.btnForward.TabIndex = 31;
-			this.btnForward.Text = ">";
+			this.btnForward.Text = ">|";
 			this.btnForward.UseVisualStyleBackColor = false;
 			this.btnForward.Click += new System.EventHandler(this.btnForward_Click);
 			// 

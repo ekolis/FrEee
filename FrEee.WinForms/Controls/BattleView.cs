@@ -46,6 +46,8 @@ namespace FrEee.WinForms.Controls
 			get => round;
 			set
 			{
+				if (battle == null)
+					return; // still initializing
 				round = value;
 				while (round < 0)
 					round += Battle.Duration;
