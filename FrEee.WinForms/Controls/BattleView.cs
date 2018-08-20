@@ -150,9 +150,7 @@ namespace FrEee.WinForms.Controls
 			var littleFontSize = Math.Max(SectorDrawSize / 8, 1);
 			var littleFont = new Font("Sans Serif", littleFontSize);
 
-			/*pe.Graphics.DrawRectangle(Pens.White, 0, 0,
-				(Battle.LowerRight[round].X - Battle.UpperLeft[round].X) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize,
-				(Battle.LowerRight[round].Y - Battle.UpperLeft[round].Y) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize);*/
+			pe.Graphics.DrawRectangle(Pens.White, 0, 0, Width - 1, Height - 1);
 
 			if (Battle != null)
 			{
