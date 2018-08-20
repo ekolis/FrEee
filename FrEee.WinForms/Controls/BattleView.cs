@@ -14,295 +14,298 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Controls
 {
-    /// <summary>
-    /// Displays a map of a star system.
-    /// </summary>
-    public partial class BattleView : Control
-    {
-        #region Private Fields
+	/// <summary>
+	/// Displays a map of a star system.
+	/// </summary>
+	public partial class BattleView : Control
+	{
+		#region Private Fields
 
-        /// <summary>
-        /// Border in pixels between sectors and around the entire map.
-        /// </summary>
-        private const int SectorBorderSize = 1;
+		/// <summary>
+		/// Border in pixels between sectors and around the entire map.
+		/// </summary>
+		private const int SectorBorderSize = 1;
 
-        private Battle battle;
+		private Battle battle;
 
-        private List<Boom> booms = new List<Boom>();
+		private List<Boom> booms = new List<Boom>();
 
-        private bool combatPhase = false;
+		private bool combatPhase = false;
 
-        private SafeDictionary<ICombatant, IntVector2> locations = new SafeDictionary<ICombatant, IntVector2>();
+		private SafeDictionary<ICombatant, IntVector2> locations = new SafeDictionary<ICombatant, IntVector2>();
 
-        private List<Pewpew> pewpews = new List<Pewpew>();
+		private List<Pewpew> pewpews = new List<Pewpew>();
 
-        /// <summary>
-        /// Current round of battle.
-        /// </summary>
-        private int round = 0;
+		/// <summary>
+		/// Current round of battle.
+		/// </summary>
+		private int round = 0;
 
-        #endregion Private Fields
+		#endregion Private Fields
 
-        #region Public Constructors
+		#region Public Constructors
 
-        public BattleView()
-        {
-            InitializeComponent();
-            BackColor = Color.Black;
-            SizeChanged += BattleView_SizeChanged;
-            DoubleBuffered = true;
-        }
+		public BattleView()
+		{
+			InitializeComponent();
+			BackColor = Color.Black;
+			SizeChanged += BattleView_SizeChanged;
+			DoubleBuffered = true;
+		}
 
-        #endregion Public Constructors
+		#endregion Public Constructors
 
-        #region Public Properties
+		#region Public Properties
 
-        public Battle Battle
-        {
-            get => battle;
-            set
-            {
-                battle = value;
-                UpdateData();
-                Invalidate();
-            }
-        }
+		public Battle Battle
+		{
+			get => battle;
+			set
+			{
+				battle = value;
+				UpdateData();
+				Invalidate();
+			}
+		}
 
-        /// <summary>
-        /// The size at which each sector will be drawn, in pixels.
-        /// </summary>
-        public int SectorDrawSize
-        {
-            get
-            {
-                if (Battle == null)
-                    return 0;
-                // TODO - scale differently on X and Y axes for non-square views
-                return Math.Min(Width - SectorBorderSize, Height - SectorBorderSize) / Battle.GetDiameter(round) - SectorBorderSize;
-            }
-        }
+		/// <summary>
+		/// The size at which each sector will be drawn, in pixels.
+		/// </summary>
+		public int SectorDrawSize
+		{
+			get
+			{
+				if (Battle == null)
+					return 0;
+				// TODO - scale differently on X and Y axes for non-square views
+				return Math.Min(Width - SectorBorderSize, Height - SectorBorderSize) / Battle.GetDiameter(round) - SectorBorderSize;
+			}
+		}
 
-        #endregion Public Properties
+		#endregion Public Properties
 
-        #region Protected Methods
+		#region Protected Methods
 
-        protected override void OnPaint(PaintEventArgs pe)
-        {
-            base.OnPaint(pe);
+		protected override void OnPaint(PaintEventArgs pe)
+		{
+			base.OnPaint(pe);
 
-            pe.Graphics.Clear(BackColor);
+			pe.Graphics.Clear(BackColor);
 
-            pe.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+			if (Battle == null)
+				return;
 
-            var drawsize = SectorDrawSize;
-            var bigFontSize = Math.Max(SectorDrawSize / 6, 1);
-            var bigFont = new Font("Sans Serif", bigFontSize);
-            var littleFontSize = Math.Max(SectorDrawSize / 8, 1);
-            var littleFont = new Font("Sans Serif", littleFontSize);
+			pe.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-            pe.Graphics.DrawRectangle(Pens.White, 0, 0,
-                (Battle.LowerRight[round].X - Battle.UpperLeft[round].X) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize,
-                (Battle.LowerRight[round].Y - Battle.UpperLeft[round].Y) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize);
+			var drawsize = SectorDrawSize;
+			var bigFontSize = Math.Max(SectorDrawSize / 6, 1);
+			var bigFont = new Font("Sans Serif", bigFontSize);
+			var littleFontSize = Math.Max(SectorDrawSize / 8, 1);
+			var littleFont = new Font("Sans Serif", littleFontSize);
 
-            if (Battle != null)
-            {
-                // draw combat sectors
-                for (var x = Battle.UpperLeft[round].X; x <= Battle.LowerRight[round].X; x++)
-                {
-                    for (var y = Battle.UpperLeft[round].Y; y <= Battle.LowerRight[round].Y; y++)
-                    {
-                        // where and how big will we draw the sector?
-                        var drawPoint = GetDrawPoint(x, y);
-                        var drawx = drawPoint.X;
-                        var drawy = drawPoint.Y;
+			pe.Graphics.DrawRectangle(Pens.White, 0, 0,
+				(Battle.LowerRight[round].X - Battle.UpperLeft[round].X) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize,
+				(Battle.LowerRight[round].Y - Battle.UpperLeft[round].Y) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize);
 
-                        var pos = new IntVector2(x, y);
+			if (Battle != null)
+			{
+				// draw combat sectors
+				for (var x = Battle.UpperLeft[round].X; x <= Battle.LowerRight[round].X; x++)
+				{
+					for (var y = Battle.UpperLeft[round].Y; y <= Battle.LowerRight[round].Y; y++)
+					{
+						// where and how big will we draw the sector?
+						var drawPoint = GetDrawPoint(x, y);
+						var drawx = drawPoint.X;
+						var drawy = drawPoint.Y;
 
-                        // draw image, owner flag, and name of largest space object (if any)
-                        var here = Battle.Combatants.Where(q => q.IsAlive && locations.Any(w => w.Key == q && w.Value == pos));
-                        if (here.Any())
-                        {
-                            Image pic;
-                            if (here.OfType<ISpaceObject>().Any())
-                            {
-                                var largest = here.OfType<ISpaceObject>().Largest();
-                                if (largest is SpaceVehicle v)
-                                    pic = v.Icon.Resize(drawsize); // spacecraft get the icon, not the portrait, drawn, since the icon is topdown
-                                else
-                                    pic = largest.Portrait.Resize(drawsize);
-                                if (largest is Planet p)
-                                {
-                                    if (p.Colony != null)
-                                        p.DrawPopulationBars(pic);
-                                    else
-                                        p.DrawStatusIcons(pic);
-                                }
-                                pe.Graphics.DrawImage(pic, drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
-                            }
-                            // also draw seekers on top
-                            if (here.OfType<Seeker>().Any())
-                            {
-                                // TODO - draw seeker icons
-                                pe.Graphics.FillEllipse(new SolidBrush(here.OfType<Seeker>().First().Owner.Color), drawx - drawsize / 4f, drawy - drawsize / 4f, drawsize / 2f, drawsize / 2f);
-                            }
+						var pos = new IntVector2(x, y);
 
-                            // TODO - draw owner flag & objet name?
-                        }
+						// draw image, owner flag, and name of largest space object (if any)
+						var here = Battle.Combatants.Where(q => q.IsAlive && locations.Any(w => w.Key == q && w.Value == pos));
+						if (here.Any())
+						{
+							Image pic;
+							if (here.OfType<ISpaceObject>().Any())
+							{
+								var largest = here.OfType<ISpaceObject>().Largest();
+								if (largest is SpaceVehicle v)
+									pic = v.Icon.Resize(drawsize); // spacecraft get the icon, not the portrait, drawn, since the icon is topdown
+								else
+									pic = largest.Portrait.Resize(drawsize);
+								if (largest is Planet p)
+								{
+									if (p.Colony != null)
+										p.DrawPopulationBars(pic);
+									else
+										p.DrawStatusIcons(pic);
+								}
+								pe.Graphics.DrawImage(pic, drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
+							}
+							// also draw seekers on top
+							if (here.OfType<Seeker>().Any())
+							{
+								// TODO - draw seeker icons
+								pe.Graphics.FillEllipse(new SolidBrush(here.OfType<Seeker>().First().Owner.Color), drawx - drawsize / 4f, drawy - drawsize / 4f, drawsize / 2f, drawsize / 2f);
+							}
 
-                        var availForFlagsAndNums = Math.Min(drawsize - 21, 24);
-                        var top = 0;
-                        if (availForFlagsAndNums > 0)
-                        {
-                            var cornerx = drawx - drawsize / 2;
-                            var cornery = drawy - drawsize / 2;
-                            if (here.Count() > 1)
-                            {
-                                foreach (var g in here.Except(here.OfType<Planet>()).Where(sobj => sobj.Owner != null).GroupBy(sobj => sobj.Owner))
-                                {
-                                    // draw empire insignia and space object count
-                                    var owner = g.Key;
-                                    var fleetedCount = g.OfType<Fleet>().Sum(f => f.LeafVehicles.Count());
-                                    var unfleetedCount = g.Except(g.OfType<Fleet>()).Count();
-                                    var count = fleetedCount + unfleetedCount;
-                                    var aspect = owner.Icon;
-                                    if (owner.Icon != null)
-                                    {
-                                        var mode = pe.Graphics.InterpolationMode;
-                                        if (owner.Icon.Width == 1 && owner.Icon.Height == 1)
-                                        {
-                                            pe.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                                            pe.Graphics.DrawImage(owner.Icon, cornerx, cornery + top, bigFontSize * 2, bigFontSize * 2);
-                                            pe.Graphics.InterpolationMode = mode;
-                                        }
-                                        else
-                                            pe.Graphics.DrawImage(owner.Icon, cornerx, cornery + top, bigFontSize, bigFontSize);
-                                    }
-                                    top += bigFontSize;
-                                }
-                            }
-                        }
+							// TODO - draw owner flag & objet name?
+						}
 
-                        if (combatPhase)
-                        {
-                            // draw pewpews and booms
-                            foreach (var pewpew in pewpews.Where(q => q.Start == pos))
-                                pe.Graphics.DrawLine(Pens.White, drawPoint, GetDrawPoint(pewpew.End.X, pewpew.End.Y));
-                            foreach (var boom in booms.Where(q => q.Position == pos))
-                                pe.Graphics.FillEllipse(Brushes.White, drawx - drawsize * boom.Size / 2f, drawy - drawsize * boom.Size / 2f, drawsize * boom.Size, drawsize * boom.Size);
-                        }
-                    }
-                }
-            }
-        }
+						var availForFlagsAndNums = Math.Min(drawsize - 21, 24);
+						var top = 0;
+						if (availForFlagsAndNums > 0)
+						{
+							var cornerx = drawx - drawsize / 2;
+							var cornery = drawy - drawsize / 2;
+							if (here.Count() > 1)
+							{
+								foreach (var g in here.Except(here.OfType<Planet>()).Where(sobj => sobj.Owner != null).GroupBy(sobj => sobj.Owner))
+								{
+									// draw empire insignia and space object count
+									var owner = g.Key;
+									var fleetedCount = g.OfType<Fleet>().Sum(f => f.LeafVehicles.Count());
+									var unfleetedCount = g.Except(g.OfType<Fleet>()).Count();
+									var count = fleetedCount + unfleetedCount;
+									var aspect = owner.Icon;
+									if (owner.Icon != null)
+									{
+										var mode = pe.Graphics.InterpolationMode;
+										if (owner.Icon.Width == 1 && owner.Icon.Height == 1)
+										{
+											pe.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+											pe.Graphics.DrawImage(owner.Icon, cornerx, cornery + top, bigFontSize * 2, bigFontSize * 2);
+											pe.Graphics.InterpolationMode = mode;
+										}
+										else
+											pe.Graphics.DrawImage(owner.Icon, cornerx, cornery + top, bigFontSize, bigFontSize);
+									}
+									top += bigFontSize;
+								}
+							}
+						}
 
-        #endregion Protected Methods
+						if (combatPhase)
+						{
+							// draw pewpews and booms
+							foreach (var pewpew in pewpews.Where(q => q.Start == pos))
+								pe.Graphics.DrawLine(Pens.White, drawPoint, GetDrawPoint(pewpew.End.X, pewpew.End.Y));
+							foreach (var boom in booms.Where(q => q.Position == pos))
+								pe.Graphics.FillEllipse(Brushes.White, drawx - drawsize * boom.Size / 2f, drawy - drawsize * boom.Size / 2f, drawsize * boom.Size, drawsize * boom.Size);
+						}
+					}
+				}
+			}
+		}
 
-        #region Private Methods
+		#endregion Protected Methods
 
-        private void BattleView_SizeChanged(object sender, EventArgs e)
-        {
-            Invalidate();
-        }
+		#region Private Methods
 
-        private PointF GetDrawPoint(int x, int y)
-        {
-            var drawx = (x - Battle.UpperLeft[round].X) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize;
-            var drawy = (y - Battle.UpperLeft[round].Y) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize;
-            return new PointF(drawx, drawy);
-        }
+		private void BattleView_SizeChanged(object sender, EventArgs e)
+		{
+			Invalidate();
+		}
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            if (Battle == null)
-                return;
-            if (combatPhase)
-            {
-                round++;
-                if (round >= Mod.Current.Settings.SpaceCombatTurns)
-                    round = 0;
-                UpdateData();
-                combatPhase = false;
-            }
-            else
-                combatPhase = true;
-            Invalidate();
-        }
+		private PointF GetDrawPoint(int x, int y)
+		{
+			var drawx = (x - Battle.UpperLeft[round].X) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize;
+			var drawy = (y - Battle.UpperLeft[round].Y) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize;
+			return new PointF(drawx, drawy);
+		}
 
-        private void UpdateData()
-        {
-            if (Battle == null)
-                return;
-            pewpews.Clear();
-            booms.Clear();
-            foreach (var e in Battle.Events[round])
-            {
-                switch (e)
-                {
-                    case CombatantAppearsEvent ca:
-                        locations[ca.Combatant] = ca.EndPosition;
-                        break;
+		private void timer1_Tick(object sender, EventArgs e)
+		{
+			if (Battle == null)
+				return;
+			if (combatPhase)
+			{
+				round++;
+				if (round >= Mod.Current.Settings.SpaceCombatTurns)
+					round = 0;
+				UpdateData();
+				combatPhase = false;
+			}
+			else
+				combatPhase = true;
+			Invalidate();
+		}
 
-                    case CombatantDisappearsEvent cd:
-                        locations.Remove(cd.Combatant);
-                        booms.Add(new Boom(cd.EndPosition, 1));
-                        break;
+		private void UpdateData()
+		{
+			if (Battle == null)
+				return;
+			pewpews.Clear();
+			booms.Clear();
+			foreach (var e in Battle.Events[round])
+			{
+				switch (e)
+				{
+					case CombatantAppearsEvent ca:
+						locations[ca.Combatant] = ca.EndPosition;
+						break;
 
-                    case CombatantMovesEvent cm:
-                        locations[cm.Combatant] = cm.EndPosition;
-                        break;
+					case CombatantDisappearsEvent cd:
+						locations.Remove(cd.Combatant);
+						booms.Add(new Boom(cd.EndPosition, 1));
+						break;
 
-                    case WeaponFiresEvent wf:
-                        pewpews.Add(new Pewpew(wf.StartPosition, wf.EndPosition));
-                        booms.Add(new Boom(wf.EndPosition, 0.5f));
-                        break;
-                }
-            }
-        }
+					case CombatantMovesEvent cm:
+						locations[cm.Combatant] = cm.EndPosition;
+						break;
 
-        #endregion Private Methods
+					case WeaponFiresEvent wf:
+						pewpews.Add(new Pewpew(wf.StartPosition, wf.EndPosition));
+						booms.Add(new Boom(wf.EndPosition, 0.5f));
+						break;
+				}
+			}
+		}
 
-        #region Private Classes
+		#endregion Private Methods
 
-        private class Boom
-        {
-            #region Public Constructors
+		#region Private Classes
 
-            public Boom(IntVector2 pos, float size)
-            {
-                Position = pos;
-                Size = size;
-            }
+		private class Boom
+		{
+			#region Public Constructors
 
-            #endregion Public Constructors
+			public Boom(IntVector2 pos, float size)
+			{
+				Position = pos;
+				Size = size;
+			}
 
-            #region Public Properties
+			#endregion Public Constructors
 
-            public IntVector2 Position { get; set; }
-            public float Size { get; set; }
+			#region Public Properties
 
-            #endregion Public Properties
-        }
+			public IntVector2 Position { get; set; }
+			public float Size { get; set; }
 
-        private class Pewpew
-        {
-            #region Public Constructors
+			#endregion Public Properties
+		}
 
-            public Pewpew(IntVector2 start, IntVector2 end)
-            {
-                Start = start;
-                End = end;
-            }
+		private class Pewpew
+		{
+			#region Public Constructors
 
-            #endregion Public Constructors
+			public Pewpew(IntVector2 start, IntVector2 end)
+			{
+				Start = start;
+				End = end;
+			}
 
-            #region Public Properties
+			#endregion Public Constructors
 
-            public IntVector2 End { get; set; }
-            public IntVector2 Start { get; set; }
+			#region Public Properties
 
-            #endregion Public Properties
-        }
+			public IntVector2 End { get; set; }
+			public IntVector2 Start { get; set; }
 
-        #endregion Private Classes
-    }
+			#endregion Public Properties
+		}
+
+		#endregion Private Classes
+	}
 }
