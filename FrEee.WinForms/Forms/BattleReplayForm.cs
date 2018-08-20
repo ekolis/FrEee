@@ -67,6 +67,10 @@ namespace FrEee.WinForms.Forms
 		{
 			battleView.IsPaused = !battleView.IsPaused;
 			minimap.IsPaused = !minimap.IsPaused;
+			if (battleView.IsPaused)
+				btnPause.Text = ">";
+			else
+				btnPause.Text = "||";
 		}
 
 		private void btnForward_Click(object sender, EventArgs e)
