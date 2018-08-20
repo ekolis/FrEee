@@ -298,7 +298,7 @@ namespace FrEee.WinForms.Controls
 			if (combatPhase)
 			{
 				round++;
-				if (round >= Mod.Current.Settings.SpaceCombatTurns)
+				if (round >= Battle.Duration)
 					round = 0;
 				UpdateData();
 				combatPhase = false;

@@ -66,6 +66,11 @@ namespace FrEee.Game.Objects.Combat.Grid
 		public PRNG Dice { get; set; }
 
 		/// <summary>
+		/// The number of rounds this battle lasted.
+		/// </summary>
+		public int Duration => Events.Count;
+
+		/// <summary>
 		/// The empires engagaed in battle.
 		/// </summary>
 		public IEnumerable<Empire> Empires { get; private set; }
@@ -344,6 +349,24 @@ namespace FrEee.Game.Objects.Combat.Grid
 				}
 
 				UpdateBounds(i, locations.Values);
+
+				var alives = Combatants.Where(q => q.IsAlive);
+				bool hostile = false;
+				foreach (var a in alives)
+				{
+					foreach (var b in alives)
+					{
+						if (a.IsHostileTo(b.Owner))
+						{
+							hostile = true;
+							break;
+						}
+					}
+					if (hostile)
+						break;
+				}
+				if (!hostile)
+					break;
 			}
 
 			// validate fleets since some ships might have died
