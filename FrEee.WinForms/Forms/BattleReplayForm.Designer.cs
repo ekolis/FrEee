@@ -44,8 +44,10 @@
 			this.minimap.BackColor = System.Drawing.Color.Black;
 			this.minimap.Battle = null;
 			this.minimap.FocusedLocation = null;
+			this.minimap.IsPaused = false;
 			this.minimap.Location = new System.Drawing.Point(749, 12);
 			this.minimap.Name = "minimap";
+			this.minimap.Round = 0;
 			this.minimap.Size = new System.Drawing.Size(256, 256);
 			this.minimap.TabIndex = 28;
 			this.minimap.Text = "minimap";
@@ -61,8 +63,10 @@
 			this.battleView.BackColor = System.Drawing.Color.Black;
 			this.battleView.Battle = null;
 			this.battleView.FocusedLocation = null;
+			this.battleView.IsPaused = false;
 			this.battleView.Location = new System.Drawing.Point(12, 12);
 			this.battleView.Name = "battleView";
+			this.battleView.Round = 0;
 			this.battleView.Size = new System.Drawing.Size(731, 709);
 			this.battleView.TabIndex = 27;
 			this.battleView.Text = "battleView";
@@ -83,6 +87,7 @@
 			// 
 			// btnBack
 			// 
+			this.btnBack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnBack.BackColor = System.Drawing.Color.Black;
 			this.btnBack.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnBack.Location = new System.Drawing.Point(749, 274);
@@ -95,6 +100,7 @@
 			// 
 			// btnPause
 			// 
+			this.btnPause.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnPause.BackColor = System.Drawing.Color.Black;
 			this.btnPause.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnPause.Location = new System.Drawing.Point(830, 274);
@@ -107,6 +113,7 @@
 			// 
 			// btnForward
 			// 
+			this.btnForward.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnForward.BackColor = System.Drawing.Color.Black;
 			this.btnForward.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnForward.Location = new System.Drawing.Point(911, 274);
