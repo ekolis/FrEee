@@ -1,24 +1,24 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Technology;
-using FrEee.Game.Objects.Vehicles;
-using FrEee.Utility.Extensions;
-using FrEee.Modding.Templates;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using FrEee.Utility;
-using System.Drawing;
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Abilities;
-using Tech = FrEee.Game.Objects.Technology.Technology;
+using FrEee.Game.Objects.Technology;
+using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
+using FrEee.Modding.Templates;
+using FrEee.Utility;
+using FrEee.Utility.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Text;
+using Tech = FrEee.Game.Objects.Technology.Technology;
 
 namespace FrEee.Game.Objects.Vehicles
 {
@@ -35,27 +35,35 @@ namespace FrEee.Game.Objects.Vehicles
 				case VehicleTypes.Ship:
 					d = new Design<Ship>();
 					break;
+
 				case VehicleTypes.Base:
 					d = new Design<Base>();
 					break;
+
 				case VehicleTypes.Fighter:
 					d = new Design<Fighter>();
 					break;
+
 				case VehicleTypes.Troop:
 					d = new Design<Troop>();
 					break;
+
 				case VehicleTypes.Mine:
 					d = new Design<Mine>();
 					break;
+
 				case VehicleTypes.Satellite:
 					d = new Design<Satellite>();
 					break;
+
 				case VehicleTypes.Drone:
 					d = new Design<Drone>();
 					break;
+
 				case VehicleTypes.WeaponPlatform:
 					d = new Design<WeaponPlatform>();
 					break;
+
 				default:
 					throw new Exception("Cannot create a design for vehicle type " + vt + ".");
 			}
@@ -356,11 +364,11 @@ namespace FrEee.Game.Objects.Vehicles
 			get
 			{
 				// no Engines Per Move rating? then no movement
-				if (Hull.Mass == 0)
+				if (Hull.ThrustPerMove == 0)
 					return 0;
 				var thrust = this.GetAbilityValue("Standard Ship Movement").ToInt();
 				// TODO - make sure that Movement Bonus and Extra Movement are not in fact affected by Engines Per Move in SE4
-				return thrust / Hull.Mass + this.GetAbilityValue("Movement Bonus").ToInt() + this.GetAbilityValue("Extra Movement Generation").ToInt() + this.GetAbilityValue("Vehicle Speed").ToInt();
+				return thrust / Hull.ThrustPerMove + this.GetAbilityValue("Movement Bonus").ToInt() + this.GetAbilityValue("Extra Movement Generation").ToInt() + this.GetAbilityValue("Vehicle Speed").ToInt();
 			}
 		}
 
@@ -383,7 +391,7 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		/// <summary>
-		/// Designs contain abilities from their 
+		/// Designs contain abilities from their
 		/// </summary>
 		public IEnumerable<Ability> ChildAbilities
 		{
@@ -402,7 +410,6 @@ namespace FrEee.Game.Objects.Vehicles
 				return Components.Where(comp => comp.HasAbility("Standard Ship Movement") || comp.HasAbility("Extra Movement Generation") || comp.HasAbility("Movement Bonus")).Sum(comp => comp.SupplyUsage);
 			}
 		}
-
 
 		public int ShieldHitpoints
 		{
@@ -498,7 +505,6 @@ namespace FrEee.Game.Objects.Vehicles
 		/// </summary>
 		public int VehiclesBuilt { get; set; }
 
-
 		public int SupplyStorage
 		{
 			get { return this.GetAbilityValue("Supply Storage").ToInt(); }
@@ -583,7 +589,6 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return Hull == null ? AbilityTargets.None : Hull.AbilityTarget; }
 		}
-
 
 		public void Redact(Empire emp)
 		{
@@ -679,7 +684,6 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
-
 		IDesign IUpgradeable<IDesign>.LatestVersion
 		{
 			get { return LatestVersion; }
@@ -694,7 +698,6 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return OlderVersions; }
 		}
-
 
 		public IEnumerable<IDesign<T>> NewerVersions
 		{
@@ -719,7 +722,6 @@ namespace FrEee.Game.Objects.Vehicles
 			// make sure this design's components actually belong to this design!
 			foreach (var mct in Components)
 				mct.Container = this;
-
 		}
 
 		/// <summary>
