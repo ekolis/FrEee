@@ -32,6 +32,9 @@
 			this.minimap = new FrEee.WinForms.Controls.BattleView();
 			this.battleView = new FrEee.WinForms.Controls.BattleView();
 			this.btnClose = new FrEee.WinForms.Controls.GameButton();
+			this.btnBack = new FrEee.WinForms.Controls.GameButton();
+			this.btnPause = new FrEee.WinForms.Controls.GameButton();
+			this.btnForward = new FrEee.WinForms.Controls.GameButton();
 			this.SuspendLayout();
 			// 
 			// minimap
@@ -78,14 +81,53 @@
 			this.btnClose.UseVisualStyleBackColor = false;
 			this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
 			// 
+			// btnBack
+			// 
+			this.btnBack.BackColor = System.Drawing.Color.Black;
+			this.btnBack.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnBack.Location = new System.Drawing.Point(749, 274);
+			this.btnBack.Name = "btnBack";
+			this.btnBack.Size = new System.Drawing.Size(75, 23);
+			this.btnBack.TabIndex = 29;
+			this.btnBack.Text = "<";
+			this.btnBack.UseVisualStyleBackColor = false;
+			this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+			// 
+			// btnPause
+			// 
+			this.btnPause.BackColor = System.Drawing.Color.Black;
+			this.btnPause.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnPause.Location = new System.Drawing.Point(830, 274);
+			this.btnPause.Name = "btnPause";
+			this.btnPause.Size = new System.Drawing.Size(75, 23);
+			this.btnPause.TabIndex = 30;
+			this.btnPause.Text = "||";
+			this.btnPause.UseVisualStyleBackColor = false;
+			this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
+			// 
+			// btnForward
+			// 
+			this.btnForward.BackColor = System.Drawing.Color.Black;
+			this.btnForward.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnForward.Location = new System.Drawing.Point(911, 274);
+			this.btnForward.Name = "btnForward";
+			this.btnForward.Size = new System.Drawing.Size(75, 23);
+			this.btnForward.TabIndex = 31;
+			this.btnForward.Text = ">";
+			this.btnForward.UseVisualStyleBackColor = false;
+			this.btnForward.Click += new System.EventHandler(this.btnForward_Click);
+			// 
 			// BattleReplayForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(1017, 768);
-			this.Controls.Add(this.minimap);
 			this.Controls.Add(this.battleView);
+			this.Controls.Add(this.btnForward);
+			this.Controls.Add(this.btnPause);
+			this.Controls.Add(this.btnBack);
+			this.Controls.Add(this.minimap);
 			this.Controls.Add(this.btnClose);
 			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "BattleReplayForm";
@@ -100,5 +142,8 @@
 		private System.Windows.Forms.ColumnHeader columnHeader1;
 		private Controls.BattleView battleView;
 		private Controls.BattleView minimap;
+		private Controls.GameButton btnBack;
+		private Controls.GameButton btnPause;
+		private Controls.GameButton btnForward;
 	}
 }
