@@ -188,7 +188,8 @@ namespace FrEee.WinForms.Forms
 				resCostMin.Amount = Design.Cost[Resource.Minerals];
 				resCostOrg.Amount = Design.Cost[Resource.Organics];
 				resCostRad.Amount = Design.Cost[Resource.Radioactives];
-				txtSpeed.Text = Design.StrategicSpeed.ToString() + " sec/turn; " + Design.CombatSpeed.ToString() + "km/s";
+				txtSpeed.Text = Design.StrategicSpeed.ToString() + " sec/turn; " + Design.CombatSpeed;
+
 				var genPerTurn = Design.GetAbilityValue("Supply Generation Per Turn").ToInt();
 				var genPerStar = Design.GetAbilityValue("Solar Supply Generation").ToInt();
 				txtSupplyStorage.Text = "Capacity " + Design.SupplyStorage.ToUnitString(true) + ", " + genPerTurn.ToUnitString(true) + "/turn, " + genPerStar.ToUnitString(true) + "/star, -" + Design.SupplyUsagePerSector + "/sector";
