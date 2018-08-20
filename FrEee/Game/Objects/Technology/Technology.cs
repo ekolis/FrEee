@@ -325,18 +325,18 @@ namespace FrEee.Game.Objects.Technology
 
         public int GetLevelCost(int level)
         {
-            if (Galaxy.Current.GameSetup.TechnologyCost == TechnologyCost.Low)
+            if (Galaxy.Current.TechnologyCost == TechnologyCost.Low)
                 return LevelCost * level;
-            else if (Galaxy.Current.GameSetup.TechnologyCost == TechnologyCost.Medium)
+            else if (Galaxy.Current.TechnologyCost == TechnologyCost.Medium)
             {
                 if (Math.Abs(level) == 1)
                     return LevelCost * level;
                 else
                     return LevelCost * level * level / 2;
             }
-            else if (Galaxy.Current.GameSetup.TechnologyCost == TechnologyCost.High)
+            else if (Galaxy.Current.TechnologyCost == TechnologyCost.High)
                 return LevelCost * level * level;
-            throw new Exception("Invalid technology cost for galaxy: " + Galaxy.Current.GameSetup.TechnologyCost);
+            throw new Exception("Invalid technology cost for galaxy: " + Galaxy.Current.TechnologyCost);
         }
 
         public int GetNextLevelCost(Empire emp)

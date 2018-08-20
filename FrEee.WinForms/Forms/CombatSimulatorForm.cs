@@ -66,7 +66,7 @@ namespace FrEee.WinForms.Forms
 
         private void BindDesignList()
         {
-			var emp = Empire.Current;
+            var emp = Galaxy.Current.CurrentEmpire;
             IEnumerable<IDesign> designs = emp.KnownDesigns;
 
             // filter by vehicle type

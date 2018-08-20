@@ -49,7 +49,7 @@ namespace FrEee.WinForms.Forms
         private void Bind()
         {
             empireStatusBindingSource.DataSource = Galaxy.Current.Empires.Select(e => new EmpireStatus(e));
-            Text = "Host Console - " + Galaxy.Current.GameSetup.GameName + " turn " + Galaxy.Current.TurnNumber;
+            Text = "Host Console - " + Galaxy.Current.Name + " turn " + Galaxy.Current.TurnNumber;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -119,14 +119,14 @@ namespace FrEee.WinForms.Forms
                             catch (IOException)
                             {
                                 MessageBox.Show("Could not load " + savefile + ". Attempting to recreate player view.");
-                                Empire.Current = emp;
+                                Galaxy.Current.CurrentEmpire = emp;
                                 Galaxy.Current.Redact();
                             }
                         }
                         else
                         {
                             // AI empires have no GAM files, so create their views in memory
-                            Empire.Current = emp;
+                            Galaxy.Current.CurrentEmpire = emp;
                             Galaxy.Current.Redact();
                         }
                     }
