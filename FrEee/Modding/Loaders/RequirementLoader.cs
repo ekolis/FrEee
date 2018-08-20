@@ -31,13 +31,8 @@ namespace FrEee.Modding.Loaders
                     if (nfield == null)
                         break; // no more tech requirements
                     var lfield = rec.FindField(new string[] { "Tech Level Req " + count, "Tech Level Req" }, ref start, false, start, true);
-                    if (lfield == null)
-                    {
-                        Mod.Errors.Add(new DataParsingException("Could not find Tech Level Req field to match Tech Area Req field.", Mod.CurrentFileName, rec));
-                        break;
-                    }
                     var techname = nfield.CreateFormula<string>(r).Value;
-                    var levelFormula = lfield.CreateFormula<int>(r);
+					var levelFormula = lfield?.CreateFormula<int>(r) ?? 1;
                     var tech = Mod.Current.Technologies.FindByName(techname);
                     if (tech == null)
                         Mod.Errors.Add(new DataParsingException("Could not find a technology named " + techname + ".", Mod.CurrentFileName, rec));
