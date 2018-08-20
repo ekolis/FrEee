@@ -209,6 +209,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 				// phase 1: combatants move starting with the slowest (so the faster ships get to react to their moves) - but seekers go last so they get a chance to hit
 				foreach (var c in turnorder)
 				{
+					var oldpos = locations[c];
 					if (c is Seeker s)
 					{
 						if (locations[s] == null)
@@ -237,7 +238,6 @@ namespace FrEee.Game.Objects.Combat.Grid
 							targetiness[target] = 1d / (locations[target] - locations[c]).LengthEightWay;
 						}
 
-						var oldpos = locations[c];
 						if (!targetiness.Any())
 						{
 							// evade enemies
@@ -263,8 +263,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 								locations[c] = IntVector2.InterpolateEightWay(locations[c], targetPos, c.CombatSpeed);
 							}
 						}
-						Events.Last().Add(new CombatantMovesEvent(c, oldpos, locations[c]));
 					}
+					Events.Last().Add(new CombatantMovesEvent(c, oldpos, locations[c]));
 				}
 
 				UpdateBounds(i, locations.Values);
