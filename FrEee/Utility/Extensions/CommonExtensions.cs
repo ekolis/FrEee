@@ -1888,7 +1888,7 @@ namespace FrEee.Utility.Extensions
                 var amount = abil.Value1.ToInt();
 
                 if (resource.HasValue)
-                    amount = Galaxy.Current.GameSetup.StandardMiningModel.GetRate(amount, o.ResourceValue[resource], pcts[resource] / 100d);
+                    amount = Galaxy.Current.StandardMiningModel.GetRate(amount, o.ResourceValue[resource], pcts[resource] / 100d);
 
                 income.Add(resource, amount);
             }
@@ -2214,7 +2214,7 @@ namespace FrEee.Utility.Extensions
             var seers = sys.FindSpaceObjects<ISpaceObject>(s => s.Owner == emp && !s.IsMemory);
             if (!seers.Any() || sobj.IsHiddenFrom(emp))
             {
-                if (Galaxy.Current.GameSetup.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
+                if (Galaxy.Current.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
                     return Visibility.Visible;
                 if (emp.AllSystemsExploredFromStart)
                     return Visibility.Fogged;

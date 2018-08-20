@@ -985,9 +985,9 @@ namespace FrEee.WinForms.Forms
         private void SaveCommands()
         {
             foreach (var cmd in newCommands)
-                Empire.Current.Commands.Add(cmd);
+                Galaxy.Current.CurrentEmpire.Commands.Add(cmd);
             foreach (var cmd in removedCommands)
-                Empire.Current.Commands.Remove(cmd);
+                Galaxy.Current.CurrentEmpire.Commands.Remove(cmd);
         }
 
         #endregion Private Methods

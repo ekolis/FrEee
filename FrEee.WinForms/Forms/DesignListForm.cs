@@ -35,7 +35,7 @@ namespace FrEee.WinForms.Forms
 
         private void BindDesignList()
         {
-            var emp = Empire.Current;
+            var emp = Galaxy.Current.CurrentEmpire;
             IEnumerable<IDesign> designs = emp.KnownDesigns.OrderBy(d => d.Role).ThenBy(d => d.Name).ThenBy(d => d.Iteration);
 
             // filter by vehicle type

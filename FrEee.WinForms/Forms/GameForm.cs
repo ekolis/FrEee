@@ -400,7 +400,7 @@ namespace FrEee.WinForms.Forms
         {
             var todos = FindTodos();
 
-            if (Galaxy.Current.GameSetup.IsSinglePlayer && !hostView)
+            if (Galaxy.Current.IsSinglePlayer && !hostView)
             {
                 var msg = !todos.Any() ? "Process turn after saving your commands?" : "Process turn after saving your commands? You have:\n\n" + string.Join("\n", todos.ToArray());
                 var result = MessageBox.Show(msg, "FrEee", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
@@ -850,7 +850,7 @@ namespace FrEee.WinForms.Forms
                 switch (MessageBox.Show(msg, "FrEee", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
                 {
                     case DialogResult.Yes:
-                        SaveCommands(!Galaxy.Current.GameSetup.IsSinglePlayer || hostView);
+                        SaveCommands(!Galaxy.Current.IsSinglePlayer || hostView);
                         break;
 
                     case DialogResult.No:
@@ -1224,7 +1224,7 @@ namespace FrEee.WinForms.Forms
             Galaxy.Current.SaveCommands();
             if (endTurn)
             {
-                if (Galaxy.Current.GameSetup.IsSinglePlayer && !hostView)
+                if (Galaxy.Current.IsSinglePlayer && !hostView)
                 {
                     Cursor = Cursors.WaitCursor;
                     Enabled = false;
@@ -1233,14 +1233,14 @@ namespace FrEee.WinForms.Forms
                     var t = new Thread(new ThreadStart(() =>
                     {
                         status.Message = "Loading game";
-                        Galaxy.Load(Galaxy.Current.GameSetup.GameName, Galaxy.Current.TurnNumber);
+                        Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber);
                         status.Progress = 0.25;
                         status.Message = "Processing turn";
                         Galaxy.ProcessTurn(false, status, 0.5);
                         status.Message = "Saving game";
                         Galaxy.SaveAll(status, 0.75);
                         status.Message = "Loading game";
-                        Galaxy.Load(Galaxy.Current.GameSetup.GameName, Galaxy.Current.TurnNumber, plrnum);
+                        Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber, plrnum);
                         status.Progress = 1.00;
                         // no need to reload designs from library, they're already loaded
                     }));
@@ -1311,7 +1311,7 @@ namespace FrEee.WinForms.Forms
             Music.Play(MusicMode.Strategic, FindMusicMood());
 
             // display empire flag
-            picEmpireFlag.Image = Empire.Current.Icon;
+            picEmpireFlag.Image = Galaxy.Current.CurrentEmpire.Icon;
 
             // create homesystem tab
             foreach (var tab in ListTabs().ToArray())
@@ -1345,11 +1345,11 @@ namespace FrEee.WinForms.Forms
         private void SetUpResourceDisplay()
         {
             var income = Empire.Current.NetIncomeLessConstruction;
-            resMin.Amount = Empire.Current.StoredResources[Resource.Minerals];
+            resMin.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Minerals];
             resMin.Change = income[Resource.Minerals];
-            resOrg.Amount = Empire.Current.StoredResources[Resource.Organics];
+            resOrg.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Organics];
             resOrg.Change = income[Resource.Organics];
-            resRad.Amount = Empire.Current.StoredResources[Resource.Radioactives];
+            resRad.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Radioactives];
             resRad.Change = income[Resource.Radioactives];
             resRes.Amount = income[Resource.Research];
             if (Empire.Current.BonusResearch != 0)
@@ -1544,9 +1544,9 @@ namespace FrEee.WinForms.Forms
                     if (sector != null)
                     {
                         var suitablePlanets = sector.SpaceObjects.OfType<Planet>().Where(p => p.Colony == null && v.Abilities().Any(a => a.Rule.Matches("Colonize Planet - " + p.Surface)));
-                        if (Galaxy.Current.GameSetup.CanColonizeOnlyBreathable)
+                        if (Galaxy.Current.CanColonizeOnlyBreathable)
                             suitablePlanets = suitablePlanets.Where(p => p.Atmosphere == Empire.Current.PrimaryRace.NativeAtmosphere);
-                        if (Galaxy.Current.GameSetup.CanColonizeOnlyHomeworldSurface)
+                        if (Galaxy.Current.CanColonizeOnlyHomeworldSurface)
                             suitablePlanets = suitablePlanets.Where(p => p.Surface == Empire.Current.PrimaryRace.NativeSurface);
                         if (suitablePlanets.Any())
                         {

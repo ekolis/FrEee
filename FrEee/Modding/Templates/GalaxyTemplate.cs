@@ -101,7 +101,15 @@ namespace FrEee.Modding.Templates
         public Galaxy Instantiate(Status status, double desiredProgress)
         {
             var gal = new Galaxy(Mod.Current);
-			gal.GameSetup = GameSetup;
+            gal.Width = GameSetup.GalaxySize.Width;
+            gal.Height = GameSetup.GalaxySize.Height;
+            gal.MinPlanetValue = GameSetup.MinPlanetValue;
+            gal.MinSpawnedPlanetValue = GameSetup.MinSpawnedPlanetValue;
+            gal.MaxSpawnedPlanetValue = GameSetup.MaxSpawnedPlanetValue;
+            gal.MaxPlanetValue = GameSetup.MaxPlanetValue;
+            gal.MinAsteroidValue = GameSetup.MinAsteroidValue;
+            gal.MinSpawnedAsteroidValue = GameSetup.MinSpawnedAsteroidValue;
+            gal.MaxSpawnedAsteroidValue = GameSetup.MaxSpawnedAsteroidValue;
             var bounds = new Rectangle(-GameSetup.GalaxySize.Width / 2, -GameSetup.GalaxySize.Height / 2, GameSetup.GalaxySize.Width, GameSetup.GalaxySize.Height);
 
             var unusedNames = new List<string>(Mod.Current.StarSystemNames);
@@ -149,7 +157,7 @@ namespace FrEee.Modding.Templates
                     foreach (var candidate in candidates.Shuffle())
                     {
                         // pick a nearby star system to create a warp point to
-                        for (int dist = 1; dist < gal.Width + gal.GameSetup.GalaxySize.Height; dist++)
+                        for (int dist = 1; dist < gal.Width + gal.Height; dist++)
                         {
                             var nearby = gal.StarSystemLocations.Where(ssl => ssl.Location.ManhattanDistance(candidate.Location) == dist);
                             nearby = nearby.Where(ssl => GetWarpPointCount(ssl.Item) < GameSetup.GalaxyTemplate.MaxWarpPointsPerSystem);
