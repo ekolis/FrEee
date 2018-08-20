@@ -1,4 +1,5 @@
-﻿using FrEee.Game.Objects.Space;
+﻿using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Setup;
 using FrEee.Modding;
@@ -94,7 +95,7 @@ namespace FrEee.WinForms.Forms
 
                         status.Message = "Setting up galaxy";
                         Galaxy.Initialize(setup, status, 1.0);
-                        var name = Galaxy.Current.Name;
+                        var name = Galaxy.Current.GameSetup.GameName;
                         var turn = Galaxy.Current.TurnNumber;
                         status.Message = "Loading game";
                         Galaxy.Load(name + "_" + turn + "_0001.gam");
@@ -142,7 +143,7 @@ namespace FrEee.WinForms.Forms
             Cursor = Cursors.WaitCursor;
             var plrfile = Path.GetFileNameWithoutExtension(filename) + ".plr";
             Galaxy.Load(filename);
-            if (Galaxy.Current.CurrentEmpire == null)
+            if (Empire.Current == null)
             {
                 // host view, load host console
                 Cursor = Cursors.WaitCursor;

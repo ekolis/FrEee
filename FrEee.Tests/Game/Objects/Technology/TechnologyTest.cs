@@ -2,6 +2,7 @@
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Space;
+using FrEee.Game.Setup;
 using FrEee.Modding;
 using FrEee.Utility.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -124,7 +125,8 @@ namespace FrEee.Tests.Game.Objects.Technology
         public void TestInit()
         {
             new Galaxy(Mod.Current);
-            Galaxy.Current.TechnologyCost = TechnologyCost.Low;
+			Galaxy.Current.GameSetup = new GameSetup();
+            Galaxy.Current.GameSetup.TechnologyCost = TechnologyCost.Low;
             emp = new Empire();
             Galaxy.Current.Empires.Add(emp);
         }
