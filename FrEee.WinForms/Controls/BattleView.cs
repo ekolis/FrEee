@@ -41,6 +41,20 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		private int round = 0;
 
+		public int Round
+		{
+			get => round;
+			set
+			{
+				round = value;
+				while (round < 0)
+					round += Battle.Duration;
+				while (round >= Battle.Duration)
+					round -= Battle.Duration;
+				Invalidate();
+			}
+		}
+
 		#endregion Private Fields
 
 		#region Public Constructors
@@ -96,6 +110,12 @@ namespace FrEee.WinForms.Controls
 				focusedLocation = value;
 				Invalidate();
 			}
+		}
+
+		public bool IsPaused
+		{
+			get => !roundTimer.Enabled;
+			set => roundTimer.Enabled = !value;
 		}
 
 		/// <summary>
