@@ -2,6 +2,7 @@
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
+using FrEee.Game.Setup;
 using FrEee.Modding;
 using FrEee.Utility.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -85,7 +86,7 @@ namespace FrEee.Tests.Game.Objects.Space
             HideSubmarine();
 
             // redact things for the empire
-            Galaxy.Current.CurrentEmpire = seekers;
+            Empire.Current = seekers;
             Galaxy.Current.Redact();
 
             // make sure it's still visible as a memory
@@ -98,6 +99,7 @@ namespace FrEee.Tests.Game.Objects.Space
         {
             // initialize galaxy
             new Galaxy();
+			Galaxy.Current.GameSetup = new GameSetup();
             Mod.Current = new Mod();
 
             // initialize star systems

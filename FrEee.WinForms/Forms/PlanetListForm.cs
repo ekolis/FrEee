@@ -119,7 +119,7 @@ namespace FrEee.WinForms.Forms
         private void grid_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
             var planet = (Planet)grid.SelectedItem;
-            foreach (var sys in Galaxy.Current.CurrentEmpire.ExploredStarSystems)
+            foreach (var sys in Empire.Current.ExploredStarSystems)
             {
                 if (sys.FindSpaceObjects<Planet>().Any(p => p == planet))
                 {
