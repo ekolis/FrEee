@@ -249,7 +249,7 @@ namespace FrEee.WinForms.Forms
 
         private string CalculateStatus(IMobileSpaceObject sobj2)
         {
-            var s = "Speed " + sobj2.Speed;
+            var s = "Speed " + sobj2.StrategicSpeed;
             var sup = CalculateSupplyStatus(sobj2.SupplyRemaining, sobj2.SupplyStorage);
             if (sup == null)
                 return s;
