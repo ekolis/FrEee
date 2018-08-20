@@ -108,6 +108,7 @@
     <Compile Include="Game\Objects\Vehicles\CloakingTest.cs" />
     <Compile Include="Game\Objects\Vehicles\DamageTest.cs" />
     <Compile Include="Game\Setup\GameSetupTest.cs" />
+    <Compile Include="Modding\Loaders\ComponentLoaderTest.cs" />
     <Compile Include="TestUtilities.cs" />
     <Compile Include="Modding\FormulaTest.cs" />
     <Compile Include="Modding\Loaders\LoaderTest.cs" />
@@ -150,6 +151,9 @@
     <Content Include="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeStations.txt" />
     <Content Include="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeTransports.txt" />
     <Content Include="Mods\Include Mod\Data\VehicleSize.txt" />
+    <Content Include="Mods\ComponentLoaderTest\Data\Components.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Mods\WeaponInfoTest\Data\Components.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

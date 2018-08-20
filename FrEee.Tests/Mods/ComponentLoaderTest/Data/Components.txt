@@ -1,0 +1,18 @@
+﻿*BEGIN*
+
+
+Name := Range 2 Weapon
+Tonnage Space Taken := 20
+Tonnage Structure := 20
+Weapon Type := Direct Fire
+Weapon Damage At Rng := 20 20 0 0 0 0 0
+Weapon Display Type := Beam
+Pic := test
+
+Name := Blind Spot Weapon
+Tonnage Space Taken := 20
+Tonnage Structure := 20
+Weapon Type := Direct Fire
+Weapon Damage At Rng := 0 20 20 0
+Weapon Display Type := Beam
+Pic := test
