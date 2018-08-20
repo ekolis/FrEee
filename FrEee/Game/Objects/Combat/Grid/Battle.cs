@@ -148,7 +148,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 		public int GetDiameter(int round)
 		{
-			return UpperLeft[round].DistanceToEightWay(LowerRight[round]);
+			return UpperLeft[round].DistanceToEightWay(LowerRight[round]) + 1;
 		}
 
 		/// <summary>
