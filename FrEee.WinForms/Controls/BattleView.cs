@@ -442,7 +442,7 @@ namespace FrEee.WinForms.Controls
 			if (!arr.Any())
 				return null;
 			var i = arr.IndexOf(SelectedCombatant);
-			if (i >= arr.Length)
+			if (i + 1 >= arr.Length)
 				return arr[0];
 			return arr[i + 1];
 		}
