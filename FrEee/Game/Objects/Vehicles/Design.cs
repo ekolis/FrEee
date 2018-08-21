@@ -95,7 +95,7 @@ namespace FrEee.Game.Objects.Vehicles
 				d.IsNew = true;
 				d.Owner = Empire.Current;
 				d.TurnNumber = Galaxy.Current.TurnNumber;
-				d.Iteration = Empire.Current.KnownDesigns.OwnedBy(Empire.Current).Where(x => x.Name == d.Name).MaxOrDefault(x => x.Iteration) + 1; // auto assign nex available iteration
+				d.Iteration = Empire.Current.KnownDesigns.OwnedBy(Empire.Current).Where(x => x.BaseName == d.BaseName && x.IsUnlocked()).MaxOrDefault(x => x.Iteration) + 1; // auto assign nex available iteration
 				Empire.Current.KnownDesigns.Add(d); // only client side, don't need to worry about other players spying :)
 			});
 
@@ -665,7 +665,7 @@ namespace FrEee.Game.Objects.Vehicles
 					copy.Hull = Hull.LatestVersion;
 					copy.TurnNumber = Galaxy.Current.TurnNumber;
 					copy.Owner = Empire.Current;
-					copy.Iteration++;
+					copy.Iteration = Empire.Current.KnownDesigns.OwnedBy(Empire.Current).Where(x => x.BaseName == BaseName && x.IsUnlocked()).MaxOrDefault(x => x.Iteration) + 1; // auto assign nex available iteration
 					copy.VehiclesBuilt = 0;
 
 					// use real component templates and mounts from mod, not copies!

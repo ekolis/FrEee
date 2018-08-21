@@ -995,6 +995,11 @@ namespace FrEee.Utility.Extensions
 			return o.StandardIncome() + o.RemoteMiningIncome() + o.RawResourceIncome();
 		}
 
+		public static bool IsUnlocked(this IUnlockable u)
+		{
+			return u.UnlockRequirements.All(r => r.IsMetBy(Empire.Current));
+		}
+
 		public static object Instantiate(this Type type, params object[] args)
 		{
 			if (type.GetConstructors().Where(c => c.GetParameters().Length == (args == null ? 0 : args.Length)).Any())
