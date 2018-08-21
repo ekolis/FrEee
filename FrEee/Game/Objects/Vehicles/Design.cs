@@ -7,6 +7,7 @@ using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding;
+using FrEee.Modding.Templates;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
@@ -628,6 +629,11 @@ namespace FrEee.Game.Objects.Vehicles
 		/// For serialization and client safety
 		/// </summary>
 		private GalaxyReference<Empire> owner { get; set; }
+
+		public void AddComponent(ComponentTemplate ct, Mount m = null)
+		{
+			Components.Add(new MountedComponentTemplate(this, ct, m));
+		}
 
 		public Visibility CheckVisibility(Empire emp)
 		{
