@@ -59,18 +59,18 @@ namespace FrEee.Tests.Game.Objects.Combat
 			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Armor I"));
 			defender = defenderDesign.Instantiate();
 			Heal(defender);
-			TestDamage(attacker, defender, "Depleted Uranium Cannon II", 1, expectedArmorDmg: 1);
+			TestDamage(attacker, defender, 1, expectedArmorDmg: 1);
 
 			// phased shields should get hit before normal shields
 			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Shield Generator I"));
 			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Phased - Shield Generator I"));
 			defender = defenderDesign.Instantiate();
 			Heal(defender);
-			TestDamage(attacker, defender, "Depleted Uranium Cannon II", 1, expectedNormalShieldDmg: 1);
+			TestDamage(attacker, defender, 1, expectedNormalShieldDmg: 1);
 
 			// make sure our ship can be destroyed
 			Heal(defender);
-			TestDamage(attacker, defender, "Depleted Uranium Cannon II", 99999, defender.HullHitpoints, defender.ArmorHitpoints, defender.PhasedShields, defender.NormalShields);
+			TestDamage(attacker, defender, 99999, defender.HullHitpoints, defender.ArmorHitpoints, defender.PhasedShields, defender.NormalShields);
 		}
 
 		/// <summary>
@@ -88,7 +88,34 @@ namespace FrEee.Tests.Game.Objects.Combat
 			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Phased - Shield Generator I"));
 			defender = defenderDesign.Instantiate();
 			Heal(defender);
-			TestDamage(attacker, defender, "Shield Depleter I", 99999, expectedNormalShieldDmg: defender.NormalShields, expectedPhasedShieldDmg: defender.PhasedShields);
+			TestDamage(attacker, defender, 99999, expectedNormalShieldDmg: defender.NormalShields, expectedPhasedShieldDmg: defender.PhasedShields);
+		}
+
+		/// <summary>
+		/// Makes sure that "skips normal shields" damage skips normal shields, but not armor or phased shields, and can destroy a ship.
+		/// </summary>
+		[TestMethod]
+		public void SkipsNormalShieldsDamageVersusShips()
+		{
+			attackerDesign.AddComponent(mod.ComponentTemplates.FindByName("Phased - Polaron Beam I"));
+			attacker = attackerDesign.Instantiate();
+
+			// small amounts of damage should hit the armor
+			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Armor I"));
+			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Shield Generator I"));
+			defender = defenderDesign.Instantiate();
+			Heal(defender);
+			TestDamage(attacker, defender, 1, expectedArmorDmg: 1);
+
+			// phased shields shold block damage
+			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Phased - Shield Generator I"));
+			defender = defenderDesign.Instantiate();
+			Heal(defender);
+			TestDamage(attacker, defender, 1, expectedPhasedShieldDmg: 1);
+
+			// should be able to destroy ship
+			// normal shields will go down when generators destroyed
+			TestDamage(attacker, defender, 99999, expectedHullDmg: defender.HullHitpoints, expectedArmorDmg: defender.ArmorHitpoints, expectedNormalShieldDmg: defender.NormalShields, expectedPhasedShieldDmg: defender.PhasedShields);
 		}
 
 		private void Heal(Ship ship)
@@ -97,15 +124,18 @@ namespace FrEee.Tests.Game.Objects.Combat
 			ship.Repair();
 		}
 
-		private void TestDamage(Ship attacker, IDamageable defender, string weaponName, int dmg, int expectedHullDmg = 0, int expectedArmorDmg = 0, int expectedPhasedShieldDmg = 0, int expectedNormalShieldDmg = 0)
+		private void TestDamage(Ship attacker, IDamageable defender, int dmg, int expectedHullDmg = 0, int expectedArmorDmg = 0, int expectedPhasedShieldDmg = 0, int expectedNormalShieldDmg = 0)
 		{
 			var hhp = defender.HullHitpoints;
 			var ahp = defender.ArmorHitpoints;
 			var pshp = defender.PhasedShields;
 			var nshp = defender.NormalShields;
 
-			var hit = new Hit(new Shot(attacker, attacker.Components.FindByName(weaponName), defender, 0), defender, dmg);
-			defender.TakeDamage(hit);
+			foreach (var w in attacker.Weapons)
+			{
+				var hit = new Hit(new Shot(attacker, w, defender, 0), defender, dmg);
+				defender.TakeDamage(hit);
+			}
 			Assert.AreEqual(Math.Max(0, hhp - expectedHullDmg), defender.HullHitpoints, $"Expected hull HP of {Math.Max(0, hhp - expectedHullDmg)}, got {defender.HullHitpoints}.");
 			Assert.AreEqual(Math.Max(0, ahp - expectedArmorDmg), defender.ArmorHitpoints, $"Expected armor HP of {Math.Max(0, ahp - expectedArmorDmg)}, got {defender.ArmorHitpoints}.");
 			Assert.AreEqual(Math.Max(0, nshp - expectedNormalShieldDmg), defender.NormalShields, $"Expected normal shields of {Math.Max(0, nshp - expectedNormalShieldDmg)}, got {defender.NormalShields}.");

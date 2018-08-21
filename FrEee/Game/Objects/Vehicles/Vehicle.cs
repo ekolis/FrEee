@@ -671,33 +671,28 @@ namespace FrEee.Game.Objects.Vehicles
 			int shieldDmg = 0;
 			int normalShieldPiercing = hit.Shot.DamageType.NormalShieldPiercing.Evaluate(hit);
 			int phasedShieldPiercing = hit.Shot.DamageType.PhasedShieldPiercing.Evaluate(hit);
-
-			// weighted average of shield piercing by shield type
-			int shieldPiercing = NormalShields + PhasedShields > 0 ? (normalShieldPiercing * NormalShields + phasedShieldPiercing * PhasedShields) / (NormalShields + PhasedShields) : 0;
-			double spf = shieldPiercing.Percent(); // shield piercing factor (leakiness)
-			var sdf = 1d - spf; // shield damage factor (solidness)
-			double normalBaseSDF = hit.Shot.DamageType.NormalShieldDamage.Evaluate(hit).Percent();
-			double phasedBaseSDF = hit.Shot.DamageType.PhasedShieldDamage.Evaluate(hit).Percent();
-			double normalCombinedSDF = sdf * normalBaseSDF; // accounting for both damage factor and piercing
-			double phasedCombinedSDF = sdf * phasedBaseSDF;
+			double normalSDF = hit.Shot.DamageType.NormalShieldDamage.Evaluate(hit).Percent();
+			double phasedSDF = hit.Shot.DamageType.PhasedShieldDamage.Evaluate(hit).Percent();
 
 			// how much damage pierced the shields?
 			double piercedShields = 0;
 
 			if (NormalShields > 0)
 			{
-				var dmg = (int)Math.Min(damage * normalCombinedSDF, NormalShields);
+				var dmg = (int)Math.Min(damage * normalSDF, NormalShields);
 				piercedShields += damage * normalShieldPiercing.Percent();
 				NormalShields -= dmg;
-				damage -= (int)Math.Ceiling(dmg / normalBaseSDF);
+				if (normalSDF != 0)
+					damage -= (int)Math.Ceiling(dmg / normalSDF);
 				shieldDmg += dmg;
 			}
 			if (PhasedShields > 0)
 			{
-				var dmg = (int)Math.Min(damage * phasedCombinedSDF, PhasedShields);
+				var dmg = (int)Math.Min(damage * phasedSDF, PhasedShields);
 				piercedShields += damage * phasedShieldPiercing.Percent();
 				PhasedShields -= dmg;
-				damage -= (int)Math.Ceiling(dmg / phasedBaseSDF);
+				if (phasedSDF != 0)
+					damage -= (int)Math.Ceiling(dmg / phasedSDF);
 				shieldDmg += dmg;
 			}
 
