@@ -106,6 +106,10 @@ namespace FrEee.Modding.Loaders
 
 			// TODO - load more settings
 
+			settings.SeekerEvasion = rec.Get<int>("Seeker Combat Defense Modifier");
+			settings.PlanetAccuracy = rec.Get<int>("Planet Combat Offense Modifier");
+			settings.PlanetEvasion = rec.Get<int>("Planet Combat Defense Modifier");
+
 			yield break;
 		}
 

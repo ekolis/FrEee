@@ -110,7 +110,7 @@ namespace FrEee.Game.Objects.Combat
 
 		public bool RollAccuracy(PRNG dice = null)
 		{
-			var accuracy = Weapon.Template.WeaponAccuracy + Attacker.Accuracy;
+			var accuracy = Weapon.Template.WeaponAccuracy + Attacker.Accuracy + Mod.Current.Settings.WeaponAccuracyPointBlank - Range * Mod.Current.Settings.WeaponAccuracyLossPerSquare;
 			int evasion = 0;
 			if (Defender is ITargetable t)
 				evasion = t.Evasion;
