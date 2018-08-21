@@ -12,7 +12,15 @@ namespace FrEee.Tests.Game.Objects.Technology
 	[TestClass]
 	public class WeaponInfoTest
 	{
-		private Galaxy gal = new Galaxy();
+		private static Galaxy gal = new Galaxy();
+
+		private static Mod mod;
+
+		[ClassInitialize]
+		public static void ClassInit(TestContext ctx)
+		{
+			mod = Mod.Load("WeaponInfoTest");
+		}
 
 		/// <summary>
 		/// Tests formula damage values.
@@ -20,7 +28,6 @@ namespace FrEee.Tests.Game.Objects.Technology
 		[TestMethod]
 		public void FormulaDamage()
 		{
-			var mod = Mod.Load("WeaponInfoTest");
 			var ct = mod.ComponentTemplates.Single(x => x.Name == "Formula Weapon");
 			var comp = ct.Instantiate();
 			Assert.AreEqual<int>(3, ct.WeaponInfo.MinRange);
@@ -36,7 +43,6 @@ namespace FrEee.Tests.Game.Objects.Technology
 		[TestMethod]
 		public void NonFormulaDamage()
 		{
-			var mod = Mod.Load("WeaponInfoTest");
 			var ct = mod.ComponentTemplates.Single(x => x.Name == "Non-Formula Weapon");
 			var comp = ct.Instantiate();
 			Assert.AreEqual<int>(3, ct.WeaponInfo.MinRange);

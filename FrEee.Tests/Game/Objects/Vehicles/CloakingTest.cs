@@ -19,27 +19,58 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		/// <summary>
 		/// The ship that is looking for an enemy ship.
 		/// </summary>
-		private Ship destroyer;
+		private static Ship destroyer;
 
 		/// <summary>
 		/// They're controlling the submarine.
 		/// </summary>
-		private Empire hiders;
+		private static Empire hiders;
 
 		/// <summary>
 		/// They're controlling the destroyer.
 		/// </summary>
-		private Empire seekers;
+		private static Empire seekers;
 
 		/// <summary>
 		/// The ship that is hiding.
 		/// </summary>
-		private Ship submarine;
+		private static Ship submarine;
 
 		/// <summary>
 		/// Where the ships are.
 		/// </summary>
-		private StarSystem sys;
+		private static StarSystem sys;
+
+		[ClassInitialize]
+		public static void ClassInit(TestContext ctx)
+		{
+			// initialize galaxy
+			new Galaxy();
+			Mod.Load(null);
+			sys = new StarSystem(0);
+			Galaxy.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(sys, new Point()));
+
+			// initialize empires
+			seekers = new Empire();
+			seekers.Name = "Seekers";
+			hiders = new Empire();
+			hiders.Name = "Hiders";
+
+			// initialize ships
+			Assert.IsNotNull(Mod.Current);
+			var dsDesign = new Design<Ship>();
+			dsDesign.BaseName = "TestDestroyer";
+			dsDesign.CreateHull();
+			dsDesign.Owner = seekers;
+			destroyer = dsDesign.Instantiate();
+			destroyer.Owner = seekers;
+			var subDesign = new Design<Ship>();
+			subDesign.BaseName = "TestSubmarine";
+			subDesign.CreateHull();
+			subDesign.Owner = hiders;
+			submarine = subDesign.Instantiate();
+			submarine.Owner = hiders;
+		}
 
 		/// <summary>
 		/// If we have no cloaks, and they have a sensor, they should still be able to see us.
@@ -71,6 +102,14 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			AddSensorAbility(destroyer.Hull, "Foobar", 2);
 			AddCloakAbility(submarine.Hull, "Foobar", 1);
 			Assert.IsFalse(submarine.IsHiddenFrom(seekers), "Submarine should be visible.");
+		}
+
+		[TestInitialize]
+		public void Init()
+		{
+			// place ships
+			sys.Place(destroyer, new Point());
+			sys.Place(submarine, new Point());
 		}
 
 		/// <summary>
@@ -124,41 +163,6 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			AddSensorAbility(destroyer.Hull, "Foobar", 1);
 			AddCloakAbility(submarine.Hull, "Foobar", 1);
 			Assert.IsFalse(submarine.IsHiddenFrom(seekers), "Submarine should be visible.");
-		}
-
-		[TestInitialize]
-		public void Setup()
-		{
-			// initialize galaxy
-			new Galaxy();
-			Mod.Load(null);
-			sys = new StarSystem(0);
-			Galaxy.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(sys, new Point()));
-
-			// initialize empires
-			seekers = new Empire();
-			seekers.Name = "Seekers";
-			hiders = new Empire();
-			hiders.Name = "Hiders";
-
-			// initialize ships
-			Assert.IsNotNull(Mod.Current);
-			var dsDesign = new Design<Ship>();
-			dsDesign.BaseName = "TestDestroyer";
-			dsDesign.CreateHull();
-			dsDesign.Owner = seekers;
-			destroyer = dsDesign.Instantiate();
-			destroyer.Owner = seekers;
-			var subDesign = new Design<Ship>();
-			subDesign.BaseName = "TestSubmarine";
-			subDesign.CreateHull();
-			subDesign.Owner = hiders;
-			submarine = subDesign.Instantiate();
-			submarine.Owner = hiders;
-
-			// place ships
-			sys.Place(destroyer, new Point());
-			sys.Place(submarine, new Point());
 		}
 
 		// TODO - same/low level sight obscuration from star system

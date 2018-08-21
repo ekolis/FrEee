@@ -17,28 +17,15 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 	[TestClass]
 	public class ResupplyTest
 	{
-		private Empire empire;
-		private Fleet fleet;
-		private Ship ship1, ship2;
-		private ComponentTemplate storageComp;
-		private int supplyPerComp;
-		private StarSystem sys;
+		private static Empire empire;
+		private static Fleet fleet;
+		private static Ship ship1, ship2;
+		private static ComponentTemplate storageComp;
+		private static int supplyPerComp;
+		private static StarSystem sys;
 
-		/// <summary>
-		/// Can ships in fleets resupply each other?
-		/// </summary>
-		[TestMethod]
-		public void FleetResupply()
-		{
-			ship1.SupplyRemaining = supplyPerComp;
-			ship2.SupplyRemaining = supplyPerComp;
-			fleet.ShareSupplies();
-			AreEqual(supplyPerComp * 2 / 4, ship1.SupplyRemaining);
-			AreEqual(supplyPerComp * 6 / 4, ship2.SupplyRemaining);
-		}
-
-		[TestInitialize]
-		public void Setup()
+		[ClassInitialize]
+		public static void ClassInit(TestContext ctx)
 		{
 			// initialize galaxy
 			new Galaxy();
@@ -81,6 +68,19 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 
 			// place ships
 			sys.Place(fleet, new Point());
+		}
+
+		/// <summary>
+		/// Can ships in fleets resupply each other?
+		/// </summary>
+		[TestMethod]
+		public void FleetResupply()
+		{
+			ship1.SupplyRemaining = supplyPerComp;
+			ship2.SupplyRemaining = supplyPerComp;
+			fleet.ShareSupplies();
+			AreEqual(supplyPerComp * 2 / 4, ship1.SupplyRemaining);
+			AreEqual(supplyPerComp * 6 / 4, ship2.SupplyRemaining);
 		}
 
 		// TODO - test quantum reactors
