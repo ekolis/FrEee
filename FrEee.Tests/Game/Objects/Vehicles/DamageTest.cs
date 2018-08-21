@@ -26,41 +26,20 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		/// <summary>
 		/// They're controlling the ship.
 		/// </summary>
-		private Empire empire;
+		private static Empire empire;
 
 		/// <summary>
 		/// The template for the engine component.
 		/// </summary>
-		private ComponentTemplate engineTemplate;
+		private static ComponentTemplate engineTemplate;
 
 		/// <summary>
 		/// The ship that is taking damage.
 		/// </summary>
-		private Ship ship;
+		private static Ship ship;
 
-		/// <summary>
-		/// Ship speed should degrade as engines take damage.
-		/// Also, ships should go the proper speed when undamaged.
-		/// </summary>
-		[TestMethod]
-		public void EngineDamage()
-		{
-			// sanity check
-			Assert.AreNotEqual(0, GetExpectedSpeed(ship));
-
-			Assert.AreEqual(GetExpectedSpeed(ship), ship.StrategicSpeed);
-
-			for (var i = 0; i < numEngines; i++)
-			{
-				// ouchies!
-				ship.Components.Where(c => c.Template.ComponentTemplate == engineTemplate && c.Hitpoints > 0).First().Hitpoints = 0;
-
-				Assert.AreEqual(GetExpectedSpeed(ship), ship.StrategicSpeed);
-			}
-		}
-
-		[TestInitialize]
-		public void Setup()
+		[ClassInitialize]
+		public static void ClassInit(TestContext ctx)
 		{
 			// initialize galaxy
 			Mod.Load(null);
@@ -97,6 +76,32 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			// initialize ship
 			ship = design.Instantiate();
 			ship.Owner = empire;
+		}
+
+		/// <summary>
+		/// Ship speed should degrade as engines take damage.
+		/// Also, ships should go the proper speed when undamaged.
+		/// </summary>
+		[TestMethod]
+		public void EngineDamage()
+		{
+			// sanity check
+			Assert.AreNotEqual(0, GetExpectedSpeed(ship));
+
+			Assert.AreEqual(GetExpectedSpeed(ship), ship.StrategicSpeed);
+
+			for (var i = 0; i < numEngines; i++)
+			{
+				// ouchies!
+				ship.Components.Where(c => c.Template.ComponentTemplate == engineTemplate && c.Hitpoints > 0).First().Hitpoints = 0;
+
+				Assert.AreEqual(GetExpectedSpeed(ship), ship.StrategicSpeed);
+			}
+		}
+
+		[TestInitialize]
+		public void Init()
+		{
 		}
 
 		private int GetExpectedSpeed(Ship ship)

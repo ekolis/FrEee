@@ -14,27 +14,14 @@ namespace FrEee.Tests.Game.Objects.Orders
 	[TestClass]
 	public class ConstructionTest
 	{
-		private Colony colony;
-		private Empire empire;
-		private Planet planet;
-		private Race race;
-		private FacilityTemplate sy;
+		private static Colony colony;
+		private static Empire empire;
+		private static Planet planet;
+		private static Race race;
+		private static FacilityTemplate sy;
 
-		/// <summary>
-		/// If there's no population on a colony, it shouldn't be able to build anything.
-		/// </summary>
-		[TestMethod]
-		public void NoPopNoBuild()
-		{
-			colony.Population.Clear();
-			IsTrue(planet.ConstructionQueue.Rate.IsEmpty);
-
-			colony.Population[race] = 0;
-			IsTrue(planet.ConstructionQueue.Rate.IsEmpty);
-		}
-
-		[TestInitialize]
-		public void Setup()
+		[ClassInitialize]
+		public static void ClassInit(TestContext ctx)
 		{
 			// initialize galaxy
 			new Galaxy();
@@ -49,7 +36,11 @@ namespace FrEee.Tests.Game.Objects.Orders
 
 			// initialize components
 			sy = Mod.Current.FacilityTemplates.FindByName("Space Yard Facility I");
+		}
 
+		[TestInitialize]
+		public void Init()
+		{
 			// initialize colony
 			planet = new Planet();
 			colony = new Colony();
@@ -57,6 +48,19 @@ namespace FrEee.Tests.Game.Objects.Orders
 			colony.Population.Add(race, (long)1e9); // 1 billion population;
 			colony.ConstructionQueue = new ConstructionQueue(planet);
 			planet.Colony = colony;
+		}
+
+		/// <summary>
+		/// If there's no population on a colony, it shouldn't be able to build anything.
+		/// </summary>
+		[TestMethod]
+		public void NoPopNoBuild()
+		{
+			colony.Population.Clear();
+			IsTrue(planet.ConstructionQueue.Rate.IsEmpty);
+
+			colony.Population[race] = 0;
+			IsTrue(planet.ConstructionQueue.Rate.IsEmpty);
 		}
 
 		// TODO - test construction of facilities/units/ships

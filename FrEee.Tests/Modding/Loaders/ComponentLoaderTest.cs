@@ -10,13 +10,18 @@ namespace FrEee.Tests.Modding.Loaders
 	[TestClass]
 	public class ComponentLoaderTest
 	{
+		[ClassInitialize]
+		public static void ClassInit(TestContext ctx)
+		{
+			Mod.Load("ComponentLoaderTest");
+		}
+
 		/// <summary>
 		/// Makes sure standard weapons have sane values for their minimum/maximum range.
 		/// </summary>
 		[TestMethod]
 		public void WeaponRange()
 		{
-			Mod.Load("ComponentLoaderTest");
 			var w = Mod.Current.ComponentTemplates.FindByName("Range 2 Weapon");
 			Assert.AreEqual(0, w.WeaponInfo.MinRange.Value);
 			Assert.AreEqual(2, w.WeaponInfo.MaxRange.Value);
@@ -28,7 +33,6 @@ namespace FrEee.Tests.Modding.Loaders
 		[TestMethod]
 		public void WeaponRangeBlindSpot()
 		{
-			Mod.Load("ComponentLoaderTest");
 			var w = Mod.Current.ComponentTemplates.FindByName("Blind Spot Weapon");
 			Assert.AreEqual(2, w.WeaponInfo.MinRange.Value);
 			Assert.AreEqual(3, w.WeaponInfo.MaxRange.Value);
