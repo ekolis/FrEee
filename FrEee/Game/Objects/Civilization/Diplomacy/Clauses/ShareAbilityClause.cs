@@ -4,58 +4,46 @@ using FrEee.Utility.Extensions;
 
 namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 {
-    /// <summary>
-    /// Allows empires to share usage of abilities that can affect other objects, such as resupply.
-    /// </summary>
-    public class ShareAbilityClause : Clause
-    {
-        #region Public Constructors
+	/// <summary>
+	/// Allows empires to share usage of abilities that can affect other objects, such as resupply.
+	/// </summary>
+	public class ShareAbilityClause : Clause
+	{
+		public ShareAbilityClause(Empire giver, Empire receiver, AbilityRule rule, SharingPriority priority)
+			: base(giver, receiver)
+		{
+			AbilityRule = rule;
+			Priority = priority;
+		}
 
-        public ShareAbilityClause(Empire giver, Empire receiver, AbilityRule rule, SharingPriority priority)
-            : base(giver, receiver)
-        {
-            AbilityRule = rule;
-            Priority = priority;
-        }
+		/// <summary>
+		/// The type of ability being shared.
+		/// </summary>
+		public AbilityRule AbilityRule { get; set; }
 
-        #endregion Public Constructors
+		public override string BriefDescription
+		{
+			get { return "Share Ability (" + AbilityRule.Name + ") - " + Priority + " Priority"; }
+		}
 
-        #region Public Properties
+		public override string FullDescription
+		{
+			get
+			{
+				return Giver.WeOrName() + " will share the " + AbilityRule.Name + " ability with " + Receiver.UsOrName() + " at " + Priority.ToString().ToLower() + " priority.";
+			}
+		}
 
-        /// <summary>
-        /// The type of ability being shared.
-        /// </summary>
-        public AbilityRule AbilityRule { get; set; }
+		/// <summary>
+		/// The priority of sharing with this empire.
+		/// </summary>
+		public SharingPriority Priority { get; set; }
 
-        public override string BriefDescription
-        {
-            get { return "Share Ability (" + AbilityRule.Name + ") - " + Priority + " Priority"; }
-        }
-
-        public override string FullDescription
-        {
-            get
-            {
-                return Giver.WeOrName() + " will share the " + AbilityRule.Name + " ability with " + Receiver.UsOrName() + " at " + Priority.ToString().ToLower() + " priority.";
-            }
-        }
-
-        /// <summary>
-        /// The priority of sharing with this empire.
-        /// </summary>
-        public SharingPriority Priority { get; set; }
-
-        #endregion Public Properties
-
-        #region Public Methods
-
-        /// <summary>
-        /// Doesn't do anything; this clause just affects ability scopes.
-        /// </summary>
-        public override void PerformAction()
-        {
-        }
-
-        #endregion Public Methods
-    }
+		/// <summary>
+		/// Doesn't do anything; this clause just affects ability scopes.
+		/// </summary>
+		public override void PerformAction()
+		{
+		}
+	}
 }

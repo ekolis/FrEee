@@ -8,44 +8,32 @@ using System.Linq;
 
 namespace FrEee.WinForms.Objects.GalaxyViewModes
 {
-    /// <summary>
-    /// Displays min/org/rad income.
-    /// </summary>
-    public class ResourcesMode : ArgbMode
-    {
-        #region Public Properties
+	/// <summary>
+	/// Displays min/org/rad income.
+	/// </summary>
+	public class ResourcesMode : ArgbMode
+	{
+		public override string Name
+		{
+			get { return "Resources"; }
+		}
 
-        public override string Name
-        {
-            get { return "Resources"; }
-        }
+		protected override Color GetColor(StarSystem sys)
+		{
+			var max = Galaxy.Current.StarSystemLocations.MaxOfAllResources(l => GetResources(l.Item));
+			foreach (var r in Resource.All)
+				if (max[r] == 0)
+					max[r] = int.MaxValue; // prevent divide by zero
+			var amt = GetResources(sys);
+			var blue = 255 * amt[Resource.Minerals] / max[Resource.Minerals];
+			var green = 255 * amt[Resource.Organics] / max[Resource.Organics];
+			var red = 255 * amt[Resource.Radioactives] / max[Resource.Radioactives];
+			return Color.FromArgb(red, green, blue);
+		}
 
-        #endregion Public Properties
-
-        #region Protected Methods
-
-        protected override Color GetColor(StarSystem sys)
-        {
-            var max = Galaxy.Current.StarSystemLocations.MaxOfAllResources(l => GetResources(l.Item));
-            foreach (var r in Resource.All)
-                if (max[r] == 0)
-                    max[r] = int.MaxValue; // prevent divide by zero
-            var amt = GetResources(sys);
-            var blue = 255 * amt[Resource.Minerals] / max[Resource.Minerals];
-            var green = 255 * amt[Resource.Organics] / max[Resource.Organics];
-            var red = 255 * amt[Resource.Radioactives] / max[Resource.Radioactives];
-            return Color.FromArgb(red, green, blue);
-        }
-
-        #endregion Protected Methods
-
-        #region Private Methods
-
-        private ResourceQuantity GetResources(StarSystem sys)
-        {
-            return sys.SpaceObjects.OwnedBy(Empire.Current).OfType<IIncomeProducer>().Sum(sobj => sobj.GrossIncome());
-        }
-
-        #endregion Private Methods
-    }
+		private ResourceQuantity GetResources(StarSystem sys)
+		{
+			return sys.SpaceObjects.OwnedBy(Empire.Current).OfType<IIncomeProducer>().Sum(sobj => sobj.GrossIncome());
+		}
+	}
 }

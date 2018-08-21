@@ -1,9 +1,6 @@
 ﻿using FrEee.Modding;
 using FrEee.Utility.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FrEee.Tests.Modding.Loaders
 {

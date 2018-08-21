@@ -16,453 +16,441 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-    public partial class ResearchForm : Form
-    {
-        #region Private Fields
+	public partial class ResearchForm : Form
+	{
+		public ResearchForm()
+		{
+			InitializeComponent();
 
-        private bool abort;
+			// show RP available
+			resRes.Amount = Empire.Current.NetIncome[Resource.Research];
+			if (Empire.Current.BonusResearch != 0)
+				resRes.Change = Empire.Current.BonusResearch;
 
-        private IEnumerable<Technology> allTechs;
+			// bind group dropdown and tech grid
+			ddlGroup.Items.Clear();
+			ddlGroup.Items.Add(new { Text = "All" });
+			ddlGroup.Items.Add(new { Text = "In Progress" });
+			foreach (var group in Galaxy.Current.Mod.Technologies.Select(t => t.Group).Distinct())
+				ddlGroup.Items.Add(new { Text = group, GroupName = group });
+			ddlGroup.SelectedItem = ddlGroup.Items.Cast<object>().First();
 
-        private Technology curTech;
+			// save off old research priorities in case user cancels
+			oldPcts = new Dictionary<Technology, int>();
+			foreach (var kvp in Empire.Current.ResearchSpending)
+				oldPcts.Add(kvp.Key, kvp.Value);
+			oldQueue = new List<Technology>();
+			foreach (var tech in Empire.Current.ResearchQueue)
+				oldQueue.Add(tech);
 
-        private bool hasChanged = false;
+			// bind queue
+			BindQueue();
 
-        private Dictionary<Technology, int> oldPcts;
+			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+			catch { }
+		}
 
-        private List<Technology> oldQueue;
+		private bool abort;
 
-        private bool ready = false;
+		private IEnumerable<Technology> allTechs;
 
-        private DataGridViewColumn sortColumn = null;
+		private Technology curTech;
 
-        private ListSortDirection sortDir = ListSortDirection.Ascending;
+		private bool hasChanged = false;
 
-        #endregion Private Fields
+		private Dictionary<Technology, int> oldPcts;
 
-        #region Public Constructors
+		private List<Technology> oldQueue;
 
-        public ResearchForm()
-        {
-            InitializeComponent();
+		private bool ready = false;
 
-            // show RP available
-            resRes.Amount = Empire.Current.NetIncome[Resource.Research];
-            if (Empire.Current.BonusResearch != 0)
-                resRes.Change = Empire.Current.BonusResearch;
+		private DataGridViewColumn sortColumn = null;
 
-            // bind group dropdown and tech grid
-            ddlGroup.Items.Clear();
-            ddlGroup.Items.Add(new { Text = "All" });
-            ddlGroup.Items.Add(new { Text = "In Progress" });
-            foreach (var group in Galaxy.Current.Mod.Technologies.Select(t => t.Group).Distinct())
-                ddlGroup.Items.Add(new { Text = group, GroupName = group });
-            ddlGroup.SelectedItem = ddlGroup.Items.Cast<object>().First();
+		private ListSortDirection sortDir = ListSortDirection.Ascending;
 
-            // save off old research priorities in case user cancels
-            oldPcts = new Dictionary<Technology, int>();
-            foreach (var kvp in Empire.Current.ResearchSpending)
-                oldPcts.Add(kvp.Key, kvp.Value);
-            oldQueue = new List<Technology>();
-            foreach (var tech in Empire.Current.ResearchQueue)
-                oldQueue.Add(tech);
+		private void BindDetails()
+		{
+			if (curTech == null)
+			{
+				txtTechName.Text = "(No Technology)";
+				txtTechDiscription.Text = "(No Technology)";
+				lblSpending.Text = "Spending";
+				sldSpending.Maximum = 100;
+				sldSpending.Value = 0;
+				sldSpending.Enabled = false;
+				lblResults.Text = "Expected Results";
+				lstResults.Items.Clear();
+			}
+			else
+			{
+				txtTechName.Text = curTech.Name;
+				txtTechDiscription.Text = curTech.Description;
+				var spent = allTechs.Sum(t => t.Spending.Value);
+				lblSpending.Text = "Spending (" + (100 - spent) + "% unspent)";
+				sldSpending.Maximum = (int)(100 - spent + curTech.Spending.Value);
+				sldSpending.Value = (int)curTech.Spending.Value;
+				sldSpending.Enabled = true;
+				if (curTech.Progress.Eta == null)
+					lblResults.Text = "Expected Results (never)";
+				else
+					lblResults.Text = "Expected Results (in " + curTech.Progress.Eta + " turns)";
+				lstResults.Initialize(32, 32);
+				foreach (var result in curTech.ExpectedResults)
+					lstResults.AddItemWithImage(result.ResearchGroup, result.Name, result, result.Icon);
+			}
+		}
 
-            // bind queue
-            BindQueue();
+		private void BindQueue()
+		{
+			lstQueue.Items.Clear();
+			var idx = 0;
+			var levels = new SafeDictionary<Technology, int>(Empire.Current.ResearchedTechnologies);
+			Empire.Current.ComputeResearchProgress();
+			foreach (var tech in Empire.Current.ResearchQueue)
+			{
+				levels[tech]++; // so we can research the same tech multiple times with the appropriate cost for each level
+				var eta = Empire.Current.GetResearchProgress(tech, levels[tech]).Eta;
+				if (eta == null)
+				{
+					if (tech.MaximumLevel == 1 && levels[tech] == 1)
+						lstQueue.Items.Add(tech.Name + " (never)");
+					else
+						lstQueue.Items.Add(tech.Name + " L" + levels[tech] + " (never)");
+				}
+				else
+				{
+					if (tech.MaximumLevel == 1 && levels[tech] == 1)
+						lstQueue.Items.Add(tech.Name + " (" + eta + " turns)");
+					else
+						lstQueue.Items.Add(tech.Name + " L" + levels[tech] + " (" + eta + " turns)");
+				}
+				idx++;
+			}
+		}
 
-            try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
-            catch { }
-        }
+		private void BindTechGrid()
+		{
+			allTechs = Empire.Current.AvailableTechnologies.Where(t =>
+				{
+					dynamic item = (dynamic)ddlGroup.SelectedItem;
+					if (item.Text == "All")
+						return true; // show all techs
+					else if (item.Text == "In Progress")
+						return t.Progress.Eta != null || t.Progress.Value > 0; // show techs in progress (either started or being researched)
+					else
+						return t.Group == item.GroupName; // show techs in selected group
+				}).ToArray();
+			RebindTechGrid();
+		}
 
-        #endregion Public Constructors
+		private void btnAddToQueue_Click(object sender, EventArgs e)
+		{
+			TryAddTechToQueue(curTech);
+		}
 
-        #region Private Methods
+		private void btnBottom_Click(object sender, EventArgs e)
+		{
+			var selIdx = lstQueue.SelectedIndex;
+			if (selIdx >= 0)
+			{
+				var selTech = Empire.Current.ResearchQueue[selIdx];
+				Empire.Current.ResearchQueue.RemoveAt(selIdx);
+				Empire.Current.ResearchQueue.Add(selTech);
+				BindQueue();
+				hasChanged = true;
+			}
+		}
 
-        private void BindDetails()
-        {
-            if (curTech == null)
-            {
-                txtTechName.Text = "(No Technology)";
-                txtTechDiscription.Text = "(No Technology)";
-                lblSpending.Text = "Spending";
-                sldSpending.Maximum = 100;
-                sldSpending.Value = 0;
-                sldSpending.Enabled = false;
-                lblResults.Text = "Expected Results";
-                lstResults.Items.Clear();
-            }
-            else
-            {
-                txtTechName.Text = curTech.Name;
-                txtTechDiscription.Text = curTech.Description;
-                var spent = allTechs.Sum(t => t.Spending.Value);
-                lblSpending.Text = "Spending (" + (100 - spent) + "% unspent)";
-                sldSpending.Maximum = (int)(100 - spent + curTech.Spending.Value);
-                sldSpending.Value = (int)curTech.Spending.Value;
-                sldSpending.Enabled = true;
-                if (curTech.Progress.Eta == null)
-                    lblResults.Text = "Expected Results (never)";
-                else
-                    lblResults.Text = "Expected Results (in " + curTech.Progress.Eta + " turns)";
-                lstResults.Initialize(32, 32);
-                foreach (var result in curTech.ExpectedResults)
-                    lstResults.AddItemWithImage(result.ResearchGroup, result.Name, result, result.Icon);
-            }
-        }
+		private void btnCancel_Click(object sender, EventArgs e)
+		{
+			abort = true;
+			Cancel();
+			Close();
+		}
 
-        private void BindQueue()
-        {
-            lstQueue.Items.Clear();
-            var idx = 0;
-            var levels = new SafeDictionary<Technology, int>(Empire.Current.ResearchedTechnologies);
-            Empire.Current.ComputeResearchProgress();
-            foreach (var tech in Empire.Current.ResearchQueue)
-            {
-                levels[tech]++; // so we can research the same tech multiple times with the appropriate cost for each level
-                var eta = Empire.Current.GetResearchProgress(tech, levels[tech]).Eta;
-                if (eta == null)
-                {
-                    if (tech.MaximumLevel == 1 && levels[tech] == 1)
-                        lstQueue.Items.Add(tech.Name + " (never)");
-                    else
-                        lstQueue.Items.Add(tech.Name + " L" + levels[tech] + " (never)");
-                }
-                else
-                {
-                    if (tech.MaximumLevel == 1 && levels[tech] == 1)
-                        lstQueue.Items.Add(tech.Name + " (" + eta + " turns)");
-                    else
-                        lstQueue.Items.Add(tech.Name + " L" + levels[tech] + " (" + eta + " turns)");
-                }
-                idx++;
-            }
-        }
+		private void btnClear_Click(object sender, EventArgs e)
+		{
+			Empire.Current.ResearchQueue.Clear();
+			BindQueue();
+			hasChanged = true;
+		}
 
-        private void BindTechGrid()
-        {
-            allTechs = Empire.Current.AvailableTechnologies.Where(t =>
-                {
-                    dynamic item = (dynamic)ddlGroup.SelectedItem;
-                    if (item.Text == "All")
-                        return true; // show all techs
-                    else if (item.Text == "In Progress")
-                        return t.Progress.Eta != null || t.Progress.Value > 0; // show techs in progress (either started or being researched)
-                    else
-                        return t.Group == item.GroupName; // show techs in selected group
-                }).ToArray();
-            RebindTechGrid();
-        }
+		private void btnDelete_Click(object sender, EventArgs e)
+		{
+			var selIdx = lstQueue.SelectedIndex;
+			if (selIdx >= 0)
+			{
+				var selTech = Empire.Current.ResearchQueue[selIdx];
+				Empire.Current.ResearchQueue.RemoveAt(selIdx);
+				BindQueue();
+				hasChanged = true;
+			}
+		}
 
-        private void btnAddToQueue_Click(object sender, EventArgs e)
-        {
-            TryAddTechToQueue(curTech);
-        }
+		private void btnDown_Click(object sender, EventArgs e)
+		{
+			var selIdx = lstQueue.SelectedIndex;
+			if (selIdx >= 0)
+			{
+				var selTech = Empire.Current.ResearchQueue[selIdx];
+				Empire.Current.ResearchQueue.RemoveAt(selIdx);
+				Empire.Current.ResearchQueue.Insert(Math.Min(Empire.Current.ResearchQueue.Count, selIdx + 1), selTech);
+				BindQueue();
+				hasChanged = true;
+			}
+		}
 
-        private void btnBottom_Click(object sender, EventArgs e)
-        {
-            var selIdx = lstQueue.SelectedIndex;
-            if (selIdx >= 0)
-            {
-                var selTech = Empire.Current.ResearchQueue[selIdx];
-                Empire.Current.ResearchQueue.RemoveAt(selIdx);
-                Empire.Current.ResearchQueue.Add(selTech);
-                BindQueue();
-                hasChanged = true;
-            }
-        }
+		private void btnSave_Click(object sender, EventArgs e)
+		{
+			abort = true;
+			Save();
+			Close();
+		}
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            abort = true;
-            Cancel();
-            Close();
-        }
+		private void btnTop_Click(object sender, EventArgs e)
+		{
+			var selIdx = lstQueue.SelectedIndex;
+			if (selIdx >= 0)
+			{
+				var selTech = Empire.Current.ResearchQueue[selIdx];
+				Empire.Current.ResearchQueue.RemoveAt(selIdx);
+				Empire.Current.ResearchQueue.Insert(0, selTech);
+				BindQueue();
+				hasChanged = true;
+			}
+		}
 
-        private void btnClear_Click(object sender, EventArgs e)
-        {
-            Empire.Current.ResearchQueue.Clear();
-            BindQueue();
-            hasChanged = true;
-        }
+		private void btnTree_Click(object sender, EventArgs e)
+		{
+			this.ShowChildForm(new TechTreeForm());
+		}
 
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            var selIdx = lstQueue.SelectedIndex;
-            if (selIdx >= 0)
-            {
-                var selTech = Empire.Current.ResearchQueue[selIdx];
-                Empire.Current.ResearchQueue.RemoveAt(selIdx);
-                BindQueue();
-                hasChanged = true;
-            }
-        }
+		private void btnUp_Click(object sender, EventArgs e)
+		{
+			var selIdx = lstQueue.SelectedIndex;
+			if (selIdx >= 0)
+			{
+				var selTech = Empire.Current.ResearchQueue[selIdx];
+				Empire.Current.ResearchQueue.RemoveAt(selIdx);
+				Empire.Current.ResearchQueue.Insert(Math.Max(0, selIdx - 1), selTech);
+				BindQueue();
+				hasChanged = true;
+			}
+		}
 
-        private void btnDown_Click(object sender, EventArgs e)
-        {
-            var selIdx = lstQueue.SelectedIndex;
-            if (selIdx >= 0)
-            {
-                var selTech = Empire.Current.ResearchQueue[selIdx];
-                Empire.Current.ResearchQueue.RemoveAt(selIdx);
-                Empire.Current.ResearchQueue.Insert(Math.Min(Empire.Current.ResearchQueue.Count, selIdx + 1), selTech);
-                BindQueue();
-                hasChanged = true;
-            }
-        }
+		private void Cancel()
+		{
+			Empire.Current.ResearchSpending.Clear();
+			foreach (var kvp in oldPcts)
+				Empire.Current.ResearchSpending.Add(kvp);
+			Empire.Current.ResearchQueue.Clear();
+			foreach (var tech in oldQueue)
+				Empire.Current.ResearchQueue.Add(tech);
+		}
 
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            abort = true;
-            Save();
-            Close();
-        }
+		private void ddlGroup_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			BindTechGrid();
+			gridTechs.ClearSelection();
+			curTech = null;
+			BindDetails();
+		}
 
-        private void btnTop_Click(object sender, EventArgs e)
-        {
-            var selIdx = lstQueue.SelectedIndex;
-            if (selIdx >= 0)
-            {
-                var selTech = Empire.Current.ResearchQueue[selIdx];
-                Empire.Current.ResearchQueue.RemoveAt(selIdx);
-                Empire.Current.ResearchQueue.Insert(0, selTech);
-                BindQueue();
-                hasChanged = true;
-            }
-        }
+		private void gridQueues_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			if (e.RowIndex >= 0 && e.Button == System.Windows.Forms.MouseButtons.Left)
+			{
+				var tech = (Technology)gridTechs.Rows[e.RowIndex].DataBoundItem;
+				TryAddTechToQueue(tech);
+			}
+		}
 
-        private void btnTree_Click(object sender, EventArgs e)
-        {
-            this.ShowChildForm(new TechTreeForm());
-        }
+		private void gridQueues_RowEnter(object sender, DataGridViewCellEventArgs e)
+		{
+			if (ready)
+			{
+				curTech = (Technology)gridTechs.Rows[e.RowIndex].DataBoundItem;
+				BindDetails();
+			}
+		}
 
-        private void btnUp_Click(object sender, EventArgs e)
-        {
-            var selIdx = lstQueue.SelectedIndex;
-            if (selIdx >= 0)
-            {
-                var selTech = Empire.Current.ResearchQueue[selIdx];
-                Empire.Current.ResearchQueue.RemoveAt(selIdx);
-                Empire.Current.ResearchQueue.Insert(Math.Max(0, selIdx - 1), selTech);
-                BindQueue();
-                hasChanged = true;
-            }
-        }
+		private void gridTechs_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			ListSortDirection? dir = null;
+			var col = gridTechs.Columns[e.ColumnIndex];
+			if (sortColumn == col)
+			{
+				// already sorting by this column, change sort mode
+				if (sortDir == ListSortDirection.Ascending)
+					dir = ListSortDirection.Descending;
+				else if (sortDir == ListSortDirection.Descending)
+					dir = ListSortDirection.Ascending;
+				else
+					col = null; // unsort
+			}
+			if (dir == null)
+			{
+				// default sort order for each column
+				if (col == colProgress || col == colSpending)
+					dir = ListSortDirection.Descending;
+				else
+					dir = ListSortDirection.Ascending;
+			}
+			foreach (DataGridViewColumn c in gridTechs.Columns)
+			{
+				if (c == col)
+				{
+					if (dir == ListSortDirection.Ascending)
+						c.HeaderCell.SortGlyphDirection = SortOrder.Ascending;
+					else if (dir == ListSortDirection.Descending)
+						c.HeaderCell.SortGlyphDirection = SortOrder.Descending;
+					else
+						c.HeaderCell.SortGlyphDirection = SortOrder.None;
+				}
+				else
+					c.HeaderCell.SortGlyphDirection = SortOrder.None;
+			}
 
-        private void Cancel()
-        {
-            Empire.Current.ResearchSpending.Clear();
-            foreach (var kvp in oldPcts)
-                Empire.Current.ResearchSpending.Add(kvp);
-            Empire.Current.ResearchQueue.Clear();
-            foreach (var tech in oldQueue)
-                Empire.Current.ResearchQueue.Add(tech);
-        }
+			sortDir = dir.Value;
+			sortColumn = col;
 
-        private void ddlGroup_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            BindTechGrid();
-            gridTechs.ClearSelection();
-            curTech = null;
-            BindDetails();
-        }
+			RebindTechGrid();
+		}
 
-        private void gridQueues_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (e.RowIndex >= 0 && e.Button == System.Windows.Forms.MouseButtons.Left)
-            {
-                var tech = (Technology)gridTechs.Rows[e.RowIndex].DataBoundItem;
-                TryAddTechToQueue(tech);
-            }
-        }
+		private void lstQueue_DoubleClick(object sender, EventArgs e)
+		{
+			if (lstQueue.SelectedIndex >= 0)
+			{
+				Empire.Current.ResearchQueue.RemoveAt(lstQueue.SelectedIndex);
+				BindTechGrid();
+				BindQueue();
+				hasChanged = true;
+			}
+		}
 
-        private void gridQueues_RowEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            if (ready)
-            {
-                curTech = (Technology)gridTechs.Rows[e.RowIndex].DataBoundItem;
-                BindDetails();
-            }
-        }
+		private void lstResults_MouseClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				var u = lstResults.SelectedItems.Cast<ListViewItem>().Select(i => i.Tag).Cast<IUnlockable>().SingleOrDefault();
+				if (u != null)
+					this.ShowChildForm(new TechTreeForm(u));
+			}
+		}
 
-        private void gridTechs_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            ListSortDirection? dir = null;
-            var col = gridTechs.Columns[e.ColumnIndex];
-            if (sortColumn == col)
-            {
-                // already sorting by this column, change sort mode
-                if (sortDir == ListSortDirection.Ascending)
-                    dir = ListSortDirection.Descending;
-                else if (sortDir == ListSortDirection.Descending)
-                    dir = ListSortDirection.Ascending;
-                else
-                    col = null; // unsort
-            }
-            if (dir == null)
-            {
-                // default sort order for each column
-                if (col == colProgress || col == colSpending)
-                    dir = ListSortDirection.Descending;
-                else
-                    dir = ListSortDirection.Ascending;
-            }
-            foreach (DataGridViewColumn c in gridTechs.Columns)
-            {
-                if (c == col)
-                {
-                    if (dir == ListSortDirection.Ascending)
-                        c.HeaderCell.SortGlyphDirection = SortOrder.Ascending;
-                    else if (dir == ListSortDirection.Descending)
-                        c.HeaderCell.SortGlyphDirection = SortOrder.Descending;
-                    else
-                        c.HeaderCell.SortGlyphDirection = SortOrder.None;
-                }
-                else
-                    c.HeaderCell.SortGlyphDirection = SortOrder.None;
-            }
+		private void RebindTechGrid()
+		{
+			var sorted = new List<Technology>(allTechs);
 
-            sortDir = dir.Value;
-            sortColumn = col;
+			// save selected tech since we're messing with the grid order
+			var selTech = curTech;
 
-            RebindTechGrid();
-        }
+			if (sortColumn == colName)
+				sorted.Sort((t1, t2) => t1.Name.CompareTo(t2.Name));
+			else if (sortColumn == colLevel)
+				sorted.Sort((t1, t2) => t1.CurrentLevel.CompareTo(t2.CurrentLevel));
+			else if (sortColumn == colNextLevelCost)
+				sorted.Sort((t1, t2) => t1.NextLevelCost.CompareTo(t2.NextLevelCost));
+			else if (sortColumn == colProgress)
+			{
+				// always show techs with no progress at the bottom
+				var defaultValue = sortDir == ListSortDirection.Ascending ? double.MaxValue : double.MinValue;
+				// sort first by ETA, then by RP required to complete but in the opposite order
+				sorted = sorted.OrderBy(t => t.Progress.RawEta ?? defaultValue).ThenBy(t => t.Progress.Value - t.Progress.Maximum).ToList();
+			}
+			else if (sortColumn == colSpending)
+				sorted.Sort((t1, t2) => t1.Spending.Value.CompareTo(t2.Spending.Value));
 
-        private void lstQueue_DoubleClick(object sender, EventArgs e)
-        {
-            if (lstQueue.SelectedIndex >= 0)
-            {
-                Empire.Current.ResearchQueue.RemoveAt(lstQueue.SelectedIndex);
-                BindTechGrid();
-                BindQueue();
-                hasChanged = true;
-            }
-        }
+			if (sortDir == ListSortDirection.Descending && sortColumn != null)
+				sorted.Reverse();
 
-        private void lstResults_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                var u = lstResults.SelectedItems.Cast<ListViewItem>().Select(i => i.Tag).Cast<IUnlockable>().SingleOrDefault();
-                if (u != null)
-                    this.ShowChildForm(new TechTreeForm(u));
-            }
-        }
+			technologyBindingSource.DataSource = sorted;
+			technologyBindingSource.ResetBindings(false);
 
-        private void RebindTechGrid()
-        {
-            var sorted = new List<Technology>(allTechs);
+			// reselect previously selected tech
+			curTech = selTech;
+			foreach (DataGridViewRow row in gridTechs.Rows)
+			{
+				if (row.DataBoundItem == curTech)
+				{
+					row.Selected = true;
+					gridTechs.FirstDisplayedScrollingRowIndex = row.Index;
+				}
+				else
+					row.Selected = false;
+			}
+			BindDetails();
+		}
 
-            // save selected tech since we're messing with the grid order
-            var selTech = curTech;
+		private void ResearchForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (!abort && hasChanged)
+			{
+				switch (MessageBox.Show("Save your changes?", "FrEee", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
+				{
+					case DialogResult.Yes:
+						Save();
+						break;
 
-            if (sortColumn == colName)
-                sorted.Sort((t1, t2) => t1.Name.CompareTo(t2.Name));
-            else if (sortColumn == colLevel)
-                sorted.Sort((t1, t2) => t1.CurrentLevel.CompareTo(t2.CurrentLevel));
-            else if (sortColumn == colNextLevelCost)
-                sorted.Sort((t1, t2) => t1.NextLevelCost.CompareTo(t2.NextLevelCost));
-            else if (sortColumn == colProgress)
-            {
-                // always show techs with no progress at the bottom
-                var defaultValue = sortDir == ListSortDirection.Ascending ? double.MaxValue : double.MinValue;
-                // sort first by ETA, then by RP required to complete but in the opposite order
-                sorted = sorted.OrderBy(t => t.Progress.RawEta ?? defaultValue).ThenBy(t => t.Progress.Value - t.Progress.Maximum).ToList();
-            }
-            else if (sortColumn == colSpending)
-                sorted.Sort((t1, t2) => t1.Spending.Value.CompareTo(t2.Spending.Value));
+					case DialogResult.No:
+						Cancel();
+						break;
 
-            if (sortDir == ListSortDirection.Descending && sortColumn != null)
-                sorted.Reverse();
+					case DialogResult.Cancel:
+						e.Cancel = true;
+						break;
+				}
+			}
+		}
 
-            technologyBindingSource.DataSource = sorted;
-            technologyBindingSource.ResetBindings(false);
+		private void ResearchForm_Load(object sender, EventArgs e)
+		{
+			curTech = null;
+			BindTechGrid();
+			BindDetails();
+			ready = true;
+		}
 
-            // reselect previously selected tech
-            curTech = selTech;
-            foreach (DataGridViewRow row in gridTechs.Rows)
-            {
-                if (row.DataBoundItem == curTech)
-                {
-                    row.Selected = true;
-                    gridTechs.FirstDisplayedScrollingRowIndex = row.Index;
-                }
-                else
-                    row.Selected = false;
-            }
-            BindDetails();
-        }
+		private void ResearchForm_MouseEnter(object sender, EventArgs e)
+		{
+			ready = true;
+		}
 
-        private void ResearchForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (!abort && hasChanged)
-            {
-                switch (MessageBox.Show("Save your changes?", "FrEee", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
-                {
-                    case DialogResult.Yes:
-                        Save();
-                        break;
+		private void Save()
+		{
+			var cmd = new ResearchCommand();
+			cmd.Spending.Clear();
+			foreach (var kvp in Empire.Current.ResearchSpending)
+				cmd.Spending[kvp.Key] = kvp.Value;
+			cmd.Queue.Clear();
+			foreach (var tech in Empire.Current.ResearchQueue)
+				cmd.Queue.Add(tech);
+			Empire.Current.ResearchCommand = cmd;
+		}
 
-                    case DialogResult.No:
-                        Cancel();
-                        break;
+		private void sldSpending_Scroll(object sender, EventArgs e)
+		{
+			Empire.Current.ResearchSpending[curTech] = sldSpending.Value;
+			RebindTechGrid();
+			BindQueue();
+			BindDetails();
+			hasChanged = true;
+		}
 
-                    case DialogResult.Cancel:
-                        e.Cancel = true;
-                        break;
-                }
-            }
-        }
-
-        private void ResearchForm_Load(object sender, EventArgs e)
-        {
-            curTech = null;
-            BindTechGrid();
-            BindDetails();
-            ready = true;
-        }
-
-        private void ResearchForm_MouseEnter(object sender, EventArgs e)
-        {
-            ready = true;
-        }
-
-        private void Save()
-        {
-            var cmd = new ResearchCommand();
-            cmd.Spending.Clear();
-            foreach (var kvp in Empire.Current.ResearchSpending)
-                cmd.Spending[kvp.Key] = kvp.Value;
-            cmd.Queue.Clear();
-            foreach (var tech in Empire.Current.ResearchQueue)
-                cmd.Queue.Add(tech);
-            Empire.Current.ResearchCommand = cmd;
-        }
-
-        private void sldSpending_Scroll(object sender, EventArgs e)
-        {
-            Empire.Current.ResearchSpending[curTech] = sldSpending.Value;
-            RebindTechGrid();
-            BindQueue();
-            BindDetails();
-            hasChanged = true;
-        }
-
-        private void TryAddTechToQueue(Technology tech)
-        {
-            if (tech != null)
-            {
-                if (Empire.Current.ResearchedTechnologies[tech] + Empire.Current.ResearchQueue.Where(t => t == tech).Count() >= tech.MaximumLevel)
-                    MessageBox.Show("The maximum level for " + tech + " is " + tech.MaximumLevel + ".", "Cannot Research Further");
-                else
-                {
-                    Empire.Current.ResearchQueue.Add(tech);
-                    BindTechGrid();
-                    BindQueue();
-                    hasChanged = true;
-                }
-            }
-        }
-
-        #endregion Private Methods
-    }
+		private void TryAddTechToQueue(Technology tech)
+		{
+			if (tech != null)
+			{
+				if (Empire.Current.ResearchedTechnologies[tech] + Empire.Current.ResearchQueue.Where(t => t == tech).Count() >= tech.MaximumLevel)
+					MessageBox.Show("The maximum level for " + tech + " is " + tech.MaximumLevel + ".", "Cannot Research Further");
+				else
+				{
+					Empire.Current.ResearchQueue.Add(tech);
+					BindTechGrid();
+					BindQueue();
+					hasChanged = true;
+				}
+			}
+		}
+	}
 }

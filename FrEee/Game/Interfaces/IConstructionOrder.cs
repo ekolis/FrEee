@@ -3,25 +3,21 @@ using FrEee.Utility;
 
 namespace FrEee.Game.Interfaces
 {
-    public interface IConstructionOrder : IOrder<ConstructionQueue>, INamed
-    {
-        #region Public Properties
+	public interface IConstructionOrder : IOrder<ConstructionQueue>, INamed
+	{
+		/// <summary>
+		/// The cost of the construction.
+		/// </summary>
+		ResourceQuantity Cost { get; }
 
-        /// <summary>
-        /// The cost of the construction.
-        /// </summary>
-        ResourceQuantity Cost { get; }
+		/// <summary>
+		/// The item being constructed.
+		/// </summary>
+		IConstructable Item { get; }
 
-        /// <summary>
-        /// The item being constructed.
-        /// </summary>
-        IConstructable Item { get; }
-
-        /// <summary>
-        /// The template.
-        /// </summary>
-        IConstructionTemplate Template { get; }
-
-        #endregion Public Properties
-    }
+		/// <summary>
+		/// The template.
+		/// </summary>
+		IConstructionTemplate Template { get; }
+	}
 }

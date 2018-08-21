@@ -5,229 +5,205 @@ using System.Linq;
 
 namespace FrEee.Utility
 {
-    /// <summary>
-    /// A dictionary that does not throw exceptions when manipulating nonexistent data or overwriting old data.
-    /// </summary>
-    /// <typeparam name="TKey"></typeparam>
-    /// <typeparam name="TValue"></typeparam>
-    [Serializable]
-    public class SafeDictionary<TKey, TValue> : IDictionary<TKey, TValue>
-    {
-        #region Private Fields
+	/// <summary>
+	/// A dictionary that does not throw exceptions when manipulating nonexistent data or overwriting old data.
+	/// </summary>
+	/// <typeparam name="TKey"></typeparam>
+	/// <typeparam name="TValue"></typeparam>
+	[Serializable]
+	public class SafeDictionary<TKey, TValue> : IDictionary<TKey, TValue>
+	{
+		public SafeDictionary()
+			: this(false)
+		{
+		}
 
-        private Dictionary<TKey, TValue> dict;
+		public SafeDictionary(bool autoInit)
+		{
+			InitDict();
+			AutoInit = autoInit;
+		}
 
-        #endregion Private Fields
+		public SafeDictionary(IDictionary<TKey, TValue> tocopy, bool autoInit = false)
+			: this(autoInit)
+		{
+			foreach (var kvp in tocopy)
+				Add(kvp);
+		}
 
-        #region Public Constructors
+		/// <summary>
+		/// Should newly referenced values be initialized to new objects or left null?
+		/// </summary>
+		public bool AutoInit { get; set; }
 
-        public SafeDictionary()
-            : this(false)
-        {
-        }
+		/// <summary>
+		/// For initializing newly created values.
+		/// </summary>
+		public object[] AutoInitArgs { get; set; }
 
-        public SafeDictionary(bool autoInit)
-        {
-            InitDict();
-            AutoInit = autoInit;
-        }
+		public int Count
+		{
+			get
+			{
+				if (dict == null)
+					return 0;
+				return dict.Count;
+			}
+		}
 
-        public SafeDictionary(IDictionary<TKey, TValue> tocopy, bool autoInit = false)
-            : this(autoInit)
-        {
-            foreach (var kvp in tocopy)
-                Add(kvp);
-        }
+		public bool IsReadOnly
+		{
+			get
+			{
+				return false;
+			}
+		}
 
-        #endregion Public Constructors
+		public ICollection<TKey> Keys
+		{
+			get
+			{
+				if (dict == null)
+					return new List<TKey>();
+				return dict.Keys;
+			}
+		}
 
-        #region Public Properties
+		public ICollection<TValue> Values
+		{
+			get
+			{
+				if (dict == null)
+					return new List<TValue>();
+				return dict.Values;
+			}
+		}
 
-        /// <summary>
-        /// Should newly referenced values be initialized to new objects or left null?
-        /// </summary>
-        public bool AutoInit { get; set; }
+		private Dictionary<TKey, TValue> dict;
 
-        /// <summary>
-        /// For initializing newly created values.
-        /// </summary>
-        public object[] AutoInitArgs { get; set; }
+		public TValue this[TKey key]
+		{
+			get
+			{
+				if (dict == null)
+					return default(TValue);
+				TValue val;
+				if (dict.TryGetValue(key, out val))
+					return val;
+				else
+				{
+					if (AutoInit)
+					{
+						try
+						{
+							val = (TValue)typeof(TValue).Instantiate(AutoInitArgs);
+							this[key] = val;
+							return val;
+						}
+						catch
+						{
+							// can't instantiate the object
+							return default(TValue);
+						}
+					}
+					else
+						return default(TValue);
+				}
+			}
+			set
+			{
+				if (ContainsKey(key))
+					dict[key] = value;
+				else
+				{
+					InitDict();
+					dict.Add(key, value);
+				}
+			}
+		}
 
-        public int Count
-        {
-            get
-            {
-                if (dict == null)
-                    return 0;
-                return dict.Count;
-            }
-        }
+		public virtual void Add(TKey key, TValue value)
+		{
+			this[key] = value;
+		}
 
-        public bool IsReadOnly
-        {
-            get
-            {
-                return false;
-            }
-        }
+		public virtual void Add(KeyValuePair<TKey, TValue> item)
+		{
+			this[item.Key] = item.Value;
+		}
 
-        public ICollection<TKey> Keys
-        {
-            get
-            {
-                if (dict == null)
-                    return new List<TKey>();
-                return dict.Keys;
-            }
-        }
+		public void Clear()
+		{
+			if (dict != null)
+				dict.Clear();
+		}
 
-        public ICollection<TValue> Values
-        {
-            get
-            {
-                if (dict == null)
-                    return new List<TValue>();
-                return dict.Values;
-            }
-        }
+		public bool Contains(KeyValuePair<TKey, TValue> item)
+		{
+			if (dict == null)
+				return false;
+			return dict.Contains(item);
+		}
 
-        #endregion Public Properties
+		public bool ContainsKey(TKey key)
+		{
+			if (key == null)
+				return false; // dicts can't contain null keys anyway
 
-        #region Public Indexers
+			if (dict == null)
+				return false; // obviously empty, no need to InitDict
 
-        public TValue this[TKey key]
-        {
-            get
-            {
-                if (dict == null)
-                    return default(TValue);
-                TValue val;
-                if (dict.TryGetValue(key, out val))
-                    return val;
-                else
-                {
-                    if (AutoInit)
-                    {
-                        try
-                        {
-                            val = (TValue)typeof(TValue).Instantiate(AutoInitArgs);
-                            this[key] = val;
-                            return val;
-                        }
-                        catch
-                        {
-                            // can't instantiate the object
-                            return default(TValue);
-                        }
-                    }
-                    else
-                        return default(TValue);
-                }
-            }
-            set
-            {
-                if (ContainsKey(key))
-                    dict[key] = value;
-                else
-                {
-                    InitDict();
-                    dict.Add(key, value);
-                }
-            }
-        }
+			return dict.ContainsKey(key);
+		}
 
-        #endregion Public Indexers
+		public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+		{
+			if (dict != null)
+				((IDictionary<TKey, TValue>)dict).CopyTo(array, arrayIndex);
+		}
 
-        #region Public Methods
+		public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+		{
+			if (dict == null)
+				return Enumerable.Empty<KeyValuePair<TKey, TValue>>().GetEnumerator();
+			return dict.GetEnumerator();
+		}
 
-        public virtual void Add(TKey key, TValue value)
-        {
-            this[key] = value;
-        }
+		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
+		}
 
-        public virtual void Add(KeyValuePair<TKey, TValue> item)
-        {
-            this[item.Key] = item.Value;
-        }
+		public bool Remove(TKey key)
+		{
+			if (dict == null)
+				return false;
+			return dict.Remove(key);
+		}
 
-        public void Clear()
-        {
-            if (dict != null)
-                dict.Clear();
-        }
+		public bool Remove(KeyValuePair<TKey, TValue> item)
+		{
+			if (dict == null)
+				return false;
+			return ((IDictionary<TKey, TValue>)dict).Remove(item);
+		}
 
-        public bool Contains(KeyValuePair<TKey, TValue> item)
-        {
-            if (dict == null)
-                return false;
-            return dict.Contains(item);
-        }
+		public bool TryGetValue(TKey key, out TValue value)
+		{
+			if (dict == null)
+				value = default(TValue);
+			else
+				value = this[key];
+			return true;
+		}
 
-        public bool ContainsKey(TKey key)
-        {
-            if (key == null)
-                return false; // dicts can't contain null keys anyway
-
-            if (dict == null)
-                return false; // obviously empty, no need to InitDict
-
-            return dict.ContainsKey(key);
-        }
-
-        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
-        {
-            if (dict != null)
-                ((IDictionary<TKey, TValue>)dict).CopyTo(array, arrayIndex);
-        }
-
-        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
-        {
-            if (dict == null)
-                return Enumerable.Empty<KeyValuePair<TKey, TValue>>().GetEnumerator();
-            return dict.GetEnumerator();
-        }
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public bool Remove(TKey key)
-        {
-            if (dict == null)
-                return false;
-            return dict.Remove(key);
-        }
-
-        public bool Remove(KeyValuePair<TKey, TValue> item)
-        {
-            if (dict == null)
-                return false;
-            return ((IDictionary<TKey, TValue>)dict).Remove(item);
-        }
-
-        public bool TryGetValue(TKey key, out TValue value)
-        {
-            if (dict == null)
-                value = default(TValue);
-            else
-                value = this[key];
-            return true;
-        }
-
-        #endregion Public Methods
-
-        #region Private Methods
-
-        /// <summary>
-        /// Somehow we can't guarantee that dict will be initialized on freshly instantiated objects otherwise...
-        /// </summary>
-        private void InitDict()
-        {
-            if (dict == null)
-                dict = new Dictionary<TKey, TValue>();
-        }
-
-        #endregion Private Methods
-    }
+		/// <summary>
+		/// Somehow we can't guarantee that dict will be initialized on freshly instantiated objects otherwise...
+		/// </summary>
+		private void InitDict()
+		{
+			if (dict == null)
+				dict = new Dictionary<TKey, TValue>();
+		}
+	}
 }

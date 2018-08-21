@@ -9,140 +9,124 @@ using System.Linq;
 
 namespace FrEee.Game.Objects.Civilization.Diplomacy
 {
-    /// <summary>
-    /// A diplomatic message.
-    /// </summary>
-    public abstract class Message : IMessage
-    {
-        #region Protected Constructors
+	/// <summary>
+	/// A diplomatic message.
+	/// </summary>
+	public abstract class Message : IMessage
+	{
+		protected Message(Empire recipient)
+		{
+			Owner = Empire.Current;
+			Recipient = recipient;
+			TurnNumber = Galaxy.Current.TurnNumber;
+		}
 
-        protected Message(Empire recipient)
-        {
-            Owner = Empire.Current;
-            Recipient = recipient;
-            TurnNumber = Galaxy.Current.TurnNumber;
-        }
+		public Image Icon
+		{
+			get
+			{
+				return Owner == Empire.Current ? Recipient.Icon : Owner.Icon;
+			}
+		}
 
-        #endregion Protected Constructors
+		public abstract IEnumerable<string> IconPaths { get; }
 
-        #region Public Properties
+		public long ID
+		{
+			get;
+			set;
+		}
 
-        public Image Icon
-        {
-            get
-            {
-                return Owner == Empire.Current ? Recipient.Icon : Owner.Icon;
-            }
-        }
+		public IMessage InReplyTo { get; set; }
 
-        public abstract IEnumerable<string> IconPaths { get; }
+		public bool IsDisposed { get; set; }
 
-        public long ID
-        {
-            get;
-            set;
-        }
+		/// <summary>
+		/// Messages cannot be memories, as they do not change over time.
+		/// </summary>
+		public bool IsMemory
+		{
+			get; set;
+		}
 
-        public IMessage InReplyTo { get; set; }
+		/// <summary>
+		/// The empire sending this message.
+		/// </summary>
+		[DoNotSerialize]
+		public Empire Owner { get { return owner; } set { owner = value; } }
 
-        public bool IsDisposed { get; set; }
+		public Image Portrait
+		{
+			get
+			{
+				return Owner == Empire.Current ? Recipient.Portrait : Owner.Portrait;
+			}
+		}
 
-        /// <summary>
-        /// Messages cannot be memories, as they do not change over time.
-        /// </summary>
-        public bool IsMemory
-        {
-            get; set;
-        }
+		public abstract IEnumerable<string> PortraitPaths { get; }
 
-        /// <summary>
-        /// The empire sending this message.
-        /// </summary>
-        [DoNotSerialize]
-        public Empire Owner { get { return owner; } set { owner = value; } }
+		/// <summary>
+		/// The empire receiving the message.
+		/// </summary>
+		[DoNotSerialize]
+		public Empire Recipient { get { return recipient; } set { recipient = value; } }
 
-        public Image Portrait
-        {
-            get
-            {
-                return Owner == Empire.Current ? Recipient.Portrait : Owner.Portrait;
-            }
-        }
+		/// <summary>
+		/// The text of the message.
+		/// </summary>
+		public string Text { get; set; }
 
-        public abstract IEnumerable<string> PortraitPaths { get; }
+		public double Timestamp
+		{
+			get; set;
+		}
 
-        /// <summary>
-        /// The empire receiving the message.
-        /// </summary>
-        [DoNotSerialize]
-        public Empire Recipient { get { return recipient; } set { recipient = value; } }
+		public int TurnNumber { get; set; }
 
-        /// <summary>
-        /// The text of the message.
-        /// </summary>
-        public string Text { get; set; }
+		private GalaxyReference<Empire> owner { get; set; }
 
-        public double Timestamp
-        {
-            get; set;
-        }
+		private GalaxyReference<Empire> recipient { get; set; }
 
-        public int TurnNumber { get; set; }
+		public Visibility CheckVisibility(Empire emp)
+		{
+			// TODO - intel to spy on foreign messages or disrupt communications
+			if (emp == Owner)
+				return Visibility.Owned;
+			if (emp == Recipient)
+				return Visibility.Scanned;
+			return Visibility.Unknown;
+		}
 
-        #endregion Public Properties
+		public void Dispose()
+		{
+			if (IsDisposed)
+				return;
+			Galaxy.Current.UnassignID(this);
+			if (Owner != null)
+			{
+				// HACK - how could a diplomatic message have no owner?
+				var cmd = Owner.Commands.OfType<SendMessageCommand>().SingleOrDefault(c => c.Message == this);
+				if (cmd != null)
+					Owner.Commands.Remove(cmd);
+			}
+		}
 
-        #region Private Properties
+		/// <summary>
+		/// Messages cannot be memories, as they do not change over time.
+		/// </summary>
+		public bool IsObsoleteMemory(Empire emp)
+		{
+			return false;
+		}
 
-        private GalaxyReference<Empire> owner { get; set; }
+		public void Redact(Empire emp)
+		{
+			// TODO - partial espionage of messages?
+			// e.g. you could tell that a type of message was sent but not the text or parameters
+			if (CheckVisibility(emp) < Visibility.Fogged)
+				Dispose();
+		}
 
-        private GalaxyReference<Empire> recipient { get; set; }
-
-        #endregion Private Properties
-
-        #region Public Methods
-
-        public Visibility CheckVisibility(Empire emp)
-        {
-            // TODO - intel to spy on foreign messages or disrupt communications
-            if (emp == Owner)
-                return Visibility.Owned;
-            if (emp == Recipient)
-                return Visibility.Scanned;
-            return Visibility.Unknown;
-        }
-
-        public void Dispose()
-        {
-            if (IsDisposed)
-                return;
-            Galaxy.Current.UnassignID(this);
-            if (Owner != null)
-            {
-                // HACK - how could a diplomatic message have no owner?
-                var cmd = Owner.Commands.OfType<SendMessageCommand>().SingleOrDefault(c => c.Message == this);
-                if (cmd != null)
-                    Owner.Commands.Remove(cmd);
-            }
-        }
-
-        /// <summary>
-        /// Messages cannot be memories, as they do not change over time.
-        /// </summary>
-        public bool IsObsoleteMemory(Empire emp)
-        {
-            return false;
-        }
-
-        public void Redact(Empire emp)
-        {
-            // TODO - partial espionage of messages?
-            // e.g. you could tell that a type of message was sent but not the text or parameters
-            if (CheckVisibility(emp) < Visibility.Fogged)
-                Dispose();
-        }
-
-        public abstract void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null);
-
-        #endregion Public Methods
-    }
+		public abstract void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null);
+	}
 }

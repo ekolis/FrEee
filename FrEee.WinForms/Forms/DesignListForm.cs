@@ -18,8 +18,6 @@ namespace FrEee.WinForms.Forms
 {
 	public partial class DesignListForm : Form
 	{
-		#region Public Constructors
-
 		public DesignListForm()
 		{
 			InitializeComponent();
@@ -28,10 +26,6 @@ namespace FrEee.WinForms.Forms
 
 			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); } catch { }
 		}
-
-		#endregion Public Constructors
-
-		#region Private Methods
 
 		private void BindDesignList()
 		{
@@ -269,7 +263,5 @@ namespace FrEee.WinForms.Forms
 			else
 				designReport.Design = null;
 		}
-
-		#endregion Private Methods
 	}
 }

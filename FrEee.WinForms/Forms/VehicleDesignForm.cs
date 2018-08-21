@@ -19,24 +19,6 @@ namespace FrEee.WinForms.Forms
 {
 	public partial class VehicleDesignForm : Form
 	{
-		#region Private Fields
-
-		/// <summary>
-		/// Are we closing the form no matter what, even if there's a design?
-		/// </summary>
-		private bool abort;
-
-		private IDesign design;
-
-		private Mount mount;
-
-		// for saving to library
-		private string originalDesignName;
-
-		#endregion Private Fields
-
-		#region Public Constructors
-
 		public VehicleDesignForm()
 		{
 			InitializeComponent();
@@ -65,10 +47,6 @@ namespace FrEee.WinForms.Forms
 			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
 			catch { }
 		}
-
-		#endregion Public Constructors
-
-		#region Public Properties
 
 		/// <summary>
 		/// The currently used mount for placing new components.
@@ -100,9 +78,17 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
-		#endregion Public Properties
+		/// <summary>
+		/// Are we closing the form no matter what, even if there's a design?
+		/// </summary>
+		private bool abort;
 
-		#region Private Methods
+		private IDesign design;
+
+		private Mount mount;
+
+		// for saving to library
+		private string originalDesignName;
 
 		private void BindAll()
 		{
@@ -550,29 +536,15 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
-		#endregion Private Methods
-
-		#region Private Classes
-
 		private class MountInfo
 		{
-			#region Public Constructors
-
 			public MountInfo(Mount mount)
 			{
 				Mount = mount;
 			}
 
-			#endregion Public Constructors
-
-			#region Public Properties
-
 			public Mount Mount { get; set; }
 			public string ShortName { get { return Mount == null ? "(No Mount)" : Mount.ShortName.Value; } }
-
-			#endregion Public Properties
 		}
-
-		#endregion Private Classes
 	}
 }

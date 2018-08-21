@@ -12,106 +12,90 @@ using System.Linq;
 
 namespace FrEee.Game.Objects.Orders
 {
-    /// <summary>
-    /// An order for a mobile space object to hold position until enemies are sighted in the system.
-    /// </summary>
-    [Serializable]
-    public class SentryOrder : IOrder<IMobileSpaceObject>
-    {
-        #region Public Constructors
+	/// <summary>
+	/// An order for a mobile space object to hold position until enemies are sighted in the system.
+	/// </summary>
+	[Serializable]
+	public class SentryOrder : IOrder<IMobileSpaceObject>
+	{
+		public SentryOrder()
+		{
+			Owner = Empire.Current;
+		}
 
-        public SentryOrder()
-        {
-            Owner = Empire.Current;
-        }
+		public bool ConsumesMovement
+		{
+			get { return true; }
+		}
 
-        #endregion Public Constructors
+		public long ID { get; set; }
 
-        #region Public Properties
+		public bool IsComplete
+		{
+			get;
+			private set;
+		}
 
-        public bool ConsumesMovement
-        {
-            get { return true; }
-        }
+		public bool IsDisposed { get; set; }
 
-        public long ID { get; set; }
+		/// <summary>
+		/// The empire which issued the order.
+		/// </summary>
+		[DoNotSerialize]
+		public Empire Owner { get { return owner; } set { owner = value; } }
 
-        public bool IsComplete
-        {
-            get;
-            private set;
-        }
+		private GalaxyReference<Empire> owner { get; set; }
 
-        public bool IsDisposed { get; set; }
+		public bool CheckCompletion(IMobileSpaceObject v)
+		{
+			return IsComplete;
+		}
 
-        /// <summary>
-        /// The empire which issued the order.
-        /// </summary>
-        [DoNotSerialize]
-        public Empire Owner { get { return owner; } set { owner = value; } }
+		/// <summary>
+		/// Orders are visible only to their owners.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public Visibility CheckVisibility(Empire emp)
+		{
+			if (emp == Owner)
+				return Visibility.Visible;
+			return Visibility.Unknown;
+		}
 
-        #endregion Public Properties
+		public void Dispose()
+		{
+			if (IsDisposed)
+				return;
+			foreach (var v in Galaxy.Current.Referrables.OfType<SpaceVehicle>())
+				v.Orders.Remove(this);
+			Galaxy.Current.UnassignID(this);
+		}
 
-        #region Private Properties
+		public void Execute(IMobileSpaceObject sobj)
+		{
+			// if hostiles in system, we are done sentrying
+			if (sobj.FindStarSystem().FindSpaceObjects<ICombatSpaceObject>(s => s.IsHostileTo(sobj.Owner)).Any())
+				IsComplete = true;
 
-        private GalaxyReference<Empire> owner { get; set; }
+			// spend time
+			sobj.SpendTime(sobj.TimePerMove);
+		}
 
-        #endregion Private Properties
+		public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject executor)
+		{
+			// this order doesn't error
+			yield break;
+		}
 
-        #region Public Methods
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		{
+			// This type does not use client objects, so nothing to do here.
+		}
 
-        public bool CheckCompletion(IMobileSpaceObject v)
-        {
-            return IsComplete;
-        }
-
-        /// <summary>
-        /// Orders are visible only to their owners.
-        /// </summary>
-        /// <param name="emp"></param>
-        /// <returns></returns>
-        public Visibility CheckVisibility(Empire emp)
-        {
-            if (emp == Owner)
-                return Visibility.Visible;
-            return Visibility.Unknown;
-        }
-
-        public void Dispose()
-        {
-            if (IsDisposed)
-                return;
-            foreach (var v in Galaxy.Current.Referrables.OfType<SpaceVehicle>())
-                v.Orders.Remove(this);
-            Galaxy.Current.UnassignID(this);
-        }
-
-        public void Execute(IMobileSpaceObject sobj)
-        {
-            // if hostiles in system, we are done sentrying
-            if (sobj.FindStarSystem().FindSpaceObjects<ICombatSpaceObject>(s => s.IsHostileTo(sobj.Owner)).Any())
-                IsComplete = true;
-
-            // spend time
-            sobj.SpendTime(sobj.TimePerMove);
-        }
-
-        public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject executor)
-        {
-            // this order doesn't error
-            yield break;
-        }
-
-        public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
-        {
-            // This type does not use client objects, so nothing to do here.
-        }
-
-        public override string ToString()
-        {
-            return "Sentry";
-        }
-
-        #endregion Public Methods
-    }
+		public override string ToString()
+		{
+			return "Sentry";
+		}
+	}
 }

@@ -8,74 +8,50 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-    public partial class SearchBoxResultsForm : Form
-    {
-        #region Private Fields
+	public partial class SearchBoxResultsForm : Form
+	{
+		public SearchBoxResultsForm()
+		{
+			InitializeComponent();
 
-        private IEnumerable<ISpaceObject> results;
+			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); } catch { }
+		}
 
-        #endregion Private Fields
+		public IEnumerable<ISpaceObject> Results
+		{
+			get { return results; }
+			set
+			{
+				listView.Initialize(32, 32);
+				results = value.ToArray();
+				foreach (var sobj in results)
+					listView.AddItemWithImage(null, sobj.Name, sobj, sobj.Icon);
+			}
+		}
 
-        #region Public Constructors
+		public ISpaceObject SelectedObject
+		{
+			get
+			{
+				return listView.SelectedItems.Count == 0 ? null : (ISpaceObject)listView.SelectedItems[0].Tag;
+			}
+		}
 
-        public SearchBoxResultsForm()
-        {
-            InitializeComponent();
+		private IEnumerable<ISpaceObject> results;
 
-            try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); } catch { }
-        }
+		private void listView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+		{
+			if (ObjectSelected != null)
+				ObjectSelected(this, SelectedObject);
+		}
 
-        #endregion Public Constructors
+		private void listView_SizeChanged(object sender, EventArgs e)
+		{
+			columnHeader1.Width = Width - 32;
+		}
 
-        #region Public Delegates
+		public event ObjectSelectedDelegate ObjectSelected;
 
-        public delegate void ObjectSelectedDelegate(SearchBoxResultsForm sender, ISpaceObject sobj);
-
-        #endregion Public Delegates
-
-        #region Public Events
-
-        public event ObjectSelectedDelegate ObjectSelected;
-
-        #endregion Public Events
-
-        #region Public Properties
-
-        public IEnumerable<ISpaceObject> Results
-        {
-            get { return results; }
-            set
-            {
-                listView.Initialize(32, 32);
-                results = value.ToArray();
-                foreach (var sobj in results)
-                    listView.AddItemWithImage(null, sobj.Name, sobj, sobj.Icon);
-            }
-        }
-
-        public ISpaceObject SelectedObject
-        {
-            get
-            {
-                return listView.SelectedItems.Count == 0 ? null : (ISpaceObject)listView.SelectedItems[0].Tag;
-            }
-        }
-
-        #endregion Public Properties
-
-        #region Private Methods
-
-        private void listView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-        {
-            if (ObjectSelected != null)
-                ObjectSelected(this, SelectedObject);
-        }
-
-        private void listView_SizeChanged(object sender, EventArgs e)
-        {
-            columnHeader1.Width = Width - 32;
-        }
-
-        #endregion Private Methods
-    }
+		public delegate void ObjectSelectedDelegate(SearchBoxResultsForm sender, ISpaceObject sobj);
+	}
 }

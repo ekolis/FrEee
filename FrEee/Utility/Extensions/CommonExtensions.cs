@@ -25,24 +25,11 @@ using System.Threading.Tasks;
 
 namespace FrEee.Utility.Extensions
 {
-	public enum IDCopyBehavior
-	{
-		PreserveSource,
-		PreserveDestination,
-		Regenerate
-	}
-
 	public static class CommonExtensions
 	{
-		#region Private Fields
-
 		private static SafeDictionary<Type, object> defaultValueCache = new SafeDictionary<Type, object>();
 
 		private static List<Type> mappedTypes = new List<Type>();
-
-		#endregion Private Fields
-
-		#region Public Methods
 
 		/// <summary>
 		/// All abilities belonging to an object.
@@ -995,11 +982,6 @@ namespace FrEee.Utility.Extensions
 			return o.StandardIncome() + o.RemoteMiningIncome() + o.RawResourceIncome();
 		}
 
-		public static bool IsUnlocked(this IUnlockable u)
-		{
-			return u.UnlockRequirements.All(r => r.IsMetBy(Empire.Current));
-		}
-
 		public static object Instantiate(this Type type, params object[] args)
 		{
 			if (type.GetConstructors().Where(c => c.GetParameters().Length == (args == null ? 0 : args.Length)).Any())
@@ -1011,6 +993,11 @@ namespace FrEee.Utility.Extensions
 		public static T Instantiate<T>(params object[] args)
 		{
 			return (T)typeof(T).Instantiate(args);
+		}
+
+		public static bool IsUnlocked(this IUnlockable u)
+		{
+			return u.UnlockRequirements.All(r => r.IsMetBy(Empire.Current));
 		}
 
 		/// <summary>
@@ -2093,10 +2080,6 @@ namespace FrEee.Utility.Extensions
 			return "The " + emp.Name;
 		}
 
-		#endregion Public Methods
-
-		#region Internal Methods
-
 		internal static Visibility CheckSpaceObjectVisibility(this ISpaceObject sobj, Empire emp)
 		{
 			bool hasMemory = false;
@@ -2155,10 +2138,6 @@ namespace FrEee.Utility.Extensions
 			}
 			return Visibility.Visible;
 		}
-
-		#endregion Internal Methods
-
-		#region Private Methods
 
 		private static Expression CreateParam(ParameterExpression[] paramsOfDelegate, int i, ParameterInfo callParamType, Queue<object> queueMissingParams)
 		{
@@ -2261,8 +2240,6 @@ namespace FrEee.Utility.Extensions
 				LogUnitTransferFailedNoStorage(unit, src, dest, emp);
 		}
 
-		#endregion Private Methods
-
 		/*// based on http://cangencer.wordpress.com/2011/06/08/auto-ignore-non-existing-properties-with-automapper/
 		private static IMappingExpression<T, T> IgnoreReadOnlyAndNonSerializableProperties<T>(this IMappingExpression<T, T> expression)
 		{
@@ -2320,5 +2297,12 @@ namespace FrEee.Utility.Extensions
 			})).Unwrap();
 			runSync.Wait();
 		}*/
+	}
+
+	public enum IDCopyBehavior
+	{
+		PreserveSource,
+		PreserveDestination,
+		Regenerate
 	}
 }

@@ -11,202 +11,170 @@ using System.Security.Policy;
 
 namespace FrEee.Tests.Utility.Extensions
 {
-    /// <summary>
-    /// Tests data operations.
-    /// </summary>
-    [TestClass]
-    public class DataTest
-    {
-        #region Private Fields
+	/// <summary>
+	/// Tests data operations.
+	/// </summary>
+	[TestClass]
+	public class DataTest
+	{
+		private Person barack, michelle, malia, sasha;
 
-        private Person barack, michelle, malia, sasha;
+		[ClassInitialize]
+		public static void ClassInit(TestContext ctx)
+		{
+			// silly unit tests can't find their own assembly
+			SafeType.ForceLoadType(typeof(DataTest));
+			SafeType.ForceLoadType(typeof(Person));
+		}
 
-        #endregion Private Fields
+		/// <summary>
+		/// Tests simple data on an object that is not an IDataObject.
+		/// </summary>
+		[TestMethod]
+		public void AnyObjectSimpleData()
+		{
+			var timmy = new Person("Timmy", null, null);
+			var lassie = new Dog("Lassie", timmy);
 
-        #region Public Methods
+			var simple = new SimpleDataObject(lassie, null);
+			simple.InitializeData();
+			Assert.AreEqual(lassie.Name, simple.Data[nameof(lassie.Name)]);
+			Assert.AreEqual(lassie.Owner, simple.Data[nameof(lassie.Owner)]);
+			var clone = (Dog)simple.Value;
+			Assert.AreEqual(lassie.Name, clone.Name);
+			Assert.AreEqual(lassie.Owner, clone.Owner);
+		}
 
-        [ClassInitialize]
-        public static void ClassInit(TestContext ctx)
-        {
-            // silly unit tests can't find their own assembly
-            SafeType.ForceLoadType(typeof(DataTest));
-            SafeType.ForceLoadType(typeof(Person));
-        }
+		/// <summary>
+		/// Tests sending simple data over app domain boundaries.
+		/// </summary>
+		[TestMethod]
+		public void AppDomains()
+		{
+			//Setting the AppDomainSetup. It is very important to set the ApplicationBase to a folder
+			//other than the one in which the sandboxer resides.
+			AppDomainSetup adSetup = new AppDomainSetup();
+			adSetup.ApplicationBase = AppDomain.CurrentDomain.BaseDirectory;
+			adSetup.ApplicationName = "FrEee";
+			adSetup.DynamicBase = "ScriptEngine";
 
-        /// <summary>
-        /// Tests simple data on an object that is not an IDataObject.
-        /// </summary>
-        [TestMethod]
-        public void AnyObjectSimpleData()
-        {
-            var timmy = new Person("Timmy", null, null);
-            var lassie = new Dog("Lassie", timmy);
+			//Setting the permissions for the AppDomain. We give the permission to execute and to
+			//read/discover the location where the untrusted code is loaded.
+			var evidence = new Evidence();
+			evidence.AddHostEvidence(new Zone(SecurityZone.MyComputer));
+			var permissions = SecurityManager.GetStandardSandbox(evidence);
+			var reflection = new ReflectionPermission(PermissionState.Unrestricted);
+			permissions.AddPermission(reflection);
 
-            var simple = new SimpleDataObject(lassie, null);
-            simple.InitializeData();
-            Assert.AreEqual(lassie.Name, simple.Data[nameof(lassie.Name)]);
-            Assert.AreEqual(lassie.Owner, simple.Data[nameof(lassie.Owner)]);
-            var clone = (Dog)simple.Value;
-            Assert.AreEqual(lassie.Name, clone.Name);
-            Assert.AreEqual(lassie.Owner, clone.Owner);
-        }
+			//Now we have everything we need to create the AppDomain, so let's create it.
+			var sandbox = AppDomain.CreateDomain("Test", null, adSetup, permissions, AppDomain.CurrentDomain.GetAssemblies().Select(a => a.Evidence.GetHostEvidence<StrongName>()).Where(sn => sn != null).ToArray());
 
-        /// <summary>
-        /// Tests sending simple data over app domain boundaries.
-        /// </summary>
-        [TestMethod]
-        public void AppDomains()
-        {
-            //Setting the AppDomainSetup. It is very important to set the ApplicationBase to a folder
-            //other than the one in which the sandboxer resides.
-            AppDomainSetup adSetup = new AppDomainSetup();
-            adSetup.ApplicationBase = AppDomain.CurrentDomain.BaseDirectory;
-            adSetup.ApplicationName = "FrEee";
-            adSetup.DynamicBase = "ScriptEngine";
+			// can we send Barack over?
+			sandbox.SetData("data", new SimpleDataObject(barack));
 
-            //Setting the permissions for the AppDomain. We give the permission to execute and to
-            //read/discover the location where the untrusted code is loaded.
-            var evidence = new Evidence();
-            evidence.AddHostEvidence(new Zone(SecurityZone.MyComputer));
-            var permissions = SecurityManager.GetStandardSandbox(evidence);
-            var reflection = new ReflectionPermission(PermissionState.Unrestricted);
-            permissions.AddPermission(reflection);
+			// can we make a new person (well, person data) over there and poke him?
+			var data = (SimpleDataObject)sandbox.CreateInstanceAndUnwrap(Assembly.GetAssembly(typeof(SimpleDataObject)).FullName, typeof(SimpleDataObject).FullName);
+			var nobody = new Person(null, null, null);
+			data.Data = nobody.Data;
+			nobody.Data = data.Data;
+			Assert.AreEqual("Hi, I'm nobody!", nobody.SayHi());
+		}
 
-            //Now we have everything we need to create the AppDomain, so let's create it.
-            var sandbox = AppDomain.CreateDomain("Test", null, adSetup, permissions, AppDomain.CurrentDomain.GetAssemblies().Select(a => a.Evidence.GetHostEvidence<StrongName>()).Where(sn => sn != null).ToArray());
+		/// <summary>
+		/// Tests full-fledged (object oriented) data operations.
+		/// </summary>
+		[TestMethod]
+		public void Data()
+		{
+			var data = barack.Data;
+			Assert.AreEqual(barack.Name, data[nameof(barack.Name)]);
+			Assert.AreEqual(barack.Children, data[nameof(barack.Children)]);
+			var clone = new Person(null, null, null);
+			clone.Data = data;
+			Assert.AreEqual(barack.Name, clone.Name);
+			Assert.AreEqual(barack.Children, clone.Children); // well, the DNA test would say they're the clone's as well ;)
+		}
 
-            // can we send Barack over?
-            sandbox.SetData("data", new SimpleDataObject(barack));
+		/// <summary>
+		/// Tests simple (string-only) data operations.
+		/// </summary>
+		[TestMethod]
+		public void SimpleData()
+		{
+			var simple = new SimpleDataObject(barack, null);
+			simple.InitializeData();
+			Assert.AreEqual(barack.Name, simple.Data[nameof(barack.Name)]);
+			Assert.AreEqual(barack.Children, simple.Data[nameof(barack.Children)]);
+			var clone = (Person)simple.Value;
+			Assert.AreEqual(barack.Name, clone.Name);
+			Assert.AreEqual(barack.Children, clone.Children); // well, the DNA test would say they're the clone's as well ;)
+		}
 
-            // can we make a new person (well, person data) over there and poke him?
-            var data = (SimpleDataObject)sandbox.CreateInstanceAndUnwrap(Assembly.GetAssembly(typeof(SimpleDataObject)).FullName, typeof(SimpleDataObject).FullName);
-            var nobody = new Person(null, null, null);
-            data.Data = nobody.Data;
-            nobody.Data = data.Data;
-            Assert.AreEqual("Hi, I'm nobody!", nobody.SayHi());
-        }
+		[TestInitialize]
+		public void TestInit()
+		{
+			barack = new Person("Barack", null, null);
+			michelle = new Person("Michelle", null, null);
+			malia = new Person("Malia", barack, michelle);
+			sasha = new Person("Sasha", barack, michelle);
+		}
 
-        /// <summary>
-        /// Tests full-fledged (object oriented) data operations.
-        /// </summary>
-        [TestMethod]
-        public void Data()
-        {
-            var data = barack.Data;
-            Assert.AreEqual(barack.Name, data[nameof(barack.Name)]);
-            Assert.AreEqual(barack.Children, data[nameof(barack.Children)]);
-            var clone = new Person(null, null, null);
-            clone.Data = data;
-            Assert.AreEqual(barack.Name, clone.Name);
-            Assert.AreEqual(barack.Children, clone.Children); // well, the DNA test would say they're the clone's as well ;)
-        }
+		private class Dog
+		{
+			public Dog(string name, Person owner)
+			{
+				Name = Name;
+				Owner = owner;
+			}
 
-        /// <summary>
-        /// Tests simple (string-only) data operations.
-        /// </summary>
-        [TestMethod]
-        public void SimpleData()
-        {
-            var simple = new SimpleDataObject(barack, null);
-            simple.InitializeData();
-            Assert.AreEqual(barack.Name, simple.Data[nameof(barack.Name)]);
-            Assert.AreEqual(barack.Children, simple.Data[nameof(barack.Children)]);
-            var clone = (Person)simple.Value;
-            Assert.AreEqual(barack.Name, clone.Name);
-            Assert.AreEqual(barack.Children, clone.Children); // well, the DNA test would say they're the clone's as well ;)
-        }
+			public string Name { get; set; }
+			public Person Owner { get; private set; }
+		}
 
-        [TestInitialize]
-        public void TestInit()
-        {
-            barack = new Person("Barack", null, null);
-            michelle = new Person("Michelle", null, null);
-            malia = new Person("Malia", barack, michelle);
-            sasha = new Person("Sasha", barack, michelle);
-        }
+		private class Person : IDataObject
+		{
+			public Person(string name, Person father, Person mother)
+			{
+				Name = name;
+				Mother = mother;
+				Father = father;
+				if (Mother != null)
+					Mother.Children.Add(this);
+				if (Father != null)
+					Father.Children.Add(this);
+			}
 
-        #endregion Public Methods
+			public ISet<Person> Children { get; private set; } = new HashSet<Person>();
 
-        #region Private Classes
+			public SafeDictionary<string, object> Data
+			{
+				get
+				{
+					var dict = new SafeDictionary<string, object>();
+					dict[nameof(Name)] = Name;
+					dict[nameof(Mother)] = Mother;
+					dict[nameof(Father)] = Father;
+					dict[nameof(Children)] = Children;
+					return dict;
+				}
 
-        private class Dog
-        {
-            #region Public Constructors
+				set
+				{
+					Name = value[nameof(Name)].Default<string>();
+					Mother = value[nameof(Mother)].Default<Person>();
+					Father = value[nameof(Father)].Default<Person>();
+					Children = value[nameof(Children)].Default(new HashSet<Person>());
+				}
+			}
 
-            public Dog(string name, Person owner)
-            {
-                Name = Name;
-                Owner = owner;
-            }
+			public Person Father { get; private set; }
+			public Person Mother { get; private set; }
+			public string Name { get; set; }
 
-            #endregion Public Constructors
-
-            #region Public Properties
-
-            public string Name { get; set; }
-            public Person Owner { get; private set; }
-
-            #endregion Public Properties
-        }
-
-        private class Person : IDataObject
-        {
-            #region Public Constructors
-
-            public Person(string name, Person father, Person mother)
-            {
-                Name = name;
-                Mother = mother;
-                Father = father;
-                if (Mother != null)
-                    Mother.Children.Add(this);
-                if (Father != null)
-                    Father.Children.Add(this);
-            }
-
-            #endregion Public Constructors
-
-            #region Public Properties
-
-            public ISet<Person> Children { get; private set; } = new HashSet<Person>();
-
-            public SafeDictionary<string, object> Data
-            {
-                get
-                {
-                    var dict = new SafeDictionary<string, object>();
-                    dict[nameof(Name)] = Name;
-                    dict[nameof(Mother)] = Mother;
-                    dict[nameof(Father)] = Father;
-                    dict[nameof(Children)] = Children;
-                    return dict;
-                }
-
-                set
-                {
-                    Name = value[nameof(Name)].Default<string>();
-                    Mother = value[nameof(Mother)].Default<Person>();
-                    Father = value[nameof(Father)].Default<Person>();
-                    Children = value[nameof(Children)].Default(new HashSet<Person>());
-                }
-            }
-
-            public Person Father { get; private set; }
-            public Person Mother { get; private set; }
-            public string Name { get; set; }
-
-            #endregion Public Properties
-
-            #region Public Methods
-
-            public string SayHi()
-            {
-                return $"Hi, I'm {Name ?? "nobody"}!";
-            }
-
-            #endregion Public Methods
-        }
-
-        #endregion Private Classes
-    }
+			public string SayHi()
+			{
+				return $"Hi, I'm {Name ?? "nobody"}!";
+			}
+		}
+	}
 }

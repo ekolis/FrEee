@@ -18,14 +18,6 @@ namespace FrEee.Game.Objects.Vehicles
 	[Serializable]
 	public abstract class SpaceVehicle : Vehicle, ICargoTransferrer, IMobileSpaceObject<SpaceVehicle>
 	{
-		#region Private Fields
-
-		private Sector sector;
-
-		#endregion Private Fields
-
-		#region Public Constructors
-
 		public SpaceVehicle()
 		{
 			Orders = new List<IOrder<SpaceVehicle>>();
@@ -33,10 +25,6 @@ namespace FrEee.Game.Objects.Vehicles
 			Cargo = new Cargo();
 			StoredResources = new ResourceQuantity();
 		}
-
-		#endregion Public Constructors
-
-		#region Public Properties
 
 		public IDictionary<Race, long> AllPopulation
 		{
@@ -81,6 +69,8 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return this.GetAbilityValue("Cargo Storage").ToInt(); }
 		}
+
+		public override int CombatSpeed => Mod.Current.Settings.CombatSpeedPercentPerStrategicSpeed.PercentOfRounded(StrategicSpeed) + this.GetAbilityValue("Combat Movement").ToInt();
 
 		public ConstructionQueue ConstructionQueue
 		{
@@ -218,6 +208,16 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
+		public override StarSystem StarSystem
+		{
+			get { return Sector == null ? null : Sector.StarSystem; }
+		}
+
+		/// <summary>
+		/// Resources stored on this space vehicle.
+		/// </summary>
+		public ResourceQuantity StoredResources { get; private set; }
+
 		/// <summary>
 		/// The speed of the vehicle, taking into account hull mass, thrust, speed bonuses, and supply.
 		/// </summary>
@@ -247,18 +247,6 @@ namespace FrEee.Game.Objects.Vehicles
 					+ EmergencySpeed;
 			}
 		}
-
-		public override int CombatSpeed => Mod.Current.Settings.CombatSpeedPercentPerStrategicSpeed.PercentOfRounded(StrategicSpeed) + this.GetAbilityValue("Combat Movement").ToInt();
-
-		public override StarSystem StarSystem
-		{
-			get { return Sector == null ? null : Sector.StarSystem; }
-		}
-
-		/// <summary>
-		/// Resources stored on this space vehicle.
-		/// </summary>
-		public ResourceQuantity StoredResources { get; private set; }
 
 		public Progress SupplyFill { get { return new Progress(SupplyRemaining, SupplyStorage); } }
 
@@ -298,15 +286,8 @@ namespace FrEee.Game.Objects.Vehicles
 			set;
 		}
 
-		#endregion Public Properties
-
-		#region Private Properties
-
 		private ConstructionQueue constructionQueue { get; set; }
-
-		#endregion Private Properties
-
-		#region Public Methods
+		private Sector sector;
 
 		public void AddOrder(IOrder order)
 		{
@@ -470,7 +451,5 @@ namespace FrEee.Game.Objects.Vehicles
 			foreach (var u in Cargo.Units.OfType<IMobileSpaceObject>())
 				u.SpendTime(timeElapsed);
 		}
-
-		#endregion Public Methods
 	}
 }

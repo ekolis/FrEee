@@ -21,24 +21,12 @@ namespace FrEee.Game.Objects.Space
 	/// </summary>
 	public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, IIncomeProducer
 	{
-		#region Private Fields
-
-		private Sector sector;
-
-		#endregion Private Fields
-
-		#region Public Constructors
-
 		public Fleet()
 		{
 			Vehicles = new GalaxyReferenceSet<IMobileSpaceObject>();
 			Orders = new List<IOrder<Fleet>>();
 			Timestamp = Galaxy.Current?.Timestamp ?? 0;
 		}
-
-		#endregion Public Constructors
-
-		#region Public Properties
 
 		public AbilityTargets AbilityTarget
 		{
@@ -137,6 +125,8 @@ namespace FrEee.Game.Objects.Space
 				});
 			}
 		}
+
+		public int CombatSpeed => Mod.Current.Settings.CombatSpeedPercentPerStrategicSpeed.PercentOfRounded(StrategicSpeed);
 
 		/// <summary>
 		/// Fleets don't have construction queues.
@@ -516,11 +506,6 @@ namespace FrEee.Game.Objects.Space
 			get { return Vehicles.ExceptSingle((IMobileSpaceObject)null).Sum(v => v.Size); }
 		}
 
-		public int StrategicSpeed
-		{
-			get { return Vehicles.MinOrDefault(sobj => sobj.StrategicSpeed); }
-		}
-
 		public ResourceQuantity StandardIncomePercentages
 		{
 			get { return Owner.PrimaryRace.IncomePercentages; }
@@ -542,6 +527,11 @@ namespace FrEee.Game.Objects.Space
 			{
 				return Vehicles.Sum(v => v.StoredResources);
 			}
+		}
+
+		public int StrategicSpeed
+		{
+			get { return Vehicles.MinOrDefault(sobj => sobj.StrategicSpeed); }
 		}
 
 		/// <summary>
@@ -643,11 +633,7 @@ namespace FrEee.Game.Objects.Space
 			get { return WeaponTargets.None; }
 		}
 
-		public int CombatSpeed => Mod.Current.Settings.CombatSpeedPercentPerStrategicSpeed.PercentOfRounded(StrategicSpeed);
-
-		#endregion Public Properties
-
-		#region Public Methods
+		private Sector sector;
 
 		public void AddOrder(IOrder order)
 		{
@@ -892,10 +878,6 @@ namespace FrEee.Game.Objects.Space
 				Dispose();
 		}
 
-		#endregion Public Methods
-
-		#region Private Methods
-
 		private IEnumerable<string> GetImagePaths(string imagetype)
 		{
 			var shipsetPath = Owner?.ShipsetPath ?? Empire.Current?.ShipsetPath;
@@ -921,7 +903,5 @@ namespace FrEee.Game.Objects.Space
 			yield return Path.Combine("Pictures", "Races", shipsetPath, imagetype + "_" + imageName);
 			yield return Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_" + imagetype + "_" + imageName);
 		}
-
-		#endregion Private Methods
 	}
 }

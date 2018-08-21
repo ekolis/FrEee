@@ -17,8 +17,6 @@ namespace FrEee.Game.Objects.Combat.Grid
 {
 	public class Battle : IBattle
 	{
-		#region Public Constructors
-
 		static Battle()
 		{
 			Current = new HashSet<Battle>();
@@ -42,10 +40,6 @@ namespace FrEee.Game.Objects.Combat.Grid
 			Dice = new PRNG((int)(moduloID / stardate * 10));
 			Timestamp = stardate;
 		}
-
-		#endregion Public Constructors
-
-		#region Public Properties
 
 		/// <summary>
 		/// Any battles that are currently ongoing.
@@ -146,10 +140,6 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 		public double Timestamp { get; private set; }
 		public IList<IntVector2> UpperLeft { get; private set; } = new List<IntVector2>();
-
-		#endregion Public Properties
-
-		#region Public Methods
 
 		public int GetDiameter(int round)
 		{
@@ -400,10 +390,6 @@ namespace FrEee.Game.Objects.Combat.Grid
 			}
 		}
 
-		#endregion Public Methods
-
-		#region Private Methods
-
 		private void CheckSeekerDetonation(Seeker s, SafeDictionary<ICombatant, IntVector2> locations)
 		{
 			if (locations[s] == locations[s.Target])
@@ -521,7 +507,5 @@ namespace FrEee.Game.Objects.Combat.Grid
 			UpperLeft[round].Y = positions.MinOrDefault(q => q.Y);
 			LowerRight[round].Y = positions.MaxOrDefault(q => q.Y);
 		}
-
-		#endregion Private Methods
 	}
 }

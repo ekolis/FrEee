@@ -21,21 +21,13 @@ namespace FrEee.Game.Objects.Vehicles
 	[Serializable]
 	public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IFoggable
 	{
-		#region Public Constructors
-
 		public Vehicle()
 		{
 			Components = new List<Component>();
 			ConstructionProgress = new ResourceQuantity();
 		}
 
-		#endregion Public Constructors
-
-		#region Public Properties
-
 		public abstract AbilityTargets AbilityTarget { get; }
-
-		public abstract int CombatSpeed { get; }
 
 		public int Accuracy
 		{
@@ -76,6 +68,8 @@ namespace FrEee.Game.Objects.Vehicles
 				return Components.Cast<IAbilityObject>().Append(Design.Hull);
 			}
 		}
+
+		public abstract int CombatSpeed { get; }
 
 		/// <summary>
 		/// The components on this vehicle.
@@ -497,6 +491,16 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return Design.Hull.Size; }
 		}
 
+		public ResourceQuantity StandardIncomePercentages
+		{
+			get
+			{
+				return Owner.PrimaryRace.IncomePercentages;
+			}
+		}
+
+		public abstract StarSystem StarSystem { get; }
+
 		/// <summary>
 		/// The speed of the vehicle, taking into account hull mass, thrust, and speed bonuses.
 		/// </summary>
@@ -523,16 +527,6 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
-		public ResourceQuantity StandardIncomePercentages
-		{
-			get
-			{
-				return Owner.PrimaryRace.IncomePercentages;
-			}
-		}
-
-		public abstract StarSystem StarSystem { get; }
-
 		public IConstructionTemplate Template
 		{
 			get { return Design; }
@@ -552,10 +546,6 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		public abstract WeaponTargets WeaponTargetType { get; }
-
-		#endregion Public Properties
-
-		#region Public Methods
 
 		public bool CanTarget(ITargetable target)
 		{
@@ -756,7 +746,5 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			return Name;
 		}
-
-		#endregion Public Methods
 	}
 }

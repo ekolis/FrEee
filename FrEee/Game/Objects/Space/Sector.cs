@@ -11,338 +11,322 @@ using System.Linq;
 
 namespace FrEee.Game.Objects.Space
 {
-    /// <summary>
-    /// A sector in a star system.
-    /// </summary>
-    [Serializable]
-    public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnable
-    {
-        #region Public Constructors
+	/// <summary>
+	/// A sector in a star system.
+	/// </summary>
+	[Serializable]
+	public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnable
+	{
+		public Sector(StarSystem starSystem, Point coordinates)
+		{
+			StarSystem = starSystem;
+			Coordinates = coordinates;
+		}
 
-        public Sector(StarSystem starSystem, Point coordinates)
-        {
-            StarSystem = starSystem;
-            Coordinates = coordinates;
-        }
+		public AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.Sector; }
+		}
 
-        #endregion Public Constructors
+		/// <summary>
+		/// Sectors don't contain population. (They kind of die in space...)
+		/// </summary>
+		public IDictionary<Race, long> AllPopulation
+		{
+			get { return new Dictionary<Race, long>(); }
+		}
 
-        #region Public Properties
+		public IEnumerable<IUnit> AllUnits
+		{
+			get { return StarSystem.SpaceObjectLocations.Where(l => l.Location == Coordinates).Select(l => l.Item).OfType<IUnit>().ToList(); }
+		}
 
-        public AbilityTargets AbilityTarget
-        {
-            get { return AbilityTargets.Sector; }
-        }
+		public Cargo Cargo
+		{
+			get
+			{
+				// TODO - implement sector cargo once we have unit groups
+				return new Cargo();
+			}
+		}
 
-        /// <summary>
-        /// Sectors don't contain population. (They kind of die in space...)
-        /// </summary>
-        public IDictionary<Race, long> AllPopulation
-        {
-            get { return new Dictionary<Race, long>(); }
-        }
+		/// <summary>
+		/// Sectors can contain practically infinite cargo.
+		/// </summary>
+		public int CargoStorage
+		{
+			get { return int.MaxValue; }
+		}
 
-        public IEnumerable<IUnit> AllUnits
-        {
-            get { return StarSystem.SpaceObjectLocations.Where(l => l.Location == Coordinates).Select(l => l.Item).OfType<IUnit>().ToList(); }
-        }
+		public IEnumerable<IAbilityObject> Children
+		{
+			get { return SpaceObjects; }
+		}
 
-        public Cargo Cargo
-        {
-            get
-            {
-                // TODO - implement sector cargo once we have unit groups
-                return new Cargo();
-            }
-        }
+		public Point Coordinates { get; set; }
 
-        /// <summary>
-        /// Sectors can contain practically infinite cargo.
-        /// </summary>
-        public int CargoStorage
-        {
-            get { return int.MaxValue; }
-        }
+		public Image Icon
+		{
+			get
+			{
+				return SpaceObjects.Largest()?.Icon ?? StarSystem?.Icon;
+			}
+		}
 
-        public IEnumerable<IAbilityObject> Children
-        {
-            get { return SpaceObjects; }
-        }
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return SpaceObjects.Largest()?.IconPaths ?? StarSystem?.IconPaths;
+			}
+		}
 
-        public Point Coordinates { get; set; }
+		public IEnumerable<Ability> IntrinsicAbilities
+		{
+			get { yield break; }
+		}
 
-        public Image Icon
-        {
-            get
-            {
-                return SpaceObjects.Largest()?.Icon ?? StarSystem?.Icon;
-            }
-        }
+		public bool IsContested
+		{
+			get
+			{
+				return SpaceObjects.Select(sobj => sobj.Owner).Distinct().ExceptSingle((Empire)null).Count() > 1;
+			}
+		}
 
-        public IEnumerable<string> IconPaths
-        {
-            get
-            {
-                return SpaceObjects.Largest()?.IconPaths ?? StarSystem?.IconPaths;
-            }
-        }
+		public string Name
+		{
+			get
+			{
+				if (StarSystem == null)
+					return "(Unexplored)";
+				return StarSystem + " (" + Coordinates.X + ", " + Coordinates.Y + ")";
+			}
+		}
 
-        public IEnumerable<Ability> IntrinsicAbilities
-        {
-            get { yield break; }
-        }
+		public Empire Owner
+		{
+			get
+			{
+				var owned = SpaceObjects.Where(sobj => sobj.Owner != null);
+				if (!owned.Any())
+					return null;
+				return owned.Largest().Owner;
+			}
+		}
 
-        public bool IsContested
-        {
-            get
-            {
-                return SpaceObjects.Select(sobj => sobj.Owner).Distinct().ExceptSingle((Empire)null).Count() > 1;
-            }
-        }
+		public IEnumerable<IAbilityObject> Parents
+		{
+			get
+			{
+				yield return StarSystem;
+			}
+		}
 
-        public string Name
-        {
-            get
-            {
-                if (StarSystem == null)
-                    return "(Unexplored)";
-                return StarSystem + " (" + Coordinates.X + ", " + Coordinates.Y + ")";
-            }
-        }
+		public long PopulationStorageFree
+		{
+			get { return 0; }
+		}
 
-        public Empire Owner
-        {
-            get
-            {
-                var owned = SpaceObjects.Where(sobj => sobj.Owner != null);
-                if (!owned.Any())
-                    return null;
-                return owned.Largest().Owner;
-            }
-        }
+		public Image Portrait
+		{
+			get
+			{
+				return SpaceObjects.Largest()?.Portrait ?? StarSystem?.Portrait;
+			}
+		}
 
-        public IEnumerable<IAbilityObject> Parents
-        {
-            get
-            {
-                yield return StarSystem;
-            }
-        }
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				return SpaceObjects.Largest()?.PortraitPaths ?? StarSystem?.PortraitPaths;
+			}
+		}
 
-        public long PopulationStorageFree
-        {
-            get { return 0; }
-        }
+		[DoNotSerialize(false)]
+		Sector ILocated.Sector
+		{
+			get { return this; }
+			set { throw new NotSupportedException("Cannot set the sector of a sector."); }
+		}
 
-        public Image Portrait
-        {
-            get
-            {
-                return SpaceObjects.Largest()?.Portrait ?? StarSystem?.Portrait;
-            }
-        }
+		public IEnumerable<ISpaceObject> SpaceObjects
+		{
+			get
+			{
+				if (StarSystem == null)
+					return Enumerable.Empty<ISpaceObject>();
+				var result = StarSystem.SpaceObjectLocations.Where(l => l.Location == Coordinates).Select(l => l.Item).Where(sobj => !(sobj is IContainable<Fleet>) || ((IContainable<Fleet>)sobj).Container == null);
 
-        public IEnumerable<string> PortraitPaths
-        {
-            get
-            {
-                return SpaceObjects.Largest()?.PortraitPaths ?? StarSystem?.PortraitPaths;
-            }
-        }
+				// on the server we don't want to count memories as physical space objects
+				if (Empire.Current == null)
+					result = result.Where(x => !x.IsMemory);
 
-        [DoNotSerialize(false)]
-        Sector ILocated.Sector
-        {
-            get { return this; }
-            set { throw new NotSupportedException("Cannot set the sector of a sector."); }
-        }
+				return result.ToArray();
+			}
+		}
 
-        public IEnumerable<ISpaceObject> SpaceObjects
-        {
-            get
-            {
-                if (StarSystem == null)
-                    return Enumerable.Empty<ISpaceObject>();
-                var result = StarSystem.SpaceObjectLocations.Where(l => l.Location == Coordinates).Select(l => l.Item).Where(sobj => !(sobj is IContainable<Fleet>) || ((IContainable<Fleet>)sobj).Container == null);
+		[DoNotSerialize]
+		public StarSystem StarSystem { get { return starSystem; } set { starSystem = value; } }
 
-                // on the server we don't want to count memories as physical space objects
-                if (Empire.Current == null)
-                    result = result.Where(x => !x.IsMemory);
+		private GalaxyReference<StarSystem> starSystem { get; set; }
 
-                return result.ToArray();
-            }
-        }
+		public static bool operator !=(Sector s1, Sector s2)
+		{
+			return !(s1 == s2);
+		}
 
-        [DoNotSerialize]
-        public StarSystem StarSystem { get { return starSystem; } set { starSystem = value; } }
+		public static bool operator ==(Sector s1, Sector s2)
+		{
+			if (s1.IsNull() && s2.IsNull())
+				return true;
+			if (s1.IsNull() || s2.IsNull())
+				return false;
+			return s1.starSystem == s2.starSystem && s1.Coordinates == s2.Coordinates;
+		}
 
-        #endregion Public Properties
+		public long AddPopulation(Race race, long amount)
+		{
+			// population jettisoned into space just disappears without a trace...
+			return 0;
+		}
 
-        #region Private Properties
+		public bool AddUnit(IUnit unit)
+		{
+			// can't place a unit that can't move about in space, in space!
+			if (!(unit is IMobileSpaceObject))
+				return false;
 
-        private GalaxyReference<StarSystem> starSystem { get; set; }
+			// TODO - limit number of units in space per empire as specified in Settings.txt
 
-        #endregion Private Properties
+			// place this unit in a fleet with other similar units
+			var fleet = this.SpaceObjects.OfType<Fleet>().SelectMany(f => f.SubfleetsWithNonFleetChildren()).Where(
+				f => f.Vehicles.OfType<IUnit>().Where(u => u.Design == unit.Design).Any()).FirstOrDefault();
+			var v = (IMobileSpaceObject)unit;
+			if (fleet == null)
+			{
+				// create a new fleet, there's no fleet with similar units
+				fleet = new Fleet();
+				fleet.Name = unit.Design.Name + " Group";
+				Place(fleet);
+			}
+			Place(v);
+			fleet.Vehicles.Add(v);
+			return true;
+		}
 
-        #region Public Methods
+		public Visibility CheckVisibility(Empire emp)
+		{
+			throw new NotImplementedException();
+		}
 
-        public static bool operator !=(Sector s1, Sector s2)
-        {
-            return !(s1 == s2);
-        }
+		public override bool Equals(object obj)
+		{
+			// TODO - upgrade equals to use "as" operator
+			if (obj is Sector)
+				return this == (Sector)obj;
+			return false;
+		}
 
-        public static bool operator ==(Sector s1, Sector s2)
-        {
-            if (s1.IsNull() && s2.IsNull())
-                return true;
-            if (s1.IsNull() || s2.IsNull())
-                return false;
-            return s1.starSystem == s2.starSystem && s1.Coordinates == s2.Coordinates;
-        }
+		public IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp)
+		{
+			return SpaceObjects.Where(sobj => sobj.Owner == emp).OfType<IAbilityObject>();
+		}
 
-        public long AddPopulation(Race race, long amount)
-        {
-            // population jettisoned into space just disappears without a trace...
-            return 0;
-        }
+		public override int GetHashCode()
+		{
+			return HashCodeMasher.Mash(starSystem, Coordinates);
+		}
 
-        public bool AddUnit(IUnit unit)
-        {
-            // can't place a unit that can't move about in space, in space!
-            if (!(unit is IMobileSpaceObject))
-                return false;
+		/// <summary>
+		/// Has this sector's star system been explored by an empire?
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public bool IsExploredBy(Empire emp)
+		{
+			if (StarSystem == null)
+				return false;
+			return StarSystem.ExploredByEmpires.Contains(emp);
+		}
 
-            // TODO - limit number of units in space per empire as specified in Settings.txt
+		public void Place(ISpaceObject sobj, bool removeFromFleet = true)
+		{
+			if (removeFromFleet)
+			{
+				// remove from fleet
+				if (sobj is IMobileSpaceObject)
+				{
+					var v = (IMobileSpaceObject)sobj;
+					if (v.Container != null)
+						v.Container.Vehicles.Remove(v);
+				}
+			}
 
-            // place this unit in a fleet with other similar units
-            var fleet = this.SpaceObjects.OfType<Fleet>().SelectMany(f => f.SubfleetsWithNonFleetChildren()).Where(
-                f => f.Vehicles.OfType<IUnit>().Where(u => u.Design == unit.Design).Any()).FirstOrDefault();
-            var v = (IMobileSpaceObject)unit;
-            if (fleet == null)
-            {
-                // create a new fleet, there's no fleet with similar units
-                fleet = new Fleet();
-                fleet.Name = unit.Design.Name + " Group";
-                Place(fleet);
-            }
-            Place(v);
-            fleet.Vehicles.Add(v);
-            return true;
-        }
+			// remove from cargo
+			if (sobj is IUnit)
+			{
+				var u = (IUnit)sobj;
+				u.Container?.RemoveUnit(u);
+			}
 
-        public Visibility CheckVisibility(Empire emp)
-        {
-            throw new NotImplementedException();
-        }
+			// place in space if it's actually in space
+			if (StarSystem != null)
+				StarSystem.Place(sobj, Coordinates);
+		}
 
-        public override bool Equals(object obj)
-        {
-            // TODO - upgrade equals to use "as" operator
-            if (obj is Sector)
-                return this == (Sector)obj;
-            return false;
-        }
+		public void Remove(ISpaceObject sobj)
+		{
+			// remove from fleet
+			if (sobj is IMobileSpaceObject)
+			{
+				var v = (IMobileSpaceObject)sobj;
+				if (v.Container != null)
+					v.Container.Vehicles.Remove(v);
+			}
 
-        public IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp)
-        {
-            return SpaceObjects.Where(sobj => sobj.Owner == emp).OfType<IAbilityObject>();
-        }
+			// remove from cargo
+			if (sobj is IUnit)
+			{
+				var u = (IUnit)sobj;
+				if (!u.Container.Equals(this))
+					u.Container.RemoveUnit(u);
+			}
 
-        public override int GetHashCode()
-        {
-            return HashCodeMasher.Mash(starSystem, Coordinates);
-        }
+			if (SpaceObjects.Contains(sobj))
+				StarSystem.Remove(sobj);
+		}
 
-        /// <summary>
-        /// Has this sector's star system been explored by an empire?
-        /// </summary>
-        /// <param name="emp"></param>
-        /// <returns></returns>
-        public bool IsExploredBy(Empire emp)
-        {
-            if (StarSystem == null)
-                return false;
-            return StarSystem.ExploredByEmpires.Contains(emp);
-        }
+		public long RemovePopulation(Race race, long amount)
+		{
+			// population cannot be recovered from space!
+			return amount;
+		}
 
-        public void Place(ISpaceObject sobj, bool removeFromFleet = true)
-        {
-            if (removeFromFleet)
-            {
-                // remove from fleet
-                if (sobj is IMobileSpaceObject)
-                {
-                    var v = (IMobileSpaceObject)sobj;
-                    if (v.Container != null)
-                        v.Container.Vehicles.Remove(v);
-                }
-            }
+		public bool RemoveUnit(IUnit unit)
+		{
+			if (unit is IMobileSpaceObject)
+			{
+				Remove((IMobileSpaceObject)unit);
+			}
+			return false;
+		}
 
-            // remove from cargo
-            if (sobj is IUnit)
-            {
-                var u = (IUnit)sobj;
-                u.Container?.RemoveUnit(u);
-            }
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		{
+			if (done == null)
+				done = new HashSet<IPromotable>();
+			if (!done.Contains(this))
+			{
+				done.Add(this);
+				starSystem.ReplaceClientIDs(idmap, done);
+			}
+		}
 
-            // place in space if it's actually in space
-            if (StarSystem != null)
-                StarSystem.Place(sobj, Coordinates);
-        }
-
-        public void Remove(ISpaceObject sobj)
-        {
-            // remove from fleet
-            if (sobj is IMobileSpaceObject)
-            {
-                var v = (IMobileSpaceObject)sobj;
-                if (v.Container != null)
-                    v.Container.Vehicles.Remove(v);
-            }
-
-            // remove from cargo
-            if (sobj is IUnit)
-            {
-                var u = (IUnit)sobj;
-                if (!u.Container.Equals(this))
-                    u.Container.RemoveUnit(u);
-            }
-
-            if (SpaceObjects.Contains(sobj))
-                StarSystem.Remove(sobj);
-        }
-
-        public long RemovePopulation(Race race, long amount)
-        {
-            // population cannot be recovered from space!
-            return amount;
-        }
-
-        public bool RemoveUnit(IUnit unit)
-        {
-            if (unit is IMobileSpaceObject)
-            {
-                Remove((IMobileSpaceObject)unit);
-            }
-            return false;
-        }
-
-        public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
-        {
-            if (done == null)
-                done = new HashSet<IPromotable>();
-            if (!done.Contains(this))
-            {
-                done.Add(this);
-                starSystem.ReplaceClientIDs(idmap, done);
-            }
-        }
-
-        public override string ToString()
-        {
-            return Name;
-        }
-
-        #endregion Public Methods
-    }
+		public override string ToString()
+		{
+			return Name;
+		}
+	}
 }

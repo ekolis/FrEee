@@ -8,8 +8,6 @@ namespace FrEee.Utility
 	/// </summary>
 	public class IntVector2 : Vector2<int>, IEquatable<IntVector2>
 	{
-		#region Public Constructors
-
 		public IntVector2()
 			: base()
 		{
@@ -24,10 +22,6 @@ namespace FrEee.Utility
 			: base(v)
 		{
 		}
-
-		#endregion Public Constructors
-
-		#region Public Properties
 
 		/// <summary>
 		/// Length of this vector moving in 8 directions along the grid.
@@ -54,10 +48,6 @@ namespace FrEee.Utility
 				return dx + dy;
 			}
 		}
-
-		#endregion Public Properties
-
-		#region Public Methods
 
 		/// <summary>
 		/// Interpolates between two vectors.
@@ -115,14 +105,14 @@ namespace FrEee.Utility
 			return new IntVector2(v.X * s, v.Y * s);
 		}
 
-		public static IntVector2 operator /(IntVector2 v, int s)
-		{
-			return new IntVector2(v.X / s, v.Y / s);
-		}
-
 		public static IntVector2 operator *(int s, IntVector2 v)
 		{
 			return v * s;
+		}
+
+		public static IntVector2 operator /(IntVector2 v, int s)
+		{
+			return new IntVector2(v.X / s, v.Y / s);
 		}
 
 		public static IntVector2 operator +(IntVector2 v1, IntVector2 v2)
@@ -166,7 +156,5 @@ namespace FrEee.Utility
 		{
 			return $"({X}, {Y})";
 		}
-
-		#endregion Public Methods
 	}
 }

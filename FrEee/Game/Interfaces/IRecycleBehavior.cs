@@ -3,23 +3,15 @@ using System.Collections.Generic;
 
 namespace FrEee.Game.Interfaces
 {
-    /// <summary>
-    /// A type of recycle behavior (scrap, analyze, etc.)
-    /// </summary>
-    public interface IRecycleBehavior
-    {
-        #region Public Properties
+	/// <summary>
+	/// A type of recycle behavior (scrap, analyze, etc.)
+	/// </summary>
+	public interface IRecycleBehavior
+	{
+		string Verb { get; }
 
-        string Verb { get; }
+		void Execute(IRecyclable target, bool didRecycle = false);
 
-        #endregion Public Properties
-
-        #region Public Methods
-
-        void Execute(IRecyclable target, bool didRecycle = false);
-
-        IEnumerable<LogMessage> GetErrors(IMobileSpaceObject executor, IRecyclable target);
-
-        #endregion Public Methods
-    }
+		IEnumerable<LogMessage> GetErrors(IMobileSpaceObject executor, IRecyclable target);
+	}
 }

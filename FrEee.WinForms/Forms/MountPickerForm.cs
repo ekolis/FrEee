@@ -9,82 +9,66 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-    public partial class MountPickerForm : Form
-    {
-        #region Private Fields
+	public partial class MountPickerForm : Form
+	{
+		public MountPickerForm(IHull hull)
+		{
+			InitializeComponent();
+			this.hull = hull;
+			Bind();
 
-        /// <summary>
-        /// The hull that the user is using.
-        /// Some mounts have restrictions on what hulls can use them.
-        /// So don't show any mounts that the hull can't use.
-        /// </summary>
-        private IHull hull;
+			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); } catch { }
+		}
 
-        #endregion Private Fields
+		/// <summary>
+		/// The mount that the user selected.
+		/// </summary>
+		public Mount Mount { get; private set; }
 
-        #region Public Constructors
+		/// <summary>
+		/// The hull that the user is using.
+		/// Some mounts have restrictions on what hulls can use them.
+		/// So don't show any mounts that the hull can't use.
+		/// </summary>
+		private IHull hull;
 
-        public MountPickerForm(IHull hull)
-        {
-            InitializeComponent();
-            this.hull = hull;
-            Bind();
+		private void Bind()
+		{
+			var mounts = Empire.Current.UnlockedItems.OfType<Mount>().Where(m =>
+				m.VehicleTypes.HasFlag(hull.VehicleType) &&
+				(m.MinimumVehicleSize == null || m.MinimumVehicleSize <= hull.Size) &&
+				(m.MaximumVehicleSize == null || m.MinimumVehicleSize >= hull.Size));
+			mountBindingSource.DataSource = mounts.ToArray();
+			gridMounts.Visible = mounts.Any();
+			// TODO - show mount stats somewhere...
+		}
 
-            try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); } catch { }
-        }
+		private void btnCancel_Click(object sender, EventArgs e)
+		{
+			DialogResult = DialogResult.Cancel;
+			Close();
+		}
 
-        #endregion Public Constructors
+		private void btnOk_Click(object sender, EventArgs e)
+		{
+			DialogResult = DialogResult.OK;
+			Close();
+		}
 
-        #region Public Properties
+		private void gridMounts_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+		{
+			// pick the mount and close the form
+			Mount = (Mount)gridMounts.Rows[e.RowIndex].DataBoundItem;
+			DialogResult = DialogResult.OK;
+			Close();
+		}
 
-        /// <summary>
-        /// The mount that the user selected.
-        /// </summary>
-        public Mount Mount { get; private set; }
-
-        #endregion Public Properties
-
-        #region Private Methods
-
-        private void Bind()
-        {
-            var mounts = Empire.Current.UnlockedItems.OfType<Mount>().Where(m =>
-                m.VehicleTypes.HasFlag(hull.VehicleType) &&
-                (m.MinimumVehicleSize == null || m.MinimumVehicleSize <= hull.Size) &&
-                (m.MaximumVehicleSize == null || m.MinimumVehicleSize >= hull.Size));
-            mountBindingSource.DataSource = mounts.ToArray();
-            gridMounts.Visible = mounts.Any();
-            // TODO - show mount stats somewhere...
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
-        }
-
-        private void btnOk_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.OK;
-            Close();
-        }
-
-        private void gridMounts_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            // pick the mount and close the form
-            Mount = (Mount)gridMounts.Rows[e.RowIndex].DataBoundItem;
-            DialogResult = DialogResult.OK;
-            Close();
-        }
-
-        private void gridMounts_SelectionChanged(object sender, EventArgs e)
-        {
-            if (gridMounts.SelectedRows.Count > 0)
-                Mount = (Mount)gridMounts.SelectedRows[0].DataBoundItem;
-            else
-                Mount = null;
-        }
-
-        #endregion Private Methods
-    }
+		private void gridMounts_SelectionChanged(object sender, EventArgs e)
+		{
+			if (gridMounts.SelectedRows.Count > 0)
+				Mount = (Mount)gridMounts.SelectedRows[0].DataBoundItem;
+			else
+				Mount = null;
+		}
+	}
 }

@@ -3,26 +3,18 @@ using FrEee.Utility;
 
 namespace FrEee.Game.Objects.Combat.Grid
 {
-    public class CombatantMovesEvent : IBattleEvent
-    {
-        #region Public Constructors
+	public class CombatantMovesEvent : IBattleEvent
+	{
+		public CombatantMovesEvent(ICombatant combatant, IntVector2 here, IntVector2 there)
+		{
+			Combatant = combatant;
+			StartPosition = here;
+			EndPosition = there;
+		}
 
-        public CombatantMovesEvent(ICombatant combatant, IntVector2 here, IntVector2 there)
-        {
-            Combatant = combatant;
-            StartPosition = here;
-            EndPosition = there;
-        }
+		public ICombatant Combatant { get; set; }
 
-        #endregion Public Constructors
-
-        #region Public Properties
-
-        public ICombatant Combatant { get; set; }
-
-        public IntVector2 EndPosition { get; set; }
-        public IntVector2 StartPosition { get; set; }
-
-        #endregion Public Properties
-    }
+		public IntVector2 EndPosition { get; set; }
+		public IntVector2 StartPosition { get; set; }
+	}
 }

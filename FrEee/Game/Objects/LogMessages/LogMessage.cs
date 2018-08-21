@@ -4,42 +4,34 @@ using System.Drawing;
 
 namespace FrEee.Game.Objects.LogMessages
 {
-    [Serializable]
-    public abstract class LogMessage
-    {
-        #region Protected Constructors
+	[Serializable]
+	public abstract class LogMessage
+	{
+		protected LogMessage(string text)
+		{
+			Text = text;
+			TurnNumber = Galaxy.Current.TurnNumber;
+		}
 
-        protected LogMessage(string text)
-        {
-            Text = text;
-            TurnNumber = Galaxy.Current.TurnNumber;
-        }
+		protected LogMessage(string text, int turn)
+		{
+			Text = text;
+			TurnNumber = turn;
+		}
 
-        protected LogMessage(string text, int turn)
-        {
-            Text = text;
-            TurnNumber = turn;
-        }
+		/// <summary>
+		/// A picture to display with the log message.
+		/// </summary>
+		public abstract Image Picture { get; }
 
-        #endregion Protected Constructors
+		/// <summary>
+		/// The text of the log message.
+		/// </summary>
+		public string Text { get; set; }
 
-        #region Public Properties
-
-        /// <summary>
-        /// A picture to display with the log message.
-        /// </summary>
-        public abstract Image Picture { get; }
-
-        /// <summary>
-        /// The text of the log message.
-        /// </summary>
-        public string Text { get; set; }
-
-        /// <summary>
-        /// The turn number on which the log message was generated.
-        /// </summary>
-        public int TurnNumber { get; set; }
-
-        #endregion Public Properties
-    }
+		/// <summary>
+		/// The turn number on which the log message was generated.
+		/// </summary>
+		public int TurnNumber { get; set; }
+	}
 }

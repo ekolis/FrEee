@@ -8,136 +8,120 @@ using System.Linq;
 
 namespace FrEee.Game.Objects.Technology
 {
-    public class FacilityUpgrade : IUpgradeable<FacilityUpgrade>, IPromotable, INamed
-    {
-        #region Public Constructors
+	public class FacilityUpgrade : IUpgradeable<FacilityUpgrade>, IPromotable, INamed
+	{
+		public FacilityUpgrade(FacilityTemplate old, FacilityTemplate nu)
+		{
+			Old = old;
+			New = nu;
+		}
 
-        public FacilityUpgrade(FacilityTemplate old, FacilityTemplate nu)
-        {
-            Old = old;
-            New = nu;
-        }
+		public ResourceQuantity Cost
+		{
+			get
+			{
+				return New.Cost * Mod.Current.Settings.UpgradeFacilityPercentCost / 100;
+			}
+		}
 
-        #endregion Public Constructors
+		/// <summary>
+		/// The family of facility being upgraded.
+		/// </summary>
+		public string Family
+		{
+			get { return New.Family; }
+		}
 
-        #region Public Properties
+		public bool IsObsolescent
+		{
+			get
+			{
+				return New.IsObsolescent;
+			}
+		}
 
-        public ResourceQuantity Cost
-        {
-            get
-            {
-                return New.Cost * Mod.Current.Settings.UpgradeFacilityPercentCost / 100;
-            }
-        }
+		public bool IsObsolete
+		{
+			get
+			{
+				return New.IsObsolete;
+			}
+		}
 
-        /// <summary>
-        /// The family of facility being upgraded.
-        /// </summary>
-        public string Family
-        {
-            get { return New.Family; }
-        }
+		public FacilityUpgrade LatestVersion
+		{
+			get
+			{
+				if (IsObsolete)
+					return new FacilityUpgrade(Old, New.LatestVersion);
+				else
+					return this;
+			}
+		}
 
-        public bool IsObsolescent
-        {
-            get
-            {
-                return New.IsObsolescent;
-            }
-        }
+		public string Name
+		{
+			get
+			{
+				return "Upgrade " + Old + " to " + New;
+			}
+		}
 
-        public bool IsObsolete
-        {
-            get
-            {
-                return New.IsObsolete;
-            }
-        }
+		[DoNotSerialize]
+		public FacilityTemplate New { get { return nu; } private set { nu = value; } }
 
-        public FacilityUpgrade LatestVersion
-        {
-            get
-            {
-                if (IsObsolete)
-                    return new FacilityUpgrade(Old, New.LatestVersion);
-                else
-                    return this;
-            }
-        }
+		public IEnumerable<FacilityUpgrade> NewerVersions
+		{
+			get { return Galaxy.Current.FindSpaceObjects<ISpaceObject>().Select(o => o.ConstructionQueue).ExceptSingle(null).SelectMany(q => q.Orders).Select(o => o.Item).OfType<FacilityUpgrade>().Where(u => u.New.UpgradesTo(New)); }
+		}
 
-        public string Name
-        {
-            get
-            {
-                return "Upgrade " + Old + " to " + New;
-            }
-        }
+		[DoNotSerialize]
+		public FacilityTemplate Old { get { return old; } private set { old = value; } }
 
-        [DoNotSerialize]
-        public FacilityTemplate New { get { return nu; } private set { nu = value; } }
+		public IEnumerable<FacilityUpgrade> OlderVersions
+		{
+			get { return Galaxy.Current.FindSpaceObjects<ISpaceObject>().Select(o => o.ConstructionQueue).ExceptSingle(null).SelectMany(q => q.Orders).Select(o => o.Item).OfType<FacilityUpgrade>().Where(u => New.UpgradesTo(u.New)); }
+		}
 
-        public IEnumerable<FacilityUpgrade> NewerVersions
-        {
-            get { return Galaxy.Current.FindSpaceObjects<ISpaceObject>().Select(o => o.ConstructionQueue).ExceptSingle(null).SelectMany(q => q.Orders).Select(o => o.Item).OfType<FacilityUpgrade>().Where(u => u.New.UpgradesTo(New)); }
-        }
+		private ModReference<FacilityTemplate> nu { get; set; }
+		private ModReference<FacilityTemplate> old { get; set; }
 
-        [DoNotSerialize]
-        public FacilityTemplate Old { get { return old; } private set { old = value; } }
+		public static bool operator !=(FacilityUpgrade x, FacilityUpgrade y)
+		{
+			return !(x == y);
+		}
 
-        public IEnumerable<FacilityUpgrade> OlderVersions
-        {
-            get { return Galaxy.Current.FindSpaceObjects<ISpaceObject>().Select(o => o.ConstructionQueue).ExceptSingle(null).SelectMany(q => q.Orders).Select(o => o.Item).OfType<FacilityUpgrade>().Where(u => New.UpgradesTo(u.New)); }
-        }
+		public static bool operator ==(FacilityUpgrade x, FacilityUpgrade y)
+		{
+			return x.SafeEquals(y);
+		}
 
-        #endregion Public Properties
+		public override bool Equals(object obj)
+		{
+			var fu = obj as FacilityUpgrade;
+			if (fu == null)
+				return false;
+			return fu.Old == Old && fu.New == New;
+		}
 
-        #region Private Properties
+		public override int GetHashCode()
+		{
+			return HashCodeMasher.Mash(Old, New);
+		}
 
-        private ModReference<FacilityTemplate> nu { get; set; }
-        private ModReference<FacilityTemplate> old { get; set; }
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		{
+			if (done == null)
+				done = new HashSet<IPromotable>();
+			if (!done.Contains(this))
+			{
+				done.Add(this);
+				old.ReplaceClientIDs(idmap, done);
+				nu.ReplaceClientIDs(idmap, done);
+			}
+		}
 
-        #endregion Private Properties
-
-        #region Public Methods
-
-        public static bool operator !=(FacilityUpgrade x, FacilityUpgrade y)
-        {
-            return !(x == y);
-        }
-
-        public static bool operator ==(FacilityUpgrade x, FacilityUpgrade y)
-        {
-            return x.SafeEquals(y);
-        }
-
-        public override bool Equals(object obj)
-        {
-            var fu = obj as FacilityUpgrade;
-            if (fu == null)
-                return false;
-            return fu.Old == Old && fu.New == New;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCodeMasher.Mash(Old, New);
-        }
-
-        public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
-        {
-            if (done == null)
-                done = new HashSet<IPromotable>();
-            if (!done.Contains(this))
-            {
-                done.Add(this);
-                old.ReplaceClientIDs(idmap, done);
-                nu.ReplaceClientIDs(idmap, done);
-            }
-        }
-
-        #endregion Public Methods
-
-        /*public bool RequiresColonyQueue
+		/*public bool RequiresColonyQueue
 		{
 			get
 			{
@@ -249,5 +233,5 @@ namespace FrEee.Game.Objects.Technology
 		{
 			// nothing to dispose of
 		}*/
-    }
+	}
 }

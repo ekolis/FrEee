@@ -15,78 +15,13 @@ namespace FrEee.WinForms.Forms
 {
 	public partial class BattleReplayForm : Form, IBindable<Battle>
 	{
-		#region Public Constructors
-
 		public BattleReplayForm(Battle b)
 		{
 			InitializeComponent();
 			Bind(b);
 		}
 
-		#endregion Public Constructors
-
-		#region Public Properties
-
 		public Battle Battle { get; private set; }
-
-		#endregion Public Properties
-
-		#region Public Methods
-
-		public void Bind(Battle data)
-		{
-			Battle = data;
-			Bind();
-		}
-
-		public void Bind()
-		{
-			battleView.Battle = Battle;
-			minimap.Battle = Battle;
-			Text = Battle.NameFor(Empire.Current);
-		}
-
-		#endregion Public Methods
-
-		#region Private Methods
-
-		private void btnClose_Click(object sender, EventArgs e)
-		{
-			DialogResult = DialogResult.OK;
-			Close();
-		}
-
-		#endregion Private Methods
-
-		private void minimap_MouseDown(object sender, MouseEventArgs e)
-		{
-			battleView.FocusedLocation = minimap.ClickLocation;
-			SelectedCombatant = minimap.SelectedCombatant;
-		}
-
-		private void btnBack_Click(object sender, EventArgs e)
-		{
-			battleView.Round--;
-			minimap.Round--;
-		}
-
-		private void btnPause_Click(object sender, EventArgs e)
-		{
-			battleView.IsPaused = !battleView.IsPaused;
-			minimap.IsPaused = !minimap.IsPaused;
-			if (battleView.IsPaused)
-				btnPause.Text = ">";
-			else
-				btnPause.Text = "||";
-		}
-
-		private void btnForward_Click(object sender, EventArgs e)
-		{
-			battleView.Round++;
-			minimap.Round++;
-		}
-
-		private ICombatant selectedCombatant;
 
 		public ICombatant SelectedCombatant
 		{
@@ -102,6 +37,55 @@ namespace FrEee.WinForms.Forms
 				else if (value is Seeker s)
 					reportPanel.Controls.Add(new Label { Text = $"{s.Name} targeting {s.Target} ({s.Hitpoints} HP)" });
 			}
+		}
+
+		private ICombatant selectedCombatant;
+
+		public void Bind(Battle data)
+		{
+			Battle = data;
+			Bind();
+		}
+
+		public void Bind()
+		{
+			battleView.Battle = Battle;
+			minimap.Battle = Battle;
+			Text = Battle.NameFor(Empire.Current);
+		}
+
+		private void btnBack_Click(object sender, EventArgs e)
+		{
+			battleView.Round--;
+			minimap.Round--;
+		}
+
+		private void btnClose_Click(object sender, EventArgs e)
+		{
+			DialogResult = DialogResult.OK;
+			Close();
+		}
+
+		private void btnForward_Click(object sender, EventArgs e)
+		{
+			battleView.Round++;
+			minimap.Round++;
+		}
+
+		private void btnPause_Click(object sender, EventArgs e)
+		{
+			battleView.IsPaused = !battleView.IsPaused;
+			minimap.IsPaused = !minimap.IsPaused;
+			if (battleView.IsPaused)
+				btnPause.Text = ">";
+			else
+				btnPause.Text = "||";
+		}
+
+		private void minimap_MouseDown(object sender, MouseEventArgs e)
+		{
+			battleView.FocusedLocation = minimap.ClickLocation;
+			SelectedCombatant = minimap.SelectedCombatant;
 		}
 
 		private void RefreshSelectedCombatant()

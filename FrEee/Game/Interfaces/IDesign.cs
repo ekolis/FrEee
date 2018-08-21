@@ -10,8 +10,6 @@ namespace FrEee.Game.Interfaces
 	/// </summary>
 	public interface IDesign : INamed, IPictorial, IOwnableAbilityObject, IConstructionTemplate, IPromotable, IFoggable, IUpgradeable<IDesign>, ICleanable
 	{
-		#region Public Properties
-
 		int Accuracy { get; }
 
 		int ArmorHitpoints { get; }
@@ -120,10 +118,6 @@ namespace FrEee.Game.Interfaces
 		/// </summary>
 		IEnumerable<string> Warnings { get; }
 
-		#endregion Public Properties
-
-		#region Public Methods
-
 		/// <summary>
 		/// Creates an order to build this design.
 		/// </summary>
@@ -137,8 +131,6 @@ namespace FrEee.Game.Interfaces
 		ICreateDesignCommand CreateCreationCommand();
 
 		IVehicle Instantiate();
-
-		#endregion Public Methods
 	}
 
 	public interface IDesign<out T> : IDesign, IPictorial, IReferrable, IUpgradeable<IDesign<T>> where T : IVehicle

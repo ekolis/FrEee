@@ -10,22 +10,12 @@ namespace FrEee.Modding.Loaders
 	/// </summary>
 	public class ModSettingsLoader : DataFileLoader
 	{
-		#region Public Fields
-
-		public const string Filename = "Settings.txt";
-
-		#endregion Public Fields
-
-		#region Public Constructors
-
 		public ModSettingsLoader(string modPath)
 			: base(modPath, Filename, DataFile.Load(modPath, Filename))
 		{
 		}
 
-		#endregion Public Constructors
-
-		#region Public Methods
+		public const string Filename = "Settings.txt";
 
 		public override IEnumerable<IModObject> Load(Mod mod)
 		{
@@ -112,7 +102,5 @@ namespace FrEee.Modding.Loaders
 
 			yield break;
 		}
-
-		#endregion Public Methods
 	}
 }

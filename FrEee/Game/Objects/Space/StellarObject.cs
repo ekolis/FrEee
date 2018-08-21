@@ -18,23 +18,11 @@ namespace FrEee.Game.Objects.Space
 	[Serializable]
 	public abstract class StellarObject : IStellarObject, IAbstractDataObject
 	{
-		#region Private Fields
-
-		private Sector sector;
-
-		#endregion Private Fields
-
-		#region Public Constructors
-
 		public StellarObject()
 		{
 			IntrinsicAbilities = new List<Ability>();
 			StoredResources = new ResourceQuantity();
 		}
-
-		#endregion Public Constructors
-
-		#region Public Properties
 
 		// TODO - rename to IntrinsicAbilities in IAbilityContainer and remove DoNotSerialize
 		[DoNotSerialize]
@@ -268,10 +256,7 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		public double Timestamp { get; set; }
-
-		#endregion Public Properties
-
-		#region Public Methods
+		private Sector sector;
 
 		public Visibility CheckVisibility(Empire emp)
 		{
@@ -326,7 +311,5 @@ namespace FrEee.Game.Objects.Space
 		{
 			return Name;
 		}
-
-		#endregion Public Methods
 	}
 }

@@ -3,88 +3,72 @@ using System;
 
 namespace FrEee.Utility
 {
-    /// <summary>
-    /// A client side cache for data.
-    /// Can also cache data server side when a flag is enabled.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class ClientSideCache<T>
-    {
-        #region Private Fields
+	/// <summary>
+	/// A client side cache for data.
+	/// Can also cache data server side when a flag is enabled.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public class ClientSideCache<T>
+	{
+		public ClientSideCache(Func<T> compute)
+		{
+			this.compute = compute;
+			IsDirty = true;
+		}
 
-        private Func<T> compute;
+		public bool IsCacheEnabled
+		{
+			get
+			{
+				return IsServerSideCacheEnabled || Empire.Current != null;
+			}
+		}
 
-        private bool isServerSideCacheEnabled;
+		public bool IsDirty { get; private set; }
 
-        private T value;
+		public bool IsServerSideCacheEnabled
+		{
+			get
+			{
+				return isServerSideCacheEnabled;
+			}
+			set
+			{
+				isServerSideCacheEnabled = value;
+				if (!isServerSideCacheEnabled)
+					IsDirty = true;
+			}
+		}
 
-        #endregion Private Fields
+		public T Value
+		{
+			get
+			{
+				if (IsCacheEnabled)
+				{
+					if (!IsDirty)
+						return value;
+					else
+					{
+						value = compute();
+						IsDirty = false;
+						return value;
+					}
+				}
+				else
+					return compute();
+			}
+		}
 
-        #region Public Constructors
+		private Func<T> compute;
 
-        public ClientSideCache(Func<T> compute)
-        {
-            this.compute = compute;
-            IsDirty = true;
-        }
+		private bool isServerSideCacheEnabled;
 
-        #endregion Public Constructors
+		private T value;
 
-        #region Public Properties
-
-        public bool IsCacheEnabled
-        {
-            get
-            {
-                return IsServerSideCacheEnabled || Empire.Current != null;
-            }
-        }
-
-        public bool IsDirty { get; private set; }
-
-        public bool IsServerSideCacheEnabled
-        {
-            get
-            {
-                return isServerSideCacheEnabled;
-            }
-            set
-            {
-                isServerSideCacheEnabled = value;
-                if (!isServerSideCacheEnabled)
-                    IsDirty = true;
-            }
-        }
-
-        public T Value
-        {
-            get
-            {
-                if (IsCacheEnabled)
-                {
-                    if (!IsDirty)
-                        return value;
-                    else
-                    {
-                        value = compute();
-                        IsDirty = false;
-                        return value;
-                    }
-                }
-                else
-                    return compute();
-            }
-        }
-
-        #endregion Public Properties
-
-        #region Public Methods
-
-        public static implicit operator T(ClientSideCache<T> cache)
-        {
-            return cache.Value;
-        }
-
-        #endregion Public Methods
-    }
+		public static implicit operator T(ClientSideCache<T> cache)
+		{
+			return cache.Value;
+		}
+	}
 }

@@ -9,23 +9,11 @@ namespace FrEee.Utility
 	/// </summary>
 	public class PRNG
 	{
-		#region Private Fields
-
-		private Random prng;
-
-		#endregion Private Fields
-
-		#region Public Constructors
-
 		public PRNG(int seed)
 		{
 			this.Seed = seed;
 			prng = new Random(seed);
 		}
-
-		#endregion Public Constructors
-
-		#region Public Properties
 
 		/// <summary>
 		/// The number of times that this PRNG has been called.
@@ -37,9 +25,7 @@ namespace FrEee.Utility
 		/// </summary>
 		public int Seed { get; private set; }
 
-		#endregion Public Properties
-
-		#region Public Methods
+		private Random prng;
 
 		public static bool operator !=(PRNG r1, PRNG r2)
 		{
@@ -131,7 +117,5 @@ namespace FrEee.Utility
 		{
 			return "Seed: " + Seed + ", Iteration: " + Iteration;
 		}
-
-		#endregion Public Methods
 	}
 }

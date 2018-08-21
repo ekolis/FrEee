@@ -13,8 +13,6 @@ namespace FrEee.Game.Objects.Combat
 	/// </summary>
 	public class Shot : IFormulaHost
 	{
-		#region Public Constructors
-
 		public Shot(ICombatant attacker, Component weapon, IDamageable defender, int range)
 		{
 			Attacker = attacker;
@@ -23,10 +21,6 @@ namespace FrEee.Game.Objects.Combat
 			Range = range;
 			DamageLeft = FullDamage;
 		}
-
-		#endregion Public Constructors
-
-		#region Public Properties
 
 		public GalaxyReference<ICombatant> attacker { get; set; }
 
@@ -97,10 +91,6 @@ namespace FrEee.Game.Objects.Combat
 		[DoNotSerialize]
 		public Component Weapon { get { return weapon; } set { weapon = value; } }
 
-		#endregion Public Properties
-
-		#region Public Methods
-
 		public int InflictDamage(IDamageable target, PRNG dice = null)
 		{
 			var hit = new Hit(this, target, DamageLeft);
@@ -126,7 +116,5 @@ namespace FrEee.Game.Objects.Combat
 		{
 			return Attacker + "'s " + Weapon + " vs. " + Defender + " at range " + Range + " (" + DamageLeft + " damage left)";
 		}
-
-		#endregion Public Methods
 	}
 }

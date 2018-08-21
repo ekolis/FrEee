@@ -9,103 +9,87 @@ using System.Linq;
 
 namespace FrEee.Game.Objects.Orders
 {
-    public class RecycleVehicleInSpaceOrder : IOrder<SpaceVehicle>
-    {
-        #region Public Constructors
+	public class RecycleVehicleInSpaceOrder : IOrder<SpaceVehicle>
+	{
+		public RecycleVehicleInSpaceOrder(IRecycleBehavior behavior)
+		{
+			Behavior = behavior;
+		}
 
-        public RecycleVehicleInSpaceOrder(IRecycleBehavior behavior)
-        {
-            Behavior = behavior;
-        }
+		public IRecycleBehavior Behavior { get; private set; }
 
-        #endregion Public Constructors
+		public bool ConsumesMovement
+		{
+			get { return false; }
+		}
 
-        #region Public Properties
+		public long ID
+		{
+			get;
+			set;
+		}
 
-        public IRecycleBehavior Behavior { get; private set; }
+		public bool IsComplete
+		{
+			get;
+			private set;
+		}
 
-        public bool ConsumesMovement
-        {
-            get { return false; }
-        }
+		public bool IsDisposed
+		{
+			get;
+			set;
+		}
 
-        public long ID
-        {
-            get;
-            set;
-        }
+		/// <summary>
+		/// The empire which issued the order.
+		/// </summary>
+		[DoNotSerialize]
+		public Empire Owner { get { return owner; } set { owner = value; } }
 
-        public bool IsComplete
-        {
-            get;
-            private set;
-        }
+		private GalaxyReference<Empire> owner { get; set; }
 
-        public bool IsDisposed
-        {
-            get;
-            set;
-        }
+		public bool CheckCompletion(SpaceVehicle executor)
+		{
+			return IsComplete;
+		}
 
-        /// <summary>
-        /// The empire which issued the order.
-        /// </summary>
-        [DoNotSerialize]
-        public Empire Owner { get { return owner; } set { owner = value; } }
+		public void Dispose()
+		{
+			if (IsDisposed)
+				return;
+			foreach (var v in Galaxy.Current.Referrables.OfType<SpaceVehicle>())
+				v.Orders.Remove(this);
+			Galaxy.Current.UnassignID(this);
+		}
 
-        #endregion Public Properties
+		public void Execute(SpaceVehicle executor)
+		{
+			var errors = GetErrors(executor);
+			if (errors.Any() && Owner != null)
+			{
+				foreach (var e in errors)
+					Owner.Log.Add(e);
+				return;
+			}
 
-        #region Private Properties
+			Behavior.Execute(executor);
+			IsComplete = true;
+		}
 
-        private GalaxyReference<Empire> owner { get; set; }
+		public IEnumerable<LogMessage> GetErrors(SpaceVehicle executor)
+		{
+			return Behavior.GetErrors(executor, executor);
+		}
 
-        #endregion Private Properties
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		{
+			// This type does not use client objects, so nothing to do here.
+		}
 
-        #region Public Methods
-
-        public bool CheckCompletion(SpaceVehicle executor)
-        {
-            return IsComplete;
-        }
-
-        public void Dispose()
-        {
-            if (IsDisposed)
-                return;
-            foreach (var v in Galaxy.Current.Referrables.OfType<SpaceVehicle>())
-                v.Orders.Remove(this);
-            Galaxy.Current.UnassignID(this);
-        }
-
-        public void Execute(SpaceVehicle executor)
-        {
-            var errors = GetErrors(executor);
-            if (errors.Any() && Owner != null)
-            {
-                foreach (var e in errors)
-                    Owner.Log.Add(e);
-                return;
-            }
-
-            Behavior.Execute(executor);
-            IsComplete = true;
-        }
-
-        public IEnumerable<LogMessage> GetErrors(SpaceVehicle executor)
-        {
-            return Behavior.GetErrors(executor, executor);
-        }
-
-        public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
-        {
-            // This type does not use client objects, so nothing to do here.
-        }
-
-        public override string ToString()
-        {
-            return Behavior.Verb;
-        }
-
-        #endregion Public Methods
-    }
+		public override string ToString()
+		{
+			return Behavior.Verb;
+		}
+	}
 }

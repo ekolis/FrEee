@@ -14,14 +14,6 @@ namespace FrEee.WinForms.Controls
 	/// </summary>
 	public partial class DesignReport : UserControl, IBindable<IDesign>
 	{
-		#region Private Fields
-
-		private IDesign design;
-
-		#endregion Private Fields
-
-		#region Public Constructors
-
 		public DesignReport()
 		{
 			InitializeComponent();
@@ -32,10 +24,6 @@ namespace FrEee.WinForms.Controls
 		{
 			Design = design;
 		}
-
-		#endregion Public Constructors
-
-		#region Public Properties
 
 		/// <summary>
 		/// The design for which to display a report.
@@ -50,9 +38,7 @@ namespace FrEee.WinForms.Controls
 			}
 		}
 
-		#endregion Public Properties
-
-		#region Public Methods
+		private IDesign design;
 
 		public void Bind()
 		{
@@ -117,10 +103,6 @@ namespace FrEee.WinForms.Controls
 			Bind();
 		}
 
-		#endregion Public Methods
-
-		#region Private Methods
-
 		private int? GetRange(int capacity, int speed, int usagePerSector, int generationPerTurn)
 		{
 			if (speed == 0)
@@ -151,7 +133,5 @@ namespace FrEee.WinForms.Controls
 		{
 			picPortrait.ShowFullSize(Design.Name);
 		}
-
-		#endregion Private Methods
 	}
 }

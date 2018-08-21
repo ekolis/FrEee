@@ -23,17 +23,11 @@ namespace FrEee.Game.Objects.Space
 	[Serializable]
 	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpaceObject, ICargoTransferrer, IReferrable, IMobileSpaceObject<Planet>, IMineableSpaceObject, IIncomeProducer, IDataObject, ITransferrable, ITargetable
 	{
-		#region Public Constructors
-
 		public Planet()
 		{
 			ResourceValue = new ResourceQuantity();
 			Orders = new List<IOrder<Planet>>();
 		}
-
-		#endregion Public Constructors
-
-		#region Public Properties
 
 		public override AbilityTargets AbilityTarget
 		{
@@ -150,6 +144,8 @@ namespace FrEee.Game.Objects.Space
 		/// The colony on this planet, if any.
 		/// </summary>
 		public Colony Colony { get; set; }
+
+		public int CombatSpeed => 0;
 
 		public override ConstructionQueue ConstructionQueue
 		{
@@ -664,16 +660,6 @@ namespace FrEee.Game.Objects.Space
 			get { return null; }
 		}
 
-		/// <summary>
-		/// TODO - planetary engines? but how would we do engines per move?
-		/// </summary>
-		public int StrategicSpeed
-		{
-			get { return 0; }
-		}
-
-		public int CombatSpeed => 0;
-
 		public ResourceQuantity StandardIncomePercentages
 		{
 			get
@@ -682,6 +668,14 @@ namespace FrEee.Game.Objects.Space
 					return Colony.StandardIncomePercentages;
 				return new ResourceQuantity();
 			}
+		}
+
+		/// <summary>
+		/// TODO - planetary engines? but how would we do engines per move?
+		/// </summary>
+		public int StrategicSpeed
+		{
+			get { return 0; }
 		}
 
 		public int SupplyRemaining
@@ -736,25 +730,13 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		#endregion Public Properties
-
-		#region Internal Properties
-
 		/// <summary>
 		/// Used for naming.
 		/// </summary>
 		[DoNotSerialize]
 		internal Planet MoonOf { get; set; }
 
-		#endregion Internal Properties
-
-		#region Private Properties
-
 		private ModReference<StellarObjectSize> size { get; set; }
-
-		#endregion Private Properties
-
-		#region Public Methods
 
 		public void AddOrder(IOrder order)
 		{
@@ -1128,10 +1110,6 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		#endregion Public Methods
-
-		#region Private Methods
-
 		private int TakeFacilityDamage(Hit hit, PRNG dice = null)
 		{
 			if (Colony == null)
@@ -1179,7 +1157,5 @@ namespace FrEee.Game.Objects.Space
 				Colony.Population.Remove(race);
 			return damage - inflicted;
 		}
-
-		#endregion Private Methods
 	}
 }

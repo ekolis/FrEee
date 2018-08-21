@@ -5,54 +5,38 @@ using System.Linq;
 
 namespace FrEee.WinForms.Objects.GalaxyViewModes
 {
-    /// <summary>
-    /// A galaxy view mode that uses ARGB values to indicate up to four data values at once.
-    /// </summary>
-    public abstract class ArgbMode : IGalaxyViewMode
-    {
-        #region Public Properties
+	/// <summary>
+	/// A galaxy view mode that uses ARGB values to indicate up to four data values at once.
+	/// </summary>
+	public abstract class ArgbMode : IGalaxyViewMode
+	{
+		public abstract string Name { get; }
 
-        public abstract string Name { get; }
+		public void Draw(StarSystem sys, Graphics g, PointF pos, float size)
+		{
+			// draw circle
+			var color = GetColor(sys);
+			g.FillEllipse(new SolidBrush(color), pos, size);
+			g.DrawEllipse(new Pen(Saturate(color)), pos, size);
+		}
 
-        #endregion Public Properties
+		/// <summary>
+		/// Color for any given star system, excluding alpha.
+		/// </summary>
+		protected abstract Color GetColor(StarSystem sys);
 
-        #region Public Methods
+		protected int Weight(float amount, float max)
+		{
+			return (int)(255 * amount / max);
+		}
 
-        public void Draw(StarSystem sys, Graphics g, PointF pos, float size)
-        {
-            // draw circle
-            var color = GetColor(sys);
-            g.FillEllipse(new SolidBrush(color), pos, size);
-            g.DrawEllipse(new Pen(Saturate(color)), pos, size);
-        }
+		private Color Saturate(Color c)
+		{
+			if (c.R == 0 && c.G == 0 && c.B == 0)
+				return Color.White;
 
-        #endregion Public Methods
-
-        #region Protected Methods
-
-        /// <summary>
-        /// Color for any given star system, excluding alpha.
-        /// </summary>
-        protected abstract Color GetColor(StarSystem sys);
-
-        protected int Weight(float amount, float max)
-        {
-            return (int)(255 * amount / max);
-        }
-
-        #endregion Protected Methods
-
-        #region Private Methods
-
-        private Color Saturate(Color c)
-        {
-            if (c.R == 0 && c.G == 0 && c.B == 0)
-                return Color.White;
-
-            var max = new int[] { c.R, c.G, c.B }.Max();
-            return Color.FromArgb(255 * c.R / max, 255 * c.G / max, 255 * c.B / max);
-        }
-
-        #endregion Private Methods
-    }
+			var max = new int[] { c.R, c.G, c.B }.Max();
+			return Color.FromArgb(255 * c.R / max, 255 * c.G / max, 255 * c.B / max);
+		}
+	}
 }

@@ -17,8 +17,6 @@ namespace FrEee.Game.Objects.Combat
 	/// </summary>
 	public class Seeker : ICombatant
 	{
-		#region Public Constructors
-
 		public Seeker(IBattle battle, Empire owner, ICombatant attacker, Component launcher, ICombatant target)
 		{
 			Battle = battle;
@@ -35,10 +33,6 @@ namespace FrEee.Game.Objects.Combat
 			Hitpoints = WeaponInfo.SeekerDurability; // TODO - can mounts affect seeker durability?
 			CombatSpeed = WeaponInfo.SeekerSpeed;
 		}
-
-		#endregion Public Constructors
-
-		#region Public Properties
 
 		/// <summary>
 		/// Seekers don't fire so it doesn't really matter...
@@ -60,6 +54,8 @@ namespace FrEee.Game.Objects.Combat
 		/// The battle in which this seeker was fired.
 		/// </summary>
 		public IBattle Battle { get; set; }
+
+		public int CombatSpeed { get; set; }
 
 		public Formula<int> Damage
 		{
@@ -253,8 +249,6 @@ namespace FrEee.Game.Objects.Combat
 			get { return NormalShields + PhasedShields; }
 		}
 
-		public int CombatSpeed { get; set; }
-
 		public StarSystem StarSystem
 		{
 			get { return Battle.StarSystem; }
@@ -284,10 +278,6 @@ namespace FrEee.Game.Objects.Combat
 		{
 			get { return WeaponTargets.Seeker; }
 		}
-
-		#endregion Public Properties
-
-		#region Public Methods
 
 		public bool CanTarget(ITargetable target)
 		{
@@ -365,7 +355,5 @@ namespace FrEee.Game.Objects.Combat
 		{
 			return Name;
 		}
-
-		#endregion Public Methods
 	}
 }

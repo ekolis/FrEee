@@ -7,113 +7,85 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Controls
 {
-    public partial class TraitPicker : UserControl
-    {
-        #region Private Fields
+	public partial class TraitPicker : UserControl
+	{
+		public TraitPicker()
+		{
+			InitializeComponent();
+		}
 
-        private IEnumerable<Trait> traits;
+		public IEnumerable<Trait> CheckedTraits
+		{
+			get { return Traits.Where(t => IsTraitChecked(t)); }
+		}
 
-        #endregion Private Fields
+		public IEnumerable<Trait> Traits
+		{
+			get
+			{
+				return traits;
+			}
+			set
+			{
+				traits = value;
+				Bind();
+			}
+		}
 
-        #region Public Constructors
+		private IEnumerable<Trait> traits;
 
-        public TraitPicker()
-        {
-            InitializeComponent();
-        }
+		public void Bind()
+		{
+			pnlTraits.Controls.Clear();
+			if (Traits != null)
+			{
+				foreach (var trait in Traits)
+				{
+					var chk = new CheckBox();
+					chk.Text = "(" + trait.Cost + " pts) " + trait.Name;
+					chk.Tag = trait;
+					chk.CheckedChanged += chk_CheckedChanged;
+					pnlTraits.Controls.Add(chk);
 
-        #endregion Public Constructors
+					var lbl = new Label();
+					lbl.Text = trait.Description;
+					lbl.Padding = new Padding(40, 0, 0, 0);
+					pnlTraits.Controls.Add(lbl);
+				}
+			}
+		}
 
-        #region Public Delegates
+		public bool IsTraitChecked(Trait trait)
+		{
+			if (!Traits.Contains(trait))
+				return false;
+			var chk = pnlTraits.Controls.OfType<CheckBox>().Single(c => c.Tag == trait);
+			return chk.Checked;
+		}
 
-        public delegate void TraitToggledDelegate(TraitPicker picker, Trait trait, bool state);
+		public void SetTraitChecked(Trait trait, bool state)
+		{
+			if (!Traits.Contains(trait))
+				throw new Exception(trait + " is not in this trait picker.");
+			var chk = pnlTraits.Controls.OfType<CheckBox>().Single(c => c.Tag == trait);
+			chk.Checked = state;
+		}
 
-        #endregion Public Delegates
+		private void chk_CheckedChanged(object sender, EventArgs e)
+		{
+			var chk = (CheckBox)sender;
+			if (TraitToggled != null)
+				TraitToggled(this, (Trait)chk.Tag, chk.Checked);
+		}
 
-        #region Public Events
+		private void pnlTraits_SizeChanged(object sender, EventArgs e)
+		{
+			foreach (Control c in pnlTraits.Controls)
+				c.Width = pnlTraits.Width - 32;
+		}
 
-        public event TraitToggledDelegate TraitToggled;
+		public event TraitToggledDelegate TraitToggled;
 
-        #endregion Public Events
-
-        #region Public Properties
-
-        public IEnumerable<Trait> CheckedTraits
-        {
-            get { return Traits.Where(t => IsTraitChecked(t)); }
-        }
-
-        public IEnumerable<Trait> Traits
-        {
-            get
-            {
-                return traits;
-            }
-            set
-            {
-                traits = value;
-                Bind();
-            }
-        }
-
-        #endregion Public Properties
-
-        #region Public Methods
-
-        public void Bind()
-        {
-            pnlTraits.Controls.Clear();
-            if (Traits != null)
-            {
-                foreach (var trait in Traits)
-                {
-                    var chk = new CheckBox();
-                    chk.Text = "(" + trait.Cost + " pts) " + trait.Name;
-                    chk.Tag = trait;
-                    chk.CheckedChanged += chk_CheckedChanged;
-                    pnlTraits.Controls.Add(chk);
-
-                    var lbl = new Label();
-                    lbl.Text = trait.Description;
-                    lbl.Padding = new Padding(40, 0, 0, 0);
-                    pnlTraits.Controls.Add(lbl);
-                }
-            }
-        }
-
-        public bool IsTraitChecked(Trait trait)
-        {
-            if (!Traits.Contains(trait))
-                return false;
-            var chk = pnlTraits.Controls.OfType<CheckBox>().Single(c => c.Tag == trait);
-            return chk.Checked;
-        }
-
-        public void SetTraitChecked(Trait trait, bool state)
-        {
-            if (!Traits.Contains(trait))
-                throw new Exception(trait + " is not in this trait picker.");
-            var chk = pnlTraits.Controls.OfType<CheckBox>().Single(c => c.Tag == trait);
-            chk.Checked = state;
-        }
-
-        #endregion Public Methods
-
-        #region Private Methods
-
-        private void chk_CheckedChanged(object sender, EventArgs e)
-        {
-            var chk = (CheckBox)sender;
-            if (TraitToggled != null)
-                TraitToggled(this, (Trait)chk.Tag, chk.Checked);
-        }
-
-        private void pnlTraits_SizeChanged(object sender, EventArgs e)
-        {
-            foreach (Control c in pnlTraits.Controls)
-                c.Width = pnlTraits.Width - 32;
-        }
-
-        #endregion Private Methods
-    }
+		public delegate void TraitToggledDelegate(TraitPicker picker, Trait trait, bool state);
+	}
 }

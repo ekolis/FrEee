@@ -3,45 +3,37 @@ using System.Drawing;
 
 namespace FrEee.Game.Objects.Combat
 {
-    [Serializable]
-    public class ProjectileWeaponDisplayEffect : WeaponDisplayEffect
-    {
-        #region Public Constructors
+	[Serializable]
+	public class ProjectileWeaponDisplayEffect : WeaponDisplayEffect
+	{
+		public ProjectileWeaponDisplayEffect(string name)
+			: base(name)
+		{
+		}
 
-        public ProjectileWeaponDisplayEffect(string name)
-            : base(name)
-        {
-        }
+		public override Point GlobalSpriteOffset
+		{
+			get { return new Point(); }
+		}
 
-        #endregion Public Constructors
+		public override string GlobalSpriteSheetName
+		{
+			get { return "Torps"; }
+		}
 
-        #region Public Properties
+		public override Point ShipsetSpriteOffset
+		{
+			get { return new Point(); }
+		}
 
-        public override Point GlobalSpriteOffset
-        {
-            get { return new Point(); }
-        }
+		public override string ShipsetSpriteSheetName
+		{
+			get { return "Torps"; }
+		}
 
-        public override string GlobalSpriteSheetName
-        {
-            get { return "Torps"; }
-        }
-
-        public override Point ShipsetSpriteOffset
-        {
-            get { return new Point(); }
-        }
-
-        public override string ShipsetSpriteSheetName
-        {
-            get { return "Torps"; }
-        }
-
-        public override Size SpriteSize
-        {
-            get { return new Size(20, 20); }
-        }
-
-        #endregion Public Properties
-    }
+		public override Size SpriteSize
+		{
+			get { return new Size(20, 20); }
+		}
+	}
 }

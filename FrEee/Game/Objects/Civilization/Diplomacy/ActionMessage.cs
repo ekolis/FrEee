@@ -4,54 +4,42 @@ using System.Collections.Generic;
 
 namespace FrEee.Game.Objects.Civilization.Diplomacy
 {
-    /// <summary>
-    /// A message specifying some unilateral action.
-    /// </summary>
-    public class ActionMessage : Message
-    {
-        #region Public Constructors
+	/// <summary>
+	/// A message specifying some unilateral action.
+	/// </summary>
+	public class ActionMessage : Message
+	{
+		public ActionMessage(Empire recipient)
+			: base(recipient)
+		{
+			if (Recipient == Owner)
+				throw new Exception("You can't perform a diplomatic action on yourself!");
+		}
 
-        public ActionMessage(Empire recipient)
-            : base(recipient)
-        {
-            if (Recipient == Owner)
-                throw new Exception("You can't perform a diplomatic action on yourself!");
-        }
+		/// <summary>
+		/// The action in question.
+		/// </summary>
+		public Action Action { get; set; }
 
-        #endregion Public Constructors
+		public override IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return Owner.IconPaths;
+			}
+		}
 
-        #region Public Properties
+		public override IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				return Owner.PortraitPaths;
+			}
+		}
 
-        /// <summary>
-        /// The action in question.
-        /// </summary>
-        public Action Action { get; set; }
-
-        public override IEnumerable<string> IconPaths
-        {
-            get
-            {
-                return Owner.IconPaths;
-            }
-        }
-
-        public override IEnumerable<string> PortraitPaths
-        {
-            get
-            {
-                return Owner.PortraitPaths;
-            }
-        }
-
-        #endregion Public Properties
-
-        #region Public Methods
-
-        public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
-        {
-            Action.ReplaceClientIDs(idmap);
-        }
-
-        #endregion Public Methods
-    }
+		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		{
+			Action.ReplaceClientIDs(idmap);
+		}
+	}
 }

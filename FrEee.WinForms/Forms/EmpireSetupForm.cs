@@ -15,369 +15,353 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-    public partial class EmpireSetupForm : Form
-    {
-        #region Private Fields
+	public partial class EmpireSetupForm : Form
+	{
+		public EmpireSetupForm()
+		{
+			InitializeComponent();
+			BindChoices();
 
-        private EmpireTemplate empireTemplate;
+			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+			catch { }
+		}
 
-        private string lastDdlPicText = null;
+		public EmpireTemplate EmpireTemplate
+		{
+			get
+			{
+				return empireTemplate;
+			}
+			set
+			{
+				originalEmpireTemplate = value.Copy();
+				originalRace = value.PrimaryRace.Copy();
+				empireTemplate = value;
+				Bind();
+			}
+		}
 
-        /// <summary>
-        /// A copy of the original empire template, in case the user cancels.
-        /// </summary>
-        private EmpireTemplate originalEmpireTemplate;
+		public int PointsSpent
+		{
+			get
+			{
+				int result = 0;
+				foreach (var t in raceTraitPicker.CheckedTraits)
+					result += t.Cost.Value;
+				result += aptitudePicker.Cost;
+				return result;
+			}
+		}
 
-        /// <summary>
-        /// A copy of the original race, in case the user cancels.
-        /// </summary>
-        private Race originalRace;
+		/// <summary>
+		/// The number of empire setup points available for spending.
+		/// </summary>
+		public int PointsToSpend { get; set; }
 
-        #endregion Private Fields
+		private EmpireTemplate empireTemplate;
 
-        #region Public Constructors
+		private string lastDdlPicText = null;
 
-        public EmpireSetupForm()
-        {
-            InitializeComponent();
-            BindChoices();
+		/// <summary>
+		/// A copy of the original empire template, in case the user cancels.
+		/// </summary>
+		private EmpireTemplate originalEmpireTemplate;
 
-            try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
-            catch { }
-        }
+		/// <summary>
+		/// A copy of the original race, in case the user cancels.
+		/// </summary>
+		private Race originalRace;
 
-        #endregion Public Constructors
+		private void aptitudePicker_AptitudeValueChanged(Controls.AptitudePicker ap, Aptitude aptitude, int newValue)
+		{
+			BindPointsSpent();
+		}
 
-        #region Public Properties
+		private void Bind()
+		{
+			if (EmpireTemplate == null)
+				EmpireTemplate = new EmpireTemplate();
+			if (EmpireTemplate.PrimaryRace == null)
+				EmpireTemplate.PrimaryRace = new Race();
 
-        public EmpireTemplate EmpireTemplate
-        {
-            get
-            {
-                return empireTemplate;
-            }
-            set
-            {
-                originalEmpireTemplate = value.Copy();
-                originalRace = value.PrimaryRace.Copy();
-                empireTemplate = value;
-                Bind();
-            }
-        }
+			txtName.Text = EmpireTemplate.Name;
+			txtLeaderName.Text = EmpireTemplate.LeaderName;
+			ddlLeaderPortrait.Text = EmpireTemplate.LeaderPortraitName;
+			spnColorRed.Value = EmpireTemplate.Color.R;
+			spnColorGreen.Value = EmpireTemplate.Color.G;
+			spnColorBlue.Value = EmpireTemplate.Color.B;
+			ddlInsignia.Text = EmpireTemplate.InsigniaName;
+			ddlShipset.Text = EmpireTemplate.ShipsetName;
+			ddlAI.Text = EmpireTemplate.AIName;
+			ddlCulture.SelectedItem = EmpireTemplate.Culture;
 
-        public int PointsSpent
-        {
-            get
-            {
-                int result = 0;
-                foreach (var t in raceTraitPicker.CheckedTraits)
-                    result += t.Cost.Value;
-                result += aptitudePicker.Cost;
-                return result;
-            }
-        }
+			// race general stuff
+			txtRaceName.Text = EmpireTemplate.PrimaryRace.Name;
+			ddlRacePopulationIcon.Text = EmpireTemplate.PrimaryRace.PopulationIconName;
+			ddlRaceNativeSurface.SelectedItem = EmpireTemplate.PrimaryRace.NativeSurface;
+			ddlRaceNativeAtmosphere.SelectedItem = EmpireTemplate.PrimaryRace.NativeAtmosphere;
+			ddlRaceHappiness.SelectedItem = EmpireTemplate.PrimaryRace.HappinessModel;
 
-        /// <summary>
-        /// The number of empire setup points available for spending.
-        /// </summary>
-        public int PointsToSpend { get; set; }
+			// race traits
+			foreach (var trait in raceTraitPicker.Traits)
+				raceTraitPicker.SetTraitChecked(trait, EmpireTemplate.PrimaryRace.Traits.Contains(trait));
 
-        #endregion Public Properties
+			// race aptitudes
+			foreach (var apt in Aptitude.All)
+			{
+				int val = 100;
+				if (EmpireTemplate.PrimaryRace.Aptitudes.ContainsKey(apt.Name))
+					val = EmpireTemplate.PrimaryRace.Aptitudes[apt.Name];
+				aptitudePicker.SetValue(apt, val);
+			}
 
-        #region Private Methods
+			// is AI empire?
+			chkAIsCanUse.Checked = EmpireTemplate.AIsCanUse;
 
-        private void aptitudePicker_AptitudeValueChanged(Controls.AptitudePicker ap, Aptitude aptitude, int newValue)
-        {
-            BindPointsSpent();
-        }
+			BindPointsSpent();
 
-        private void Bind()
-        {
-            if (EmpireTemplate == null)
-                EmpireTemplate = new EmpireTemplate();
-            if (EmpireTemplate.PrimaryRace == null)
-                EmpireTemplate.PrimaryRace = new Race();
+			BindPictures();
+		}
 
-            txtName.Text = EmpireTemplate.Name;
-            txtLeaderName.Text = EmpireTemplate.LeaderName;
-            ddlLeaderPortrait.Text = EmpireTemplate.LeaderPortraitName;
-            spnColorRed.Value = EmpireTemplate.Color.R;
-            spnColorGreen.Value = EmpireTemplate.Color.G;
-            spnColorBlue.Value = EmpireTemplate.Color.B;
-            ddlInsignia.Text = EmpireTemplate.InsigniaName;
-            ddlShipset.Text = EmpireTemplate.ShipsetName;
-            ddlAI.Text = EmpireTemplate.AIName;
-            ddlCulture.SelectedItem = EmpireTemplate.Culture;
+		private void BindChoices()
+		{
+			foreach (var portrait in Pictures.ListLeaderPortraits())
+			{
+				ddlLeaderPortrait.Items.Add(portrait);
+			}
+			foreach (var icon in Pictures.ListPopulationIcons())
+			{
+				ddlRacePopulationIcon.Items.Add(icon);
+			}
+			foreach (var surface in Mod.Current.StellarObjectTemplates.OfType<Planet>().Select(p => p.Surface).Distinct())
+			{
+				ddlRaceNativeSurface.Items.Add(surface);
+			}
+			foreach (var atmosphere in Mod.Current.StellarObjectTemplates.OfType<Planet>().Select(p => p.Atmosphere).Distinct())
+			{
+				ddlRaceNativeAtmosphere.Items.Add(atmosphere);
+			}
+			foreach (var insignia in Pictures.ListInsignia())
+			{
+				ddlInsignia.Items.Add(insignia);
+			}
+			foreach (var shipset in Pictures.ListShipsets())
+			{
+				ddlShipset.Items.Add(shipset);
+			}
+			foreach (var ai in Mod.Current.EmpireAIs)
+			{
+				ddlAI.Items.Add(ai);
+			}
+			foreach (var h in Mod.Current.HappinessModels)
+			{
+				ddlRaceHappiness.Items.Add(h);
+			}
+			foreach (var c in Mod.Current.Cultures)
+			{
+				ddlCulture.Items.Add(c);
+			}
+			raceTraitPicker.Traits = Mod.Current.Traits;
+		}
 
-            // race general stuff
-            txtRaceName.Text = EmpireTemplate.PrimaryRace.Name;
-            ddlRacePopulationIcon.Text = EmpireTemplate.PrimaryRace.PopulationIconName;
-            ddlRaceNativeSurface.SelectedItem = EmpireTemplate.PrimaryRace.NativeSurface;
-            ddlRaceNativeAtmosphere.SelectedItem = EmpireTemplate.PrimaryRace.NativeAtmosphere;
-            ddlRaceHappiness.SelectedItem = EmpireTemplate.PrimaryRace.HappinessModel;
+		private void BindPictures()
+		{
+			ddlRacePopulationIcon_TextChanged(null, null);
+			ddlLeaderPortrait_TextChanged(null, null);
+			ddlInsignia_TextChanged(null, null);
+			ddlShipset_TextChanged(null, null);
+			spnColor_ValueChanged(null, null);
+		}
 
-            // race traits
-            foreach (var trait in raceTraitPicker.Traits)
-                raceTraitPicker.SetTraitChecked(trait, EmpireTemplate.PrimaryRace.Traits.Contains(trait));
+		private void BindPointsSpent()
+		{
+			int pointsAvailable = PointsToSpend - PointsSpent;
+			txtPointsAvailable.Text = "Points Available: " + pointsAvailable + " / " + PointsToSpend;
+			if (pointsAvailable < 0)
+				txtPointsAvailable.ForeColor = Color.FromArgb(255, 128, 128);
+			else
+				txtPointsAvailable.ForeColor = Color.White;
+		}
 
-            // race aptitudes
-            foreach (var apt in Aptitude.All)
-            {
-                int val = 100;
-                if (EmpireTemplate.PrimaryRace.Aptitudes.ContainsKey(apt.Name))
-                    val = EmpireTemplate.PrimaryRace.Aptitudes[apt.Name];
-                aptitudePicker.SetValue(apt, val);
-            }
+		private void btnCancel_Click(object sender, EventArgs e)
+		{
+			// revert changes
+			EmpireTemplate = originalEmpireTemplate;
+			EmpireTemplate.PrimaryRace = originalRace;
+			DialogResult = DialogResult.Cancel;
+			Close();
+		}
 
-            // is AI empire?
-            chkAIsCanUse.Checked = EmpireTemplate.AIsCanUse;
+		private void btnCompareCultures_Click(object sender, EventArgs e)
+		{
+			this.ShowChildForm(new CultureComparisonForm());
+		}
 
-            BindPointsSpent();
+		private void btnLoadRace_Click(object sender, EventArgs e)
+		{
+			var dlg = new OpenFileDialog();
+			dlg.InitialDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Races");
+			dlg.Filter = "Races (*.rac)|*.rac";
+			var result = dlg.ShowDialog();
+			if (result == DialogResult.OK)
+			{
+				EmpireTemplate.PrimaryRace = Race.Load(dlg.FileName);
+				Bind();
+			}
+		}
 
-            BindPictures();
-        }
+		private void btnOK_Click(object sender, EventArgs e)
+		{
+			SaveChanges();
 
-        private void BindChoices()
-        {
-            foreach (var portrait in Pictures.ListLeaderPortraits())
-            {
-                ddlLeaderPortrait.Items.Add(portrait);
-            }
-            foreach (var icon in Pictures.ListPopulationIcons())
-            {
-                ddlRacePopulationIcon.Items.Add(icon);
-            }
-            foreach (var surface in Mod.Current.StellarObjectTemplates.OfType<Planet>().Select(p => p.Surface).Distinct())
-            {
-                ddlRaceNativeSurface.Items.Add(surface);
-            }
-            foreach (var atmosphere in Mod.Current.StellarObjectTemplates.OfType<Planet>().Select(p => p.Atmosphere).Distinct())
-            {
-                ddlRaceNativeAtmosphere.Items.Add(atmosphere);
-            }
-            foreach (var insignia in Pictures.ListInsignia())
-            {
-                ddlInsignia.Items.Add(insignia);
-            }
-            foreach (var shipset in Pictures.ListShipsets())
-            {
-                ddlShipset.Items.Add(shipset);
-            }
-            foreach (var ai in Mod.Current.EmpireAIs)
-            {
-                ddlAI.Items.Add(ai);
-            }
-            foreach (var h in Mod.Current.HappinessModels)
-            {
-                ddlRaceHappiness.Items.Add(h);
-            }
-            foreach (var c in Mod.Current.Cultures)
-            {
-                ddlCulture.Items.Add(c);
-            }
-            raceTraitPicker.Traits = Mod.Current.Traits;
-        }
+			// validate
+			var warnings = EmpireTemplate.GetWarnings(PointsToSpend);
+			if (warnings.Any())
+				MessageBox.Show(warnings.First(), "FrEee");
+			else
+			{
+				DialogResult = DialogResult.OK;
+				Close();
+			}
+		}
 
-        private void BindPictures()
-        {
-            ddlRacePopulationIcon_TextChanged(null, null);
-            ddlLeaderPortrait_TextChanged(null, null);
-            ddlInsignia_TextChanged(null, null);
-            ddlShipset_TextChanged(null, null);
-            spnColor_ValueChanged(null, null);
-        }
+		private void btnSaveRace_Click(object sender, EventArgs e)
+		{
+			SaveChanges();
+			var dlg = new SaveFileDialog();
+			dlg.InitialDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Races");
+			dlg.Filter = "Races (*.rac)|*.rac";
+			var result = dlg.ShowDialog();
+			if (result == DialogResult.OK)
+				EmpireTemplate.PrimaryRace.Save(dlg.FileName);
+		}
 
-        private void BindPointsSpent()
-        {
-            int pointsAvailable = PointsToSpend - PointsSpent;
-            txtPointsAvailable.Text = "Points Available: " + pointsAvailable + " / " + PointsToSpend;
-            if (pointsAvailable < 0)
-                txtPointsAvailable.ForeColor = Color.FromArgb(255, 128, 128);
-            else
-                txtPointsAvailable.ForeColor = Color.White;
-        }
+		private void ddlCulture_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (ddlCulture.SelectedItem != null)
+				txtCulture.Text = ((Culture)ddlCulture.SelectedItem).Description;
+			else
+				txtCulture.Text = "Please choose a culture.";
+		}
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            // revert changes
-            EmpireTemplate = originalEmpireTemplate;
-            EmpireTemplate.PrimaryRace = originalRace;
-            DialogResult = DialogResult.Cancel;
-            Close();
-        }
+		private void ddlInsignia_TextChanged(object sender, EventArgs e)
+		{
+			var emp = new Empire();
+			emp.InsigniaName = ddlInsignia.Text;
+			picInsignia.Image = emp.Icon;
+		}
 
-        private void btnCompareCultures_Click(object sender, EventArgs e)
-        {
-            this.ShowChildForm(new CultureComparisonForm());
-        }
+		private void ddlLeaderPortrait_TextChanged(object sender, EventArgs e)
+		{
+			var emp = new Empire();
+			emp.LeaderPortraitName = ddlLeaderPortrait.Text;
+			picLeaderPortrait.Image = emp.Portrait;
+		}
 
-        private void btnLoadRace_Click(object sender, EventArgs e)
-        {
-            var dlg = new OpenFileDialog();
-            dlg.InitialDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Races");
-            dlg.Filter = "Races (*.rac)|*.rac";
-            var result = dlg.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                EmpireTemplate.PrimaryRace = Race.Load(dlg.FileName);
-                Bind();
-            }
-        }
+		private void ddlPic_Leave(object sender, EventArgs e)
+		{
+			// auto update ddl's that have no value to match this ddl
+			var ddl = (ComboBox)sender;
+			var text = ddl.Text;
+			foreach (var ddl2 in new ComboBox[]
+				{
+					ddlLeaderPortrait,
+					ddlRacePopulationIcon,
+					ddlShipset,
+					ddlInsignia
+				})
+			{
+				if (string.IsNullOrWhiteSpace(ddl2.Text))
+					ddl2.Text = ddl.Text;
+			}
+			lastDdlPicText = ddl.Text;
+		}
 
-        private void btnOK_Click(object sender, EventArgs e)
-        {
-            SaveChanges();
+		private void ddlPic_TextChanged(object sender, EventArgs e)
+		{
+		}
 
-            // validate
-            var warnings = EmpireTemplate.GetWarnings(PointsToSpend);
-            if (warnings.Any())
-                MessageBox.Show(warnings.First(), "FrEee");
-            else
-            {
-                DialogResult = DialogResult.OK;
-                Close();
-            }
-        }
+		private void ddlRaceHappiness_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			var h = (HappinessModel)ddlRaceHappiness.SelectedItem;
+			if (h != null)
+				txtRaceHappiness.Text = h.Description;
+			else
+				txtRaceHappiness.Text = "Please choose a happiness model.";
+		}
 
-        private void btnSaveRace_Click(object sender, EventArgs e)
-        {
-            SaveChanges();
-            var dlg = new SaveFileDialog();
-            dlg.InitialDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Races");
-            dlg.Filter = "Races (*.rac)|*.rac";
-            var result = dlg.ShowDialog();
-            if (result == DialogResult.OK)
-                EmpireTemplate.PrimaryRace.Save(dlg.FileName);
-        }
+		private void ddlRacePopulationIcon_TextChanged(object sender, EventArgs e)
+		{
+			var emp = new Empire();
+			emp.PrimaryRace = new Race();
+			emp.PrimaryRace.PopulationIconName = ddlRacePopulationIcon.Text;
+			picRacePopulationIcon.Image = emp.PrimaryRace.Icon;
+		}
 
-        private void ddlCulture_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (ddlCulture.SelectedItem != null)
-                txtCulture.Text = ((Culture)ddlCulture.SelectedItem).Description;
-            else
-                txtCulture.Text = "Please choose a culture.";
-        }
+		private void ddlShipset_TextChanged(object sender, EventArgs e)
+		{
+			picShipset.Image = Mod.Current.Hulls.First().GetPortrait(ddlShipset.Text);
+		}
 
-        private void ddlInsignia_TextChanged(object sender, EventArgs e)
-        {
-            var emp = new Empire();
-            emp.InsigniaName = ddlInsignia.Text;
-            picInsignia.Image = emp.Icon;
-        }
+		private void empireTraitPicker_TraitToggled(Controls.TraitPicker picker, Trait trait, bool state)
+		{
+			BindPointsSpent();
+		}
 
-        private void ddlLeaderPortrait_TextChanged(object sender, EventArgs e)
-        {
-            var emp = new Empire();
-            emp.LeaderPortraitName = ddlLeaderPortrait.Text;
-            picLeaderPortrait.Image = emp.Portrait;
-        }
+		private void raceTraitPicker_TraitToggled(Controls.TraitPicker picker, Trait trait, bool state)
+		{
+			BindPointsSpent();
+		}
 
-        private void ddlPic_Leave(object sender, EventArgs e)
-        {
-            // auto update ddl's that have no value to match this ddl
-            var ddl = (ComboBox)sender;
-            var text = ddl.Text;
-            foreach (var ddl2 in new ComboBox[]
-                {
-                    ddlLeaderPortrait,
-                    ddlRacePopulationIcon,
-                    ddlShipset,
-                    ddlInsignia
-                })
-            {
-                if (string.IsNullOrWhiteSpace(ddl2.Text))
-                    ddl2.Text = ddl.Text;
-            }
-            lastDdlPicText = ddl.Text;
-        }
+		private void SaveChanges()
+		{
+			// save changes
+			var et = EmpireTemplate;
+			var r = et.PrimaryRace;
+			r.Name = txtRaceName.Text;
+			r.PopulationIconName = ddlRacePopulationIcon.Text;
+			r.NativeSurface = (string)ddlRaceNativeSurface.SelectedItem;
+			r.NativeAtmosphere = (string)ddlRaceNativeAtmosphere.SelectedItem;
+			r.HappinessModel = (HappinessModel)ddlRaceHappiness.SelectedItem;
+			r.TraitNames.Clear();
+			foreach (var t in raceTraitPicker.CheckedTraits)
+				r.TraitNames.Add(t.Name);
+			foreach (var kvp in aptitudePicker.Values)
+			{
+				if (r.Aptitudes.ContainsKey(kvp.Key.Name))
+					r.Aptitudes[kvp.Key.Name] = kvp.Value;
+				else
+					r.Aptitudes.Add(kvp.Key.Name, kvp.Value);
+			}
+			et.Name = txtName.Text;
+			et.AIsCanUse = chkAIsCanUse.Checked;
+			et.LeaderName = txtLeaderName.Text;
+			et.LeaderPortraitName = ddlLeaderPortrait.Text;
+			et.Color = Color.FromArgb((int)spnColorRed.Value, (int)spnColorGreen.Value, (int)spnColorBlue.Value);
+			et.InsigniaName = ddlInsignia.Text;
+			et.ShipsetName = ddlShipset.Text;
+			et.AIName = ddlAI.Text;
+			et.Culture = (Culture)ddlCulture.SelectedItem;
+		}
 
-        private void ddlPic_TextChanged(object sender, EventArgs e)
-        {
-        }
+		private void spnColor_KeyPress(object sender, KeyPressEventArgs e)
+		{
+		}
 
-        private void ddlRaceHappiness_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var h = (HappinessModel)ddlRaceHappiness.SelectedItem;
-            if (h != null)
-                txtRaceHappiness.Text = h.Description;
-            else
-                txtRaceHappiness.Text = "Please choose a happiness model.";
-        }
+		private void spnColor_Leave(object sender, EventArgs e)
+		{
+			// round to next 85
+			var spn = (NumericUpDown)sender;
+			spn.Value = Math.Ceiling(spn.Value / 85m) * 85m;
+		}
 
-        private void ddlRacePopulationIcon_TextChanged(object sender, EventArgs e)
-        {
-            var emp = new Empire();
-            emp.PrimaryRace = new Race();
-            emp.PrimaryRace.PopulationIconName = ddlRacePopulationIcon.Text;
-            picRacePopulationIcon.Image = emp.PrimaryRace.Icon;
-        }
+		private void spnColor_ValueChanged(object sender, EventArgs e)
+		{
+			picColor.BackColor = Color.FromArgb((int)spnColorRed.Value, (int)spnColorGreen.Value, (int)spnColorBlue.Value);
+		}
 
-        private void ddlShipset_TextChanged(object sender, EventArgs e)
-        {
-            picShipset.Image = Mod.Current.Hulls.First().GetPortrait(ddlShipset.Text);
-        }
-
-        private void empireTraitPicker_TraitToggled(Controls.TraitPicker picker, Trait trait, bool state)
-        {
-            BindPointsSpent();
-        }
-
-        private void raceTraitPicker_TraitToggled(Controls.TraitPicker picker, Trait trait, bool state)
-        {
-            BindPointsSpent();
-        }
-
-        private void SaveChanges()
-        {
-            // save changes
-            var et = EmpireTemplate;
-            var r = et.PrimaryRace;
-            r.Name = txtRaceName.Text;
-            r.PopulationIconName = ddlRacePopulationIcon.Text;
-            r.NativeSurface = (string)ddlRaceNativeSurface.SelectedItem;
-            r.NativeAtmosphere = (string)ddlRaceNativeAtmosphere.SelectedItem;
-            r.HappinessModel = (HappinessModel)ddlRaceHappiness.SelectedItem;
-            r.TraitNames.Clear();
-            foreach (var t in raceTraitPicker.CheckedTraits)
-                r.TraitNames.Add(t.Name);
-            foreach (var kvp in aptitudePicker.Values)
-            {
-                if (r.Aptitudes.ContainsKey(kvp.Key.Name))
-                    r.Aptitudes[kvp.Key.Name] = kvp.Value;
-                else
-                    r.Aptitudes.Add(kvp.Key.Name, kvp.Value);
-            }
-            et.Name = txtName.Text;
-            et.AIsCanUse = chkAIsCanUse.Checked;
-            et.LeaderName = txtLeaderName.Text;
-            et.LeaderPortraitName = ddlLeaderPortrait.Text;
-            et.Color = Color.FromArgb((int)spnColorRed.Value, (int)spnColorGreen.Value, (int)spnColorBlue.Value);
-            et.InsigniaName = ddlInsignia.Text;
-            et.ShipsetName = ddlShipset.Text;
-            et.AIName = ddlAI.Text;
-            et.Culture = (Culture)ddlCulture.SelectedItem;
-        }
-
-        private void spnColor_KeyPress(object sender, KeyPressEventArgs e)
-        {
-        }
-
-        private void spnColor_Leave(object sender, EventArgs e)
-        {
-            // round to next 85
-            var spn = (NumericUpDown)sender;
-            spn.Value = Math.Ceiling(spn.Value / 85m) * 85m;
-        }
-
-        private void spnColor_ValueChanged(object sender, EventArgs e)
-        {
-            picColor.BackColor = Color.FromArgb((int)spnColorRed.Value, (int)spnColorGreen.Value, (int)spnColorBlue.Value);
-        }
-
-        private void spnColorRed_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-        }
-
-        #endregion Private Methods
-    }
+		private void spnColorRed_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+		{
+		}
+	}
 }

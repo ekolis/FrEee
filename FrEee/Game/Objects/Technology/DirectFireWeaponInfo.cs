@@ -3,27 +3,23 @@ using System;
 
 namespace FrEee.Game.Objects.Technology
 {
-    [Serializable]
-    public class DirectFireWeaponInfo : WeaponInfo
-    {
-        #region Public Properties
+	[Serializable]
+	public class DirectFireWeaponInfo : WeaponInfo
+	{
+		/// <summary>
+		/// Accuracy bonus or penalty for this weapon.
+		/// </summary>
+		public Formula<int> AccuracyModifier { get; set; }
 
-        /// <summary>
-        /// Accuracy bonus or penalty for this weapon.
-        /// </summary>
-        public Formula<int> AccuracyModifier { get; set; }
-
-        public override Enumerations.WeaponTypes WeaponType
-        {
-            get
-            {
-                if (IsPointDefense)
-                    return Enumerations.WeaponTypes.DirectFirePointDefense;
-                else
-                    return Enumerations.WeaponTypes.DirectFire;
-            }
-        }
-
-        #endregion Public Properties
-    }
+		public override Enumerations.WeaponTypes WeaponType
+		{
+			get
+			{
+				if (IsPointDefense)
+					return Enumerations.WeaponTypes.DirectFirePointDefense;
+				else
+					return Enumerations.WeaponTypes.DirectFire;
+			}
+		}
+	}
 }

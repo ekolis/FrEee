@@ -18,14 +18,6 @@ namespace FrEee.WinForms.Controls
 	/// </summary>
 	public partial class FleetReport : UserControl, IBindable<Fleet>
 	{
-		#region Private Fields
-
-		private Fleet fleet;
-
-		#endregion Private Fields
-
-		#region Public Constructors
-
 		public FleetReport()
 		{
 			InitializeComponent();
@@ -37,27 +29,8 @@ namespace FrEee.WinForms.Controls
 			Fleet = fleet;
 		}
 
-		#endregion Public Constructors
-
-		#region Public Delegates
-
-		public delegate void OrdersChangedDelegate();
-
-		#endregion Public Delegates
-
-		#region Public Events
-
-		public event OrdersChangedDelegate OrdersChanged;
-
-		#endregion Public Events
-
-		#region Public Properties
-
 		public Fleet Fleet { get { return fleet; } set { fleet = value; Bind(); } }
-
-		#endregion Public Properties
-
-		#region Public Methods
+		private Fleet fleet;
 
 		public void Bind(Fleet data)
 		{
@@ -148,10 +121,6 @@ namespace FrEee.WinForms.Controls
 			}
 			ResumeLayout();
 		}
-
-		#endregion Public Methods
-
-		#region Private Methods
 
 		private void btnClearOrders_Click(object sender, System.EventArgs e)
 		{
@@ -354,6 +323,8 @@ namespace FrEee.WinForms.Controls
 			}
 		}
 
-		#endregion Private Methods
+		public event OrdersChangedDelegate OrdersChanged;
+
+		public delegate void OrdersChangedDelegate();
 	}
 }

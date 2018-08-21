@@ -15,6 +15,45 @@ namespace FrEee.Utility.Extensions
 	public static class CopyingExtensions
 	{
 		/// <summary>
+		/// Checks for "do not copy" attribute, even on interface properties.
+		/// Returns true if there is no such attribute.
+		/// </summary>
+		/// <param name="p"></param>
+		/// <returns></returns>
+		public static bool CanCopyFully(this PropertyInfo p)
+		{
+			if (p.HasAttribute<DoNotCopyAttribute>() || p.PropertyType.HasAttribute<DoNotCopyAttribute>())
+				return false;
+			foreach (var i in p.DeclaringType.GetInterfaces())
+			{
+				var ip = i.GetProperty(p.Name);
+				if (ip != null && ip.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any())
+					return false;
+			}
+			return true;
+		}
+
+		/// <summary>
+		/// Checks for "do not copy" attribute, even on interface properties.
+		/// Returns true if there is no such attribute, or the attribute is present but the safe-copy flag is set.
+		/// Safe copying means copying a reference but not deep copying.
+		/// </summary>
+		/// <param name="p"></param>
+		/// <returns></returns>
+		public static bool CanCopySafely(this PropertyInfo p)
+		{
+			if (p.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Union(p.PropertyType.GetCustomAttributes(true).OfType<DoNotCopyAttribute>()).Any(a => !a.AllowSafeCopy))
+				return false;
+			foreach (var i in p.DeclaringType.GetInterfaces())
+			{
+				var ip = i.GetProperty(p.Name);
+				if (ip != null && ip.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any(a => !a.AllowSafeCopy))
+					return false;
+			}
+			return true;
+		}
+
+		/// <summary>
 		/// Copies an object.
 		/// </summary>
 		/// <typeparam name="T">The type of object to copy.</typeparam>
@@ -71,14 +110,6 @@ namespace FrEee.Utility.Extensions
 
 		private class OnlySafePropertiesInjection : ConventionInjection
 		{
-			#region Private Fields
-
-			private SafeDictionary<object, object> knownObjects = new SafeDictionary<object, object>();
-
-			#endregion Private Fields
-
-			#region Public Constructors
-
 			public OnlySafePropertiesInjection(object root, bool deep, IDCopyBehavior rootBehavior, IDCopyBehavior subordinateBehavior, IDictionary<object, object> known = null)
 			{
 				Root = root;
@@ -93,19 +124,11 @@ namespace FrEee.Utility.Extensions
 				}
 			}
 
-			#endregion Public Constructors
-
-			#region Public Properties
-
 			public bool DeepCopy { get; private set; }
 			public object Root { get; private set; }
 			public IDCopyBehavior RootBehavior { get; private set; }
-
 			public IDCopyBehavior SubordinateBehavior { get; private set; }
-
-			#endregion Public Properties
-
-			#region Protected Methods
+			private SafeDictionary<object, object> knownObjects = new SafeDictionary<object, object>();
 
 			protected override void Inject(object source, object target)
 			{
@@ -194,10 +217,6 @@ namespace FrEee.Utility.Extensions
 					c.Source.Type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(p => PropertyMatches(p, c.TargetProp.Name)) &&
 					c.Target.Type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(p => PropertyMatches(p, c.TargetProp.Name));
 			}
-
-			#endregion Protected Methods
-
-			#region Private Methods
 
 			private object CopyObject(object parent, object sv)
 			{
@@ -289,47 +308,6 @@ namespace FrEee.Utility.Extensions
 					   && p.GetSetMethod(true) != null // has a setter, whether public or private
 					   && p.GetIndexParameters().Length == 0; // lacks index parameters
 			}
-
-			#endregion Private Methods
-		}
-
-		/// <summary>
-		/// Checks for "do not copy" attribute, even on interface properties.
-		/// Returns true if there is no such attribute.
-		/// </summary>
-		/// <param name="p"></param>
-		/// <returns></returns>
-		public static bool CanCopyFully(this PropertyInfo p)
-		{
-			if (p.HasAttribute<DoNotCopyAttribute>() || p.PropertyType.HasAttribute<DoNotCopyAttribute>())
-				return false;
-			foreach (var i in p.DeclaringType.GetInterfaces())
-			{
-				var ip = i.GetProperty(p.Name);
-				if (ip != null && ip.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any())
-					return false;
-			}
-			return true;
-		}
-
-		/// <summary>
-		/// Checks for "do not copy" attribute, even on interface properties.
-		/// Returns true if there is no such attribute, or the attribute is present but the safe-copy flag is set.
-		/// Safe copying means copying a reference but not deep copying.
-		/// </summary>
-		/// <param name="p"></param>
-		/// <returns></returns>
-		public static bool CanCopySafely(this PropertyInfo p)
-		{
-			if (p.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Union(p.PropertyType.GetCustomAttributes(true).OfType<DoNotCopyAttribute>()).Any(a => !a.AllowSafeCopy))
-				return false;
-			foreach (var i in p.DeclaringType.GetInterfaces())
-			{
-				var ip = i.GetProperty(p.Name);
-				if (ip != null && ip.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any(a => !a.AllowSafeCopy))
-					return false;
-			}
-			return true;
 		}
 	}
 }
