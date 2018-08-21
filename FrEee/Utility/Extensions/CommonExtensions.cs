@@ -1525,7 +1525,7 @@ namespace FrEee.Utility.Extensions
 		{
 			if (emp == null)
 				return "battle"; // no empire specified
-			if (!b.Combatants.Any(c => c.Owner == emp || (b.OriginalOwners[c]?.IsAllyOf(emp, b.StarSystem) ?? false)))
+			if (!b.Empires.Contains(emp) && !b.Empires.Any(e => e.IsAllyOf(emp, b.StarSystem)))
 				return "battle"; // empire/allies not involved
 			var survivors = b.Combatants.Where(c => c.IsAlive);
 			var ourSurvivors = survivors.Where(c => c.Owner == emp);
