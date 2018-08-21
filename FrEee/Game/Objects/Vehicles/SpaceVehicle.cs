@@ -431,7 +431,7 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <param name="amount"></param>
 		public override void ReplenishShields(int? amount = null)
 		{
-			if (SupplyRemaining > 0)
+			if (HasInfiniteSupplies || SupplyRemaining > 0)
 				base.ReplenishShields(amount);
 			else
 			{
