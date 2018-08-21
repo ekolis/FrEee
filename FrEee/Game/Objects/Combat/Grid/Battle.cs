@@ -471,7 +471,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 					var maxrng = w.Template.WeaponMinRange;
 					var range = locations[c].DistanceToEightWay(locations[target]);
 					var shot = new Shot(c, w, target, range);
-					if (shot.RollAccuracy(Dice))
+					if (w.Template.ComponentTemplate.WeaponInfo.IsWarhead || shot.RollAccuracy(Dice))
 					{
 						dmg += shot.FullDamage;
 						if (w.Template.ComponentTemplate.WeaponInfo.IsWarhead)
