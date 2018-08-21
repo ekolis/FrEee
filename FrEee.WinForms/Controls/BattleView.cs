@@ -353,7 +353,8 @@ namespace FrEee.WinForms.Controls
 
 					case WeaponFiresEvent wf:
 						pewpews.Add(new Pewpew(wf.StartPosition, wf.EndPosition));
-						booms.Add(new Boom(wf.EndPosition, 0.5f));
+						if (wf.IsHit)
+							booms.Add(new Boom(wf.EndPosition, 0.5f));
 						break;
 				}
 			}
