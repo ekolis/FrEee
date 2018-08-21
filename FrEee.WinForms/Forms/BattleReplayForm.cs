@@ -1,8 +1,14 @@
-﻿using FrEee.Game.Objects.Civilization;
+﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Combat.Grid;
+using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Vehicles;
 using FrEee.Utility.Extensions;
+using FrEee.WinForms.Controls;
 using FrEee.WinForms.Interfaces;
 using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
@@ -55,6 +61,7 @@ namespace FrEee.WinForms.Forms
 		private void minimap_MouseDown(object sender, MouseEventArgs e)
 		{
 			battleView.FocusedLocation = minimap.ClickLocation;
+			SelectedCombatant = minimap.SelectedCombatant;
 		}
 
 		private void btnBack_Click(object sender, EventArgs e)
@@ -77,6 +84,38 @@ namespace FrEee.WinForms.Forms
 		{
 			battleView.Round++;
 			minimap.Round++;
+		}
+
+		private ICombatant selectedCombatant;
+
+		public ICombatant SelectedCombatant
+		{
+			get => selectedCombatant;
+			set
+			{
+				selectedCombatant = value;
+				reportPanel.Controls.Clear();
+				if (value is SpaceVehicle v)
+					reportPanel.Controls.Add(new SpaceVehicleReport(v) { Dock = DockStyle.Fill });
+				else if (value is Planet p)
+					reportPanel.Controls.Add(new PlanetReport(p) { Dock = DockStyle.Fill });
+				else if (value is Seeker s)
+					reportPanel.Controls.Add(new Label { Text = $"{s.Name} targeting {s.Target} ({s.Hitpoints} HP)" });
+			}
+		}
+
+		private void RefreshSelectedCombatant()
+		{
+			var ctl = reportPanel.Controls.Cast<Control>().FirstOrDefault();
+			if (ctl == null)
+				return;
+			else if (ctl is IBindable b)
+				b.Bind();
+			else if (ctl is Label l)
+			{
+				if (SelectedCombatant is Seeker s)
+					l.Text = $"{s.Name} targeting {s.Target} ({s.Hitpoints} HP)";
+			}
 		}
 	}
 }
