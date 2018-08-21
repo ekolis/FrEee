@@ -1061,6 +1061,7 @@ namespace FrEee.Game.Objects.Space
 
 			// TODO - to-hit chances not just based on HP?
 			// TODO - per-race population HP?
+			// TODO - planetary shields
 			var popHP = (int)Math.Ceiling(Colony.Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints);
 			var cargoHP = Colony.Cargo.MaxHitpoints;
 			var facilHP = Colony.Facilities.Sum(f => f.MaxHitpoints);
