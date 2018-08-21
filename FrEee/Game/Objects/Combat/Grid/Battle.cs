@@ -182,6 +182,9 @@ namespace FrEee.Game.Objects.Combat.Grid
 			foreach (var c in Combatants)
 				c.UpdateEmpireMemories();
 
+			// make a query so we can check who's alive
+			var alives = Combatants.Where(q => q.IsAlive);
+
 			for (int i = 0; i < Mod.Current.Settings.SpaceCombatTurns; i++)
 			{
 				Events.Add(new List<IBattleEvent>());
@@ -194,7 +197,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 					}
 				}
 
-				var turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x is Seeker ? 1 : 0).ThenBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
+				var turnorder = alives.OrderBy(x => x is Seeker ? 1 : 0).ThenBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
 
 				// phase 0: reload weapons
 				foreach (var w in turnorder.SelectMany(q => q.Weapons))
@@ -231,7 +234,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 						// TODO - both pursue target and evade scary enemies at the same time using heatmap
 						// find out how good each target is
 						var targetiness = new SafeDictionary<ICombatant, double>();
-						foreach (var target in Combatants.Where(x => c.IsHostileTo(x.Owner) && c.CanTarget(x)))
+						foreach (var target in alives.Where(x => c.IsHostileTo(x.Owner) && c.CanTarget(x)))
 						{
 							targetiness[target] = 1d / (locations[target] - locations[c]).LengthEightWay;
 						}
@@ -240,7 +243,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 						{
 							// evade enemies
 							var heatmap = new HeatMap();
-							foreach (var e in Combatants.Where(x => x.IsHostileTo(c.Owner) && x.CanTarget(c)))
+							foreach (var e in alives.Where(x => x.IsHostileTo(c.Owner) && x.CanTarget(c)))
 							{
 								int threat;
 								if (e.Weapons.Any())
@@ -304,7 +307,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 					}
 				}
 
-				turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
+				turnorder = alives.OrderBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
 
 				// phase 3: combatants fire point defense non-warhead weapons starting with the fastest (so the faster ships get to inflict damage first and possibly KO enemies preventing them from firing back)
 				foreach (var c in turnorder.Reverse())
@@ -313,7 +316,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 						TryFireWeapon(c, w, reloads, locations, multiplex);
 				}
 
-				turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
+				turnorder = alives.OrderBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
 
 				// phase 4: point defense seekers detonate
 				foreach (var s in turnorder.Reverse().OfType<Seeker>().Where(s => s.WeaponInfo.IsPointDefense))
@@ -321,7 +324,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 					CheckSeekerDetonation(s, locations);
 				}
 
-				turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
+				turnorder = alives.OrderBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
 
 				// phase 5: ships fire non-PD non-warhead weapons starting with the fastest (so the faster ships get to inflict damage first and possibly KO enemies preventing them from firing back)
 				foreach (var c in turnorder.Reverse())
@@ -330,7 +333,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 						TryFireWeapon(c, w, reloads, locations, multiplex);
 				}
 
-				turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
+				turnorder = alives.OrderBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
 
 				// phase 6: non-PD seekers detonate
 				foreach (var s in turnorder.Reverse().OfType<Seeker>().Where(s => !s.WeaponInfo.IsPointDefense))
@@ -338,7 +341,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 					CheckSeekerDetonation(s, locations);
 				}
 
-				turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
+				turnorder = alives.OrderBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
 
 				// phase 7: ramming! only activates if ship has no other weapons
 				foreach (var c in turnorder.Reverse())
@@ -349,7 +352,6 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 				UpdateBounds(i, locations.Values);
 
-				var alives = Combatants.Where(q => q.IsAlive);
 				bool hostile = false;
 				foreach (var a in alives)
 				{
