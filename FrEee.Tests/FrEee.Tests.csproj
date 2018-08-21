@@ -100,6 +100,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Game\Objects\Abilities\AbilityTest.cs" />
+    <Compile Include="Game\Objects\Combat\DamageTypesTest.cs" />
     <Compile Include="Game\Objects\Orders\ConstructionTest.cs" />
     <Compile Include="Game\Objects\Space\MemoryTest.cs" />
     <Compile Include="Game\Objects\Technology\TechnologyTest.cs" />

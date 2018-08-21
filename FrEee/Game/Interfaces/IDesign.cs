@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Technology;
+using FrEee.Modding.Templates;
 using System.Collections.Generic;
 
 namespace FrEee.Game.Interfaces
@@ -118,6 +119,8 @@ namespace FrEee.Game.Interfaces
 		/// </summary>
 		IEnumerable<string> Warnings { get; }
 
+		void AddComponent(ComponentTemplate ct, Mount m = null);
+
 		/// <summary>
 		/// Creates an order to build this design.
 		/// </summary>
@@ -135,5 +138,6 @@ namespace FrEee.Game.Interfaces
 
 	public interface IDesign<out T> : IDesign, IPictorial, IReferrable, IUpgradeable<IDesign<T>> where T : IVehicle
 	{
+		new T Instantiate();
 	}
 }
