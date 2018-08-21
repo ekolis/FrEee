@@ -10,12 +10,6 @@ namespace FrEee.Tests.Modding.Loaders
 	[TestClass]
 	public class ComponentLoaderTest
 	{
-		[TestInitialize]
-		public void Init()
-		{
-			TestUtilities.SetEntryAssembly();
-		}
-
 		/// <summary>
 		/// Makes sure standard weapons have sane values for their minimum/maximum range.
 		/// </summary>

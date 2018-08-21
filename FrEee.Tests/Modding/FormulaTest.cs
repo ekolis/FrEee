@@ -62,7 +62,6 @@ namespace FrEee.Tests.Modding
 		[TestMethod]
 		public void DynamicFormulaWithParameters()
 		{
-			TestUtilities.SetEntryAssembly();
 			var gal = new Galaxy();
 			Empire emp = new Empire();
 			Mod.Current = Mod.Load("DynamicFormulaWithParameters");

@@ -12,7 +12,6 @@ namespace FrEee.Tests.Modding.Loaders
 		[TestMethod]
 		public void LoadIncludeModWithoutErrors()
 		{
-			TestUtilities.SetEntryAssembly();
 			Mod.Load("Include Mod");
 			Assert.AreEqual(0, Mod.Errors.Count);
 		}

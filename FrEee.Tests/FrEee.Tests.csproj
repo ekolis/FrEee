@@ -115,6 +115,7 @@
     <Compile Include="Modding\ScriptEngineTest.cs" />
     <Compile Include="Modding\StockMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\AssemblyInitializer.cs" />
     <Compile Include="Utility\DataTest.cs" />
     <Compile Include="Utility\Extensions\CommonExtensionsTest.cs" />
     <Compile Include="Utility\Extensions\ParserTest.cs" />

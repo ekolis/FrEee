@@ -30,12 +30,6 @@ namespace FrEee.Tests.Game.Objects.Technology
 			Assert.AreEqual<int>(0, ct.WeaponInfo.GetDamage(new Shot(null, comp, null, 6)));
 		}
 
-		[TestInitialize]
-		public void Init()
-		{
-			TestUtilities.SetEntryAssembly();
-		}
-
 		/// <summary>
 		/// Tests non-formula damage values.
 		/// </summary>
