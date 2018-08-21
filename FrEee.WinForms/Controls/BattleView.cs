@@ -259,9 +259,20 @@ namespace FrEee.WinForms.Controls
 						{
 							// draw pewpews and booms
 							foreach (var pewpew in pewpews.Where(q => q.Start == pos))
-								pe.Graphics.DrawLine(Pens.White, drawPoint, GetDrawPoint(pewpew.End.X, pewpew.End.Y));
-							foreach (var boom in booms.Where(q => q.Position == pos))
-								pe.Graphics.FillEllipse(Brushes.White, drawx - drawsize * boom.Size / 2f, drawy - drawsize * boom.Size / 2f, drawsize * boom.Size, drawsize * boom.Size);
+							{
+								if (pewpew.IsHit)
+									pe.Graphics.DrawLine(Pens.White, drawPoint, GetDrawPoint(pewpew.End.X, pewpew.End.Y));
+								else
+								{
+									// offset the target end a bit if it's a miss
+									var dp = GetDrawPoint(pewpew.End.X, pewpew.End.Y);
+									var dx = dp.X + RandomHelper.Range(-SectorDrawSize / 2, SectorDrawSize / 2);
+									var dy = dp.Y + RandomHelper.Range(-SectorDrawSize / 2, SectorDrawSize / 2);
+									pe.Graphics.DrawLine(Pens.White, drawPoint, new PointF(dx, dy));
+								}
+								foreach (var boom in booms.Where(q => q.Position == pos))
+									pe.Graphics.FillEllipse(Brushes.White, drawx - drawsize * boom.Size / 2f, drawy - drawsize * boom.Size / 2f, drawsize * boom.Size, drawsize * boom.Size);
+							}
 						}
 					}
 				}
@@ -352,9 +363,15 @@ namespace FrEee.WinForms.Controls
 						break;
 
 					case WeaponFiresEvent wf:
-						pewpews.Add(new Pewpew(wf.StartPosition, wf.EndPosition));
 						if (wf.IsHit)
+						{
+							pewpews.Add(new Pewpew(wf.StartPosition, wf.EndPosition));
 							booms.Add(new Boom(wf.EndPosition, 0.5f));
+						}
+						else
+						{
+							pewpews.Add(new Pewpew(wf.StartPosition, wf.EndPosition, false));
+						}
 						break;
 				}
 			}
@@ -388,10 +405,11 @@ namespace FrEee.WinForms.Controls
 		{
 			#region Public Constructors
 
-			public Pewpew(IntVector2 start, IntVector2 end)
+			public Pewpew(IntVector2 start, IntVector2 end, bool isHit = true)
 			{
 				Start = start;
 				End = end;
+				IsHit = isHit;
 			}
 
 			#endregion Public Constructors
@@ -400,6 +418,7 @@ namespace FrEee.WinForms.Controls
 
 			public IntVector2 End { get; set; }
 			public IntVector2 Start { get; set; }
+			public bool IsHit { get; set; }
 
 			#endregion Public Properties
 		}
