@@ -11,7 +11,6 @@ namespace FrEee.Tests.Game.Setup
 		[TestMethod]
 		public void Quickstart()
 		{
-			TestUtilities.SetEntryAssembly();
 			var setup = GameSetup.Load(@"..\..\..\..\FrEee\GameSetups\quickstart.gsu");
 			Mod.Current = Mod.Load(null);
 			Galaxy.Initialize(setup);
