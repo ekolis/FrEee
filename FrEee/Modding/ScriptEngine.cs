@@ -85,6 +85,7 @@ namespace FrEee.Modding
 				deserializers.Add("from FrEee.Utility import Serializer;");
 				deserializers.Add("if (newGalaxy and not galaxy is None):");
 				deserializers.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
+				deserializers.Add("\tMod.Current = galaxy.Mod;");
 				for (int i = 0; i < args.Length; i++)
 					deserializers.Add("arg" + i + " = Serializer.DeserializeFromString(_arg" + i + ");");
 				// TODO - serializers so the objects can be modified by the script
@@ -138,6 +139,7 @@ namespace FrEee.Modding
 				deserializers.Add("from FrEee.Utility import Serializer;");
 				deserializers.Add("if (newGalaxy):");
 				deserializers.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
+				deserializers.Add("\tMod.Current = galaxy.Mod;");
 				for (int i = 0; i < args.Length; i++)
 					deserializers.Add("arg" + i + " = Serializer.DeserializeFromString(_arg" + i + ");");
 				// TODO - serializers so the objects can be modified by the script
@@ -242,6 +244,7 @@ namespace FrEee.Modding
 			preCommands.Add("if newGalaxy:");
 			preCommands.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
 			preCommands.Add("\tGalaxy.Current = galaxy;");
+			preCommands.Add("\tMod.Current = galaxy.Mod;");
 			if (variables != null)
 			{
 				foreach (var variable in variables.Keys)

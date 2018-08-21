@@ -707,7 +707,7 @@ namespace FrEee.Game.Objects.Vehicles
 				var sgfdStart = damage;
 				var sgfdAbility = this.GetAbilityValue("Shield Generation From Damage").ToInt();
 
-				var comps = Components.Where(c => c.Hitpoints > 0);
+				var comps = Components.Where(c => c.Hitpoints > 0 && hit.Shot.DamageType.ComponentPiercing.Evaluate(new Hit(hit.Shot, c, hit.NominalDamage)) < 100);
 				var armor = comps.Where(c => c.HasAbility("Armor"));
 				var internals = comps.Where(c => !c.HasAbility("Armor"));
 				var canBeHit = armor.Any() ? armor : internals;

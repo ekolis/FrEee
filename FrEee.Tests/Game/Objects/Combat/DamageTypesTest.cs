@@ -7,6 +7,7 @@ using FrEee.Modding;
 using FrEee.Utility.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace FrEee.Tests.Game.Objects.Combat
 {
@@ -28,6 +29,8 @@ namespace FrEee.Tests.Game.Objects.Combat
 
 			// create a galaxy for referencing things
 			new Galaxy();
+			foreach (var r in mod.Objects.OfType<IReferrable>())
+				Galaxy.Current.AssignID(r);
 		}
 
 		[TestInitialize]
@@ -57,20 +60,40 @@ namespace FrEee.Tests.Game.Objects.Combat
 
 			// armor should get hit before hull
 			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Armor I"));
-			defender = defenderDesign.Instantiate();
-			Heal(defender);
+			SetupDefender();
 			TestDamage(attacker, defender, 1, expectedArmorDmg: 1);
 
 			// phased shields should get hit before normal shields
 			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Shield Generator I"));
 			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Phased - Shield Generator I"));
-			defender = defenderDesign.Instantiate();
-			Heal(defender);
+			SetupDefender();
 			TestDamage(attacker, defender, 1, expectedNormalShieldDmg: 1);
 
 			// make sure our ship can be destroyed
-			Heal(defender);
+			SetupDefender();
 			TestDamage(attacker, defender, 99999, defender.HullHitpoints, defender.ArmorHitpoints, defender.PhasedShields, defender.NormalShields);
+		}
+
+		/// <summary>
+		/// Makes sure that "only engines" damage damages engines and shields only.
+		/// </summary>
+		[TestMethod]
+		public void OnlyEnginesDamageVersusShips()
+		{
+			attackerDesign.AddComponent(mod.ComponentTemplates.FindByName("Ionic Disperser I"));
+			attacker = attackerDesign.Instantiate();
+
+			// small amounts of damage should hit the shields
+			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Armor I"));
+			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Shield Generator I"));
+			SetupDefender();
+			TestDamage(attacker, defender, 1, expectedNormalShieldDmg: 1);
+
+			// large amounts of damage should hit the engines
+			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Ion Engine I"));
+			SetupDefender();
+			TestDamage(attacker, defender, 99999, expectedNormalShieldDmg: defender.NormalShields, expectedHullDmg: 20);
+			Assert.AreEqual(0, defender.Components.Where(c => !c.IsDestroyed && c.HasAbility("Standard Ship Movement")).Count());
 		}
 
 		/// <summary>
@@ -86,8 +109,7 @@ namespace FrEee.Tests.Game.Objects.Combat
 			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Armor I"));
 			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Shield Generator I"));
 			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Phased - Shield Generator I"));
-			defender = defenderDesign.Instantiate();
-			Heal(defender);
+			SetupDefender();
 			TestDamage(attacker, defender, 99999, expectedNormalShieldDmg: defender.NormalShields, expectedPhasedShieldDmg: defender.PhasedShields);
 		}
 
@@ -103,14 +125,12 @@ namespace FrEee.Tests.Game.Objects.Combat
 			// small amounts of damage should hit the armor
 			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Armor I"));
 			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Shield Generator I"));
-			defender = defenderDesign.Instantiate();
-			Heal(defender);
+			SetupDefender();
 			TestDamage(attacker, defender, 1, expectedArmorDmg: 1);
 
 			// phased shields shold block damage
 			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Phased - Shield Generator I"));
-			defender = defenderDesign.Instantiate();
-			Heal(defender);
+			SetupDefender();
 			TestDamage(attacker, defender, 1, expectedPhasedShieldDmg: 1);
 
 			// should be able to destroy ship
@@ -118,10 +138,22 @@ namespace FrEee.Tests.Game.Objects.Combat
 			TestDamage(attacker, defender, 99999, expectedHullDmg: defender.HullHitpoints, expectedArmorDmg: defender.ArmorHitpoints, expectedNormalShieldDmg: defender.NormalShields, expectedPhasedShieldDmg: defender.PhasedShields);
 		}
 
+		private void AddComponents(IDesign d, params string[] compNames)
+		{
+			foreach (var cn in compNames)
+				d.AddComponent(Mod.Current.ComponentTemplates.FindByName(cn));
+		}
+
 		private void Heal(Ship ship)
 		{
-			ship.ReplenishShields();
 			ship.Repair();
+			ship.ReplenishShields();
+		}
+
+		private void SetupDefender()
+		{
+			defender = defenderDesign.Instantiate();
+			Heal(defender);
 		}
 
 		private void TestDamage(Ship attacker, IDamageable defender, int dmg, int expectedHullDmg = 0, int expectedArmorDmg = 0, int expectedPhasedShieldDmg = 0, int expectedNormalShieldDmg = 0)
