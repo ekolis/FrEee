@@ -355,7 +355,7 @@ namespace FrEee.WinForms.Forms
 			if (Design != null)
 			{
 				Design.BaseName = ddlName.Text;
-				Design.Iteration = Empire.Current.KnownDesigns.Where(d => d != Design && d.Owner == Empire.Current && d.BaseName == ddlName.Text).Count() + 1;
+				Design.Iteration = Empire.Current.KnownDesigns.Where(d => d != Design && d.Owner == Empire.Current && d.BaseName == ddlName.Text && d.IsUnlocked()).Count() + 1;
 				txtIteration.Text = Design.Iteration <= 1 ? "" : Design.Iteration.ToRomanNumeral();
 				BindWarnings();
 			}
