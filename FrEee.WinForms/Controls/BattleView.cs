@@ -428,8 +428,27 @@ namespace FrEee.WinForms.Controls
 		private void BattleView_MouseDown(object sender, MouseEventArgs e)
 		{
 			ClickLocation = GetClickPoint(e.X, e.Y);
+			SelectedCombatant = GetNextCombatantAt(ClickLocation.X, ClickLocation.Y);
+		}
+
+		private IEnumerable<ICombatant> GetCombatantsAt(int x, int y)
+		{
+			return locations.Where(q => q.Value.X == x && q.Value.Y == y).Select(q => q.Key);
+		}
+
+		private ICombatant GetNextCombatantAt(int x, int y)
+		{
+			var arr = GetCombatantsAt(x, y).ToArray();
+			if (!arr.Any())
+				return null;
+			var i = arr.IndexOf(SelectedCombatant);
+			if (i >= arr.Length)
+				return arr[0];
+			return arr[i + 1];
 		}
 
 		public IntVector2 ClickLocation { get; private set; }
+
+		public ICombatant SelectedCombatant { get; set; }
 	}
 }
