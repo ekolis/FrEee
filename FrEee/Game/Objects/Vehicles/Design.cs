@@ -88,7 +88,7 @@ namespace FrEee.Game.Objects.Vehicles
 			if (Empire.Current == null)
 				throw new InvalidOperationException("Can't import designs without a current empire.");
 
-			var designs = Library.Import<IDesign>().Where(d => !Empire.Current.KnownDesigns.Any(d2 => d2.Name == d.Name)).ToArray();
+			var designs = Library.Import<IDesign>(d => !Empire.Current.KnownDesigns.Any(d2 => d2.Equals(d))).ToArray();
 
 			designs.SafeForeach(d =>
 			{
@@ -774,6 +774,28 @@ namespace FrEee.Game.Objects.Vehicles
 				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_" + pathtype + "_" + s)); // for SE4 shipset compatibility
 			}
 			return paths;
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (obj is Design<T> d)
+			{
+				if (d.BaseName != BaseName)
+					return false;
+				if (d.Hull != Hull)
+					return false;
+				if (d.Components.Count != Components.Count)
+					return false;
+				for (var i = 0; i < Components.Count; i++)
+				{
+					if (d.Components[i].ComponentTemplate != Components[i].ComponentTemplate)
+						return false;
+					if (d.Components[i].Mount != Components[i].Mount)
+						return false;
+				}
+				return true;
+			}
+			return false;
 		}
 	}
 }
