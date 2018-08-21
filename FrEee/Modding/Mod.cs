@@ -264,7 +264,7 @@ namespace FrEee.Modding
 				if (status != null)
 					status.Message = "Loading " + loader.FileName;
 				CurrentFileName = loader.FileName;
-				foreach (var mo in loader.Load(mod))
+				foreach (var mo in loader.Load(mod).ToArray())
 					mod.AssignID(mo, used);
 				if (status != null)
 					status.Progress += progressPerFile;
