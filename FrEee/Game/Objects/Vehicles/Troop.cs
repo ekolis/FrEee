@@ -13,8 +13,6 @@ namespace FrEee.Game.Objects.Vehicles
 	[Serializable]
 	public class Troop : Vehicle, IUnit
 	{
-		#region Public Properties
-
 		public override AbilityTargets AbilityTarget
 		{
 			get { return AbilityTargets.Troop; }
@@ -79,10 +77,6 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return Enumerations.WeaponTargets.Invalid; }
 		}
 
-		#endregion Public Properties
-
-		#region Public Methods
-
 		public override Visibility CheckVisibility(Empire emp)
 		{
 			if (Owner == emp)
@@ -114,7 +108,5 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 			target.Owner.Log.Add(this.CreateLogMessage(this + " could not be placed in cargo at " + target + " because there is not enough cargo space available."));
 		}
-
-		#endregion Public Methods
 	}
 }

@@ -7,71 +7,59 @@ using System.Linq;
 
 namespace FrEee.Modding.Loaders
 {
-    /// <summary>
-    /// Loads technologies from TechArea.txt.
-    /// </summary>
-    [Serializable]
-    public class TechnologyLoader : DataFileLoader
-    {
-        #region Public Fields
+	/// <summary>
+	/// Loads technologies from TechArea.txt.
+	/// </summary>
+	[Serializable]
+	public class TechnologyLoader : DataFileLoader
+	{
+		public TechnologyLoader(string modPath)
+			 : base(modPath, Filename, DataFile.Load(modPath, Filename))
+		{
+		}
 
-        public const string Filename = "TechArea.txt";
+		public const string Filename = "TechArea.txt";
 
-        #endregion Public Fields
+		public override IEnumerable<IModObject> Load(Mod mod)
+		{
+			foreach (var rec in DataFile.Records)
+			{
+				var tech = new Technology();
+				string temp;
+				int index = -1;
 
-        #region Public Constructors
+				tech.ModID = rec.Get<string>("ID", tech);
+				rec.TryFindFieldValue("Name", out temp, ref index, Mod.Errors, 0, true);
+				tech.Name = temp;
+				mod.Technologies.Add(tech);
 
-        public TechnologyLoader(string modPath)
-             : base(modPath, Filename, DataFile.Load(modPath, Filename))
-        {
-        }
+				rec.TryFindFieldValue("Group", out temp, ref index, Mod.Errors, 0, true);
+				tech.Group = temp;
 
-        #endregion Public Constructors
+				rec.TryFindFieldValue("Description", out temp, ref index, Mod.Errors, 0, true);
+				tech.Description = temp;
 
-        #region Public Methods
+				tech.MaximumLevel = rec.Get<int>("Maximum Level", tech);
+				tech.LevelCost = rec.Get<int>("Level Cost", tech);
+				tech.StartLevel = rec.Get<int>("Start Level", tech);
+				tech.RaiseLevel = rec.Get<int>("Raise Level", tech);
+				tech.RacialTechID = rec.Get<string>("Racial Area", tech);
+				tech.UniqueTechID = rec.Get<string>("Unique Area", tech);
+				tech.CanBeRemoved = rec.Get<bool>("Can Be Removed", tech);
 
-        public override IEnumerable<IModObject> Load(Mod mod)
-        {
-            foreach (var rec in DataFile.Records)
-            {
-                var tech = new Technology();
-                string temp;
-                int index = -1;
+				yield return tech;
+			}
 
-                tech.ModID = rec.Get<string>("ID", tech);
-                rec.TryFindFieldValue("Name", out temp, ref index, Mod.Errors, 0, true);
-                tech.Name = temp;
-                mod.Technologies.Add(tech);
+			foreach (var tech in mod.Technologies)
+			{
+				// find this tech's record
+				var rec = DataFile.Records.Single(r => r.Get<string>("Name", null) == tech.Name);
 
-                rec.TryFindFieldValue("Group", out temp, ref index, Mod.Errors, 0, true);
-                tech.Group = temp;
-
-                rec.TryFindFieldValue("Description", out temp, ref index, Mod.Errors, 0, true);
-                tech.Description = temp;
-
-                tech.MaximumLevel = rec.Get<int>("Maximum Level", tech);
-                tech.LevelCost = rec.Get<int>("Level Cost", tech);
-                tech.StartLevel = rec.Get<int>("Start Level", tech);
-                tech.RaiseLevel = rec.Get<int>("Raise Level", tech);
-                tech.RacialTechID = rec.Get<string>("Racial Area", tech);
-                tech.UniqueTechID = rec.Get<string>("Unique Area", tech);
-                tech.CanBeRemoved = rec.Get<bool>("Can Be Removed", tech);
-
-                yield return tech;
-            }
-
-            foreach (var tech in mod.Technologies)
-            {
-                // find this tech's record
-                var rec = DataFile.Records.Single(r => r.Get<string>("Name", null) == tech.Name);
-
-                // load its tech reqs
-                // couldn't do it before because some early techs can reference later techs
-                foreach (var tr in RequirementLoader.LoadEmpireRequirements(rec, tech, RequirementType.Unlock))
-                    tech.UnlockRequirements.Add(tr);
-            }
-        }
-
-        #endregion Public Methods
-    }
+				// load its tech reqs
+				// couldn't do it before because some early techs can reference later techs
+				foreach (var tr in RequirementLoader.LoadEmpireRequirements(rec, tech, RequirementType.Unlock))
+					tech.UnlockRequirements.Add(tr);
+			}
+		}
+	}
 }

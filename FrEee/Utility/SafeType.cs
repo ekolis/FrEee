@@ -6,213 +6,193 @@ using System.Reflection;
 
 namespace FrEee.Utility
 {
-    /// <summary>
-    /// A reference to a data type which can be safely serialized and cross-version matched.
-    /// </summary>
-    public class SafeType
-    {
-        #region Public Constructors
+	/// <summary>
+	/// A reference to a data type which can be safely serialized and cross-version matched.
+	/// </summary>
+	public class SafeType
+	{
+		static SafeType()
+		{
+			RegisterAssembly(Assembly.GetEntryAssembly());
+			RegisterAssembly(Assembly.GetExecutingAssembly());
 
-        static SafeType()
-        {
-            RegisterAssembly(Assembly.GetEntryAssembly());
-            RegisterAssembly(Assembly.GetExecutingAssembly());
-
-            /*ReferencedAssemblies = LoadReferencedAssemblies().ToDictionary(a => a.GetName().Name);
+			/*ReferencedAssemblies = LoadReferencedAssemblies().ToDictionary(a => a.GetName().Name);
 			ReferencedTypes = new Dictionary<Tuple<Assembly, string>, Type>();
 			foreach (var a in ReferencedAssemblies.Values)
 			{
 				foreach (var t in a.GetTypes())
 					ReferencedTypes.Add(Tuple.Create(a, t.FullName), t);
 			}*/
-        }
+		}
 
-        public SafeType(string name)
-        {
-            Name = name;
-        }
+		public SafeType(string name)
+		{
+			Name = name;
+		}
 
-        public SafeType(Type type)
-        {
-            Type = type;
-        }
+		public SafeType(Type type)
+		{
+			Type = type;
+		}
 
-        #endregion Public Constructors
+		public string Name { get; set; }
 
-        #region Public Properties
+		[DoNotSerialize]
+		[JsonIgnore]
+		public Type Type
+		{
+			get
+			{
+				return Type.GetType(Name,
+					assemblyName => FindAssembly(assemblyName.FullName),
+					(assembly, typeName, caseInsensitive) =>
+					{
+						if (caseInsensitive)
+							throw new NotSupportedException("Case insensitive type search is not supported.");
+						else
+						{
+							var t = FindType(assembly, typeName);
+							if (t == null)
+								throw new InvalidOperationException("Type '" + typeName + "' in assembly '" + assembly.FullName + "' was not found. Perhaps this SafeType is referring to an incompatible version of the assembly?");
+							return t;
+						}
+					});
+			}
+			set
+			{
+				Name = value.AssemblyQualifiedName;
+			}
+		}
 
-        public string Name { get; set; }
+		private static SafeDictionary<string, Assembly> ReferencedAssemblies { get; set; } = new SafeDictionary<string, Assembly>();
 
-        [DoNotSerialize]
-        [JsonIgnore]
-        public Type Type
-        {
-            get
-            {
-                return Type.GetType(Name,
-                    assemblyName => FindAssembly(assemblyName.FullName),
-                    (assembly, typeName, caseInsensitive) =>
-                    {
-                        if (caseInsensitive)
-                            throw new NotSupportedException("Case insensitive type search is not supported.");
-                        else
-                        {
-                            var t = FindType(assembly, typeName);
-                            if (t == null)
-                                throw new InvalidOperationException("Type '" + typeName + "' in assembly '" + assembly.FullName + "' was not found. Perhaps this SafeType is referring to an incompatible version of the assembly?");
-                            return t;
-                        }
-                    });
-            }
-            set
-            {
-                Name = value.AssemblyQualifiedName;
-            }
-        }
+		private static SafeDictionary<Assembly, SafeDictionary<string, Type>> ReferencedTypes { get; set; } = new SafeDictionary<Assembly, SafeDictionary<string, Type>>(true);
 
-        #endregion Public Properties
+		public static void ForceLoadType(Type t)
+		{
+			RegisterAssembly(t.Assembly);
+			FindType(t.Assembly, t.AssemblyQualifiedName);
+		}
 
-        #region Private Properties
+		public static implicit operator SafeType(Type t)
+		{
+			return new SafeType(t);
+		}
 
-        private static SafeDictionary<string, Assembly> ReferencedAssemblies { get; set; } = new SafeDictionary<string, Assembly>();
+		public static implicit operator Type(SafeType t)
+		{
+			return t.Type;
+		}
 
-        private static SafeDictionary<Assembly, SafeDictionary<string, Type>> ReferencedTypes { get; set; } = new SafeDictionary<Assembly, SafeDictionary<string, Type>>(true);
+		public override string ToString()
+		{
+			return Name;
+		}
 
-        #endregion Private Properties
+		private static Assembly FindAssembly(string n)
+		{
+			foreach (var kvp in ReferencedAssemblies)
+			{
+				if (kvp.Value.FullName == n)
+					return kvp.Value;
+			}
 
-        #region Public Methods
+			// no such assembly? find any referenced assemblies and keep on searching
+			try
+			{
+				return FindMoreAssemblies(a => a, a => a.FullName == n);
+			}
+			catch (Exception ex)
+			{
+				throw new ArgumentException("Could not find assembly named " + n + ".", ex);
+			}
+		}
 
-        public static void ForceLoadType(Type t)
-        {
-            RegisterAssembly(t.Assembly);
-            FindType(t.Assembly, t.AssemblyQualifiedName);
-        }
+		private static T FindMoreAssemblies<T>(Func<Assembly, T> resultor, Func<Assembly, bool> foundit = null)
+		{
+			bool more = false;
+			var done = new List<string>(); // full names of scanned assemblies
+			do
+			{
+				foreach (var a in ReferencedAssemblies.Values.Where(x => !done.Contains(x.FullName)).ToArray())
+				{
+					if (LoadReferencedAssemblies(a))
+						more = true;
+					foreach (var a2 in ReferencedAssemblies.Values)
+					{
+						if (foundit != null)
+						{
+							// use foundit condition
+							if (foundit(a2))
+								return resultor(a2);
+						}
+						else
+						{
+							// use result being not null as the condition
+							var result = resultor(a2);
+							if (result != null)
+								return result;
+						}
+						done.Add(a2.FullName);
+					}
+				}
+			} while (more);
 
-        public static implicit operator SafeType(Type t)
-        {
-            return new SafeType(t);
-        }
+			throw new Exception("No assemblies matched the criteria.");
+		}
 
-        public static implicit operator Type(SafeType t)
-        {
-            return t.Type;
-        }
+		private static Type FindType(string name)
+		{
+			// do we already know about it?
+			foreach (var a in ReferencedAssemblies.Values)
+			{
+				var t = FindType(a, name);
+				if (t != null)
+					return t;
+			}
 
-        public override string ToString()
-        {
-            return Name;
-        }
+			// scan for new assemblies containing the type
+			try
+			{
+				return FindMoreAssemblies(a => FindType(a, name));
+			}
+			catch (Exception ex)
+			{
+				throw new ArgumentException($"Could not find type named {name}.", ex);
+			}
+		}
 
-        #endregion Public Methods
+		private static Type FindType(Assembly a, string name)
+		{
+			if (!ReferencedTypes[a].Any())
+			{
+				foreach (var t in a.GetTypes())
+					ReferencedTypes[a][t.FullName] = t;
+			}
+			var type = ReferencedTypes[a][name];
+			return type;
+		}
 
-        #region Private Methods
+		private static bool LoadReferencedAssemblies(Assembly a)
+		{
+			bool more = false;
+			foreach (var n2 in a.GetReferencedAssemblies().Select(a2 => a2.FullName).Except(ReferencedAssemblies.Values.Select(x => x.FullName)))
+			{
+				more = true; // discovered assemblies
+				var a2 = Assembly.Load(n2);
+				RegisterAssembly(a2);
+				FindAssembly(n2);
+			}
+			return more;
+		}
 
-        private static Assembly FindAssembly(string n)
-        {
-            foreach (var kvp in ReferencedAssemblies)
-            {
-                if (kvp.Value.FullName == n)
-                    return kvp.Value;
-            }
+		private static void RegisterAssembly(Assembly a)
+		{
+			if (a != null)
+				ReferencedAssemblies[a.GetName().Name] = a;
+		}
 
-            // no such assembly? find any referenced assemblies and keep on searching
-            try
-            {
-                return FindMoreAssemblies(a => a, a => a.FullName == n);
-            }
-            catch (Exception ex)
-            {
-                throw new ArgumentException("Could not find assembly named " + n + ".", ex);
-            }
-        }
-
-        private static T FindMoreAssemblies<T>(Func<Assembly, T> resultor, Func<Assembly, bool> foundit = null)
-        {
-            bool more = false;
-            var done = new List<string>(); // full names of scanned assemblies
-            do
-            {
-                foreach (var a in ReferencedAssemblies.Values.Where(x => !done.Contains(x.FullName)).ToArray())
-                {
-                    if (LoadReferencedAssemblies(a))
-                        more = true;
-                    foreach (var a2 in ReferencedAssemblies.Values)
-                    {
-                        if (foundit != null)
-                        {
-                            // use foundit condition
-                            if (foundit(a2))
-                                return resultor(a2);
-                        }
-                        else
-                        {
-                            // use result being not null as the condition
-                            var result = resultor(a2);
-                            if (result != null)
-                                return result;
-                        }
-                        done.Add(a2.FullName);
-                    }
-                }
-            } while (more);
-
-            throw new Exception("No assemblies matched the criteria.");
-        }
-
-        private static Type FindType(string name)
-        {
-            // do we already know about it?
-            foreach (var a in ReferencedAssemblies.Values)
-            {
-                var t = FindType(a, name);
-                if (t != null)
-                    return t;
-            }
-
-            // scan for new assemblies containing the type
-            try
-            {
-                return FindMoreAssemblies(a => FindType(a, name));
-            }
-            catch (Exception ex)
-            {
-                throw new ArgumentException($"Could not find type named {name}.", ex);
-            }
-        }
-
-        private static Type FindType(Assembly a, string name)
-        {
-            if (!ReferencedTypes[a].Any())
-            {
-                foreach (var t in a.GetTypes())
-                    ReferencedTypes[a][t.FullName] = t;
-            }
-            var type = ReferencedTypes[a][name];
-            return type;
-        }
-
-        private static bool LoadReferencedAssemblies(Assembly a)
-        {
-            bool more = false;
-            foreach (var n2 in a.GetReferencedAssemblies().Select(a2 => a2.FullName).Except(ReferencedAssemblies.Values.Select(x => x.FullName)))
-            {
-                more = true; // discovered assemblies
-                var a2 = Assembly.Load(n2);
-                RegisterAssembly(a2);
-                FindAssembly(n2);
-            }
-            return more;
-        }
-
-        private static void RegisterAssembly(Assembly a)
-        {
-            if (a != null)
-                ReferencedAssemblies[a.GetName().Name] = a;
-        }
-
-        #endregion Private Methods
-
-        /*/// <summary>
+		/*/// <summary>
 		/// Finds and loads all referenced assemblies from a given root assembly, recursively.
 		/// </summary>
 		/// <param name="rootAssembly">The root assembly. If not specified, Assembly.GetEntryAssembly() and Assembly.GetExecutingAssembly() will be used.</param>
@@ -240,5 +220,5 @@ namespace FrEee.Utility
 			}
 			return alreadyLoaded;
 		}*/
-    }
+	}
 }

@@ -17,31 +17,17 @@ namespace FrEee.Modding.Loaders
 	/// </summary>
 	public class ComponentLoader : DataFileLoader
 	{
-		#region Public Fields
-
-		public const string Filename = "Components.txt";
-
-		#endregion Public Fields
-
-		#region Private Fields
-
-		private static List<string> numbers = new List<string>()
-		{
-			"Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"
-		};
-
-		#endregion Private Fields
-
-		#region Public Constructors
-
 		public ComponentLoader(string modPath)
 					: base(modPath, Filename, DataFile.Load(modPath, Filename))
 		{
 		}
 
-		#endregion Public Constructors
+		public const string Filename = "Components.txt";
 
-		#region Public Methods
+		private static List<string> numbers = new List<string>()
+		{
+			"Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"
+		};
 
 		public override IEnumerable<IModObject> Load(Mod mod)
 		{
@@ -213,10 +199,6 @@ namespace FrEee.Modding.Loaders
 			}
 		}
 
-		#endregion Public Methods
-
-		#region Private Methods
-
 		private VehicleTypes ParseVehicleTypes(string s, string separator, Record rec)
 		{
 			if (s == null)
@@ -230,7 +212,5 @@ namespace FrEee.Modding.Loaders
 				return WeaponTargets.All;
 			return s.ParseEnum<WeaponTargets>();
 		}
-
-		#endregion Private Methods
 	}
 }

@@ -10,255 +10,227 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Controls
 {
-    public partial class SearchBox : UserControl
-    {
-        #region Private Fields
+	public partial class SearchBox : UserControl
+	{
+		public SearchBox()
+		{
+			InitializeComponent();
+			resultsForm = new SearchBoxResultsForm();
+			resultsForm.ObjectSelected += resultsForm_ObjectSelected;
+			ResultsPopupHeight = 128;
 
-        // http://stackoverflow.com/questions/97459/automatically-select-all-text-on-focus-in-winforms-textbox
-        private bool alreadyFocused;
+			textBox.GotFocus += textBox1_GotFocus;
+			textBox.MouseUp += textBox1_MouseUp;
+			textBox.Leave += textBox1_Leave;
+		}
 
-        private IEnumerable<ISpaceObject> objectsToSearch;
+		public IEnumerable<ISpaceObject> ObjectsToSearch
+		{
+			get
+			{
+				return objectsToSearch;
+			}
+			set
+			{
+				objectsToSearch = value;
+			}
+		}
 
-        private SearchBoxResultsForm resultsForm;
+		public int ResultsPopupHeight
+		{
+			get;
+			set;
+		}
 
-        #endregion Private Fields
+		public ISpaceObject SelectedObject
+		{
+			get;
+			private set;
+		}
 
-        #region Public Constructors
+		/// <summary>
+		/// The current star system. Items in this system will be shown first.
+		/// </summary>
+		public StarSystem StarSystem
+		{
+			get;
+			set;
+		}
 
-        public SearchBox()
-        {
-            InitializeComponent();
-            resultsForm = new SearchBoxResultsForm();
-            resultsForm.ObjectSelected += resultsForm_ObjectSelected;
-            ResultsPopupHeight = 128;
+		// http://stackoverflow.com/questions/97459/automatically-select-all-text-on-focus-in-winforms-textbox
+		private bool alreadyFocused;
 
-            textBox.GotFocus += textBox1_GotFocus;
-            textBox.MouseUp += textBox1_MouseUp;
-            textBox.Leave += textBox1_Leave;
-        }
+		private IEnumerable<ISpaceObject> objectsToSearch;
 
-        #endregion Public Constructors
+		private SearchBoxResultsForm resultsForm;
 
-        #region Public Delegates
+		public void HideResults()
+		{
+			resultsForm.Hide();
+		}
 
-        public delegate void ObjectSelectedDelegate(SearchBox sender, ISpaceObject sobj);
+		public void ShowResults()
+		{
+			var results = ObjectsToSearch.Where(o => o.Name.ToLower().Contains(textBox.Text.ToLower())).OrderBy(o => o.FindStarSystem() == StarSystem ? 0 : 1);
+			resultsForm.Results = results;
+			if (!resultsForm.Visible)
+			{
+				resultsForm.Show(this);
+				Focus();
+				textBox.Select(textBox.Text.Length, 0);
+			}
+			PlaceResultsForm();
+		}
 
-        #endregion Public Delegates
+		private void form_LocationChanged(object sender, EventArgs e)
+		{
+			PlaceResultsForm();
+		}
 
-        #region Public Events
+		private void form_Resize(object sender, EventArgs e)
+		{
+			var form = (Form)sender;
+			if (form.WindowState == FormWindowState.Minimized)
+				resultsForm.Hide();
+		}
 
-        public event ObjectSelectedDelegate ObjectSelected;
+		private void PlaceResultsForm()
+		{
+			var screenPos = PointToScreen(Location);
+			resultsForm.Left = screenPos.X;
+			resultsForm.Top = screenPos.Y + Height;
+			resultsForm.Width = Width;
+			resultsForm.Height = ResultsPopupHeight;
+		}
 
-        #endregion Public Events
+		private void resultsForm_ObjectSelected(SearchBoxResultsForm sender, ISpaceObject sobj)
+		{
+			SelectedObject = sobj;
+			if (ObjectSelected != null)
+				ObjectSelected(this, sobj);
+		}
 
-        #region Public Properties
+		private void SearchBox_Enter(object sender, EventArgs e)
+		{
+			textBox.SelectAll();
+		}
 
-        public IEnumerable<ISpaceObject> ObjectsToSearch
-        {
-            get
-            {
-                return objectsToSearch;
-            }
-            set
-            {
-                objectsToSearch = value;
-            }
-        }
+		private void SearchBox_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				// select first item
+				SelectedObject = resultsForm.Results.FirstOrDefault();
+				if (ObjectSelected != null)
+					ObjectSelected(this, SelectedObject);
+			}
+			else if (e.KeyCode == Keys.Escape)
+			{
+				// hide results
+				HideResults();
+			}
+			else
+			{
+				// update results
+				ShowResults();
+			}
+		}
 
-        public int ResultsPopupHeight
-        {
-            get;
-            set;
-        }
+		private void SearchBox_Leave(object sender, EventArgs e)
+		{
+			HideResults();
+		}
 
-        public ISpaceObject SelectedObject
-        {
-            get;
-            private set;
-        }
+		private void SearchBox_Load(object sender, EventArgs e)
+		{
+			var form = this.FindForm();
+			if (form != null)
+			{
+				form.LocationChanged += form_LocationChanged;
+				form.Resize += form_Resize;
+			}
+		}
 
-        /// <summary>
-        /// The current star system. Items in this system will be shown first.
-        /// </summary>
-        public StarSystem StarSystem
-        {
-            get;
-            set;
-        }
+		private void SearchBox_SizeChanged(object sender, EventArgs e)
+		{
+			if (textBox != null)
+				textBox.Width = Width;
+			if (resultsForm != null)
+				resultsForm.Width = Width;
+		}
 
-        #endregion Public Properties
+		private void textBox_Enter(object sender, EventArgs e)
+		{
+			textBox.SelectAll();
+		}
 
-        #region Public Methods
+		private void textBox_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				// select first item
+				SelectedObject = resultsForm.Results.FirstOrDefault();
+				if (ObjectSelected != null)
+					ObjectSelected(this, SelectedObject);
+			}
+			else if (e.KeyCode == Keys.Escape)
+			{
+				// hide results
+				HideResults();
+			}
+			else
+			{
+				// update results
+				ShowResults();
+			}
+		}
 
-        public void HideResults()
-        {
-            resultsForm.Hide();
-        }
+		private void textBox_Leave(object sender, EventArgs e)
+		{
+			HideResults();
+		}
 
-        public void ShowResults()
-        {
-            var results = ObjectsToSearch.Where(o => o.Name.ToLower().Contains(textBox.Text.ToLower())).OrderBy(o => o.FindStarSystem() == StarSystem ? 0 : 1);
-            resultsForm.Results = results;
-            if (!resultsForm.Visible)
-            {
-                resultsForm.Show(this);
-                Focus();
-                textBox.Select(textBox.Text.Length, 0);
-            }
-            PlaceResultsForm();
-        }
+		private void textBox_SizeChanged(object sender, EventArgs e)
+		{
+			Height = textBox.Height;
+		}
 
-        #endregion Public Methods
+		private void textBox_TextChanged(object sender, EventArgs e)
+		{
+			// update results
+			ShowResults();
+		}
 
-        #region Private Methods
+		private void textBox1_GotFocus(object sender, EventArgs e)
+		{
+			// Select all text only if the mouse isn't down.
+			// This makes tabbing to the textbox give focus.
+			if (MouseButtons == MouseButtons.None)
+			{
+				this.textBox.SelectAll();
+				alreadyFocused = true;
+			}
+		}
 
-        private void form_LocationChanged(object sender, EventArgs e)
-        {
-            PlaceResultsForm();
-        }
+		private void textBox1_Leave(object sender, EventArgs e)
+		{
+			alreadyFocused = false;
+		}
 
-        private void form_Resize(object sender, EventArgs e)
-        {
-            var form = (Form)sender;
-            if (form.WindowState == FormWindowState.Minimized)
-                resultsForm.Hide();
-        }
+		private void textBox1_MouseUp(object sender, MouseEventArgs e)
+		{
+			// Web browsers like Google Chrome select the text on mouse up.
+			// They only do it if the textbox isn't already focused,
+			// and if the user hasn't selected all text.
+			if (!alreadyFocused && this.textBox.SelectionLength == 0)
+			{
+				alreadyFocused = true;
+				this.textBox.SelectAll();
+			}
+		}
 
-        private void PlaceResultsForm()
-        {
-            var screenPos = PointToScreen(Location);
-            resultsForm.Left = screenPos.X;
-            resultsForm.Top = screenPos.Y + Height;
-            resultsForm.Width = Width;
-            resultsForm.Height = ResultsPopupHeight;
-        }
+		public event ObjectSelectedDelegate ObjectSelected;
 
-        private void resultsForm_ObjectSelected(SearchBoxResultsForm sender, ISpaceObject sobj)
-        {
-            SelectedObject = sobj;
-            if (ObjectSelected != null)
-                ObjectSelected(this, sobj);
-        }
-
-        private void SearchBox_Enter(object sender, EventArgs e)
-        {
-            textBox.SelectAll();
-        }
-
-        private void SearchBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                // select first item
-                SelectedObject = resultsForm.Results.FirstOrDefault();
-                if (ObjectSelected != null)
-                    ObjectSelected(this, SelectedObject);
-            }
-            else if (e.KeyCode == Keys.Escape)
-            {
-                // hide results
-                HideResults();
-            }
-            else
-            {
-                // update results
-                ShowResults();
-            }
-        }
-
-        private void SearchBox_Leave(object sender, EventArgs e)
-        {
-            HideResults();
-        }
-
-        private void SearchBox_Load(object sender, EventArgs e)
-        {
-            var form = this.FindForm();
-            if (form != null)
-            {
-                form.LocationChanged += form_LocationChanged;
-                form.Resize += form_Resize;
-            }
-        }
-
-        private void SearchBox_SizeChanged(object sender, EventArgs e)
-        {
-            if (textBox != null)
-                textBox.Width = Width;
-            if (resultsForm != null)
-                resultsForm.Width = Width;
-        }
-
-        private void textBox_Enter(object sender, EventArgs e)
-        {
-            textBox.SelectAll();
-        }
-
-        private void textBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                // select first item
-                SelectedObject = resultsForm.Results.FirstOrDefault();
-                if (ObjectSelected != null)
-                    ObjectSelected(this, SelectedObject);
-            }
-            else if (e.KeyCode == Keys.Escape)
-            {
-                // hide results
-                HideResults();
-            }
-            else
-            {
-                // update results
-                ShowResults();
-            }
-        }
-
-        private void textBox_Leave(object sender, EventArgs e)
-        {
-            HideResults();
-        }
-
-        private void textBox_SizeChanged(object sender, EventArgs e)
-        {
-            Height = textBox.Height;
-        }
-
-        private void textBox_TextChanged(object sender, EventArgs e)
-        {
-            // update results
-            ShowResults();
-        }
-
-        private void textBox1_GotFocus(object sender, EventArgs e)
-        {
-            // Select all text only if the mouse isn't down.
-            // This makes tabbing to the textbox give focus.
-            if (MouseButtons == MouseButtons.None)
-            {
-                this.textBox.SelectAll();
-                alreadyFocused = true;
-            }
-        }
-
-        private void textBox1_Leave(object sender, EventArgs e)
-        {
-            alreadyFocused = false;
-        }
-
-        private void textBox1_MouseUp(object sender, MouseEventArgs e)
-        {
-            // Web browsers like Google Chrome select the text on mouse up.
-            // They only do it if the textbox isn't already focused,
-            // and if the user hasn't selected all text.
-            if (!alreadyFocused && this.textBox.SelectionLength == 0)
-            {
-                alreadyFocused = true;
-                this.textBox.SelectAll();
-            }
-        }
-
-        #endregion Private Methods
-    }
+		public delegate void ObjectSelectedDelegate(SearchBox sender, ISpaceObject sobj);
+	}
 }

@@ -2,14 +2,14 @@
 
 namespace FrEee.Game.Enumerations
 {
-    public enum EmpirePlacement
-    {
-        [CanonicalName("Can Start In Same System")]
-        CanStartInSameSystem,
+	public enum EmpirePlacement
+	{
+		[CanonicalName("Can Start In Same System")]
+		CanStartInSameSystem,
 
-        [CanonicalName("Different Systems")]
-        DifferentSystems,
+		[CanonicalName("Different Systems")]
+		DifferentSystems,
 
-        Equidistant
-    }
+		Equidistant
+	}
 }

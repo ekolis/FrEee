@@ -12,8 +12,6 @@ namespace FrEee.Game.Objects.Vehicles
 	[Serializable]
 	public class WeaponPlatform : Vehicle, IUnit
 	{
-		#region Public Properties
-
 		public override AbilityTargets AbilityTarget
 		{
 			get { return AbilityTargets.WeaponPlatform; }
@@ -75,10 +73,6 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return Enumerations.WeaponTargets.Invalid; }
 		}
 
-		#endregion Public Properties
-
-		#region Public Methods
-
 		public override Visibility CheckVisibility(Empire emp)
 		{
 			if (Owner == emp)
@@ -100,7 +94,5 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			CommonExtensions.Place(this, target);
 		}
-
-		#endregion Public Methods
 	}
 }

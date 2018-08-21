@@ -11,214 +11,194 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Controls
 {
-    public partial class PlanetReport : UserControl, IBindable<Planet>
-    {
-        #region Private Fields
+	public partial class PlanetReport : UserControl, IBindable<Planet>
+	{
+		public PlanetReport()
+		{
+			InitializeComponent();
+		}
 
-        private Planet planet;
+		public PlanetReport(Planet planet)
+			: this()
+		{
+			Planet = planet;
+		}
 
-        #endregion Private Fields
+		/// <summary>
+		/// The planet for which to display a report.
+		/// </summary>
+		public Planet Planet
+		{
+			get { return planet; }
+			set
+			{
+				planet = value;
+				Bind();
+			}
+		}
 
-        #region Public Constructors
+		private Planet planet;
 
-        public PlanetReport()
-        {
-            InitializeComponent();
-        }
+		public void Bind()
+		{
+			SuspendLayout();
+			if (Planet == null)
+				Visible = false;
+			else
+			{
+				Visible = true;
 
-        public PlanetReport(Planet planet)
-            : this()
-        {
-            Planet = planet;
-        }
+				bool showColonyInfo = planet.Colony != null;
+				pnlColony.Visible = showColonyInfo;
+				if (showColonyInfo)
+				{
+					if (!gameTabControl1.TabPages.Contains(pageFacil))
+						gameTabControl1.TabPages.Insert(1, pageFacil);
+					if (!gameTabControl1.TabPages.Contains(pageCargo))
+						gameTabControl1.TabPages.Insert(2, pageCargo);
+					if (!gameTabControl1.TabPages.Contains(pageOrders))
+						gameTabControl1.TabPages.Insert(3, pageOrders);
+				}
+				else
+				{
+					gameTabControl1.TabPages.Remove(pageFacil);
+					gameTabControl1.TabPages.Remove(pageCargo);
+					gameTabControl1.TabPages.Remove(pageOrders);
+				}
 
-        #endregion Public Constructors
+				picOwnerFlag.Image = Planet.Owner == null ? null : Planet.Owner.Icon;
+				picPortrait.Image = Planet.Portrait;
 
-        #region Public Properties
+				if (Planet.Timestamp == Galaxy.Current.Timestamp)
+					txtAge.Text = "Current";
+				else if (Galaxy.Current.Timestamp - Planet.Timestamp <= 1)
+					txtAge.Text = "Last turn";
+				else
+					txtAge.Text = Math.Ceiling(Galaxy.Current.Timestamp - Planet.Timestamp) + " turns ago";
 
-        /// <summary>
-        /// The planet for which to display a report.
-        /// </summary>
-        public Planet Planet
-        {
-            get { return planet; }
-            set
-            {
-                planet = value;
-                Bind();
-            }
-        }
+				txtName.Text = Planet.Name;
+				txtSizeSurface.Text = Planet.Size + " " + Planet.Surface + " Planet";
+				txtAtmosphere.Text = Planet.Atmosphere;
+				txtConditions.Text = ""; // TODO - load conditions
 
-        #endregion Public Properties
+				txtValueMinerals.Text = Planet.ResourceValue[Resource.Minerals].ToUnitString();
+				txtValueOrganics.Text = Planet.ResourceValue[Resource.Organics].ToUnitString();
+				txtValueRadioactives.Text = Planet.ResourceValue[Resource.Radioactives].ToUnitString();
 
-        #region Public Methods
+				txtDescription.Text = Planet.Description;
 
-        public void Bind()
-        {
-            SuspendLayout();
-            if (Planet == null)
-                Visible = false;
-            else
-            {
-                Visible = true;
+				txtColonyType.Text = Planet.Owner == null ? "Uninhabited" : Planet.Owner.Name + " Colony"; // TODO - load colony type
+				if (Planet.Owner == null)
+					txtPopulation.Text = "0";
+				else
+				{
+					var pop = Planet.Colony.Population.Sum(kvp => kvp.Value);
+					if (Planet.PopulationChangePerTurn > 0)
+						txtPopulation.Text = pop.ToUnitString(true) + " / " + Planet.MaxPopulation.ToUnitString(true) + " (+" + Planet.PopulationChangePerTurn.ToUnitString(true) + ")";
+					else if (Planet.PopulationChangePerTurn < 0)
+						txtPopulation.Text = pop.ToUnitString(true) + " / " + Planet.MaxPopulation.ToUnitString(true) + " (" + Planet.PopulationChangePerTurn.ToUnitString(true) + ")";
+					else
+						txtPopulation.Text = pop.ToUnitString(true) + " / " + Planet.MaxPopulation.ToUnitString(true) + " (stagnant)";
+				}
 
-                bool showColonyInfo = planet.Colony != null;
-                pnlColony.Visible = showColonyInfo;
-                if (showColonyInfo)
-                {
-                    if (!gameTabControl1.TabPages.Contains(pageFacil))
-                        gameTabControl1.TabPages.Insert(1, pageFacil);
-                    if (!gameTabControl1.TabPages.Contains(pageCargo))
-                        gameTabControl1.TabPages.Insert(2, pageCargo);
-                    if (!gameTabControl1.TabPages.Contains(pageOrders))
-                        gameTabControl1.TabPages.Insert(3, pageOrders);
-                }
-                else
-                {
-                    gameTabControl1.TabPages.Remove(pageFacil);
-                    gameTabControl1.TabPages.Remove(pageCargo);
-                    gameTabControl1.TabPages.Remove(pageOrders);
-                }
+				txtMood.Text = ""; // TODO - load mood
 
-                picOwnerFlag.Image = Planet.Owner == null ? null : Planet.Owner.Icon;
-                picPortrait.Image = Planet.Portrait;
+				// load income
+				if (Planet.Owner != null)
+				{
+					var income = Planet.GrossIncome();
+					var remoteMining = Planet.Owner.RemoteMiners.Where(kvp => kvp.Key.Item1 == Planet).Sum(kvp => kvp.Value); // planets doing remote mining of their moons? sure, why not?
+					var rawGen = Planet.RawResourceIncome();
+					var totalIncome = income + remoteMining + rawGen;
+					resIncomeMinerals.Amount = totalIncome[Resource.Minerals];
+					resIncomeOrganics.Amount = totalIncome[Resource.Organics];
+					resIncomeRadioactives.Amount = totalIncome[Resource.Radioactives];
+					resResearch.Amount = totalIncome[Resource.Research];
+					resIntel.Amount = totalIncome[Resource.Intelligence];
+				}
+				else
+				{
+					resIncomeMinerals.Amount = resIncomeOrganics.Amount = resIncomeRadioactives.Amount = resResearch.Amount = resIntel.Amount = 0;
+				}
 
-                if (Planet.Timestamp == Galaxy.Current.Timestamp)
-                    txtAge.Text = "Current";
-                else if (Galaxy.Current.Timestamp - Planet.Timestamp <= 1)
-                    txtAge.Text = "Last turn";
-                else
-                    txtAge.Text = Math.Ceiling(Galaxy.Current.Timestamp - Planet.Timestamp) + " turns ago";
+				// load construction data
+				if (Planet.Colony == null || Planet.ConstructionQueue.FirstItemEta == null)
+				{
+					txtConstructionItem.Text = "(None)";
+					txtConstructionItem.BackColor = Color.Transparent;
+					txtConstructionTime.Text = "";
+					txtConstructionTime.BackColor = Color.Transparent;
+				}
+				else
+				{
+					txtConstructionItem.Text = Planet.ConstructionQueue.FirstItemName;
+					txtConstructionItem.BackColor = Planet.ConstructionQueue.FirstItemEta <= 1d ? Color.DarkGreen : Color.Transparent;
+					if (Planet.ConstructionQueue.Eta != Planet.ConstructionQueue.FirstItemEta)
+						txtConstructionTime.Text = Planet.ConstructionQueue.FirstItemEta.ToString("f1") + " turns (" + Planet.ConstructionQueue.Eta.ToString("f1") + " turns for all)";
+					else
+						txtConstructionTime.Text = Planet.ConstructionQueue.FirstItemEta.ToString("f1") + " turns";
+					txtConstructionTime.BackColor = Planet.ConstructionQueue.Eta <= 1d ? Color.DarkGreen : Color.Transparent;
+				}
 
-                txtName.Text = Planet.Name;
-                txtSizeSurface.Text = Planet.Size + " " + Planet.Surface + " Planet";
-                txtAtmosphere.Text = Planet.Atmosphere;
-                txtConditions.Text = ""; // TODO - load conditions
+				// load orders
+				// TODO - let player adjust orders here
+				lstOrdersDetail.Items.Clear();
+				foreach (var order in Planet.Orders)
+					lstOrdersDetail.Items.Add(order);
 
-                txtValueMinerals.Text = Planet.ResourceValue[Resource.Minerals].ToUnitString();
-                txtValueOrganics.Text = Planet.ResourceValue[Resource.Organics].ToUnitString();
-                txtValueRadioactives.Text = Planet.ResourceValue[Resource.Radioactives].ToUnitString();
+				// load facilities
+				lstFacilitiesDetail.Initialize(32, 32);
+				if (Planet.Colony != null)
+				{
+					txtFacilitySlotsFree.Text = string.Format("{0} / {1} slots free", Planet.MaxFacilities - Planet.Colony.Facilities.Count, Planet.MaxFacilities);
 
-                txtDescription.Text = Planet.Description;
+					foreach (var fg in Planet.Colony.Facilities.GroupBy(f => f.Template))
+						lstFacilitiesDetail.AddItemWithImage(fg.Key.Group, fg.Count() + "x " + fg.Key.Name.Value, fg.Key, fg.Key.Icon);
+				}
+				else
+					txtFacilitySlotsFree.Text = "";
 
-                txtColonyType.Text = Planet.Owner == null ? "Uninhabited" : Planet.Owner.Name + " Colony"; // TODO - load colony type
-                if (Planet.Owner == null)
-                    txtPopulation.Text = "0";
-                else
-                {
-                    var pop = Planet.Colony.Population.Sum(kvp => kvp.Value);
-                    if (Planet.PopulationChangePerTurn > 0)
-                        txtPopulation.Text = pop.ToUnitString(true) + " / " + Planet.MaxPopulation.ToUnitString(true) + " (+" + Planet.PopulationChangePerTurn.ToUnitString(true) + ")";
-                    else if (Planet.PopulationChangePerTurn < 0)
-                        txtPopulation.Text = pop.ToUnitString(true) + " / " + Planet.MaxPopulation.ToUnitString(true) + " (" + Planet.PopulationChangePerTurn.ToUnitString(true) + ")";
-                    else
-                        txtPopulation.Text = pop.ToUnitString(true) + " / " + Planet.MaxPopulation.ToUnitString(true) + " (stagnant)";
-                }
+				// load cargo
+				txtCargoSpaceFree.Text = string.Format("{0} / {1} free", (Planet.CargoStorage - (Planet.Cargo == null ? 0 : Planet.Cargo.Size)).Kilotons(), Planet.CargoStorage.Kilotons());
+				lstCargoDetail.Initialize(32, 32);
+				if (Planet.Cargo != null)
+				{
+					foreach (var ug in Planet.Cargo.Units.GroupBy(u => u.Design))
+						lstCargoDetail.AddItemWithImage(ug.Key.VehicleTypeName, ug.Count() + "x " + ug.Key.Name, ug, ug.First().Icon);
+					foreach (var pop in Planet.Cargo.Population)
+						lstCargoDetail.AddItemWithImage("Population", pop.Value.ToUnitString(true) + " " + pop.Key.Name, pop, pop.Key.Icon);
+				}
 
-                txtMood.Text = ""; // TODO - load mood
+				abilityTreeView.Abilities = Planet.AbilityTree();
+				if (Planet.Colony == null)
+					abilityTreeView.IntrinsicAbilities = Planet.IntrinsicAbilities;
+				else
+					abilityTreeView.IntrinsicAbilities = Planet.IntrinsicAbilities.Concat(Planet.Colony.Abilities());
+			}
+			ResumeLayout();
+		}
 
-                // load income
-                if (Planet.Owner != null)
-                {
-                    var income = Planet.GrossIncome();
-                    var remoteMining = Planet.Owner.RemoteMiners.Where(kvp => kvp.Key.Item1 == Planet).Sum(kvp => kvp.Value); // planets doing remote mining of their moons? sure, why not?
-                    var rawGen = Planet.RawResourceIncome();
-                    var totalIncome = income + remoteMining + rawGen;
-                    resIncomeMinerals.Amount = totalIncome[Resource.Minerals];
-                    resIncomeOrganics.Amount = totalIncome[Resource.Organics];
-                    resIncomeRadioactives.Amount = totalIncome[Resource.Radioactives];
-                    resResearch.Amount = totalIncome[Resource.Research];
-                    resIntel.Amount = totalIncome[Resource.Intelligence];
-                }
-                else
-                {
-                    resIncomeMinerals.Amount = resIncomeOrganics.Amount = resIncomeRadioactives.Amount = resResearch.Amount = resIntel.Amount = 0;
-                }
+		public void Bind(Planet data)
+		{
+			Planet = data;
+			Bind();
+		}
 
-                // load construction data
-                if (Planet.Colony == null || Planet.ConstructionQueue.FirstItemEta == null)
-                {
-                    txtConstructionItem.Text = "(None)";
-                    txtConstructionItem.BackColor = Color.Transparent;
-                    txtConstructionTime.Text = "";
-                    txtConstructionTime.BackColor = Color.Transparent;
-                }
-                else
-                {
-                    txtConstructionItem.Text = Planet.ConstructionQueue.FirstItemName;
-                    txtConstructionItem.BackColor = Planet.ConstructionQueue.FirstItemEta <= 1d ? Color.DarkGreen : Color.Transparent;
-                    if (Planet.ConstructionQueue.Eta != Planet.ConstructionQueue.FirstItemEta)
-                        txtConstructionTime.Text = Planet.ConstructionQueue.FirstItemEta.ToString("f1") + " turns (" + Planet.ConstructionQueue.Eta.ToString("f1") + " turns for all)";
-                    else
-                        txtConstructionTime.Text = Planet.ConstructionQueue.FirstItemEta.ToString("f1") + " turns";
-                    txtConstructionTime.BackColor = Planet.ConstructionQueue.Eta <= 1d ? Color.DarkGreen : Color.Transparent;
-                }
+		private void lstFacilitiesDetail_MouseDown(object sender, MouseEventArgs e)
+		{
+			var item = lstFacilitiesDetail.GetItemAt(e.X, e.Y);
+			if (item != null)
+			{
+				var facil = (FacilityTemplate)item.Tag;
+				var report = new FacilityReport(facil);
+				var form = report.CreatePopupForm(facil.Name);
+				FindForm().ShowChildForm(form);
+			}
+		}
 
-                // load orders
-                // TODO - let player adjust orders here
-                lstOrdersDetail.Items.Clear();
-                foreach (var order in Planet.Orders)
-                    lstOrdersDetail.Items.Add(order);
-
-                // load facilities
-                lstFacilitiesDetail.Initialize(32, 32);
-                if (Planet.Colony != null)
-                {
-                    txtFacilitySlotsFree.Text = string.Format("{0} / {1} slots free", Planet.MaxFacilities - Planet.Colony.Facilities.Count, Planet.MaxFacilities);
-
-                    foreach (var fg in Planet.Colony.Facilities.GroupBy(f => f.Template))
-                        lstFacilitiesDetail.AddItemWithImage(fg.Key.Group, fg.Count() + "x " + fg.Key.Name.Value, fg.Key, fg.Key.Icon);
-                }
-                else
-                    txtFacilitySlotsFree.Text = "";
-
-                // load cargo
-                txtCargoSpaceFree.Text = string.Format("{0} / {1} free", (Planet.CargoStorage - (Planet.Cargo == null ? 0 : Planet.Cargo.Size)).Kilotons(), Planet.CargoStorage.Kilotons());
-                lstCargoDetail.Initialize(32, 32);
-                if (Planet.Cargo != null)
-                {
-                    foreach (var ug in Planet.Cargo.Units.GroupBy(u => u.Design))
-                        lstCargoDetail.AddItemWithImage(ug.Key.VehicleTypeName, ug.Count() + "x " + ug.Key.Name, ug, ug.First().Icon);
-                    foreach (var pop in Planet.Cargo.Population)
-                        lstCargoDetail.AddItemWithImage("Population", pop.Value.ToUnitString(true) + " " + pop.Key.Name, pop, pop.Key.Icon);
-                }
-
-                abilityTreeView.Abilities = Planet.AbilityTree();
-                if (Planet.Colony == null)
-                    abilityTreeView.IntrinsicAbilities = Planet.IntrinsicAbilities;
-                else
-                    abilityTreeView.IntrinsicAbilities = Planet.IntrinsicAbilities.Concat(Planet.Colony.Abilities());
-            }
-            ResumeLayout();
-        }
-
-        public void Bind(Planet data)
-        {
-            Planet = data;
-            Bind();
-        }
-
-        #endregion Public Methods
-
-        #region Private Methods
-
-        private void lstFacilitiesDetail_MouseDown(object sender, MouseEventArgs e)
-        {
-            var item = lstFacilitiesDetail.GetItemAt(e.X, e.Y);
-            if (item != null)
-            {
-                var facil = (FacilityTemplate)item.Tag;
-                var report = new FacilityReport(facil);
-                var form = report.CreatePopupForm(facil.Name);
-                FindForm().ShowChildForm(form);
-            }
-        }
-
-        private void picPortrait_Click(object sender, System.EventArgs e)
-        {
-            picPortrait.ShowFullSize(Planet.Name);
-        }
-
-        #endregion Private Methods
-    }
+		private void picPortrait_Click(object sender, System.EventArgs e)
+		{
+			picPortrait.ShowFullSize(Planet.Name);
+		}
+	}
 }

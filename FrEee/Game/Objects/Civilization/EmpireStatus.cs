@@ -4,67 +4,59 @@ using System.IO;
 
 namespace FrEee.Game.Objects.Civilization
 {
-    public enum PlrUploadStatus
-    {
-        /// <summary>
-        /// PLR file has not been uploaded.
-        /// </summary>
-        NotUploaded,
+	/// <summary>
+	/// Status of an empire (has the player uploaded a PLR file, etc.)
+	/// </summary>
+	public class EmpireStatus
+	{
+		public EmpireStatus(Empire emp)
+		{
+			Empire = emp;
+		}
 
-        /// <summary>
-        /// PLR file has been uploaded.
-        /// </summary>
-        Uploaded,
+		public Empire Empire { get; set; }
 
-        /// <summary>
-        /// Empire is defeated. No PLR file needed.
-        /// </summary>
-        Defeated,
+		public Image Insignia { get { return Empire.Icon; } }
+		public bool IsDefeated { get { return Empire.IsDefeated; } }
+		public bool IsPlayerEmpire { get { return Empire.IsPlayerEmpire; } }
+		public string Name { get { return Empire.Name; } }
 
-        /// <summary>
-        /// Empire is an AI. No PLR file needed.
-        /// </summary>
-        AI,
-    }
+		public PlrUploadStatus PlrUploadStatus
+		{
+			get
+			{
+				if (IsDefeated)
+					return PlrUploadStatus.Defeated;
+				if (!IsPlayerEmpire)
+					return PlrUploadStatus.AI;
+				// TODO - check for PLR files in same folder as GAM?
+				if (File.Exists(Galaxy.Current.GetEmpireCommandsSavePath(Empire)))
+					return PlrUploadStatus.Uploaded;
+				return PlrUploadStatus.NotUploaded;
+			}
+		}
+	}
 
-    /// <summary>
-    /// Status of an empire (has the player uploaded a PLR file, etc.)
-    /// </summary>
-    public class EmpireStatus
-    {
-        #region Public Constructors
+	public enum PlrUploadStatus
+	{
+		/// <summary>
+		/// PLR file has not been uploaded.
+		/// </summary>
+		NotUploaded,
 
-        public EmpireStatus(Empire emp)
-        {
-            Empire = emp;
-        }
+		/// <summary>
+		/// PLR file has been uploaded.
+		/// </summary>
+		Uploaded,
 
-        #endregion Public Constructors
+		/// <summary>
+		/// Empire is defeated. No PLR file needed.
+		/// </summary>
+		Defeated,
 
-        #region Public Properties
-
-        public Empire Empire { get; set; }
-
-        public Image Insignia { get { return Empire.Icon; } }
-        public bool IsDefeated { get { return Empire.IsDefeated; } }
-        public bool IsPlayerEmpire { get { return Empire.IsPlayerEmpire; } }
-        public string Name { get { return Empire.Name; } }
-
-        public PlrUploadStatus PlrUploadStatus
-        {
-            get
-            {
-                if (IsDefeated)
-                    return PlrUploadStatus.Defeated;
-                if (!IsPlayerEmpire)
-                    return PlrUploadStatus.AI;
-                // TODO - check for PLR files in same folder as GAM?
-                if (File.Exists(Galaxy.Current.GetEmpireCommandsSavePath(Empire)))
-                    return PlrUploadStatus.Uploaded;
-                return PlrUploadStatus.NotUploaded;
-            }
-        }
-
-        #endregion Public Properties
-    }
+		/// <summary>
+		/// Empire is an AI. No PLR file needed.
+		/// </summary>
+		AI,
+	}
 }

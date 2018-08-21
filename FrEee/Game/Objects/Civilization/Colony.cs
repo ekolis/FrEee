@@ -12,208 +12,196 @@ using System.Linq;
 
 namespace FrEee.Game.Objects.Civilization
 {
-    /// <summary>
-    /// A colony on a planet.
-    /// </summary>
-    [Serializable]
-    public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>, IIncomeProducer
-    {
-        #region Public Constructors
+	/// <summary>
+	/// A colony on a planet.
+	/// </summary>
+	[Serializable]
+	public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>, IIncomeProducer
+	{
+		public Colony()
+		{
+			Facilities = new List<Facility>();
+			Population = new SafeDictionary<Race, long>();
+			Cargo = new Cargo();
+		}
 
-        public Colony()
-        {
-            Facilities = new List<Facility>();
-            Population = new SafeDictionary<Race, long>();
-            Cargo = new Cargo();
-        }
+		public AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.Planet; }
+		}
 
-        #endregion Public Constructors
+		/// <summary>
+		/// The cargo stored on this colony.
+		/// </summary>
+		public Cargo Cargo { get; set; }
 
-        #region Public Properties
+		public IEnumerable<IAbilityObject> Children
+		{
+			get
+			{
+				return Facilities.Cast<IAbilityObject>().Union(Cargo.Units.Cast<IAbilityObject>());
+			}
+		}
 
-        public AbilityTargets AbilityTarget
-        {
-            get { return AbilityTargets.Planet; }
-        }
+		/// <summary>
+		/// This colony's construction queue.
+		/// </summary>
+		public ConstructionQueue ConstructionQueue
+		{
+			get;
+			set;
+		}
 
-        /// <summary>
-        /// The cargo stored on this colony.
-        /// </summary>
-        public Cargo Cargo { get; set; }
+		public Planet Container
+		{
+			get
+			{
+				return Galaxy.Current.FindSpaceObjects<Planet>().SingleOrDefault(p => p.Colony == this);
+			}
+		}
 
-        public IEnumerable<IAbilityObject> Children
-        {
-            get
-            {
-                return Facilities.Cast<IAbilityObject>().Union(Cargo.Units.Cast<IAbilityObject>());
-            }
-        }
+		/// <summary>
+		/// The facilities on this colony.
+		/// </summary>
+		public ICollection<Facility> Facilities { get; set; }
 
-        /// <summary>
-        /// This colony's construction queue.
-        /// </summary>
-        public ConstructionQueue ConstructionQueue
-        {
-            get;
-            set;
-        }
+		public long ID
+		{
+			get;
+			set;
+		}
 
-        public Planet Container
-        {
-            get
-            {
-                return Galaxy.Current.FindSpaceObjects<Planet>().SingleOrDefault(p => p.Colony == this);
-            }
-        }
+		public IEnumerable<Ability> IntrinsicAbilities
+		{
+			get { yield break; }
+		}
 
-        /// <summary>
-        /// The facilities on this colony.
-        /// </summary>
-        public ICollection<Facility> Facilities { get; set; }
+		public bool IsDisposed { get; set; }
 
-        public long ID
-        {
-            get;
-            set;
-        }
+		public bool IsMemory
+		{
+			get;
+			set;
+		}
 
-        public IEnumerable<Ability> IntrinsicAbilities
-        {
-            get { yield break; }
-        }
+		/// <summary>
+		/// Ratio of population that has the "No Spaceports" ability.
+		/// </summary>
+		public double MerchantsRatio
+		{
+			get
+			{
+				var merchants = Population.Where(kvp => kvp.Key.HasAbility("No Spaceports")).Sum(kvp => kvp.Value);
+				var totalPop = Population.Sum(kvp => kvp.Value);
+				var ratio = (double)merchants / (double)totalPop;
+				return ratio;
+			}
+		}
 
-        public bool IsDisposed { get; set; }
+		/// <summary>
+		/// The empire which owns this colony.
+		/// </summary>
+		public Empire Owner { get; set; }
 
-        public bool IsMemory
-        {
-            get;
-            set;
-        }
+		public IEnumerable<IAbilityObject> Parents
+		{
+			get
+			{
+				yield return Container;
+			}
+		}
 
-        /// <summary>
-        /// Ratio of population that has the "No Spaceports" ability.
-        /// </summary>
-        public double MerchantsRatio
-        {
-            get
-            {
-                var merchants = Population.Where(kvp => kvp.Key.HasAbility("No Spaceports")).Sum(kvp => kvp.Value);
-                var totalPop = Population.Sum(kvp => kvp.Value);
-                var ratio = (double)merchants / (double)totalPop;
-                return ratio;
-            }
-        }
+		/// <summary>
+		/// The population of this colony, by race.
+		/// </summary>
+		public SafeDictionary<Race, long> Population { get; private set; }
 
-        /// <summary>
-        /// The empire which owns this colony.
-        /// </summary>
-        public Empire Owner { get; set; }
+		public ResourceQuantity RemoteMiningIncomePercentages
+		{
+			get { return Owner.PrimaryRace.IncomePercentages; }
+		}
 
-        public IEnumerable<IAbilityObject> Parents
-        {
-            get
-            {
-                yield return Container;
-            }
-        }
+		public ResourceQuantity ResourceValue
+		{
+			get { return Container.ResourceValue; }
+		}
 
-        /// <summary>
-        /// The population of this colony, by race.
-        /// </summary>
-        public SafeDictionary<Race, long> Population { get; private set; }
+		[DoNotSerialize(false)]
+		public Sector Sector { get => Container.Sector; set => throw new NotSupportedException("Can't set the sector of a colony."); }
 
-        public ResourceQuantity RemoteMiningIncomePercentages
-        {
-            get { return Owner.PrimaryRace.IncomePercentages; }
-        }
+		public ResourceQuantity StandardIncomePercentages
+		{
+			get
+			{
+				// do modifiers to income
+				var totalpop = Population.Sum(kvp => kvp.Value);
+				var popfactor = Mod.Current.Settings.GetPopulationProductionFactor(totalpop);
 
-        public ResourceQuantity ResourceValue
-        {
-            get { return Container.ResourceValue; }
-        }
+				var result = new ResourceQuantity();
 
-        [DoNotSerialize(false)]
-        public Sector Sector { get => Container.Sector; set => throw new NotSupportedException("Can't set the sector of a colony."); }
+				foreach (var r in Resource.All)
+				{
+					var aptfactor = 1d;
+					if (r.Aptitude != null)
+						aptfactor = Population.Sum(kvp => (kvp.Key.Aptitudes[r.Aptitude.Name] / 100d) * (double)kvp.Value / (double)totalpop);
+					var cultfactor = (100 + r.CultureModifier(Owner.Culture)) / 100d;
 
-        public ResourceQuantity StandardIncomePercentages
-        {
-            get
-            {
-                // do modifiers to income
-                var totalpop = Population.Sum(kvp => kvp.Value);
-                var popfactor = Mod.Current.Settings.GetPopulationProductionFactor(totalpop);
+					result += (int)(100 * popfactor * aptfactor * cultfactor) * r;
+				}
 
-                var result = new ResourceQuantity();
+				return result;
+			}
+		}
 
-                foreach (var r in Resource.All)
-                {
-                    var aptfactor = 1d;
-                    if (r.Aptitude != null)
-                        aptfactor = Population.Sum(kvp => (kvp.Key.Aptitudes[r.Aptitude.Name] / 100d) * (double)kvp.Value / (double)totalpop);
-                    var cultfactor = (100 + r.CultureModifier(Owner.Culture)) / 100d;
+		public StarSystem StarSystem => Container?.StarSystem;
 
-                    result += (int)(100 * popfactor * aptfactor * cultfactor) * r;
-                }
+		public double Timestamp { get; set; }
 
-                return result;
-            }
-        }
+		public Visibility CheckVisibility(Empire emp)
+		{
+			// should be visible, assuming the planet is visible - we don't have colony cloaking at the moment...
+			if (emp == Owner)
+				return Visibility.Owned;
+			else
+				return Visibility.Visible;
+		}
 
-        public StarSystem StarSystem => Container?.StarSystem;
+		public void Dispose()
+		{
+			if (IsDisposed)
+				return;
+			if (Container != null)
+				Container.Colony = null;
+			ConstructionQueue.SafeDispose();
+			Galaxy.Current.UnassignID(this);
+			if (!IsMemory)
+				this.UpdateEmpireMemories();
+			IsDisposed = true;
+		}
 
-        public double Timestamp { get; set; }
+		public bool IsObsoleteMemory(Empire emp)
+		{
+			return Container == null || Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+		}
 
-        #endregion Public Properties
-
-        #region Public Methods
-
-        public Visibility CheckVisibility(Empire emp)
-        {
-            // should be visible, assuming the planet is visible - we don't have colony cloaking at the moment...
-            if (emp == Owner)
-                return Visibility.Owned;
-            else
-                return Visibility.Visible;
-        }
-
-        public void Dispose()
-        {
-            if (IsDisposed)
-                return;
-            if (Container != null)
-                Container.Colony = null;
-            ConstructionQueue.SafeDispose();
-            Galaxy.Current.UnassignID(this);
-            if (!IsMemory)
-                this.UpdateEmpireMemories();
-            IsDisposed = true;
-        }
-
-        public bool IsObsoleteMemory(Empire emp)
-        {
-            return Container == null || Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
-        }
-
-        public void Redact(Empire emp)
-        {
-            var visibility = CheckVisibility(emp);
-            if (visibility < Visibility.Owned)
-            {
-                // can only see space used by cargo, not actual cargo
-                Cargo.SetFakeSize(true);
-            }
-            if (visibility < Visibility.Scanned)
-            {
-                var unknownFacilityTemplate = FacilityTemplate.Unknown;
-                var facilCount = Facilities.Count;
-                Facilities.Clear();
-                for (int i = 0; i < facilCount; i++)
-                    Facilities.Add(new Facility(unknownFacilityTemplate));
-            }
-            if (visibility < Visibility.Fogged)
-                Dispose();
-        }
-
-        #endregion Public Methods
-    }
+		public void Redact(Empire emp)
+		{
+			var visibility = CheckVisibility(emp);
+			if (visibility < Visibility.Owned)
+			{
+				// can only see space used by cargo, not actual cargo
+				Cargo.SetFakeSize(true);
+			}
+			if (visibility < Visibility.Scanned)
+			{
+				var unknownFacilityTemplate = FacilityTemplate.Unknown;
+				var facilCount = Facilities.Count;
+				Facilities.Clear();
+				for (int i = 0; i < facilCount; i++)
+					Facilities.Add(new Facility(unknownFacilityTemplate));
+			}
+			if (visibility < Visibility.Fogged)
+				Dispose();
+		}
+	}
 }

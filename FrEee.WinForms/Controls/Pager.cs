@@ -5,106 +5,86 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Controls
 {
-    public partial class Pager : UserControl
-    {
-        #region Private Fields
+	public partial class Pager : UserControl
+	{
+		public Pager()
+		{
+			InitializeComponent();
+			SizeChanged += GamePager_SizeChanged;
+		}
 
-        private IList<Control> content;
+		public IList<Control> Content
+		{
+			get
+			{
+				return content;
+			}
+			set
+			{
+				content = value;
+				if (Content != null && Content.Count > 0)
+					CurrentPage = 0;
+				else
+					CurrentPage = -1;
+			}
+		}
 
-        private int currentPage;
+		public int CurrentPage
+		{
+			get
+			{
+				return currentPage;
+			}
+			set
+			{
+				currentPage = value;
+				RefreshContent();
+			}
+		}
 
-        #endregion Private Fields
+		public bool ShowPager
+		{
+			get { return tableLayoutPanel1.RowStyles[0].Height != 0; }
+			set { tableLayoutPanel1.RowStyles[0].Height = value ? 20 : 0; }
+		}
 
-        #region Public Constructors
+		private IList<Control> content;
 
-        public Pager()
-        {
-            InitializeComponent();
-            SizeChanged += GamePager_SizeChanged;
-        }
+		private int currentPage;
 
-        #endregion Public Constructors
+		public void RefreshContent()
+		{
+			pnlContent.Controls.Clear();
+			if (CurrentPage >= 0 && Content != null && CurrentPage < Content.Count)
+			{
+				lblPager.Text = "Page " + (CurrentPage + 1) + " of " + Content.Count;
+				pnlContent.Controls.Add(Content[CurrentPage]);
+				//Content[CurrentPage].Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+				//Content[CurrentPage].Width = pnlContent.Width;
+				Content[CurrentPage].Dock = DockStyle.Fill;
+			}
+			else
+			{
+				lblPager.Text = "";
+			}
+		}
 
-        #region Public Properties
+		private void btnNext_Click(object sender, EventArgs e)
+		{
+			if (Content.Count > 0 && CurrentPage < Content.Count - 1)
+				CurrentPage++;
+		}
 
-        public IList<Control> Content
-        {
-            get
-            {
-                return content;
-            }
-            set
-            {
-                content = value;
-                if (Content != null && Content.Count > 0)
-                    CurrentPage = 0;
-                else
-                    CurrentPage = -1;
-            }
-        }
+		private void btnPrev_Click(object sender, EventArgs e)
+		{
+			if (CurrentPage > 0)
+				CurrentPage--;
+		}
 
-        public int CurrentPage
-        {
-            get
-            {
-                return currentPage;
-            }
-            set
-            {
-                currentPage = value;
-                RefreshContent();
-            }
-        }
-
-        public bool ShowPager
-        {
-            get { return tableLayoutPanel1.RowStyles[0].Height != 0; }
-            set { tableLayoutPanel1.RowStyles[0].Height = value ? 20 : 0; }
-        }
-
-        #endregion Public Properties
-
-        #region Public Methods
-
-        public void RefreshContent()
-        {
-            pnlContent.Controls.Clear();
-            if (CurrentPage >= 0 && Content != null && CurrentPage < Content.Count)
-            {
-                lblPager.Text = "Page " + (CurrentPage + 1) + " of " + Content.Count;
-                pnlContent.Controls.Add(Content[CurrentPage]);
-                //Content[CurrentPage].Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-                //Content[CurrentPage].Width = pnlContent.Width;
-                Content[CurrentPage].Dock = DockStyle.Fill;
-            }
-            else
-            {
-                lblPager.Text = "";
-            }
-        }
-
-        #endregion Public Methods
-
-        #region Private Methods
-
-        private void btnNext_Click(object sender, EventArgs e)
-        {
-            if (Content.Count > 0 && CurrentPage < Content.Count - 1)
-                CurrentPage++;
-        }
-
-        private void btnPrev_Click(object sender, EventArgs e)
-        {
-            if (CurrentPage > 0)
-                CurrentPage--;
-        }
-
-        private void GamePager_SizeChanged(object sender, EventArgs e)
-        {
-            btnPrev.Font = new Font(btnPrev.Font.FontFamily, btnPrev.Height / 3, btnPrev.Font.Style);
-            btnNext.Font = new Font(btnNext.Font.FontFamily, btnNext.Height / 3, btnNext.Font.Style);
-        }
-
-        #endregion Private Methods
-    }
+		private void GamePager_SizeChanged(object sender, EventArgs e)
+		{
+			btnPrev.Font = new Font(btnPrev.Font.FontFamily, btnPrev.Height / 3, btnPrev.Font.Style);
+			btnNext.Font = new Font(btnNext.Font.FontFamily, btnNext.Height / 3, btnNext.Font.Style);
+		}
+	}
 }

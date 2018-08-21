@@ -6,98 +6,62 @@ using System.Collections.Generic;
 
 namespace FrEee.Game.Objects
 {
-    public class SimulatedEmpire : IDisposable
-    {
-        #region Public Constructors
+	public class SimulatedEmpire : IDisposable
+	{
+		public SimulatedEmpire(Empire emp)
+		{
+			Empire = emp.CopyAndAssignNewID();
+			SpaceObjects = new HashSet<SimulatedSpaceObject>();
+		}
 
-        public SimulatedEmpire(Empire emp)
-        {
-            Empire = emp.CopyAndAssignNewID();
-            SpaceObjects = new HashSet<SimulatedSpaceObject>();
-        }
+		public Empire Empire { get; private set; }
 
-        #endregion Public Constructors
+		public ISet<SimulatedSpaceObject> SpaceObjects { get; private set; }
 
-        #region Public Properties
+		public void Dispose()
+		{
+			Empire.Dispose();
+			foreach (var sobj in SpaceObjects)
+				sobj.Dispose();
+		}
+	}
 
-        public Empire Empire { get; private set; }
+	public class SimulatedSpaceObject : IDisposable
+	{
+		public SimulatedSpaceObject(ICombatSpaceObject sobj)
+		{
+			SpaceObject = sobj;
+			Units = new HashSet<SimulatedUnit>();
+		}
 
-        public ISet<SimulatedSpaceObject> SpaceObjects { get; private set; }
+		public ICombatSpaceObject SpaceObject { get; private set; }
 
-        #endregion Public Properties
+		public ISet<SimulatedUnit> Units { get; private set; }
 
-        #region Public Methods
+		// TODO - population in cargo?
 
-        public void Dispose()
-        {
-            Empire.Dispose();
-            foreach (var sobj in SpaceObjects)
-                sobj.Dispose();
-        }
+		// TODO - enemy troops in cargo? or can those go under Units?
 
-        #endregion Public Methods
-    }
+		public void Dispose()
+		{
+			SpaceObject.Dispose();
+			foreach (var u in Units)
+				u.Dispose();
+		}
+	}
 
-    public class SimulatedSpaceObject : IDisposable
-    {
-        #region Public Constructors
+	public class SimulatedUnit : IDisposable
+	{
+		public SimulatedUnit(IUnit u)
+		{
+			Unit = u;
+		}
 
-        public SimulatedSpaceObject(ICombatSpaceObject sobj)
-        {
-            SpaceObject = sobj;
-            Units = new HashSet<SimulatedUnit>();
-        }
+		public IUnit Unit { get; private set; }
 
-        #endregion Public Constructors
-
-        #region Public Properties
-
-        public ICombatSpaceObject SpaceObject { get; private set; }
-
-        public ISet<SimulatedUnit> Units { get; private set; }
-
-        #endregion Public Properties
-
-        // TODO - population in cargo?
-
-        // TODO - enemy troops in cargo? or can those go under Units?
-
-        #region Public Methods
-
-        public void Dispose()
-        {
-            SpaceObject.Dispose();
-            foreach (var u in Units)
-                u.Dispose();
-        }
-
-        #endregion Public Methods
-    }
-
-    public class SimulatedUnit : IDisposable
-    {
-        #region Public Constructors
-
-        public SimulatedUnit(IUnit u)
-        {
-            Unit = u;
-        }
-
-        #endregion Public Constructors
-
-        #region Public Properties
-
-        public IUnit Unit { get; private set; }
-
-        #endregion Public Properties
-
-        #region Public Methods
-
-        public void Dispose()
-        {
-            Unit.Dispose();
-        }
-
-        #endregion Public Methods
-    }
+		public void Dispose()
+		{
+			Unit.Dispose();
+		}
+	}
 }

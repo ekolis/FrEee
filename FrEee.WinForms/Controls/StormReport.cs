@@ -6,91 +6,71 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Controls
 {
-    public partial class StormReport : UserControl, IBindable<Storm>
-    {
-        #region Private Fields
+	public partial class StormReport : UserControl, IBindable<Storm>
+	{
+		public StormReport()
+		{
+			InitializeComponent();
+		}
 
-        private Storm storm;
+		public StormReport(Storm storm)
+			: this()
+		{
+			Storm = storm;
+		}
 
-        #endregion Private Fields
+		/// <summary>
+		/// The storm for which to display a report.
+		/// </summary>
+		public Storm Storm
+		{
+			get { return storm; }
+			set
+			{
+				storm = value;
+				Bind();
+			}
+		}
 
-        #region Public Constructors
+		private Storm storm;
 
-        public StormReport()
-        {
-            InitializeComponent();
-        }
+		public void Bind()
+		{
+			SuspendLayout();
+			if (Storm == null)
+				Visible = false;
+			else
+			{
+				Visible = true;
 
-        public StormReport(Storm storm)
-            : this()
-        {
-            Storm = storm;
-        }
+				picPortrait.Image = Storm.Portrait;
 
-        #endregion Public Constructors
+				if (Storm.Timestamp == Galaxy.Current.Timestamp)
+					txtAge.Text = "Current";
+				else if (Galaxy.Current.Timestamp - Storm.Timestamp <= 1)
+					txtAge.Text = "Last turn";
+				else
+					txtAge.Text = Math.Ceiling(Galaxy.Current.Timestamp - Storm.Timestamp) + " turns ago";
 
-        #region Public Properties
+				txtName.Text = Storm.Name;
+				txtSize.Text = Storm.StellarSize + " Storm";
+				txtDescription.Text = Storm.Description;
 
-        /// <summary>
-        /// The storm for which to display a report.
-        /// </summary>
-        public Storm Storm
-        {
-            get { return storm; }
-            set
-            {
-                storm = value;
-                Bind();
-            }
-        }
+				abilityTreeView.Abilities = Storm.AbilityTree();
+				abilityTreeView.IntrinsicAbilities = Storm.IntrinsicAbilities;
+			}
+			ResumeLayout();
+		}
 
-        #endregion Public Properties
+		public void Bind(Storm data)
+		{
+			Storm = data;
+			Bind();
+		}
 
-        #region Public Methods
-
-        public void Bind()
-        {
-            SuspendLayout();
-            if (Storm == null)
-                Visible = false;
-            else
-            {
-                Visible = true;
-
-                picPortrait.Image = Storm.Portrait;
-
-                if (Storm.Timestamp == Galaxy.Current.Timestamp)
-                    txtAge.Text = "Current";
-                else if (Galaxy.Current.Timestamp - Storm.Timestamp <= 1)
-                    txtAge.Text = "Last turn";
-                else
-                    txtAge.Text = Math.Ceiling(Galaxy.Current.Timestamp - Storm.Timestamp) + " turns ago";
-
-                txtName.Text = Storm.Name;
-                txtSize.Text = Storm.StellarSize + " Storm";
-                txtDescription.Text = Storm.Description;
-
-                abilityTreeView.Abilities = Storm.AbilityTree();
-                abilityTreeView.IntrinsicAbilities = Storm.IntrinsicAbilities;
-            }
-            ResumeLayout();
-        }
-
-        public void Bind(Storm data)
-        {
-            Storm = data;
-            Bind();
-        }
-
-        #endregion Public Methods
-
-        #region Private Methods
-
-        private void picPortrait_Click(object sender, System.EventArgs e)
-        {
-            picPortrait.ShowFullSize(Storm.Name);
-        }
-
-        #endregion Private Methods
-    }
+		private void picPortrait_Click(object sender, System.EventArgs e)
+		{
+			picPortrait.ShowFullSize(Storm.Name);
+		}
+	}
 }

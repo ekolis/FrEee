@@ -23,8 +23,6 @@ namespace FrEee.Game.Setup
 	[Serializable]
 	public class GameSetup
 	{
-		#region Public Constructors
-
 		public GameSetup()
 		{
 			EmpireTemplates = new List<EmpireTemplate>();
@@ -32,10 +30,6 @@ namespace FrEee.Game.Setup
 			VictoryConditions = new List<IVictoryCondition>();
 			VictoryConditions.Add(new TotalEliminationVictoryCondition());
 		}
-
-		#endregion Public Constructors
-
-		#region Public Properties
 
 		/// <summary>
 		/// Allowed trades in this game.
@@ -230,10 +224,6 @@ namespace FrEee.Game.Setup
 		/// </summary>
 		public WarpPointPlacementStrategy WarpPointPlacementStrategy { get; set; }
 
-		#endregion Public Properties
-
-		#region Public Methods
-
 		public static GameSetup Load(string filename)
 		{
 			var fs = new FileStream(filename, FileMode.Open);
@@ -406,10 +396,6 @@ namespace FrEee.Game.Setup
 			Serializer.Serialize(this, fs);
 			fs.Close(); fs.Dispose();
 		}
-
-		#endregion Public Methods
-
-		#region Private Methods
 
 		/// <summary>
 		/// Makes a suitable homeworld for an empire.
@@ -642,7 +628,5 @@ namespace FrEee.Game.Setup
 		{
 			return RandomHelper.Range(0, 3) * 85;
 		}
-
-		#endregion Private Methods
 	}
 }

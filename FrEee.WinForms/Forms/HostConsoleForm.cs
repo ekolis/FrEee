@@ -22,14 +22,6 @@ namespace FrEee.WinForms.Forms
 	/// </summary>
 	public partial class HostConsoleForm : Form
 	{
-		#region Private Fields
-
-		private string serializedGalaxy;
-
-		#endregion Private Fields
-
-		#region Public Constructors
-
 		public HostConsoleForm()
 		{
 			InitializeComponent();
@@ -43,9 +35,7 @@ namespace FrEee.WinForms.Forms
 			CacheGalaxy();
 		}
 
-		#endregion Public Constructors
-
-		#region Private Methods
+		private string serializedGalaxy;
 
 		private void Bind()
 		{
@@ -198,7 +188,5 @@ namespace FrEee.WinForms.Forms
 		{
 			Galaxy.LoadFromString(serializedGalaxy);
 		}
-
-		#endregion Private Methods
 	}
 }

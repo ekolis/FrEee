@@ -5,44 +5,28 @@ using FrEee.Utility.Extensions;
 
 namespace FrEee.Game.Objects.Commands
 {
-    /// <summary>
-    /// Sets a player note.
-    /// </summary>
-    public class SetPlayerNoteCommand : Command<Empire>
-    {
-        #region Public Constructors
+	/// <summary>
+	/// Sets a player note.
+	/// </summary>
+	public class SetPlayerNoteCommand : Command<Empire>
+	{
+		public SetPlayerNoteCommand(IReferrable target, string note)
+			: base(Empire.Current)
+		{
+			Target = target;
+			Note = note;
+		}
 
-        public SetPlayerNoteCommand(IReferrable target, string note)
-            : base(Empire.Current)
-        {
-            Target = target;
-            Note = note;
-        }
+		public string Note { get; set; }
 
-        #endregion Public Constructors
+		[DoNotSerialize]
+		public IReferrable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
 
-        #region Public Properties
+		private GalaxyReference<IReferrable> target { get; set; }
 
-        public string Note { get; set; }
-
-        [DoNotSerialize]
-        public IReferrable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
-
-        #endregion Public Properties
-
-        #region Private Properties
-
-        private GalaxyReference<IReferrable> target { get; set; }
-
-        #endregion Private Properties
-
-        #region Public Methods
-
-        public override void Execute()
-        {
-            Executor.PlayerNotes[target] = Note;
-        }
-
-        #endregion Public Methods
-    }
+		public override void Execute()
+		{
+			Executor.PlayerNotes[target] = Note;
+		}
+	}
 }

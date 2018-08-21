@@ -36,8 +36,6 @@ namespace FrEee.WinForms.Forms
 			catch { }
 		}
 
-		#region Button click handlers
-
 		private void btnQuickStart_Click(object sender, EventArgs e)
 		{
 			var status = new Status
@@ -269,8 +267,6 @@ namespace FrEee.WinForms.Forms
 			}
 			MessageBox.Show(credits, "FrEee v" + Assembly.GetExecutingAssembly().GetName().Version.ToString(3));
 		}
-
-		#endregion Button click handlers
 
 		private void MainMenuForm_VisibleChanged(object sender, EventArgs e)
 		{

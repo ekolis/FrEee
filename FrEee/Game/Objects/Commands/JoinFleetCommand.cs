@@ -6,90 +6,74 @@ using System.Collections.Generic;
 
 namespace FrEee.Game.Objects.Commands
 {
-    /// <summary>
-    /// A command for a space vehicle to join a fleet.
-    /// </summary>
-    public class JoinFleetCommand : Command<IMobileSpaceObject>
-    {
-        #region Public Constructors
+	/// <summary>
+	/// A command for a space vehicle to join a fleet.
+	/// </summary>
+	public class JoinFleetCommand : Command<IMobileSpaceObject>
+	{
+		public JoinFleetCommand(IMobileSpaceObject vehicle, Fleet fleet)
+			: base(vehicle)
+		{
+			Fleet = fleet;
+		}
 
-        public JoinFleetCommand(IMobileSpaceObject vehicle, Fleet fleet)
-            : base(vehicle)
-        {
-            Fleet = fleet;
-        }
+		public JoinFleetCommand(IMobileSpaceObject vehicle, CreateFleetCommand cmd)
+			: base(vehicle)
+		{
+			CreateFleetCommand = cmd;
+		}
 
-        public JoinFleetCommand(IMobileSpaceObject vehicle, CreateFleetCommand cmd)
-            : base(vehicle)
-        {
-            CreateFleetCommand = cmd;
-        }
+		public CreateFleetCommand CreateFleetCommand { get; set; }
 
-        #endregion Public Constructors
+		[DoNotSerialize]
+		public Fleet Fleet
+		{
+			get
+			{
+				return fleet ?? CreateFleetCommand.Fleet;
+			}
+			set
+			{
+				Galaxy.Current.AssignID(value);
+				fleet = value;
+			}
+		}
 
-        #region Public Properties
+		private GalaxyReference<Fleet> fleet { get; set; }
 
-        public CreateFleetCommand CreateFleetCommand { get; set; }
+		public override void Execute()
+		{
+			// if it's a new fleet, find it
+			if (CreateFleetCommand != null)
+				Fleet = CreateFleetCommand.Fleet;
 
-        [DoNotSerialize]
-        public Fleet Fleet
-        {
-            get
-            {
-                return fleet ?? CreateFleetCommand.Fleet;
-            }
-            set
-            {
-                Galaxy.Current.AssignID(value);
-                fleet = value;
-            }
-        }
+			// validation
+			if (Executor.Sector != Fleet.Sector)
+				Issuer.Log.Add(Executor.CreateLogMessage(Executor + " cannot join " + Fleet + " because they are not in the same sector."));
+			else if (Fleet.Owner != Issuer && CreateFleetCommand == null)
+				Issuer.Log.Add(Executor.CreateLogMessage(Executor + " cannot join " + Fleet + " because this fleet does not belong to us."));
+			else
+			{
+				// remove from old fleet
+				if (Executor.Container != null)
+					Executor.Container.Vehicles.Remove(Executor);
 
-        #endregion Public Properties
+				// add to new fleet
+				Fleet.Vehicles.Add(Executor);
+				Executor.Container = Fleet;
+			}
+		}
 
-        #region Private Properties
-
-        private GalaxyReference<Fleet> fleet { get; set; }
-
-        #endregion Private Properties
-
-        #region Public Methods
-
-        public override void Execute()
-        {
-            // if it's a new fleet, find it
-            if (CreateFleetCommand != null)
-                Fleet = CreateFleetCommand.Fleet;
-
-            // validation
-            if (Executor.Sector != Fleet.Sector)
-                Issuer.Log.Add(Executor.CreateLogMessage(Executor + " cannot join " + Fleet + " because they are not in the same sector."));
-            else if (Fleet.Owner != Issuer && CreateFleetCommand == null)
-                Issuer.Log.Add(Executor.CreateLogMessage(Executor + " cannot join " + Fleet + " because this fleet does not belong to us."));
-            else
-            {
-                // remove from old fleet
-                if (Executor.Container != null)
-                    Executor.Container.Vehicles.Remove(Executor);
-
-                // add to new fleet
-                Fleet.Vehicles.Add(Executor);
-                Executor.Container = Fleet;
-            }
-        }
-
-        public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
-        {
-            if (done == null)
-                done = new HashSet<IPromotable>();
-            if (!done.Contains(this))
-            {
-                done.Add(this);
-                base.ReplaceClientIDs(idmap, done);
-                fleet.ReplaceClientIDs(idmap, done);
-            }
-        }
-
-        #endregion Public Methods
-    }
+		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		{
+			if (done == null)
+				done = new HashSet<IPromotable>();
+			if (!done.Contains(this))
+			{
+				done.Add(this);
+				base.ReplaceClientIDs(idmap, done);
+				fleet.ReplaceClientIDs(idmap, done);
+			}
+		}
+	}
 }

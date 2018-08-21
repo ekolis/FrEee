@@ -13,328 +13,314 @@ using System.Linq;
 
 namespace FrEee.Game.Objects.Technology
 {
-    /// <summary>
-    /// A component of a vehicle.
-    /// TODO - should Component implement IOwnable like Facility does?
-    /// </summary>
-    [Serializable]
-    public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IContainable<IVehicle>, IFormulaHost, IReferrable, IUpgradeable<Component>
-    {
-        #region Public Constructors
+	/// <summary>
+	/// A component of a vehicle.
+	/// TODO - should Component implement IOwnable like Facility does?
+	/// </summary>
+	[Serializable]
+	public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IContainable<IVehicle>, IFormulaHost, IReferrable, IUpgradeable<Component>
+	{
+		public Component(IVehicle container, MountedComponentTemplate template)
+		{
+			Container = container;
+			Template = template;
+			Hitpoints = template.Durability;
+		}
 
-        public Component(IVehicle container, MountedComponentTemplate template)
-        {
-            Container = container;
-            Template = template;
-            Hitpoints = template.Durability;
-        }
+		public IEnumerable<Ability> Abilities
+		{
+			get
+			{
+				if (IsDestroyed)
+					return Enumerable.Empty<Ability>();
+				else
+					return Template.Abilities;
+			}
+		}
 
-        #endregion Public Constructors
+		public AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.Component; }
+		}
 
-        #region Public Properties
+		public int ArmorHitpoints
+		{
+			get
+			{
+				return this.HasAbility("Armor") ? Hitpoints : 0;
+			}
+		}
 
-        public IEnumerable<Ability> Abilities
-        {
-            get
-            {
-                if (IsDestroyed)
-                    return Enumerable.Empty<Ability>();
-                else
-                    return Template.Abilities;
-            }
-        }
+		public IEnumerable<IAbilityObject> Children
+		{
+			get
+			{
+				// The mounted component template might seem like a descendant, but it can't be,
+				// because its abilities shouldn't be passed up when the component is destroyed.
+				yield break;
+			}
+		}
 
-        public AbilityTargets AbilityTarget
-        {
-            get { return AbilityTargets.Component; }
-        }
+		[DoNotSerialize]
+		public IVehicle Container
+		{
+			get
+			{
+				return container == null ? null : container.Value;
+			}
+			set
+			{
+				container = value.ReferViaGalaxy();
+			}
+		}
 
-        public int ArmorHitpoints
-        {
-            get
-            {
-                return this.HasAbility("Armor") ? Hitpoints : 0;
-            }
-        }
+		/// <summary>
+		/// Component hit chances are normally determined by their maximum hitpoints.
+		/// This is what makes leaky armor work.
+		/// </summary>
+		public int HitChance
+		{
+			// TODO - moddable hit chance
+			get { return MaxHitpoints; }
+		}
 
-        public IEnumerable<IAbilityObject> Children
-        {
-            get
-            {
-                // The mounted component template might seem like a descendant, but it can't be,
-                // because its abilities shouldn't be passed up when the component is destroyed.
-                yield break;
-            }
-        }
+		/// <summary>
+		/// The current hitpoints of this component.
+		/// </summary>
+		public int Hitpoints { get; set; }
 
-        [DoNotSerialize]
-        public IVehicle Container
-        {
-            get
-            {
-                return container == null ? null : container.Value;
-            }
-            set
-            {
-                container = value.ReferViaGalaxy();
-            }
-        }
+		public int HullHitpoints
+		{
+			get
+			{
+				return this.HasAbility("Armor") ? 0 : Hitpoints;
+			}
+		}
 
-        /// <summary>
-        /// Component hit chances are normally determined by their maximum hitpoints.
-        /// This is what makes leaky armor work.
-        /// </summary>
-        public int HitChance
-        {
-            // TODO - moddable hit chance
-            get { return MaxHitpoints; }
-        }
+		public System.Drawing.Image Icon
+		{
+			get { return Template.Icon; }
+		}
 
-        /// <summary>
-        /// The current hitpoints of this component.
-        /// </summary>
-        public int Hitpoints { get; set; }
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return Template.IconPaths;
+			}
+		}
 
-        public int HullHitpoints
-        {
-            get
-            {
-                return this.HasAbility("Armor") ? 0 : Hitpoints;
-            }
-        }
+		public long ID
+		{
+			get;
+			set;
+		}
 
-        public System.Drawing.Image Icon
-        {
-            get { return Template.Icon; }
-        }
+		public IEnumerable<Ability> IntrinsicAbilities
+		{
+			get
+			{
+				// Need to treat the template's abilities as intrinsic because they can be switched on or off
+				// based on the damage state of the component.
+				return Abilities;
+			}
+		}
 
-        public IEnumerable<string> IconPaths
-        {
-            get
-            {
-                return Template.IconPaths;
-            }
-        }
+		/// <summary>
+		/// Is this component out of commission?
+		/// </summary>
+		public bool IsDestroyed { get { return Hitpoints <= 0; } }
 
-        public long ID
-        {
-            get;
-            set;
-        }
+		public bool IsDisposed
+		{
+			get;
+			set;
+		}
 
-        public IEnumerable<Ability> IntrinsicAbilities
-        {
-            get
-            {
-                // Need to treat the template's abilities as intrinsic because they can be switched on or off
-                // based on the damage state of the component.
-                return Abilities;
-            }
-        }
+		public bool IsObsolescent
+		{
+			get { return Template.IsObsolescent; }
+		}
 
-        /// <summary>
-        /// Is this component out of commission?
-        /// </summary>
-        public bool IsDestroyed { get { return Hitpoints <= 0; } }
+		/// <summary>
+		/// Is this component obsolete (can be upgraded to a newer component)?
+		/// </summary>
+		public bool IsObsolete
+		{
+			get
+			{
+				return Template.IsObsolete;
+			}
+		}
 
-        public bool IsDisposed
-        {
-            get;
-            set;
-        }
+		public Component LatestVersion
+		{
+			get
+			{
+				if (IsObsolescent)
+					return Template.LatestVersion.Instantiate();
+				else
+					return this;
+			}
+		}
 
-        public bool IsObsolescent
-        {
-            get { return Template.IsObsolescent; }
-        }
+		public int MaxArmorHitpoints
+		{
+			get
+			{
+				return this.HasAbility("Armor") ? MaxHitpoints : 0;
+			}
+		}
 
-        /// <summary>
-        /// Is this component obsolete (can be upgraded to a newer component)?
-        /// </summary>
-        public bool IsObsolete
-        {
-            get
-            {
-                return Template.IsObsolete;
-            }
-        }
+		public int MaxHitpoints
+		{
+			get { return Template.Durability; }
+		}
 
-        public Component LatestVersion
-        {
-            get
-            {
-                if (IsObsolescent)
-                    return Template.LatestVersion.Instantiate();
-                else
-                    return this;
-            }
-        }
+		public int MaxHullHitpoints
+		{
+			get
+			{
+				return this.HasAbility("Armor") ? 0 : MaxHitpoints;
+			}
+		}
 
-        public int MaxArmorHitpoints
-        {
-            get
-            {
-                return this.HasAbility("Armor") ? MaxHitpoints : 0;
-            }
-        }
+		public int MaxNormalShields
+		{
+			get { return 0; }
+		}
 
-        public int MaxHitpoints
-        {
-            get { return Template.Durability; }
-        }
+		public int MaxPhasedShields
+		{
+			get { return 0; }
+		}
 
-        public int MaxHullHitpoints
-        {
-            get
-            {
-                return this.HasAbility("Armor") ? 0 : MaxHitpoints;
-            }
-        }
+		public int MaxShieldHitpoints
+		{
+			get { return MaxNormalShields + MaxPhasedShields; }
+		}
 
-        public int MaxNormalShields
-        {
-            get { return 0; }
-        }
+		public string Name { get { return Template.Name; } }
 
-        public int MaxPhasedShields
-        {
-            get { return 0; }
-        }
+		public IEnumerable<Component> NewerVersions
+		{
+			get { return Galaxy.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Where(c => Template.UpgradesTo(c.Template)); }
+		}
 
-        public int MaxShieldHitpoints
-        {
-            get { return MaxNormalShields + MaxPhasedShields; }
-        }
+		/// <summary>
+		/// Components don't actually have shields; they just generate them for the vehicle.
+		/// </summary>
+		[DoNotSerialize(false)]
+		public int NormalShields
+		{
+			get
+			{
+				return 0;
+			}
+			set
+			{
+				throw new NotSupportedException("Components don't actually have shields; they just generate them for the vehicle.");
+			}
+		}
 
-        public string Name { get { return Template.Name; } }
+		public IEnumerable<Component> OlderVersions
+		{
+			get { return Galaxy.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Where(c => c.Template.UpgradesTo(Template)); }
+		}
 
-        public IEnumerable<Component> NewerVersions
-        {
-            get { return Galaxy.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Where(c => Template.UpgradesTo(c.Template)); }
-        }
+		public Empire Owner
+		{
+			get { return Container == null ? null : Container.Owner; }
+		}
 
-        /// <summary>
-        /// Components don't actually have shields; they just generate them for the vehicle.
-        /// </summary>
-        [DoNotSerialize(false)]
-        public int NormalShields
-        {
-            get
-            {
-                return 0;
-            }
-            set
-            {
-                throw new NotSupportedException("Components don't actually have shields; they just generate them for the vehicle.");
-            }
-        }
+		public IEnumerable<IAbilityObject> Parents
+		{
+			get
+			{
+				if (Container != null)
+					yield return Container;
+			}
+		}
 
-        public IEnumerable<Component> OlderVersions
-        {
-            get { return Galaxy.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Where(c => c.Template.UpgradesTo(Template)); }
-        }
+		/// <summary>
+		/// Components don't actually have shields; they just generate them for the vehicle.
+		/// </summary>
+		[DoNotSerialize(false)]
+		public int PhasedShields
+		{
+			get
+			{
+				return 0;
+			}
+			set
+			{
+				throw new NotSupportedException("Components don't actually have shields; they just generate them for the vehicle.");
+			}
+		}
 
-        public Empire Owner
-        {
-            get { return Container == null ? null : Container.Owner; }
-        }
+		public System.Drawing.Image Portrait
+		{
+			get { return Template.Portrait; }
+		}
 
-        public IEnumerable<IAbilityObject> Parents
-        {
-            get
-            {
-                if (Container != null)
-                    yield return Container;
-            }
-        }
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				return Template.PortraitPaths;
+			}
+		}
 
-        /// <summary>
-        /// Components don't actually have shields; they just generate them for the vehicle.
-        /// </summary>
-        [DoNotSerialize(false)]
-        public int PhasedShields
-        {
-            get
-            {
-                return 0;
-            }
-            set
-            {
-                throw new NotSupportedException("Components don't actually have shields; they just generate them for the vehicle.");
-            }
-        }
+		public int ShieldHitpoints
+		{
+			get { return NormalShields + PhasedShields; }
+		}
 
-        public System.Drawing.Image Portrait
-        {
-            get { return Template.Portrait; }
-        }
+		/// <summary>
+		/// The template for this component.
+		/// Specifies the basic stats of the component and its abilities.
+		/// </summary>
+		public MountedComponentTemplate Template { get; private set; }
 
-        public IEnumerable<string> PortraitPaths
-        {
-            get
-            {
-                return Template.PortraitPaths;
-            }
-        }
+		public IEnumerable<Ability> UnstackedAbilities
+		{
+			get { return Abilities; }
+		}
 
-        public int ShieldHitpoints
-        {
-            get { return NormalShields + PhasedShields; }
-        }
+		public IDictionary<string, object> Variables
+		{
+			get
+			{
+				return new Dictionary<string, object>
+				{
+					{"component", Template.ComponentTemplate},
+					{"mount", Template.Mount},
+					{"vehicle", Container},
+					{"design", Container.Design},
+					{"empire", Container.Owner}
+				};
+			}
+		}
 
-        /// <summary>
-        /// The template for this component.
-        /// Specifies the basic stats of the component and its abilities.
-        /// </summary>
-        public MountedComponentTemplate Template { get; private set; }
+		[DoNotCopy]
+		private GalaxyReference<IVehicle> container { get; set; }
 
-        public IEnumerable<Ability> UnstackedAbilities
-        {
-            get { return Abilities; }
-        }
+		/// <summary>
+		/// If this is a weapon, returns true if this weapon can target an object at a particular range.
+		/// If not a weapon, always returns false.
+		/// </summary>
+		/// <param name="target"></param>
+		/// <returns></returns>
+		public bool CanTarget(ITargetable target)
+		{
+			if (IsDestroyed)
+				return false; // damaged weapons can't fire!
+			if (Template.ComponentTemplate.WeaponInfo == null)
+				return false; // not a weapon!
+			return Template.ComponentTemplate.WeaponInfo.Targets.HasFlag(target.WeaponTargetType);
+		}
 
-        public IDictionary<string, object> Variables
-        {
-            get
-            {
-                return new Dictionary<string, object>
-                {
-                    {"component", Template.ComponentTemplate},
-                    {"mount", Template.Mount},
-                    {"vehicle", Container},
-                    {"design", Container.Design},
-                    {"empire", Container.Owner}
-                };
-            }
-        }
-
-        #endregion Public Properties
-
-        #region Private Properties
-
-        [DoNotCopy]
-        private GalaxyReference<IVehicle> container { get; set; }
-
-        #endregion Private Properties
-
-        #region Public Methods
-
-        /// <summary>
-        /// If this is a weapon, returns true if this weapon can target an object at a particular range.
-        /// If not a weapon, always returns false.
-        /// </summary>
-        /// <param name="target"></param>
-        /// <returns></returns>
-        public bool CanTarget(ITargetable target)
-        {
-            if (IsDestroyed)
-                return false; // damaged weapons can't fire!
-            if (Template.ComponentTemplate.WeaponInfo == null)
-                return false; // not a weapon!
-            return Template.ComponentTemplate.WeaponInfo.Targets.HasFlag(target.WeaponTargetType);
-        }
-
-        /*/// <summary>
+		/*/// <summary>
 		/// If this is a weapon, attempts to attack the target.
 		/// If not a weapon, does nothing.
 		/// </summary>
@@ -366,59 +352,57 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}*/
 
-        public void Dispose()
-        {
-            Hitpoints = 0;
-            IsDisposed = true;
-        }
+		public void Dispose()
+		{
+			Hitpoints = 0;
+			IsDisposed = true;
+		}
 
-        public int? Repair(int? amount = null)
-        {
-            if (this.HasAbility("Component Destroyed On Use") || this.HasAbility("Space Object Destroyed On Use"))
-            {
-                // if component is destroyed on use, it can only be repaired at a friendly colony
-                // SE4 said a friendly spaceyard, but that's still exploitable by using mobile SY ships
-                if (!Container.Sector.SpaceObjects.OfType<Planet>().Any(p => p.Owner == Owner))
-                    return amount;
-            }
+		public int? Repair(int? amount = null)
+		{
+			if (this.HasAbility("Component Destroyed On Use") || this.HasAbility("Space Object Destroyed On Use"))
+			{
+				// if component is destroyed on use, it can only be repaired at a friendly colony
+				// SE4 said a friendly spaceyard, but that's still exploitable by using mobile SY ships
+				if (!Container.Sector.SpaceObjects.OfType<Planet>().Any(p => p.Owner == Owner))
+					return amount;
+			}
 
-            if (amount == null)
-            {
-                Hitpoints = MaxHitpoints;
-                return amount;
-            }
-            else
-            {
-                var actual = Math.Min(MaxHitpoints - Hitpoints, amount.Value);
-                Hitpoints += actual;
-                return amount.Value - actual;
-            }
-        }
+			if (amount == null)
+			{
+				Hitpoints = MaxHitpoints;
+				return amount;
+			}
+			else
+			{
+				var actual = Math.Min(MaxHitpoints - Hitpoints, amount.Value);
+				Hitpoints += actual;
+				return amount.Value - actual;
+			}
+		}
 
-        public void ReplenishShields(int? amount = null)
-        {
-            // nothing to do
-        }
+		public void ReplenishShields(int? amount = null)
+		{
+			// nothing to do
+		}
 
-        public int TakeDamage(Hit hit, PRNG dice = null)
-        {
-            int damage = hit.NominalDamage;
-            var realhit = new Hit(hit.Shot, this, damage);
-            var df = realhit.Shot.DamageType.ComponentDamage.Evaluate(realhit);
-            var dp = realhit.Shot.DamageType.ComponentPiercing.Evaluate(realhit);
-            var factoredDmg = df.PercentOfRounded(damage);
-            var piercing = dp.PercentOfRounded(damage);
-            var realdmg = Math.Min(Hitpoints, factoredDmg);
-            var nominalDamageSpent = realdmg / ((df + dp) / 100);
-            Hitpoints -= realdmg;
-            return damage - nominalDamageSpent;
-        }
+		public int TakeDamage(Hit hit, PRNG dice = null)
+		{
+			int damage = hit.NominalDamage;
+			var realhit = new Hit(hit.Shot, this, damage);
+			var df = realhit.Shot.DamageType.ComponentDamage.Evaluate(realhit);
+			var dp = realhit.Shot.DamageType.ComponentPiercing.Evaluate(realhit);
+			var factoredDmg = df.PercentOfRounded(damage);
+			var piercing = dp.PercentOfRounded(damage);
+			var realdmg = Math.Min(Hitpoints, factoredDmg);
+			var nominalDamageSpent = realdmg / ((df + dp) / 100);
+			Hitpoints -= realdmg;
+			return damage - nominalDamageSpent;
+		}
 
-        public override string ToString()
-        {
-            return Name;
-        }
-
-        #endregion Public Methods
-    }
+		public override string ToString()
+		{
+			return Name;
+		}
+	}
 }

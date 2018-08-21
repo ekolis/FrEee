@@ -19,17 +19,11 @@ namespace FrEee.Game.Objects.Orders
 	[Serializable]
 	public class ColonizeOrder : IOrder<SpaceVehicle>
 	{
-		#region Public Constructors
-
 		public ColonizeOrder(Planet planet)
 		{
 			Owner = Empire.Current;
 			Planet = planet;
 		}
-
-		#endregion Public Constructors
-
-		#region Public Properties
 
 		public bool ConsumesMovement
 		{
@@ -58,16 +52,8 @@ namespace FrEee.Game.Objects.Orders
 		[DoNotSerialize]
 		public Planet Planet { get { return planet; } set { planet = value; } }
 
-		#endregion Public Properties
-
-		#region Private Properties
-
 		private GalaxyReference<Empire> owner { get; set; }
 		private GalaxyReference<Planet> planet { get; set; }
-
-		#endregion Private Properties
-
-		#region Public Methods
 
 		public bool CheckCompletion(SpaceVehicle v)
 		{
@@ -226,7 +212,5 @@ namespace FrEee.Game.Objects.Orders
 		{
 			return "Colonize " + Planet.Name;
 		}
-
-		#endregion Public Methods
 	}
 }

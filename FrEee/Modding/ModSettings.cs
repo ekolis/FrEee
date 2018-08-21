@@ -12,8 +12,6 @@ namespace FrEee.Modding
 	/// </summary>
 	public class ModSettings
 	{
-		#region Public Constructors
-
 		public ModSettings()
 		{
 			DefaultColonyConstructionRate = new ResourceQuantity();
@@ -44,10 +42,6 @@ namespace FrEee.Modding
 
 			ValueChangeFrequency = 10;
 		}
-
-		#endregion Public Constructors
-
-		#region Public Properties
 
 		/// <summary>
 		/// Racial aptitudes.
@@ -455,10 +449,6 @@ namespace FrEee.Modding
 		/// </summary>
 		public int WeaponAccuracyPointBlank { get; set; }
 
-		#endregion Public Properties
-
-		#region Public Methods
-
 		public double GetMoodFactor(int anger)
 		{
 			Mood mood = Mood.Emotionless;
@@ -499,7 +489,5 @@ namespace FrEee.Modding
 			}
 			return result;
 		}
-
-		#endregion Public Methods
 	}
 }

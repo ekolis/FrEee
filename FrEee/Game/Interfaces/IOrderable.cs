@@ -2,35 +2,27 @@
 
 namespace FrEee.Game.Interfaces
 {
-    /// <summary>
-    /// Something which can accept orders from an empire and queue them for execution over time.
-    /// </summary>
-    public interface IOrderable : IReferrable
-    {
-        #region Public Properties
+	/// <summary>
+	/// Something which can accept orders from an empire and queue them for execution over time.
+	/// </summary>
+	public interface IOrderable : IReferrable
+	{
+		/// <summary>
+		/// The queued orders.
+		/// </summary>
+		IEnumerable<IOrder> Orders { get; }
 
-        /// <summary>
-        /// The queued orders.
-        /// </summary>
-        IEnumerable<IOrder> Orders { get; }
+		void AddOrder(IOrder order);
 
-        #endregion Public Properties
+		/// <summary>
+		/// Executes orders for an appropriate amount of time.
+		/// Some objects execute orders for an entire turn at once; others only for smaller ticks.
+		/// </summary>
+		/// <returns>true if there was anything to do this turn</returns>
+		bool ExecuteOrders();
 
-        #region Public Methods
+		void RearrangeOrder(IOrder order, int delta);
 
-        void AddOrder(IOrder order);
-
-        /// <summary>
-        /// Executes orders for an appropriate amount of time.
-        /// Some objects execute orders for an entire turn at once; others only for smaller ticks.
-        /// </summary>
-        /// <returns>true if there was anything to do this turn</returns>
-        bool ExecuteOrders();
-
-        void RearrangeOrder(IOrder order, int delta);
-
-        void RemoveOrder(IOrder order);
-
-        #endregion Public Methods
-    }
+		void RemoveOrder(IOrder order);
+	}
 }

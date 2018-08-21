@@ -2,12 +2,8 @@
 
 namespace FrEee.Game.Interfaces
 {
-    public interface IErrorProne
-    {
-        #region Public Properties
-
-        IEnumerable<string> Errors { get; }
-
-        #endregion Public Properties
-    }
+	public interface IErrorProne
+	{
+		IEnumerable<string> Errors { get; }
+	}
 }

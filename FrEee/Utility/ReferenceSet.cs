@@ -7,187 +7,167 @@ using System.Linq;
 
 namespace FrEee.Utility
 {
-    public class GalaxyReferenceSet<T> : ReferenceSet<GalaxyReference<T>, T>
-    {
-    }
+	public class GalaxyReferenceSet<T> : ReferenceSet<GalaxyReference<T>, T>
+	{
+	}
 
-    public class ModReferenceSet<T> : ReferenceSet<ModReference<T>, T>
-            where T : IModObject
-    {
-    }
+	public class ModReferenceSet<T> : ReferenceSet<ModReference<T>, T>
+			where T : IModObject
+	{
+	}
 
-    /// <summary>
-    /// A set of references.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class ReferenceSet<TRef, T> : ISet<T>, IPromotable, IReferenceEnumerable
-        where TRef : IReference<T>
-    {
-        #region Public Constructors
+	/// <summary>
+	/// A set of references.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public class ReferenceSet<TRef, T> : ISet<T>, IPromotable, IReferenceEnumerable
+		where TRef : IReference<T>
+	{
+		public ReferenceSet()
+		{
+			set = new HashSet<TRef>();
+		}
 
-        public ReferenceSet()
-        {
-            set = new HashSet<TRef>();
-        }
+		public int Count
+		{
+			get { return set.Count; }
+		}
 
-        #endregion Public Constructors
+		public bool IsReadOnly
+		{
+			get { return false; }
+		}
 
-        #region Public Properties
+		private HashSet<TRef> set { get; set; }
 
-        public int Count
-        {
-            get { return set.Count; }
-        }
+		private ISet<T> Set { get { return new HashSet<T>(set.Select(r => r.Value)); } }
 
-        public bool IsReadOnly
-        {
-            get { return false; }
-        }
+		public bool Add(T item)
+		{
+			return set.Add(MakeReference(item));
+		}
 
-        #endregion Public Properties
+		void ICollection<T>.Add(T item)
+		{
+			set.Add(MakeReference(item));
+		}
 
-        #region Private Properties
+		public void Clear()
+		{
+			set.Clear();
+		}
 
-        private HashSet<TRef> set { get; set; }
+		public bool Contains(T item)
+		{
+			return Set.Contains(item);
+		}
 
-        private ISet<T> Set { get { return new HashSet<T>(set.Select(r => r.Value)); } }
+		public void CopyTo(T[] array, int arrayIndex)
+		{
+			Set.CopyTo(array, arrayIndex);
+		}
 
-        #endregion Private Properties
+		public void ExceptWith(IEnumerable<T> other)
+		{
+			set.Clear();
+			var result = Set;
+			result.ExceptWith(other);
+			foreach (var item in result)
+				Add(item);
+		}
 
-        #region Public Methods
+		public IEnumerator<T> GetEnumerator()
+		{
+			return Set.GetEnumerator();
+		}
 
-        public bool Add(T item)
-        {
-            return set.Add(MakeReference(item));
-        }
+		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
+		}
 
-        void ICollection<T>.Add(T item)
-        {
-            set.Add(MakeReference(item));
-        }
+		public void IntersectWith(IEnumerable<T> other)
+		{
+			set.Clear();
+			var result = Set;
+			result.IntersectWith(other);
+			foreach (var item in result)
+				Add(item);
+		}
 
-        public void Clear()
-        {
-            set.Clear();
-        }
+		public bool IsProperSubsetOf(IEnumerable<T> other)
+		{
+			return Set.IsProperSubsetOf(other);
+		}
 
-        public bool Contains(T item)
-        {
-            return Set.Contains(item);
-        }
+		public bool IsProperSupersetOf(IEnumerable<T> other)
+		{
+			return Set.IsProperSupersetOf(other);
+		}
 
-        public void CopyTo(T[] array, int arrayIndex)
-        {
-            Set.CopyTo(array, arrayIndex);
-        }
+		public bool IsSubsetOf(IEnumerable<T> other)
+		{
+			return Set.IsSubsetOf(other);
+		}
 
-        public void ExceptWith(IEnumerable<T> other)
-        {
-            set.Clear();
-            var result = Set;
-            result.ExceptWith(other);
-            foreach (var item in result)
-                Add(item);
-        }
+		public bool IsSupersetOf(IEnumerable<T> other)
+		{
+			return Set.IsSupersetOf(other);
+		}
 
-        public IEnumerator<T> GetEnumerator()
-        {
-            return Set.GetEnumerator();
-        }
+		public bool Overlaps(IEnumerable<T> other)
+		{
+			return Set.Overlaps(other);
+		}
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+		public bool Remove(T item)
+		{
+			if (item == null)
+				return set.RemoveWhere(x => !x.HasValue) > 0; // TODO - remvoe only one null?
+			else
+				return set.Remove(MakeReference(item));
+		}
 
-        public void IntersectWith(IEnumerable<T> other)
-        {
-            set.Clear();
-            var result = Set;
-            result.IntersectWith(other);
-            foreach (var item in result)
-                Add(item);
-        }
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		{
+			if (done == null)
+				done = new HashSet<IPromotable>();
+			if (!done.Contains(this))
+			{
+				done.Add(this);
+				foreach (var r in set.OfType<IPromotable>())
+					r.ReplaceClientIDs(idmap, done);
+			}
+		}
 
-        public bool IsProperSubsetOf(IEnumerable<T> other)
-        {
-            return Set.IsProperSubsetOf(other);
-        }
+		public bool SetEquals(IEnumerable<T> other)
+		{
+			return Set.SetEquals(other);
+		}
 
-        public bool IsProperSupersetOf(IEnumerable<T> other)
-        {
-            return Set.IsProperSupersetOf(other);
-        }
+		public void SymmetricExceptWith(IEnumerable<T> other)
+		{
+			set.Clear();
+			var result = Set;
+			result.SymmetricExceptWith(other);
+			foreach (var item in result)
+				Add(item);
+		}
 
-        public bool IsSubsetOf(IEnumerable<T> other)
-        {
-            return Set.IsSubsetOf(other);
-        }
+		public void UnionWith(IEnumerable<T> other)
+		{
+			set.Clear();
+			var result = Set;
+			result.UnionWith(other);
+			foreach (var item in result)
+				Add(item);
+		}
 
-        public bool IsSupersetOf(IEnumerable<T> other)
-        {
-            return Set.IsSupersetOf(other);
-        }
-
-        public bool Overlaps(IEnumerable<T> other)
-        {
-            return Set.Overlaps(other);
-        }
-
-        public bool Remove(T item)
-        {
-            if (item == null)
-                return set.RemoveWhere(x => !x.HasValue) > 0; // TODO - remvoe only one null?
-            else
-                return set.Remove(MakeReference(item));
-        }
-
-        public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
-        {
-            if (done == null)
-                done = new HashSet<IPromotable>();
-            if (!done.Contains(this))
-            {
-                done.Add(this);
-                foreach (var r in set.OfType<IPromotable>())
-                    r.ReplaceClientIDs(idmap, done);
-            }
-        }
-
-        public bool SetEquals(IEnumerable<T> other)
-        {
-            return Set.SetEquals(other);
-        }
-
-        public void SymmetricExceptWith(IEnumerable<T> other)
-        {
-            set.Clear();
-            var result = Set;
-            result.SymmetricExceptWith(other);
-            foreach (var item in result)
-                Add(item);
-        }
-
-        public void UnionWith(IEnumerable<T> other)
-        {
-            set.Clear();
-            var result = Set;
-            result.UnionWith(other);
-            foreach (var item in result)
-                Add(item);
-        }
-
-        #endregion Public Methods
-
-        #region Private Methods
-
-        private static TRef MakeReference(T item)
-        {
-            if (item == null)
-                return (TRef)typeof(TRef).Instantiate();
-            return (TRef)typeof(TRef).Instantiate(item);
-        }
-
-        #endregion Private Methods
-    }
+		private static TRef MakeReference(T item)
+		{
+			if (item == null)
+				return (TRef)typeof(TRef).Instantiate();
+			return (TRef)typeof(TRef).Instantiate(item);
+		}
+	}
 }

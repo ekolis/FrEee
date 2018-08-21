@@ -17,8 +17,6 @@ namespace FrEee.WinForms.Forms
 {
 	public partial class BattleResultsForm : Form, IBindable<IBattle>
 	{
-		#region Public Constructors
-
 		public BattleResultsForm(IBattle battle)
 		{
 			InitializeComponent();
@@ -34,18 +32,10 @@ namespace FrEee.WinForms.Forms
 			Text = Battle.NameFor(Empire.Current);
 		}
 
-		#endregion Public Constructors
-
-		#region Public Properties
-
 		/// <summary>
 		/// The battle we are displaying results for.
 		/// </summary>
 		public IBattle Battle { get; private set; }
-
-		#endregion Public Properties
-
-		#region Public Methods
 
 		public void Bind(IBattle data)
 		{
@@ -102,10 +92,6 @@ namespace FrEee.WinForms.Forms
 			grid.Data = data;
 			grid.Initialize();
 		}
-
-		#endregion Public Methods
-
-		#region Private Methods
 
 		/// <summary>
 		/// Gets the icon of a vehicle/design, or a generic icon if it's not a vehicle/design (e.g. if it's a planet).
@@ -167,22 +153,12 @@ namespace FrEee.WinForms.Forms
 			this.ShowChildForm(form);
 		}
 
-		#endregion Private Methods
-
-		#region Private Classes
-
 		private class CombatantInfo
 		{
-			#region Public Properties
-
 			public Empire Empire { get; set; }
 			public Image HullIcon { get; set; }
 			public string HullName { get; set; }
 			public int HullSize { get; set; }
-
-			#endregion Public Properties
-
-			#region Public Methods
 
 			public override bool Equals(object obj)
 			{
@@ -196,10 +172,6 @@ namespace FrEee.WinForms.Forms
 			{
 				return HashCodeMasher.Mash(Empire, HullName, HullSize);
 			}
-
-			#endregion Public Methods
 		}
-
-		#endregion Private Classes
 	}
 }

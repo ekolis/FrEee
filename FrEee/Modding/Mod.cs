@@ -21,8 +21,6 @@ namespace FrEee.Modding
 	[Serializable]
 	public class Mod : IDisposable
 	{
-		#region Public Constructors
-
 		public Mod()
 		{
 			Errors = new List<DataParsingException>();
@@ -54,10 +52,6 @@ namespace FrEee.Modding
 			FacilityTemplates.Add(FacilityTemplate.Unknown);
 			Register(FacilityTemplate.Unknown);
 		}
-
-		#endregion Public Constructors
-
-		#region Public Properties
 
 		/// <summary>
 		/// The currently loaded mod.
@@ -205,15 +199,7 @@ namespace FrEee.Modding
 		/// </summary>
 		public ICollection<Trait> Traits { get; private set; }
 
-		#endregion Public Properties
-
-		#region Private Properties
-
 		private SafeDictionary<string, IModObject> objects { get; set; }
-
-		#endregion Private Properties
-
-		#region Public Methods
 
 		/// <summary>
 		/// Loads a mod.
@@ -501,7 +487,5 @@ namespace FrEee.Modding
 		{
 			return RootPath ?? "<Stock>";
 		}
-
-		#endregion Public Methods
 	}
 }

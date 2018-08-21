@@ -9,111 +9,95 @@ using System.Linq;
 
 namespace FrEee.Game.Objects.Orders
 {
-    public class RecycleFacilityOrCargoOrder : IOrder<IMobileSpaceObject>
-    {
-        #region Public Constructors
+	public class RecycleFacilityOrCargoOrder : IOrder<IMobileSpaceObject>
+	{
+		public RecycleFacilityOrCargoOrder(IRecycleBehavior behavior, IRecyclable target)
+		{
+			Behavior = behavior;
+			Target = target;
+		}
 
-        public RecycleFacilityOrCargoOrder(IRecycleBehavior behavior, IRecyclable target)
-        {
-            Behavior = behavior;
-            Target = target;
-        }
+		public IRecycleBehavior Behavior { get; private set; }
 
-        #endregion Public Constructors
+		public bool ConsumesMovement
+		{
+			get { return false; }
+		}
 
-        #region Public Properties
+		public long ID
+		{
+			get;
+			set;
+		}
 
-        public IRecycleBehavior Behavior { get; private set; }
+		public bool IsComplete
+		{
+			get;
+			private set;
+		}
 
-        public bool ConsumesMovement
-        {
-            get { return false; }
-        }
+		public bool IsDisposed
+		{
+			get;
+			set;
+		}
 
-        public long ID
-        {
-            get;
-            set;
-        }
+		/// <summary>
+		/// The empire which issued the order.
+		/// </summary>
+		[DoNotSerialize]
+		public Empire Owner { get { return owner; } set { owner = value; } }
 
-        public bool IsComplete
-        {
-            get;
-            private set;
-        }
+		/// <summary>
+		/// The facility or unit in cargo to recycle.
+		/// </summary>
+		[DoNotSerialize]
+		public IRecyclable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
 
-        public bool IsDisposed
-        {
-            get;
-            set;
-        }
+		private GalaxyReference<Empire> owner { get; set; }
+		private GalaxyReference<IRecyclable> target { get; set; }
 
-        /// <summary>
-        /// The empire which issued the order.
-        /// </summary>
-        [DoNotSerialize]
-        public Empire Owner { get { return owner; } set { owner = value; } }
+		public bool CheckCompletion(IMobileSpaceObject executor)
+		{
+			return IsComplete;
+		}
 
-        /// <summary>
-        /// The facility or unit in cargo to recycle.
-        /// </summary>
-        [DoNotSerialize]
-        public IRecyclable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
+		public void Dispose()
+		{
+			if (IsDisposed)
+				return;
+			foreach (var v in Galaxy.Current.Referrables.OfType<IMobileSpaceObject>())
+				v.RemoveOrder(this);
+			Galaxy.Current.UnassignID(this);
+		}
 
-        #endregion Public Properties
+		public void Execute(IMobileSpaceObject executor)
+		{
+			var errors = GetErrors(executor);
+			if (errors.Any())
+			{
+				foreach (var e in errors)
+					Owner.Log.Add(e);
+				return;
+			}
 
-        #region Private Properties
+			Behavior.Execute(Target);
+			IsComplete = true;
+		}
 
-        private GalaxyReference<Empire> owner { get; set; }
-        private GalaxyReference<IRecyclable> target { get; set; }
+		public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject executor)
+		{
+			return Behavior.GetErrors(executor, Target);
+		}
 
-        #endregion Private Properties
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		{
+			// This type does not use client objects, so nothing to do here.
+		}
 
-        #region Public Methods
-
-        public bool CheckCompletion(IMobileSpaceObject executor)
-        {
-            return IsComplete;
-        }
-
-        public void Dispose()
-        {
-            if (IsDisposed)
-                return;
-            foreach (var v in Galaxy.Current.Referrables.OfType<IMobileSpaceObject>())
-                v.RemoveOrder(this);
-            Galaxy.Current.UnassignID(this);
-        }
-
-        public void Execute(IMobileSpaceObject executor)
-        {
-            var errors = GetErrors(executor);
-            if (errors.Any())
-            {
-                foreach (var e in errors)
-                    Owner.Log.Add(e);
-                return;
-            }
-
-            Behavior.Execute(Target);
-            IsComplete = true;
-        }
-
-        public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject executor)
-        {
-            return Behavior.GetErrors(executor, Target);
-        }
-
-        public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
-        {
-            // This type does not use client objects, so nothing to do here.
-        }
-
-        public override string ToString()
-        {
-            return Behavior.Verb + " " + Target;
-        }
-
-        #endregion Public Methods
-    }
+		public override string ToString()
+		{
+			return Behavior.Verb + " " + Target;
+		}
+	}
 }

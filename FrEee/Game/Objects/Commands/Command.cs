@@ -7,81 +7,61 @@ using System.Linq;
 
 namespace FrEee.Game.Objects.Commands
 {
-    /// <summary>
-    /// A generic command.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    [Serializable]
-    public abstract class Command<T> : ICommand<T>
-        where T : IReferrable
-    {
-        #region Protected Constructors
+	/// <summary>
+	/// A generic command.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	[Serializable]
+	public abstract class Command<T> : ICommand<T>
+		where T : IReferrable
+	{
+		protected Command(T target)
+		{
+			Issuer = Empire.Current;
+			Executor = target;
+		}
 
-        protected Command(T target)
-        {
-            Issuer = Empire.Current;
-            Executor = target;
-        }
+		[DoNotSerialize]
+		public T Executor { get { return executor; } set { executor = value; } }
 
-        #endregion Protected Constructors
+		IReferrable ICommand.Executor
+		{
+			get { return Executor; }
+		}
 
-        #region Public Properties
+		public long ExecutorID { get { return executor.ID; } }
 
-        [DoNotSerialize]
-        public T Executor { get { return executor; } set { executor = value; } }
+		public bool IsDisposed { get; set; }
 
-        IReferrable ICommand.Executor
-        {
-            get { return Executor; }
-        }
+		[DoNotSerialize]
+		public Empire Issuer { get { return issuer; } set { issuer = value; } }
 
-        public long ExecutorID { get { return executor.ID; } }
+		public virtual IEnumerable<IReferrable> NewReferrables
+		{
+			get
+			{
+				yield break;
+			}
+		}
 
-        public bool IsDisposed { get; set; }
+		protected GalaxyReference<T> executor { get; set; }
 
-        [DoNotSerialize]
-        public Empire Issuer { get { return issuer; } set { issuer = value; } }
+		private GalaxyReference<Empire> issuer { get; set; }
 
-        public virtual IEnumerable<IReferrable> NewReferrables
-        {
-            get
-            {
-                yield break;
-            }
-        }
+		public abstract void Execute();
 
-        #endregion Public Properties
-
-        #region Protected Properties
-
-        protected GalaxyReference<T> executor { get; set; }
-
-        #endregion Protected Properties
-
-        #region Private Properties
-
-        private GalaxyReference<Empire> issuer { get; set; }
-
-        #endregion Private Properties
-
-        #region Public Methods
-
-        public abstract void Execute();
-
-        public virtual void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
-        {
-            if (done == null)
-                done = new HashSet<IPromotable>();
-            if (!done.Contains(this))
-            {
-                done.Add(this);
-                issuer.ReplaceClientIDs(idmap, done);
-                executor.ReplaceClientIDs(idmap, done);
-                foreach (var r in NewReferrables.OfType<IPromotable>())
-                    r.ReplaceClientIDs(idmap, done);
-            }
-        }
-
-        #endregion Public Methods
-    }
+		public virtual void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		{
+			if (done == null)
+				done = new HashSet<IPromotable>();
+			if (!done.Contains(this))
+			{
+				done.Add(this);
+				issuer.ReplaceClientIDs(idmap, done);
+				executor.ReplaceClientIDs(idmap, done);
+				foreach (var r in NewReferrables.OfType<IPromotable>())
+					r.ReplaceClientIDs(idmap, done);
+			}
+		}
+	}
 }

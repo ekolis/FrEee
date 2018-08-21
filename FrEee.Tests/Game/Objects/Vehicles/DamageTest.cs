@@ -18,8 +18,6 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 	[TestClass]
 	public class DamageTest
 	{
-		#region Private Fields
-
 		/// <summary>
 		/// Number of engines to give the ship.
 		/// </summary>
@@ -39,10 +37,6 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		/// The ship that is taking damage.
 		/// </summary>
 		private Ship ship;
-
-		#endregion Private Fields
-
-		#region Public Methods
 
 		/// <summary>
 		/// Ship speed should degrade as engines take damage.
@@ -105,10 +99,6 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			ship.Owner = empire;
 		}
 
-		#endregion Public Methods
-
-		#region Private Methods
-
 		private int GetExpectedSpeed(Ship ship)
 		{
 			// add up thrust of all working engines, and divide by hull mass (engines per move, not tonnage)
@@ -122,7 +112,5 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 				+ ship.Components.Where(c => c.Hitpoints > 0).MaxOrDefault(c => c.GetAbilityValue("Extra Movement Generation").ToInt())
 				+ ship.Components.Where(c => c.Hitpoints > 0).MaxOrDefault(c => c.GetAbilityValue("Vehicle Speed").ToInt());
 		}
-
-		#endregion Private Methods
 	}
 }

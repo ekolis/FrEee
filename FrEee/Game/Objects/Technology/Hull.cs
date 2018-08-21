@@ -21,8 +21,6 @@ namespace FrEee.Game.Objects.Technology
 	[Serializable]
 	public class Hull<T> : IHull<T> where T : IVehicle
 	{
-		#region Public Constructors
-
 		public Hull()
 		{
 			PictureNames = new List<string>();
@@ -30,10 +28,6 @@ namespace FrEee.Game.Objects.Technology
 			Abilities = new List<Ability>();
 			Cost = new ResourceQuantity();
 		}
-
-		#endregion Public Constructors
-
-		#region Public Properties
 
 		public IList<Ability> Abilities { get; private set; }
 
@@ -154,12 +148,6 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get { return LatestVersion; }
 		}
-
-		/// <summary>
-		/// The number of thrust points required to generate 1 movement point.
-		/// Also known as Engines Per Move, though technically engines can generate more than 1 thrust point.
-		/// </summary>
-		public int ThrustPerMove { get; set; }
 
 		/// <summary>
 		/// Maximum number of engines allowed.
@@ -283,6 +271,12 @@ namespace FrEee.Game.Objects.Technology
 		/// </summary>
 		public int Size { get; set; }
 
+		/// <summary>
+		/// The number of thrust points required to generate 1 movement point.
+		/// Also known as Engines Per Move, though technically engines can generate more than 1 thrust point.
+		/// </summary>
+		public int ThrustPerMove { get; set; }
+
 		public double Timestamp
 		{
 			get;
@@ -329,10 +323,6 @@ namespace FrEee.Game.Objects.Technology
 				return VehicleType.ToSpacedString();
 			}
 		}
-
-		#endregion Public Properties
-
-		#region Public Methods
 
 		public bool CanUseMount(Mount m)
 		{
@@ -409,10 +399,6 @@ namespace FrEee.Game.Objects.Technology
 			return Name;
 		}
 
-		#endregion Public Methods
-
-		#region Private Methods
-
 		private IEnumerable<string> GetPaths(string pathtype)
 		{
 			var paths = new List<string>();
@@ -433,7 +419,5 @@ namespace FrEee.Game.Objects.Technology
 			}
 			return paths;
 		}
-
-		#endregion Private Methods
 	}
 }

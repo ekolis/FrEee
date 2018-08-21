@@ -27,30 +27,6 @@ namespace FrEee.Game.Objects.Civilization
 	[Serializable]
 	public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable<Empire>, IComparable, IFormulaHost
 	{
-		#region Private Fields
-
-		private ResourceQuantity colonyIncome;
-
-		private ResourceQuantity grossDomesticIncome;
-
-		private ResourceQuantity maintenance;
-
-		private ResourceQuantity rawResourceIncome;
-
-		private IDictionary<Tuple<ISpaceObject, IMineableSpaceObject>, ResourceQuantity> remoteMiners = new SafeDictionary<Tuple<ISpaceObject, IMineableSpaceObject>, ResourceQuantity>(true);
-
-		private ResourceQuantity remoteMiningIncome;
-
-		private ModProgress<Tech>[] researchProgress;
-
-		private ResourceQuantity tradeIncome;
-
-		private ISet<IUnlockable> unlockedItems;
-
-		#endregion Private Fields
-
-		#region Public Constructors
-
 		public Empire()
 		{
 			StoredResources = new ResourceQuantity();
@@ -75,10 +51,6 @@ namespace FrEee.Game.Objects.Civilization
 			NumberedWaypoints = new Waypoint[10];
 			Scores = new SafeDictionary<int, int?>();
 		}
-
-		#endregion Public Constructors
-
-		#region Public Properties
 
 		/// <summary>
 		/// The current empire being controlled by the player.
@@ -754,16 +726,25 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public IList<Waypoint> Waypoints { get; private set; }
 
-		#endregion Public Properties
-
-		#region Private Properties
-
 		private ModReference<AI<Empire, Galaxy>> ai { get; set; }
 		private ModReference<Culture> culture { get; set; }
+		private ResourceQuantity colonyIncome;
 
-		#endregion Private Properties
+		private ResourceQuantity grossDomesticIncome;
 
-		#region Public Methods
+		private ResourceQuantity maintenance;
+
+		private ResourceQuantity rawResourceIncome;
+
+		private IDictionary<Tuple<ISpaceObject, IMineableSpaceObject>, ResourceQuantity> remoteMiners = new SafeDictionary<Tuple<ISpaceObject, IMineableSpaceObject>, ResourceQuantity>(true);
+
+		private ResourceQuantity remoteMiningIncome;
+
+		private ModProgress<Tech>[] researchProgress;
+
+		private ResourceQuantity tradeIncome;
+
+		private ISet<IUnlockable> unlockedItems;
 
 		/// <summary>
 		/// Belays (cancels) an order.
@@ -788,24 +769,14 @@ namespace FrEee.Game.Objects.Civilization
 			return UnlockedItems.OfType<IAbilityObject>().Any(c => c.HasAbility(planet.ColonizationAbilityName));
 		}
 
-		public bool HasSeen(IFoggable o)
-		{
-			return o.CheckVisibility(this) >= Visibility.Fogged;
-		}
-
-		public bool CanSee(IFoggable o)
-		{
-			return o.CheckVisibility(this) >= Visibility.Visible;
-		}
-
 		public bool CanScan(IFoggable o)
 		{
 			return o.CheckVisibility(this) >= Visibility.Scanned;
 		}
 
-		public bool Owns(IFoggable o)
+		public bool CanSee(IFoggable o)
 		{
-			return o.CheckVisibility(this) >= Visibility.Owned;
+			return o.CheckVisibility(this) >= Visibility.Visible;
 		}
 
 		public bool CheckUnlockStatus(IUnlockable item)
@@ -967,6 +938,11 @@ namespace FrEee.Game.Objects.Civilization
 			return starSystem.ExploredByEmpires.Contains(this);
 		}
 
+		public bool HasSeen(IFoggable o)
+		{
+			return o.CheckVisibility(this) >= Visibility.Fogged;
+		}
+
 		/// <summary>
 		/// Determines if something has been unlocked in the tech tree.
 		/// </summary>
@@ -1030,6 +1006,11 @@ namespace FrEee.Game.Objects.Civilization
 			target.AddOrder(order);
 			var cmd = new AddOrderCommand<T>(target, order);
 			Commands.Add(cmd);
+		}
+
+		public bool Owns(IFoggable o)
+		{
+			return o.CheckVisibility(this) >= Visibility.Owned;
 		}
 
 		/// <summary>
@@ -1238,10 +1219,6 @@ namespace FrEee.Game.Objects.Civilization
 			}
 		}
 
-		#endregion Public Methods
-
-		#region Private Methods
-
 		private IEnumerable<string> GetImagePaths(string imagename, string imagetype)
 		{
 			if (Mod.Current?.RootPath != null)
@@ -1296,7 +1273,5 @@ namespace FrEee.Game.Objects.Civilization
 				return double.PositiveInfinity;
 			return (double)costBefore / (queueSpending * totalRP / 100d);
 		}
-
-		#endregion Private Methods
 	}
 }

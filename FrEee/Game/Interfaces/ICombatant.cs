@@ -10,12 +10,15 @@ namespace FrEee.Game.Interfaces
 	/// </summary>
 	public interface ICombatant : IPictorial, ITargetable, IDisposable, IFoggable, ILocated, INamed
 	{
-		#region Public Properties
-
 		/// <summary>
 		/// Accuracy rating of this combatant.
 		/// </summary>
 		int Accuracy { get; }
+
+		/// <summary>
+		/// How fast can this combatant move in combat?
+		/// </summary>
+		int CombatSpeed { get; }
 
 		/// <summary>
 		/// Is this combatant still alive or is it destroyed/glassed?
@@ -28,18 +31,9 @@ namespace FrEee.Game.Interfaces
 		int MaxTargets { get; }
 
 		/// <summary>
-		/// How fast can this combatant move in combat?
-		/// </summary>
-		int CombatSpeed { get; }
-
-		/// <summary>
 		/// Any undamaged weapons this combatant is armed with.
 		/// </summary>
 		IEnumerable<Component> Weapons { get; }
-
-		#endregion Public Properties
-
-		#region Public Methods
 
 		/// <summary>
 		/// Can this object fire on another object?
@@ -49,7 +43,5 @@ namespace FrEee.Game.Interfaces
 		bool CanTarget(ITargetable target);
 
 		bool IsHostileTo(Empire emp);
-
-		#endregion Public Methods
 	}
 }

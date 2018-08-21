@@ -1,7 +1,5 @@
 ﻿using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace FrEee.Tests.Utility
 {

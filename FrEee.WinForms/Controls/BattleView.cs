@@ -3,7 +3,6 @@ using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Combat.Grid;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
-using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
@@ -19,48 +18,6 @@ namespace FrEee.WinForms.Controls
 	/// </summary>
 	public partial class BattleView : Control
 	{
-		#region Private Fields
-
-		/// <summary>
-		/// Border in pixels between sectors and around the entire map.
-		/// </summary>
-		private const int SectorBorderSize = 1;
-
-		private Battle battle;
-
-		private List<Boom> booms = new List<Boom>();
-
-		private bool combatPhase = false;
-
-		private SafeDictionary<ICombatant, IntVector2> locations = new SafeDictionary<ICombatant, IntVector2>();
-
-		private List<Pewpew> pewpews = new List<Pewpew>();
-
-		/// <summary>
-		/// Current round of battle.
-		/// </summary>
-		private int round = 0;
-
-		public int Round
-		{
-			get => round;
-			set
-			{
-				if (battle == null)
-					return; // still initializing
-				round = value;
-				while (round < 0)
-					round += Battle.Duration;
-				while (round >= Battle.Duration)
-					round -= Battle.Duration;
-				Invalidate();
-			}
-		}
-
-		#endregion Private Fields
-
-		#region Public Constructors
-
 		public BattleView()
 		{
 			InitializeComponent();
@@ -68,12 +25,6 @@ namespace FrEee.WinForms.Controls
 			SizeChanged += BattleView_SizeChanged;
 			DoubleBuffered = true;
 		}
-
-		#endregion Public Constructors
-
-		#region Public Properties
-
-		private bool autoZoom;
 
 		/// <summary>
 		/// Automatically zoom to show the entire battle?
@@ -99,7 +50,7 @@ namespace FrEee.WinForms.Controls
 			}
 		}
 
-		private IntVector2 focusedLocation;
+		public IntVector2 ClickLocation { get; private set; }
 
 		/// <summary>
 		/// The combat sector which is focused.
@@ -120,6 +71,22 @@ namespace FrEee.WinForms.Controls
 			set => roundTimer.Enabled = !value;
 		}
 
+		public int Round
+		{
+			get => round;
+			set
+			{
+				if (battle == null)
+					return; // still initializing
+				round = value;
+				while (round < 0)
+					round += Battle.Duration;
+				while (round >= Battle.Duration)
+					round -= Battle.Duration;
+				Invalidate();
+			}
+		}
+
 		/// <summary>
 		/// The size at which each sector will be drawn, in pixels.
 		/// </summary>
@@ -136,7 +103,7 @@ namespace FrEee.WinForms.Controls
 			}
 		}
 
-		private bool useSquares;
+		public ICombatant SelectedCombatant { get; set; }
 
 		/// <summary>
 		/// Display everything as a square rather than an icon?
@@ -151,9 +118,29 @@ namespace FrEee.WinForms.Controls
 			}
 		}
 
-		#endregion Public Properties
+		/// <summary>
+		/// Border in pixels between sectors and around the entire map.
+		/// </summary>
+		private const int SectorBorderSize = 1;
 
-		#region Protected Methods
+		private bool autoZoom;
+		private Battle battle;
+
+		private List<Boom> booms = new List<Boom>();
+
+		private bool combatPhase = false;
+
+		private IntVector2 focusedLocation;
+		private SafeDictionary<ICombatant, IntVector2> locations = new SafeDictionary<ICombatant, IntVector2>();
+
+		private List<Pewpew> pewpews = new List<Pewpew>();
+
+		/// <summary>
+		/// Current round of battle.
+		/// </summary>
+		private int round = 0;
+
+		private bool useSquares;
 
 		protected override void OnPaint(PaintEventArgs pe)
 		{
@@ -279,13 +266,36 @@ namespace FrEee.WinForms.Controls
 			}
 		}
 
-		#endregion Protected Methods
-
-		#region Private Methods
+		private void BattleView_MouseDown(object sender, MouseEventArgs e)
+		{
+			ClickLocation = GetClickPoint(e.X, e.Y);
+			SelectedCombatant = GetNextCombatantAt(ClickLocation.X, ClickLocation.Y);
+		}
 
 		private void BattleView_SizeChanged(object sender, EventArgs e)
 		{
 			Invalidate();
+		}
+
+		private IntVector2 GetClickPoint(int x, int y)
+		{
+			if (AutoZoom)
+			{
+				var clickx = (x - SectorBorderSize) / (SectorDrawSize + SectorBorderSize) + Battle.UpperLeft[round].X;
+				var clicky = (y - SectorBorderSize) / (SectorDrawSize + SectorBorderSize) + Battle.UpperLeft[round].Y;
+				return new IntVector2(clickx, clicky);
+			}
+			else
+			{
+				var clickx = (x - (SectorBorderSize - Width / 2)) / (SectorDrawSize + SectorBorderSize) + SectorBorderSize;
+				var clicky = (y - (SectorBorderSize - Height / 2)) / (SectorDrawSize + SectorBorderSize) + SectorBorderSize;
+				return new IntVector2(clickx, clicky);
+			}
+		}
+
+		private IEnumerable<ICombatant> GetCombatantsAt(int x, int y)
+		{
+			return locations.Where(q => q.Value.X == x && q.Value.Y == y).Select(q => q.Key);
 		}
 
 		private PointF GetDrawPoint(int x, int y)
@@ -306,20 +316,15 @@ namespace FrEee.WinForms.Controls
 			}
 		}
 
-		private IntVector2 GetClickPoint(int x, int y)
+		private ICombatant GetNextCombatantAt(int x, int y)
 		{
-			if (AutoZoom)
-			{
-				var clickx = (x - SectorBorderSize) / (SectorDrawSize + SectorBorderSize) + Battle.UpperLeft[round].X;
-				var clicky = (y - SectorBorderSize) / (SectorDrawSize + SectorBorderSize) + Battle.UpperLeft[round].Y;
-				return new IntVector2(clickx, clicky);
-			}
-			else
-			{
-				var clickx = (x - (SectorBorderSize - Width / 2)) / (SectorDrawSize + SectorBorderSize) + SectorBorderSize;
-				var clicky = (y - (SectorBorderSize - Height / 2)) / (SectorDrawSize + SectorBorderSize) + SectorBorderSize;
-				return new IntVector2(clickx, clicky);
-			}
+			var arr = GetCombatantsAt(x, y).ToArray();
+			if (!arr.Any())
+				return null;
+			var i = arr.IndexOf(SelectedCombatant);
+			if (i + 1 >= arr.Length)
+				return arr[0];
+			return arr[i + 1];
 		}
 
 		private void timer1_Tick(object sender, EventArgs e)
@@ -377,34 +382,20 @@ namespace FrEee.WinForms.Controls
 			}
 		}
 
-		#endregion Private Methods
-
-		#region Private Classes
-
 		private class Boom
 		{
-			#region Public Constructors
-
 			public Boom(IntVector2 pos, float size)
 			{
 				Position = pos;
 				Size = size;
 			}
 
-			#endregion Public Constructors
-
-			#region Public Properties
-
 			public IntVector2 Position { get; set; }
 			public float Size { get; set; }
-
-			#endregion Public Properties
 		}
 
 		private class Pewpew
 		{
-			#region Public Constructors
-
 			public Pewpew(IntVector2 start, IntVector2 end, bool isHit = true)
 			{
 				Start = start;
@@ -412,43 +403,9 @@ namespace FrEee.WinForms.Controls
 				IsHit = isHit;
 			}
 
-			#endregion Public Constructors
-
-			#region Public Properties
-
 			public IntVector2 End { get; set; }
-			public IntVector2 Start { get; set; }
 			public bool IsHit { get; set; }
-
-			#endregion Public Properties
+			public IntVector2 Start { get; set; }
 		}
-
-		#endregion Private Classes
-
-		private void BattleView_MouseDown(object sender, MouseEventArgs e)
-		{
-			ClickLocation = GetClickPoint(e.X, e.Y);
-			SelectedCombatant = GetNextCombatantAt(ClickLocation.X, ClickLocation.Y);
-		}
-
-		private IEnumerable<ICombatant> GetCombatantsAt(int x, int y)
-		{
-			return locations.Where(q => q.Value.X == x && q.Value.Y == y).Select(q => q.Key);
-		}
-
-		private ICombatant GetNextCombatantAt(int x, int y)
-		{
-			var arr = GetCombatantsAt(x, y).ToArray();
-			if (!arr.Any())
-				return null;
-			var i = arr.IndexOf(SelectedCombatant);
-			if (i + 1 >= arr.Length)
-				return arr[0];
-			return arr[i + 1];
-		}
-
-		public IntVector2 ClickLocation { get; private set; }
-
-		public ICombatant SelectedCombatant { get; set; }
 	}
 }

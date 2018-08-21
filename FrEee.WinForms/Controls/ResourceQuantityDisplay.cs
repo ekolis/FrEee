@@ -4,60 +4,44 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Controls
 {
-    public partial class ResourceQuantityDisplay : UserControl, IBindable<ResourceQuantity>
-    {
-        #region Private Fields
+	public partial class ResourceQuantityDisplay : UserControl, IBindable<ResourceQuantity>
+	{
+		public ResourceQuantityDisplay()
+		{
+			InitializeComponent();
+		}
 
-        private ResourceQuantity q;
+		public ResourceQuantity ResourceQuantity
+		{
+			get { return q; }
+			set
+			{
+				q = value;
+				Bind();
+			}
+		}
 
-        #endregion Private Fields
+		private ResourceQuantity q;
 
-        #region Public Constructors
+		public void Bind(ResourceQuantity data)
+		{
+			ResourceQuantity = data;
+		}
 
-        public ResourceQuantityDisplay()
-        {
-            InitializeComponent();
-        }
-
-        #endregion Public Constructors
-
-        #region Public Properties
-
-        public ResourceQuantity ResourceQuantity
-        {
-            get { return q; }
-            set
-            {
-                q = value;
-                Bind();
-            }
-        }
-
-        #endregion Public Properties
-
-        #region Public Methods
-
-        public void Bind(ResourceQuantity data)
-        {
-            ResourceQuantity = data;
-        }
-
-        public void Bind()
-        {
-            if (ResourceQuantity == null)
-            {
-                min.Amount = 0;
-                org.Amount = 0;
-                rad.Amount = 0;
-            }
-            else
-            {
-                min.Amount = ResourceQuantity[Resource.Minerals];
-                org.Amount = ResourceQuantity[Resource.Organics];
-                rad.Amount = ResourceQuantity[Resource.Radioactives];
-            }
-        }
-
-        #endregion Public Methods
-    }
+		public void Bind()
+		{
+			if (ResourceQuantity == null)
+			{
+				min.Amount = 0;
+				org.Amount = 0;
+				rad.Amount = 0;
+			}
+			else
+			{
+				min.Amount = ResourceQuantity[Resource.Minerals];
+				org.Amount = ResourceQuantity[Resource.Organics];
+				rad.Amount = ResourceQuantity[Resource.Radioactives];
+			}
+		}
+	}
 }

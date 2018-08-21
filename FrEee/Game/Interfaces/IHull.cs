@@ -9,8 +9,6 @@ namespace FrEee.Game.Interfaces
 {
 	public interface IHull : IModObject, IResearchable, IAbilityContainer, IReferrable, IPictorial, IUpgradeable<IHull>
 	{
-		#region Public Properties
-
 		/// <summary>
 		/// Can this hull use components with the Ship Auxiliary Control ability?
 		/// </summary>
@@ -19,12 +17,6 @@ namespace FrEee.Game.Interfaces
 		string Code { get; set; }
 		ResourceQuantity Cost { get; set; }
 		string Description { get; set; }
-
-		/// <summary>
-		/// Thrust points required to move one sector per turn.
-		/// SE4 called this "engines per move" but this was a misnomer because engines were allowed to produce more than one thrust point.
-		/// </summary>
-		int ThrustPerMove { get; set; }
 
 		/// <summary>
 		/// Maximum number of engines allowed.
@@ -64,8 +56,16 @@ namespace FrEee.Game.Interfaces
 		bool NeedsBridge { get; set; }
 
 		IList<string> PictureNames { get; }
+
 		string ShortName { get; set; }
+
 		int Size { get; set; }
+
+		/// <summary>
+		/// Thrust points required to move one sector per turn.
+		/// SE4 called this "engines per move" but this was a misnomer because engines were allowed to produce more than one thrust point.
+		/// </summary>
+		int ThrustPerMove { get; set; }
 
 		/// <summary>
 		/// The vehicle type of this hull.
@@ -73,10 +73,6 @@ namespace FrEee.Game.Interfaces
 		VehicleTypes VehicleType { get; }
 
 		string VehicleTypeName { get; }
-
-		#endregion Public Properties
-
-		#region Public Methods
 
 		/// <summary>
 		/// Can this hull use a mount?
@@ -88,8 +84,6 @@ namespace FrEee.Game.Interfaces
 		Image GetIcon(string shipsetPath);
 
 		Image GetPortrait(string shipsetPath);
-
-		#endregion Public Methods
 	}
 
 	/// <summary>
@@ -97,8 +91,6 @@ namespace FrEee.Game.Interfaces
 	/// </summary>
 	public interface IHull<out T> : IHull, IReferrable, IUpgradeable<IHull<T>> where T : IVehicle
 	{
-		#region Public Properties
-
 		new bool IsObsolescent { get; }
 
 		// to deal with ambiguity between implementing IHull and IHull<T>
@@ -107,7 +99,5 @@ namespace FrEee.Game.Interfaces
 		new IHull<T> LatestVersion { get; }
 		new IEnumerable<IHull<T>> NewerVersions { get; }
 		new IEnumerable<IHull<T>> OlderVersions { get; }
-
-		#endregion Public Properties
 	}
 }

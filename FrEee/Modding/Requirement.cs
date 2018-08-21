@@ -1,36 +1,24 @@
 ﻿namespace FrEee.Modding
 {
-    /// <summary>
-    /// A requirement for some condition.
-    /// </summary>
-    /// <typeparam name="T">The object which needs to meet the requirement.</typeparam>
-    public abstract class Requirement<T>
-    {
-        #region Public Constructors
+	/// <summary>
+	/// A requirement for some condition.
+	/// </summary>
+	/// <typeparam name="T">The object which needs to meet the requirement.</typeparam>
+	public abstract class Requirement<T>
+	{
+		public Requirement(Formula<string> description)
+		{
+			Description = description;
+		}
 
-        public Requirement(Formula<string> description)
-        {
-            Description = description;
-        }
+		public Formula<string> Description { get; set; }
 
-        #endregion Public Constructors
+		/// <summary>
+		/// Is this a "strict" requirement?
+		/// Non-strict requirements are not counted as prerequisites for purposes of finding the "root" items of the tech tree.
+		/// </summary>
+		public abstract bool IsStrict { get; }
 
-        #region Public Properties
-
-        public Formula<string> Description { get; set; }
-
-        /// <summary>
-        /// Is this a "strict" requirement?
-        /// Non-strict requirements are not counted as prerequisites for purposes of finding the "root" items of the tech tree.
-        /// </summary>
-        public abstract bool IsStrict { get; }
-
-        #endregion Public Properties
-
-        #region Public Methods
-
-        public abstract bool IsMetBy(T obj);
-
-        #endregion Public Methods
-    }
+		public abstract bool IsMetBy(T obj);
+	}
 }

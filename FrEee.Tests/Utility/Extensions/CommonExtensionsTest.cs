@@ -11,7 +11,16 @@ namespace FrEee.Tests.Utility.Extensions
 	[TestClass]
 	public class CommonExtensionsTest
 	{
-		#region Public Methods
+		[TestMethod]
+		public void PercentOfRounded()
+		{
+			Assert.AreEqual(2, 50.PercentOfRounded(4));
+			Assert.AreEqual(4, 50.PercentOfRounded(7));
+			Assert.AreEqual(3, 50.PercentOfRounded(5));
+			Assert.AreEqual(-2, 50.PercentOfRounded(-4));
+			Assert.AreEqual(-4, 50.PercentOfRounded(-7));
+			Assert.AreEqual(-3, 50.PercentOfRounded(-5));
+		}
 
 		[TestMethod]
 		public void SpawnTasksAsync()
@@ -26,41 +35,16 @@ namespace FrEee.Tests.Utility.Extensions
 			Assert.IsTrue(!squares.Any(s => s.Number > 5));
 		}
 
-		[TestMethod]
-		public void PercentOfRounded()
-		{
-			Assert.AreEqual(2, 50.PercentOfRounded(4));
-			Assert.AreEqual(4, 50.PercentOfRounded(7));
-			Assert.AreEqual(3, 50.PercentOfRounded(5));
-			Assert.AreEqual(-2, 50.PercentOfRounded(-4));
-			Assert.AreEqual(-4, 50.PercentOfRounded(-7));
-			Assert.AreEqual(-3, 50.PercentOfRounded(-5));
-		}
-
-		#endregion Public Methods
-
-		#region Private Classes
-
 		private class Square
 		{
-			#region Public Constructors
-
 			public Square(int i)
 			{
 				Number = i;
 			}
 
-			#endregion Public Constructors
-
-			#region Public Properties
-
 			public int Number { get; private set; }
 
 			public int SquaredNumber { get { return Number * Number; } }
-
-			#endregion Public Properties
 		}
-
-		#endregion Private Classes
 	}
 }

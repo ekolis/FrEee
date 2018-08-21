@@ -4,7 +4,6 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
@@ -24,18 +23,12 @@ namespace FrEee.Game.Objects.Technology
 	[Serializable]
 	public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityObject, IPromotable, IContainable<IDesign>, IFormulaHost, IUpgradeable<MountedComponentTemplate>, IPictorial
 	{
-		#region Public Constructors
-
 		public MountedComponentTemplate(IDesign container, ComponentTemplate ct, Mount mount = null)
 		{
 			Container = container;
 			ComponentTemplate = ct;
 			Mount = mount;
 		}
-
-		#endregion Public Constructors
-
-		#region Public Properties
 
 		public IEnumerable<Ability> Abilities
 		{
@@ -145,11 +138,6 @@ namespace FrEee.Game.Objects.Technology
 			get { yield break; }
 		}
 
-		/// <summary>
-		/// Does this template have valid component and mount templates? (Or a null mount template)
-		/// </summary>
-		public bool IsValidInMod => componentTemplate.HasValue && (mount == null || mount.HasValue);
-
 		public bool IsObsolescent
 		{
 			get { return this != LatestVersion; }
@@ -165,6 +153,11 @@ namespace FrEee.Game.Objects.Technology
 				return ComponentTemplate.IsObsolete || Mount != null && Mount.IsObsolete;
 			}
 		}
+
+		/// <summary>
+		/// Does this template have valid component and mount templates? (Or a null mount template)
+		/// </summary>
+		public bool IsValidInMod => componentTemplate.HasValue && (mount == null || mount.HasValue);
 
 		public MountedComponentTemplate LatestVersion
 		{
@@ -318,16 +311,8 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
-		#endregion Public Properties
-
-		#region Private Properties
-
 		private ModReference<ComponentTemplate> componentTemplate { get; set; }
 		private ModReference<Mount> mount { get; set; }
-
-		#endregion Private Properties
-
-		#region Public Methods
 
 		public static bool operator !=(MountedComponentTemplate t1, MountedComponentTemplate t2)
 		{
@@ -420,17 +405,11 @@ namespace FrEee.Game.Objects.Technology
 			return Name;
 		}
 
-		#endregion Public Methods
-
-		#region Public Classes
-
 		/// <summary>
 		/// Compares templates ignoring the containing vehicle (only compares component template and mount)
 		/// </summary>
 		public class SimpleEqualityComparer : IEqualityComparer<MountedComponentTemplate>
 		{
-			#region Public Methods
-
 			public bool Equals(MountedComponentTemplate x, MountedComponentTemplate y)
 			{
 				return x.ComponentTemplate == y.ComponentTemplate && x.Mount == y.Mount;
@@ -440,10 +419,6 @@ namespace FrEee.Game.Objects.Technology
 			{
 				return HashCodeMasher.Mash(obj.ComponentTemplate, obj.Mount);
 			}
-
-			#endregion Public Methods
-
-			#endregion Public Classes
 		}
 	}
 }

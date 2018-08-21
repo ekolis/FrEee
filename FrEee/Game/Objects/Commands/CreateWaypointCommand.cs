@@ -4,53 +4,41 @@ using System.Collections.Generic;
 
 namespace FrEee.Game.Objects.Commands
 {
-    /// <summary>
-    /// A command to create a new waypoint.
-    /// </summary>
-    public class CreateWaypointCommand : Command<Empire>
-    {
-        #region Public Constructors
+	/// <summary>
+	/// A command to create a new waypoint.
+	/// </summary>
+	public class CreateWaypointCommand : Command<Empire>
+	{
+		public CreateWaypointCommand(Waypoint waypoint)
+			: base(Empire.Current)
+		{
+			Waypoint = waypoint;
+		}
 
-        public CreateWaypointCommand(Waypoint waypoint)
-            : base(Empire.Current)
-        {
-            Waypoint = waypoint;
-        }
+		/// <summary>
+		/// A hotkey from zero to nine used to access this waypoint, or null to create a waypoint with no hotkey.
+		/// </summary>
+		public int? Hotkey { get; private set; }
 
-        #endregion Public Constructors
+		public override IEnumerable<IReferrable> NewReferrables
+		{
+			get
+			{
+				foreach (var r in base.NewReferrables)
+					yield return r;
+				yield return Waypoint;
+			}
+		}
 
-        #region Public Properties
+		/// <summary>
+		/// The waypoint being created.
+		/// </summary>
+		public Waypoint Waypoint { get; set; }
 
-        /// <summary>
-        /// A hotkey from zero to nine used to access this waypoint, or null to create a waypoint with no hotkey.
-        /// </summary>
-        public int? Hotkey { get; private set; }
-
-        public override IEnumerable<IReferrable> NewReferrables
-        {
-            get
-            {
-                foreach (var r in base.NewReferrables)
-                    yield return r;
-                yield return Waypoint;
-            }
-        }
-
-        /// <summary>
-        /// The waypoint being created.
-        /// </summary>
-        public Waypoint Waypoint { get; set; }
-
-        #endregion Public Properties
-
-        #region Public Methods
-
-        public override void Execute()
-        {
-            if (!Executor.Waypoints.Contains(Waypoint))
-                Executor.Waypoints.Add(Waypoint); // add new waypoint
-        }
-
-        #endregion Public Methods
-    }
+		public override void Execute()
+		{
+			if (!Executor.Waypoints.Contains(Waypoint))
+				Executor.Waypoints.Add(Waypoint); // add new waypoint
+		}
+	}
 }

@@ -10,211 +10,195 @@ using System.Linq;
 
 namespace FrEee.Game.Objects.Orders
 {
-    /// <summary>
-    /// An order to move to a waypoint.
-    /// </summary>
-    /// <typeparam name="IMobileSpaceObject"></typeparam>
-    public class WaypointOrder : IMovementOrder
-    {
-        #region Public Constructors
+	/// <summary>
+	/// An order to move to a waypoint.
+	/// </summary>
+	/// <typeparam name="IMobileSpaceObject"></typeparam>
+	public class WaypointOrder : IMovementOrder
+	{
+		public WaypointOrder(Waypoint target, bool avoidEnemies)
+		{
+			Owner = Empire.Current;
+			Target = target;
+			AvoidEnemies = avoidEnemies;
+			// TODO - add flag for "avoid damaging sectors"? but how to specify in UI?
+		}
 
-        public WaypointOrder(Waypoint target, bool avoidEnemies)
-        {
-            Owner = Empire.Current;
-            Target = target;
-            AvoidEnemies = avoidEnemies;
-            // TODO - add flag for "avoid damaging sectors"? but how to specify in UI?
-        }
+		/// <summary>
+		/// Should pathfinding avoid enemies?
+		/// </summary>
+		public bool AvoidEnemies { get; set; }
 
-        #endregion Public Constructors
+		public bool ConsumesMovement
+		{
+			get { return true; }
+		}
 
-        #region Public Properties
+		public Sector Destination
+		{
+			get { return Target.Sector; }
+		}
 
-        /// <summary>
-        /// Should pathfinding avoid enemies?
-        /// </summary>
-        public bool AvoidEnemies { get; set; }
+		public long ID { get; set; }
 
-        public bool ConsumesMovement
-        {
-            get { return true; }
-        }
+		public bool IsComplete
+		{
+			get;
+			set;
+		}
 
-        public Sector Destination
-        {
-            get { return Target.Sector; }
-        }
+		public bool IsDisposed { get; set; }
 
-        public long ID { get; set; }
+		/// <summary>
+		/// Did we already log a pathfinding error this turn?
+		/// </summary>
+		[DoNotSerialize]
+		public bool LoggedPathfindingError { get; private set; }
 
-        public bool IsComplete
-        {
-            get;
-            set;
-        }
+		/// <summary>
+		/// The empire which issued the order.
+		/// </summary>
+		[DoNotSerialize]
+		public Empire Owner { get { return owner; } set { owner = value; } }
 
-        public bool IsDisposed { get; set; }
+		/// <summary>
+		/// Any pathfinding error that we might have found.
+		/// </summary>
+		[DoNotSerialize]
+		public LogMessage PathfindingError { get; private set; }
 
-        /// <summary>
-        /// Did we already log a pathfinding error this turn?
-        /// </summary>
-        [DoNotSerialize]
-        public bool LoggedPathfindingError { get; private set; }
+		/// <summary>
+		/// The target we are pursuing.
+		/// </summary>
+		[DoNotSerialize]
+		public Waypoint Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
 
-        /// <summary>
-        /// The empire which issued the order.
-        /// </summary>
-        [DoNotSerialize]
-        public Empire Owner { get { return owner; } set { owner = value; } }
+		/// <summary>
+		/// A verb used to describe this order.
+		/// </summary>
+		public string Verb
+		{
+			get
+			{
+				if (AvoidEnemies)
+					return "navigate to";
+				else
+					return "patrol";
+			}
+		}
 
-        /// <summary>
-        /// Any pathfinding error that we might have found.
-        /// </summary>
-        [DoNotSerialize]
-        public LogMessage PathfindingError { get; private set; }
+		private GalaxyReference<Empire> owner { get; set; }
+		private GalaxyReference<Waypoint> target { get; set; }
 
-        /// <summary>
-        /// The target we are pursuing.
-        /// </summary>
-        [DoNotSerialize]
-        public Waypoint Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
+		public bool CheckCompletion(IMobileSpaceObject v)
+		{
+			return IsComplete;
+		}
 
-        /// <summary>
-        /// A verb used to describe this order.
-        /// </summary>
-        public string Verb
-        {
-            get
-            {
-                if (AvoidEnemies)
-                    return "navigate to";
-                else
-                    return "patrol";
-            }
-        }
+		/// <summary>
+		/// Orders are visible only to their owners.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public Visibility CheckVisibility(Empire emp)
+		{
+			if (emp == Owner)
+				return Visibility.Visible;
+			return Visibility.Unknown;
+		}
 
-        #endregion Public Properties
+		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start)
+		{
+			return Pathfinder.CreateDijkstraMap(me, start, Destination, AvoidEnemies, true);
+		}
 
-        #region Private Properties
+		public void Dispose()
+		{
+			if (IsDisposed)
+				return;
+			foreach (var v in Galaxy.Current.FindSpaceObjects<IMobileSpaceObject>())
+				v.RemoveOrder(this);
+			Galaxy.Current.UnassignID(this);
+		}
 
-        private GalaxyReference<Empire> owner { get; set; }
-        private GalaxyReference<Waypoint> target { get; set; }
+		public void Execute(IMobileSpaceObject sobj)
+		{
+			// TODO - movement logs
+			if (Target == null)
+				IsComplete = true; // target waypoint doesn't exist anymore
+			else if (sobj.Sector == Target.Sector)
+				IsComplete = true; // we've arrived at the target
+			else
+			{
+				var gotoSector = Pathfind(sobj, sobj.Sector).FirstOrDefault();
+				if (gotoSector != null)
+				{
+					// move
+					sobj.Sector = gotoSector;
+					sobj.RefreshDijkstraMap();
 
-        #endregion Private Properties
+					// consume supplies
+					sobj.BurnMovementSupplies();
 
-        #region Public Methods
+					// resupply space vehicles
+					// either this vehicle from other space objects, or other vehicles from this one
+					// TODO - this should really be done AFTER battles...
+					if (gotoSector.HasAbility("Supply Generation", sobj.Owner))
+					{
+						foreach (var v in gotoSector.SpaceObjects.OfType<IMobileSpaceObject>().Where(v => v.Owner == sobj.Owner))
+							v.SupplyRemaining = v.SupplyStorage;
+					}
+					if (gotoSector.StarSystem.HasAbility("Supply Generation - System", sobj.Owner) || gotoSector.StarSystem.HasAbility("Supply Generation - System"))
+					{
+						foreach (var v in gotoSector.StarSystem.FindSpaceObjects<IMobileSpaceObject>().Where(v => v.Owner == sobj.Owner))
+							v.SupplyRemaining = v.SupplyStorage;
+					}
+				}
+				else if (!LoggedPathfindingError)
+				{
+					// log pathfinding error
+					string reason;
+					if (sobj.StrategicSpeed <= 0)
+						reason = sobj + " is immobile";
+					else
+						reason = "there is no available path leading toward " + Destination;
+					PathfindingError = sobj.CreateLogMessage(sobj + " could not " + Verb + " " + Target + " because " + reason + ".");
+					sobj.Owner.Log.Add(PathfindingError);
+					LoggedPathfindingError = true;
+				}
+			}
 
-        public bool CheckCompletion(IMobileSpaceObject v)
-        {
-            return IsComplete;
-        }
+			// spend time
+			sobj.SpendTime(sobj.TimePerMove);
+		}
 
-        /// <summary>
-        /// Orders are visible only to their owners.
-        /// </summary>
-        /// <param name="emp"></param>
-        /// <returns></returns>
-        public Visibility CheckVisibility(Empire emp)
-        {
-            if (emp == Owner)
-                return Visibility.Visible;
-            return Visibility.Unknown;
-        }
+		public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject v)
+		{
+			if (PathfindingError != null)
+				yield return PathfindingError;
+		}
 
-        public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start)
-        {
-            return Pathfinder.CreateDijkstraMap(me, start, Destination, AvoidEnemies, true);
-        }
+		/// <summary>
+		/// Finds the path for executing this order.
+		/// </summary>
+		/// <param name="sobj">The space object executing the order.</param>
+		/// <param name="start">The start location (need not be the current location, in case there are prior orders queued).</param>
+		/// <returns></returns>
+		public IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start)
+		{
+			return Pathfinder.Pathfind(me, start, Destination, AvoidEnemies, true, me.DijkstraMap);
+		}
 
-        public void Dispose()
-        {
-            if (IsDisposed)
-                return;
-            foreach (var v in Galaxy.Current.FindSpaceObjects<IMobileSpaceObject>())
-                v.RemoveOrder(this);
-            Galaxy.Current.UnassignID(this);
-        }
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done)
+		{
+			target.ReplaceClientIDs(idmap, done);
+		}
 
-        public void Execute(IMobileSpaceObject sobj)
-        {
-            // TODO - movement logs
-            if (Target == null)
-                IsComplete = true; // target waypoint doesn't exist anymore
-            else if (sobj.Sector == Target.Sector)
-                IsComplete = true; // we've arrived at the target
-            else
-            {
-                var gotoSector = Pathfind(sobj, sobj.Sector).FirstOrDefault();
-                if (gotoSector != null)
-                {
-                    // move
-                    sobj.Sector = gotoSector;
-                    sobj.RefreshDijkstraMap();
-
-                    // consume supplies
-                    sobj.BurnMovementSupplies();
-
-                    // resupply space vehicles
-                    // either this vehicle from other space objects, or other vehicles from this one
-                    // TODO - this should really be done AFTER battles...
-                    if (gotoSector.HasAbility("Supply Generation", sobj.Owner))
-                    {
-                        foreach (var v in gotoSector.SpaceObjects.OfType<IMobileSpaceObject>().Where(v => v.Owner == sobj.Owner))
-                            v.SupplyRemaining = v.SupplyStorage;
-                    }
-                    if (gotoSector.StarSystem.HasAbility("Supply Generation - System", sobj.Owner) || gotoSector.StarSystem.HasAbility("Supply Generation - System"))
-                    {
-                        foreach (var v in gotoSector.StarSystem.FindSpaceObjects<IMobileSpaceObject>().Where(v => v.Owner == sobj.Owner))
-                            v.SupplyRemaining = v.SupplyStorage;
-                    }
-                }
-                else if (!LoggedPathfindingError)
-                {
-                    // log pathfinding error
-                    string reason;
-                    if (sobj.StrategicSpeed <= 0)
-                        reason = sobj + " is immobile";
-                    else
-                        reason = "there is no available path leading toward " + Destination;
-                    PathfindingError = sobj.CreateLogMessage(sobj + " could not " + Verb + " " + Target + " because " + reason + ".");
-                    sobj.Owner.Log.Add(PathfindingError);
-                    LoggedPathfindingError = true;
-                }
-            }
-
-            // spend time
-            sobj.SpendTime(sobj.TimePerMove);
-        }
-
-        public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject v)
-        {
-            if (PathfindingError != null)
-                yield return PathfindingError;
-        }
-
-        /// <summary>
-        /// Finds the path for executing this order.
-        /// </summary>
-        /// <param name="sobj">The space object executing the order.</param>
-        /// <param name="start">The start location (need not be the current location, in case there are prior orders queued).</param>
-        /// <returns></returns>
-        public IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start)
-        {
-            return Pathfinder.Pathfind(me, start, Destination, AvoidEnemies, true, me.DijkstraMap);
-        }
-
-        public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done)
-        {
-            target.ReplaceClientIDs(idmap, done);
-        }
-
-        public override string ToString()
-        {
-            if (Target == null)
-                return "Unknown " + Verb + " order";
-            return Verb.Capitalize() + " " + Target;
-        }
-
-        #endregion Public Methods
-    }
+		public override string ToString()
+		{
+			if (Target == null)
+				return "Unknown " + Verb + " order";
+			return Verb.Capitalize() + " " + Target;
+		}
+	}
 }
