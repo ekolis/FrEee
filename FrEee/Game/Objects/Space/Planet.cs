@@ -1092,6 +1092,8 @@ namespace FrEee.Game.Objects.Space
 				else if (num == 2)
 					damage = TakeFacilityDamage(hit, dice);
 				hit = new Hit(hit.Shot, this, damage);
+				if (hit.NominalDamage <= 0)
+					break;
 			}
 
 			// if planet was completely glassed, remove the colony
