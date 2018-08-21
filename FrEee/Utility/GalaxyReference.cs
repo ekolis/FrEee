@@ -48,7 +48,11 @@ namespace FrEee.Utility
 				else
 					ID = Galaxy.Current.AssignID(r);
 				if (!HasValue)
-					throw new ArgumentException("{0} does not exist in the current galaxy so it cannot be referenced.".F(t));
+				{
+					Galaxy.Current.referrables[r.ID] = r;
+					if (!HasValue)
+						throw new ArgumentException("{0} does not exist in the current galaxy so it cannot be referenced.".F(t));
+				}
 			}
 			else
 			{

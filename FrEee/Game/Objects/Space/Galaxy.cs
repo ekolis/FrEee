@@ -47,6 +47,7 @@ namespace FrEee.Game.Objects.Space
 		public Galaxy()
 		{
 			Galaxy.Current = this;
+			Mod = Mod.Current;
 			StarSystemLocations = new List<ObjectLocation<StarSystem>>();
 			Empires = new List<Empire>();
 			Name = "Unnamed";
