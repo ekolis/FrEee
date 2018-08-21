@@ -453,7 +453,6 @@ namespace FrEee.Game.Objects.Combat.Grid
 				return;
 
 			// fire!
-
 			while (reloads[w] <= 0)
 			{
 				if (w.Template.ComponentTemplate.WeaponType == WeaponTypes.Seeking || w.Template.ComponentTemplate.WeaponType == WeaponTypes.SeekingPointDefense)
@@ -466,25 +465,30 @@ namespace FrEee.Game.Objects.Combat.Grid
 				else
 				{
 					// fire
-					Events.Last().Add(new WeaponFiresEvent(c, locations[c], target, locations[target]));
 					int dmg = 0;
 					var winfo = w.Template.ComponentTemplate.WeaponInfo;
 					var minrng = w.Template.WeaponMinRange;
 					var maxrng = w.Template.WeaponMinRange;
 					var range = locations[c].DistanceToEightWay(locations[target]);
 					var shot = new Shot(c, w, target, range);
-					dmg += shot.FullDamage;
-					if (w.Template.ComponentTemplate.WeaponInfo.IsWarhead)
+					if (shot.RollAccuracy(Dice))
 					{
-						// warheads have a damage modifer
-						target.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range) * Mod.Current.Settings.RammingSourceHitpointsDamagePercent / 100));
-						// warheads damage the firing ship too
-						c.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range) * Mod.Current.Settings.RammingTargetHitpointsDamagePercent / 100));
-						// warheads destroy themselves on activation
-						w.Hitpoints = 0;
+						dmg += shot.FullDamage;
+						if (w.Template.ComponentTemplate.WeaponInfo.IsWarhead)
+						{
+							// warheads have a damage modifer
+							target.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range) * Mod.Current.Settings.RammingSourceHitpointsDamagePercent / 100));
+							// warheads damage the firing ship too
+							c.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range) * Mod.Current.Settings.RammingTargetHitpointsDamagePercent / 100));
+							// warheads destroy themselves on activation
+							w.Hitpoints = 0;
+						}
+						else
+							target.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range)));
+						Events.Last().Add(new WeaponFiresEvent(c, locations[c], target, locations[target], true));
 					}
 					else
-						target.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range)));
+						Events.Last().Add(new WeaponFiresEvent(c, locations[c], target, locations[target], false));
 				}
 				// TODO - mounts that affect reload rate?
 				reloads[w] += w.Template.ComponentTemplate.WeaponInfo.ReloadRate;
