@@ -65,6 +65,9 @@ namespace FrEee.Tests.Game.Objects.Combat
 			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Phased - Shield Generator I"));
 			defender = defenderDesign.Instantiate();
 			TestDamage(attacker, defender, "Depleted Uranium Cannon II", 1, expectedNormalShieldDmg: 1);
+
+			// make sure our ship can be destroyed
+			TestDamage(attacker, defender, "Depleted Uranium Cannon II", 99999, defender.HullHitpoints, defender.ArmorHitpoints, defender.PhasedShields, defender.NormalShields);
 		}
 
 		private void TestDamage(Ship attacker, IDamageable defender, string weaponName, int dmg, int expectedHullDmg = 0, int expectedArmorDmg = 0, int expectedPhasedShieldDmg = 0, int expectedNormalShieldDmg = 0)
@@ -83,6 +86,11 @@ namespace FrEee.Tests.Game.Objects.Combat
 			Assert.AreEqual(ahp - expectedArmorDmg, defender.ArmorHitpoints);
 			Assert.AreEqual(nshp - expectedNormalShieldDmg, defender.NormalShields);
 			Assert.AreEqual(pshp - expectedPhasedShieldDmg, defender.PhasedShields);
+
+			if (defender.HullHitpoints > 0)
+				Assert.IsFalse(defender.IsDestroyed);
+			else
+				Assert.IsTrue(defender.IsDestroyed);
 
 			defender.ReplenishShields();
 			defender.Repair();
