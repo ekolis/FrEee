@@ -696,7 +696,7 @@ namespace FrEee.Game.Objects.Vehicles
 			{
 				var dmg = (int)Math.Min(damage * phasedCombinedSDF, PhasedShields);
 				piercedShields += damage * phasedShieldPiercing.Percent();
-				NormalShields -= dmg;
+				PhasedShields -= dmg;
 				damage -= (int)Math.Ceiling(dmg / phasedBaseSDF);
 				shieldDmg += dmg;
 			}
