@@ -8,6 +8,7 @@ using FrEee.Utility.Extensions;
 using FrEee.WinForms.Controls;
 using FrEee.WinForms.Interfaces;
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -19,6 +20,7 @@ namespace FrEee.WinForms.Forms
 		{
 			InitializeComponent();
 			Bind(b);
+			reportPanel.Controls.Add(CreateLogListBox());
 		}
 
 		public Battle Battle { get; private set; }
@@ -36,7 +38,37 @@ namespace FrEee.WinForms.Forms
 					reportPanel.Controls.Add(new PlanetReport(p) { Dock = DockStyle.Fill });
 				else if (value is Seeker s)
 					reportPanel.Controls.Add(new Label { Text = $"{s.Name} targeting {s.Target} ({s.Hitpoints} HP)" });
+				else if (value is null)
+					reportPanel.Controls.Add(CreateLogListBox());
 			}
+		}
+
+		private ListBox CreateLogListBox()
+		{
+			var lb = new ListBox();
+			lb.BackColor = Color.Black;
+			lb.ForeColor = Color.White;
+			lb.Dock = DockStyle.Fill;
+			reportPanel.Controls.Add(lb);
+			foreach (var roundEvents in Battle.Events)
+			{
+				lb.Items.Add($"Begin round {Battle.Events.IndexOf(roundEvents) + 1}!");
+				foreach (var e in roundEvents)
+				{
+					if (e is CombatantAppearsEvent cae)
+						lb.Items.Add($"{cae.Combatant} appears!");
+					else if (e is CombatantDisappearsEvent cde)
+						lb.Items.Add($"{cde.Combatant} disappears!");
+					else if (e is WeaponFiresEvent wfe)
+					{
+						if (wfe.IsHit)
+							lb.Items.Add($"{wfe.Combatant} fires at {wfe.Target} and hits!");
+						else
+							lb.Items.Add($"{wfe.Combatant} fires at {wfe.Target} and misses.");
+					}
+				}
+			}
+			return lb;
 		}
 
 		private ICombatant selectedCombatant;
