@@ -346,8 +346,11 @@ namespace FrEee.Game.Objects.Combat.Grid
 				// phase 7: ramming! only activates if ship has no other weapons
 				foreach (var c in turnorder.Reverse())
 				{
-					foreach (var w in c.Weapons.Where(w => w.Template.ComponentTemplate.WeaponInfo.IsWarhead))
-						TryFireWeapon(c, w, reloads, locations, multiplex);
+					if (!c.Weapons.Any(w => !w.Template.ComponentTemplate.WeaponInfo.IsWarhead))
+					{
+						foreach (var w in c.Weapons.Where(w => w.Template.ComponentTemplate.WeaponInfo.IsWarhead))
+							TryFireWeapon(c, w, reloads, locations, multiplex);
+					}
 				}
 
 				UpdateBounds(i, locations.Values);
