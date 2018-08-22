@@ -187,18 +187,22 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
+				if (Container != null)
+					return Container.Sector;
 				if (sector == null)
 					sector = this.FindSector();
 				return sector;
 			}
 			set
 			{
-				var oldsector = sector;
+				var oldsector = Sector;
 				sector = value;
 				if (value == null)
 				{
 					if (oldsector != null)
+					{
 						oldsector.Remove(this);
+					}
 				}
 				else
 				{
