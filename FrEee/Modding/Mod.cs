@@ -23,6 +23,8 @@ namespace FrEee.Modding
 	{
 		public Mod()
 		{
+			Current = this;
+
 			Errors = new List<DataParsingException>();
 
 			objects = new SafeDictionary<string, IModObject>();
