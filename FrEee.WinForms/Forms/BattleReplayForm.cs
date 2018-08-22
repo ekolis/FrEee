@@ -39,36 +39,38 @@ namespace FrEee.WinForms.Forms
 				else if (value is Seeker s)
 					reportPanel.Controls.Add(new Label { Text = $"{s.Name} targeting {s.Target} ({s.Hitpoints} HP)" });
 				else if (value is null)
-					reportPanel.Controls.Add(CreateLogListBox());
+					reportPanel.Controls.Add(logListBox);
 			}
 		}
 
+		private ListBox logListBox;
+
 		private ListBox CreateLogListBox()
 		{
-			var lb = new ListBox();
-			lb.BackColor = Color.Black;
-			lb.ForeColor = Color.White;
-			lb.Dock = DockStyle.Fill;
-			reportPanel.Controls.Add(lb);
+			logListBox = new ListBox();
+			logListBox.BackColor = Color.Black;
+			logListBox.ForeColor = Color.White;
+			logListBox.Dock = DockStyle.Fill;
+			reportPanel.Controls.Add(logListBox);
 			foreach (var roundEvents in Battle.Events)
 			{
-				lb.Items.Add($"Begin round {Battle.Events.IndexOf(roundEvents) + 1}!");
+				logListBox.Items.Add($"Begin round {Battle.Events.IndexOf(roundEvents) + 1}!");
 				foreach (var e in roundEvents)
 				{
 					if (e is CombatantAppearsEvent cae)
-						lb.Items.Add($"{cae.Combatant} appears!");
+						logListBox.Items.Add($"{cae.Combatant} appears!");
 					else if (e is CombatantDisappearsEvent cde)
-						lb.Items.Add($"{cde.Combatant} disappears!");
+						logListBox.Items.Add($"{cde.Combatant} disappears!");
 					else if (e is WeaponFiresEvent wfe)
 					{
 						if (wfe.IsHit)
-							lb.Items.Add($"{wfe.Combatant} fires at {wfe.Target} and hits!");
+							logListBox.Items.Add($"{wfe.Combatant} fires at {wfe.Target} and hits!");
 						else
-							lb.Items.Add($"{wfe.Combatant} fires at {wfe.Target} and misses.");
+							logListBox.Items.Add($"{wfe.Combatant} fires at {wfe.Target} and misses.");
 					}
 				}
 			}
-			return lb;
+			return logListBox;
 		}
 
 		private ICombatant selectedCombatant;
@@ -131,6 +133,14 @@ namespace FrEee.WinForms.Forms
 			{
 				if (SelectedCombatant is Seeker s)
 					l.Text = $"{s.Name} targeting {s.Target} ({s.Hitpoints} HP)";
+			}
+		}
+
+		private void timer_Tick(object sender, EventArgs e)
+		{
+			if (!battleView.IsPaused)
+			{
+				logListBox.TopIndex = logListBox.Items.IndexOf($"Begin round {battleView.Round + 1}!");
 			}
 		}
 	}
