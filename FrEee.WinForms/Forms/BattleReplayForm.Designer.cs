@@ -28,7 +28,9 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.timer = new System.Windows.Forms.Timer(this.components);
 			this.reportPanel = new FrEee.WinForms.Controls.GamePanel();
 			this.battleView = new FrEee.WinForms.Controls.BattleView();
 			this.btnForward = new FrEee.WinForms.Controls.GameButton();
@@ -37,6 +39,12 @@
 			this.minimap = new FrEee.WinForms.Controls.BattleView();
 			this.btnClose = new FrEee.WinForms.Controls.GameButton();
 			this.SuspendLayout();
+			// 
+			// timer
+			// 
+			this.timer.Enabled = true;
+			this.timer.Interval = 50;
+			this.timer.Tick += new System.EventHandler(this.timer_Tick);
 			// 
 			// reportPanel
 			// 
@@ -171,5 +179,6 @@
 		private Controls.GameButton btnPause;
 		private Controls.GameButton btnForward;
 		private Controls.GamePanel reportPanel;
+		private System.Windows.Forms.Timer timer;
 	}
 }
