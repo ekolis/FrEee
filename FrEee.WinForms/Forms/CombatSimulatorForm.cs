@@ -77,7 +77,11 @@ namespace FrEee.WinForms.Forms
 		{
 			lstEmpires.Initialize(32, 32);
 			foreach (var simemp in Empires)
+			{
+				foreach (var simemp2 in Empires.ExceptSingle(simemp))
+					simemp.Empire.EncounteredEmpires.Add(simemp2.Empire);
 				lstEmpires.AddItemWithImage(null, simemp.Empire.Name, simemp, simemp.Empire.Icon);
+			}
 		}
 
 		private void BindSpaceObjectList()
