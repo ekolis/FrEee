@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FrEee.Utility.Extensions
 {
@@ -92,6 +93,19 @@ namespace FrEee.Utility.Extensions
 			}
 			else
 				return list.ElementAt(index);
+		}
+
+		/// <summary>
+		/// Converts an enumeration to an array, then does something to each item in a parallel fashion.
+		/// </summary>
+		/// <param name="items"></param>
+		/// <param name="action"></param>
+		public static void ParallelSafeForeach<T>(this IEnumerable<T> items, Action<T> action)
+		{
+			if (items != null && action != null)
+			{
+				Parallel.ForEach(items.ToArray(), action);
+			}
 		}
 
 		/// <summary>
