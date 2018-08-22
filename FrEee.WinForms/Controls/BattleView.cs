@@ -163,6 +163,19 @@ namespace FrEee.WinForms.Controls
 
 			if (Battle != null)
 			{
+				// draw grid
+				for (var x = Battle.UpperLeft[round].X; x <= Battle.LowerRight[round].X; x++)
+				{
+					var drawPoint1 = GetDrawPoint(x, Battle.UpperLeft[round].Y);
+					var drawPoint2 = GetDrawPoint(x, Battle.LowerRight[round].Y);
+					pe.Graphics.DrawLine(Pens.SlateGray, drawPoint1, drawPoint2);
+				}
+				for (var y = Battle.UpperLeft[round].Y; y <= Battle.LowerRight[round].Y; y++)
+				{
+					var drawPoint1 = GetDrawPoint(Battle.UpperLeft[round].X, y);
+					var drawPoint2 = GetDrawPoint(Battle.LowerRight[round].X, y);
+					pe.Graphics.DrawLine(Pens.SlateGray, drawPoint1, drawPoint2);
+				}
 				// draw combat sectors
 				for (var x = Battle.UpperLeft[round].X; x <= Battle.LowerRight[round].X; x++)
 				{
