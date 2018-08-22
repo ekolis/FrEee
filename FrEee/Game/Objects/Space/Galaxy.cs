@@ -793,7 +793,7 @@ namespace FrEee.Game.Objects.Space
 				status.Message = "Generating resources";
 
 			// resource generation 1: colony income
-			Current.FindSpaceObjects<Planet>().Where(x => !x.IsMemory).Select(p => p.Colony).ExceptSingle(null).SafeForeach(ProcessColonyIncome);
+			Current.FindSpaceObjects<Planet>().Where(x => !x.IsMemory).Select(p => p.Colony).ExceptSingle(null).ParallelSafeForeach(ProcessColonyIncome);
 
 			// resource generation 2: remote mining
 			// TODO - multithread remote mining once I can figure out where adjustedValue should go
@@ -961,7 +961,7 @@ namespace FrEee.Game.Objects.Space
 			// replenish shields
 			if (status != null)
 				status.Message = "Replenishing shields";
-			Current.FindSpaceObjects<ICombatSpaceObject>().SafeForeach(o => o.ReplenishShields());
+			Current.FindSpaceObjects<ICombatSpaceObject>().ParallelSafeForeach(o => o.ReplenishShields());
 			if (status != null)
 				status.Progress += progressPerOperation;
 
@@ -971,7 +971,7 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Message = "Moving ships";
 			Current.CurrentTick = 0;
-			Current.FindSpaceObjects<IMobileSpaceObject>().SafeForeach(CommonExtensions.RefillMovement);
+			Current.FindSpaceObjects<IMobileSpaceObject>().ParallelSafeForeach(CommonExtensions.RefillMovement);
 			Current.DisableAbilityCache(); // ships moving about and fighting can affect abilities!
 			while (!Current.didLastTick)
 			{
@@ -1040,7 +1040,7 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			// replenish shields again, so the players see the full shield amounts in the GUI
-			Current.FindSpaceObjects<ICombatSpaceObject>().SafeForeach(o => o.ReplenishShields());
+			Current.FindSpaceObjects<ICombatSpaceObject>().ParallelSafeForeach(o => o.ReplenishShields());
 
 			// repair facilities
 			Current.FindSpaceObjects<Planet>().Select(p => p.Colony).Where(c => c != null).SelectMany(c => c.Facilities).SafeForeach(f => f.Repair());
@@ -1067,7 +1067,7 @@ namespace FrEee.Game.Objects.Space
 			Current.EnableAbilityCache();
 
 			// get supplies from reactors, solar panels, etc.
-			Current.FindSpaceObjects<IMobileSpaceObject>().SafeForeach(v =>
+			Current.FindSpaceObjects<IMobileSpaceObject>().ParallelSafeForeach(v =>
 			{
 				v.SupplyRemaining += v.GetAbilityValue("Supply Generation Per Turn").ToInt();
 				if (v.StarSystem != null)
@@ -1076,7 +1076,7 @@ namespace FrEee.Game.Objects.Space
 			});
 
 			// resupply space vehicles one last time (after weapons fire and repair which could affect supply remaining/storage)
-			Current.FindSpaceObjects<ISpaceObject>().Where(s => s.HasAbility("Supply Generation")).SafeForeach(sobj =>
+			Current.FindSpaceObjects<ISpaceObject>().Where(s => s.HasAbility("Supply Generation")).ParallelSafeForeach(sobj =>
 			{
 				var emp = sobj.Owner;
 				var sector = sobj.Sector;
@@ -1093,7 +1093,7 @@ namespace FrEee.Game.Objects.Space
 				}
 			}
 
-			Current.Empires.SafeForeach(emp =>
+			Current.Empires.ParallelSafeForeach(emp =>
 			{
 				emp.StoredResources = ResourceQuantity.Min(emp.StoredResources, emp.ResourceStorage);// resource spoilage
 				emp.Commands.Clear(); // clear empire commands
@@ -1101,19 +1101,18 @@ namespace FrEee.Game.Objects.Space
 			});
 
 			// clear completed orders
-			Current.Referrables.OfType<IPathfindingOrder>().Where(o => o.KnownTarget == null).SafeForeach(o => o.IsComplete = true);
-			Current.Referrables.OfType<IOrder>().Where(o => o.IsComplete).SafeForeach(o => o.Dispose());
+			Current.Referrables.OfType<IPathfindingOrder>().Where(o => o.KnownTarget == null).ParallelSafeForeach(o => o.IsComplete = true);
+			Current.Referrables.OfType<IOrder>().Where(o => o.IsComplete).ParallelSafeForeach(o => o.Dispose());
 
 			// update known designs
-			// TODO - multithread this somehow
-			foreach (var emp in Current.Empires)
+			Current.Empires.ParallelSafeForeach(emp =>
 			{
 				foreach (var design in Current.Referrables.OfType<IDesign>())
 				{
 					if (design.CheckVisibility(emp) >= Visibility.Scanned && !emp.KnownDesigns.Contains(design))
 						emp.KnownDesigns.Add(design);
 				}
-			}
+			});
 
 			// clear obsolete sensor ghosts
 			// TODO - multithread this somehow
