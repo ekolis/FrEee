@@ -16,13 +16,7 @@ namespace FrEee.Game.Objects.Technology
 			New = nu;
 		}
 
-		public ResourceQuantity Cost
-		{
-			get
-			{
-				return New.Cost * Mod.Current.Settings.UpgradeFacilityPercentCost / 100;
-			}
-		}
+		public ResourceQuantity Cost => New.Cost.Value * Mod.Current.Settings.UpgradeFacilityPercentCost / 100;
 
 		/// <summary>
 		/// The family of facility being upgraded.
