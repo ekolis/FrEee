@@ -1070,7 +1070,8 @@ namespace FrEee.Game.Objects.Space
 			Current.FindSpaceObjects<IMobileSpaceObject>().SafeForeach(v =>
 			{
 				v.SupplyRemaining += v.GetAbilityValue("Supply Generation Per Turn").ToInt();
-				v.SupplyRemaining += v.GetAbilityValue("Solar Supply Generation").ToInt() * v.StarSystem.FindSpaceObjects<Star>().Count();
+				if (v.StarSystem != null)
+					v.SupplyRemaining += v.GetAbilityValue("Solar Supply Generation").ToInt() * v.StarSystem.FindSpaceObjects<Star>().Count();
 				v.NormalizeSupplies();
 			});
 
