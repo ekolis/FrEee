@@ -92,6 +92,7 @@ namespace FrEee.WinForms.Forms
 		{
 			battleView.Round--;
 			minimap.Round--;
+			ScrollLogListBox();
 		}
 
 		private void btnClose_Click(object sender, EventArgs e)
@@ -104,6 +105,7 @@ namespace FrEee.WinForms.Forms
 		{
 			battleView.Round++;
 			minimap.Round++;
+			ScrollLogListBox();
 		}
 
 		private void btnPause_Click(object sender, EventArgs e)
@@ -139,9 +141,12 @@ namespace FrEee.WinForms.Forms
 		private void timer_Tick(object sender, EventArgs e)
 		{
 			if (!battleView.IsPaused)
-			{
-				logListBox.TopIndex = logListBox.Items.IndexOf($"Begin round {battleView.Round + 1}!");
-			}
+				ScrollLogListBox();
+		}
+
+		private void ScrollLogListBox()
+		{
+			logListBox.TopIndex = logListBox.Items.IndexOf($"Begin round {battleView.Round + 1}!");
 		}
 	}
 }
