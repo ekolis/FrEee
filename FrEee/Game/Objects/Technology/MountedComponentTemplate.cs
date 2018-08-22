@@ -292,7 +292,7 @@ namespace FrEee.Game.Objects.Technology
 					return 0;
 				if (Mount == null)
 					return w.MaxRange;
-				return w.MaxRange + Mount.WeaponRangeModifier;
+				return w.MaxRange.Value  + Mount.WeaponRangeModifier.Value;
 			}
 		}
 
@@ -307,7 +307,7 @@ namespace FrEee.Game.Objects.Technology
 					return w.MinRange;
 				if (w.MinRange == 0)
 					return 0; // don't create a blind spot for weapons with a min range of zero
-				return w.MinRange + Mount.WeaponRangeModifier;
+				return w.MinRange.Value + Mount.WeaponRangeModifier.Value;
 			}
 		}
 
@@ -366,7 +366,7 @@ namespace FrEee.Game.Objects.Technology
 			if (Mount == null)
 				return w.Damage.Evaluate(variables);
 
-			return w.Damage.Evaluate(variables) * Mount.WeaponDamagePercent / 100;
+			return w.Damage.Evaluate(variables) * Mount.WeaponDamagePercent.Evaluate(variables) / 100;
 		}
 
 		/// <summary>
@@ -381,7 +381,7 @@ namespace FrEee.Game.Objects.Technology
 				return w.Damage;
 
 			var shot2 = new Shot(shot.Attacker, shot.Weapon, shot.Defender, shot.Range - (Mount == null ? 0 : Mount.WeaponRangeModifier.Evaluate(this)));
-			return w.Damage.Evaluate(shot2) * (Mount?.WeaponDamagePercent ?? 100) / 100;
+			return w.Damage.Evaluate(shot2) * (Mount?.WeaponDamagePercent?.Value ?? 100) / 100;
 		}
 
 		public Component Instantiate()

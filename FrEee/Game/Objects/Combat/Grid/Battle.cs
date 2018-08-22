@@ -488,7 +488,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 						Events.Last().Add(new WeaponFiresEvent(c, locations[c], target, locations[target], false));
 				}
 				// TODO - mounts that affect reload rate?
-				reloads[w] += w.Template.ComponentTemplate.WeaponInfo.ReloadRate;
+				reloads[w] += w.Template.ComponentTemplate.WeaponInfo.ReloadRate.Evaluate(w.Template);
 			}
 
 			if (target.IsDestroyed)
