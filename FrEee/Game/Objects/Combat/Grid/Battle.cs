@@ -471,21 +471,26 @@ namespace FrEee.Game.Objects.Combat.Grid
 					if (w.Template.ComponentTemplate.WeaponInfo.IsWarhead || shot.RollAccuracy(Dice))
 					{
 						dmg += shot.FullDamage;
+						Hit hit;
 						if (w.Template.ComponentTemplate.WeaponInfo.IsWarhead)
 						{
+							hit = new Hit(shot, target, w.Template.GetWeaponDamage(range) * Mod.Current.Settings.RammingSourceHitpointsDamagePercent / 100);
 							// warheads have a damage modifer
-							target.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range) * Mod.Current.Settings.RammingSourceHitpointsDamagePercent / 100));
+							target.TakeDamage(hit);
 							// warheads damage the firing ship too
 							c.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range) * Mod.Current.Settings.RammingTargetHitpointsDamagePercent / 100));
 							// warheads destroy themselves on activation
 							w.Hitpoints = 0;
 						}
 						else
-							target.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range)));
-						Events.Last().Add(new WeaponFiresEvent(c, locations[c], target, locations[target], true));
+						{
+							hit = new Hit(shot, target, w.Template.GetWeaponDamage(range));
+							target.TakeDamage(hit);
+						}
+						Events.Last().Add(new WeaponFiresEvent(c, locations[c], target, locations[target], w, hit));
 					}
 					else
-						Events.Last().Add(new WeaponFiresEvent(c, locations[c], target, locations[target], false));
+						Events.Last().Add(new WeaponFiresEvent(c, locations[c], target, locations[target], w, null));
 				}
 				// TODO - mounts that affect reload rate?
 				reloads[w] += w.Template.ComponentTemplate.WeaponInfo.ReloadRate.Evaluate(w.Template);

@@ -1,17 +1,20 @@
 ﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Technology;
 using FrEee.Utility;
 
 namespace FrEee.Game.Objects.Combat.Grid
 {
 	public class WeaponFiresEvent : IBattleEvent
 	{
-		public WeaponFiresEvent(ICombatant combatant, IntVector2 here, ICombatant target, IntVector2 there, bool isHit)
+		public WeaponFiresEvent(ICombatant combatant, IntVector2 here, ICombatant target, IntVector2 there, Component weapon, Hit hit)
 		{
 			Combatant = combatant;
 			Target = target;
 			StartPosition = here;
 			EndPosition = there;
-			IsHit = isHit;
+			//Weapon = weapon;
+			//Hit = hit;
+			IsHit = hit != null;
 		}
 
 		public ICombatant Combatant { get; set; }
@@ -20,5 +23,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 		public bool IsHit { get; set; }
 		public IntVector2 StartPosition { get; set; }
 		public ICombatant Target { get; set; }
+		//public Component Weapon { get; set; }
+		//public Hit Hit { get; set; }
 	}
 }
