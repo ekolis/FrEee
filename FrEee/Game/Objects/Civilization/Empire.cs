@@ -495,7 +495,7 @@ namespace FrEee.Game.Objects.Civilization
 			}
 		}
 
-		public IDictionary<Tuple<ISpaceObject, IMineableSpaceObject>, ResourceQuantity> RemoteMiners
+		public IDictionary<(ISpaceObject Miner, IMineableSpaceObject Target), ResourceQuantity> RemoteMiners
 		{
 			// TODO - limit each miner to mining only the best planet/asteroid in each resource, not all of them?
 			get
@@ -503,10 +503,12 @@ namespace FrEee.Game.Objects.Civilization
 				// shouldn't change except at turn processing...
 				if (remoteMiners == null || Empire.Current == null)
 				{
-					remoteMiners = new SafeDictionary<Tuple<ISpaceObject, IMineableSpaceObject>, ResourceQuantity>(true);
+					remoteMiners = new SafeDictionary<(ISpaceObject, IMineableSpaceObject), ResourceQuantity>(true);
 					foreach (var miner in Galaxy.Current.FindSpaceObjects<ISpaceObject>().BelongingTo(this))
 					{
-						// only unowned planets and asteroids can be mined
+						if (miner.Sector == null)
+							continue; // HACK - shouldn't FindSpaceObjects only be finding objects with sectors?
+									  // only unowned planets and asteroids can be mined
 						foreach (var sobj in miner.Sector.SpaceObjects.OfType<IMineableSpaceObject>().Unowned())
 						{
 							foreach (var resource in Resource.All)
@@ -525,8 +527,17 @@ namespace FrEee.Game.Objects.Civilization
 									// only one vehicle per empire can mine a sector in any given resource
 									// but we get the one with the most mining ability :)
 									var best = remoteMiners.Keys.SingleOrDefault(k => k.Item1.Sector == miner.Sector);
-									if (best == null)
-										remoteMiners[Tuple.Create(miner, sobj)][resource] = income;
+									if (best.Item1 == null || best.Item2 == null)
+									{
+										lock (remoteMiners)
+										{
+											// HACK - why is a SafeDictionary throwing exceptions when I spawn a new key?!
+											if (!remoteMiners.ContainsKey((miner, sobj)))
+												remoteMiners.Add((miner, sobj), income * resource);
+											else
+												remoteMiners[(miner, sobj)][resource] = income;
+										}
+									}
 									else if (income > remoteMiners[best][resource])
 										remoteMiners[best][resource] = income;
 								}
@@ -736,12 +747,10 @@ namespace FrEee.Game.Objects.Civilization
 
 		private ResourceQuantity rawResourceIncome;
 
-		private IDictionary<Tuple<ISpaceObject, IMineableSpaceObject>, ResourceQuantity> remoteMiners = new SafeDictionary<Tuple<ISpaceObject, IMineableSpaceObject>, ResourceQuantity>(true);
-
+		private IDictionary<(ISpaceObject, IMineableSpaceObject), ResourceQuantity> remoteMiners = new SafeDictionary<(ISpaceObject Miner, IMineableSpaceObject Target), ResourceQuantity>(true);
 		private ResourceQuantity remoteMiningIncome;
 
 		private ModProgress<Tech>[] researchProgress;
-
 		private ResourceQuantity tradeIncome;
 
 		private ISet<IUnlockable> unlockedItems;
