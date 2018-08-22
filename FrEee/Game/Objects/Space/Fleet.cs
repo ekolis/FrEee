@@ -470,13 +470,15 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
+				if (Container != null)
+					return Container.Sector;
 				if (sector == null)
 					sector = this.FindSector();
 				return sector;
 			}
 			set
 			{
-				var oldsector = sector;
+				var oldsector = Sector;
 				sector = value;
 				if (value == null)
 				{
@@ -487,11 +489,6 @@ namespace FrEee.Game.Objects.Space
 				{
 					if (oldsector != value)
 						value.Place(this);
-				}
-				if (value != null)
-				{
-					foreach (var v in Vehicles)
-						value.Place(v, false); // don't remove the vehicles from the fleet!
 				}
 			}
 		}

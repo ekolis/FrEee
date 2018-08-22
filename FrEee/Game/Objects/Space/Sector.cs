@@ -278,10 +278,9 @@ namespace FrEee.Game.Objects.Space
 
 		public void Remove(ISpaceObject sobj)
 		{
-			// remove from fleet
-			if (sobj is IMobileSpaceObject)
+			// remove from fleet if necessary
+			if (sobj is IMobileSpaceObject v)
 			{
-				var v = (IMobileSpaceObject)sobj;
 				if (v.Container != null)
 					v.Container.Vehicles.Remove(v);
 			}
