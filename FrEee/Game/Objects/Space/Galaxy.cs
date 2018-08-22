@@ -793,7 +793,7 @@ namespace FrEee.Game.Objects.Space
 				status.Message = "Generating resources";
 
 			// resource generation 1: colony income
-			Current.FindSpaceObjects<Planet>().Where(x => !x.IsMemory).Select(p => p.Colony).ExceptSingle(null).ParallelSafeForeach(ProcessColonyIncome);
+			Current.FindSpaceObjects<Planet>().Where(x => !x.IsMemory).Select(p => p.Colony).ExceptSingle(null).SafeForeach(ProcessColonyIncome);
 
 			// resource generation 2: remote mining
 			// TODO - multithread remote mining once I can figure out where adjustedValue should go
@@ -971,7 +971,7 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Message = "Moving ships";
 			Current.CurrentTick = 0;
-			Current.FindSpaceObjects<IMobileSpaceObject>().ParallelSafeForeach(CommonExtensions.RefillMovement);
+			Current.FindSpaceObjects<IMobileSpaceObject>().SafeForeach(CommonExtensions.RefillMovement);
 			Current.DisableAbilityCache(); // ships moving about and fighting can affect abilities!
 			while (!Current.didLastTick)
 			{
@@ -1040,7 +1040,7 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			// replenish shields again, so the players see the full shield amounts in the GUI
-			Current.FindSpaceObjects<ICombatSpaceObject>().ParallelSafeForeach(o => o.ReplenishShields());
+			Current.FindSpaceObjects<ICombatSpaceObject>().SafeForeach(o => o.ReplenishShields());
 
 			// repair facilities
 			Current.FindSpaceObjects<Planet>().Select(p => p.Colony).Where(c => c != null).SelectMany(c => c.Facilities).SafeForeach(f => f.Repair());
@@ -1076,7 +1076,7 @@ namespace FrEee.Game.Objects.Space
 			});
 
 			// resupply space vehicles one last time (after weapons fire and repair which could affect supply remaining/storage)
-			Current.FindSpaceObjects<ISpaceObject>().Where(s => s.HasAbility("Supply Generation")).ParallelSafeForeach(sobj =>
+			Current.FindSpaceObjects<ISpaceObject>().Where(s => s.HasAbility("Supply Generation")).SafeForeach(sobj =>
 			{
 				var emp = sobj.Owner;
 				var sector = sobj.Sector;
