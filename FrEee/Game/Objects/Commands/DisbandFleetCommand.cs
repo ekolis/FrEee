@@ -1,4 +1,5 @@
 ﻿using FrEee.Game.Objects.Space;
+using System.Linq;
 
 namespace FrEee.Game.Objects.Commands
 {
@@ -14,6 +15,12 @@ namespace FrEee.Game.Objects.Commands
 
 		public override void Execute()
 		{
+			foreach (var v in Executor.Vehicles.ToArray())
+			{
+				Executor.Vehicles.Remove(v);
+				v.Container = null;
+				Executor.Sector.Place(v);
+			}
 			Executor.Dispose();
 		}
 	}
