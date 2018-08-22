@@ -961,7 +961,7 @@ namespace FrEee.Game.Objects.Space
 			// replenish shields
 			if (status != null)
 				status.Message = "Replenishing shields";
-			Current.FindSpaceObjects<ICombatSpaceObject>().ParallelSafeForeach(o => o.ReplenishShields());
+			Current.FindSpaceObjects<ICombatSpaceObject>().SafeForeach(o => o.ReplenishShields());
 			if (status != null)
 				status.Progress += progressPerOperation;
 
@@ -1067,7 +1067,7 @@ namespace FrEee.Game.Objects.Space
 			Current.EnableAbilityCache();
 
 			// get supplies from reactors, solar panels, etc.
-			Current.FindSpaceObjects<IMobileSpaceObject>().ParallelSafeForeach(v =>
+			Current.FindSpaceObjects<IMobileSpaceObject>().SafeForeach(v =>
 			{
 				v.SupplyRemaining += v.GetAbilityValue("Supply Generation Per Turn").ToInt();
 				if (v.StarSystem != null)
@@ -1102,7 +1102,7 @@ namespace FrEee.Game.Objects.Space
 
 			// clear completed orders
 			Current.Referrables.OfType<IPathfindingOrder>().Where(o => o.KnownTarget == null).ParallelSafeForeach(o => o.IsComplete = true);
-			Current.Referrables.OfType<IOrder>().Where(o => o.IsComplete).ParallelSafeForeach(o => o.Dispose());
+			Current.Referrables.OfType<IOrder>().Where(o => o.IsComplete).SafeForeach(o => o.Dispose());
 
 			// update known designs
 			Current.Empires.ParallelSafeForeach(emp =>
