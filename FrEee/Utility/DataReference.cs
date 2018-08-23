@@ -69,12 +69,13 @@ namespace FrEee.Utility
 					kobjs = Context.KnownObjects[typeof(T)] = new List<object>();
 				while (kobjs.Count <= ID)
 				{
-					var o = typeof(T).Instantiate();
+					var o = (T)typeof(T).Instantiate();
 					Context.Add(o);
-					return (T)o;
+					// TODO - populate data in object somehow
 				}
 				return (T)kobjs[ID];
 			}
+
 			set
 			{
 				if (Context.GetID(value) == null)
