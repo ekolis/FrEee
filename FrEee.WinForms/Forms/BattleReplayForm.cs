@@ -45,34 +45,6 @@ namespace FrEee.WinForms.Forms
 
 		private ListBox logListBox;
 
-		private ListBox CreateLogListBox()
-		{
-			logListBox = new ListBox();
-			logListBox.BackColor = Color.Black;
-			logListBox.ForeColor = Color.White;
-			logListBox.Dock = DockStyle.Fill;
-			reportPanel.Controls.Add(logListBox);
-			foreach (var roundEvents in Battle.Events)
-			{
-				logListBox.Items.Add($"Begin round {Battle.Events.IndexOf(roundEvents) + 1}!");
-				foreach (var e in roundEvents)
-				{
-					if (e is CombatantAppearsEvent cae)
-						logListBox.Items.Add($"{cae.Combatant} appears!");
-					else if (e is CombatantDisappearsEvent cde)
-						logListBox.Items.Add($"{cde.Combatant} disappears!");
-					else if (e is WeaponFiresEvent wfe)
-					{
-						if (wfe.IsHit)
-							logListBox.Items.Add($"{wfe.Combatant} fires at {wfe.Target} and hits!");
-						else
-							logListBox.Items.Add($"{wfe.Combatant} fires at {wfe.Target} and misses.");
-					}
-				}
-			}
-			return logListBox;
-		}
-
 		private ICombatant selectedCombatant;
 
 		public void Bind(Battle data)
@@ -86,6 +58,11 @@ namespace FrEee.WinForms.Forms
 			battleView.Battle = Battle;
 			minimap.Battle = Battle;
 			Text = Battle.NameFor(Empire.Current);
+		}
+
+		private void battleView_MouseDown(object sender, MouseEventArgs e)
+		{
+			SelectedCombatant = battleView.SelectedCombatant;
 		}
 
 		private void btnBack_Click(object sender, EventArgs e)
@@ -118,10 +95,37 @@ namespace FrEee.WinForms.Forms
 				btnPause.Text = "||";
 		}
 
+		private ListBox CreateLogListBox()
+		{
+			logListBox = new ListBox();
+			logListBox.BackColor = Color.Black;
+			logListBox.ForeColor = Color.White;
+			logListBox.Dock = DockStyle.Fill;
+			reportPanel.Controls.Add(logListBox);
+			foreach (var roundEvents in Battle.Events)
+			{
+				logListBox.Items.Add($"Begin round {Battle.Events.IndexOf(roundEvents) + 1}!");
+				foreach (var e in roundEvents)
+				{
+					if (e is CombatantAppearsEvent cae)
+						logListBox.Items.Add($"{cae.Combatant} appears!");
+					else if (e is CombatantDisappearsEvent cde)
+						logListBox.Items.Add($"{cde.Combatant} disappears!");
+					else if (e is WeaponFiresEvent wfe)
+					{
+						if (wfe.IsHit)
+							logListBox.Items.Add($"{wfe.Combatant} fires at {wfe.Target} and hits!");
+						else
+							logListBox.Items.Add($"{wfe.Combatant} fires at {wfe.Target} and misses.");
+					}
+				}
+			}
+			return logListBox;
+		}
+
 		private void minimap_MouseDown(object sender, MouseEventArgs e)
 		{
 			battleView.FocusedLocation = minimap.ClickLocation;
-			SelectedCombatant = minimap.SelectedCombatant;
 		}
 
 		private void RefreshSelectedCombatant()
@@ -138,15 +142,15 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
+		private void ScrollLogListBox()
+		{
+			logListBox.TopIndex = logListBox.Items.IndexOf($"Begin round {battleView.Round + 1}!");
+		}
+
 		private void timer_Tick(object sender, EventArgs e)
 		{
 			if (!battleView.IsPaused)
 				ScrollLogListBox();
-		}
-
-		private void ScrollLogListBox()
-		{
-			logListBox.TopIndex = logListBox.Items.IndexOf($"Begin round {battleView.Round + 1}!");
 		}
 	}
 }
