@@ -32,6 +32,7 @@ namespace FrEee.Utility
 	/// <summary>
 	/// Context for object graph operations.
 	/// </summary>
+	[Serializable]
 	public class ObjectGraphContext
 	{
 		static ObjectGraphContext()
@@ -80,6 +81,7 @@ namespace FrEee.Utility
 		/// <summary>
 		/// The known objects, grouped by type. Their IDs are their indices in the lists.
 		/// </summary>
+		[field: NonSerialized]
 		public SafeDictionary<Type, IList<object>> KnownObjects { get; private set; }
 
 		/// <summary>
@@ -92,7 +94,9 @@ namespace FrEee.Utility
 		/// </summary>
 		public IEnumerable<string> PropertyStack { get { return propertyStack; } }
 
+		[field: NonSerialized]
 		internal Queue<object> ObjectQueue { get; set; }
+		[NonSerialized]
 		internal Stack<object> objectStack;
 
 		internal Stack<string> propertyStack;
