@@ -38,6 +38,7 @@
 			this.grid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.grid.AppendMenuItems = null;
 			this.grid.BackColor = System.Drawing.Color.Black;
 			this.grid.CreateDefaultGridConfig = null;
 			this.grid.CurrentGridConfig = null;
@@ -49,9 +50,10 @@
 			this.grid.LoadGridConfigs = null;
 			this.grid.Location = new System.Drawing.Point(12, 12);
 			this.grid.Name = "grid";
+			this.grid.PrependMenuItems = null;
 			this.grid.ResetGridConfigs = null;
 			this.grid.ShowConfigs = false;
-			this.grid.Size = new System.Drawing.Size(587, 605);
+			this.grid.Size = new System.Drawing.Size(671, 605);
 			this.grid.TabIndex = 2;
 			// 
 			// btnReplay
@@ -59,7 +61,7 @@
 			this.btnReplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnReplay.BackColor = System.Drawing.Color.Black;
 			this.btnReplay.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnReplay.Location = new System.Drawing.Point(443, 623);
+			this.btnReplay.Location = new System.Drawing.Point(527, 623);
 			this.btnReplay.Name = "btnReplay";
 			this.btnReplay.Size = new System.Drawing.Size(75, 23);
 			this.btnReplay.TabIndex = 1;
@@ -72,7 +74,7 @@
 			this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnClose.BackColor = System.Drawing.Color.Black;
 			this.btnClose.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnClose.Location = new System.Drawing.Point(524, 623);
+			this.btnClose.Location = new System.Drawing.Point(608, 623);
 			this.btnClose.Name = "btnClose";
 			this.btnClose.Size = new System.Drawing.Size(75, 23);
 			this.btnClose.TabIndex = 0;
@@ -85,7 +87,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(611, 658);
+			this.ClientSize = new System.Drawing.Size(695, 658);
 			this.Controls.Add(this.grid);
 			this.Controls.Add(this.btnReplay);
 			this.Controls.Add(this.btnClose);
