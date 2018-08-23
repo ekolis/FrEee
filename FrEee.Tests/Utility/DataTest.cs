@@ -10,7 +10,7 @@ using System.Security;
 using System.Security.Permissions;
 using System.Security.Policy;
 
-namespace FrEee.Tests.Utility.Extensions
+namespace FrEee.Tests.Utility
 {
 	/// <summary>
 	/// Tests data operations.
@@ -66,27 +66,6 @@ namespace FrEee.Tests.Utility.Extensions
 			Assert.AreEqual("Hi, I'm nobody!", nobody.SayHi());
 		}
 
-		private AppDomain BuildSandbox()
-		{
-			//Setting the AppDomainSetup. It is very important to set the ApplicationBase to a folder
-			//other than the one in which the sandboxer resides.
-			AppDomainSetup adSetup = new AppDomainSetup();
-			adSetup.ApplicationBase = AppDomain.CurrentDomain.BaseDirectory;
-			adSetup.ApplicationName = "FrEee";
-			adSetup.DynamicBase = "ScriptEngine";
-
-			//Setting the permissions for the AppDomain. We give the permission to execute and to
-			//read/discover the location where the untrusted code is loaded.
-			var evidence = new Evidence();
-			evidence.AddHostEvidence(new Zone(SecurityZone.MyComputer));
-			var permissions = SecurityManager.GetStandardSandbox(evidence);
-			var reflection = new ReflectionPermission(PermissionState.Unrestricted);
-			permissions.AddPermission(reflection);
-
-			//Now we have everything we need to create the AppDomain, so let's create it.
-			return AppDomain.CreateDomain("Test", null, adSetup, permissions, AppDomain.CurrentDomain.GetAssemblies().Select(a => a.Evidence.GetHostEvidence<StrongName>()).Where(sn => sn != null).ToArray());
-		}
-		
 		/// <summary>
 		/// Tests full-fledged (object oriented) data operations.
 		/// </summary>
@@ -117,15 +96,6 @@ namespace FrEee.Tests.Utility.Extensions
 			Assert.AreEqual(barack.Children, clone.Children); // well, the DNA test would say they're the clone's as well ;)
 		}
 
-		[TestInitialize]
-		public void TestInit()
-		{
-			barack = new Person("Barack", null, null);
-			michelle = new Person("Michelle", null, null);
-			malia = new Person("Malia", barack, michelle);
-			sasha = new Person("Sasha", barack, michelle);
-		}
-
 		/// <summary>
 		/// Tests serializing game state over the simple data protocol.
 		/// </summary>
@@ -139,10 +109,39 @@ namespace FrEee.Tests.Utility.Extensions
 			sandbox.SetData("galaxy", simple);
 			// can we make a new galaxy over there and get some data out?
 			var data = (SimpleDataObject)sandbox.CreateInstanceAndUnwrap(Assembly.GetAssembly(typeof(SimpleDataObject)).FullName, typeof(SimpleDataObject).FullName);
-			data.SimpleData= simple.SimpleData;
+			data.SimpleData = simple.SimpleData;
 			var galcopy = data.Reconstitute<Galaxy>();
 			Assert.AreEqual(gal.Empires[0].Name, galcopy.Empires[0].Name);
+		}
 
+		[TestInitialize]
+		public void TestInit()
+		{
+			barack = new Person("Barack", null, null);
+			michelle = new Person("Michelle", null, null);
+			malia = new Person("Malia", barack, michelle);
+			sasha = new Person("Sasha", barack, michelle);
+		}
+
+		private AppDomain BuildSandbox()
+		{
+			//Setting the AppDomainSetup. It is very important to set the ApplicationBase to a folder
+			//other than the one in which the sandboxer resides.
+			AppDomainSetup adSetup = new AppDomainSetup();
+			adSetup.ApplicationBase = AppDomain.CurrentDomain.BaseDirectory;
+			adSetup.ApplicationName = "FrEee";
+			adSetup.DynamicBase = "ScriptEngine";
+
+			//Setting the permissions for the AppDomain. We give the permission to execute and to
+			//read/discover the location where the untrusted code is loaded.
+			var evidence = new Evidence();
+			evidence.AddHostEvidence(new Zone(SecurityZone.MyComputer));
+			var permissions = SecurityManager.GetStandardSandbox(evidence);
+			var reflection = new ReflectionPermission(PermissionState.Unrestricted);
+			permissions.AddPermission(reflection);
+
+			//Now we have everything we need to create the AppDomain, so let's create it.
+			return AppDomain.CreateDomain("Test", null, adSetup, permissions, AppDomain.CurrentDomain.GetAssemblies().Select(a => a.Evidence.GetHostEvidence<StrongName>()).Where(sn => sn != null).ToArray());
 		}
 
 		private class Dog
