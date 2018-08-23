@@ -20,20 +20,20 @@ namespace FrEee.WinForms.Forms
 		/// <summary>
 		/// Creates a log form.
 		/// </summary>
-		/// <param name="gameForm"></param>
+		/// <param name="mainGameForm"></param>
 		/// <param name="battle">The battle whose log we should display, or null to display the turn log.</param>
-		public LogForm(GameForm gameForm, IList<LogMessage> log)
+		public LogForm(MainGameForm mainGameForm, IList<LogMessage> log)
 		{
 			InitializeComponent();
-			this.gameForm = gameForm;
+			this.mainGameForm = mainGameForm;
 			messages = log.OrderByDescending(m => m.TurnNumber).ToArray();
 
 			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); } catch { }
 
-			ShowInTaskbar = !gameForm.HasLogBeenShown;
+			ShowInTaskbar = !mainGameForm.HasLogBeenShown;
 		}
 
-		private GameForm gameForm;
+		private MainGameForm mainGameForm;
 
 		private IEnumerable<LogMessage> messages;
 
@@ -67,7 +67,7 @@ namespace FrEee.WinForms.Forms
 					if (context is ISpaceObject)
 					{
 						// go to space object
-						gameForm.SelectSpaceObject((ISpaceObject)context);
+						mainGameForm.SelectSpaceObject((ISpaceObject)context);
 						Close();
 					}
 					else if (context is IUnit)
@@ -78,9 +78,9 @@ namespace FrEee.WinForms.Forms
 						if (container != null)
 						{
 							if (container is Sector)
-								gameForm.SelectSpaceObject((ISpaceObject)unit);
+								mainGameForm.SelectSpaceObject((ISpaceObject)unit);
 							else
-								gameForm.SelectSpaceObject((ISpaceObject)container);
+								mainGameForm.SelectSpaceObject((ISpaceObject)container);
 							Close();
 						}
 					}
@@ -89,26 +89,26 @@ namespace FrEee.WinForms.Forms
 						// go to the planet
 						var facility = (Facility)context;
 						var container = facility.Container;
-						gameForm.SelectSpaceObject(container);
+						mainGameForm.SelectSpaceObject(container);
 						Close();
 					}
 					else if (context is Technology)
 					{
 						// go to research screen
-						gameForm.ShowResearchForm();
+						mainGameForm.ShowResearchForm();
 						Close();
 					}
 					else if (context is IHull<IVehicle>)
 					{
 						// go to design screen and create a new design using this hull
 						var hull = (IHull<IVehicle>)context;
-						gameForm.ShowVehicleDesignForm(new VehicleDesignForm(hull));
+						mainGameForm.ShowVehicleDesignForm(new VehicleDesignForm(hull));
 						Close();
 					}
 					else if (context is ComponentTemplate || context is Mount)
 					{
 						// go to design screen
-						gameForm.ShowVehicleDesignForm(new VehicleDesignForm());
+						mainGameForm.ShowVehicleDesignForm(new VehicleDesignForm());
 						Close();
 					}
 					else if (context is IBattle)
@@ -121,7 +121,7 @@ namespace FrEee.WinForms.Forms
 					{
 						// show diplomacy screen
 						var form = new DiplomacyForm((IMessage)context);
-						gameForm.ShowChildForm(form);
+						mainGameForm.ShowChildForm(form);
 						Close();
 					}
 

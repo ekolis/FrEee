@@ -141,6 +141,12 @@
     <Compile Include="Controls\BattleView.Designer.cs">
       <DependentUpon>BattleView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\GameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GameForm.Designer.cs">
+      <DependentUpon>GameForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ActivateAbilityForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -493,11 +499,11 @@
     <Compile Include="Forms\DesignListForm.Designer.cs">
       <DependentUpon>DesignListForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\GameForm.cs">
+    <Compile Include="Forms\MainGameForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\GameForm.Designer.cs">
-      <DependentUpon>GameForm.cs</DependentUpon>
+    <Compile Include="Forms\MainGameForm.Designer.cs">
+      <DependentUpon>MainGameForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\GameSetupForm.cs">
       <SubType>Form</SubType>
@@ -587,6 +593,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\StarSystemView.resx">
       <DependentUpon>StarSystemView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GameForm.resx">
+      <DependentUpon>GameForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ActivateAbilityForm.resx">
       <DependentUpon>ActivateAbilityForm.cs</DependentUpon>
@@ -720,8 +729,8 @@
     <EmbeddedResource Include="Forms\DesignListForm.resx">
       <DependentUpon>DesignListForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\GameForm.resx">
-      <DependentUpon>GameForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\MainGameForm.resx">
+      <DependentUpon>MainGameForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\GameSetupForm.resx">
       <DependentUpon>GameSetupForm.cs</DependentUpon>

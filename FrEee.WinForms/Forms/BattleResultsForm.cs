@@ -145,7 +145,7 @@ namespace FrEee.WinForms.Forms
 		{
 			Form form;
 			if (Battle is FrEee.Game.Objects.Combat.Simple.Battle b)
-				form = new LogForm(GameForm.Instance, b.Log);
+				form = new LogForm(MainGameForm.Instance, b.Log);
 			else if (Battle is FrEee.Game.Objects.Combat.Grid.Battle b2)
 				form = new BattleReplayForm(b2);
 			else

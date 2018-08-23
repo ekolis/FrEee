@@ -20,6 +20,8 @@
 			base.Dispose(disposing);
 		}
 
+		protected override string WikiPage => "VehicleDesign";
+
 		#region Windows Form Designer generated code
 
 		/// <summary>
@@ -85,6 +87,7 @@
 			this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
 			this.btnMountInfo = new FrEee.WinForms.Controls.GameButton();
 			this.ddlMount = new System.Windows.Forms.ComboBox();
+			this.btnHelp = new FrEee.WinForms.Controls.GameButton();
 			this.pnlStats.SuspendLayout();
 			this.gamePanel4.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picDetailIcon)).BeginInit();
@@ -765,12 +768,27 @@
 			this.ddlMount.ValueMember = "Mount";
 			this.ddlMount.SelectedIndexChanged += new System.EventHandler(this.ddlMount_SelectedIndexChanged);
 			// 
+			// btnHelp
+			// 
+			this.btnHelp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnHelp.BackColor = System.Drawing.Color.Black;
+			this.btnHelp.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnHelp.Location = new System.Drawing.Point(551, 494);
+			this.btnHelp.Name = "btnHelp";
+			this.btnHelp.Size = new System.Drawing.Size(146, 29);
+			this.btnHelp.TabIndex = 32;
+			this.btnHelp.Text = "Help";
+			this.btnHelp.UseVisualStyleBackColor = false;
+			this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
+			// 
 			// VehicleDesignForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(709, 636);
+			this.Controls.Add(this.btnHelp);
 			this.Controls.Add(this.ddlMount);
 			this.Controls.Add(this.picPortrait);
 			this.Controls.Add(this.txtIteration);
@@ -876,5 +894,6 @@
 		private Controls.GamePictureBox picPortrait;
 		private Controls.GameButton btnMountInfo;
 		private System.Windows.Forms.ComboBox ddlMount;
+		private Controls.GameButton btnHelp;
 	}
 }

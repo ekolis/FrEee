@@ -17,7 +17,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class VehicleDesignForm : Form
+	public partial class VehicleDesignForm : GameForm
 	{
 		public VehicleDesignForm()
 		{
@@ -253,6 +253,11 @@ namespace FrEee.WinForms.Forms
 		{
 			abort = true;
 			Close();
+		}
+
+		private void btnHelp_Click(object sender, EventArgs e)
+		{
+			OpenWikiPage();
 		}
 
 		private void btnHull_Click(object sender, EventArgs e)
