@@ -105,6 +105,16 @@ namespace FrEee.WinForms.Controls
 
 		public ICombatant SelectedCombatant { get; set; }
 
+		public bool ShowGrid
+		{
+			get => showGrid;
+			set
+			{
+				showGrid = value;
+				Invalidate();
+			}
+		}
+
 		/// <summary>
 		/// Display everything as a square rather than an icon?
 		/// </summary>
@@ -125,14 +135,10 @@ namespace FrEee.WinForms.Controls
 
 		private bool autoZoom;
 		private Battle battle;
-
 		private List<Boom> booms = new List<Boom>();
-
 		private bool combatPhase = false;
-
 		private IntVector2 focusedLocation;
 		private SafeDictionary<ICombatant, IntVector2> locations = new SafeDictionary<ICombatant, IntVector2>();
-
 		private List<Pewpew> pewpews = new List<Pewpew>();
 
 		/// <summary>
@@ -140,6 +146,7 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		private int round = 0;
 
+		private bool showGrid;
 		private bool useSquares;
 
 		protected override void OnPaint(PaintEventArgs pe)
@@ -159,23 +166,30 @@ namespace FrEee.WinForms.Controls
 			var littleFontSize = Math.Max(SectorDrawSize / 8, 1);
 			var littleFont = new Font("Sans Serif", littleFontSize);
 
+			// draw border
 			pe.Graphics.DrawRectangle(Pens.White, 0, 0, Width - 1, Height - 1);
 
 			if (Battle != null)
 			{
-				// draw grid
-				for (var x = Battle.UpperLeft[round].X; x <= Battle.LowerRight[round].X; x++)
+				if (ShowGrid)
 				{
-					var drawPoint1 = GetDrawPoint(x, Battle.UpperLeft[round].Y);
-					var drawPoint2 = GetDrawPoint(x, Battle.LowerRight[round].Y);
-					pe.Graphics.DrawLine(Pens.SlateGray, drawPoint1, drawPoint2);
+					// draw grid
+					var gridColor = Color.FromArgb(0, 32, 64);
+					var gridPen = new Pen(gridColor, 1);
+					for (var x = Battle.UpperLeft[round].X; x <= Battle.LowerRight[round].X; x++)
+					{
+						var drawPoint1 = GetDrawPoint(x, Battle.UpperLeft[round].Y);
+						var drawPoint2 = GetDrawPoint(x, Battle.LowerRight[round].Y);
+						pe.Graphics.DrawLine(gridPen, drawPoint1, drawPoint2);
+					}
+					for (var y = Battle.UpperLeft[round].Y; y <= Battle.LowerRight[round].Y; y++)
+					{
+						var drawPoint1 = GetDrawPoint(Battle.UpperLeft[round].X, y);
+						var drawPoint2 = GetDrawPoint(Battle.LowerRight[round].X, y);
+						pe.Graphics.DrawLine(gridPen, drawPoint1, drawPoint2);
+					}
 				}
-				for (var y = Battle.UpperLeft[round].Y; y <= Battle.LowerRight[round].Y; y++)
-				{
-					var drawPoint1 = GetDrawPoint(Battle.UpperLeft[round].X, y);
-					var drawPoint2 = GetDrawPoint(Battle.LowerRight[round].X, y);
-					pe.Graphics.DrawLine(Pens.SlateGray, drawPoint1, drawPoint2);
-				}
+
 				// draw combat sectors
 				for (var x = Battle.UpperLeft[round].X; x <= Battle.LowerRight[round].X; x++)
 				{
