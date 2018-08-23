@@ -145,6 +145,7 @@ namespace FrEee.Utility
 			get { return Value; }
 		}
 
+		[NonSerialized]
 		private object value;
 
 		public static ISimpleDataObject Create(object o, ObjectGraphContext ctx = null)
