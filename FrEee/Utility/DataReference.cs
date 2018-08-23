@@ -27,6 +27,7 @@ namespace FrEee.Utility
 		}
 
 		[JsonIgnore]
+		[field: NonSerialized]
 		public ObjectGraphContext Context { get; set; }
 
 		public string Data
@@ -61,6 +62,8 @@ namespace FrEee.Utility
 		{
 			get
 			{
+				if (Context == null)
+					Context = new ObjectGraphContext();
 				var kobjs = Context.KnownObjects[typeof(T)];
 				if (kobjs == null)
 					kobjs = Context.KnownObjects[typeof(T)] = new List<object>();
