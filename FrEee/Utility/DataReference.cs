@@ -67,16 +67,13 @@ namespace FrEee.Utility
 				var kobjs = Context.KnownObjects[typeof(T)];
 				if (kobjs == null)
 					kobjs = Context.KnownObjects[typeof(T)] = new List<object>();
-				if (kobjs.Count > ID)
-					return (T)kobjs[ID];
-				else if (kobjs.Count == ID)
+				while (kobjs.Count <= ID)
 				{
 					var o = typeof(T).Instantiate();
 					Context.Add(o);
 					return (T)o;
 				}
-				else
-					throw new Exception($"Too high ID {ID} specified for object of type {typeof(T)}; there are not enough objects.");
+				return (T)kobjs[ID];
 			}
 			set
 			{
