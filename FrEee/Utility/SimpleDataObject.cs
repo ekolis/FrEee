@@ -58,6 +58,7 @@ namespace FrEee.Utility
 		}
 
 		[JsonIgnore]
+		[field: NonSerialized]
 		public ObjectGraphContext Context { get; set; }
 
 		[JsonIgnore]

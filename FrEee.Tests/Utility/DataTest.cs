@@ -106,6 +106,7 @@ namespace FrEee.Tests.Utility
 			var gal = Galaxy.Current;
 			var simple = new SimpleDataObject(gal);
 			var sandbox = BuildSandbox();
+			simple.Context.KnownObjects.Clear();
 			sandbox.SetData("galaxy", simple);
 			// can we make a new galaxy over there and get some data out?
 			var data = (SimpleDataObject)sandbox.CreateInstanceAndUnwrap(Assembly.GetAssembly(typeof(SimpleDataObject)).FullName, typeof(SimpleDataObject).FullName);
