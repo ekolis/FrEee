@@ -41,6 +41,7 @@ namespace FrEee.Utility
 				Type = o.GetType();
 				if (Context.GetID(o) == null)
 					ID = Context.Add(o);
+				Data = o.GetData(ctx);
 			}
 			else
 			{
@@ -172,6 +173,13 @@ namespace FrEee.Utility
 			if (Context.GetID(Value) == null)
 				Context.Add(Value);
 			Value.SetData(Data, ctx ?? Context);
+		}
+
+		public T Reconstitute<T>(ObjectGraphContext ctx = null)
+		{
+			var result = (T)typeof(T).Instantiate();
+			result.SetData(Data, ctx ?? new ObjectGraphContext());
+			return result;
 		}
 	}
 }

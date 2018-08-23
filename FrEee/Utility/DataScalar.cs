@@ -21,6 +21,7 @@ namespace FrEee.Utility
 	/// A scalar which can be converted easily to and from a string.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
+	[Serializable]
 	public class DataScalar<T> : IDataScalar
 	{
 		public DataScalar(T value = default(T))

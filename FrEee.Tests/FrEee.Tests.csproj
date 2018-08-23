@@ -184,7 +184,8 @@
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)..\FrEee\Mods" "$(TargetDir)Mods\" /y /e /s
 xcopy "$(ProjectDir)..\FrEee\Data" "$(TargetDir)Data\" /y /e /s
-xcopy "$(ProjectDir)Mods" "$(TargetDir)Mods\" /y /e /s</PostBuildEvent>
+xcopy "$(ProjectDir)Mods" "$(TargetDir)Mods\" /y /e /s
+xcopy "$(ProjectDir)Savegame" "$(TargetDir)Savegame\" /y /e /s</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

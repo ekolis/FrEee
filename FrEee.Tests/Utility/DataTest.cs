@@ -1,4 +1,5 @@
-﻿using FrEee.Utility;
+﻿using FrEee.Game.Objects.Space;
+using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -51,6 +52,22 @@ namespace FrEee.Tests.Utility.Extensions
 		[TestMethod]
 		public void AppDomains()
 		{
+			// make a sandbox
+			var sandbox = BuildSandbox();
+
+			// can we send Barack over?
+			sandbox.SetData("data", new SimpleDataObject(barack));
+
+			// can we make a new person (well, person data) over there and poke him?
+			var data = (SimpleDataObject)sandbox.CreateInstanceAndUnwrap(Assembly.GetAssembly(typeof(SimpleDataObject)).FullName, typeof(SimpleDataObject).FullName);
+			var nobody = new Person(null, null, null);
+			data.Data = nobody.Data;
+			nobody.Data = data.Data;
+			Assert.AreEqual("Hi, I'm nobody!", nobody.SayHi());
+		}
+
+		private AppDomain BuildSandbox()
+		{
 			//Setting the AppDomainSetup. It is very important to set the ApplicationBase to a folder
 			//other than the one in which the sandboxer resides.
 			AppDomainSetup adSetup = new AppDomainSetup();
@@ -67,19 +84,9 @@ namespace FrEee.Tests.Utility.Extensions
 			permissions.AddPermission(reflection);
 
 			//Now we have everything we need to create the AppDomain, so let's create it.
-			var sandbox = AppDomain.CreateDomain("Test", null, adSetup, permissions, AppDomain.CurrentDomain.GetAssemblies().Select(a => a.Evidence.GetHostEvidence<StrongName>()).Where(sn => sn != null).ToArray());
-
-			// can we send Barack over?
-			sandbox.SetData("data", new SimpleDataObject(barack));
-
-			// can we make a new person (well, person data) over there and poke him?
-			var data = (SimpleDataObject)sandbox.CreateInstanceAndUnwrap(Assembly.GetAssembly(typeof(SimpleDataObject)).FullName, typeof(SimpleDataObject).FullName);
-			var nobody = new Person(null, null, null);
-			data.Data = nobody.Data;
-			nobody.Data = data.Data;
-			Assert.AreEqual("Hi, I'm nobody!", nobody.SayHi());
+			return AppDomain.CreateDomain("Test", null, adSetup, permissions, AppDomain.CurrentDomain.GetAssemblies().Select(a => a.Evidence.GetHostEvidence<StrongName>()).Where(sn => sn != null).ToArray());
 		}
-
+		
 		/// <summary>
 		/// Tests full-fledged (object oriented) data operations.
 		/// </summary>
@@ -117,6 +124,25 @@ namespace FrEee.Tests.Utility.Extensions
 			michelle = new Person("Michelle", null, null);
 			malia = new Person("Malia", barack, michelle);
 			sasha = new Person("Sasha", barack, michelle);
+		}
+
+		/// <summary>
+		/// Tests serializing game state over the simple data protocol.
+		/// </summary>
+		[TestMethod]
+		public void SimpleDataGameState()
+		{
+			Galaxy.Load("freeefurball_1.gam");
+			var gal = Galaxy.Current;
+			var simple = new SimpleDataObject(gal);
+			var sandbox = BuildSandbox();
+			sandbox.SetData("galaxy", simple);
+			// can we make a new galaxy over there and get some data out?
+			var data = (SimpleDataObject)sandbox.CreateInstanceAndUnwrap(Assembly.GetAssembly(typeof(SimpleDataObject)).FullName, typeof(SimpleDataObject).FullName);
+			data.SimpleData= simple.SimpleData;
+			var galcopy = data.Reconstitute<Galaxy>();
+			Assert.AreEqual(gal.Empires[0].Name, galcopy.Empires[0].Name);
+
 		}
 
 		private class Dog

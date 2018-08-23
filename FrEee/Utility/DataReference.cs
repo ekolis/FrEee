@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 namespace FrEee.Utility
 {
+	[Serializable]
 	public class DataReference<T> : IDataReference, IReference<T>
 	{
 		public DataReference()
