@@ -496,7 +496,7 @@ namespace FrEee.WinForms.Forms
 					Galaxy.Load(name + "_" + turn + "_0001.gam");
 					Design.ImportFromLibrary();
 					Hide();
-					MainMenuForm.GetInstance().ShowChildForm(new GameForm(false, true));
+					MainMenuForm.GetInstance().ShowChildForm(new MainGameForm(false, true));
 				}
 				else
 				{

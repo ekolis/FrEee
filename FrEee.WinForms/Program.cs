@@ -181,7 +181,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 
 			Design.ImportFromLibrary();
 
-			var form = new GameForm(false, true);
+			var form = new MainGameForm(false, true);
 			form.KeyPreview = true;
 			form.StartPosition = FormStartPosition.CenterScreen;
 			form.KeyDown += GuiExtensions.childForm_KeyDown_forDebugConsole;

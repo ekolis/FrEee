@@ -100,7 +100,7 @@ namespace FrEee.WinForms.Forms
 				var sobj = (ISpaceObject)grid.SelectedItem;
 				if (sobj != null)
 				{
-					GameForm.Instance.SelectSpaceObject(sobj);
+					MainGameForm.Instance.SelectSpaceObject(sobj);
 					Close();
 				}
 			}

@@ -124,7 +124,7 @@ namespace FrEee.WinForms.Forms
 						}
 					}
 					Design.ImportFromLibrary();
-					var form = new GameForm(true, false);
+					var form = new MainGameForm(true, false);
 					Hide();
 					this.ShowChildForm(form);
 					Show();

@@ -114,7 +114,7 @@ namespace FrEee.WinForms.Forms
 			if (status.Exception == null && !warnings.Any())
 			{
 				Design.ImportFromLibrary();
-				var game = new GameForm(false, true);
+				var game = new MainGameForm(false, true);
 				this.ShowChildForm(game);
 				game.FormClosed += (s, args) =>
 						{
@@ -166,7 +166,7 @@ namespace FrEee.WinForms.Forms
 				Design.ImportFromLibrary();
 
 				// display game view
-				var form = new GameForm(false, true);
+				var form = new MainGameForm(false, true);
 				Cursor = Cursors.Default;
 				Hide();
 				this.ShowChildForm(form);
