@@ -74,6 +74,7 @@
 			this.battleView.Name = "battleView";
 			this.battleView.Round = 0;
 			this.battleView.SelectedCombatant = null;
+			this.battleView.ShowGrid = true;
 			this.battleView.Size = new System.Drawing.Size(593, 709);
 			this.battleView.TabIndex = 27;
 			this.battleView.Text = "battleView";
@@ -130,6 +131,7 @@
 			this.minimap.Name = "minimap";
 			this.minimap.Round = 0;
 			this.minimap.SelectedCombatant = null;
+			this.minimap.ShowGrid = false;
 			this.minimap.Size = new System.Drawing.Size(256, 256);
 			this.minimap.TabIndex = 28;
 			this.minimap.Text = "minimap";
