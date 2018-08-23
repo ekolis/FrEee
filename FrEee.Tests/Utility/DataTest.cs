@@ -110,7 +110,9 @@ namespace FrEee.Tests.Utility
 			// can we make a new galaxy over there and get some data out?
 			var data = (SimpleDataObject)sandbox.CreateInstanceAndUnwrap(Assembly.GetAssembly(typeof(SimpleDataObject)).FullName, typeof(SimpleDataObject).FullName);
 			data.SimpleData = simple.SimpleData;
-			var galcopy = data.Reconstitute<Galaxy>();
+			var data2 = new SimpleDataObject();
+			data2.SimpleData = data.SimpleData;
+			var galcopy = data2.Reconstitute<Galaxy>();
 			Assert.AreEqual(gal.Empires[0].Name, galcopy.Empires[0].Name);
 		}
 
