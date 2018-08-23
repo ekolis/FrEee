@@ -79,6 +79,7 @@
 			this.battleView.TabIndex = 27;
 			this.battleView.Text = "battleView";
 			this.battleView.UseSquares = false;
+			this.battleView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.battleView_MouseDown);
 			// 
 			// btnForward
 			// 

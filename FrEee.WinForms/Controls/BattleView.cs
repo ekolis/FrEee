@@ -314,8 +314,10 @@ namespace FrEee.WinForms.Controls
 			}
 			else
 			{
-				var clickx = (x - (SectorBorderSize - Width / 2)) / (SectorDrawSize + SectorBorderSize) + SectorBorderSize;
-				var clicky = (y - (SectorBorderSize - Height / 2)) / (SectorDrawSize + SectorBorderSize) + SectorBorderSize;
+				if (FocusedLocation == null)
+					FocusedLocation = (Battle.LowerRight[round] - Battle.UpperLeft[round]) / 2;
+				var clickx = (x - Width / 2 - SectorBorderSize) / (SectorDrawSize + SectorBorderSize) + FocusedLocation.X;
+				var clicky = (y - Height / 2 - SectorBorderSize) / (SectorDrawSize + SectorBorderSize) + FocusedLocation.Y;
 				return new IntVector2(clickx, clicky);
 			}
 		}
