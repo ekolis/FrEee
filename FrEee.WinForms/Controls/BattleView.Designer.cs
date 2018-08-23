@@ -44,7 +44,7 @@ namespace FrEee.WinForms.Controls
 			// roundTimer
 			// 
 			this.roundTimer.Enabled = true;
-			this.roundTimer.Interval = 250;
+			this.roundTimer.Interval = 500;
 			this.roundTimer.Tick += new System.EventHandler(this.timer1_Tick);
 			// 
 			// BattleView
