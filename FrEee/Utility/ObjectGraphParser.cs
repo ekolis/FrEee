@@ -96,6 +96,7 @@ namespace FrEee.Utility
 
 		[field: NonSerialized]
 		internal Queue<object> ObjectQueue { get; set; }
+
 		[NonSerialized]
 		internal Stack<object> objectStack;
 
