@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class GenericPickerForm : Form
+	public partial class GenericPickerForm : GameForm
 	{
 		public GenericPickerForm(IEnumerable<object> objects)
 		{

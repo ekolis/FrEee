@@ -25,7 +25,7 @@ namespace FrEee.WinForms.Forms
 		/// <summary>
 		/// The wiki page associated with this form.
 		/// </summary>
-		protected virtual string WikiPage => "Home";
+		protected virtual string WikiPage => GetType().Name.Replace("Form", "");
 
 		/// <summary>
 		/// Opens the appropriate wiki page for this form in a browser.

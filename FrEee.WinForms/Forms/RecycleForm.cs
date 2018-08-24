@@ -20,7 +20,7 @@ namespace FrEee.WinForms.Forms
 	/// <summary>
 	/// Form where the player can choose recycling actions such as scrapping and mothballing.
 	/// </summary>
-	public partial class RecycleForm : Form
+	public partial class RecycleForm : GameForm
 	{
 		public RecycleForm(Sector sector)
 		{

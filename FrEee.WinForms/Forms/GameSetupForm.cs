@@ -22,7 +22,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class GameSetupForm : Form
+	public partial class GameSetupForm : GameForm
 	{
 		public GameSetupForm()
 		{

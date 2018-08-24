@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class ScoresForm : Form
+	public partial class ScoresForm : GameForm
 	{
 		public ScoresForm()
 		{

@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class HullPickerForm : Form
+	public partial class HullPickerForm : GameForm
 	{
 		public HullPickerForm()
 		{

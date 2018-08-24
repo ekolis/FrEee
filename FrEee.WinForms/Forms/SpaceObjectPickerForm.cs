@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class SpaceObjectPickerForm : Form
+	public partial class SpaceObjectPickerForm : GameForm
 	{
 		public SpaceObjectPickerForm(IEnumerable<ISpaceObject> objects)
 		{

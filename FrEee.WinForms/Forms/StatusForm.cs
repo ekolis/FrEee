@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class StatusForm : Form
+	public partial class StatusForm : GameForm
 	{
 		public StatusForm(Thread thread, Status status)
 		{

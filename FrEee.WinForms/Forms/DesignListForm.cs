@@ -16,7 +16,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class DesignListForm : Form
+	public partial class DesignListForm : GameForm
 	{
 		public DesignListForm()
 		{

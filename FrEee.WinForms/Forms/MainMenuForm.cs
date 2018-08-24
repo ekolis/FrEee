@@ -19,7 +19,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class MainMenuForm : Form
+	public partial class MainMenuForm : GameForm
 	{
 		private static MainMenuForm _instance;
 

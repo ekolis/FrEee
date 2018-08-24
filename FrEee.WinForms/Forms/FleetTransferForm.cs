@@ -16,7 +16,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class FleetTransferForm : Form
+	public partial class FleetTransferForm : GameForm
 	{
 		public FleetTransferForm(Sector sector)
 		{

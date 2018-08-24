@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class CargoTransferForm : Form
+	public partial class CargoTransferForm : GameForm
 	{
 		public CargoTransferForm(ICargoTransferrer fromContainer, Sector targetSector)
 		{

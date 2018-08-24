@@ -18,7 +18,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class ConstructionQueueForm : Form
+	public partial class ConstructionQueueForm : GameForm
 	{
 		public ConstructionQueueForm(ConstructionQueue queue)
 		{

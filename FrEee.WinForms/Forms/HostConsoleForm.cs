@@ -20,7 +20,7 @@ namespace FrEee.WinForms.Forms
 	/// Form which allows the game host to perform various operations on a game,
 	/// such as processing a turn or setting players to AI control.
 	/// </summary>
-	public partial class HostConsoleForm : Form
+	public partial class HostConsoleForm : GameForm
 	{
 		public HostConsoleForm()
 		{

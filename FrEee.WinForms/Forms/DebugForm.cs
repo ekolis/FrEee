@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class DebugForm : Form
+	public partial class DebugForm : GameForm
 	{
 		public DebugForm()
 		{

@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class ActivateAbilityForm : Form
+	public partial class ActivateAbilityForm : GameForm
 	{
 		public ActivateAbilityForm(IMobileSpaceObject sobj)
 		{

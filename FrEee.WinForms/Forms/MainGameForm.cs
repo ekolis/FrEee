@@ -25,7 +25,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class MainGameForm : Form
+	public partial class MainGameForm : GameForm
 	{
 		/// <summary>
 		/// Creates a game form.

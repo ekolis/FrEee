@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class CultureComparisonForm : Form
+	public partial class CultureComparisonForm : GameForm
 	{
 		public CultureComparisonForm()
 		{

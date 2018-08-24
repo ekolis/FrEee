@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class OptionsForm : Form
+	public partial class OptionsForm : GameForm
 	{
 		public OptionsForm()
 		{
