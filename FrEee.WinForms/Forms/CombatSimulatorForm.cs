@@ -17,7 +17,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class CombatSimulatorForm : Form
+	public partial class CombatSimulatorForm : GameForm
 	{
 		public CombatSimulatorForm(bool groundCombat)
 		{

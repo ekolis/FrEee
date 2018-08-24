@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class MountPickerForm : Form
+	public partial class MountPickerForm : GameForm
 	{
 		public MountPickerForm(IHull hull)
 		{

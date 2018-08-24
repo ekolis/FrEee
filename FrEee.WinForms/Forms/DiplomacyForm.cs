@@ -20,7 +20,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class DiplomacyForm : Form
+	public partial class DiplomacyForm : GameForm
 	{
 		public DiplomacyForm(Empire targetEmpire)
 		{

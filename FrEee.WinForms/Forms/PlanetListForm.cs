@@ -17,7 +17,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class PlanetListForm : Form
+	public partial class PlanetListForm : GameForm
 	{
 		public PlanetListForm()
 		{

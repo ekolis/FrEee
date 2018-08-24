@@ -15,7 +15,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class LogForm : Form
+	public partial class LogForm : GameForm
 	{
 		/// <summary>
 		/// Creates a log form.

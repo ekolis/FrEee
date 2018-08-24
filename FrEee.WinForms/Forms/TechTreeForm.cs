@@ -16,7 +16,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class TechTreeForm : Form, IBindable<IUnlockable>
+	public partial class TechTreeForm : GameForm, IBindable<IUnlockable>
 	{
 		public TechTreeForm()
 		{

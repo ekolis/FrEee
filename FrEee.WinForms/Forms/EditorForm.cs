@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class EditorForm : Form, IBindable<object>
+	public partial class EditorForm : GameForm, IBindable<object>
 	{
 		public EditorForm(object root, Func<bool> save, Func<bool> cancel)
 		{

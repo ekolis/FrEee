@@ -16,7 +16,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class ShipListForm : Form
+	public partial class ShipListForm : GameForm
 	{
 		public ShipListForm()
 		{

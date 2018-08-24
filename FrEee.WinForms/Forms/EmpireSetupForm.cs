@@ -15,7 +15,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class EmpireSetupForm : Form
+	public partial class EmpireSetupForm : GameForm
 	{
 		public EmpireSetupForm()
 		{

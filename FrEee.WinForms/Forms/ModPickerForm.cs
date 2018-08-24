@@ -15,7 +15,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class ModPickerForm : Form
+	public partial class ModPickerForm : GameForm
 	{
 		public ModPickerForm()
 		{

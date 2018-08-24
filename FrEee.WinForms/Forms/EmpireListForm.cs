@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class EmpireListForm : Form
+	public partial class EmpireListForm : GameForm
 	{
 		public EmpireListForm()
 		{

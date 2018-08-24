@@ -16,7 +16,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class ResearchForm : Form
+	public partial class ResearchForm : GameForm
 	{
 		public ResearchForm()
 		{

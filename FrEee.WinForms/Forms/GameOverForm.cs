@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class GameOverForm : Form
+	public partial class GameOverForm : GameForm
 	{
 		public GameOverForm(bool victory)
 		{

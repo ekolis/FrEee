@@ -13,7 +13,7 @@ namespace FrEee.WinForms.Forms
 	/// <summary>
 	/// Displays errors when loading a mod.
 	/// </summary>
-	public partial class ModErrorsForm : Form, IBindable<IEnumerable<DataParsingException>>
+	public partial class ModErrorsForm : GameForm, IBindable<IEnumerable<DataParsingException>>
 	{
 		public ModErrorsForm()
 		{

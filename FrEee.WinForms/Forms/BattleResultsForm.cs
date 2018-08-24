@@ -15,7 +15,7 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class BattleResultsForm : Form, IBindable<IBattle>
+	public partial class BattleResultsForm : GameForm, IBindable<IBattle>
 	{
 		public BattleResultsForm(IBattle battle)
 		{
