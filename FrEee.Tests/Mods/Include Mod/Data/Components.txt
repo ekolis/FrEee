@@ -1,0 +1,4 @@
+﻿*BEGIN*
+
+
+#include-from "ComponentLoaderTest" "Components.txt"
