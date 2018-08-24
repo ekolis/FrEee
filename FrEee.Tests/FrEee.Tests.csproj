@@ -143,6 +143,9 @@
     <Content Include="Mods\DynamicFormulaWithParameters\Data\Components.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Mods\Include Mod\Data\Components.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Mods\Include Mod\Data\LandVehicleSizes\VehicleSizeTroops.txt" />
     <Content Include="Mods\Include Mod\Data\LandVehicleSizes\VehicleSizeWeaponPlatforms.txt" />
     <Content Include="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeCarriers.txt" />
