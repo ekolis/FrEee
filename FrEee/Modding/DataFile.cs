@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace FrEee.Modding
 {
@@ -44,24 +45,39 @@ namespace FrEee.Modding
 			curLine += 2;
 
 			List<DataFile> includeDataFiles = new List<DataFile>();
-			while (lines[curLine].StartsWith("#include") ||
-				string.IsNullOrEmpty(lines[curLine]))
+			while (curLine < lines.Length && (lines[curLine].StartsWith("#include") ||
+				string.IsNullOrEmpty(lines[curLine])))
 			{
-				if (string.IsNullOrEmpty(lines[curLine]))
+				string line = lines[curLine];
+				if (string.IsNullOrEmpty(line))
 				{
 					++curLine;
 					continue;
 				}
 
-				string line = lines[curLine];
-				int firstPQ = line.IndexOf('"') + 1;
-				int lastPQ = line.LastIndexOf('"') - 1;
-				string includePath = line.Substring(firstPQ, (lastPQ - firstPQ) + 1);
-				string filename = Path.GetFileName(includePath);
-				if (string.IsNullOrEmpty(filename))
-					throw new FileNotFoundException($"#include path \"{includePath}\" at line {curLine} does not contain filename");
-				string subpath = Path.GetDirectoryName(includePath);
-				includeDataFiles.Add(Load(DataPath, filename, subpath));
+				if (line.StartsWith("#include-from"))
+				{
+					var regex = new Regex("#include-from \"(.*)\" \"(.*)\"");
+					var match = regex.Match(line);
+					var modName = match.Groups[1].Captures[0].Value;
+					var fileName = match.Groups[2].Captures[0].Value;
+					if (string.IsNullOrEmpty(modName))
+						throw new FileNotFoundException($"#include-from at line {curLine} does not contain mod name.");
+					if (string.IsNullOrEmpty(fileName))
+						throw new FileNotFoundException($"#include-from at line {curLine} does not contain file name.");
+					includeDataFiles.Add(Load(modName, fileName));
+				}
+				else
+				{
+					int firstPQ = line.IndexOf('"') + 1;
+					int lastPQ = line.LastIndexOf('"') - 1;
+					string includePath = line.Substring(firstPQ, (lastPQ - firstPQ) + 1);
+					string filename = Path.GetFileName(includePath);
+					if (string.IsNullOrEmpty(filename))
+						throw new FileNotFoundException($"#include path \"{includePath}\" at line {curLine} does not contain filename.");
+					string subpath = Path.GetDirectoryName(includePath);
+					includeDataFiles.Add(Load(DataPath, filename, subpath));
+				}
 
 				++curLine;
 			}

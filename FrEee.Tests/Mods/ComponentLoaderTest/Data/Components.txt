@@ -7,6 +7,7 @@ Tonnage Structure := 20
 Weapon Type := Direct Fire
 Weapon Damage At Rng := 20 20 0 0 0 0 0
 Weapon Display Type := Beam
+Weapon Damage Type := Normal
 Pic := test
 
 Name := Blind Spot Weapon
@@ -15,4 +16,5 @@ Tonnage Structure := 20
 Weapon Type := Direct Fire
 Weapon Damage At Rng := 0 20 20 0
 Weapon Display Type := Beam
+Weapon Damage Type := Normal
 Pic := test
