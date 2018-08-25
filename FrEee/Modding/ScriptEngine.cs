@@ -30,7 +30,7 @@ namespace FrEee.Modding
 
 			//Setting the AppDomainSetup. It is very important to set the ApplicationBase to a folder
 			//other than the one in which the sandboxer resides.
-			AppDomainSetup adSetup = new AppDomainSetup();
+			var adSetup = new AppDomainSetup();
 			adSetup.ApplicationBase = AppDomain.CurrentDomain.BaseDirectory;
 			adSetup.ApplicationName = "FrEee";
 			adSetup.DynamicBase = "ScriptEngine";
