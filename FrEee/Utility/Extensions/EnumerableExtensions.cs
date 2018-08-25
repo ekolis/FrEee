@@ -252,7 +252,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> src, PRNG prng = null)
 		{
-			return src.OrderBy(t => RandomHelper.Next(int.MaxValue, prng));
+			return src.Select(value => (RandomHelper.Next(int.MaxValue, prng), value)).OrderBy(q => q.Item1).Select(q => q.value);
 		}
 
 		/// <summary>
