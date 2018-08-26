@@ -77,6 +77,16 @@ namespace FrEee.Modding
 			return new LiteralFormula<T>(txt);
 		}
 
+		public ObjectFormula<T> CreateObjectFormula<T>(object context)
+		{
+			return new ObjectFormula<T>(Value.TrimStart('='), context, true);
+		}
+
+		public Script CreateScript(object context)
+		{
+			return new Script("DynamicScript", Value.TrimStart('='));
+		}
+
 		/// <summary>
 		/// Parses a field as a double and logs any error in the mod loading error log.
 		/// </summary>
