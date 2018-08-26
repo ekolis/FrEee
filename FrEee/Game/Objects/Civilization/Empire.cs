@@ -1017,6 +1017,17 @@ namespace FrEee.Game.Objects.Civilization
 			Commands.Add(cmd);
 		}
 
+		public void NormalizeStoredResources()
+		{
+			foreach (var r in Resource.All)
+			{
+				if (StoredResources[r] > ResourceStorage[r])
+					StoredResources[r] = ResourceStorage[r];
+				if (StoredResources[r] < 0)
+					StoredResources[r] = 0;
+			}
+		}
+
 		public bool Owns(IFoggable o)
 		{
 			return o.CheckVisibility(this) >= Visibility.Owned;
