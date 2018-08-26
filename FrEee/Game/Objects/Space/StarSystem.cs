@@ -328,6 +328,11 @@ namespace FrEee.Game.Objects.Space
 			return CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
 		}
 
+		public Sector PickRandomSector(PRNG prng = null)
+		{
+			return new Sector(this, RandomHelper.Range(-Radius, Radius, prng), RandomHelper.Range(-Radius, Radius, prng);
+		}
+
 		public void Place(ISpaceObject sobj, Point coords)
 		{
 			var sys = sobj.FindStarSystem();
