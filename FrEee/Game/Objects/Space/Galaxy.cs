@@ -1482,6 +1482,11 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
+		public Sector PickRandomSector(PRNG prng = null)
+		{
+			return StarSystemLocations.PickRandom(prng).Item.PickRandomSector(prng);
+		}
+
 		/// <summary>
 		/// Removes any space objects, etc. that the current empire cannot see.
 		/// </summary>
