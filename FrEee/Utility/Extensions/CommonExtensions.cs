@@ -1825,14 +1825,32 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
+		/// Inflicts damage on an object.
+		/// </summary>
+		/// <returns>Leftover damage.</returns>
+		public static int TakeDamage(this IDamageable d, DamageType dt, int damage, PRNG dice = null)
+		{
+			return d.TakeDamage(new Hit(dt, damage, d), dice);
+		}
+
+		/// <summary>
+		/// Inflicts damage on an object.
+		/// </summary>
+		/// <returns>Leftover damage.</returns>
+		public static int TakeDamage(this IDamageable d, string damageTypeName, int damage, PRNG dice = null)
+		{
+			return d.TakeDamage(Mod.Current.DamageTypes.FindByName(damageTypeName), damage, dice);
+		}
+
+		/// <summary>
 		/// Inflicts normal damage on an object out of the blue.
 		/// </summary>
 		/// <param name="d">The object which should take damage.</param>
 		/// <param name="dmg">The amount of normal damage to inflict.</param>
 		/// <returns>Leftover damage.</returns>
-		public static int TakeNormalDamage(this IDamageable d, int dmg)
+		public static int TakeNormalDamage(this IDamageable d, int dmg, PRNG dice = null)
 		{
-			return d.TakeDamage(new Hit(new Shot(null, null, d, 0), d, dmg));
+			return d.TakeDamage("Normal", dmg, dice);
 		}
 
 		/// <summary>

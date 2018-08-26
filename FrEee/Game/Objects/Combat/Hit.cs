@@ -1,4 +1,5 @@
 ﻿using FrEee.Game.Interfaces;
+using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
@@ -11,12 +12,22 @@ namespace FrEee.Game.Objects.Combat
 	/// </summary>
 	public class Hit : IFormulaHost
 	{
-		public Hit(Shot shot, IDamageable target, int nominalDamage)
+		public Hit(Shot shot, IDamageable target, int? nominalDamage = null)
 		{
 			Shot = shot;
+			DamageType = shot.DamageType;
 			Target = target;
-			NominalDamage = nominalDamage;
+			NominalDamage = nominalDamage ?? shot.DamageLeft;
 		}
+
+		public Hit(DamageType dt, int damage, IDamageable target)
+		{
+			DamageType = dt;
+			Target = target;
+			NominalDamage = damage;
+		}
+
+		public DamageType DamageType { get; set; }
 
 		/// <summary>
 		/// The nominal damage inflicted by this hit, not accounting for special damage types and target defenses.
