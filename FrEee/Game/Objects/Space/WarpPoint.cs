@@ -77,6 +77,17 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
+		public void Close(bool closeBothWays = true)
+		{
+			if (closeBothWays)
+			{
+				var wps = Target.SpaceObjects.OfType<WarpPoint>().Where(q => q.Target == Sector);
+				foreach (var wp in wps)
+					wp.Dispose();
+			}
+			Dispose();
+		}
+
 		/// <summary>
 		/// Just copy the warp point's data.
 		/// </summary>
