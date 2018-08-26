@@ -73,6 +73,18 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
+		/// Detonates this star. All space vehicles in the system will be destroyed and all planets will be converted to asteroid fields.
+		/// </summary>
+		public void Detonate()
+		{
+			foreach (var p in StarSystem.FindSpaceObjects<Planet>())
+				p.ConvertToAsteroidField();
+			foreach (var v in StarSystem.FindSpaceObjects<IMobileSpaceObject>())
+				v.Dispose();
+			Dispose();
+		}
+
+		/// <summary>
 		/// Just copy the star's data.
 		/// </summary>
 		/// <returns>A copy of the star.</returns>
