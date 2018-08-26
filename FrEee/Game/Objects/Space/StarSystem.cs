@@ -330,7 +330,7 @@ namespace FrEee.Game.Objects.Space
 
 		public Sector PickRandomSector(PRNG prng = null)
 		{
-			return new Sector(this, RandomHelper.Range(-Radius, Radius, prng), RandomHelper.Range(-Radius, Radius, prng);
+			return new Sector(this, new Point(RandomHelper.Range(-Radius, Radius, prng), RandomHelper.Range(-Radius, Radius, prng)));
 		}
 
 		public void Place(ISpaceObject sobj, Point coords)
