@@ -1,4 +1,5 @@
 ﻿using FrEee.Game.Objects.Combat;
+using FrEee.Modding;
 using FrEee.Utility;
 
 namespace FrEee.Game.Interfaces
@@ -69,9 +70,6 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// Takes damage.
 		/// </summary>
-		/// <param name="dmgType"></param>
-		/// <param name="damage"></param>
-		/// <param name="dice"></param>
 		/// <returns>Leftover damage.</returns>
 		int TakeDamage(Hit hit, PRNG dice = null);
 	}
