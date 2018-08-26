@@ -157,6 +157,14 @@ namespace FrEee.Game.Objects.Civilization
 
 		public double Timestamp { get; set; }
 
+		public void ChangePopulation(long amount)
+		{
+			var pop = Population.ToArray();
+			var total = Population.Sum(q => q.Value);
+			foreach (var kvp in pop)
+				Population[kvp.Key] += amount * kvp.Value / total;
+		}
+
 		public Visibility CheckVisibility(Empire emp)
 		{
 			// should be visible, assuming the planet is visible - we don't have colony cloaking at the moment...
