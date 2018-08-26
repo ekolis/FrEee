@@ -1317,6 +1317,20 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
+		/// Creates a new empire.
+		/// </summary>
+		/// <returns></returns>
+		public Empire CreateNewEmpire()
+		{
+			var emp = new Empire();
+			emp.Name = "Randomly Generated Empire"; // TODO - load from EmpireNames.txt / EmpireTypes.txt
+
+			// TODO - assign AI and primary race to empire
+			Empires.Add(emp);
+			return emp;
+		}
+
+		/// <summary>
 		/// Disables the server side ability cache.
 		/// </summary>
 		public void DisableAbilityCache()
