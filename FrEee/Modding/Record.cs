@@ -102,6 +102,39 @@ namespace FrEee.Modding
 			return f.CreateFormula<T>(context);
 		}
 
+		public ObjectFormula<T> GetObject<T>(string fieldName, object context = null, bool allowNulls = true)
+		{
+			int index = 0;
+			return GetObject<T>(fieldName, context, ref index, allowNulls);
+		}
+
+		public ObjectFormula<T> GetObject<T>(IEnumerable<string> fieldNames, object context = null, bool allowNulls = true)
+		{
+			int index = 0;
+			return GetObject<T>(fieldNames, context, ref index, allowNulls);
+		}
+
+		public ObjectFormula<T> GetObject<T>(string fieldName, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
+		{
+			return GetObject<T>(new string[] { fieldName }, context, ref index, allowNulls, startIndex = 0, allowSkip = true);
+		}
+
+		public ObjectFormula<T> GetObject<T>(IEnumerable<string> fieldNames, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
+		{
+			var f = FindField(fieldNames, ref index, !allowNulls, startIndex, allowSkip);
+			if (f == null)
+			{
+				if (allowNulls)
+					return null;
+				else
+				{
+					Mod.Errors.Add(new DataParsingException("Cannot find field \"" + fieldNames.First() + "\".", Mod.CurrentFileName, this, null));
+					return new ObjectFormula<T>("None", context, false);
+				}
+			}
+			return f.CreateObjectFormula<T>(context);
+		}
+
 		public IEnumerable<Formula<T>> GetMany<T>(string fieldName, object context, bool allowNulls = true)
 			where T : IConvertible, IComparable
 		{
@@ -133,6 +166,70 @@ namespace FrEee.Modding
 				startIndex = index + 1;
 				if (f != null)
 					result.Add(f.CreateFormula<T>(context));
+			} while (f != null);
+			return result;
+		}
+
+		public Script GetScript(string fieldName, object context = null, bool allowNulls = true)
+		{
+			int index = 0;
+			return GetScript(fieldName, context, ref index, allowNulls);
+		}
+
+		public Script GetScript(IEnumerable<string> fieldNames, object context = null, bool allowNulls = true)
+		{
+			int index = 0;
+			return GetScript(fieldNames, context, ref index, allowNulls);
+		}
+
+		public Script GetScript(string fieldName, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
+		{
+			return GetScript(new string[] { fieldName }, context, ref index, allowNulls, startIndex = 0, allowSkip = true);
+		}
+
+		public Script GetScript(IEnumerable<string> fieldNames, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
+		{
+			var f = FindField(fieldNames, ref index, !allowNulls, startIndex, allowSkip);
+			if (f == null)
+			{
+				if (allowNulls)
+					return null;
+				else
+				{
+					Mod.Errors.Add(new DataParsingException("Cannot find field \"" + fieldNames.First() + "\".", Mod.CurrentFileName, this, null));
+					return new Script("DynamicScript", "None");
+				}
+			}
+			return f.CreateScript(context);
+		}
+
+		public IEnumerable<Script> GetScripts(string fieldName, object context, bool allowNulls = true)
+		{
+			int index = 0;
+			return GetScripts(fieldName, context, ref index, allowNulls);
+		}
+
+		public IEnumerable<Script> GetScripts(IEnumerable<string> fieldNames, object context, bool allowNulls = true)
+		{
+			int index = 0;
+			return GetScripts(fieldNames, context, ref index, allowNulls);
+		}
+
+		public IEnumerable<Script> GetScripts(string fieldName, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
+		{
+			return GetScripts(new string[] { fieldName }, context, ref index, allowNulls, startIndex = 0, allowSkip = true);
+		}
+
+		public IEnumerable<Script> GetScripts(IEnumerable<string> fieldNames, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
+		{
+			Field f;
+			var result = new List<Script>();
+			do
+			{
+				f = FindField(fieldNames, ref index, !allowNulls, startIndex, allowSkip);
+				startIndex = index + 1;
+				if (f != null)
+					result.Add(f.CreateScript(context));
 			} while (f != null);
 			return result;
 		}

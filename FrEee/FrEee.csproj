@@ -147,9 +147,12 @@
     <Compile Include="Game\Objects\Combat\IBattle.cs" />
     <Compile Include="Game\Objects\Combat\Seeker.cs" />
     <Compile Include="Modding\ComputedFormula.cs" />
+    <Compile Include="Modding\ObjectFormula.cs" />
     <Compile Include="Modding\Formula.cs" />
     <Compile Include="Modding\LiteralFormula.cs" />
     <Compile Include="Modding\Loaders\DesignRoleLoader.cs" />
+    <Compile Include="Modding\Loaders\EventTypeLoader.cs" />
+    <Compile Include="Game\Objects\Events\EventType.cs" />
     <Compile Include="Utility\ClientUtilities.cs" />
     <Compile Include="Utility\Extensions\ChecksExtensions.cs" />
     <Compile Include="Utility\Extensions\CopyingExtensions.cs" />

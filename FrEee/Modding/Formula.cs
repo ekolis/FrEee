@@ -12,7 +12,7 @@ namespace FrEee.Modding
 	/// <typeparam name="T">Return type of the formula.</typeparam>
 	[Serializable]
 	public abstract class Formula<T> : IFormula<T>, IComparable<T>, IComparable<Formula<T>>
-		where T : IConvertible, IComparable
+		where T : IComparable, IConvertible
 	{
 		public Formula(string text)
 					: this()

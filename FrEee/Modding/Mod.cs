@@ -49,6 +49,7 @@ namespace FrEee.Modding
 			HappinessModels = new List<HappinessModel>();
 			Cultures = new List<Culture>();
 			EmpireAIs = new List<AI<Empire, Galaxy>>();
+			EventTypes = new List<EventType>();
 
 			// for redacted colonies
 			FacilityTemplates.Add(FacilityTemplate.Unknown);
@@ -104,6 +105,11 @@ namespace FrEee.Modding
 		/// The script which runs after each turn.
 		/// </summary>
 		public Script EndTurnScript { get; set; }
+
+		/// <summary>
+		/// The event types in the mod.
+		/// </summary>
+		public ICollection<EventType> EventTypes { get; private set; }
 
 		/// <summary>
 		/// The facilities in the mod.
@@ -241,6 +247,7 @@ namespace FrEee.Modding
 				new HappinessModelLoader(path),
 				new CultureLoader(path),
 				new EmpireAILoader(path),
+				new EventTypeLoader(path),
 			};
 
 			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / loaders.Length;
