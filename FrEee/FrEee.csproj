@@ -137,6 +137,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game\Objects\Events\Event.cs" />
+    <Compile Include="Game\Enumerations\EventMessageTarget.cs" />
+    <Compile Include="Game\Enumerations\EventSeverity.cs" />
     <Compile Include="Game\Objects\Combat\Grid\Battle.cs" />
     <Compile Include="Game\Objects\Combat\Grid\CombatantDisappearsEvent.cs" />
     <Compile Include="Game\Objects\Combat\Grid\CombatantAppearsEvent.cs" />
@@ -146,13 +149,16 @@
     <Compile Include="Game\Objects\Combat\Simple\Battle.cs" />
     <Compile Include="Game\Objects\Combat\IBattle.cs" />
     <Compile Include="Game\Objects\Combat\Seeker.cs" />
+    <Compile Include="Game\Objects\Events\EventMessage.cs" />
     <Compile Include="Modding\ComputedFormula.cs" />
+    <Compile Include="Modding\EventTemplate.cs" />
+    <Compile Include="Modding\Loaders\EventLoader.cs" />
     <Compile Include="Modding\ObjectFormula.cs" />
     <Compile Include="Modding\Formula.cs" />
     <Compile Include="Modding\LiteralFormula.cs" />
     <Compile Include="Modding\Loaders\DesignRoleLoader.cs" />
     <Compile Include="Modding\Loaders\EventTypeLoader.cs" />
-    <Compile Include="Game\Objects\Events\EventType.cs" />
+    <Compile Include="Modding\EventType.cs" />
     <Compile Include="Utility\ClientUtilities.cs" />
     <Compile Include="Utility\Extensions\ChecksExtensions.cs" />
     <Compile Include="Utility\Extensions\CopyingExtensions.cs" />

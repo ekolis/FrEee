@@ -50,6 +50,7 @@ namespace FrEee.Modding
 			Cultures = new List<Culture>();
 			EmpireAIs = new List<AI<Empire, Galaxy>>();
 			EventTypes = new List<EventType>();
+			EventTemplates = new List<EventTemplate>();
 
 			// for redacted colonies
 			FacilityTemplates.Add(FacilityTemplate.Unknown);
@@ -105,6 +106,11 @@ namespace FrEee.Modding
 		/// The script which runs after each turn.
 		/// </summary>
 		public Script EndTurnScript { get; set; }
+
+		/// <summary>
+		/// The event templates in the mod.
+		/// </summary>
+		public ICollection<EventTemplate> EventTemplates { get; private set; }
 
 		/// <summary>
 		/// The event types in the mod.
@@ -248,6 +254,7 @@ namespace FrEee.Modding
 				new CultureLoader(path),
 				new EmpireAILoader(path),
 				new EventTypeLoader(path),
+				new EventLoader(path),
 			};
 
 			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / loaders.Length;
@@ -409,38 +416,6 @@ namespace FrEee.Modding
 		}
 
 		/// <summary>
-		/// Patches a mod with data from a new mod.
-		/// </summary>
-		/// <param name="newMod">The new mod.</param>
-		[Obsolete("Mod.Patch is deprecated and does not work properly. Just set the Mod property of Galaxy instead.")]
-		public void Patch(Mod newMod)
-		{
-			newMod.Info.CopyTo(Info);
-			newMod.GlobalScript.CopyTo(GlobalScript);
-			StarSystemNames.Clear();
-			foreach (var n in newMod.StarSystemNames)
-				StarSystemNames.Add(n);
-			AbilityRules.Patch(newMod.AbilityRules);
-			newMod.Settings.CopyTo(Settings);
-			StellarObjectSizes.Patch(newMod.StellarObjectSizes);
-			StellarObjectTemplates.Patch(newMod.StellarObjectTemplates);
-			Traits.Patch(newMod.Traits);
-			Technologies.Patch(newMod.Technologies);
-			FacilityTemplates.Patch(newMod.FacilityTemplates);
-			Hulls.Patch(newMod.Hulls);
-			ComponentTemplates.Patch(newMod.ComponentTemplates);
-			Mounts.Patch(newMod.Mounts);
-			StellarAbilityTemplates.Patch(newMod.StellarAbilityTemplates);
-			StarSystemTemplates.Patch(newMod.StarSystemTemplates);
-			GalaxyTemplates.Patch(newMod.GalaxyTemplates);
-			HappinessModels.Patch(newMod.HappinessModels);
-			Cultures.Patch(newMod.Cultures);
-			newMod.GameInitScript.CopyTo(GameInitScript);
-			newMod.EndTurnScript.CopyTo(EndTurnScript);
-			EmpireAIs.Patch(newMod.EmpireAIs);
-		}
-
-		/// <summary>
 		/// Refreshes the object catalog.
 		/// </summary>
 		public void RefreshObjects()
@@ -476,6 +451,10 @@ namespace FrEee.Modding
 				Register(c);
 			foreach (var ai in EmpireAIs)
 				Register(ai);
+			foreach (var q in EventTypes)
+				Register(q);
+			foreach (var q in EventTemplates)
+				Register(q);
 		}
 
 		/// <summary>

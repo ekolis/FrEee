@@ -53,7 +53,7 @@ namespace FrEee.Modding
 		/// <summary>
 		/// Any external scripts directly referenced by this script.
 		/// </summary>
-		public IList<Script> ExternalScripts { get; private set; }
+		public IList<Script> ExternalScripts { get; set; }
 
 		/// <summary>
 		/// Full text of this script, including the mod global script and all referenced external scripts.

@@ -1,15 +1,10 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Abilities;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
-using FrEee.Modding;
+using FrEee.Game.Objects.Events;
 using FrEee.Modding.Interfaces;
-using FrEee.Utility;
 using System.Collections.Generic;
-using System.IO;
 
-namespace FrEee.Game.Objects.Technology
+namespace FrEee.Modding
 {
 	/// <summary>
 	/// A type of random event or intelligence project.
@@ -19,6 +14,11 @@ namespace FrEee.Game.Objects.Technology
 		public EventType()
 		{
 		}
+
+		/// <summary>
+		/// Actiosn to execute when the event occurs.,
+		/// </summary>
+		public ICollection<Script> Actions { get; set; }
 
 		public bool IsDisposed { get; set; }
 
@@ -37,18 +37,13 @@ namespace FrEee.Game.Objects.Technology
 		string INamed.Name => Name;
 
 		/// <summary>
+		/// Scripts to set parameters for the event type.
+		/// </summary>
+		public IDictionary<string, ObjectFormula<object>> Parameters { get; set; }
+
+		/// <summary>
 		/// Script to select a target for the event.
 		/// </summary>
 		public ObjectFormula<IEnumerable<object>> TargetSelector { get; set; }
-
-		/// <summary>
-		/// Scripts to set parameters for the event type.
-		/// </summary>
-		public ICollection<Script> Parameters { get; set; }
-
-		/// <summary>
-		/// Actiosn to execute when the event occurs.,
-		/// </summary>
-		public ICollection<Script> Actions { get; set; }
 	}
 }

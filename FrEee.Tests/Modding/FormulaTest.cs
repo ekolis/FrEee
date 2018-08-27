@@ -149,5 +149,19 @@ Name := ='Nuclear Missile ' + warhead.ToRomanNumeral() + ' S' + speed.ToString()
 			Assert.IsFalse(formula.IsDynamic);
 			Assert.IsFalse(formula.IsLiteral);
 		}
+
+		/// <summary>
+		/// Tests SE4/SE5 style replacement strings.
+		/// </summary>
+		[TestMethod]
+		public void ReplacementStrings()
+		{
+			var field = new Field("Test := [%Amount1] [%Amount2%]");
+			var ctx = new { Amount1 = 42, Amount2 = 69 };
+			var formula = field.CreateFormula<string>(ctx);
+			Assert.AreEqual("42 69", formula.Value);
+			Assert.IsTrue(formula.IsDynamic);
+			Assert.IsFalse(formula.IsLiteral);
+		}
 	}
 }

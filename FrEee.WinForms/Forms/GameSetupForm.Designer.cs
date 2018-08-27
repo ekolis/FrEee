@@ -341,8 +341,8 @@
 			// 
 			// ddlEventSeverity
 			// 
+			this.ddlEventSeverity.DisplayMember = "Value";
 			this.ddlEventSeverity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ddlEventSeverity.Enabled = false;
 			this.ddlEventSeverity.FormattingEnabled = true;
 			this.ddlEventSeverity.Location = new System.Drawing.Point(114, 305);
 			this.ddlEventSeverity.Name = "ddlEventSeverity";
@@ -431,13 +431,14 @@
 			// 
 			// ddlEventFrequency
 			// 
+			this.ddlEventFrequency.DisplayMember = "Name";
 			this.ddlEventFrequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ddlEventFrequency.Enabled = false;
 			this.ddlEventFrequency.FormattingEnabled = true;
 			this.ddlEventFrequency.Location = new System.Drawing.Point(114, 276);
 			this.ddlEventFrequency.Name = "ddlEventFrequency";
 			this.ddlEventFrequency.Size = new System.Drawing.Size(152, 23);
 			this.ddlEventFrequency.TabIndex = 15;
+			this.ddlEventFrequency.ValueMember = "Value";
 			// 
 			// label6
 			// 
@@ -2453,7 +2454,6 @@
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.btnStart);
 			this.Controls.Add(this.tabs);
-			this.ForeColor = System.Drawing.Color.White;
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.Name = "GameSetupForm";
