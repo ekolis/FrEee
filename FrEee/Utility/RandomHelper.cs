@@ -65,5 +65,15 @@ namespace FrEee.Utility
 		{
 			return (prng ?? PRNG).Range(min, max);
 		}
+
+		/// <summary>
+		/// Determines if something happens based on a percentage chance.
+		/// </summary>
+		/// <param name="chance">The chance of something happening, between 0 and 100.</param>
+		/// <returns>Should something happen?</returns>
+		public static bool PercentageChance(int chance, PRNG prng = null)
+		{
+			return Range(0, 99, prng) < chance;
+		}
 	}
 }

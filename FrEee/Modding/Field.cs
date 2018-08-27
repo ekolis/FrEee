@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace FrEee.Modding
 {
@@ -57,6 +58,11 @@ namespace FrEee.Modding
 					where T : IConvertible, IComparable
 		{
 			var txt = Value.TrimStart('=');
+
+			// SE4/SE5 style replacement strings turn into dynamic formulas
+			txt = Regex.Replace(txt, @"\[\%(.*)\%\]", "{{$1}}");
+			txt = Regex.Replace(txt, @"\[\%(.*)\]", "{{$1}}");
+
 			if (Value.StartsWith("=="))
 				return new ComputedFormula<T>(txt, context, true); // dynamic
 			else if (Value.StartsWith("="))

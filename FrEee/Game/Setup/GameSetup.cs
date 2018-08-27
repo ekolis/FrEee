@@ -55,6 +55,12 @@ namespace FrEee.Game.Setup
 		public IList<EmpireTemplate> EmpireTemplates { get; private set; }
 
 		/// <summary>
+		/// Number of turns per random event per surviving major empire.
+		/// E.g. if this is set to 20 then in a galaxy with 10 players there will be approximately one random event every other turn.
+		/// </summary>
+		public int EventRarity { get; private set; }
+
+		/// <summary>
 		/// Technologies that are locked at level zero.
 		/// </summary>
 		public IList<string> ForbiddenTechnologyNames { get; private set; }

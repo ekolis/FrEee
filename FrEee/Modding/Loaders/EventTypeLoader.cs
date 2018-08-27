@@ -1,9 +1,5 @@
-﻿using FrEee.Game.Enumerations;
-using FrEee.Game.Objects.Technology;
-using FrEee.Modding.Enumerations;
-using FrEee.Modding.Interfaces;
-using FrEee.Utility.Extensions;
-using System;
+﻿using FrEee.Modding.Interfaces;
+using FrEee.Utility;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,8 +27,17 @@ namespace FrEee.Modding.Loaders
 				et.ModID = rec.Get<string>("ID", et);
 				et.Name = rec.Get<string>("Name", et);
 				et.TargetSelector = rec.GetObject<IEnumerable<object>>("Target Type Selector", et);
-				et.Parameters = rec.GetScripts("Parameter", et).ToList();
+				et.Parameters = new SafeDictionary<string, ObjectFormula<object>>();
+				var actionParams = new List<Script>();
+				foreach (var f in rec.Fields.Where(f => f.Name == "Parameter"))
+				{
+					var split = f.Value.Split('=').Select(s => s.Trim()).ToArray();
+					et.Parameters[split[0]] = new ObjectFormula<object>(split[1], et, true);
+					actionParams.Add(new Script("EventType", f.Value));
+				}
 				et.Actions = rec.GetScripts("Action", et).ToList();
+				foreach (var action in et.Actions)
+					action.ExternalScripts = actionParams.ToArray();
 
 				yield return et;
 			}

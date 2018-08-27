@@ -330,6 +330,114 @@ namespace FrEee.Modding
 			return result;
 		}
 
+		/// <summary>
+		/// Runs a script in a sandboxed environment.
+		/// </summary>
+		/// <param name="script">The script code to run.</param>
+		/// <param name="variables">Read/write variables to inject into the script.</param>
+		/// <param name="readOnlyVariables">Read-only variables to inject into the script.</param>
+		public static void RunScript(Script script, IDictionary<string, object> variables = null, IDictionary<string, object> readOnlyVariables = null)
+		{
+			var preCommands = new List<string>();
+			var postCommands = new List<string>();
+			preCommands.Add("import clr");
+			preCommands.Add("clr.AddReference('System.Core')");
+			preCommands.Add("import System");
+			preCommands.Add("clr.ImportExtensions(System.Linq)");
+			preCommands.Add("import FrEee");
+			preCommands.Add("import FrEee.Utility");
+			preCommands.Add("clr.ImportExtensions(FrEee.Utility.Extensions)");
+			preCommands.Add("from FrEee.Modding import Mod");
+			preCommands.Add("from FrEee.Game.Objects.Space import Galaxy");
+			preCommands.Add("from FrEee.Game.Objects.Civilization import Empire");
+			preCommands.Add("from FrEee.Utility import Serializer");
+			preCommands.Add("if newGalaxy:");
+			preCommands.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
+			preCommands.Add("\tGalaxy.Current = galaxy;");
+			preCommands.Add("\tMod.Current = galaxy.Mod;");
+			if (variables != null)
+			{
+				foreach (var variable in variables.Keys)
+				{
+					if (variables[variable] is IReferrable)
+					{
+						preCommands.Add("if 'galaxy' in vars():");
+						preCommands.Add("\t" + variable + " = galaxy.GetReferrable(_" + variable + ");");
+					}
+					else
+						preCommands.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
+					postCommands.Add("_" + variable + " = Serializer.SerializeToString(" + variable + ");");
+				}
+			}
+			if (readOnlyVariables != null)
+			{
+				foreach (var variable in readOnlyVariables.Keys)
+				{
+					if (readOnlyVariables[variable] == Galaxy.Current && Galaxy.Current != null)
+					{
+						preCommands.Add(variable + " = galaxy;");
+					}
+					else if (readOnlyVariables[variable] is IReferrable)
+					{
+						preCommands.Add("if 'galaxy' in vars():");
+						preCommands.Add("\t" + variable + " = galaxy.GetReferrable(_" + variable + ");");
+					}
+					else
+						preCommands.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
+				}
+			}
+			var code =
+				string.Join("\n", preCommands.ToArray()) + "\n" +
+				script.Text + "\n" +
+				string.Join("\n", postCommands.ToArray());
+			var external = new List<Script>(script.ExternalScripts);
+			if (Mod.Current != null)
+				external.Add(Mod.Current.GlobalScript);
+			var sc = new ScriptCode("runner", code, external.ToArray());
+			var runner = GetCodeScript(sc);
+			var compiledScript = GetCompiledScript(runner);
+			var allVariables = new Dictionary<string, object>();
+			if (variables != null)
+			{
+				foreach (var v in variables)
+					allVariables.Add(v.Key, v.Value);
+			}
+			if (readOnlyVariables != null)
+			{
+				foreach (var v in readOnlyVariables)
+					allVariables.Add(v.Key, v.Value);
+			}
+			UpdateScope(allVariables);
+			try
+			{
+				compiledScript.Execute(scope);
+				if (variables != null)
+				{
+					var newvals = RetrieveVariablesFromScope(scope, variables.Keys);
+					foreach (var kvp in variables)
+						newvals[kvp.Key].CopyTo(kvp.Value);
+				}
+			}
+			catch (Exception ex)
+			{
+				if (ex.Data.Values.Count > 0)
+				{
+					Array info = ex.Data.Values.Cast<dynamic>().First();
+					var debugInfo = info.Cast<dynamic>().FirstOrDefault(o => o.DebugInfo != null)?.DebugInfo;
+					if (debugInfo != null)
+					{
+						int startLine = debugInfo.StartLine;
+						int endLine = debugInfo.StartLine;
+						throw new ScriptException(ex, string.Join("\n", runner.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
+					}
+					else
+						throw new ScriptException(ex, "(unknown code)");
+				}
+				else
+					throw new ScriptException(ex, "(unknown code)");
+			}
+		}
+
 		public static IDictionary<string, string> SerializeScriptVariables(IDictionary<string, object> variables)
 		{
 			return variables.Select(kvp => new KeyValuePair<string, string>(

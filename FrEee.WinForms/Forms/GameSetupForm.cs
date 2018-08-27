@@ -57,6 +57,17 @@ namespace FrEee.WinForms.Forms
 			ddlScoreDisplay.SelectedIndex = 0; // own only, no ranking
 			ddlTechCost.SelectedIndex = 0; // low tech cost
 
+			ddlEventFrequency.Items.Add(new { Name = "Very Common", Value = 10 });
+			ddlEventFrequency.Items.Add(new { Name = "Common", Value = 20 });
+			ddlEventFrequency.Items.Add(new { Name = "Rare", Value = 40 });
+			ddlEventFrequency.Items.Add(new { Name = "Very Rare", Value = 80 });
+			ddlEventFrequency.SelectedItem = ddlEventFrequency.Items.Cast<dynamic>().Single(q => q.Name == "Common");
+
+			foreach (var item in Enum.GetValues(typeof(EventSeverity)))
+				ddlEventSeverity.Items.Add(item);
+
+			ddlEventSeverity.SelectedItem = EventSeverity.High;
+
 			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); } catch { }
 		}
 
