@@ -735,13 +735,14 @@ namespace FrEee.Game.Objects.Space
 				status.Message = "Triggering events";
 			}
 
-			if (RandomHelper.PerMilleChance(Current.EventFrequency * Current.Empires.Where(e => !e.IsDefeated).Count()))
+			var dice = new PRNG(Current.Name.GetHashCode() + Current.TurnNumber);
+			if (RandomHelper.PerMilleChance(Current.EventFrequency * Current.Empires.Where(e => !e.IsDefeated).Count(), dice))
 			{
 				// trigger a new event
 				var templates = Mod.Current.EventTemplates.Where(t => t.Severity <= Current.MaximumEventSeverity);
 				if (templates.Any())
 				{
-					var template = templates.PickRandom();
+					var template = templates.PickRandom(dice);
 					var evt = template.Instantiate();
 					Current.PendingEvents.Add(evt);
 				}
