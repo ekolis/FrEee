@@ -449,6 +449,21 @@ namespace FrEee.Modding
 		/// </summary>
 		public int WeaponAccuracyPointBlank { get; set; }
 
+		/// <summary>
+		/// Low event frequency, chance per 1000 per player for an event each turns
+		/// </summary>
+		public double EventFrequencyLow { get; set; }
+
+		/// <summary>
+		/// Medium event frequency, chance per 1000 per player for an event each turns
+		/// </summary>
+		public double EventFrequencyMedium { get; set; }
+
+		/// <summary>
+		/// High event frequency, chance per 1000 per player for an event each turns
+		/// </summary>
+		public double EventFrequencyHigh { get; set; }
+
 		public double GetMoodFactor(int anger)
 		{
 			Mood mood = Mood.Emotionless;

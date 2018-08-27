@@ -194,6 +194,7 @@
 			this.btnLoadSetup = new FrEee.WinForms.Controls.GameButton();
 			this.btnSaveSetup = new FrEee.WinForms.Controls.GameButton();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
+			this.label62 = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.tabGalaxy.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.spnSystemGroups)).BeginInit();
@@ -271,6 +272,7 @@
 			// tabGalaxy
 			// 
 			this.tabGalaxy.BackColor = System.Drawing.Color.Black;
+			this.tabGalaxy.Controls.Add(this.label62);
 			this.tabGalaxy.Controls.Add(this.label11);
 			this.tabGalaxy.Controls.Add(this.spnSystemGroups);
 			this.tabGalaxy.Controls.Add(this.txtWarpPointLocation);
@@ -2442,6 +2444,15 @@
 			this.progressBar.TabIndex = 5;
 			this.progressBar.Visible = false;
 			// 
+			// label62
+			// 
+			this.label62.AutoSize = true;
+			this.label62.Location = new System.Drawing.Point(272, 279);
+			this.label62.Name = "label62";
+			this.label62.Size = new System.Drawing.Size(158, 15);
+			this.label62.TabIndex = 28;
+			this.label62.Text = "Per mille per player per turn";
+			// 
 			// GameSetupForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2685,5 +2696,6 @@
 		private System.Windows.Forms.Label label60;
 		private System.Windows.Forms.ComboBox ddlTechCost;
 		private System.Windows.Forms.Label label61;
+		private System.Windows.Forms.Label label62;
 	}
 }

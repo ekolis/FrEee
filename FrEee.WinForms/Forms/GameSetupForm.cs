@@ -57,11 +57,11 @@ namespace FrEee.WinForms.Forms
 			ddlScoreDisplay.SelectedIndex = 0; // own only, no ranking
 			ddlTechCost.SelectedIndex = 0; // low tech cost
 
-			ddlEventFrequency.Items.Add(new { Name = "Very Common", Value = 10 });
-			ddlEventFrequency.Items.Add(new { Name = "Common", Value = 20 });
-			ddlEventFrequency.Items.Add(new { Name = "Rare", Value = 40 });
-			ddlEventFrequency.Items.Add(new { Name = "Very Rare", Value = 80 });
-			ddlEventFrequency.SelectedItem = ddlEventFrequency.Items.Cast<dynamic>().Single(q => q.Name == "Common");
+			ddlEventFrequency.Items.Add(new { Name = $"None", Value = 0 });
+			ddlEventFrequency.Items.Add(new { Name = $"Low ({Mod.Current.Settings.EventFrequencyLow})", Value = Mod.Current.Settings.EventFrequencyLow });
+			ddlEventFrequency.Items.Add(new { Name = $"Medum ({Mod.Current.Settings.EventFrequencyMedium})", Value = Mod.Current.Settings.EventFrequencyMedium });
+			ddlEventFrequency.Items.Add(new { Name = $"High ({Mod.Current.Settings.EventFrequencyHigh})", Value = Mod.Current.Settings.EventFrequencyHigh });
+			ddlEventFrequency.SelectedItem = ddlEventFrequency.Items.Cast<dynamic>().ElementAt(1);
 
 			foreach (var item in Enum.GetValues(typeof(EventSeverity)))
 				ddlEventSeverity.Items.Add(item);
