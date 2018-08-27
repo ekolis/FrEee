@@ -735,7 +735,7 @@ namespace FrEee.Game.Objects.Space
 				status.Message = "Triggering events";
 			}
 
-			var dice = new PRNG(Current.Name.GetHashCode() + Current.TurnNumber);
+			var dice = new PRNG(HashCodeMasher.Mash(Current.Empires.Where(e => !e.IsDefeated)));
 			if (RandomHelper.PerMilleChance(Current.EventFrequency * Current.Empires.Where(e => !e.IsDefeated).Count(), dice))
 			{
 				// trigger a new event
