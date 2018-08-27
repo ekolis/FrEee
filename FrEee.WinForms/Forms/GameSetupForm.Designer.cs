@@ -34,7 +34,7 @@
 			this.label11 = new System.Windows.Forms.Label();
 			this.spnSystemGroups = new System.Windows.Forms.NumericUpDown();
 			this.txtWarpPointLocation = new System.Windows.Forms.Label();
-			this.ddlEventSeverity = new System.Windows.Forms.ComboBox();
+			this.ddlMaximumEventSeverity = new System.Windows.Forms.ComboBox();
 			this.label10 = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
 			this.spnHeight = new System.Windows.Forms.NumericUpDown();
@@ -276,7 +276,7 @@
 			this.tabGalaxy.Controls.Add(this.label11);
 			this.tabGalaxy.Controls.Add(this.spnSystemGroups);
 			this.tabGalaxy.Controls.Add(this.txtWarpPointLocation);
-			this.tabGalaxy.Controls.Add(this.ddlEventSeverity);
+			this.tabGalaxy.Controls.Add(this.ddlMaximumEventSeverity);
 			this.tabGalaxy.Controls.Add(this.label10);
 			this.tabGalaxy.Controls.Add(this.label9);
 			this.tabGalaxy.Controls.Add(this.spnHeight);
@@ -343,13 +343,13 @@
 			// 
 			// ddlEventSeverity
 			// 
-			this.ddlEventSeverity.DisplayMember = "Value";
-			this.ddlEventSeverity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ddlEventSeverity.FormattingEnabled = true;
-			this.ddlEventSeverity.Location = new System.Drawing.Point(114, 305);
-			this.ddlEventSeverity.Name = "ddlEventSeverity";
-			this.ddlEventSeverity.Size = new System.Drawing.Size(152, 23);
-			this.ddlEventSeverity.TabIndex = 22;
+			this.ddlMaximumEventSeverity.DisplayMember = "Value";
+			this.ddlMaximumEventSeverity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlMaximumEventSeverity.FormattingEnabled = true;
+			this.ddlMaximumEventSeverity.Location = new System.Drawing.Point(114, 305);
+			this.ddlMaximumEventSeverity.Name = "ddlEventSeverity";
+			this.ddlMaximumEventSeverity.Size = new System.Drawing.Size(152, 23);
+			this.ddlMaximumEventSeverity.TabIndex = 22;
 			// 
 			// label10
 			// 
@@ -2557,7 +2557,7 @@
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.NumericUpDown spnWidth;
 		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.ComboBox ddlEventSeverity;
+		private System.Windows.Forms.ComboBox ddlMaximumEventSeverity;
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.BindingSource galaxyTemplateBindingSource;
 		private Controls.GameButton btnLoadSetup;

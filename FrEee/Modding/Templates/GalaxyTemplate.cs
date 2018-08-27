@@ -100,6 +100,8 @@ namespace FrEee.Modding.Templates
 			gal.MinAsteroidValue = GameSetup.MinAsteroidValue;
 			gal.MinSpawnedAsteroidValue = GameSetup.MinSpawnedAsteroidValue;
 			gal.MaxSpawnedAsteroidValue = GameSetup.MaxSpawnedAsteroidValue;
+			gal.EventFrequency = GameSetup.EventFrequency;
+			gal.MaximumEventSeverity = GameSetup.MaximumEventSeverity;
 			var bounds = new Rectangle(-GameSetup.GalaxySize.Width / 2, -GameSetup.GalaxySize.Height / 2, GameSetup.GalaxySize.Width, GameSetup.GalaxySize.Height);
 
 			var unusedNames = new List<string>(Mod.Current.StarSystemNames);

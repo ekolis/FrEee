@@ -113,6 +113,18 @@ namespace FrEee.Utility
 			return Next(max - min + 1) + min;
 		}
 
+		/// <summary>
+		/// Generates a random number within a range (inclusive).
+		/// </summary>
+		/// <param name="min">The minimum.</param>
+		/// <param name="max">The maximum.</param>
+		/// <returns></returns>
+		public double Range(double min, double max)
+		{
+			Iteration++;
+			return prng.NextDouble() * (max + double.Epsilon - min) + min;
+		}
+
 		public override string ToString()
 		{
 			return "Seed: " + Seed + ", Iteration: " + Iteration;

@@ -5,6 +5,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Combat.Grid;
+using FrEee.Game.Objects.Events;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Objects.VictoryConditions;
@@ -669,6 +670,21 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
+		/// Events which have been warned of and are pending execution.
+		/// </summary>
+		public ICollection<Event> PendingEvents { get; private set; } = new List<Event>();
+
+		/// <summary>
+		/// Per mille chance of a random event occurring, per turn, per player.
+		/// </summary>
+		public double EventFrequency { get; set; }
+
+		/// <summary>
+		/// The maximum event severity in this game.
+		/// </summary>
+		public EventSeverity MaximumEventSeverity { get; set; }
+
+		/// <summary>
 		/// Processes the turn.
 		/// </summary>
 		/// <param name="safeMode">Stop processing if PLR files are missing?</param>
@@ -688,7 +704,7 @@ namespace FrEee.Game.Objects.Space
 			if (status == null)
 				progressPerOperation = 0d;
 			else
-				progressPerOperation = (desiredProgress - status.Progress) / (9 + Current.Empires.Count);
+				progressPerOperation = (desiredProgress - status.Progress) / (10 + Current.Empires.Count);
 
 			if (status != null)
 				status.Message = "Initializing turn";
@@ -710,6 +726,34 @@ namespace FrEee.Game.Objects.Space
 						// purge *really* old empire logs too
 						e.Log.Remove(m);
 					}
+				}
+			}
+
+			if (status != null)
+			{
+				status.Progress += progressPerOperation;
+				status.Message = "Triggering events";
+			}
+
+			if (RandomHelper.PerMilleChance(Current.EventFrequency * Current.Empires.Where(e => !e.IsDefeated).Count()))
+			{
+				// trigger a new event
+				var templates = Mod.Current.EventTemplates.Where(t => t.Severity <= Current.MaximumEventSeverity);
+				if (templates.Any())
+				{
+					var template = templates.PickRandom();
+					var evt = template.Instantiate();
+					Current.PendingEvents.Add(evt);
+				}
+			}
+
+			// take care of pending events
+			foreach (var evt in Current.PendingEvents.ToArray())
+			{
+				if (evt.TurnNumber == Current.TurnNumber)
+				{
+					evt.Execute();
+					Current.PendingEvents.Remove(evt);
 				}
 			}
 
@@ -1096,9 +1140,9 @@ namespace FrEee.Game.Objects.Space
 			Current.Empires.ParallelSafeForeach(emp =>
 			{
 				emp.StoredResources = ResourceQuantity.Min(emp.StoredResources, emp.ResourceStorage);// resource spoilage
-				emp.Commands.Clear(); // clear empire commands
-				emp.Scores[Current.TurnNumber] = emp.ComputeScore(null); // update score
-			});
+					emp.Commands.Clear(); // clear empire commands
+					emp.Scores[Current.TurnNumber] = emp.ComputeScore(null); // update score
+				});
 
 			// clear completed orders
 			Current.Referrables.OfType<IPathfindingOrder>().Where(o => o.KnownTarget == null).ParallelSafeForeach(o => o.IsComplete = true);
@@ -1290,9 +1334,9 @@ namespace FrEee.Game.Objects.Space
 				canAssign = !prop.HasAttribute<DoNotAssignIDAttribute>() && !isMemory;
 				if (isMemory)
 					return false; // no recursion!
-				if (prop.GetAttributes<DoNotAssignIDAttribute>().Any(a => a.Recurse))
+					if (prop.GetAttributes<DoNotAssignIDAttribute>().Any(a => a.Recurse))
 					return false; // no recursion!
-				else
+					else
 					return true;
 			};
 			parser.StartObject += o =>
