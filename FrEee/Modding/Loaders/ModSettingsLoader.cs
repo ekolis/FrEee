@@ -48,6 +48,10 @@ namespace FrEee.Modding.Loaders
 
 			// TODO - load more settings
 
+			// event frequency is really per mille per player per turn but silly aaron said it was percent :P
+			settings.EventFrequencyLow = rec.Get<double>("Event Percent Chance Low") ?? 5;
+			settings.EventFrequencyMedium = rec.Get<double>("Event Percent Chance Medium") ?? 109;
+			settings.EventFrequencyHigh = rec.Get<double>("Event Percent Chance High") ?? 25;
 			settings.MaintenanceDeficitToDestroyOneShip = rec.Get<int>("Maintenance Cost Amt Per Dead", null) ?? 20000;
 			settings.ShipBaseMaintenanceRate = rec.Get<int>("Empire Ship And Base Percent Maint Cost", null) ?? rec.Get<int>("Empire Starting Percent Maint Cost", null);
 			settings.UnitMaintenanceRate = rec.Get<int>("Empire Unit Percent Maint Cost", null) ?? 0;
