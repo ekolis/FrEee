@@ -81,8 +81,10 @@ namespace FrEee.Game.Objects.Events
 				}
 			}
 
+			var dict = new SafeDictionary<string, object>();
+			dict.Add("target", Target);
 			foreach (var action in Template.Type.Actions)
-				ScriptEngine.RunScript(action);
+				ScriptEngine.RunScript(action, dict);
 		}
 
 		/// <summary>
