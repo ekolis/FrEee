@@ -64,9 +64,9 @@ namespace FrEee.WinForms.Forms
 			ddlEventFrequency.SelectedItem = ddlEventFrequency.Items.Cast<dynamic>().ElementAt(1);
 
 			foreach (var item in Enum.GetValues(typeof(EventSeverity)))
-				ddlEventSeverity.Items.Add(item);
+				ddlMaximumEventSeverity.Items.Add(item);
 
-			ddlEventSeverity.SelectedItem = EventSeverity.High;
+			ddlMaximumEventSeverity.SelectedItem = EventSeverity.High;
 
 			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); } catch { }
 		}
@@ -108,6 +108,8 @@ namespace FrEee.WinForms.Forms
 			spnSystemGroups.Value = setup.StarSystemGroups;
 			chkAllSystemsExplored.Checked = setup.AllSystemsExplored;
 			chkOmniscient.Checked = setup.OmniscientView;
+			ddlEventFrequency.SelectedItem = ddlEventFrequency.Items.Cast<dynamic>().SingleOrDefault(q => q.Value == setup.EventFrequency);
+			ddlMaximumEventSeverity.SelectedItem = setup.MaximumEventSeverity;
 
 			spnRateStandard.Value = (decimal)setup.StandardMiningModel.RatePercentage;
 			spnBonusStandard.Value = (decimal)setup.StandardMiningModel.ValuePercentageBonus;
@@ -654,6 +656,8 @@ namespace FrEee.WinForms.Forms
 			setup.StarSystemGroups = (int)spnSystemGroups.Value;
 			setup.AllSystemsExplored = chkAllSystemsExplored.Checked;
 			setup.OmniscientView = chkOmniscient.Checked;
+			setup.EventFrequency = (double)ddlEventFrequency.SelectedValue;
+			setup.MaximumEventSeverity = (EventSeverity)ddlMaximumEventSeverity.SelectedItem;
 			setup.StandardMiningModel = new MiningModel
 			{
 				RatePercentage = (double)spnRateStandard.Value,

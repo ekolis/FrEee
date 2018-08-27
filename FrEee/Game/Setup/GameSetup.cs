@@ -54,11 +54,15 @@ namespace FrEee.Game.Setup
 		/// </summary>
 		public IList<EmpireTemplate> EmpireTemplates { get; private set; }
 
-		/// <summary>
-		/// Number of turns per random event per surviving major empire.
-		/// E.g. if this is set to 20 then in a galaxy with 10 players there will be approximately one random event every other turn.
+		//// <summary>
+		/// Per mille chance of a random event occurring, per turn, per player.
 		/// </summary>
-		public int EventRarity { get; private set; }
+		public double EventFrequency { get; set; }
+
+		/// <summary>
+		/// The maximum event severity in this game.
+		/// </summary>
+		public EventSeverity MaximumEventSeverity { get; set; }
 
 		/// <summary>
 		/// Technologies that are locked at level zero.
