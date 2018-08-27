@@ -656,7 +656,7 @@ namespace FrEee.WinForms.Forms
 			setup.StarSystemGroups = (int)spnSystemGroups.Value;
 			setup.AllSystemsExplored = chkAllSystemsExplored.Checked;
 			setup.OmniscientView = chkOmniscient.Checked;
-			setup.EventFrequency = (double)ddlEventFrequency.SelectedValue;
+			setup.EventFrequency = (double)((dynamic)ddlEventFrequency.SelectedItem).Value;
 			setup.MaximumEventSeverity = (EventSeverity)ddlMaximumEventSeverity.SelectedItem;
 			setup.StandardMiningModel = new MiningModel
 			{
