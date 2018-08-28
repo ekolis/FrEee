@@ -26,7 +26,7 @@ namespace FrEee.Modding.Loaders
 
 				et.ModID = rec.Get<string>("ID", et);
 				et.Name = rec.Get<string>("Name", et);
-				et.TargetSelector = rec.GetObject<IEnumerable<object>>("Target Type Selector", et);
+				et.TargetSelector = rec.GetObject<IEnumerable<object>>("Target Selector", et);
 				et.Parameters = new SafeDictionary<string, ObjectFormula<object>>();
 				var actionParams = new List<Script>();
 				foreach (var f in rec.Fields.Where(f => f.Name == "Parameter"))

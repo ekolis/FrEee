@@ -745,6 +745,7 @@ namespace FrEee.Game.Objects.Space
 					var template = templates.PickRandom(dice);
 					var evt = template.Instantiate();
 					Current.PendingEvents.Add(evt);
+					evt.Warn();
 				}
 			}
 
