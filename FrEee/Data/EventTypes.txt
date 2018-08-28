@@ -87,7 +87,7 @@ Name 				:= Planet - Population Change
 Is Negative	When	:= amount < 0
 Import				:= from FrEee.Game.Objects.Space import Galaxy;
 Import				:= from FrEee.Game.Objects.Space import Planet;
-Target Selector 	:= Galaxy.Current.FindSpaceObjects[Planet]().Where(lambda p: p.Colony != null)
+Target Selector 	:= Galaxy.Current.FindSpaceObjects[Planet]().Where(lambda p: p.Colony != None)
 Parameter			:= PlanetName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;
 Parameter			:= SectorName = target.Sector.Name;
@@ -97,7 +97,7 @@ Name 				:= Planet - Population Rebel
 Is Negative	When	:= true
 Import				:= from FrEee.Game.Objects.Space import Galaxy;
 Import				:= from FrEee.Game.Objects.Space import Planet;
-Target Selector 	:= Galaxy.Current.FindSpaceObjects[Planet]().Where(lambda p: p.Colony != null)
+Target Selector 	:= Galaxy.Current.FindSpaceObjects[Planet]().Where(lambda p: p.Colony != None)
 Parameter			:= PlanetName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;
 Parameter			:= SectorName = target.Sector.Name;
@@ -108,7 +108,7 @@ Name 				:= Planet - Facility Damage
 Is Negative	When	:= true
 Import				:= from FrEee.Game.Objects.Space import Galaxy;
 Import				:= from FrEee.Game.Objects.Space import Planet;
-Target Selector 	:= Galaxy.Current.FindSpaceObjects[Planet]().Where(lambda p: p.Colony != null)
+Target Selector 	:= Galaxy.Current.FindSpaceObjects[Planet]().Where(lambda p: p.Colony != None)
 Parameter			:= PlanetName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;
 Parameter			:= SectorName = target.Sector.Name;
@@ -118,7 +118,7 @@ Name 				:= Planet - Cargo Damage
 Is Negative	When	:= amount > 0
 Import				:= from FrEee.Game.Objects.Space import Galaxy;
 Import				:= from FrEee.Game.Objects.Space import Planet;
-Target Selector 	:= Galaxy.Current.FindSpaceObjects[Planet]().Where(lambda p: p.Colony != null)
+Target Selector 	:= Galaxy.Current.FindSpaceObjects[Planet]().Where(lambda p: p.Colony != None)
 Parameter			:= PlanetName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;
 Parameter			:= SectorName = target.Sector.Name;
@@ -137,7 +137,7 @@ Name 				:= Planet - Plague
 Is Negative	When	:= true
 Import				:= from FrEee.Game.Objects.Space import Galaxy;
 Import				:= from FrEee.Game.Objects.Space import Planet;
-Target Selector 	:= Galaxy.Current.FindSpaceObjects[Planet]().Where(lambda p: p.Colony != null)
+Target Selector 	:= Galaxy.Current.FindSpaceObjects[Planet]().Where(lambda p: p.Colony != None)
 Parameter			:= PlanetName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;
 Parameter			:= SectorName = target.Sector.Name;
