@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <LangVersion>7.3</LangVersion>
-    <Version>0.0.8</Version>
+    <Version>0.0.9</Version>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Game\Objects\Combat2\**" />
