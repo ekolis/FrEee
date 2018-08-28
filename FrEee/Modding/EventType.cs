@@ -50,5 +50,10 @@ namespace FrEee.Modding
 		/// Script to select a target for the event.
 		/// </summary>
 		public ObjectFormula<IEnumerable<object>> TargetSelector { get; set; }
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }
