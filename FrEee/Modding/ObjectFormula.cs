@@ -4,6 +4,7 @@ using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace FrEee.Modding
 {
@@ -101,7 +102,8 @@ namespace FrEee.Modding
 
 		public T Evaluate(IDictionary<string, object> variables)
 		{
-			return ScriptEngine.EvaluateExpression<T>(Text, variables);
+			var fulltext = string.Join("\n", ExternalScripts.Select(q => q.Text)) + "\n" + Text;
+			return ScriptEngine.EvaluateExpression<T>(fulltext, variables);
 		}
 
 		public T Evaluate(object host)
@@ -157,5 +159,11 @@ namespace FrEee.Modding
 		{
 			throw new NotSupportedException();
 		}
+
+		/// <summary>
+		/// The external scripts required to execute this formula.
+		/// </summary>
+		/// TODO - let other types of formulas have external scripts
+		public Script[] ExternalScripts { get; set; }
 	}
 }

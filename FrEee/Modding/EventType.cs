@@ -16,11 +16,16 @@ namespace FrEee.Modding
 		}
 
 		/// <summary>
-		/// Actiosn to execute when the event occurs.,
+		/// Action to execute when the event occurs.,
 		/// </summary>
-		public ICollection<Script> Actions { get; set; }
+		public Script Action { get; set; }
 
 		public bool IsDisposed { get; set; }
+
+		/// <summary>
+		/// The import statements required to run the target selector and action scripts.
+		/// </summary>
+		public Script Imports { get; set; }
 
 		/// <summary>
 		/// When is this a negative event?
