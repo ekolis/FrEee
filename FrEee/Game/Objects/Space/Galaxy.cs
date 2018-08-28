@@ -752,9 +752,10 @@ namespace FrEee.Game.Objects.Space
 			// take care of pending events
 			foreach (var evt in Current.PendingEvents.ToArray())
 			{
-				if (evt.TurnNumber == Current.TurnNumber && evt.Target != null)
+				if (evt.TurnNumber == Current.TurnNumber)
 				{
-					evt.Execute();
+					if (evt.Target != null)
+						evt.Execute();
 					Current.PendingEvents.Remove(evt);
 				}
 			}

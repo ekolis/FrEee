@@ -83,5 +83,10 @@ namespace FrEee.Modding
 		{
 			return new Event(this);
 		}
+
+		public override string ToString()
+		{
+			return Type.Name;
+		}
 	}
 }

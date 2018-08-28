@@ -142,5 +142,10 @@ namespace FrEee.Game.Objects.Events
 				}
 			}
 		}
+
+		public override string ToString()
+		{
+			return $"{Template} targeting {Target} at turn {TurnNumber}";
+		}
 	}
 }
