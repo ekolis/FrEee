@@ -28,19 +28,11 @@ namespace FrEee.Modding.Loaders
 				et.ModID = rec.Get<string>("ID", et);
 				et.Name = rec.Get<string>("Name", et);
 				et.Imports = rec.GetScript("Import", et);
+				et.Parameters = rec.GetScript("Parameter", et);
 				et.TargetSelector = rec.GetObject<IEnumerable<object>>("Target Selector", et);
 				et.TargetSelector.ExternalScripts = new Script[] { et.Imports };
-				et.Parameters = new SafeDictionary<string, ObjectFormula<object>>();
-				var actionParams = new List<Script>();
-				foreach (var f in rec.Fields.Where(f => f.Name == "Parameter"))
-				{
-					var split = f.Value.Split('=').Select(s => s.Trim()).ToArray();
-					et.Parameters[split[0]] = new ObjectFormula<object>(split[1], et, true);
-					actionParams.Add(new Script("EventType", f.Value));
-				}
 				et.Action = rec.GetScript("Action", et);
-				et.Action.ExternalScripts = actionParams.ConcatSingle(et.Imports).ToArray();
-
+				et.Action.ExternalScripts = new Script[] { et.Imports, et.Parameters };
 				yield return et;
 			}
 		}

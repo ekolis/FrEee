@@ -74,8 +74,6 @@ namespace FrEee.Game.Objects.Events
 				foreach (var emp in AffectedEmpires)
 				{
 					var context = new SafeDictionary<string, object>();
-					foreach (var parm in Template.Type.Parameters)
-						context.Add(parm.Key, parm.Value.Value);
 					var text = m.Text.Evaluate(context);
 					emp.RecordLog(this, text);
 				}
@@ -137,8 +135,6 @@ namespace FrEee.Game.Objects.Events
 				foreach (var emp in AffectedEmpires)
 				{
 					var context = new SafeDictionary<string, object>();
-					foreach (var parm in Template.Type.Parameters)
-						context.Add(parm.Key, parm.Value.Value);
 					var text = m.Text.Evaluate(context);
 					emp.RecordLog(this, text);
 				}

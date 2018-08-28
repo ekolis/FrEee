@@ -4,6 +4,7 @@ using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace FrEee.Modding
 {
@@ -113,7 +114,12 @@ namespace FrEee.Modding
 
 		public override T Evaluate(IDictionary<string, object> variables)
 		{
-			return ScriptEngine.EvaluateExpression<T>(Text, variables);
+			string fulltext;
+			if (ExternalScripts == null)
+				fulltext = Text;
+			else
+				fulltext = string.Join("\n", ExternalScripts.Select(q => q.Text)) + "\n" + Text;
+			return ScriptEngine.EvaluateExpression<T>(fulltext, variables);
 		}
 
 		public override T Evaluate(object host)
