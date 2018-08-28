@@ -107,17 +107,19 @@ namespace FrEee.Game.Objects.Events
 			for (var i = 0; i < 10; i++)
 			{
 				RollTarget();
+				if (Target == null)
+					break; // no suitable targets
 				hasTarget = true;
 
 				foreach (var p in AffectedEmpires)
 				{
-					if (RandomHelper.PercentageChance(p.GetAbilityValue("Luck").ToInt() - p.GetAbilityValue("Change Bad Event Chance - Empire").ToInt(), Dice)) ;
-					hasTarget = false;
+					if (RandomHelper.PercentageChance(p.GetAbilityValue("Luck").ToInt() - p.GetAbilityValue("Change Bad Event Chance - Empire").ToInt(), Dice))
+						hasTarget = false;
 					if (Target is ILocated l)
 					{
-						if (RandomHelper.PercentageChance(100 + l.StarSystem.GetEmpireAbilityValue(p, "Change Bad Event Chance - System").ToInt(), Dice))
+						if (RandomHelper.PercentageChance(-l.StarSystem.GetEmpireAbilityValue(p, "Change Bad Event Chance - System").ToInt(), Dice))
 							hasTarget = false;
-						if (RandomHelper.PercentageChance(100 + l.Sector.GetEmpireAbilityValue(p, "Change Bad Event Chance - Sector").ToInt(), Dice))
+						if (RandomHelper.PercentageChance(-l.Sector.GetEmpireAbilityValue(p, "Change Bad Event Chance - Sector").ToInt(), Dice))
 							hasTarget = false;
 					}
 				}
