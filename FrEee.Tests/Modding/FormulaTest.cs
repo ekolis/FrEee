@@ -6,6 +6,7 @@ using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FrEee.Tests.Modding
@@ -157,9 +158,13 @@ Name := ='Nuclear Missile ' + warhead.ToRomanNumeral() + ' S' + speed.ToString()
 		public void ReplacementStrings()
 		{
 			var field = new Field("Test := [%Amount1] [%Amount2%]");
-			var ctx = new { Amount1 = 42, Amount2 = 69 };
+			var ctx = new Dictionary<string, object>()
+			{
+				{"Amount1", 42 },
+				{"Amount2", 69 },
+			};
 			var formula = field.CreateFormula<string>(ctx);
-			Assert.AreEqual("42 69", formula.Value);
+			Assert.AreEqual("42 69", formula.Evaluate(ctx));
 			Assert.IsTrue(formula.IsDynamic);
 			Assert.IsFalse(formula.IsLiteral);
 		}
