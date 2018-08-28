@@ -3,6 +3,7 @@ using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace FrEee.Modding
 {
@@ -216,5 +217,10 @@ namespace FrEee.Modding
 		public abstract Formula<string> ToStringFormula(CultureInfo c = null);
 
 		protected abstract T ComputeValue();
+
+		/// <summary>
+		/// The external scripts required to execute this formula.
+		/// </summary>
+		public Script[] ExternalScripts { get; set; }
 	}
 }

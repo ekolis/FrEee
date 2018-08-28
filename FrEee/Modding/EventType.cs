@@ -44,7 +44,7 @@ namespace FrEee.Modding
 		/// <summary>
 		/// Scripts to set parameters for the event type.
 		/// </summary>
-		public IDictionary<string, ObjectFormula<object>> Parameters { get; set; }
+		public Script Parameters { get; set; }
 
 		/// <summary>
 		/// Script to select a target for the event.

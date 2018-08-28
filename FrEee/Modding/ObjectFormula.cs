@@ -102,7 +102,11 @@ namespace FrEee.Modding
 
 		public T Evaluate(IDictionary<string, object> variables)
 		{
-			var fulltext = string.Join("\n", ExternalScripts.Select(q => q.Text)) + "\n" + Text;
+			string fulltext;
+			if (ExternalScripts == null)
+				fulltext = Text;
+			else
+				fulltext = string.Join("\n", ExternalScripts.Select(q => q.Text)) + "\n" + Text;
 			return ScriptEngine.EvaluateExpression<T>(fulltext, variables);
 		}
 
@@ -163,7 +167,6 @@ namespace FrEee.Modding
 		/// <summary>
 		/// The external scripts required to execute this formula.
 		/// </summary>
-		/// TODO - let other types of formulas have external scripts
 		public Script[] ExternalScripts { get; set; }
 	}
 }
