@@ -5,7 +5,7 @@
     <ApplicationIcon>FrEee.ico</ApplicationIcon>
     <OutputType>WinExe</OutputType>
     <StartupObject />
-    <Version>0.0.8</Version>
+    <Version>0.0.9</Version>
     <Authors>FrEee Dev Team (see licenses/credits.txt)</Authors>
     <Company />
     <Product>FrEee</Product>

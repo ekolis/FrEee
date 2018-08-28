@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace FrEee.Utility
 {
@@ -91,9 +92,12 @@ namespace FrEee.Utility
 
 		private static Assembly FindAssembly(string n)
 		{
+			// FrEee, Version=0.0.8.0, Culture=neutral, PublicKeyToken=null
+			// ignore all but the assembly's base name since the version etc. could change
+			var regex = new Regex($"{n.Substring(0, n.IndexOf(","))}, Version=(.*), Culture=(.*), PublicKeyToken=(.*)");
 			foreach (var kvp in ReferencedAssemblies)
 			{
-				if (kvp.Value.FullName == n)
+				if (regex.IsMatch(kvp.Value.FullName))
 					return kvp.Value;
 			}
 
