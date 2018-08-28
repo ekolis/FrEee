@@ -182,25 +182,23 @@ namespace FrEee.Modding
 			return GetScript(fieldNames, context, ref index, allowNulls);
 		}
 
-		public Script GetScript(string fieldName, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
+		public Script GetScript(string fieldName, object context, ref int index, bool allowNulls = true, bool allowSkip = true)
 		{
-			return GetScript(new string[] { fieldName }, context, ref index, allowNulls, startIndex = 0, allowSkip = true);
+			return GetScript(new string[] { fieldName }, context, ref index, allowNulls, allowSkip);
 		}
 
-		public Script GetScript(IEnumerable<string> fieldNames, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
+		public Script GetScript(IEnumerable<string> fieldNames, object context, ref int index, bool allowNulls = true, bool allowSkip = true)
 		{
-			var f = FindField(fieldNames, ref index, !allowNulls, startIndex, allowSkip);
-			if (f == null)
+			Field f;
+			List<Field> fs = new List<Field>();
+			do
 			{
-				if (allowNulls)
-					return null;
-				else
-				{
-					Mod.Errors.Add(new DataParsingException("Cannot find field \"" + fieldNames.First() + "\".", Mod.CurrentFileName, this, null));
-					return new Script("DynamicScript", "None");
-				}
-			}
-			return f.CreateScript(context);
+				f = FindField(fieldNames, ref index, !allowNulls, index, allowSkip);
+				if (f != null)
+					fs.Add(f);
+				index++;
+			} while (f != null);
+			return new Script("Script", string.Join("\n", fs.Select(f2 => f2.Value)));
 		}
 
 		public IEnumerable<Script> GetScripts(string fieldName, object context, bool allowNulls = true)

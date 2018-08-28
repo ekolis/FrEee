@@ -83,8 +83,7 @@ namespace FrEee.Game.Objects.Events
 
 			var dict = new SafeDictionary<string, object>();
 			dict.Add("target", Target);
-			foreach (var action in Template.Type.Actions)
-				ScriptEngine.RunScript(action, dict);
+			ScriptEngine.RunScript(Template.Type.Action, dict);
 		}
 
 		/// <summary>
@@ -98,7 +97,7 @@ namespace FrEee.Game.Objects.Events
 		/// <summary>
 		/// A random number generator.
 		/// </summary>
-		private PRNG Dice { get; } 
+		private PRNG Dice { get; }
 
 		/// <summary>
 		/// Warns players who should know about this event.
@@ -111,11 +110,11 @@ namespace FrEee.Game.Objects.Events
 			{
 				RollTarget();
 				hasTarget = true;
-				
+
 				foreach (var p in AffectedEmpires)
 				{
 					if (RandomHelper.PercentageChance(p.GetAbilityValue("Luck").ToInt() - p.GetAbilityValue("Change Bad Event Chance - Empire").ToInt(), Dice)) ;
-						hasTarget = false;
+					hasTarget = false;
 					if (Target is ILocated l)
 					{
 						if (RandomHelper.PercentageChance(100 + l.StarSystem.GetEmpireAbilityValue(p, "Change Bad Event Chance - System").ToInt(), Dice))
