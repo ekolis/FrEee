@@ -114,6 +114,7 @@ namespace FrEee.Utility
 			var done = new List<string>(); // full names of scanned assemblies
 			do
 			{
+				more = false;
 				foreach (var a in ReferencedAssemblies.Values.Where(x => !done.Contains(x.FullName)).ToArray())
 				{
 					if (LoadReferencedAssemblies(a))
