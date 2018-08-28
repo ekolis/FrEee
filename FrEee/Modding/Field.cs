@@ -60,18 +60,17 @@ namespace FrEee.Modding
 			var txt = Value.TrimStart('=');
 
 			// SE4/SE5 style replacement strings turn into dynamic formulas
-			txt = Regex.Replace(txt, @"\[\%(.*)\%\]", "{{$1}}");
-			txt = Regex.Replace(txt, @"\[\%(.*)\]", "{{$1}}");
+			txt = Regex.Replace(txt, @"\[\%(.*?)\%?\]", "{{$1}}");
 
-			if (Value.StartsWith("=="))
+			if (txt.StartsWith("=="))
 				return new ComputedFormula<T>(txt, context, true); // dynamic
-			else if (Value.StartsWith("="))
+			else if (txt.StartsWith("="))
 				return new ComputedFormula<T>(txt, context, false); // static
 																	// TODO - take into account quotes when seeing if we have string interpolation?
-			else if (Value.Contains("{") && Value.Substring(Value.IndexOf("{")).Contains("}"))
+			else if (txt.Contains("{") && txt.Substring(txt.IndexOf("{")).Contains("}"))
 			{
 				// string interpolation formula
-				var isDynamic = Value.Contains("{{") && Value.Substring(Value.IndexOf("{{")).Contains("}}");
+				var isDynamic = txt.Contains("{{") && txt.Substring(txt.IndexOf("{{")).Contains("}}");
 				var replacedText = txt;
 				replacedText = "'" + replacedText + "'"; // make it a string
 				replacedText = replacedText.Replace("{{", "' + str(");
