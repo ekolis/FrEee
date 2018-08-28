@@ -25,27 +25,7 @@ namespace FrEee.Modding
 		/// </summary>
 		static ScriptEngine()
 		{
-			// http://msdn.microsoft.com/en-us/library/bb763046.aspx
-			// http://grokbase.com/t/python/ironpython-users/123kjgw8k8/passing-python-exceptions-in-a-sandboxed-domain
-
-			//Setting the AppDomainSetup. It is very important to set the ApplicationBase to a folder
-			//other than the one in which the sandboxer resides.
-			var adSetup = new AppDomainSetup();
-			adSetup.ApplicationBase = AppDomain.CurrentDomain.BaseDirectory;
-			adSetup.ApplicationName = "FrEee";
-			adSetup.DynamicBase = "ScriptEngine";
-
-			//Setting the permissions for the AppDomain. We give the permission to execute and to
-			//read/discover the location where the untrusted code is loaded.
-			var evidence = new Evidence();
-			evidence.AddHostEvidence(new Zone(SecurityZone.MyComputer));
-			var permissions = SecurityManager.GetStandardSandbox(evidence);
-			var reflection = new ReflectionPermission(PermissionState.Unrestricted);
-			permissions.AddPermission(reflection);
-
-			//Now we have everything we need to create the AppDomain, so let's create it.
-			sandbox = AppDomain.CreateDomain("ScriptEngine", null, adSetup, permissions, AppDomain.CurrentDomain.GetAssemblies().Select(a => a.Evidence.GetHostEvidence<StrongName>()).Where(sn => sn != null).ToArray());
-			engine = Python.CreateEngine(sandbox);
+			engine = Python.CreateEngine();
 			engine.Runtime.LoadAssembly(typeof(string).Assembly); // load System.dll
 			engine.Runtime.LoadAssembly(typeof(Uri).Assembly); // load mscorlib.dll
 			engine.Runtime.LoadAssembly(Assembly.GetAssembly(typeof(Enumerable))); // load System.Core.dll
@@ -65,13 +45,10 @@ namespace FrEee.Modding
 
 		private static IDictionary<string, object> lastVariables = new SafeDictionary<string, object>();
 
-		private static AppDomain sandbox;
-
 		private static ScriptScope scope;
 
 		/// <summary>
-		/// Calls a script function in a sandboxed environment.
-		/// Note that the return value of the script may still contain insecure code, so be careful!
+		/// Calls a script function .
 		/// </summary>
 		/// <param name="script">The script containing the function.</param>
 		/// <param name="function">The name of the function.</param>
@@ -124,8 +101,7 @@ namespace FrEee.Modding
 		}
 
 		/// <summary>
-		/// Calls a script subroutine in a sandboxed environment.
-		/// Note that the return value of the script may still contain insecure code, so be careful!
+		/// Calls a script subroutine .
 		/// </summary>
 		/// <param name="script">The script containing the function.</param>
 		/// <param name="function">The name of the function.</param>
@@ -200,8 +176,7 @@ namespace FrEee.Modding
 		}
 
 		/// <summary>
-		/// Evaluates a script expression in a sandboxed environment.
-		/// Note that the return value of the script may still contain insecure code, so be careful!
+		/// Evaluates a script expression .
 		/// </summary>
 		/// <param name="expression">The script code to run.</param>
 		/// <param name="readOnlyVariables">Variables to inject into the script.</param>
@@ -221,7 +196,7 @@ namespace FrEee.Modding
 		}
 
 		/// <summary>
-		/// Runs a script in a sandboxed environment.
+		/// Runs a script .
 		/// </summary>
 		/// <param name="script">The script code to run.</param>
 		/// <param name="variables">Read/write variables to inject into the script.</param>
@@ -331,7 +306,7 @@ namespace FrEee.Modding
 		}
 
 		/// <summary>
-		/// Runs a script in a sandboxed environment.
+		/// Runs a script .
 		/// </summary>
 		/// <param name="script">The script code to run.</param>
 		/// <param name="variables">Read/write variables to inject into the script.</param>
