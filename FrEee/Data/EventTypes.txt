@@ -11,6 +11,7 @@ Is Negative	When	:= amount > 0
 Import				:= from FrEee.Game.Objects.Space import Galaxy;
 Import				:= from FrEee.Game.Objects.Vehicles import SpaceVehicle;
 Import				:= from FrEee.Game.Interfaces import IUnit;
+Import				:= from FrEee.Game.Interfaces import IVehicle;
 Target Selector 	:= Galaxy.Current.FindSpaceObjects[SpaceVehicle]().Except[IVehicle](Galaxy.Current.FindSpaceObjects[IUnit]())
 Parameter			:= VehicleName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;
@@ -52,6 +53,7 @@ Is Negative	When	:= true
 Import				:= from FrEee.Game.Objects.Space import Galaxy;
 Import				:= from FrEee.Game.Objects.Vehicles import SpaceVehicle;
 Import				:= from FrEee.Game.Interfaces import IUnit;
+Import				:= from FrEee.Game.Interfaces import IVehicle;
 Target Selector 	:= Galaxy.Current.FindSpaceObjects[SpaceVehicle]().Except[IVehicle](Galaxy.Current.FindSpaceObjects[IUnit]())
 Parameter			:= VehicleName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;

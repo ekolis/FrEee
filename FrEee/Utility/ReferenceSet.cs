@@ -2,30 +2,59 @@
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace FrEee.Utility
 {
+	[Serializable]
 	public class GalaxyReferenceSet<T> : ReferenceSet<GalaxyReference<T>, T>
 	{
+		public GalaxyReferenceSet()
+			: base()
+		{
+		}
+
+		public GalaxyReferenceSet(IEnumerable<T> objs)
+			: base(objs)
+		{
+		}
 	}
 
+	[Serializable]
 	public class ModReferenceSet<T> : ReferenceSet<ModReference<T>, T>
 			where T : IModObject
 	{
+		public ModReferenceSet()
+			: base()
+		{
+		}
+
+		public ModReferenceSet(IEnumerable<T> objs)
+			: base(objs)
+		{
+		}
 	}
 
 	/// <summary>
 	/// A set of references.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
+	[Serializable]
 	public class ReferenceSet<TRef, T> : ISet<T>, IPromotable, IReferenceEnumerable
 		where TRef : IReference<T>
 	{
 		public ReferenceSet()
 		{
 			set = new HashSet<TRef>();
+		}
+
+		public ReferenceSet(IEnumerable<T> objs)
+			: this()
+		{
+			foreach (var obj in objs)
+				Add(obj);
 		}
 
 		public int Count
