@@ -19,18 +19,7 @@ namespace FrEee.Utility
 	{
 		public GalaxyReference()
 		{
-			cache = new ClientSideCache<T>(() =>
-			{
-				if (ID <= 0)
-					return value;
-				var obj = (T)Galaxy.Current.GetReferrable(ID);
-				if (obj == null)
-					return default(T);
-				if (obj is IReferrable && (obj as IReferrable).IsDisposed)
-					return default(T);
-				return obj;
-			}
-			);
+			InitializeCache();
 		}
 
 		public GalaxyReference(T t)
@@ -71,6 +60,22 @@ namespace FrEee.Utility
 				throw new Exception("Object with ID " + id + " is not a " + typeof(T) + ".");
 		}
 
+		private void InitializeCache()
+		{
+			cache = new ClientSideCache<T>(() =>
+			{
+				if (ID <= 0)
+					return value;
+				var obj = (T)Galaxy.Current.GetReferrable(ID);
+				if (obj == null)
+					return default(T);
+				if (obj is IReferrable && (obj as IReferrable).IsDisposed)
+					return default(T);
+				return obj;
+			}
+			);
+		}
+
 		/// <summary>
 		/// Does the reference have a valid value?
 		/// </summary>
@@ -95,6 +100,8 @@ namespace FrEee.Utility
 		{
 			get
 			{
+				if (cache == null)
+					InitializeCache();
 				return cache.Value;
 			}
 		}
