@@ -99,7 +99,10 @@ namespace FrEee.Utility
 			}
 		}
 
+		[field: NonSerialized]
 		private T value { get; set; }
+
+		[NonSerialized]
 		private ClientSideCache<T> cache;
 
 		public static implicit operator GalaxyReference<T>(T t)
