@@ -940,7 +940,8 @@ namespace FrEee.Game.Objects.Space
 					else
 					{
 						// no hacking!
-						cmd.Issuer.Log.Add(new GenericLogMessage(cmd.Issuer.Name + " cannot issue a command to an object belonging to " + emp + "!"));
+						if (cmd.Issuer != null)
+							cmd.Issuer.Log.Add(new GenericLogMessage(cmd.Issuer.Name + " cannot issue a command to an object belonging to " + emp + "!"));
 					}
 				}
 
