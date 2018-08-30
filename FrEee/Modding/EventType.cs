@@ -2,6 +2,7 @@
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Events;
 using FrEee.Modding.Interfaces;
+using FrEee.Utility;
 using System.Collections.Generic;
 
 namespace FrEee.Modding
@@ -49,7 +50,7 @@ namespace FrEee.Modding
 		/// <summary>
 		/// Script to select a target for the event.
 		/// </summary>
-		public ObjectFormula<IEnumerable<object>> TargetSelector { get; set; }
+		public ObjectFormula<GalaxyReferenceSet<IReferrable>> TargetSelector { get; set; }
 
 		public override string ToString()
 		{

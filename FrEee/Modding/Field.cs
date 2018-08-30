@@ -1,4 +1,8 @@
-﻿using System;
+﻿using FrEee.Game.Interfaces;
+using FrEee.Utility.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace FrEee.Modding
@@ -82,6 +86,31 @@ namespace FrEee.Modding
 		public ObjectFormula<T> CreateObjectFormula<T>(object context)
 		{
 			return new ObjectFormula<T>(Value.TrimStart('='), context, true);
+		}
+
+		public ObjectFormula<T> CreateReferenceEnumerableFormula<T>(object context)
+			where T : IReferenceEnumerable
+		{
+			var typename = typeof(T).Name;
+			if (typename.Contains("`"))
+				typename = typename.Substring(0, typename.IndexOf('`'));
+			var f = new ObjectFormula<T>($"{typename}[{string.Join(", ", typeof(T).GetGenericArguments().Select(x => x.Name).ToArray())}]({Value.TrimStart('=')})", context, true);
+			var import = $"from {typeof(T).Namespace} import {typename};";
+			var imports = new List<string>();
+			imports.Add(import);
+			foreach (var genparm in typeof(T).GetGenericArguments())
+			{
+				var typename2 = genparm.Name;
+				if (typename2.Contains("`"))
+					typename2 = typename.Substring(0, typename2.IndexOf('`'));
+				imports.Add($"from {genparm.Namespace} import {typename2};");
+			}
+			var script = new Script("Import", string.Join("\n", imports));
+			if (f.ExternalScripts == null)
+				f.ExternalScripts = new Script[] { script };
+			else
+				f.ExternalScripts = f.ExternalScripts.ConcatSingle(script).ToArray();
+			return f;
 		}
 
 		public Script CreateScript(object context)

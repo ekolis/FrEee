@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrEee.Game.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -133,6 +134,36 @@ namespace FrEee.Modding
 				}
 			}
 			return f.CreateObjectFormula<T>(context);
+		}
+
+		public ObjectFormula<T> GetReferenceEnumerable<T>(IEnumerable<string> fieldNames, object context = null, bool allowNulls = true)
+			where T : IReferenceEnumerable
+		{
+			int index = 0;
+			return GetReferenceEnumerable<T>(fieldNames, context, ref index, allowNulls);
+		}
+
+		public ObjectFormula<T> GetReferenceEnumerable<T>(string fieldName, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
+			where T : IReferenceEnumerable
+		{
+			return GetReferenceEnumerable<T>(new string[] { fieldName }, context, ref index, allowNulls);
+		}
+
+		public ObjectFormula<T> GetReferenceEnumerable<T>(IEnumerable<string> fieldNames, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
+			where T : IReferenceEnumerable
+		{
+			var f = FindField(fieldNames, ref index, !allowNulls, startIndex, allowSkip);
+			if (f == null)
+			{
+				if (allowNulls)
+					return null;
+				else
+				{
+					Mod.Errors.Add(new DataParsingException("Cannot find field \"" + fieldNames.First() + "\".", Mod.CurrentFileName, this, null));
+					return new ObjectFormula<T>("None", context, false);
+				}
+			}
+			return f.CreateReferenceEnumerableFormula<T>(context);
 		}
 
 		public IEnumerable<Formula<T>> GetMany<T>(string fieldName, object context, bool allowNulls = true)
