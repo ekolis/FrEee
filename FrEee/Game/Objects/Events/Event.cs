@@ -53,7 +53,7 @@ namespace FrEee.Game.Objects.Events
 		/// <summary>
 		/// The object affected by this script.
 		/// </summary>
-		public object Target { get; private set; }
+		public IReferrable Target { get; private set; }
 
 		/// <summary>
 		/// The template for this event.

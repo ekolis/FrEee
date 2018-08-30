@@ -1,4 +1,5 @@
-﻿using FrEee.Modding.Interfaces;
+﻿using FrEee.Game.Interfaces;
+using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System.Collections.Generic;
@@ -29,8 +30,8 @@ namespace FrEee.Modding.Loaders
 				et.Name = rec.Get<string>("Name", et);
 				et.Imports = rec.GetScript("Import", et);
 				et.Parameters = rec.GetScript("Parameter", et);
-				et.TargetSelector = rec.GetObject<IEnumerable<object>>("Target Selector", et);
-				et.TargetSelector.ExternalScripts = new Script[] { et.Imports };
+				et.TargetSelector = rec.GetReferenceEnumerable<GalaxyReferenceSet<IReferrable>>(new string[] { "Target Selector" }, et);
+				et.TargetSelector.ExternalScripts = et.TargetSelector.ExternalScripts.ConcatSingle(et.Imports).ToArray();
 				et.Action = rec.GetScript("Action", et);
 				et.Action.ExternalScripts = new Script[] { et.Imports, et.Parameters };
 				yield return et;
