@@ -1,19 +1,22 @@
-FrEee.Game.Setup.GameSetup, FrEee, Version=0.0.8.0, Culture=neutral, PublicKeyToken=null:
-p31:
+FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null:
+p32:
 	AllowedTrades:
 		:
 		All;
 	EmpirePlacement:
 		:
 		Equidistant;
+	EmpirePoints:
+		:
+		2000;
 	EmpireTemplates:
-		System.Collections.Generic.List`1[[FrEee.Game.Setup.EmpireTemplate, FrEee, Version=0.0.8.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
+		System.Collections.Generic.List`1[[FrEee.Game.Setup.EmpireTemplate, FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 		c1:		
 			:
 			p11:
 				AIName:
 					:
-					"";
+					"AI_Default";
 				AIsCanUse:
 					:
 					True;
@@ -37,12 +40,12 @@ p31:
 					"Eee";
 				Name:
 					:
-					"Eee";
+					"Eee Consortium";
 				PrimaryRace:
 					:
 					p7:
 						Aptitudes:
-							FrEee.Utility.SafeDictionary`2[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], FrEee, Version=0.0.8.0, Culture=neutral, PublicKeyToken=null:
+							FrEee.Utility.SafeDictionary`2[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null:
 							d15:							
 								:
 								"Physical Strength";
@@ -126,7 +129,11 @@ p31:
 							"Eee";
 						TraitNames:
 							System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-							c0:							
+							c2:							
+								:
+								"Natural Merchants";
+								:
+								"Propulsion Experts";
 							;
 					;
 				ShipsetName:
@@ -146,10 +153,10 @@ p31:
 		p2:
 			Height:
 				:
-				30;
+				15;
 			Width:
 				:
-				40;
+				20;
 		;
 	GalaxyTemplateName:
 		:
@@ -238,14 +245,14 @@ p31:
 		:
 		20000;
 	VictoryConditions:
-		System.Collections.Generic.List`1[[FrEee.Game.Interfaces.IVictoryCondition, FrEee, Version=0.0.8.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
+		System.Collections.Generic.List`1[[FrEee.Game.Interfaces.IVictoryCondition, FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 		c1:		
-			FrEee.Game.Objects.VictoryConditions.TotalEliminationVictoryCondition, FrEee, Version=0.0.8.0, Culture=neutral, PublicKeyToken=null:
+			FrEee.Game.Objects.VictoryConditions.TotalEliminationVictoryCondition, FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null:
 			p0:
 			;
 		;
 	WarpPointPlacementStrategy:
-		FrEee.Game.Setup.WarpPointPlacementStrategies.EdgeAlignedWarpPointPlacementStrategy, FrEee, Version=0.0.8.0, Culture=neutral, PublicKeyToken=null:
+		FrEee.Game.Setup.WarpPointPlacementStrategies.EdgeAlignedWarpPointPlacementStrategy, FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null:
 		p2:
 			Description:
 				:
