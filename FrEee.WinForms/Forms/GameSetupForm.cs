@@ -61,6 +61,7 @@ namespace FrEee.WinForms.Forms
 			ddlEventFrequency.Items.Add(new { Name = $"Low ({Mod.Current.Settings.EventFrequencyLow})", Value = Mod.Current.Settings.EventFrequencyLow });
 			ddlEventFrequency.Items.Add(new { Name = $"Medum ({Mod.Current.Settings.EventFrequencyMedium})", Value = Mod.Current.Settings.EventFrequencyMedium });
 			ddlEventFrequency.Items.Add(new { Name = $"High ({Mod.Current.Settings.EventFrequencyHigh})", Value = Mod.Current.Settings.EventFrequencyHigh });
+			ddlEventFrequency.Items.Add(new { Name = $"Ludicrous (1000)", Value = 1000 });
 			ddlEventFrequency.SelectedItem = ddlEventFrequency.Items.Cast<dynamic>().ElementAt(1);
 
 			foreach (var item in Enum.GetValues(typeof(EventSeverity)))
