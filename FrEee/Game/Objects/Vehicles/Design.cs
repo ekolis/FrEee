@@ -321,6 +321,33 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
+		public ResourceQuantity MaintenanceCost
+		{
+			get
+			{
+				double pct;
+				if (Hull.VehicleType == VehicleTypes.Ship || Hull.VehicleType == VehicleTypes.Base)
+					pct = Mod.Current.Settings.ShipBaseMaintenanceRate;
+				else
+					pct = Mod.Current.Settings.UnitMaintenanceRate;
+
+				if (pct > 0)
+				{
+					if (Owner != null)
+					{
+						pct -= Owner.GetAbilityValue("Reduced Maintenance Cost - Empire").ToInt();
+						pct -= Owner.Culture.MaintenanceReduction;
+						if (Owner.PrimaryRace.Aptitudes.ContainsKey(Aptitude.Maintenance.Name))
+							pct -= Owner.PrimaryRace.Aptitudes[Aptitude.Maintenance.Name] - 100;
+					}
+					pct *= (100d + this.GetAbilityValue("Modified Maintenance Cost").ToInt()) / 100d;
+					return Cost * pct / 100d;
+				}
+				else
+					return new ResourceQuantity();
+			}
+		}
+
 		IDesign IUpgradeable<IDesign>.LatestVersion
 		{
 			get { return LatestVersion; }
