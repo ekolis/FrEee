@@ -2,6 +2,7 @@
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding.Templates;
+using FrEee.Utility;
 using System.Collections.Generic;
 
 namespace FrEee.Game.Interfaces
@@ -60,6 +61,8 @@ namespace FrEee.Game.Interfaces
 		bool IsValidInMod { get; }
 
 		int Iteration { get; set; }
+
+		ResourceQuantity MaintenanceCost { get; }
 
 		/// <summary>
 		/// The name of the design.

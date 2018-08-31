@@ -64,6 +64,9 @@ namespace FrEee.WinForms.Controls
 				resCostMin.Amount = Design.Cost[Resource.Minerals];
 				resCostOrg.Amount = Design.Cost[Resource.Organics];
 				resCostRad.Amount = Design.Cost[Resource.Radioactives];
+				resMaintMin.Amount = Design.MaintenanceCost[Resource.Minerals];
+				resMaintOrg.Amount = Design.MaintenanceCost[Resource.Organics];
+				resMaintRad.Amount = Design.MaintenanceCost[Resource.Radioactives];
 				txtSpeed.Text = Design.StrategicSpeed.ToString() + " sec/turn; " + Design.CombatSpeed.ToString() + "km/s";
 				var genPerTurn = Design.GetAbilityValue("Supply Generation Per Turn").ToInt();
 				var genPerStar = Design.GetAbilityValue("Solar Supply Generation").ToInt();

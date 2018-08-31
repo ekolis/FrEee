@@ -67,6 +67,9 @@ namespace FrEee.WinForms.Controls
 			this.txtName = new System.Windows.Forms.Label();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.lstComponents = new System.Windows.Forms.ListView();
+			this.resMaintRad = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resMaintOrg = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resMaintMin = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.tabs.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.pnlStats.SuspendLayout();
@@ -122,6 +125,9 @@ namespace FrEee.WinForms.Controls
 			this.pnlStats.BackColor = System.Drawing.Color.Black;
 			this.pnlStats.BorderColor = System.Drawing.Color.CornflowerBlue;
 			this.pnlStats.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlStats.Controls.Add(this.resMaintRad);
+			this.pnlStats.Controls.Add(this.resMaintOrg);
+			this.pnlStats.Controls.Add(this.resMaintMin);
 			this.pnlStats.Controls.Add(this.txtEvasion);
 			this.pnlStats.Controls.Add(this.label18);
 			this.pnlStats.Controls.Add(this.txtAccuracy);
@@ -345,9 +351,9 @@ namespace FrEee.WinForms.Controls
 			this.label10.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.label10.Location = new System.Drawing.Point(6, 3);
 			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(31, 15);
+			this.label10.Size = new System.Drawing.Size(65, 15);
 			this.label10.TabIndex = 2;
-			this.label10.Text = "Cost";
+			this.label10.Text = "Cost/Maint";
 			// 
 			// txtDate
 			// 
@@ -498,6 +504,45 @@ namespace FrEee.WinForms.Controls
 			this.lstComponents.View = System.Windows.Forms.View.Tile;
 			this.lstComponents.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstComponents_MouseDown);
 			// 
+			// resMaintRad
+			// 
+			this.resMaintRad.Amount = 0;
+			this.resMaintRad.BackColor = System.Drawing.Color.Black;
+			this.resMaintRad.Change = null;
+			this.resMaintRad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.resMaintRad.Location = new System.Drawing.Point(192, 38);
+			this.resMaintRad.Margin = new System.Windows.Forms.Padding(0);
+			this.resMaintRad.Name = "resMaintRad";
+			this.resMaintRad.ResourceName = "Radioactives";
+			this.resMaintRad.Size = new System.Drawing.Size(92, 17);
+			this.resMaintRad.TabIndex = 41;
+			// 
+			// resMaintOrg
+			// 
+			this.resMaintOrg.Amount = 0;
+			this.resMaintOrg.BackColor = System.Drawing.Color.Black;
+			this.resMaintOrg.Change = null;
+			this.resMaintOrg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+			this.resMaintOrg.Location = new System.Drawing.Point(192, 21);
+			this.resMaintOrg.Margin = new System.Windows.Forms.Padding(0);
+			this.resMaintOrg.Name = "resMaintOrg";
+			this.resMaintOrg.ResourceName = "Organics";
+			this.resMaintOrg.Size = new System.Drawing.Size(92, 17);
+			this.resMaintOrg.TabIndex = 40;
+			// 
+			// resMaintMin
+			// 
+			this.resMaintMin.Amount = 0;
+			this.resMaintMin.BackColor = System.Drawing.Color.Black;
+			this.resMaintMin.Change = null;
+			this.resMaintMin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+			this.resMaintMin.Location = new System.Drawing.Point(192, 3);
+			this.resMaintMin.Margin = new System.Windows.Forms.Padding(0);
+			this.resMaintMin.Name = "resMaintMin";
+			this.resMaintMin.ResourceName = "Minerals";
+			this.resMaintMin.Size = new System.Drawing.Size(92, 17);
+			this.resMaintMin.TabIndex = 39;
+			// 
 			// DesignReport
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -556,5 +601,8 @@ namespace FrEee.WinForms.Controls
 		private ResourceDisplay resCostOrg;
 		private ResourceDisplay resCostMin;
 		private System.Windows.Forms.Label label10;
+		private ResourceDisplay resMaintRad;
+		private ResourceDisplay resMaintOrg;
+		private ResourceDisplay resMaintMin;
 	}
 }
