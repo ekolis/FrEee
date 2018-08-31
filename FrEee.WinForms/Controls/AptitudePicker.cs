@@ -56,6 +56,7 @@ namespace FrEee.WinForms.Controls
 					txtName.TextAlign = ContentAlignment.MiddleLeft;
 					txtName.AutoSize = false;
 					txtName.Width = 200;
+					toolTip.SetToolTip(txtName, kvp.Key.Description);
 					//txtName.Dock = DockStyle.Fill;
 					pnl.Controls.Add(txtName, 0, row);
 
@@ -65,12 +66,14 @@ namespace FrEee.WinForms.Controls
 					spnValue.Value = kvp.Value;
 					spnValue.Tag = kvp.Key;
 					spnValue.ValueChanged += spnValue_ValueChanged;
+					toolTip.SetToolTip(spnValue, kvp.Key.Description);
 					pnl.Controls.Add(spnValue, 1, row);
 
 					var txtCost = new Label();
 					txtCost.Name = "txtCost_" + kvp.Key.Name.Replace(' ', '_');
 					txtCost.Text = kvp.Key.GetCost(kvp.Value) + " pts";
 					txtCost.TextAlign = ContentAlignment.MiddleLeft;
+					toolTip.SetToolTip(txtCost, kvp.Key.Description);
 					pnl.Controls.Add(txtCost, 2, row);
 
 					row++;
