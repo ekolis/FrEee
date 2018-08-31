@@ -13,6 +13,18 @@ namespace FrEee.WinForms.Controls
 			InitializeComponent();
 		}
 
+		private bool roundMaxToMUltipleOfPowerOfTen;
+
+		public bool RoundMaxToMultipleOfPowerOfTen
+		{
+			get => roundMaxToMUltipleOfPowerOfTen;
+			set
+			{
+				roundMaxToMUltipleOfPowerOfTen = value;
+				Invalidate();
+			}
+		}
+
 		public IEnumerable<double> DataPoints
 		{
 			get { return dataPoints; }
@@ -63,11 +75,14 @@ namespace FrEee.WinForms.Controls
 			{
 				// draw Y-axis (round max up to a single digit multiple of a power of 10 for pretty display)
 				var max = DataPoints.Max();
-				var log = Math.Floor(Math.Log10(max));
-				var pow = Math.Pow(10, log);
-				var factor = max / pow;
-				var rounded = Math.Ceiling(factor);
-				max = rounded * pow;
+				if (RoundMaxToMultipleOfPowerOfTen)
+				{
+					var log = Math.Floor(Math.Log10(max));
+					var pow = Math.Pow(10, log);
+					var factor = max / pow;
+					var rounded = Math.Ceiling(factor);
+					max = rounded * pow;
+				}
 				var sfRight = new StringFormat();
 				sfRight.Alignment = StringAlignment.Far;
 				sfRight.LineAlignment = StringAlignment.Center;
