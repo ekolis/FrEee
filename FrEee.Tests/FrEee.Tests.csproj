@@ -197,10 +197,10 @@
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(ProjectDir)..\FrEee\Mods" "$(TargetDir)Mods\" /y /e /s
-xcopy "$(ProjectDir)..\FrEee\Data" "$(TargetDir)Data\" /y /e /s
-xcopy "$(ProjectDir)Mods" "$(TargetDir)Mods\" /y /e /s
-xcopy "$(ProjectDir)Savegame" "$(TargetDir)Savegame\" /y /e /s</PostBuildEvent>
+    <PostBuildEvent>robocopy "$(ProjectDir)..\FrEee\Mods" "$(TargetDir)Mods\" /e
+robocopy "$(ProjectDir)..\FrEee\Data" "$(TargetDir)Data\" /e
+robocopy "$(ProjectDir)Mods" "$(TargetDir)Mods\" /e
+robocopy "$(ProjectDir)Savegame" "$(TargetDir)Savegame\" /e</PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
