@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScoresForm));
 			this.graph = new FrEee.WinForms.Controls.LineGraph();
 			this.grid = new FrEee.WinForms.Controls.GameGridView();
 			this.SuspendLayout();
@@ -41,6 +40,7 @@
 			this.graph.DataPoints = null;
 			this.graph.Location = new System.Drawing.Point(12, 12);
 			this.graph.Name = "graph";
+			this.graph.RoundMaxToMultipleOfPowerOfTen = true;
 			this.graph.Size = new System.Drawing.Size(709, 310);
 			this.graph.TabIndex = 0;
 			this.graph.Text = "graph";
@@ -53,7 +53,7 @@
 			this.grid.AppendMenuItems = null;
 			this.grid.BackColor = System.Drawing.Color.Black;
 			this.grid.CreateDefaultGridConfig = null;
-			this.grid.CurrentGridConfig = ((FrEee.WinForms.DataGridView.GridConfig)(resources.GetObject("grid.CurrentGridConfig")));
+			this.grid.CurrentGridConfig = null;
 			this.grid.Data = new object[0];
 			this.grid.DataType = typeof(object);
 			this.grid.ForeColor = System.Drawing.Color.White;
@@ -76,7 +76,6 @@
 			this.ClientSize = new System.Drawing.Size(733, 445);
 			this.Controls.Add(this.grid);
 			this.Controls.Add(this.graph);
-			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "ScoresForm";
 			this.Text = "Scores";
 			this.Load += new System.EventHandler(this.ScoresForm_Load);
