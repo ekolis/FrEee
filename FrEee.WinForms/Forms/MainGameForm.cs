@@ -540,7 +540,7 @@ namespace FrEee.WinForms.Forms
 			switch (mode)
 			{
 				case CommandMode.None:
-					Text = "FrEee - " + Galaxy.Current;
+					Text = "FrEee - " + Galaxy.Current.Name + " - " + Galaxy.Current;
 					break;
 
 				case CommandMode.Move:
