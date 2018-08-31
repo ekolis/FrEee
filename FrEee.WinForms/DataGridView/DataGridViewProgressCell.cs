@@ -69,7 +69,7 @@ namespace FrEee.WinForms.DataGridView
 						if (progress.Eta == null)
 							text = "Never";
 						else
-							text = progress.Eta + " turns";
+							text = progress.Eta + " turn" + (progress.Eta == 1 ? "" : "s");
 						break;
 				}
 				graphics.DrawString(text, cellStyle.Font, brush, rect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
