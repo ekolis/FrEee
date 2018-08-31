@@ -134,9 +134,9 @@ namespace FrEee.WinForms.Controls
 					txtConstructionItem.Text = Planet.ConstructionQueue.FirstItemName;
 					txtConstructionItem.BackColor = Planet.ConstructionQueue.FirstItemEta <= 1d ? Color.DarkGreen : Color.Transparent;
 					if (Planet.ConstructionQueue.Eta != Planet.ConstructionQueue.FirstItemEta)
-						txtConstructionTime.Text = Planet.ConstructionQueue.FirstItemeta.CeilingString(1) + " turns (" + Planet.ConstructionQueue.eta.CeilingString(1) + " turns for all)";
+						txtConstructionTime.Text = Planet.ConstructionQueue.FirstItemEta.CeilingString(1) + " turns (" + Planet.ConstructionQueue.Eta.CeilingString(1) + " turns for all)";
 					else
-						txtConstructionTime.Text = Planet.ConstructionQueue.FirstItemeta.CeilingString(1) + " turns";
+						txtConstructionTime.Text = Planet.ConstructionQueue.FirstItemEta.CeilingString(1) + " turns";
 					txtConstructionTime.BackColor = Planet.ConstructionQueue.Eta <= 1d ? Color.DarkGreen : Color.Transparent;
 				}
 
