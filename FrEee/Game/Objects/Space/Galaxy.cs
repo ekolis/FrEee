@@ -1648,7 +1648,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			if (CurrentEmpire == null)
 				return Name;
-			return CurrentEmpire.Name + " - " + CurrentEmpire.LeaderName + " - " + Stardate;
+			return Name + " - " + CurrentEmpire.Name + " - " + CurrentEmpire.LeaderName + " - " + Stardate;
 		}
 
 		public void UnassignID(long id)
