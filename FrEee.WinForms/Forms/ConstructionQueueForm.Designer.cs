@@ -86,6 +86,7 @@
 			this.txtCargoStorageFree = new System.Windows.Forms.Label();
 			this.txtFacilitySlotsFree = new System.Windows.Forms.Label();
 			this.chkExpanded = new System.Windows.Forms.CheckBox();
+			this.btnHelp = new FrEee.WinForms.Controls.GameButton();
 			this.gamePanel2.SuspendLayout();
 			this.gamePanel1.SuspendLayout();
 			this.gameTabControl1.SuspendLayout();
@@ -768,12 +769,25 @@
 			this.chkExpanded.UseVisualStyleBackColor = true;
 			this.chkExpanded.CheckedChanged += new System.EventHandler(this.chkExpanded_CheckedChanged);
 			// 
+			// btnHelp
+			// 
+			this.btnHelp.BackColor = System.Drawing.Color.Black;
+			this.btnHelp.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnHelp.Location = new System.Drawing.Point(703, 429);
+			this.btnHelp.Name = "btnHelp";
+			this.btnHelp.Size = new System.Drawing.Size(175, 29);
+			this.btnHelp.TabIndex = 28;
+			this.btnHelp.Text = "Help";
+			this.btnHelp.UseVisualStyleBackColor = false;
+			this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
+			// 
 			// ConstructionQueueForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(880, 558);
+			this.Controls.Add(this.btnHelp);
 			this.Controls.Add(this.chkExpanded);
 			this.Controls.Add(this.txtFacilitySlotsFree);
 			this.Controls.Add(this.txtCargoStorageFree);
@@ -799,7 +813,6 @@
 			this.Controls.Add(this.resOrganicsRate);
 			this.Controls.Add(this.resMineralsRate);
 			this.Controls.Add(this.label1);
-			this.ForeColor = System.Drawing.Color.White;
 			this.KeyPreview = true;
 			this.Name = "ConstructionQueueForm";
 			this.ShowInTaskbar = false;
@@ -878,5 +891,6 @@
 		private System.Windows.Forms.Label lblPresentSystem;
 		private System.Windows.Forms.Label lblPresentSector;
 		private System.Windows.Forms.Label lblPresentLocal;
+		private Controls.GameButton btnHelp;
 	}
 }
