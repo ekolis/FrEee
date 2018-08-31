@@ -74,7 +74,7 @@ namespace FrEee.WinForms.Forms
 				e.ColumnIndex == gridQueues.Columns.IndexOf(FirstItemEta))
 			{
 				if (e.Value != null)
-					e.Value = ((double)e.Value).ToString("f1");
+					e.Value = ((double)e.Value).CeilingString(1);
 			}
 		}
 
