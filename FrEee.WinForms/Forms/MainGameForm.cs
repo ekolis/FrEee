@@ -286,7 +286,7 @@ namespace FrEee.WinForms.Forms
 				if (tech.Progress.Eta == null)
 					progResearch.RightText = "Never";
 				else
-					progResearch.RightText = tech.Progress.Eta + " turns";
+					progResearch.RightText = tech.Progress.Eta + " turn" + (tech.Progress.Eta == 1 ? "" : "s");
 			}
 			else
 			{

@@ -93,7 +93,7 @@ namespace FrEee.WinForms.Forms
 				if (curTech.Progress.Eta == null)
 					lblResults.Text = "Expected Results (never)";
 				else
-					lblResults.Text = "Expected Results (in " + curTech.Progress.Eta + " turns)";
+					lblResults.Text = "Expected Results (in " + curTech.Progress.Eta + " turn" + (curTech.Progress.Eta == 1 ? "" : "s") + ")";
 				lstResults.Initialize(32, 32);
 				foreach (var result in curTech.ExpectedResults)
 					lstResults.AddItemWithImage(result.ResearchGroup, result.Name, result, result.Icon);
@@ -119,10 +119,10 @@ namespace FrEee.WinForms.Forms
 				}
 				else
 				{
-					if (tech.MaximumLevel == 1 && levels[tech] == 1)
-						lstQueue.Items.Add(tech.Name + " (" + eta + " turns)");
+                    if (tech.MaximumLevel == 1 && levels[tech] == 1)
+						lstQueue.Items.Add(tech.Name + " (" + eta + " turn" + (eta == 1 ? "" : "s") + ")");
 					else
-						lstQueue.Items.Add(tech.Name + " L" + levels[tech] + " (" + eta + " turns)");
+						lstQueue.Items.Add(tech.Name + " L" + levels[tech] + " (" + eta + " turn" + (eta == 1 ? "" : "s") + ")");
 				}
 				idx++;
 			}
