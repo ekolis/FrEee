@@ -937,11 +937,12 @@ namespace FrEee.Game.Objects.Space
 						else
 							cmd.Execute();
 					}
+					else if (cmd.Issuer == null)
+						throw new NullReferenceException($"Command {cmd} was issued by nobody!");
 					else
 					{
 						// no hacking!
-						if (cmd.Issuer != null)
-							cmd.Issuer.Log.Add(new GenericLogMessage(cmd.Issuer.Name + " cannot issue a command to an object belonging to " + emp + "!"));
+						cmd.Issuer.Log.Add(new GenericLogMessage(cmd.Issuer.Name + " cannot issue a command to an object belonging to " + emp + "!"));
 					}
 				}
 
@@ -1144,9 +1145,9 @@ namespace FrEee.Game.Objects.Space
 			Current.Empires.ParallelSafeForeach(emp =>
 			{
 				emp.StoredResources = ResourceQuantity.Min(emp.StoredResources, emp.ResourceStorage);// resource spoilage
-					emp.Commands.Clear(); // clear empire commands
-					emp.Scores[Current.TurnNumber] = emp.ComputeScore(null); // update score
-				});
+				emp.Commands.Clear(); // clear empire commands
+				emp.Scores[Current.TurnNumber] = emp.ComputeScore(null); // update score
+			});
 
 			// clear completed orders
 			Current.Referrables.OfType<IPathfindingOrder>().Where(o => o.KnownTarget == null).ParallelSafeForeach(o => o.IsComplete = true);
@@ -1338,9 +1339,9 @@ namespace FrEee.Game.Objects.Space
 				canAssign = !prop.HasAttribute<DoNotAssignIDAttribute>() && !isMemory;
 				if (isMemory)
 					return false; // no recursion!
-					if (prop.GetAttributes<DoNotAssignIDAttribute>().Any(a => a.Recurse))
+				if (prop.GetAttributes<DoNotAssignIDAttribute>().Any(a => a.Recurse))
 					return false; // no recursion!
-					else
+				else
 					return true;
 			};
 			parser.StartObject += o =>
