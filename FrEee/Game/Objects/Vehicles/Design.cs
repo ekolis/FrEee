@@ -670,7 +670,8 @@ namespace FrEee.Game.Objects.Vehicles
 			// TODO - "battle manager" so we're not tied to a specific combat implementation
 			else if (emp.KnownDesigns.Contains(this) || Galaxy.Current.Battles.Any(b =>
 				b.Combatants.Any(c => c.Owner == emp) &&
-				b.Combatants.OfType<IVehicle>().Any(v => v.Design == this)))
+					(b.Combatants.OfType<IVehicle>().Any(v => v.Design == this)
+					|| b.Combatants.OfType<ICargoContainer>().Any(c => c.Cargo.Units.Any(u => u.Design == this)))))
 				return Visibility.Scanned;
 			return Visibility.Unknown;
 		}
