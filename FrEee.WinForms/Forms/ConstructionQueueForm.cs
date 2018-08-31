@@ -971,5 +971,10 @@ namespace FrEee.WinForms.Forms
 			foreach (var cmd in removedCommands)
 				Galaxy.Current.CurrentEmpire.Commands.Remove(cmd);
 		}
+
+		private void btnHelp_Click(object sender, EventArgs e)
+		{
+			OpenWikiPage();
+		}
 	}
 }
