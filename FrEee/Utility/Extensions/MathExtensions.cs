@@ -14,6 +14,19 @@ namespace FrEee.Utility.Extensions
 		/// <param name="num">The number.</param>
 		/// <param name="decimalPlaces">The decimal places.</param>
 		/// <returns></returns>
+		public static string CeilingString(this double? num, int decimalPlaces = 0)
+		{
+			if (num == null)
+				return null;
+			return num.Value.CeilingString(decimalPlaces);
+		}
+
+		/// <summary>
+		/// Finds the ceiling of the specified number to the specified number of decimal places and returns it as a string.
+		/// </summary>
+		/// <param name="num">The number.</param>
+		/// <param name="decimalPlaces">The decimal places.</param>
+		/// <returns></returns>
 		public static string CeilingString(this double num, int decimalPlaces = 0)
 		{
 			return MathX.Ceiling(num, decimalPlaces).ToString("f" + decimalPlaces);
