@@ -167,12 +167,14 @@
     <Compile Include="Utility\Extensions\ConversionExtensions.cs" />
     <Compile Include="Utility\Extensions\EnumerableExtensions.cs" />
     <Compile Include="Utility\Extensions\GameEnumerableExtensions.cs" />
+    <Compile Include="Utility\Extensions\MathExtensions.cs" />
     <Compile Include="Utility\Extensions\StringHandlingExtensions.cs" />
     <Compile Include="Utility\Extensions\UnitHandlingExtensions.cs" />
     <Compile Include="Utility\HeatMap.cs" />
     <Compile Include="Utility\IntVector2.cs" />
     <Compile Include="Utility\JsonSerializer.cs" />
     <Compile Include="Utility\LegacySerializer.cs" />
+    <Compile Include="Utility\MathX.cs" />
     <Compile Include="Utility\ResourceProgress.cs" />
     <Compile Include="Utility\SimpleDataObject.cs" />
     <Compile Include="Utility\DataReference.cs" />
