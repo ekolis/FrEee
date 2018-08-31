@@ -130,7 +130,7 @@ namespace FrEee.WinForms.Forms
 					item.ImageIndex = i;
 					item.Tag = facil;
 					var eta = facil.Cost.Keys.Max(res => (double)(facil.Cost[res]) / (double)ConstructionQueue.Rate[res]);
-					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString("f1")));
+					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.CeilingString(1)));
 					ilFacil.Images.Add(facil.Icon);
 					lstFacilities.Items.Add(item);
 					if (facil.IsObsolete)
@@ -210,7 +210,7 @@ namespace FrEee.WinForms.Forms
 						fore = firstFinishesThisTurn ? (allFinishThisTurn ? Color.Cyan : Color.LightGreen) : lstQueue.ForeColor;
 					if (back != lstQueue.BackColor)
 						fore = lstQueue.BackColor;
-					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, firstEta.ToString("f1") + "(" + eta.ToString("f1") + ")", fore, back, lstQueue.Font));
+					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, firstEta.CeilingString(1) + "(" + eta.CeilingString(1) + ")", fore, back, lstQueue.Font));
 					item.ImageIndex = i;
 					il.Images.Add(order.Template.Icon);
 					lstQueue.Items.Add(item);
@@ -240,7 +240,7 @@ namespace FrEee.WinForms.Forms
 						fore = finishesThisTurn ? Color.Cyan : lstQueue.BackColor;
 					if (back != lstQueue.BackColor)
 						fore = lstQueue.BackColor;
-					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString("f1") + "(" + eta.ToString("f1") + ")", fore, back, lstQueue.Font));
+					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.CeilingString(1) + "(" + eta.CeilingString(1) + ")", fore, back, lstQueue.Font));
 					item.ImageIndex = i;
 					il.Images.Add(order.Template.Icon);
 					lstQueue.Items.Add(item);
@@ -262,7 +262,7 @@ namespace FrEee.WinForms.Forms
 			foreach (var design in designs.Where(d => ConstructionQueue.CanConstruct(d)).OrderBy(d => d.Role).ThenBy(d => d.Name).ThenBy(d => d.Iteration))
 			{
 				var eta = design.Cost.Keys.Max(res => (double)(design.Cost[res]) / (double)ConstructionQueue.Rate[res]);
-				var x = lstShips.AddItemWithImage(design.Role, design.Name, design, design.Icon, eta.ToString("f1"));
+				var x = lstShips.AddItemWithImage(design.Role, design.Name, design, design.Icon, eta.CeilingString(1));
 				if (design.IsObsolete)
 					x.ForeColor = Color.Gray;
 				else if (design.IsObsolescent)
@@ -312,7 +312,7 @@ namespace FrEee.WinForms.Forms
 									item.Tag = fu;
 									var cost = newf.Cost * Mod.Current.Settings.UpgradeFacilityPercentCost / 100;
 									var eta = cost.Keys.Max(res => (double)(cost[res]) / (double)ConstructionQueue.Rate[res]);
-									item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString("f1")));
+									item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.CeilingString(1)));
 									ilFacil.Images.Add(newf.Icon);
 									lstUpgrades.Items.Add(item);
 									if (fu.IsObsolete)

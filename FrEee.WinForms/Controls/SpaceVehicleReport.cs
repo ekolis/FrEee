@@ -112,9 +112,9 @@ namespace FrEee.WinForms.Controls
 					txtConstructionItem.Text = Vehicle.ConstructionQueue.FirstItemName;
 					txtConstructionItem.BackColor = Vehicle.ConstructionQueue.FirstItemEta <= 1d ? Color.DarkGreen : Color.Transparent;
 					if (Vehicle.ConstructionQueue.Eta != Vehicle.ConstructionQueue.FirstItemEta)
-						txtConstructionTime.Text = Vehicle.ConstructionQueue.FirstItemEta.ToString("f1") + " turns (" + Vehicle.ConstructionQueue.Eta.ToString("f1") + " turns for all)";
+						txtConstructionTime.Text = Vehicle.ConstructionQueue.FirstItemeta.CeilingString(1) + " turns (" + Vehicle.ConstructionQueue.eta.CeilingString(1) + " turns for all)";
 					else
-						txtConstructionTime.Text = Vehicle.ConstructionQueue.FirstItemEta.ToString("f1") + " turns";
+						txtConstructionTime.Text = Vehicle.ConstructionQueue.FirstItemeta.CeilingString(1) + " turns";
 					txtConstructionTime.BackColor = Vehicle.ConstructionQueue.Eta <= 1d ? Color.DarkGreen : Color.Transparent;
 				}
 
