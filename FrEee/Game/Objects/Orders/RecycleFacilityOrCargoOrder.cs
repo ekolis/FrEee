@@ -81,6 +81,8 @@ namespace FrEee.Game.Objects.Orders
 					foreach (var e in errors)
 						Owner.Log.Add(e);
 				}
+				else
+					IsComplete = true;
 				return;
 			}
 
