@@ -1519,7 +1519,7 @@ namespace FrEee.Game.Objects.Space
 					v.UpdateEmpireMemories();
 					if (v.StarSystem != null && v.Owner != null)
 					{
-						foreach (var sobj in v.StarSystem.FindSpaceObjects<ISpaceObject>().Where(sobj => sobj != v && !sobj.IsMemory).ToArray())
+						foreach (var sobj in v.StarSystem.FindSpaceObjects<ISpaceObject>().Where(sobj => sobj != v && !sobj.IsMemory && v.Owner.CanSee(sobj)).ToArray())
 							v.Owner.UpdateMemory(sobj);
 					}
 
