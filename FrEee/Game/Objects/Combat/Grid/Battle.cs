@@ -384,8 +384,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 				{
 					foreach (var b in alives)
 					{
-						// TODO - also check if combatant is armed
-						if (a.IsHostileTo(b.Owner))
+						// TODO - check if ships want to ram even if they have no weapons
+						if (a.IsHostileTo(b.Owner) && a.Weapons.Any())
 						{
 							hostile = true;
 							break;
