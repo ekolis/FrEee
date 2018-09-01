@@ -335,7 +335,7 @@ namespace FrEee.Game.Objects.Space
 			// From here on, largestObject and StarSystem are defined
 
 			// Don't display the star system name, if the space object's name contains it, to avoid repetition
-			bool objectNameContainsStarName = Regex.IsMatch(largestObject.Name, string.Format(@"\b{0}\b", Regex.Escape(StarSystem.Name)));
+			bool objectNameContainsStarName = Regex.IsMatch(largestObject.Name, string.Format(@"\b{0}\b", Regex.Escape(StarSystem.Name ?? "(unexplored)")));
 			if (objectNameContainsStarName)
 				return largestObject + " (" + Coordinates.X + ", " + Coordinates.Y + ")";
 			else
