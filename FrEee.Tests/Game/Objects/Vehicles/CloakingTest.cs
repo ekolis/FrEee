@@ -47,8 +47,6 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			// initialize galaxy
 			new Galaxy();
 			Mod.Load(null);
-			sys = new StarSystem(0);
-			Galaxy.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(sys, new Point()));
 
 			// initialize empires
 			seekers = new Empire();
@@ -107,6 +105,10 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		[TestInitialize]
 		public void Init()
 		{
+			// create star system
+			sys = new StarSystem(0);
+			Galaxy.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(sys, new Point()));
+
 			// place ships
 			sys.Place(destroyer, new Point());
 			sys.Place(submarine, new Point());
@@ -132,6 +134,17 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			AddSensorAbility(destroyer.Hull, "Narf", 1);
 			AddCloakAbility(submarine.Hull, "Foobar", 999);
 			Assert.IsFalse(submarine.IsHiddenFrom(seekers), "Submarine should be visible.");
+		}
+
+		/// <summary>
+		/// If everyone is in a nebula with a system cloaking ability, the enemy ship should be hidden.
+		/// </summary>
+		[TestMethod]
+		public void NebulaCantSee()
+		{
+			AddSensorAbility(destroyer.Hull, "Foobar", 1);
+			sys.Abilities.Add(new Ability(sys, Mod.Current.AbilityRules.FindByName("System - Sight Obscuration"), null, 999));
+			Assert.IsTrue(submarine.IsHiddenFrom(seekers), "Submarine should be hidden.");
 		}
 
 		/// <summary>
@@ -163,6 +176,19 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			AddSensorAbility(destroyer.Hull, "Foobar", 1);
 			AddCloakAbility(submarine.Hull, "Foobar", 1);
 			Assert.IsFalse(submarine.IsHiddenFrom(seekers), "Submarine should be visible.");
+		}
+
+		/// <summary>
+		/// If the enemy is in a storm with a sector cloaking ability, the enemy ship should be hidden.
+		/// </summary>
+		[TestMethod]
+		public void StormCantSee()
+		{
+			AddSensorAbility(destroyer.Hull, "Foobar", 1);
+			var storm = new Storm();
+			storm.Abilities.Add(new Ability(sys, Mod.Current.AbilityRules.FindByName("Sector - Sight Obscuration"), null, 999));
+			sys.Place(storm, new Point());
+			Assert.IsTrue(submarine.IsHiddenFrom(seekers), "Submarine should be hidden.");
 		}
 
 		// TODO - same/low level sight obscuration from star system
