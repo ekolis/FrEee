@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -325,7 +326,20 @@ namespace FrEee.Game.Objects.Space
 
 		public override string ToString()
 		{
-			return Name;
+			var largestObject = SpaceObjects.Largest();
+
+			// If sector doesn't have space objects, or the star system is unexplored, early return just the sector name
+			if (largestObject == null || StarSystem == null)
+				return Name;
+
+			// From here on, largestObject and StarSystem are defined
+
+			// Don't display the star system name, if the space object's name contains it, to avoid repetition
+			bool objectNameContainsStarName = Regex.IsMatch(largestObject.Name, string.Format(@"\b{0}\b", Regex.Escape(StarSystem.Name)));
+			if (objectNameContainsStarName)
+				return largestObject + " (" + Coordinates.X + ", " + Coordinates.Y + ")";
+			else
+				return largestObject + " at " + Name;
 		}
 	}
 }
