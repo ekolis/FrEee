@@ -161,17 +161,28 @@ namespace FrEee.Game.Objects.Combat.Grid
 			var locations = new SafeDictionary<ICombatant, IntVector2>();
 			var multiplex = new SafeDictionary<ICombatant, HashSet<ICombatant>>(true);
 
-			// place all combatants at the points of a regular polygon
-			var sideLength = 21; // make sure no one can shoot each other at the start
-								 // https://stackoverflow.com/questions/32169875/calculating-the-coordinates-of-a-regular-polygon-given-its-center-and-its-side-l
-			var radius = sideLength / (2 * Sin(PI / Empires.Count()));
-			var combs = Combatants.ToArray();
-			for (var i = 0; i < Empires.Count(); i++)
+			if (Sector.SpaceObjects.OfType<WarpPoint>().Any())
 			{
-				var x = radius * Cos(PI / Empires.Count() * (1 + 2 * i));
-				var y = radius * Sin(PI / Empires.Count() * (1 + 2 * i));
-				foreach (var comb in Combatants.Where(q => q.Owner == Empires.ElementAt(i)))
-					locations.Add(comb, new IntVector2((int)x, (int)y));
+				// HACK - warp point in sector, assume someone warped
+				// TODO - do this for warp point exits instead since warp points may be one way
+				// warp battles start with everyone in the same square to allow blockades
+				foreach (var c in Combatants)
+					locations.Add(c, new IntVector2());
+			}
+			else
+			{   
+				// place all combatants at the points of a regular polygon
+				var sideLength = 21; // make sure no one can shoot each other at the start
+									 // https://stackoverflow.com/questions/32169875/calculating-the-coordinates-of-a-regular-polygon-given-its-center-and-its-side-l
+				var radius = sideLength / (2 * Sin(PI / Empires.Count()));
+				var combs = Combatants.ToArray();
+				for (var i = 0; i < Empires.Count(); i++)
+				{
+					var x = radius * Cos(PI / Empires.Count() * (1 + 2 * i));
+					var y = radius * Sin(PI / Empires.Count() * (1 + 2 * i));
+					foreach (var comb in Combatants.Where(q => q.Owner == Empires.ElementAt(i)))
+						locations.Add(comb, new IntVector2((int)x, (int)y));
+				}
 			}
 
 			Events = new List<IList<IBattleEvent>>();
