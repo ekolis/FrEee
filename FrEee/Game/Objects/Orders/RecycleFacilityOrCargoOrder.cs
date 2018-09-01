@@ -76,8 +76,11 @@ namespace FrEee.Game.Objects.Orders
 			var errors = GetErrors(executor);
 			if (errors.Any())
 			{
-				foreach (var e in errors)
-					Owner.Log.Add(e);
+				if (Owner != null)
+				{
+					foreach (var e in errors)
+						Owner.Log.Add(e);
+				}
 				return;
 			}
 
