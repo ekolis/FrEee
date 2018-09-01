@@ -17,7 +17,7 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return AbilityTargets.WeaponPlatform; }
 		}
 
-		public override int CombatSpeed => 0;
+		public override double CombatSpeed => 0;
 
 		public ICargoContainer Container
 		{

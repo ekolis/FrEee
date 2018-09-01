@@ -70,7 +70,7 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return this.GetAbilityValue("Cargo Storage").ToInt(); }
 		}
 
-		public override int CombatSpeed => Mod.Current.Settings.CombatSpeedPercentPerStrategicSpeed.PercentOfRounded(StrategicSpeed) + this.GetAbilityValue("Combat Movement").ToInt();
+		public override double CombatSpeed => Mod.Current.Settings.CombatSpeedPercentPerStrategicSpeed.PercentOf(StrategicSpeed) + this.GetAbilityValue("Combat Movement").ToInt();
 
 		public ConstructionQueue ConstructionQueue
 		{

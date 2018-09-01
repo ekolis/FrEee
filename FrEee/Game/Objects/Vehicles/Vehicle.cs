@@ -69,7 +69,7 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
-		public abstract int CombatSpeed { get; }
+		public abstract double CombatSpeed { get; }
 
 		/// <summary>
 		/// The components on this vehicle.

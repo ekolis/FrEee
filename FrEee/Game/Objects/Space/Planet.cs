@@ -145,7 +145,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public Colony Colony { get; set; }
 
-		public int CombatSpeed => 0;
+		public double CombatSpeed => 0;
 
 		public override ConstructionQueue ConstructionQueue
 		{
