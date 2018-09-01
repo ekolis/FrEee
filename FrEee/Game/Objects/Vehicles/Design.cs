@@ -671,7 +671,7 @@ namespace FrEee.Game.Objects.Vehicles
 			else if (emp.KnownDesigns.Contains(this) || Galaxy.Current.Battles.Any(b =>
 				b.Combatants.Any(c => c.Owner == emp) &&
 					(b.Combatants.OfType<IVehicle>().Any(v => v.Design == this)
-					|| b.Combatants.OfType<ICargoContainer>().Any(c => c.Cargo.Units.Any(u => u.Design == this)))))
+					|| b.Combatants.OfType<ICargoContainer>().Any(c => c.Cargo?.Units?.Any(u => u.Design == this) ?? false))))
 				return Visibility.Scanned;
 			return Visibility.Unknown;
 		}
