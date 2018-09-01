@@ -237,7 +237,7 @@ namespace FrEee.WinForms.Forms
 					if (i == ConstructionQueue.Orders.Count - 1)
 						back = idle ? Color.DarkOrange : lstQueue.BackColor;
 					else
-						fore = finishesThisTurn ? Color.Cyan : lstQueue.BackColor;
+						fore = finishesThisTurn ? Color.Cyan : lstQueue.ForeColor;
 					if (back != lstQueue.BackColor)
 						fore = lstQueue.BackColor;
 					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.CeilingString(1) + "(" + eta.CeilingString(1) + ")", fore, back, lstQueue.Font));
