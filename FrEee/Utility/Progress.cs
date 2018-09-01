@@ -63,7 +63,9 @@ namespace FrEee.Utility
 		{
 			get
 			{
-				if (IncrementalProgressBeforeDelay <= 0 && ExtraIncrementalProgressAfterDelay <= 0)
+				if (Delay == double.PositiveInfinity)
+					return null; // When the delay is infinite, like the research queue having 0 research points, it never finishes
+				else if (IncrementalProgressBeforeDelay <= 0 && ExtraIncrementalProgressAfterDelay <= 0)
 					return null;
 				else if (Delay == null)
 				{
