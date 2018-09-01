@@ -14,6 +14,7 @@ using System.Linq;
 
 namespace FrEee.Game.Objects.Combat.Simple
 {
+	[Obsolete("Simple.Battle is obsolete, use Grid.Battle instead.")]
 	public class Battle : IBattle
 	{
 		static Battle()
