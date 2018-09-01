@@ -36,6 +36,11 @@ namespace FrEee.Game.Objects.Orders.RecycleBehaviors
 
 		public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject executor, IRecyclable target)
 		{
+			if (target == null)
+			{
+				yield return new GenericLogMessage("A scrap order was issued for a nonexistent target.");
+				yield break;
+			}
 			if (target.IsDisposed)
 				yield return target.CreateLogMessage($"{target} cannot be scrapped because it is already destroyed.");
 			if (target.RecycleContainer != executor)
