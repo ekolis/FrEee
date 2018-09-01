@@ -126,7 +126,7 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public int CombatSpeed => Mod.Current.Settings.CombatSpeedPercentPerStrategicSpeed.PercentOfRounded(StrategicSpeed);
+		public double CombatSpeed => Mod.Current.Settings.CombatSpeedPercentPerStrategicSpeed.PercentOf(StrategicSpeed);
 
 		/// <summary>
 		/// Fleets don't have construction queues.

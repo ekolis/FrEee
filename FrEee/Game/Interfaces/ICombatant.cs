@@ -18,7 +18,7 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// How fast can this combatant move in combat?
 		/// </summary>
-		int CombatSpeed { get; }
+		double CombatSpeed { get; }
 
 		/// <summary>
 		/// Is this combatant still alive or is it destroyed/glassed?

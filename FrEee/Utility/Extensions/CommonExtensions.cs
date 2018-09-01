@@ -869,36 +869,6 @@ namespace FrEee.Utility.Extensions
 			}
 		}
 
-		/// <summary>
-		/// Converts a percentage into a ratio.
-		/// </summary>
-		/// <param name="i">The percentage, e.g. 50</param>
-		/// <returns>The ratio, e.g. 0.5</returns>
-		public static double Percent(this int i)
-		{
-			return (double)i / 100d;
-		}
-
-		/// <summary>
-		/// Multiplies an integer by a percentage and rounds it.
-		/// </summary>
-		/// <param name="i"></param>
-		/// <param name="d"></param>
-		/// <returns></returns>
-		public static int PercentOfRounded(this int p, int i)
-		{
-			if (p * i < 0)
-				return -PercentOfRounded(p, -i);
-			// we don't want to use Math.Round because it rounds to the nearest even integer when at 0.5 and we want to always round up
-			var temp = i * p / 100d;
-			var ipart = Math.Floor((double)temp);
-			var dpart = temp - ipart;
-			if (dpart >= 0.5)
-				return (int)(ipart + 1);
-			else
-				return (int)ipart;
-		}
-
 		public static void Place(this IUnit unit, ISpaceObject target)
 		{
 			if (target is ICargoContainer)

@@ -53,6 +53,11 @@ namespace FrEee.Game.Objects.Combat.Grid
 		public static ICollection<Battle> Previous { get; private set; }
 
 		/// <summary>
+		/// Saved-up fractional combat speed from the previous round.
+		/// </summary>
+		public SafeDictionary<ICombatant, double> CombatSpeedBuffer { get; private set; } = new SafeDictionary<ICombatant, double>();
+
+		/// <summary>
 		/// The combatants in this battle.
 		/// </summary>
 		public ISet<ICombatant> Combatants { get; private set; }
@@ -170,7 +175,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 					locations.Add(c, new IntVector2());
 			}
 			else
-			{   
+			{
 				// place all combatants at the points of a regular polygon
 				var sideLength = 21; // make sure no one can shoot each other at the start
 									 // https://stackoverflow.com/questions/32169875/calculating-the-coordinates-of-a-regular-polygon-given-its-center-and-its-side-l
@@ -210,6 +215,10 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 				var turnorder = alives.OrderBy(x => x is Seeker ? 1 : 0).ThenBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
 
+				// configure our combat speed buffer with fractional speed
+				foreach (var x in Combatants)
+					CombatSpeedBuffer[x] += x.CombatSpeed - Floor(x.CombatSpeed);
+
 				// phase 0: reload weapons
 				foreach (var w in turnorder.SelectMany(q => q.Weapons))
 				{
@@ -232,8 +241,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 							Events.Last().Add(new CombatantDisappearsEvent(s));
 							continue;
 						}
-						s.DistanceTraveled += Math.Min(s.CombatSpeed, locations[s].DistanceToEightWay(locations[s.Target]));
-						locations[s] = IntVector2.InterpolateEightWay(locations[s], locations[s.Target], s.CombatSpeed);
+						s.DistanceTraveled += Math.Min((int)(s.CombatSpeed + CombatSpeedBuffer[c]), locations[s].DistanceToEightWay(locations[s.Target]));
+						locations[s] = IntVector2.InterpolateEightWay(locations[s], locations[s.Target], (int)(c.CombatSpeed + CombatSpeedBuffer[c]));
 						if (s.DistanceTraveled > s.WeaponInfo.MaxRange)
 						{
 							s.Hitpoints = 0;
@@ -258,12 +267,12 @@ namespace FrEee.Game.Objects.Combat.Grid
 							{
 								int threat;
 								if (e.Weapons.Any())
-									threat = e.CombatSpeed + e.Weapons.Where(w => w.CanTarget(c)).Max(w => w.Template.WeaponMaxRange);
+									threat = (int)(c.CombatSpeed + CombatSpeedBuffer[c]) + e.Weapons.Where(w => w.CanTarget(c)).Max(w => w.Template.WeaponMaxRange);
 								else
 									threat = 0;
 								heatmap.AddLinearGradientEightWay(locations[e], threat, threat, -1);
 							}
-							locations[c] = heatmap.FindMin(locations[c], c.CombatSpeed);
+							locations[c] = heatmap.FindMin(locations[c], (int)(c.CombatSpeed + CombatSpeedBuffer[c]));
 						}
 						else
 						{
@@ -272,7 +281,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 							if (bestTarget != null)
 							{
 								var targetPos = locations[bestTarget];
-								locations[c] = IntVector2.InterpolateEightWay(locations[c], targetPos, c.CombatSpeed);
+								locations[c] = IntVector2.InterpolateEightWay(locations[c], targetPos, (int)(c.CombatSpeed + CombatSpeedBuffer[c]));
 							}
 						}
 					}
@@ -364,6 +373,10 @@ namespace FrEee.Game.Objects.Combat.Grid
 					}
 				}
 
+				// clear used combat speed buffer speed
+				foreach (var x in Combatants)
+					CombatSpeedBuffer[x] -= Floor(CombatSpeedBuffer[x]);
+
 				UpdateBounds(i, locations.Values);
 
 				bool hostile = false;
@@ -371,6 +384,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 				{
 					foreach (var b in alives)
 					{
+						// TODO - also check if combatant is armed
 						if (a.IsHostileTo(b.Owner))
 						{
 							hostile = true;

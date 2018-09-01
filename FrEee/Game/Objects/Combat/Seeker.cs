@@ -55,7 +55,7 @@ namespace FrEee.Game.Objects.Combat
 		/// </summary>
 		public IBattle Battle { get; set; }
 
-		public int CombatSpeed { get; set; }
+		public double CombatSpeed { get; set; }
 
 		public Formula<int> Damage
 		{
