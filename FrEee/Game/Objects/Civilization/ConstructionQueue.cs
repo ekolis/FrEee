@@ -488,7 +488,7 @@ namespace FrEee.Game.Objects.Civilization
 			if (Container is IVehicle)
 			{
 				// apply aptitude modifier for empire's primary race
-				rate *= Owner.PrimaryRace.Aptitudes[Aptitude.Construction.Name] / 100d + 1d;
+				rate *= Owner.PrimaryRace.Aptitudes[Aptitude.Construction.Name] / 100d;
 			}
 
 			return rate;
