@@ -146,6 +146,11 @@ namespace FrEee.Game.Objects.Combat.Grid
 		public double Timestamp { get; private set; }
 		public IList<IntVector2> UpperLeft { get; private set; } = new List<IntVector2>();
 
+		public int GetCombatSpeedThisRound(ICombatant c)
+		{
+			return (int)(c.CombatSpeed + CombatSpeedBuffer[c]);
+		}
+
 		public int GetDiameter(int round)
 		{
 			return UpperLeft[round].DistanceToEightWay(LowerRight[round]) + 1;
@@ -215,10 +220,6 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 				var turnorder = alives.OrderBy(x => x is Seeker ? 1 : 0).ThenBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
 
-				// configure our combat speed buffer with fractional speed
-				foreach (var x in Combatants)
-					CombatSpeedBuffer[x] += x.CombatSpeed - Floor(x.CombatSpeed);
-
 				// phase 0: reload weapons
 				foreach (var w in turnorder.SelectMany(q => q.Weapons))
 				{
@@ -241,8 +242,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 							Events.Last().Add(new CombatantDisappearsEvent(s));
 							continue;
 						}
-						s.DistanceTraveled += Math.Min((int)(s.CombatSpeed + CombatSpeedBuffer[c]), locations[s].DistanceToEightWay(locations[s.Target]));
-						locations[s] = IntVector2.InterpolateEightWay(locations[s], locations[s.Target], (int)(c.CombatSpeed + CombatSpeedBuffer[c]));
+						s.DistanceTraveled += Math.Min(GetCombatSpeedThisRound(c), locations[s].DistanceToEightWay(locations[s.Target]));
+						locations[s] = IntVector2.InterpolateEightWay(locations[s], locations[s.Target], GetCombatSpeedThisRound(c));
 						if (s.DistanceTraveled > s.WeaponInfo.MaxRange)
 						{
 							s.Hitpoints = 0;
@@ -267,12 +268,12 @@ namespace FrEee.Game.Objects.Combat.Grid
 							{
 								int threat;
 								if (e.Weapons.Any())
-									threat = (int)(c.CombatSpeed + CombatSpeedBuffer[c]) + e.Weapons.Where(w => w.CanTarget(c)).Max(w => w.Template.WeaponMaxRange);
+									threat = GetCombatSpeedThisRound(e) + e.Weapons.Where(w => w.CanTarget(c)).Max(w => w.Template.WeaponMaxRange);
 								else
 									threat = 0;
 								heatmap.AddLinearGradientEightWay(locations[e], threat, threat, -1);
 							}
-							locations[c] = heatmap.FindMin(locations[c], (int)(c.CombatSpeed + CombatSpeedBuffer[c]));
+							locations[c] = heatmap.FindMin(locations[c], GetCombatSpeedThisRound(c));
 						}
 						else
 						{
@@ -281,7 +282,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 							if (bestTarget != null)
 							{
 								var targetPos = locations[bestTarget];
-								locations[c] = IntVector2.InterpolateEightWay(locations[c], targetPos, (int)(c.CombatSpeed + CombatSpeedBuffer[c]));
+								locations[c] = IntVector2.InterpolateEightWay(locations[c], targetPos, GetCombatSpeedThisRound(c));
 							}
 						}
 					}
@@ -375,7 +376,10 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 				// clear used combat speed buffer speed
 				foreach (var x in Combatants)
+				{
+					CombatSpeedBuffer[x] += x.CombatSpeed - Floor(x.CombatSpeed);
 					CombatSpeedBuffer[x] -= Floor(CombatSpeedBuffer[x]);
+				}
 
 				UpdateBounds(i, locations.Values);
 
