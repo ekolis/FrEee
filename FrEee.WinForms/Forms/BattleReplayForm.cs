@@ -7,6 +7,7 @@ using FrEee.Game.Objects.Vehicles;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Controls;
 using FrEee.WinForms.Interfaces;
+using FrEee.WinForms.Objects;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -151,6 +152,36 @@ namespace FrEee.WinForms.Forms
 		{
 			if (!battleView.IsPaused)
 				ScrollLogListBox();
+		}
+
+		private void BattleReplayForm_Load(object sender, EventArgs e)
+		{
+			MusicMood mood;
+			switch (Battle.ResultFor(Empire.Current))
+			{
+				case "victory":
+					mood = MusicMood.Upbeat;
+					break;
+				case "defeat":
+					mood = MusicMood.Sad;
+					break;
+				case "battle":
+					mood = MusicMood.Peaceful;
+					break;
+				default:
+					mood = MusicMood.Tense;
+					break;
+			}
+			Music.Play(MusicMode.Combat,mood);
+		}
+
+		private MusicMode prevMusicMode = Music.CurrentMode;
+		private MusicMood prevMusicMood = Music.CurrentMood;
+
+		private void BattleReplayForm_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			// revert to previously playing style of music
+			Music.Play(prevMusicMode, prevMusicMood);
 		}
 	}
 }
