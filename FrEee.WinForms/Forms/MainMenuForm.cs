@@ -294,7 +294,7 @@ namespace FrEee.WinForms.Forms
 			}
 			// set the default music volume according to the settings
 			// volume values are 0-100, so scale appropriately to the 0-1 range
-			Music.setVolume(ClientSettings.Instance.masterVolume * ClientSettings.Instance.musicVolume * 1.0e-4f);
+			Music.setVolume(ClientSettings.Instance.MasterVolume * ClientSettings.Instance.MusicVolume * 1.0e-4f);
 		}
 
 		private void MainMenuForm_FormClosed(object sender, FormClosedEventArgs e)

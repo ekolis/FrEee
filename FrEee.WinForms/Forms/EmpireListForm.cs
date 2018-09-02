@@ -7,6 +7,7 @@ using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using System;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -128,6 +129,15 @@ namespace FrEee.WinForms.Forms
 				lstMessages.Initialize(64, 64);
 				foreach (var msg in msgs.OrderByDescending(m => m.TurnNumber))
 					lstMessages.AddItemWithImage(msg.TurnNumber.ToStardate(), "", msg, msg.Owner.Portrait, msg.Owner == Empire.Current ? "Us" : msg.Owner.Name, msg.Recipient == Empire.Current ? "Us" : msg.Recipient.Name, msg.Text);
+
+				// player info
+				txtName.Text = emp.PlayerInfo.Name;
+				lnkPbw.Text = emp.PlayerInfo.Pbw;
+				lnkEmail.Text = emp.PlayerInfo.Email;
+				txtIrc.Text = emp.PlayerInfo.Irc;
+				txtDiscord.Text = emp.PlayerInfo.Discord;
+				lnkWebsite.Text = emp.PlayerInfo.Website;
+				txtNotes.Text = emp.PlayerInfo.Notes;
 			}
 		}
 
@@ -247,6 +257,25 @@ namespace FrEee.WinForms.Forms
 			}
 			else
 				MessageBox.Show("You cannot reply to outgoing messages.");
+		}
+
+		private void lnkPbw_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			Process.Start($"http://pbw.spaceempires.net/profile/{lnkPbw.Text}");
+		}
+
+		private void lnkEmail_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			Process.Start($"mailto:{lnkEmail.Text}");
+		}
+
+		private void lnkWebsite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			// prevent attacks by players who set their website to "deltree /y c:\" :)
+			if (lnkWebsite.Text.StartsWith("http://") || lnkWebsite.Text.StartsWith("https://"))
+			{
+				Process.Start(lnkWebsite.Text);
+			}
 		}
 	}
 }

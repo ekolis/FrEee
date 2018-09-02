@@ -5,6 +5,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Combat.Grid;
+using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Events;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Vehicles;
@@ -1624,6 +1625,9 @@ namespace FrEee.Game.Objects.Space
 			AssignIDs();
 			if (CurrentEmpire == null)
 				throw new InvalidOperationException("Can't save commands without a current empire.");
+			foreach (var c in Empire.Current.Commands.OfType<SetPlayerInfoCommand>().ToArray())
+				Empire.Current.Commands.Remove(c);
+			Empire.Current.Commands.Add(new SetPlayerInfoCommand(Empire.Current) { PlayerInfo = Empire.Current.PlayerInfo });				
 			if (!Directory.Exists(FrEeeConstants.SaveGameDirectory))
 				Directory.CreateDirectory(FrEeeConstants.SaveGameDirectory);
 			var filename = GetEmpireCommandsSavePath(CurrentEmpire);

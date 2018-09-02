@@ -1,4 +1,5 @@
-﻿using FrEee.Utility;
+﻿using FrEee.Game.Objects.Civilization;
+using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.DataGridView;
 using System;
@@ -42,19 +43,21 @@ namespace FrEee.WinForms.Objects
 		/// </summary>
 		public GridConfig CurrentShipListConfig { get; set; }
 
-		public int effectsVolume { get; set; }
+		public int EffectsVolume { get; set; }
 
 		/// <summary>
 		/// Volume settings.  Valid ranges are 0(off) - 100(full).
 		/// </summary>
-		public int masterVolume { get; set; }
+		public int MasterVolume { get; set; }
 
-		public int musicVolume { get; set; }
+		public int MusicVolume { get; set; }
 
 		/// <summary>
 		/// Configurations for the planet list.
 		/// </summary>
 		public IList<GridConfig> PlanetListConfigs { get; private set; }
+
+		public PlayerInfo PlayerInfo { get; set; } = new PlayerInfo();
 
 		/// <summary>
 		/// Configurations for the ship list.
