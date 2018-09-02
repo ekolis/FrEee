@@ -64,18 +64,23 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 			{
 				try
 				{
-					var ex = e.Exception;
-					var values = new Dictionary<string, string>
+					void Log(Exception ex)
 					{
-						{ "app", "FrEee (WinForms)" },
-						{ "version", Application.ProductVersion },
-						{ "type", ex.GetType().Name },
-						{ "message", ex.Message },
-						{ "stackTrace", ex.StackTrace },
-					};
-					var content = new FormUrlEncodedContent(values);
-					var response = http.PostAsync("http://edkolis.com/errorlog", content).Result;
-					var responseString = response.Content.ReadAsStringAsync().Result;
+						if (ex.InnerException != null)
+							Log(ex.InnerException);
+						var values = new Dictionary<string, string>
+						{
+							{ "app", "FrEee (WinForms)" },
+							{ "version", Application.ProductVersion },
+							{ "type", ex.GetType().Name },
+							{ "message", ex.Message },
+							{ "stackTrace", ex.StackTrace },
+						};
+						var content = new FormUrlEncodedContent(values);
+						var response = http.PostAsync("http://edkolis.com/errorlog", content).Result;
+						var responseString = response.Content.ReadAsStringAsync().Result;
+					}
+					Log(e.Exception);
 				}
 				catch (Exception ex)
 				{
