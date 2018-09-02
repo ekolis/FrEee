@@ -137,6 +137,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game\Objects\Civilization\PlayerInfo.cs" />
+    <Compile Include="Game\Objects\Commands\SetPlayerInfoCommand.cs" />
     <Compile Include="Game\Objects\Events\Event.cs" />
     <Compile Include="Game\Enumerations\EventMessageTarget.cs" />
     <Compile Include="Game\Enumerations\EventSeverity.cs" />

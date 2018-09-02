@@ -65,6 +65,11 @@ namespace FrEee.Game.Objects.Civilization
 			}
 		}
 
+		/// <summary>
+		/// Information about the player controlling this empire.
+		/// </summary>
+		public PlayerInfo PlayerInfo { get; set; }
+
 		public AbilityTargets AbilityTarget
 		{
 			get { return AbilityTargets.Empire; }

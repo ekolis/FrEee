@@ -1056,6 +1056,8 @@ namespace FrEee.WinForms.Forms
 			// so the search box can lose focus...
 			foreach (Control ctl in pnlLayout.Controls)
 				AssignClickHandler(ctl);
+
+			Empire.Current.PlayerInfo = ClientSettings.Instance.PlayerInfo;
 		}
 
 		private void GameForm_MouseDown(object sender, MouseEventArgs e)
