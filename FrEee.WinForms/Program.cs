@@ -7,8 +7,10 @@ using FrEee.Utility.Extensions;
 using FrEee.WinForms.Forms;
 using FrEee.WinForms.Utility.Extensions;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -41,6 +43,8 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 			return 1;
 		}
 
+		private static readonly HttpClient http = new HttpClient();
+
 		/// <summary>
 		/// The main entry point for the application.
 		/// Return values:
@@ -55,6 +59,30 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 		[STAThread]
 		private static int Main(string[] args)
 		{
+			// log exceptions online
+			AppDomain.CurrentDomain.FirstChanceException += (sender, e) =>
+			{
+				try
+				{
+					var ex = e.Exception;
+					var values = new Dictionary<string, string>
+					{
+						{ "app", "FrEee (WinForms)" },
+						{ "version", Application.ProductVersion },
+						{ "type", ex.GetType().Name },
+						{ "message", ex.Message },
+						{ "stackTrace", ex.StackTrace },
+					};
+					var content = new FormUrlEncodedContent(values);
+					var response = http.PostAsync("http://edkolis.com/errorlog", content).Result;
+					var responseString = response.Content.ReadAsStringAsync().Result;
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("Error logging exception: " + ex.Message);
+				}
+			};
+
 			// HACK - so many things are based on the working directory...
 			Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
 
