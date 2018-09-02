@@ -1181,10 +1181,24 @@ namespace FrEee.WinForms.Forms
 						status.Progress = 1.00;
 						// no need to reload designs from library, they're already loaded
 					}));
+
 					this.ShowChildForm(new StatusForm(t, status));
 					SetUpGui();
 					Enabled = true;
 					Cursor = Cursors.Default;
+
+					if (Galaxy.Current.IsWinner)
+					{
+						var form = new GameOverForm(true);
+						form.StartPosition = FormStartPosition.CenterScreen;
+						this.ShowChildForm(form);
+					}
+					if (Galaxy.Current.IsLoser)
+					{
+						var form = new GameOverForm(false);
+						form.StartPosition = FormStartPosition.CenterScreen;
+						this.ShowChildForm(form);
+					}
 				}
 				else if (!hostView)
 					MessageBox.Show("Please send " + Galaxy.Current.CommandFileName + " to the game host.");
