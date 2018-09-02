@@ -165,10 +165,11 @@
 			this.Controls.Add(this.btnBack);
 			this.Controls.Add(this.minimap);
 			this.Controls.Add(this.btnClose);
-			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "BattleReplayForm";
 			this.ShowInTaskbar = false;
 			this.Text = "Battle Replay";
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.BattleReplayForm_FormClosed);
+			this.Load += new System.EventHandler(this.BattleReplayForm_Load);
 			this.ResumeLayout(false);
 
 		}
