@@ -62,12 +62,12 @@ namespace FrEee.WinForms.Forms
 			ddlEventFrequency.Items.Add(new { Name = $"Medum ({Mod.Current.Settings.EventFrequencyMedium})", Value = Mod.Current.Settings.EventFrequencyMedium });
 			ddlEventFrequency.Items.Add(new { Name = $"High ({Mod.Current.Settings.EventFrequencyHigh})", Value = Mod.Current.Settings.EventFrequencyHigh });
 			ddlEventFrequency.Items.Add(new { Name = $"Ludicrous (1000)", Value = 1000 });
-			ddlEventFrequency.SelectedItem = ddlEventFrequency.Items.Cast<dynamic>().ElementAt(1);
+			ddlEventFrequency.SelectedItem = ddlEventFrequency.Items.Cast<dynamic>().ElementAt(0);
 
 			foreach (var item in Enum.GetValues(typeof(EventSeverity)))
 				ddlMaximumEventSeverity.Items.Add(item);
 
-			ddlMaximumEventSeverity.SelectedItem = EventSeverity.High;
+			ddlMaximumEventSeverity.SelectedItem = EventSeverity.None;
 
 			ddlTechUniqueness.Items.Add(new { Name = "Very Easy (-2)", Value = -2 });
 			ddlTechUniqueness.Items.Add(new { Name = "Easy (-1)", Value = -1 });
