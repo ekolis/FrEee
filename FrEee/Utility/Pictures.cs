@@ -496,8 +496,10 @@ namespace FrEee.Utility
 				return
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", emp.InsigniaName, "Insignia")) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", emp.InsigniaName, emp.InsigniaName + "_Insignia")) ??
+					Crop(GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", emp.InsigniaName, emp.InsigniaName + "_Main")), new Rectangle(0, 0, 26, 18)) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", emp.InsigniaName, "Insignia")) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", emp.InsigniaName, emp.InsigniaName + "_Insignia")) ??
+					Crop(GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", emp.InsigniaName, emp.InsigniaName + "_Main")), new Rectangle(0, 0, 26, 18)) ??
 					GetSolidColorImage(emp.Color);
 			}
 			else
@@ -506,8 +508,24 @@ namespace FrEee.Utility
 				return
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", emp.InsigniaName, "Insignia")) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", emp.InsigniaName, emp.InsigniaName + "_Insignia")) ??
+					Crop(GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", emp.InsigniaName, emp.InsigniaName + "_Main")), new Rectangle(0, 0, 26, 18)) ??
 					GetSolidColorImage(emp.Color);
 			}
+		}
+
+		/// <summary>
+		/// Crops the specified image.
+		/// </summary>
+		/// <param name="img">The image.</param>
+		/// <param name="cropArea">The crop area.</param>
+		/// <returns>The cropped image.</returns>
+		private static Image Crop(Image img, Rectangle cropArea)
+		{
+			if (img == null)
+				return null;
+			Bitmap bmpImage = new Bitmap(img);
+			Bitmap bmpCrop = bmpImage.Clone(cropArea,bmpImage.PixelFormat);
+			return (bmpCrop);
 		}
 
 		/// <summary>
@@ -525,8 +543,10 @@ namespace FrEee.Utility
 				return
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", insigniaName, "Insignia")) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", insigniaName, insigniaName + "_Insignia")) ??
+					Crop(GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", insigniaName, insigniaName + "_Main")), new Rectangle(0, 0, 26, 18)) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", insigniaName, "Insignia")) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", insigniaName, insigniaName + "_Insignia")) ??
+					Crop(GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", insigniaName, insigniaName + "_Main")), new Rectangle(0, 0, 26, 18)) ??
 					GetSolidColorImage(emp.Color);
 			}
 			else
@@ -535,6 +555,7 @@ namespace FrEee.Utility
 				return
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", insigniaName, "Insignia")) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", insigniaName, insigniaName + "_Insignia")) ??
+					Crop(GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", insigniaName, insigniaName + "_Main")), new Rectangle(0, 0, 26, 18)) ??
 					GetSolidColorImage(emp.Color);
 			}
 		}
