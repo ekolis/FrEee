@@ -97,6 +97,7 @@ namespace FrEee.Game.Objects.Space
 		public ICollection<IBattle> Battles { get; private set; }
 
 		public bool CanColonizeOnlyBreathable { get; set; }
+
 		public bool CanColonizeOnlyHomeworldSurface { get; set; }
 
 		public IEnumerable<IAbilityObject> Children
@@ -129,6 +130,11 @@ namespace FrEee.Game.Objects.Space
 		/// The empires participating in the game.
 		/// </summary>
 		public IList<Empire> Empires { get; private set; }
+
+		/// <summary>
+		/// Per mille chance of a random event occurring, per turn, per player.
+		/// </summary>
+		public double EventFrequency { get; set; }
 
 		public string GameFileName
 		{
@@ -173,6 +179,7 @@ namespace FrEee.Game.Objects.Space
 		public bool IsHumansVsAI { get; set; }
 
 		public bool IsIntelligenceAllowed { get; set; }
+
 		public bool IsLoser { get; private set; }
 
 		/// <summary>
@@ -181,9 +188,18 @@ namespace FrEee.Game.Objects.Space
 		public bool IsSinglePlayer { get; set; }
 
 		public bool IsSurrenderAllowed { get; set; }
+
 		public bool IsWinner { get; private set; }
+
+		/// <summary>
+		/// The maximum event severity in this game.
+		/// </summary>
+		public EventSeverity MaximumEventSeverity { get; set; }
+
 		public int MaxPlanetValue { get; set; }
+
 		public int MaxSpawnedAsteroidValue { get; set; }
+
 		public int MaxSpawnedPlanetValue { get; set; }
 
 		public int MaxX
@@ -197,8 +213,11 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		public int MinAsteroidValue { get; set; }
+
 		public int MinPlanetValue { get; set; }
+
 		public int MinSpawnedAsteroidValue { get; set; }
+
 		public int MinSpawnedPlanetValue { get; set; }
 
 		public int MinX
@@ -241,6 +260,11 @@ namespace FrEee.Game.Objects.Space
 				yield break;
 			}
 		}
+
+		/// <summary>
+		/// Events which have been warned of and are pending execution.
+		/// </summary>
+		public ICollection<Event> PendingEvents { get; private set; } = new List<Event>();
 
 		/// <summary>
 		/// The current player number (1 is the first player, 0 is the game host).
@@ -295,6 +319,11 @@ namespace FrEee.Game.Objects.Space
 		/// Hight = Level ^ 2 * BaseCost
 		/// </summary>
 		public TechnologyCost TechnologyCost { get; set; }
+
+		/// <summary>
+		/// Zero means normal tech cost; positive values make researching techs that other players know already harder; negative makes it easier.
+		/// </summary>
+		public int TechnologyUniqueness { get; set; }
 
 		/// <summary>
 		/// Current time equals turn number plus tick minus 1.
@@ -669,21 +698,6 @@ namespace FrEee.Game.Objects.Space
 					p.Owner.RecordLog(p, "{0} has been stripped dry of {1}. Its value is at the bare minimum.".F(p, r));
 			}
 		}
-
-		/// <summary>
-		/// Events which have been warned of and are pending execution.
-		/// </summary>
-		public ICollection<Event> PendingEvents { get; private set; } = new List<Event>();
-
-		/// <summary>
-		/// Per mille chance of a random event occurring, per turn, per player.
-		/// </summary>
-		public double EventFrequency { get; set; }
-
-		/// <summary>
-		/// The maximum event severity in this game.
-		/// </summary>
-		public EventSeverity MaximumEventSeverity { get; set; }
 
 		/// <summary>
 		/// Processes the turn.
@@ -1218,6 +1232,24 @@ namespace FrEee.Game.Objects.Space
 			foreach (var x in Current.FindSpaceObjects<ISpaceObject>().Owned().ToArray())
 				x.UpdateEmpireMemories();
 
+			// save off tech levels for computing tech uniqueness next turn
+			if (Current.TechnologyUniqueness != 0)
+			{
+				foreach (var emp in Current.Empires)
+				{
+					emp.OtherPlayersTechLevels.Clear();
+					foreach (var emp2 in Current.Empires.ExceptSingle(emp))
+					{
+						foreach (var tech in Mod.Current.Technologies)
+						{
+							if (emp.OtherPlayersTechLevels[tech] == null)
+								emp.OtherPlayersTechLevels[tech] = new List<int>();
+							emp.OtherPlayersTechLevels[tech].Add(emp2.ResearchedTechnologies[tech]);
+						}
+					}
+				}
+			}
+
 			//Current.SpaceObjectIDCheck("after cleanup");
 
 			// end of turn scripts
@@ -1627,7 +1659,7 @@ namespace FrEee.Game.Objects.Space
 				throw new InvalidOperationException("Can't save commands without a current empire.");
 			foreach (var c in Empire.Current.Commands.OfType<SetPlayerInfoCommand>().ToArray())
 				Empire.Current.Commands.Remove(c);
-			Empire.Current.Commands.Add(new SetPlayerInfoCommand(Empire.Current) { PlayerInfo = Empire.Current.PlayerInfo });				
+			Empire.Current.Commands.Add(new SetPlayerInfoCommand(Empire.Current) { PlayerInfo = Empire.Current.PlayerInfo });
 			if (!Directory.Exists(FrEeeConstants.SaveGameDirectory))
 				Directory.CreateDirectory(FrEeeConstants.SaveGameDirectory);
 			var filename = GetEmpireCommandsSavePath(CurrentEmpire);

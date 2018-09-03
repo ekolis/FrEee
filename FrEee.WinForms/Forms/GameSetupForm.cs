@@ -69,6 +69,13 @@ namespace FrEee.WinForms.Forms
 
 			ddlMaximumEventSeverity.SelectedItem = EventSeverity.High;
 
+			ddlTechUniqueness.Items.Add(new { Name = "Very Easy (-2)", Value = -2 });
+			ddlTechUniqueness.Items.Add(new { Name = "Easy (-1)", Value = -1 });
+			ddlTechUniqueness.Items.Add(new { Name = "Normal (0)", Value = 0 });
+			ddlTechUniqueness.Items.Add(new { Name = "Hard (+1)", Value = 1 });
+			ddlTechUniqueness.Items.Add(new { Name = "Very Hard (+2)", Value = 2 });
+			ddlTechUniqueness.SelectedIndex = 2; // zero, normal cost 
+
 			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); } catch { }
 		}
 
@@ -151,6 +158,7 @@ namespace FrEee.WinForms.Forms
 			ddlStartTech.SelectedIndex = (int)setup.TechnologyCost;
 			for (int i = 0; i < lstTechs.Items.Count; i++)
 				lstTechs.SetItemChecked(i, !setup.ForbiddenTechnologyNames.Contains(((Technology)lstTechs.Items[i]).Name));
+			ddlTechUniqueness.SelectedItem = ddlTechUniqueness.Items.Cast<dynamic>().SingleOrDefault(x => x.Value == setup.TechnologyUniqueness);
 
 			spnStartResources.Value = setup.StartingResources;
 			spnResourceStorage.Value = setup.ResourceStorage;
@@ -698,6 +706,7 @@ namespace FrEee.WinForms.Forms
 					break;
 			}
 			setup.TechnologyCost = (TechnologyCost)ddlTechCost.SelectedIndex;
+			setup.TechnologyUniqueness = (int)ddlTechUniqueness.SelectedValue;
 			for (int i = 0; i < lstTechs.Items.Count; i++)
 			{
 				if (!lstTechs.GetItemChecked(i))

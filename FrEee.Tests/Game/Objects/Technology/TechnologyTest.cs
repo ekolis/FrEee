@@ -39,7 +39,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 			// TODO - allocate to multiple techs
 
 			emp.ResearchedTechnologies[tech] = 0;
-			emp.BonusResearch = tech.GetLevelCost(1) + tech.GetLevelCost(2);
+			emp.BonusResearch = tech.GetBaseLevelCost(1) + tech.GetBaseLevelCost(2);
 
 			var cmd = new ResearchCommand();
 			cmd.Issuer = emp;
@@ -77,7 +77,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 			emp.ResearchedTechnologies[t2] = 0;
 
 			// give them some RP
-			emp.BonusResearch = t1.GetLevelCost(1) + 1;
+			emp.BonusResearch = t1.GetBaseLevelCost(1) + 1;
 
 			// create research command
 			var cmd = new ResearchCommand

@@ -31,6 +31,7 @@
 			this.components = new System.ComponentModel.Container();
 			this.tabs = new FrEee.WinForms.Controls.GameTabControl();
 			this.tabGalaxy = new System.Windows.Forms.TabPage();
+			this.label62 = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
 			this.spnSystemGroups = new System.Windows.Forms.NumericUpDown();
 			this.txtWarpPointLocation = new System.Windows.Forms.Label();
@@ -105,6 +106,8 @@
 			this.ddlPresets = new System.Windows.Forms.ComboBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.tabTechnology = new System.Windows.Forms.TabPage();
+			this.ddlTechUniqueness = new System.Windows.Forms.ComboBox();
+			this.label63 = new System.Windows.Forms.Label();
 			this.ddlTechCost = new System.Windows.Forms.ComboBox();
 			this.label61 = new System.Windows.Forms.Label();
 			this.label31 = new System.Windows.Forms.Label();
@@ -194,7 +197,6 @@
 			this.btnLoadSetup = new FrEee.WinForms.Controls.GameButton();
 			this.btnSaveSetup = new FrEee.WinForms.Controls.GameButton();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
-			this.label62 = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.tabGalaxy.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.spnSystemGroups)).BeginInit();
@@ -304,6 +306,15 @@
 			this.tabGalaxy.TabIndex = 0;
 			this.tabGalaxy.Text = "Galaxy";
 			// 
+			// label62
+			// 
+			this.label62.AutoSize = true;
+			this.label62.Location = new System.Drawing.Point(272, 279);
+			this.label62.Name = "label62";
+			this.label62.Size = new System.Drawing.Size(158, 15);
+			this.label62.TabIndex = 28;
+			this.label62.Text = "Per mille per player per turn";
+			// 
 			// label11
 			// 
 			this.label11.AutoSize = true;
@@ -341,13 +352,13 @@
 			this.txtWarpPointLocation.TabIndex = 25;
 			this.txtWarpPointLocation.Text = "Choose a warp point placement option.";
 			// 
-			// ddlEventSeverity
+			// ddlMaximumEventSeverity
 			// 
 			this.ddlMaximumEventSeverity.DisplayMember = "Value";
 			this.ddlMaximumEventSeverity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ddlMaximumEventSeverity.FormattingEnabled = true;
 			this.ddlMaximumEventSeverity.Location = new System.Drawing.Point(114, 305);
-			this.ddlMaximumEventSeverity.Name = "ddlEventSeverity";
+			this.ddlMaximumEventSeverity.Name = "ddlMaximumEventSeverity";
 			this.ddlMaximumEventSeverity.Size = new System.Drawing.Size(152, 23);
 			this.ddlMaximumEventSeverity.TabIndex = 22;
 			// 
@@ -1257,6 +1268,8 @@
 			// tabTechnology
 			// 
 			this.tabTechnology.BackColor = System.Drawing.Color.Black;
+			this.tabTechnology.Controls.Add(this.ddlTechUniqueness);
+			this.tabTechnology.Controls.Add(this.label63);
 			this.tabTechnology.Controls.Add(this.ddlTechCost);
 			this.tabTechnology.Controls.Add(this.label61);
 			this.tabTechnology.Controls.Add(this.label31);
@@ -1270,6 +1283,28 @@
 			this.tabTechnology.Size = new System.Drawing.Size(545, 540);
 			this.tabTechnology.TabIndex = 2;
 			this.tabTechnology.Text = "Technology";
+			// 
+			// ddlTechUniqueness
+			// 
+			this.ddlTechUniqueness.DisplayMember = "Name";
+			this.ddlTechUniqueness.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlTechUniqueness.FormattingEnabled = true;
+			this.ddlTechUniqueness.Location = new System.Drawing.Point(424, 6);
+			this.ddlTechUniqueness.Name = "ddlTechUniqueness";
+			this.ddlTechUniqueness.Size = new System.Drawing.Size(121, 23);
+			this.ddlTechUniqueness.TabIndex = 19;
+			this.ddlTechUniqueness.ValueMember = "Value";
+			// 
+			// label63
+			// 
+			this.label63.AutoSize = true;
+			this.label63.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label63.Location = new System.Drawing.Point(247, 9);
+			this.label63.Margin = new System.Windows.Forms.Padding(3);
+			this.label63.Name = "label63";
+			this.label63.Size = new System.Drawing.Size(179, 15);
+			this.label63.TabIndex = 18;
+			this.label63.Text = "Tech Known By Other Players is";
 			// 
 			// ddlTechCost
 			// 
@@ -2444,15 +2479,6 @@
 			this.progressBar.TabIndex = 5;
 			this.progressBar.Visible = false;
 			// 
-			// label62
-			// 
-			this.label62.AutoSize = true;
-			this.label62.Location = new System.Drawing.Point(272, 279);
-			this.label62.Name = "label62";
-			this.label62.Size = new System.Drawing.Size(158, 15);
-			this.label62.TabIndex = 28;
-			this.label62.Text = "Per mille per player per turn";
-			// 
 			// GameSetupForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2697,5 +2723,7 @@
 		private System.Windows.Forms.ComboBox ddlTechCost;
 		private System.Windows.Forms.Label label61;
 		private System.Windows.Forms.Label label62;
+		private System.Windows.Forms.ComboBox ddlTechUniqueness;
+		private System.Windows.Forms.Label label63;
 	}
 }
