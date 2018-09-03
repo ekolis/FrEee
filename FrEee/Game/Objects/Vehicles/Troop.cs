@@ -20,9 +20,10 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public override double CombatSpeed => 0;
 
+		// TODO - make me an actual property, not searching the galaxy (check other unit types too)
 		public ICargoContainer Container
 		{
-			get { return Galaxy.Current.FindSpaceObjects<ICargoTransferrer>().SingleOrDefault(cc => cc.Cargo.Units.Contains(this)); }
+			get { return Galaxy.Current.FindSpaceObjects<ICargoTransferrer>().SingleOrDefault(cc => cc.Cargo?.Units?.Contains(this) ?? false); }
 		}
 
 		public override int MaxTargets => int.MaxValue;
@@ -68,13 +69,12 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public override StarSystem StarSystem
 		{
-			get { return Container.StarSystem; }
+			get { return Container?.StarSystem; }
 		}
 
 		public override WeaponTargets WeaponTargetType
 		{
-			// troops cannot be targeted in space combat
-			get { return Enumerations.WeaponTargets.Invalid; }
+			get { return WeaponTargets.Planet; }
 		}
 
 		public override Visibility CheckVisibility(Empire emp)

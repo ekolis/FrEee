@@ -26,11 +26,6 @@ namespace FrEee.Game.Objects.Combat.Grid
 		public Battle()
 		{
 			Log = new List<LogMessage>();
-			foreach (var c in Combatants)
-			{
-				OriginalHitpoints[c] = c.Hitpoints;
-				OriginalOwners[c] = c.Owner;
-			}
 
 			double stardate = Galaxy.Current.Timestamp;
 			Timestamp = stardate;
@@ -150,7 +145,16 @@ namespace FrEee.Game.Objects.Combat.Grid
 			return UpperLeft[round].DistanceToEightWay(LowerRight[round]) + 1;
 		}
 
-		public abstract void Initialize();
+		public virtual void Initialize(IEnumerable<ICombatant> combatants)
+		{
+			Combatants = combatants.ToHashSet();
+
+			foreach (var c in Combatants)
+			{
+				OriginalHitpoints[c] = c.Hitpoints;
+				OriginalOwners[c] = c.Owner;
+			}
+		}
 
 		public abstract void PlaceCombatants(SafeDictionary<ICombatant, IntVector2> locations);
 

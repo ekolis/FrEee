@@ -2,6 +2,7 @@
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Combat.Grid;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
@@ -89,8 +90,16 @@ namespace FrEee.WinForms.Forms
 			lstSpaceObjects.Initialize(32, 32);
 			if (CurrentEmpire != null)
 			{
-				foreach (var simsobj in CurrentEmpire.SpaceObjects)
-					lstSpaceObjects.AddItemWithImage(simsobj.SpaceObject.WeaponTargetType.ToSpacedString(), simsobj.SpaceObject.Name, simsobj, simsobj.SpaceObject.Icon);
+				if (IsGroundCombat)
+				{
+					foreach (var simtroop in CurrentEmpire.Troops)
+						lstSpaceObjects.AddItemWithImage(simtroop.Unit.WeaponTargetType.ToSpacedString(), simtroop.Unit.Name, simtroop, simtroop.Unit.Icon);
+				}
+				else
+				{
+					foreach (var simsobj in CurrentEmpire.SpaceObjects)
+						lstSpaceObjects.AddItemWithImage(simsobj.SpaceObject.WeaponTargetType.ToSpacedString(), simsobj.SpaceObject.Name, simsobj, simsobj.SpaceObject.Icon);
+				}
 			}
 			CurrentSpaceObject = null;
 			BindCargoList();
@@ -99,28 +108,42 @@ namespace FrEee.WinForms.Forms
 		private void BindVehicleTypeList()
 		{
 			ddlVehicleType.Items.Clear();
-			ddlVehicleType.Items.Add(new { Name = "All", VehicleTypes = VehicleTypes.All });
-			ddlVehicleType.Items.Add(new { Name = "Ships/Bases", VehicleTypes = VehicleTypes.Ship | VehicleTypes.Base });
-			ddlVehicleType.Items.Add(new { Name = "Units", VehicleTypes = VehicleTypes.Fighter | VehicleTypes.Satellite | VehicleTypes.Drone | VehicleTypes.Troop | VehicleTypes.Mine | VehicleTypes.WeaponPlatform });
-			ddlVehicleType.Items.Add(new { Name = "Space", VehicleTypes = VehicleTypes.Ship | VehicleTypes.Base | VehicleTypes.Fighter | VehicleTypes.Satellite | VehicleTypes.Drone | VehicleTypes.Mine });
-			ddlVehicleType.Items.Add(new { Name = "Ground", VehicleTypes = VehicleTypes.Troop | VehicleTypes.WeaponPlatform });
+			if (IsGroundCombat)
+			{
+				ddlVehicleType.Items.Add(new { Name = "Troops", VehicleTypes = VehicleTypes.Troop });
+			}
+			else
+			{
+				ddlVehicleType.Items.Add(new { Name = "All", VehicleTypes = VehicleTypes.All });
+				ddlVehicleType.Items.Add(new { Name = "Ships/Bases", VehicleTypes = VehicleTypes.Ship | VehicleTypes.Base });
+				ddlVehicleType.Items.Add(new { Name = "Units", VehicleTypes = VehicleTypes.Fighter | VehicleTypes.Satellite | VehicleTypes.Drone | VehicleTypes.Troop | VehicleTypes.Mine | VehicleTypes.WeaponPlatform });
+				ddlVehicleType.Items.Add(new { Name = "Space", VehicleTypes = VehicleTypes.Ship | VehicleTypes.Base | VehicleTypes.Fighter | VehicleTypes.Satellite | VehicleTypes.Drone | VehicleTypes.Mine });
+				ddlVehicleType.Items.Add(new { Name = "Ground", VehicleTypes = VehicleTypes.Troop | VehicleTypes.WeaponPlatform });
+			}
 			ddlVehicleType.SelectedItem = ddlVehicleType.Items[0];
 		}
 
 		private void btnAddPlanet_Click(object sender, EventArgs e)
 		{
-			// TODO - let player choose a planet?
-			var template = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => p.Atmosphere == CurrentEmpire.Empire.PrimaryRace.NativeAtmosphere).PickRandom();
-			var planet = template.Instantiate();
-			planet.Name = "Planet";
-			var sim = new SimulatedSpaceObject(planet);
-			var simPlanet = (Planet)sim.SpaceObject;
-			simPlanet.Colony = new Colony();
-			simPlanet.Colony.Owner = CurrentEmpire.Empire;
-			// TODO - let player choose population?
-			simPlanet.Colony.Population.Add(CurrentEmpire.Empire.PrimaryRace, simPlanet.MaxPopulation);
-			CurrentEmpire.SpaceObjects.Add(sim);
-			BindSpaceObjectList();
+			if (IsGroundCombat)
+			{
+				MessageBox.Show("Planets cannot be added to ground battles.");	
+			}
+			else
+			{
+				// TODO - let player choose a planet?
+				var template = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => p.Atmosphere == CurrentEmpire.Empire.PrimaryRace.NativeAtmosphere).PickRandom();
+				var planet = template.Instantiate();
+				planet.Name = "Planet";
+				var sim = new SimulatedSpaceObject(planet);
+				var simPlanet = (Planet)sim.SpaceObject;
+				simPlanet.Colony = new Colony();
+				simPlanet.Colony.Owner = CurrentEmpire.Empire;
+				// TODO - let player choose population?
+				simPlanet.Colony.Population.Add(CurrentEmpire.Empire.PrimaryRace, simPlanet.MaxPopulation);
+				CurrentEmpire.SpaceObjects.Add(sim);
+				BindSpaceObjectList();
+			}
 		}
 
 		private void btnAddUnit_Click(object sender, EventArgs e)
@@ -141,18 +164,40 @@ namespace FrEee.WinForms.Forms
 				MessageBox.Show("Please select a design before clicking \"Add Vehicle\".");
 				return;
 			}
-			if (!(dsn is IDesign<SpaceVehicle>))
+			if (IsGroundCombat)
 			{
-				MessageBox.Show("Only space vehicle designs can be added to the vehicle list.");
-				return;
+				if (!(dsn is IDesign<Troop>))
+				{
+					MessageBox.Show("Only troop designs can be added to the vehicle list for ground combat.");
+					return;
+				}
+			}
+			else
+			{
+				if (!(dsn is IDesign<SpaceVehicle>))
+				{
+					MessageBox.Show("Only space vehicle designs can be added to the vehicle list for space combat.");
+					return;
+				}
 			}
 
 			// need to set owner *after* copying vehicle!
-			var sv = new SimulatedSpaceObject((SpaceVehicle)dsn.Instantiate());
-			var v = (SpaceVehicle)sv.SpaceObject;
-			v.Owner = CurrentEmpire.Empire;
-			v.SupplyRemaining = v.SupplyStorage;
-			CurrentEmpire.SpaceObjects.Add(sv);
+			if (IsGroundCombat)
+			{
+				var sv = new SimulatedUnit((Troop)dsn.Instantiate());
+				var v = (Troop)sv.Unit;
+				v.Owner = CurrentEmpire.Empire;
+				CurrentEmpire.Troops.Add(sv);
+			}
+			else
+			{
+				var sv = new SimulatedSpaceObject((SpaceVehicle)dsn.Instantiate());
+				var v = (SpaceVehicle)sv.SpaceObject;
+				v.Owner = CurrentEmpire.Empire;
+				v.SupplyRemaining = v.SupplyStorage;
+				CurrentEmpire.SpaceObjects.Add(sv);
+			}
+			
 			BindSpaceObjectList();
 		}
 
@@ -166,9 +211,6 @@ namespace FrEee.WinForms.Forms
 			// TODO - duplicate cargo
 		}
 
-		//#region Simulated object wrappers
-		//moved to Free.Game.Objects SimulatedObjectWrappers.cs
-		//#endregion
 		private void btnDuplicateEmpire_Click(object sender, EventArgs e)
 		{
 			foreach (var simemp in Empires.Where(se => lstEmpires.HasItemSelected(se)).ToArray())
@@ -200,15 +242,37 @@ namespace FrEee.WinForms.Forms
 		private void btnOK_Click(object sender, EventArgs e)
 		{
 			Cursor = Cursors.WaitCursor;
-			Sector location = new Sector(new StarSystem(0), new System.Drawing.Point());
-			foreach (ISpaceObject ispobj in (Empires.SelectMany(se => se.SpaceObjects.Select(ss => ss.SpaceObject))))
-				ispobj.Sector = location;
-			// create battle with all our combatants
-			//var battle = new Battle_Space(Empires.SelectMany(se => se.SpaceObjects.Select(ss => ss.SpaceObject)));
-			var battle = new SpaceBattle(location);
+			IBattle battle;
+			if (IsGroundCombat)
+			{
+				// TODO - let player pick a planet to fight on, or at least specify population for militia
+				var template = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => p.Atmosphere == CurrentEmpire.Empire.PrimaryRace.NativeAtmosphere).PickRandom();
+				var planet = template.Instantiate();
+				planet.Name = "Planet";
+				var sim = new SimulatedSpaceObject(planet);
+				var simPlanet = (Planet)sim.SpaceObject;
+				simPlanet.Colony = new Colony();
+				simPlanet.Colony.Owner = Empires.First().Empire;
+				simPlanet.Sector = new Sector(new StarSystem(0) { Name = "Simulation" }, new Point());
+				foreach (Troop t in Empires.SelectMany(se => se.Troops.Select(ss => ss.Unit)))
+					planet.Cargo.Units.Add(t);
+				battle = new GroundBattle(planet);
 
-			// simulate the battle
-			battle.Resolve();
+				// simulate the battle
+				battle.Resolve();
+			}
+			else
+			{
+				Sector location = new Sector(new StarSystem(0), new Point());
+				foreach (ISpaceObject ispobj in (Empires.SelectMany(se => se.SpaceObjects.Select(ss => ss.SpaceObject))))
+					ispobj.Sector = location;
+				// create battle with all our combatants
+				//var battle = new Battle_Space(Empires.SelectMany(se => se.SpaceObjects.Select(ss => ss.SpaceObject)));
+				battle = new SpaceBattle(location);
+
+				// simulate the battle
+				battle.Resolve();
+			}
 
 			// show the results
 			var form = new BattleResultsForm(battle);
@@ -245,6 +309,11 @@ namespace FrEee.WinForms.Forms
 			foreach (var simsobj in CurrentEmpire.SpaceObjects.Where(ss => lstSpaceObjects.HasItemSelected(ss)).ToArray())
 			{
 				CurrentEmpire.SpaceObjects.Remove(simsobj);
+				simsobj.Dispose();
+			}
+			foreach (var simsobj in CurrentEmpire.Troops.Where(ss => lstSpaceObjects.HasItemSelected(ss)).ToArray())
+			{
+				CurrentEmpire.Troops.Remove(simsobj);
 				simsobj.Dispose();
 			}
 			BindSpaceObjectList();
