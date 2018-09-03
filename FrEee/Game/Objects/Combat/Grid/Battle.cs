@@ -416,7 +416,12 @@ namespace FrEee.Game.Objects.Combat.Grid
 					emp.UpdateMemory(sobj); ;
 				}
 			}
+
+			// modify happiness
+			ModifyHappiness();
 		}
+
+		public abstract void ModifyHappiness();
 
 		public override string ToString()
 		{

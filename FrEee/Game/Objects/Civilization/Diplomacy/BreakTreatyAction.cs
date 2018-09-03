@@ -21,8 +21,12 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		{
 			foreach (var clause in Executor.GetTreaty(Target))
 				clause.Dispose();
+
 			Executor.Log.Add(Target.CreateLogMessage("We have broken our treaty with the " + Target + "."));
 			Target.Log.Add(Executor.CreateLogMessage("The " + Target + " has broken its treaty with us."));
+
+			Executor.TriggerHappinessChange(hm => hm.TreatyNone);
+			Target.TriggerHappinessChange(hm => hm.TreatyNone);
 		}
 	}
 }

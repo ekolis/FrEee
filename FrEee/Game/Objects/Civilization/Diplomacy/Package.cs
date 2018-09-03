@@ -1,4 +1,5 @@
-﻿using FrEee.Game.Interfaces;
+﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
@@ -220,6 +221,38 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			}
 			foreach (var emp in CommunicationChannels)
 				target.EncounteredEmpires.Add(emp); // not two way, you'll have to gift your own comms channels to the target to let them talk to you!
+
+			// TODO - get max treaty clause happiness change and only apply that?
+			if (TreatyClauses.OfType<AllianceClause>().Any())
+			{
+				var cs = TreatyClauses.OfType<AllianceClause>();
+				if (cs.Any(c => c.AllianceLevel >= AllianceLevel.DefensivePact))
+					Recipient.TriggerHappinessChange(hm => hm.TreatyMilitaryAlliance);
+				else if (cs.Any(c => c.AllianceLevel >= AllianceLevel.NonAggression))
+					Recipient.TriggerHappinessChange(hm => hm.TreatyNonAggression);
+				else if (cs.Any(c => c.AllianceLevel >= AllianceLevel.NeutralZone))
+					Recipient.TriggerHappinessChange(hm => hm.TreatyNonIntercourse);
+			}
+			if (TreatyClauses.OfType<CooperativeResearchClause>().Any())
+			{
+				Recipient.TriggerHappinessChange(hm => hm.TreatyTradeAndResearch);
+			}
+			if (TreatyClauses.OfType<FreeTradeClause>().Any())
+			{
+				Recipient.TriggerHappinessChange(hm => hm.TreatyTrade);
+			}
+			if (TreatyClauses.OfType<TributeClause>().Any())
+			{
+				Recipient.TriggerHappinessChange(hm => hm.TreatyProtectorateDominant);
+				Owner.TriggerHappinessChange(hm => hm.TreatyProtectorateSubordinate);
+			}
+			if (TreatyClauses.OfType<ShareAbilityClause>().Any()
+				|| TreatyClauses.OfType<ShareCombatLogsClause>().Any()
+				|| TreatyClauses.OfType<ShareDesignsClause>().Any()
+				|| TreatyClauses.OfType<ShareVisionClause>().Any())
+			{
+				Recipient.TriggerHappinessChange(hm => hm.TreatyPartnership);
+			}
 		}
 	}
 }

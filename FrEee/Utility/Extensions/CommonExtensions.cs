@@ -2,6 +2,7 @@ using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Combat.Grid;
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
@@ -663,6 +664,8 @@ namespace FrEee.Utility.Extensions
 
 		public static object Instantiate(this Type type, params object[] args)
 		{
+			if (type.Name == "Battle")
+				return typeof(SpaceBattle).Instantiate(); // HACK - old savegame compatibility
 			if (type.GetConstructors().Where(c => c.GetParameters().Length == (args == null ? 0 : args.Length)).Any())
 				return Activator.CreateInstance(type, args);
 			else

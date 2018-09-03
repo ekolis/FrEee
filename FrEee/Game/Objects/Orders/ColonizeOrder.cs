@@ -92,6 +92,7 @@ namespace FrEee.Game.Objects.Orders
 			{
 				// colonize now!!!
 				Planet.Colony = new Colony { Owner = sobj.Owner };
+				Owner.TriggerHappinessChange(hm => hm.PlanetColonized);
 				Planet.Colony.ConstructionQueue = new ConstructionQueue(Planet);
 				foreach (var kvp in sobj.Cargo.Population)
 				{

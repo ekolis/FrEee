@@ -578,8 +578,9 @@ namespace FrEee.Game.Setup
 				{
 					Owner = emp,
 					ConstructionQueue = new ConstructionQueue(hw),
+					IsHomeworld = true,
 				};
-				hw.Colony.Population.Add(emp.PrimaryRace, hw.Size.MaxPopulation);
+				hw.AddPopulation(emp.PrimaryRace, hw.Size.MaxPopulation);
 				if (sy != null && hw.Colony.Facilities.Count < hw.MaxFacilities)
 					hw.Colony.Facilities.Add(sy.Instantiate());
 				if (sp != null && hw.Colony.Facilities.Count < hw.MaxFacilities && (!emp.HasAbility("No Spaceports") || sp.Abilities.Count > 1))

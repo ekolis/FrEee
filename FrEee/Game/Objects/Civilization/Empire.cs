@@ -1303,5 +1303,35 @@ namespace FrEee.Game.Objects.Civilization
 		/// Anonymized tech levels of other players. Only used if Technology Uniqueness is nonzero.
 		/// </summary>
 		public SafeDictionary<Tech, List<int>> OtherPlayersTechLevels { get; private set; } = new SafeDictionary<Tech, List<int>>(true);
+
+		/// <summary>
+		/// Triggers a happiness change empire wide.
+		/// </summary>
+		/// <param name="trigger">The trigger function.</param>
+		public void TriggerHappinessChange(Func<HappinessModel, int> trigger)
+		{
+			foreach (var colony in OwnedSpaceObjects.OfType<Planet>().Select(p => p.Colony))
+				colony.TriggerHappinessChange(trigger);
+		}
+
+		/// <summary>
+		/// Triggers a happiness change in a star system.
+		/// </summary>
+		/// <param name="trigger">The trigger function.</param>
+		public void TriggerHappinessChange(StarSystem s, Func<HappinessModel, int> trigger)
+		{
+			foreach (var colony in s.FindSpaceObjects<Planet>().Where(p => p.Owner == this).Select(p => p.Colony))
+				colony.TriggerHappinessChange(trigger);
+		}
+
+		/// <summary>
+		/// Triggers a happiness change in a sector.
+		/// </summary>
+		/// <param name="trigger">The trigger function.</param>
+		public void TriggerHappinessChange(Sector s, Func<HappinessModel, int> trigger)
+		{
+			foreach (var colony in s.SpaceObjects.OfType<Planet>().Where(p => p.Owner == this).Select(p => p.Colony))
+				colony.TriggerHappinessChange(trigger);
+		}
 	}
 }

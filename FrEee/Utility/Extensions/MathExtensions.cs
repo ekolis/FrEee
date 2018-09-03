@@ -81,5 +81,27 @@ namespace FrEee.Utility.Extensions
 			else
 				return (int)ipart;
 		}
+
+		public static int WeightedAverage<T>(this IEnumerable<T> list, Func<T, int> weightPicker, Func<T, int> amountPicker)
+		{
+			int result = 0;
+			if (list == null || !list.Any())
+				return result;
+			foreach (var item in list)
+				result += weightPicker(item) * amountPicker(item);
+			result /= list.Sum(weightPicker);
+			return result;
+		}
+
+		public static double WeightedAverage<T>(this IEnumerable<T> list, Func<T, double> weightPicker, Func<T, double> amountPicker)
+		{
+			double result = 0;
+			if (list == null || !list.Any())
+				return result;
+			foreach (var item in list)
+				result += weightPicker(item) * amountPicker(item);
+			result /= list.Sum(weightPicker);
+			return result;
+		}
 	}
 }

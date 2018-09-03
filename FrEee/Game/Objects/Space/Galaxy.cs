@@ -744,6 +744,13 @@ namespace FrEee.Game.Objects.Space
 				}
 			}
 
+			// reset anger deltas for new turn
+			foreach (var p in Galaxy.Current.FindSpaceObjects<Planet>().Where(p => p.Colony != null))
+			{
+				var c = p.Colony;
+				c.AngerDeltas.Clear();
+			}
+
 			if (status != null)
 			{
 				status.Progress += progressPerOperation;
@@ -1125,6 +1132,53 @@ namespace FrEee.Game.Objects.Space
 
 			// replenish shields again, so the players see the full shield amounts in the GUI
 			Current.FindSpaceObjects<ICombatSpaceObject>().SafeForeach(o => o.ReplenishShields());
+
+			// modify colony anger
+			foreach (var ship in Current.FindSpaceObjects<SpaceVehicle>().Where(x => x is Ship || x is Base))
+			{
+				foreach (var emp in Current.Empires.Where(e => e.CanSee(ship)))
+				{
+					if (emp == ship.Owner)
+					{
+						emp.TriggerHappinessChange(ship.StarSystem, hm => hm.OurShipInSystem);
+						emp.TriggerHappinessChange(ship.Sector, hm => hm.OurShipInSector);
+					}
+					else if (emp.IsEnemyOf(ship.Owner, ship.StarSystem))
+					{
+						emp.TriggerHappinessChange(ship.StarSystem, hm => hm.EnemyShipInSystem);
+						emp.TriggerHappinessChange(ship.Sector, hm => hm.EnemyShipInSector);
+					}
+				}
+			}
+			Current.FindSpaceObjects<Planet>().Where(p => p.Colony != null).Select(p => p.Colony).ParallelSafeForeach(c =>
+			{
+				if (c.Cargo.Units.Any(u => u.IsHostileTo(c.Owner)))
+					c.TriggerHappinessChange(hm => hm.EnemyTroopsOnPlanet);
+				c.TriggerHappinessChange(hm => hm.OurTroopOnPlanet * c.Cargo.Units.OfType<Troop>().Count());
+			});
+			Current.FindSpaceObjects<Planet>().Where(p => p.Colony != null).Select(p => p.Colony).ParallelSafeForeach(c =>
+			{
+				foreach (var race in c.Population.Keys)
+				{
+					var delta = c.AngerDeltas[race];
+					if (delta > race.HappinessModel.MaxPositiveTurnAngerChange)
+						delta = race.HappinessModel.MaxPositiveTurnAngerChange;
+					if (delta < race.HappinessModel.MaxNegativeTurnAngerChange)
+						delta = race.HappinessModel.MaxNegativeTurnAngerChange;
+					delta += race == c.Owner.PrimaryRace ? race.HappinessModel.NaturalTurnAngerChangeOurRace : race.HappinessModel.NaturalTurnAngerChangeOtherRaces;
+					c.Anger[race] += delta;
+					if (c.Anger[race] > Mod.Current.Settings.MaxAnger)
+						c.Anger[race] = Mod.Current.Settings.MaxAnger;
+					if (c.Anger[race] < Mod.Current.Settings.MinAnger)
+						c.Anger[race] = Mod.Current.Settings.MinAnger;
+
+					// TODO - display reason for growing happy/unhappy
+					if (delta >= 100)
+						c.Owner.RecordLog(c.Container, $"The {race} population of {c.Container} is growing very unhappy.");
+					else if (delta <= -100)
+						c.Owner.RecordLog(c.Container, $"The {race} population of {c.Container} is growing very happy.");
+				}
+			});
 
 			// repair facilities
 			Current.FindSpaceObjects<Planet>().Select(p => p.Colony).Where(c => c != null).SelectMany(c => c.Facilities).SafeForeach(f => f.Repair());

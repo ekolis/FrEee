@@ -84,5 +84,28 @@ namespace FrEee.Game.Objects.Combat.Grid
 		}
 
 		public override int MaxRounds => Mod.Current.Settings.SpaceCombatTurns;
+
+		public override void ModifyHappiness()
+		{
+			foreach (var e in Empires)
+			{
+				switch (this.ResultFor(e))
+				{
+					case "victory":
+						e.TriggerHappinessChange(StarSystem, hm => hm.BattleInSystemWin);
+						e.TriggerHappinessChange(Sector, hm => hm.BattleInSectorWin);
+						break;
+					case "defeat":
+						e.TriggerHappinessChange(StarSystem, hm => hm.BattleInSystemLoss);
+						e.TriggerHappinessChange(Sector, hm => hm.BattleInSectorLoss);
+						break;
+					case "stalemate":
+					case "Pyrrhic victory":
+						e.TriggerHappinessChange(StarSystem, hm => hm.BattleInSystemStalemate);
+						e.TriggerHappinessChange(Sector, hm => hm.BattleInSectorStalemate);
+						break;
+				}
+			}
+		}
 	}
 }

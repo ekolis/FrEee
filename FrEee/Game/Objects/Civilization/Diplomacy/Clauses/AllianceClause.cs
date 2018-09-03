@@ -86,6 +86,8 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 			response.Action = new DeclareWarAction(emp);
 			var cmd = new SendMessageCommand(response);
 			Empire.Current.Commands.Add(cmd);
+			Empire.Current.TriggerHappinessChange(hm => hm.TreatyWar);
+			emp.TriggerHappinessChange(hm => hm.TreatyWar);
 		}
 	}
 }
