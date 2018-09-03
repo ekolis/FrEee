@@ -1,4 +1,5 @@
-﻿using FrEee.Utility;
+﻿using FrEee.Game.Interfaces;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// <summary>
 	/// Information about a player.
 	/// </summary>
-	[ClientSafe]
-	public class PlayerInfo
+	public class PlayerInfo : IPromotable
 	{
 		public string Name { get; set; }
 
@@ -26,5 +26,10 @@ namespace FrEee.Game.Objects.Civilization
 		public string Website { get; set; }
 
 		public string Notes { get; set; }
+
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		{
+			// nothing to do here
+		}
 	}
 }
