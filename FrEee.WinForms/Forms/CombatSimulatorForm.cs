@@ -205,7 +205,7 @@ namespace FrEee.WinForms.Forms
 				ispobj.Sector = location;
 			// create battle with all our combatants
 			//var battle = new Battle_Space(Empires.SelectMany(se => se.SpaceObjects.Select(ss => ss.SpaceObject)));
-			var battle = new Battle(location);
+			var battle = new SpaceBattle(location);
 
 			// simulate the battle
 			battle.Resolve();

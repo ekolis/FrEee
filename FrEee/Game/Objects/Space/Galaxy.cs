@@ -718,8 +718,8 @@ namespace FrEee.Game.Objects.Space
 			double progressPerOperation;
 			if (status == null)
 				progressPerOperation = 0d;
-			else
-				progressPerOperation = (desiredProgress - status.Progress) / (10 + Current.Empires.Count);
+			else // TODO - make a list of operation lambdas and run through them so we don't have to keep count manually & the code is cleaner
+				progressPerOperation = (desiredProgress - status.Progress) / (11 + Current.Empires.Count);
 
 			if (status != null)
 				status.Message = "Initializing turn";
@@ -1063,6 +1063,25 @@ namespace FrEee.Game.Objects.Space
 				//Current.SpaceObjectIDCheck("after ship movement at T=" + Current.Timestamp);
 
 				Current.DisableAbilityCache();
+			}
+
+			if (status != null)
+				status.Progress += progressPerOperation;
+
+			//Current.SpaceObjectIDCheck("after shield replenishment");
+
+			// ship movement
+			if (status != null)
+				status.Message = "Resolving ground battles";
+
+			// resolve ground battles
+			foreach (var p in Current.FindSpaceObjects<Planet>(p => p.Cargo.Units.Any(u => u.IsHostileTo(p.Owner) || p.IsHostileTo(u.Owner)))
+			){
+				var battle = new GroundBattle(p);
+				battle.Resolve();
+				Current.Battles.Add(battle);
+				foreach (var emp in battle.Empires)
+					emp.Log.Add(battle.CreateLogMessage(battle.NameFor(emp)));
 			}
 
 			Current.EnableAbilityCache();
@@ -1568,7 +1587,7 @@ namespace FrEee.Game.Objects.Space
 					(!lastBattleTimestamps.ContainsKey(sector) || lastBattleTimestamps[sector] < Timestamp - (v.StrategicSpeed == 0 ? 1d : 1d / v.StrategicSpeed))) // have we fought here too recently?
 				{
 					// resolve the battle
-					var battle = new Battle(sector);
+					var battle = new SpaceBattle(sector);
 					battle.Resolve();
 					Battles.Add(battle);
 					foreach (var emp in battle.Empires)

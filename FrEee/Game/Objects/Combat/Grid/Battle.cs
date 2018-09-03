@@ -15,7 +15,7 @@ using static System.Math;
 
 namespace FrEee.Game.Objects.Combat.Grid
 {
-	public class Battle : IBattle
+	public abstract class Battle : IBattle
 	{
 		static Battle()
 		{
@@ -23,12 +23,9 @@ namespace FrEee.Game.Objects.Combat.Grid
 			Previous = new HashSet<Battle>();
 		}
 
-		public Battle(Sector location)
+		public Battle()
 		{
-			Sector = location ?? throw new Exception("Battles require a sector location.");
 			Log = new List<LogMessage>();
-			Empires = Sector.SpaceObjects.OfType<ICombatSpaceObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray();
-			Combatants = new HashSet<ICombatant>(Sector.SpaceObjects.OfType<ICombatant>().Where(o => o.Owner != null).Union(Sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.Combatants)).Where(o => !(o is Fleet)));
 			foreach (var c in Combatants)
 			{
 				OriginalHitpoints[c] = c.Hitpoints;
@@ -36,8 +33,6 @@ namespace FrEee.Game.Objects.Combat.Grid
 			}
 
 			double stardate = Galaxy.Current.Timestamp;
-			int moduloID = (int)(Sector.StarSystem.ID % 100000);
-			Dice = new PRNG((int)(moduloID / stardate * 10));
 			Timestamp = stardate;
 		}
 
@@ -53,14 +48,19 @@ namespace FrEee.Game.Objects.Combat.Grid
 		public static ICollection<Battle> Previous { get; private set; }
 
 		/// <summary>
+		/// The combatants in this battle.
+		/// </summary>
+		public ISet<ICombatant> Combatants { get; protected set; }
+
+		/// <summary>
 		/// Saved-up fractional combat speed from the previous round.
 		/// </summary>
 		public SafeDictionary<ICombatant, double> CombatSpeedBuffer { get; private set; } = new SafeDictionary<ICombatant, double>();
 
 		/// <summary>
-		/// The combatants in this battle.
+		/// The percentage of normal damage that weapons inflict.
 		/// </summary>
-		public ISet<ICombatant> Combatants { get; private set; }
+		public abstract int DamagePercentage { get; }
 
 		public PRNG Dice { get; set; }
 
@@ -70,9 +70,9 @@ namespace FrEee.Game.Objects.Combat.Grid
 		public int Duration => Events.Count;
 
 		/// <summary>
-		/// The empires engagaed in battle.
+		/// The empires engaged in battle.
 		/// </summary>
-		public IEnumerable<Empire> Empires { get; private set; }
+		public IEnumerable<Empire> Empires { get; protected set; }
 
 		public List<IList<IBattleEvent>> Events
 		{
@@ -96,19 +96,12 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 		public IList<IntVector2> LowerRight { get; private set; } = new List<IntVector2>();
 
+		public abstract int MaxRounds { get; }
+
 		/// <summary>
-		/// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
+		/// The name of the battle. Battles are typicaly named after their location.
 		/// </summary>
-		public string Name
-		{
-			get
-			{
-				if (Sector.SpaceObjects.OfType<StellarObject>().Any())
-					return "Battle at " + Sector.SpaceObjects.OfType<StellarObject>().Largest();
-				var coords = Sector.Coordinates;
-				return "Battle at " + Sector.StarSystem + " sector (" + coords.X + ", " + coords.Y + ")";
-			}
-		}
+		public abstract string Name { get; }
 
 		/// <summary>
 		/// Starting HP of all combatants.
@@ -144,6 +137,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 		public StarSystem StarSystem { get { return Sector.StarSystem; } }
 
 		public double Timestamp { get; private set; }
+
 		public IList<IntVector2> UpperLeft { get; private set; } = new List<IntVector2>();
 
 		public int GetCombatSpeedThisRound(ICombatant c)
@@ -155,6 +149,10 @@ namespace FrEee.Game.Objects.Combat.Grid
 		{
 			return UpperLeft[round].DistanceToEightWay(LowerRight[round]) + 1;
 		}
+
+		public abstract void Initialize();
+
+		public abstract void PlaceCombatants(SafeDictionary<ICombatant, IntVector2> locations);
 
 		/// <summary>
 		/// Resolves the battle.
@@ -171,29 +169,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 			var locations = new SafeDictionary<ICombatant, IntVector2>();
 			var multiplex = new SafeDictionary<ICombatant, HashSet<ICombatant>>(true);
 
-			if (Sector.SpaceObjects.OfType<WarpPoint>().Any())
-			{
-				// HACK - warp point in sector, assume someone warped
-				// TODO - do this for warp point exits instead since warp points may be one way
-				// warp battles start with everyone in the same square to allow blockades
-				foreach (var c in Combatants)
-					locations.Add(c, new IntVector2());
-			}
-			else
-			{
-				// place all combatants at the points of a regular polygon
-				var sideLength = 21; // make sure no one can shoot each other at the start
-									 // https://stackoverflow.com/questions/32169875/calculating-the-coordinates-of-a-regular-polygon-given-its-center-and-its-side-l
-				var radius = sideLength / (2 * Sin(PI / Empires.Count()));
-				var combs = Combatants.ToArray();
-				for (var i = 0; i < Empires.Count(); i++)
-				{
-					var x = radius * Cos(PI / Empires.Count() * (1 + 2 * i));
-					var y = radius * Sin(PI / Empires.Count() * (1 + 2 * i));
-					foreach (var comb in Combatants.Where(q => q.Owner == Empires.ElementAt(i)))
-						locations.Add(comb, new IntVector2((int)x, (int)y));
-				}
-			}
+			PlaceCombatants(locations);
 
 			Events = new List<IList<IBattleEvent>>();
 
@@ -206,7 +182,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 			// make a query so we can check who's alive
 			var alives = Combatants.Where(q => q.IsAlive);
 
-			for (int i = 0; i < Mod.Current.Settings.SpaceCombatTurns; i++)
+			for (int i = 0; i < MaxRounds; i++)
 			{
 				Events.Add(new List<IBattleEvent>());
 				if (i == 0)
@@ -374,6 +350,24 @@ namespace FrEee.Game.Objects.Combat.Grid
 					}
 				}
 
+				turnorder = alives.OrderBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
+
+				// phase 8: drop troops
+				foreach (var c in turnorder.Reverse())
+				{
+					if (c is ICargoTransferrer cc && cc.AllUnits.OfType<Troop>().Any())
+					{
+						// find enemy planets in the same square
+						var dropTargets = locations.Where(q => q.Key != c && q.Value == locations[c] && q.Key is Planet p && c.IsHostileTo(p.Owner)).Select(q => q.Key).Cast<Planet>();
+						var dropTarget = dropTargets.PickRandom(Dice);
+						var cd = new CargoDelta();
+						cd.UnitTypeTonnage.Add(VehicleTypes.Troop, null);
+						cc.TransferCargo(cd, dropTarget, cc.Owner, true);
+						var groundBattle = new GroundBattle(dropTarget);
+						groundBattle.Resolve();
+					}
+				}
+
 				// clear used combat speed buffer speed
 				foreach (var x in Combatants)
 				{
@@ -422,6 +416,11 @@ namespace FrEee.Game.Objects.Combat.Grid
 					emp.UpdateMemory(sobj); ;
 				}
 			}
+		}
+
+		public override string ToString()
+		{
+			return Name;
 		}
 
 		private void CheckSeekerDetonation(Seeker s, SafeDictionary<ICombatant, IntVector2> locations)

@@ -1434,7 +1434,7 @@ namespace FrEee.Utility.Extensions
 		/// <summary>
 		/// Transfers items from this cargo container to another cargo container.
 		/// </summary>
-		public static void TransferCargo(this ICargoContainer src, CargoDelta delta, ICargoContainer dest, Empire emp)
+		public static void TransferCargo(this ICargoContainer src, CargoDelta delta, ICargoContainer dest, Empire emp, bool overrideFreeSpace = false)
 		{
 			// if destination is null, we are transferring to/from space
 			if (dest == null)
@@ -1452,8 +1452,11 @@ namespace FrEee.Utility.Extensions
 					amount = Math.Min(amount, kvp.Value.Value);
 				// limit by amount available
 				amount = Math.Min(amount, src.AllPopulation[kvp.Key]);
-				// limit by amount of free space
-				amount = Math.Min(amount, dest.PopulationStorageFree + (long)((dest.CargoStorage - dest.Cargo.Size) / Mod.Current.Settings.PopulationSize));
+				if (!overrideFreeSpace)
+				{
+					// limit by amount of free space
+					amount = Math.Min(amount, dest.PopulationStorageFree + (long)((dest.CargoStorage - dest.Cargo.Size) / Mod.Current.Settings.PopulationSize));
+				}
 
 				amount -= src.RemovePopulation(kvp.Key, amount);
 				dest.AddPopulation(kvp.Key, amount);
@@ -1740,6 +1743,11 @@ namespace FrEee.Utility.Extensions
 			emp.Log.Add(src.CreateLogMessage("Only " + actualTonnage.Kilotons() + " of " + desiredTonnage.Kilotons() + " worth of " + vt.ToSpacedString().ToLower() + "s could be transferred from " + src + " to " + dest + " because there are not enough in " + src + "'s cargo or " + dest + "'s cargo is full."));
 		}
 
+		private static void LogUnitTransferFailedHostile(IUnit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
+		{
+			emp.Log.Add(src.CreateLogMessage(unit + " could not be transferred from " + src + " to " + dest + " because " + unit + " is hostile."));
+		}
+
 		private static void LogUnitTransferFailedNoStorage(IUnit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
 		{
 			emp.Log.Add(src.CreateLogMessage(unit + " could not be transferred from " + src + " to " + dest + " because " + dest + "'s cargo is full."));
@@ -1752,6 +1760,8 @@ namespace FrEee.Utility.Extensions
 
 		private static void TryTransferUnit(IUnit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
 		{
+			if (unit.IsHostileTo(emp))
+				LogUnitTransferFailedHostile(unit, src, dest, emp);
 			if (dest.CargoStorageFree() >= unit.Design.Hull.Size)
 			{
 				src.RemoveUnit(unit);
