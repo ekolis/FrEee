@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrEee.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// <summary>
 	/// Information about a player.
 	/// </summary>
+	[ClientSafe]
 	public class PlayerInfo
 	{
 		public string Name { get; set; }
