@@ -31,6 +31,21 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		/// <summary>
+		/// The anger level of each race on this colony.
+		/// </summary>
+		public SafeDictionary<Race, int> Anger { get; private set; } = new SafeDictionary<Race, int>();
+
+		/// <summary>
+		/// The anger changes this turn of each race on this colony.
+		/// </summary>
+		public SafeDictionary<Race, int> AngerDeltas { get; private set; } = new SafeDictionary<Race, int>();
+
+		/// <summary>
+		/// The average anger of all races on this colony, weighted by population.
+		/// </summary>
+		public int AverageAnger => (int)Anger.WeightedAverage(kvp => Population[kvp.Key], kvp => kvp.Value);
+
+		/// <summary>
 		/// The cargo stored on this colony.
 		/// </summary>
 		public Cargo Cargo { get; set; }
@@ -78,6 +93,8 @@ namespace FrEee.Game.Objects.Civilization
 
 		public bool IsDisposed { get; set; }
 
+		public bool IsHomeworld { get; set; }
+
 		public bool IsMemory
 		{
 			get;
@@ -97,6 +114,11 @@ namespace FrEee.Game.Objects.Civilization
 				return ratio;
 			}
 		}
+
+		/// <summary>
+		/// The overall mood of the population of this colony.
+		/// </summary>
+		public Mood Mood => Mod.Current.Settings.MoodThresholds.Where(kvp => kvp.Value <= AverageAnger).WithMax(kvp => kvp.Value).Single().Key;
 
 		/// <summary>
 		/// The empire which owns this colony.
@@ -136,6 +158,7 @@ namespace FrEee.Game.Objects.Civilization
 				// do modifiers to income
 				var totalpop = Population.Sum(kvp => kvp.Value);
 				var popfactor = Mod.Current.Settings.GetPopulationProductionFactor(totalpop);
+				var moodfactor = Mod.Current.Settings.MoodModifiers[Mood] / 100d;
 
 				var result = new ResourceQuantity();
 
@@ -146,7 +169,7 @@ namespace FrEee.Game.Objects.Civilization
 						aptfactor = Population.Sum(kvp => (kvp.Key.Aptitudes[r.Aptitude.Name] / 100d) * (double)kvp.Value / (double)totalpop);
 					var cultfactor = (100 + r.CultureModifier(Owner.Culture)) / 100d;
 
-					result += (int)(100 * popfactor * aptfactor * cultfactor) * r;
+					result += (int)(100 * popfactor * aptfactor * cultfactor * moodfactor) * r;
 				}
 
 				return result;
@@ -210,6 +233,18 @@ namespace FrEee.Game.Objects.Civilization
 			}
 			if (visibility < Visibility.Fogged)
 				Dispose();
+		}
+
+		/// <summary>
+		/// Triggers a happiness change at this colony.
+		/// </summary>
+		/// <param name="trigger">The trigger function.</param>
+		public void TriggerHappinessChange(Func<HappinessModel, int> trigger)
+		{
+			foreach (var race in Population.Keys)
+			{
+				Anger[race] += trigger(race.HappinessModel);
+			}
 		}
 	}
 }

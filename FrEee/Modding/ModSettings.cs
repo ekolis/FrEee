@@ -24,6 +24,7 @@ namespace FrEee.Modding
 
 			MoodModifiers = new Dictionary<Mood, int>();
 
+			// TODO - moddable mood thresholds
 			MoodThresholds = new Dictionary<Mood, int>();
 			MoodThresholds.Add(Mood.Rioting, 750);
 			MoodThresholds.Add(Mood.Unhappy, 450);
@@ -129,6 +130,21 @@ namespace FrEee.Modding
 		public int EmergencyBuildRate { get; set; }
 
 		/// <summary>
+		/// High event frequency, chance per 1000 per player for an event each turns
+		/// </summary>
+		public double EventFrequencyHigh { get; set; }
+
+		/// <summary>
+		/// Low event frequency, chance per 1000 per player for an event each turns
+		/// </summary>
+		public double EventFrequencyLow { get; set; }
+
+		/// <summary>
+		/// Medium event frequency, chance per 1000 per player for an event each turns
+		/// </summary>
+		public double EventFrequencyMedium { get; set; }
+
+		/// <summary>
 		/// Standard maintenance cost for facilities (%/turn).
 		/// </summary>
 		public int FacilityMaintenanceRate { get; set; }
@@ -193,6 +209,9 @@ namespace FrEee.Modding
 		/// </summary>
 		public int MaintenanceDeficitToDestroyOneShip { get; set; }
 
+		// TODO - moddable min/max anger values
+		public int MaxAnger => 1000;
+
 		/// <summary>
 		/// Maximum number of consecutive turns a queue can be on emergency build.
 		/// </summary>
@@ -247,6 +266,9 @@ namespace FrEee.Modding
 		/// Hitpoints of a militia unit.
 		/// </summary>
 		public int MilitiaHitpoints { get; set; }
+
+		// TODO - moddable min/max anger values
+		public int MinAnger => 0;
 
 		/// <summary>
 		/// Can drones be affected by mines?
@@ -394,6 +416,9 @@ namespace FrEee.Modding
 		/// </summary>
 		public int SpaceCombatTurns { get; set; }
 
+		// TODO - moddable starting population anger
+		public int StartPopulationAnger => 400;
+
 		/// <summary>
 		/// Starting trade percentage for treaties.
 		/// </summary>
@@ -448,21 +473,6 @@ namespace FrEee.Modding
 		/// Weapon accuracy at 0 squares distance.
 		/// </summary>
 		public int WeaponAccuracyPointBlank { get; set; }
-
-		/// <summary>
-		/// Low event frequency, chance per 1000 per player for an event each turns
-		/// </summary>
-		public double EventFrequencyLow { get; set; }
-
-		/// <summary>
-		/// Medium event frequency, chance per 1000 per player for an event each turns
-		/// </summary>
-		public double EventFrequencyMedium { get; set; }
-
-		/// <summary>
-		/// High event frequency, chance per 1000 per player for an event each turns
-		/// </summary>
-		public double EventFrequencyHigh { get; set; }
 
 		public double GetMoodFactor(int anger)
 		{

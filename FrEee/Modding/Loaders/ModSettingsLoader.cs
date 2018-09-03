@@ -1,5 +1,7 @@
-﻿using FrEee.Game.Objects.Civilization;
+﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Modding.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -80,6 +82,10 @@ namespace FrEee.Modding.Loaders
 				a.LowCost = rec.Get<int>("Characteristic " + a.Name + " Threshhold Pct Cost Neg", null);
 				a.HighCost = rec.Get<int>("Characteristic " + a.Name + " Threshhold Pct Cost Pos", null);
 			}
+
+			// load mood modifiers
+			foreach (var mood in new Mood[] { Mood.Riot, Mood.Angry, Mood.Unhappy, Mood.Indifferent, Mood.Happy, Mood.Jubilant })
+				settings.MoodModifiers.Add(mood, rec.Get<int>($"Mood {mood} Modifier"));
 
 			// TODO - load more settings
 

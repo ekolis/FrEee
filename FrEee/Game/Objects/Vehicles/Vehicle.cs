@@ -728,7 +728,15 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 
 			if (IsDestroyed)
+			{
+				if (this is Ship || this is Base)
+				{
+					// trigger ship lost happiness changes
+					Owner.TriggerHappinessChange(hm => hm.OurShipLost);
+					Owner.TriggerHappinessChange(StarSystem, hm => hm.OurShipLostInSystem);
+				}
 				Dispose();
+			}
 
 			// update memory sight
 			if (!IsMemory)

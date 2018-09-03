@@ -755,6 +755,8 @@ namespace FrEee.Game.Objects.Space
 			var canCargo = Math.Min(amount, (long)(this.CargoStorageFree() / Mod.Current.Settings.PopulationSize));
 			amount -= canCargo;
 			Colony.Cargo.Population[race] += canCargo;
+			if (!Colony.Anger.ContainsKey(race))
+				Colony.Anger[race] = Mod.Current.Settings.StartPopulationAnger;
 			return amount;
 		}
 
@@ -1081,7 +1083,12 @@ namespace FrEee.Game.Objects.Space
 
 			// if planet was completely glassed, remove the colony
 			if (!Colony.Population.Any(p => p.Value > 0) && !Cargo.Units.Any() && !Cargo.Population.Any(p => p.Value > 0) && !Colony.Facilities.Any())
+			{
+				if (Colony.IsHomeworld)
+					Colony.Owner.TriggerHappinessChange(hm => hm.OurHomeworldLost);
+				Colony.Owner.TriggerHappinessChange(hm => hm.OurPlanetLost);
 				Colony.Dispose();
+			}
 
 			// update memory sight
 			if (!IsMemory)
@@ -1139,6 +1146,7 @@ namespace FrEee.Game.Objects.Space
 				return hit.NominalDamage;
 			int damage = hit.NominalDamage;
 			int inflicted = 0;
+			long totalPopKilled = 0;
 			for (int i = 0; i < damage; i++)
 			{
 				// pick a race and kill some population
@@ -1148,11 +1156,13 @@ namespace FrEee.Game.Objects.Space
 				double popHPPerPerson = Mod.Current.Settings.PopulationHitpoints;
 				// TODO - don't ceiling the popKilled, just stack it up
 				int popKilled = (int)Math.Ceiling(hit.Shot.DamageType.PopulationDamage.Evaluate(hit.Shot) / 100 / popHPPerPerson);
+				totalPopKilled += popKilled;
 				Colony.Population[race] -= popKilled;
 				if (Colony.Population[race] < 0)
 					Colony.Population[race] = 0;
 				inflicted += 1;
 			}
+			Colony.TriggerHappinessChange(hm => (int)(hm.OneMillionPopulationKilled * totalPopKilled / 1_000_000));
 			// clear population that was emptied out
 			foreach (var race in Colony.Population.Where(kvp => kvp.Value <= 0).Select(kvp => kvp.Key).ToArray())
 				Colony.Population.Remove(race);

@@ -101,7 +101,10 @@ namespace FrEee.WinForms.Controls
 						txtPopulation.Text = pop.ToUnitString(true) + " / " + Planet.MaxPopulation.ToUnitString(true) + " (stagnant)";
 				}
 
-				txtMood.Text = ""; // TODO - load mood
+				if (Planet.Colony == null)
+					txtMood.Text = null;
+				else
+					txtMood.Text = $"{Planet.Colony.Mood} ({Planet.Colony.AverageAnger})";
 
 				// load income
 				if (Planet.Owner != null)

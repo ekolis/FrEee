@@ -1,9 +1,11 @@
 ﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +24,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 			: base()
 		{
 			Planet = location;
+			OriginalPlanetOwner = Planet.Owner;
 			Sector = location.Sector ?? throw new Exception("Ground battles require a sector location.");
 
 			// TODO - should weapon platforms participate in ground combat like in SE5?
@@ -41,6 +44,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 		public Planet Planet { get; private set; }
 
+		public Empire OriginalPlanetOwner { get; private set; }
+
 		public override void Initialize()
 		{
 			Empires = Planet.Cargo.Units.OfType<Troop>().Select(t => t.Owner).Distinct();
@@ -58,6 +63,30 @@ namespace FrEee.Game.Objects.Combat.Grid
 		}
 
 		public override int MaxRounds => Mod.Current.Settings.GroundCombatTurns;
+
+		public override void ModifyHappiness()
+		{
+			foreach (var e in Empires)
+			{
+				switch (this.ResultFor(e))
+				{
+					case "victory":
+						if (OriginalPlanetOwner != e)
+							e.TriggerHappinessChange(hm => hm.EnemyPlanetCaptured);
+						break;
+					case "defeat":
+						if (OriginalPlanetOwner == e)
+						{
+							e.TriggerHappinessChange(hm => hm.OurPlanetCaptured);
+							e.TriggerHappinessChange(hm => hm.OurPlanetLost);
+							if (Planet.Colony.IsHomeworld)
+								e.TriggerHappinessChange(hm => hm.OurHomeworldLost);
+						}
+						break;
+				}
+
+			}
+		}
 
 		public override string Name => $"Ground Battle at {Planet}";
 	}

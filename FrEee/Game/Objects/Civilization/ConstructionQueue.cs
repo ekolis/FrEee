@@ -3,6 +3,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
+using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
@@ -361,6 +362,21 @@ namespace FrEee.Game.Objects.Civilization
 								order.Item.Place(Container);
 							Orders.Remove(order);
 							builtThisTurn.Add(order.Item);
+							if (order.Item is Ship || order.Item is Base)
+							{
+								// trigger ship built happiness changes
+								Owner.TriggerHappinessChange(hm => hm.AnyShipConstructed);
+								if (Container is Planet p)
+									p.Colony.TriggerHappinessChange(hm => hm.ShipConstructed);
+
+							}
+							if (order.Item is Facility)
+							{
+								// trigger facility built happiness changes
+								if (Container is Planet p)
+									p.Colony.TriggerHappinessChange(hm => hm.FacilityConstructed);
+
+							}
 						}
 					}
 				}
@@ -460,7 +476,9 @@ namespace FrEee.Game.Objects.Civilization
 					return new ResourceQuantity();
 				rate *= Mod.Current.Settings.GetPopulationConstructionFactor(pop);
 
-				// TODO - apply happiness modifier
+				// apply mood modifier
+				var moodModifier = Mod.Current.Settings.MoodModifiers[Colony.Mood];
+				rate *= moodModifier / 100d;
 
 				var ratios = Colony.Population.Select(p => new { Race = p.Key, Ratio = (double)p.Value / (double)pop });
 
