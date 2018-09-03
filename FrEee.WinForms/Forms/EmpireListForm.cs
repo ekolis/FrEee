@@ -131,13 +131,13 @@ namespace FrEee.WinForms.Forms
 					lstMessages.AddItemWithImage(msg.TurnNumber.ToStardate(), "", msg, msg.Owner.Portrait, msg.Owner == Empire.Current ? "Us" : msg.Owner.Name, msg.Recipient == Empire.Current ? "Us" : msg.Recipient.Name, msg.Text);
 
 				// player info
-				txtName.Text = emp.PlayerInfo.Name;
-				lnkPbw.Text = emp.PlayerInfo.Pbw;
-				lnkEmail.Text = emp.PlayerInfo.Email;
-				txtIrc.Text = emp.PlayerInfo.Irc;
-				txtDiscord.Text = emp.PlayerInfo.Discord;
-				lnkWebsite.Text = emp.PlayerInfo.Website;
-				txtNotes.Text = emp.PlayerInfo.Notes;
+				txtName.Text = emp.PlayerInfo?.Name;
+				lnkPbw.Text = emp.PlayerInfo?.Pbw;
+				lnkEmail.Text = emp.PlayerInfo?.Email;
+				txtIrc.Text = emp.PlayerInfo?.Irc;
+				txtDiscord.Text = emp.PlayerInfo?.Discord;
+				lnkWebsite.Text = emp.PlayerInfo?.Website;
+				txtNotes.Text = emp.PlayerInfo?.Notes;
 			}
 		}
 
