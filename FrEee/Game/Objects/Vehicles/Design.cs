@@ -23,6 +23,22 @@ namespace FrEee.Game.Objects.Vehicles
 	/// </summary>
 	public static class Design
 	{
+		static Design()
+		{
+			militiaDesign = new Design<Troop>();
+			militiaDesign.BaseName = "Militia";
+			var militiaWeapon = new ComponentTemplate();
+			militiaWeapon.Durability = Mod.Current.Settings.MilitiaHitpoints;
+			militiaWeapon.Name = "Small Arms";
+			militiaWeapon.WeaponInfo = new DirectFireWeaponInfo
+			{
+				Damage = Mod.Current.Settings.MilitiaFirepower,
+				MinRange = 0,
+				MaxRange = 1,
+			};
+			militiaDesign.Components.Add(new MountedComponentTemplate(militiaDesign, militiaWeapon));
+		}
+
 		public static IDesign Create(VehicleTypes vt)
 		{
 			IDesign d;
@@ -97,6 +113,10 @@ namespace FrEee.Game.Objects.Vehicles
 
 			return designs;
 		}
+
+		public static Design<Troop> militiaDesign;
+
+		public static Design<Troop> MilitiaDesign => militiaDesign;
 	}
 
 	/// <summary>

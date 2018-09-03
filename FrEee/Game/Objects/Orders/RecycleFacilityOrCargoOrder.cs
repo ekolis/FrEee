@@ -92,7 +92,16 @@ namespace FrEee.Game.Objects.Orders
 
 		public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject executor)
 		{
-			return Behavior.GetErrors(executor, Target);
+			return Behavior.GetErrors(executor, Target).Concat(SelfErrors);
+		}
+
+		private IEnumerable<LogMessage> SelfErrors
+		{
+			get
+			{
+				if (Target is ICombatant c && c.IsHostileTo(Owner))
+					yield return c.CreateLogMessage($"You can't {Behavior.Verb} {c} because it belongs to a hostile empire.");
+			}
 		}
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
