@@ -1075,8 +1075,9 @@ namespace FrEee.Game.Objects.Space
 				status.Message = "Resolving ground battles";
 
 			// resolve ground battles
-			foreach (var p in Current.FindSpaceObjects<Planet>(p => p.Cargo.Units.Any(u => u.IsHostileTo(p.Owner) || p.IsHostileTo(u.Owner)))
-			){
+			foreach (var p in Current.FindSpaceObjects<Planet>(p => p.Cargo != null && p.Cargo.Units.Any(u => u.IsHostileTo(p.Owner) || p.IsHostileTo(u.Owner)))
+			)
+			{
 				var battle = new GroundBattle(p);
 				battle.Resolve();
 				Current.Battles.Add(battle);
