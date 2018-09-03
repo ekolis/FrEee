@@ -1168,5 +1168,7 @@ namespace FrEee.Game.Objects.Space
 				Colony.Population.Remove(race);
 			return damage - inflicted;
 		}
+
+		public Progress AngerProgress => new Progress(Colony?.AverageAnger ?? 0, Mod.Current.Settings.MaxAnger);
 	}
 }
