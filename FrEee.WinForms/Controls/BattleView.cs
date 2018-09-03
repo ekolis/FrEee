@@ -226,6 +226,15 @@ namespace FrEee.WinForms.Controls
 								else
 									pe.Graphics.DrawImage(pic, drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
 							}
+							if (here.OfType<Troop>().Any())
+							{
+								var largest = here.OfType<Troop>().WithMax(t => t.Hull.Size).First();
+								pic = largest.Icon.Resize(drawsize);
+								if (useSquares)
+									pe.Graphics.FillRectangle(new SolidBrush(largest.Owner.Color), drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
+								else
+									pe.Graphics.DrawImage(pic, drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
+							}
 							// also draw seekers on top
 							if (here.OfType<Seeker>().Any())
 							{
