@@ -231,7 +231,9 @@ namespace FrEee.Game.Objects.Combat.Grid
 						// TODO - both pursue target and evade scary enemies at the same time using heatmap
 						// find out how good each target is
 						var targetiness = new SafeDictionary<ICombatant, double>();
-						foreach (var target in alives.Where(x => c.IsHostileTo(x.Owner) && c.CanTarget(x)))
+						foreach (var target in alives.Where(x =>
+							c.IsHostileTo(x.Owner)
+							&& (c.CanTarget(x) || x is Planet && c is ICargoContainer cc && cc.Cargo.Units.OfType<Troop>().Any())))
 						{
 							targetiness[target] = 1d / (locations[target] - locations[c]).LengthEightWay;
 						}
