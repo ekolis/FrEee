@@ -64,7 +64,7 @@ namespace FrEee.WinForms.Objects
 		/// </summary>
 		public IList<GridConfig> ShipListConfigs { get; private set; }
 
-		private static readonly GridColumnConfig colAnger = new GridColumnConfig("Anger", "Anger", typeof(DataGridViewProgressColumn), Color.Red);
+		private static readonly GridColumnConfig colAnger = new GridColumnConfig("AngerProgress", "Anger", typeof(DataGridViewProgressColumn), Color.Red);
 
 		private static readonly GridColumnConfig colArmorHitpoints = new GridColumnConfig("ArmorHitpointsFill", "Armor HP", typeof(DataGridViewProgressColumn), Color.Yellow, Format.Units);
 
