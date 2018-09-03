@@ -706,7 +706,7 @@ namespace FrEee.WinForms.Forms
 					break;
 			}
 			setup.TechnologyCost = (TechnologyCost)ddlTechCost.SelectedIndex;
-			setup.TechnologyUniqueness = (int)ddlTechUniqueness.SelectedValue;
+			setup.TechnologyUniqueness = (int)((dynamic)ddlTechUniqueness.SelectedItem).Value;
 			for (int i = 0; i < lstTechs.Items.Count; i++)
 			{
 				if (!lstTechs.GetItemChecked(i))
