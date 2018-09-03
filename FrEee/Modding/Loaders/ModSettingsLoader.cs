@@ -58,6 +58,16 @@ namespace FrEee.Modding.Loaders
 			settings.ShipBaseMaintenanceRate = rec.Get<int>("Empire Ship And Base Percent Maint Cost", null) ?? rec.Get<int>("Empire Starting Percent Maint Cost", null);
 			settings.UnitMaintenanceRate = rec.Get<int>("Empire Unit Percent Maint Cost", null) ?? 0;
 			settings.FacilityMaintenanceRate = rec.Get<int>("Empire Facility Percent Maint Cost", null) ?? 0;
+
+			// TODO - load more settings
+
+			settings.PopulationPerMilitia = rec.Get<int>("Defending Units Per Population", null) ?? 20; // yes, Aaron did say units per pop but it's really pops per unit!
+			settings.MilitiaFirepower = rec.Get<int>("Population Defender Attack Strength") ?? 10;
+			settings.MilitiaHitpoints = rec.Get<int>("Population Defender Hit Points") ?? 30;
+
+			// TODO - load more settings
+
+
 			settings.Reproduction = rec.Get<int>("Empire Starting Percent Reproduction", null) ?? 10;
 			settings.ReproductionMultiplier = rec.Get<double>("Reproduction Multiplier", null) ?? 0.1;
 

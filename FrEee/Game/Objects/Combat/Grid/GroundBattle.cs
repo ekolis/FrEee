@@ -29,15 +29,15 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 			// TODO - should weapon platforms participate in ground combat like in SE5?
 			Empires = Planet.Cargo.Units.OfType<Troop>().Select(t => t.Owner).Distinct();
-			Combatants = new HashSet<ICombatant>(Planet.Cargo.Units.OfType<Troop>());
-			for (var i = 0; i < Planet.PopulationFill.Value / Mod.Current.Settings.PopulationFactor / Mod.Current.Settings.PopulationPerMilitia; i++)
+			var combatants = new HashSet<ICombatant>(Planet.Cargo.Units.OfType<Troop>());
+			for (var i = 0; i < Planet.PopulationFill.Value / Mod.Current.Settings.PopulationFactor / (Mod.Current.Settings.PopulationPerMilitia == 0 ? 20 : Mod.Current.Settings.PopulationPerMilitia); i++)
 			{
 				var militia = Design.MilitiaDesign.Instantiate();
 				militia.Owner = Planet.Owner;
-				Combatants.Add(militia);
+				combatants.Add(militia);
 			}
 
-			Initialize();
+			Initialize(combatants);
 		}
 
 		public override int DamagePercentage => Mod.Current.Settings.GroundCombatDamagePercent;
@@ -46,10 +46,11 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 		public Empire OriginalPlanetOwner { get; private set; }
 
-		public override void Initialize()
+		public override void Initialize(IEnumerable<ICombatant> combatants)
 		{
+			base.Initialize(combatants);
+
 			Empires = Planet.Cargo.Units.OfType<Troop>().Select(t => t.Owner).Distinct();
-			Combatants = new HashSet<ICombatant>(Planet.Cargo.Units.OfType<Troop>());
 
 			int moduloID = (int)(Planet.ID % 100000);
 			Dice = new PRNG((int)(moduloID / Galaxy.Current.Timestamp * 10));

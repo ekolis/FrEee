@@ -12,11 +12,14 @@ namespace FrEee.Game.Objects
 		{
 			Empire = emp.CopyAndAssignNewID();
 			SpaceObjects = new HashSet<SimulatedSpaceObject>();
+			Troops = new HashSet<SimulatedUnit>();
 		}
 
 		public Empire Empire { get; private set; }
 
 		public ISet<SimulatedSpaceObject> SpaceObjects { get; private set; }
+
+		public ISet<SimulatedUnit> Troops { get; private set; }
 
 		public void Dispose()
 		{

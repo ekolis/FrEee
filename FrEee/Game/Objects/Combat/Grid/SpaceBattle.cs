@@ -28,15 +28,16 @@ namespace FrEee.Game.Objects.Combat.Grid
 			Empires = Sector.SpaceObjects.OfType<ICombatSpaceObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray();
 			Combatants = new HashSet<ICombatant>(Sector.SpaceObjects.OfType<ICombatant>().Where(o => o.Owner != null).Union(Sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.Combatants)).Where(o => !(o is Fleet)));
 
-			Initialize();
+			Initialize(new HashSet<ICombatant>(Sector.SpaceObjects.OfType<ICombatant>().Where(o => o.Owner != null).Union(Sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.Combatants)).Where(o => !(o is Fleet))));
 		}
 
 		public override int DamagePercentage => 100;
 
-		public override void Initialize()
+		public override void Initialize(IEnumerable<ICombatant> combatants)
 		{
+			base.Initialize(combatants);
+
 			Empires = Sector.SpaceObjects.OfType<ICombatSpaceObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray();
-			Combatants = new HashSet<ICombatant>(Sector.SpaceObjects.OfType<ICombatant>().Where(o => o.Owner != null).Union(Sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.Combatants)).Where(o => !(o is Fleet)));
 
 			int moduloID = (int)(Sector.StarSystem.ID % 100000);
 			Dice = new PRNG((int)(moduloID / Galaxy.Current.Timestamp * 10));
