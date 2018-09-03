@@ -524,7 +524,7 @@ namespace FrEee.Utility
 			if (img == null)
 				return null;
 			Bitmap bmpImage = new Bitmap(img);
-			Bitmap bmpCrop = bmpImage.Clone(cropArea,bmpImage.PixelFormat);
+			Bitmap bmpCrop = bmpImage.Clone(cropArea, bmpImage.PixelFormat);
 			return (bmpCrop);
 		}
 
@@ -924,7 +924,8 @@ namespace FrEee.Utility
 					if (File.Exists(Path.Combine(d, "Insignia.png")) ||
 						File.Exists(Path.Combine(d, "Insignia.bmp")) ||
 						File.Exists(Path.Combine(d, name + "_Insignia.png")) ||
-						File.Exists(Path.Combine(d, name + "_Insignia.bmp")))
+						File.Exists(Path.Combine(d, name + "_Insignia.bmp")) ||
+						File.Exists(Path.Combine(d, name + "_Main.bmp")))
 						list.Add(name);
 				}
 			}
@@ -936,7 +937,7 @@ namespace FrEee.Utility
 				if (File.Exists(Path.Combine(d, "Insignia.png")) ||
 					File.Exists(Path.Combine(d, "Insignia.bmp")) ||
 					File.Exists(Path.Combine(d, name + "_Insignia.png")) ||
-					File.Exists(Path.Combine(d, name + "_Insignia.bmp")))
+					File.Exists(Path.Combine(d, name + "_Main.bmp")))
 					list.Add(name);
 			}
 			return list.Distinct();
