@@ -356,6 +356,7 @@
 			// 
 			this.ddlMaximumEventSeverity.DisplayMember = "Value";
 			this.ddlMaximumEventSeverity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlMaximumEventSeverity.Enabled = false;
 			this.ddlMaximumEventSeverity.FormattingEnabled = true;
 			this.ddlMaximumEventSeverity.Location = new System.Drawing.Point(114, 305);
 			this.ddlMaximumEventSeverity.Name = "ddlMaximumEventSeverity";
@@ -446,6 +447,7 @@
 			// 
 			this.ddlEventFrequency.DisplayMember = "Name";
 			this.ddlEventFrequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlEventFrequency.Enabled = false;
 			this.ddlEventFrequency.FormattingEnabled = true;
 			this.ddlEventFrequency.Location = new System.Drawing.Point(114, 276);
 			this.ddlEventFrequency.Name = "ddlEventFrequency";
