@@ -195,6 +195,12 @@ namespace FrEee.Game.Setup
 		public TechnologyCost TechnologyCost { get; set; }
 
 		/// <summary>
+		/// The technology uniqueness factor.
+		/// Tech cost is increased if other players know a tech and this factor is positive, or decreased if it's negative.
+		/// </summary>
+		public int TechnologyUniqueness { get; set; }
+
+		/// <summary>
 		/// Game victory conditions.
 		/// </summary>
 		public IList<IVictoryCondition> VictoryConditions { get; private set; }
@@ -278,6 +284,7 @@ namespace FrEee.Game.Setup
 
 			// set up misc. game options
 			gal.TechnologyCost = TechnologyCost;
+			gal.TechnologyUniqueness = TechnologyUniqueness;
 			gal.IsHumansVsAI = IsHumansVsAI;
 			gal.AllowedTrades = AllowedTrades;
 			gal.IsSurrenderAllowed = IsSurrenderAllowed;

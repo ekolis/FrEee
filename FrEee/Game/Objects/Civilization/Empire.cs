@@ -867,7 +867,7 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				// researched tech cost
 				for (var level = 1; level <= kvp.Value; level++)
-					score += kvp.Key.GetLevelCost(level);
+					score += kvp.Key.GetBaseLevelCost(level);
 			}
 			// TODO - count population toward score?
 			return score;
@@ -1260,7 +1260,7 @@ namespace FrEee.Game.Objects.Civilization
 			var pctSpending = AvailableTechnologies.Sum(t => ResearchSpending[t]);
 			var queueSpending = 100 - pctSpending;
 			var firstQueueSpending = 0;
-			var cost = tech.GetLevelCost(level);
+			var cost = tech.GetLevelCost(level, this);
 			var acc = AccumulatedResearch[tech];
 			if (ResearchQueue.FirstOrDefault() == tech)
 				firstQueueSpending = Math.Min(queueSpending * totalRP / 100, cost - acc);
@@ -1290,7 +1290,7 @@ namespace FrEee.Game.Objects.Civilization
 				foundLevels[queuedTech]++;
 				if (queuedTech == tech && foundLevels[queuedTech] == level)
 					break; // found the tech and level we want
-				costBefore += queuedTech.GetLevelCost(foundLevels[queuedTech]);
+				costBefore += queuedTech.GetLevelCost(foundLevels[queuedTech], this);
 				if (queuedTech.CurrentLevel == foundLevels[queuedTech] - 1)
 					costBefore -= AccumulatedResearch[queuedTech];
 			}
@@ -1298,5 +1298,10 @@ namespace FrEee.Game.Objects.Civilization
 				return double.PositiveInfinity;
 			return (double)costBefore / (queueSpending * totalRP / 100d);
 		}
+
+		/// <summary>
+		/// Anonymized tech levels of other players. Only used if Technology Uniqueness is nonzero.
+		/// </summary>
+		public SafeDictionary<Tech, List<int>> OtherPlayersTechLevels { get; private set; } = new SafeDictionary<Tech, List<int>>(true);
 	}
 }

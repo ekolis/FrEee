@@ -723,7 +723,7 @@ namespace FrEee.WinForms.Forms
 			foreach (var tech in Empire.Current.ResearchQueue)
 			{
 				levels[tech]++; // so we can research the same tech multiple times with the appropriate cost for each level
-				queueSpending += tech.GetLevelCost(levels[tech]);
+				queueSpending += tech.GetLevelCost(levels[tech], Empire.Current);
 				idx++;
 			}
 			var totalRP = Empire.Current.NetIncome[Resource.Research] + Empire.Current.BonusResearch;

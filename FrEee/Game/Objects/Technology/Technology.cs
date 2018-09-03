@@ -5,6 +5,7 @@ using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -313,7 +314,20 @@ namespace FrEee.Game.Objects.Technology
 			return GetUnlockedItems(emp, techs);
 		}
 
-		public int GetLevelCost(int level)
+		public int GetLevelCost(int level, Empire emp)
+		{
+			var baseCost = GetBaseLevelCost(level);
+			if (Galaxy.Current.TechnologyUniqueness == 0)
+				return baseCost;
+			var otherEmpires = Galaxy.Current.Empires.Where(e => !e.IsMinorEmpire && !e.IsDefeated).ExceptSingle(emp);
+			if (!otherEmpires.Any())
+				return baseCost;
+			var playerRatio = emp.OtherPlayersTechLevels[this].Count(x => x >= level);
+			var uniquenessFactor = Math.Pow(2, Galaxy.Current.TechnologyUniqueness * playerRatio);
+			return (int)(GetBaseLevelCost(level) * uniquenessFactor);
+		}
+
+		public int GetBaseLevelCost(int level)
 		{
 			if (Galaxy.Current.TechnologyCost == TechnologyCost.Low)
 				return LevelCost * level;
@@ -333,7 +347,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			if (emp == null)
 				return LevelCost;
-			return GetLevelCost(emp.ResearchedTechnologies[this] + 1);
+			return GetLevelCost(emp.ResearchedTechnologies[this] + 1, emp);
 		}
 
 		public bool IsObsoleteMemory(Empire emp)
