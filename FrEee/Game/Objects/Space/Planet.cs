@@ -546,7 +546,12 @@ namespace FrEee.Game.Objects.Space
 					var sys = this.FindStarSystem();
 					var sysModifier = sys == null ? 0 : sys.GetEmpireAbilityValue(Owner, "Modify Reproduction - System").ToInt();
 					var planetModifier = this.GetAbilityValue("Modify Reproduction - Planet").ToInt();
-					var reproduction = ((Mod.Current.Settings.Reproduction + (race.Aptitudes["Reproduction"] - 100) + sysModifier + planetModifier) * Mod.Current.Settings.ReproductionMultiplier) / 100d;
+					var moodModifier = Mod.Current.Settings.MoodReproductionModifiers[Colony.Moods[race]];
+					var reproduction =
+						(Mod.Current.Settings.Reproduction + (race.Aptitudes["Reproduction"] - 100) 
+							+ sysModifier + planetModifier + moodModifier)
+						* Mod.Current.Settings.ReproductionMultiplier
+						/ 100d;
 					deltapop[race] = (long)(Colony.Population[race] * reproduction);
 
 					// TODO - allow cloning of populations over the max of a 32 bit int?

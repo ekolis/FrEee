@@ -477,7 +477,7 @@ namespace FrEee.Game.Objects.Civilization
 				rate *= Mod.Current.Settings.GetPopulationConstructionFactor(pop);
 
 				// apply mood modifier
-				var moodModifier = Mod.Current.Settings.MoodModifiers[Colony.Mood];
+				var moodModifier = Mod.Current.Settings.MoodProductivityModifiers[Colony.Mood];
 				rate *= moodModifier / 100d;
 
 				var ratios = Colony.Population.Select(p => new { Race = p.Key, Ratio = (double)p.Value / (double)pop });
