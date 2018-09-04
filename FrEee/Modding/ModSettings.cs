@@ -43,6 +43,26 @@ namespace FrEee.Modding
 			MoodThresholds.Add(Mood.Happy, 150);
 			MoodThresholds.Add(Mood.Jubilant, 0);
 
+			// TODO - moddable planetary conditions thresholds
+			ConditionsThresholds = new Dictionary<Conditions, int>();
+			ConditionsThresholds.Add(Conditions.Deadly, 0);
+			ConditionsThresholds.Add(Conditions.Harsh, 20);
+			ConditionsThresholds.Add(Conditions.Unpleasant, 35);
+			ConditionsThresholds.Add(Conditions.Average, 50);
+			ConditionsThresholds.Add(Conditions.Mild, 65);
+			ConditionsThresholds.Add(Conditions.Good, 80);
+			ConditionsThresholds.Add(Conditions.Optimal, 95);
+
+			// TODO - moddable planetary conditions modifiers
+			ConditionsReproductionModifiers = new Dictionary<Conditions, int>();
+			ConditionsReproductionModifiers.Add(Conditions.Deadly, -20);
+			ConditionsReproductionModifiers.Add(Conditions.Harsh, -5);
+			ConditionsReproductionModifiers.Add(Conditions.Unpleasant, -2);
+			ConditionsReproductionModifiers.Add(Conditions.Average, 0);
+			ConditionsReproductionModifiers.Add(Conditions.Mild, 2);
+			ConditionsReproductionModifiers.Add(Conditions.Good, 5);
+			ConditionsReproductionModifiers.Add(Conditions.Optimal, 8);
+
 			IntroSongs = new List<string>();
 			GameplaySongs = new List<string>();
 			CombatSongs = new List<string>();
@@ -222,6 +242,9 @@ namespace FrEee.Modding
 
 		// TODO - moddable min/max anger values
 		public int MaxAnger => 1000;
+		
+		// TODO - moddable min/max conditions values
+		public int MaxConditions => 100;
 
 		/// <summary>
 		/// Maximum number of consecutive turns a queue can be on emergency build.
@@ -278,8 +301,20 @@ namespace FrEee.Modding
 		/// </summary>
 		public int MilitiaHitpoints { get; set; }
 
-		// TODO - moddable min/max anger values
+		// TODO - moddable min/max anger values (or place in game setup)
 		public int MinAnger => 0;
+
+		// TODO - moddable min/max planetary conditions values (or place in game setup)
+		public int MinConditions => 0;
+
+		// TODO - moddable min/max planetary conditions values  (or place in game setup)
+		public int MinRandomPlanetConditions => 20;
+
+		// TODO - moddable min/max planetary conditions values (or place in game setup)
+		public int MaxRandomPlanetConditions => 100;
+
+		// TODO - moddable homeworld conditions (or place in game setup)
+		public int HomeworldConditions => 80;
 
 		/// <summary>
 		/// Can drones be affected by mines?
@@ -310,6 +345,16 @@ namespace FrEee.Modding
 		/// Minimum anger thresholds for each mood, in tenths of a percent.
 		/// </summary>
 		public IDictionary<Mood, int> MoodThresholds { get; private set; }
+
+		/// <summary>
+		/// Modifiers to reproduction rates from planetary conditions.
+		/// </summary>
+		public IDictionary<Conditions, int> ConditionsReproductionModifiers { get; private set; }
+
+		/// <summary>
+		/// Minimum thresholds for each conditions value, in percent.
+		/// </summary>
+		public IDictionary<Conditions, int> ConditionsThresholds { get; private set; }
 
 		/// <summary>
 		/// Accuracy rating of planets.

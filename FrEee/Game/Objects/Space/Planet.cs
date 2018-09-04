@@ -132,6 +132,16 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
+		/// <summary>
+		/// The environmental conditions of this planet. Affects reproduction rate of populations.
+		/// </summary>
+		public Conditions Conditions => Mod.Current.Settings.ConditionsThresholds.Where(x => x.Value <= ConditionsAmount).WithMax(x => x.Value).Single().Key;
+
+		/// <summary>
+		/// Numeric representation of plantery conditions.
+		/// </summary>
+		public int ConditionsAmount { get; set; }
+
 		public string ColonizationAbilityName
 		{
 			get
@@ -170,6 +180,7 @@ namespace FrEee.Game.Objects.Space
 				dict[nameof(size)] = size;
 				dict[nameof(Surface)] = Surface;
 				dict[nameof(Atmosphere)] = Atmosphere;
+				dict[nameof(ConditionsAmount)] = ConditionsAmount;
 				dict[nameof(ResourceValue)] = ResourceValue;
 				dict[nameof(Colony)] = Colony;
 				dict[nameof(Orders)] = Orders;
@@ -181,6 +192,7 @@ namespace FrEee.Game.Objects.Space
 				size = value[nameof(size)].Default<ModReference<StellarObjectSize>>();
 				Surface = value[nameof(Surface)].Default<string>();
 				Atmosphere = value[nameof(Atmosphere)].Default<string>();
+				ConditionsAmount = value[nameof(ConditionsAmount)].Default<int>();
 				ModID = value[nameof(ModID)].Default<string>();
 				ResourceValue = value[nameof(ResourceValue)].Default(new ResourceQuantity());
 				Colony = value[nameof(Colony)].Default<Colony>();
@@ -547,9 +559,10 @@ namespace FrEee.Game.Objects.Space
 					var sysModifier = sys == null ? 0 : sys.GetEmpireAbilityValue(Owner, "Modify Reproduction - System").ToInt();
 					var planetModifier = this.GetAbilityValue("Modify Reproduction - Planet").ToInt();
 					var moodModifier = Mod.Current.Settings.MoodReproductionModifiers[Colony.Moods[race]];
+					var conditionsModifier = Mod.Current.Settings.ConditionsReproductionModifiers[Conditions];
 					var reproduction =
-						(Mod.Current.Settings.Reproduction + (race.Aptitudes["Reproduction"] - 100) 
-							+ sysModifier + planetModifier + moodModifier)
+						(Mod.Current.Settings.Reproduction + (race.Aptitudes["Reproduction"] - 100)
+							+ sysModifier + planetModifier + moodModifier + conditionsModifier)
 						* Mod.Current.Settings.ReproductionMultiplier
 						/ 100d;
 					if (reproduction < 0)
