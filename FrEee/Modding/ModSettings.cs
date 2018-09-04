@@ -22,7 +22,17 @@ namespace FrEee.Modding
 
 			PopulationModifiers = new SortedDictionary<long, PopulationModifier>();
 
-			MoodModifiers = new Dictionary<Mood, int>();
+			// TODO - split apart production and construction modifiers as a mod option?
+			MoodProductivityModifiers = new Dictionary<Mood, int>();
+
+			// TODO - moddable mood reproduction modifiers
+			MoodReproductionModifiers = new Dictionary<Mood, int>();
+			MoodReproductionModifiers.Add(Mood.Rioting, -999);
+			MoodReproductionModifiers.Add(Mood.Angry, -5);
+			MoodReproductionModifiers.Add(Mood.Unhappy, -2);
+			MoodReproductionModifiers.Add(Mood.Indifferent, 0);
+			MoodReproductionModifiers.Add(Mood.Happy, 2);
+			MoodReproductionModifiers.Add(Mood.Jubilant, 5);
 
 			// TODO - moddable mood thresholds
 			MoodThresholds = new Dictionary<Mood, int>();
@@ -289,7 +299,12 @@ namespace FrEee.Modding
 		/// <summary>
 		/// Modifiers to production and construction rates from population mood.
 		/// </summary>
-		public IDictionary<Mood, int> MoodModifiers { get; private set; }
+		public IDictionary<Mood, int> MoodProductivityModifiers { get; private set; }
+
+		/// <summary>
+		/// Modifiers to reproduction rates from population mood.
+		/// </summary>
+		public IDictionary<Mood, int> MoodReproductionModifiers { get; private set; }
 
 		/// <summary>
 		/// Minimum anger thresholds for each mood, in tenths of a percent.
@@ -485,8 +500,8 @@ namespace FrEee.Modding
 				else
 					break;
 			}
-			if (MoodModifiers.ContainsKey(mood))
-				return MoodModifiers[mood] / 100d;
+			if (MoodProductivityModifiers.ContainsKey(mood))
+				return MoodProductivityModifiers[mood] / 100d;
 			return 1d;
 		}
 

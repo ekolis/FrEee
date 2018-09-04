@@ -121,6 +121,11 @@ namespace FrEee.Game.Objects.Civilization
 		public Mood Mood => Mod.Current.Settings.MoodThresholds.Where(kvp => kvp.Value <= AverageAnger).WithMax(kvp => kvp.Value).Single().Key;
 
 		/// <summary>
+		/// The mood of each race on this colony.
+		/// </summary>
+		public IReadOnlyDictionary<Race, Mood> Moods => Anger.Select(kvp => new KeyValuePair<Race, Mood>(kvp.Key, Mod.Current.Settings.MoodThresholds.Where(kvp2 => kvp2.Value <= Anger[kvp.Key]).WithMax(kvp2 => kvp2.Value).Single().Key)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+		/// <summary>
 		/// The empire which owns this colony.
 		/// </summary>
 		public Empire Owner { get; set; }
@@ -158,7 +163,7 @@ namespace FrEee.Game.Objects.Civilization
 				// do modifiers to income
 				var totalpop = Population.Sum(kvp => kvp.Value);
 				var popfactor = Mod.Current.Settings.GetPopulationProductionFactor(totalpop);
-				var moodfactor = Mod.Current.Settings.MoodModifiers[Mood] / 100d;
+				var moodfactor = Mod.Current.Settings.MoodProductivityModifiers[Mood] / 100d;
 
 				var result = new ResourceQuantity();
 
