@@ -552,6 +552,8 @@ namespace FrEee.Game.Objects.Space
 							+ sysModifier + planetModifier + moodModifier)
 						* Mod.Current.Settings.ReproductionMultiplier
 						/ 100d;
+					if (reproduction < 0)
+						reproduction = 0;
 					deltapop[race] = (long)(Colony.Population[race] * reproduction);
 
 					// TODO - allow cloning of populations over the max of a 32 bit int?
