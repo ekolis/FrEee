@@ -82,7 +82,7 @@ namespace FrEee.WinForms.Controls
 				txtName.Text = Planet.Name;
 				txtSizeSurface.Text = Planet.Size + " " + Planet.Surface + " Planet";
 				txtAtmosphere.Text = Planet.Atmosphere;
-				txtConditions.Text = ""; // TODO - load conditions
+				txtConditions.Text = Planet.Conditions + " (" + Planet.ConditionsAmount + ")";
 
 				txtValueMinerals.Text = Planet.ResourceValue[Resource.Minerals].ToUnitString();
 				txtValueOrganics.Text = Planet.ResourceValue[Resource.Organics].ToUnitString();

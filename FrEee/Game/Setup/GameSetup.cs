@@ -433,6 +433,7 @@ namespace FrEee.Game.Setup
 				s.StellarSize == HomeworldSize &&
 				s.StellarObjectType == "Planet" &&
 				!s.IsConstructed).PickRandom();
+			hw.ConditionsAmount = Mod.Current.Settings.HomeworldConditions;
 			return hw;
 		}
 

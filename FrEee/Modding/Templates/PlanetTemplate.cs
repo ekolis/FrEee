@@ -89,6 +89,8 @@ namespace FrEee.Modding.Templates
 			planet.ResourceValue[Resource.Organics] = RandomHelper.Range(Galaxy.Current.MinSpawnedPlanetValue, Galaxy.Current.MaxSpawnedPlanetValue);
 			planet.ResourceValue[Resource.Radioactives] = RandomHelper.Range(Galaxy.Current.MinSpawnedPlanetValue, Galaxy.Current.MaxSpawnedPlanetValue);
 
+			planet.ConditionsAmount = RandomHelper.Range(Mod.Current.Settings.MinRandomPlanetConditions, Mod.Current.Settings.MaxRandomPlanetConditions);
+
 			return planet;
 		}
 	}
