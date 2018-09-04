@@ -29,6 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode presenceMode1 = new FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode();
 			this.tabs = new FrEee.WinForms.Controls.GameTabControl();
 			this.tabGalaxy = new System.Windows.Forms.TabPage();
 			this.label62 = new System.Windows.Forms.Label();
@@ -197,6 +198,8 @@
 			this.btnLoadSetup = new FrEee.WinForms.Controls.GameButton();
 			this.btnSaveSetup = new FrEee.WinForms.Controls.GameButton();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
+			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
+			this.btnPreviewMap = new FrEee.WinForms.Controls.GameButton();
 			this.tabs.SuspendLayout();
 			this.tabGalaxy.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.spnSystemGroups)).BeginInit();
@@ -274,6 +277,8 @@
 			// tabGalaxy
 			// 
 			this.tabGalaxy.BackColor = System.Drawing.Color.Black;
+			this.tabGalaxy.Controls.Add(this.btnPreviewMap);
+			this.tabGalaxy.Controls.Add(this.galaxyView);
 			this.tabGalaxy.Controls.Add(this.label62);
 			this.tabGalaxy.Controls.Add(this.label11);
 			this.tabGalaxy.Controls.Add(this.spnSystemGroups);
@@ -2481,6 +2486,33 @@
 			this.progressBar.TabIndex = 5;
 			this.progressBar.Visible = false;
 			// 
+			// galaxyView
+			// 
+			this.galaxyView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.galaxyView.BackColor = System.Drawing.Color.Black;
+			this.galaxyView.Location = new System.Drawing.Point(14, 330);
+			this.galaxyView.Mode = presenceMode1;
+			this.galaxyView.Name = "galaxyView";
+			this.galaxyView.SelectedStarSystem = null;
+			this.galaxyView.Size = new System.Drawing.Size(525, 204);
+			this.galaxyView.TabIndex = 29;
+			this.galaxyView.Text = "galaxyView2";
+			// 
+			// btnPreviewMap
+			// 
+			this.btnPreviewMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnPreviewMap.BackColor = System.Drawing.Color.Black;
+			this.btnPreviewMap.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnPreviewMap.Location = new System.Drawing.Point(442, 137);
+			this.btnPreviewMap.Name = "btnPreviewMap";
+			this.btnPreviewMap.Size = new System.Drawing.Size(97, 23);
+			this.btnPreviewMap.TabIndex = 7;
+			this.btnPreviewMap.Text = "Preview Map";
+			this.btnPreviewMap.UseVisualStyleBackColor = false;
+			this.btnPreviewMap.Click += new System.EventHandler(this.btnPreviewMap_Click);
+			// 
 			// GameSetupForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2727,5 +2759,7 @@
 		private System.Windows.Forms.Label label62;
 		private System.Windows.Forms.ComboBox ddlTechUniqueness;
 		private System.Windows.Forms.Label label63;
+		private Controls.GameButton btnPreviewMap;
+		private Controls.GalaxyView galaxyView;
 	}
 }
