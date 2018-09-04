@@ -485,9 +485,12 @@ namespace FrEee.Game.Objects.Space
 			var progressPerStep = (desiredProgress - startProgress) / 4d;
 
 			// create the game
-			var galtemp = gsu.GalaxyTemplate;
-			galtemp.GameSetup = gsu;
-			Current = galtemp.Instantiate(status, startProgress + progressPerStep);
+			if (Galaxy.Current == null)
+			{
+				var galtemp = gsu.GalaxyTemplate;
+				galtemp.GameSetup = gsu;
+				Current = galtemp.Instantiate(status, startProgress + progressPerStep);
+			}
 			if (status != null)
 				status.Message = "Populating galaxy";
 			gsu.PopulateGalaxy(Current);

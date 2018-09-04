@@ -30,6 +30,7 @@ namespace FrEee.WinForms.Forms
 			setup = new GameSetup();
 			if (Mod.Current == null)
 				Mod.Load(null);
+			Galaxy.Current = null;
 
 			// bind data
 			galaxyTemplateBindingSource.DataSource = Mod.Current.GalaxyTemplates;
@@ -505,7 +506,6 @@ namespace FrEee.WinForms.Forms
 				}
 			}));
 			t.Name = "Game Setup";
-
 			this.ShowChildForm(new StatusForm(t, status));
 
 			if (status.Exception == null)
@@ -783,6 +783,34 @@ namespace FrEee.WinForms.Forms
 		{
 			spnStarSystems.Maximum = spnWidth.Value * spnHeight.Value;
 			setup.GalaxySize = new Size((int)spnWidth.Value, (int)spnHeight.Value);
+		}
+
+		private void btnPreviewMap_Click(object sender, EventArgs e)
+		{
+			progressBar.Visible = true;
+			var status = new Status
+			{
+				Progress = 0d,
+				Message = "Initializing",
+				Exception = null,
+			};
+			Thread t = new Thread(new ThreadStart(() =>
+			{
+				try
+				{
+					// create the galaxy
+					var galtemp = setup.GalaxyTemplate;
+					galtemp.GameSetup = setup;
+					Galaxy.Current = galtemp.Instantiate(status, 1);
+				}
+				catch (Exception ex)
+				{
+					status.Exception = ex;
+				}
+			}));
+			t.Name = "Map Generation";
+			this.ShowChildForm(new StatusForm(t, status));
+			galaxyView.Invalidate();
 		}
 	}
 }
