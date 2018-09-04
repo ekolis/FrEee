@@ -810,6 +810,7 @@ namespace FrEee.WinForms.Forms
 			}));
 			t.Name = "Map Generation";
 			this.ShowChildForm(new StatusForm(t, status));
+			galaxyView.ComputeWarpPointConnectivity();
 			galaxyView.Invalidate();
 		}
 	}
