@@ -44,6 +44,8 @@ namespace FrEee.Modding.Loaders
 				rec.TryFindFieldValue("Description", out temp, ref index, Mod.Errors, 0, true);
 				sst.Description = temp;
 
+				sst.Radius = rec.Get<int>("Radius") ?? 6;
+
 				rec.TryFindFieldValue("Background Bitmap", out temp, ref index, Mod.Errors, 0, true);
 				sst.BackgroundImagePath = Path.GetFileNameWithoutExtension(temp); // so we can use PNG when SE4 specifies BMP files
 
