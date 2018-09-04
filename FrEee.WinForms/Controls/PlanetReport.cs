@@ -54,14 +54,17 @@ namespace FrEee.WinForms.Controls
 				{
 					if (!gameTabControl1.TabPages.Contains(pageFacil))
 						gameTabControl1.TabPages.Insert(1, pageFacil);
+					if (!gameTabControl1.TabPages.Contains(pageRaces))
+						gameTabControl1.TabPages.Insert(2, pageRaces);
 					if (!gameTabControl1.TabPages.Contains(pageCargo))
-						gameTabControl1.TabPages.Insert(2, pageCargo);
+						gameTabControl1.TabPages.Insert(3, pageCargo);
 					if (!gameTabControl1.TabPages.Contains(pageOrders))
-						gameTabControl1.TabPages.Insert(3, pageOrders);
+						gameTabControl1.TabPages.Insert(4, pageOrders);
 				}
 				else
 				{
 					gameTabControl1.TabPages.Remove(pageFacil);
+					gameTabControl1.TabPages.Remove(pageRaces);
 					gameTabControl1.TabPages.Remove(pageCargo);
 					gameTabControl1.TabPages.Remove(pageOrders);
 				}
@@ -160,6 +163,18 @@ namespace FrEee.WinForms.Controls
 				}
 				else
 					txtFacilitySlotsFree.Text = "";
+
+				// load races
+				var popSpace = Planet.PopulationFill.Maximum;
+				var popSpaceFree = popSpace - Planet.PopulationFill.Value;
+				lblPopulationSpaceFree.Text = $"{popSpaceFree.ToUnitString(true)} / {popSpace.ToUnitString(true)} free";
+				lstRaces.Initialize(32, 32);
+				if (Planet.Colony != null)
+				{
+					var col = Planet.Colony;
+					foreach (var race in Planet.AllPopulation.Keys)
+						lstRaces.AddItemWithImage(null, $"{race.Name}: {col.Moods[race]} ({col.Anger[race]})", race, race.Icon);
+				}
 
 				// load cargo
 				txtCargoSpaceFree.Text = string.Format("{0} / {1} free", (Planet.CargoStorage - (Planet.Cargo == null ? 0 : Planet.Cargo.Size)).Kilotons(), Planet.CargoStorage.Kilotons());
