@@ -27,6 +27,7 @@ namespace FrEee.Modding
 			// TODO - moddable mood thresholds
 			MoodThresholds = new Dictionary<Mood, int>();
 			MoodThresholds.Add(Mood.Rioting, 750);
+			MoodThresholds.Add(Mood.Angry, 600);
 			MoodThresholds.Add(Mood.Unhappy, 450);
 			MoodThresholds.Add(Mood.Indifferent, 300);
 			MoodThresholds.Add(Mood.Happy, 150);
