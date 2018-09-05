@@ -319,10 +319,7 @@ namespace FrEee.Game.Objects.Technology
 			var baseCost = GetBaseLevelCost(level);
 			if (Galaxy.Current.TechnologyUniqueness == 0)
 				return baseCost;
-			var otherEmpires = Galaxy.Current.Empires.Where(e => !e.IsMinorEmpire && !e.IsDefeated).ExceptSingle(emp);
-			if (!otherEmpires.Any())
-				return baseCost;
-			var playerRatio = emp.OtherPlayersTechLevels[this].Count(x => x >= level);
+			var playerRatio = emp.OtherPlayersTechLevels[this]?.Count(x => x >= level) ?? 0;
 			var uniquenessFactor = Math.Pow(2, Galaxy.Current.TechnologyUniqueness * playerRatio);
 			return (int)(GetBaseLevelCost(level) * uniquenessFactor);
 		}
