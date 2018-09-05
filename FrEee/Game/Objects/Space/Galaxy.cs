@@ -494,6 +494,7 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Message = "Populating galaxy";
 			gsu.PopulateGalaxy(Current);
+			Current.SaveTechLevelsForUniqueness();
 			if (status != null)
 				status.Progress += progressPerStep;
 
@@ -1310,22 +1311,7 @@ namespace FrEee.Game.Objects.Space
 				x.UpdateEmpireMemories();
 
 			// save off tech levels for computing tech uniqueness next turn
-			if (Current.TechnologyUniqueness != 0)
-			{
-				foreach (var emp in Current.Empires)
-				{
-					emp.OtherPlayersTechLevels.Clear();
-					foreach (var emp2 in Current.Empires.ExceptSingle(emp))
-					{
-						foreach (var tech in Mod.Current.Technologies)
-						{
-							if (emp.OtherPlayersTechLevels[tech] == null)
-								emp.OtherPlayersTechLevels[tech] = new List<int>();
-							emp.OtherPlayersTechLevels[tech].Add(emp2.ResearchedTechnologies[tech]);
-						}
-					}
-				}
-			}
+			Current.SaveTechLevelsForUniqueness();
 
 			//Current.SpaceObjectIDCheck("after cleanup");
 
@@ -1342,6 +1328,29 @@ namespace FrEee.Game.Objects.Space
 			//Current.SpaceObjectIDCheck("at end of turn");
 
 			return missingPlrs;
+		}
+
+		/// <summary>
+		/// Saves all empires' tech levels in the other empires for uniqueness calculations.
+		/// </summary>
+		private void SaveTechLevelsForUniqueness()
+		{
+			if (Current.TechnologyUniqueness != 0)
+			{
+				foreach (var emp in Current.Empires)
+				{
+					emp.OtherPlayersTechLevels.Clear();
+					foreach (var emp2 in Current.Empires.ExceptSingle(emp))
+					{
+						foreach (var tech in Mod.Current.Technologies)
+						{
+							if (emp.OtherPlayersTechLevels[tech] == null)
+								emp.OtherPlayersTechLevels[tech] = new List<int>();
+							emp.OtherPlayersTechLevels[tech].Add(emp2.ResearchedTechnologies[tech]);
+						}
+					}
+				}
+			}
 		}
 
 		/// <summary>
