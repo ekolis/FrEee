@@ -96,6 +96,7 @@ namespace FrEee.Modding.Loaders
 			// load mood modifiers
 			foreach (var mood in new Mood[] { Mood.Riot, Mood.Angry, Mood.Unhappy, Mood.Indifferent, Mood.Happy, Mood.Jubilant })
 				settings.MoodProductivityModifiers.Add(mood, rec.Get<int>($"Mood {mood} Modifier"));
+            settings.MoodProductivityModifiers.Add(Mood.Emotionless, rec.Get<int>("Mood Emotionless Modifier") ?? settings.MoodProductivityModifiers[Mood.Happy]);
 
 			// TODO - load more settings
 

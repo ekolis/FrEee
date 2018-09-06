@@ -12,6 +12,6 @@
 		Indifferent = 0,
 		Happy = 1,
 		Jubilant = 2,
-		Emotionless = Happy,
+		Emotionless = 3,
 	}
 }

@@ -33,9 +33,10 @@ namespace FrEee.Modding
 			MoodReproductionModifiers.Add(Mood.Indifferent, 0);
 			MoodReproductionModifiers.Add(Mood.Happy, 2);
 			MoodReproductionModifiers.Add(Mood.Jubilant, 5);
+            MoodReproductionModifiers.Add(Mood.Emotionless, 2);
 
-			// TODO - moddable mood thresholds
-			MoodThresholds = new Dictionary<Mood, int>();
+            // TODO - moddable mood thresholds
+            MoodThresholds = new Dictionary<Mood, int>();
 			MoodThresholds.Add(Mood.Rioting, 750);
 			MoodThresholds.Add(Mood.Angry, 600);
 			MoodThresholds.Add(Mood.Unhappy, 450);
@@ -43,8 +44,8 @@ namespace FrEee.Modding
 			MoodThresholds.Add(Mood.Happy, 150);
 			MoodThresholds.Add(Mood.Jubilant, 0);
 
-			// TODO - moddable planetary conditions thresholds
-			ConditionsThresholds = new Dictionary<Conditions, int>();
+            // TODO - moddable planetary conditions thresholds
+            ConditionsThresholds = new Dictionary<Conditions, int>();
 			ConditionsThresholds.Add(Conditions.Deadly, 0);
 			ConditionsThresholds.Add(Conditions.Harsh, 20);
 			ConditionsThresholds.Add(Conditions.Unpleasant, 35);
