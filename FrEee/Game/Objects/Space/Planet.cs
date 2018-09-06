@@ -137,6 +137,8 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public Conditions Conditions => Mod.Current.Settings.ConditionsThresholds.Where(x => x.Value <= ConditionsAmount).WithMax(x => x.Value).Single().Key;
 
+        public Progress ConditionsProgress => new Progress(ConditionsAmount, Mod.Current.Settings.MaxConditions);
+
 		/// <summary>
 		/// Numeric representation of plantery conditions.
 		/// </summary>
