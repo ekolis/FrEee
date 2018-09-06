@@ -72,7 +72,7 @@ namespace FrEee.WinForms.Objects
 
 		private static readonly GridColumnConfig colCargo = new GridColumnConfig("CargoFill", "Cargo", typeof(DataGridViewProgressColumn), Color.White, Format.Units);
 
-		private static readonly GridColumnConfig colConditions = new GridColumnConfig("Conditions", "Conditions", typeof(DataGridViewProgressColumn), Color.Green);
+		private static readonly GridColumnConfig colConditions = new GridColumnConfig("ConditionsProgress", "Conditions", typeof(DataGridViewProgressColumn), Color.Green);
 
 		private static readonly GridColumnConfig colConstructionETA = new GridColumnConfig("ConstructionEta", "ETA", typeof(DataGridViewTextBoxColumn), Color.White);
 
