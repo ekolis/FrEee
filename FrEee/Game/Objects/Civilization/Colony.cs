@@ -195,11 +195,13 @@ namespace FrEee.Game.Objects.Civilization
 
 		public Visibility CheckVisibility(Empire emp)
 		{
-			// should be visible, assuming the planet is visible - we don't have colony cloaking at the moment...
-			if (emp == Owner)
-				return Visibility.Owned;
-			else
-				return Visibility.Visible;
+            // should be visible, assuming the planet is visible - we don't have colony cloaking at the moment...
+            if (emp == Owner)
+                return Visibility.Owned;
+            else if (Container == null)
+                return Visibility.Unknown; // HACK - why would a colony not be on a planet?!
+            else
+                return Container.CheckVisibility(emp);
 		}
 
 		public void Dispose()
