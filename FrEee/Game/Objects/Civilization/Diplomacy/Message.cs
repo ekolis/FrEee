@@ -59,7 +59,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		{
 			get
 			{
-				return Owner == Empire.Current ? Recipient.Portrait : Owner.Portrait;
+				return Owner == Empire.Current ? Recipient.Portrait : Owner?.Portrait;
 			}
 		}
 
