@@ -52,7 +52,7 @@ namespace FrEee.WinForms.Forms
 			try { base.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
 			catch { }
 			TargetEmpire = inReplyTo.Owner;
-			picPortrait.Image = TargetEmpire.Portrait;
+			picPortrait.Image = TargetEmpire?.Portrait;
 			InReplyTo = inReplyTo;
 			txtInReplyTo.Text = InReplyTo.Text;
 			if (InReplyTo is ProposalMessage)
