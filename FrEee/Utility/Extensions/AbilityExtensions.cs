@@ -210,8 +210,8 @@ namespace FrEee.Utility.Extensions
 			if (sourceFilter == null)
 			{
 				var subobjs = obj.GetContainedAbilityObjects(emp);
-				Func<Ability[]> getabils = () =>
-					subobjs.SelectMany(o => o.Abilities()).Where(a => a.Rule.CanTarget(obj.AbilityTarget)).ToArray();
+				Func<IEnumerable<Ability>> getabils = () =>
+					subobjs.SelectMany(o => o.Abilities()).Where(a => a.Rule.CanTarget(obj.AbilityTarget));
 				if (Galaxy.Current.IsAbilityCacheEnabled)
 				{
 					var tuple = Tuple.Create(obj, emp);
@@ -374,11 +374,11 @@ namespace FrEee.Utility.Extensions
 
 		public static string GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name, IAbilityObject stackTo, int index = 1, bool includeShared = true, bool includeEmpireCommon = true, Func<Ability, bool> filter = null)
 		{
-			var tuples = objs.Squash(o => o.Abilities()).ToArray();
+			var tuples = objs.Squash(o => o.Abilities());
 			if (includeShared)
-				tuples = tuples.Union(objs.Squash(o => o.SharedAbilities())).ToArray();
+				tuples = tuples.Union(objs.Squash(o => o.SharedAbilities()));
 			if (includeEmpireCommon)
-				tuples = tuples.Union(objs.Squash(o => o.EmpireCommonAbilities())).ToArray();
+				tuples = tuples.Union(objs.Squash(o => o.EmpireCommonAbilities()));
 			var abils = tuples.GroupBy(t => new { Rule = t.Item2.Rule, Object = t.Item1 }).Where(g => g.Key.Rule.Matches(name) && g.Key.Rule.CanTarget(g.Key.Object.AbilityTarget)).SelectMany(x => x).Select(t => t.Item2).Where(a => filter == null || filter(a)).Stack(stackTo);
 			if (!abils.Any())
 				return null;

@@ -25,27 +25,7 @@ namespace FrEee.Modding
 		/// </summary>
 		static ScriptEngine()
 		{
-			// http://msdn.microsoft.com/en-us/library/bb763046.aspx
-			// http://grokbase.com/t/python/ironpython-users/123kjgw8k8/passing-python-exceptions-in-a-sandboxed-domain
-
-			//Setting the AppDomainSetup. It is very important to set the ApplicationBase to a folder
-			//other than the one in which the sandboxer resides.
-			var adSetup = new AppDomainSetup();
-			adSetup.ApplicationBase = AppDomain.CurrentDomain.BaseDirectory;
-			adSetup.ApplicationName = "FrEee";
-			adSetup.DynamicBase = "ScriptEngine";
-
-			//Setting the permissions for the AppDomain. We give the permission to execute and to
-			//read/discover the location where the untrusted code is loaded.
-			var evidence = new Evidence();
-			evidence.AddHostEvidence(new Zone(SecurityZone.MyComputer));
-			var permissions = SecurityManager.GetStandardSandbox(evidence);
-			var reflection = new ReflectionPermission(PermissionState.Unrestricted);
-			permissions.AddPermission(reflection);
-
-			//Now we have everything we need to create the AppDomain, so let's create it.
-			sandbox = AppDomain.CreateDomain("ScriptEngine", null, adSetup, permissions, AppDomain.CurrentDomain.GetAssemblies().Select(a => a.Evidence.GetHostEvidence<StrongName>()).Where(sn => sn != null).ToArray());
-			engine = Python.CreateEngine(sandbox);
+			engine = Python.CreateEngine();
 			engine.Runtime.LoadAssembly(typeof(string).Assembly); // load System.dll
 			engine.Runtime.LoadAssembly(typeof(Uri).Assembly); // load mscorlib.dll
 			engine.Runtime.LoadAssembly(Assembly.GetAssembly(typeof(Enumerable))); // load System.Core.dll
@@ -505,7 +485,7 @@ namespace FrEee.Modding
 					lastVariables.Remove(variable);
 				}
 			}
-			if (lastGalaxy != Galaxy.Current)
+			if (lastGalaxy == null || lastGalaxy.TurnNumber < Galaxy.Current.TurnNumber)
 			{
 				lastGalaxy = Galaxy.Current;
 				var sval = lastGalaxy.StringValue;

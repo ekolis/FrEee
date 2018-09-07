@@ -431,15 +431,12 @@ namespace FrEee.Game.Objects.Space
 
 		/// <summary>
 		/// Serialized string value of the galaxy at the beginning of the turn.
-		/// Only valid client side; otherwise returns null.
 		/// </summary>
 		[DoNotSerialize]
 		internal string StringValue
 		{
 			get
 			{
-				if (Empire.Current == null)
-					return null;
 				if (stringValue == null)
 					StringValue = SaveToString(false);
 				return stringValue;
@@ -1326,6 +1323,8 @@ namespace FrEee.Game.Objects.Space
 			//Current.SpaceObjectCleanup();
 
 			//Current.SpaceObjectIDCheck("at end of turn");
+
+			Current.StringValue = null;
 
 			return missingPlrs;
 		}

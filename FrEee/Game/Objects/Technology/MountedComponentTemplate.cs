@@ -34,37 +34,44 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				return ComponentTemplate.Abilities.Select(a =>
-					{
-						var result = new Ability(this)
-						{
-							Rule = a.Rule,
-							Values = new List<Formula<string>>(a.Values),
-							Description = (a.Description ?? a.Rule.Description).Evaluate(this),
-						};
-						if (Mount != null)
-						{
-							if (Mount.AbilityPercentages.ContainsKey(a.Rule))
-							{
-								foreach (var p in Mount.AbilityPercentages[a.Rule])
-								{
-									result.Values[p.Key] = (double.Parse(result.Values[p.Key].Evaluate(this)) * p.Value / 100).ToString();
-									a.Description = null; // values have been modified, need to use generic description
-								}
-							}
-							if (Mount.AbilityModifiers.ContainsKey(a.Rule))
-							{
-								foreach (var m in Mount.AbilityModifiers[a.Rule])
-								{
-									result.Values[m.Key] = (double.Parse(result.Values[m.Key].Evaluate(this)) + m.Value).ToString();
-									a.Description = null; // values have been modified, need to use generic description
-								}
-							}
-						}
-						return result;
-					});
+				if (abilities == null)
+					abilities = ComponentTemplate.Abilities.Select(a => ComputeAbility(a)).ToArray();
+				return abilities;
 			}
 		}
+
+		private Ability ComputeAbility(Ability a)
+		{
+			var result = new Ability(this)
+			{
+				Rule = a.Rule,
+				Values = new List<Formula<string>>(a.Values),
+				Description = (a.Description ?? a.Rule.Description).Evaluate(this),
+			};
+			if (Mount != null)
+			{
+				if (Mount.AbilityPercentages.ContainsKey(a.Rule))
+				{
+					foreach (var p in Mount.AbilityPercentages[a.Rule])
+					{
+						result.Values[p.Key] = (double.Parse(result.Values[p.Key].Evaluate(this)) * p.Value / 100).ToString();
+						a.Description = null; // values have been modified, need to use generic description
+					}
+				}
+				if (Mount.AbilityModifiers.ContainsKey(a.Rule))
+				{
+					foreach (var m in Mount.AbilityModifiers[a.Rule])
+					{
+						result.Values[m.Key] = (double.Parse(result.Values[m.Key].Evaluate(this)) + m.Value).ToString();
+						a.Description = null; // values have been modified, need to use generic description
+					}
+				}
+			}
+			return result;
+		}
+
+		[DoNotSerialize(false)]
+		private Ability[] abilities { get; set; }
 
 		public AbilityTargets AbilityTarget
 		{
@@ -292,7 +299,7 @@ namespace FrEee.Game.Objects.Technology
 					return 0;
 				if (Mount == null)
 					return w.MaxRange;
-				return w.MaxRange.Value  + Mount.WeaponRangeModifier.Value;
+				return w.MaxRange.Value + Mount.WeaponRangeModifier.Value;
 			}
 		}
 

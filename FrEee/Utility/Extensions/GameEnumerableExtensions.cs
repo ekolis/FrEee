@@ -312,21 +312,16 @@ namespace FrEee.Utility.Extensions
 		public static ILookup<Ability, Ability> StackToTree(this IEnumerable<Ability> abilities, IAbilityObject stackTo)
 		{
 			var stacked = new List<Tuple<Ability, Ability>>();
-			if (abilities.Any())
+			var grouped = abilities.GroupBy(a => a.Rule);
+			foreach (var group in grouped)
 			{
-				var grouped = abilities.GroupBy(a => a.Rule);
-				foreach (var group in grouped)
+				var lookup = group.Key.GroupAndStack(group, stackTo);
+				foreach (var lgroup in lookup)
 				{
-					var lookup = group.Key.GroupAndStack(group, stackTo);
-					foreach (var lgroup in lookup)
-					{
-						foreach (var abil in group)
-							stacked.Add(Tuple.Create(lgroup.Key, abil));
-					}
+					foreach (var abil in group)
+						stacked.Add(Tuple.Create(lgroup.Key, abil));
 				}
 			}
-			foreach (var abil in abilities.Where(a => !Mod.Current.AbilityRules.Any(r => r == a.Rule)))
-				stacked.Add(Tuple.Create(abil, abil));
 			return stacked.ToLookup(t => t.Item1, t => t.Item2);
 		}
 
