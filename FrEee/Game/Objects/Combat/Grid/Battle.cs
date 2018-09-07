@@ -135,11 +135,6 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 		public IList<IntVector2> UpperLeft { get; private set; } = new List<IntVector2>();
 
-		public int GetCombatSpeedThisRound(ICombatant c)
-		{
-			return (int)(c.CombatSpeed + CombatSpeedBuffer[c]);
-		}
-
 		public int GetDiameter(int round)
 		{
 			return UpperLeft[round].DistanceToEightWay(LowerRight[round]) + 1;
@@ -188,6 +183,15 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 			for (int i = 0; i < MaxRounds; i++)
 			{
+				var combatSpeeds = new SafeDictionary<ICombatant, double>();
+				foreach (var c in Combatants)
+					combatSpeeds[c] = c.CombatSpeed;
+
+				int GetCombatSpeedThisRound(ICombatant c)
+				{
+					return (int)(combatSpeeds[c] + CombatSpeedBuffer[c]);
+				}
+
 				Events.Add(new List<IBattleEvent>());
 				if (i == 0)
 				{
@@ -198,7 +202,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 					}
 				}
 
-				var turnorder = alives.OrderBy(x => x is Seeker ? 1 : 0).ThenBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
+				var turnorder = alives.OrderBy(x => x is Seeker ? 1 : 0).ThenBy(x => combatSpeeds[x]).ThenShuffle(Dice).ToArray();
 
 				// phase 0: reload weapons
 				foreach (var w in turnorder.SelectMany(q => q.Weapons))
