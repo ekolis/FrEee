@@ -251,6 +251,10 @@ namespace FrEee.Game.Objects.Civilization
 			foreach (var race in Population.Keys)
 			{
 				Anger[race] += trigger(race.HappinessModel);
+                if (Anger[race] > Mod.Current.Settings.MaxAnger)
+                    Anger[race] = Mod.Current.Settings.MaxAnger;
+                if (Anger[race] < Mod.Current.Settings.MinAnger)
+                    Anger[race] = Mod.Current.Settings.MinAnger;
 			}
 		}
 	}
