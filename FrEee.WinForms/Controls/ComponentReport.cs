@@ -7,6 +7,7 @@ using FrEee.WinForms.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Component = FrEee.Game.Objects.Technology.Component;
@@ -117,7 +118,12 @@ namespace FrEee.WinForms.Controls
 						dmglist.Add(shot.FullDamage);
 					}
 					damageGraph.Title = "Range: " + Component.Template.WeaponMinRange + " - " + Component.Template.WeaponMaxRange;
-					damageGraph.DataPoints = dmglist.Select(d => (double)d);
+					damageGraph.Series.Add(new LineGraph.GraphSeries
+					{
+						Name = "",
+						Color = Color.White,
+						DataPoints = dmglist.Select(d => (double)d)
+					});
 				}
 				else
 				{

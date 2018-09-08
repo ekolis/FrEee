@@ -466,7 +466,6 @@
 			this.damageGraph.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.damageGraph.DataPoints = null;
 			this.damageGraph.Location = new System.Drawing.Point(125, 0);
 			this.damageGraph.Name = "damageGraph";
 			this.damageGraph.Size = new System.Drawing.Size(234, 105);

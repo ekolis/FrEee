@@ -25,12 +25,12 @@ namespace FrEee.WinForms.Controls
 			}
 		}
 
-		public IEnumerable<double> DataPoints
+		public ICollection<GraphSeries> Series
 		{
-			get { return dataPoints; }
+			get { return series; }
 			set
 			{
-				dataPoints = value;
+				series = value;
 				Invalidate();
 			}
 		}
@@ -45,7 +45,7 @@ namespace FrEee.WinForms.Controls
 			}
 		}
 
-		private IEnumerable<double> dataPoints;
+		private ICollection<GraphSeries> series = new List<GraphSeries>();
 
 		private string title;
 
@@ -53,28 +53,25 @@ namespace FrEee.WinForms.Controls
 		{
 			base.OnPaint(pe);
 
-			// compute boundaries
-			var horizontalMargin = Font.SizeInPoints * pe.Graphics.DpiX / 96f * 5f;
-			var verticalMargin = Font.SizeInPoints * pe.Graphics.DpiY / 96f * 2f;
-			var graphBounds = new RectangleF(horizontalMargin, verticalMargin, Width - horizontalMargin * 2, Height - verticalMargin * 2);
-			var headerBounds = new RectangleF(horizontalMargin, 0, graphBounds.Width, verticalMargin);
-
 			// get graphics
 			var g = pe.Graphics;
 
-			// get brush
-			var brush = new SolidBrush(ForeColor);
+			// compute boundaries
+			var max = Series.Max(s => s.DataPoints.Max());
+			var horizontalMargin = g.MeasureString(max.ToString(), Font).Width;
+			var verticalMargin = Font.SizeInPoints * pe.Graphics.DpiY / 96f * 2f;
+			var graphBounds = new RectangleF(horizontalMargin, verticalMargin, Width - horizontalMargin * 2, Height - verticalMargin * 2);
+			var headerBounds = new RectangleF(horizontalMargin, 0, graphBounds.Width, verticalMargin);
 
 			// draw title
 			var sfCenter = new StringFormat();
 			sfCenter.Alignment = StringAlignment.Center;
 			sfCenter.LineAlignment = StringAlignment.Center;
-			g.DrawString(Title, Font, brush, headerBounds, sfCenter);
+			g.DrawString(Title, Font, Brushes.White, headerBounds, sfCenter);
 
-			if (DataPoints != null && DataPoints.Any())
+			if (Series != null && Series.Any())
 			{
 				// draw Y-axis (round max up to a single digit multiple of a power of 10 for pretty display)
-				var max = DataPoints.Max();
 				if (RoundMaxToMultipleOfPowerOfTen)
 				{
 					var log = Math.Floor(Math.Log10(max));
@@ -92,31 +89,44 @@ namespace FrEee.WinForms.Controls
 					var pos = graphBounds.Bottom - graphBounds.Height / 5f * i;
 					var size = g.MeasureString(val.ToString(), Font);
 					var rect = new RectangleF(0, pos - size.Height / 2f, horizontalMargin, size.Height);
-					g.DrawString(val.ToString(), Font, brush, rect, sfRight);
+					g.DrawString(val.ToString(), Font, Brushes.White, rect, sfRight);
 				}
 
 				// draw X-axis and data points
-				var maxx = DataPoints.Count() - 1;
+				var maxx = Series.Max(s => s.DataPoints.Count()) - 1;
 				var sfTop = new StringFormat();
 				sfTop.Alignment = StringAlignment.Center;
 				sfTop.LineAlignment = StringAlignment.Near;
 				float lastXpos = 0;
 				float lastYpos = 0;
-				var pen = new Pen(brush);
-				for (int i = 0; i <= maxx; i++)
+				foreach (var s in Series)
 				{
-					var xpos = graphBounds.Left + graphBounds.Width / (maxx == 0 ? 1 : maxx) * i;
-					var size = g.MeasureString(i.ToString(), Font);
-					var rect = new RectangleF(xpos - size.Width / 2f, graphBounds.Bottom, size.Width, size.Height);
-					g.DrawString(i.ToString(), Font, brush, rect, sfTop);
-					var val = DataPoints.ElementAt(i);
-					var ypos = (float)(graphBounds.Bottom - graphBounds.Height * val / (double.IsNaN(max) ? 1 : max));
-					if (i > 0)
-						g.DrawLine(pen, lastXpos, lastYpos, xpos, ypos);
-					lastXpos = xpos;
-					lastYpos = ypos;
+					var pen = new Pen(s.Color);
+					var brush = new SolidBrush(s.Color);
+					for (int i = 0; i <= maxx; i++)
+					{
+						var xpos = graphBounds.Left + graphBounds.Width / (maxx == 0 ? 1 : maxx) * i;
+						var size = g.MeasureString(i.ToString(), Font);
+						var rect = new RectangleF(xpos - size.Width / 2f, graphBounds.Bottom, size.Width, size.Height);
+						g.DrawString(i.ToString(), Font, Brushes.White, rect, sfTop);
+						var val = s.DataPoints.ElementAt(i);
+						var ypos = (float)(graphBounds.Bottom - graphBounds.Height * val / (double.IsNaN(max) ? 1 : max));
+						if (i > 0)
+							g.DrawLine(pen, lastXpos, lastYpos, xpos, ypos);
+						else
+							g.DrawString(s.Name, Font, brush, xpos, ypos);
+						lastXpos = xpos;
+						lastYpos = ypos;
+					}
 				}
 			}
+		}
+
+		public class GraphSeries
+		{
+			public Color Color { get; set; }
+			public string Name { get; set; }
+			public IEnumerable<double> DataPoints { get; set; }
 		}
 	}
 }
