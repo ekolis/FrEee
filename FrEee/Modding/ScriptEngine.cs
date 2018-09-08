@@ -230,10 +230,7 @@ namespace FrEee.Modding
 				foreach (var variable in variables.Keys)
 				{
 					if (variables[variable] is IReferrable)
-					{
-						preCommands.Add("if 'galaxy' in vars():");
-						preCommands.Add("\t" + variable + " = galaxy.GetReferrable(_" + variable + ");");
-					}
+						preCommands.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
 					else
 						preCommands.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
 					postCommands.Add("_" + variable + " = Serializer.SerializeToString(" + variable + ");");
@@ -244,14 +241,9 @@ namespace FrEee.Modding
 				foreach (var variable in readOnlyVariables.Keys)
 				{
 					if (readOnlyVariables[variable] == Galaxy.Current && Galaxy.Current != null)
-					{
 						preCommands.Add(variable + " = galaxy;");
-					}
 					else if (readOnlyVariables[variable] is IReferrable)
-					{
-						preCommands.Add("if 'galaxy' in vars():");
-						preCommands.Add("\t" + variable + " = galaxy.GetReferrable(_" + variable + ");");
-					}
+						preCommands.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
 					else
 						preCommands.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
 				}
@@ -340,10 +332,7 @@ namespace FrEee.Modding
 				foreach (var variable in variables.Keys)
 				{
 					if (variables[variable] is IReferrable)
-					{
-						preCommands.Add("if 'galaxy' in vars():");
-						preCommands.Add("\t" + variable + " = galaxy.GetReferrable(_" + variable + ");");
-					}
+						preCommands.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
 					else
 						preCommands.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
 					postCommands.Add("_" + variable + " = Serializer.SerializeToString(" + variable + ");");
@@ -354,14 +343,9 @@ namespace FrEee.Modding
 				foreach (var variable in readOnlyVariables.Keys)
 				{
 					if (readOnlyVariables[variable] == Galaxy.Current && Galaxy.Current != null)
-					{
 						preCommands.Add(variable + " = galaxy;");
-					}
 					else if (readOnlyVariables[variable] is IReferrable)
-					{
-						preCommands.Add("if 'galaxy' in vars():");
-						preCommands.Add("\t" + variable + " = galaxy.GetReferrable(_" + variable + ");");
-					}
+						preCommands.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
 					else
 						preCommands.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
 				}
@@ -485,7 +469,7 @@ namespace FrEee.Modding
 					lastVariables.Remove(variable);
 				}
 			}
-			if (Galaxy.Current!= null && (lastGalaxy == null || lastGalaxy.TurnNumber < Galaxy.Current.TurnNumber))
+			if (Galaxy.Current != null && (lastGalaxy == null || lastGalaxy.TurnNumber < Galaxy.Current.TurnNumber))
 			{
 				lastGalaxy = Galaxy.Current;
 				var sval = lastGalaxy.StringValue;
