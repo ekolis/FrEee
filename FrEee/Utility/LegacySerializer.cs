@@ -92,7 +92,7 @@ namespace FrEee.Utility
 
 			// write the type name if it's not the same as the desired type
 			if (type == desiredType)
-				w.WriteLine(":");
+				w.Write(":");
 			else
 				w.WriteLine(type.AssemblyQualifiedName + ":");
 
@@ -106,7 +106,8 @@ namespace FrEee.Utility
 			if (id != null)
 			{
 				// already seen this object, just write an ID
-				w.Write(tabs);
+				if (type != desiredType)
+					w.Write(tabs);
 				w.Write("i");
 				w.Write(id);
 
@@ -118,7 +119,8 @@ namespace FrEee.Utility
 			}
 
 			// write some tabs
-			w.Write(tabs);
+			if (type != desiredType)
+				w.Write(tabs);
 
 			// serialize the object
 			if (type.IsPrimitive || typeof(Enum).IsAssignableFrom(type) || type.Name == "Nullable`1")
