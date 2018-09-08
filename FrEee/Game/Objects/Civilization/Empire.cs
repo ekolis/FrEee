@@ -646,7 +646,7 @@ namespace FrEee.Game.Objects.Civilization
 			get
 			{
 				int? s = null;
-				for (var x = Galaxy.Current.TurnNumber; x >= 0 && s != null; x--)
+				for (var x = Galaxy.Current.TurnNumber; x >= 0 && s == null; x--)
 				{
 					s = GetScoreAtTurn(x);
 				}
