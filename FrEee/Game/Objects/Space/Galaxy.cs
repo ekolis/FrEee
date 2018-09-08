@@ -1161,23 +1161,26 @@ namespace FrEee.Game.Objects.Space
 			{
 				foreach (var race in c.Population.Keys)
 				{
-					var delta = c.AngerDeltas[race];
-					if (delta > race.HappinessModel.MaxPositiveTurnAngerChange)
-						delta = race.HappinessModel.MaxPositiveTurnAngerChange;
-					if (delta < race.HappinessModel.MaxNegativeTurnAngerChange)
-						delta = race.HappinessModel.MaxNegativeTurnAngerChange;
-					delta += race == c.Owner.PrimaryRace ? race.HappinessModel.NaturalTurnAngerChangeOurRace : race.HappinessModel.NaturalTurnAngerChangeOtherRaces;
-					c.Anger[race] += delta;
-					if (c.Anger[race] > Mod.Current.Settings.MaxAnger)
-						c.Anger[race] = Mod.Current.Settings.MaxAnger;
-					if (c.Anger[race] < Mod.Current.Settings.MinAnger)
-						c.Anger[race] = Mod.Current.Settings.MinAnger;
+					if (race.HappinessModel != null)
+					{
+						var delta = c.AngerDeltas[race];
+						if (delta > race.HappinessModel.MaxPositiveTurnAngerChange)
+							delta = race.HappinessModel.MaxPositiveTurnAngerChange;
+						if (delta < race.HappinessModel.MaxNegativeTurnAngerChange)
+							delta = race.HappinessModel.MaxNegativeTurnAngerChange;
+						delta += race == c.Owner.PrimaryRace ? race.HappinessModel.NaturalTurnAngerChangeOurRace : race.HappinessModel.NaturalTurnAngerChangeOtherRaces;
+						c.Anger[race] += delta;
+						if (c.Anger[race] > Mod.Current.Settings.MaxAnger)
+							c.Anger[race] = Mod.Current.Settings.MaxAnger;
+						if (c.Anger[race] < Mod.Current.Settings.MinAnger)
+							c.Anger[race] = Mod.Current.Settings.MinAnger;
 
-					// TODO - display reason for growing happy/unhappy
-					if (delta >= 100)
-						c.Owner.RecordLog(c.Container, $"The {race} population of {c.Container} is growing very unhappy.");
-					else if (delta <= -100)
-						c.Owner.RecordLog(c.Container, $"The {race} population of {c.Container} is growing very happy.");
+						// TODO - display reason for growing happy/unhappy
+						if (delta >= 100)
+							c.Owner.RecordLog(c.Container, $"The {race} population of {c.Container} is growing very unhappy.");
+						else if (delta <= -100)
+							c.Owner.RecordLog(c.Container, $"The {race} population of {c.Container} is growing very happy.");
+					}
 				}
 			});
 
