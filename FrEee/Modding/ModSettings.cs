@@ -35,8 +35,18 @@ namespace FrEee.Modding
 			MoodReproductionModifiers.Add(Mood.Jubilant, 5);
             MoodReproductionModifiers.Add(Mood.Emotionless, 2);
 
-            // TODO - moddable mood thresholds
-            MoodThresholds = new Dictionary<Mood, int>();
+			// TODO - moddable mood construction modifiers
+			MoodConstructionModifiers = new Dictionary<Mood, int>();
+			MoodConstructionModifiers.Add(Mood.Rioting,  0);
+			MoodConstructionModifiers.Add(Mood.Angry, 100);
+			MoodConstructionModifiers.Add(Mood.Unhappy, 100);
+			MoodConstructionModifiers.Add(Mood.Indifferent, 100);
+			MoodConstructionModifiers.Add(Mood.Happy, 100);
+			MoodConstructionModifiers.Add(Mood.Jubilant, 100);
+			MoodConstructionModifiers.Add(Mood.Emotionless, 100);
+
+			// TODO - moddable mood thresholds
+			MoodThresholds = new Dictionary<Mood, int>();
 			MoodThresholds.Add(Mood.Rioting, 750);
 			MoodThresholds.Add(Mood.Angry, 600);
 			MoodThresholds.Add(Mood.Unhappy, 450);
@@ -331,6 +341,11 @@ namespace FrEee.Modding
 		/// Minimum income for an empire, even if it doesn't have any normal resource income.
 		/// </summary>
 		public ResourceQuantity MinimumEmpireIncome { get; set; }
+
+		/// <summary>
+		/// Modifiers to construction rates from population mood.
+		/// </summary>
+		public IDictionary<Mood, int> MoodConstructionModifiers { get; private set; }
 
 		/// <summary>
 		/// Modifiers to production and construction rates from population mood.
