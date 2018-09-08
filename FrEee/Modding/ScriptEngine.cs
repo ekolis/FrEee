@@ -485,7 +485,7 @@ namespace FrEee.Modding
 					lastVariables.Remove(variable);
 				}
 			}
-			if (lastGalaxy == null || lastGalaxy.TurnNumber < Galaxy.Current.TurnNumber)
+			if (Galaxy.Current!= null && (lastGalaxy == null || lastGalaxy.TurnNumber < Galaxy.Current.TurnNumber))
 			{
 				lastGalaxy = Galaxy.Current;
 				var sval = lastGalaxy.StringValue;
