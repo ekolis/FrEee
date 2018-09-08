@@ -424,6 +424,8 @@ namespace FrEee.Utility
 				Type itemType;
 				if (type.GetGenericArguments().Count() == 2)
 					itemType = typeof(KeyValuePair<,>).MakeGenericType(type.GetGenericArguments());
+				else if (type == typeof(DynamicDictionary))
+					itemType = typeof(KeyValuePair<object, object>);
 				else
 					// HACK - Resources inherits from a dictionary type
 					itemType = typeof(KeyValuePair<,>).MakeGenericType(type.BaseType.GetGenericArguments());
@@ -677,6 +679,12 @@ namespace FrEee.Utility
 			{
 				// HACK - Resources inherits from a dictionary type
 				itemType = typeof(KeyValuePair<,>).MakeGenericType(type.BaseType.GetGenericArguments());
+				w.WriteLine("d" + list.Cast<object>().Count() + ":" + tabs);
+				isDict = true;
+			}
+			else if (type == typeof(DynamicDictionary))
+			{
+				itemType = typeof(KeyValuePair<object, object>);
 				w.WriteLine("d" + list.Cast<object>().Count() + ":" + tabs);
 				isDict = true;
 			}

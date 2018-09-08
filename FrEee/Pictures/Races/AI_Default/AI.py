@@ -31,7 +31,7 @@ if (enabledMinisters.ContainsKey("Empire Management")):
 
 # test AI data storage
 if (not empire.AINotes.HasProperty("Log")):
-	empire.AINotes.Log = List[str]();
-empire.AINotes.Log.Add(str.Format("{0} has played its turn for stardate {1}.\n", empire.Name, galaxy.Stardate));
+	empire.AINotes.Log = [];
+empire.AINotes.Log.Add("{0} has played its turn for stardate {1}.\n".format(empire.Name, galaxy.Stardate));
 for msg in empire.AINotes.Log:
 	Console.WriteLine(msg);
