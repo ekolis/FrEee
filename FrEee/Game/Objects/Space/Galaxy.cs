@@ -817,7 +817,8 @@ namespace FrEee.Game.Objects.Space
 				{
 					LoadFromString(serializedGalaxy);
 					Current.CurrentEmpire = Current.Empires[i];
-					Current.Redact();
+					// TODO - re-enable redaction of galaxy for AI empires once we have a working AI
+					//Current.Redact();
 					Current.CurrentEmpire.AI.Act(Current.CurrentEmpire, Current, Current.CurrentEmpire.AI.MinisterNames);
 					cmds.Add(i, Current.CurrentEmpire.Commands);
 					notes.Add(i, Current.CurrentEmpire.AINotes);
