@@ -61,15 +61,15 @@ namespace FrEee.Modding
 		public Formula<T> CreateFormula<T>(object context)
 					where T : IConvertible, IComparable
 		{
-			var txt = Value.TrimStart('=');
+			var txt = Value;
 
 			// deal with replacement strings
 			txt = Regex.Replace(txt, @"\[\%(.*?)\%?\]", @"{{$1}}");
 
 			if (txt.StartsWith("=="))
-				return new ComputedFormula<T>(txt, context, true); // dynamic
+				return new ComputedFormula<T>(txt.TrimStart('='), context, true); // dynamic
 			else if (txt.StartsWith("="))
-				return new ComputedFormula<T>(txt, context, false); // static
+				return new ComputedFormula<T>(txt.TrimStart('='), context, false); // static
 																	// TODO - take into account quotes when seeing if we have string interpolation?
 			else if (txt.Contains("{") && txt.Substring(txt.IndexOf("{")).Contains("}"))
 			{
