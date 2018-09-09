@@ -40,7 +40,7 @@ namespace FrEee.WinForms.Controls
 			this.lblComponents = new System.Windows.Forms.Label();
 			this.resMaintOrg = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resMaintRad = new FrEee.WinForms.Controls.ResourceDisplay();
-			this.lblMaint = new System.Windows.Forms.Label();
+			this.lblIncome = new System.Windows.Forms.Label();
 			this.txtExperience = new System.Windows.Forms.Label();
 			this.lblExperience = new System.Windows.Forms.Label();
 			this.txtOrder = new System.Windows.Forms.Label();
@@ -110,7 +110,7 @@ namespace FrEee.WinForms.Controls
 			this.pageDetail.Controls.Add(this.lblComponents);
 			this.pageDetail.Controls.Add(this.resMaintOrg);
 			this.pageDetail.Controls.Add(this.resMaintRad);
-			this.pageDetail.Controls.Add(this.lblMaint);
+			this.pageDetail.Controls.Add(this.lblIncome);
 			this.pageDetail.Controls.Add(this.txtExperience);
 			this.pageDetail.Controls.Add(this.lblExperience);
 			this.pageDetail.Controls.Add(this.txtOrder);
@@ -232,16 +232,16 @@ namespace FrEee.WinForms.Controls
 			this.resMaintRad.Size = new System.Drawing.Size(68, 20);
 			this.resMaintRad.TabIndex = 44;
 			// 
-			// lblMaint
+			// lblIncome
 			// 
-			this.lblMaint.AutoSize = true;
-			this.lblMaint.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblMaint.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblMaint.Location = new System.Drawing.Point(6, 331);
-			this.lblMaint.Name = "lblMaint";
-			this.lblMaint.Size = new System.Drawing.Size(41, 15);
-			this.lblMaint.TabIndex = 43;
-			this.lblMaint.Text = "Maint.";
+			this.lblIncome.AutoSize = true;
+			this.lblIncome.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblIncome.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.lblIncome.Location = new System.Drawing.Point(6, 331);
+			this.lblIncome.Name = "lblIncome";
+			this.lblIncome.Size = new System.Drawing.Size(48, 15);
+			this.lblIncome.TabIndex = 43;
+			this.lblIncome.Text = "Income";
 			// 
 			// txtExperience
 			// 
@@ -959,7 +959,7 @@ namespace FrEee.WinForms.Controls
 		private ResourceDisplay resMaintMin;
 		private ResourceDisplay resMaintOrg;
 		private ResourceDisplay resMaintRad;
-		private System.Windows.Forms.Label lblMaint;
+		private System.Windows.Forms.Label lblIncome;
 		private System.Windows.Forms.Label txtExperience;
 		private System.Windows.Forms.Label lblExperience;
 		private System.Windows.Forms.Label txtOrder;
