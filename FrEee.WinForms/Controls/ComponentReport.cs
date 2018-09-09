@@ -57,7 +57,6 @@ namespace FrEee.WinForms.Controls
 		public void Bind(Component data)
 		{
 			Component = data;
-			Bind();
 		}
 
 		public void Bind()
