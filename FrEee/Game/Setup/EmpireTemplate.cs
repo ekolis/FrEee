@@ -177,5 +177,10 @@ namespace FrEee.Game.Setup
 			Serializer.Serialize(this, fs);
 			fs.Close(); fs.Dispose();
 		}
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }
