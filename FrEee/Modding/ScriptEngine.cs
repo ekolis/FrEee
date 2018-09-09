@@ -402,13 +402,7 @@ namespace FrEee.Modding
 
 			public override bool Equals(object obj)
 			{
-				// TODO - upgrade equals to use "as" operator
-				if (obj is ScriptCode)
-				{
-					var sc = (ScriptCode)obj;
-					return sc == this;
-				}
-				return false;
+				return obj as ScriptCode == this;
 			}
 
 			public override int GetHashCode()
