@@ -166,7 +166,6 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 			var reloads = new SafeDictionary<Component, double>();
 			var locations = new SafeDictionary<ICombatant, IntVector2>();
-			var multiplex = new SafeDictionary<ICombatant, HashSet<ICombatant>>(true);
 
 			PlaceCombatants(locations);
 
@@ -184,6 +183,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 			for (int i = 0; i < MaxRounds; i++)
 			{
 				var combatSpeeds = new SafeDictionary<ICombatant, double>();
+				var multiplex = new SafeDictionary<ICombatant, HashSet<ICombatant>>(true);
 				foreach (var c in Combatants)
 					combatSpeeds[c] = c.CombatSpeed;
 
