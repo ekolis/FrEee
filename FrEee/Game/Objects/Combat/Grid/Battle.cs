@@ -263,12 +263,35 @@ namespace FrEee.Game.Objects.Combat.Grid
 						}
 						else
 						{
-							// move as close as possible to the best target
+							// move to max range that we can inflict max damage on best target
 							ICombatant bestTarget = targetiness.WithMax(x => x.Value).First().Key;
 							if (bestTarget != null)
 							{
+								var maxdmg = 0;
+								var maxdmgrange = 0;
+								for (var range = 0; range < c.Weapons.Max(w => w.Template.WeaponMaxRange); range++)
+								{
+									var dmg = c.Weapons.Where(w => w.CanTarget(bestTarget)).Sum(w => w.Template.GetWeaponDamage(range));
+									if (dmg >= maxdmg)
+									{
+										maxdmg = dmg;
+										maxdmgrange = range;
+									}
+								}
 								var targetPos = locations[bestTarget];
-								locations[c] = IntVector2.InterpolateEightWay(locations[c], targetPos, GetCombatSpeedThisRound(c));
+								var tiles = new HashSet<IntVector2>();
+								for (var x = targetPos.X - maxdmgrange;  x <= targetPos.X + maxdmgrange; x++)
+								{
+									tiles.Add(new IntVector2(x, targetPos.Y - maxdmgrange));
+									tiles.Add(new IntVector2(x, targetPos.Y + maxdmgrange));
+								}
+								for (var y = targetPos.Y - maxdmgrange; y <= targetPos.Y + maxdmgrange; y++)
+								{
+									tiles.Add(new IntVector2(targetPos.X - maxdmgrange, y));
+									tiles.Add(new IntVector2(targetPos.X + maxdmgrange, y));
+								}
+								var closest = tiles.WithMin(t => t.DistanceToEightWay(locations[c])).First();
+								locations[c] = IntVector2.InterpolateEightWay(locations[c], closest, GetCombatSpeedThisRound(c));
 							}
 						}
 					}
