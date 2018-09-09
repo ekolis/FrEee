@@ -29,9 +29,11 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode presenceMode1 = new FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode();
+			FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode presenceMode2 = new FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode();
 			this.tabs = new FrEee.WinForms.Controls.GameTabControl();
 			this.tabGalaxy = new System.Windows.Forms.TabPage();
+			this.btnPreviewMap = new FrEee.WinForms.Controls.GameButton();
+			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
 			this.label62 = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
 			this.spnSystemGroups = new System.Windows.Forms.NumericUpDown();
@@ -198,8 +200,6 @@
 			this.btnLoadSetup = new FrEee.WinForms.Controls.GameButton();
 			this.btnSaveSetup = new FrEee.WinForms.Controls.GameButton();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
-			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
-			this.btnPreviewMap = new FrEee.WinForms.Controls.GameButton();
 			this.tabs.SuspendLayout();
 			this.tabGalaxy.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.spnSystemGroups)).BeginInit();
@@ -311,6 +311,33 @@
 			this.tabGalaxy.TabIndex = 0;
 			this.tabGalaxy.Text = "Galaxy";
 			// 
+			// btnPreviewMap
+			// 
+			this.btnPreviewMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnPreviewMap.BackColor = System.Drawing.Color.Black;
+			this.btnPreviewMap.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnPreviewMap.Location = new System.Drawing.Point(442, 137);
+			this.btnPreviewMap.Name = "btnPreviewMap";
+			this.btnPreviewMap.Size = new System.Drawing.Size(97, 23);
+			this.btnPreviewMap.TabIndex = 10;
+			this.btnPreviewMap.Text = "Preview Map";
+			this.btnPreviewMap.UseVisualStyleBackColor = false;
+			this.btnPreviewMap.Click += new System.EventHandler(this.btnPreviewMap_Click);
+			// 
+			// galaxyView
+			// 
+			this.galaxyView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.galaxyView.BackColor = System.Drawing.Color.Black;
+			this.galaxyView.Location = new System.Drawing.Point(14, 330);
+			this.galaxyView.Mode = presenceMode2;
+			this.galaxyView.Name = "galaxyView";
+			this.galaxyView.SelectedStarSystem = null;
+			this.galaxyView.Size = new System.Drawing.Size(525, 204);
+			this.galaxyView.TabIndex = 29;
+			this.galaxyView.Text = "galaxyView2";
+			// 
 			// label62
 			// 
 			this.label62.AutoSize = true;
@@ -339,7 +366,7 @@
             0});
 			this.spnSystemGroups.Name = "spnSystemGroups";
 			this.spnSystemGroups.Size = new System.Drawing.Size(71, 21);
-			this.spnSystemGroups.TabIndex = 26;
+			this.spnSystemGroups.TabIndex = 4;
 			this.spnSystemGroups.Value = new decimal(new int[] {
             1,
             0,
@@ -366,7 +393,7 @@
 			this.ddlMaximumEventSeverity.Location = new System.Drawing.Point(114, 305);
 			this.ddlMaximumEventSeverity.Name = "ddlMaximumEventSeverity";
 			this.ddlMaximumEventSeverity.Size = new System.Drawing.Size(152, 23);
-			this.ddlMaximumEventSeverity.TabIndex = 22;
+			this.ddlMaximumEventSeverity.TabIndex = 9;
 			// 
 			// label10
 			// 
@@ -400,7 +427,7 @@
             0});
 			this.spnHeight.Name = "spnHeight";
 			this.spnHeight.Size = new System.Drawing.Size(48, 21);
-			this.spnHeight.TabIndex = 19;
+			this.spnHeight.TabIndex = 2;
 			this.spnHeight.Value = new decimal(new int[] {
             30,
             0,
@@ -429,7 +456,7 @@
             0});
 			this.spnWidth.Name = "spnWidth";
 			this.spnWidth.Size = new System.Drawing.Size(48, 21);
-			this.spnWidth.TabIndex = 17;
+			this.spnWidth.TabIndex = 1;
 			this.spnWidth.Value = new decimal(new int[] {
             40,
             0,
@@ -457,7 +484,7 @@
 			this.ddlEventFrequency.Location = new System.Drawing.Point(114, 276);
 			this.ddlEventFrequency.Name = "ddlEventFrequency";
 			this.ddlEventFrequency.Size = new System.Drawing.Size(152, 23);
-			this.ddlEventFrequency.TabIndex = 15;
+			this.ddlEventFrequency.TabIndex = 8;
 			this.ddlEventFrequency.ValueMember = "Value";
 			// 
 			// label6
@@ -477,7 +504,7 @@
 			this.chkOmniscient.Location = new System.Drawing.Point(22, 251);
 			this.chkOmniscient.Name = "chkOmniscient";
 			this.chkOmniscient.Size = new System.Drawing.Size(231, 19);
-			this.chkOmniscient.TabIndex = 11;
+			this.chkOmniscient.TabIndex = 7;
 			this.chkOmniscient.Text = "Omniscient View of Explored Systems";
 			this.chkOmniscient.UseVisualStyleBackColor = true;
 			// 
@@ -498,7 +525,7 @@
 			this.chkAllSystemsExplored.Location = new System.Drawing.Point(22, 226);
 			this.chkAllSystemsExplored.Name = "chkAllSystemsExplored";
 			this.chkAllSystemsExplored.Size = new System.Drawing.Size(140, 19);
-			this.chkAllSystemsExplored.TabIndex = 9;
+			this.chkAllSystemsExplored.TabIndex = 6;
 			this.chkAllSystemsExplored.Text = "All Systems Explored";
 			this.chkAllSystemsExplored.UseVisualStyleBackColor = true;
 			// 
@@ -511,7 +538,7 @@
 			this.ddlWarpPointLocation.Location = new System.Drawing.Point(114, 137);
 			this.ddlWarpPointLocation.Name = "ddlWarpPointLocation";
 			this.ddlWarpPointLocation.Size = new System.Drawing.Size(152, 23);
-			this.ddlWarpPointLocation.TabIndex = 8;
+			this.ddlWarpPointLocation.TabIndex = 5;
 			this.ddlWarpPointLocation.SelectedIndexChanged += new System.EventHandler(this.ddlWarpPointLocation_SelectedIndexChanged);
 			// 
 			// warpPointPlacementStrategyBindingSource
@@ -555,7 +582,7 @@
             0});
 			this.spnStarSystems.Name = "spnStarSystems";
 			this.spnStarSystems.Size = new System.Drawing.Size(71, 21);
-			this.spnStarSystems.TabIndex = 4;
+			this.spnStarSystems.TabIndex = 3;
 			this.spnStarSystems.Value = new decimal(new int[] {
             30,
             0,
@@ -592,7 +619,7 @@
 			this.ddlGalaxyType.Location = new System.Drawing.Point(114, 6);
 			this.ddlGalaxyType.Name = "ddlGalaxyType";
 			this.ddlGalaxyType.Size = new System.Drawing.Size(152, 23);
-			this.ddlGalaxyType.TabIndex = 1;
+			this.ddlGalaxyType.TabIndex = 0;
 			this.ddlGalaxyType.SelectedIndexChanged += new System.EventHandler(this.ddlGalaxyType_SelectedIndexChanged);
 			// 
 			// galaxyTemplateBindingSource
@@ -2485,33 +2512,6 @@
 			this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
 			this.progressBar.TabIndex = 5;
 			this.progressBar.Visible = false;
-			// 
-			// galaxyView
-			// 
-			this.galaxyView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.galaxyView.BackColor = System.Drawing.Color.Black;
-			this.galaxyView.Location = new System.Drawing.Point(14, 330);
-			this.galaxyView.Mode = presenceMode1;
-			this.galaxyView.Name = "galaxyView";
-			this.galaxyView.SelectedStarSystem = null;
-			this.galaxyView.Size = new System.Drawing.Size(525, 204);
-			this.galaxyView.TabIndex = 29;
-			this.galaxyView.Text = "galaxyView2";
-			// 
-			// btnPreviewMap
-			// 
-			this.btnPreviewMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnPreviewMap.BackColor = System.Drawing.Color.Black;
-			this.btnPreviewMap.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnPreviewMap.Location = new System.Drawing.Point(442, 137);
-			this.btnPreviewMap.Name = "btnPreviewMap";
-			this.btnPreviewMap.Size = new System.Drawing.Size(97, 23);
-			this.btnPreviewMap.TabIndex = 7;
-			this.btnPreviewMap.Text = "Preview Map";
-			this.btnPreviewMap.UseVisualStyleBackColor = false;
-			this.btnPreviewMap.Click += new System.EventHandler(this.btnPreviewMap_Click);
 			// 
 			// GameSetupForm
 			// 
