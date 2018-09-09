@@ -150,6 +150,12 @@ namespace FrEee.WinForms.Objects
 
 		private static readonly GridColumnConfig colSurface = new GridColumnConfig("Surface", "Surface", typeof(DataGridViewTextBoxColumn), Color.White);
 
+		public SafeDictionary<string, Size> WindowSizes { get; private set; } = new SafeDictionary<string, Size>();
+
+		public SafeDictionary<string, FormWindowState> WindowStates { get; private set; } = new SafeDictionary<string, FormWindowState>();
+
+		public SafeDictionary<string, Point> WindowLocations { get; private set; } = new SafeDictionary<string, Point>();
+
 		public static GridConfig CreateDefaultAlienShipListConfig()
 		{
 			var cfg = new GridConfig();

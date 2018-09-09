@@ -299,6 +299,7 @@ namespace FrEee.WinForms.Forms
 
 		private void MainMenuForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
+			ClientSettings.Save();
 			Application.Exit();
 		}
 	}
