@@ -123,7 +123,7 @@ namespace FrEee.Modding.Templates
 		{
 			get
 			{
-				var latest = NewerVersions.Where(t => Empire.Current.HasUnlocked(t)).LastOrDefault();
+				var latest = NewerVersions.Union(OlderVersions).Where(t => Empire.Current.HasUnlocked(t)).LastOrDefault();
 				if (latest != null)
 				{
 					System.Diagnostics.Debug.WriteLine($"{this} is obsoleted by {latest}");
