@@ -602,10 +602,13 @@ namespace FrEee.Game.Objects.Vehicles
 
 					// set name of ship so we can't guess what design it is
 					Name = (Owner?.Name ?? "Unowned") + " " + Hull.Name;
+
+					// clear component list if design is not known
+					Components.Clear();
 				}
 
-				// clear component list
-				Components.Clear();
+				// can't see HP of components unless scanned, so pretend the ship is fully repaired
+				Repair();
 			}
 
 			if (visibility < Visibility.Fogged || visibility < Visibility.Visible && !IsMemory)
