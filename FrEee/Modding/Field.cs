@@ -63,6 +63,9 @@ namespace FrEee.Modding
 		{
 			var txt = Value.TrimStart('=');
 
+			// deal with replacement strings
+			txt = Regex.Replace(txt, @"\[\%(.*?)\%?\]", @"{{$1}}");
+
 			if (txt.StartsWith("=="))
 				return new ComputedFormula<T>(txt, context, true); // dynamic
 			else if (txt.StartsWith("="))
