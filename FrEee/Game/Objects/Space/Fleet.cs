@@ -741,9 +741,13 @@ namespace FrEee.Game.Objects.Space
 
 			var vis = CheckVisibility(emp);
 
-			// Can't see names of alien fleets
+			// Can't see names or orders of alien fleets
+			// TODO - espionage
 			if (vis < Visibility.Owned)
+			{
 				Name = Owner + " Fleet";
+				Orders.Clear();
+			}
 		}
 
 		public void RemoveOrder(IOrder order)
