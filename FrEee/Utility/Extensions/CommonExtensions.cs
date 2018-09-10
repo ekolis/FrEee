@@ -369,7 +369,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static ICargoContainer FindContainer(this IUnit unit)
 		{
-			var containers = Galaxy.Current.FindSpaceObjects<ICargoContainer>().Where(cc => cc.Cargo != null && cc.Cargo.Units.Contains(unit));
+			var containers = Galaxy.Current.FindSpaceObjects<ICargoContainer>().Where(cc => !(cc is Fleet) && cc.Cargo != null && cc.Cargo.Units.Contains(unit));
 			if (!containers.Any())
 			{
 				if (unit is IMobileSpaceObject)

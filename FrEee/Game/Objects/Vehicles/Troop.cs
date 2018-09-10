@@ -23,7 +23,10 @@ namespace FrEee.Game.Objects.Vehicles
 		// TODO - make me an actual property, not searching the galaxy (check other unit types too)
 		public ICargoContainer Container
 		{
-			get { return Galaxy.Current.FindSpaceObjects<ICargoTransferrer>().SingleOrDefault(cc => cc.Cargo?.Units?.Contains(this) ?? false); }
+			get
+			{
+				return CommonExtensions.FindContainer(this);
+			}
 		}
 
 		public override int MaxTargets => int.MaxValue;
