@@ -393,11 +393,14 @@ namespace FrEee.Game.Objects.Combat.Grid
 						// find enemy planets in the same square
 						var dropTargets = locations.Where(q => q.Key != c && q.Value == locations[c] && q.Key is Planet p && c.IsHostileTo(p.Owner)).Select(q => q.Key).Cast<Planet>();
 						var dropTarget = dropTargets.PickRandom(Dice);
-						var cd = new CargoDelta();
-						cd.UnitTypeTonnage.Add(VehicleTypes.Troop, null);
-						cc.TransferCargo(cd, dropTarget, cc.Owner, true);
-						var groundBattle = new GroundBattle(dropTarget);
-						groundBattle.Resolve();
+						if (dropTarget != null)
+						{
+							var cd = new CargoDelta();
+							cd.UnitTypeTonnage.Add(VehicleTypes.Troop, null);
+							cc.TransferCargo(cd, dropTarget, cc.Owner, true);
+							var groundBattle = new GroundBattle(dropTarget);
+							groundBattle.Resolve();
+						}
 					}
 				}
 
