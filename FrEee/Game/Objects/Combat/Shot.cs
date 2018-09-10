@@ -62,9 +62,7 @@ namespace FrEee.Game.Objects.Combat
 			{
 				if (Weapon == null || Range < Weapon.Template.WeaponMinRange || Range > Weapon.Template.WeaponMaxRange)
 					return 0;
-				var dict = Variables;
-				dict["range"] = EffectiveRange;
-				return Weapon.Template.GetWeaponDamage(dict); // TODO - use PRNG
+				return Weapon.Template.GetWeaponDamage(EffectiveRange); // TODO - use PRNG
 			}
 		}
 

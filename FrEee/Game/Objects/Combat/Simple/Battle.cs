@@ -210,7 +210,7 @@ namespace FrEee.Game.Objects.Combat.Simple
 						var range = Dice.Next(maxrng - minrng) + minrng; // just pick a random valid range
 						var shot = new Shot(seeker.LaunchingCombatant, seeker.LaunchingComponent, seeker.Target, range);
 						Log.Add(seeker.CreateLogMessage(seeker + " detonates! " + seeker.Target + " takes " + shot.FullDamage + " damage."));
-						seeker.Target.TakeDamage(new Hit(shot, seeker.Target, seeker.Damage.Evaluate(shot)));
+						seeker.Target.TakeDamage(new Hit(shot, seeker.Target, seeker.Damage.Value));
 					}
 					else
 						Log.Add(seeker.CreateLogMessage(seeker + " moves closer to " + seeker.Target + " (" + seekers[seeker] + " rounds to detonation)"));
