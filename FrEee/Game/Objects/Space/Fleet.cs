@@ -748,6 +748,8 @@ namespace FrEee.Game.Objects.Space
 				Name = Owner + " Fleet";
 				Orders.Clear();
 			}
+			if (vis < Visibility.Fogged)
+				Dispose();
 		}
 
 		public void RemoveOrder(IOrder order)
