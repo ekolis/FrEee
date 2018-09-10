@@ -357,38 +357,10 @@ namespace FrEee.Game.Objects.Technology
 			if (w == null)
 				return 0;
 
-			var shot = new Shot(null, null, null, range - (Mount == null ? 0 : Mount.WeaponRangeModifier.Evaluate(this)));
-			return w.Damage.Evaluate(shot) * (Mount?.WeaponDamagePercent ?? 100) / 100;
-		}
-
-		/// <summary>
-		/// Damage inflicted by this component at range, if it is a weapon.
-		/// </summary>
-		public int GetWeaponDamage(IDictionary<string, object> variables)
-		{
-			var w = ComponentTemplate.WeaponInfo;
-			if (w == null)
-				return 0;
-
-			if (Mount == null)
-				return w.Damage.Evaluate(variables);
-
-			return w.Damage.Evaluate(variables) * Mount.WeaponDamagePercent.Evaluate(variables) / 100;
-		}
-
-		/// <summary>
-		/// Damage inflicted by this component at range, if it is a weapon.
-		/// </summary>
-		public int GetWeaponDamage(Shot shot)
-		{
-			var w = ComponentTemplate.WeaponInfo;
-			if (w == null)
-				return 0;
-			if (Mount == null)
-				return w.Damage;
-
-			var shot2 = new Shot(shot.Attacker, shot.Weapon, shot.Defender, shot.Range - (Mount == null ? 0 : Mount.WeaponRangeModifier.Evaluate(this)));
-			return w.Damage.Evaluate(shot2) * (Mount?.WeaponDamagePercent?.Value ?? 100) / 100;
+			var shot = new Shot(null, null, null, range - (Mount == null ? 0 : Mount.WeaponRangeModifier.Value));
+			var dict = new SafeDictionary<string, object>();
+			dict["range"] = range;
+			return w.Damage.Evaluate(dict) * (Mount?.WeaponDamagePercent.Value ?? 100) / 100;
 		}
 
 		public Component Instantiate()
