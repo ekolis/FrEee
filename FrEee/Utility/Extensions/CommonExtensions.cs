@@ -1152,6 +1152,8 @@ namespace FrEee.Utility.Extensions
 		{
 			if (image == null)
 				return null;
+			if (size == 0)
+				return null;
 			var result = new Bitmap(size, size, PixelFormat.Format32bppArgb);
 			var g = Graphics.FromImage(result);
 			g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
