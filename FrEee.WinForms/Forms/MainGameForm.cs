@@ -548,7 +548,7 @@ namespace FrEee.WinForms.Forms
 					break;
 
 				case CommandMode.Pursue:
-					Text = "Click a space object for " + sobj + " to pursue. (Ctrl-click to move aggressively)";
+					Text = "Click a space object for " + sobj + " to pursue. (Ctrl-click or pursue a hostile target to move aggressively)";
 					break;
 
 				case CommandMode.Evade:
@@ -1428,7 +1428,7 @@ namespace FrEee.WinForms.Forms
 					if (target != null)
 					{
 						// pursue
-						IssueSpaceObjectOrder(new PursueOrder(target, !aggressiveMode));
+						IssueSpaceObjectOrder(new PursueOrder(target, !(aggressiveMode || target is ICombatant c && c.IsHostileTo(Empire.Current))));
 						starSystemView.Invalidate(); // show move lines
 						BindReport();
 						starSystemView.Invalidate(); // show move lines
