@@ -223,7 +223,10 @@ namespace FrEee.Modding
 			T result;
 			try
 			{
-				result = (T)compiledScript.Execute(scope);
+				var cc = new CompiledCodeWithVariables(compiledScript, allVariables);
+				if (Results.ContainsKey(cc))
+					return (T)Results[cc];
+				Results[cc] = result = (T)compiledScript.Execute(scope);
 				if (variables != null)
 				{
 					var newvals = RetrieveVariablesFromScope(scope, variables.Keys);
@@ -372,6 +375,50 @@ namespace FrEee.Modding
 				compiledScripts.Add(source, Compile(source));
 			return compiledScripts[source];
 		}
+
+		private class CompiledCodeWithVariables : IEquatable<CompiledCodeWithVariables>
+		{
+			public CompiledCodeWithVariables(CompiledCode code, IDictionary<string, object> variables)
+			{
+				Code = code;
+				Variables = new SafeDictionary<string, object>(variables);
+			}
+
+			public CompiledCode Code { get; set; }
+			public SafeDictionary<string, object> Variables { get; set; }
+
+			public bool Equals(CompiledCodeWithVariables other)
+			{
+				return Code == other.Code && Variables.Keys.Count == other.Variables.Keys.Count && Variables.All(kvp => kvp.Value.SafeEquals(other.Variables[kvp.Key]));
+			}
+
+			public override bool Equals(object obj)
+			{
+				if (obj is CompiledCodeWithVariables c)
+					return this.Equals(c);
+				return false;
+			}
+
+			public static bool operator ==(CompiledCodeWithVariables c1, CompiledCodeWithVariables c2)
+			{
+				return c1.Equals(c2);
+			}
+
+			public static bool operator !=(CompiledCodeWithVariables c1, CompiledCodeWithVariables c2)
+			{
+				return !(c1 == c2);
+			}
+
+			public override int GetHashCode()
+			{
+				return HashCodeMasher.Mash(Code) ^ HashCodeMasher.Mash(Variables.Keys.ToArray()) ^ HashCodeMasher.Mash(Variables.Values.ToArray());
+			}
+		}
+
+		/// <summary>
+		/// The results
+		/// </summary>
+		private static SafeDictionary<CompiledCodeWithVariables, object> Results { get; set; } = new SafeDictionary<CompiledCodeWithVariables, object>();
 
 		private class ScriptCode
 		{

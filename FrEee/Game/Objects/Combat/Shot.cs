@@ -78,9 +78,6 @@ namespace FrEee.Game.Objects.Combat
 			{
 				return new Dictionary<string, object>
 				{
-					{ "weapon", Weapon},
-					{ "attacker", Defender},
-					{ "defender", Defender},
 					{ "range", Range},
 				};
 			}
