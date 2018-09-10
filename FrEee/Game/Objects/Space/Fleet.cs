@@ -691,7 +691,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			if (IsDisposed)
 				return;
-			foreach (var v in Vehicles)
+			foreach (var v in Vehicles.ExceptSingle(null))
 				v.Container = null;
 			Vehicles.Clear();
 			Galaxy.Current.UnassignID(this);
