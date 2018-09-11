@@ -61,8 +61,18 @@ namespace FrEee.Utility
 			}
 			set
 			{
-				Name = value.AssemblyQualifiedName;
+				Name = GetShortTypeName(value);
 			}
+		}
+
+		internal static string GetShortTypeName(Type t)
+		{
+			var tname = t.AssemblyQualifiedName;
+			tname = Regex.Replace(tname, @", Version=.*, Culture=.*, PublicKeyToken=.*?\],\[", "],[");
+			tname = Regex.Replace(tname, @", Version=.*, Culture=.*, PublicKeyToken=.*?\]\]", "]]");
+			tname = Regex.Replace(tname, @", Version=.*, Culture=.*, PublicKeyToken=.*?\]", "]");
+			tname = Regex.Replace(tname, @", Version=.*, Culture=.*, PublicKeyToken=.*", "");
+			return tname;
 		}
 
 		private static SafeDictionary<string, Assembly> ReferencedAssemblies { get; set; } = new SafeDictionary<string, Assembly>();
