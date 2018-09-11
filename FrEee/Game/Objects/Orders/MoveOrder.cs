@@ -202,7 +202,7 @@ namespace FrEee.Game.Objects.Orders
 		public override string ToString()
 		{
 			var coords = Destination.Coordinates;
-			if (Destination == null)
+			if (Destination == null || Destination.StarSystem == null)
 				return "(Unknown Move Order)";
 			if (AvoidEnemies)
 				return "Move to " + Destination.StarSystem.Name + " (" + coords.X + ", " + coords.Y + ")";
