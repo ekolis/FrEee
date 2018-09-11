@@ -55,6 +55,16 @@ namespace FrEee.Tests.Utility
 			Assert.AreEqual(answer, answer2);
 		}
 
+		[TestMethod]
+		public void NestedDictionary()
+		{
+			var dict = new SafeDictionary<string, SafeDictionary<string, string>>(true);
+			dict["test"]["fred"] = "flintstone";
+			var s = Serializer.SerializeToString(dict);
+			var dict2 = Serializer.DeserializeFromString< SafeDictionary<string, SafeDictionary<string, string>>>(s);
+			Assert.AreEqual(dict["test"]["fred"], dict2["test"]["fred"]);
+		}
+
 		private class Car
 		{
 			public Car(Company manufacturer, string model, int year)

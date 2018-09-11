@@ -10,6 +10,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace FrEee.Utility
@@ -46,6 +47,11 @@ namespace FrEee.Utility
 				Serialize(o, w, o.GetType(), context, tabLevel);
 		}
 
+		private static string GetShortTypeName(Type t)
+		{
+			return SafeType.GetShortTypeName(t);
+		}
+
 		internal static void Serialize(object o, TextWriter w, Type desiredType, ObjectGraphContext context = null, int tabLevel = 0)
 		{
 			var tabs = new string('\t', tabLevel);
@@ -67,12 +73,12 @@ namespace FrEee.Utility
 			// deal with nulls
 			if (o == null)
 			{
-				if (!ObjectGraphContext.KnownTypes.ContainsKey(desiredType.AssemblyQualifiedName))
+				if (!ObjectGraphContext.KnownTypes.ContainsKey(GetShortTypeName(desiredType)))
 				{
-					ObjectGraphContext.KnownTypes.Add(desiredType.AssemblyQualifiedName, desiredType);
+					ObjectGraphContext.KnownTypes.Add(GetShortTypeName(desiredType), desiredType);
 					ObjectGraphContext.AddProperties(desiredType);
 				}
-				w.Write(desiredType.AssemblyQualifiedName);
+				w.Write(GetShortTypeName(desiredType));
 				w.WriteLine(":n;");
 				return;
 			}
@@ -83,10 +89,10 @@ namespace FrEee.Utility
 			if (!type.IsValueType && type != typeof(string))
 				id = context.GetID(o);
 
-			if (!ObjectGraphContext.KnownTypes.ContainsKey(type.AssemblyQualifiedName))
+			if (!ObjectGraphContext.KnownTypes.ContainsKey(GetShortTypeName(type)))
 			{
 				// register type
-				ObjectGraphContext.KnownTypes.Add(type.AssemblyQualifiedName, type);
+				ObjectGraphContext.KnownTypes.Add(GetShortTypeName(type), type);
 				ObjectGraphContext.AddProperties(type);
 			}
 
@@ -94,7 +100,7 @@ namespace FrEee.Utility
 			if (type == desiredType)
 				w.Write(":");
 			else
-				w.WriteLine(type.AssemblyQualifiedName + ":");
+				w.WriteLine(GetShortTypeName(type) + ":");
 
 			if (id == null && !type.IsValueType && type != typeof(string) && !typeof(Array).IsAssignableFrom(type))
 			{
@@ -177,10 +183,10 @@ namespace FrEee.Utility
 					throw new SerializationException("Unable to determine object type from type string \"" + typename + "\"");
 			}
 
-			if (!ObjectGraphContext.KnownTypes.ContainsKey(type.AssemblyQualifiedName))
+			if (!ObjectGraphContext.KnownTypes.ContainsKey(GetShortTypeName(type)))
 			{
 				// add to known types
-				ObjectGraphContext.KnownTypes.Add(type.AssemblyQualifiedName, type);
+				ObjectGraphContext.KnownTypes.Add(GetShortTypeName(type), type);
 			}
 
 			// check type so we don't bother trying to create an object only to find it's the wrong type later
