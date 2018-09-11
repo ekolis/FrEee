@@ -729,12 +729,19 @@ namespace FrEee.Game.Objects.Space
 			{
 				foreach (var m in e.Log.ToArray())
 				{
-					if (m is PictorialLogMessage<IBattle> bm)
+					if (m is IPictorialLogMessage<Battle> bm)
 					{
-						// purge old battle logs to save space in the savegame
-						if (bm.Context.Timestamp < Current.Timestamp)
+						// purge old battle to save space in the savegame
+						var b = bm.Context;
+						if (b.Timestamp < Current.Timestamp)
 						{
-							bm.Context.Log.Clear();
+							b.Combatants.Clear();
+							b.CombatSpeedBuffer.Clear();
+							b.Events.Clear();
+							b.LowerRight.Clear();
+							b.OriginalHitpoints.Clear();
+							b.OriginalOwners.Clear();
+							b.UpperLeft.Clear();
 						}
 					}
 					if (m.TurnNumber < Current.TurnNumber - 10)
