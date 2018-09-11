@@ -87,9 +87,12 @@ namespace FrEee.Utility.Extensions
 			int result = 0;
 			if (list == null || !list.Any())
 				return result;
+			var total = list.Sum(weightPicker);
+			if (total == 0)
+				return result;
 			foreach (var item in list)
 				result += weightPicker(item) * amountPicker(item);
-			result /= list.Sum(weightPicker);
+			result /= total;
 			return result;
 		}
 
@@ -98,9 +101,12 @@ namespace FrEee.Utility.Extensions
 			double result = 0;
 			if (list == null || !list.Any())
 				return result;
+			var total = list.Sum(weightPicker);
+			if (total == 0)
+				return result;
 			foreach (var item in list)
 				result += weightPicker(item) * amountPicker(item);
-			result /= list.Sum(weightPicker);
+			result /= total;
 			return result;
 		}
 	}
