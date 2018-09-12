@@ -166,6 +166,10 @@ namespace FrEee.Utility
 			// find data type
 			var typename = r.ReadTo(':', log).Trim();
 			Type type;
+			if (typename.Contains("Dictionary") && typename.Contains("AbilityRule"))
+			{
+
+			}
 			if (string.IsNullOrWhiteSpace(typename))
 				type = desiredType;
 			else

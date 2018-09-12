@@ -174,6 +174,8 @@ namespace FrEee.Utility
 		/// <returns>The object's ID. IDs are unique within any any given object type but not across types.</returns>
 		public int Add(object o)
 		{
+			if (o == null)
+				return -1;
 			var type = o.GetType();
 			if (!KnownTypes.ContainsKey(type.AssemblyQualifiedName))
 				KnownTypes.Add(type.AssemblyQualifiedName, type);
