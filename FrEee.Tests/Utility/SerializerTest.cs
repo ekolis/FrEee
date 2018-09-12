@@ -78,6 +78,13 @@ namespace FrEee.Tests.Utility
 			Assert.AreEqual(list.First(), list2.First());
 		}
 
+		[TestMethod]
+		public void NestedCrossAssemblySafeTypeName()
+		{
+			var s = SafeType.GetShortTypeName(typeof(List<Formula<string>>));
+			Assert.AreEqual("System.Collections.Generic.List`1[[FrEee.Modding.Formula`1[[System.String, mscorlib]], FrEee.Core]], mscorlib", s);
+		}
+
 		private class Car
 		{
 			public Car(Company manufacturer, string model, int year)
