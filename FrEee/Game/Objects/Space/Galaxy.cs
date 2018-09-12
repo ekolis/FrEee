@@ -1636,7 +1636,7 @@ namespace FrEee.Game.Objects.Space
 			foreach (var v in vlist)
 			{
 				// mark system explored if not already
-				var sys = v.FindStarSystem();
+				var sys = v.StarSystem;
 				if (sys == null)
 					continue; // space object is dead, or not done being built
 
