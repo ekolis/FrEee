@@ -104,7 +104,10 @@ namespace FrEee.Utility
 		{
 			// FrEee, Version=0.0.8.0, Culture=neutral, PublicKeyToken=null
 			// ignore all but the assembly's base name since the version etc. could change
-			var regex = new Regex($"{n.Substring(0, n.IndexOf(","))}, Version=(.*), Culture=(.*), PublicKeyToken=(.*)");
+			var whereIsComma = n.IndexOf(",");
+			if (whereIsComma < 0)
+				whereIsComma = n.Length;
+			var regex = new Regex($"{n.Substring(0, whereIsComma)}, Version=(.*), Culture=(.*), PublicKeyToken=(.*)");
 			foreach (var kvp in ReferencedAssemblies)
 			{
 				if (regex.IsMatch(kvp.Value.FullName))
