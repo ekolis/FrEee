@@ -130,7 +130,7 @@ namespace FrEee.Utility
 				w.Write(tabs);
 
 			// serialize the object
-			if (Stringifiers.Stringifiers.All?.Any(x => x.SupportedType == type) ?? false)
+			if (StringifierLibrary.Instance.All?.Any(x => x.SupportedType == type) ?? false)
 				WriteStringifiedObject(o, w);
 			else if (type.IsPrimitive || typeof(Enum).IsAssignableFrom(type) || type.Name == "Nullable`1")
 				WritePrimitiveOrEnum(o, w);
@@ -199,7 +199,7 @@ namespace FrEee.Utility
 			// the object!
 			object o;
 
-			if (Stringifiers.Stringifiers.All?.Any(x => x.SupportedType == type) ?? false)
+			if (StringifierLibrary.Instance.All?.Any(x => x.SupportedType == type) ?? false)
 			{
 				o = DeserializeStringifiedObject(r, type, context, log);
 			}
@@ -522,7 +522,8 @@ namespace FrEee.Utility
 				log.Append((char)fin);
 			if (fin == 's')
 			{
-				var stringifier = Stringifiers.Stringifiers.All.Single(x => x.SupportedType == type);
+				var stringifier = StringifierLibrary.Instance.All.Single(x => x.SupportedType == type);
+				var dummy = r.ReadTo(':', log);
 				var val = r.ReadTo(';', log);
 				return stringifier.Destringify(val);
 			}
@@ -883,7 +884,7 @@ namespace FrEee.Utility
 
 		private static void WriteStringifiedObject(object o, TextWriter w)
 		{
-			w.WriteLine("s:" + Stringifiers.Stringifiers.All.Single(x => x.SupportedType == o.GetType()).Stringify(o) + ";");
+			w.WriteLine("s:" + StringifierLibrary.Instance.All.Single(x => x.SupportedType == o.GetType()).Stringify(o) + ";");
 		}
 	}
 }

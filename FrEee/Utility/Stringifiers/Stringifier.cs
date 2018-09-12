@@ -1,8 +1,6 @@
 ﻿using FrEee.Game.Objects.Space;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,21 +28,5 @@ namespace FrEee.Utility.Stringifiers
 		{
 			return Destringify(s);
 		}
-	}
-
-	public static class Stringifiers
-	{
-		private static CompositionContainer container;
-
-		static Stringifiers()
-		{
-			var catalog = new AggregateCatalog();
-			catalog.Catalogs.Add(new AssemblyCatalog(typeof(Galaxy).Assembly));
-			container = new CompositionContainer(catalog);
-			container.ComposeParts();
-		}
-
-		[Import]
-		public static IEnumerable<IStringifier> All { get; private set; }
 	}
 }
