@@ -44,20 +44,61 @@ namespace FrEee.Utility
 		{
 			get
 			{
-				return Type.GetType(Name,
-					assemblyName => FindAssembly(assemblyName.FullName),
-					(assembly, typeName, caseInsensitive) =>
+				if (Name.Contains("[["))
+				{
+					var regex = new Regex(@"(.*?)(\[\[.*\]\]), (.*)");
+					var match = regex.Match(Name);
+					var tname = match.Groups[1].Captures[0].Value.Trim(); // type name
+					var gtparmnames = match.Groups[2].Captures[0].Value.Trim(); // generic type parameter names
+					var aname = match.Groups[3].Captures[0].Value.Trim(); // assembly name
+					if (aname.Contains(","))
+						aname = aname.Substring(0, aname.IndexOf(",")); // strip legacy junk
+					var t = FindType(tname);
+					var gtparmnameslist = gtparmnames.Trim('[', ']').Split(',');
+					var gtparmnameslist2 = new List<string>();
+					var brackets = 0;
+					foreach (var gtparmname in gtparmnameslist)
 					{
-						if (caseInsensitive)
-							throw new NotSupportedException("Case insensitive type search is not supported.");
+						var gtparmname2 = gtparmname.Trim();
+						if (gtparmname2.StartsWith("Version") || gtparmname2.StartsWith("Culture") || gtparmname2.StartsWith("PublicKeyToken"))
+							continue; // legacy junk
+						if (brackets == 0)
+							gtparmnameslist2.Add(gtparmname2);
 						else
-						{
-							var t = FindType(assembly, typeName);
-							if (t == null)
-								throw new InvalidOperationException("Type '" + typeName + "' in assembly '" + assembly.FullName + "' was not found. Perhaps this SafeType is referring to an incompatible version of the assembly?");
-							return t;
-						}
-					});
+							gtparmnameslist2[gtparmnameslist2.Count - 1] += ", " + gtparmname2;
+						if (gtparmname2.Contains("[["))
+							brackets++;
+						if (gtparmname2.Contains("]]"))
+							brackets--;
+					}
+					var gtparmnameslist3 = new List<string>();
+					for (var i = 0; i < gtparmnameslist2.Count; i++)
+					{
+						if (i % 2 == 0)
+							gtparmnameslist3.Add(gtparmnameslist2[i]);
+						else
+							gtparmnameslist3[gtparmnameslist3.Count - 1] += ", " + gtparmnameslist2[i];
+					}
+					for (var i = 0; i < gtparmnameslist3.Count; i++)
+					{
+						gtparmnameslist3[i] = gtparmnameslist3[i].Trim('[', ']');
+					}
+					if (gtparmnameslist3.Last().Contains("[[") && !gtparmnameslist3.Last().Contains("]]"))
+						gtparmnameslist3[gtparmnameslist3.Count - 1] += "]], " + aname;
+					else if (!gtparmnameslist3.Last().Contains(","))
+						gtparmnameslist3[gtparmnameslist3.Count - 1] += ", " + aname;
+					var gtparms = gtparmnameslist3.Select(x => new SafeType(x).Type).ToArray();
+					return t.MakeGenericType(gtparms.Where(x => x != null).ToArray()); // HACK - nulls are getting in due to assembly names appearing twice or something
+				}
+				else
+				{
+					var regex = new Regex(@"(.*?), (.*)");
+					var match = regex.Match(Name);
+					var tname = match.Groups[1].Captures[0].Value.Trim(); // type name
+					var aname = match.Groups[2].Captures[0].Value.Trim().Trim('[', ']'); // assembly name
+					var t = FindType(FindAssembly(aname), tname);
+					return t;
+				}
 			}
 			set
 			{
@@ -88,7 +129,7 @@ namespace FrEee.Utility
 		public static void ForceLoadType(Type t)
 		{
 			RegisterAssembly(t.Assembly);
-			FindType(t.Assembly, t.AssemblyQualifiedName);
+			FindType(t.Assembly, GetShortTypeName(t));
 		}
 
 		public static implicit operator SafeType(Type t)
@@ -123,7 +164,7 @@ namespace FrEee.Utility
 			// no such assembly? find any referenced assemblies and keep on searching
 			try
 			{
-				return FindMoreAssemblies(a => a, a => a.FullName == n);
+				return FindMoreAssemblies(a => a, a => a.FullName.Substring(0, a.FullName.IndexOf(",")) == n);
 			}
 			catch (Exception ex)
 			{
@@ -188,13 +229,27 @@ namespace FrEee.Utility
 
 		private static Type FindType(Assembly a, string name)
 		{
+			int arrayDim = 0;
+			if (name.EndsWith("[]"))
+				arrayDim = 1;
+			else if (name.EndsWith("[,]"))
+				arrayDim = 2;
+
+			var realname = name.TrimEnd('[', ',', ']');
+
+			// do we already know about it?
 			if (!ReferencedTypes[a].Any())
 			{
 				foreach (var t in a.GetTypes())
 					ReferencedTypes[a][t.FullName] = t;
 			}
-			var type = ReferencedTypes[a][name];
-			return type;
+			var type = ReferencedTypes[a][realname];
+			if (arrayDim == 0)
+				return type;
+			else if (arrayDim == 1)
+				return type.MakeArrayType();
+			else
+				return type.MakeArrayType(arrayDim);
 		}
 
 		private static bool LoadReferencedAssemblies(Assembly a)
