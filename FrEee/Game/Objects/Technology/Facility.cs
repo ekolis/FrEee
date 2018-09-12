@@ -160,7 +160,7 @@ namespace FrEee.Game.Objects.Technology
 			get
 			{
 				// TODO - moddable facility HP
-				return 1000;
+				return 500;
 			}
 		}
 
@@ -375,6 +375,10 @@ namespace FrEee.Game.Objects.Technology
 
 		public int TakeDamage(Hit hit, PRNG dice = null)
 		{
+			// HACK - we reduced max HP of facilities
+			if (Hitpoints > MaxHitpoints)
+				Repair();
+
 			int damage = hit.NominalDamage;
 			var realhit = new Hit(hit.Shot, this, damage);
 			var df = realhit.Shot.DamageType.FacilityDamage.Evaluate(realhit);
