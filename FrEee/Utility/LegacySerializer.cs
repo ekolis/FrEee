@@ -353,9 +353,133 @@ namespace FrEee.Utility
 			return o;
 		}
 
-		private static IEnumerable DeserializeCollection(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		private static IEnumerable DeserializeDictionary(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
 		{
 			IEnumerable o;
+			int size;
+			var sizeStr = r.ReadTo(':', log);
+			if (!int.TryParse(sizeStr, out size))
+				throw new SerializationException("Expected integer, got \"" + sizeStr + "\" when parsing collection size.");
+			var coll = type.Instantiate();
+			context.Add(coll);
+			var adder = type.GetMethods().Single(m => m.Name == "Add" && m.GetParameters().Length == 2);
+			Type itemType;
+			if (type.GetGenericArguments().Count() == 2)
+				itemType = typeof(KeyValuePair<,>).MakeGenericType(type.GetGenericArguments());
+			else if (type == typeof(DynamicDictionary))
+				itemType = typeof(KeyValuePair<object, object>);
+			else
+				// HACK - Resources inherits from a dictionary type
+				itemType = typeof(KeyValuePair<,>).MakeGenericType(type.BaseType.GetGenericArguments());
+
+			var collParm = Expression.Parameter(typeof(object), "coll");
+			var keyParm = Expression.Parameter(typeof(object), "key");
+			var valParm = Expression.Parameter(typeof(object), "val");
+			var keyprop = ObjectGraphContext.GetKnownProperties(itemType)["Key"];
+			var valprop = ObjectGraphContext.GetKnownProperties(itemType)["Value"];
+			Delegate lambdaAdder;
+			if (ObjectGraphContext.CollectionAdders[type] == null)
+			{
+				// lambda has not been created yet, so create it
+				ObjectGraphContext.CollectionAdders[type] =
+					Expression.Lambda(Expression.Call(
+						Expression.Convert(collParm, type),
+						adder,
+						Expression.Convert(keyParm, keyprop.PropertyType),
+						Expression.Convert(valParm, valprop.PropertyType)
+						), collParm, keyParm, valParm).Compile();
+			}
+
+			// get lambda
+			lambdaAdder = ObjectGraphContext.CollectionAdders[type];
+
+			// load items and add them
+			for (int i = 0; i < size; i++)
+			{
+				var key = Deserialize(r, keyprop.PropertyType, false, context, log);
+				var val = Deserialize(r, valprop.PropertyType, false, context, log);
+				lambdaAdder.DynamicInvoke(coll, key, val);
+			}
+
+			o = (IEnumerable)coll;
+
+			// clean up
+			ReadSemicolon(r, type, log);
+
+			return o;
+		}
+
+		private static IEnumerable DeserializeList(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		{
+			IEnumerable o;
+			int size;
+			var sizeStr = r.ReadTo(':', log);
+			if (!int.TryParse(sizeStr, out size))
+				throw new SerializationException("Expected integer, got \"" + sizeStr + "\" when parsing collection size.");
+			var coll = Activator.CreateInstance(type);
+			context.Add(coll);
+			var adder = type.GetMethods().Single(m => m.Name == "Add" && m.GetParameters().Length == 1);
+			Type itemType;
+			if (typeof(DynamicDictionary).IsAssignableFrom(type))
+			{
+				itemType = typeof(KeyValuePair<object, object>);
+			}
+			else if (type.GetGenericArguments().Length == 2)
+			{
+				// HACK - assume it's a dictionary, no real way to test
+				itemType = typeof(KeyValuePair<,>).MakeGenericType(type.GetGenericArguments());
+			}
+			else if (type.GetGenericArguments().Length == 1)
+			{
+				// HACK - assume it's a collection, no real way to test
+				itemType = type.GetGenericArguments()[0];
+			}
+			else
+			{
+				// no generic type? probably a list of objects?
+				itemType = typeof(object);
+			}
+			var collParm = Expression.Parameter(type, "coll");
+			var objParm = Expression.Parameter(itemType, "obj");
+			Delegate lambdaAdder;
+			if (ObjectGraphContext.CollectionAdders[type] == null)
+			{
+				// lambda has not been created yet, so create it
+				try
+				{
+					ObjectGraphContext.CollectionAdders[type] =
+						Expression.Lambda(Expression.Call(
+							collParm, // the collection to add to
+							adder, // the add method to call
+							objParm), // the object to add
+							collParm, objParm).Compile();
+				}
+				catch (Exception ex)
+				{
+					throw new SerializationException("Could not create lambda to add {0} items to {1}.".F(itemType, type), ex);
+				}
+			}
+
+			// get lambda
+			lambdaAdder = ObjectGraphContext.CollectionAdders[type];
+
+			// load items and add them
+			for (int i = 0; i < size; i++)
+			{
+				var item = Deserialize(r, itemType, false, context, log);
+				lambdaAdder.DynamicInvoke(coll, item);
+			}
+			o = (IEnumerable)coll;
+
+			// clean up
+			ReadSemicolon(r, type, log);
+
+			return o;
+		}
+
+		private static IEnumerable DeserializeCollection(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		{
+			IEnumerable o = null;
 			// collections
 			// read size or id number
 			var fin = r.Read();
@@ -369,119 +493,15 @@ namespace FrEee.Utility
 				log.Append((char)fin);
 			if (fin == 'c')
 			{
-				int size;
-				var sizeStr = r.ReadTo(':', log);
-				if (!int.TryParse(sizeStr, out size))
-					throw new SerializationException("Expected integer, got \"" + sizeStr + "\" when parsing collection size.");
-				var coll = Activator.CreateInstance(type);
-				context.Add(coll);
-				var adder = type.GetMethods().Single(m => m.Name == "Add" && m.GetParameters().Length == 1);
-				Type itemType;
-				if (typeof(DynamicDictionary).IsAssignableFrom(type))
-				{
-					itemType = typeof(KeyValuePair<object, object>);
-				}
-				else if (type.GetGenericArguments().Length == 2)
-				{
-					// HACK - assume it's a dictionary, no real way to test
-					itemType = typeof(KeyValuePair<,>).MakeGenericType(type.GetGenericArguments());
-				}
-				else if (type.GetGenericArguments().Length == 1)
-				{
-					// HACK - assume it's a collection, no real way to test
-					itemType = type.GetGenericArguments()[0];
-				}
-				else
-				{
-					// no generic type? probably a list of objects?
-					itemType = typeof(object);
-				}
-				var collParm = Expression.Parameter(type, "coll");
-				var objParm = Expression.Parameter(itemType, "obj");
-				Delegate lambdaAdder;
-				if (ObjectGraphContext.CollectionAdders[type] == null)
-				{
-					// lambda has not been created yet, so create it
-					try
-					{
-						ObjectGraphContext.CollectionAdders[type] =
-							Expression.Lambda(Expression.Call(
-								collParm, // the collection to add to
-								adder, // the add method to call
-								objParm), // the object to add
-								collParm, objParm).Compile();
-					}
-					catch (Exception ex)
-					{
-						throw new SerializationException("Could not create lambda to add {0} items to {1}.".F(itemType, type), ex);
-					}
-				}
-
-				// get lambda
-				lambdaAdder = ObjectGraphContext.CollectionAdders[type];
-
-				// load items and add them
-				for (int i = 0; i < size; i++)
-				{
-					var item = Deserialize(r, itemType, false, context, log);
-					lambdaAdder.DynamicInvoke(coll, item);
-				}
-				o = (IEnumerable)coll;
-
-				// clean up
-				ReadSemicolon(r, type, log);
+				o = DeserializeList(r, type, context, log);
+			}
+			else if (fin == 'c')
+			{
+				o = DeserializeList(r, type, context, log);
 			}
 			else if (fin == 'd')
 			{
-				int size;
-				var sizeStr = r.ReadTo(':', log);
-				if (!int.TryParse(sizeStr, out size))
-					throw new SerializationException("Expected integer, got \"" + sizeStr + "\" when parsing collection size.");
-				var coll = type.Instantiate();
-				context.Add(coll);
-				var adder = type.GetMethods().Single(m => m.Name == "Add" && m.GetParameters().Length == 2);
-				Type itemType;
-				if (type.GetGenericArguments().Count() == 2)
-					itemType = typeof(KeyValuePair<,>).MakeGenericType(type.GetGenericArguments());
-				else if (type == typeof(DynamicDictionary))
-					itemType = typeof(KeyValuePair<object, object>);
-				else
-					// HACK - Resources inherits from a dictionary type
-					itemType = typeof(KeyValuePair<,>).MakeGenericType(type.BaseType.GetGenericArguments());
-
-				var collParm = Expression.Parameter(typeof(object), "coll");
-				var keyParm = Expression.Parameter(typeof(object), "key");
-				var valParm = Expression.Parameter(typeof(object), "val");
-				var keyprop = ObjectGraphContext.GetKnownProperties(itemType)["Key"];
-				var valprop = ObjectGraphContext.GetKnownProperties(itemType)["Value"];
-				Delegate lambdaAdder;
-				if (ObjectGraphContext.CollectionAdders[type] == null)
-				{
-					// lambda has not been created yet, so create it
-					ObjectGraphContext.CollectionAdders[type] =
-						Expression.Lambda(Expression.Call(
-							Expression.Convert(collParm, type),
-							adder,
-							Expression.Convert(keyParm, keyprop.PropertyType),
-							Expression.Convert(valParm, valprop.PropertyType)
-							), collParm, keyParm, valParm).Compile();
-				}
-
-				// get lambda
-				lambdaAdder = ObjectGraphContext.CollectionAdders[type];
-
-				// load items and add them
-				for (int i = 0; i < size; i++)
-				{
-					var key = Deserialize(r, keyprop.PropertyType, false, context, log);
-					var val = Deserialize(r, valprop.PropertyType, false, context, log);
-					lambdaAdder.DynamicInvoke(coll, key, val);
-				}
-
-				o = (IEnumerable)coll;
-
-				// clean up
-				ReadSemicolon(r, type, log);
+				o = DeserializeDictionary(r, type, context, log);
 			}
 			else if (fin == 'i')
 			{
@@ -547,8 +567,16 @@ namespace FrEee.Utility
 				// clean up
 				ReadSemicolon(r, type, log);
 			}
+			else if (fin == 'd')
+			{
+				o = DeserializeDictionary(r, type, context, log);
+			}
+			else if (fin == 'c')
+			{
+				o = DeserializeList(r, type, context, log);
+			}
 			else
-				throw new Exception("Unknown data tag " + fin + ", was expecting s/p/i/n.");
+				throw new Exception("Unknown data tag " + fin + ", was expecting s/p/i/n/d/c.");
 			context.Add(o);
 			return o;
 		}
