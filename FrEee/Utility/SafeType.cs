@@ -44,6 +44,8 @@ namespace FrEee.Utility
 		{
 			get
 			{
+				if (Name.Contains("Version="))
+					return Type.GetType(Name); // legacy junk
 				if (Name.Contains("[["))
 				{
 					var regex = new Regex(@"(.*?)(\[\[.*\]\]), (.*)");
