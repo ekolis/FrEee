@@ -20,7 +20,7 @@ namespace FrEee.Utility
 			/*ReferencedAssemblies = LoadReferencedAssemblies().ToDictionary(a => a.GetName().Name);
 			ReferencedTypes = new Dictionary<Tuple<Assembly, string>, Type>();
 			foreach (var a in ReferencedAssemblies.Values)
-			{
+			tpy
 				foreach (var t in a.GetTypes())
 					ReferencedTypes.Add(Tuple.Create(a, t.FullName), t);
 			}*/
@@ -65,15 +65,21 @@ namespace FrEee.Utility
 			}
 		}
 
-		internal static string GetShortTypeName(Type t)
+		public static string GetShortTypeName(Type t)
 		{
 			var tname = t.AssemblyQualifiedName;
-			tname = Regex.Replace(tname, @", Version=.*, Culture=.*, PublicKeyToken=.*?\],\[", "],[");
-			tname = Regex.Replace(tname, @", Version=.*, Culture=.*, PublicKeyToken=.*?\]\]", "]]");
-			tname = Regex.Replace(tname, @", Version=.*, Culture=.*, PublicKeyToken=.*?\]", "]");
-			tname = Regex.Replace(tname, @", Version=.*, Culture=.*, PublicKeyToken=.*", "");
-			return tname;
+			if (!ShortTypeNames.ContainsKey(t))
+			{
+				tname = Regex.Replace(tname, @"(.*?), (.*?), Version=.*?, Culture=.*?, PublicKeyToken=.*?\],\[", "$1],[");
+				tname = Regex.Replace(tname, @"(.*?), (.*?), Version=.*?, Culture=.*?, PublicKeyToken=.*?\]\]", "$1, $2]]");
+				tname = Regex.Replace(tname, @"(.*?), (.*?), Version=.*?, Culture=.*?, PublicKeyToken=.*?\]", "$1, $2]");
+				tname = Regex.Replace(tname, @"(.*?), (.*?), Version=.*?, Culture=.*?, PublicKeyToken=.*\z", "$1, $2");
+				ShortTypeNames[t] = tname;
+			}
+			return ShortTypeNames[t];
 		}
+
+		private static SafeDictionary<Type, string> ShortTypeNames { get; set; } = new SafeDictionary<Type, string>();
 
 		private static SafeDictionary<string, Assembly> ReferencedAssemblies { get; set; } = new SafeDictionary<string, Assembly>();
 
