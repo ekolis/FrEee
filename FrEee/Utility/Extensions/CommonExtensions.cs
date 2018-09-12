@@ -939,7 +939,7 @@ namespace FrEee.Utility.Extensions
 		{
 			var sb = new StringBuilder();
 			int data = 0;
-			bool escaping = false;
+			bool escaping = false, quoting = false;
 			do
 			{
 				data = r.Read();
@@ -953,10 +953,24 @@ namespace FrEee.Utility.Extensions
 						log.Append((char)data);
 					escaping = false;
 				}
+				else if (quoting)
+				{
+					// in quotes
+					sb.Append((char)data);
+					if (log != null)
+						log.Append((char)data);
+					if (data == '"')
+						quoting = false;
+				}
 				else if (data == c)
 					break; // found match
 				else if (data == '\\')
 					escaping = true; // begin escape sequence
+				else if (data == '"')
+				{
+					sb.Append((char)data);
+					quoting = true; // begin quoted string
+				}
 				else
 				{
 					// regular data
