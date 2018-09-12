@@ -525,7 +525,7 @@ namespace FrEee.Utility
 				var stringifier = StringifierLibrary.Instance.All.Single(x => x.SupportedType == type);
 				var dummy = r.ReadTo(':', log);
 				var val = r.ReadTo(';', log);
-				return stringifier.Destringify(val);
+				o = stringifier.Destringify(val);
 			}
 			else if (fin == 'p')
 			{
@@ -545,6 +545,7 @@ namespace FrEee.Utility
 			}
 			else
 				throw new Exception("Unknown data tag " + fin + ", was expecting s/p/i/n.");
+			context.Add(o);
 			return o;
 		}
 
