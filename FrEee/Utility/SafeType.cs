@@ -111,7 +111,7 @@ namespace FrEee.Utility
 			var tname = t.AssemblyQualifiedName;
 			if (!ShortTypeNames.ContainsKey(t))
 			{
-				tname = Regex.Replace(tname, @"(.*?), (.*?), Version=.*?, Culture=.*?, PublicKeyToken=.*?\],\[", "$1],[");
+				tname = Regex.Replace(tname, @"(.*?), (.*?), Version=.*?, Culture=.*?, PublicKeyToken=.*?\],\[", "$1, $2],[");
 				tname = Regex.Replace(tname, @"(.*?), (.*?), Version=.*?, Culture=.*?, PublicKeyToken=.*?\]\]", "$1, $2]]");
 				tname = Regex.Replace(tname, @"(.*?), (.*?), Version=.*?, Culture=.*?, PublicKeyToken=.*?\]", "$1, $2]");
 				tname = Regex.Replace(tname, @"(.*?), (.*?), Version=.*?, Culture=.*?, PublicKeyToken=.*\z", "$1, $2");
