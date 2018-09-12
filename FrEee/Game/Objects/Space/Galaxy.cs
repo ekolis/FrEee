@@ -1193,11 +1193,16 @@ namespace FrEee.Game.Objects.Space
 			});
 
 			// repair facilities
-			Current.FindSpaceObjects<Planet>().Select(p => p.Colony).Where(c => c != null).SelectMany(c => c.Facilities).SafeForeach(f => f.Repair());
+			// planets with no population won't repair facilities
+			Current.FindSpaceObjects<Planet>().Select(p => p.Colony).Where(c => c != null && c.Population.Any(q => q.Value > 0)).SelectMany(c => c.Facilities).SafeForeach(f => f.Repair());
 
 			// repair units
+			// planets with no population won't repair units
 			Current.FindSpaceObjects<IMobileSpaceObject>().OfType<IUnit>().SafeForeach(u => u.Repair());
-			Current.FindSpaceObjects<ISpaceObject>().OfType<ICargoContainer>().Where(p => p.Cargo != null).SelectMany(p => p.Cargo.Units).SafeForeach(u => u.Repair());
+			Current.FindSpaceObjects<ISpaceObject>().OfType<ICargoContainer>().Where(
+				p => p.Cargo != null
+				&& (!(p is Planet) || (((Planet)p).Colony?.Population.Any(q => q.Value > 0) ?? false)))
+				.SelectMany(p => p.Cargo.Units).SafeForeach(u => u.Repair());
 
 			// repair ships/bases
 			// TODO - repair priorities
