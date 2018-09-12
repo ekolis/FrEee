@@ -388,34 +388,37 @@ namespace FrEee.WinForms.Controls
 				return;
 			pewpews.Clear();
 			booms.Clear();
-			foreach (var e in Battle.Events[round])
+			if (Battle.Events.Count > round)
 			{
-				switch (e)
+				foreach (var e in Battle.Events[round])
 				{
-					case CombatantAppearsEvent ca:
-						locations[ca.Combatant] = ca.EndPosition;
-						break;
+					switch (e)
+					{
+						case CombatantAppearsEvent ca:
+							locations[ca.Combatant] = ca.EndPosition;
+							break;
 
-					case CombatantDisappearsEvent cd:
-						locations.Remove(cd.Combatant);
-						booms.Add(new Boom(cd.EndPosition, 1));
-						break;
+						case CombatantDisappearsEvent cd:
+							locations.Remove(cd.Combatant);
+							booms.Add(new Boom(cd.EndPosition, 1));
+							break;
 
-					case CombatantMovesEvent cm:
-						locations[cm.Combatant] = cm.EndPosition;
-						break;
+						case CombatantMovesEvent cm:
+							locations[cm.Combatant] = cm.EndPosition;
+							break;
 
-					case WeaponFiresEvent wf:
-						if (wf.IsHit)
-						{
-							pewpews.Add(new Pewpew(wf.StartPosition, wf.EndPosition));
-							booms.Add(new Boom(wf.EndPosition, 0.5f));
-						}
-						else
-						{
-							pewpews.Add(new Pewpew(wf.StartPosition, wf.EndPosition, false));
-						}
-						break;
+						case WeaponFiresEvent wf:
+							if (wf.IsHit)
+							{
+								pewpews.Add(new Pewpew(wf.StartPosition, wf.EndPosition));
+								booms.Add(new Boom(wf.EndPosition, 0.5f));
+							}
+							else
+							{
+								pewpews.Add(new Pewpew(wf.StartPosition, wf.EndPosition, false));
+							}
+							break;
+					}
 				}
 			}
 		}

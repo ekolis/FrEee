@@ -78,14 +78,14 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 		public System.Drawing.Image Icon
 		{
-			get { return Combatants.OfType<ISpaceObject>().Largest().Icon; }
+			get { return Combatants.OfType<ISpaceObject>().Largest()?.Icon; }
 		}
 
 		public IEnumerable<string> IconPaths
 		{
 			get
 			{
-				return Combatants.OfType<ISpaceObject>().Largest().IconPaths;
+				return Combatants.OfType<ISpaceObject>().Largest()?.IconPaths ?? Enumerable.Empty<string>();
 			}
 		}
 
@@ -112,14 +112,14 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 		public System.Drawing.Image Portrait
 		{
-			get { return Combatants.OfType<ISpaceObject>().Largest().Portrait; }
+			get { return Combatants.OfType<ISpaceObject>().Largest()?.Portrait; }
 		}
 
 		public IEnumerable<string> PortraitPaths
 		{
 			get
 			{
-				return Combatants.OfType<ISpaceObject>().Largest().PortraitPaths;
+				return Combatants.OfType<ISpaceObject>().Largest()?.PortraitPaths ?? Enumerable.Empty<string>();
 			}
 		}
 
