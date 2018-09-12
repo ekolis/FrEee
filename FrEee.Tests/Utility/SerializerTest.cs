@@ -89,6 +89,13 @@ namespace FrEee.Tests.Utility
 		}
 
 		[TestMethod]
+		public void NestedDictionaries()
+		{
+			var s = SafeType.GetShortTypeName(typeof(IDictionary<AbilityRule, IDictionary<int, Formula<int>>>));
+			Assert.AreEqual("System.Collections.Generic.IDictionary`2[[FrEee.Game.Objects.Abilities.AbilityRule, FrEee.Core],[System.Collections.Generic.IDictionary`2[[System.Int32, mscorlib],[FrEee.Modding.Formula`1[[System.Int32, mscorlib]], FrEee.Core]], mscorlib]], mscorlib", s);
+		}
+
+		[TestMethod]
 		public void LookUpComplexType()
 		{
 			{
@@ -100,6 +107,16 @@ namespace FrEee.Tests.Utility
 				var tname = "FrEee.Game.Objects.Orders.ConstructionOrder`2[[FrEee.Game.Objects.Vehicles.Ship, FrEee.Core],[FrEee.Game.Objects.Vehicles.Design`1[[FrEee.Game.Objects.Vehicles.Ship, FrEee.Core]], FrEee.Core";
 				var st = new SafeType(tname);
 				Assert.AreEqual(typeof(ConstructionOrder<Ship, Design<Ship>>), st.Type);
+			}
+			{
+				var tname = "System.Collections.Generic.Dictionary`2[[FrEee.Game.Objects.Abilities.AbilityRule, FrEee.Core],[FrEee.Modding.Formula`1[[System.Int32, mscorlib]], mscorlib";
+				var st = new SafeType(tname);
+				Assert.AreEqual(typeof(Dictionary<AbilityRule, Formula<int>>), st.Type);
+			}
+			{
+				var tname = "System.Collections.Generic.IDictionary`2[[FrEee.Game.Objects.Abilities.AbilityRule, FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null],[System.Collections.Generic.IDictionary`2[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[FrEee.Modding.Formula`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]";
+				var st = new SafeType(tname);
+				Assert.AreEqual(typeof(IDictionary<AbilityRule, IDictionary<int, Formula<int>>>), st.Type);
 			}
 		}
 
