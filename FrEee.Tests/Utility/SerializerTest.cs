@@ -1,4 +1,7 @@
-﻿using FrEee.Modding;
+﻿using FrEee.Game.Objects.Abilities;
+using FrEee.Game.Objects.Orders;
+using FrEee.Game.Objects.Vehicles;
+using FrEee.Modding;
 using FrEee.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -64,7 +67,7 @@ namespace FrEee.Tests.Utility
 			var dict = new SafeDictionary<string, SafeDictionary<string, string>>(true);
 			dict["test"]["fred"] = "flintstone";
 			var s = Serializer.SerializeToString(dict);
-			var dict2 = Serializer.DeserializeFromString< SafeDictionary<string, SafeDictionary<string, string>>>(s);
+			var dict2 = Serializer.DeserializeFromString<SafeDictionary<string, SafeDictionary<string, string>>>(s);
 			Assert.AreEqual(dict["test"]["fred"], dict2["test"]["fred"]);
 		}
 
@@ -83,6 +86,44 @@ namespace FrEee.Tests.Utility
 		{
 			var s = SafeType.GetShortTypeName(typeof(List<Formula<string>>));
 			Assert.AreEqual("System.Collections.Generic.List`1[[FrEee.Modding.Formula`1[[System.String, mscorlib]], FrEee.Core]], mscorlib", s);
+		}
+
+		[TestMethod]
+		public void LookUpComplexType()
+		{
+			{
+				var tname = "System.Collections.Generic.List`1[[FrEee.Modding.Formula`1[[System.String, mscorlib]], FrEee.Core]], mscorlib";
+				var st = new SafeType(tname);
+				Assert.AreEqual(typeof(List<Formula<string>>), st.Type);
+			}
+			{
+				var tname = "FrEee.Game.Objects.Orders.ConstructionOrder`2[[FrEee.Game.Objects.Vehicles.Ship, FrEee.Core],[FrEee.Game.Objects.Vehicles.Design`1[[FrEee.Game.Objects.Vehicles.Ship, FrEee.Core]], FrEee.Core";
+				var st = new SafeType(tname);
+				Assert.AreEqual(typeof(ConstructionOrder<Ship, Design<Ship>>), st.Type);
+			}
+		}
+
+		[TestMethod]
+		public void LegacyLookUpComplexType()
+		{
+			{
+				var tname = "System.Collections.Generic.List`1[[FrEee.Game.Objects.Abilities.AbilityRule, FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089";
+				var st = new SafeType(tname);
+				Assert.AreEqual(typeof(List<AbilityRule>), st.Type);
+			}
+			{
+				var tname = "System.Collections.Generic.List`1[[FrEee.Modding.Formula`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089";
+				var st = new SafeType(tname);
+				Assert.AreEqual(typeof(List<Formula<string>>), st.Type);
+			}
+		}
+
+		[TestMethod]
+		public void LegacyLookUpArrays()
+		{
+			var tname = "FrEee.Modding.Script[], FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null";
+			var st = new SafeType(tname);
+			Assert.AreEqual(typeof(Script[]), st.Type);
 		}
 
 		private class Car
