@@ -490,7 +490,10 @@
     <Compile Include="Utility\Serializer.cs" />
     <Compile Include="Utility\Status.cs" />
     <Compile Include="Utility\Stringifiers\IStringifier.cs" />
+    <Compile Include="Utility\Stringifiers\SizeStringifier.cs" />
+    <Compile Include="Utility\Stringifiers\PointStringifier.cs" />
     <Compile Include="Utility\Stringifiers\Stringifier.cs" />
+    <Compile Include="Utility\Stringifiers\StringifierLibrary.cs" />
     <Compile Include="Utility\Vector2.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
