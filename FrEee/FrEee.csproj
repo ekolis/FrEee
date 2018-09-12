@@ -125,6 +125,7 @@
       <HintPath>..\packages\valueinjecter.2.3.3\lib\net35\Omu.ValueInjecter.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
@@ -488,6 +489,8 @@
     <Compile Include="Utility\SequenceEqualityComparer.cs" />
     <Compile Include="Utility\Serializer.cs" />
     <Compile Include="Utility\Status.cs" />
+    <Compile Include="Utility\Stringifiers\IStringifier.cs" />
+    <Compile Include="Utility\Stringifiers\Stringifier.cs" />
     <Compile Include="Utility\Vector2.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

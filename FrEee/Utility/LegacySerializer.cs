@@ -1,5 +1,6 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Utility.Extensions;
+using FrEee.Utility.Stringifiers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -129,7 +130,9 @@ namespace FrEee.Utility
 				w.Write(tabs);
 
 			// serialize the object
-			if (type.IsPrimitive || typeof(Enum).IsAssignableFrom(type) || type.Name == "Nullable`1")
+			if (Stringifiers.Stringifiers.All?.Any(x => x.SupportedType == type) ?? false)
+				WriteStringifiedObject(o, w);
+			else if (type.IsPrimitive || typeof(Enum).IsAssignableFrom(type) || type.Name == "Nullable`1")
 				WritePrimitiveOrEnum(o, w);
 			else if (type == typeof(string))
 				WriteString((string)o, w);
@@ -196,7 +199,11 @@ namespace FrEee.Utility
 			// the object!
 			object o;
 
-			if (type.IsPrimitive)
+			if (Stringifiers.Stringifiers.All?.Any(x => x.SupportedType == type) ?? false)
+			{
+				o = DeserializeStringifiedObject(r, type, context, log);
+			}
+			else if (type.IsPrimitive)
 			{
 				// parse primitive types
 				var val = r.ReadTo(';', log);
@@ -500,10 +507,112 @@ namespace FrEee.Utility
 			return o;
 		}
 
-		private static object DeserializeObject(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		private static object DeserializeStringifiedObject(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
 		{
 			object o;
+			// read tag to see if it's actually a stringified object
+			var fin = r.Read();
+			while (fin != 0 && char.IsWhiteSpace((char)fin))
+			{
+				if (log != null)
+					log.Append((char)fin);
+				fin = r.Read();
+			}
+			if (fin != 0 && log != null)
+				log.Append((char)fin);
+			if (fin == 's')
+			{
+				var stringifier = Stringifiers.Stringifiers.All.Single(x => x.SupportedType == type);
+				var val = r.ReadTo(';', log);
+				return stringifier.Destringify(val);
+			}
+			else if (fin == 'p')
+			{
+				o = DeserializeObjectWithProperties(r, type, context, log);
+			}
+			else if (fin == 'i')
+			{
+				o = DeserializeObjectWithID(r, type, context, log);
+			}
+			else if (fin == 'n')
+			{
+				// null object!
+				o = null;
+
+				// clean up
+				ReadSemicolon(r, type, log);
+			}
+			else
+				throw new Exception("Unknown data tag " + fin + ", was expecting s/p/i/n.");
+			return o;
+		}
+
+		private static object DeserializeObjectWithProperties(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		{
+			// create object and add it to our context
+			var o = type.Instantiate();
+			context.Add(o);
+
+			// properties count - need to create object and populate properties
+			int count;
+			string s = r.ReadTo(':', log);
+			if (!int.TryParse(s, out count))
+				throw new SerializationException("Expected integer, got \"" + s + "\" when parsing property count.");
+
+			var dict = new SafeDictionary<string, object>();
+
+			// deserialize the properties
+			var props = ObjectGraphContext.GetKnownProperties(type);
+			for (int i = 0; i < count; i++)
+			{
+				var pname = r.ReadTo(':', log).Trim();
+				if (props.ContainsKey(pname))
+				{
+					var prop = props[pname];
+					if (prop != null && !prop.HasAttribute<DoNotSerializeAttribute>())
+					{
+						if (prop.Name == "Sector" && type == typeof(Game.Objects.Civilization.SpaceObjectWaypoint))
+						{
+						}
+						dict[pname] = Deserialize(r, prop.PropertyType, false, context, log);
+					}
+					else
+						r.ReadTo(';', log); // throw away this property, we don't need it
+											// if p is null or has do not serialize attribute, it must be data from an old version with different property names, so don't crash
+				}
+			}
+
+			//propertySetterTasks.Add(Task.Factory.StartNew(() =>
+			//{
+			o.SetData(dict, context);
+			//}));
+
+			// clean up
+			ReadSemicolon(r, type, log);
+
+			return o;
+		}
+
+		private static object DeserializeObjectWithID(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		{
+			// ID - need to find known object
+			int id;
+			string s = r.ReadTo(';', log);
+			if (!int.TryParse(s, out id))
+				throw new SerializationException("Expected integer, got \"" + s + "\" when parsing object ID.");
+
+			// do we have it?
+			if (!context.KnownObjects.ContainsKey(type) || context.KnownObjects[type].Count <= id)
+				throw new SerializationException("No known object of type " + type + " has an ID of " + id + ".");
+
+			// found it!
+			return context.KnownObjects[type][id];
+		}
+
+		private static object DeserializeObject(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		{
 			// read property count or id number
+			object o;
 			var fin = r.Read();
 			while (fin != 0 && char.IsWhiteSpace((char)fin))
 			{
@@ -514,62 +623,10 @@ namespace FrEee.Utility
 			if (fin != 0 && log != null)
 				log.Append((char)fin);
 			if (fin == 'p')
-			{
-				// create object and add it to our context
-				o = type.Instantiate();
-				context.Add(o);
-
-				// properties count - need to create object and populate properties
-				int count;
-				string s = r.ReadTo(':', log);
-				if (!int.TryParse(s, out count))
-					throw new SerializationException("Expected integer, got \"" + s + "\" when parsing property count.");
-
-				var dict = new SafeDictionary<string, object>();
-
-				// deserialize the properties
-				var props = ObjectGraphContext.GetKnownProperties(type);
-				for (int i = 0; i < count; i++)
-				{
-					var pname = r.ReadTo(':', log).Trim();
-					if (props.ContainsKey(pname))
-					{
-						var prop = props[pname];
-						if (prop != null && !prop.HasAttribute<DoNotSerializeAttribute>())
-						{
-							if (prop.Name == "Sector" && type == typeof(Game.Objects.Civilization.SpaceObjectWaypoint))
-							{
-							}
-							dict[pname] = Deserialize(r, prop.PropertyType, false, context, log);
-						}
-						else
-							r.ReadTo(';', log); // throw away this property, we don't need it
-												// if p is null or has do not serialize attribute, it must be data from an old version with different property names, so don't crash
-					}
-				}
-
-				//propertySetterTasks.Add(Task.Factory.StartNew(() =>
-				//{
-				o.SetData(dict, context);
-				//}));
-
-				// clean up
-				ReadSemicolon(r, type, log);
-			}
+				o = DeserializeObjectWithProperties(r, type, context, log);
 			else if (fin == 'i')
 			{
-				// ID - need to find known object
-				int id;
-				string s = r.ReadTo(';', log);
-				if (!int.TryParse(s, out id))
-					throw new SerializationException("Expected integer, got \"" + s + "\" when parsing object ID.");
-
-				// do we have it?
-				if (!context.KnownObjects.ContainsKey(type) || context.KnownObjects[type].Count <= id)
-					throw new SerializationException("No known object of type " + type + " has an ID of " + id + ".");
-
-				// found it!
-				o = context.KnownObjects[type][id];
+				o = DeserializeObjectWithID(r, type, context, log);
 			}
 			else if (fin == 'n')
 			{
@@ -822,6 +879,11 @@ namespace FrEee.Utility
 
 			// write end object
 			w.WriteLine(";");
+		}
+
+		private static void WriteStringifiedObject(object o, TextWriter w)
+		{
+			w.WriteLine("s:" + Stringifiers.Stringifiers.All.Single(x => x.SupportedType == o.GetType()).Stringify(o) + ";");
 		}
 	}
 }
