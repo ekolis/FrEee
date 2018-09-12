@@ -1,5 +1,8 @@
-﻿using FrEee.Utility;
+﻿using FrEee.Modding;
+using FrEee.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FrEee.Tests.Utility
 {
@@ -63,6 +66,16 @@ namespace FrEee.Tests.Utility
 			var s = Serializer.SerializeToString(dict);
 			var dict2 = Serializer.DeserializeFromString< SafeDictionary<string, SafeDictionary<string, string>>>(s);
 			Assert.AreEqual(dict["test"]["fred"], dict2["test"]["fred"]);
+		}
+
+		[TestMethod]
+		public void NestedCrossAssembly()
+		{
+			var list = new List<Formula<string>>();
+			list.Add(new LiteralFormula<string>("hello"));
+			var s = Serializer.SerializeToString(list);
+			var list2 = Serializer.DeserializeFromString<List<Formula<string>>>(s);
+			Assert.AreEqual(list.First(), list2.First());
 		}
 
 		private class Car
