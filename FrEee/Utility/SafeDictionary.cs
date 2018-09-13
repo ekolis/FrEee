@@ -112,13 +112,8 @@ namespace FrEee.Utility
 			}
 			set
 			{
-				if (ContainsKey(key))
-					dict[key] = value;
-				else
-				{
-					InitDict();
-					dict.Add(key, value);
-				}
+				InitDict();
+				dict[key] = value;
 			}
 		}
 
