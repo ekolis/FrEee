@@ -36,6 +36,8 @@ namespace FrEee.Game.Objects.Technology
 		/// </summary>
 		public Formula<bool> IsPointDefense { get; set; }
 
+		public bool IsSeeker { get { return WeaponType == WeaponTypes.Seeking || WeaponType == WeaponTypes.SeekingPointDefense; } }
+
 		public bool IsWarhead { get { return WeaponType == WeaponTypes.Warhead || WeaponType == WeaponTypes.WarheadPointDefense; } }
 
 		/// <summary>
