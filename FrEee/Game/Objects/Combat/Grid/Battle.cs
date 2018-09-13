@@ -310,7 +310,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 								var closest = tiles.WithMin(t => t.DistanceToEightWay(locations[c])).First();
 								locations[c] = IntVector2.InterpolateEightWay(locations[c], closest, GetCombatSpeedThisRound(c));
 								var newdist = locations[c].DistanceToEightWay(locations[bestTarget]);
-								if (newdist >= DistancesToTargets[c] && !c.Weapons.Any(w => w.Template.WeaponMaxRange >= newdist))
+								if (DistancesToTargets.ContainsKey(c) && newdist >= DistancesToTargets[c] && !c.Weapons.Any(w => w.Template.WeaponMaxRange >= newdist))
 								{
 									DistancesToTargets.Remove(c);
 									IgnoredTargets[c].Add(bestTarget); // can't catch it, might as well find a new target
