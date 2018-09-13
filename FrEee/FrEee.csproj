@@ -140,6 +140,7 @@
   <ItemGroup>
     <Compile Include="Game\Enumerations\Conditions.cs" />
     <Compile Include="Game\Objects\Civilization\PlayerInfo.cs" />
+    <Compile Include="Game\Objects\Combat\Grid\CombatantsCollideEvent.cs" />
     <Compile Include="Game\Objects\Combat\Grid\GroundBattle.cs" />
     <Compile Include="Game\Objects\Combat\Grid\SpaceBattle.cs" />
     <Compile Include="Game\Objects\Commands\SetPlayerInfoCommand.cs" />
