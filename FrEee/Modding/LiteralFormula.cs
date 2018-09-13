@@ -26,11 +26,16 @@ namespace FrEee.Modding
 		{
 		}
 
+		[DoNotSerialize(false)]
 		public override object Context
 		{
 			get
 			{
 				return null;
+			}
+			set
+			{
+				// do nothing
 			}
 		}
 

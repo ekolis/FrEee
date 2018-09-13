@@ -174,23 +174,29 @@ namespace FrEee.Game.Objects.Abilities
 			// get basic description
 			string result;
 			if (Description != null && Description.Value != null)
+			{
+				// replace [%Amount1%] and such
+				var dict = new Dictionary<string, object>();
+				for (int i = 1; i <= Rule.ValueRules.Count && i <= Values.Count; i++)
+					dict.Add("Amount" + i, Values[i-1].Value);
+				if (Rule.Matches("Shield Generation") || Rule.Matches("Phased Shield Generation") || Rule.Matches("Planet - Shield Generation"))
+					dict.Add("ShieldPointsGenerated", Values[0]);
+				Description.Context = dict;
 				result = Description.Value;
+			}
 			else if (Rule.Description != null)
-				result = Rule.Description.Value;
+			{
+				var dict = new Dictionary<string, object>();
+				for (int i = 1; i <= Rule.ValueRules.Count && i <= Values.Count; i++)
+					dict.Add("Amount" + i, Values[i - 1].Value);
+				if (Rule.Matches("Shield Generation") || Rule.Matches("Phased Shield Generation") || Rule.Matches("Planet - Shield Generation"))
+					dict.Add("ShieldPointsGenerated", Values[0]);
+				result = Rule.Description.Evaluate(dict);
+			}
 			else
 				result = Rule.Name + ": " + string.Join(", ", Values.Select(v => v.Value));
 
-			// replace [%Amount1%] and such
-			for (int i = 1; i <= Rule.ValueRules.Count && i <= Values.Count; i++)
-			{
-				result = result.Replace("[%Amount" + i + "]", Values[i - 1]);
-				result = result.Replace("[%Amount" + i + "%]", Values[i - 1]);
-			}
-			if (Rule.Matches("Shield Generation") || Rule.Matches("Phased Shield Generation") || Rule.Matches("Planet - Shield Generation"))
-			{
-				result = result.Replace("[%ShieldPointsGenerated]", Values[0]);
-				result = result.Replace("[%ShieldPointsGenerated%]", Values[0]);
-			}
+
 
 			return result;
 		}

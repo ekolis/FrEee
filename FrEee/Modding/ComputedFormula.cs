@@ -30,7 +30,8 @@ namespace FrEee.Modding
 		{
 		}
 
-		public override object Context { get { return context; } }
+		[DoNotSerialize(false)]
+		public override object Context { get { return context; } set { context = value; } }
 
 		/// <summary>
 		/// Is this a dynamic formula? Dynamic formulas cannot be cached.
