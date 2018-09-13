@@ -985,6 +985,28 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
+		/// Reads characters until the specified character is found at the end of the line or end of stream.
+		/// Returns all characters read except the specified character.
+		/// </summary>
+		/// <param name="r"></param>
+		/// <param name="c"></param>
+		/// <returns></returns>
+		public static string ReadToEndOfLine(this TextReader r, char c, StringBuilder log)
+		{
+			var sb = new StringBuilder();
+			string data = "";
+			do
+			{
+				data = r.ReadLine();
+				log?.Append(data);
+				sb.Append(data);
+				if (data.EndsWith(c.ToString()))
+					break;
+			} while (true);
+			return sb.ToString().Substring(0, Math.Max(0, sb.Length - 1)); // trim off the semicolon
+		}
+
+		/// <summary>
 		/// Generates new IDs for this object (unless skipRoot is true) and all subordinate objects.
 		/// TODO - take into account DoNotAssignIDAttribute
 		/// </summary>

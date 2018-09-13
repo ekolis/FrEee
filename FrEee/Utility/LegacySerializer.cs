@@ -210,7 +210,7 @@ namespace FrEee.Utility
 			else if (type.IsPrimitive)
 			{
 				// parse primitive types
-				var val = r.ReadTo(';', log);
+				var val = r.ReadToEndOfLine(';', log);
 				o = Convert.ChangeType(val, type);
 			}
 			else if (type == typeof(string))
@@ -221,7 +221,7 @@ namespace FrEee.Utility
 			else if (type == typeof(Color))
 			{
 				// HACK - Color implmentation varies between .NET and Mono, so treat it as raw ARGB values
-				var argb = r.ReadTo(';', log).Split(',');
+				var argb = r.ReadToEndOfLine(';', log).Split(',');
 				if (argb.Length != 4)
 					throw new SerializationException("Colors must have 4 ARGB values.");
 				byte a, rv, g, b;
@@ -232,7 +232,7 @@ namespace FrEee.Utility
 			else if (typeof(Enum).IsAssignableFrom(type))
 			{
 				// parse enums
-				var val = r.ReadTo(';', log);
+				var val = r.ReadToEndOfLine(';', log);
 				o = val.ParseEnum(type);
 			}
 			else if (typeof(Array).IsAssignableFrom(type))
@@ -329,7 +329,7 @@ namespace FrEee.Utility
 			{
 				// ID - need to find known object
 				int id;
-				string s = r.ReadTo(';', log);
+				string s = r.ReadToEndOfLine(';', log);
 				if (!int.TryParse(s, out id))
 					throw new SerializationException("Expected integer, got \"" + s + "\" when parsing object ID.");
 
@@ -507,7 +507,7 @@ namespace FrEee.Utility
 			{
 				// ID - need to find known object
 				int id;
-				string s = r.ReadTo(';', log);
+				string s = r.ReadToEndOfLine(';', log);
 				if (!int.TryParse(s, out id))
 					throw new SerializationException("Expected integer, got \"" + s + "\" when parsing object ID.");
 
@@ -548,7 +548,7 @@ namespace FrEee.Utility
 			{
 				var stringifier = StringifierLibrary.Instance.All.Single(x => x.SupportedType == type);
 				var dummy = r.ReadTo(':', log);
-				var val = r.ReadTo(';', log);
+				var val = r.ReadToEndOfLine(';', log);
 				o = stringifier.Destringify(val);
 			}
 			else if (fin == 'p')
@@ -612,8 +612,8 @@ namespace FrEee.Utility
 						dict[pname] = Deserialize(r, prop.PropertyType, false, context, log);
 					}
 					else
-						r.ReadTo(';', log); // throw away this property, we don't need it
-											// if p is null or has do not serialize attribute, it must be data from an old version with different property names, so don't crash
+						r.ReadToEndOfLine(';', log); // throw away this property, we don't need it
+													// if p is null or has do not serialize attribute, it must be data from an old version with different property names, so don't crash
 				}
 			}
 
@@ -632,7 +632,7 @@ namespace FrEee.Utility
 		{
 			// ID - need to find known object
 			int id;
-			string s = r.ReadTo(';', log);
+			string s = r.ReadToEndOfLine(';', log);
 			if (!int.TryParse(s, out id))
 				throw new SerializationException("Expected integer, got \"" + s + "\" when parsing object ID.");
 
@@ -684,7 +684,7 @@ namespace FrEee.Utility
 			int quotes = 0;
 			while (!foundRealSemicolon)
 			{
-				var ns = r.ReadTo(';', log);
+				var ns = r.ReadToEndOfLine(';', log);
 				quotes += ns.Count(c => c == '"');
 				sb.Append(ns);
 				if (!ns.EndsWith("\\") && quotes % 2 == 0)
