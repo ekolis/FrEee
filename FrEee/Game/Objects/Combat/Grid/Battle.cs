@@ -270,7 +270,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 						else
 						{
 							// move to max range that we can inflict max damage on best target
-							var goodTargets = targetiness.WithMax(x => x.Value).Where(x => !IgnoredTargets[c].Contains(x.Key));
+							var goodTargets = targetiness.Where(x => !IgnoredTargets[c].Contains(x.Key)).WithMax(x => x.Value);
 							ICombatant bestTarget = null;
 							if (goodTargets.Any())
 								bestTarget = goodTargets.First().Key;
@@ -278,7 +278,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 							{
 								// try previously ignored targets
 								IgnoredTargets[c].Clear();
-								goodTargets = targetiness.WithMax(x => x.Value).Where(x => !IgnoredTargets[c].Contains(x.Key));
+								goodTargets = targetiness.Where(x => !IgnoredTargets[c].Contains(x.Key)).WithMax(x => x.Value);
 								if (goodTargets.Any())
 									bestTarget = goodTargets.First().Key;
 							}
@@ -315,7 +315,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 								{
 									DistancesToTargets.Remove(c);
 									IgnoredTargets[c].Add(bestTarget); // can't catch it, might as well find a new target
-									goodTargets = targetiness.WithMax(x => x.Value).Where(x => !IgnoredTargets[c].Contains(x.Key));
+									goodTargets = targetiness.Where(x => !IgnoredTargets[c].Contains(x.Key)).WithMax(x => x.Value);
 									bestTarget = null;
 									if (goodTargets.Any())
 										bestTarget = goodTargets.First().Key;
