@@ -290,13 +290,16 @@ namespace FrEee.Game.Objects.Combat.Grid
 								gotosAreEvil:
 								var maxdmg = 0;
 								var maxdmgrange = 0;
-								for (var range = 0; range < c.Weapons.Max(w => w.Template.WeaponMaxRange); range++)
+								if (c.Weapons.Any())
 								{
-									var dmg = c.Weapons.Where(w => w.CanTarget(bestTarget)).Sum(w => w.Template.GetWeaponDamage(range));
-									if (dmg >= maxdmg)
+									for (var range = 0; range < c.Weapons.Max(w => w.Template.WeaponMaxRange); range++)
 									{
-										maxdmg = dmg;
-										maxdmgrange = range;
+										var dmg = c.Weapons.Where(w => w.CanTarget(bestTarget)).Sum(w => w.Template.GetWeaponDamage(range));
+										if (dmg >= maxdmg)
+										{
+											maxdmg = dmg;
+											maxdmgrange = range;
+										}
 									}
 								}
 								var targetPos = locations[bestTarget];
