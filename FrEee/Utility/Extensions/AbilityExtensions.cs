@@ -30,7 +30,7 @@ namespace FrEee.Utility.Extensions
 			if (obj == null)
 				return Enumerable.Empty<Ability>();
 
-			if (sourceFilter == null && Galaxy.Current.IsAbilityCacheEnabled)
+			if (sourceFilter == null && Galaxy.Current != null && Galaxy.Current.IsAbilityCacheEnabled)
 			{
 				// use the ability cache
 				if (Galaxy.Current.AbilityCache[obj] == null)

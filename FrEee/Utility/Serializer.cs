@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Text;
 
 namespace FrEee.Utility
 {
@@ -11,6 +12,20 @@ namespace FrEee.Utility
 	public static class Serializer
 	{
 		private const bool EnableJsonSerializer = false;
+
+		public static T Deserialize<T>(string s)
+		{
+			T t;
+			using (MemoryStream stream = new MemoryStream())
+			{
+				var sw = new StreamWriter(stream);
+				sw.Write(s);
+				sw.Flush();
+				stream.Seek(0, SeekOrigin.Begin);
+				t = Deserialize<T>(stream); 
+			}
+			return t;
+		}
 
 		public static T Deserialize<T>(Stream str)
 		{

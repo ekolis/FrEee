@@ -181,7 +181,8 @@ namespace FrEee.Utility
 				KnownTypes.Add(type.AssemblyQualifiedName, type);
 			if (!KnownObjects.ContainsKey(type))
 				KnownObjects.Add(type, new List<object>());
-			KnownObjects[type].Add(o);
+//			if (!KnownObjects[type].Contains(o))
+				KnownObjects[type].Add(o);
 			if (!KnownIDs.ContainsKey(type))
 				KnownIDs.Add(type, new SafeDictionary<object, int>());
 			var id = KnownObjects[type].Count - 1;
