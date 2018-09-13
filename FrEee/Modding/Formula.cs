@@ -29,7 +29,7 @@ namespace FrEee.Modding
 			value = new Lazy<T>(ComputeValue);
 		}
 
-		public abstract object Context { get; }
+		public abstract object Context { get; set; }
 		public abstract bool IsDynamic { get; }
 		public abstract bool IsLiteral { get; }
 
