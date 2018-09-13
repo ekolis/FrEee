@@ -11,11 +11,12 @@ namespace FrEee.Game.Enumerations
 	{
 		None = 0x0,
 
+		// NOTE - SE4 uses Ships as the target type for bases as well
 		[Name("Ships")]
 		Ship = 0x1,
 
-		[Name("Bases")]
-		Base = 0x2,
+		//[Name("Bases")]
+		//Base = 0x2,
 
 		[Name("Fighters")]
 		[Name("Ftr")]
@@ -34,7 +35,7 @@ namespace FrEee.Game.Enumerations
 		[Name("Seekers")]
 		Seeker = 0x200,
 
-		All = Ship | Base | Fighter | Satellite | Drone | Planet | Seeker,
+		All = Ship | /*Base |*/ Fighter | Satellite | Drone | Planet | Seeker,
 		Invalid = 0x400,
 	}
 }

@@ -47,7 +47,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public override WeaponTargets WeaponTargetType
 		{
-			get { return WeaponTargets.Base; }
+			get { return WeaponTargets.Ship; }
 		}
 
 		public override void Place(ISpaceObject target)
