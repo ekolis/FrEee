@@ -302,6 +302,13 @@ namespace FrEee.Game.Objects.Combat.Grid
 										}
 									}
 								}
+								if (c.Weapons.Any(w => w.Template.ComponentTemplate.WeaponInfo.IsSeeker))
+								{
+									// adjust desired range due to seeker speed and target speed
+									var roundsToClose = c.Weapons.Where(w => w.Template.ComponentTemplate.WeaponInfo.IsSeeker).Max(w => w.Template.WeaponMaxRange / (w.Template.ComponentTemplate.WeaponInfo as SeekingWeaponInfo).SeekerSpeed);
+									var distanceAdjustment = (int)Ceiling(combatSpeeds[bestTarget] * roundsToClose);
+									maxdmgrange -= distanceAdjustment;
+								}
 								var targetPos = locations[bestTarget];
 								var tiles = new HashSet<IntVector2>();
 								for (var x = targetPos.X - maxdmgrange; x <= targetPos.X + maxdmgrange; x++)
