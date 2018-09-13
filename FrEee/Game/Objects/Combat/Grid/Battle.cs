@@ -284,6 +284,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 							}
 							if (bestTarget != null)
 							{
+								gotosAreEvil:
 								var maxdmg = 0;
 								var maxdmgrange = 0;
 								for (var range = 0; range < c.Weapons.Max(w => w.Template.WeaponMaxRange); range++)
@@ -310,10 +311,17 @@ namespace FrEee.Game.Objects.Combat.Grid
 								var closest = tiles.WithMin(t => t.DistanceToEightWay(locations[c])).First();
 								locations[c] = IntVector2.InterpolateEightWay(locations[c], closest, GetCombatSpeedThisRound(c));
 								var newdist = locations[c].DistanceToEightWay(locations[bestTarget]);
-								if (DistancesToTargets.ContainsKey(c) && newdist >= DistancesToTargets[c] && !c.Weapons.Any(w => w.Template.WeaponMaxRange >= newdist))
+								if (DistancesToTargets.ContainsKey(c) && newdist >= DistancesToTargets[c] && combatSpeeds[c] <= combatSpeeds[bestTarget] && !c.Weapons.Any(w => w.Template.WeaponMaxRange >= newdist))
 								{
 									DistancesToTargets.Remove(c);
 									IgnoredTargets[c].Add(bestTarget); // can't catch it, might as well find a new target
+									goodTargets = targetiness.WithMax(x => x.Value).Where(x => !IgnoredTargets[c].Contains(x.Key));
+									bestTarget = null;
+									if (goodTargets.Any())
+										bestTarget = goodTargets.First().Key;
+									if (bestTarget == null)
+										goto gotosAreVeryEvil;
+									goto gotosAreEvil;
 								}
 								else
 									DistancesToTargets[c] = newdist;
@@ -322,6 +330,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 								DistancesToTargets.Remove(c);
 						}
 					}
+					gotosAreVeryEvil:
 					if (locations[c] != oldpos)
 						Events.Last().Add(new CombatantMovesEvent(c, oldpos, locations[c]));
 				}
