@@ -246,8 +246,11 @@ namespace FrEee.Game.Objects.Combat.Grid
 						// find out how good each target is
 						var targetiness = new SafeDictionary<ICombatant, double>();
 						foreach (var target in alives.Where(x =>
-							c.IsHostileTo(x.Owner)
-							&& (c.CanTarget(x) || x is Planet && c is ICargoContainer cc && cc.Cargo.Units.OfType<Troop>().Any())))
+							c.IsHostileTo(x.Owner) &&
+							(c.CanTarget(x)
+							|| (x is Planet p && 
+								(p.Cargo.Hitpoints > 0 || p.PopulationFill.Value > 0 || p.FacilityFill.Value > 0)
+								|| (c is ICargoContainer cc && cc.Cargo.Units.OfType<Troop>().Any())))))
 						{
 							targetiness[target] = 1d / (locations[target] - locations[c]).LengthEightWay;
 						}
