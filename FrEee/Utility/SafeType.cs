@@ -108,15 +108,21 @@ namespace FrEee.Utility
 			}
 		}
 
+		private static List<(Regex, string)> shortTypeNameRegexes { get; } = new List<(Regex, string)>
+		{
+			(new Regex(@"(.*?), (.*?), Version=.*?, Culture=.*?, PublicKeyToken=.*?\],\[", RegexOptions.Compiled),  "$1, $2],["),
+			(new Regex(@"(.*?), (.*?), Version=.*?, Culture=.*?, PublicKeyToken=.*?\]\]", RegexOptions.Compiled),  "$1, $2]]"),
+			(new Regex(@"(.*?), (.*?), Version=.*?, Culture=.*?, PublicKeyToken=.*?\]", RegexOptions.Compiled),  "$1, $2]"),
+			(new Regex(@"(.*?), (.*?), Version=.*?, Culture=.*?, PublicKeyToken=.*\z", RegexOptions.Compiled),  "$1, $2"),
+		};
+
 		public static string GetShortTypeName(Type t)
 		{
 			var tname = t.AssemblyQualifiedName;
 			if (!ShortTypeNames.ContainsKey(t))
 			{
-				tname = Regex.Replace(tname, @"(.*?), (.*?), Version=.*?, Culture=.*?, PublicKeyToken=.*?\],\[", "$1, $2],[");
-				tname = Regex.Replace(tname, @"(.*?), (.*?), Version=.*?, Culture=.*?, PublicKeyToken=.*?\]\]", "$1, $2]]");
-				tname = Regex.Replace(tname, @"(.*?), (.*?), Version=.*?, Culture=.*?, PublicKeyToken=.*?\]", "$1, $2]");
-				tname = Regex.Replace(tname, @"(.*?), (.*?), Version=.*?, Culture=.*?, PublicKeyToken=.*\z", "$1, $2");
+				foreach (var r in shortTypeNameRegexes)
+					tname = r.Item1.Replace(tname, r.Item2);
 				ShortTypeNames[t] = tname;
 			}
 			return ShortTypeNames[t];
