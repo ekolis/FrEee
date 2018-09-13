@@ -89,6 +89,10 @@ namespace FrEee.Game.Objects.Combat.Grid
 			}
 		}
 
+		private SafeDictionary<ICombatant, int> DistancesToTargets { get; } = new SafeDictionary<ICombatant, int>();
+
+		private SafeDictionary<ICombatant, HashSet<ICombatant>> IgnoredTargets { get; } = new SafeDictionary<ICombatant, HashSet<ICombatant>>(true);
+
 		public IList<LogMessage> Log { get; private set; }
 
 		public IList<IntVector2> LowerRight { get; private set; } = new List<IntVector2>();
@@ -266,7 +270,18 @@ namespace FrEee.Game.Objects.Combat.Grid
 						else
 						{
 							// move to max range that we can inflict max damage on best target
-							ICombatant bestTarget = targetiness.WithMax(x => x.Value).First().Key;
+							var goodTargets = targetiness.WithMax(x => x.Value).Where(x => !IgnoredTargets[c].Contains(x.Key));
+							ICombatant bestTarget = null;
+							if (goodTargets.Any())
+								bestTarget = goodTargets.First().Key;
+							if (bestTarget == null)
+							{
+								// try previously ignored targets
+								IgnoredTargets[c].Clear();
+								goodTargets = targetiness.WithMax(x => x.Value).Where(x => !IgnoredTargets[c].Contains(x.Key));
+								if (goodTargets.Any())
+									bestTarget = goodTargets.First().Key;
+							}
 							if (bestTarget != null)
 							{
 								var maxdmg = 0;
@@ -282,7 +297,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 								}
 								var targetPos = locations[bestTarget];
 								var tiles = new HashSet<IntVector2>();
-								for (var x = targetPos.X - maxdmgrange;  x <= targetPos.X + maxdmgrange; x++)
+								for (var x = targetPos.X - maxdmgrange; x <= targetPos.X + maxdmgrange; x++)
 								{
 									tiles.Add(new IntVector2(x, targetPos.Y - maxdmgrange));
 									tiles.Add(new IntVector2(x, targetPos.Y + maxdmgrange));
@@ -294,7 +309,17 @@ namespace FrEee.Game.Objects.Combat.Grid
 								}
 								var closest = tiles.WithMin(t => t.DistanceToEightWay(locations[c])).First();
 								locations[c] = IntVector2.InterpolateEightWay(locations[c], closest, GetCombatSpeedThisRound(c));
+								var newdist = locations[c].DistanceToEightWay(locations[bestTarget]);
+								if (newdist >= DistancesToTargets[c] && !c.Weapons.Any(w => w.Template.WeaponMaxRange >= newdist))
+								{
+									DistancesToTargets.Remove(c);
+									IgnoredTargets[c].Add(bestTarget); // can't catch it, might as well find a new target
+								}
+								else
+									DistancesToTargets[c] = newdist;
 							}
+							else
+								DistancesToTargets.Remove(c);
 						}
 					}
 					if (locations[c] != oldpos)
@@ -380,12 +405,15 @@ namespace FrEee.Game.Objects.Combat.Grid
 				{
 					if (!c.Weapons.Any(w => !w.Template.ComponentTemplate.WeaponInfo.IsWarhead))
 					{
+						// TODO - add damage from ship HP on both sides
 						foreach (var w in c.Weapons.Where(w => w.Template.ComponentTemplate.WeaponInfo.IsWarhead))
 							TryFireWeapon(c, w, reloads, locations, multiplex);
 					}
 				}
 
 				turnorder = alives.OrderBy(x => x.CombatSpeed).ThenShuffle(Dice).ToArray();
+
+				// TODO - boarding
 
 				// phase 8: drop troops
 				foreach (var c in turnorder.Reverse())
