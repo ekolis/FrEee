@@ -1616,9 +1616,9 @@ namespace FrEee.Game.Objects.Space
 				foreach (var cmd in CurrentEmpire.Commands)
 				{
 					if (cmd.Executor == null)
-						cmd.Issuer.Log.Add(cmd.Issuer.CreateLogMessage($"{cmd} cannot be issued because its executor does not exist. Probably a bug..."));
+						CurrentEmpire.Log.Add(CurrentEmpire.CreateLogMessage($"{cmd} cannot be issued because its executor does not exist. Probably a bug..."));
 					else if (cmd.Issuer != cmd.Executor.Owner && cmd.Issuer != cmd.Executor)
-						cmd.Issuer.Log.Add(cmd.Issuer.CreateLogMessage("We cannot issue commands to " + cmd.Executor + " because it does not belong to us!"));
+						CurrentEmpire.Log.Add(CurrentEmpire.CreateLogMessage("We cannot issue commands to " + cmd.Executor + " because it does not belong to us!"));
 					else
 						cmd.Execute();
 				}
