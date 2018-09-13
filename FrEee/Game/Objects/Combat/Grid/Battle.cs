@@ -522,11 +522,14 @@ namespace FrEee.Game.Objects.Combat.Grid
 			{
 				var range = s.DistanceTraveled;
 				var shot = new Shot(s.LaunchingCombatant, s.LaunchingComponent, s.Target, range);
-				s.Target.TakeDamage(new Hit(shot, s.Target, s.Damage.Evaluate(shot)));
+				var hit = new Hit(shot, s.Target, s.Damage.Evaluate(shot));
+				s.Target.TakeDamage(hit);
+				Events.Last().Add(new CombatantsCollideEvent(s, s.Target, locations[s.Target], s.Hitpoints, hit.NominalDamage));
 				s.Hitpoints = 0;
 				Events.Last().Add(new CombatantDisappearsEvent(s));
 				if (s.Target.IsDestroyed)
 				{
+					var loc = locations[s.Target];
 					locations.Remove(s.Target);
 					Events.Last().Add(new CombatantDisappearsEvent(s.Target));
 				}

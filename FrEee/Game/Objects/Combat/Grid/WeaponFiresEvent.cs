@@ -12,9 +12,10 @@ namespace FrEee.Game.Objects.Combat.Grid
 			Target = target;
 			StartPosition = here;
 			EndPosition = there;
-			//Weapon = weapon;
-			//Hit = hit;
+			Weapon = weapon;
+			Hit = hit;
 			IsHit = hit != null;
+			Damage = hit?.NominalDamage ?? 0;
 		}
 
 		public ICombatant Combatant { get; set; }
@@ -23,7 +24,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 		public bool IsHit { get; set; }
 		public IntVector2 StartPosition { get; set; }
 		public ICombatant Target { get; set; }
-		//public Component Weapon { get; set; }
-		//public Hit Hit { get; set; }
+		public Component Weapon { get; set; }
+		public Hit Hit { get; set; }
+		public int Damage { get; set; }
 	}
 }

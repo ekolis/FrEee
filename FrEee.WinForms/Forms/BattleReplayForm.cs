@@ -115,9 +115,13 @@ namespace FrEee.WinForms.Forms
 					else if (e is WeaponFiresEvent wfe)
 					{
 						if (wfe.IsHit)
-							logListBox.Items.Add($"{wfe.Combatant} fires at {wfe.Target} and hits!");
+							logListBox.Items.Add($"{wfe.Combatant} fires {wfe.Weapon} at {wfe.Target} and hits for {wfe.Damage} damage!");
 						else
 							logListBox.Items.Add($"{wfe.Combatant} fires at {wfe.Target} and misses.");
+					}
+					else if (e is CombatantsCollideEvent cce)
+					{
+						logListBox.Items.Add($"{cce.Combatant} collides with {cce.Target}!");
 					}
 				}
 			}
