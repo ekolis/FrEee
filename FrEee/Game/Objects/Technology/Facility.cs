@@ -160,7 +160,7 @@ namespace FrEee.Game.Objects.Technology
 			get
 			{
 				// TODO - moddable facility HP
-				return 500;
+				return Cost.Sum(x => x.Value) / 10;
 			}
 		}
 
