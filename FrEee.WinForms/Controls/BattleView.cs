@@ -242,7 +242,17 @@ namespace FrEee.WinForms.Controls
 								pe.Graphics.FillEllipse(new SolidBrush(here.OfType<Seeker>().First().Owner.Color), drawx - drawsize / 4f, drawy - drawsize / 4f, drawsize / 2f, drawsize / 2f);
 							}
 
-							// TODO - draw owner flag & objet name?
+							// TODO - draw owner flag?
+
+							if (here.Count() > 1)
+							{
+								pe.Graphics.DrawString($"{here.Count()} objects", Font, Brushes.White, drawx, drawy + drawsize / 2f, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Far});
+							}
+							else if (here.Count() == 1 && here.Single() is ISpaceObject)
+							{
+								pe.Graphics.DrawString($"{here.Single().Name}", Font, Brushes.White, drawx, drawy + drawsize / 2f, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Far });
+							}
+
 						}
 
 						var availForFlagsAndNums = Math.Min(drawsize - 21, 24);
