@@ -8,6 +8,7 @@ using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -253,6 +254,10 @@ namespace FrEee.WinForms.Controls
 								pe.Graphics.DrawString($"{here.Single().Name}", Font, Brushes.White, drawx, drawy + drawsize / 2f, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Far });
 							}
 
+							// draw unarmed flag if all combatants here are unarmed (seekers excluded)
+							var nonseekers = here.Except(here.OfType<Seeker>());
+							if (nonseekers.Any() && nonseekers.All(q => unarmedCombatants.Contains(q)))
+								pe.Graphics.DrawImage(Pictures.GetModImage(Path.Combine("Pictures", "UI", "Combat", "Unarmed")), drawx, drawy, drawsize / 2f, drawsize / 2f);
 						}
 
 						var availForFlagsAndNums = Math.Min(drawsize - 21, 24);
@@ -406,6 +411,15 @@ namespace FrEee.WinForms.Controls
 					{
 						case CombatantAppearsEvent ca:
 							locations[ca.Combatant] = ca.EndPosition;
+							if (ca.IsUnarmed)
+								unarmedCombatants.Add(ca.Combatant);
+							break;
+
+						case CombatantsCollideEvent cc:
+							if (cc.WasCombatantDisarmed)
+								unarmedCombatants.Add(cc.Combatant);
+							if (cc.WasTargetDisarmed)
+								unarmedCombatants.Add(cc.Target);
 							break;
 
 						case CombatantLaunchedEvent cl:
@@ -431,6 +445,8 @@ namespace FrEee.WinForms.Controls
 							{
 								pewpews.Add(new Pewpew(wf.StartPosition, wf.EndPosition));
 								booms.Add(new Boom(wf.EndPosition, 0.5f));
+								if (wf.WasTargetDisarmed)
+									unarmedCombatants.Add(wf.Combatant);
 							}
 							else
 							{
@@ -467,5 +483,7 @@ namespace FrEee.WinForms.Controls
 			public bool IsHit { get; set; }
 			public IntVector2 Start { get; set; }
 		}
+
+		private HashSet<ICombatant> unarmedCombatants { get; } = new HashSet<ICombatant>();
 	}
 }
