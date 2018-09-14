@@ -203,7 +203,7 @@ namespace FrEee.WinForms.Controls
 						var pos = new IntVector2(x, y);
 
 						// draw image, owner flag, and name of largest space object (if any)
-						var here = Battle.Combatants.Where(q => q.IsAlive && locations.Any(w => w.Key == q && w.Value == pos));
+						var here = Battle.Combatants.Where(q => locations.Any(w => w.Key == q && w.Value == pos));
 						if (here.Any())
 						{
 							Image pic;
