@@ -16,7 +16,7 @@ namespace FrEee.Game.Objects.Abilities
 	/// A special ability of some game object, or just a tag used by the AI or by modders.
 	/// </summary>
 	[Serializable]
-	public class Ability : IContainable<IAbilityObject>, IReferrable, IModObject, IDataObject
+	public class Ability : IContainable<IAbilityObject>, IReferrable, IModObject, IDataObject, IFormulaHost
 	{
 		public Ability(IAbilityObject container)
 		{
@@ -158,6 +158,19 @@ namespace FrEee.Game.Objects.Abilities
 		/// </summary>
 		public IList<Formula<string>> Values { get; set; }
 
+		public IDictionary<string, object> Variables
+		{
+			get
+			{
+				var dict = new Dictionary<string, object>();
+				for (var i = 0; i < Values.Count; i++)
+					dict.Add("Amount" + (i + 1), Values[i]);
+				if (Rule.Matches("Shield Generation") || Rule.Matches("Phased Shield Generation") || Rule.Matches("Planet - Shield Generation"))
+					dict.Add("ShieldPointsGenerated", Value1.ToInt()); // TODO - take into account mounts that affect shields
+				return dict;
+			}
+		}
+
 		private ModReference<AbilityRule> rule { get; set; }
 
 		public void Dispose()
@@ -173,26 +186,10 @@ namespace FrEee.Game.Objects.Abilities
 		{
 			// get basic description
 			string result;
-			if (Description != null && Description.Value != null)
-			{
-				// replace [%Amount1%] and such
-				var dict = new Dictionary<string, object>();
-				for (int i = 1; i <= Rule.ValueRules.Count && i <= Values.Count; i++)
-					dict.Add("Amount" + i, Values[i-1].Value);
-				if (Rule.Matches("Shield Generation") || Rule.Matches("Phased Shield Generation") || Rule.Matches("Planet - Shield Generation"))
-					dict.Add("ShieldPointsGenerated", Values[0]);
-				Description.Context = dict;
-				result = Description.Value;
-			}
+			if (Description != null)
+				result = Description.Evaluate(this);
 			else if (Rule.Description != null)
-			{
-				var dict = new Dictionary<string, object>();
-				for (int i = 1; i <= Rule.ValueRules.Count && i <= Values.Count; i++)
-					dict.Add("Amount" + i, Values[i - 1].Value);
-				if (Rule.Matches("Shield Generation") || Rule.Matches("Phased Shield Generation") || Rule.Matches("Planet - Shield Generation"))
-					dict.Add("ShieldPointsGenerated", Values[0]);
-				result = Rule.Description.Evaluate(dict);
-			}
+				result = Rule.Description.Evaluate(this);
 			else
 				result = Rule.Name + ": " + string.Join(", ", Values.Select(v => v.Value));
 
