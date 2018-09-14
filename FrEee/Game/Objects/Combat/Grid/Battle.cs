@@ -298,9 +298,10 @@ namespace FrEee.Game.Objects.Combat.Grid
 										}
 									}
 								}
-								if (c.Weapons.Any(w => w.Template.ComponentTemplate.WeaponInfo.IsSeeker))
+								if (c.Weapons.Any(w => w.Template.ComponentTemplate.WeaponInfo.IsSeeker)
+									&& locations[c].DistanceToEightWay(locations[bestTarget]) > DistancesToTargets[c])
 								{
-									// adjust desired range due to seeker speed and target speed
+									// adjust desired range due to seeker speed and target speed if retreating
 									var roundsToClose = c.Weapons.Where(w => w.Template.ComponentTemplate.WeaponInfo.IsSeeker).Max(w =>
 										(int)Math.Ceiling((double)w.Template.WeaponMaxRange / (double)(w.Template.ComponentTemplate.WeaponInfo as SeekingWeaponInfo).SeekerSpeed));
 									var distanceAdjustment = (int)Ceiling(combatSpeeds[bestTarget] * roundsToClose);
