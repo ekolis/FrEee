@@ -42,11 +42,14 @@ namespace FrEee.Game.Objects.Technology
 
 		private Ability ComputeAbility(Ability a)
 		{
+			var dict = new Dictionary<string, object>(Variables);
+			foreach (var kvp in a.Variables)
+				dict.Add(kvp.Key, kvp.Value);
 			var result = new Ability(this)
 			{
 				Rule = a.Rule,
 				Values = new List<Formula<string>>(a.Values),
-				Description = (a.Description ?? a.Rule.Description).Evaluate(this),
+				Description = (a.Description ?? a.Rule.Description).Evaluate(dict),
 			};
 			if (Mount != null)
 			{
