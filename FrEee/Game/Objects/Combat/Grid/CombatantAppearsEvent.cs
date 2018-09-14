@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Utility;
 using System;
+using System.Linq;
 
 namespace FrEee.Game.Objects.Combat.Grid
 {
@@ -10,11 +11,14 @@ namespace FrEee.Game.Objects.Combat.Grid
 		{
 			Combatant = combatant;
 			StartPosition = EndPosition = position;
+			IsUnarmed = !(Combatant is Seeker) && !Combatant.Weapons.Any();
 		}
 
 		public ICombatant Combatant { get; set; }
 
 		public IntVector2 EndPosition { get; set; }
 		public IntVector2 StartPosition { get; set; }
+
+		public bool IsUnarmed { get; set; }
 	}
 }

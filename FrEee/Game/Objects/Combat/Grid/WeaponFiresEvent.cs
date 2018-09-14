@@ -6,7 +6,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 {
 	public class WeaponFiresEvent : IBattleEvent
 	{
-		public WeaponFiresEvent(ICombatant combatant, IntVector2 here, ICombatant target, IntVector2 there, Component weapon, Hit hit)
+		public WeaponFiresEvent(ICombatant combatant, IntVector2 here, ICombatant target, IntVector2 there, Component weapon, Hit hit, bool wasTargetDisarmed)
 		{
 			Combatant = combatant;
 			Target = target;
@@ -16,6 +16,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 			Hit = hit;
 			IsHit = hit != null;
 			Damage = hit?.NominalDamage ?? 0;
+			WasTargetDisarmed = wasTargetDisarmed;
 		}
 
 		public ICombatant Combatant { get; set; }
@@ -27,5 +28,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 		public Component Weapon { get; set; }
 		public Hit Hit { get; set; }
 		public int Damage { get; set; }
+
+		public bool WasTargetDisarmed { get; set; }
 	}
 }

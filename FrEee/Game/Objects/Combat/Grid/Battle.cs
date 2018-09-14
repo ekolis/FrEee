@@ -520,8 +520,10 @@ namespace FrEee.Game.Objects.Combat.Grid
 				var range = s.DistanceTraveled;
 				var shot = new Shot(s.LaunchingCombatant, s.LaunchingComponent, s.Target, range);
 				var hit = new Hit(shot, s.Target, s.Damage.Evaluate(shot));
-				s.Target.TakeDamage(hit);
-				Events.Last().Add(new CombatantsCollideEvent(s, s.Target, locations[s.Target], s.Hitpoints, hit.NominalDamage));
+				bool wasArmed = s.Target is Seeker || s.Target.Weapons.Any();
+				s.Target.TakeDamage(hit, Dice);
+				bool isArmed = s.Target is Seeker || s.Target.Weapons.Any();
+				Events.Last().Add(new CombatantsCollideEvent(s, s.Target, locations[s.Target], s.Hitpoints, hit.NominalDamage, false, wasArmed && !isArmed));
 				s.Hitpoints = 0;
 				Events.Last().Add(new CombatantDestroyedEvent(s, locations[s]));
 				locations.Remove(s);
@@ -593,6 +595,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 					var maxrng = w.Template.WeaponMinRange;
 					var range = locations[c].DistanceToEightWay(locations[target]);
 					var shot = new Shot(c, w, target, range);
+					bool wasArmed = target is Seeker || target.Weapons.Any();
 					if (w.Template.ComponentTemplate.WeaponInfo.IsWarhead || shot.RollAccuracy(Dice))
 					{
 						dmg += shot.FullDamage;
@@ -612,10 +615,14 @@ namespace FrEee.Game.Objects.Combat.Grid
 							hit = new Hit(shot, target, w.Template.GetWeaponDamage(range));
 							target.TakeDamage(hit);
 						}
-						Events.Last().Add(new WeaponFiresEvent(c, locations[c], target, locations[target], w, hit));
+						bool isArmed = target is Seeker || target.Weapons.Any();
+						Events.Last().Add(new WeaponFiresEvent(c, locations[c], target, locations[target], w, hit, wasArmed && !isArmed));
 					}
 					else
-						Events.Last().Add(new WeaponFiresEvent(c, locations[c], target, locations[target], w, null));
+					{
+						bool isArmed = target is Seeker || target.Weapons.Any();
+						Events.Last().Add(new WeaponFiresEvent(c, locations[c], target, locations[target], w, null, wasArmed && !isArmed));
+					}
 				}
 				// TODO - mounts that affect reload rate?
 				reloads[w] += w.Template.ComponentTemplate.WeaponInfo.ReloadRate.Evaluate(w.Template);
