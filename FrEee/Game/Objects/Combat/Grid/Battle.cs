@@ -199,13 +199,12 @@ namespace FrEee.Game.Objects.Combat.Grid
 				}
 
 				Events.Add(new List<IBattleEvent>());
+
 				if (i == 0)
 				{
 					// first round, all combatants appear
 					foreach (var c in Combatants)
-					{
 						Events.Last().Add(new CombatantAppearsEvent(c, locations[c]));
-					}
 				}
 
 				var turnorder = alives.OrderBy(x => x is Seeker ? 1 : 0).ThenBy(x => combatSpeeds[x]).ThenShuffle(Dice).ToArray();
@@ -229,7 +228,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 						if (locations[s.Target] == null)
 						{
 							s.Hitpoints = 0; // seekers self destruct when their target is destroyed
-							Events.Last().Add(new CombatantDisappearsEvent(s));
+							Events.Last().Add(new CombatantDestroyedEvent(s, locations[s]));
 							continue;
 						}
 						s.DistanceTraveled += Math.Min(GetCombatSpeedThisRound(c), locations[s].DistanceToEightWay(locations[s.Target]));
@@ -237,7 +236,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 						if (s.DistanceTraveled > s.WeaponInfo.MaxRange)
 						{
 							s.Hitpoints = 0;
-							Events.Last().Add(new CombatantDisappearsEvent(s));
+							Events.Last().Add(new CombatantDestroyedEvent(s, locations[s]));
 						}
 					}
 					else
@@ -284,7 +283,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 							}
 							if (bestTarget != null)
 							{
-								gotosAreEvil:
+							gotosAreEvil:
 								var maxdmg = 0;
 								var maxdmgrange = 0;
 								if (c.Weapons.Any())
@@ -302,7 +301,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 								if (c.Weapons.Any(w => w.Template.ComponentTemplate.WeaponInfo.IsSeeker))
 								{
 									// adjust desired range due to seeker speed and target speed
-									var roundsToClose = c.Weapons.Where(w => w.Template.ComponentTemplate.WeaponInfo.IsSeeker).Max(w => 
+									var roundsToClose = c.Weapons.Where(w => w.Template.ComponentTemplate.WeaponInfo.IsSeeker).Max(w =>
 										(int)Math.Ceiling((double)w.Template.WeaponMaxRange / (double)(w.Template.ComponentTemplate.WeaponInfo as SeekingWeaponInfo).SeekerSpeed));
 									var distanceAdjustment = (int)Ceiling(combatSpeeds[bestTarget] * roundsToClose);
 									maxdmgrange -= distanceAdjustment;
@@ -341,7 +340,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 								DistancesToTargets.Remove(c);
 						}
 					}
-					gotosAreVeryEvil:
+				gotosAreVeryEvil:
 					if (locations[c] != oldpos)
 						Events.Last().Add(new CombatantMovesEvent(c, oldpos, locations[c]));
 				}
@@ -352,7 +351,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 				foreach (var c in turnorder)
 				{
 					// find launchable units
-					var unitsToLaunch = new List<(ICombatant, SpaceVehicle)>();
+					var unitsToLaunch = new List<(ICombatant Launcher, SpaceVehicle Launchee)>();
 					if (c is Planet)
 					{
 						// planets can launch infinite units per turn
@@ -379,8 +378,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 					foreach (var info in unitsToLaunch)
 					{
 						Combatants.Add(info.Item2);
-						locations[info.Item2] = new IntVector2(locations[info.Item1]);
-						Events.Last().Add(new CombatantAppearsEvent(c, locations[c]));
+						locations[info.Launchee] = new IntVector2(locations[info.Launcher]);
+						Events.Last().Add(new CombatantLaunchedEvent(info.Launcher, info.Launchee, locations[info.Launchee]));
 					}
 				}
 
@@ -524,12 +523,13 @@ namespace FrEee.Game.Objects.Combat.Grid
 				s.Target.TakeDamage(hit);
 				Events.Last().Add(new CombatantsCollideEvent(s, s.Target, locations[s.Target], s.Hitpoints, hit.NominalDamage));
 				s.Hitpoints = 0;
-				Events.Last().Add(new CombatantDisappearsEvent(s));
+				Events.Last().Add(new CombatantDestroyedEvent(s, locations[s]));
+				locations.Remove(s);
 				if (s.Target.IsDestroyed)
 				{
 					var loc = locations[s.Target];
+					Events.Last().Add(new CombatantDestroyedEvent(s.Target, locations[s.Target]));
 					locations.Remove(s.Target);
-					Events.Last().Add(new CombatantDisappearsEvent(s.Target));
 				}
 			}
 		}
@@ -582,7 +582,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 					var seeker = new Seeker(this, w.Owner, c, w, target);
 					Combatants.Add(seeker);
 					locations[seeker] = new IntVector2(locations[c]);
-					Events.Last().Add(new CombatantAppearsEvent(seeker, locations[seeker]));
+					Events.Last().Add(new CombatantLaunchedEvent(c, seeker, locations[seeker]));
 				}
 				else
 				{
@@ -623,8 +623,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 			if (target.IsDestroyed)
 			{
+				Events.Last().Add(new CombatantDestroyedEvent(target, locations[target]));
 				locations.Remove(target);
-				Events.Last().Add(new CombatantDisappearsEvent(target));
 			}
 		}
 
