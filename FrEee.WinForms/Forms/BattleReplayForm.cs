@@ -110,19 +110,21 @@ namespace FrEee.WinForms.Forms
 				{
 					if (e is CombatantAppearsEvent cae)
 						logListBox.Items.Add($"{cae.Combatant} appears!");
+					if (e is CombatantLaunchedEvent cle)
+						logListBox.Items.Add($"{cle.Launcher} launches {cle.Combatant}.");
 					else if (e is CombatantDisappearsEvent cde)
 						logListBox.Items.Add($"{cde.Combatant} disappears!");
+					else if (e is CombatantDestroyedEvent cde2)
+						logListBox.Items.Add($"{cde2.Combatant} is destroyed!");
 					else if (e is WeaponFiresEvent wfe)
 					{
 						if (wfe.IsHit)
 							logListBox.Items.Add($"{wfe.Combatant} fires {wfe.Weapon} at {wfe.Target} and hits for {wfe.Damage} damage!");
 						else
-							logListBox.Items.Add($"{wfe.Combatant} fires at {wfe.Target} and misses.");
+							logListBox.Items.Add($"{wfe.Combatant} fires {wfe.Weapon} at {wfe.Target} and misses.");
 					}
 					else if (e is CombatantsCollideEvent cce)
-					{
-						logListBox.Items.Add($"{cce.Combatant} collides with {cce.Target}!");
-					}
+						logListBox.Items.Add($"{cce.Combatant} collides with {cce.Target}, causing {cce.TargetDamage} damage to {cce.Target} and {cce.CombatantDamage} to itself!");
 				}
 			}
 			return logListBox;
@@ -149,7 +151,9 @@ namespace FrEee.WinForms.Forms
 
 		private void ScrollLogListBox()
 		{
-			logListBox.TopIndex = logListBox.Items.IndexOf($"Begin round {battleView.Round + 1}!");
+			var text = $"Begin round {battleView.Round + 1}!";
+			logListBox.TopIndex = logListBox.Items.IndexOf(text);
+			logListBox.SelectedIndex= logListBox.Items.IndexOf(text);
 		}
 
 		private void timer_Tick(object sender, EventArgs e)

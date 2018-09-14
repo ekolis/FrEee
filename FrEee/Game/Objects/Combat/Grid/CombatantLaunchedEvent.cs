@@ -1,17 +1,18 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Utility;
-using System;
 
 namespace FrEee.Game.Objects.Combat.Grid
 {
-	public class CombatantAppearsEvent : IBattleEvent
+	public class CombatantLaunchedEvent : IBattleEvent
 	{
-		public CombatantAppearsEvent(ICombatant combatant, IntVector2 position)
+		public CombatantLaunchedEvent(ICombatant launcher, ICombatant combatant, IntVector2 position)
 		{
+			Launcher = launcher;
 			Combatant = combatant;
 			StartPosition = EndPosition = position;
 		}
 
+		public ICombatant Launcher { get; set; }
 		public ICombatant Combatant { get; set; }
 
 		public IntVector2 EndPosition { get; set; }

@@ -408,9 +408,18 @@ namespace FrEee.WinForms.Controls
 							locations[ca.Combatant] = ca.EndPosition;
 							break;
 
-						case CombatantDisappearsEvent cd:
-							locations.Remove(cd.Combatant);
-							booms.Add(new Boom(cd.EndPosition, 1));
+						case CombatantLaunchedEvent cl:
+							locations[cl.Combatant] = cl.EndPosition;
+							break;
+
+						case CombatantDisappearsEvent cdis:
+							locations.Remove(cdis.Combatant);
+							booms.Add(new Boom(cdis.EndPosition, 1));
+							break;
+
+						case CombatantDestroyedEvent cdes:
+							locations.Remove(cdes.Combatant);
+							booms.Add(new Boom(cdes.EndPosition, 1));
 							break;
 
 						case CombatantMovesEvent cm:

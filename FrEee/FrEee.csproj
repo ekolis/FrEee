@@ -140,6 +140,9 @@
   <ItemGroup>
     <Compile Include="Game\Enumerations\Conditions.cs" />
     <Compile Include="Game\Objects\Civilization\PlayerInfo.cs" />
+    <Compile Include="Game\Objects\Combat\Grid\CombatantAppearsEvent.cs" />
+    <Compile Include="Game\Objects\Combat\Grid\CombatantDisappearsEvent.cs" />
+    <Compile Include="Game\Objects\Combat\Grid\CombatantLaunchedEvent.cs" />
     <Compile Include="Game\Objects\Combat\Grid\CombatantsCollideEvent.cs" />
     <Compile Include="Game\Objects\Combat\Grid\GroundBattle.cs" />
     <Compile Include="Game\Objects\Combat\Grid\SpaceBattle.cs" />
@@ -148,8 +151,7 @@
     <Compile Include="Game\Enumerations\EventMessageTarget.cs" />
     <Compile Include="Game\Enumerations\EventSeverity.cs" />
     <Compile Include="Game\Objects\Combat\Grid\Battle.cs" />
-    <Compile Include="Game\Objects\Combat\Grid\CombatantDisappearsEvent.cs" />
-    <Compile Include="Game\Objects\Combat\Grid\CombatantAppearsEvent.cs" />
+    <Compile Include="Game\Objects\Combat\Grid\CombatantDestroyedEvent.cs" />
     <Compile Include="Game\Objects\Combat\Grid\IBattleEvent.cs" />
     <Compile Include="Game\Objects\Combat\Grid\CombatantMovesEvent.cs" />
     <Compile Include="Game\Objects\Combat\Grid\WeaponFiresEvent.cs" />

@@ -50,6 +50,7 @@
 			// 
 			this.reportPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.reportPanel.AutoScroll = true;
 			this.reportPanel.BackColor = System.Drawing.Color.Black;
 			this.reportPanel.BorderColor = System.Drawing.Color.CornflowerBlue;
 			this.reportPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
