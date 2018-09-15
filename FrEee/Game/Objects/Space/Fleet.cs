@@ -696,6 +696,7 @@ namespace FrEee.Game.Objects.Space
 			Vehicles.Clear();
 			Galaxy.Current.UnassignID(this);
 			Sector = null;
+			Orders.Clear();
 			if (!IsMemory)
 				this.UpdateEmpireMemories();
 		}
