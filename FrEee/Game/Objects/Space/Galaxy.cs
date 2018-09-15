@@ -1283,6 +1283,13 @@ namespace FrEee.Game.Objects.Space
 				}
 			}
 
+			// validate fleets and share supplies
+			foreach (var f in Current.FindSpaceObjects<Fleet>().ToArray())
+			{
+				f.Validate();
+				f.ShareSupplies();
+			}
+
 			// check for victory/defeat
 			foreach (var vc in Current.VictoryConditions)
 			{
