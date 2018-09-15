@@ -691,6 +691,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			if (IsDisposed)
 				return;
+			IsDisposed = true;
 			foreach (var v in Vehicles.ExceptSingle(null))
 				v.Container = null;
 			Vehicles.Clear();
@@ -878,7 +879,7 @@ namespace FrEee.Game.Objects.Space
 				else if (sobj is Fleet)
 					((Fleet)sobj).Validate(ancestors);
 			}
-			if (!Vehicles.Any())
+			if (!Vehicles.ExceptSingle(null).Any())
 				Dispose();
 		}
 

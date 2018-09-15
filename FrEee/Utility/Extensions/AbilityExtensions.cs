@@ -422,6 +422,8 @@ namespace FrEee.Utility.Extensions
 		{
 			if (obj == null)
 				yield break;
+			if (empire == null)
+				yield break;
 
 			foreach (var clause in empire.ReceivedTreatyClauses.Flatten().OfType<ShareAbilityClause>())
 			{
