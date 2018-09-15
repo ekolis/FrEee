@@ -279,7 +279,7 @@ namespace FrEee.Utility
 				return null;
 			if (sector.StarSystem == null)
 				return null; // no guarantee that the warp point to the unexplored system is two-way!
-			if (!emp.HasExplored(sector.StarSystem))
+			if (emp != null && !emp.HasExplored(sector.StarSystem))
 				return null; // no cheating!
 			if (findWarpIn) // find a warp point leading into the system
 				return Galaxy.Current.FindSpaceObjects<WarpPoint>().Where(wp => wp.Target != null && wp.Target.StarSystem == sector.StarSystem && wp.CheckVisibility(emp) >= Visibility.Fogged).Select(wp => wp.Target).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault();
