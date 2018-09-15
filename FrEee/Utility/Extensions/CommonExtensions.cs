@@ -340,7 +340,7 @@ namespace FrEee.Utility.Extensions
 					where T : IMobileSpaceObject<T>
 		{
 			bool didStuff = false;
-			while (o.Orders.Any() && (o.TimeToNextMove <= 1e-15 || !o.Orders.First().ConsumesMovement))
+			while (!o.IsDisposed && o.Orders.Any() && (o.TimeToNextMove <= 1e-15 || !o.Orders.First().ConsumesMovement))
 			{
 				o.Orders.First().Execute(o);
 				if (o.Orders.First().IsComplete)
