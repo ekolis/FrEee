@@ -226,7 +226,7 @@ namespace FrEee.Utility
 
 		public override int GetHashCode()
 		{
-			return HashCodeMasher.Mash(IsGlobal, IsLocal, Name, Color, PictureName);
+			return Name.GetSafeHashCode();
 		}
 
 		public override string ToString()
