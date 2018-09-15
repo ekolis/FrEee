@@ -249,6 +249,9 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static int EstimateDistance(Sector start, Sector end, Empire emp)
 		{
+			if (start == null)
+				return 0;
+
 			int sublightDistance = int.MaxValue;
 			int ftlDistance = int.MaxValue;
 
