@@ -9,6 +9,7 @@ using FrEee.Game.Setup;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility.Extensions;
+using Svg;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -214,9 +215,9 @@ namespace FrEee.Utility
 		{
 			if (string.IsNullOrEmpty(Path.GetExtension(path)))
 			{
-				// check PNG, then BMP, if no extension specified
+				// check SVG, then PNG, then BMP, if no extension specified
 				// don't scale BMP files (unless they're specifically requested as BMP with a scale factor)
-				return GetCachedImage(path + ".png", scale) ?? GetCachedImage(path + ".bmp");
+				return GetCachedImage(path + ".svg", scale) ?? GetCachedImage(path + ".png", scale) ?? GetCachedImage(path + ".bmp");
 			}
 
 			if (!fileCache.ContainsKey(path))
@@ -229,10 +230,18 @@ namespace FrEee.Utility
 				{
 					try
 					{
-						var bmp = new Bitmap(path);
-						if (Path.GetExtension(path).ToLower() == ".bmp")
-							bmp.MakeTransparent(Color.Black);
-						fileCache[path] = bmp;
+						if (path.ToLower().EndsWith(".svg"))
+						{
+							var svg = SvgDocument.Open(path);
+							fileCache[path] = svg.Draw(512, 512);
+						}
+						else
+						{
+							var bmp = new Bitmap(path);
+							if (Path.GetExtension(path).ToLower() == ".bmp")
+								bmp.MakeTransparent(Color.Black);
+							fileCache[path] = bmp;
+						}		
 					}
 					catch (Exception ex)
 					{

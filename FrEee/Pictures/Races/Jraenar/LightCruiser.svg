@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="512"
+   height="512"
+   viewBox="0 0 135.46666 135.46666"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="LightCruiser.svg"
+   inkscape:export-filename="C:\Users\edkol\Documents\Visual Studio 2017\Projects\FrEee\FrEee\Pictures\Races\Jraenar\Escort.png"
+   inkscape:export-xdpi="151.90459"
+   inkscape:export-ydpi="151.90459">
+  <defs
+     id="defs2">
+    <linearGradient
+       id="linearGradient6233"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#ff0000;stop-opacity:1;"
+         offset="0"
+         id="stop6231" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#000000"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="156.3216"
+     inkscape:cy="245.46718"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-161.53345)">
+    <path
+       style="fill:#c0c8c8;fill-opacity:1;stroke:none;stroke-width:0.26861203;stroke-opacity:1"
+       d="m 89.769347,213.64804 c 10e-7,8.92178 -2.284595,26.33134 -10.545042,26.40726 -8.742438,0.0803 -14.006037,-0.20417 -20.059803,-0.20417 -12.10753,0 -13.240399,-8.35951 -13.240396,-26.20309 10e-7,-17.84357 9.815092,-32.30865 21.92262,-32.30865 12.107529,0 21.922618,14.46508 21.922621,32.30865 z"
+       id="path3713"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ssssss" />
+    <ellipse
+       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.26861203;stroke-opacity:1"
+       id="path4529"
+       cx="67.087021"
+       cy="212.37607"
+       rx="6.8372521"
+       ry="6.2751708" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26861203;stroke-opacity:1"
+       id="path4533"
+       cx="67.412605"
+       cy="212.46086"
+       rx="1.9535004"
+       ry="1.4415934" />
+    <path
+       style="fill:#c0c8c8;fill-opacity:1;stroke:none;stroke-width:0.55387563;stroke-opacity:1"
+       d="m 59.392788,234.04524 h 14.986194 l 9.638392,36.19169 -16.737615,-13.22917 -15.635483,11.90626 z"
+       id="rect4535"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccc" />
+    <rect
+       style="fill:#c0c8c8;fill-opacity:1;stroke:none;stroke-width:0.24703291;stroke-opacity:1"
+       id="rect4552"
+       width="9.66646"
+       height="38.757881"
+       x="44.623642"
+       y="246.18173" />
+    <path
+       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.2019306;stroke-opacity:1"
+       d="m 54.290102,246.18174 c 1e-6,2.74571 -1.806646,1.72483 -4.603076,1.72483 -2.79643,0 -5.523692,1.02088 -5.523691,-1.72483 -10e-7,-2.74571 2.266952,-4.97157 5.063383,-4.97157 2.796431,0 5.063385,2.22586 5.063384,4.97157 z"
+       id="path4556"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cscsc" />
+    <rect
+       style="fill:#c0c8c8;fill-opacity:1;stroke:none;stroke-width:0.24703291;stroke-opacity:1"
+       id="rect4552-0"
+       width="9.66646"
+       height="38.757877"
+       x="80.441566"
+       y="246.26732" />
+    <path
+       style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.2019306;stroke-opacity:1"
+       d="m 90.637194,246.26732 c 1e-6,2.74571 -1.806646,1.72483 -4.603076,1.72483 -2.79643,0 -5.523692,1.02088 -5.523691,-1.72483 -1e-6,-2.74571 2.266952,-4.97157 5.063383,-4.97157 2.796431,0 5.063385,2.22586 5.063384,4.97157 z"
+       id="path4556-1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cscsc" />
+  </g>
+</svg>
