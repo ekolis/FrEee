@@ -199,7 +199,9 @@ namespace FrEee.Utility
 
 		public override bool Equals(object obj)
 		{
-			return ReferenceEquals(this, obj);
+			if (obj is ResourceQuantity rq)
+				return this == rq;
+			return false;
 		}
 
 		public override int GetHashCode()
