@@ -41,7 +41,7 @@ namespace FrEee.WinForms.Controls
 		public void Bind()
 		{
 			SuspendLayout();
-			if (Fleet == null)
+			if (Fleet == null || Fleet.Owner == null)
 				Visible = false;
 			else
 			{
