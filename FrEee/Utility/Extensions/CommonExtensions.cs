@@ -229,6 +229,10 @@ namespace FrEee.Utility.Extensions
 					mines.Remove(mine);
 				}
 
+				if (sobj is Fleet ff)
+					ff.Validate();
+
+
 				// logging!
 				if (minesDetonated.Any() || minesSwept.Any() || minesAttacking.Any())
 					owner.Log.Add(sobj.CreateLogMessage(sobj + " encountered a mine field at " + sector + " and took " + totalDamage + " points of damage, sweeping " + minesSwept.Sum(kvp => kvp.Value) + " mines."));
