@@ -340,10 +340,13 @@ namespace FrEee.Utility.Extensions
 					where T : IMobileSpaceObject<T>
 		{
 			bool didStuff = false;
+			if (o is Fleet f && !f.Vehicles.ExceptSingle(null).Any())
+				o.Dispose();
 			while (!o.IsDisposed && o.Orders.Any() && (o.TimeToNextMove <= 1e-15 || !o.Orders.First().ConsumesMovement))
 			{
-				o.Orders.First().Execute(o);
-				if (o.Orders.First().IsComplete)
+				var order = o.Orders.First();
+				order.Execute(o);
+				if (order.IsComplete && o.Orders.Contains(order))
 					o.Orders.RemoveAt(0);
 				didStuff = true;
 			}
