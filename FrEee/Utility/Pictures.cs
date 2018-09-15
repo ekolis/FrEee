@@ -387,9 +387,11 @@ namespace FrEee.Utility
 				{
 					paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Mini_" + s));
 					paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Mini_" + s)); // for SE4 shipset compatibility
+					paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, s));
 				}
 				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, "Mini_" + s));
 				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, shipsetPath + "_Mini_" + s)); // for SE4 shipset compatibility
+				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, s));
 			}
 			return (GetCachedImage(paths) ?? GetGenericImage(hull.GetType(), scale)).Resize(size);
 		}
@@ -723,9 +725,11 @@ namespace FrEee.Utility
 				{
 					paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Portrait_" + s));
 					paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + s)); // for SE4 shipset compatibility
+					paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, s));
 				}
 				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, "Portrait_" + s));
 				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + s)); // for SE4 shipset compatibility
+				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, s));
 			}
 			return GetCachedImage(paths) ?? GetGenericImage(hull.GetType(), scale);
 		}
@@ -756,9 +760,11 @@ namespace FrEee.Utility
 			{
 				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Portrait_" + imageName));
 				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + imageName)); // for SE4 shipset compatibility
+				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, imageName));
 			}
 			paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, "Portrait_" + imageName));
 			paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + imageName)); // for SE4 shipset compatibility
+			paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, imageName));
 
 			return GetCachedImage(paths) ?? GetGenericImage(fleet.GetType());
 		}
