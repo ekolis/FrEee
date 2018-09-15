@@ -703,7 +703,7 @@ namespace FrEee.Game.Objects.Space
 
 		public bool ExecuteOrders()
 		{
-			if (!Vehicles.Any())
+			if (!Vehicles.ExceptSingle(null).Any())
 				return false; // fleets with no vehicles can't execute orders
 			return this.ExecuteMobileSpaceObjectOrders();
 		}
