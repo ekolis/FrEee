@@ -118,9 +118,9 @@ namespace FrEee.Utility
 
 		public static string GetShortTypeName(Type t)
 		{
-			var tname = t.AssemblyQualifiedName;
 			if (!ShortTypeNames.ContainsKey(t))
 			{
+				var tname = t.AssemblyQualifiedName;
 				foreach (var r in shortTypeNameRegexes)
 					tname = r.Item1.Replace(tname, r.Item2);
 				ShortTypeNames[t] = tname;
