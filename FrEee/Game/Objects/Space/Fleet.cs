@@ -257,7 +257,7 @@ namespace FrEee.Game.Objects.Space
 
 		public bool IsDestroyed
 		{
-			get { return Vehicles.All(sobj => sobj.IsDestroyed); }
+			get { return Vehicles.ExceptSingle(null).All(sobj => sobj.IsDestroyed); }
 		}
 
 		public bool IsDisposed { get; set; }
