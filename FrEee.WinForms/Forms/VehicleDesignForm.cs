@@ -192,6 +192,14 @@ namespace FrEee.WinForms.Forms
 					txtRange.Text = range + " sectors (unlimited w/star)";
 				else
 					txtRange.Text = range + " sectors (" + rangeWithOneStar + " w/star)";
+				var engines = Design.Components.Where(c => c.HasAbility("Standard Ship Movement")).Count();
+				txtEngines.Text = $"{engines} / {Design.Hull.MaxEngines}";
+				if (engines < Design.Hull.MaxEngines)
+					txtEngines.ForeColor = Color.Yellow;
+				else if (engines > Design.Hull.MaxEngines)
+					txtEngines.ForeColor = Color.Red;
+				else
+					txtEngines.ForeColor = Color.White;
 				txtShields.Text = Design.ShieldHitpoints + " shields (+" + Design.ShieldRegeneration + " regen)";
 				txtArmor.Text = Design.ArmorHitpoints + " armor";
 				txtHull.Text = Design.HullHitpoints + " hull";

@@ -88,6 +88,8 @@
 			this.btnMountInfo = new FrEee.WinForms.Controls.GameButton();
 			this.ddlMount = new System.Windows.Forms.ComboBox();
 			this.btnHelp = new FrEee.WinForms.Controls.GameButton();
+			this.label14 = new System.Windows.Forms.Label();
+			this.txtEngines = new System.Windows.Forms.Label();
 			this.pnlStats.SuspendLayout();
 			this.gamePanel4.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picDetailIcon)).BeginInit();
@@ -275,6 +277,8 @@
 			this.pnlStats.BackColor = System.Drawing.Color.Black;
 			this.pnlStats.BorderColor = System.Drawing.Color.CornflowerBlue;
 			this.pnlStats.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlStats.Controls.Add(this.txtEngines);
+			this.pnlStats.Controls.Add(this.label14);
 			this.pnlStats.Controls.Add(this.txtEvasion);
 			this.pnlStats.Controls.Add(this.label18);
 			this.pnlStats.Controls.Add(this.txtAccuracy);
@@ -782,6 +786,25 @@
 			this.btnHelp.UseVisualStyleBackColor = false;
 			this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
 			// 
+			// label14
+			// 
+			this.label14.AutoSize = true;
+			this.label14.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label14.Location = new System.Drawing.Point(3, 100);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(45, 13);
+			this.label14.TabIndex = 27;
+			this.label14.Text = "Engines";
+			// 
+			// txtEngines
+			// 
+			this.txtEngines.AutoSize = true;
+			this.txtEngines.Location = new System.Drawing.Point(84, 100);
+			this.txtEngines.Name = "txtEngines";
+			this.txtEngines.Size = new System.Drawing.Size(30, 13);
+			this.txtEngines.TabIndex = 28;
+			this.txtEngines.Text = "0 / 0";
+			// 
 			// VehicleDesignForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -814,7 +837,6 @@
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.btnHull);
 			this.Controls.Add(this.label1);
-			this.ForeColor = System.Drawing.Color.White;
 			this.MaximumSize = new System.Drawing.Size(725, 9999);
 			this.MinimumSize = new System.Drawing.Size(725, 493);
 			this.Name = "VehicleDesignForm";
@@ -895,5 +917,7 @@
 		private Controls.GameButton btnMountInfo;
 		private System.Windows.Forms.ComboBox ddlMount;
 		private Controls.GameButton btnHelp;
+		private System.Windows.Forms.Label txtEngines;
+		private System.Windows.Forms.Label label14;
 	}
 }
