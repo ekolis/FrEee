@@ -128,7 +128,7 @@ namespace FrEee.WinForms.Forms
 				var msgs = Empire.Current.IncomingMessages.Where(m => m.Owner == emp).Union(Empire.Current.SentMessages.Where(m => m.Recipient == emp)).Union(Empire.Current.Commands.OfType<SendMessageCommand>().Select(cmd => cmd.Message));
 				lstMessages.Initialize(64, 64);
 				foreach (var msg in msgs.OrderByDescending(m => m.TurnNumber))
-					lstMessages.AddItemWithImage(msg.TurnNumber.ToStardate(), "", msg, msg.Owner.Portrait, msg.Owner == Empire.Current ? "Us" : msg.Owner.Name, msg.Recipient == Empire.Current ? "Us" : msg.Recipient.Name, msg.Text);
+					lstMessages.AddItemWithImage(msg.TurnNumber.ToStardate(), "", msg, msg.Owner.Portrait, null, msg.Owner == Empire.Current ? "Us" : msg.Owner.Name, msg.Recipient == Empire.Current ? "Us" : msg.Recipient.Name, msg.Text);
 
 				// player info
 				txtName.Text = emp.PlayerInfo?.Name;

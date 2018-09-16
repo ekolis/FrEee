@@ -262,7 +262,7 @@ namespace FrEee.WinForms.Forms
 			foreach (var design in designs.Where(d => ConstructionQueue.CanConstruct(d)).OrderBy(d => d.Role).ThenBy(d => d.Name).ThenBy(d => d.Iteration))
 			{
 				var eta = design.Cost.Keys.Max(res => (double)(design.Cost[res]) / (double)ConstructionQueue.Rate[res]);
-				var x = lstShips.AddItemWithImage(design.Role, design.Name, design, design.Icon, eta.CeilingString(1));
+				var x = lstShips.AddItemWithImage(design.Role, design.Name, design, design.Icon, null, eta.CeilingString(1));
 				if (design.IsObsolete)
 					x.ForeColor = Color.Gray;
 				else if (design.IsObsolescent)

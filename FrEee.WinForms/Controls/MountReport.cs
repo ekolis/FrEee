@@ -170,7 +170,7 @@ namespace FrEee.WinForms.Controls
 			}
 			lstAbilities.Initialize(32, 32);
 			foreach (var kvp in abils)
-				lstAbilities.AddItemWithImage(null, kvp.Key.Item1 + " value " + kvp.Key.Item2, kvp, null, kvp.Value);
+				lstAbilities.AddItemWithImage(null, kvp.Key.Item1 + " value " + kvp.Key.Item2, kvp, null, null, kvp.Value);
 			ResumeLayout();
 		}
 

@@ -71,7 +71,7 @@ namespace FrEee.WinForms.Forms
 			// display it!
 			lstDesigns.Initialize(32, 32);
 			foreach (var design in designs)
-				lstDesigns.AddItemWithImage(design.Role, design.Name, design, design.Icon, design.Cost.Sum(kvp => kvp.Value).ToUnitString());
+				lstDesigns.AddItemWithImage(design.Role, design.Name, design, design.Icon, null, design.Cost.Sum(kvp => kvp.Value).ToUnitString());
 		}
 
 		private void BindEmpireList()

@@ -150,10 +150,11 @@ namespace FrEee.WinForms.Controls
 				lstComponentsDetail.Initialize(32, 32);
 				foreach (var g in vehicle.Components.GroupBy(c => new ComponentGroup(c.Template, c.Hitpoints)))
 				{
+					var color = g.Key.Hitpoints == g.Key.Template.Durability ? Color.White : g.Key.Hitpoints == 0 ? Color.Red : Color.Yellow;
 					if (g.Count() > 1)
-						lstComponentsDetail.AddItemWithImage(g.Key.Template.ComponentTemplate.Group, g.Count() + "x " + g.Key.Template.Name + " (" + g.Key.Hitpoints + " / " + g.Key.Template.Durability + " HP)", g.Key, g.First().Icon);
+						lstComponentsDetail.AddItemWithImage(g.Key.Template.ComponentTemplate.Group, g.Count() + "x " + g.Key.Template.Name + " (" + g.Key.Hitpoints + " / " + g.Key.Template.Durability + " HP)", g.Key, g.First().Icon, color);
 					else
-						lstComponentsDetail.AddItemWithImage(g.Key.Template.ComponentTemplate.Group, g.Key.Template.Name + " (" + g.Key.Hitpoints + " / " + g.Key.Template.Durability + " HP)", g.Key, g.First().Icon);
+						lstComponentsDetail.AddItemWithImage(g.Key.Template.ComponentTemplate.Group, g.Key.Template.Name + " (" + g.Key.Hitpoints + " / " + g.Key.Template.Durability + " HP)", g.Key, g.First().Icon, color);
 				}
 
 				// cargo detail
