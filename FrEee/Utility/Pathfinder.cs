@@ -295,7 +295,7 @@ namespace FrEee.Utility
 			var moves = new List<Sector>();
 
 			// no moving in an unexplored system until we've explored it
-			if (!s.IsExploredBy(emp))
+			if (s == null || !s.IsExploredBy(emp))
 				yield break;
 
 			var sys = s.StarSystem;
