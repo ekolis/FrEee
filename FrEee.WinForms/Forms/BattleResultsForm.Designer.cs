@@ -31,6 +31,7 @@
 			this.grid = new FrEee.WinForms.Controls.GameGridView();
 			this.btnReplay = new FrEee.WinForms.Controls.GameButton();
 			this.btnClose = new FrEee.WinForms.Controls.GameButton();
+			this.btnGoTo = new FrEee.WinForms.Controls.GameButton();
 			this.SuspendLayout();
 			// 
 			// grid
@@ -82,16 +83,29 @@
 			this.btnClose.UseVisualStyleBackColor = false;
 			this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
 			// 
+			// btnGoTo
+			// 
+			this.btnGoTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnGoTo.BackColor = System.Drawing.Color.Black;
+			this.btnGoTo.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnGoTo.Location = new System.Drawing.Point(446, 623);
+			this.btnGoTo.Name = "btnGoTo";
+			this.btnGoTo.Size = new System.Drawing.Size(75, 23);
+			this.btnGoTo.TabIndex = 3;
+			this.btnGoTo.Text = "Go To";
+			this.btnGoTo.UseVisualStyleBackColor = false;
+			this.btnGoTo.Click += new System.EventHandler(this.btnGoTo_Click);
+			// 
 			// BattleResultsForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(695, 658);
+			this.Controls.Add(this.btnGoTo);
 			this.Controls.Add(this.grid);
 			this.Controls.Add(this.btnReplay);
 			this.Controls.Add(this.btnClose);
-			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "BattleResultsForm";
 			this.Text = "Battle Results";
 			this.ResumeLayout(false);
@@ -103,5 +117,6 @@
 		private Controls.GameButton btnClose;
 		private Controls.GameButton btnReplay;
 		private Controls.GameGridView grid;
+		private Controls.GameButton btnGoTo;
 	}
 }

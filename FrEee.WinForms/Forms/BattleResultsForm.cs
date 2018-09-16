@@ -173,5 +173,12 @@ namespace FrEee.WinForms.Forms
 				return HashCodeMasher.Mash(Empire, HullName, HullSize);
 			}
 		}
+
+		private void btnGoTo_Click(object sender, EventArgs e)
+		{
+			MainGameForm.Instance.SelectStarSystem(Battle.StarSystem);
+			MainGameForm.Instance.SelectSector(Battle.Sector.Coordinates);
+			Close();
+		}
 	}
 }
