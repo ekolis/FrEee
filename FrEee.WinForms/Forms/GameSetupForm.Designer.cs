@@ -118,6 +118,9 @@
 			this.ddlStartTech = new System.Windows.Forms.ComboBox();
 			this.label30 = new System.Windows.Forms.Label();
 			this.tabEmpires = new System.Windows.Forms.TabPage();
+			this.lblMaxBonusResearchFromEmpirePoints = new System.Windows.Forms.Label();
+			this.spnResearchPerUnspentEmpirePoint = new System.Windows.Forms.NumericUpDown();
+			this.label64 = new System.Windows.Forms.Label();
 			this.btnEmpireBottom = new FrEee.WinForms.Controls.GameButton();
 			this.btnEmpireTop = new FrEee.WinForms.Controls.GameButton();
 			this.btnEmpireDown = new FrEee.WinForms.Controls.GameButton();
@@ -231,6 +234,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnRateStandard)).BeginInit();
 			this.tabTechnology.SuspendLayout();
 			this.tabEmpires.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.spnResearchPerUnspentEmpirePoint)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnMaxDispersion)).BeginInit();
 			this.gamePanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.spnResourceStorage)).BeginInit();
@@ -1419,6 +1423,9 @@
 			// tabEmpires
 			// 
 			this.tabEmpires.BackColor = System.Drawing.Color.Black;
+			this.tabEmpires.Controls.Add(this.lblMaxBonusResearchFromEmpirePoints);
+			this.tabEmpires.Controls.Add(this.spnResearchPerUnspentEmpirePoint);
+			this.tabEmpires.Controls.Add(this.label64);
 			this.tabEmpires.Controls.Add(this.btnEmpireBottom);
 			this.tabEmpires.Controls.Add(this.btnEmpireTop);
 			this.tabEmpires.Controls.Add(this.btnEmpireDown);
@@ -1461,6 +1468,42 @@
 			this.tabEmpires.Size = new System.Drawing.Size(545, 540);
 			this.tabEmpires.TabIndex = 3;
 			this.tabEmpires.Text = "Empires";
+			// 
+			// lblMaxBonusResearchFromEmpirePoints
+			// 
+			this.lblMaxBonusResearchFromEmpirePoints.AutoSize = true;
+			this.lblMaxBonusResearchFromEmpirePoints.ForeColor = System.Drawing.Color.White;
+			this.lblMaxBonusResearchFromEmpirePoints.Location = new System.Drawing.Point(253, 86);
+			this.lblMaxBonusResearchFromEmpirePoints.Margin = new System.Windows.Forms.Padding(3);
+			this.lblMaxBonusResearchFromEmpirePoints.Name = "lblMaxBonusResearchFromEmpirePoints";
+			this.lblMaxBonusResearchFromEmpirePoints.Size = new System.Drawing.Size(235, 15);
+			this.lblMaxBonusResearchFromEmpirePoints.TabIndex = 50;
+			this.lblMaxBonusResearchFromEmpirePoints.Text = "Empires can earn up to 0 bonus research.";
+			// 
+			// spnResearchPerUnspentEmpirePoint
+			// 
+			this.spnResearchPerUnspentEmpirePoint.Location = new System.Drawing.Point(449, 57);
+			this.spnResearchPerUnspentEmpirePoint.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+			this.spnResearchPerUnspentEmpirePoint.Name = "spnResearchPerUnspentEmpirePoint";
+			this.spnResearchPerUnspentEmpirePoint.Size = new System.Drawing.Size(90, 21);
+			this.spnResearchPerUnspentEmpirePoint.TabIndex = 3;
+			this.spnResearchPerUnspentEmpirePoint.ThousandsSeparator = true;
+			this.spnResearchPerUnspentEmpirePoint.ValueChanged += new System.EventHandler(this.spnResearchPerUnspentEmpirePoint_ValueChanged);
+			// 
+			// label64
+			// 
+			this.label64.AutoSize = true;
+			this.label64.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label64.Location = new System.Drawing.Point(252, 59);
+			this.label64.Margin = new System.Windows.Forms.Padding(3);
+			this.label64.Name = "label64";
+			this.label64.Size = new System.Drawing.Size(187, 15);
+			this.label64.TabIndex = 48;
+			this.label64.Text = "Bonus Per Unspent Empire Point\r\n";
 			// 
 			// btnEmpireBottom
 			// 
@@ -1541,7 +1584,7 @@
             0});
 			this.spnMaxDispersion.Name = "spnMaxDispersion";
 			this.spnMaxDispersion.Size = new System.Drawing.Size(120, 21);
-			this.spnMaxDispersion.TabIndex = 41;
+			this.spnMaxDispersion.TabIndex = 7;
 			this.spnMaxDispersion.Value = new decimal(new int[] {
             1,
             0,
@@ -1566,7 +1609,7 @@
 			this.ddlHomeworldSize.Location = new System.Drawing.Point(125, 111);
 			this.ddlHomeworldSize.Name = "ddlHomeworldSize";
 			this.ddlHomeworldSize.Size = new System.Drawing.Size(165, 23);
-			this.ddlHomeworldSize.TabIndex = 39;
+			this.ddlHomeworldSize.TabIndex = 5;
 			// 
 			// label42
 			// 
@@ -1634,7 +1677,7 @@
 			this.btnCreateEmpire.Location = new System.Drawing.Point(307, 337);
 			this.btnCreateEmpire.Name = "btnCreateEmpire";
 			this.btnCreateEmpire.Size = new System.Drawing.Size(101, 31);
-			this.btnCreateEmpire.TabIndex = 33;
+			this.btnCreateEmpire.TabIndex = 12;
 			this.btnCreateEmpire.Text = "Create";
 			this.btnCreateEmpire.UseVisualStyleBackColor = false;
 			this.btnCreateEmpire.Click += new System.EventHandler(this.btnCreateEmpire_Click);
@@ -1688,7 +1731,7 @@
             0});
 			this.spnResourceStorage.Name = "spnResourceStorage";
 			this.spnResourceStorage.Size = new System.Drawing.Size(120, 21);
-			this.spnResourceStorage.TabIndex = 30;
+			this.spnResourceStorage.TabIndex = 1;
 			this.spnResourceStorage.Value = new decimal(new int[] {
             50000,
             0,
@@ -1712,14 +1755,14 @@
 			this.spnMinorEmpires.Location = new System.Drawing.Point(125, 279);
 			this.spnMinorEmpires.Name = "spnMinorEmpires";
 			this.spnMinorEmpires.Size = new System.Drawing.Size(120, 21);
-			this.spnMinorEmpires.TabIndex = 28;
+			this.spnMinorEmpires.TabIndex = 11;
 			// 
 			// spnRandomAIs
 			// 
 			this.spnRandomAIs.Location = new System.Drawing.Point(125, 252);
 			this.spnRandomAIs.Name = "spnRandomAIs";
 			this.spnRandomAIs.Size = new System.Drawing.Size(120, 21);
-			this.spnRandomAIs.TabIndex = 27;
+			this.spnRandomAIs.TabIndex = 10;
 			// 
 			// spnEmpirePoints
 			// 
@@ -1731,12 +1774,13 @@
             0});
 			this.spnEmpirePoints.Name = "spnEmpirePoints";
 			this.spnEmpirePoints.Size = new System.Drawing.Size(120, 21);
-			this.spnEmpirePoints.TabIndex = 26;
+			this.spnEmpirePoints.TabIndex = 9;
 			this.spnEmpirePoints.Value = new decimal(new int[] {
             2000,
             0,
             0,
             0});
+			this.spnEmpirePoints.ValueChanged += new System.EventHandler(this.spnEmpirePoints_ValueChanged);
 			// 
 			// ddlScoreDisplay
 			// 
@@ -1751,7 +1795,7 @@
 			this.ddlScoreDisplay.Location = new System.Drawing.Point(125, 196);
 			this.ddlScoreDisplay.Name = "ddlScoreDisplay";
 			this.ddlScoreDisplay.Size = new System.Drawing.Size(166, 23);
-			this.ddlScoreDisplay.TabIndex = 25;
+			this.ddlScoreDisplay.TabIndex = 8;
 			// 
 			// ddlEmpirePlacement
 			// 
@@ -1764,7 +1808,7 @@
 			this.ddlEmpirePlacement.Location = new System.Drawing.Point(126, 140);
 			this.ddlEmpirePlacement.Name = "ddlEmpirePlacement";
 			this.ddlEmpirePlacement.Size = new System.Drawing.Size(165, 23);
-			this.ddlEmpirePlacement.TabIndex = 24;
+			this.ddlEmpirePlacement.TabIndex = 6;
 			// 
 			// spnHomeworlds
 			// 
@@ -1781,7 +1825,7 @@
             0});
 			this.spnHomeworlds.Name = "spnHomeworlds";
 			this.spnHomeworlds.Size = new System.Drawing.Size(120, 21);
-			this.spnHomeworlds.TabIndex = 23;
+			this.spnHomeworlds.TabIndex = 4;
 			this.spnHomeworlds.Value = new decimal(new int[] {
             1,
             0,
@@ -1798,7 +1842,7 @@
             0});
 			this.spnStartResearch.Name = "spnStartResearch";
 			this.spnStartResearch.Size = new System.Drawing.Size(120, 21);
-			this.spnStartResearch.TabIndex = 22;
+			this.spnStartResearch.TabIndex = 2;
 			this.spnStartResearch.Value = new decimal(new int[] {
             20000,
             0,
@@ -1815,7 +1859,7 @@
             0});
 			this.spnStartResources.Name = "spnStartResources";
 			this.spnStartResources.Size = new System.Drawing.Size(120, 21);
-			this.spnStartResources.TabIndex = 21;
+			this.spnStartResources.TabIndex = 0;
 			this.spnStartResources.Value = new decimal(new int[] {
             20000,
             0,
@@ -2566,6 +2610,7 @@
 			this.tabTechnology.PerformLayout();
 			this.tabEmpires.ResumeLayout(false);
 			this.tabEmpires.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.spnResearchPerUnspentEmpirePoint)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnMaxDispersion)).EndInit();
 			this.gamePanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.spnResourceStorage)).EndInit();
@@ -2761,5 +2806,8 @@
 		private System.Windows.Forms.Label label63;
 		private Controls.GameButton btnPreviewMap;
 		private Controls.GalaxyView galaxyView;
+		private System.Windows.Forms.NumericUpDown spnResearchPerUnspentEmpirePoint;
+		private System.Windows.Forms.Label label64;
+		private System.Windows.Forms.Label lblMaxBonusResearchFromEmpirePoints;
 	}
 }
