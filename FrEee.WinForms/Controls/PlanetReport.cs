@@ -73,6 +73,8 @@ namespace FrEee.WinForms.Controls
 
 				picOwnerFlag.Image = Planet.Owner == null ? null : Planet.Owner.Icon;
 				picPortrait.Image = Planet.Portrait;
+				Planet.DrawPopulationBars(picPortrait.Image, 128);
+				Planet.DrawStatusIcons(picPortrait.Image);
 
 				if (Planet.Timestamp == Galaxy.Current.Timestamp)
 					txtAge.Text = "Current";

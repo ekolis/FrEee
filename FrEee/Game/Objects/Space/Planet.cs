@@ -867,29 +867,32 @@ namespace FrEee.Game.Objects.Space
 		/// Make sure not to draw on an original; make a copy first!
 		/// </summary>
 		/// <param name="img"></param>
-		public void DrawPopulationBars(Image img)
+		public void DrawPopulationBars(Image img, int? expectedSize = null)
 		{
 			if (Colony != null)
 			{
 				// draw population bar
 				var g = Graphics.FromImage(img);
-				var rect = new Rectangle(img.Width - 21, 1, 20, 8);
-				var pen = new Pen(Colony.Owner.Color);
+				double scaleFactor = 1;
+				if (expectedSize != null)
+					scaleFactor = (double)expectedSize / Math.Max(img.Width, img.Height);
+				var rect = new Rectangle((int)(img.Width - 21 / scaleFactor), (int)(1 / scaleFactor), (int)(20 / scaleFactor), (int)(8 / scaleFactor));
+				var pen = new Pen(Colony.Owner.Color, 1 / (float)scaleFactor);
 				g.FillRectangle(Brushes.Black, rect);
 				g.DrawRectangle(pen, rect);
 				var brush = new SolidBrush(Colony.Owner.Color);
 				var pop = Colony.Population.Sum(kvp => kvp.Value);
-				rect.Width = 5;
-				rect.X++;
-				rect.Y += 2;
-				rect.Height -= 3;
-				rect.X += 1;
+				rect.Width = (int)(5 / scaleFactor);
+				rect.X += (int)(1 /scaleFactor);
+				rect.Y += (int)(2 / scaleFactor);
+				rect.Height -= (int)(3 / scaleFactor);
+				rect.X += (int)(1 / scaleFactor);
 				if (pop > 0)
 					g.FillRectangle(brush, rect);
-				rect.X += 6;
+				rect.X += (int)(6 /scaleFactor);
 				if (pop > MaxPopulation / 3)
 					g.FillRectangle(brush, rect);
-				rect.X += 6;
+				rect.X += (int)(6 / scaleFactor);
 				if (pop > MaxPopulation * 2 / 3)
 					g.FillRectangle(brush, rect);
 			}

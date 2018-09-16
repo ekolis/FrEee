@@ -1607,8 +1607,13 @@ namespace FrEee.WinForms.Forms
 						var item = new ListViewItem();
 						item.Text = sobj.Name;
 						item.Tag = sobj;
-						if (sobj is Planet)
-							il.Images.Add(sobj.Portrait.Resize(48).DrawPopulationBars((Planet)sobj));
+						if (sobj is Planet p)
+						{
+							var img = sobj.Portrait.Resize(48);
+							img = img.DrawPopulationBars(p);
+							p.DrawStatusIcons(img);
+							il.Images.Add(img);
+						}
 						else
 							il.Images.Add(sobj.Portrait.Resize(48));
 						item.ImageIndex = i;
