@@ -458,6 +458,8 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				Orders.DisposeAll();
 				Orders.Clear();
+				AreOrdersOnHold = false;
+				AreRepeatOrdersEnabled = false;
 			}
 			if (CheckVisibility(emp) < Visibility.Fogged)
 				Dispose();

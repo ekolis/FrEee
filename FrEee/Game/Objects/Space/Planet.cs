@@ -999,7 +999,12 @@ namespace FrEee.Game.Objects.Space
 				Colony = null;
 
 			if (vis < Visibility.Owned)
+			{
+				// TODO - espionage?
 				Orders.Clear();
+				AreOrdersOnHold = false;
+				AreRepeatOrdersEnabled = false;
+			}
 		}
 
 		public void RemoveOrder(IOrder order)

@@ -759,6 +759,8 @@ namespace FrEee.Game.Objects.Space
 			{
 				Name = Owner + " Fleet";
 				Orders.Clear();
+				AreOrdersOnHold = false;
+				AreRepeatOrdersEnabled = false;
 			}
 			if (vis < Visibility.Fogged)
 				Dispose();
