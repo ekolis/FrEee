@@ -399,6 +399,8 @@ namespace FrEee.Game.Objects.Vehicles
 			{
 				// can't see orders unless it's your vehicle
 				Orders.Clear();
+				AreOrdersOnHold = false;
+				AreRepeatOrdersEnabled = false;
 
 				// can only see cargo size if scanned but unowed
 				Cargo.SetFakeSize(true);
