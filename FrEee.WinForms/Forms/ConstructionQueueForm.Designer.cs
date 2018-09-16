@@ -87,6 +87,7 @@
 			this.txtFacilitySlotsFree = new System.Windows.Forms.Label();
 			this.chkExpanded = new System.Windows.Forms.CheckBox();
 			this.btnHelp = new FrEee.WinForms.Controls.GameButton();
+			this.lblSpaceportWarning = new System.Windows.Forms.Label();
 			this.gamePanel2.SuspendLayout();
 			this.gamePanel1.SuspendLayout();
 			this.gameTabControl1.SuspendLayout();
@@ -551,7 +552,7 @@
 			this.gameTabControl1.Controls.Add(this.tabPage3);
 			this.gameTabControl1.Controls.Add(this.tabPage4);
 			this.gameTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-			this.gameTabControl1.Location = new System.Drawing.Point(3, 3);
+			this.gameTabControl1.Location = new System.Drawing.Point(6, 3);
 			this.gameTabControl1.Name = "gameTabControl1";
 			this.gameTabControl1.SelectedIndex = 0;
 			this.gameTabControl1.SelectedTabBackColor = System.Drawing.Color.CornflowerBlue;
@@ -782,12 +783,24 @@
 			this.btnHelp.UseVisualStyleBackColor = false;
 			this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
 			// 
+			// lblSpaceportWarning
+			// 
+			this.lblSpaceportWarning.AutoSize = true;
+			this.lblSpaceportWarning.BackColor = System.Drawing.Color.Black;
+			this.lblSpaceportWarning.ForeColor = System.Drawing.Color.Red;
+			this.lblSpaceportWarning.Location = new System.Drawing.Point(700, 13);
+			this.lblSpaceportWarning.Name = "lblSpaceportWarning";
+			this.lblSpaceportWarning.Size = new System.Drawing.Size(119, 13);
+			this.lblSpaceportWarning.TabIndex = 29;
+			this.lblSpaceportWarning.Text = "Warning: No Spaceport";
+			// 
 			// ConstructionQueueForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(880, 558);
+			this.Controls.Add(this.lblSpaceportWarning);
 			this.Controls.Add(this.btnHelp);
 			this.Controls.Add(this.chkExpanded);
 			this.Controls.Add(this.txtFacilitySlotsFree);
@@ -893,5 +906,6 @@
 		private System.Windows.Forms.Label lblPresentSector;
 		private System.Windows.Forms.Label lblPresentLocal;
 		private Controls.GameButton btnHelp;
+		private System.Windows.Forms.Label lblSpaceportWarning;
 	}
 }
