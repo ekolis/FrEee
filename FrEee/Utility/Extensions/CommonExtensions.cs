@@ -340,6 +340,10 @@ namespace FrEee.Utility.Extensions
 					where T : IMobileSpaceObject<T>
 		{
 			bool didStuff = false;
+
+			if (o.AreOrdersOnHold)
+				return didStuff;
+
 			if (o is Fleet f && !f.Vehicles.ExceptSingle(null).Any())
 				o.Dispose();
 			while (!o.IsDisposed && o.Orders.Any() && (o.TimeToNextMove <= 1e-15 || !o.Orders.First().ConsumesMovement))

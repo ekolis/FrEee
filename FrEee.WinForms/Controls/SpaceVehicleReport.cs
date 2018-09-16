@@ -397,5 +397,18 @@ namespace FrEee.WinForms.Controls
 				cmd.AreRepeatOrdersEnabled = chkRepeat.Checked;
 			cmd.Execute();
 		}
+
+		private void chkOnHold_CheckedChanged(object sender, EventArgs e)
+		{
+			var cmd = Empire.Current.Commands.OfType<ToggleOrdersOnHoldCommand>().SingleOrDefault(x => x.Executor == Vehicle);
+			if (cmd == null)
+			{
+				cmd = new ToggleOrdersOnHoldCommand(Vehicle, chkOnHold.Checked);
+				Empire.Current.Commands.Add(cmd);
+			}
+			else
+				cmd.AreOrdersOnHold = chkOnHold.Checked;
+			cmd.Execute();
+		}
 	}
 }

@@ -238,5 +238,18 @@ namespace FrEee.WinForms.Controls
 		{
 
 		}
+
+		private void chkOnHold_CheckedChanged(object sender, EventArgs e)
+		{
+			var cmd = Empire.Current.Commands.OfType<ToggleOrdersOnHoldCommand>().SingleOrDefault(x => x.Executor == Planet);
+			if (cmd == null)
+			{
+				cmd = new ToggleOrdersOnHoldCommand(Planet, chkOnHold.Checked);
+				Empire.Current.Commands.Add(cmd);
+			}
+			else
+				cmd.AreOrdersOnHold = chkOnHold.Checked;
+			cmd.Execute();
+		}
 	}
 }

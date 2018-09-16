@@ -7,6 +7,8 @@ namespace FrEee.Game.Interfaces
 	/// </summary>
 	public interface IOrderable : IReferrable
 	{
+		bool AreOrdersOnHold { get; set; }
+
 		bool AreRepeatOrdersEnabled { get; set; }
 
 		/// <summary>

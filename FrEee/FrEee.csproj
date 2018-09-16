@@ -150,6 +150,7 @@
     <Compile Include="Game\Objects\Combat\Grid\GroundBattle.cs" />
     <Compile Include="Game\Objects\Combat\Grid\SpaceBattle.cs" />
     <Compile Include="Game\Objects\Commands\SetPlayerInfoCommand.cs" />
+    <Compile Include="Game\Objects\Commands\ToggleOrdersOnHoldCommand.cs" />
     <Compile Include="Game\Objects\Commands\ToggleRepeatOrdersCommand.cs" />
     <Compile Include="Game\Objects\Events\Event.cs" />
     <Compile Include="Game\Enumerations\EventMessageTarget.cs" />

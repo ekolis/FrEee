@@ -28,9 +28,9 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("6x Constitution Heavy Cruiser");
-			System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("4x Phalanx Destroyer");
-			System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("2x Trooper Medium Transport");
+			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("6x Constitution Heavy Cruiser");
+			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("4x Phalanx Destroyer");
+			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("2x Trooper Medium Transport");
 			this.pageDetail = new System.Windows.Forms.TabPage();
 			this.txtAge = new System.Windows.Forms.Label();
 			this.txtCargoSpaceFree = new System.Windows.Forms.Label();
@@ -78,6 +78,7 @@ namespace FrEee.WinForms.Controls
 			this.abilityTreeView = new FrEee.WinForms.Controls.AbilityTreeView();
 			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
 			this.pageOrders = new System.Windows.Forms.TabPage();
+			this.chkRepeat = new System.Windows.Forms.CheckBox();
 			this.btnDeleteOrder = new FrEee.WinForms.Controls.GameButton();
 			this.btnOrderGoesDown = new FrEee.WinForms.Controls.GameButton();
 			this.btnOrderToBottom = new FrEee.WinForms.Controls.GameButton();
@@ -85,7 +86,7 @@ namespace FrEee.WinForms.Controls
 			this.btnOrderGoesUp = new FrEee.WinForms.Controls.GameButton();
 			this.btnOrderToTop = new FrEee.WinForms.Controls.GameButton();
 			this.lstOrdersDetail = new System.Windows.Forms.ListBox();
-			this.chkRepeat = new System.Windows.Forms.CheckBox();
+			this.chkOnHold = new System.Windows.Forms.CheckBox();
 			this.pageDetail.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.gamePanel1.SuspendLayout();
@@ -317,9 +318,9 @@ namespace FrEee.WinForms.Controls
 			this.lstVehicleSummary.ForeColor = System.Drawing.Color.White;
 			this.lstVehicleSummary.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
 			this.lstVehicleSummary.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem10,
-            listViewItem11,
-            listViewItem12});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3});
 			this.lstVehicleSummary.Location = new System.Drawing.Point(4, 3);
 			this.lstVehicleSummary.Name = "lstVehicleSummary";
 			this.lstVehicleSummary.Size = new System.Drawing.Size(264, 92);
@@ -773,6 +774,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.pageOrders.AutoScroll = true;
 			this.pageOrders.BackColor = System.Drawing.Color.Black;
+			this.pageOrders.Controls.Add(this.chkOnHold);
 			this.pageOrders.Controls.Add(this.chkRepeat);
 			this.pageOrders.Controls.Add(this.btnDeleteOrder);
 			this.pageOrders.Controls.Add(this.btnOrderGoesDown);
@@ -787,6 +789,18 @@ namespace FrEee.WinForms.Controls
 			this.pageOrders.Size = new System.Drawing.Size(292, 492);
 			this.pageOrders.TabIndex = 1;
 			this.pageOrders.Text = "Orders";
+			// 
+			// chkRepeat
+			// 
+			this.chkRepeat.AutoSize = true;
+			this.chkRepeat.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+			this.chkRepeat.Location = new System.Drawing.Point(8, 73);
+			this.chkRepeat.Name = "chkRepeat";
+			this.chkRepeat.Size = new System.Drawing.Size(106, 19);
+			this.chkRepeat.TabIndex = 19;
+			this.chkRepeat.Text = "Repeat Orders";
+			this.chkRepeat.UseVisualStyleBackColor = true;
+			this.chkRepeat.CheckedChanged += new System.EventHandler(this.chkRepeat_CheckedChanged);
 			// 
 			// btnDeleteOrder
 			// 
@@ -899,17 +913,17 @@ namespace FrEee.WinForms.Controls
 			this.lstOrdersDetail.Size = new System.Drawing.Size(279, 375);
 			this.lstOrdersDetail.TabIndex = 0;
 			// 
-			// chkRepeat
+			// chkOnHold
 			// 
-			this.chkRepeat.AutoSize = true;
-			this.chkRepeat.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-			this.chkRepeat.Location = new System.Drawing.Point(8, 73);
-			this.chkRepeat.Name = "chkRepeat";
-			this.chkRepeat.Size = new System.Drawing.Size(106, 19);
-			this.chkRepeat.TabIndex = 19;
-			this.chkRepeat.Text = "Repeat Orders";
-			this.chkRepeat.UseVisualStyleBackColor = true;
-			this.chkRepeat.CheckedChanged += new System.EventHandler(this.chkRepeat_CheckedChanged);
+			this.chkOnHold.AutoSize = true;
+			this.chkOnHold.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+			this.chkOnHold.Location = new System.Drawing.Point(120, 74);
+			this.chkOnHold.Name = "chkOnHold";
+			this.chkOnHold.Size = new System.Drawing.Size(111, 19);
+			this.chkOnHold.TabIndex = 20;
+			this.chkOnHold.Text = "Orders On Hold";
+			this.chkOnHold.UseVisualStyleBackColor = true;
+			this.chkOnHold.CheckedChanged += new System.EventHandler(this.chkOnHold_CheckedChanged);
 			// 
 			// FleetReport
 			// 
@@ -996,5 +1010,6 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label txtAge;
 		private System.Windows.Forms.CheckBox chkRepeat;
+		private System.Windows.Forms.CheckBox chkOnHold;
 	}
 }

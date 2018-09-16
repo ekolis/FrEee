@@ -28,14 +28,14 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("1x Space Yard");
-			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("6x Mineral Miner");
-			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("3x Organics Farm");
-			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("2x Radioactives Extraction");
-			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("2000M Jraenar (Happy: 150)");
-			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("1000M Eee (Jubilant: 0)");
-			System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("10x \"Buster\" class Weapon Platform");
-			System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("500x \"Guard\" class Troop");
+			System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("1x Space Yard");
+			System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("6x Mineral Miner");
+			System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("3x Organics Farm");
+			System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("2x Radioactives Extraction");
+			System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("2000M Jraenar (Happy: 150)");
+			System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("1000M Eee (Jubilant: 0)");
+			System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("10x \"Buster\" class Weapon Platform");
+			System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("500x \"Guard\" class Troop");
 			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
 			this.pageDetail = new System.Windows.Forms.TabPage();
 			this.txtAge = new System.Windows.Forms.Label();
@@ -80,6 +80,7 @@ namespace FrEee.WinForms.Controls
 			this.txtCargoSpaceFree = new System.Windows.Forms.Label();
 			this.lstCargoDetail = new System.Windows.Forms.ListView();
 			this.pageOrders = new System.Windows.Forms.TabPage();
+			this.chkRepeat = new System.Windows.Forms.CheckBox();
 			this.btnOrdersClear = new FrEee.WinForms.Controls.GameButton();
 			this.btnOrderDelete = new FrEee.WinForms.Controls.GameButton();
 			this.btnOrderDown = new FrEee.WinForms.Controls.GameButton();
@@ -87,7 +88,7 @@ namespace FrEee.WinForms.Controls
 			this.lstOrdersDetail = new System.Windows.Forms.ListBox();
 			this.pageAbility = new System.Windows.Forms.TabPage();
 			this.abilityTreeView = new FrEee.WinForms.Controls.AbilityTreeView();
-			this.chkRepeat = new System.Windows.Forms.CheckBox();
+			this.chkOnHold = new System.Windows.Forms.CheckBox();
 			this.gameTabControl1.SuspendLayout();
 			this.pageDetail.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
@@ -562,10 +563,10 @@ namespace FrEee.WinForms.Controls
 			this.lstFacilitiesDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstFacilitiesDetail.ForeColor = System.Drawing.Color.White;
 			this.lstFacilitiesDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
+            listViewItem9,
+            listViewItem10,
+            listViewItem11,
+            listViewItem12});
 			this.lstFacilitiesDetail.Location = new System.Drawing.Point(0, 22);
 			this.lstFacilitiesDetail.Name = "lstFacilitiesDetail";
 			this.lstFacilitiesDetail.Size = new System.Drawing.Size(367, 408);
@@ -607,8 +608,8 @@ namespace FrEee.WinForms.Controls
 			this.lstRaces.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstRaces.ForeColor = System.Drawing.Color.White;
 			this.lstRaces.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6});
+            listViewItem13,
+            listViewItem14});
 			this.lstRaces.Location = new System.Drawing.Point(-1, 21);
 			this.lstRaces.Name = "lstRaces";
 			this.lstRaces.Size = new System.Drawing.Size(368, 399);
@@ -649,8 +650,8 @@ namespace FrEee.WinForms.Controls
 			this.lstCargoDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstCargoDetail.ForeColor = System.Drawing.Color.White;
 			this.lstCargoDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem7,
-            listViewItem8});
+            listViewItem15,
+            listViewItem16});
 			this.lstCargoDetail.Location = new System.Drawing.Point(-1, 21);
 			this.lstCargoDetail.Name = "lstCargoDetail";
 			this.lstCargoDetail.Size = new System.Drawing.Size(368, 399);
@@ -661,6 +662,7 @@ namespace FrEee.WinForms.Controls
 			// pageOrders
 			// 
 			this.pageOrders.BackColor = System.Drawing.Color.Black;
+			this.pageOrders.Controls.Add(this.chkOnHold);
 			this.pageOrders.Controls.Add(this.chkRepeat);
 			this.pageOrders.Controls.Add(this.btnOrdersClear);
 			this.pageOrders.Controls.Add(this.btnOrderDelete);
@@ -673,6 +675,18 @@ namespace FrEee.WinForms.Controls
 			this.pageOrders.Size = new System.Drawing.Size(367, 426);
 			this.pageOrders.TabIndex = 1;
 			this.pageOrders.Text = "Orders";
+			// 
+			// chkRepeat
+			// 
+			this.chkRepeat.AutoSize = true;
+			this.chkRepeat.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+			this.chkRepeat.Location = new System.Drawing.Point(6, 6);
+			this.chkRepeat.Name = "chkRepeat";
+			this.chkRepeat.Size = new System.Drawing.Size(106, 19);
+			this.chkRepeat.TabIndex = 19;
+			this.chkRepeat.Text = "Repeat Orders";
+			this.chkRepeat.UseVisualStyleBackColor = true;
+			this.chkRepeat.CheckedChanged += new System.EventHandler(this.chkRepeat_CheckedChanged);
 			// 
 			// btnOrdersClear
 			// 
@@ -765,17 +779,17 @@ namespace FrEee.WinForms.Controls
 			this.abilityTreeView.Size = new System.Drawing.Size(361, 420);
 			this.abilityTreeView.TabIndex = 0;
 			// 
-			// chkRepeat
+			// chkOnHold
 			// 
-			this.chkRepeat.AutoSize = true;
-			this.chkRepeat.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-			this.chkRepeat.Location = new System.Drawing.Point(6, 6);
-			this.chkRepeat.Name = "chkRepeat";
-			this.chkRepeat.Size = new System.Drawing.Size(106, 19);
-			this.chkRepeat.TabIndex = 19;
-			this.chkRepeat.Text = "Repeat Orders";
-			this.chkRepeat.UseVisualStyleBackColor = true;
-			this.chkRepeat.CheckedChanged += new System.EventHandler(this.chkRepeat_CheckedChanged);
+			this.chkOnHold.AutoSize = true;
+			this.chkOnHold.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+			this.chkOnHold.Location = new System.Drawing.Point(118, 6);
+			this.chkOnHold.Name = "chkOnHold";
+			this.chkOnHold.Size = new System.Drawing.Size(111, 19);
+			this.chkOnHold.TabIndex = 21;
+			this.chkOnHold.Text = "Orders On Hold";
+			this.chkOnHold.UseVisualStyleBackColor = true;
+			this.chkOnHold.CheckedChanged += new System.EventHandler(this.chkOnHold_CheckedChanged);
 			// 
 			// PlanetReport
 			// 
@@ -859,5 +873,6 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.Label lblPopulationSpaceFree;
 		private System.Windows.Forms.ListView lstRaces;
 		private System.Windows.Forms.CheckBox chkRepeat;
+		private System.Windows.Forms.CheckBox chkOnHold;
 	}
 }
