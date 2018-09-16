@@ -71,6 +71,11 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
+		/// Are this object's orders on hold?
+		/// </summary>
+		public bool AreOrdersOnHold { get; set; }
+
+		/// <summary>
 		/// Should this object's orders repeat once they are completed?
 		/// </summary>
 		public bool AreRepeatOrdersEnabled { get; set; }
