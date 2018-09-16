@@ -179,5 +179,10 @@ namespace FrEee.Game.Objects.Orders
 				Upgrade.ReplaceClientIDs(idmap, done);
 			}
 		}
+
+		public void Reset()
+		{
+			NewFacility = null;
+		}
 	}
 }

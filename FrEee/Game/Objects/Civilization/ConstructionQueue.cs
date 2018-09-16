@@ -385,7 +385,10 @@ namespace FrEee.Game.Objects.Civilization
 								order.Item.Place(Container);
 							Orders.Remove(order);
 							if (AreRepeatOrdersEnabled)
+							{
+								order.Reset();
 								Orders.Add(order);
+							}
 							builtThisTurn.Add(order.Item);
 							if (order.Item is Ship || order.Item is Base)
 							{

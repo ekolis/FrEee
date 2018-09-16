@@ -19,5 +19,10 @@ namespace FrEee.Game.Interfaces
 		/// The template.
 		/// </summary>
 		IConstructionTemplate Template { get; }
+
+		/// <summary>
+		/// Resets this order so it can be repeated.
+		/// </summary>
+		void Reset();
 	}
 }
