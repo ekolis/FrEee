@@ -151,6 +151,11 @@ namespace FrEee.WinForms.Controls
 				// load orders
 				// TODO - let player adjust orders here
 				lstOrdersDetail.Items.Clear();
+				if (!Planet.IsOurs)
+				{
+					chkOnHold.Visible = false;
+					chkRepeat.Visible = false;
+				}
 				foreach (var order in Planet.Orders)
 					lstOrdersDetail.Items.Add(order);
 

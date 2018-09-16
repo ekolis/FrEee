@@ -136,6 +136,11 @@ namespace FrEee.WinForms.Controls
 					lstCargoSummary.AddItemWithImage("Population", pop.Value.ToUnitString(true) + " " + pop.Key.Name, pop, pop.Key.Icon);
 
 				// orders detail
+				if (!Vehicle.IsOurs)
+				{
+					chkOnHold.Visible = false;
+					chkRepeat.Visible = false;
+				}
 				lstOrdersDetail.Items.Clear();
 				foreach (var o in vehicle.Orders)
 					lstOrdersDetail.Items.Add(o);
