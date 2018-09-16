@@ -28,6 +28,11 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		/// <summary>
+		/// Should this object's orders repeat once they are completed?
+		/// </summary>
+		public bool AreRepeatOrdersEnabled { get; set; }
+
+		/// <summary>
 		/// Cargo space free, counting queued items as already constructed and in cargo.
 		/// </summary>
 		public int CargoStorageFree
@@ -361,6 +366,8 @@ namespace FrEee.Game.Objects.Civilization
 							if (!(order is UpgradeFacilityOrder))
 								order.Item.Place(Container);
 							Orders.Remove(order);
+							if (AreRepeatOrdersEnabled)
+								Orders.Add(order);
 							builtThisTurn.Add(order.Item);
 							if (order.Item is Ship || order.Item is Base)
 							{

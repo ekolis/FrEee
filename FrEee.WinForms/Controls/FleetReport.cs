@@ -326,5 +326,18 @@ namespace FrEee.WinForms.Controls
 		public event OrdersChangedDelegate OrdersChanged;
 
 		public delegate void OrdersChangedDelegate();
+
+		private void chkRepeat_CheckedChanged(object sender, EventArgs e)
+		{
+			var cmd = Empire.Current.Commands.OfType<ToggleRepeatOrdersCommand>().SingleOrDefault(x => x.Executor == Fleet);
+			if (cmd == null)
+			{
+				cmd = new ToggleRepeatOrdersCommand(Fleet, chkRepeat.Checked);
+				Empire.Current.Commands.Add(cmd);
+			}
+			else
+				cmd.AreRepeatOrdersEnabled = chkRepeat.Checked;
+			cmd.Execute();
+		}
 	}
 }

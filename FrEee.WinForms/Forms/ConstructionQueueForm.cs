@@ -976,5 +976,18 @@ namespace FrEee.WinForms.Forms
 		{
 			OpenWikiPage();
 		}
+
+		private void chkRepeat_CheckedChanged(object sender, EventArgs e)
+		{
+			var cmd = Empire.Current.Commands.OfType<ToggleRepeatOrdersCommand>().SingleOrDefault(x => x.Executor == ConstructionQueue);
+			if (cmd == null)
+			{
+				cmd = new ToggleRepeatOrdersCommand(ConstructionQueue, chkRepeat.Checked);
+				Empire.Current.Commands.Add(cmd);
+			}
+			else
+				cmd.AreRepeatOrdersEnabled = chkRepeat.Checked;
+			cmd.Execute();
+		}
 	}
 }

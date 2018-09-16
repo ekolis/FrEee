@@ -72,6 +72,11 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
+		/// <summary>
+		/// Should this object's orders repeat once they are completed?
+		/// </summary>
+		public bool AreRepeatOrdersEnabled { get; set; }
+
 		public int ArmorHitpoints
 		{
 			get { return Vehicles.Sum(v => v.ArmorHitpoints); }

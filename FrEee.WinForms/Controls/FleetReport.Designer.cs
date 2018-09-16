@@ -28,9 +28,9 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("6x Constitution Heavy Cruiser");
-			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("4x Phalanx Destroyer");
-			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("2x Trooper Medium Transport");
+			System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("6x Constitution Heavy Cruiser");
+			System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("4x Phalanx Destroyer");
+			System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("2x Trooper Medium Transport");
 			this.pageDetail = new System.Windows.Forms.TabPage();
 			this.txtAge = new System.Windows.Forms.Label();
 			this.txtCargoSpaceFree = new System.Windows.Forms.Label();
@@ -85,6 +85,7 @@ namespace FrEee.WinForms.Controls
 			this.btnOrderGoesUp = new FrEee.WinForms.Controls.GameButton();
 			this.btnOrderToTop = new FrEee.WinForms.Controls.GameButton();
 			this.lstOrdersDetail = new System.Windows.Forms.ListBox();
+			this.chkRepeat = new System.Windows.Forms.CheckBox();
 			this.pageDetail.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.gamePanel1.SuspendLayout();
@@ -316,9 +317,9 @@ namespace FrEee.WinForms.Controls
 			this.lstVehicleSummary.ForeColor = System.Drawing.Color.White;
 			this.lstVehicleSummary.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
 			this.lstVehicleSummary.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3});
+            listViewItem10,
+            listViewItem11,
+            listViewItem12});
 			this.lstVehicleSummary.Location = new System.Drawing.Point(4, 3);
 			this.lstVehicleSummary.Name = "lstVehicleSummary";
 			this.lstVehicleSummary.Size = new System.Drawing.Size(264, 92);
@@ -772,6 +773,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.pageOrders.AutoScroll = true;
 			this.pageOrders.BackColor = System.Drawing.Color.Black;
+			this.pageOrders.Controls.Add(this.chkRepeat);
 			this.pageOrders.Controls.Add(this.btnDeleteOrder);
 			this.pageOrders.Controls.Add(this.btnOrderGoesDown);
 			this.pageOrders.Controls.Add(this.btnOrderToBottom);
@@ -892,10 +894,22 @@ namespace FrEee.WinForms.Controls
             "Drop All Eee Population",
             "Load All Troops",
             "Move to Fizbon (3, 6)"});
-			this.lstOrdersDetail.Location = new System.Drawing.Point(7, 84);
+			this.lstOrdersDetail.Location = new System.Drawing.Point(7, 99);
 			this.lstOrdersDetail.Name = "lstOrdersDetail";
-			this.lstOrdersDetail.Size = new System.Drawing.Size(279, 390);
+			this.lstOrdersDetail.Size = new System.Drawing.Size(279, 375);
 			this.lstOrdersDetail.TabIndex = 0;
+			// 
+			// chkRepeat
+			// 
+			this.chkRepeat.AutoSize = true;
+			this.chkRepeat.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+			this.chkRepeat.Location = new System.Drawing.Point(8, 73);
+			this.chkRepeat.Name = "chkRepeat";
+			this.chkRepeat.Size = new System.Drawing.Size(106, 19);
+			this.chkRepeat.TabIndex = 19;
+			this.chkRepeat.Text = "Repeat Orders";
+			this.chkRepeat.UseVisualStyleBackColor = true;
+			this.chkRepeat.CheckedChanged += new System.EventHandler(this.chkRepeat_CheckedChanged);
 			// 
 			// FleetReport
 			// 
@@ -920,6 +934,7 @@ namespace FrEee.WinForms.Controls
 			this.pageAbility.ResumeLayout(false);
 			this.gameTabControl1.ResumeLayout(false);
 			this.pageOrders.ResumeLayout(false);
+			this.pageOrders.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -980,5 +995,6 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.Label txtCargoSpaceFree;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label txtAge;
+		private System.Windows.Forms.CheckBox chkRepeat;
 	}
 }

@@ -46,6 +46,11 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		/// <summary>
+		/// Should this object's orders repeat once they are completed?
+		/// </summary>
+		public bool AreRepeatOrdersEnabled { get; set; }
+
+		/// <summary>
 		/// Space vehicles can be placed in fleets.
 		/// </summary>
 		public bool CanBeInFleet
