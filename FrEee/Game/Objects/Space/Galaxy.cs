@@ -854,16 +854,6 @@ namespace FrEee.Game.Objects.Space
 			// advance turn number
 			Current.TurnNumber++;
 
-			// colony maintenance
-			if (status != null)
-				status.Message = "Maintaining colonies";
-			if (Current.TurnNumber.IsDivisibleBy(Mod.Current.Settings.ReproductionFrequency.DefaultTo(1)))
-				Current.FindSpaceObjects<Planet>(p => p.HasColony).SafeForeach(ProcessPopulationGrowth);
-			if (Current.TurnNumber.IsDivisibleBy(Mod.Current.Settings.ValueChangeFrequency.DefaultTo(1)))
-				Current.FindSpaceObjects<Planet>(p => p.HasColony).SafeForeach(ProcessResourceValueChange);
-			if (status != null)
-				status.Progress += progressPerOperation;
-
 			//Current.SpaceObjectIDCheck("after colony maintenance");
 
 			// resource generation
@@ -1111,6 +1101,16 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			// TODO - more turn stuff? or do we have everything?
+
+			// colony maintenance
+			if (status != null)
+				status.Message = "Maintaining colonies";
+			if (Current.TurnNumber.IsDivisibleBy(Mod.Current.Settings.ReproductionFrequency.DefaultTo(1)))
+				Current.FindSpaceObjects<Planet>(p => p.HasColony).SafeForeach(ProcessPopulationGrowth);
+			if (Current.TurnNumber.IsDivisibleBy(Mod.Current.Settings.ValueChangeFrequency.DefaultTo(1)))
+				Current.FindSpaceObjects<Planet>(p => p.HasColony).SafeForeach(ProcessResourceValueChange);
+			if (status != null)
+				status.Progress += progressPerOperation;
 
 			if (status != null)
 				status.Message = "Cleaning up";
