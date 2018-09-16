@@ -153,6 +153,11 @@ namespace FrEee.Game.Setup
 		/// </summary>
 		public MiningModel RemoteMiningModel { get; set; }
 
+		/// <summary>
+		/// The research points granted to empires per unspent empire point.
+		/// </summary>
+		public decimal ResearchPointsPerUnspentEmpirePoint { get; set; }
+
 		public int ResourceStorage { get; set; }
 
 		public ScoreDisplay ScoreDisplay { get; set; }
@@ -475,7 +480,7 @@ namespace FrEee.Game.Setup
 			}
 
 			// give empire starting research
-			emp.BonusResearch = StartingResearch;
+			emp.BonusResearch = StartingResearch + (int)(ResearchPointsPerUnspentEmpirePoint * (EmpirePoints - emp.PrimaryRace.Traits.Sum(q => q.Cost)));
 
 			// TODO - moddable colony techs?
 			string colonyTechName = null;

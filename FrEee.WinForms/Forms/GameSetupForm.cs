@@ -160,6 +160,7 @@ namespace FrEee.WinForms.Forms
 			for (int i = 0; i < lstTechs.Items.Count; i++)
 				lstTechs.SetItemChecked(i, !setup.ForbiddenTechnologyNames.Contains(((Technology)lstTechs.Items[i]).Name));
 			ddlTechUniqueness.SelectedItem = ddlTechUniqueness.Items.Cast<dynamic>().SingleOrDefault(x => x.Value == setup.TechnologyUniqueness);
+			spnResearchPerUnspentEmpirePoint.Value = setup.ResearchPointsPerUnspentEmpirePoint;
 
 			spnStartResources.Value = setup.StartingResources;
 			spnResourceStorage.Value = setup.ResourceStorage;
@@ -707,6 +708,8 @@ namespace FrEee.WinForms.Forms
 			}
 			setup.TechnologyCost = (TechnologyCost)ddlTechCost.SelectedIndex;
 			setup.TechnologyUniqueness = (int)((dynamic)ddlTechUniqueness.SelectedItem).Value;
+			setup.ResearchPointsPerUnspentEmpirePoint = spnResearchPerUnspentEmpirePoint.Value;
+			lblMaxBonusResearchFromEmpirePoints.Text = $"Empires can earn up to {((double)(setup.EmpirePoints * setup.ResearchPointsPerUnspentEmpirePoint)).ToUnitString(true)} bonus research.";
 			for (int i = 0; i < lstTechs.Items.Count; i++)
 			{
 				if (!lstTechs.GetItemChecked(i))
@@ -812,6 +815,16 @@ namespace FrEee.WinForms.Forms
 			this.ShowChildForm(new StatusForm(t, status));
 			galaxyView.ComputeWarpPointConnectivity();
 			galaxyView.Invalidate();
+		}
+
+		private void spnResearchPerUnspentEmpirePoint_ValueChanged(object sender, EventArgs e)
+		{
+			lblMaxBonusResearchFromEmpirePoints.Text = $"Empires can earn up to {((double)(spnEmpirePoints.Value * spnResearchPerUnspentEmpirePoint.Value)).ToUnitString(true)} bonus research.";
+		}
+
+		private void spnEmpirePoints_ValueChanged(object sender, EventArgs e)
+		{
+			lblMaxBonusResearchFromEmpirePoints.Text = $"Empires can earn up to {((double)(spnEmpirePoints.Value * spnResearchPerUnspentEmpirePoint.Value)).ToUnitString(true)} bonus research.";
 		}
 	}
 }
