@@ -76,7 +76,7 @@ namespace FrEee.WinForms.Forms
 			lstHulls.Initialize(32, 32);
 			foreach (var hull in hulls)
 			{
-				var item = lstHulls.AddItemWithImage(ddlVehicleType.SelectedIndex > 0 ? hull.VehicleTypeName : null, hull.Name, hull, hull.Icon, hull.Size.Kilotons(), hull.Cost[Resource.Minerals].ToUnitString(), hull.Cost[Resource.Organics].ToUnitString(), hull.Cost[Resource.Radioactives].ToUnitString(), hull.Description);
+				var item = lstHulls.AddItemWithImage(ddlVehicleType.SelectedIndex > 0 ? hull.VehicleTypeName : null, hull.Name, hull, hull.Icon, null, hull.Size.Kilotons(), hull.Cost[Resource.Minerals].ToUnitString(), hull.Cost[Resource.Organics].ToUnitString(), hull.Cost[Resource.Radioactives].ToUnitString(), hull.Description);
 				item.UseItemStyleForSubItems = false;
 				item.SubItems[2].ForeColor = Resource.Minerals.Color;
 				item.SubItems[3].ForeColor = Resource.Organics.Color;

@@ -20,7 +20,7 @@ namespace FrEee.WinForms.Utility.Extensions
 		/// <param name="group"></param>
 		/// <param name="text"></param>
 		/// <param name="image"></param>
-		public static ListViewItem AddItemWithImage(this ListView lv, string groupName, string text, object tag, Image image, params string[] subitems)
+		public static ListViewItem AddItemWithImage(this ListView lv, string groupName, string text, object tag, Image image, Color? color = null, params string[] subitems)
 		{
 			int imageNum = lv.Items.Count;
 			if (lv.LargeImageList != null)
@@ -37,12 +37,14 @@ namespace FrEee.WinForms.Utility.Extensions
 					lv.Groups.Add(group);
 				}
 				item = new ListViewItem(text, group);
+				item.ForeColor = color ?? lv.ForeColor;
 			}
 			else
 				item = new ListViewItem(text);
 			foreach (var sub in subitems)
 			{
 				var lvsub = new ListViewItem.ListViewSubItem(item, sub);
+				lvsub.ForeColor = color ?? lv.ForeColor;
 				item.SubItems.Add(lvsub);
 			}
 			item.Tag = tag;

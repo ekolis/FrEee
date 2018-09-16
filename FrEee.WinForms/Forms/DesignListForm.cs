@@ -48,7 +48,7 @@ namespace FrEee.WinForms.Forms
 			lstDesigns.Initialize(32, 32);
 			foreach (var design in designs)
 			{
-				var x = lstDesigns.AddItemWithImage(design.Role, design.Name, design, design.Icon, design.Cost.Sum(kvp => kvp.Value).ToUnitString());
+				var x = lstDesigns.AddItemWithImage(design.Role, design.Name, design, design.Icon, null, design.Cost.Sum(kvp => kvp.Value).ToUnitString());
 				if (design.IsObsolete)
 					x.ForeColor = Color.Gray;
 				else if (design.IsObsolescent)
