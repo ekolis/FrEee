@@ -106,6 +106,11 @@ namespace FrEee.WinForms.Controls
 				txtCargoSpaceFree.Text = string.Format("{0} / {1} free", (Fleet.CargoStorage - (Fleet.Cargo == null ? 0 : Fleet.Cargo.Size)).Kilotons(), Fleet.CargoStorage.Kilotons());
 
 				// orders detail
+				if (!Fleet.IsOurs)
+				{
+					chkOnHold.Visible = false;
+					chkRepeat.Visible = false;
+				}
 				lstOrdersDetail.Items.Clear();
 				foreach (var o in Fleet.Orders)
 					lstOrdersDetail.Items.Add(o);
