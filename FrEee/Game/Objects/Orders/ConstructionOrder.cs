@@ -188,5 +188,10 @@ namespace FrEee.Game.Objects.Orders
 				template.ReplaceClientIDs(idmap, done);
 			}
 		}
+
+		public void Reset()
+		{
+			Item = default(T);
+		}
 	}
 }
