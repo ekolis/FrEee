@@ -269,13 +269,22 @@ namespace FrEee.Game.Objects.Civilization
 			get
 			{
 				var spent = new ResourceQuantity();
-				foreach (var o in Orders)
+				if (AreOrdersOnHold)
+					return spent;
+				while (AreRepeatOrdersEnabled)
 				{
-					var left = o.Cost;
-					if (o.Item != null)
-						left -= o.Item.ConstructionProgress;
-					left = ResourceQuantity.Min(left, Rate - spent);
-					spent += left;
+					var spentThisRound = new ResourceQuantity();
+					foreach (var o in Orders)
+					{
+						var left = o.Cost;
+						if (o.Item != null)
+							left -= o.Item.ConstructionProgress;
+						left = ResourceQuantity.Min(left, Rate - spent);
+						spent += left;
+						spentThisRound += left;
+					}
+					if (!spentThisRound.Any(kvp => kvp.Value > 0))
+						break;
 				}
 				return spent;
 			}
