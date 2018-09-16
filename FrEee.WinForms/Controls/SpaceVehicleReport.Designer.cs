@@ -94,6 +94,7 @@ namespace FrEee.WinForms.Controls
 			this.txtName = new System.Windows.Forms.Label();
 			this.picOwnerFlag = new System.Windows.Forms.PictureBox();
 			this.pageOrders = new System.Windows.Forms.TabPage();
+			this.chkRepeat = new System.Windows.Forms.CheckBox();
 			this.btnDeleteOrder = new FrEee.WinForms.Controls.GameButton();
 			this.btnOrderGoesDown = new FrEee.WinForms.Controls.GameButton();
 			this.btnOrderToBottom = new FrEee.WinForms.Controls.GameButton();
@@ -198,7 +199,7 @@ namespace FrEee.WinForms.Controls
 			this.panel1.Location = new System.Drawing.Point(3, 3);
 			this.panel1.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(248, 643);
+			this.panel1.Size = new System.Drawing.Size(214, 643);
 			this.panel1.TabIndex = 0;
 			// 
 			// txtAge
@@ -224,7 +225,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.txtConstructionTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtConstructionTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtConstructionTime.Location = new System.Drawing.Point(121, 346);
+			this.txtConstructionTime.Location = new System.Drawing.Point(87, 346);
 			this.txtConstructionTime.Name = "txtConstructionTime";
 			this.txtConstructionTime.Size = new System.Drawing.Size(127, 15);
 			this.txtConstructionTime.TabIndex = 120;
@@ -246,7 +247,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.txtConstructionItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtConstructionItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtConstructionItem.Location = new System.Drawing.Point(121, 331);
+			this.txtConstructionItem.Location = new System.Drawing.Point(87, 331);
 			this.txtConstructionItem.Name = "txtConstructionItem";
 			this.txtConstructionItem.Size = new System.Drawing.Size(127, 15);
 			this.txtConstructionItem.TabIndex = 118;
@@ -282,7 +283,7 @@ namespace FrEee.WinForms.Controls
 			this.resIncomeMin.Change = null;
 			this.resIncomeMin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.resIncomeMin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-			this.resIncomeMin.Location = new System.Drawing.Point(25, 361);
+			this.resIncomeMin.Location = new System.Drawing.Point(-9, 361);
 			this.resIncomeMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resIncomeMin.Name = "resIncomeMin";
 			this.resIncomeMin.ResourceName = "Minerals";
@@ -308,7 +309,7 @@ namespace FrEee.WinForms.Controls
 			this.resIncomeOrg.Change = null;
 			this.resIncomeOrg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.resIncomeOrg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-			this.resIncomeOrg.Location = new System.Drawing.Point(100, 361);
+			this.resIncomeOrg.Location = new System.Drawing.Point(66, 361);
 			this.resIncomeOrg.Margin = new System.Windows.Forms.Padding(0);
 			this.resIncomeOrg.Name = "resIncomeOrg";
 			this.resIncomeOrg.ResourceName = "Organics";
@@ -323,7 +324,7 @@ namespace FrEee.WinForms.Controls
 			this.resIncomeRad.Change = null;
 			this.resIncomeRad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.resIncomeRad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.resIncomeRad.Location = new System.Drawing.Point(177, 361);
+			this.resIncomeRad.Location = new System.Drawing.Point(143, 361);
 			this.resIncomeRad.Margin = new System.Windows.Forms.Padding(0);
 			this.resIncomeRad.Name = "resIncomeRad";
 			this.resIncomeRad.ResourceName = "Radioactives";
@@ -345,7 +346,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.txtFleet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtFleet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtFleet.Location = new System.Drawing.Point(118, 317);
+			this.txtFleet.Location = new System.Drawing.Point(84, 317);
 			this.txtFleet.Name = "txtFleet";
 			this.txtFleet.Size = new System.Drawing.Size(130, 15);
 			this.txtFleet.TabIndex = 112;
@@ -367,7 +368,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.txtExperience.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtExperience.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtExperience.Location = new System.Drawing.Point(121, 302);
+			this.txtExperience.Location = new System.Drawing.Point(87, 302);
 			this.txtExperience.Name = "txtExperience";
 			this.txtExperience.Size = new System.Drawing.Size(127, 15);
 			this.txtExperience.TabIndex = 110;
@@ -389,7 +390,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.txtOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtOrder.Location = new System.Drawing.Point(113, 287);
+			this.txtOrder.Location = new System.Drawing.Point(79, 287);
 			this.txtOrder.Name = "txtOrder";
 			this.txtOrder.Size = new System.Drawing.Size(135, 15);
 			this.txtOrder.TabIndex = 108;
@@ -429,7 +430,7 @@ namespace FrEee.WinForms.Controls
 			this.gamePanel2.Location = new System.Drawing.Point(3, 532);
 			this.gamePanel2.Name = "gamePanel2";
 			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel2.Size = new System.Drawing.Size(242, 100);
+			this.gamePanel2.Size = new System.Drawing.Size(208, 100);
 			this.gamePanel2.TabIndex = 104;
 			// 
 			// lstCargoSummary
@@ -482,7 +483,7 @@ namespace FrEee.WinForms.Controls
 			this.gamePanel1.Location = new System.Drawing.Point(5, 411);
 			this.gamePanel1.Name = "gamePanel1";
 			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel1.Size = new System.Drawing.Size(240, 100);
+			this.gamePanel1.Size = new System.Drawing.Size(206, 100);
 			this.gamePanel1.TabIndex = 102;
 			// 
 			// lstComponentsSummary
@@ -526,7 +527,7 @@ namespace FrEee.WinForms.Controls
 			this.pnlStats.Name = "pnlStats";
 			this.pnlStats.RowCount = 1;
 			this.pnlStats.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.pnlStats.Size = new System.Drawing.Size(243, 123);
+			this.pnlStats.Size = new System.Drawing.Size(209, 123);
 			this.pnlStats.TabIndex = 100;
 			// 
 			// tableLayoutPanel1
@@ -549,7 +550,7 @@ namespace FrEee.WinForms.Controls
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(115, 117);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(98, 117);
 			this.tableLayoutPanel1.TabIndex = 2;
 			// 
 			// lblSupplies
@@ -581,7 +582,7 @@ namespace FrEee.WinForms.Controls
 			this.progSupplies.Padding = new System.Windows.Forms.Padding(5);
 			this.progSupplies.ProgressDisplayType = FrEee.WinForms.Controls.ProgressDisplayType.Numeric;
 			this.progSupplies.RightText = "";
-			this.progSupplies.Size = new System.Drawing.Size(115, 19);
+			this.progSupplies.Size = new System.Drawing.Size(98, 19);
 			this.progSupplies.TabIndex = 18;
 			this.progSupplies.Value = ((long)(2500));
 			// 
@@ -614,7 +615,7 @@ namespace FrEee.WinForms.Controls
 			this.progAmmunition.Padding = new System.Windows.Forms.Padding(5);
 			this.progAmmunition.ProgressDisplayType = FrEee.WinForms.Controls.ProgressDisplayType.Numeric;
 			this.progAmmunition.RightText = "";
-			this.progAmmunition.Size = new System.Drawing.Size(115, 19);
+			this.progAmmunition.Size = new System.Drawing.Size(98, 19);
 			this.progAmmunition.TabIndex = 20;
 			this.progAmmunition.Value = ((long)(100));
 			// 
@@ -647,7 +648,7 @@ namespace FrEee.WinForms.Controls
 			this.progFuel.Padding = new System.Windows.Forms.Padding(5);
 			this.progFuel.ProgressDisplayType = FrEee.WinForms.Controls.ProgressDisplayType.Numeric;
 			this.progFuel.RightText = "";
-			this.progFuel.Size = new System.Drawing.Size(115, 19);
+			this.progFuel.Size = new System.Drawing.Size(98, 19);
 			this.progFuel.TabIndex = 22;
 			this.progFuel.Value = ((long)(1000));
 			// 
@@ -662,7 +663,7 @@ namespace FrEee.WinForms.Controls
 			this.tableLayoutPanel2.Controls.Add(this.lblArmor, 0, 2);
 			this.tableLayoutPanel2.Controls.Add(this.lblHull, 0, 3);
 			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel2.Location = new System.Drawing.Point(124, 3);
+			this.tableLayoutPanel2.Location = new System.Drawing.Point(107, 3);
 			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
 			this.tableLayoutPanel2.RowCount = 6;
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
@@ -675,7 +676,7 @@ namespace FrEee.WinForms.Controls
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(116, 117);
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(99, 117);
 			this.tableLayoutPanel2.TabIndex = 0;
 			// 
 			// progHull
@@ -696,7 +697,7 @@ namespace FrEee.WinForms.Controls
 			this.progHull.Padding = new System.Windows.Forms.Padding(5);
 			this.progHull.ProgressDisplayType = FrEee.WinForms.Controls.ProgressDisplayType.Numeric;
 			this.progHull.RightText = "";
-			this.progHull.Size = new System.Drawing.Size(116, 19);
+			this.progHull.Size = new System.Drawing.Size(99, 19);
 			this.progHull.TabIndex = 30;
 			this.progHull.Value = ((long)(150));
 			// 
@@ -718,7 +719,7 @@ namespace FrEee.WinForms.Controls
 			this.progArmor.Padding = new System.Windows.Forms.Padding(5);
 			this.progArmor.ProgressDisplayType = FrEee.WinForms.Controls.ProgressDisplayType.Numeric;
 			this.progArmor.RightText = "";
-			this.progArmor.Size = new System.Drawing.Size(116, 19);
+			this.progArmor.Size = new System.Drawing.Size(99, 19);
 			this.progArmor.TabIndex = 29;
 			this.progArmor.Value = ((long)(100));
 			// 
@@ -751,7 +752,7 @@ namespace FrEee.WinForms.Controls
 			this.progShields.Padding = new System.Windows.Forms.Padding(5);
 			this.progShields.ProgressDisplayType = FrEee.WinForms.Controls.ProgressDisplayType.Numeric;
 			this.progShields.RightText = "";
-			this.progShields.Size = new System.Drawing.Size(116, 19);
+			this.progShields.Size = new System.Drawing.Size(99, 19);
 			this.progShields.TabIndex = 24;
 			this.progShields.Value = ((long)(200));
 			// 
@@ -883,6 +884,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.pageOrders.AutoScroll = true;
 			this.pageOrders.BackColor = System.Drawing.Color.Black;
+			this.pageOrders.Controls.Add(this.chkRepeat);
 			this.pageOrders.Controls.Add(this.btnDeleteOrder);
 			this.pageOrders.Controls.Add(this.btnOrderGoesDown);
 			this.pageOrders.Controls.Add(this.btnOrderToBottom);
@@ -896,6 +898,18 @@ namespace FrEee.WinForms.Controls
 			this.pageOrders.Size = new System.Drawing.Size(292, 642);
 			this.pageOrders.TabIndex = 1;
 			this.pageOrders.Text = "Orders";
+			// 
+			// chkRepeat
+			// 
+			this.chkRepeat.AutoSize = true;
+			this.chkRepeat.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+			this.chkRepeat.Location = new System.Drawing.Point(8, 74);
+			this.chkRepeat.Name = "chkRepeat";
+			this.chkRepeat.Size = new System.Drawing.Size(106, 19);
+			this.chkRepeat.TabIndex = 18;
+			this.chkRepeat.Text = "Repeat Orders";
+			this.chkRepeat.UseVisualStyleBackColor = true;
+			this.chkRepeat.CheckedChanged += new System.EventHandler(this.chkRepeat_CheckedChanged);
 			// 
 			// btnDeleteOrder
 			// 
@@ -1003,9 +1017,9 @@ namespace FrEee.WinForms.Controls
             "Drop All Eee Population",
             "Load All Troops",
             "Move to Fizbon (3, 6)"});
-			this.lstOrdersDetail.Location = new System.Drawing.Point(7, 84);
+			this.lstOrdersDetail.Location = new System.Drawing.Point(7, 99);
 			this.lstOrdersDetail.Name = "lstOrdersDetail";
-			this.lstOrdersDetail.Size = new System.Drawing.Size(279, 555);
+			this.lstOrdersDetail.Size = new System.Drawing.Size(279, 540);
 			this.lstOrdersDetail.TabIndex = 0;
 			// 
 			// pageComps
@@ -1151,6 +1165,7 @@ namespace FrEee.WinForms.Controls
 			this.tableLayoutPanel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picOwnerFlag)).EndInit();
 			this.pageOrders.ResumeLayout(false);
+			this.pageOrders.PerformLayout();
 			this.pageComps.ResumeLayout(false);
 			this.pageComps.PerformLayout();
 			this.pageCargo.ResumeLayout(false);
@@ -1232,5 +1247,6 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.Label txtName;
 		private System.Windows.Forms.PictureBox picOwnerFlag;
 		private System.Windows.Forms.Label txtAge;
+		private System.Windows.Forms.CheckBox chkRepeat;
 	}
 }

@@ -1,3 +1,5 @@
+using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Utility;
@@ -217,6 +219,24 @@ namespace FrEee.WinForms.Controls
 		private void picPortrait_Click(object sender, System.EventArgs e)
 		{
 			picPortrait.ShowFullSize(Planet.Name);
+		}
+
+		private void chkRepeat_CheckedChanged(object sender, EventArgs e)
+		{
+			var cmd = Empire.Current.Commands.OfType<ToggleRepeatOrdersCommand>().SingleOrDefault(x => x.Executor == Planet);
+			if (cmd == null)
+			{
+				cmd = new ToggleRepeatOrdersCommand(Planet, chkRepeat.Checked);
+				Empire.Current.Commands.Add(cmd);
+			}
+			else
+				cmd.AreRepeatOrdersEnabled = chkRepeat.Checked;
+			cmd.Execute();
+		}
+
+		private void lstOrdersDetail_SelectedIndexChanged(object sender, EventArgs e)
+		{
+
 		}
 	}
 }

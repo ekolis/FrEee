@@ -32,10 +32,10 @@ namespace FrEee.WinForms.Controls
 			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("6x Mineral Miner");
 			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("3x Organics Farm");
 			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("2x Radioactives Extraction");
-			System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("10x \"Buster\" class Weapon Platform");
-			System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("500x \"Guard\" class Troop");
 			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("2000M Jraenar (Happy: 150)");
 			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("1000M Eee (Jubilant: 0)");
+			System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("10x \"Buster\" class Weapon Platform");
+			System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("500x \"Guard\" class Troop");
 			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
 			this.pageDetail = new System.Windows.Forms.TabPage();
 			this.txtAge = new System.Windows.Forms.Label();
@@ -73,6 +73,9 @@ namespace FrEee.WinForms.Controls
 			this.pageFacil = new System.Windows.Forms.TabPage();
 			this.txtFacilitySlotsFree = new System.Windows.Forms.Label();
 			this.lstFacilitiesDetail = new System.Windows.Forms.ListView();
+			this.pageRaces = new System.Windows.Forms.TabPage();
+			this.lblPopulationSpaceFree = new System.Windows.Forms.Label();
+			this.lstRaces = new System.Windows.Forms.ListView();
 			this.pageCargo = new System.Windows.Forms.TabPage();
 			this.txtCargoSpaceFree = new System.Windows.Forms.Label();
 			this.lstCargoDetail = new System.Windows.Forms.ListView();
@@ -84,19 +87,17 @@ namespace FrEee.WinForms.Controls
 			this.lstOrdersDetail = new System.Windows.Forms.ListBox();
 			this.pageAbility = new System.Windows.Forms.TabPage();
 			this.abilityTreeView = new FrEee.WinForms.Controls.AbilityTreeView();
-			this.pageRaces = new System.Windows.Forms.TabPage();
-			this.lblPopulationSpaceFree = new System.Windows.Forms.Label();
-			this.lstRaces = new System.Windows.Forms.ListView();
+			this.chkRepeat = new System.Windows.Forms.CheckBox();
 			this.gameTabControl1.SuspendLayout();
 			this.pageDetail.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.pnlColony.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picOwnerFlag)).BeginInit();
 			this.pageFacil.SuspendLayout();
+			this.pageRaces.SuspendLayout();
 			this.pageCargo.SuspendLayout();
 			this.pageOrders.SuspendLayout();
 			this.pageAbility.SuspendLayout();
-			this.pageRaces.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// gameTabControl1
@@ -573,6 +574,48 @@ namespace FrEee.WinForms.Controls
 			this.lstFacilitiesDetail.View = System.Windows.Forms.View.Tile;
 			this.lstFacilitiesDetail.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstFacilitiesDetail_MouseDown);
 			// 
+			// pageRaces
+			// 
+			this.pageRaces.BackColor = System.Drawing.Color.Black;
+			this.pageRaces.Controls.Add(this.lblPopulationSpaceFree);
+			this.pageRaces.Controls.Add(this.lstRaces);
+			this.pageRaces.Location = new System.Drawing.Point(4, 29);
+			this.pageRaces.Name = "pageRaces";
+			this.pageRaces.Padding = new System.Windows.Forms.Padding(3);
+			this.pageRaces.Size = new System.Drawing.Size(367, 426);
+			this.pageRaces.TabIndex = 5;
+			this.pageRaces.Text = "Races";
+			// 
+			// lblPopulationSpaceFree
+			// 
+			this.lblPopulationSpaceFree.AutoSize = true;
+			this.lblPopulationSpaceFree.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblPopulationSpaceFree.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.lblPopulationSpaceFree.Location = new System.Drawing.Point(3, 3);
+			this.lblPopulationSpaceFree.Name = "lblPopulationSpaceFree";
+			this.lblPopulationSpaceFree.Size = new System.Drawing.Size(118, 15);
+			this.lblPopulationSpaceFree.TabIndex = 37;
+			this.lblPopulationSpaceFree.Text = "1000M / 4000M free";
+			// 
+			// lstRaces
+			// 
+			this.lstRaces.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lstRaces.BackColor = System.Drawing.Color.Black;
+			this.lstRaces.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstRaces.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lstRaces.ForeColor = System.Drawing.Color.White;
+			this.lstRaces.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem5,
+            listViewItem6});
+			this.lstRaces.Location = new System.Drawing.Point(-1, 21);
+			this.lstRaces.Name = "lstRaces";
+			this.lstRaces.Size = new System.Drawing.Size(368, 399);
+			this.lstRaces.TabIndex = 24;
+			this.lstRaces.UseCompatibleStateImageBehavior = false;
+			this.lstRaces.View = System.Windows.Forms.View.Tile;
+			// 
 			// pageCargo
 			// 
 			this.pageCargo.BackColor = System.Drawing.Color.Black;
@@ -618,6 +661,7 @@ namespace FrEee.WinForms.Controls
 			// pageOrders
 			// 
 			this.pageOrders.BackColor = System.Drawing.Color.Black;
+			this.pageOrders.Controls.Add(this.chkRepeat);
 			this.pageOrders.Controls.Add(this.btnOrdersClear);
 			this.pageOrders.Controls.Add(this.btnOrderDelete);
 			this.pageOrders.Controls.Add(this.btnOrderDown);
@@ -685,15 +729,17 @@ namespace FrEee.WinForms.Controls
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.lstOrdersDetail.BackColor = System.Drawing.Color.Black;
 			this.lstOrdersDetail.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstOrdersDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
 			this.lstOrdersDetail.ForeColor = System.Drawing.Color.White;
 			this.lstOrdersDetail.FormattingEnabled = true;
-			this.lstOrdersDetail.ItemHeight = 20;
+			this.lstOrdersDetail.ItemHeight = 15;
 			this.lstOrdersDetail.Items.AddRange(new object[] {
             "Launch All Fighters"});
-			this.lstOrdersDetail.Location = new System.Drawing.Point(7, 4);
+			this.lstOrdersDetail.Location = new System.Drawing.Point(3, 40);
 			this.lstOrdersDetail.Name = "lstOrdersDetail";
-			this.lstOrdersDetail.Size = new System.Drawing.Size(354, 360);
+			this.lstOrdersDetail.Size = new System.Drawing.Size(361, 375);
 			this.lstOrdersDetail.TabIndex = 0;
+			this.lstOrdersDetail.SelectedIndexChanged += new System.EventHandler(this.lstOrdersDetail_SelectedIndexChanged);
 			// 
 			// pageAbility
 			// 
@@ -719,47 +765,17 @@ namespace FrEee.WinForms.Controls
 			this.abilityTreeView.Size = new System.Drawing.Size(361, 420);
 			this.abilityTreeView.TabIndex = 0;
 			// 
-			// pageRaces
+			// chkRepeat
 			// 
-			this.pageRaces.BackColor = System.Drawing.Color.Black;
-			this.pageRaces.Controls.Add(this.lblPopulationSpaceFree);
-			this.pageRaces.Controls.Add(this.lstRaces);
-			this.pageRaces.Location = new System.Drawing.Point(4, 29);
-			this.pageRaces.Name = "pageRaces";
-			this.pageRaces.Padding = new System.Windows.Forms.Padding(3);
-			this.pageRaces.Size = new System.Drawing.Size(367, 426);
-			this.pageRaces.TabIndex = 5;
-			this.pageRaces.Text = "Races";
-			// 
-			// lblPopulationSpaceFree
-			// 
-			this.lblPopulationSpaceFree.AutoSize = true;
-			this.lblPopulationSpaceFree.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblPopulationSpaceFree.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblPopulationSpaceFree.Location = new System.Drawing.Point(3, 3);
-			this.lblPopulationSpaceFree.Name = "lblPopulationSpaceFree";
-			this.lblPopulationSpaceFree.Size = new System.Drawing.Size(118, 15);
-			this.lblPopulationSpaceFree.TabIndex = 37;
-			this.lblPopulationSpaceFree.Text = "1000M / 4000M free";
-			// 
-			// lstRaces
-			// 
-			this.lstRaces.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.lstRaces.BackColor = System.Drawing.Color.Black;
-			this.lstRaces.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstRaces.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lstRaces.ForeColor = System.Drawing.Color.White;
-			this.lstRaces.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6});
-			this.lstRaces.Location = new System.Drawing.Point(-1, 21);
-			this.lstRaces.Name = "lstRaces";
-			this.lstRaces.Size = new System.Drawing.Size(368, 399);
-			this.lstRaces.TabIndex = 24;
-			this.lstRaces.UseCompatibleStateImageBehavior = false;
-			this.lstRaces.View = System.Windows.Forms.View.Tile;
+			this.chkRepeat.AutoSize = true;
+			this.chkRepeat.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+			this.chkRepeat.Location = new System.Drawing.Point(6, 6);
+			this.chkRepeat.Name = "chkRepeat";
+			this.chkRepeat.Size = new System.Drawing.Size(106, 19);
+			this.chkRepeat.TabIndex = 19;
+			this.chkRepeat.Text = "Repeat Orders";
+			this.chkRepeat.UseVisualStyleBackColor = true;
+			this.chkRepeat.CheckedChanged += new System.EventHandler(this.chkRepeat_CheckedChanged);
 			// 
 			// PlanetReport
 			// 
@@ -778,12 +794,13 @@ namespace FrEee.WinForms.Controls
 			((System.ComponentModel.ISupportInitialize)(this.picOwnerFlag)).EndInit();
 			this.pageFacil.ResumeLayout(false);
 			this.pageFacil.PerformLayout();
+			this.pageRaces.ResumeLayout(false);
+			this.pageRaces.PerformLayout();
 			this.pageCargo.ResumeLayout(false);
 			this.pageCargo.PerformLayout();
 			this.pageOrders.ResumeLayout(false);
+			this.pageOrders.PerformLayout();
 			this.pageAbility.ResumeLayout(false);
-			this.pageRaces.ResumeLayout(false);
-			this.pageRaces.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -841,5 +858,6 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.TabPage pageRaces;
 		private System.Windows.Forms.Label lblPopulationSpaceFree;
 		private System.Windows.Forms.ListView lstRaces;
+		private System.Windows.Forms.CheckBox chkRepeat;
 	}
 }

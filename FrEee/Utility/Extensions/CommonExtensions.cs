@@ -347,7 +347,11 @@ namespace FrEee.Utility.Extensions
 				var order = o.Orders.First();
 				order.Execute(o);
 				if (order.IsComplete && o.Orders.Contains(order))
+				{
 					o.Orders.RemoveAt(0);
+					if (o.AreRepeatOrdersEnabled)
+						o.Orders.Add(order);
+				}
 				didStuff = true;
 			}
 			if (Galaxy.Current.NextTickSize == double.PositiveInfinity)

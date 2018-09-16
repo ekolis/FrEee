@@ -71,6 +71,11 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
+		/// Should this object's orders repeat once they are completed?
+		/// </summary>
+		public bool AreRepeatOrdersEnabled { get; set; }
+
+		/// <summary>
 		/// TODO - planetary "armor" facilities that soak damage first?
 		/// </summary>
 		public int ArmorHitpoints

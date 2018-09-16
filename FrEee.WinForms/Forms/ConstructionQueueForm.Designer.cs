@@ -139,6 +139,7 @@
 			this.chkRepeat.TabIndex = 10;
 			this.chkRepeat.Text = "Repeat Build";
 			this.chkRepeat.UseVisualStyleBackColor = true;
+			this.chkRepeat.CheckedChanged += new System.EventHandler(this.chkRepeat_CheckedChanged);
 			// 
 			// chkOnHold
 			// 
