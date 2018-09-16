@@ -151,7 +151,7 @@ namespace FrEee.WinForms.Controls
 				// load orders
 				// TODO - let player adjust orders here
 				lstOrdersDetail.Items.Clear();
-				if (!Planet.IsOurs)
+				if (Planet.Owner != Empire.Current)
 				{
 					chkOnHold.Visible = false;
 					chkRepeat.Visible = false;
