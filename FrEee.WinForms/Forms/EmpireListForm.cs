@@ -42,6 +42,7 @@ namespace FrEee.WinForms.Forms
 			{
 				txtTreaty.Text = "N/A";
 				txtTreaty.ForeColor = Color.White;
+				toolTip.SetToolTip(txtTreaty, "Select an empire to view its treaty status.");
 			}
 			else
 			{
@@ -49,6 +50,7 @@ namespace FrEee.WinForms.Forms
 				{
 					txtTreaty.Text = "Self";
 					txtTreaty.ForeColor = Color.CornflowerBlue;
+					toolTip.SetToolTip(txtTreaty, "You can't have a treaty with your own empire. Nice try, though...");
 				}
 				else
 				{
@@ -57,20 +59,24 @@ namespace FrEee.WinForms.Forms
 					var receiving = treaty.Where(c => c.Receiver == Empire.Current);
 					var givingTexts = giving.Select(c => c.ToString());
 					var receivingTexts = receiving.Select(c => c.ToString());
+					var helptext = "";
 					if (!treaty.Any())
 					{
 						txtTreaty.Text = "None";
 						txtTreaty.ForeColor = Color.Yellow;
+						helptext = "You don't have any treaty with this empire.";
 					}
 					else if (!giving.Any())
 					{
 						txtTreaty.Text = "Receiving " + string.Join(", ", receivingTexts.ToArray());
 						txtTreaty.ForeColor = Color.Green;
+						helptext = string.Join("\n", receiving.Select(x => x.FullDescription));
 					}
 					else if (!receiving.Any())
 					{
 						txtTreaty.Text = "Giving " + string.Join(", ", givingTexts.ToArray());
 						txtTreaty.ForeColor = Color.LightGray;
+						helptext = string.Join("\n", giving.Select(x => x.FullDescription));
 					}
 					else
 					{
@@ -91,7 +97,10 @@ namespace FrEee.WinForms.Forms
 								txtTreaty.Text = "Mutual " + string.Join(", ", mutualTexts.ToArray());
 						}
 						txtTreaty.ForeColor = Color.White;
+
+						helptext = string.Join("\n", giving.Union(receiving).Select(x => x.FullDescription));
 					}
+					toolTip.SetToolTip(txtTreaty, helptext);
 				}
 
 				// budget

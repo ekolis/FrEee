@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.tabs = new FrEee.WinForms.Controls.GameTabControl();
 			this.tabDiplomacy = new System.Windows.Forms.TabPage();
 			this.btnDelete = new FrEee.WinForms.Controls.GameButton();
@@ -77,14 +78,14 @@
 			this.label4 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
-			this.btnClose = new FrEee.WinForms.Controls.GameButton();
-			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
-			this.lstEmpires = new System.Windows.Forms.ListView();
-			this.btnMinisters = new FrEee.WinForms.Controls.GameButton();
-			this.btnAvoidSystems = new FrEee.WinForms.Controls.GameButton();
-			this.btnWaypoints = new FrEee.WinForms.Controls.GameButton();
-			this.btnScores = new FrEee.WinForms.Controls.GameButton();
 			this.tabPlayerInfo = new System.Windows.Forms.TabPage();
+			this.txtNotes = new System.Windows.Forms.Label();
+			this.lnkWebsite = new System.Windows.Forms.LinkLabel();
+			this.txtDiscord = new System.Windows.Forms.Label();
+			this.txtIrc = new System.Windows.Forms.Label();
+			this.lnkEmail = new System.Windows.Forms.LinkLabel();
+			this.lnkPbw = new System.Windows.Forms.LinkLabel();
+			this.txtName = new System.Windows.Forms.Label();
 			this.label15 = new System.Windows.Forms.Label();
 			this.label16 = new System.Windows.Forms.Label();
 			this.label17 = new System.Windows.Forms.Label();
@@ -92,19 +93,20 @@
 			this.label19 = new System.Windows.Forms.Label();
 			this.label20 = new System.Windows.Forms.Label();
 			this.label21 = new System.Windows.Forms.Label();
-			this.txtName = new System.Windows.Forms.Label();
-			this.lnkPbw = new System.Windows.Forms.LinkLabel();
-			this.lnkEmail = new System.Windows.Forms.LinkLabel();
-			this.txtIrc = new System.Windows.Forms.Label();
-			this.txtDiscord = new System.Windows.Forms.Label();
-			this.lnkWebsite = new System.Windows.Forms.LinkLabel();
-			this.txtNotes = new System.Windows.Forms.Label();
+			this.btnClose = new FrEee.WinForms.Controls.GameButton();
+			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
+			this.lstEmpires = new System.Windows.Forms.ListView();
+			this.btnMinisters = new FrEee.WinForms.Controls.GameButton();
+			this.btnAvoidSystems = new FrEee.WinForms.Controls.GameButton();
+			this.btnWaypoints = new FrEee.WinForms.Controls.GameButton();
+			this.btnScores = new FrEee.WinForms.Controls.GameButton();
+			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.tabs.SuspendLayout();
 			this.tabDiplomacy.SuspendLayout();
 			this.tabIntel.SuspendLayout();
 			this.tabBudget.SuspendLayout();
-			this.gamePanel1.SuspendLayout();
 			this.tabPlayerInfo.SuspendLayout();
+			this.gamePanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabs
@@ -686,6 +688,183 @@
 			this.label2.TabIndex = 1;
 			this.label2.Text = "Income";
 			// 
+			// tabPlayerInfo
+			// 
+			this.tabPlayerInfo.BackColor = System.Drawing.Color.Black;
+			this.tabPlayerInfo.Controls.Add(this.txtNotes);
+			this.tabPlayerInfo.Controls.Add(this.lnkWebsite);
+			this.tabPlayerInfo.Controls.Add(this.txtDiscord);
+			this.tabPlayerInfo.Controls.Add(this.txtIrc);
+			this.tabPlayerInfo.Controls.Add(this.lnkEmail);
+			this.tabPlayerInfo.Controls.Add(this.lnkPbw);
+			this.tabPlayerInfo.Controls.Add(this.txtName);
+			this.tabPlayerInfo.Controls.Add(this.label15);
+			this.tabPlayerInfo.Controls.Add(this.label16);
+			this.tabPlayerInfo.Controls.Add(this.label17);
+			this.tabPlayerInfo.Controls.Add(this.label18);
+			this.tabPlayerInfo.Controls.Add(this.label19);
+			this.tabPlayerInfo.Controls.Add(this.label20);
+			this.tabPlayerInfo.Controls.Add(this.label21);
+			this.tabPlayerInfo.Location = new System.Drawing.Point(4, 29);
+			this.tabPlayerInfo.Name = "tabPlayerInfo";
+			this.tabPlayerInfo.Size = new System.Drawing.Size(702, 426);
+			this.tabPlayerInfo.TabIndex = 4;
+			this.tabPlayerInfo.Text = "Player Info";
+			// 
+			// txtNotes
+			// 
+			this.txtNotes.AutoSize = true;
+			this.txtNotes.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.txtNotes.Location = new System.Drawing.Point(93, 158);
+			this.txtNotes.Margin = new System.Windows.Forms.Padding(3);
+			this.txtNotes.Name = "txtNotes";
+			this.txtNotes.Size = new System.Drawing.Size(61, 20);
+			this.txtNotes.TabIndex = 46;
+			this.txtNotes.Text = "(Notes)";
+			// 
+			// lnkWebsite
+			// 
+			this.lnkWebsite.AutoSize = true;
+			this.lnkWebsite.Location = new System.Drawing.Point(93, 133);
+			this.lnkWebsite.Name = "lnkWebsite";
+			this.lnkWebsite.Size = new System.Drawing.Size(58, 20);
+			this.lnkWebsite.TabIndex = 45;
+			this.lnkWebsite.TabStop = true;
+			this.lnkWebsite.Text = "(Email)";
+			this.lnkWebsite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkWebsite_LinkClicked);
+			// 
+			// txtDiscord
+			// 
+			this.txtDiscord.AutoSize = true;
+			this.txtDiscord.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.txtDiscord.Location = new System.Drawing.Point(93, 107);
+			this.txtDiscord.Margin = new System.Windows.Forms.Padding(3);
+			this.txtDiscord.Name = "txtDiscord";
+			this.txtDiscord.Size = new System.Drawing.Size(73, 20);
+			this.txtDiscord.TabIndex = 44;
+			this.txtDiscord.Text = "(Discord)";
+			// 
+			// txtIrc
+			// 
+			this.txtIrc.AutoSize = true;
+			this.txtIrc.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.txtIrc.Location = new System.Drawing.Point(93, 81);
+			this.txtIrc.Margin = new System.Windows.Forms.Padding(3);
+			this.txtIrc.Name = "txtIrc";
+			this.txtIrc.Size = new System.Drawing.Size(47, 20);
+			this.txtIrc.TabIndex = 43;
+			this.txtIrc.Text = "(IRC)";
+			// 
+			// lnkEmail
+			// 
+			this.lnkEmail.AutoSize = true;
+			this.lnkEmail.Location = new System.Drawing.Point(93, 55);
+			this.lnkEmail.Name = "lnkEmail";
+			this.lnkEmail.Size = new System.Drawing.Size(58, 20);
+			this.lnkEmail.TabIndex = 42;
+			this.lnkEmail.TabStop = true;
+			this.lnkEmail.Text = "(Email)";
+			this.lnkEmail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkEmail_LinkClicked);
+			// 
+			// lnkPbw
+			// 
+			this.lnkPbw.AutoSize = true;
+			this.lnkPbw.Location = new System.Drawing.Point(93, 29);
+			this.lnkPbw.Name = "lnkPbw";
+			this.lnkPbw.Size = new System.Drawing.Size(55, 20);
+			this.lnkPbw.TabIndex = 41;
+			this.lnkPbw.TabStop = true;
+			this.lnkPbw.Text = "(PBW)";
+			this.lnkPbw.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkPbw_LinkClicked);
+			// 
+			// txtName
+			// 
+			this.txtName.AutoSize = true;
+			this.txtName.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.txtName.Location = new System.Drawing.Point(93, 3);
+			this.txtName.Margin = new System.Windows.Forms.Padding(3);
+			this.txtName.Name = "txtName";
+			this.txtName.Size = new System.Drawing.Size(61, 20);
+			this.txtName.TabIndex = 38;
+			this.txtName.Text = "(Name)";
+			// 
+			// label15
+			// 
+			this.label15.AutoSize = true;
+			this.label15.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label15.Location = new System.Drawing.Point(3, 133);
+			this.label15.Margin = new System.Windows.Forms.Padding(3);
+			this.label15.Name = "label15";
+			this.label15.Size = new System.Drawing.Size(67, 20);
+			this.label15.TabIndex = 37;
+			this.label15.Text = "Website";
+			// 
+			// label16
+			// 
+			this.label16.AutoSize = true;
+			this.label16.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label16.Location = new System.Drawing.Point(3, 158);
+			this.label16.Margin = new System.Windows.Forms.Padding(3);
+			this.label16.Name = "label16";
+			this.label16.Size = new System.Drawing.Size(51, 20);
+			this.label16.TabIndex = 36;
+			this.label16.Text = "Notes";
+			// 
+			// label17
+			// 
+			this.label17.AutoSize = true;
+			this.label17.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label17.Location = new System.Drawing.Point(2, 107);
+			this.label17.Margin = new System.Windows.Forms.Padding(3);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(63, 20);
+			this.label17.TabIndex = 35;
+			this.label17.Text = "Discord";
+			// 
+			// label18
+			// 
+			this.label18.AutoSize = true;
+			this.label18.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label18.Location = new System.Drawing.Point(3, 81);
+			this.label18.Margin = new System.Windows.Forms.Padding(3);
+			this.label18.Name = "label18";
+			this.label18.Size = new System.Drawing.Size(37, 20);
+			this.label18.TabIndex = 34;
+			this.label18.Text = "IRC";
+			// 
+			// label19
+			// 
+			this.label19.AutoSize = true;
+			this.label19.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label19.Location = new System.Drawing.Point(2, 55);
+			this.label19.Margin = new System.Windows.Forms.Padding(3);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(48, 20);
+			this.label19.TabIndex = 33;
+			this.label19.Text = "Email";
+			// 
+			// label20
+			// 
+			this.label20.AutoSize = true;
+			this.label20.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label20.Location = new System.Drawing.Point(3, 29);
+			this.label20.Margin = new System.Windows.Forms.Padding(3);
+			this.label20.Name = "label20";
+			this.label20.Size = new System.Drawing.Size(45, 20);
+			this.label20.TabIndex = 32;
+			this.label20.Text = "PBW";
+			// 
+			// label21
+			// 
+			this.label21.AutoSize = true;
+			this.label21.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label21.Location = new System.Drawing.Point(3, 3);
+			this.label21.Margin = new System.Windows.Forms.Padding(3);
+			this.label21.Name = "label21";
+			this.label21.Size = new System.Drawing.Size(51, 20);
+			this.label21.TabIndex = 31;
+			this.label21.Text = "Name";
+			// 
 			// btnClose
 			// 
 			this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -781,183 +960,6 @@
 			this.btnScores.UseVisualStyleBackColor = false;
 			this.btnScores.Click += new System.EventHandler(this.btnScores_Click);
 			// 
-			// tabPlayerInfo
-			// 
-			this.tabPlayerInfo.BackColor = System.Drawing.Color.Black;
-			this.tabPlayerInfo.Controls.Add(this.txtNotes);
-			this.tabPlayerInfo.Controls.Add(this.lnkWebsite);
-			this.tabPlayerInfo.Controls.Add(this.txtDiscord);
-			this.tabPlayerInfo.Controls.Add(this.txtIrc);
-			this.tabPlayerInfo.Controls.Add(this.lnkEmail);
-			this.tabPlayerInfo.Controls.Add(this.lnkPbw);
-			this.tabPlayerInfo.Controls.Add(this.txtName);
-			this.tabPlayerInfo.Controls.Add(this.label15);
-			this.tabPlayerInfo.Controls.Add(this.label16);
-			this.tabPlayerInfo.Controls.Add(this.label17);
-			this.tabPlayerInfo.Controls.Add(this.label18);
-			this.tabPlayerInfo.Controls.Add(this.label19);
-			this.tabPlayerInfo.Controls.Add(this.label20);
-			this.tabPlayerInfo.Controls.Add(this.label21);
-			this.tabPlayerInfo.Location = new System.Drawing.Point(4, 29);
-			this.tabPlayerInfo.Name = "tabPlayerInfo";
-			this.tabPlayerInfo.Size = new System.Drawing.Size(702, 426);
-			this.tabPlayerInfo.TabIndex = 4;
-			this.tabPlayerInfo.Text = "Player Info";
-			// 
-			// label15
-			// 
-			this.label15.AutoSize = true;
-			this.label15.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label15.Location = new System.Drawing.Point(3, 133);
-			this.label15.Margin = new System.Windows.Forms.Padding(3);
-			this.label15.Name = "label15";
-			this.label15.Size = new System.Drawing.Size(67, 20);
-			this.label15.TabIndex = 37;
-			this.label15.Text = "Website";
-			// 
-			// label16
-			// 
-			this.label16.AutoSize = true;
-			this.label16.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label16.Location = new System.Drawing.Point(3, 158);
-			this.label16.Margin = new System.Windows.Forms.Padding(3);
-			this.label16.Name = "label16";
-			this.label16.Size = new System.Drawing.Size(51, 20);
-			this.label16.TabIndex = 36;
-			this.label16.Text = "Notes";
-			// 
-			// label17
-			// 
-			this.label17.AutoSize = true;
-			this.label17.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label17.Location = new System.Drawing.Point(2, 107);
-			this.label17.Margin = new System.Windows.Forms.Padding(3);
-			this.label17.Name = "label17";
-			this.label17.Size = new System.Drawing.Size(63, 20);
-			this.label17.TabIndex = 35;
-			this.label17.Text = "Discord";
-			// 
-			// label18
-			// 
-			this.label18.AutoSize = true;
-			this.label18.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label18.Location = new System.Drawing.Point(3, 81);
-			this.label18.Margin = new System.Windows.Forms.Padding(3);
-			this.label18.Name = "label18";
-			this.label18.Size = new System.Drawing.Size(37, 20);
-			this.label18.TabIndex = 34;
-			this.label18.Text = "IRC";
-			// 
-			// label19
-			// 
-			this.label19.AutoSize = true;
-			this.label19.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label19.Location = new System.Drawing.Point(2, 55);
-			this.label19.Margin = new System.Windows.Forms.Padding(3);
-			this.label19.Name = "label19";
-			this.label19.Size = new System.Drawing.Size(48, 20);
-			this.label19.TabIndex = 33;
-			this.label19.Text = "Email";
-			// 
-			// label20
-			// 
-			this.label20.AutoSize = true;
-			this.label20.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label20.Location = new System.Drawing.Point(3, 29);
-			this.label20.Margin = new System.Windows.Forms.Padding(3);
-			this.label20.Name = "label20";
-			this.label20.Size = new System.Drawing.Size(45, 20);
-			this.label20.TabIndex = 32;
-			this.label20.Text = "PBW";
-			// 
-			// label21
-			// 
-			this.label21.AutoSize = true;
-			this.label21.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label21.Location = new System.Drawing.Point(3, 3);
-			this.label21.Margin = new System.Windows.Forms.Padding(3);
-			this.label21.Name = "label21";
-			this.label21.Size = new System.Drawing.Size(51, 20);
-			this.label21.TabIndex = 31;
-			this.label21.Text = "Name";
-			// 
-			// txtName
-			// 
-			this.txtName.AutoSize = true;
-			this.txtName.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.txtName.Location = new System.Drawing.Point(93, 3);
-			this.txtName.Margin = new System.Windows.Forms.Padding(3);
-			this.txtName.Name = "txtName";
-			this.txtName.Size = new System.Drawing.Size(61, 20);
-			this.txtName.TabIndex = 38;
-			this.txtName.Text = "(Name)";
-			// 
-			// lnkPbw
-			// 
-			this.lnkPbw.AutoSize = true;
-			this.lnkPbw.Location = new System.Drawing.Point(93, 29);
-			this.lnkPbw.Name = "lnkPbw";
-			this.lnkPbw.Size = new System.Drawing.Size(55, 20);
-			this.lnkPbw.TabIndex = 41;
-			this.lnkPbw.TabStop = true;
-			this.lnkPbw.Text = "(PBW)";
-			this.lnkPbw.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkPbw_LinkClicked);
-			// 
-			// lnkEmail
-			// 
-			this.lnkEmail.AutoSize = true;
-			this.lnkEmail.Location = new System.Drawing.Point(93, 55);
-			this.lnkEmail.Name = "lnkEmail";
-			this.lnkEmail.Size = new System.Drawing.Size(58, 20);
-			this.lnkEmail.TabIndex = 42;
-			this.lnkEmail.TabStop = true;
-			this.lnkEmail.Text = "(Email)";
-			this.lnkEmail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkEmail_LinkClicked);
-			// 
-			// txtIrc
-			// 
-			this.txtIrc.AutoSize = true;
-			this.txtIrc.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.txtIrc.Location = new System.Drawing.Point(93, 81);
-			this.txtIrc.Margin = new System.Windows.Forms.Padding(3);
-			this.txtIrc.Name = "txtIrc";
-			this.txtIrc.Size = new System.Drawing.Size(47, 20);
-			this.txtIrc.TabIndex = 43;
-			this.txtIrc.Text = "(IRC)";
-			// 
-			// txtDiscord
-			// 
-			this.txtDiscord.AutoSize = true;
-			this.txtDiscord.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.txtDiscord.Location = new System.Drawing.Point(93, 107);
-			this.txtDiscord.Margin = new System.Windows.Forms.Padding(3);
-			this.txtDiscord.Name = "txtDiscord";
-			this.txtDiscord.Size = new System.Drawing.Size(73, 20);
-			this.txtDiscord.TabIndex = 44;
-			this.txtDiscord.Text = "(Discord)";
-			// 
-			// lnkWebsite
-			// 
-			this.lnkWebsite.AutoSize = true;
-			this.lnkWebsite.Location = new System.Drawing.Point(93, 133);
-			this.lnkWebsite.Name = "lnkWebsite";
-			this.lnkWebsite.Size = new System.Drawing.Size(58, 20);
-			this.lnkWebsite.TabIndex = 45;
-			this.lnkWebsite.TabStop = true;
-			this.lnkWebsite.Text = "(Email)";
-			this.lnkWebsite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkWebsite_LinkClicked);
-			// 
-			// txtNotes
-			// 
-			this.txtNotes.AutoSize = true;
-			this.txtNotes.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.txtNotes.Location = new System.Drawing.Point(93, 158);
-			this.txtNotes.Margin = new System.Windows.Forms.Padding(3);
-			this.txtNotes.Name = "txtNotes";
-			this.txtNotes.Size = new System.Drawing.Size(61, 20);
-			this.txtNotes.TabIndex = 46;
-			this.txtNotes.Text = "(Notes)";
-			// 
 			// EmpireListForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -980,9 +982,9 @@
 			this.tabIntel.ResumeLayout(false);
 			this.tabBudget.ResumeLayout(false);
 			this.tabBudget.PerformLayout();
-			this.gamePanel1.ResumeLayout(false);
 			this.tabPlayerInfo.ResumeLayout(false);
 			this.tabPlayerInfo.PerformLayout();
+			this.gamePanel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -1060,5 +1062,6 @@
 		private System.Windows.Forms.LinkLabel lnkPbw;
 		private System.Windows.Forms.Label txtNotes;
 		private System.Windows.Forms.LinkLabel lnkWebsite;
+		private System.Windows.Forms.ToolTip toolTip;
 	}
 }
