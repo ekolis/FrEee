@@ -29,7 +29,7 @@ namespace FrEee.WinForms.Forms
 			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
 			catch { }
 
-			lblSpaceportWarning.Visible = queue.IsColonyQueue && !queue.Colony.HasAbility("Spaceport") && queue.Colony.MerchantsRatio < 1;
+			lblSpaceportWarning.Visible = queue.IsColonyQueue && !queue.Colony.Container.StarSystem.HasAbility("Spaceport") && queue.Colony.MerchantsRatio < 1;
 		}
 
 		public ConstructionQueue ConstructionQueue { get; private set; }
