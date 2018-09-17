@@ -938,14 +938,6 @@ namespace FrEee.Game.Objects.Space
 					}
 				}
 
-				// perform treaty actions
-				foreach (var clause in emp.GivenTreatyClauses.Flatten())
-					clause.PerformAction();
-
-				// don't let stored resources actually fall below zero
-				foreach (var r in emp.StoredResources.Keys.Where(r => emp.StoredResources[r] < 0).ToArray())
-					emp.StoredResources[r] = 0;
-
 				// execute commands
 				foreach (var cmd in emp.Commands.Where(cmd => cmd != null))
 				{
@@ -966,6 +958,14 @@ namespace FrEee.Game.Objects.Space
 						cmd.Issuer.Log.Add(new GenericLogMessage(cmd.Issuer.Name + " cannot issue a command to an object belonging to " + emp + "!"));
 					}
 				}
+
+				// perform treaty actions
+				foreach (var clause in emp.GivenTreatyClauses.Flatten())
+					clause.PerformAction();
+
+				// don't let stored resources actually fall below zero
+				foreach (var r in emp.StoredResources.Keys.Where(r => emp.StoredResources[r] < 0).ToArray())
+					emp.StoredResources[r] = 0;
 
 				// do research
 				var Spending = emp.ResearchSpending;
