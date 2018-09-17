@@ -577,7 +577,7 @@ namespace FrEee.Utility
 			}
 			else
 				throw new Exception("Unknown data tag " + fin + ", was expecting s/p/i/n/d/c.");
-			if (!context.KnownObjects.ContainsKey(type) || !context.KnownObjects[type].Contains(o))
+			//if (!context.KnownObjects.ContainsKey(type) || !context.KnownObjects[type].Contains(o))
 				context.Add(o);
 			return o;
 		}
