@@ -271,7 +271,7 @@ namespace FrEee.Game.Objects.Civilization
 				var spent = new ResourceQuantity();
 				if (AreOrdersOnHold)
 					return spent;
-				while (AreRepeatOrdersEnabled)
+				do
 				{
 					var spentThisRound = new ResourceQuantity();
 					foreach (var o in Orders)
@@ -285,7 +285,7 @@ namespace FrEee.Game.Objects.Civilization
 					}
 					if (!spentThisRound.Any(kvp => kvp.Value > 0))
 						break;
-				}
+				} while (AreRepeatOrdersEnabled);
 				return spent;
 			}
 		}
