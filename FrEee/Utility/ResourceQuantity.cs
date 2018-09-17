@@ -206,7 +206,7 @@ namespace FrEee.Utility
 
 		public override int GetHashCode()
 		{
-			return HashCodeMasher.MashList(this);
+			return HashCodeMasher.MashList(this.Where(kvp => kvp.Value != 0));
 		}
 
 		public override string ToString()
