@@ -106,6 +106,8 @@ namespace FrEee.WinForms.Controls
 				txtCargoSpaceFree.Text = string.Format("{0} / {1} free", (Fleet.CargoStorage - (Fleet.Cargo == null ? 0 : Fleet.Cargo.Size)).Kilotons(), Fleet.CargoStorage.Kilotons());
 
 				// orders detail
+				chkOnHold.Checked = Fleet.AreOrdersOnHold;
+				chkRepeat.Checked = Fleet.AreRepeatOrdersEnabled;
 				if (!Fleet.IsOurs)
 				{
 					chkOnHold.Visible = false;

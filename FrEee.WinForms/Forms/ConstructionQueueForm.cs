@@ -29,6 +29,8 @@ namespace FrEee.WinForms.Forms
 			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
 			catch { }
 
+			chkOnHold.Checked = queue.AreOrdersOnHold;
+			chkRepeat.Checked = queue.AreRepeatOrdersEnabled;
 			lblSpaceportWarning.Visible = queue.IsColonyQueue && !queue.Colony.Container.StarSystem.HasAbility("Spaceport") && queue.Colony.MerchantsRatio < 1;
 		}
 
