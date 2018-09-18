@@ -378,7 +378,7 @@ namespace FrEee.Utility
 			return portrait.GetThumbnailImage(32, 32, () => false, IntPtr.Zero);
 		}
 
-		public static Image GetIcon(IHull hull, string shipsetPath, int size = 32)
+		public static Image GetIcon(IHull hull, string shipsetPath)
 		{
 			// allow for practically infinite variation in hull sizes within a confined range of image sizes using a log function
 			var maxSize = (double)Mod.Current.Hulls.Max(h => h.Size);
@@ -386,9 +386,9 @@ namespace FrEee.Utility
 			var scale = 1d / (1d + Math.Log10(ratio));
 
 			if (shipsetPath == null)
-				return GetGenericImage(hull.GetType()).Frame(scale).Resize(size);
+				return GetGenericImage(hull.GetType()).Frame(scale);
 			if (!hull.PictureNames.Any())
-				return GetGenericImage(hull.GetType()).Frame(scale).Resize(size);
+				return GetGenericImage(hull.GetType()).Frame(scale);
 			var paths = new List<string>();
 			foreach (var s in hull.PictureNames)
 			{
@@ -402,7 +402,7 @@ namespace FrEee.Utility
 				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, shipsetPath + "_Mini_" + s)); // for SE4 shipset compatibility
 				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, s));
 			}
-			return (GetCachedImage(paths) ?? GetGenericImage(hull.GetType(), scale)).Resize(size);
+			return (GetCachedImage(paths) ?? GetGenericImage(hull.GetType(), scale));
 		}
 
 		/// <summary>
