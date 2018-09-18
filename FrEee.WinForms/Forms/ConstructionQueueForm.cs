@@ -298,7 +298,7 @@ namespace FrEee.WinForms.Forms
 							if (ConstructionQueue.CanConstruct(newf))
 							{
 								var group = lstFacilities.Groups.Cast<ListViewGroup>().SingleOrDefault(g2 => g2.Header == newf.Group);
-								if (newf.Family == oldf.Family && newf != oldf)
+								if (newf.Family.Value == oldf.Family.Value && newf != oldf)
 								{
 									if (group == null)
 									{
