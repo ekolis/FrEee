@@ -299,6 +299,7 @@ namespace FrEee.Game.Objects.Combat
 				return;
 			Target = null;
 			Owner = null;
+			Galaxy.Current.UnassignID(this);
 		}
 
 		public bool IsHostileTo(Empire emp)
