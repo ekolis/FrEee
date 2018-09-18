@@ -1,4 +1,5 @@
 ﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Utility.Extensions;
 using FrEee.Utility.Stringifiers;
 using System;
@@ -87,7 +88,7 @@ namespace FrEee.Utility
 			var type = o.GetType();
 
 			int? id = null;
-			if (!type.IsValueType && type != typeof(string))
+			if (!type.IsValueType && type != typeof(string) && !(StringifierLibrary.Instance.All?.Any(x => x.SupportedType == type) ?? false))
 				id = context.GetID(o);
 
 			if (!ObjectGraphContext.KnownTypes.ContainsKey(GetShortTypeName(type)))
@@ -601,6 +602,10 @@ namespace FrEee.Utility
 			for (int i = 0; i < count; i++)
 			{
 				var pname = r.ReadTo(':', log).Trim();
+				if (type == typeof(Game.Objects.Civilization.Empire) && pname == "StoredResources")
+				{
+
+				}
 				if (props.ContainsKey(pname))
 				{
 					var prop = props[pname];
