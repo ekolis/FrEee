@@ -161,7 +161,7 @@ namespace FrEee.Game.Objects.Orders
 				yield return Upgrade.Old.CreateLogMessage(Upgrade.Old + " on " + queue.Container + " could not be upgraded to a " + Upgrade.New + " because we have not yet researched the " + Upgrade.New + ".");
 
 			// validate that new and old facilities are in the same family
-			if (Upgrade.New.Family != Upgrade.Old.Family)
+			if (Upgrade.New.Family.Value != Upgrade.Old.Family.Value)
 				yield return Upgrade.Old.CreateLogMessage(Upgrade.Old + " on " + queue.Container + " could not be upgraded to a " + Upgrade.New + " because facilities cannot be upgraded to facilities of a different family.");
 
 			// validate that there is a facility to upgrade
