@@ -1,4 +1,5 @@
 ﻿using FrEee.Game.Objects.Abilities;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Vehicles;
@@ -175,6 +176,15 @@ namespace FrEee.Tests.Utility
 			Assert.AreEqual(800, Mod.Current.FacilityTemplates.Single(x => x.Name == "Mineral Miner Facility I").GetAbilityValue("Resource Generation - Minerals").ToInt());
 		}
 
+		[TestMethod]
+		public void EmpireStoredResources()
+		{
+			var emp = new Empire();
+			emp.StoredResources = 50000 * Resource.Minerals + 50000 * Resource.Organics + 50000 * Resource.Radioactives;
+			var serdata = Serializer.SerializeToString(emp);
+			var emp2 = Serializer.DeserializeFromString<Empire>(serdata);
+			Assert.AreEqual(emp.StoredResources, emp2.StoredResources);
+		}
 
 		private class Car
 		{
