@@ -306,6 +306,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 										(int)Math.Ceiling((double)w.Template.WeaponMaxRange / (double)(w.Template.ComponentTemplate.WeaponInfo as SeekingWeaponInfo).SeekerSpeed));
 									var distanceAdjustment = (int)Ceiling(combatSpeeds[bestTarget] * roundsToClose);
 									maxdmgrange -= distanceAdjustment;
+									if (maxdmgrange < 0)
+										maxdmgrange = 0;
 								}
 								var targetPos = locations[bestTarget];
 								var tiles = new HashSet<IntVector2>();
