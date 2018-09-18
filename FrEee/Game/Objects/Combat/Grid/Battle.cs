@@ -15,7 +15,7 @@ using static System.Math;
 
 namespace FrEee.Game.Objects.Combat.Grid
 {
-	public abstract class Battle : IBattle
+	public abstract class Battle : IBattle, IDisposable
 	{
 		static Battle()
 		{
@@ -646,6 +646,19 @@ namespace FrEee.Game.Objects.Combat.Grid
 			LowerRight[round].X = positions.MaxOrDefault(q => q.X);
 			UpperLeft[round].Y = positions.MinOrDefault(q => q.Y);
 			LowerRight[round].Y = positions.MaxOrDefault(q => q.Y);
+		}
+
+		public void Dispose()
+		{
+			foreach (var seeker in Combatants.OfType<Seeker>().ToArray())
+				seeker.Dispose();
+			Combatants.Clear();
+			CombatSpeedBuffer.Clear();
+			Events.Clear();
+			LowerRight.Clear();
+			OriginalHitpoints.Clear();
+			OriginalOwners.Clear();
+			UpperLeft.Clear();
 		}
 	}
 }

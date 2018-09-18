@@ -734,15 +734,7 @@ namespace FrEee.Game.Objects.Space
 						// purge old battle to save space in the savegame
 						var b = bm.Context;
 						if (b.Timestamp < Current.Timestamp)
-						{
-							b.Combatants.Clear();
-							b.CombatSpeedBuffer.Clear();
-							b.Events.Clear();
-							b.LowerRight.Clear();
-							b.OriginalHitpoints.Clear();
-							b.OriginalOwners.Clear();
-							b.UpperLeft.Clear();
-						}
+							b.Dispose();
 					}
 					if (m.TurnNumber < Current.TurnNumber - 10)
 					{
@@ -751,6 +743,10 @@ namespace FrEee.Game.Objects.Space
 					}
 				}
 			}
+
+			// old seekers are from old battles
+			foreach (var r in Current.Referrables.OfType<Seeker>().ToArray())
+				r.Dispose();
 
 			// reset anger deltas for new turn
 			foreach (var p in Galaxy.Current.FindSpaceObjects<Planet>().Where(p => p.Colony != null))
