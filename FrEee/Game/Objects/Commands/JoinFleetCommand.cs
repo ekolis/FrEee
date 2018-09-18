@@ -30,7 +30,7 @@ namespace FrEee.Game.Objects.Commands
 		{
 			get
 			{
-				return fleet ?? CreateFleetCommand.Fleet;
+				return fleet == null || fleet.ID <= 0 ? (Fleet)CreateFleetCommand.Fleet : (Fleet)fleet;
 			}
 			set
 			{
@@ -48,15 +48,18 @@ namespace FrEee.Game.Objects.Commands
 				Fleet = CreateFleetCommand.Fleet;
 
 			// validation
-			if (Executor.Sector != Fleet.Sector)
+			if (Fleet.Sector != null && Executor.Sector != Fleet.Sector)
 				Issuer.Log.Add(Executor.CreateLogMessage(Executor + " cannot join " + Fleet + " because they are not in the same sector."));
-			else if (Fleet.Owner != Issuer && CreateFleetCommand == null)
+			else if (Fleet.Owner != null && Fleet.Owner != Issuer && CreateFleetCommand == null)
 				Issuer.Log.Add(Executor.CreateLogMessage(Executor + " cannot join " + Fleet + " because this fleet does not belong to us."));
 			else
 			{
 				// remove from old fleet
 				if (Executor.Container != null)
 					Executor.Container.Vehicles.Remove(Executor);
+
+				if (Fleet.Sector == null)
+					Fleet.Sector = Executor.Sector;
 
 				// add to new fleet
 				Fleet.Vehicles.Add(Executor);
