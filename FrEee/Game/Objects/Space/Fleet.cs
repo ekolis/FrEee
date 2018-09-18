@@ -815,6 +815,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			if (amount != null)
 				throw new NotImplementedException("Can't replenish only some of a fleet's shields. Replenish individual ships' shields, or all of the fleet's shields.");
+			Validate();
 			foreach (var sobj in Vehicles)
 				sobj.ReplenishShields();
 		}
