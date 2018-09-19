@@ -538,10 +538,10 @@ namespace FrEee.Game.Objects.Space
 		public static void Load(string filename)
 		{
 			var fs = new FileStream(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory, filename), FileMode.Open);
-			var sr = new StreamReader(fs);
-			var s = sr.ReadToEnd();
-			LoadFromString(s);
-			fs.Close(); fs.Dispose();
+			Current = Serializer.Deserialize<Galaxy>(fs);
+			Mod.Current = Galaxy.Current.Mod;
+			fs.Close();
+			fs.Dispose();
 		}
 
 		/// <summary>
