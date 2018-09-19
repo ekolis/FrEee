@@ -35,7 +35,12 @@ namespace FrEee.Game.Objects.Commands
 			set
 			{
 				if (!value.HasValidID())
+				{
+					// HACK - why is the fleet beign disposed?!
+					value.IsDisposed = false;
+					value.ID = 0;
 					Galaxy.Current.AssignID(value);
+				}
 				fleet = value;
 			}
 		}
