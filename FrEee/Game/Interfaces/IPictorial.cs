@@ -14,6 +14,11 @@ namespace FrEee.Game.Interfaces
 		Image Icon { get; }
 
 		/// <summary>
+		/// The icon pre-scaled to 32 pixels by 32 pixels.
+		/// </summary>
+		Image Icon32 { get; }
+
+		/// <summary>
 		/// Paths with fallbacks to the icon, relative to the Pictures folder.
 		/// </summary>
 		IEnumerable<string> IconPaths { get; }

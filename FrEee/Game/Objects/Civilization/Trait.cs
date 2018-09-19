@@ -3,6 +3,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -48,6 +49,8 @@ namespace FrEee.Game.Objects.Civilization
 		/// TODO - trait pictures
 		/// </summary>
 		public Image Icon { get { return null; } }
+
+		public Image Icon32 => Icon.Resize(32);
 
 		public IEnumerable<string> IconPaths
 		{

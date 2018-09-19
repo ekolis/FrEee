@@ -241,6 +241,8 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
+		public Image Icon32 => Icon.Resize(32);
+
 		public IEnumerable<string> IconPaths
 		{
 			get

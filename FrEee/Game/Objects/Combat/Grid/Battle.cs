@@ -10,6 +10,7 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using static System.Math;
 
@@ -76,10 +77,12 @@ namespace FrEee.Game.Objects.Combat.Grid
 			get; private set;
 		}
 
-		public System.Drawing.Image Icon
+		public Image Icon
 		{
 			get { return Combatants.OfType<ISpaceObject>().Largest()?.Icon; }
 		}
+
+		public Image Icon32 => Icon.Resize(32);
 
 		public IEnumerable<string> IconPaths
 		{

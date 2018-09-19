@@ -8,6 +8,7 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace FrEee.Game.Objects.Technology
@@ -69,10 +70,12 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// TODO - technology icons?
 		/// </summary>
-		public System.Drawing.Image Icon
+		public Image Icon
 		{
 			get { return Resource.Research.Icon; }
 		}
+
+		public Image Icon32 => Icon.Resize(32);
 
 		public IEnumerable<string> IconPaths
 		{

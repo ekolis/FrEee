@@ -3,6 +3,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -28,6 +29,8 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 				return Owner == Empire.Current ? Recipient.Icon : Owner.Icon;
 			}
 		}
+
+		public Image Icon32 => Icon.Resize(32);
 
 		public abstract IEnumerable<string> IconPaths { get; }
 

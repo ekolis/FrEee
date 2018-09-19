@@ -38,6 +38,8 @@ namespace FrEee.Game.Objects.Events
 
 		public Image Icon => Pictures.GetModImage(IconPaths.ToArray());
 
+		public Image Icon32 => Icon.Resize(32);
+
 		public IEnumerable<string> IconPaths => PortraitPaths;
 
 		public Image Portrait => Pictures.GetModImage(PortraitPaths.ToArray());
