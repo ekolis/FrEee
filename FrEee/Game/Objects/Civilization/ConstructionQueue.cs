@@ -186,7 +186,10 @@ namespace FrEee.Game.Objects.Civilization
 
 		public bool IsIdle
 		{
-			get { return Eta == null || Eta < 1; }
+			get
+			{
+				return Eta == null || Eta < 1 && !AreRepeatOrdersEnabled;
+			}
 		}
 
 		// TODO - make this a DoNotSerialize property after the game ends
