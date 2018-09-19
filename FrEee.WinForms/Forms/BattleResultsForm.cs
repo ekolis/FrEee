@@ -100,7 +100,7 @@ namespace FrEee.WinForms.Forms
 		private static Image GetHullIcon(IOwnable obj)
 		{
 			if (obj is IVehicle)
-				return ((IVehicle)obj).Design.Hull.GetIcon(obj.Owner.ShipsetPath);
+				return ((IVehicle)obj).Design.Hull.GetIcon(obj.Owner.ShipsetPath).Resize(32);
 			if (obj is IDesign)
 				return ((IDesign)obj).Hull.GetIcon(obj.Owner.ShipsetPath);
 			return Pictures.GetGenericImage(obj.GetType());
