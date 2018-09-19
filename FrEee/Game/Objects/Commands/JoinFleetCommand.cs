@@ -34,7 +34,8 @@ namespace FrEee.Game.Objects.Commands
 			}
 			set
 			{
-				Galaxy.Current.AssignID(value);
+				if (!value.HasValidID())
+					Galaxy.Current.AssignID(value);
 				fleet = value;
 			}
 		}
