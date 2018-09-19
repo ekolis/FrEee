@@ -41,6 +41,7 @@ namespace FrEee.Game.Objects.Commands
 				v.Container = null;
 			Fleet.Vehicles.Clear(); // no cheating by spawning new vehicles!
 			Fleet.Sector = Sector;
+			Galaxy.Current.AssignID(Fleet); // HACK - why is this not happening?
 		}
 
 		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
