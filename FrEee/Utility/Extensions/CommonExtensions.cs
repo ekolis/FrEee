@@ -346,15 +346,21 @@ namespace FrEee.Utility.Extensions
 
 			if (o is Fleet f && !f.Vehicles.ExceptSingle(null).Any())
 				o.Dispose();
+			var runOrders = new List<IOrder>();
 			while (!o.IsDisposed && o.Orders.Any() && (o.TimeToNextMove <= 1e-15 || !o.Orders.First().ConsumesMovement))
 			{
 				var order = o.Orders.First();
 				order.Execute(o);
+				runOrders.Add(order);
 				if (order.IsComplete && o.Orders.Contains(order))
 				{
 					o.Orders.RemoveAt(0);
 					if (o.AreRepeatOrdersEnabled)
+					{
 						o.Orders.Add(order);
+						if (runOrders.Count == o.Orders.Count)
+							break; // don't get in an infinite loop of repeating orders
+					}
 				}
 				didStuff = true;
 			}
