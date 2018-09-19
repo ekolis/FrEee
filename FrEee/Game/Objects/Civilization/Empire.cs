@@ -752,7 +752,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		private ResourceQuantity rawResourceIncome;
 
-		private IDictionary<(ISpaceObject, IMineableSpaceObject), ResourceQuantity> remoteMiners = new SafeDictionary<(ISpaceObject Miner, IMineableSpaceObject Target), ResourceQuantity>(true);
+		private IDictionary<(ISpaceObject, IMineableSpaceObject), ResourceQuantity> remoteMiners;
 		private ResourceQuantity remoteMiningIncome;
 
 		private ModProgress<Tech>[] researchProgress;
