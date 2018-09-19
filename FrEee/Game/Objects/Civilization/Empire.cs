@@ -531,7 +531,7 @@ namespace FrEee.Game.Objects.Civilization
 
 									// only one vehicle per empire can mine a sector in any given resource
 									// but we get the one with the most mining ability :)
-									var best = remoteMiners.Keys.SingleOrDefault(k => k.Item1.Sector == miner.Sector);
+									var best = remoteMiners.Keys.Where(k => k.Item1.Sector == miner.Sector).WithMax(k => remoteMiners[k]).FirstOrDefault();
 									if (best.Item1 == null || best.Item2 == null)
 									{
 										lock (remoteMiners)
@@ -544,7 +544,7 @@ namespace FrEee.Game.Objects.Civilization
 										}
 									}
 									else if (income > remoteMiners[best][resource])
-										remoteMiners[best][resource] = income;
+										remoteMiners[(miner, sobj)][resource] = income;
 								}
 							}
 						}
