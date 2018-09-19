@@ -1735,7 +1735,7 @@ namespace FrEee.Utility.Extensions
 				return Visibility.Scanned;
 
 			// do we have anything that can see it?
-			var sys = sobj.FindStarSystem();
+			var sys = sobj.StarSystem;
 			if (sys == null)
 				return Visibility.Unknown;
 			var seers = sys.FindSpaceObjects<ISpaceObject>(s => s.Owner == emp && !s.IsMemory);
