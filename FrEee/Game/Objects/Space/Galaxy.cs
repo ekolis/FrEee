@@ -1047,6 +1047,7 @@ namespace FrEee.Game.Objects.Space
 				Current.EnableAbilityCache();
 
 				Current.ComputeNextTickSize();
+
 				// Don't let ships in fleets move separate from their fleets!
 				Current.MoveShips();
 				Current.CurrentTick += Current.NextTickSize;
@@ -1497,7 +1498,11 @@ namespace FrEee.Game.Objects.Space
 			var objs = FindSpaceObjects<IMobileSpaceObject>().Where(obj => obj.Orders.Any());
 			objs = objs.Where(obj => !obj.IsMemory);
 			if (objs.Any() && CurrentTick < 1.0)
-				NextTickSize = Math.Max(Math.Min(1.0 - CurrentTick, objs.Min(v => v.TimeToNextMove)), 1e-15);
+			{
+				// HACK - why are objects getting zero time to next move?!
+				var nextTickSize = objs.Where(v => v.TimeToNextMove > 0).Min(v => v.TimeToNextMove);
+				NextTickSize = Math.Min(1.0 - CurrentTick, nextTickSize);
+			}
 			else
 				NextTickSize = double.PositiveInfinity;
 		}
