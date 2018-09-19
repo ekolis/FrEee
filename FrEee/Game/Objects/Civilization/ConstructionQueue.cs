@@ -359,6 +359,7 @@ namespace FrEee.Game.Objects.Civilization
 			while (Orders.Any() && ResourceQuantity.Min(Owner.StoredResources, UpcomingSpending) > empty)
 			{
 				var numOrders = Orders.Count;
+				var spentThisRound = new ResourceQuantity();
 
 				foreach (var order in Orders.Cast<IConstructionOrder>().ToArray())
 				{
@@ -377,7 +378,11 @@ namespace FrEee.Game.Objects.Civilization
 					}
 					else
 					{
+						var oldProgress = order.Item?.ConstructionProgress?.Copy() ?? new ResourceQuantity();
 						order.Execute(this);
+						var newProgress = order.Item?.ConstructionProgress?.Copy() ?? new ResourceQuantity();
+						if (newProgress == oldProgress && order == Orders.Last())
+							break; // made no progress and nothing else to try and build
 						if (order.CheckCompletion(this))
 						{
 							// upgrade facility orders place their own facilities
@@ -412,7 +417,7 @@ namespace FrEee.Game.Objects.Civilization
 
 				didStuff = true;
 
-				if (Orders.Count == numOrders)
+				if (Orders.Count == numOrders && !AreRepeatOrdersEnabled)
 					break; // couldn't accomplish any orders
 			}
 			foreach (var g in builtThisTurn.GroupBy(i => i.Template))
