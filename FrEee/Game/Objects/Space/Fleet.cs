@@ -884,6 +884,13 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public void Validate(ICollection<Fleet> ancestors = null)
 		{
+			// deal with corrupted fleets with negative IDs
+			if (!this.HasValidID())
+			{
+				ID = 0;
+				Galaxy.Current.AssignID(this);
+			}
+
 			if (ancestors == null)
 				ancestors = new List<Fleet>();
 			ancestors.Add(this);
