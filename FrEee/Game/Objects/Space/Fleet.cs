@@ -887,6 +887,8 @@ namespace FrEee.Game.Objects.Space
 			// deal with corrupted fleets with negative IDs
 			if (!this.HasValidID())
 			{
+				// HACK - why is the fleet beign disposed?!
+				IsDisposed = false;
 				ID = 0;
 				Galaxy.Current.AssignID(this);
 			}
