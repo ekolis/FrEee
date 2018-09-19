@@ -1,5 +1,6 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -40,6 +41,8 @@ namespace FrEee.Game.Objects.Combat
 		{
 			get { return GetIcon(null); }
 		}
+
+		public Image Icon32 => Icon.Resize(32);
 
 		public IEnumerable<string> IconPaths
 		{

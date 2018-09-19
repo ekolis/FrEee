@@ -6,7 +6,9 @@ using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 
 namespace FrEee.Game.Objects.Technology
@@ -61,10 +63,12 @@ namespace FrEee.Game.Objects.Technology
 		/// </summary>
 		public Formula<int> DurabilityPercent { get; set; }
 
-		public System.Drawing.Image Icon
+		public Image Icon
 		{
 			get { return Pictures.GetIcon(this); }
 		}
+
+		public Image Icon32 => Icon.Resize(32);
 
 		public IEnumerable<string> IconPaths
 		{

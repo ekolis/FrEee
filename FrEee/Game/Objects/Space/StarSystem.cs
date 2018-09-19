@@ -104,6 +104,8 @@ namespace FrEee.Game.Objects.Space
 			get { return BackgroundImage; }
 		}
 
+		public Image Icon32 => Icon.Resize(32);
+
 		public IEnumerable<string> IconPaths
 		{
 			get

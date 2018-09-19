@@ -11,6 +11,7 @@ using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Drawing;
 
 namespace FrEee.Game.Objects.Combat.Simple
 {
@@ -70,6 +71,8 @@ namespace FrEee.Game.Objects.Combat.Simple
 		{
 			get { return Combatants.OfType<ISpaceObject>().Largest().Icon; }
 		}
+
+		public Image Icon32 => Icon.Resize(32);
 
 		public IEnumerable<string> IconPaths
 		{

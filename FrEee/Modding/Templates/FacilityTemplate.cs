@@ -77,6 +77,8 @@ namespace FrEee.Game.Objects.Technology
 			get { return Pictures.GetIcon(this); }
 		}
 
+		public Image Icon32 => Icon.Resize(32);
+
 		public IEnumerable<string> IconPaths
 		{
 			get

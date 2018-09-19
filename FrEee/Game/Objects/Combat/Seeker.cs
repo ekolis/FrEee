@@ -5,8 +5,10 @@ using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 
@@ -91,10 +93,12 @@ namespace FrEee.Game.Objects.Combat
 			get { return Hitpoints; }
 		}
 
-		public System.Drawing.Image Icon
+		public Image Icon
 		{
 			get { return Portrait; }
 		}
+
+		public Image Icon32 => Icon.Resize(32);
 
 		public IEnumerable<string> IconPaths
 		{
@@ -212,7 +216,7 @@ namespace FrEee.Game.Objects.Combat
 			}
 		}
 
-		public System.Drawing.Image Portrait
+		public Image Portrait
 		{
 			// TODO - custom seeker images per shipset
 			get { return Pictures.GetGenericImage<Seeker>(1.0); }

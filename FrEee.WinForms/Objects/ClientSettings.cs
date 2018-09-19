@@ -98,7 +98,7 @@ namespace FrEee.WinForms.Objects
 
 		private static readonly GridColumnConfig colHullHitpoints = new GridColumnConfig("HullHitpointsFill", "Hull HP", typeof(DataGridViewProgressColumn), Color.White, Format.Units);
 
-		private static readonly GridColumnConfig colIcon = new GridColumnConfig("Icon", "Icon", typeof(DataGridViewImageColumn), Color.White);
+		private static readonly GridColumnConfig colIcon = new GridColumnConfig("Icon32", "Icon", typeof(DataGridViewImageColumn), Color.White);
 
 		private static readonly GridColumnConfig colIntelligenceIncome = new GridColumnConfig("IntelligenceIncome", "Int", typeof(DataGridViewTextBoxColumn), Resource.Intelligence.Color, Format.Units);
 
