@@ -386,8 +386,9 @@ namespace FrEee.Game.Objects.Civilization
 							Orders.Remove(order);
 							if (AreRepeatOrdersEnabled)
 							{
-								order.Reset();
-								Orders.Add(order);
+								var copy = order.Copy<IConstructionOrder>();
+								copy.Reset();
+								Orders.Add(copy);
 							}
 							builtThisTurn.Add(order.Item);
 							if (order.Item is Ship || order.Item is Base)
