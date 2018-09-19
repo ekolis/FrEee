@@ -36,9 +36,8 @@ namespace FrEee.Utility
 		{
 			try
 			{
-				var sr = new StreamReader(str);
-				var s = sr.ReadToEnd();
-				return DeserializeFromString(s);
+				// TODO - enable JSON serializer
+				return LegacySerializer.Deserialize<object>(str);
 			}
 			catch (JsonException ex)
 			{
@@ -78,9 +77,13 @@ namespace FrEee.Utility
 
 		public static void Serialize(object o, TextWriter w)
 		{
-			var s = SerializeToString(o);
-			w.Write(s);
-			w.Flush();
+			if (EnableJsonSerializer)
+			{
+				// TODO - enable JSON serializer
+				throw new Exception("JSON serializer isn't configured");
+			}
+			else
+				LegacySerializer.Serialize(o, w, typeof(object));
 		}
 
 		public static void Serialize(object o, Stream s)
