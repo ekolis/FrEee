@@ -276,7 +276,7 @@ namespace FrEee.Game.Objects.Space
 
 			// place in space if it's actually in space
 			if (sobj.Sector != this)
-				sobj.Sector = this;
+				StarSystem.Place(sobj, Coordinates);
 		}
 
 		public void Remove(ISpaceObject sobj)
