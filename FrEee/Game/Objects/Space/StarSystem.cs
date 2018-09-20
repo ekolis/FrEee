@@ -349,7 +349,8 @@ namespace FrEee.Game.Objects.Space
 			SpaceObjectLocations.Add(new ObjectLocation<ISpaceObject>(sobj, coords));
 
 			// see if we got hit by a minefield
-			sobj.DealWithMines();
+			if (!Serializer.IsDeserializing)
+				sobj.DealWithMines();
 		}
 
 		/// <summary>

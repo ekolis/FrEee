@@ -13,8 +13,11 @@ namespace FrEee.Utility
 	{
 		private const bool EnableJsonSerializer = false;
 
+		public static bool IsDeserializing { get; private set; }
+
 		public static T Deserialize<T>(string s)
 		{
+			IsDeserializing = true;
 			T t;
 			using (MemoryStream stream = new MemoryStream())
 			{
@@ -22,8 +25,9 @@ namespace FrEee.Utility
 				sw.Write(s);
 				sw.Flush();
 				stream.Seek(0, SeekOrigin.Begin);
-				t = Deserialize<T>(stream); 
+				t = Deserialize<T>(stream);
 			}
+			IsDeserializing = false;
 			return t;
 		}
 
@@ -37,7 +41,10 @@ namespace FrEee.Utility
 			try
 			{
 				// TODO - enable JSON serializer
-				return LegacySerializer.Deserialize<object>(str);
+				IsDeserializing = true;
+				var result = LegacySerializer.Deserialize<object>(str);
+				IsDeserializing = false;
+				return result;
 			}
 			catch (JsonException ex)
 			{
@@ -53,6 +60,7 @@ namespace FrEee.Utility
 					Console.Error.WriteLine(ex2);
 				}
 				throw new Exception("Unable to deserialize. Please check stderr.txt for details.");
+
 			}
 		}
 
@@ -70,8 +78,11 @@ namespace FrEee.Utility
 			}
 			else
 			{
+				IsDeserializing = true;
 				var sr = new StringReader(s);
-				return LegacySerializer.Deserialize<object>(sr);
+				var result = LegacySerializer.Deserialize<object>(sr);
+				IsDeserializing = false;
+				return result;
 			}
 		}
 
