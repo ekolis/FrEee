@@ -211,6 +211,7 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
+		[DoNotCopy(false)]
 		public virtual Sector Sector
 		{
 			get
