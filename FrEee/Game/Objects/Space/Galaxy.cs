@@ -540,6 +540,11 @@ namespace FrEee.Game.Objects.Space
 			var fs = new FileStream(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory, filename), FileMode.Open);
 			Current = Serializer.Deserialize<Galaxy>(fs);
 			Mod.Current = Galaxy.Current.Mod;
+			if (Empire.Current != null)
+			{
+				// load library of designs, strategies, etc.
+				Library.Load();
+			}
 			fs.Close();
 			fs.Dispose();
 		}
