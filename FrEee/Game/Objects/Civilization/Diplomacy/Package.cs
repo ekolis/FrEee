@@ -189,7 +189,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			if (errors.Any())
 				throw new Exception("Attempting to transfer an invalid package (" + this + "): " + errors.First());
 			foreach (var c in TreatyClauses)
-				c.IsInEffect = true;
+				Galaxy.Current.GetReferrable(c).IsInEffect = true;
 			foreach (var p in Planets)
 				p.Colony.Owner = target;
 			foreach (var v in Vehicles)
