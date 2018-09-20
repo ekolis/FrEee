@@ -357,6 +357,7 @@ namespace FrEee.Utility.Extensions
 					o.Orders.RemoveAt(0);
 					if (o.AreRepeatOrdersEnabled)
 					{
+						order.IsComplete = false;
 						o.Orders.Add(order);
 						if (runOrders.Count == o.Orders.Count)
 							break; // don't get in an infinite loop of repeating orders
