@@ -1594,6 +1594,18 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
+		/// Finds the real version of a fake referrable.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="fakeobj">The fake referrable.</param>
+		/// <returns></returns>
+		public T GetReferrable<T>(T fakeobj)
+			where T : IReferrable
+		{
+			return (T)GetReferrable(fakeobj.ID);
+		}
+
+		/// <summary>
 		/// Loads player commands into the current game state.
 		/// If this is the host view, commands will be loaded for all players.
 		/// If this is the player view, commands will be immediately executed so as to provide the player with a fresh game state.
