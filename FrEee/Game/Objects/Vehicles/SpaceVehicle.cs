@@ -205,6 +205,8 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 			set
 			{
+				if (sector == value)
+					return;
 				var oldsector = Sector;
 				sector = value;
 				if (value == null)

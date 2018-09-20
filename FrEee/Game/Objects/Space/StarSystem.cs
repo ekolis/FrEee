@@ -340,7 +340,9 @@ namespace FrEee.Game.Objects.Space
 			var sys = sobj.StarSystem;
 			if (sys != null)
 				sys.Remove(sobj);
-			sobj.Sector = new Sector(this, coords);
+			var sector = new Sector(this, coords);
+			if (sobj.Sector != sector)
+				sobj.Sector = sector;
 
 			SpaceObjectLocations.Add(new ObjectLocation<ISpaceObject>(sobj, coords));
 
