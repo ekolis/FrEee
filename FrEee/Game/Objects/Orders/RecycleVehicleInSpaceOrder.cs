@@ -32,7 +32,7 @@ namespace FrEee.Game.Objects.Orders
 		public bool IsComplete
 		{
 			get;
-			private set;
+			set;
 		}
 
 		public bool IsDisposed

@@ -17,7 +17,7 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// Is this order done executing?
 		/// </summary>
-		bool IsComplete { get; }
+		bool IsComplete { get; set; }
 	}
 
 	/// <summary>

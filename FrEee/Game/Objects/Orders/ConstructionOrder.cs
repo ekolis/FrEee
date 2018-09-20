@@ -46,6 +46,10 @@ namespace FrEee.Game.Objects.Orders
 					return false; // haven't checked completion yet, so it's probably safe to say it's incomplete
 				return isComplete.Value;
 			}
+			set
+			{
+				isComplete = value;
+			}
 		}
 
 		public bool IsDisposed { get; set; }
