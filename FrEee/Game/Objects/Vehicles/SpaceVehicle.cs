@@ -193,6 +193,7 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return 0; }
 		}
 
+		[DoNotCopy(false)]
 		public override Sector Sector
 		{
 			get
@@ -205,8 +206,6 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 			set
 			{
-				if (sector == value)
-					return;
 				var oldsector = Sector;
 				sector = value;
 				if (value == null)
