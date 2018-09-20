@@ -263,5 +263,22 @@ namespace FrEee.WinForms.Forms
 			else
 				designReport.Design = null;
 		}
+
+		private void btnExportAll_Click(object sender, EventArgs e)
+		{
+			var designs = Empire.Current.KnownDesigns.OwnedBy(Empire.Current);
+			var lib = Library.Import<IDesign>();
+			var count = 0;
+			foreach (var d in designs)
+			{
+				if (!lib.Any(ld => ld.Equals(d)))
+				{
+					count++;
+					Library.Export(d);
+				}
+			}
+			Library.Save();
+			MessageBox.Show($"{designs.Count()} designs exported to library ({count} new).");
+		}
 	}
 }
