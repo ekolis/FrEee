@@ -47,6 +47,7 @@
 			this.colTotalCost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.btnStrategy = new FrEee.WinForms.Controls.GameButton();
 			this.btnDelete = new FrEee.WinForms.Controls.GameButton();
+			this.btnExportAll = new FrEee.WinForms.Controls.GameButton();
 			this.gamePanel2.SuspendLayout();
 			this.gamePanel1.SuspendLayout();
 			this.SuspendLayout();
@@ -287,12 +288,26 @@
 			this.btnDelete.UseVisualStyleBackColor = false;
 			this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
 			// 
+			// btnExportAll
+			// 
+			this.btnExportAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnExportAll.BackColor = System.Drawing.Color.Black;
+			this.btnExportAll.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnExportAll.Location = new System.Drawing.Point(550, 327);
+			this.btnExportAll.Name = "btnExportAll";
+			this.btnExportAll.Size = new System.Drawing.Size(151, 29);
+			this.btnExportAll.TabIndex = 17;
+			this.btnExportAll.Text = "Export All";
+			this.btnExportAll.UseVisualStyleBackColor = false;
+			this.btnExportAll.Click += new System.EventHandler(this.btnExportAll_Click);
+			// 
 			// DesignListForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(714, 481);
+			this.Controls.Add(this.btnExportAll);
 			this.Controls.Add(this.btnDelete);
 			this.Controls.Add(this.btnStrategy);
 			this.Controls.Add(this.btnClose);
@@ -308,7 +323,6 @@
 			this.Controls.Add(this.chkForeign);
 			this.Controls.Add(this.ddlVehicleType);
 			this.Controls.Add(this.gamePanel1);
-			this.ForeColor = System.Drawing.Color.White;
 			this.MaximumSize = new System.Drawing.Size(730, 9999);
 			this.Name = "DesignListForm";
 			this.ShowInTaskbar = false;
@@ -341,5 +355,6 @@
 		private System.Windows.Forms.ColumnHeader colDesign;
         private Controls.GameButton btnStrategy;
 		private Controls.GameButton btnDelete;
+		private Controls.GameButton btnExportAll;
 	}
 }
