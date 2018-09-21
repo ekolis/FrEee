@@ -1745,6 +1745,8 @@ namespace FrEee.Game.Objects.Space
 		{
 			if (assignIDs)
 				AssignIDs();
+			foreach (var kvp in referrables.Where(kvp => kvp.Value.ID < 0).ToArray())
+				referrables.Remove(kvp);
 			Serializer.Serialize(this, stream);
 		}
 
@@ -1758,6 +1760,8 @@ namespace FrEee.Game.Objects.Space
 		{
 			if (assignIDs)
 				AssignIDs();
+			foreach (var kvp in referrables.Where(kvp => kvp.Value.ID < 0).ToArray())
+				referrables.Remove(kvp);
 			string filename;
 			if (CurrentEmpire == null)
 				filename = Name + "_" + TurnNumber + ".gam";
@@ -1825,7 +1829,9 @@ namespace FrEee.Game.Objects.Space
 
 		public void UnassignID(IReferrable r)
 		{
-			if (r != null && referrables.ContainsKey(r.ID))
+			if (r == null || r.ID < 0)
+				return; // nothing to do
+			if (referrables.ContainsKey(r.ID))
 			{
 				if (referrables[r.ID] == r)
 					referrables.Remove(r.ID);
@@ -1835,8 +1841,9 @@ namespace FrEee.Game.Objects.Space
 					referrables.Remove(galaxyThinksTheIDIs);
 				}
 			}
-			if (r != null)
-				r.ID = -1;
+			else if (referrables.Values.Contains(r))
+				referrables.Remove(referrables.Single(kvp => kvp.Value == r));
+			r.ID = -1;
 		}
 
 		internal void SpaceObjectIDCheck(string when)
