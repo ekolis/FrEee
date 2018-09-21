@@ -223,7 +223,7 @@ namespace FrEee.WinForms.Controls
 										p.DrawStatusIcons(pic);
 								}
 								if (useSquares)
-									pe.Graphics.FillRectangle(new SolidBrush(largest.Owner.Color), drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
+									pe.Graphics.FillRectangle(new SolidBrush(largest.Owner?.Color ?? Color.White), drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
 								else
 									pe.Graphics.DrawImage(pic, drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
 							}
