@@ -351,8 +351,6 @@ namespace FrEee.Game.Objects.Combat
 			int realDamage;
 			realDamage = Math.Min(Hitpoints, damage);
 			Hitpoints -= realDamage;
-			if (IsDestroyed)
-				Dispose();
 			return damage - realDamage;
 		}
 
