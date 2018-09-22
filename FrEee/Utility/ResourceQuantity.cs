@@ -16,6 +16,20 @@ namespace FrEee.Utility
 		/// </summary>
 		public bool IsEmpty { get { return this.All(kvp => kvp.Value == 0); } }
 
+		public ResourceQuantity()
+		{
+
+		}
+
+		public ResourceQuantity(ResourceQuantity q)
+		{
+			if (q != null)
+			{
+				foreach (var x in q)
+					Add(x);
+			}
+		}
+
 		/// <summary>
 		/// Computes the maximum of two resource amounts.
 		/// Missing values are treated as zeroes!
