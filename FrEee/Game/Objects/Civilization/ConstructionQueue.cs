@@ -381,9 +381,9 @@ namespace FrEee.Game.Objects.Civilization
 					}
 					else
 					{
-						var oldProgress = order.Item?.ConstructionProgress?.Copy() ?? new ResourceQuantity();
+						var oldProgress = new ResourceQuantity(order.Item?.ConstructionProgress);
 						order.Execute(this);
-						var newProgress = order.Item?.ConstructionProgress?.Copy() ?? new ResourceQuantity();
+						var newProgress = new ResourceQuantity(order.Item?.ConstructionProgress);
 						if (newProgress == oldProgress && order == Orders.Last())
 							break; // made no progress and nothing else to try and build
 						if (order.CheckCompletion(this))
