@@ -125,6 +125,9 @@ namespace FrEee.WinForms.Forms
 					btnFleetTransfer.Visible = IsFleetTransferOperationValid;
 					btnClearOrders.Visible = value is IMobileSpaceObject || value is Planet;
 				}
+
+				btnPrevIdle.Visible = true;
+				btnNextIdle.Visible = true;
 			}
 		}
 
