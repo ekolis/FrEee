@@ -29,7 +29,7 @@ namespace FrEee.Utility.Extensions
 		private static SafeDictionary<Type, object> defaultValueCache = new SafeDictionary<Type, object>();
 
 		private static List<Type> mappedTypes = new List<Type>();
-		
+
 		/// <summary>
 		/// Casts an object to a type. Returns null if the type is wrong.
 		/// </summary>
@@ -189,7 +189,11 @@ namespace FrEee.Utility.Extensions
 				var minesAttacking = new SafeDictionary<Empire, int>();
 
 				// can we sweep any?
-				var sweeping = sobj.GetAbilityValue("Mine Sweeping").ToInt();
+				int sweeping;
+				if (sobj is Fleet f2)
+					sweeping = f2.LeafVehicles.Sum(v => v.GetAbilityValue("Mine Sweeping").ToInt());
+				else
+					sweeping = sobj.GetAbilityValue("Mine Sweeping").ToInt();
 
 				// go through the minefield!
 				while (mines.Any() && !d.IsDestroyed)
@@ -989,11 +993,11 @@ namespace FrEee.Utility.Extensions
 					break; // found match
 				else if (data == '\\')
 					escaping = true; // begin escape sequence
-				/*else if (data == '"')
-				{
-					sb.Append((char)data);
-					quoting = true; // begin quoted string
-				}*/
+									 /*else if (data == '"')
+									 {
+										 sb.Append((char)data);
+										 quoting = true; // begin quoted string
+									 }*/
 				else
 				{
 					// regular data
