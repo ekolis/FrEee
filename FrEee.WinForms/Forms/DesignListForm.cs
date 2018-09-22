@@ -267,7 +267,7 @@ namespace FrEee.WinForms.Forms
 		private void btnExportAll_Click(object sender, EventArgs e)
 		{
 			var designs = Empire.Current.KnownDesigns.OwnedBy(Empire.Current);
-			var lib = Library.Import<IDesign>();
+			var lib = Library.Import<IDesign>(d => d.IsValidInMod);
 			var count = 0;
 			foreach (var d in designs)
 			{
