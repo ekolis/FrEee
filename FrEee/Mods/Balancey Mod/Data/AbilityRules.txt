@@ -1,0 +1,1239 @@
+=======================================================================================
+*BEGIN*
+=======================================================================================
+
+Name := Warp Point - Turbulence
+Targets := WarpPoint
+Description := Inflicts [%Amount1%] normal damage to vehicles traversing this warp point.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Star - Unstable
+Targets := Star
+Description := Star is unstable and emits a greater than normal quantity of solar flares. (No in-game effect)
+
+Name := Sector - Sight Obscuration
+Targets := Sector, SpaceObject, Component, Facility
+Description := Sensor sweeps below level [%Amount1%] (all sensor types) are prevented against vehicles in this sector.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Sector - Sensor Interference
+Targets := Sector, SpaceObject, Component, Facility
+Description := Weapon accuracy is reduced by [%Amount1%]% in this sector.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Sector - Shield Disruption
+Targets := Sector, SpaceObject, Component, Facility
+Description := Vehicles' maximum shield points are reduced by [%Amount1%] in this sector.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Sector - Damage
+Targets := Sector, SpaceObject, Component, Facility
+Description := Sector inflicts [%Amount1%] damage to vehicles entering it or remaining in it at the end of a turn.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := System - Sight Obscuration
+Targets := StarSystem, SpaceObject, Component, Facility
+Description := Sensor sweeps below level [%Amount1%] (all sensor types) are prevented against vehicles in this system.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := System - Sensor Interference
+Targets := StarSystem, SpaceObject, Component, Facility
+Description := Weapon accuracy is reduced by [%Amount1%]% in this system.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := System - Shield Disruption
+Targets := StarSystem, SpaceObject, Component, Facility
+Description := Vehicles' maximum shield points are reduced by [%Amount1%] in this system.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := System - Damage
+Targets := StarSystem, SpaceObject, Component, Facility
+Description := Star system inflicts [%Amount1%] damage to vehicles entering it or remaining in it at the end of a turn.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Resource Generation - Minerals
+Targets := Planet, Facility, GroundVehicle, Component
+Description := Mines [%Amount1%] minerals each turn (modified by planet value).
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Resource Generation - Organics
+Targets := Planet, Facility, GroundVehicle, Component
+Description := Farms [%Amount1%] organics each turn (modified by planet value).
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Resource Generation - Radioactives
+Targets := Planet, Facility, GroundVehicle, Component
+Description := Refines [%Amount1%] radioactives each turn (modified by planet value).
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Point Generation - Research
+Targets := Vehicle, Planet, Component, Facility
+Description := Generates [%Amount1%] research points each turn.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Point Generation - Intelligence
+Targets := Vehicle, Planet, Component, Facility
+Description := Generates [%Amount1%] intelligence points each turn.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Spaceport
+Targets := Planet, Vehicle, StarSystem, Component, Facility
+Description := Allows resources and points generated in this system to be collected by the empire.
+
+Name := Palace
+Targets := Planet, Facility
+Description := Seat of government for an empire. (No in-game effect)
+
+Name := Supply Generation
+Alias := Supply Generation - Sector
+Targets := Sector, Vehicle, Planet, Component, Facility
+Description := Completely replenishes the supplies of vehicles that pass through this sector.
+
+Name := Supply Generation - System
+Targets := StarSystem, Vehicle, Planet, Component, Facility
+Description := Completely replenishes the supplies of vehicles that pass through this system.
+
+Name := Planet - Change Minerals Value
+Targets := Planet, Facility, GroundVehicle, Component
+Description := Planet minerals value is changed by [%Amount1%] per year.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Planet - Change Organics Value
+Targets := Planet, Facility, GroundVehicle, Component
+Description := Planet organics value is changed by [%Amount1%] per year.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Planet - Change Radioactives Value
+Targets := Planet, Facility, GroundVehicle, Component
+Description := Planet radioactives value is changed by [%Amount1%] per year.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Sector - Change Minerals Value
+Targets := Sector, Planet, Facility, GroundVehicle, Component
+Description := Planet minerals value is changed by [%Amount1%] per year.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Sector - Change Organics Value
+Targets := Sector, Planet, Facility, GroundVehicle, Component
+Description := Planet organics value is changed by [%Amount1%] per year.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Sector - Change Radioactives Value
+Targets := Sector, Planet, Facility, GroundVehicle, Component
+Description := Planet radioactives value is changed by [%Amount1%] per year.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := System - Change Minerals Value
+Targets := StarSystem, Planet, Facility, Vehicle, Component
+Description := Minerals value of all colonized planets in this system is changed by [%Amount1%] per year.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := System - Change Organics Value
+Targets := StarSystem, Planet, Facility, Vehicle, Component
+Description := Organics value of all colonized planets in this system is changed by [%Amount1%] per year.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := System - Change Radioactives Value
+Targets := StarSystem, Planet, Facility, Vehicle, Component
+Description := Radioactives value of all colonized planets in this system is changed by [%Amount1%] per year.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Empire - Change Minerals Value
+Targets := Empire, Planet, Facility, Vehicle, Component
+Description := Minerals value of all colonized planets is changed by [%Amount1%] per year.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Empire - Change Organics Value
+Targets := Empire, Planet, Facility, Vehicle, Component
+Description := Organics value of all colonized planets is changed by [%Amount1%] per year.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Empire - Change Radioactives Value
+Targets := Empire, Planet, Facility, Vehicle, Component
+Description := Radioactives value of all colonized planets is changed by [%Amount1%] per year.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Planet - Change Conditions
+Targets := Planet, Facility, GroundVehicle, Component
+Description := Planet conditions are changed by [%Amount1%] per year.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Planet - Change Population Happiness
+Targets := Planet, Facility, GroundVehicle, Component
+Description := Population happiness is changed by [%Amount1%] per turn on this planet.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Planet - Change Ground Defense
+Targets := Planet, Facility, GroundVehicle, Component
+Description := Weapon damage inflicted by troops defending this colony is changed by [%Amount1%]%.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := System - Change Ground Defense
+Targets := Sector, Planet, Facility, Vehicle, Component
+Description := Weapon damage inflicted by troops defending colonies in this system in ground combat is changed by [%Amount1%]%.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Empire - Change Ground Defense
+Targets := Empire, Planet, Facility, Vehicle, Component
+Description := Weapon damage inflicted by troops defending this empire's colonies is changed by [%Amount1%]%.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Planet - Shield Generation
+Targets := Planet, Facility, GroundVehicle, Component
+Description := Generates [%Amount1%] planetary shield points.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Shield Generation
+Targets := Vehicle, Planet, Component, Facility
+Description := Generates [%Amount1%] normal shield points.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Phased Shield Generation
+Targets := Vehicle, Planet, Component, Facility
+Description := Generates [%Amount1%] phased shield points.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Component Repair
+Targets := Sector, Vehicle, Planet, Component, Facility
+Description := [%Amount1%] components per turn can be repaired in this sector.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Component Repair - System
+Targets := StarSystem, Vehicle, Planet, Component, Facility
+Description := [%Amount1%] components per turn can be repaired in this star system.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Cargo Storage
+Targets := Vehicle, Planet, Component, Facility
+Description := Can store [%Amount1%]kT of cargo.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Drop Troops
+Targets := SpaceVehicle, Component
+Description := This ability is not used. All transports can drop troops.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Launch/Recover Fighters
+Targets := Vehicle, Component
+Description := Can launch [%Amount1%] fighters per combat round, and an unlimited number of fighters per turn.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Lay Mines
+Alias := Launch/Recover Mines
+Targets := Vehicle, Component
+Description := Can lay [%Amount1%] mines per combat round, and an unlimited number of mines per turn.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Multiplex Tracking
+Targets := Vehicle, Component
+Description := Vehicle can set up to [%Amount1%] weapon groups in its combat strategy.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Combat To Hit Offense Plus
+Targets := Vehicle, Planet, Component, Facility
+Description := Accuracy modifier of [%Amount1%]%.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Combat To Hit Defense Plus
+Targets := Vehicle, Planet, Component, Facility
+Description := Evasion modifier of [%Amount1%]%.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Mine Sweeping
+Targets := SpaceVehicle, Component
+Description := Can sweep [%Amount1%] mines per sector traversed.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Medical Bay
+Targets := Vehicle, Planet, Component, Facility
+Description := Can cure plagues up to level [%Amount1%].
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Movement Bonus
+Targets := SpaceVehicle, Component
+Description := Speed bonus of [%Amount1%].
+Value 1 Rule := TakeLowest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Emissive Armor
+Targets := Vehicle, Planet, Component, Facility
+Description := Negates [%Amount1%] damage from each hit, except from armor piercing weapons.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Shield Regeneration
+Targets := Vehicle, Planet, Component, Facility
+Description := Regenerates [%Amount1%] shield points per combat round.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Master Computer
+Targets := Vehicle, Component
+Description := Vehicle does not need standard command components or crew.
+
+Name := Cloak Level
+Targets := Vehicle, Planet, Component, Facility
+Description := Prevents [%Amount1%] sensor sweeps below level [%Amount2%] against this vehicle.
+Value 1 Rule := Group
+Value 2 Rule := TakeHighest
+Value 2 Group Rule := None
+
+Name := Sensor Level
+Targets := Vehicle, Planet, Component, Facility, StarSystem
+Description := Performs a level [%Amount2%] [%Amount1%] sensor sweep to detect cloaked ships.
+Value 1 Rule := Group
+Value 2 Rule := TakeHighest
+Value 2 Group Rule := None
+
+Name := Emergency Resupply
+Targets := Component
+Description := Generates [%Amount1%] supplies when used.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Emergency Energy
+Alias := Emergency Propulsion
+Alias := Emergency Speed
+Targets := Component
+Description := Generates [%Amount1%] movement points when used.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Long Range Scanner
+Targets := Vehicle, Planet, Component, Facility
+Description := Allows detailed scanning of alien ships at range [%Amount1%].
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Open Warp Point Distance
+Alias := Open Warp Point
+Targets := SpaceVehicle, Component
+Description := Can open a warp point to a star system up to [%Amount1%] light-years away.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Create Planet Size
+Name := Create Planet
+Targets := SpaceVehicle, Component
+Description := Can create a planet (up to size [%Amount1%]) out of an asteroid field.
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Destroy Planet Size
+Name := Destroy Planet
+Targets := SpaceVehicle, Component
+Description := Can destroy a planet up to size [%Amount1%].
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Boarding Attack
+Targets := SpaceVehicle, Planet, Component, Facility
+Description := Provides [%Amount1%] soldiers to capture enemy ships or defend this ship from capture.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Boarding Defense
+Targets := SpaceVehicle, Component
+Description := Automated turrets can defend this ship from [%Amount1%] enemy boarders.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Standard Ship Movement
+Targets := SpaceVehicle, Component
+Description := Provides [%Amount1%] points of thrust for movement.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Ship Bridge
+Targets := Vehicle, Component
+Description := Provides primary command capability. If command is lost, the ship will move slower and be unable to fire weapons.
+
+Name := Ship Auxiliary Control
+Targets := Vehicle, Component
+Description := Provides auxiliary command capability in case of primary command failure. If command is lost, the ship will move slower and be unable to fire weapons.
+
+Name := Ship Life Support
+Targets := Vehicle, Component
+Description := Provides life support for a ship's crew. If all life support is lost, the ship will be unable take any actions.
+
+Name := Ship Crew Quarters
+Targets := Vehicle, Component
+Description := Provides quarters for a ship's crew. If all crew quarters are lost, the ship will move slower. Can also defend against 4 boarders per crew quarters.
+
+Name := Scanner Jammer
+Targets := Vehicle, Component
+Description := Alien ships cannot use long range scanners against this vehicle.
+
+Name := Quantum Reactor
+Targets := SpaceVehicle, Component
+Description := This vehicle does not require supplies.
+
+Name := Supply Storage
+Targets := SpaceVehicle, Component
+Description := Stores [%Amount1%] supplies.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Space Yard
+Targets := Vehicle, Planet, Component, Facility
+Description := Can construct with [%Amount2%] [%Amount1%] per turn.
+Value 1 Rule := Group
+Value 2 Rule := Add
+
+Name := Resource Storage - Mineral
+Targets := Vehicle, Planet, Component, Facility
+Alias := Resource Storage - Minerals
+Description := Can store [%Amount1%] minerals for an empire.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Resource Storage - Organics
+Targets := Vehicle, Planet, Component, Facility
+Description := Can store [%Amount1%] organics for an empire.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Resource Storage - Radioactives
+Targets := Vehicle, Planet, Component, Facility
+Description := Can store [%Amount1%] radioactives for an empire.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Resource Gen Modifier Planet - Minerals
+Name := Resource Gen Modifier - Minerals
+Targets := Planet, SpaceVehicle, Component, Facility
+Description := Mineral mining rate is changed by [%Amount1%]% on this planet or vehicle.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Resource Gen Modifier Planet - Organics
+Name := Resource Gen Modifier - Organics
+Targets := Planet, SpaceVehicle, Component, Facility
+Description := Organics farming rate is changed by [%Amount1%]% on this planet or vehicle.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Resource Gen Modifier Planet - Radioactives
+Name := Resource Gen Modifier - Radioactives
+Targets := Planet, SpaceVehicle, Component, Facility
+Description := Radioactives refining rate is changed by [%Amount1%]% on this planet or vehicle.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Resource Gen Modifier System - Minerals
+Targets := StarSystem, Planet, SpaceVehicle, Component, Facility
+Description := Mineral mining rate is changed by [%Amount1%]% in this system.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Resource Gen Modifier System - Organics
+Targets := StarSystem, Planet, SpaceVehicle, Component, Facility
+Description := Organics farming rate is changed by [%Amount1%]% in this system.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Resource Gen Modifier System - Radioactives
+Targets := StarSystem, Planet, SpaceVehicle, Component, Facility
+Description := Radioactives refining rate is changed by [%Amount1%]% in this system.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Resource Gen Modifier Empire - Minerals
+Targets := Empire, Planet, SpaceVehicle, Component, Facility, Race
+Description := Mineral mining rate is changed by [%Amount1%]% throughout the empire.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Resource Gen Modifier Empire - Organics
+Targets := Empire, Planet, SpaceVehicle, Component, Facility, Race
+Description := Organics farming rate is changed by [%Amount1%]% throughout the empire.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Resource Gen Modifier Empire - Radioactives
+Targets := Empire, Planet, SpaceVehicle, Component, Facility, Race
+Description := Radioactives refining rate is changed by [%Amount1%]% throughout the empire.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Planet Point Generation Modifier - Research
+Name := Point Generation Modifier - Research
+Targets := Planet, SpaceVehicle, Component, Facility
+Description := Research rate is changed by [%Amount1%]% on this planet or vehicle.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Planet Point Generation Modifier - Intelligence
+Targets := Planet, SpaceVehicle, Component, Facility
+Description := Intelligence rate is changed by [%Amount1%]% on this planet or vehicle.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := System Point Generation Modifier - Research
+Targets := StarSystem, Planet, SpaceVehicle, Component, Facility
+Description := Research rate is changed by [%Amount1%]% in this system.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := System Point Generation Modifier - Intelligence
+Targets := StarSystem, Planet, SpaceVehicle, Component, Facility
+Description := Intelligence rate is changed by [%Amount1%]% in this system.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Empire Point Generation Modifier - Research
+Targets := Empire, Planet, SpaceVehicle, Component, Facility, Race
+Description := Research rate is changed by [%Amount1%]% throughout the empire.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Empire Point Generation Modifier - Intelligence
+Targets := Empire, Planet, SpaceVehicle, Component, Facility, Race
+Description := Intelligence rate is changed by [%Amount1%]% throughout the empire.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Combat Modifier - Sector
+Targets := Sector, Planet, Vehicle, Component, Facility
+Description := Weapon accuracy and evasion is changed by [%Amount1%]% in this sector.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Combat Modifier - System
+Targets := StarSystem, Planet, Vehicle, Component, Facility
+Description := Weapon accuracy and evasion is changed by [%Amount1%]% in this system.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Combat Modifier - Empire
+Targets := Empire, Planet, Vehicle, Component, Facility
+Description := Weapon accuracy and evasion is changed by [%Amount1%]% throughout the empire.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Damage Modifier - Sector
+Targets := Sector, Planet, Vehicle, Component, Facility
+Description := Weapon damage is changed by [%Amount1%]% in this sector.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Damage Modifier - System
+Targets := StarSystem, Planet, Vehicle, Component, Facility
+Description := Weapon damage is changed by [%Amount1%]% in this system.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Damage Modifier - Empire
+Targets := Empire, Planet, Vehicle, Component, Facility
+Description := Weapon damage is changed by [%Amount1%]% throughout the empire.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Planet Value Change - Sector
+Targets := Sector, Planet, Vehicle, Component, Facility
+Description := The value of each colonized planet in this sector is changed by [%Amount1%] every 10 turns (all resources).
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Planet Value Change - System
+Targets := StarSystem, Planet, Vehicle, Component, Facility
+Description := The value of each colonized planet in this system is changed by [%Amount1%] every 10 turns (all resources).
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Planet Value Change - Empire
+Targets := Empire, Planet, Vehicle, Component, Facility
+Description := The value of each colonized planet throughout the empire is changed by [%Amount1%] every 10 turns (all resources).
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Planet Conditions Change - Sector
+Targets := Sector, Planet, Vehicle, Component, Facility
+Description := The conditions of each colonized planet in this sector are changed by [%Amount1%] every 10 turns.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Planet Conditions Change - System
+Targets := StarSystem, Planet, Vehicle, Component, Facility
+Description := The conditions of each colonized planet in this system are changed by [%Amount1%] every 10 turns.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Planet Conditions Change - Empire
+Targets := Empire, Planet, Vehicle, Component, Facility
+Description := The conditions of each colonized planet throughout the empire are changed by [%Amount1%] every 10 turns.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Change Bad Event Chance - Sector
+Targets := Sector, Planet, Vehicle, Component, Facility
+Description := The chance of a bad random event occurring in this sector is changed by [%Amount1%].
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Change Bad Event Chance - System
+Targets := StarSystem, Planet, Vehicle, Component, Facility
+Description := The chance of a bad random event occurring in this system is changed by [%Amount1%].
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Change Bad Event Chance - Empire
+Targets := Empire, Planet, Vehicle, Component, Facility
+Description := The chance of a bad random event occurring is changed by [%Amount1%].
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Change Bad Intelligence Chance - Sector
+Targets := Sector, Planet, Vehicle, Component, Facility
+Description := The chance of foreign intelligence operations occurring in this sector is changed by [%Amount1%].
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Change Bad Intelligence Chance - System
+Targets := StarSystem, Planet, Vehicle, Component, Facility
+Description := The chance of foreign intelligence operations occurring in this system is changed by [%Amount1%].
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Change Bad Intelligence Chance - Empire
+Targets := Empire, Planet, Vehicle, Component, Facility
+Description := The chance of foreign intelligence operations occurring is changed by [%Amount1%].
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Change Population Happiness - Sector
+Targets := Sector, Planet, Component, Facility
+Description := Population happiness is changed by [%Amount1%] per turn in this sector.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Change Population Happiness - System
+Targets := StarSystem, Planet, Component, Facility
+Description := Population happiness is changed by [%Amount1%] per turn in this system.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Change Population Happiness - Empire
+Targets := Empire, Planet, Component, Facility
+Description := Population happiness is changed by [%Amount1%] per turn throughout the empire.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Ship Training
+Alias := Ship Training - Sector
+Targets := Sector, SpaceVehicle, Planet, Component, Facility
+Description := Ships in this sector can be trained, giving them a [%Amount1%]% accuracy/evasion bonus per turn (max [%Amount2%]%).
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Fleet Training
+Alias := Fleet Training - Sector
+Targets := Sector, Fleet, Planet, Component, Facility
+Description := Fleets in this sector can be trained, giving them a [%Amount1%]% accuracy/evasion bonus per turn (max [%Amount2%]%).
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Ship Training - System
+Targets := StarSystem, SpaceVehicle, Planet, Component, Facility
+Description := Ships in this system can be trained, giving them a [%Amount1%]% accuracy/evasion bonus per turn (max [%Amount2%]%).
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Fleet Training - System
+Targets := StarSystem, Fleet, Planet, Component, Facility
+Description := Fleets in this system can be trained, giving them a [%Amount1%]% accuracy/evasion bonus per turn (max [%Amount2%]%).
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Ship Training - Empire
+Targets := Empire, SpaceVehicle, Planet, Component, Facility
+Description := All ships in the empire can be trained, giving them a [%Amount1%]% accuracy/evasion bonus per turn (max [%Amount2%]%).
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Fleet Training - Empire
+Targets := Empire, Fleet, Planet, Component, Facility
+Description := All fleets in the empire can be trained, giving them a [%Amount1%]% accuracy/evasion bonus per turn (max [%Amount2%]%).
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Modify Reproduction - Planet
+Targets := Planet, Facility, GroundVehicle, Component
+Description := Population reproduction is changed by [%Amount1%] per turn on this planet.
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Modify Reproduction - System
+Targets := StarSystem, Planet, Facility, Vehicle, Component
+Description := Population reproduction is changed by [%Amount1%] per turn in this system.
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Modify Reproduction - Empire
+Targets := Empire, Planet, Facility, Vehicle, Component
+Description := Population reproduction is changed by [%Amount1%] per turn throughout the empire.
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Change Population - Planet
+Targets := Planet, Facility, GroundVehicle, Component
+Description := The population of this colony is increased by [%Amount1%]M per turn.
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Change Population - System
+Targets := StarSystem, Planet, Facility, Vehicle, Component
+Description := The population of each colony in this system is increased by [%Amount1%]M per turn.
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Change Population - Empire
+Targets := Empire, Planet, Facility, Vehicle, Component
+Description := The population of each colony in the empire is increased by [%Amount1%]M per turn.
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Plague Prevention - Planet
+Targets := Planet, Facility, GroundVehicle, Component
+Description := The population of this colony is immune to plagues up to level [%Amount1%].
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Plague Prevention - System
+Targets := StarSystem, Planet, Facility, Vehicle, Component
+Description := The population of this system is immune to plagues up to level [%Amount1%].
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Plague Prevention - Empire
+Targets := Empire, Planet, Facility, Vehicle, Component
+Description := The population of the entire empire is immune to plagues up to level [%Amount1%].
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Resource Conversion
+Targets := Empire, Facility, Component
+Description := Can convert between resource types with a [%Amount1%] loss of material.
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Resource Reclamation
+Alias := Resource Reclamation - Sector
+Targets := Sector, Facility, Component
+Description := Vehicles scrapped in this sector will reclaim [%Amount1%]% of their resource cost.
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Resource Reclamation - System
+Targets := StarSystem, Facility, Component
+Description := Vehicles scrapped in this system will reclaim [%Amount1%]% of their resource cost.
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Resource Reclamation - Empire
+Targets := Empire, Facility, Component
+Description := Vehicles scrapped anywhere in the empire will reclaim [%Amount1%]% of their resource cost.
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Close Warp Point
+Targets := SpaceVehicle, Component
+Description := Can close a warp point.
+
+Name := Destroy Star
+Targets := SpaceVehicle, Component
+Description := Can destroy a star. This will destroy all ships in the system and turn planets into asteroids.
+
+Name := Create Star
+Targets := SpaceVehicle, Component
+Description := Can create a star in a system that does not already have any stars, nebulae, or black holes.
+    
+Name := Destroy Storm
+Targets := SpaceVehicle, Component
+Description := Can destroy a storm.
+    
+Name := Create Storm
+Targets := SpaceVehicle, Component
+Description := Can create a storm.
+    
+Name := Self-Destruct
+Targets := Vehicle, Component, Planet, Facility
+Description := Vehicle can self-destruct at will, and will do so if it is taken over by boarders.
+    
+Name := Colonize Planet - Rock
+Targets := SpaceVehicle, Component
+Description := Can colonize a rock planet. The colony ship will be destroyed upon doing so.
+    
+Name := Colonize Planet - Ice
+Targets := SpaceVehicle, Component
+Description := Can colonize an ice planet. The colony ship will be destroyed upon doing so.
+    
+Name := Colonize Planet - Gas
+Alias := Colonize Planet - Gas Giant
+Targets := SpaceVehicle, Component
+Description := Can colonize a gas giant. The colony ship will be destroyed upon doing so.
+    
+Name := Point-Defense
+Targets := Component
+Description := Weapon automatically fires at the first target to come into range.
+  
+Name := Armor
+Targets := Component
+Description := Component is damaged before other components on a vehicle.
+  
+Name := Launch/Recover Satellites
+Targets := SpaceVehicle, Component
+Description := Can launch [%Amount1%] satellites per combat round, and an unlimited number of satellites per turn.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Launch Drones
+Targets := SpaceVehicle, Component
+Description := Can launch [%Amount1%] drones per combat round, and an unlimited number of drones per turn.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Remote Resource Generation - Minerals
+Targets := SpaceVehicle, Planet, Component, Facility
+Description := Remotely mines [%Amount1%] minerals each turn from uninhabited planets and asteroids in the sector (modified by planet/asteroid value).
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Remote Resource Generation - Organics
+Targets := SpaceVehicle, Planet, Component, Facility
+Description := Remotely farms [%Amount1%] organics each turn from uninhabited planets and asteroids in the sector (modified by planet/asteroid value).
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Remote Resource Generation - Radioactives
+Targets := SpaceVehicle, Planet, Component, Facility
+Description := Remotely refines [%Amount1%] radioactives each turn from uninhabited planets and asteroids in the sector (modified by planet/asteroid value).
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Armor Regeneration
+Targets := Vehicle, Component, Planet, Facility
+Description := Components and facilities with this ability will repair themselves for a total of [%Amount1%] HP per combat round, and completely after combat.
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Shield Generation From Damage
+Targets := Vehicle, Component, Planet, Facility
+Description := When the vehicle takes hull or armor damage, except from armor piercing weapons, the shields are regenerated by [%Amount1%] points or the amount of damage inflicted, whichever is less.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := System - Movement Towards Center
+Targets := StarSystem
+Description := This system draws all vehicles toward its center at a rate of [%Amount1%] sectors per turn.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := System - Movement Random
+Targets := StarSystem
+Description := Vehicles in this system will move randomly up to [%Amount1%] sectors per turn.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := System - Destructive Center
+Targets := StarSystem
+Description := Entering the sector of this system will inflict [%Amount1%] points of normal damage.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Destroy Nebulae
+Alias := Destroy Nebula
+Targets := SpaceVehicle, Component
+Description := Can dissipate a nebula.
+
+Name := Create Nebulae
+Alias := Create Nebula
+Targets := SpaceVehicle, Component
+Description := Can destroy a star, creating a nebula in its place. This will destroy all ships in the system and turn planets into asteroids.
+
+Name := Destroy Black Hole
+Targets := SpaceVehicle, Component
+Description := Can dissipate a black hole.
+
+Name := Create Black Hole
+Targets := SpaceVehicle, Component
+Description := Can destroy a star, creating a black hole in its place. This will destroy all ships and planets in the system.
+
+Name := Stop Planet Destroyer
+Targets := Planet, Facility, GroundVehicle, Component
+Description := This planet cannot be destroyed by planet destroying weapons.
+
+Name := Stop Star Destroyer
+Targets := StarSystem, SpaceVehicle, Planet, Component, Facility
+Description := Stars in this system cannot be destroyed by standard star destroying weapons.
+
+Name := Stop Nebulae Creator
+Targets := StarSystem, SpaceVehicle, Planet, Component, Facility
+Description := Stars in this system cannot be converted into nebulae.
+
+Name := Stop Black Hole Creator
+Targets := StarSystem, SpaceVehicle, Planet, Component, Facility
+Description := Stars in this system cannot be converted into black holes.
+
+Name := Stop Open Warp Point
+Targets := StarSystem, SpaceVehicle, Planet, Component, Facility
+Description := Warp points cannot be opened to or from this system.
+
+Name := Stop Close Warp Point
+Targets := StarSystem, SpaceVehicle, Planet, Component, Facility
+Description := Warp points to and from this system cannot be closed.
+
+Name := Component Destroyed On Use
+Alias := Facility Destroyed On Use
+Alias := Destroyed On Use
+Targets := Component, Facility
+Description := This component or facility is disabled when activated, and must be repaired to be used again.
+
+Name := Space Object Destroyed On Use
+Targets := Component, Facility, Vehicle
+Description := This component or facility destroys the entire vehicle or planet it is contained within when activated.
+
+Name := Ancient Ruins
+Targets := Planet
+Description := This planet contains ancient ruins. [%Amount1%] random technologies will be learned when it is colonized.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Ancient Ruins Unique
+Targets := Planet
+Description := This planet contains ancient ruins. Unique technology [%Amount1%] will be learned when it is colonized.
+
+Name := Combat Best Experience
+Targets := Vehicle, Component
+Description := Contains a network connection that gives this vehicle the same effective experience level as the most experienced ship in the sector that is also connected to the network.
+
+Name := Combat Movement
+Targets := SpaceVehicle, Component
+Description := Vehicle gains [%Amount1%] additional speed in combat.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Supply Generation Per Turn
+Targets := SpaceVehicle, Component
+Description := Generates [%Amount1%] supplies per turn.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Solar Supply Generation
+Targets := SpaceVehicle, Component
+Description := Generates [%Amount1%] supplies per turn from each star in the system.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Extra Movement Generation
+Targets := SpaceVehicle, Component
+Description := Vehicle speed is increased by [%Amount1%].
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Planet - Change Atmosphere
+Targets := Planet, Facility, GroundVehicle, Component
+Description := After [%Amount1%] turns, the atmosphere of this planet will be converted to one breathable by the majority of the planet's population.
+Value 1 Rule := TakeLowest
+Value 2 Rule := TakeLowest
+
+Name := Weapons Always Hit
+Targets := Vehicle, Planet, Facility, Component
+Description := This vehicle's weapons will always hit their target.
+
+Name := Create Constructed Planet
+Alias := Create Constructed Planet From Star
+Targets := SpaceVehicle, Component
+Description := Can create a constructed planet of type [%Amount1%] from a star.
+
+Name := Create Constructed Planet From Planet
+Targets := SpaceVehicle, Component
+Description := Can create a constructed planet of type [%Amount1%] from a planet.
+
+Name := Create Constructed Planet From Storm
+Targets := SpaceVehicle, Component
+Description := Can create a constructed planet of type [%Amount1%] from a storm.
+
+Name := Create Constructed Planet From Warp Point
+Targets := SpaceVehicle, Component
+Description := Can create a constructed planet of type [%Amount1%] from a warp point.
+
+Name := Create Constructed Planet From Asteroids
+Targets := SpaceVehicle, Component
+Description := Can create a constructed planet of type [%Amount1%] from an asteroid field.
+
+Name := Create Constructed Planet From Space
+Targets := SpaceVehicle, Component
+Description := Can create a constructed planet of type [%Amount1%] in deep space.
+
+Name := Constructed Planet Requirements
+Targets := Component
+Description := Requrires [%Amount1%]kT of [%Amount2%] components to create a constructed planet.
+Value 1 Rule := Group
+Value 1 Group Rule := None
+Value 2 Rule := Add
+
+Name := Modified Maintenance Cost
+Targets := Vehicle, Component
+Description := Maintenance rate is modified by [%Amount1%]%.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Long Range Scanner - System
+Targets := Vehicle, Planet, Component, Facility
+Description := Allows detailed scanning of alien ships within this system.
+Description := 
+
+Name := Solar Resource Generation - Minerals
+Targets := SpaceVehicle, Planet, Component, Facility
+Description := Generates [%Amount1%] minerals per star in the system each turn.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Solar Resource Generation - Organics
+Targets := SpaceVehicle, Planet, Component, Facility
+Description := Generates [%Amount1%] organigs per star in the system each turn.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Solar Resource Generation - Radioactives
+Targets := SpaceVehicle, Planet, Component, Facility
+Description := Generates [%Amount1%] radioactives per star in the system each turn.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Reduced Maintenance Cost - Sector
+Targets := Sector, Planet, Vehicle, Facility, Component
+Description := Maintenance rate is reduced by [%Amount1%]% for the entire sector.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Reduced Maintenance Cost - System
+Targets := StarSystem, Planet, Vehicle, Facility, Component
+Description := Maintenance rate is reduced by [%Amount1%]% for the entire system.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Reduced Maintenance Cost - Empire
+Targets := Empire, Planet, Vehicle, Facility, Component
+Description := Maintenance rate is reduced by [%Amount1%]% for the entire empire.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Shield Modifier - Sector
+Targets := Sector, Planet, Vehicle, Facility, Component
+Description := Modifies vehicles' maximum shield points by [%Amount1%] in this sector.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Shield Modifier - System
+Targets := StarSystem, Planet, Vehicle, Facility, Component
+Description := Modifies vehicles' maximum shield points by [%Amount1%] in this system.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Shield Modifier - Empire
+Targets := Empire, Planet, Vehicle, Facility, Component
+Description := Modifies vehicles' maximum shield points by [%Amount1%] throughout the empire.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Combat To Hit Offense Minus
+Targets := Vehicle, Planet, Facility, Component
+Description := Accuracy penalty of [%Amount1%].
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Combat To Hit Defense Minus
+Targets := Vehicle, Planet, Facility, Component
+Description := Evasion penalty of [%Amount1%].
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Generate Points Minerals
+Targets := Vehicle, Planet, Facility, Component
+Descriptiion := Generates [%Amount1%] minerals per turn.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Generate Points Organics
+Targets := Vehicle, Planet, Facility, Component
+Descriptiion := Generates [%Amount1%] organics per turn.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Generate Points Radioactives
+Targets := Vehicle, Planet, Facility, Component
+Descriptiion := Generates [%Amount1%] radioactives per turn.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Generate Points Research
+Targets := Vehicle, Planet, Facility, Component
+Descriptiion := Generates [%Amount1%] research points per turn.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Generate Points Intelligence
+Targets := Vehicle, Planet, Facility, Component
+Descriptiion := Generates [%Amount1%] intelligence points per turn.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Supply Cost
+Targets := Trait, Race, Empire
+Description := Vehicle supply usage is modified by [%Amount1%]%.
+Value 1 Rule := TakeLowest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := No Plagues
+Targets := Trait, Race
+Description := The race's population is immune to plagues.
+
+Name := Luck
+Targets := Trait, Race, Empire, Planet, Facility, Vehicle, Component
+Description := The chance of a bad random event occurring in this empire is changed by [%Amount1%].
+Value 1 Rule := Add
+Value 2 Rule := TakeLowest
+
+Name := No Spaceports
+Targets := Trait, Race, Planet
+Description := Colonies containing this race's population do not require spaceports to gather resources and points.
+
+Name := Vehicle Speed
+Targets := Trait, Race, Empire, Planet, Facility, Vehicle, Component
+Description := The speed of this empire's vehicles is modified by [%Amount1%].
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Galaxy Seen
+Targets := Trait, Race, Empire
+Description := The empire has prior knowledge of the entire galaxy at the start of the game.
+
+Name := Planet Storage Space
+Targets := Trait, Race, Empire, Planet, Facility
+Description := Colonies' facility, cargo, and population storage space is modified by [%Amount1%]%.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Planetary SY Rate
+Targets := Trait, Race, Empire, Planet
+Description := Planetary space yards' construction rate is modified by [%Amount1%]%.
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
+
+Name := Tech Area
+Targets := Trait, Race, Empire
+Description := Empire gains access to the [%Amount1%] racial tech.
+
+Name := Population Emotionless
+Targets := Trait, Race, Planet, Facility, Vehicle
+Description := Population does not grow angry or happy.
+
+Name := Breakthrough Chance
+Targets := Trait, Race, Empire, Planet, Facility, Vehicle, Component
+Description := The chance of a research breakthrough in this empire is modified by [%Amount1%].
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
