@@ -102,6 +102,7 @@ namespace FrEee.WinForms.Forms
 			logListBox.BackColor = Color.Black;
 			logListBox.ForeColor = Color.White;
 			logListBox.Dock = DockStyle.Fill;
+			logListBox.HorizontalScrollbar = true;
 			reportPanel.Controls.Add(logListBox);
 			foreach (var roundEvents in Battle.Events)
 			{
