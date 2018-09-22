@@ -293,7 +293,7 @@ Value 1 Group Rule := Add
 Value 2 Rule := Group
 
 Name := Mine Sweeping
-Targets := SpaceVehicle, Component
+Targets := SpaceVehicle, Component, Fleet
 Description := Can sweep [%Amount1%] mines per sector traversed.
 Value 1 Rule := Add
 Value 2 Rule := Add
