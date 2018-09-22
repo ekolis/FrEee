@@ -359,7 +359,8 @@ namespace FrEee.Game.Objects.Civilization
 			UnspentRate = Rate;
 			var empty = new ResourceQuantity();
 			var builtThisTurn = new HashSet<IConstructable>();
-			while (Orders.Any() && ResourceQuantity.Min(Owner.StoredResources, UpcomingSpending) > empty)
+			bool done = false;
+			while (!done && Orders.Any() && (Owner.StoredResources > empty || UpcomingSpending.IsEmpty))
 			{
 				var numOrders = Orders.Count;
 				var spentThisRound = new ResourceQuantity();
@@ -384,8 +385,8 @@ namespace FrEee.Game.Objects.Civilization
 						var oldProgress = new ResourceQuantity(order.Item?.ConstructionProgress);
 						order.Execute(this);
 						var newProgress = new ResourceQuantity(order.Item?.ConstructionProgress);
-						if (newProgress == oldProgress && order == Orders.Last())
-							break; // made no progress and nothing else to try and build
+						if (newProgress < (order.Item?.Cost ?? new ResourceQuantity()) && newProgress == oldProgress && order == Orders.Last())
+							done = true; // made no progress and nothing else to try and build
 						if (order.CheckCompletion(this))
 						{
 							// upgrade facility orders place their own facilities
@@ -420,8 +421,8 @@ namespace FrEee.Game.Objects.Civilization
 
 				didStuff = true;
 
-				if (Orders.Count == numOrders && !AreRepeatOrdersEnabled)
-					break; // couldn't accomplish any orders
+				if (!AreRepeatOrdersEnabled)
+					done = true;
 			}
 			foreach (var g in builtThisTurn.GroupBy(i => i.Template))
 			{
