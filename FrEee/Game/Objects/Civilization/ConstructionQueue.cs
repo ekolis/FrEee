@@ -188,7 +188,9 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				return Eta == null || Eta < 1 && !AreRepeatOrdersEnabled;
+				var unlockedHulls = Mod.Current.Hulls.OfType<IHull<IUnit>>().Where(h => h.IsUnlocked());
+				return (Eta == null || Eta < 1 && !AreRepeatOrdersEnabled)
+					&& (IsSpaceYardQueue || FacilitySlotsFree > 0 || unlockedHulls.Any() && unlockedHulls.Min(h => h.Size) <= CargoStorageFreeInSector);
 			}
 		}
 
