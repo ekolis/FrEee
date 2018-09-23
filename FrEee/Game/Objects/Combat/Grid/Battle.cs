@@ -545,7 +545,6 @@ namespace FrEee.Game.Objects.Combat.Grid
 		private void TryFireWeapon(ICombatant c, Component w, SafeDictionary<Component, double> reloads, SafeDictionary<ICombatant, IntVector2> locations, SafeDictionary<ICombatant, HashSet<ICombatant>> multiplex)
 		{
 			// find suitable targets in range
-
 			ICombatant target;
 			if (w.Template.ComponentTemplate.WeaponInfo.IsWarhead)
 			{
@@ -560,6 +559,21 @@ namespace FrEee.Game.Objects.Combat.Grid
 						return false;
 					var range = locations[c].DistanceToEightWay(locations[x]);
 					return range == 0;
+				}).FirstOrDefault();
+			}
+			else if (w.Template.ComponentTemplate.WeaponInfo.IsPointDefense)
+			{
+				// point defense weapons are unaffected by multiplex tracking limits
+				target = Combatants.Where(x =>
+				{
+					if (!x.IsAlive)
+						return false;
+					if (!x.Owner.IsEnemyOf(w.Owner, StarSystem))
+						return false;
+					if (!w.CanTarget(x))
+						return false;
+					var range = locations[c].DistanceToEightWay(locations[x]);
+					return range >= w.Template.WeaponMinRange && range <= w.Template.WeaponMaxRange;
 				}).FirstOrDefault();
 			}
 			else
