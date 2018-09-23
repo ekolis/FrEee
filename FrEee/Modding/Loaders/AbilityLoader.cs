@@ -63,7 +63,7 @@ namespace FrEee.Modding.Loaders
 					if (vfield == null)
 						break;
 					var val = vfield.CreateFormula<string>(abil);
-					abil.Values.Add(val.Value);
+					abil.Values.Add(val);
 				}
 
 				yield return abil;
