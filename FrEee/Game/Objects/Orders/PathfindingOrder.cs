@@ -47,7 +47,7 @@ namespace FrEee.Game.Objects.Orders
 
 		public Sector Destination
 		{
-			get { return KnownTarget.Sector; }
+			get { return KnownTarget?.Sector; }
 		}
 
 		public long ID { get; set; }
