@@ -189,6 +189,9 @@ namespace FrEee.WinForms.Forms
 				return;
 			}
 
+			// set it in reply to the incoming message (if any)
+			msg.InReplyTo = InReplyTo;
+
 			// create a command to send it
 			var cmd = new SendMessageCommand(msg);
 			Empire.Current.Commands.Add(cmd);
