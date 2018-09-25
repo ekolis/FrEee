@@ -1434,7 +1434,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns>The new ID.</returns>
 		public long AssignID(IReferrable r, long id = 0)
 		{
-			if (r.ID < 0)
+			if (r.ID < 0 || r.IsDisposed)
 			{
 				if (!r.IsDisposed)
 					r.Dispose();
@@ -1815,7 +1815,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			if (assignIDs)
 				CleanGameState();
-			foreach (var kvp in referrables.Where(kvp => kvp.Value.ID < 0).ToArray())
+			foreach (var kvp in referrables.Where(kvp => kvp.Value.IsDisposed).ToArray())
 				referrables.Remove(kvp);
 			Serializer.Serialize(this, stream);
 		}
@@ -1913,7 +1913,7 @@ namespace FrEee.Game.Objects.Space
 			}
 			else if (referrables.Values.Contains(r))
 				referrables.Remove(referrables.Single(kvp => kvp.Value == r));
-			r.ID = -1;
+			//r.ID = -1;
 		}
 
 		internal void SpaceObjectIDCheck(string when)

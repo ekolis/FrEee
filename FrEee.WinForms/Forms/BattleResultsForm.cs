@@ -67,14 +67,14 @@ namespace FrEee.WinForms.Forms
 			var combatants = Battle.Combatants;
 			foreach (var group in combatants.GroupBy(c => new CombatantInfo
 			{
-				Empire = Battle.OriginalOwners[c] ?? c.Owner,
+				Empire = Battle.StartCombatants.Single(c2 => c2.ID == c.ID).Owner,
 				HullIcon = GetHullIcon(c),
 				HullName = GetHullName(c),
 				HullSize = GetHullSize(c)
 			}))
 			{
 				var count = group.Count();
-				var hp = group.Sum(c => Battle.OriginalHitpoints[c]);
+				var hp = group.Sum(c => Battle.StartCombatants.Single(c2 => c2.ID == c.ID).Hitpoints);
 				var item = new
 				{
 					EmpireIcon = group.Key?.Empire?.Icon,
@@ -84,7 +84,7 @@ namespace FrEee.WinForms.Forms
 					HullSize = group.Key.HullSize,
 					StartCount = count,
 					StartHP = hp,
-					Losses = group.Count(c => c.IsDestroyed || Battle.OriginalOwners[c] != c.Owner), // destroyed or captured
+					Losses = group.Count(c => c.IsDestroyed || Battle.StartCombatants.Single(c2 => c2.ID == c.ID).Owner != c.Owner), // destroyed or captured
 					Damage = hp - group.Sum(c => c.Hitpoints),
 				};
 				data.Add(item);
@@ -144,9 +144,9 @@ namespace FrEee.WinForms.Forms
 		private void btnReplay_Click(object sender, EventArgs e)
 		{
 			Form form;
-			if (Battle is FrEee.Game.Objects.Combat.Simple.Battle b)
-				form = new LogForm(MainGameForm.Instance, b.Log);
-			else if (Battle is FrEee.Game.Objects.Combat.Grid.Battle b2)
+			//if (Battle is FrEee.Game.Objects.Combat.Simple.Battle b)
+			//	form = new LogForm(MainGameForm.Instance, b.Log);
+			if (Battle is FrEee.Game.Objects.Combat.Grid.Battle b2)
 				form = new BattleReplayForm(b2);
 			else
 				throw new Exception($"Unknown battle type {Battle.GetType()}!");

@@ -12,9 +12,9 @@ namespace FrEee.Game.Objects.Combat
 		PRNG Dice { get; set; }
 		IEnumerable<Empire> Empires { get; }
 		IList<LogMessage> Log { get; }
-		SafeDictionary<ICombatant, int> OriginalHitpoints { get; }
-		SafeDictionary<ICombatant, Empire> OriginalOwners { get; }
 		double Timestamp { get; }
+		ISet<ICombatant> StartCombatants { get; }
+		ISet<ICombatant> EndCombatants { get; }
 
 		void Resolve();
 	}
