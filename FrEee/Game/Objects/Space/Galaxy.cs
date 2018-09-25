@@ -1543,7 +1543,7 @@ namespace FrEee.Game.Objects.Space
 					{
 						try
 						{
-							coll.GetType().GetMethods().Single(m => m.Name == "Remove" && m.GetParameters().Length == 1 && m.GetParameters()[0].GetType().IsAssignableFrom(key.GetType())).Invoke(coll, new object[] { key });
+							coll.GetType().GetMethods().Single(m => m.Name == "Remove" && m.GetParameters().Length == 1 && m.GetParameters()[0].ParameterType.IsAssignableFrom(key.GetType())).Invoke(coll, new object[] { key });
 						}
 						catch (MissingMethodException ex)
 						{
