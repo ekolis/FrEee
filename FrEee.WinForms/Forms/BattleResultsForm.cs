@@ -77,8 +77,8 @@ namespace FrEee.WinForms.Forms
 				var hp = group.Sum(c => Battle.OriginalHitpoints[c]);
 				var item = new
 				{
-					EmpireIcon = group.Key.Empire.Icon,
-					EmpireName = group.Key.Empire.Name,
+					EmpireIcon = group.Key?.Empire?.Icon,
+					EmpireName = group.Key?.Empire?.Name,
 					HullIcon = group.Key.HullIcon,
 					HullName = group.Key.HullName,
 					HullSize = group.Key.HullSize,

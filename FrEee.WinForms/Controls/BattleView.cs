@@ -232,7 +232,7 @@ namespace FrEee.WinForms.Controls
 								var largest = here.OfType<Troop>().WithMax(t => t.Hull.Size).First();
 								pic = largest.Icon.Resize(drawsize);
 								if (useSquares)
-									pe.Graphics.FillRectangle(new SolidBrush(largest.Owner.Color), drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
+									pe.Graphics.FillRectangle(new SolidBrush(largest.Owner?.Color ?? Color.White), drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
 								else
 									pe.Graphics.DrawImage(pic, drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
 							}
@@ -240,7 +240,7 @@ namespace FrEee.WinForms.Controls
 							if (here.OfType<Seeker>().Any())
 							{
 								// TODO - draw seeker icons
-								pe.Graphics.FillEllipse(new SolidBrush(here.OfType<Seeker>().First().Owner.Color), drawx - drawsize / 4f, drawy - drawsize / 4f, drawsize / 2f, drawsize / 2f);
+								pe.Graphics.FillEllipse(new SolidBrush(here.OfType<Seeker>().First().Owner?.Color ?? Color.White), drawx - drawsize / 4f, drawy - drawsize / 4f, drawsize / 2f, drawsize / 2f);
 							}
 
 							// TODO - draw owner flag?
