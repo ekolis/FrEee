@@ -1559,7 +1559,7 @@ namespace FrEee.Game.Objects.Space
 					StarSystemLocations.Remove(l);
 				else
 				{
-					foreach (var l2 in l.Item.SpaceObjectLocations)
+					foreach (var l2 in l.Item.SpaceObjectLocations.ToArray())
 					{
 						if (l2.Item == null)
 							l.Item.SpaceObjectLocations.Remove(l2);
