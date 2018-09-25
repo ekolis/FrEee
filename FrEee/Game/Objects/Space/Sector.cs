@@ -166,7 +166,7 @@ namespace FrEee.Game.Objects.Space
 				if (Empire.Current == null)
 					result = result.Where(x => !x.IsMemory);
 
-				return result.ToArray();
+				return result.ExceptSingle(null).ToArray();
 			}
 		}
 

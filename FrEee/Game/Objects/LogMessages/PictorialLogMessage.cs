@@ -30,7 +30,7 @@ namespace FrEee.Game.Objects.LogMessages
 
 		public override Image Picture
 		{
-			get { return Context.Portrait; }
+			get { return Context?.Portrait; }
 		}
 	}
 }
