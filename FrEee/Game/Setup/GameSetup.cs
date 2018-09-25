@@ -258,7 +258,7 @@ namespace FrEee.Game.Setup
 		{
 			gal.Name = GameName;
 
-			gal.AssignIDs();
+			gal.CleanGameState();
 
 			// remove forbidden techs
 			foreach (var tname in ForbiddenTechnologyNames)
@@ -453,7 +453,7 @@ namespace FrEee.Game.Setup
 			}
 
 			// give empire starting techs
-			Galaxy.Current.AssignIDs(); // need to know what the techs in the game are!
+			Galaxy.Current.CleanGameState(); // need to know what the techs in the game are!
 			foreach (var tech in Galaxy.Current.Referrables.OfType<Technology>())
 			{
 				switch (StartingTechnologyLevel)

@@ -16,6 +16,7 @@ using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -1468,16 +1469,21 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
-		/// Assigns IDs to referrable objects in the galaxy.
+		/// Assigns IDs to referrable objects in the galaxy and purges disposed objects.
 		/// Doesn't assign IDs to objects via DoNotAssignID properties, or to memories (or sub-objects of them).
 		/// </summary>
-		public void AssignIDs()
+		public void CleanGameState()
 		{
 			var parser = new ObjectGraphParser();
 			bool canAssign = true;
 			parser.Property += (pname, o, val) =>
 			{
 				var prop = o.GetType().FindProperty(pname);
+				if (o.GetPropertyValue("IsDisposed") == (object)true)
+				{
+					prop.SetValue(o, null);
+					return false; // no recursion!
+				}
 				var isMemory = val is IFoggable && (val as IFoggable).IsMemory;
 				canAssign = !prop.HasAttribute<DoNotAssignIDAttribute>() && !isMemory;
 				if (isMemory)
@@ -1487,12 +1493,58 @@ namespace FrEee.Game.Objects.Space
 				else
 					return true;
 			};
+			var colls = new List<IEnumerable>();
 			parser.StartObject += o =>
 			{
 				if (o is IReferrable && canAssign)
 				{
 					var r = (IReferrable)o;
 					AssignID(r);
+				}
+				if (o is IEnumerable)
+				{
+					colls.Add((IEnumerable)o);
+				}
+			};
+			parser.EndObject += o =>
+			{
+				if (o is IEnumerable)
+				{
+					colls.Remove((IEnumerable)o);
+				}
+			};
+			parser.Item += (o) =>
+			{
+				// TODO - cache lambda expressions?
+				if (o == null)
+					return;
+				var coll = colls.Last();
+				if (o.GetPropertyValue("IsDisposed") == (object)true)
+				{
+					try
+					{
+						coll.GetType().GetMethod("Remove").Invoke(coll, new object[] { o });
+					}
+					catch (MissingMethodException ex)
+					{
+
+					}
+				}
+				if (o.GetType().IsGenericType && o.GetType().GetGenericTypeDefinition() == typeof(KeyValuePair<,>))
+				{
+					var key = o.GetPropertyValue("Key");
+					var val = o.GetPropertyValue("Value");
+					if (key.GetPropertyValue("IsDisposed") == (object)true || val.GetPropertyValue("IsDisposed") == (object)true)
+					{
+						try
+						{
+							coll.GetType().GetMethod("Remove").Invoke(coll, new object[] { o });
+						}
+						catch (MissingMethodException ex)
+						{
+
+						}
+					}
 				}
 			};
 			parser.Parse(this);
@@ -1744,7 +1796,7 @@ namespace FrEee.Game.Objects.Space
 		public void Save(Stream stream, bool assignIDs = true)
 		{
 			if (assignIDs)
-				AssignIDs();
+				CleanGameState();
 			foreach (var kvp in referrables.Where(kvp => kvp.Value.ID < 0).ToArray())
 				referrables.Remove(kvp);
 			Serializer.Serialize(this, stream);
@@ -1759,7 +1811,7 @@ namespace FrEee.Game.Objects.Space
 		public string Save(bool assignIDs = true)
 		{
 			if (assignIDs)
-				AssignIDs();
+				CleanGameState();
 			foreach (var kvp in referrables.Where(kvp => kvp.Value.ID < 0).ToArray())
 				referrables.Remove(kvp);
 			string filename;
@@ -1784,7 +1836,7 @@ namespace FrEee.Game.Objects.Space
 		/// <exception cref="InvalidOperationException">if there is no current empire.</exception>
 		public string SaveCommands()
 		{
-			AssignIDs();
+			CleanGameState();
 			if (CurrentEmpire == null)
 				throw new InvalidOperationException("Can't save commands without a current empire.");
 			foreach (var c in Empire.Current.Commands.OfType<SetPlayerInfoCommand>().ToArray())
@@ -1806,7 +1858,7 @@ namespace FrEee.Game.Objects.Space
 		public string SaveToString(bool assignIDs = true)
 		{
 			if (assignIDs)
-				AssignIDs();
+				CleanGameState();
 			return Serializer.SerializeToString(this);
 		}
 
