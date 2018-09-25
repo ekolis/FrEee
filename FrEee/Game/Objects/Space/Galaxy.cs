@@ -1476,6 +1476,11 @@ namespace FrEee.Game.Objects.Space
 		{
 			var parser = new ObjectGraphParser();
 			bool canAssign = true;
+			foreach (var kvp in referrables.ToArray())
+			{
+				if (kvp.Value.IsDisposed)
+					referrables.Remove(kvp.Key);
+			}
 			parser.Property += (pname, o, val) =>
 			{
 				var prop = o.GetType().FindProperty(pname);
