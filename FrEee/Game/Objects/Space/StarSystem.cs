@@ -297,7 +297,7 @@ namespace FrEee.Game.Objects.Space
 
 		public IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp)
 		{
-			return SpaceObjectLocations.Select(l => l.Item).Where(sobj => sobj.Owner == emp).OfType<IAbilityObject>();
+			return SpaceObjectLocations.Select(l => l.Item).Where(sobj => sobj?.Owner == emp).OfType<IAbilityObject>();
 		}
 
 		public Sector GetSector(int x, int y)
