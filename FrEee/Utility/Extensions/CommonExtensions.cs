@@ -424,6 +424,10 @@ namespace FrEee.Utility.Extensions
 
 		public static T FindMemory<T>(this T f, Empire emp) where T : IFoggable
 		{
+			if (f == null)
+				return default(T);
+			if (emp == null)
+				return f; // host can see everything
 			return (T)emp.Memory[f.ID];
 		}
 
