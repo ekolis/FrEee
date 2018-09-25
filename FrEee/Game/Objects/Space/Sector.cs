@@ -234,7 +234,7 @@ namespace FrEee.Game.Objects.Space
 
 		public IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp)
 		{
-			return SpaceObjects.Where(sobj => sobj.Owner == emp).OfType<IAbilityObject>();
+			return SpaceObjects.Where(sobj => sobj?.Owner == emp).OfType<IAbilityObject>();
 		}
 
 		public override int GetHashCode()

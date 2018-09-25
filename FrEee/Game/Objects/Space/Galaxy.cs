@@ -1479,7 +1479,7 @@ namespace FrEee.Game.Objects.Space
 			parser.Property += (pname, o, val) =>
 			{
 				var prop = o.GetType().FindProperty(pname);
-				if (o.GetPropertyValue("IsDisposed") == (object)true)
+				if (prop.SetMethod != null && val.GetPropertyValue("IsDisposed") is bool b && b)
 				{
 					prop.SetValue(o, null);
 					return false; // no recursion!
@@ -1519,7 +1519,7 @@ namespace FrEee.Game.Objects.Space
 				if (o == null)
 					return;
 				var coll = colls.Last();
-				if (o.GetPropertyValue("IsDisposed") == (object)true)
+				if (o.GetPropertyValue("IsDisposed") is bool b && b)
 				{
 					try
 					{
@@ -1527,22 +1527,22 @@ namespace FrEee.Game.Objects.Space
 					}
 					catch (MissingMethodException ex)
 					{
-
+						Console.Error.WriteLine($"Unable to purge disposed object {o}: {ex.Message}.");
 					}
 				}
 				if (o.GetType().IsGenericType && o.GetType().GetGenericTypeDefinition() == typeof(KeyValuePair<,>))
 				{
 					var key = o.GetPropertyValue("Key");
 					var val = o.GetPropertyValue("Value");
-					if (key.GetPropertyValue("IsDisposed") == (object)true || val.GetPropertyValue("IsDisposed") == (object)true)
+					if (key.GetPropertyValue("IsDisposed") is bool b1 && b1 || val.GetPropertyValue("IsDisposed") is bool b2 && b2)
 					{
 						try
 						{
-							coll.GetType().GetMethod("Remove").Invoke(coll, new object[] { o });
+							coll.GetType().GetMethod("Remove").Invoke(coll, new object[] { key });
 						}
 						catch (MissingMethodException ex)
 						{
-
+							Console.Error.WriteLine($"Unable to purge disposed object {o}: {ex.Message}.");
 						}
 					}
 				}
