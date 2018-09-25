@@ -1482,35 +1482,35 @@ namespace FrEee.Game.Objects.Space
 					referrables.Remove(kvp.Key);
 			}
 			parser.Property += (pname, o, val) =>
-			{
-				var prop = o.GetType().FindProperty(pname);
-				if (prop.SetMethod != null && val.GetPropertyValue("IsDisposed") is bool b && b)
 				{
-					prop.SetValue(o, null);
-					return false; // no recursion!
-				}
-				var isMemory = val is IFoggable && (val as IFoggable).IsMemory;
-				canAssign = !prop.HasAttribute<DoNotAssignIDAttribute>() && !isMemory;
-				if (isMemory)
-					return false; // no recursion!
-				if (prop.GetAttributes<DoNotAssignIDAttribute>().Any(a => a.Recurse))
-					return false; // no recursion!
-				else
-					return true;
-			};
+					var prop = o.GetType().FindProperty(pname);
+					if (prop.SetMethod != null && val.GetPropertyValue("IsDisposed") is bool b && b)
+					{
+						prop.SetValue(o, null);
+						return false; // no recursion!
+					}
+					var isMemory = val is IFoggable && (val as IFoggable).IsMemory;
+					canAssign = !prop.HasAttribute<DoNotAssignIDAttribute>() && !isMemory;
+					if (isMemory)
+						return false; // no recursion!
+					if (prop.GetAttributes<DoNotAssignIDAttribute>().Any(a => a.Recurse))
+						return false; // no recursion!
+					else
+						return true;
+				};
 			var colls = new List<IEnumerable>();
 			parser.StartObject += o =>
-			{
-				if (o is IReferrable && canAssign)
-				{
-					var r = (IReferrable)o;
-					AssignID(r);
-				}
-				if (o is IEnumerable)
-				{
-					colls.Add((IEnumerable)o);
-				}
-			};
+						{
+							if (o is IReferrable && canAssign)
+							{
+								var r = (IReferrable)o;
+								AssignID(r);
+							}
+							if (o is IEnumerable)
+							{
+								colls.Add((IEnumerable)o);
+							}
+						};
 			parser.EndObject += o =>
 			{
 				if (o is IEnumerable)
@@ -1553,6 +1553,19 @@ namespace FrEee.Game.Objects.Space
 				}
 			};
 			parser.Parse(this);
+			foreach (var l in StarSystemLocations.ToArray())
+			{
+				if (l.Item == null)
+					StarSystemLocations.Remove(l);
+				else
+				{
+					foreach (var l2 in l.Item.SpaceObjectLocations)
+					{
+						if (l2.Item == null)
+							l.Item.SpaceObjectLocations.Remove(l2);
+					}
+				}
+			}
 		}
 
 		public void ComputeNextTickSize()
