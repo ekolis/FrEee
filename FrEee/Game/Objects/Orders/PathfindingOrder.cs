@@ -71,7 +71,7 @@ namespace FrEee.Game.Objects.Orders
 					return null;
 				if (Target.CheckVisibility(Owner) >= Visibility.Visible)
 					return Target;
-				return Owner.Recall(Target);
+				return Owner?.Recall(Target);
 			}
 		}
 
