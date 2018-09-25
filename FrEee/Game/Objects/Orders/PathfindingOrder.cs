@@ -97,7 +97,7 @@ namespace FrEee.Game.Objects.Orders
 		/// The target we are pursuing.
 		/// </summary>
 		[DoNotSerialize]
-		public ISpaceObject Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
+		public ISpaceObject Target { get { return target?.Value; } set { target = value.ReferViaGalaxy(); } }
 
 		/// <summary>
 		/// A verb used to describe this order.
