@@ -131,7 +131,7 @@ namespace FrEee.Tests.Game.Objects.Space
 			submarine.Sector = here.GetSector(0, 0);
 
 			// register objects
-			Galaxy.Current.AssignIDs();
+			Galaxy.Current.CleanGameState();
 		}
 
 		private void HideSubmarine()

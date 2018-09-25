@@ -631,6 +631,8 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static object GetPropertyValue(this object o, string propertyName)
 		{
+			if (o == null)
+				return null;
 			var prop = o.GetType().GetProperty(propertyName);
 			if (prop == null)
 				return null;
