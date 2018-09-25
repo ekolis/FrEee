@@ -160,7 +160,6 @@
     <Compile Include="Game\Objects\Combat\Grid\IBattleEvent.cs" />
     <Compile Include="Game\Objects\Combat\Grid\CombatantMovesEvent.cs" />
     <Compile Include="Game\Objects\Combat\Grid\WeaponFiresEvent.cs" />
-    <Compile Include="Game\Objects\Combat\Simple\Battle.cs" />
     <Compile Include="Game\Objects\Combat\IBattle.cs" />
     <Compile Include="Game\Objects\Combat\Seeker.cs" />
     <Compile Include="Game\Objects\Events\EventMessage.cs" />
@@ -539,6 +538,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Game\Objects\Combat\Simple\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

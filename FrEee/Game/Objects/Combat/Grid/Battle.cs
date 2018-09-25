@@ -49,6 +49,30 @@ namespace FrEee.Game.Objects.Combat.Grid
 		public ISet<ICombatant> Combatants { get; protected set; }
 
 		/// <summary>
+		/// Copies of the combatants from the start of the battle.
+		/// </summary>
+		public ISet<ICombatant> StartCombatants { get; private set; } = new HashSet<ICombatant>();
+
+		/// <summary>
+		/// Copies of the combatants from the end of the battle.
+		/// </summary>
+		public ISet<ICombatant> EndCombatants { get; private set; } = new HashSet<ICombatant>();
+
+		/// <summary>
+		/// Starting HP of all combatants.
+		/// </summary>
+		[Obsolete("OriginalHitpoints is obsolete, use StartCombatants.")]
+		// TODO - remove after games are over
+		public SafeDictionary<ICombatant, int> OriginalHitpoints { get; private set; } = new SafeDictionary<ICombatant, int>();
+
+		/// <summary>
+		/// Who originally owned each combatant?
+		/// </summary>
+		[Obsolete("OriginalOwners is obsolete, use StartCombatants.")]
+		// TODO - remove after games are over
+		public SafeDictionary<ICombatant, Empire> OriginalOwners { get; private set; } = new SafeDictionary<ICombatant, Empire>();
+
+		/// <summary>
 		/// Saved-up fractional combat speed from the previous round.
 		/// </summary>
 		/// TODO - enable DoNotSerialize for this property after the current game
@@ -107,16 +131,6 @@ namespace FrEee.Game.Objects.Combat.Grid
 		/// </summary>
 		public abstract string Name { get; }
 
-		/// <summary>
-		/// Starting HP of all combatants.
-		/// </summary>
-		public SafeDictionary<ICombatant, int> OriginalHitpoints { get; private set; } = new SafeDictionary<ICombatant, int>();
-
-		/// <summary>
-		/// Who originally owned each combatant?
-		/// </summary>
-		public SafeDictionary<ICombatant, Empire> OriginalOwners { get; private set; } = new SafeDictionary<ICombatant, Empire>();
-
 		public System.Drawing.Image Portrait
 		{
 			get { return Combatants.OfType<ISpaceObject>().Largest()?.Portrait; }
@@ -152,12 +166,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 		public virtual void Initialize(IEnumerable<ICombatant> combatants)
 		{
 			Combatants = combatants.ToHashSet();
-
-			foreach (var c in Combatants)
-			{
-				OriginalHitpoints[c] = c.Hitpoints;
-				OriginalOwners[c] = c.Owner;
-			}
+			StartCombatants = combatants.Select(c => c.Copy()).ToHashSet();
 		}
 
 		public abstract void PlaceCombatants(SafeDictionary<ICombatant, IntVector2> locations);
@@ -384,6 +393,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 					foreach (var info in unitsToLaunch)
 					{
 						Combatants.Add(info.Item2);
+						StartCombatants.Add(info.Item2.Copy());
 						locations[info.Launchee] = new IntVector2(locations[info.Launcher]);
 						Events.Last().Add(new CombatantLaunchedEvent(info.Launcher, info.Launchee, locations[info.Launchee]));
 					}
@@ -486,6 +496,11 @@ namespace FrEee.Game.Objects.Combat.Grid
 				if (!hostile)
 					break;
 			}
+
+			// save state of combatants at end of battle - set to undisposed so they don't get purged!
+			EndCombatants = Combatants.Select(x => x.Copy()).ToHashSet();
+			foreach (var c in EndCombatants)
+				c.IsDisposed = false;
 
 			// validate fleets since some ships might have died
 			foreach (var fleet in Sector.SpaceObjects.OfType<Fleet>())
@@ -603,6 +618,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 				{
 					var seeker = new Seeker(this, w.Owner, c, w, target);
 					Combatants.Add(seeker);
+					StartCombatants.Add(seeker.Copy());
 					locations[seeker] = new IntVector2(locations[c]);
 					Events.Last().Add(new CombatantLaunchedEvent(c, seeker, locations[seeker]));
 				}
@@ -675,8 +691,10 @@ namespace FrEee.Game.Objects.Combat.Grid
 			CombatSpeedBuffer.Clear();
 			Events.Clear();
 			LowerRight.Clear();
-			OriginalHitpoints.Clear();
-			OriginalOwners.Clear();
+			if (StartCombatants != null)
+				StartCombatants.Clear();
+			if (EndCombatants != null)
+				EndCombatants.Clear();
 			UpperLeft.Clear();
 		}
 	}
