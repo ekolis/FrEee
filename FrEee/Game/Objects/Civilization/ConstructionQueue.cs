@@ -199,10 +199,12 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				return Container.IsMemory;
+				return Container?.IsMemory ?? true;
 			}
 			set
 			{
+				if (Container == null)
+					return;
 				Container.IsMemory = value;
 			}
 		}
