@@ -634,55 +634,60 @@ namespace FrEee.Game.Objects.Combat.Grid
 			// fire!
 			while (reloads[w] <= 0)
 			{
-				if (w.Template.ComponentTemplate.WeaponType == WeaponTypes.Seeking || w.Template.ComponentTemplate.WeaponType == WeaponTypes.SeekingPointDefense)
+				if (w.BurnSupplies())
 				{
-					var seeker = new Seeker(Sector, w.Owner, c, w, target);
-					Galaxy.Current.AssignID(seeker);
-					Combatants.Add(seeker);
-					StartCombatants[seeker.ID] = seeker.Copy();
-					locations[seeker] = new IntVector2(locations[c]);
-					Events.Last().Add(new CombatantLaunchedEvent(this, c, seeker, locations[seeker]));
-				}
-				else
-				{
-					// fire
-					int dmg = 0;
-					var winfo = w.Template.ComponentTemplate.WeaponInfo;
-					var minrng = w.Template.WeaponMinRange;
-					var maxrng = w.Template.WeaponMinRange;
-					var range = locations[c].DistanceToEightWay(locations[target]);
-					var shot = new Shot(c, w, target, range);
-					bool wasArmed = target is Seeker || target.Weapons.Any();
-					if (w.Template.ComponentTemplate.WeaponInfo.IsWarhead || shot.RollAccuracy(Dice))
+					if (w.Template.ComponentTemplate.WeaponType == WeaponTypes.Seeking || w.Template.ComponentTemplate.WeaponType == WeaponTypes.SeekingPointDefense)
 					{
-						dmg += shot.FullDamage;
-						Hit hit;
-						if (w.Template.ComponentTemplate.WeaponInfo.IsWarhead)
-						{
-							hit = new Hit(shot, target, w.Template.GetWeaponDamage(range) * Mod.Current.Settings.RammingSourceHitpointsDamagePercent / 100);
-							// warheads have a damage modifer
-							target.TakeDamage(hit);
-							// warheads damage the firing ship too
-							c.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range) * Mod.Current.Settings.RammingTargetHitpointsDamagePercent / 100));
-							// warheads destroy themselves on activation
-							w.Hitpoints = 0;
-						}
-						else
-						{
-							hit = new Hit(shot, target, w.Template.GetWeaponDamage(range));
-							target.TakeDamage(hit);
-						}
-						bool isArmed = target is Seeker || target.Weapons.Any();
-						Events.Last().Add(new WeaponFiresEvent(this, c, locations[c], target, locations[target], w, hit, wasArmed && !isArmed));
+						var seeker = new Seeker(Sector, w.Owner, c, w, target);
+						Galaxy.Current.AssignID(seeker);
+						Combatants.Add(seeker);
+						StartCombatants[seeker.ID] = seeker.Copy();
+						locations[seeker] = new IntVector2(locations[c]);
+						Events.Last().Add(new CombatantLaunchedEvent(this, c, seeker, locations[seeker]));
 					}
 					else
 					{
-						bool isArmed = target is Seeker || target.Weapons.Any();
-						Events.Last().Add(new WeaponFiresEvent(this, c, locations[c], target, locations[target], w, null, wasArmed && !isArmed));
+						// fire
+						int dmg = 0;
+						var winfo = w.Template.ComponentTemplate.WeaponInfo;
+						var minrng = w.Template.WeaponMinRange;
+						var maxrng = w.Template.WeaponMinRange;
+						var range = locations[c].DistanceToEightWay(locations[target]);
+						var shot = new Shot(c, w, target, range);
+						bool wasArmed = target is Seeker || target.Weapons.Any();
+						if (w.Template.ComponentTemplate.WeaponInfo.IsWarhead || shot.RollAccuracy(Dice))
+						{
+							dmg += shot.FullDamage;
+							Hit hit;
+							if (w.Template.ComponentTemplate.WeaponInfo.IsWarhead)
+							{
+								hit = new Hit(shot, target, w.Template.GetWeaponDamage(range) * Mod.Current.Settings.RammingSourceHitpointsDamagePercent / 100);
+								// warheads have a damage modifer
+								target.TakeDamage(hit);
+								// warheads damage the firing ship too
+								c.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range) * Mod.Current.Settings.RammingTargetHitpointsDamagePercent / 100));
+								// warheads destroy themselves on activation
+								w.Hitpoints = 0;
+							}
+							else
+							{
+								hit = new Hit(shot, target, w.Template.GetWeaponDamage(range));
+								target.TakeDamage(hit);
+							}
+							bool isArmed = target is Seeker || target.Weapons.Any();
+							Events.Last().Add(new WeaponFiresEvent(this, c, locations[c], target, locations[target], w, hit, wasArmed && !isArmed));
+						}
+						else
+						{
+							bool isArmed = target is Seeker || target.Weapons.Any();
+							Events.Last().Add(new WeaponFiresEvent(this, c, locations[c], target, locations[target], w, null, wasArmed && !isArmed));
+						}
 					}
+					// TODO - mounts that affect reload rate?
+					reloads[w] += w.Template.ComponentTemplate.WeaponInfo.ReloadRate.Evaluate(w.Template);
 				}
-				// TODO - mounts that affect reload rate?
-				reloads[w] += w.Template.ComponentTemplate.WeaponInfo.ReloadRate.Evaluate(w.Template);
+				else
+					break;
 			}
 
 			if (target.IsDestroyed)
