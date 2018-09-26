@@ -249,17 +249,19 @@ namespace FrEee.Game.Objects.Vehicles
 				if (thrust < Design.Hull.ThrustPerMove)
 					return 0;
 
-				// gotta go slow if you don't have supplies!
-				if (!HasInfiniteSupplies && SupplyStorage < EngineSupplyBurnRate)
-					return 1;
-
 				// take into account base speed plus all bonuses
-				return
+				var spd =
 					thrust / Design.Hull.ThrustPerMove
 					+ this.GetAbilityValue("Movement Bonus").ToInt()
 					+ this.GetAbilityValue("Extra Movement Generation").ToInt()
 					+ this.GetAbilityValue("Vehicle Speed").ToInt()
 					+ EmergencySpeed;
+
+				// gotta go slow if you don't have supplies to move!
+				if (spd > 1 && !HasInfiniteSupplies && SupplyRemaining < EngineSupplyBurnRate)
+					return 1;
+
+				return spd;
 			}
 		}
 
