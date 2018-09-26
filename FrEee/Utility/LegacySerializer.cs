@@ -613,7 +613,8 @@ namespace FrEee.Utility
 				}
 				if (props.ContainsKey(pname))
 				{
-					var prop = props[pname];
+					// TODO - get base class recursively, not just derived class and declaring type
+					var prop = type.GetProperty(pname) ?? props[pname]; // get concrete type property in case it has DoNotSerialize and the abstract type doesn't
 					if (prop != null)
 					{
 						var data = Deserialize(r, prop.PropertyType, false, context, log);
