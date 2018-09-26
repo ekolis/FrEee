@@ -3,17 +3,12 @@ using FrEee.Utility;
 
 namespace FrEee.Game.Objects.Combat.Grid
 {
-	public class CombatantDestroyedEvent : IBattleEvent
+	public class CombatantDestroyedEvent : BattleEvent
 	{
-		public CombatantDestroyedEvent(ICombatant combatant, IntVector2 position)
+		public CombatantDestroyedEvent(IBattle battle, ICombatant combatant, IntVector2 position)
+			: base(battle, combatant, position, position)
 		{
-			Combatant = combatant;
-			StartPosition = EndPosition = position;
 		}
 
-		public ICombatant Combatant { get; set; }
-
-		public IntVector2 EndPosition { get; set; }
-		public IntVector2 StartPosition { get; set; }
 	}
 }

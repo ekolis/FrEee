@@ -54,6 +54,11 @@ namespace FrEee.Game.Objects.Combat.Grid
 		public IDictionary<long, ICombatant> StartCombatants { get; private set; } = new SafeDictionary<long, ICombatant>();
 
 		/// <summary>
+		/// Copies of the weapons from the start of the battle.
+		/// </summary>
+		public IDictionary<long, Component> StartWeapons { get; private set; } = new SafeDictionary<long, Component>();
+
+		/// <summary>
 		/// Copies of the combatants from the end of the battle.
 		/// </summary>
 		public IDictionary<long, ICombatant> EndCombatants { get; private set; } = new SafeDictionary<long, ICombatant>();
@@ -167,6 +172,15 @@ namespace FrEee.Game.Objects.Combat.Grid
 		{
 			Combatants = combatants.ToHashSet();
 			StartCombatants = combatants.Select(c => new { ID = c.ID, Copy = c.Copy() }).ToDictionary(q => q.ID, q => q.Copy);
+			foreach (var c in Combatants)
+			{
+				for (var i = 0; i < c.Weapons.Count(); i++)
+				{
+					var w = c.Weapons.ElementAt(i);
+					var wc = StartCombatants[c.ID].Weapons.ElementAt(i);
+					StartWeapons[w.ID] = wc;
+				}
+			}
 		}
 
 		public abstract void PlaceCombatants(SafeDictionary<ICombatant, IntVector2> locations);
@@ -216,7 +230,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 				{
 					// first round, all combatants appear
 					foreach (var c in Combatants)
-						Events.Last().Add(new CombatantAppearsEvent(c, locations[c]));
+						Events.Last().Add(new CombatantAppearsEvent(this, c, locations[c]));
 				}
 
 				var turnorder = alives.OrderBy(x => x is Seeker ? 1 : 0).ThenBy(x => combatSpeeds[x]).ThenShuffle(Dice).ToArray();
@@ -240,7 +254,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 						if (locations[s.Target] == null)
 						{
 							s.Hitpoints = 0; // seekers self destruct when their target is destroyed
-							Events.Last().Add(new CombatantDestroyedEvent(s, locations[s]));
+							Events.Last().Add(new CombatantDestroyedEvent(this, s, locations[s]));
 							continue;
 						}
 						s.DistanceTraveled += Math.Min(GetCombatSpeedThisRound(c), locations[s].DistanceToEightWay(locations[s.Target]));
@@ -248,7 +262,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 						if (s.DistanceTraveled > s.WeaponInfo.MaxRange)
 						{
 							s.Hitpoints = 0;
-							Events.Last().Add(new CombatantDestroyedEvent(s, locations[s]));
+							Events.Last().Add(new CombatantDestroyedEvent(this, s, locations[s]));
 						}
 					}
 					else
@@ -357,7 +371,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 					}
 				gotosAreVeryEvil:
 					if (locations[c] != oldpos)
-						Events.Last().Add(new CombatantMovesEvent(c, oldpos, locations[c]));
+						Events.Last().Add(new CombatantMovesEvent(this, c, oldpos, locations[c]));
 				}
 
 				UpdateBounds(i, locations.Values);
@@ -394,8 +408,14 @@ namespace FrEee.Game.Objects.Combat.Grid
 					{
 						Combatants.Add(info.Item2);
 						StartCombatants[info.Item2.ID] = info.Item2.Copy();
+						for (var ix = 0; ix < info.Item2.Weapons.Count(); ix++)
+						{
+							var w = info.Item2.Weapons.ElementAt(ix);
+							var wc = StartCombatants[info.Item2.ID].Weapons.ElementAt(ix);
+							StartWeapons[w.ID] = wc;
+						}
 						locations[info.Launchee] = new IntVector2(locations[info.Launcher]);
-						Events.Last().Add(new CombatantLaunchedEvent(info.Launcher, info.Launchee, locations[info.Launchee]));
+						Events.Last().Add(new CombatantLaunchedEvent(this, info.Launcher, info.Launchee, locations[info.Launchee]));
 					}
 				}
 
@@ -544,14 +564,14 @@ namespace FrEee.Game.Objects.Combat.Grid
 				bool wasArmed = s.Target is Seeker || s.Target.Weapons.Any();
 				s.Target.TakeDamage(hit, Dice);
 				bool isArmed = s.Target is Seeker || s.Target.Weapons.Any();
-				Events.Last().Add(new CombatantsCollideEvent(s, s.Target, locations[s.Target], s.Hitpoints, hit.NominalDamage, false, wasArmed && !isArmed));
+				Events.Last().Add(new CombatantsCollideEvent(this, s, s.Target, locations[s.Target], s.Hitpoints, hit.NominalDamage, false, wasArmed && !isArmed));
 				s.Hitpoints = 0;
-				Events.Last().Add(new CombatantDestroyedEvent(s, locations[s]));
+				Events.Last().Add(new CombatantDestroyedEvent(this, s, locations[s]));
 				locations.Remove(s);
 				if (s.Target.IsDestroyed)
 				{
 					var loc = locations[s.Target];
-					Events.Last().Add(new CombatantDestroyedEvent(s.Target, locations[s.Target]));
+					Events.Last().Add(new CombatantDestroyedEvent(this, s.Target, locations[s.Target]));
 					locations.Remove(s.Target);
 				}
 			}
@@ -621,7 +641,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 					Combatants.Add(seeker);
 					StartCombatants[seeker.ID] = seeker.Copy();
 					locations[seeker] = new IntVector2(locations[c]);
-					Events.Last().Add(new CombatantLaunchedEvent(c, seeker, locations[seeker]));
+					Events.Last().Add(new CombatantLaunchedEvent(this, c, seeker, locations[seeker]));
 				}
 				else
 				{
@@ -653,12 +673,12 @@ namespace FrEee.Game.Objects.Combat.Grid
 							target.TakeDamage(hit);
 						}
 						bool isArmed = target is Seeker || target.Weapons.Any();
-						Events.Last().Add(new WeaponFiresEvent(c, locations[c], target, locations[target], w, hit, wasArmed && !isArmed));
+						Events.Last().Add(new WeaponFiresEvent(this, c, locations[c], target, locations[target], w, hit, wasArmed && !isArmed));
 					}
 					else
 					{
 						bool isArmed = target is Seeker || target.Weapons.Any();
-						Events.Last().Add(new WeaponFiresEvent(c, locations[c], target, locations[target], w, null, wasArmed && !isArmed));
+						Events.Last().Add(new WeaponFiresEvent(this, c, locations[c], target, locations[target], w, null, wasArmed && !isArmed));
 					}
 				}
 				// TODO - mounts that affect reload rate?
@@ -667,7 +687,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 			if (target.IsDestroyed)
 			{
-				Events.Last().Add(new CombatantDestroyedEvent(target, locations[target]));
+				Events.Last().Add(new CombatantDestroyedEvent(this, target, locations[target]));
 				locations.Remove(target);
 			}
 		}
