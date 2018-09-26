@@ -14,6 +14,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 		private GalaxyReference<ICombatant> launcher { get; set; }
 
+		[DoNotSerialize]
 		public ICombatant Launcher
 		{
 			get => launcher?.Value ?? Battle?.StartCombatants?[launcher.ID];
