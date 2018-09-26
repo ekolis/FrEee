@@ -24,14 +24,15 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 		private GalaxyReference<ICombatant> combatant { get; set; }
 
+		[DoNotSerialize]
 		public ICombatant Combatant
 		{
 			get => combatant?.Value ?? Battle?.StartCombatants?[combatant.ID];
 			set => combatant = value.ReferViaGalaxy();
 		}
 
-		public IntVector2 EndPosition { get; }
+		public IntVector2 EndPosition { get; set; }
 
-		public IntVector2 StartPosition { get; }
+		public IntVector2 StartPosition { get; set; }
 	}
 }

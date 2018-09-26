@@ -23,6 +23,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 		private GalaxyReference<ICombatant> target { get; set; }
 
+		[DoNotSerialize]
 		public ICombatant Target
 		{
 			get => target?.Value ?? Battle?.StartCombatants?[target.ID];

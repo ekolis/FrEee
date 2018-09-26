@@ -21,6 +21,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 		private GalaxyReference<ICombatant> target { get; set; }
 
+		[DoNotSerialize]
 		public ICombatant Target
 		{
 			get => target?.Value ?? Battle?.StartCombatants?[target.ID];
@@ -29,6 +30,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 		private GalaxyReference<Component> weapon { get; set; }
 
+		[DoNotSerialize]
 		public Component Weapon
 		{
 			get => weapon?.Value ?? Battle?.StartWeapons?[weapon.ID];
