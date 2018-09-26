@@ -1522,7 +1522,7 @@ namespace FrEee.Game.Objects.Space
 				{
 					foreach (var l2 in l.Item.SpaceObjectLocations.ToArray())
 					{
-						if (l2.Item == null)
+						if (l2.Item == null || l2.Item.IsDisposed)
 							l.Item.SpaceObjectLocations.Remove(l2);
 					}
 				}
