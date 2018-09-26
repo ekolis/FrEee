@@ -38,7 +38,8 @@ namespace FrEee.Utility
 		static ObjectGraphContext()
 		{
 			KnownTypes = new SafeDictionary<string, Type>();
-			KnownProperties = new SafeDictionary<Type, IDictionary<string, PropertyInfo>>();
+			KnownPropertiesIncludingDoNotSerialize = new SafeDictionary<Type, IDictionary<string, PropertyInfo>>();
+			KnownPropertiesExcludingDoNotSerialize = new SafeDictionary<Type, IDictionary<string, PropertyInfo>>();
 			PropertyGetters = new SafeDictionary<PropertyInfo, Delegate>();
 			PropertySetters = new SafeDictionary<PropertyInfo, Delegate>();
 			CollectionAdders = new SafeDictionary<Type, Delegate>();
@@ -105,7 +106,12 @@ namespace FrEee.Utility
 		/// <summary>
 		/// Known properties for each object type.
 		/// </summary>
-		private static SafeDictionary<Type, IDictionary<string, PropertyInfo>> KnownProperties { get; set; }
+		private static SafeDictionary<Type, IDictionary<string, PropertyInfo>> KnownPropertiesIncludingDoNotSerialize { get; set; }
+
+		/// <summary>
+		/// Known properties for each object type.
+		/// </summary>
+		private static SafeDictionary<Type, IDictionary<string, PropertyInfo>> KnownPropertiesExcludingDoNotSerialize { get; set; }
 
 		/// <summary>
 		/// Adds the properties for a type.
@@ -113,7 +119,7 @@ namespace FrEee.Utility
 		/// <param name="type"></param>
 		public static void AddProperties(Type type)
 		{
-			if (!KnownProperties.ContainsKey(type))
+			if (!KnownPropertiesIncludingDoNotSerialize.ContainsKey(type))
 			{
 				// list out the object's properties that aren't marked nonserializable
 				var props = new Dictionary<PropertyInfo, int>();
@@ -137,7 +143,8 @@ namespace FrEee.Utility
 				}
 				// Mono seems to place inherited properties on the derived type too so we need a consistent ordering
 				var props2 = props.Distinct().GroupBy(p => p.Key.Name).Select(g => g.Single(p2 => p2.Value == g.Max(p3 => p3.Value))).Select(kvp => kvp.Key).OrderBy(p => p.Name);
-				KnownProperties.Add(type, props2.ToDictionary(p => p.Name));
+				KnownPropertiesIncludingDoNotSerialize.Add(type, props2.ToDictionary(p => p.Name));
+				KnownPropertiesExcludingDoNotSerialize.Add(type, props2.Where(x => !x.HasAttribute<DoNotSerializeAttribute>()).ToDictionary(p => p.Name, p => p));
 				foreach (var prop in props2)
 				{
 					var objParm = Expression.Parameter(prop.DeclaringType);
@@ -160,13 +167,10 @@ namespace FrEee.Utility
 
 		public static IDictionary<string, PropertyInfo> GetKnownProperties(Type t, bool includeDoNotSerializeProperties = false)
 		{
-			if (KnownProperties[t] == null)
+			var kp = includeDoNotSerializeProperties ? KnownPropertiesIncludingDoNotSerialize : KnownPropertiesExcludingDoNotSerialize;
+			if (kp[t] == null)
 				AddProperties(t);
-			return KnownProperties[t].Where(
-				p =>
-				includeDoNotSerializeProperties
-				|| (!p.Value.HasAttribute<DoNotSerializeAttribute>()))
-				.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+			return kp[t];
 		}
 
 		/// <summary>
@@ -218,10 +222,10 @@ namespace FrEee.Utility
 				return PropertyGetters[prop].DynamicInvoke(obj);
 		}
 
-		public IDictionary<string, PropertyInfo> GetProperties(Type type)
+		public IDictionary<string, PropertyInfo> GetProperties(Type type, bool includeDoNotSerialize = false)
 		{
 			AddProperties(type);
-			return KnownProperties[type];
+			return includeDoNotSerialize ? KnownPropertiesIncludingDoNotSerialize[type] : KnownPropertiesExcludingDoNotSerialize[type];
 		}
 
 		public void SetObjectProperty(object obj, PropertyInfo prop, object val)
