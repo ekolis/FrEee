@@ -67,14 +67,14 @@ namespace FrEee.WinForms.Forms
 			var combatants = Battle.Combatants;
 			foreach (var group in combatants.GroupBy(c => new CombatantInfo
 			{
-				Empire = Battle.StartCombatants.Single(c2 => c2.ID == c.ID).Owner,
+				Empire = Battle.StartCombatants[c.ID].Owner,
 				HullIcon = GetHullIcon(c),
 				HullName = GetHullName(c),
 				HullSize = GetHullSize(c)
 			}))
 			{
 				var count = group.Count();
-				var hp = group.Sum(c => Battle.StartCombatants.Single(c2 => c2.ID == c.ID).Hitpoints);
+				var hp = group.Sum(c => Battle.StartCombatants[c.ID].Hitpoints);
 				var item = new
 				{
 					EmpireIcon = group.Key?.Empire?.Icon,
@@ -84,7 +84,7 @@ namespace FrEee.WinForms.Forms
 					HullSize = group.Key.HullSize,
 					StartCount = count,
 					StartHP = hp,
-					Losses = group.Count(c => c.IsDestroyed || Battle.StartCombatants.Single(c2 => c2.ID == c.ID).Owner != c.Owner), // destroyed or captured
+					Losses = group.Count(c => c.IsDestroyed || Battle.StartCombatants[c.ID].Owner != c.Owner), // destroyed or captured
 					Damage = hp - group.Sum(c => c.Hitpoints),
 				};
 				data.Add(item);

@@ -51,12 +51,12 @@ namespace FrEee.Game.Objects.Combat.Grid
 		/// <summary>
 		/// Copies of the combatants from the start of the battle.
 		/// </summary>
-		public ISet<ICombatant> StartCombatants { get; private set; } = new HashSet<ICombatant>();
+		public IDictionary<long, ICombatant> StartCombatants { get; private set; } = new SafeDictionary<long, ICombatant>();
 
 		/// <summary>
 		/// Copies of the combatants from the end of the battle.
 		/// </summary>
-		public ISet<ICombatant> EndCombatants { get; private set; } = new HashSet<ICombatant>();
+		public IDictionary<long, ICombatant> EndCombatants { get; private set; } = new SafeDictionary<long, ICombatant>();
 
 		/// <summary>
 		/// Starting HP of all combatants.
@@ -166,7 +166,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 		public virtual void Initialize(IEnumerable<ICombatant> combatants)
 		{
 			Combatants = combatants.ToHashSet();
-			StartCombatants = combatants.Select(c => c.Copy()).ToHashSet();
+			StartCombatants = combatants.Select(c => new { ID = c.ID, Copy = c.Copy() }).ToDictionary(q => q.ID, q => q.Copy);
 		}
 
 		public abstract void PlaceCombatants(SafeDictionary<ICombatant, IntVector2> locations);
@@ -393,7 +393,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 					foreach (var info in unitsToLaunch)
 					{
 						Combatants.Add(info.Item2);
-						StartCombatants.Add(info.Item2.Copy());
+						StartCombatants.Add(info.Item2.ID, info.Item2.Copy());
 						locations[info.Launchee] = new IntVector2(locations[info.Launcher]);
 						Events.Last().Add(new CombatantLaunchedEvent(info.Launcher, info.Launchee, locations[info.Launchee]));
 					}
@@ -498,8 +498,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 			}
 
 			// save state of combatants at end of battle - set to undisposed so they don't get purged!
-			EndCombatants = Combatants.Select(x => x.Copy()).ToHashSet();
-			foreach (var c in EndCombatants)
+			EndCombatants = Combatants.Select(c => new { ID = c.ID, Copy = c.Copy() }).ToDictionary(q => q.ID, q => q.Copy);
+			foreach (var c in EndCombatants.Values)
 				c.IsDisposed = false;
 
 			// validate fleets since some ships might have died
@@ -618,7 +618,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 				{
 					var seeker = new Seeker(this, w.Owner, c, w, target);
 					Combatants.Add(seeker);
-					StartCombatants.Add(seeker.Copy());
+					StartCombatants.Add(seeker.ID, seeker.Copy());
 					locations[seeker] = new IntVector2(locations[c]);
 					Events.Last().Add(new CombatantLaunchedEvent(c, seeker, locations[seeker]));
 				}
