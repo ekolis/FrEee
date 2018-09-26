@@ -8,7 +8,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// An object that can fire weapons and/or targeted by weapons.
 	/// </summary>
-	public interface ICombatant : IPictorial, ITargetable, IDisposable, IFoggable, ILocated, INamed
+	public interface ICombatant : IPictorial, ITargetable, IDisposable, IFoggable, INamed
 	{
 		/// <summary>
 		/// Accuracy rating of this combatant.
