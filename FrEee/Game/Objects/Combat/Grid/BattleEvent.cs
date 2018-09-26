@@ -19,7 +19,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 			EndPosition = endPosition;
 		}
 
-		public IBattle Battle { get; }
+		[DoNotCopy]
+		public IBattle Battle { get; set; }
 
 		private GalaxyReference<ICombatant> combatant { get; set; }
 
