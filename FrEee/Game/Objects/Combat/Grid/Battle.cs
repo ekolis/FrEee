@@ -617,6 +617,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 				if (w.Template.ComponentTemplate.WeaponType == WeaponTypes.Seeking || w.Template.ComponentTemplate.WeaponType == WeaponTypes.SeekingPointDefense)
 				{
 					var seeker = new Seeker(this, w.Owner, c, w, target);
+					Galaxy.Current.AssignID(seeker);
 					Combatants.Add(seeker);
 					StartCombatants[seeker.ID] = seeker.Copy();
 					locations[seeker] = new IntVector2(locations[c]);
