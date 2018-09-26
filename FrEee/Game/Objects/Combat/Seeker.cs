@@ -19,9 +19,9 @@ namespace FrEee.Game.Objects.Combat
 	/// </summary>
 	public class Seeker : ICombatant
 	{
-		public Seeker(IBattle battle, Empire owner, ICombatant attacker, Component launcher, ICombatant target)
+		public Seeker(Sector sector, Empire owner, ICombatant attacker, Component launcher, ICombatant target)
 		{
-			Battle = battle;
+			Sector = sector;
 			Owner = owner;
 			if (launcher.Template.ComponentTemplate.WeaponInfo is SeekingWeaponInfo)
 				LaunchingComponent = launcher;
@@ -55,7 +55,8 @@ namespace FrEee.Game.Objects.Combat
 		/// <summary>
 		/// The battle in which this seeker was fired.
 		/// </summary>
-		[DoNotCopy(false)]
+		[DoNotSerialize(false)]
+		[Obsolete("Seekers don't need to know what battle they're in; this property is obsolete.")]
 		public IBattle Battle { get; set; }
 
 		public double CombatSpeed { get; set; }
@@ -242,11 +243,9 @@ namespace FrEee.Game.Objects.Combat
 			}
 		}
 
-		[DoNotSerialize(false)]
 		public Sector Sector
 		{
-			get { return Battle.Sector; }
-			set { throw new NotSupportedException("Cannot set the sector of a seeker once it's been initialized."); }
+			get; set;
 		}
 
 		public int ShieldHitpoints
@@ -256,7 +255,7 @@ namespace FrEee.Game.Objects.Combat
 
 		public StarSystem StarSystem
 		{
-			get { return Battle.StarSystem; }
+			get { return Sector.StarSystem; }
 		}
 
 		/// <summary>
