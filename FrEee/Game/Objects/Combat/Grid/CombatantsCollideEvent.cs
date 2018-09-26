@@ -1,5 +1,6 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Game.Objects.Combat.Grid
 {
@@ -7,13 +8,12 @@ namespace FrEee.Game.Objects.Combat.Grid
 	/// When combatants collide - seeker detonation or ship ramming
 	/// </summary>
 	/// <seealso cref="FrEee.Game.Objects.Combat.Grid.IBattleEvent" />
-	public class CombatantsCollideEvent : IBattleEvent
+	public class CombatantsCollideEvent : BattleEvent
 	{
-		public CombatantsCollideEvent(ICombatant combatant, ICombatant target, IntVector2 location, int combatantDamage, int targetDamage, bool wasCombatantDisarmed, bool wasTargetDisarmed)
+		public CombatantsCollideEvent(Battle battle, ICombatant combatant, ICombatant target, IntVector2 location, int combatantDamage, int targetDamage, bool wasCombatantDisarmed, bool wasTargetDisarmed)
+			: base(battle, combatant, location, location)
 		{
-			Combatant = combatant;
 			Target = target;
-			StartPosition = EndPosition = location;
 			CombatantDamage = combatantDamage;
 			TargetDamage = targetDamage;
 			WasCombatantDisarmed = wasCombatantDisarmed;
@@ -21,11 +21,13 @@ namespace FrEee.Game.Objects.Combat.Grid
 		}
 
 
-		public ICombatant Combatant { get; set; }
-		public ICombatant Target { get; set; }
+		private GalaxyReference<ICombatant> target { get; set; }
 
-		public IntVector2 EndPosition { get; set; }
-		public IntVector2 StartPosition { get; set; }
+		public ICombatant Target
+		{
+			get => target?.Value ?? Battle?.StartCombatants?[target.ID];
+			set => target = value.ReferViaGalaxy();
+		}
 
 		public int CombatantDamage { get; set; }
 		public int TargetDamage { get; set; }

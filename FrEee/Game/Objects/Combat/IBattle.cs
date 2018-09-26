@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
+using FrEee.Game.Objects.Technology;
 using FrEee.Utility;
 using System.Collections.Generic;
 
@@ -14,6 +15,7 @@ namespace FrEee.Game.Objects.Combat
 		IList<LogMessage> Log { get; }
 		double Timestamp { get; }
 		IDictionary<long, ICombatant> StartCombatants { get; }
+		IDictionary<long, Component> StartWeapons { get; }
 		IDictionary<long, ICombatant> EndCombatants { get; }
 
 		void Resolve();

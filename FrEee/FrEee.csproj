@@ -143,6 +143,7 @@
   <ItemGroup>
     <Compile Include="Game\Enumerations\Conditions.cs" />
     <Compile Include="Game\Objects\Civilization\PlayerInfo.cs" />
+    <Compile Include="Game\Objects\Combat\Grid\BattleEvent.cs" />
     <Compile Include="Game\Objects\Combat\Grid\CombatantAppearsEvent.cs" />
     <Compile Include="Game\Objects\Combat\Grid\CombatantDisappearsEvent.cs" />
     <Compile Include="Game\Objects\Combat\Grid\CombatantLaunchedEvent.cs" />

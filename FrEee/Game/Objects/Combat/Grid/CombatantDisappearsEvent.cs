@@ -5,16 +5,12 @@ using System;
 namespace FrEee.Game.Objects.Combat.Grid
 {
 	[Obsolete("This class is deprecated; use CombatantDestroyedEvent if a combatant is destroyed.")]
-	public class CombatantDisappearsEvent : IBattleEvent
+	public class CombatantDisappearsEvent : BattleEvent
 	{
-		public CombatantDisappearsEvent(ICombatant combatant)
+		public CombatantDisappearsEvent(IBattle battle, ICombatant combatant, IntVector2 position)
+			: base(battle, combatant, position, position)
 		{
-			Combatant = combatant;
 		}
 
-		public ICombatant Combatant { get; set; }
-
-		public IntVector2 EndPosition { get; set; }
-		public IntVector2 StartPosition { get; set; }
 	}
 }
