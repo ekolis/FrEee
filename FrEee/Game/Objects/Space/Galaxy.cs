@@ -1484,11 +1484,6 @@ namespace FrEee.Game.Objects.Space
 			parser.Property += (pname, o, val) =>
 				{
 					var prop = o.GetType().FindProperty(pname);
-					if (prop.SetMethod != null && val.GetPropertyValue("IsDisposed") is bool b && b)
-					{
-						prop.SetValue(o, null);
-						return false; // no recursion!
-					}
 					var isMemory = val is IFoggable && (val as IFoggable).IsMemory;
 					canAssign = !prop.HasAttribute<DoNotAssignIDAttribute>() && !isMemory;
 					if (isMemory)
@@ -1516,40 +1511,6 @@ namespace FrEee.Game.Objects.Space
 				if (o is IEnumerable)
 				{
 					colls.Remove((IEnumerable)o);
-				}
-			};
-			parser.Item += (o) =>
-			{
-				// TODO - cache lambda expressions?
-				if (o == null)
-					return;
-				var coll = colls.Last();
-				if (o.GetPropertyValue("IsDisposed") is bool b && b)
-				{
-					try
-					{
-						coll.GetType().GetMethod("Remove").Invoke(coll, new object[] { o });
-					}
-					catch (MissingMethodException ex)
-					{
-						Console.Error.WriteLine($"Unable to purge disposed object {o}: {ex.Message}.");
-					}
-				}
-				if (o.GetType().IsGenericType && o.GetType().GetGenericTypeDefinition() == typeof(KeyValuePair<,>))
-				{
-					var key = o.GetPropertyValue("Key");
-					var val = o.GetPropertyValue("Value");
-					if (key.GetPropertyValue("IsDisposed") is bool b1 && b1 || val.GetPropertyValue("IsDisposed") is bool b2 && b2)
-					{
-						try
-						{
-							coll.GetType().GetMethods().Single(m => m.Name == "Remove" && m.GetParameters().Length == 1 && m.GetParameters()[0].ParameterType.IsAssignableFrom(key.GetType())).Invoke(coll, new object[] { key });
-						}
-						catch (MissingMethodException ex)
-						{
-							Console.Error.WriteLine($"Unable to purge disposed object {o}: {ex.Message}.");
-						}
-					}
 				}
 			};
 			parser.Parse(this);
