@@ -376,8 +376,8 @@ namespace FrEee.Utility
 			var collParm = Expression.Parameter(typeof(object), "coll");
 			var keyParm = Expression.Parameter(typeof(object), "key");
 			var valParm = Expression.Parameter(typeof(object), "val");
-			var keyprop = ObjectGraphContext.GetKnownProperties(itemType)["Key"];
-			var valprop = ObjectGraphContext.GetKnownProperties(itemType)["Value"];
+			var keyprop = ObjectGraphContext.GetKnownProperties(itemType, true)["Key"];
+			var valprop = ObjectGraphContext.GetKnownProperties(itemType, true)["Value"];
 			Delegate lambdaAdder;
 			if (ObjectGraphContext.CollectionAdders[type] == null)
 			{
@@ -595,10 +595,15 @@ namespace FrEee.Utility
 			if (!int.TryParse(s, out count))
 				throw new SerializationException("Expected integer, got \"" + s + "\" when parsing property count.");
 
+			if (type.Name.Contains("Appears"))
+			{
+
+			}
+
 			var dict = new SafeDictionary<string, object>();
 
 			// deserialize the properties
-			var props = ObjectGraphContext.GetKnownProperties(type);
+			var props = ObjectGraphContext.GetKnownProperties(type, true);
 			for (int i = 0; i < count; i++)
 			{
 				var pname = r.ReadTo(':', log).Trim();
@@ -609,12 +614,11 @@ namespace FrEee.Utility
 				if (props.ContainsKey(pname))
 				{
 					var prop = props[pname];
-					if (prop != null && !prop.HasAttribute<DoNotSerializeAttribute>())
+					if (prop != null)
 					{
-						if (prop.Name == "Sector" && type == typeof(Game.Objects.Civilization.SpaceObjectWaypoint))
-						{
-						}
-						dict[pname] = Deserialize(r, prop.PropertyType, false, context, log);
+						var data = Deserialize(r, prop.PropertyType, false, context, log);
+						if (!prop.HasAttribute<DoNotSerializeAttribute>())
+							dict[pname] = data;
 					}
 					else
 						r.ReadToEndOfLine(';', log); // throw away this property, we don't need it

@@ -128,8 +128,6 @@ namespace FrEee.Utility
 							// hopefully put "quicker to check" and "easier to fail" conditions up top
 							f.GetIndexParameters().Length == 0 // we don't support indexed properties
 							&& (f.GetGetMethod(true) != null && f.GetSetMethod(true) != null)
-							&& !f.HasAttribute<DoNotSerializeAttribute>()
-							&& (!type.GetProperty(f.Name)?.HasAttribute<DoNotSerializeAttribute>() ?? true) // inherited class DoNotSerialize overrides base lack of it so we need to check the derived type
 						)
 					);
 					foreach (var prop in newprops)
@@ -160,11 +158,15 @@ namespace FrEee.Utility
 			}
 		}
 
-		public static IDictionary<string, PropertyInfo> GetKnownProperties(Type t)
+		public static IDictionary<string, PropertyInfo> GetKnownProperties(Type t, bool includeDoNotSerializeProperties = false)
 		{
 			if (KnownProperties[t] == null)
 				AddProperties(t);
-			return KnownProperties[t];
+			return KnownProperties[t].Where(
+				p =>
+				includeDoNotSerializeProperties
+				|| (!p.Value.HasAttribute<DoNotSerializeAttribute>()))
+				.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 		}
 
 		/// <summary>
