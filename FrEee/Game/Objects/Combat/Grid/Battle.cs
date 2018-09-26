@@ -393,7 +393,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 					foreach (var info in unitsToLaunch)
 					{
 						Combatants.Add(info.Item2);
-						StartCombatants.Add(info.Item2.ID, info.Item2.Copy());
+						StartCombatants[info.Item2.ID] = info.Item2.Copy();
 						locations[info.Launchee] = new IntVector2(locations[info.Launcher]);
 						Events.Last().Add(new CombatantLaunchedEvent(info.Launcher, info.Launchee, locations[info.Launchee]));
 					}
@@ -618,7 +618,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 				{
 					var seeker = new Seeker(this, w.Owner, c, w, target);
 					Combatants.Add(seeker);
-					StartCombatants.Add(seeker.ID, seeker.Copy());
+					StartCombatants[seeker.ID] = seeker.Copy();
 					locations[seeker] = new IntVector2(locations[c]);
 					Events.Last().Add(new CombatantLaunchedEvent(c, seeker, locations[seeker]));
 				}
