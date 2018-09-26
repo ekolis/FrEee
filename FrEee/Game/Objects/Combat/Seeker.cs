@@ -55,6 +55,7 @@ namespace FrEee.Game.Objects.Combat
 		/// <summary>
 		/// The battle in which this seeker was fired.
 		/// </summary>
+		[DoNotCopy(false)]
 		public IBattle Battle { get; set; }
 
 		public double CombatSpeed { get; set; }

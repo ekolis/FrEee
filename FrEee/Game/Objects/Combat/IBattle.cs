@@ -13,8 +13,8 @@ namespace FrEee.Game.Objects.Combat
 		IEnumerable<Empire> Empires { get; }
 		IList<LogMessage> Log { get; }
 		double Timestamp { get; }
-		ISet<ICombatant> StartCombatants { get; }
-		ISet<ICombatant> EndCombatants { get; }
+		IDictionary<long, ICombatant> StartCombatants { get; }
+		IDictionary<long, ICombatant> EndCombatants { get; }
 
 		void Resolve();
 	}
