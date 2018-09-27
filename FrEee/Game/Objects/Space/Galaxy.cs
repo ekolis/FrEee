@@ -1172,14 +1172,14 @@ namespace FrEee.Game.Objects.Space
 			{
 				foreach (var race in c.Population.Keys)
 				{
-					if (race.HappinessModel != null)
+					if (!race.HasAbility("Population Emotionless") && race.HappinessModel != null)
 					{
 						var delta = c.AngerDeltas[race];
+						delta += race == c.Owner.PrimaryRace ? race.HappinessModel.NaturalTurnAngerChangeOurRace : race.HappinessModel.NaturalTurnAngerChangeOtherRaces;
 						if (delta > race.HappinessModel.MaxPositiveTurnAngerChange)
 							delta = race.HappinessModel.MaxPositiveTurnAngerChange;
 						if (delta < race.HappinessModel.MaxNegativeTurnAngerChange)
 							delta = race.HappinessModel.MaxNegativeTurnAngerChange;
-						delta += race == c.Owner.PrimaryRace ? race.HappinessModel.NaturalTurnAngerChangeOurRace : race.HappinessModel.NaturalTurnAngerChangeOtherRaces;
 						c.Anger[race] += delta;
 						if (c.Anger[race] > Mod.Current.Settings.MaxAnger)
 							c.Anger[race] = Mod.Current.Settings.MaxAnger;
