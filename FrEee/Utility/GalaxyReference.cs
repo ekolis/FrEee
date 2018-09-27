@@ -39,6 +39,7 @@ namespace FrEee.Utility
 				if (!HasValue)
 				{
 					Galaxy.Current.referrables[r.ID] = r;
+					cache = null; // reset cache
 					if (!HasValue)
 						throw new ArgumentException("{0} does not exist in the current galaxy so it cannot be referenced.".F(t));
 				}
@@ -69,8 +70,8 @@ namespace FrEee.Utility
 				var obj = (T)Galaxy.Current.GetReferrable(ID);
 				if (obj == null)
 					return default(T);
-				if (obj is IReferrable && (obj as IReferrable).IsDisposed)
-					return default(T);
+				/*if (obj is IReferrable && (obj as IReferrable).IsDisposed)
+					return default(T);*/
 				return obj;
 			}
 			);
@@ -79,16 +80,7 @@ namespace FrEee.Utility
 		/// <summary>
 		/// Does the reference have a valid value?
 		/// </summary>
-		public bool HasValue
-		{
-			get
-			{
-				if (value == null)
-					return ID <= 0 || Galaxy.Current.referrables.ContainsKey(ID); // nonpositive ID's are null objects
-				else
-					return true;
-			}
-		}
+		public bool HasValue => Value != null;
 
 		public long ID { get; internal set; }
 
