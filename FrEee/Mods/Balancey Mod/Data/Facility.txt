@@ -78,11 +78,8 @@ Cost Radioactives   := 1500
 Number of Tech Req  := 1
 Tech Area Req 1     := Applied Research
 Tech Level Req 1    := =level
-Number of Abilities := 1
 Ability 1 Type      := Point Generation - Research
-Ability 1 Descr     := Generates [%Amount1%] research points each turn.
-Ability 1 Val 1     := =400 + 100 * level
-Ability 1 Val 2     := 0
+Ability 1 Val       := =400 + 100 * level
 
 Parameter Name      := level
 Parameter Maximum   := 5
@@ -99,11 +96,8 @@ Cost Radioactives   := 0
 Number of Tech Req  := 1
 Tech Area Req 1     := Applied Intelligence
 Tech Level Req 1    := =level
-Number of Abilities := 1
-Ability 1 Type      := Point Generation - Research
-Ability 1 Descr     := Generates [%Amount1%] research points each turn.
-Ability 1 Val 1     := =400 + 100 * level
-Ability 1 Val 2     := 0
+Ability 1 Type      := Point Generation - Intelligence
+Ability 1 Val       := =400 + 100 * level
 
 Name                := Space Port
 Description         := Facility which processes all generated resources in its system and makes them available for the empire.
