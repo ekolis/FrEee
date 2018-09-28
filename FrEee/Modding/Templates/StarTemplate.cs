@@ -4,6 +4,7 @@ using FrEee.Game.Objects.Space;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FrEee.Modding.Templates
@@ -53,6 +54,11 @@ namespace FrEee.Modding.Templates
 		/// The size of the star, or null to choose a size randomly.
 		/// </summary>
 		public StellarSize? StellarSize { get; set; }
+
+		/// <summary>
+		/// Parameters from the mod meta templates.
+		/// </summary>
+		public IDictionary<string, object> TemplateParameters { get; set; }
 
 		public void Dispose()
 		{

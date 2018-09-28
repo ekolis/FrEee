@@ -5,6 +5,7 @@ using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FrEee.Modding.Templates
@@ -47,6 +48,11 @@ namespace FrEee.Modding.Templates
 		/// The surface compositiion of the asteroid field, or null to choose a surface randomly.
 		/// </summary>
 		public string Surface { get; set; }
+
+		/// <summary>
+		/// Parameters from the mod meta templates.
+		/// </summary>
+		public IDictionary<string, object> TemplateParameters { get; set; }
 
 		public void Dispose()
 		{

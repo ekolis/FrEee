@@ -65,7 +65,7 @@ namespace FrEee.Modding
 			get
 			{
 				if (IsDynamic)
-					return Evaluate(Context);
+					return Evaluate(Context, null);
 				else
 				{
 					if (value == null)
@@ -100,27 +100,35 @@ namespace FrEee.Modding
 			return IsDynamic == other.IsDynamic && Text == other.Text && Context == other.Context;
 		}
 
-		public T Evaluate(IDictionary<string, object> variables)
+		public T Evaluate(object host, IDictionary<string, object> variables = null)
 		{
+			var vars = new Dictionary<string, object>(variables ?? new Dictionary<string, object>());
+			vars.Add("self", Context);
+			vars.Add("host", host);
+			if (host is IFormulaHost)
+			{
+				foreach (var kvp in ((IFormulaHost)host).Variables)
+					vars.Add(kvp.Key, kvp.Value);
+			}
+			if (host is IModObject mo)
+			{
+				if (mo.TemplateParameters != null)
+				{
+					foreach (var kvp in mo.TemplateParameters)
+						vars.Add(kvp.Key, kvp.Value);
+				}
+			}
 			string fulltext;
 			if (ExternalScripts == null)
 				fulltext = Text;
 			else
 				fulltext = string.Join("\n", ExternalScripts.Select(q => q.Text)) + "\n" + Text;
-			return ScriptEngine.EvaluateExpression<T>(fulltext, variables);
+			return ScriptEngine.EvaluateExpression<T>(fulltext, vars);
 		}
 
-		public T Evaluate(object host)
+		object IFormula.Evaluate(object host, IDictionary<string, object> variables)
 		{
-			var variables = new Dictionary<string, object>();
-			variables.Add("self", Context);
-			variables.Add("host", host);
-			if (host is IFormulaHost)
-			{
-				foreach (var kvp in ((IFormulaHost)host).Variables)
-					variables.Add(kvp.Key, kvp.Value);
-			}
-			return Evaluate(variables);
+			return Evaluate(host, variables);
 		}
 
 		public override int GetHashCode()
@@ -136,17 +144,7 @@ namespace FrEee.Modding
 
 		protected T ComputeValue()
 		{
-			return Evaluate(Context);
-		}
-
-		object IFormula.Evaluate(IDictionary<string, object> variables)
-		{
-			return Evaluate(variables);
-		}
-
-		object IFormula.Evaluate(object host)
-		{
-			return Evaluate(host);
+			return Evaluate(Context, null);
 		}
 
 		public int CompareTo(object obj)

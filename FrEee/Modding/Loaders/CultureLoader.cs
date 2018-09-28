@@ -21,6 +21,7 @@ namespace FrEee.Modding.Loaders
 			foreach (var rec in DataFile.Records)
 			{
 				var c = new Culture();
+				c.TemplateParameters = rec.Parameters;
 				mod.Cultures.Add(c);
 
 				c.ModID = rec.Get<string>("ID", c);

@@ -222,6 +222,11 @@ namespace FrEee.Game.Objects.Technology
 		/// </summary>
 		public int StartLevel { get; set; }
 
+		/// <summary>
+		/// Parameters from the mod meta templates.
+		/// </summary>
+		public IDictionary<string, object> TemplateParameters { get; set; }
+
 		public double Timestamp
 		{
 			get;
@@ -303,6 +308,22 @@ namespace FrEee.Game.Objects.Technology
 				Mod.Current.Technologies.Remove(this);
 		}
 
+		public int GetBaseLevelCost(int level)
+		{
+			if (Galaxy.Current.TechnologyCost == TechnologyCost.Low)
+				return LevelCost * level;
+			else if (Galaxy.Current.TechnologyCost == TechnologyCost.Medium)
+			{
+				if (Math.Abs(level) == 1)
+					return LevelCost * level;
+				else
+					return LevelCost * level * level / 2;
+			}
+			else if (Galaxy.Current.TechnologyCost == TechnologyCost.High)
+				return LevelCost * level * level;
+			throw new Exception("Invalid technology cost for galaxy: " + Galaxy.Current.TechnologyCost);
+		}
+
 		/// <summary>
 		/// Determines what an empire would unlock by researching the next level of this technology.
 		/// </summary>
@@ -325,22 +346,6 @@ namespace FrEee.Game.Objects.Technology
 			var playerRatio = emp.OtherPlayersTechLevels[this]?.Count(x => x >= level) ?? 0;
 			var uniquenessFactor = Math.Pow(2, Galaxy.Current.TechnologyUniqueness * playerRatio);
 			return (int)(GetBaseLevelCost(level) * uniquenessFactor);
-		}
-
-		public int GetBaseLevelCost(int level)
-		{
-			if (Galaxy.Current.TechnologyCost == TechnologyCost.Low)
-				return LevelCost * level;
-			else if (Galaxy.Current.TechnologyCost == TechnologyCost.Medium)
-			{
-				if (Math.Abs(level) == 1)
-					return LevelCost * level;
-				else
-					return LevelCost * level * level / 2;
-			}
-			else if (Galaxy.Current.TechnologyCost == TechnologyCost.High)
-				return LevelCost * level * level;
-			throw new Exception("Invalid technology cost for galaxy: " + Galaxy.Current.TechnologyCost);
 		}
 
 		public int GetNextLevelCost(Empire emp)

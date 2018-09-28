@@ -25,6 +25,7 @@ namespace FrEee.Modding.Loaders
 			foreach (var rec in DataFile.Records)
 			{
 				var tech = new Technology();
+				tech.TemplateParameters = rec.Parameters;
 				string temp;
 				int index = -1;
 

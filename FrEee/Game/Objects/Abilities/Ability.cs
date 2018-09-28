@@ -132,6 +132,11 @@ namespace FrEee.Game.Objects.Abilities
 		public AbilityRule Rule { get { return rule; } set { rule = value; } }
 
 		/// <summary>
+		/// Parameters from the mod meta templates.
+		/// </summary>
+		public IDictionary<string, object> TemplateParameters { get; set; }
+
+		/// <summary>
 		/// The first value of the ability. Not all abilities have values, so this might be null!
 		/// </summary>
 		public Formula<string> Value1
@@ -187,13 +192,11 @@ namespace FrEee.Game.Objects.Abilities
 			// get basic description
 			string result;
 			if (Description != null)
-				result = Description.Evaluate(this);
+				result = Description.Evaluate(this, TemplateParameters);
 			else if (Rule.Description != null)
-				result = Rule.Description.Evaluate(this);
+				result = Rule.Description.Evaluate(this, TemplateParameters);
 			else
 				result = Rule.Name + ": " + string.Join(", ", Values.Select(v => v.Value));
-
-
 
 			return result;
 		}

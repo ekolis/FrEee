@@ -26,6 +26,7 @@ namespace FrEee.Modding.Loaders
 			foreach (var rec in DataFile.Records)
 			{
 				var m = new Mount();
+				m.TemplateParameters = rec.Parameters;
 				mod.Mounts.Add(m);
 
 				m.ModID = rec.Get<string>("ID", m);

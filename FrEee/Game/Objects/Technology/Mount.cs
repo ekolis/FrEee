@@ -204,6 +204,11 @@ namespace FrEee.Game.Objects.Technology
 		/// </summary>
 		public Formula<int> SupplyUsagePercent { get; set; }
 
+		/// <summary>
+		/// Parameters from the mod meta templates.
+		/// </summary>
+		public IDictionary<string, object> TemplateParameters { get; set; }
+
 		public double Timestamp
 		{
 			get;

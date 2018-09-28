@@ -25,6 +25,7 @@ namespace FrEee.Modding.Loaders
 			foreach (var rec in DataFile.Records)
 			{
 				var r = new AbilityRule();
+				r.TemplateParameters = rec.Parameters;
 				mod.AbilityRules.Add(r);
 
 				int index = -1;

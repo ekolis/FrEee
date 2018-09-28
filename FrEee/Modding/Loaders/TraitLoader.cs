@@ -25,6 +25,7 @@ namespace FrEee.Modding.Loaders
 			foreach (var rec in DataFile.Records)
 			{
 				t = new Trait();
+				t.TemplateParameters = rec.Parameters;
 				mod.Traits.Add(t);
 
 				t.ModID = rec.Get<string>("ID", t);

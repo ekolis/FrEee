@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Modding.Interfaces;
 using System;
+using System.Collections.Generic;
 
 namespace FrEee.Modding
 {
@@ -77,6 +78,11 @@ namespace FrEee.Modding
 		/// Stellar size of this size.
 		/// </summary>
 		public StellarSize StellarSize { get; set; }
+
+		/// <summary>
+		/// Parameters from the mod meta templates.
+		/// </summary>
+		public IDictionary<string, object> TemplateParameters { get; set; }
 
 		public int CompareTo(object obj)
 		{

@@ -56,6 +56,11 @@ namespace FrEee.Modding.Templates
 		/// </summary>
 		public string Name { get; set; }
 
+		/// <summary>
+		/// Parameters from the mod meta templates.
+		/// </summary>
+		public IDictionary<string, object> TemplateParameters { get; set; }
+
 		public void Dispose()
 		{
 			// TODO - remove it from somewhere?

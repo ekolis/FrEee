@@ -20,6 +20,7 @@ namespace FrEee.Modding.Loaders
 			foreach (var rec in DataFile.Records)
 			{
 				var dt = new DamageType();
+				dt.TemplateParameters = rec.Parameters;
 				mod.DamageTypes.Add(dt);
 
 				dt.ModID = rec.Get<string>("ID", dt);

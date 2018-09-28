@@ -252,6 +252,7 @@ namespace FrEee.Modding.Loaders
 					sobj.PictureName = temp;
 
 				rec.TryFindFieldValue("Description", out temp, ref index, Mod.Errors, 0, true);
+				sobj.TemplateParameters = rec.Parameters;
 				sobj.Description = temp;
 				sobj.ModID = rec.Get<string>("ID", sobj);
 

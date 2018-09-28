@@ -41,6 +41,11 @@ namespace FrEee.Game.Objects.AI
 		public Script Script { get; set; }
 
 		/// <summary>
+		/// Parameters from the mod meta templates.
+		/// </summary>
+		public IDictionary<string, object> TemplateParameters { get; set; }
+
+		/// <summary>
 		/// Allows the AI to act on its domain using information from its context.
 		/// </summary>
 		/// <param name="domain">The AI's domain of control.</param>

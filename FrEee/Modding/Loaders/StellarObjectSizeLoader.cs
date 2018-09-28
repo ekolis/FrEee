@@ -21,6 +21,7 @@ namespace FrEee.Modding.Loaders
 			foreach (var rec in DataFile.Records)
 			{
 				var sos = new StellarObjectSize();
+				sos.TemplateParameters = rec.Parameters;
 				mod.StellarObjectSizes.Add(sos);
 
 				sos.ModID = rec.Get<string>("ID", sos);

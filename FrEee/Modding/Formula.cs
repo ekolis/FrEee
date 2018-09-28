@@ -3,7 +3,6 @@ using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 
 namespace FrEee.Modding
 {
@@ -30,6 +29,12 @@ namespace FrEee.Modding
 		}
 
 		public abstract object Context { get; set; }
+
+		/// <summary>
+		/// The external scripts required to execute this formula.
+		/// </summary>
+		public Script[] ExternalScripts { get; set; }
+
 		public abstract bool IsDynamic { get; }
 		public abstract bool IsLiteral { get; }
 
@@ -186,19 +191,12 @@ namespace FrEee.Modding
 			return Value.CompareTo(other.Value);
 		}
 
-		object IFormula.Evaluate(IDictionary<string, object> variables)
+		object IFormula.Evaluate(object host, IDictionary<string, object> variables = null)
 		{
-			return Evaluate(variables);
+			return Evaluate(host, variables);
 		}
 
-		object IFormula.Evaluate(object host)
-		{
-			return Evaluate(host);
-		}
-
-		public abstract T Evaluate(IDictionary<string, object> variables);
-
-		public abstract T Evaluate(object host);
+		public abstract T Evaluate(object host, IDictionary<string, object> variables = null);
 
 		public override string ToString()
 		{
@@ -217,10 +215,5 @@ namespace FrEee.Modding
 		public abstract Formula<string> ToStringFormula(CultureInfo c = null);
 
 		protected abstract T ComputeValue();
-
-		/// <summary>
-		/// The external scripts required to execute this formula.
-		/// </summary>
-		public Script[] ExternalScripts { get; set; }
 	}
 }

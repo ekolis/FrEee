@@ -26,6 +26,7 @@ namespace FrEee.Modding.Loaders
 			foreach (var rec in DataFile.Records)
 			{
 				var f = new FacilityTemplate();
+				f.TemplateParameters = rec.Parameters;
 				mod.FacilityTemplates.Add(f);
 
 				int index = -1;

@@ -120,6 +120,11 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public IList<Trait> RestrictedTraits { get; private set; }
 
+		/// <summary>
+		/// Parameters from the mod meta templates.
+		/// </summary>
+		public IDictionary<string, object> TemplateParameters { get; set; }
+
 		public IList<Requirement<Empire>> UnlockRequirements
 		{
 			get

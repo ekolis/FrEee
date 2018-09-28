@@ -102,15 +102,9 @@ namespace FrEee.Modding
 			return Text == other.Text;
 		}
 
-		public override T Evaluate(IDictionary<string, object> variables)
+		public override T Evaluate(object host, IDictionary<string, object> variables = null)
 		{
 			// no need to call a script
-			return Value;
-		}
-
-		public override T Evaluate(object host)
-		{
-			// no need to set variables or call a script
 			return Value;
 		}
 

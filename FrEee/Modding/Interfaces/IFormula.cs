@@ -15,9 +15,7 @@ namespace FrEee.Modding.Interfaces
 
 		object Value { get; }
 
-		object Evaluate(IDictionary<string, object> variables);
-
-		object Evaluate(object host);
+		object Evaluate(object host, IDictionary<string, object> variables = null);
 
 		Formula<string> ToStringFormula(CultureInfo c = null);
 	}
@@ -26,8 +24,6 @@ namespace FrEee.Modding.Interfaces
 	{
 		new T Value { get; }
 
-		new T Evaluate(IDictionary<string, object> variables);
-
-		new T Evaluate(object host);
+		new T Evaluate(object host, IDictionary<string, object> variables = null);
 	}
 }

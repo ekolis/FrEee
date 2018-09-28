@@ -274,6 +274,11 @@ namespace FrEee.Game.Objects.Technology
 		public int Size { get; set; }
 
 		/// <summary>
+		/// Parameters from the mod meta templates.
+		/// </summary>
+		public IDictionary<string, object> TemplateParameters { get; set; }
+
+		/// <summary>
 		/// The number of thrust points required to generate 1 movement point.
 		/// Also known as Engines Per Move, though technically engines can generate more than 1 thrust point.
 		/// </summary>
