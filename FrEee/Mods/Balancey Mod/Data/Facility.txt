@@ -785,7 +785,7 @@ Facility Group      := Ship Support
 Facility Family     := 53
 Roman Numeral       := =level
 Restrictions        := None
-Pic Num             := Energy Transmission Lens
+Pic Num             := 51
 Cost Minerals       := 5000
 Cost Organics       := 0
 Cost Radioactives   := 10000
