@@ -3899,7 +3899,7 @@ Supply Amount Used    := 5
 Restrictions          := None
 General Group         := Weapons
 Family                := 2035
-Roman Numeral         := =level0
+Roman Numeral         := =level
 Custom Group          := 0
 Tech Area Req         := Crystalline Weapons
 Tech Level Req        := 10
