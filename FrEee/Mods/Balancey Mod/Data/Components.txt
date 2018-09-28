@@ -2588,6 +2588,8 @@ Weapon Modifier       := 0
 Weapon Sound          := mine.wav
 Weapon Family         := Mine Warhead
 
+Parameter Name        := level
+Parameter Maximum     := 5
 Name                  := TODO
 Description           := To remind me where I left off!
 Pic Num               := 24
