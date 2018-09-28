@@ -32,7 +32,7 @@ namespace FrEee.Modding.Loaders
 		{
 			// TODO - should scripts be mod objects?
 			{
-				var name = "Global";
+				var name = "builtins";
 				string filename;
 				string stockFilename = filename = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Scripts", name);
 				if (ModPath == null)
