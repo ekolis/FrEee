@@ -21,6 +21,7 @@ namespace FrEee.Modding.Loaders
 			foreach (var rec in DataFile.Records)
 			{
 				var h = new HappinessModel();
+				h.TemplateParameters = rec.Parameters;
 				mod.HappinessModels.Add(h);
 
 				h.ModID = rec.Get<string>("ID", h);

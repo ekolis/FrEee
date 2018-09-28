@@ -34,6 +34,7 @@ namespace FrEee.Modding.Loaders
 			foreach (var rec in DataFile.Records)
 			{
 				var c = new ComponentTemplate();
+				c.TemplateParameters = rec.Parameters;
 				mod.ComponentTemplates.Add(c);
 
 				int index = -1;

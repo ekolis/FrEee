@@ -96,6 +96,11 @@ namespace FrEee.Game.Objects.Abilities
 		public AbilityTargets Targets { get; set; }
 
 		/// <summary>
+		/// Parameters from the mod meta templates.
+		/// </summary>
+		public IDictionary<string, object> TemplateParameters { get; set; }
+
+		/// <summary>
 		/// The rules for grouping and stacking abilities.
 		/// </summary>
 		public IList<AbilityValueRule> ValueRules { get; set; }

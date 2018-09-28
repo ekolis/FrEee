@@ -25,6 +25,7 @@ namespace FrEee.Modding.Loaders
 			foreach (var rec in DataFile.Records)
 			{
 				var et = new EventTemplate();
+				et.TemplateParameters = rec.Parameters;
 				mod.EventTemplates.Add(et);
 
 				et.ModID = rec.Get<string>("ID", et);

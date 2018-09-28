@@ -2,7 +2,6 @@
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Events;
 using FrEee.Modding.Interfaces;
-using System;
 using System.Collections.Generic;
 
 namespace FrEee.Modding
@@ -28,14 +27,24 @@ namespace FrEee.Modding
 		public bool IsDisposed { get; set; }
 
 		/// <summary>
-		/// The message to send to affected players when the event occurs.
-		/// </summary>
-		public ICollection<EventMessage> OccurrenceMessages { get; set; }
-
-		/// <summary>
 		/// Who will receive a message when this event occurs?
 		/// </summary>
 		public EventMessageTarget MessageTarget { get; set; }
+
+		/// <summary>
+		/// An ID used to represent this mod object.
+		/// </summary>
+		public string ModID { get; set; }
+
+		/// <summary>
+		/// Not used.
+		/// </summary>
+		public string Name { get; set; }
+
+		/// <summary>
+		/// The message to send to affected players when the event occurs.
+		/// </summary>
+		public ICollection<EventMessage> OccurrenceMessages { get; set; }
 
 		/// <summary>
 		/// The name of the picture to display when this event occurs.
@@ -49,14 +58,14 @@ namespace FrEee.Modding
 		public EventSeverity Severity { get; set; }
 
 		/// <summary>
+		/// Parameters from the mod meta templates.
+		/// </summary>
+		public IDictionary<string, object> TemplateParameters { get; set; }
+
+		/// <summary>
 		/// How long after being triggered until this event actually occurs?
 		/// </summary>
 		public Formula<int> TimeTillCompletion { get; set; }
-
-		/// <summary>
-		/// The message to send to affected players when the event is triggered.
-		/// </summary>
-		public ICollection<EventMessage> WarningMessages { get; set; }
 
 		/// <summary>
 		/// The type of event.
@@ -64,14 +73,9 @@ namespace FrEee.Modding
 		public EventType Type { get; set; }
 
 		/// <summary>
-		/// An ID used to represent this mod object.
+		/// The message to send to affected players when the event is triggered.
 		/// </summary>
-		public string ModID { get; set; }
-
-		/// <summary>
-		/// Not used.
-		/// </summary>
-		public string Name { get; set; }
+		public ICollection<EventMessage> WarningMessages { get; set; }
 
 		/// <summary>
 		/// Instantiates an event.

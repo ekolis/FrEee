@@ -25,6 +25,7 @@ namespace FrEee.Modding.Loaders
 			foreach (var rec in DataFile.Records)
 			{
 				var galtemp = new GalaxyTemplate();
+				galtemp.TemplateParameters = rec.Parameters;
 				string temp;
 				int index = -1;
 

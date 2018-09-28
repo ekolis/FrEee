@@ -21,12 +21,12 @@ namespace FrEee.Modding
 		/// </summary>
 		public Script Action { get; set; }
 
-		public bool IsDisposed { get; set; }
-
 		/// <summary>
 		/// The import statements required to run the target selector and action scripts.
 		/// </summary>
 		public Script Imports { get; set; }
+
+		public bool IsDisposed { get; set; }
 
 		/// <summary>
 		/// When is this a negative event?
@@ -51,6 +51,11 @@ namespace FrEee.Modding
 		/// Script to select a target for the event.
 		/// </summary>
 		public ObjectFormula<GalaxyReferenceSet<IReferrable>> TargetSelector { get; set; }
+
+		/// <summary>
+		/// Parameters from the mod meta templates.
+		/// </summary>
+		public IDictionary<string, object> TemplateParameters { get; set; }
 
 		public override string ToString()
 		{

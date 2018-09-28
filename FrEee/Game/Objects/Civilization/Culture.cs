@@ -2,6 +2,7 @@
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using System;
+using System.Collections.Generic;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -51,6 +52,12 @@ namespace FrEee.Game.Objects.Civilization
 		public int Repair { get; set; }
 		public int Research { get; set; }
 		public int SpaceCombat { get; set; }
+
+		/// <summary>
+		/// Parameters from the mod meta templates.
+		/// </summary>
+		public IDictionary<string, object> TemplateParameters { get; set; }
+
 		public int Trade { get; set; }
 
 		public void Dispose()

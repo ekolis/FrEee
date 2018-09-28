@@ -9,9 +9,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-using System.Security;
-using System.Security.Permissions;
-using System.Security.Policy;
 
 namespace FrEee.Modding
 {
@@ -32,6 +29,11 @@ namespace FrEee.Modding
 			engine.Runtime.LoadAssembly(Assembly.GetAssembly(typeof(CommonExtensions))); // load FrEee.Core.dll
 			scope = engine.CreateScope();
 		}
+
+		/// <summary>
+		/// The results
+		/// </summary>
+		private static SafeDictionary<CompiledCodeWithVariables, object> Results { get; set; } = new SafeDictionary<CompiledCodeWithVariables, object>();
 
 		private static IDictionary<ScriptCode, Script> codeScripts = new Dictionary<ScriptCode, Script>();
 
@@ -349,7 +351,6 @@ namespace FrEee.Modding
 
 			foreach (var kvp in variables)
 				engine.GetBuiltinModule().SetVariable(kvp.Key, kvp.Value);
-				
 		}
 
 		/// <summary>
@@ -387,6 +388,16 @@ namespace FrEee.Modding
 			public CompiledCode Code { get; set; }
 			public SafeDictionary<string, object> Variables { get; set; }
 
+			public static bool operator !=(CompiledCodeWithVariables c1, CompiledCodeWithVariables c2)
+			{
+				return !(c1 == c2);
+			}
+
+			public static bool operator ==(CompiledCodeWithVariables c1, CompiledCodeWithVariables c2)
+			{
+				return c1.Equals(c2);
+			}
+
 			public bool Equals(CompiledCodeWithVariables other)
 			{
 				return Code == other.Code && Variables.Keys.Count == other.Variables.Keys.Count && Variables.All(kvp => kvp.Value.SafeEquals(other.Variables[kvp.Key]));
@@ -399,26 +410,11 @@ namespace FrEee.Modding
 				return false;
 			}
 
-			public static bool operator ==(CompiledCodeWithVariables c1, CompiledCodeWithVariables c2)
-			{
-				return c1.Equals(c2);
-			}
-
-			public static bool operator !=(CompiledCodeWithVariables c1, CompiledCodeWithVariables c2)
-			{
-				return !(c1 == c2);
-			}
-
 			public override int GetHashCode()
 			{
 				return HashCodeMasher.Mash(Code) ^ HashCodeMasher.Mash(Variables.Keys.ToArray()) ^ HashCodeMasher.Mash(Variables.Values.ToArray());
 			}
 		}
-
-		/// <summary>
-		/// The results
-		/// </summary>
-		private static SafeDictionary<CompiledCodeWithVariables, object> Results { get; set; } = new SafeDictionary<CompiledCodeWithVariables, object>();
 
 		private class ScriptCode
 		{

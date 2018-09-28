@@ -57,7 +57,7 @@ namespace FrEee.Modding
 			get
 			{
 				if (IsDynamic)
-					return Evaluate(Context);
+					return Evaluate(Context, null);
 				else
 				{
 					if (value == null)
@@ -113,27 +113,30 @@ namespace FrEee.Modding
 			return IsDynamic == other.IsDynamic && Text == other.Text && Context == other.Context;
 		}
 
-		public override T Evaluate(IDictionary<string, object> variables)
+		public override T Evaluate(object host, IDictionary<string, object> variables = null)
 		{
+			var parms = new Dictionary<string, object>(variables ?? new Dictionary<string, object>());
+			parms.Add("self", Context);
+			parms.Add("host", host);
+			if (host is IFormulaHost fh)
+			{
+				foreach (var kvp in fh.Variables)
+					parms.Add(kvp.Key, kvp.Value);
+			}
+			if (host is IModObject mo)
+			{
+				if (mo.TemplateParameters != null)
+				{
+					foreach (var kvp in mo.TemplateParameters)
+						parms.Add(kvp.Key, kvp.Value);
+				}
+			}
 			string fulltext;
 			if (ExternalScripts == null)
 				fulltext = Text;
 			else
 				fulltext = string.Join("\n", ExternalScripts.Select(q => q.Text)) + "\n" + Text;
-			return ScriptEngine.EvaluateExpression<T>(fulltext, variables);
-		}
-
-		public override T Evaluate(object host)
-		{
-			var variables = new Dictionary<string, object>();
-			variables.Add("self", Context);
-			variables.Add("host", host);
-			if (host is IFormulaHost)
-			{
-				foreach (var kvp in ((IFormulaHost)host).Variables)
-					variables.Add(kvp.Key, kvp.Value);
-			}
-			return Evaluate(variables);
+			return ScriptEngine.EvaluateExpression<T>(fulltext, parms);
 		}
 
 		public override int GetHashCode()
@@ -149,7 +152,7 @@ namespace FrEee.Modding
 
 		protected override T ComputeValue()
 		{
-			return Evaluate(Context);
+			return Evaluate(Context, null);
 		}
 	}
 }

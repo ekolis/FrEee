@@ -104,6 +104,11 @@ namespace FrEee.Modding.Templates
 		public IList<IStellarObjectLocation> StellarObjectLocations { get; private set; }
 
 		/// <summary>
+		/// Parameters from the mod meta templates.
+		/// </summary>
+		public IDictionary<string, object> TemplateParameters { get; set; }
+
+		/// <summary>
 		/// Abilities for random warp points in systems generated from this template.
 		/// </summary>
 		public RandomAbilityTemplate WarpPointAbilities { get; set; }

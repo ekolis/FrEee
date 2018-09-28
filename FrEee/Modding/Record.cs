@@ -35,6 +35,11 @@ namespace FrEee.Modding
 		/// </summary>
 		public IList<Field> Fields { get; private set; }
 
+		/// <summary>
+		/// Parameters from the mod meta templates.
+		/// </summary>
+		public IDictionary<string, object> Parameters { get; set; }
+
 		public Field FindField(string fieldName, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = true)
 		{
 			return FindField(new string[] { fieldName }, ref index, logErrors, startIndex, allowSkip);

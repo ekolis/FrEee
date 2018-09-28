@@ -75,6 +75,11 @@ namespace FrEee.Modding.Templates
 		/// </summary>
 		public IDictionary<StarSystemTemplate, int> StarSystemTemplateChances { get; set; }
 
+		/// <summary>
+		/// Parameters from the mod meta templates.
+		/// </summary>
+		public IDictionary<string, object> TemplateParameters { get; set; }
+
 		public void Dispose()
 		{
 			// TODO - remove it from somewhere?

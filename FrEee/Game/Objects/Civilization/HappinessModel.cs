@@ -1,5 +1,6 @@
 ﻿using FrEee.Modding;
 using FrEee.Modding.Interfaces;
+using System.Collections.Generic;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -48,6 +49,11 @@ namespace FrEee.Game.Objects.Civilization
 		public int OurTroopOnPlanet { get; set; }
 		public int PlanetColonized { get; set; }
 		public int ShipConstructed { get; set; }
+
+		/// <summary>
+		/// Parameters from the mod meta templates.
+		/// </summary>
+		public IDictionary<string, object> TemplateParameters { get; set; }
 
 		public int TreatyMilitaryAlliance { get; set; }
 		public int TreatyNonAggression { get; set; }

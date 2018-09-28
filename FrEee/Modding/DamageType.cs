@@ -1,5 +1,6 @@
 ﻿using FrEee.Modding.Interfaces;
 using FrEee.Utility.Extensions;
+using System.Collections.Generic;
 
 namespace FrEee.Modding
 {
@@ -186,6 +187,11 @@ namespace FrEee.Modding
 		/// Percentage of nominal damage applied as random teleportation within a specified radius. Does not affect velocity.
 		/// </summary>
 		public Formula<int> TargetTeleport { get; set; }
+
+		/// <summary>
+		/// Parameters from the mod meta templates.
+		/// </summary>
+		public IDictionary<string, object> TemplateParameters { get; set; }
 
 		public override string ToString()
 		{

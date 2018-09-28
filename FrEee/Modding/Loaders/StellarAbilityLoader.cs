@@ -24,6 +24,7 @@ namespace FrEee.Modding.Loaders
 			foreach (var rec in DataFile.Records)
 			{
 				var sabil = new RandomAbilityTemplate();
+				sabil.TemplateParameters = rec.Parameters;
 				string temp;
 				int index = -1;
 

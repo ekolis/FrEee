@@ -258,6 +258,11 @@ namespace FrEee.Game.Objects.Space
 			get { return this.GetAbilityValue("Supply Storage").ToInt(); }
 		}
 
+		/// <summary>
+		/// Parameters from the mod meta templates.
+		/// </summary>
+		public IDictionary<string, object> TemplateParameters { get; set; }
+
 		public double Timestamp { get; set; }
 		private Sector sector;
 

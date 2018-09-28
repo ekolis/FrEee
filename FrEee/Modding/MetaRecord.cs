@@ -107,6 +107,9 @@ namespace FrEee.Modding
 			foreach (var permutation in permutations)
 			{
 				var rec = new Record();
+				rec.Parameters = new Dictionary<string, object>();
+				foreach (var kvp in permutation)
+					rec.Parameters.Add(kvp.Key, kvp.Value);
 				foreach (var f in Fields)
 				{
 					if (!f.Name.StartsWith("Parameter "))
