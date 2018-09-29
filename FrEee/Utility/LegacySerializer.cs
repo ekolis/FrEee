@@ -131,7 +131,7 @@ namespace FrEee.Utility
 				w.Write(tabs);
 
 			// serialize the object
-			if (StringifierLibrary.Instance.All?.Any(x => x.SupportedType == type) ?? false)
+			if (StringifierLibrary.Instance.All?.Any(x => x.SupportedType.IsAssignableFrom(type)) ?? false)
 				WriteStringifiedObject(o, w);
 			else if (type.IsPrimitive || typeof(Enum).IsAssignableFrom(type) || type.Name == "Nullable`1")
 				WritePrimitiveOrEnum(o, w);
@@ -204,7 +204,7 @@ namespace FrEee.Utility
 			// the object!
 			object o;
 
-			if (StringifierLibrary.Instance.All?.Any(x => x.SupportedType == type) ?? false)
+			if (StringifierLibrary.Instance.All?.Any(x => x.SupportedType.IsAssignableFrom(type)) ?? false)
 			{
 				o = DeserializeStringifiedObject(r, type, context, log);
 			}
@@ -547,7 +547,15 @@ namespace FrEee.Utility
 				log.Append((char)fin);
 			if (fin == 's')
 			{
-				var stringifier = StringifierLibrary.Instance.All.Single(x => x.SupportedType == type);
+				IStringifier stringifier = null;
+				var t = type;
+				while (stringifier == null && t != null)
+				{
+					stringifier = StringifierLibrary.Instance.All.SingleOrDefault(x => x.SupportedType == t);
+					t = t.BaseType;
+				}
+				if (stringifier == null)
+					throw new Exception("Can't find stringifier to deserialize " + type);
 				var dummy = r.ReadTo(':', log);
 				var val = r.ReadToEndOfLine(';', log);
 				o = stringifier.Destringify(val);
@@ -928,7 +936,16 @@ namespace FrEee.Utility
 
 		private static void WriteStringifiedObject(object o, TextWriter w)
 		{
-			w.WriteLine("s:" + StringifierLibrary.Instance.All.Single(x => x.SupportedType == o.GetType()).Stringify(o) + ";");
+			IStringifier stringifier = null;
+			var t = o.GetType();
+			while (stringifier == null && t != null)
+			{
+				stringifier = StringifierLibrary.Instance.All.SingleOrDefault(x => x.SupportedType == t);
+				t = t.BaseType;
+			}
+			if (stringifier == null)
+				throw new Exception("Can't find stringifier to deserialize " + o.GetType());
+			w.WriteLine("s:" + stringifier.Stringify(o) + ";");
 		}
 	}
 }
