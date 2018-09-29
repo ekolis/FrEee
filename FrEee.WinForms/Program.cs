@@ -60,7 +60,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 		private static int Main(string[] args)
 		{
 			// log exceptions online
-			AppDomain.CurrentDomain.FirstChanceException += (sender, e) =>
+			AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
 			{
 				try
 				{
@@ -80,7 +80,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 						var response = http.PostAsync("http://edkolis.com/errorlog", content).Result;
 						var responseString = response.Content.ReadAsStringAsync().Result;
 					}
-					Log(e.Exception);
+					Log((Exception)e.ExceptionObject);
 				}
 				catch (Exception ex)
 				{
