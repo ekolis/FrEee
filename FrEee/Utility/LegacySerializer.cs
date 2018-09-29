@@ -148,8 +148,9 @@ namespace FrEee.Utility
 			else
 				WriteObject(o, w, context, tabLevel);
 
-			// flush the stream
-			w.Flush();
+			// flush the stream if we're all done
+			if (tabLevel == 0)
+				w.Flush();
 		}
 
 		private static object Deserialize(TextReader r, Type desiredType, bool isRoot, ObjectGraphContext context = null, StringBuilder log = null)
