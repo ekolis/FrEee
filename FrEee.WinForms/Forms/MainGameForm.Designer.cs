@@ -233,6 +233,7 @@ namespace FrEee.WinForms.Forms
 			this.btnNextIdle.Text = "Next";
 			this.toolTip.SetToolTip(this.btnNextIdle, "(Tab) Next Idle Space Object");
 			this.btnNextIdle.UseVisualStyleBackColor = false;
+			this.btnNextIdle.Click += new System.EventHandler(this.btnNextIdle_Click);
 			// 
 			// btnRepair
 			// 
@@ -259,6 +260,7 @@ namespace FrEee.WinForms.Forms
 			this.btnPrevIdle.Text = "Prev";
 			this.toolTip.SetToolTip(this.btnPrevIdle, "(Shift-Tab) Previous Idle Space Object");
 			this.btnPrevIdle.UseVisualStyleBackColor = false;
+			this.btnPrevIdle.Click += new System.EventHandler(this.btnPrevIdle_Click);
 			// 
 			// btnResupply
 			// 
@@ -915,12 +917,10 @@ namespace FrEee.WinForms.Forms
 			this.Controls.Add(this.pnlLayout);
 			this.DoubleBuffered = true;
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ForeColor = System.Drawing.Color.White;
 			this.KeyPreview = true;
 			this.Margin = new System.Windows.Forms.Padding(4);
 			this.MinimumSize = new System.Drawing.Size(900, 700);
 			this.Name = "MainGameForm";
-			this.Text = "FrEee";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameForm_FormClosing);
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GameForm_FormClosed);
 			this.Load += new System.EventHandler(this.GameForm_Load);
