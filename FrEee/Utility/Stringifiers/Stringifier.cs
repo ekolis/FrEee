@@ -19,7 +19,7 @@ namespace FrEee.Utility.Stringifiers
 		{
 			if (o == null)
 				return null;
-			if (o.GetType() == typeof(T))
+			if (typeof(T).IsAssignableFrom(o.GetType()))
 				return Stringify((T)o);
 			throw new ArgumentException($"Stringifier of type {typeof(T)} can't stringify objects of type {o.GetType()}");
 		}
