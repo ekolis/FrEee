@@ -16,15 +16,13 @@ namespace FrEee.WinForms.Forms
 			{
 				Text = "Victory!";
 				pic.Image = Pictures.GetModImage(Path.Combine("Pictures", "Game", "Finale", "victory"));
-				Music.CurrentMode = MusicMode.GameOver;
-				Music.CurrentMood = MusicMood.Upbeat;
+				Music.Play(MusicMode.GameOver, MusicMood.Upbeat);
 			}
 			else
 			{
 				Text = "Defeat!";
 				pic.Image = Pictures.GetModImage(Path.Combine("Pictures", "Game", "Finale", "defeat"));
-				Music.CurrentMode = MusicMode.GameOver;
-				Music.CurrentMood = MusicMood.Sad;
+				Music.Play(MusicMode.GameOver, MusicMood.Sad);
 			}
 		}
 
