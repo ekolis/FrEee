@@ -213,6 +213,11 @@ namespace FrEee.WinForms.Objects
 		/// Music to play during combat.
 		/// </summary>
 		Combat,
+
+		/// <summary>
+		/// Music to play when the game is over (victory or defeat).
+		/// </summary>
+		GameOver,
 	}
 
 	/// <summary>
