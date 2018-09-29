@@ -116,6 +116,8 @@ namespace FrEee.WinForms.Objects
 				wc = new WaveChannel32(new Mp3FileReader(track.Path));
 			else if (tl.EndsWith("wav"))
 				wc = new WaveChannel32(new WaveFileReader(track.Path));
+			else if (tl.EndsWith("aiff") || tl.EndsWith("aif"))
+				wc = new WaveChannel32(new AiffFileReader(track.Path));
 			else
 				throw new Exception("Unknown audio format for file " + track.Path);
 
@@ -155,7 +157,9 @@ namespace FrEee.WinForms.Objects
 						{
 							files = Directory.GetFiles(folder, "*.ogg").Union(
 								Directory.GetFiles(folder, "*.mp3")).Union(
-								Directory.GetFiles(folder, "*.wav"));
+								Directory.GetFiles(folder, "*.wav")).Union(
+								Directory.GetFiles(folder, "*.aiff")).Union(
+								Directory.GetFiles(folder, "*.aif"));
 						}
 						catch
 						{
