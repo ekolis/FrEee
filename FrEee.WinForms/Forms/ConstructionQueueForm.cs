@@ -29,12 +29,19 @@ namespace FrEee.WinForms.Forms
 			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
 			catch { }
 
-			chkOnHold.Checked = queue.AreOrdersOnHold;
-			chkRepeat.Checked = queue.AreRepeatOrdersEnabled;
+
+			// setup command list
+			newCommands = new List<ICommand>();
+			removedCommands = new List<ICommand>();
+
+			wasOnHold = chkOnHold.Checked = queue.AreOrdersOnHold;
+			wasRepeat = chkRepeat.Checked = queue.AreRepeatOrdersEnabled;
 			lblSpaceportWarning.Visible = queue.IsColonyQueue && !queue.Colony.Container.StarSystem.HasAbility("Spaceport") && queue.Colony.MerchantsRatio < 1;
 		}
 
 		public ConstructionQueue ConstructionQueue { get; private set; }
+
+		private bool wasRepeat, wasOnHold;
 
 		/// <summary>
 		/// The queued orders that are selected by the player.
@@ -435,6 +442,10 @@ namespace FrEee.WinForms.Forms
 			ConstructionQueue.Orders.Clear();
 			foreach (var order in oldQueue)
 				ConstructionQueue.Orders.Add(order);
+			Empire.Current.Commands.Remove(Empire.Current.Commands.OfType<ToggleOrdersOnHoldCommand>().SingleOrDefault(x => x.Executor == ConstructionQueue));
+			Empire.Current.Commands.Remove(Empire.Current.Commands.OfType<ToggleRepeatOrdersCommand>().SingleOrDefault(x => x.Executor == ConstructionQueue));
+			ConstructionQueue.AreOrdersOnHold = wasOnHold;
+			ConstructionQueue.AreRepeatOrdersEnabled = wasRepeat;
 		}
 
 		private void chkExpanded_CheckedChanged(object sender, EventArgs e)
@@ -503,11 +514,7 @@ namespace FrEee.WinForms.Forms
 
 			// show existing queued items
 			BindQueueListView();
-
-			// setup command list
-			newCommands = new List<ICommand>();
-			removedCommands = new List<ICommand>();
-
+			
 			oldQueue = new List<IConstructionOrder>();
 			foreach (var order in ConstructionQueue.Orders)
 				oldQueue.Add(order);
@@ -983,14 +990,27 @@ namespace FrEee.WinForms.Forms
 
 		private void chkRepeat_CheckedChanged(object sender, EventArgs e)
 		{
-			var cmd = Empire.Current.Commands.OfType<ToggleRepeatOrdersCommand>().SingleOrDefault(x => x.Executor == ConstructionQueue);
+			var cmd = (Empire.Current.Commands.Union(newCommands ?? Enumerable.Empty<ICommand>())).OfType<ToggleRepeatOrdersCommand>().SingleOrDefault(x => x.Executor == ConstructionQueue);
 			if (cmd == null)
 			{
 				cmd = new ToggleRepeatOrdersCommand(ConstructionQueue, chkRepeat.Checked);
-				Empire.Current.Commands.Add(cmd);
+				newCommands.Add(cmd);
 			}
 			else
 				cmd.AreRepeatOrdersEnabled = chkRepeat.Checked;
+			cmd.Execute();
+		}
+
+		private void chkOnHold_CheckedChanged(object sender, EventArgs e)
+		{
+			var cmd = (Empire.Current.Commands.Union(newCommands ?? Enumerable.Empty<ICommand>())).OfType<ToggleOrdersOnHoldCommand>().SingleOrDefault(x => x.Executor == ConstructionQueue);
+			if (cmd == null)
+			{
+				cmd = new ToggleOrdersOnHoldCommand(ConstructionQueue, chkOnHold.Checked);
+				newCommands.Add(cmd);
+			}
+			else
+				cmd.AreOrdersOnHold = chkOnHold.Checked;
 			cmd.Execute();
 		}
 	}

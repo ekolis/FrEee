@@ -152,6 +152,7 @@
 			this.chkOnHold.TabIndex = 11;
 			this.chkOnHold.Text = "On Hold";
 			this.chkOnHold.UseVisualStyleBackColor = true;
+			this.chkOnHold.CheckedChanged += new System.EventHandler(this.chkOnHold_CheckedChanged);
 			// 
 			// btnBottom
 			// 
