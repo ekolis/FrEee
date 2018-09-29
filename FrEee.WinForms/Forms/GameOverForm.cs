@@ -1,4 +1,5 @@
 ﻿using FrEee.Utility;
+using FrEee.WinForms.Objects;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -15,11 +16,15 @@ namespace FrEee.WinForms.Forms
 			{
 				Text = "Victory!";
 				pic.Image = Pictures.GetModImage(Path.Combine("Pictures", "Game", "Finale", "victory"));
+				Music.CurrentMode = MusicMode.GameOver;
+				Music.CurrentMood = MusicMood.Upbeat;
 			}
 			else
 			{
 				Text = "Defeat!";
 				pic.Image = Pictures.GetModImage(Path.Combine("Pictures", "Game", "Finale", "defeat"));
+				Music.CurrentMode = MusicMode.GameOver;
+				Music.CurrentMood = MusicMood.Sad;
 			}
 		}
 
