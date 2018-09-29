@@ -282,14 +282,25 @@ namespace FrEee.WinForms.Forms
 				var tech = techs.Where(t => t.Progress.Eta == minEta).First();
 
 				progResearch.Progress = tech.Progress;
-				if (tech.MaximumLevel == 1)
-					progResearch.LeftText = tech.Name;
+				if (tech.CurrentLevel >= tech.MaximumLevel)
+				{
+					// HACK - why are random completed techs appearing for the next researched tech?!
+					progResearch.Value = 0;
+					progResearch.Maximum = 1;
+					progResearch.LeftText = "No Research - Click to Begin";
+					progResearch.RightText = "";
+				}
 				else
-					progResearch.LeftText = tech.Name + " L" + (tech.CurrentLevel + 1);
-				if (tech.Progress.Eta == null)
-					progResearch.RightText = "Never";
-				else
-					progResearch.RightText = tech.Progress.Eta + " turn" + (tech.Progress.Eta == 1 ? "" : "s");
+				{
+					if (tech.MaximumLevel == 1)
+						progResearch.LeftText = tech.Name;
+					else
+						progResearch.LeftText = tech.Name + " L" + (tech.CurrentLevel + 1);
+					if (tech.Progress.Eta == null)
+						progResearch.RightText = "Never";
+					else
+						progResearch.RightText = tech.Progress.Eta + " turn" + (tech.Progress.Eta == 1 ? "" : "s");
+				}
 			}
 			else
 			{
