@@ -116,7 +116,11 @@ namespace FrEee.WinForms.Forms
 					btnPursue.Visible = value is IMobileSpaceObject;
 					btnEvade.Visible = value is IMobileSpaceObject;
 					btnWarp.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).CanWarp;
-					btnColonize.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).Abilities().Any(a => a.Rule.Name.StartsWith("Colonize Planet - "));
+					{
+						btnColonize.Visible =
+						   value is IMobileSpaceObject sobj && sobj.Abilities().Any(a => a.Rule.Name.StartsWith("Colonize Planet - "))
+						   || value is Fleet f && f.LeafVehicles.Any(v => v.Abilities().Any(a => a.Rule.Name.StartsWith("Colonize Planet - ")));
+					}
 					btnSentry.Visible = value is IMobileSpaceObject;
 					btnConstructionQueue.Visible = value != null && value.ConstructionQueue != null;
 					btnTransferCargo.Visible = value != null && (value is ICargoContainer && ((ICargoContainer)value).CargoStorage > 0 || value.SupplyStorage > 0 || value.HasInfiniteSupplies);

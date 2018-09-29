@@ -17,7 +17,7 @@ namespace FrEee.Game.Objects.Orders
 	/// An order to colonize an uninhabited planet.
 	/// </summary>
 	[Serializable]
-	public class ColonizeOrder : IOrder<SpaceVehicle>
+	public class ColonizeOrder : IOrder<IMobileSpaceObject>
 	{
 		public ColonizeOrder(Planet planet)
 		{
@@ -55,7 +55,7 @@ namespace FrEee.Game.Objects.Orders
 		private GalaxyReference<Empire> owner { get; set; }
 		private GalaxyReference<Planet> planet { get; set; }
 
-		public bool CheckCompletion(SpaceVehicle v)
+		public bool CheckCompletion(IMobileSpaceObject v)
 		{
 			return IsComplete;
 		}
@@ -76,17 +76,28 @@ namespace FrEee.Game.Objects.Orders
 		{
 			if (IsDisposed)
 				return;
-			foreach (var v in Galaxy.Current.Referrables.OfType<SpaceVehicle>())
-				v.Orders.Remove(this);
+			foreach (var v in Galaxy.Current.Referrables.OfType<IMobileSpaceObject>())
+			{
+				if (v is SpaceVehicle sv)
+					sv.Orders.Remove(this);
+				else if (v is Fleet f)
+					f.Orders.Remove(this);
+				else if (v is Planet p)
+					p.Orders.Remove(this);
+			}
 			Galaxy.Current.UnassignID(this);
 		}
 
-		public void Execute(SpaceVehicle sobj)
+		public void Execute(IMobileSpaceObject sobj)
 		{
 			// error checking
 			var errors = GetErrors(sobj);
 			foreach (var error in errors)
 				sobj.Owner.Log.Add(error);
+
+			// let only one colony ship from a fleet colonize
+			if (sobj is Fleet f)
+				sobj = f.LeafVehicles.FirstOrDefault(q => q.HasAbility(Planet.ColonizationAbilityName));
 
 			if (!errors.Any())
 			{
@@ -94,15 +105,18 @@ namespace FrEee.Game.Objects.Orders
 				Planet.Colony = new Colony { Owner = sobj.Owner };
 				Owner.TriggerHappinessChange(hm => hm.PlanetColonized);
 				Planet.Colony.ConstructionQueue = new ConstructionQueue(Planet);
-				foreach (var kvp in sobj.Cargo.Population)
+				if (sobj is ICargoContainer cc)
 				{
-					// place population on planet
-					Planet.AddPopulation(kvp.Key, kvp.Value);
-				}
-				foreach (var unit in sobj.Cargo.Units)
-				{
-					// planet unit on planet
-					Planet.AddUnit(unit);
+					foreach (var kvp in cc.Cargo.Population)
+					{
+						// place population on planet
+						Planet.AddPopulation(kvp.Key, kvp.Value);
+					}
+					foreach (var unit in cc.Cargo.Units)
+					{
+						// planet unit on planet
+						Planet.AddUnit(unit);
+					}
 				}
 
 				// ruins?
@@ -175,7 +189,7 @@ namespace FrEee.Game.Objects.Orders
 			sobj.SpendTime(sobj.TimePerMove);
 		}
 
-		public IEnumerable<LogMessage> GetErrors(SpaceVehicle sobj)
+		public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject sobj)
 		{
 			if (sobj.Sector != Planet.Sector)
 			{
@@ -187,7 +201,7 @@ namespace FrEee.Game.Objects.Orders
 				// planet is already colonized!
 				yield return Planet.CreateLogMessage(Planet + " cannot be colonized by " + sobj + " because there is already a colony there belonging to the " + Planet.Colony.Owner + ".");
 			}
-			if (!sobj.HasAbility(Planet.ColonizationAbilityName))
+			if (!(sobj.HasAbility(Planet.ColonizationAbilityName) || sobj is Fleet f && f.LeafVehicles.Any(v => v.HasAbility(Planet.ColonizationAbilityName))))
 			{
 				// no such colony module
 				yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because it lacks a " + Planet.Surface + " colony module.");
