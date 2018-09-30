@@ -19,7 +19,7 @@ namespace FrEee.Tests.Modding
 	public class GalaxyTemplateTest
 	{
 		[TestMethod]
-		public void IntersectionAtEndpointsDoNotCount()
+		public void IntersectionsAtEndpointsDoNotCount()
 		{
 			var p1 = new Point(0, 0);
 			var p2 = new Point(10, 0);
