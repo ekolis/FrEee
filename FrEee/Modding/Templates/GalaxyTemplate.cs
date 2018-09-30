@@ -141,43 +141,14 @@ namespace FrEee.Modding.Templates
 			foreach (var ssl in gal.StarSystemLocations)
 				graph.Add(ssl);
 			bool triedEverything = false;
-			while (graph.Subgraphs.Count() > GameSetup.StarSystemGroups)
+			int wpsGenerated = 0;
+			while (graph.Subgraphs.Count() > GameSetup.StarSystemGroups || wpsGenerated < gal.StarSystemLocations.Count * 3)
 			{
 				// pick 2 systems
 				ObjectLocation<StarSystem> startLocation = null, endLocation = null;
 				var ssls = gal.StarSystemLocations;
 				var fewest = ssls.Min(ssl => GetWarpPointCount(ssl.Item));
 				if (fewest < GameSetup.GalaxyTemplate.MaxWarpPointsPerSystem && !triedEverything)
-				{
-					// place warp points where there aren't many to begin with
-					var candidates = ssls.Where(ssl => GetWarpPointCount(ssl.Item) == fewest);
-					foreach (var candidate in candidates.Shuffle())
-					{
-						// pick a nearby star system to create a warp point to
-						for (int dist = 1; dist < gal.Width + gal.Height; dist++)
-						{
-							var nearby = gal.StarSystemLocations.Where(ssl => ssl.Location.ManhattanDistance(candidate.Location) == dist);
-							nearby = nearby.Where(ssl => GetWarpPointCount(ssl.Item) < GameSetup.GalaxyTemplate.MaxWarpPointsPerSystem);
-							nearby = nearby.Where(ssl => AreWarpPointAnglesOk(candidate, ssl, gal, GameSetup.GalaxyTemplate.MinWarpPointAngle));
-							nearby = nearby.Where(ssl => !graph.GetExits(candidate).Contains(ssl));
-							nearby = nearby.Where(ssl => !IntersectsExceptAtEnds(candidate.Location, ssl.Location, graph));
-							if (nearby.Any())
-							{
-								startLocation = candidate;
-								endLocation = nearby.PickRandom();
-								break;
-							}
-						}
-					}
-
-					// time to give up and place warp points willy nilly (or give up for disconnected maps)?
-					if (startLocation == null || endLocation == null)
-					{
-						triedEverything = true;
-						continue;
-					}
-				}
-				else
 				{
 					// systems are full of warp points - need to connect systems that are not very connected yet
 					(startLocation, endLocation) = MinDistanceDisconnectedSystemPair(graph);
@@ -190,6 +161,8 @@ namespace FrEee.Modding.Templates
 
 					// mark systems connected
 					graph.Connect(startLocation, endLocation, true);
+
+					wpsGenerated++;
 				}
 				else
 					break;
