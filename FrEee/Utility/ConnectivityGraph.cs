@@ -93,7 +93,7 @@ namespace FrEee.Utility
 		}
 
 		/// <summary>
-		/// Are two nodes connected?
+		/// Are two nodes connected through the graph?
 		/// </summary>
 		/// <param name="node1"></param>
 		/// <param name="node2"></param>
@@ -104,6 +104,20 @@ namespace FrEee.Utility
 				return ComputeDistance(node1, node2) != null || ComputeDistance(node2, node1) != null;
 			else
 				return ComputeDistance(node1, node2) != null;
+		}
+
+		/// <summary>
+		/// Are two nodes directly connected?
+		/// </summary>
+		/// <param name="node1"></param>
+		/// <param name="node2"></param>
+		/// <returns></returns>
+		public bool AreDirectlyConnected(T node1, T node2, bool eitherWay = true)
+		{
+			if (eitherWay)
+				return ComputeDistance(node1, node2) <= 1 || ComputeDistance(node2, node1) <= 1;
+			else
+				return ComputeDistance(node1, node2) <= 1;
 		}
 
 		public void Clear()
