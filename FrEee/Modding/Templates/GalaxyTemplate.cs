@@ -221,7 +221,7 @@ namespace FrEee.Modding.Templates
 		}
 
 		/// <summary>
-		/// Determines if a number is between two bounds (exclusive).
+		/// Determines if a number is between two bounds (inclusive).
 		/// </summary>
 		/// <param name="num"></param>
 		/// <param name="bound1"></param>
@@ -229,7 +229,7 @@ namespace FrEee.Modding.Templates
 		/// <returns></returns>
 		private static bool IsBetween(double num, double bound1, double bound2)
 		{
-			return num > bound1 && num < bound2 || num > bound2 && num < bound1;
+			return num >= bound1 && num <= bound2 || num >= bound2 && num <= bound1;
 		}
 
 		private static bool IntersectsExceptAtEnds(Point p1, Point p2, ConnectivityGraph<ObjectLocation<StarSystem>> graph)
@@ -255,6 +255,12 @@ namespace FrEee.Modding.Templates
 		/// <returns></returns>
 		public static bool IntersectsExceptAtEnds(Point p1, Point p2, Point q1, Point q2)
 		{
+			if (p1 == q1 && p2 == q2)
+				return true;
+			if (p1 == q2 && p2 == q1)
+				return true;
+			if (p1 == q1 || p1 == q2 || p2 == q1 || p2 == q2)
+				return false; // intersects only on endpoints
 			var slope1 = (double)(p2.Y - p1.Y) / (double)(p2.X - p1.X);
 			var slope2 = (double)(q2.Y - q1.Y) / (double)(q2.X - q1.X);
 			if (slope1 != slope2)
@@ -306,6 +312,14 @@ namespace FrEee.Modding.Templates
 					if (IsBetween(intersectX, p1.X, p2.X))
 						return true;
 				}
+			}
+			else
+			{ 
+				if (IsBetween(p1.X, q1.X, q2.X) || IsBetween(p2.X, q1.X, q2.X) 
+					|| IsBetween(q1.X, p1.X, p2.X) || IsBetween(q2.X, p1.X, p2.X)
+					|| IsBetween(p1.Y, q1.Y, q2.Y) || IsBetween(p2.Y, q1.Y, q2.Y)
+					|| IsBetween(q1.Y, p1.Y, p2.Y) || IsBetween(q2.Y, p1.Y, p2.Y))
+					return true;
 			}
 			return false;
 		}
