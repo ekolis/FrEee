@@ -29,7 +29,7 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
-		/// Removes points within a certain Manhattan distance of a certain point.
+		/// Removes points within a certain eight way distance of a certain point.
 		/// </summary>
 		/// <param name="points">The points to start with.</param>
 		/// <param name="center">The point to block out.</param>
@@ -39,7 +39,7 @@ namespace FrEee.Utility.Extensions
 		{
 			foreach (var p in points)
 			{
-				if (center.ManhattanDistance(p) > distance)
+				if (center.EightWayDistance(p) > distance)
 					yield return p;
 			}
 		}

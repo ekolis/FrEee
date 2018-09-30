@@ -149,10 +149,7 @@ namespace FrEee.Modding.Templates
 				var ssls = gal.StarSystemLocations;
 				var fewest = ssls.Min(ssl => GetWarpPointCount(ssl.Item));
 				if (fewest < GameSetup.GalaxyTemplate.MaxWarpPointsPerSystem && !triedEverything)
-				{
-					// systems are full of warp points - need to connect systems that are not very connected yet
 					(startLocation, endLocation) = MinDistanceDisconnectedSystemPair(graph);
-				}
 
 				// create the warp points
 				if (startLocation != null && endLocation != null)
@@ -167,6 +164,8 @@ namespace FrEee.Modding.Templates
 				else
 					break;
 			}
+
+			// TODO - delete excess warp points if system groups count is >1
 
 			return gal;
 		}
