@@ -118,6 +118,7 @@
     <Compile Include="Game\Objects\Vehicles\DamageTest.cs" />
     <Compile Include="Game\Setup\GameSetupTest.cs" />
     <Compile Include="Modding\Loaders\ComponentLoaderTest.cs" />
+    <Compile Include="Modding\Templates\GalaxyTemplateTest.cs" />
     <Compile Include="TestUtilities.cs" />
     <Compile Include="Modding\FormulaTest.cs" />
     <Compile Include="Modding\Loaders\LoaderTest.cs" />
@@ -141,7 +142,6 @@
     <Folder Include="Game\Objects\Combat\Simple\" />
     <Folder Include="Game\Objects\Commands\" />
     <Folder Include="Game\Objects\LogMessages\" />
-    <Folder Include="Modding\Templates\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FrEee\FrEee.csproj">
