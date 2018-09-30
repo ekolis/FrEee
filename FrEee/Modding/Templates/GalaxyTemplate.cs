@@ -145,8 +145,6 @@ namespace FrEee.Modding.Templates
 			{
 				// pick 2 systems
 				ObjectLocation<StarSystem> startLocation = null, endLocation = null;
-				var ssls = gal.StarSystemLocations;
-				var fewest = ssls.Min(ssl => GetWarpPointCount(ssl.Item));
 				(startLocation, endLocation) = MinDistanceDisconnectedSystemPair(graph);
 
 				// create the warp points
