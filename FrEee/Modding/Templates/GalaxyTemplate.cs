@@ -307,7 +307,7 @@ namespace FrEee.Modding.Templates
 					intersectX = (intercept2 - intercept1) / (slope1 - slope2);
 					intersectY = slope1 * intersectX + intercept1;
 
-					if (IsBetween(intersectX, p1.X, p2.X))
+					if (IsBetween(intersectX, p1.X, p2.X) && IsBetween(intersectX, q1.X, q2.X))
 						return true;
 				}
 			}
