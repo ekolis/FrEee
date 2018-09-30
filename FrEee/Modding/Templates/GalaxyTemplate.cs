@@ -140,16 +140,14 @@ namespace FrEee.Modding.Templates
 			var graph = new ConnectivityGraph<ObjectLocation<StarSystem>>();
 			foreach (var ssl in gal.StarSystemLocations)
 				graph.Add(ssl);
-			bool triedEverything = false;
 			int wpsGenerated = 0;
-			while (graph.Subgraphs.Count() > GameSetup.StarSystemGroups || wpsGenerated < gal.StarSystemLocations.Count * 3)
+			while (wpsGenerated < gal.StarSystemLocations.Count * 2)
 			{
 				// pick 2 systems
 				ObjectLocation<StarSystem> startLocation = null, endLocation = null;
 				var ssls = gal.StarSystemLocations;
 				var fewest = ssls.Min(ssl => GetWarpPointCount(ssl.Item));
-				if (fewest < GameSetup.GalaxyTemplate.MaxWarpPointsPerSystem && !triedEverything)
-					(startLocation, endLocation) = MinDistanceDisconnectedSystemPair(graph);
+				(startLocation, endLocation) = MinDistanceDisconnectedSystemPair(graph);
 
 				// create the warp points
 				if (startLocation != null && endLocation != null)
@@ -172,10 +170,33 @@ namespace FrEee.Modding.Templates
 
 		private (ObjectLocation<StarSystem>, ObjectLocation<StarSystem>) MinDistanceDisconnectedSystemPair(ConnectivityGraph<ObjectLocation<StarSystem>> graph)
 		{
-			if (graph.Subgraphs.Count() < 2)
-				return (null, null); // graph is already connected
+			if (graph.Subgraphs.Count() == 0)
+				return (null, null);
+
 			(ObjectLocation<StarSystem>, ObjectLocation<StarSystem>) best = (null, null);
 			int bestDistance = int.MaxValue;
+
+			if (graph.Subgraphs.Count() == 1)
+			{
+				foreach (var l1 in graph)
+				{
+					foreach (var l2 in graph)
+					{
+						if (graph.AreDirectlyConnected(l1, l2))
+							continue;
+						if (IntersectsExceptAtEnds(l1.Location, l2.Location, graph))
+							continue;
+						var dist = l1.Location.ManhattanDistance(l2.Location);
+						if (dist < bestDistance)
+						{
+							bestDistance = dist;
+							best = (l1, l2);
+						}
+					}
+				}
+				return best;
+			}
+
 			foreach (var g1 in graph.Subgraphs)
 			{
 				foreach (var g2 in graph.Subgraphs.ExceptSingle(g1))
@@ -184,6 +205,8 @@ namespace FrEee.Modding.Templates
 					{
 						foreach (var l2 in g2)
 						{
+							if (graph.AreDirectlyConnected(l1, l2))
+								continue;
 							var dist = l1.Location.ManhattanDistance(l2.Location);
 							if (dist < bestDistance)
 							{
