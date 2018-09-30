@@ -160,6 +160,7 @@ namespace FrEee.Modding.Templates
 							nearby = nearby.Where(ssl => GetWarpPointCount(ssl.Item) < GameSetup.GalaxyTemplate.MaxWarpPointsPerSystem);
 							nearby = nearby.Where(ssl => AreWarpPointAnglesOk(candidate, ssl, gal, GameSetup.GalaxyTemplate.MinWarpPointAngle));
 							nearby = nearby.Where(ssl => !graph.GetExits(candidate).Contains(ssl));
+							nearby = nearby.Where(ssl => !IntersectsExceptAtEnds(candidate.Location, ssl.Location, graph));
 							if (nearby.Any())
 							{
 								startLocation = candidate;
@@ -179,27 +180,7 @@ namespace FrEee.Modding.Templates
 				else
 				{
 					// systems are full of warp points - need to connect systems that are not very connected yet
-					var subgraphs = graph.Subgraphs;
-					var smallest = subgraphs.Min(sg => sg.Count);
-					if (status != null)
-					{
-						var largest = subgraphs.Max(sg => sg.Count);
-						status.Message = "Creating warp points (" + largest + " systems connected)";
-						status.Progress = doneCreatingStarSystemsProgress + largest * progressPerStarSystem;
-					}
-					var candidates = subgraphs.Where(sg => sg.Count == smallest);
-					var subgraph1 = candidates.PickRandom();
-					var subgraph2 = subgraphs.Where(sg => sg != subgraph1).PickRandom();
-					if (subgraph2 == null)
-						break; // no more subgraphs to merge!
-
-					// try to pick systems that are nearby but not already connected
-					var crosstable = subgraph1.Join(subgraph2, ssl => 0, ssl => 0, (ssl1, ssl2) => Tuple.Create(ssl1, ssl2));
-					crosstable = crosstable.Where(t => !graph.GetExits(t.Item1).Contains(t.Item2));
-					var mindist = crosstable.Min(tuple => tuple.Item1.Location.ManhattanDistance(tuple.Item2.Location));
-					var pair = crosstable.Where(tuple => tuple.Item1.Location.ManhattanDistance(tuple.Item2.Location) == mindist).PickRandom();
-					startLocation = pair.Item1;
-					endLocation = pair.Item2;
+					(startLocation, endLocation) = MinDistanceDisconnectedSystemPair(graph);
 				}
 
 				// create the warp points
@@ -215,6 +196,61 @@ namespace FrEee.Modding.Templates
 			}
 
 			return gal;
+		}
+
+		private (ObjectLocation<StarSystem>, ObjectLocation<StarSystem>) MinDistanceDisconnectedSystemPair(ConnectivityGraph<ObjectLocation<StarSystem>> graph)
+		{
+			if (graph.Subgraphs.Count() < 2)
+				return (null, null); // graph is already connected
+			(ObjectLocation<StarSystem>, ObjectLocation<StarSystem>) best = (null, null);
+			int bestDistance = int.MaxValue;
+			foreach (var g1 in graph.Subgraphs)
+			{
+				foreach (var g2 in graph.Subgraphs.ExceptSingle(g1))
+				{
+					foreach (var l1 in g1)
+					{
+						foreach (var l2 in g2)
+						{
+							var dist = l1.Location.ManhattanDistance(l2.Location);
+							if (dist < bestDistance)
+							{
+								bestDistance = dist;
+								best = (l1, l2);
+							}
+						}
+					}
+				}
+			}
+			return best;
+		}
+
+		private bool IntersectsExceptAtEnds(Point p1, Point p2, ConnectivityGraph<ObjectLocation<StarSystem>> graph)
+		{
+			var slope1 = (double)(p2.Y - p1.Y) / (double)(p2.X - p1.X);
+			foreach (var line in graph.Connections)
+			{
+				var slope2 = (double)(line.Item2.Location.Y - line.Item1.Location.Y) / (double)(line.Item2.Location.X - line.Item1.Location.X);
+				if (slope1 != slope2)
+				{
+					// intersect in infinite space! but do the line segments actually intersect?
+					// y = m*x+b
+					// b = y - m*x
+					var intercept1 = p1.Y - slope1 * p1.X;
+					var intercept2 = line.Item1.Location.Y - slope2 * line.Item1.Location.X;
+
+					// m1*x+b1 = m2*x+b2
+					// m1*x-m2*x = b2-b1
+					// x*(m1-m2) = b2-b1
+					// x = (b2-b1)/(m1-m2)
+					var intersectX = (intercept2 - intercept1) / (slope1 - slope2);
+					var intersectY = slope1 * intersectX + intercept1;
+
+					if (intersectX > p1.X && intersectX < p2.X || intersectX < p1.X && intersectX > p2.X)
+						return true;
+				}
+			}
+			return false;
 		}
 
 		private bool AreWarpPointAnglesOk(ObjectLocation<StarSystem> start, ObjectLocation<StarSystem> end, Galaxy gal, int minAngle)
