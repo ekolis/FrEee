@@ -227,70 +227,85 @@ namespace FrEee.Modding.Templates
 		/// <param name="bound1"></param>
 		/// <param name="bound2"></param>
 		/// <returns></returns>
-		private bool IsBetween(double num, double bound1, double bound2)
+		private static bool IsBetween(double num, double bound1, double bound2)
 		{
 			return num > bound1 && num < bound2 || num > bound2 && num < bound1;
 		}
 
-		private bool IntersectsExceptAtEnds(Point p1, Point p2, ConnectivityGraph<ObjectLocation<StarSystem>> graph)
+		private static bool IntersectsExceptAtEnds(Point p1, Point p2, ConnectivityGraph<ObjectLocation<StarSystem>> graph)
 		{
-			var slope1 = (double)(p2.Y - p1.Y) / (double)(p2.X - p1.X);
 			foreach (var line in graph.Connections)
 			{
-				var p3 = line.Item1.Location;
-				var p4 = line.Item2.Location;
-				var slope2 = (double)(p4.Y - p3.Y) / (double)(p4.X - p3.X);
-				if (slope1 != slope2)
-				{
-					// intersect in infinite space! but do the line segments actually intersect?
-					double intercept1, intercept2, intersectX, intersectY;
-					if ((slope1 == double.PositiveInfinity || slope1 == double.NegativeInfinity) && (slope2 == double.PositiveInfinity || slope2 == double.NegativeInfinity))
-					{
-						if (IsBetween(p3.Y, p1.Y, p2.Y) || IsBetween(p4.Y, p1.Y, p2.Y))
-							return true;
-					}
-					else if (slope1 == double.PositiveInfinity || slope1 == double.NegativeInfinity)
-					{
-						// x is a constant for a vertical line
-						intersectX = p1.X;
-
-						// y = m*x+b
-						intercept2 = p3.Y - slope2 * p3.X;
-						intersectY = slope2 * intersectX + intercept2;
-
-						if (IsBetween(intersectY, p1.Y, p2.Y))
-							return true;
-					}
-					else if (slope2 == double.PositiveInfinity || slope2 == double.NegativeInfinity)
-					{
-						// x is a constant for a vertical line
-						intersectX = p3.X;
-
-						// y = m*x+b
-						intercept1 = p1.Y - slope1 * p1.X;
-						intersectY = slope1 * intersectX + intercept1;
-
-						if (IsBetween(intersectY, p1.Y, p2.Y))
-							return true;
-					}
-					else
-					{
-						// y = m*x+b
-						// b = y - m*x
-						intercept1 = p1.Y - slope1 * p1.X;
-						intercept2 = p3.Y - slope2 * p3.X;
-						// m1*x+b1 = m2*x+b2
-						// m1*x-m2*x = b2-b1
-						// x*(m1-m2) = b2-b1
-						// x = (b2-b1)/(m1-m2)
-						intersectX = (intercept2 - intercept1) / (slope1 - slope2);
-						intersectY = slope1 * intersectX + intercept1;
-
-						if (IsBetween(intersectX, p1.X, p2.X))
-							return true;
-					}
-				}
+				var q1 = line.Item1.Location;
+				var q2 = line.Item2.Location;
+				if (IntersectsExceptAtEnds(p1, p2, q1, q2))
+					return true;
 				// else no intersection
+			}
+			return false;
+		}
+
+		/// <summary>
+		/// Public for unit tests.
+		/// </summary>
+		/// <param name="p1"></param>
+		/// <param name="p2"></param>
+		/// <param name="q1"></param>
+		/// <param name="q2"></param>
+		/// <returns></returns>
+		public static bool IntersectsExceptAtEnds(Point p1, Point p2, Point q1, Point q2)
+		{
+			var slope1 = (double)(p2.Y - p1.Y) / (double)(p2.X - p1.X);
+			var slope2 = (double)(q2.Y - q1.Y) / (double)(q2.X - q1.X);
+			if (slope1 != slope2)
+			{
+				// intersect in infinite space! but do the line segments actually intersect?
+				double intercept1, intercept2, intersectX, intersectY;
+				if ((slope1 == double.PositiveInfinity || slope1 == double.NegativeInfinity) && (slope2 == double.PositiveInfinity || slope2 == double.NegativeInfinity))
+				{
+					if (IsBetween(q1.Y, p1.Y, p2.Y) || IsBetween(q2.Y, p1.Y, p2.Y))
+						return true;
+				}
+				else if (slope1 == double.PositiveInfinity || slope1 == double.NegativeInfinity)
+				{
+					// x is a constant for a vertical line
+					intersectX = p1.X;
+
+					// y = m*x+b
+					intercept2 = q1.Y - slope2 * q1.X;
+					intersectY = slope2 * intersectX + intercept2;
+
+					if (IsBetween(intersectY, p1.Y, p2.Y))
+						return true;
+				}
+				else if (slope2 == double.PositiveInfinity || slope2 == double.NegativeInfinity)
+				{
+					// x is a constant for a vertical line
+					intersectX = q1.X;
+
+					// y = m*x+b
+					intercept1 = p1.Y - slope1 * p1.X;
+					intersectY = slope1 * intersectX + intercept1;
+
+					if (IsBetween(intersectY, p1.Y, p2.Y))
+						return true;
+				}
+				else
+				{
+					// y = m*x+b
+					// b = y - m*x
+					intercept1 = p1.Y - slope1 * p1.X;
+					intercept2 = q1.Y - slope2 * q1.X;
+					// m1*x+b1 = m2*x+b2
+					// m1*x-m2*x = b2-b1
+					// x*(m1-m2) = b2-b1
+					// x = (b2-b1)/(m1-m2)
+					intersectX = (intercept2 - intercept1) / (slope1 - slope2);
+					intersectY = slope1 * intersectX + intercept1;
+
+					if (IsBetween(intersectX, p1.X, p2.X))
+						return true;
+				}
 			}
 			return false;
 		}
