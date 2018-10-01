@@ -30,23 +30,20 @@ namespace FrEee.Game.Objects.Space
 
 		public static bool operator ==(ObjectLocation<T> l1, ObjectLocation<T> l2)
 		{
-			if ((object)l1 == null && (object)l2 == null)
+			if (object.ReferenceEquals(l1, l2))
 				return true;
-			if ((object)l1 == null || (object)l2 == null)
+			if (l1 is null || l2 is null)
 				return false;
-			if (l1.Item == null && l2.Item == null)
+			if (object.ReferenceEquals(l1, l2))
 				return l1.Location.Equals(l2.Location);
-			if (l1.Item == null || l2.Item == null)
+			if (object.ReferenceEquals(l1.Item, null) || object.ReferenceEquals(l2.Item, null))
 				return false;
 			return l1.Item.Equals(l2.Item) && l1.Location.Equals(l2.Location);
 		}
 
 		public override bool Equals(object obj)
 		{
-			// TODO - upgrade equals to use "as" operator
-			if (obj is ObjectLocation<T>)
-				return this == (ObjectLocation<T>)obj;
-			return false;
+			return this == obj as ObjectLocation<T>;
 		}
 
 		public override int GetHashCode()
