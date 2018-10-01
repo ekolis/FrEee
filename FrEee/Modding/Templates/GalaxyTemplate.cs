@@ -232,13 +232,15 @@ namespace FrEee.Modding.Templates
 
 		private static bool IntersectsExceptAtEnds(Point p1, Point p2, ConnectivityGraph<ObjectLocation<StarSystem>> graph)
 		{
-			foreach (var line in graph.Connections)
+			foreach (var kvp in graph.Connections)
 			{
-				var q1 = line.Item1.Location;
-				var q2 = line.Item2.Location;
-				if (IntersectsExceptAtEnds(p1, p2, q1, q2))
-					return true;
-				// else no intersection
+				var q1 = kvp.Key.Location;
+				foreach (var q2 in kvp.Value.Select(l => l.Location))
+				{
+					if (IntersectsExceptAtEnds(p1, p2, q1, q2))
+						return true;
+					// else no intersection
+				}
 			}
 			return false;
 		}
