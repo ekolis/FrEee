@@ -30,7 +30,7 @@ namespace FrEee.Utility
 		/// <summary>
 		/// Any connections that have been made.
 		/// </summary>
-		public IEnumerable<Tuple<T, T>> Connections
+		public SafeDictionary<T, HashSet<T>> Connections
 		{
 			get { return connections; }
 		}
@@ -72,7 +72,7 @@ namespace FrEee.Utility
 			}
 		}
 
-		private ISet<Tuple<T, T>> connections = new HashSet<Tuple<T, T>>();
+		private SafeDictionary<T, HashSet<T>> connections = new SafeDictionary<T, HashSet<T>>(true);
 
 		private ISet<T> items = new HashSet<T>();
 
@@ -204,8 +204,7 @@ namespace FrEee.Utility
 		/// <param name="twoWay">Connect both ways?</param>
 		public void Connect(T start, T end, bool twoWay = false)
 		{
-			var link = Tuple.Create(start, end);
-			if (!connections.Contains(link))
+			if (!connections.ContainsKey(start) || !connections[start].Contains(end))
 			{
 				var sub1 = Subgraphs.Single(s => s.Contains(start));
 				var sub2 = Subgraphs.Single(s => s.Contains(end));
@@ -216,7 +215,7 @@ namespace FrEee.Utility
 					subgraphs.Remove(sub2);
 					subgraphs.Add(sub3);
 				}
-				connections.Add(link);
+				connections[start].Add(end);
 				singletons.Remove(start);
 				singletons.Remove(end);
 			}
@@ -242,14 +241,13 @@ namespace FrEee.Utility
 		/// <param name="twoWay">Disconnect both ways?</param>
 		public void Disconnect(T start, T end, bool twoWay = false)
 		{
-			var link = Tuple.Create(start, end);
-			if (connections.Contains(link))
+			if (connections.ContainsKey(start) && connections[start].Contains(end))
 			{
 				var sub = Subgraphs.Single(s => s.Contains(start));
 				var subs = sub.Subdivide();
 				subgraphs.Remove(sub);
 				subgraphs.AddRange(subs);
-				connections.Remove(link);
+				connections[start].Remove(end);
 				if (!GetExits(start).Any() && !GetEntrances(start).Any())
 					singletons.Add(start);
 				if (!GetEntrances(end).Any() && !GetExits(end).Any())
@@ -261,11 +259,8 @@ namespace FrEee.Utility
 
 		public void ExceptWith(IEnumerable<T> other)
 		{
-			singletons.RemoveAll(item => other.Contains(item));
-			items.ExceptWith(other);
-			var toRemove = connections.Where(link => !(items.Contains(link.Item1) || items.Contains(link.Item2)));
-			foreach (var link in toRemove)
-				Disconnect(link.Item1, link.Item2);
+			// TODO - reimplement ExceptWith
+			throw new NotSupportedException();
 		}
 
 		/// <summary>
@@ -275,7 +270,7 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public IEnumerable<T> GetEntrances(T node)
 		{
-			return Connections.Where(t => (object)t.Item2 == (object)node).Select(t => t.Item1);
+			return Connections.Where(kvp => kvp.Value.Contains(node)).Select(kvp => kvp.Key);
 		}
 
 		public IEnumerator<T> GetEnumerator()
@@ -295,16 +290,13 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public IEnumerable<T> GetExits(T node)
 		{
-			return Connections.Where(t => (object)t.Item1 == (object)node).Select(t => t.Item2);
+			return Connections[node];
 		}
 
 		public void IntersectWith(IEnumerable<T> other)
 		{
-			singletons.RemoveAll(item => !other.Contains(item));
-			items.IntersectWith(other);
-			var toRemove = connections.Where(link => !(items.Contains(link.Item1) || items.Contains(link.Item2)));
-			foreach (var link in toRemove)
-				Disconnect(link.Item1, link.Item2);
+			// TODO - reimplement IntersectWith
+			throw new NotSupportedException();
 		}
 
 		public bool IsProperSubsetOf(IEnumerable<T> other)
@@ -336,9 +328,13 @@ namespace FrEee.Utility
 		{
 			singletons.Remove(item);
 			var result = items.Remove(item);
-			var toRemove = connections.Where(link => (object)link.Item1 == (object)item || (object)link.Item2 == (object)item);
-			foreach (var link in toRemove)
-				connections.Remove(link);
+			foreach (var kvp in connections.ToArray())
+			{
+				if ((object)kvp.Key == (object)item)
+					connections.Remove(item);
+				else if (kvp.Value.Contains(item))
+					kvp.Value.Remove(item);
+			}
 			return result;
 		}
 
@@ -349,11 +345,8 @@ namespace FrEee.Utility
 
 		public void SymmetricExceptWith(IEnumerable<T> other)
 		{
-			singletons.RemoveAll(item => other.Contains(item));
-			items.SymmetricExceptWith(other);
-			var toRemove = connections.Where(link => !(items.Contains(link.Item1) || items.Contains(link.Item2)));
-			foreach (var link in toRemove)
-				connections.Remove(link);
+			// TODO - reimplement SymmetricExceptWith
+			throw new NotSupportedException();
 		}
 
 		public void UnionWith(IEnumerable<T> other)
