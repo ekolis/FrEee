@@ -126,7 +126,7 @@ namespace FrEee.Utility
 			var queue = new List<PathfinderNode<StarSystem>>();
 
 			// step 2: empty set of previously visited nodes, along with costs and previous-node references
-			var visited = new List<PathfinderNode<StarSystem>>();
+			var visited = new SafeDictionary<StarSystem, PathfinderNode<StarSystem>>();
 
 			// step 3: add start node and cost
 			queue.Add(new PathfinderNode<StarSystem>(start, 0, null));
@@ -154,12 +154,12 @@ namespace FrEee.Utility
 				// step 7b: update priority queue
 				foreach (var move in moves)
 				{
-					if (!visited.Any(n => n.Location == move))
+					if (!visited.ContainsKey(move))
 					{
 						// didn't visit yet
 						var newnode = new PathfinderNode<StarSystem>(move, node.Cost + 1, node);
 						queue.Add(newnode);
-						visited.Add(newnode);
+						visited.Add(move, newnode);
 					}
 					else
 					{
@@ -171,13 +171,13 @@ namespace FrEee.Utility
 								queue.Remove(old);
 							var newnode = new PathfinderNode<StarSystem>(move, node.Cost + 1, node);
 							queue.Add(newnode);
-							visited.Add(newnode);
+							visited.Add(move, newnode);
 						}
 					}
 				}
 			}
 
-			return visited;
+			return visited.Values;
 		}
 
 		public static IEnumerable<PathfinderNode<T>> CreateDijkstraMap<T>(T start, T end, ConnectivityGraph<T> graph)
@@ -187,7 +187,7 @@ namespace FrEee.Utility
 			var queue = new List<PathfinderNode<T>>();
 
 			// step 2: empty set of previously visited nodes, along with costs and previous-node references
-			var visited = new List<PathfinderNode<T>>();
+			var visited = new SafeDictionary<T, PathfinderNode<T>>();
 
 			// step 3: add start node and cost
 			queue.Add(new PathfinderNode<T>(start, 0, null));
@@ -215,12 +215,12 @@ namespace FrEee.Utility
 				// step 7b: update priority queue
 				foreach (var move in moves)
 				{
-					if (!visited.Any(n => n.Location.Equals(move)))
+					if (!visited.ContainsKey(move))
 					{
 						// didn't visit yet
 						var newnode = new PathfinderNode<T>(move, node.Cost + 1, node);
 						queue.Add(newnode);
-						visited.Add(newnode);
+						visited.Add(move, newnode);
 					}
 					else
 					{
@@ -232,13 +232,13 @@ namespace FrEee.Utility
 								queue.Remove(old);
 							var newnode = new PathfinderNode<T>(move, node.Cost + 1, node);
 							queue.Add(newnode);
-							visited.Add(newnode);
+							visited.Add(move, newnode);
 						}
 					}
 				}
 			}
 
-			return visited;
+			return visited.Values;
 		}
 
 		/// <summary>
