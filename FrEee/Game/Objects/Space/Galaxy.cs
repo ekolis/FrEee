@@ -1533,11 +1533,15 @@ namespace FrEee.Game.Objects.Space
 		{
 			var objs = FindSpaceObjects<IMobileSpaceObject>().Where(obj => obj.Orders.Any());
 			objs = objs.Where(obj => !obj.IsMemory);
-			if (objs.Any() && CurrentTick < 1.0)
+			if (objs.Where(v => v.TimeToNextMove > 0).Any() && CurrentTick < 1.0)
 			{
 				// HACK - why are objects getting zero time to next move?!
 				var nextTickSize = objs.Where(v => v.TimeToNextMove > 0).Min(v => v.TimeToNextMove);
 				NextTickSize = Math.Min(1.0 - CurrentTick, nextTickSize);
+			}
+			else if (objs.Any())
+			{
+				NextTickSize = objs.Min(v => v.TimePerMove);
 			}
 			else
 				NextTickSize = double.PositiveInfinity;
