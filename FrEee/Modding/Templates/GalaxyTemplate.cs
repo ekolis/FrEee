@@ -132,7 +132,7 @@ namespace FrEee.Modding.Templates
 					status.Progress += progressPerStarSystem;
 			}
 
-			var doneCreatingStarSystemsProgress = status == null ? 0.5 : status.Progress;
+			var progressPerWarp = (desiredProgress - (status == null ? 0 : status.Progress)) / (gal.StarSystemLocations.Count * 2);
 
 			// create warp points
 			if (status != null)
@@ -159,9 +159,14 @@ namespace FrEee.Modding.Templates
 				}
 				else
 					break;
+				if (status != null)
+					status.Progress += progressPerWarp;
 			}
 
 			// TODO - delete excess warp points if system groups count is >1
+
+			if (status != null)
+				status.Progress = desiredProgress;
 
 			return gal;
 		}
