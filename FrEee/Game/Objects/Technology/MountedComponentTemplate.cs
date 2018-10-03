@@ -337,7 +337,7 @@ namespace FrEee.Game.Objects.Technology
 				return true;
 			if (t1.IsNull() || t2.IsNull())
 				return false;
-			return t1.Container == t2.Container && t1.componentTemplate == t2.componentTemplate && t1.mount == t2.mount;
+			return t1.Container == t2.Container && t1.ComponentTemplate == t2.ComponentTemplate && t1.mount == t2.mount;
 		}
 
 		public override bool Equals(object obj)
