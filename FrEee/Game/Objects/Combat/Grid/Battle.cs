@@ -80,8 +80,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 		/// <summary>
 		/// Saved-up fractional combat speed from the previous round.
 		/// </summary>
-		/// TODO - enable DoNotSerialize for this property after the current game
-		//[DoNotSerialize(false)]
+		[DoNotSerialize(false)]
 		public SafeDictionary<ICombatant, double> CombatSpeedBuffer { get; private set; } = new SafeDictionary<ICombatant, double>();
 
 		/// <summary>
