@@ -610,6 +610,7 @@ namespace FrEee.Utility
 					portrait =
 						GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Planets", sobj.PictureName), scale) ??
 						GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Planets", sobj.PictureName), scale) ??
+						GetFallbackImage(sobj, scale) ??
 						GetGenericImage(sobj.GetType(), scale);
 				}
 				else
@@ -617,6 +618,7 @@ namespace FrEee.Utility
 					// stock mod has no entry in Mods folder, and looking for a null path crashes Path.Combine
 					portrait =
 						GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Planets", sobj.PictureName), scale) ??
+						GetFallbackImage(sobj, scale) ??
 						GetGenericImage(sobj.GetType(), scale);
 				}
 
@@ -627,6 +629,36 @@ namespace FrEee.Utility
 			}
 
 			return objectPortraits[sobj];
+		}
+
+		public static Image GetFallbackImage(StellarObject sobj, double scale = 1.0)
+		{
+			var path = Path.Combine("Pictures", "Planets");
+			if (sobj is Planet p)
+			{
+				// deal with spaces in Gas Giant and Carbon Dioxide
+				var surface = p.Surface;
+				if (surface.Contains(" "))
+					surface = surface.Substring(0, surface.IndexOf(' '));
+				return (GetModImage(Path.Combine(path, $"Planet_{surface}_{p.Atmosphere.Replace(" ", "")}")) ?? GetModImage(Path.Combine(path, "Planet"))).Frame(scale);
+			}
+			else if (sobj is Star star)
+			{
+				return (GetModImage(Path.Combine(path, $"Star_{star.Color}")) ?? GetModImage(Path.Combine(path, "Star"))).Frame(scale);
+			}
+			else if (sobj is WarpPoint wp)
+			{
+				return GetModImage(Path.Combine(path, "WarpPoint")).Frame(scale);
+			}
+			else if (sobj is Storm storm)
+			{
+				return GetModImage(Path.Combine(path, "Storm")).Frame(scale);
+			}
+			else if (sobj is AsteroidField af)
+			{
+				return GetModImage(Path.Combine(path, "AsteroidField")).Frame(scale);
+			}
+			return null;
 		}
 
 		/// <summary>
