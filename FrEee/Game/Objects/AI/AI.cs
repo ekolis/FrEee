@@ -1,5 +1,6 @@
 ﻿using FrEee.Modding;
 using FrEee.Modding.Interfaces;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 
@@ -13,11 +14,12 @@ namespace FrEee.Game.Objects.AI
 	[Serializable]
 	public class AI<TDomain, TContext> : IModObject
 	{
-		public AI(string name, Script script, IDictionary<string, ICollection<string>> ministerNames)
+		public AI(string name, Script script, SafeDictionary<string, ICollection<string>> ministerNames)
 		{
 			Name = name;
 			Script = script;
 			MinisterNames = ministerNames;
+			EnabledMinisters = new SafeDictionary<string, ICollection<string>>();
 		}
 
 		public bool IsDisposed { get; private set; }
@@ -25,7 +27,12 @@ namespace FrEee.Game.Objects.AI
 		/// <summary>
 		/// The names of any ministers that the AI can use, keyed by category.
 		/// </summary>
-		public IDictionary<string, ICollection<string>> MinisterNames { get; private set; }
+		public SafeDictionary<string, ICollection<string>> MinisterNames { get; private set; }
+
+		/// <summary>
+		/// The names of any ministers that are enabled, keyed by category.
+		/// </summary>
+		public SafeDictionary<string, ICollection<string>> EnabledMinisters { get; set; }
 
 		public string ModID { get; set; }
 
@@ -51,13 +58,13 @@ namespace FrEee.Game.Objects.AI
 		/// <param name="domain">The AI's domain of control.</param>
 		/// <param name="context">Contextual data that the AI needs to be aware of.</param>
 		/// <param name="enabledMinisters">The names of any ministers that the player has enabled, keyed by category.</param>
-		public void Act(TDomain domain, TContext context, IDictionary<string, ICollection<string>> enabledMinisters)
+		public void Act(TDomain domain, TContext context)
 		{
 			var variables = new Dictionary<string, object>();
 			variables.Add("domain", domain);
 			var readOnlyVariables = new Dictionary<string, object>();
 			readOnlyVariables.Add("context", context);
-			readOnlyVariables.Add("enabledMinisters", enabledMinisters);
+			readOnlyVariables.Add("enabledMinisters", EnabledMinisters);
 			ScriptEngine.RunScript<object>(Script, variables, readOnlyVariables);
 		}
 

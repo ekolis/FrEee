@@ -150,6 +150,12 @@
     <Compile Include="Controls\BattleView.Designer.cs">
       <DependentUpon>BattleView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MinistersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MinistersForm.Designer.cs">
+      <DependentUpon>MinistersForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\GameForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -602,6 +608,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\StarSystemView.resx">
       <DependentUpon>StarSystemView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MinistersForm.resx">
+      <DependentUpon>MinistersForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>
