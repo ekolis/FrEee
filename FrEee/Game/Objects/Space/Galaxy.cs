@@ -814,40 +814,40 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Progress += progressPerOperation;
 
-			// AI commands
-			if (status != null)
-				status.Message = "Playing AI turns";
-			if (Current.Empires.Any(e => !e.IsPlayerEmpire && e.AI != null))
-			{
-				var serializedGalaxy = Galaxy.Current.SaveToString();
-				var cmds = new Dictionary<int, IList<ICommand>>();
-				var notes = new Dictionary<int, DynamicDictionary>();
-				foreach (var i in Current.Empires.Where(e => !e.IsPlayerEmpire && e.AI != null).Select(e => Current.Empires.IndexOf(e)).ToArray())
-				{
-					LoadFromString(serializedGalaxy);
-					Current.CurrentEmpire = Current.Empires[i];
-					// TODO - re-enable redaction of galaxy for AI empires once we have a working AI
-					//Current.Redact();
-					Current.CurrentEmpire.AI.Act(Current.CurrentEmpire, Current, Current.CurrentEmpire.AI.MinisterNames);
-					cmds.Add(i, Current.CurrentEmpire.Commands);
-					notes.Add(i, Current.CurrentEmpire.AINotes);
-				}
-				LoadFromString(serializedGalaxy);
-				foreach (var i in Current.Empires.Where(e => !e.IsPlayerEmpire && e.AI != null).Select(e => Current.Empires.IndexOf(e)).ToArray())
-				{
-					Current.LoadCommands(Current.Empires[i], cmds[i]);
-					Current.Empires[i].AINotes = notes[i];
-				}
-			}
-			if (status != null)
-				status.Progress += progressPerOperation;
-
 			// load commands
 			if (status != null)
 				status.Message = "Loading player commands";
 			var missingPlrs = Current.LoadCommands();
 			if (safeMode && missingPlrs.Any())
 				return missingPlrs;
+			if (status != null)
+				status.Progress += progressPerOperation;
+
+			// AI/minister commands
+			if (status != null)
+				status.Message = "Playing AI turns";
+			if (Current.Empires.Any(e => e.AI != null && (e.AI.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)))
+			{
+				// TODO - use existing player gam file if it exists instead of recreating it in memory
+				var serializedGalaxy = Galaxy.Current.SaveToString();
+				var cmds = new Dictionary<int, IList<ICommand>>();
+				var notes = new Dictionary<int, DynamicDictionary>();
+				foreach (var i in Current.Empires.Where(e => e.AI != null && (e.AI.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)).Select(e => Current.Empires.IndexOf(e)).ToArray())
+				{
+					LoadFromString(serializedGalaxy);
+					Current.CurrentEmpire = Current.Empires[i];
+					Current.Redact();
+					Current.CurrentEmpire.AI.Act(Current.CurrentEmpire, Current);
+					cmds.Add(i, Current.CurrentEmpire.Commands);
+					notes.Add(i, Current.CurrentEmpire.AINotes);
+				}
+				LoadFromString(serializedGalaxy);
+				foreach (var i in Current.Empires.Where(e => e.AI != null && (e.AI.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)).Select(e => Current.Empires.IndexOf(e)).ToArray())
+				{
+					Current.LoadCommands(Current.Empires[i], cmds[i]);
+					Current.Empires[i].AINotes = notes[i];
+				}
+			}
 			if (status != null)
 				status.Progress += progressPerOperation;
 

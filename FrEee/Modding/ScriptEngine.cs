@@ -172,7 +172,7 @@ namespace FrEee.Modding
 		{
 			var dict = new Dictionary<string, object>();
 			foreach (var varName in variableNames)
-				dict.Add(varName, Serializer.DeserializeFromString(scope.GetVariable<string>("_" + varName)));
+				dict.Add(varName, engine.GetBuiltinModule().GetVariable(varName));
 			return dict;
 		}
 

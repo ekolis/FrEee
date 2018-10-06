@@ -213,7 +213,7 @@ namespace FrEee.WinForms.Forms
 
 		private void btnMinisters_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Sorry, control of AI ministers is not yet implemented.");
+			this.ShowChildForm(new MinistersForm());
 		}
 
 		private void btnReply_Click(object sender, EventArgs e)
