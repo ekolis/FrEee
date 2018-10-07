@@ -244,6 +244,10 @@ namespace FrEee.WinForms.Objects
 			// create instance
 			Instance = new ClientSettings();
 
+			Instance.MasterVolume = 100;
+			Instance.MusicVolume = 100;
+			Instance.EffectsVolume = 100;
+
 			InitializePlanetList();
 			InitializeShipList();
 		}
