@@ -38,9 +38,9 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="o"></param>
 		/// <returns></returns>
-		public static T CastTo<T>(this object o)
+		public static T CastTo<T>(this object o, T defaultValue = default(T))
 		{
-			return (T)o;
+			return (T)((o ?? defaultValue) ?? default(T));
 		}
 
 		/// <summary>
