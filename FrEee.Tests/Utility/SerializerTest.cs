@@ -186,6 +186,15 @@ namespace FrEee.Tests.Utility
 			Assert.AreEqual(emp.StoredResources, emp2.StoredResources);
 		}
 
+		[TestMethod]
+		public void QuotedStrings()
+		{
+			var str = "\"Hello world!\"";
+			var serdata = Serializer.SerializeToString(str);
+			var str2 = Serializer.DeserializeFromString<string>(serdata);
+			Assert.AreEqual(str, str2);
+		}
+
 		private class Car
 		{
 			public Car(Company manufacturer, string model, int year)
