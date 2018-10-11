@@ -358,7 +358,7 @@ namespace FrEee.Modding.Templates
 			foreach (var wp in ssl.Item.FindSpaceObjects<WarpPoint>())
 			{
 				var target = wp.TargetStarSystemLocation;
-				var offset = target.Location.AngleTo(ssl.Location);
+				var offset = ssl.Location.AngleTo(target.Location);
 				yield return offset;
 			}
 		}
