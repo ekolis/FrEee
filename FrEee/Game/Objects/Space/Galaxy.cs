@@ -494,7 +494,7 @@ namespace FrEee.Game.Objects.Space
 			}
 			if (status != null)
 				status.Message = "Populating galaxy";
-			gsu.PopulateGalaxy(Current);
+			gsu.PopulateGalaxy(Current, dice);
 			Current.SaveTechLevelsForUniqueness();
 			if (status != null)
 				status.Progress += progressPerStep;
