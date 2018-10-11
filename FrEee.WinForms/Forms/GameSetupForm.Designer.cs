@@ -205,6 +205,7 @@
 			this.btnLoadSetup = new FrEee.WinForms.Controls.GameButton();
 			this.btnSaveSetup = new FrEee.WinForms.Controls.GameButton();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
+			this.btnGenerateSeed = new FrEee.WinForms.Controls.GameButton();
 			this.tabs.SuspendLayout();
 			this.tabGalaxy.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.spnSeed)).BeginInit();
@@ -284,6 +285,7 @@
 			// tabGalaxy
 			// 
 			this.tabGalaxy.BackColor = System.Drawing.Color.Black;
+			this.tabGalaxy.Controls.Add(this.btnGenerateSeed);
 			this.tabGalaxy.Controls.Add(this.label65);
 			this.tabGalaxy.Controls.Add(this.spnSeed);
 			this.tabGalaxy.Controls.Add(this.btnPreviewMap);
@@ -2590,6 +2592,19 @@
 			this.progressBar.TabIndex = 5;
 			this.progressBar.Visible = false;
 			// 
+			// btnGenerateSeed
+			// 
+			this.btnGenerateSeed.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnGenerateSeed.BackColor = System.Drawing.Color.Black;
+			this.btnGenerateSeed.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnGenerateSeed.Location = new System.Drawing.Point(436, 6);
+			this.btnGenerateSeed.Name = "btnGenerateSeed";
+			this.btnGenerateSeed.Size = new System.Drawing.Size(97, 23);
+			this.btnGenerateSeed.TabIndex = 32;
+			this.btnGenerateSeed.Text = "Generate";
+			this.btnGenerateSeed.UseVisualStyleBackColor = false;
+			this.btnGenerateSeed.Click += new System.EventHandler(this.btnGenerateSeed_Click);
+			// 
 			// GameSetupForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2845,5 +2860,6 @@
 		private System.Windows.Forms.Label lblMaxBonusResearchFromEmpirePoints;
 		private System.Windows.Forms.Label label65;
 		private System.Windows.Forms.NumericUpDown spnSeed;
+		private Controls.GameButton btnGenerateSeed;
 	}
 }

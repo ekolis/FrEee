@@ -828,5 +828,10 @@ namespace FrEee.WinForms.Forms
 		{
 			lblMaxBonusResearchFromEmpirePoints.Text = $"Empires can earn up to {((double)(spnEmpirePoints.Value * spnResearchPerUnspentEmpirePoint.Value)).ToUnitString(true)} bonus research.";
 		}
+
+		private void btnGenerateSeed_Click(object sender, EventArgs e)
+		{
+			spnSeed.Value = DateTime.Now.Millisecond + 1000 * DateTime.Now.Second + 60000 * DateTime.Now.Minute;
+		}
 	}
 }

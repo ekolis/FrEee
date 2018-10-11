@@ -480,7 +480,7 @@ namespace FrEee.Game.Objects.Space
 				throw new InvalidOperationException("Cannot initialize a galaxy without a mod. Load a mod into Mod.Current first.");
 
 			if (dice == null)
-				dice = new PRNG(DateTime.Now.Millisecond);
+				dice = new PRNG(DateTime.Now.Millisecond + 1000 * DateTime.Now.Second + 60000 * DateTime.Now.Minute);
 
 			var startProgress = status == null ? 0d : status.Progress;
 			var progressPerStep = (desiredProgress - startProgress) / 4d;
