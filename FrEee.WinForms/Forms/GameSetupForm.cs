@@ -32,6 +32,8 @@ namespace FrEee.WinForms.Forms
 				Mod.Load(null);
 			Galaxy.Current = null;
 
+			spnSeed.Value = DateTime.Now.Millisecond + 1000 * DateTime.Now.Second + 60000 * DateTime.Now.Minute;
+
 			// bind data
 			galaxyTemplateBindingSource.DataSource = Mod.Current.GalaxyTemplates;
 			warpPointPlacementStrategyBindingSource.DataSource = WarpPointPlacementStrategy.All;
