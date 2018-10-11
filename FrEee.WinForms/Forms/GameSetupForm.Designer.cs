@@ -29,9 +29,11 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode presenceMode2 = new FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode();
+			FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode presenceMode1 = new FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode();
 			this.tabs = new FrEee.WinForms.Controls.GameTabControl();
 			this.tabGalaxy = new System.Windows.Forms.TabPage();
+			this.label65 = new System.Windows.Forms.Label();
+			this.spnSeed = new System.Windows.Forms.NumericUpDown();
 			this.btnPreviewMap = new FrEee.WinForms.Controls.GameButton();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
 			this.label62 = new System.Windows.Forms.Label();
@@ -205,6 +207,7 @@
 			this.progressBar = new System.Windows.Forms.ProgressBar();
 			this.tabs.SuspendLayout();
 			this.tabGalaxy.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.spnSeed)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnSystemGroups)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnHeight)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnWidth)).BeginInit();
@@ -281,6 +284,8 @@
 			// tabGalaxy
 			// 
 			this.tabGalaxy.BackColor = System.Drawing.Color.Black;
+			this.tabGalaxy.Controls.Add(this.label65);
+			this.tabGalaxy.Controls.Add(this.spnSeed);
 			this.tabGalaxy.Controls.Add(this.btnPreviewMap);
 			this.tabGalaxy.Controls.Add(this.galaxyView);
 			this.tabGalaxy.Controls.Add(this.label62);
@@ -315,6 +320,34 @@
 			this.tabGalaxy.TabIndex = 0;
 			this.tabGalaxy.Text = "Galaxy";
 			// 
+			// label65
+			// 
+			this.label65.AutoSize = true;
+			this.label65.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label65.Location = new System.Drawing.Point(272, 9);
+			this.label65.Margin = new System.Windows.Forms.Padding(3);
+			this.label65.Name = "label65";
+			this.label65.Size = new System.Drawing.Size(36, 15);
+			this.label65.TabIndex = 31;
+			this.label65.Text = "Seed";
+			// 
+			// spnSeed
+			// 
+			this.spnSeed.Location = new System.Drawing.Point(314, 7);
+			this.spnSeed.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+			this.spnSeed.Minimum = new decimal(new int[] {
+            -2147483648,
+            0,
+            0,
+            -2147483648});
+			this.spnSeed.Name = "spnSeed";
+			this.spnSeed.Size = new System.Drawing.Size(116, 21);
+			this.spnSeed.TabIndex = 30;
+			// 
 			// btnPreviewMap
 			// 
 			this.btnPreviewMap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -335,7 +368,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.galaxyView.BackColor = System.Drawing.Color.Black;
 			this.galaxyView.Location = new System.Drawing.Point(14, 330);
-			this.galaxyView.Mode = presenceMode2;
+			this.galaxyView.Mode = presenceMode1;
 			this.galaxyView.Name = "galaxyView";
 			this.galaxyView.SelectedStarSystem = null;
 			this.galaxyView.Size = new System.Drawing.Size(525, 204);
@@ -2578,6 +2611,7 @@
 			this.tabs.ResumeLayout(false);
 			this.tabGalaxy.ResumeLayout(false);
 			this.tabGalaxy.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.spnSeed)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnSystemGroups)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnHeight)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnWidth)).EndInit();
@@ -2809,5 +2843,7 @@
 		private System.Windows.Forms.NumericUpDown spnResearchPerUnspentEmpirePoint;
 		private System.Windows.Forms.Label label64;
 		private System.Windows.Forms.Label lblMaxBonusResearchFromEmpirePoints;
+		private System.Windows.Forms.Label label65;
+		private System.Windows.Forms.NumericUpDown spnSeed;
 	}
 }

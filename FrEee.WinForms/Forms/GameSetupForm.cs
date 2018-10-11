@@ -108,6 +108,7 @@ namespace FrEee.WinForms.Forms
 		{
 			txtGalaxyName.Text = setup.GameName;
 			spnStarSystems.Value = setup.StarSystemCount;
+			spnSeed.Value = setup.Seed;
 			spnWidth.ValueChanged -= spnWidth_ValueChanged;
 			spnHeight.ValueChanged -= spnHeight_ValueChanged;
 			spnWidth.Value = setup.GalaxySize.Width;
@@ -492,7 +493,7 @@ namespace FrEee.WinForms.Forms
 				try
 				{
 					status.Message = "Setting up galaxy";
-					Galaxy.Initialize(setup, status, 1d);
+					Galaxy.Initialize(setup, new PRNG((int)spnSeed.Value), status, 1d);
 					if (Galaxy.Current.IsSinglePlayer)
 					{
 						var name = Galaxy.Current.Name;
@@ -662,6 +663,7 @@ namespace FrEee.WinForms.Forms
 		{
 			setup.GameName = txtGalaxyName.Text;
 			setup.StarSystemCount = (int)spnStarSystems.Value;
+			setup.Seed = (int)spnSeed.Value;
 			setup.GalaxySize = new Size((int)spnWidth.Value, (int)spnHeight.Value);
 			setup.StarSystemGroups = (int)spnSystemGroups.Value;
 			setup.AllSystemsExplored = chkAllSystemsExplored.Checked;
@@ -804,7 +806,7 @@ namespace FrEee.WinForms.Forms
 					// create the galaxy
 					var galtemp = setup.GalaxyTemplate;
 					galtemp.GameSetup = setup;
-					Galaxy.Current = galtemp.Instantiate(status, 1);
+					Galaxy.Current = galtemp.Instantiate(status, 1, new PRNG((int)spnSeed.Value));
 				}
 				catch (Exception ex)
 				{

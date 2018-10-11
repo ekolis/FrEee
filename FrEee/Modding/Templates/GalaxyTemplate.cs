@@ -1,13 +1,13 @@
-﻿using FrEee.Game.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Setup;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 
 namespace FrEee.Modding.Templates
 {
@@ -88,12 +88,14 @@ namespace FrEee.Modding.Templates
 
 		public Galaxy Instantiate()
 		{
-			return Instantiate(null, 1.0);
+			return Instantiate(null, 1.0, new PRNG(RandomSeed));
 		}
+
+		public int RandomSeed { get; set; } = DateTime.Now.Millisecond;
 
 		/// <param name="status">A status object to report status back to the GUI.</param>
 		/// <param name="desiredProgress">How much progress should we report back to the GUI when we're done initializing the galaxy? 1.0 means all done with everything that needs to be done.</param>
-		public Galaxy Instantiate(Status status, double desiredProgress)
+		public Galaxy Instantiate(Status status, double desiredProgress, PRNG dice)
 		{
 			var gal = new Galaxy(Mod.Current);
 			gal.Width = GameSetup.GalaxySize.Width;
@@ -119,7 +121,7 @@ namespace FrEee.Modding.Templates
 			{
 				if (status != null)
 					status.Message = "Creating star system " + (i + 1) + " of " + GameSetup.StarSystemCount;
-				var p = StarSystemPlacementStrategy.PlaceStarSystem(gal, MinimumStarSystemDistance, bounds, GameSetup.StarSystemCount - i);
+				var p = StarSystemPlacementStrategy.PlaceStarSystem(gal, MinimumStarSystemDistance, bounds, GameSetup.StarSystemCount - i, dice);
 				if (p == null)
 					break; // no more locations available
 
@@ -190,7 +192,7 @@ namespace FrEee.Modding.Templates
 						if (IntersectsExceptAtEnds(l1.Location, l2.Location, graph))
 							continue;
 						var dist = l1.Location.ManhattanDistance(l2.Location);
-						if (dist < bestDistance)
+						if (dist < bestDistance && AreWarpPointAnglesOk(l1, l2, Galaxy.Current, MinWarpPointAngle))
 						{
 							bestDistance = dist;
 							best = (l1, l2);
@@ -211,7 +213,7 @@ namespace FrEee.Modding.Templates
 							if (graph.AreDirectlyConnected(l1, l2))
 								continue;
 							var dist = l1.Location.ManhattanDistance(l2.Location);
-							if (dist < bestDistance)
+							if (dist < bestDistance && AreWarpPointAnglesOk(l1, l2, Galaxy.Current, MinWarpPointAngle))
 							{
 								bestDistance = dist;
 								best = (l1, l2);
@@ -319,8 +321,8 @@ namespace FrEee.Modding.Templates
 				}
 			}
 			else
-			{ 
-				if (IsBetween(p1.X, q1.X, q2.X) || IsBetween(p2.X, q1.X, q2.X) 
+			{
+				if (IsBetween(p1.X, q1.X, q2.X) || IsBetween(p2.X, q1.X, q2.X)
 					|| IsBetween(q1.X, p1.X, p2.X) || IsBetween(q2.X, p1.X, p2.X)
 					|| IsBetween(p1.Y, q1.Y, q2.Y) || IsBetween(p2.Y, q1.Y, q2.Y)
 					|| IsBetween(q1.Y, p1.Y, p2.Y) || IsBetween(q2.Y, p1.Y, p2.Y))
@@ -337,14 +339,14 @@ namespace FrEee.Modding.Templates
 			// test warp points going out
 			foreach (var angle in GetWarpPointAngles(start, gal))
 			{
-				if (IsInRangeExclusive(angleOut, angle, minAngle, 360))
+				if (AngleIsInRangeExclusive(angleOut, angle, minAngle))
 					return false;
 			}
 
 			// test warp points coming back
 			foreach (var angle in GetWarpPointAngles(end, gal))
 			{
-				if (IsInRangeExclusive(angleBack, angle, minAngle, 360))
+				if (AngleIsInRangeExclusive(angleBack, angle, minAngle))
 					return false;
 			}
 
@@ -366,12 +368,18 @@ namespace FrEee.Modding.Templates
 			return sys.FindSpaceObjects<WarpPoint>().Count();
 		}
 
-		private bool IsInRangeExclusive(double d, double middle, double range, double modulo = 0)
+		/// <summary>
+		/// Public for unit tests.
+		/// </summary>
+		/// <param name="d"></param>
+		/// <param name="middle"></param>
+		/// <param name="range"></param>
+		/// <returns></returns>
+		public static bool AngleIsInRangeExclusive(double d, double middle, double range)
 		{
-			if (modulo == 0)
-				return d > (middle - range) && d < (middle + range);
-			else
-				return d % modulo > (middle - range) % modulo && d % modulo < (middle + range) % modulo;
+			return d > middle - range && d < middle + range
+				|| d + 360 > middle - range && d + 360 < middle + range
+				|| d - 360 > middle - range && d - 360 < middle + range;
 		}
 
 		private void NameStellarObjects(StarSystem sys)
@@ -454,7 +462,7 @@ namespace FrEee.Modding.Templates
 			}
 		}
 
-		private double NormalizeAngle(double angle)
+		private static double NormalizeAngle(double angle)
 		{
 			angle %= 360d;
 			if (angle < 0)

@@ -91,7 +91,7 @@ namespace FrEee.WinForms.Forms
 						}
 
 						status.Message = "Setting up galaxy";
-						Galaxy.Initialize(setup, status, 1.0);
+						Galaxy.Initialize(setup, null, status, 1.0);
 						var name = Galaxy.Current.Name;
 						var turn = Galaxy.Current.TurnNumber;
 						status.Message = "Loading game";

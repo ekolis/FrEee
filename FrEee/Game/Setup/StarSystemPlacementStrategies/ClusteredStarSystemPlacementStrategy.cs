@@ -15,7 +15,7 @@ namespace FrEee.Game.Setup.StarSystemPlacementStrategies
 	[Serializable]
 	public class ClusteredStarSystemPlacementStrategy : IStarSystemPlacementStrategy
 	{
-		public Point? PlaceStarSystem(Galaxy galaxy, int buffer, Rectangle bounds, int starsLeft)
+		public Point? PlaceStarSystem(Galaxy galaxy, int buffer, Rectangle bounds, int starsLeft, PRNG dice)
 		{
 			var openPositions = bounds.GetAllPoints();
 			foreach (var sspos in galaxy.StarSystemLocations.Select(sspos => sspos.Location))
@@ -31,7 +31,7 @@ namespace FrEee.Game.Setup.StarSystemPlacementStrategies
 			}).OrderBy(p => p.Distances.MinOrDefault());
 			var minDist = ordered.SelectMany(p => p.Distances).MinOrDefault();
 
-			if (RandomHelper.Next(2) == 0)
+			if (dice.Next(2) == 0)
 			{
 				// place a star near other stars, but not near TOO many other stars
 				var ok = ordered.Where(item => item.Distances.FirstOrDefault() == minDist);
@@ -49,7 +49,7 @@ namespace FrEee.Game.Setup.StarSystemPlacementStrategies
 					foreach (var p in ordered)
 						dict.Add(p.Position, p.Distances.Sum(d => Math.Pow(d, 3)));
 				}
-				return dict.PickWeighted();
+				return dict.PickWeighted(dice);
 			}
 			else
 			{
@@ -57,7 +57,7 @@ namespace FrEee.Game.Setup.StarSystemPlacementStrategies
 				var dict = new Dictionary<Point, double>();
 				foreach (var p in ordered)
 					dict.Add(p.Position, p.Distances.Sum(d => Math.Pow(d, 3)));
-				return dict.PickWeighted();
+				return dict.PickWeighted(dice);
 			}
 		}
 	}
