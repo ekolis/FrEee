@@ -256,7 +256,7 @@ namespace FrEee.Game.Setup
 		}
 
 		// TODO - status messages for the GUI
-		public void PopulateGalaxy(Galaxy gal)
+		public void PopulateGalaxy(Galaxy gal, PRNG dice)
 		{
 			gal.Name = GameName;
 
@@ -313,8 +313,8 @@ namespace FrEee.Game.Setup
 			for (int i = 1; i <= RandomAIs; i++)
 			{
 				// TODO - load saved EMP files for random AI empires
-				var surface = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => !p.Size.IsConstructed).Select(p => p.Surface).Distinct().PickRandom();
-				var atmosphere = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => !p.Size.IsConstructed && p.Surface == surface).Select(p => p.Atmosphere).Distinct().PickRandom();
+				var surface = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => !p.Size.IsConstructed).Select(p => p.Surface).Distinct().PickRandom(dice);
+				var atmosphere = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => !p.Size.IsConstructed && p.Surface == surface).Select(p => p.Atmosphere).Distinct().PickRandom(dice);
 				var et = new EmpireTemplate
 				{
 					Name = "Random Empire #" + i,
@@ -326,8 +326,8 @@ namespace FrEee.Game.Setup
 						NativeSurface = surface,
 					},
 					IsPlayerEmpire = false,
-					Color = RandomColor(),
-					Culture = Mod.Current.Cultures.PickRandom(),
+					Color = RandomColor(dice),
+					Culture = Mod.Current.Cultures.PickRandom(dice),
 					AIName = "AI_Default",
 				};
 				foreach (var apt in Aptitude.All)
@@ -340,8 +340,8 @@ namespace FrEee.Game.Setup
 			for (int i = 1; i <= MinorEmpires; i++)
 			{
 				// TODO - load saved EMP files for minor empires
-				var surface = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => !p.Size.IsConstructed).Select(p => p.Surface).Distinct().PickRandom();
-				var atmosphere = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => !p.Size.IsConstructed && p.Surface == surface).Select(p => p.Atmosphere).Distinct().PickRandom();
+				var surface = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => !p.Size.IsConstructed).Select(p => p.Surface).Distinct().PickRandom(dice);
+				var atmosphere = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => !p.Size.IsConstructed && p.Surface == surface).Select(p => p.Atmosphere).Distinct().PickRandom(dice);
 				var et = new EmpireTemplate
 				{
 					Name = "Minor Empire #" + i,
@@ -354,8 +354,8 @@ namespace FrEee.Game.Setup
 					},
 					IsPlayerEmpire = false,
 					IsMinorEmpire = true,
-					Color = RandomColor(),
-					Culture = Mod.Current.Cultures.PickRandom(),
+					Color = RandomColor(dice),
+					Culture = Mod.Current.Cultures.PickRandom(dice),
 					AIName = "AI_Default",
 				};
 				foreach (var apt in Aptitude.All)
@@ -366,8 +366,8 @@ namespace FrEee.Game.Setup
 
 			// place empires
 			// don't do them in any particular order, so P1 and P2 don't always wind up on opposite sides of the galaxy when using equidistant placement
-			foreach (var emp in gal.Empires.Shuffle())
-				PlaceEmpire(gal, emp);
+			foreach (var emp in gal.Empires.Shuffle(dice))
+				PlaceEmpire(gal, emp, dice);
 
 			// remove ruins if they're not allowed
 			if (!GenerateRandomRuins)
@@ -425,13 +425,13 @@ namespace FrEee.Game.Setup
 		/// Makes a suitable homeworld for an empire.
 		/// </summary>
 		/// <param name="emp"></param>
-		private Planet MakeHomeworld(Empire emp, string hwName)
+		private Planet MakeHomeworld(Empire emp, string hwName, PRNG dice)
 		{
 			var hw = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p =>
 						p.Surface == emp.PrimaryRace.NativeSurface &&
 						p.Atmosphere == emp.PrimaryRace.NativeAtmosphere &&
 						p.StellarSize == HomeworldSize &&
-						!p.Size.IsConstructed).PickRandom();
+						!p.Size.IsConstructed).PickRandom(dice);
 			if (hw == null)
 				throw new Exception("No planets found in SectType.txt with surface " + emp.PrimaryRace.NativeSurface + ", atmosphere " + emp.PrimaryRace.NativeAtmosphere + ", and size " + HomeworldSize + ". Such a planet is required for creating the " + emp + " homeworld.");
 			hw = hw.Instantiate();
@@ -439,13 +439,13 @@ namespace FrEee.Game.Setup
 			hw.Size = Mod.Current.StellarObjectSizes.Where(s =>
 				s.StellarSize == HomeworldSize &&
 				s.StellarObjectType == "Planet" &&
-				!s.IsConstructed).PickRandom();
+				!s.IsConstructed).PickRandom(dice);
 			hw.ConditionsAmount = Mod.Current.Settings.HomeworldConditions;
 			return hw;
 		}
 
 		// TODO - status messages for the GUI
-		private void PlaceEmpire(Galaxy gal, Empire emp)
+		private void PlaceEmpire(Galaxy gal, Empire emp, PRNG dice)
 		{
 			if (AllSystemsExplored)
 			{
@@ -568,17 +568,17 @@ namespace FrEee.Game.Setup
 						throw new Exception("No suitable system found to place " + emp + "'s homeworld #" + (i + 1) + ". (Try regenerating the map or increasing the number of star systems.)");
 
 					// make brand new planet in an OK system
-					var sys = okSystems.PickRandom();
+					var sys = okSystems.PickRandom(dice);
 					var nextNum = sys.FindSpaceObjects<Planet>(p => p.MoonOf == null).Count() + 1;
-					hw = MakeHomeworld(emp, sys.Name + " " + nextNum.ToRomanNumeral());
+					hw = MakeHomeworld(emp, sys.Name + " " + nextNum.ToRomanNumeral(), dice);
 					var okSectors = sys.Sectors.Where(sector => !sector.SpaceObjects.Any());
-					okSectors.PickRandom().Place(hw);
+					okSectors.PickRandom(dice).Place(hw);
 				}
 				else
-					hw = planets.PickRandom();
+					hw = planets.PickRandom(dice);
 				if (hw.Surface != emp.PrimaryRace.NativeSurface || hw.Atmosphere != emp.PrimaryRace.NativeAtmosphere || hw.StellarSize != HomeworldSize)
 				{
-					var replacementHomeworld = MakeHomeworld(emp, hw.Name);
+					var replacementHomeworld = MakeHomeworld(emp, hw.Name, dice);
 					replacementHomeworld.CopyTo(hw);
 				}
 				hw.ResourceValue[Resource.Minerals] = hw.ResourceValue[Resource.Organics] = hw.ResourceValue[Resource.Radioactives] = HomeworldValue;
@@ -634,14 +634,14 @@ namespace FrEee.Game.Setup
 		/// Picks a random color from a limited palette of 63 colors.
 		/// </summary>
 		/// <returns></returns>
-		private Color RandomColor()
+		private Color RandomColor(PRNG dice)
 		{
 			int r = 0, g = 0, b = 0;
 			while (r == 0 && g == 0 && b == 0)
 			{
-				r = RandomRGB();
-				g = RandomRGB();
-				b = RandomRGB();
+				r = RandomRGB(dice);
+				g = RandomRGB(dice);
+				b = RandomRGB(dice);
 			}
 			return Color.FromArgb(r, g, b);
 		}
@@ -650,9 +650,9 @@ namespace FrEee.Game.Setup
 		/// Generates a random number used to pick a color from a limited palette of 63 colors.
 		/// </summary>
 		/// <returns></returns>
-		private int RandomRGB()
+		private int RandomRGB(PRNG dice)
 		{
-			return RandomHelper.Range(0, 3) * 85;
+			return RandomHelper.Range(0, 3, dice) * 85;
 		}
 	}
 }

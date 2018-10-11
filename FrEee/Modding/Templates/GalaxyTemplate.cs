@@ -125,8 +125,8 @@ namespace FrEee.Modding.Templates
 				if (p == null)
 					break; // no more locations available
 
-				var sys = StarSystemTemplateChances.PickWeighted().Instantiate();
-				sys.Name = unusedNames.PickRandom();
+				var sys = StarSystemTemplateChances.PickWeighted(dice).Instantiate();
+				sys.Name = unusedNames.PickRandom(dice);
 				unusedNames.Remove(sys.Name);
 				NameStellarObjects(sys);
 				gal.StarSystemLocations.Add(new ObjectLocation<StarSystem> { Location = p.Value, Item = sys });
@@ -377,9 +377,7 @@ namespace FrEee.Modding.Templates
 		/// <returns></returns>
 		public static bool AngleIsInRangeExclusive(double d, double middle, double range)
 		{
-			return d > middle - range && d < middle + range
-				|| d + 360 > middle - range && d + 360 < middle + range
-				|| d - 360 > middle - range && d - 360 < middle + range;
+			return Math.Abs(NormalizeAngle(d - middle)) < range;
 		}
 
 		private void NameStellarObjects(StarSystem sys)
@@ -465,8 +463,10 @@ namespace FrEee.Modding.Templates
 		private static double NormalizeAngle(double angle)
 		{
 			angle %= 360d;
-			if (angle < 0)
+			if (angle < -180d)
 				angle += 360d;
+			else if (angle > 180d)
+				angle -= 360d;
 			return angle;
 		}
 	}
