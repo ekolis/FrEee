@@ -626,6 +626,10 @@ namespace FrEee.Utility
 					var prop = type.GetProperty(pname) ?? props[pname]; // get concrete type property in case it has DoNotSerialize and the abstract type doesn't
 					if (prop != null)
 					{
+						if (prop.Name == "StarSystemNames")
+						{
+
+						}
 						var data = Deserialize(r, prop.PropertyType, false, context, log);
 						if (!prop.HasAttribute<DoNotSerializeAttribute>())
 							dict[pname] = data;
@@ -704,7 +708,7 @@ namespace FrEee.Utility
 			while (!foundRealSemicolon)
 			{
 				var ns = r.ReadToEndOfLine(';', log);
-				quotes += ns.Count(c => c == '"');
+				quotes += ns.Count(c => c == '"'); // TODO - don't count escaped quotes
 				sb.Append(ns);
 				if (!ns.EndsWith("\\") && quotes % 2 == 0)
 					foundRealSemicolon = true;
@@ -713,7 +717,14 @@ namespace FrEee.Utility
 			if (s == "n")
 				o = null;
 			else
-				o = s.Trim().Trim('"').Replace("\\\"", "\"").Replace("\\;", ";").Replace("\\\\", "\\");
+			{
+				o = s.Trim();
+				if (o.StartsWith("\""))
+					o = o.Substring(1);
+				if (o.EndsWith("\""))
+					o = o.Substring(0, o.Length - 1);
+				o = o.Replace("\\\"", "\"").Replace("\\;", ";").Replace("\\\\", "\\");
+			}
 			return o;
 		}
 
