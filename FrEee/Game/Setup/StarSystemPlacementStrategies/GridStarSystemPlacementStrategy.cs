@@ -1,5 +1,6 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
+using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
 using System.Drawing;
@@ -13,7 +14,7 @@ namespace FrEee.Game.Setup.StarSystemPlacementStrategies
 	[Serializable]
 	public class GridStarSystemPlacementStrategy : IStarSystemPlacementStrategy
 	{
-		public Point? PlaceStarSystem(Galaxy galaxy, int buffer, Rectangle bounds, int starsLeft)
+		public Point? PlaceStarSystem(Galaxy galaxy, int buffer, Rectangle bounds, int starsLeft, PRNG dice)
 		{
 			var openPositions = bounds.GetAllPoints();
 			foreach (var sspos in galaxy.StarSystemLocations.Select(sspos => sspos.Location))

@@ -1,5 +1,6 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
+using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace FrEee.Game.Setup.StarSystemPlacementStrategies
 	[Serializable]
 	public class SpiralStarSystemPlacementStrategy : IStarSystemPlacementStrategy
 	{
-		public Point? PlaceStarSystem(Galaxy galaxy, int buffer, Rectangle bounds, int starsLeft)
+		public Point? PlaceStarSystem(Galaxy galaxy, int buffer, Rectangle bounds, int starsLeft, PRNG dice)
 		{
 			var openPositions = bounds.GetAllPoints();
 			foreach (var sspos in galaxy.StarSystemLocations.Select(sspos => sspos.Location))
@@ -28,7 +29,7 @@ namespace FrEee.Game.Setup.StarSystemPlacementStrategies
 			var max = ordered.Max(kvp => kvp.Value);
 			foreach (var p in ordered.Keys.ToArray())
 				ordered[p] = max / ordered[p];
-			return ordered.PickWeighted();
+			return ordered.PickWeighted(dice);
 		}
 	}
 }

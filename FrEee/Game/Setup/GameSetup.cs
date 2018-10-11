@@ -162,6 +162,8 @@ namespace FrEee.Game.Setup
 
 		public ScoreDisplay ScoreDisplay { get; set; }
 
+		public int Seed { get; set; }
+
 		/// <summary>
 		/// Model to use for standard planetary mining.
 		/// </summary>
