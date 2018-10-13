@@ -3,6 +3,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
+using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
@@ -31,7 +32,7 @@ namespace FrEee.WinForms.Forms
 			ddlGroup.Items.Clear();
 			ddlGroup.Items.Add(new { Text = "All" });
 			ddlGroup.Items.Add(new { Text = "In Progress" });
-			foreach (var group in Galaxy.Current.Mod.Technologies.Select(t => t.Group).Distinct())
+			foreach (var group in Mod.Current.Technologies.Select(t => t.Group).Distinct())
 				ddlGroup.Items.Add(new { Text = group, GroupName = group });
 			ddlGroup.SelectedItem = ddlGroup.Items.Cast<object>().First();
 
