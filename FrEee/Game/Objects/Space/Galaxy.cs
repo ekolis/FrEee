@@ -1897,7 +1897,17 @@ namespace FrEee.Game.Objects.Space
 				}
 			}
 			else if (referrables.Values.Contains(r))
-				referrables.Remove(referrables.Single(kvp => kvp.Value == r));
+			{
+				try
+				{
+					referrables.Remove(referrables.Single(kvp => kvp.Value == r));
+				}
+				catch (InvalidOperationException ex)
+				{
+					// HACK - why is the item not being found? sequence contains no matching element? it's right there!
+					Console.Error.WriteLine(ex);
+				}
+			}
 			//r.ID = -1;
 		}
 
