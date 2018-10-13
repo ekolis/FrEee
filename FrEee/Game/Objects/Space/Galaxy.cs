@@ -50,7 +50,8 @@ namespace FrEee.Game.Objects.Space
 		public Galaxy()
 		{
 			Galaxy.Current = this;
-			ModPath = Mod.Current.RootPath;
+			if (Mod.Current != null)
+				ModPath = Mod.Current.RootPath;
 			StarSystemLocations = new List<ObjectLocation<StarSystem>>();
 			Empires = new List<Empire>();
 			Name = "Unnamed";
@@ -64,9 +65,11 @@ namespace FrEee.Game.Objects.Space
 			ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
 			Battles = new HashSet<IBattle>();
 			ScriptNotes = new DynamicDictionary();
-			foreach (var q in Mod.Current.Objects.OfType<IReferrable>())
-				AssignID(q);
-
+			if (Mod.Current != null)
+			{
+				foreach (var q in Mod.Current.Objects.OfType<IReferrable>())
+					AssignID(q);
+			}
 		}
 
 		/// <summary>
