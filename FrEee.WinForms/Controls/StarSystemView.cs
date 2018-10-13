@@ -183,7 +183,7 @@ namespace FrEee.WinForms.Controls
 									nameBrush = Brushes.Gray;
 								else
 									nameBrush = Brushes.White;
-								pe.Graphics.DrawString(name, bigFont, nameBrush, drawx, drawy + drawsize / 2f, sf);
+								DrawStringWithShadow(pe.Graphics, name, bigFont, nameBrush, drawx, drawy + drawsize / 2f, sf);
 							}
 						}
 
@@ -194,7 +194,7 @@ namespace FrEee.WinForms.Controls
 							var sf = new StringFormat();
 							sf.Alignment = StringAlignment.Near; // left align our number
 							sf.LineAlignment = StringAlignment.Far; // bottom align our number
-							pe.Graphics.DrawString(sector.SpaceObjects.OfType<StellarObject>().Count().ToString(), bigFont, new SolidBrush(Color.White), drawx - drawsize / 2f, drawy + drawsize / 2f - bigFontSize, sf);
+							DrawStringWithShadow(pe.Graphics, sector.SpaceObjects.OfType<StellarObject>().Count().ToString(), bigFont, new SolidBrush(Color.White), drawx - drawsize / 2f, drawy + drawsize / 2f - bigFontSize, sf);
 						}
 
 						var availForFlagsAndNums = Math.Min(drawsize - 21, 24);
@@ -231,7 +231,7 @@ namespace FrEee.WinForms.Controls
 										var sf = new StringFormat();
 										sf.Alignment = StringAlignment.Near; // left align our number
 										sf.LineAlignment = StringAlignment.Near; // top align our number
-										pe.Graphics.DrawString(count.ToString(), bigFont, new SolidBrush(owner.Color), cornerx + bigFontSize, cornery + top, sf);
+										DrawStringWithShadow(pe.Graphics, count.ToString(), bigFont, new SolidBrush(owner.Color), cornerx + bigFontSize, cornery + top, sf);
 									}
 									top += bigFontSize;
 								}
@@ -305,9 +305,9 @@ namespace FrEee.WinForms.Controls
 						sfAbil.Alignment = StringAlignment.Far;
 						sfAbil.LineAlignment = StringAlignment.Far;
 						var rectAbil = new RectangleF(drawx - drawsize / 2f + bigFontSize, drawy - drawsize / 2f, drawsize - bigFontSize, drawsize - bigFontSize - 1);
-						pe.Graphics.DrawString(abilText, littleFont, Brushes.Black, rectAbil, sfAbil); // drop shadow
+						DrawStringWithShadow(pe.Graphics, abilText, littleFont, Brushes.Black, rectAbil, sfAbil); // drop shadow
 						rectAbil = new RectangleF(new PointF(rectAbil.X + 1, rectAbil.Y + 1), rectAbil.Size);
-						pe.Graphics.DrawString(abilText, littleFont, new SolidBrush(Empire.Current.Color), rectAbil, sfAbil); // real text
+						DrawStringWithShadow(pe.Graphics, abilText, littleFont, new SolidBrush(Empire.Current.Color), rectAbil, sfAbil); // real text
 
 						// draw waypoint reticule
 						var sfwp = new StringFormat();
@@ -320,7 +320,7 @@ namespace FrEee.WinForms.Controls
 							{
 								// waypoints with no hotkey are drawn in gray
 								pe.Graphics.DrawRectangle(Pens.Gray, box);
-								pe.Graphics.DrawString(wp.Name, littleFont, Brushes.Gray, box);
+								DrawStringWithShadow(pe.Graphics, wp.Name, littleFont, Brushes.Gray, box);
 							}
 						}
 						for (int i = 0; i < Empire.Current.NumberedWaypoints.Length; i++)
@@ -330,7 +330,7 @@ namespace FrEee.WinForms.Controls
 							if (wp != null && wp.Sector == sector)
 							{
 								pe.Graphics.DrawRectangle(Pens.Silver, box);
-								pe.Graphics.DrawString("WP" + i + ": " + wp.Name, littleFont, Brushes.Silver, box);
+								DrawStringWithShadow(pe.Graphics, "WP" + i + ": " + wp.Name, littleFont, Brushes.Silver, box);
 							}
 						}
 
@@ -419,7 +419,7 @@ namespace FrEee.WinForms.Controls
 							var sf = new StringFormat();
 							sf.Alignment = StringAlignment.Center;
 							sf.LineAlignment = StringAlignment.Center;
-							pe.Graphics.DrawString(turns.ToString(), bigFont, Brushes.White, curPoint.Value.X, curPoint.Value.Y, sf);
+							DrawStringWithShadow(pe.Graphics, turns.ToString(), bigFont, Brushes.White, curPoint.Value.X, curPoint.Value.Y, sf);
 						}
 
 						last = cur;
@@ -427,6 +427,18 @@ namespace FrEee.WinForms.Controls
 					}
 				}
 			}
+		}
+
+		private void DrawStringWithShadow(Graphics g, string s, Font font, Brush brush, float x, float y, StringFormat sf = null)
+		{
+			g.DrawString(s, font, Brushes.Black, x + 1, y + 1, sf);
+			g.DrawString(s, font, brush, x, y, sf);
+		}
+
+		private void DrawStringWithShadow(Graphics g, string s, Font font, Brush brush, RectangleF r, StringFormat sf = null)
+		{
+			g.DrawString(s, font, Brushes.Black, r.X + 1, r.Y + 1, sf);
+			g.DrawString(s, font, brush, r, sf);
 		}
 
 		private PointF GetDrawPoint(int x, int y)
