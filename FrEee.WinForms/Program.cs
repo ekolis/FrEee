@@ -1,7 +1,9 @@
-﻿using FrEee.Game.Objects.Civilization;
+﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
+using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Forms;
@@ -169,7 +171,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 				if (modFolder == "")
 				{
 					// use stock mod
-					mod = Mod.Load(null, false);
+					mod = Mod.Load(null);
 				}
 				else
 				{
@@ -179,12 +181,33 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 						Console.Error.WriteLine("Mod folder " + modFolder + " does not exist in " + Path.GetFullPath("Mods") + ".");
 						return 4;
 					}
-					mod = Mod.Load(modFolder, false);
+					mod = Mod.Load(modFolder);
 				}
 				if (Mod.Errors.Any())
 					return 5;
 				Console.WriteLine("Patching mod...");
 				Galaxy.Current.ModPath = Mod.Current.RootPath;
+				foreach (var item in Mod.Current.Objects)
+				{
+					var match = Galaxy.Current.Referrables.OfType<IModObject>().SingleOrDefault(q => q.ModID == item.ModID);
+					if (match == null)
+					{
+						// add new mod objects
+						if (item is IReferrable r)
+							Galaxy.Current.AssignID(r);
+					}
+					else
+					{
+						// patch existing mod objects
+						item.CopyTo(match);
+					}
+				}
+				foreach (var match in Galaxy.Current.Referrables.OfType<IModObject>())
+				{
+					// delete mod objects that no longer exist
+					if (!Mod.Current.Objects.Any(q => q.ModID == match.ModID))
+						((IReferrable)match).Dispose();
+				}
 				Console.WriteLine("Saving game...");
 				Galaxy.SaveAll();
 				Console.WriteLine("Done.");
