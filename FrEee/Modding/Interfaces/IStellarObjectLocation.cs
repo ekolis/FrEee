@@ -1,5 +1,6 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
+using FrEee.Utility;
 using System.Drawing;
 
 namespace FrEee.Modding.Interfaces
@@ -22,6 +23,6 @@ namespace FrEee.Modding.Interfaces
 		/// </summary>
 		/// <param name="radius">The star system.</param>
 		/// <returns></returns>
-		Point Resolve(StarSystem sys);
+		Point Resolve(StarSystem sys, PRNG dice);
 	}
 }

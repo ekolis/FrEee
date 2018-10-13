@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding.Interfaces;
+using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace FrEee.Modding.StellarObjectLocations
 		public int Radius { get; set; }
 		public ITemplate<StellarObject> StellarObjectTemplate { get; set; }
 
-		public Point Resolve(StarSystem sys)
+		public Point Resolve(StarSystem sys, PRNG dice)
 		{
 			if (Radius < 0)
 				throw new Exception("Invalid location \"Circle Radius " + Radius + "\" specified.");
@@ -35,7 +36,7 @@ namespace FrEee.Modding.StellarObjectLocations
 			}
 			if (!pts.Any())
 				throw new Exception("Cannot place stellar object - no empty sectors are available at radius " + Radius + ".");
-			LastResult = pts.PickRandom();
+			LastResult = pts.PickRandom(dice);
 			return LastResult.Value;
 		}
 	}

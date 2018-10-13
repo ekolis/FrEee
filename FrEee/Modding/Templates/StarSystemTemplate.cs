@@ -4,6 +4,7 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding.Interfaces;
 using FrEee.Modding.StellarObjectLocations;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -21,8 +22,9 @@ namespace FrEee.Modding.Templates
 		/// <summary>
 		/// Creates an empty star system template.
 		/// </summary>
-		public StarSystemTemplate()
+		public StarSystemTemplate(PRNG dice)
 		{
+			Dice = dice ?? new PRNG(DateTime.Now.Millisecond + DateTime.Now.Second * 1000 + DateTime.Now.Minute * 60000);
 			Abilities = new List<Ability>();
 			StellarObjectLocations = new List<IStellarObjectLocation>();
 		}
@@ -52,6 +54,11 @@ namespace FrEee.Modding.Templates
 		/// A description to use for star systems generated from this template.
 		/// </summary>
 		public string Description { get; set; }
+
+		/// <summary>
+		/// A random number generator to roll up some numbers.
+		/// </summary>
+		public PRNG Dice { get; set; }
 
 		/// <summary>
 		/// If true, empire homeworlds can be located in systems generated from this template.
@@ -138,7 +145,7 @@ namespace FrEee.Modding.Templates
 				Point pos;
 				try
 				{
-					pos = loc.Resolve(sys);
+					pos = loc.Resolve(sys, Dice);
 				}
 				catch (Exception)
 				{

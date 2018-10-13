@@ -2,6 +2,7 @@
 using FrEee.Game.Objects.Space;
 using FrEee.Modding.Interfaces;
 using FrEee.Modding.Templates;
+using FrEee.Utility;
 using System;
 using System.Drawing;
 
@@ -18,7 +19,7 @@ namespace FrEee.Modding.StellarObjectLocations
 		public ITemplate<StellarObject> StellarObjectTemplate { get; set; }
 		public int TargetIndex { get; set; }
 
-		public Point Resolve(StarSystem sys)
+		public Point Resolve(StarSystem sys, PRNG dice)
 		{
 			if (TargetIndex < 1 || TargetIndex > StarSystemTemplate.StellarObjectLocations.Count)
 				throw new Exception("Invalid location \"Same As " + TargetIndex + "\" specified for system with " + StarSystemTemplate.StellarObjectLocations.Count + " stellar objects.");
