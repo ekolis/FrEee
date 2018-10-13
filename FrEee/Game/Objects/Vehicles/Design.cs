@@ -108,6 +108,7 @@ namespace FrEee.Game.Objects.Vehicles
 				d.Owner = Empire.Current;
 				d.TurnNumber = Galaxy.Current.TurnNumber;
 				d.Iteration = Empire.Current.KnownDesigns.OwnedBy(Empire.Current).Where(x => x.BaseName == d.BaseName && x.IsUnlocked()).MaxOrDefault(x => x.Iteration) + 1; // auto assign nex available iteration
+				d.IsObsolete = d.IsObsolescent;
 				Empire.Current.KnownDesigns.Add(d); // only client side, don't need to worry about other players spying :)
 			});
 
