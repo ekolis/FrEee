@@ -27,7 +27,6 @@ namespace FrEee.Game.Objects.Space
 			{
 				var dict = base.Data;
 				dict[nameof(Target)] = Target;
-				dict[nameof(IsOneWay)] = IsOneWay;
 				dict[nameof(IsUnusual)] = IsUnusual;
 				return dict;
 			}
@@ -35,7 +34,6 @@ namespace FrEee.Game.Objects.Space
 			{
 				base.Data = value;
 				Target = value[nameof(Target)].Default<Sector>();
-				IsOneWay = value[nameof(IsOneWay)].Default<bool>();
 				IsUnusual = value[nameof(IsUnusual)].Default<bool>();
 			}
 		}
@@ -43,6 +41,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Should this warp point be one-way, or should it have a return connection?
 		/// </summary>
+		[DoNotSerialize]
 		public bool IsOneWay { get; set; }
 
 		/// <summary>
