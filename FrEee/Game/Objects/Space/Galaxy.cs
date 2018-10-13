@@ -242,7 +242,7 @@ namespace FrEee.Game.Objects.Space
 			get => modPath;
 			set
 			{
-				if (value != Mod.Current?.RootPath)
+				if (Mod.Current == null || Mod.Current.RootPath != value)
 					Mod.Load(value);
 				modPath = value;
 			}
