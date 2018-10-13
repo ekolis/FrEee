@@ -1,6 +1,7 @@
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Modding;
+using FrEee.Utility;
 using System;
 
 namespace FrEee.Game.Objects.Technology
@@ -41,10 +42,13 @@ namespace FrEee.Game.Objects.Technology
 		/// </summary>
 		public Formula<int> Level { get; set; }
 
+		private ModReference<Technology> technology { get; set; }
+
 		/// <summary>
 		/// The technology to be researched.
 		/// </summary>
-		public Technology Technology { get; set; }
+		[DoNotSerialize(false)]
+		public Technology Technology { get => technology; set => technology = value; }
 
 		/// <summary>
 		/// Is this technology requirement met by a particular empire?
