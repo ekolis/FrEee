@@ -125,7 +125,9 @@ namespace FrEee.Modding.Templates
 				if (p == null)
 					break; // no more locations available
 
-				var sys = StarSystemTemplateChances.PickWeighted(dice).Instantiate();
+				var sst = StarSystemTemplateChances.PickWeighted(dice);
+				sst.Dice = dice;
+				var sys = sst.Instantiate();
 				sys.Name = unusedNames.PickRandom(dice);
 				unusedNames.Remove(sys.Name);
 				NameStellarObjects(sys);

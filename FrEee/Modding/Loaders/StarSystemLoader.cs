@@ -32,7 +32,7 @@ namespace FrEee.Modding.Loaders
 		{
 			foreach (var rec in DataFile.Records)
 			{
-				var sst = new StarSystemTemplate();
+				var sst = new StarSystemTemplate(null);
 				sst.TemplateParameters = rec.Parameters;
 				string temp;
 				int index = -1;

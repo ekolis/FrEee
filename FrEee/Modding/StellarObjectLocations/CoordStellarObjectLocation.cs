@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding.Interfaces;
+using FrEee.Utility;
 using System;
 using System.Drawing;
 
@@ -22,7 +23,7 @@ namespace FrEee.Modding.StellarObjectLocations
 		/// </summary>
 		public bool UseCenteredCoordinates { get; set; }
 
-		public Point Resolve(StarSystem sys)
+		public Point Resolve(StarSystem sys, PRNG dice)
 		{
 			int realx = Coordinates.X - (UseCenteredCoordinates ? 0 : 6);
 			int realy = Coordinates.Y - (UseCenteredCoordinates ? 0 : 6);
