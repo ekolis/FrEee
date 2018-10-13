@@ -93,7 +93,9 @@ namespace FrEee.Game.Objects.Space
 		/// <returns>A copy of the warp point.</returns>
 		public WarpPoint Instantiate()
 		{
-			return this.CopyAndAssignNewID();
+			var result = this.CopyAndAssignNewID();
+			result.ModID = null;
+			return result;
 		}
 
 		public override void Redact(Empire emp)

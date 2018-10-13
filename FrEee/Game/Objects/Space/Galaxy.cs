@@ -543,6 +543,8 @@ namespace FrEee.Game.Objects.Space
 				var formula = new ComputedFormula<int>("Galaxy.Current.TurnNumber", null, true);
 				var turn = formula.Value;
 			}
+
+			Mod.Patch();
 		}
 
 		/// <summary>
@@ -561,6 +563,8 @@ namespace FrEee.Game.Objects.Space
 			}
 			fs.Close();
 			fs.Dispose();
+
+			Mod.Patch();
 		}
 
 		/// <summary>
@@ -603,6 +607,8 @@ namespace FrEee.Game.Objects.Space
 				// load library of designs, strategies, etc.
 				Library.Load();
 			}
+
+			Mod.Patch();
 		}
 
 		/// <summary>

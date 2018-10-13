@@ -54,7 +54,9 @@ namespace FrEee.Game.Objects.Space
 		/// <returns>A copy of the storm.</returns>
 		public Storm Instantiate()
 		{
-			return this.CopyAndAssignNewID();
+			var result = this.CopyAndAssignNewID();
+			result.ModID = null;
+			return result;
 		}
 	}
 }
