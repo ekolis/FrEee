@@ -503,7 +503,7 @@ namespace FrEee.Modding
 						item.CopyTo(match);
 				}
 			}
-			foreach (var match in Galaxy.Current.Referrables.OfType<IModObject>())
+			foreach (var match in Galaxy.Current.Referrables.OfType<IModObject>().ToArray())
 			{
 				// delete mod objects that no longer exist
 				if (!Mod.Current.Objects.Any(q => q.ModID == match.ModID))
