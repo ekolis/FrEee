@@ -231,7 +231,7 @@ namespace FrEee.Modding
 			if (setCurrent)
 				Current = mod;
 
-			if (!Directory.Exists(Path.Combine("Mods", path)))
+			if (path != null && !Directory.Exists(Path.Combine("Mods", path)))
 				throw new DirectoryNotFoundException($"Could not find mod {path} in the Mods folder.");
 
 			var loaders = new ILoader[]
