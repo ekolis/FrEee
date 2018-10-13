@@ -631,6 +631,8 @@ namespace FrEee.Utility
 
 						}
 						var data = Deserialize(r, prop.PropertyType, false, context, log);
+						if (prop.HasAttribute<SerializationPriorityAttribute>())
+							prop.SetValue(o, data); // TODO - use cached reflection lambdas
 						if (!prop.HasAttribute<DoNotSerializeAttribute>())
 							dict[pname] = data;
 					}
