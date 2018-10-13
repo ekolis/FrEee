@@ -198,8 +198,11 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 					}
 					else
 					{
-						// patch existing mod objects
-						item.CopyTo(match);
+						// patch existing mod o
+						if (item is IReferrable r)
+							r.CopyToExceptID((IReferrable)match, IDCopyBehavior.PreserveDestination);
+						else
+							item.CopyTo(match);
 					}
 				}
 				foreach (var match in Galaxy.Current.Referrables.OfType<IModObject>())

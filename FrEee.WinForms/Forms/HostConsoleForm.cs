@@ -3,7 +3,9 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
+using FrEee.Modding.Interfaces;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using System;
 using System.Data;
@@ -74,9 +76,30 @@ namespace FrEee.WinForms.Forms
 						// TODO - back up player GAM files too
 						Mod.Current.Dispose();
 						Mod.Current = mod;
-						Galaxy.Current.ModPath = mod.RootPath;
-						foreach (var r in mod.Objects.OfType<IReferrable>().Reverse()) // HACK - why are my components in reverse order?
-							Galaxy.Current.AssignID(r);
+						foreach (var item in Mod.Current.Objects)
+						{
+							var match = Galaxy.Current.Referrables.OfType<IModObject>().SingleOrDefault(q => q.ModID == item.ModID);
+							if (match == null)
+							{
+								// add new mod objects
+								if (item is IReferrable r)
+									Galaxy.Current.AssignID(r);
+							}
+							else
+							{
+								// patch existing mod o
+								if (item is IReferrable r)
+									r.CopyToExceptID((IReferrable)match, IDCopyBehavior.PreserveDestination);
+								else
+									item.CopyTo(match);
+							}
+						}
+						foreach (var match in Galaxy.Current.Referrables.OfType<IModObject>())
+						{
+							// delete mod objects that no longer exist
+							if (!Mod.Current.Objects.Any(q => q.ModID == match.ModID))
+								((IReferrable)match).Dispose();
+						}
 						Galaxy.SaveAll(status);
 					}
 					else
