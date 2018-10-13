@@ -1,4 +1,8 @@
-﻿using FrEee.Game.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.AI;
 using FrEee.Game.Objects.Civilization;
@@ -9,9 +13,6 @@ using FrEee.Modding.Loaders;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace FrEee.Modding
 {
@@ -229,6 +230,9 @@ namespace FrEee.Modding
 
 			if (setCurrent)
 				Current = mod;
+
+			if (!Directory.Exists(Path.Combine("Mods", path)))
+				throw new DirectoryNotFoundException($"Could not find mod {path} in the Mods folder.");
 
 			var loaders = new ILoader[]
 			{
