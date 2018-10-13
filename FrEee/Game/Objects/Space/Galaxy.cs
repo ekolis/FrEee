@@ -554,7 +554,6 @@ namespace FrEee.Game.Objects.Space
 		{
 			var fs = new FileStream(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory, filename), FileMode.Open);
 			Current = Serializer.Deserialize<Galaxy>(fs);
-			Mod.Load(Galaxy.Current.ModPath);
 			if (Empire.Current != null)
 			{
 				// load library of designs, strategies, etc.
@@ -592,7 +591,6 @@ namespace FrEee.Game.Objects.Space
 		public static void LoadFromString(string serializedData)
 		{
 			Galaxy.Current = Serializer.DeserializeFromString<Galaxy>(serializedData);
-			Mod.Load(Galaxy.Current.ModPath);
 			//Current.SpaceObjectIDCheck("after loading from memory");
 
 			if (Empire.Current != null)
