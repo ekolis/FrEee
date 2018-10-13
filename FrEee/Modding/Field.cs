@@ -77,10 +77,10 @@ namespace FrEee.Modding
 				var isDynamic = txt.Contains("{{") && txt.Substring(txt.IndexOf("{{")).Contains("}}");
 				var replacedText = txt;
 				replacedText = "'" + replacedText + "'"; // make it a string
-				replacedText = replacedText.Replace("{{", "' + (");
-				replacedText = replacedText.Replace("}}", ").Value + '");
-				replacedText = replacedText.Replace("{", "' + (");
-				replacedText = replacedText.Replace("}", ").Value + '");
+				replacedText = replacedText.Replace("{{", "' + str(");
+				replacedText = replacedText.Replace("}}", ") + '");
+				replacedText = replacedText.Replace("{", "' + str(");
+				replacedText = replacedText.Replace("}", ") + '");
 				return new ComputedFormula<T>(replacedText, context, isDynamic);
 			}
 			return new LiteralFormula<T>(txt);
