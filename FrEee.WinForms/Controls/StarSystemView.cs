@@ -462,7 +462,7 @@ namespace FrEee.WinForms.Controls
 				toolTip.SetToolTip(this, null);
 			else
 			{
-				var str = "";
+				var str = sector.Name + "\n";
 				if (sector.SpaceObjects.Any())
 					str += "\n" + sector.SpaceObjects.Largest();
 				if (SelectedSector != null && SelectedSector.StarSystem == sector.StarSystem)
