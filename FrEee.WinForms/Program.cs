@@ -80,7 +80,9 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 						var response = http.PostAsync("http://edkolis.com/errorlog", content).Result;
 						var responseString = response.Content.ReadAsStringAsync().Result;
 					}
-					Log((Exception)e.ExceptionObject);
+					var exception = (Exception)e.ExceptionObject;
+					exception.Log();
+					Log(exception);
 					var inner = (Exception)e.ExceptionObject;
 					while (inner is TargetInvocationException)
 						inner = inner.InnerException;
