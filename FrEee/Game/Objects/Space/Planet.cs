@@ -951,7 +951,9 @@ namespace FrEee.Game.Objects.Space
 		/// <returns>A copy of the planet.</returns>
 		public Planet Instantiate()
 		{
-			return this.CopyAndAssignNewID();
+			var result = this.CopyAndAssignNewID();
+			result.ModID = null;
+			return result;
 		}
 
 		public override bool IsHostileTo(Empire emp)

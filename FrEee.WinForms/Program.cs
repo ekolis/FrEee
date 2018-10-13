@@ -187,30 +187,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 					return 5;
 				Console.WriteLine("Patching mod...");
 				Galaxy.Current.ModPath = Mod.Current.RootPath;
-				foreach (var item in Mod.Current.Objects)
-				{
-					var match = Galaxy.Current.Referrables.OfType<IModObject>().SingleOrDefault(q => q.ModID == item.ModID);
-					if (match == null)
-					{
-						// add new mod objects
-						if (item is IReferrable r)
-							Galaxy.Current.AssignID(r);
-					}
-					else
-					{
-						// patch existing mod o
-						if (item is IReferrable r)
-							r.CopyToExceptID((IReferrable)match, IDCopyBehavior.PreserveDestination);
-						else
-							item.CopyTo(match);
-					}
-				}
-				foreach (var match in Galaxy.Current.Referrables.OfType<IModObject>())
-				{
-					// delete mod objects that no longer exist
-					if (!Mod.Current.Objects.Any(q => q.ModID == match.ModID))
-						((IReferrable)match).Dispose();
-				}
+				Mod.Patch();
 				Console.WriteLine("Saving game...");
 				Galaxy.SaveAll();
 				Console.WriteLine("Done.");
