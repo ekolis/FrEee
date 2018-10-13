@@ -485,6 +485,8 @@ namespace FrEee.Modding
 		/// </summary>
 		public static void Patch()
 		{
+			if (Mod.Current == null)
+				Mod.Current = Mod.Load(Galaxy.Current.ModPath);
 			foreach (var item in Mod.Current.Objects)
 			{
 				var match = Galaxy.Current.Referrables.OfType<IModObject>().SingleOrDefault(q => q.ModID == item.ModID);
@@ -506,7 +508,7 @@ namespace FrEee.Modding
 			foreach (var match in Galaxy.Current.Referrables.OfType<IModObject>().ToArray())
 			{
 				// delete mod objects that no longer exist
-				if (!Mod.Current.Objects.Any(q => q.ModID == match.ModID))
+				if (match.ModID != null && !Mod.Current.Objects.Any(q => q.ModID == match.ModID))
 					((IReferrable)match).Dispose();
 			}
 		}
