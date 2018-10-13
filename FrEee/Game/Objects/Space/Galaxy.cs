@@ -971,7 +971,9 @@ namespace FrEee.Game.Objects.Space
 							cmd.Execute();
 					}
 					else if (cmd.Issuer == null)
-						throw new NullReferenceException($"Command {cmd} was issued by nobody!");
+					{
+						Console.Error.WriteLine($"Command {cmd} was issued by nobody!");
+					}
 					else
 					{
 						// no hacking!
