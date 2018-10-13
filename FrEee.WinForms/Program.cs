@@ -178,7 +178,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 				if (Mod.Errors.Any())
 					return 5;
 				Console.WriteLine("Patching mod...");
-				Galaxy.Current.Mod = mod;
+				Galaxy.Current.ModPath = Mod.Current.RootPath;
 				Console.WriteLine("Saving game...");
 				Galaxy.SaveAll();
 				Console.WriteLine("Done.");

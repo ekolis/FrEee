@@ -73,7 +73,8 @@ namespace FrEee.WinForms.Forms
 						File.Copy(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Savegame", Galaxy.Current.GameFileName), Path.Combine("Savegame", Galaxy.Current.GameFileName + ".bak"), true);
 						// TODO - back up player GAM files too
 						Mod.Current.Dispose();
-						Galaxy.Current.Mod = Mod.Current = mod;
+						Mod.Current = mod;
+						Galaxy.Current.ModPath = mod.RootPath;
 						foreach (var r in mod.Objects.OfType<IReferrable>().Reverse()) // HACK - why are my components in reverse order?
 							Galaxy.Current.AssignID(r);
 						Galaxy.SaveAll(status);

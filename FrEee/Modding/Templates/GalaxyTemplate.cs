@@ -97,7 +97,7 @@ namespace FrEee.Modding.Templates
 		/// <param name="desiredProgress">How much progress should we report back to the GUI when we're done initializing the galaxy? 1.0 means all done with everything that needs to be done.</param>
 		public Galaxy Instantiate(Status status, double desiredProgress, PRNG dice)
 		{
-			var gal = new Galaxy(Mod.Current);
+			var gal = new Galaxy();
 			gal.Width = GameSetup.GalaxySize.Width;
 			gal.Height = GameSetup.GalaxySize.Height;
 			gal.MinPlanetValue = GameSetup.MinPlanetValue;

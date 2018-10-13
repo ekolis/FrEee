@@ -117,7 +117,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 		[TestInitialize]
 		public void TestInit()
 		{
-			new Galaxy(Mod.Current);
+			new Galaxy();
 			Galaxy.Current.TechnologyCost = TechnologyCost.Low;
 			emp = new Empire();
 			Galaxy.Current.Empires.Add(emp);

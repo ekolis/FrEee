@@ -50,7 +50,7 @@ namespace FrEee.Game.Objects.Space
 		public Galaxy()
 		{
 			Galaxy.Current = this;
-			Mod = Mod.Current;
+			ModPath = Mod.Current.RootPath;
 			StarSystemLocations = new List<ObjectLocation<StarSystem>>();
 			Empires = new List<Empire>();
 			Name = "Unnamed";
@@ -64,12 +64,9 @@ namespace FrEee.Game.Objects.Space
 			ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
 			Battles = new HashSet<IBattle>();
 			ScriptNotes = new DynamicDictionary();
-		}
+			foreach (var q in Mod.Current.Objects.OfType<IReferrable>())
+				AssignID(q);
 
-		public Galaxy(Mod mod)
-			: this()
-		{
-			Mod = mod;
 		}
 
 		/// <summary>
@@ -231,11 +228,22 @@ namespace FrEee.Game.Objects.Space
 			get { return StarSystemLocations.MinOrDefault(ssl => ssl.Location.Y); }
 		}
 
+		private string modPath;
+
 		/// <summary>
 		/// The mod being played.
 		/// </summary>
 		[SerializationPriority(1)]
-		public Mod Mod { get; set; }
+		public string ModPath
+		{
+			get => modPath;
+			set
+			{
+				if (value != Mod.Current?.RootPath)
+					Mod.Load(value);
+				modPath = value;
+			}
+		}
 
 		/// <summary>
 		/// The game name.
@@ -522,7 +530,7 @@ namespace FrEee.Game.Objects.Space
 		public static void Load(Stream stream)
 		{
 			Galaxy.Current = Serializer.Deserialize<Galaxy>(stream);
-			Mod.Current = Galaxy.Current.Mod;
+			Mod.Load(Galaxy.Current.ModPath);
 			//Current.SpaceObjectIDCheck("after loading from disk/memory");
 
 			if (Empire.Current != null)
@@ -543,7 +551,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			var fs = new FileStream(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory, filename), FileMode.Open);
 			Current = Serializer.Deserialize<Galaxy>(fs);
-			Mod.Current = Galaxy.Current.Mod;
+			Mod.Load(Galaxy.Current.ModPath);
 			if (Empire.Current != null)
 			{
 				// load library of designs, strategies, etc.
@@ -581,7 +589,7 @@ namespace FrEee.Game.Objects.Space
 		public static void LoadFromString(string serializedData)
 		{
 			Galaxy.Current = Serializer.DeserializeFromString<Galaxy>(serializedData);
-			Mod.Current = Galaxy.Current.Mod;
+			Mod.Load(Galaxy.Current.ModPath);
 			//Current.SpaceObjectIDCheck("after loading from memory");
 
 			if (Empire.Current != null)
