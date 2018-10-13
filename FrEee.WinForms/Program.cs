@@ -81,6 +81,10 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 						var responseString = response.Content.ReadAsStringAsync().Result;
 					}
 					Log((Exception)e.ExceptionObject);
+					var inner = (Exception)e.ExceptionObject;
+					while (inner is TargetInvocationException)
+						inner = inner.InnerException;
+					MessageBox.Show(inner.GetType().Name + ": " + inner.Message + "\n\nSee errorlog.txt for more details.");
 				}
 				catch (Exception ex)
 				{
