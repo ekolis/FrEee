@@ -76,11 +76,14 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			if (IsDisposed)
 				return;
-			Owner.Waypoints.Remove(this);
-			for (int i = 0; i < Owner.NumberedWaypoints.Length; i++)
+			if (Owner != null)
 			{
-				if (Owner.NumberedWaypoints[i] == this)
-					Owner.NumberedWaypoints[i] = null;
+				Owner.Waypoints.Remove(this);
+				for (int i = 0; i < Owner.NumberedWaypoints.Length; i++)
+				{
+					if (Owner.NumberedWaypoints[i] == this)
+						Owner.NumberedWaypoints[i] = null;
+				}
 			}
 			foreach (var sobj in Galaxy.Current.FindSpaceObjects<IMobileSpaceObject>())
 			{
