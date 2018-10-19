@@ -50,7 +50,11 @@ namespace FrEee.Game.Objects.Space
 			{
 				if (BackgroundImagePath == null)
 					return null;
-				return Pictures.GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Systems", BackgroundImagePath));
+				return Pictures.GetModImage(
+					Path.Combine("Pictures", "Systems", BackgroundImagePath),
+					Path.Combine("Pictures", "Systems", "1024x768", BackgroundImagePath),
+					Path.Combine("Pictures", "Systems", "800x600", BackgroundImagePath)
+					);
 			}
 		}
 
