@@ -713,7 +713,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 			foreach (var seeker in Combatants.OfType<Seeker>().ToArray())
 				seeker.Dispose();
 			Combatants.Clear();
-			CombatSpeedBuffer.Clear();
+			if (CombatSpeedBuffer != null)
+				CombatSpeedBuffer.Clear();
 			Events.Clear();
 			LowerRight.Clear();
 			if (StartCombatants != null)
