@@ -1,10 +1,10 @@
-﻿using FrEee.Modding.Interfaces;
-using FrEee.Utility;
-using FrEee.Utility.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using FrEee.Modding.Interfaces;
+using FrEee.Utility;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Modding
 {
@@ -130,6 +130,11 @@ namespace FrEee.Modding
 					foreach (var kvp in mo.TemplateParameters)
 						parms.Add(kvp.Key, kvp.Value);
 				}
+			}
+			if (variables != null)
+			{
+				foreach (var kvp in variables)
+					parms[kvp.Key] = kvp.Value;
 			}
 			string fulltext;
 			if (ExternalScripts == null)

@@ -365,7 +365,7 @@ namespace FrEee.Game.Objects.Technology
 			var shot = new Shot(null, null, null, range - (Mount == null ? 0 : Mount.WeaponRangeModifier.Value));
 			var dict = new SafeDictionary<string, object>();
 			dict["range"] = range;
-			return w.Damage.Evaluate(dict) * (Mount?.WeaponDamagePercent.Value ?? 100) / 100;
+			return w.Damage.Evaluate(null, dict) * (Mount?.WeaponDamagePercent.Value ?? 100) / 100;
 		}
 
 		public Component Instantiate()
