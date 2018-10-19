@@ -350,7 +350,10 @@ namespace FrEee.Modding
 			scope.SetVariable("galaxy", Galaxy.Current);
 
 			foreach (var kvp in variables)
+			{
+				scope.SetVariable(kvp.Key, kvp.Value);
 				engine.GetBuiltinModule().SetVariable(kvp.Key, kvp.Value);
+			}
 		}
 
 		/// <summary>
