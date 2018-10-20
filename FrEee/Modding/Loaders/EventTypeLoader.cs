@@ -34,7 +34,7 @@ namespace FrEee.Modding.Loaders
 				et.TargetSelector = rec.GetReferenceEnumerable<GalaxyReferenceSet<IReferrable>>(new string[] { "Target Selector" }, et);
 				et.TargetSelector.ExternalScripts = et.TargetSelector.ExternalScripts.ConcatSingle(et.Imports).ToArray();
 				et.Action = rec.GetScript("Action", et);
-				et.Action.ExternalScripts = new Script[] { et.Imports, et.Parameters };
+				et.Action.ExternalScripts = new Script[] { et.Imports, et.Parameters }.ToHashSet();
 				yield return et;
 			}
 		}
