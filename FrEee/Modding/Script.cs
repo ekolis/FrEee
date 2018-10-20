@@ -21,7 +21,7 @@ namespace FrEee.Modding
 		{
 			ModuleName = moduleName;
 			Text = text;
-			ExternalScripts = externalScripts.ToList();
+			ExternalScripts = externalScripts.ToHashSet();
 			GlobalVariables = new Dictionary<string, object>();
 		}
 
@@ -53,7 +53,7 @@ namespace FrEee.Modding
 		/// <summary>
 		/// Any external scripts directly referenced by this script.
 		/// </summary>
-		public IList<Script> ExternalScripts { get; set; }
+		public ISet<Script> ExternalScripts { get; set; }
 
 		/// <summary>
 		/// Full text of this script, including the mod global script and all referenced external scripts.

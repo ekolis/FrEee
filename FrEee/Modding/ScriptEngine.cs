@@ -205,8 +205,8 @@ namespace FrEee.Modding
 				script.Text + "\n" +
 				string.Join("\n", postCommands.ToArray());
 			var external = new List<Script>(script.ExternalScripts);
-			if (Mod.Current != null)
-				external.Add(Mod.Current.GlobalScript);
+			//if (Mod.Current != null)
+				//external.Add(Mod.Current.GlobalScript);
 			var sc = new ScriptCode("runner", code, external.ToArray());
 			var runner = GetCodeScript(sc);
 			var compiledScript = GetCompiledScript(runner);
