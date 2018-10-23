@@ -16,6 +16,15 @@ namespace FrEee.WinForms.Objects
 	{
 		static Music()
 		{
+			OperatingSystem os = Environment.OSVersion;
+            PlatformID pid = os.Platform;
+			if (pid == PlatformID.Unix)
+			{
+				Console.WriteLine("Linux detected, disabling Music");
+				linux = true;
+				return;
+			}
+
 			waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(48000, 2);
 			mixer = new MixingSampleProvider(waveFormat);
 
@@ -68,10 +77,13 @@ namespace FrEee.WinForms.Objects
 		private static float musicVolume = 1.0f;
 		private static WaveFormat waveFormat;
 		private static WaveOutEvent waveout = new WaveOutEvent();
+		private static bool linux = false;
 
 		public static void Play(MusicMode mode, MusicMood mood)
 		{
 			if (mode == CurrentMode && mood == CurrentMood)
+				return;
+			if (linux) 
 				return;
 
 			currentMode = mode;
@@ -81,11 +93,15 @@ namespace FrEee.WinForms.Objects
 
 		public static void setVolume(float volume)
 		{
+			if (linux)
+                return;
 			musicVolume = volume;
 		}
 
 		public static void StartNewTrack()
 		{
+			if (linux)
+                return;
 			// find out what to play
 			var tracks = FindTracks().ToArray();
 			var track = tracks.Where(t => t.Mode == CurrentMode && t.Mood == CurrentMood).PickRandom();
