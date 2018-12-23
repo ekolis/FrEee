@@ -131,6 +131,11 @@ namespace FrEee.Modding
 						parms.Add(kvp.Key, kvp.Value);
 				}
 			}
+			if (host is IDictionary<string, object> d)
+			{
+				foreach (var kvp in d)
+					parms[kvp.Key] = kvp.Value;
+			}
 			if (variables != null)
 			{
 				foreach (var kvp in variables)

@@ -173,6 +173,7 @@ namespace FrEee.Modding
 			var dict = new Dictionary<string, object>();
 			foreach (var varName in variableNames)
 				dict.Add(varName, engine.GetBuiltinModule().GetVariable(varName));
+				//dict.Add(varName, scope.GetVariable(varName));
 			return dict;
 		}
 
@@ -190,16 +191,17 @@ namespace FrEee.Modding
 			preCommands.Add("clr.AddReference('System.Core')");
 			preCommands.Add("import System");
 			preCommands.Add("clr.ImportExtensions(System.Linq)");
+			preCommands.Add("clr.AddReference('FrEee.Core')");
 			preCommands.Add("import FrEee");
 			preCommands.Add("import FrEee.Utility");
 			preCommands.Add("clr.ImportExtensions(FrEee.Utility.Extensions)");
 			preCommands.Add("from FrEee.Modding import Mod");
 			preCommands.Add("from FrEee.Game.Objects.Space import Galaxy");
 			preCommands.Add("from FrEee.Game.Objects.Civilization import Empire");
-			if (variables != null)
+			/*if (variables != null)
 				UpdateScope(variables);
 			if (readOnlyVariables != null)
-				UpdateScope(readOnlyVariables);
+				UpdateScope(readOnlyVariables);*/
 			var code =
 				string.Join("\n", preCommands.ToArray()) + "\n" +
 				script.Text + "\n" +
@@ -271,6 +273,7 @@ namespace FrEee.Modding
 			preCommands.Add("clr.AddReference('System.Core')");
 			preCommands.Add("import System");
 			preCommands.Add("clr.ImportExtensions(System.Linq)");
+			preCommands.Add("clr.AddReference('FrEee.Core')");
 			preCommands.Add("import FrEee");
 			preCommands.Add("import FrEee.Utility");
 			preCommands.Add("clr.ImportExtensions(FrEee.Utility.Extensions)");
@@ -344,15 +347,15 @@ namespace FrEee.Modding
 		/// <returns></returns>
 		public static void UpdateScope(IDictionary<string, object> variables)
 		{
-			if (variables == null)
-				variables = new Dictionary<string, object>();
-
 			scope.SetVariable("galaxy", Galaxy.Current);
 
-			foreach (var kvp in variables)
+			if (variables != null)
 			{
-				scope.SetVariable(kvp.Key, kvp.Value);
-				engine.GetBuiltinModule().SetVariable(kvp.Key, kvp.Value);
+				foreach (var kvp in variables)
+				{
+					scope.SetVariable(kvp.Key, kvp.Value);
+					engine.GetBuiltinModule().SetVariable(kvp.Key, kvp.Value);
+				}
 			}
 		}
 
