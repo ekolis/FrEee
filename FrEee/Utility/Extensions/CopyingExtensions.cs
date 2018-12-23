@@ -189,11 +189,7 @@ namespace FrEee.Utility.Extensions
 									sp.SetValue(target, knownObjects[sv]); // use known copy
 								}
 								else
-								{
 									sp.SetValue(target, sv, null); // use original object
-									if (sv != null)
-										Debug.WriteLine($"{sv} ({sp.Name} of {source}) is unknown, using original object");
-								}
 							}
 
 							if (regen)
