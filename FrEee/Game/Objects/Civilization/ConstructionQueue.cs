@@ -347,6 +347,7 @@ namespace FrEee.Game.Objects.Civilization
 			if (!IsMemory && Mod.Current != null) // don't update memories if patching mod
 				this.UpdateEmpireMemories();
 			Galaxy.Current.UnassignID(this);
+			Orders.Clear();
 			IsDisposed = true;
 		}
 
