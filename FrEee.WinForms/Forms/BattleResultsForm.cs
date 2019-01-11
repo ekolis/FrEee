@@ -74,7 +74,7 @@ namespace FrEee.WinForms.Forms
 			}))
 			{
 				var count = group.Count();
-				var hp = group.Sum(c => c.Value.Hitpoints);
+				var hp = group.Sum(c => Battle.StartCombatants[c.Key].Hitpoints);
 				var item = new
 				{
 					EmpireIcon = group.Key?.Empire?.Icon,
@@ -84,7 +84,7 @@ namespace FrEee.WinForms.Forms
 					HullSize = group.Key.HullSize,
 					StartCount = count,
 					StartHP = hp,
-					Losses = group.Count(kvp => kvp.Value.IsDestroyed || Battle.EndCombatants[kvp.Key] != kvp.Value.Owner), // destroyed or captured
+					Losses = group.Count(kvp => Battle.EndCombatants[kvp.Key].IsDestroyed || Battle.EndCombatants[kvp.Key].Owner != Battle.StartCombatants[kvp.Key].Owner), // destroyed or captured
 					Damage = hp - group.Sum(kvp => Battle.EndCombatants[kvp.Key].Hitpoints),
 				};
 				data.Add(item);
