@@ -170,7 +170,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 		public virtual void Initialize(IEnumerable<ICombatant> combatants)
 		{
 			Combatants = combatants.ToHashSet();
-			StartCombatants = combatants.Select(c => new { ID = c.ID, Copy = c.Copy() }).ToDictionary(q => q.ID, q => q.Copy);
+			StartCombatants = combatants.Select(c => new { ID = c.ID, Copy = c.CopyAndAssignNewID() }).ToDictionary(q => q.ID, q => q.Copy);
+
 			foreach (var c in Combatants)
 			{
 				for (var i = 0; i < c.Weapons.Count(); i++)
@@ -517,7 +518,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 			}
 
 			// save state of combatants at end of battle - set to undisposed so they don't get purged!
-			EndCombatants = Combatants.Select(c => new { ID = c.ID, Copy = c.Copy() }).ToDictionary(q => q.ID, q => q.Copy);
+			EndCombatants = Combatants.Select(c => new { ID = c.ID, Copy = c.CopyAndAssignNewID() }).ToDictionary(q => q.ID, q => q.Copy);
 			foreach (var c in EndCombatants.Values)
 				c.IsDisposed = false;
 

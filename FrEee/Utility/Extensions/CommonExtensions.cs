@@ -1748,7 +1748,11 @@ namespace FrEee.Utility.Extensions
 			// You can always scan space objects you are in combat with.
 			// But only their state at the time they were in combat; not for the rest of the turn!
 			// TODO - what about glassed planets, they have no owner...
-			if (Galaxy.Current.Battles.Any(b => (b.Combatants.OfType<ISpaceObject>().Contains(sobj)) && b.Combatants.Any(c => c.Owner == emp)))
+			if (Galaxy.Current.Battles.Any(b => 
+			(b.Combatants.OfType<ISpaceObject>().Contains(sobj)
+				|| b.StartCombatants.Values.OfType<ISpaceObject>().Contains(sobj)
+				|| b.EndCombatants.Values.OfType<ISpaceObject>().Contains(sobj))
+			&& b.Combatants.Any(c => c.Owner == emp)))
 				return Visibility.Scanned;
 
 			// do we have anything that can see it?

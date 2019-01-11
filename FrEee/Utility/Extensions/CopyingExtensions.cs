@@ -1,4 +1,5 @@
 ﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Technology;
 using Omu.ValueInjecter;
 using System;
 using System.Collections;
@@ -150,6 +151,7 @@ namespace FrEee.Utility.Extensions
 						{
 							bool doit = true;
 							bool regen = false;
+							if ( source is Component && ((Component)source).Hitpoints == 0) { }
 							if (source is IReferrable && sp.Name == "ID")
 							{
 								// do special things for IDs
