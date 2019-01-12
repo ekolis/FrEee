@@ -1724,8 +1724,7 @@ namespace FrEee.Game.Objects.Space
 					v.DealWithMines();
 
 				bool didStuff = v.ExecuteOrders();
-				if (!sys.ExploredByEmpires.Contains(v.Owner))
-					sys.ExploredByEmpires.Add(v.Owner);
+				sys.MarkAsExploredBy(v.Owner);
 
 				// update memory sight after movement
 				if (didStuff)
