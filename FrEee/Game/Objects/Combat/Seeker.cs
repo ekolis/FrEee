@@ -292,7 +292,11 @@ namespace FrEee.Game.Objects.Combat
 		{
 			if (Owner == emp)
 				return Visibility.Owned;
-			if (Galaxy.Current.Battles.Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
+			if (Galaxy.Current.Battles.Any(b =>
+				(b.Combatants.Contains(this)
+					|| b.StartCombatants.Values.Contains(this)
+					|| b.EndCombatants.Values.Contains(this))
+				&& b.Combatants.Any(c => c.Owner == emp)))
 				return Visibility.Scanned;
 			return Visibility.Unknown;
 		}
