@@ -352,6 +352,8 @@ namespace FrEee.Game.Objects.Space
 
 			SpaceObjectLocations.Add(new ObjectLocation<ISpaceObject>(sobj, coords));
 
+			MarkAsExploredBy(sobj.Owner);
+
 			// see if we got hit by a minefield
 			if (!Serializer.IsDeserializing)
 				sobj.DealWithMines();
@@ -389,6 +391,20 @@ namespace FrEee.Game.Objects.Space
 		public override string ToString()
 		{
 			return Name;
+		}
+
+		/// <summary>
+		/// Marks this system as explored by a particular empire and adds an appropriate log entry for the player.
+		/// Does nothing if already explored by that player.
+		/// </summary>
+		/// <param name="e"></param>
+		public void MarkAsExploredBy(Empire e)
+		{
+			if (e != null && !ExploredByEmpires.Contains(e))
+			{
+				ExploredByEmpires.Add(e);
+				e.RecordLog(this, $"We have explored the {Name} system.");
+			}
 		}
 	}
 }

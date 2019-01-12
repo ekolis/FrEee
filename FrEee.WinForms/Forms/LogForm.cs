@@ -124,6 +124,12 @@ namespace FrEee.WinForms.Forms
 						mainGameForm.ShowChildForm(form);
 						Close();
 					}
+					else if (context is StarSystem sys)
+					{
+						// navigate game form to that system
+						mainGameForm.SelectStarSystem(sys);
+						Close();
+					}
 
 					// TODO - more types of goto-messages
 				}

@@ -129,8 +129,7 @@ namespace FrEee.Game.Objects.Orders
 					sobj.RefreshDijkstraMap();
 
 					// mark system explored
-					if (!WarpPoint.TargetStarSystemLocation.Item.ExploredByEmpires.Contains(((ISpaceObject)sobj).Owner))
-						WarpPoint.TargetStarSystemLocation.Item.ExploredByEmpires.Add(((ISpaceObject)sobj).Owner);
+					WarpPoint.TargetStarSystemLocation.Item.MarkAsExploredBy(((ISpaceObject)sobj).Owner);
 
 					// done warping
 					IsComplete = true;
