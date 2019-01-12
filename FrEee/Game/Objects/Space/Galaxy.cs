@@ -533,7 +533,8 @@ namespace FrEee.Game.Objects.Space
 		public static void Load(Stream stream)
 		{
 			Galaxy.Current = Serializer.Deserialize<Galaxy>(stream);
-			Mod.Load(Galaxy.Current.ModPath);
+			if (Current.ModPath == null)
+				Mod.Load(null); // skipped in deserialization because it is null but the mod needs to be loaded!
 			//Current.SpaceObjectIDCheck("after loading from disk/memory");
 
 			if (Empire.Current != null)
@@ -556,6 +557,8 @@ namespace FrEee.Game.Objects.Space
 		{
 			var fs = new FileStream(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory, filename), FileMode.Open);
 			Current = Serializer.Deserialize<Galaxy>(fs);
+			if (Current.ModPath == null)
+				Mod.Load(null); // skipped in deserialization because it is null but the mod needs to be loaded!
 			if (Empire.Current != null)
 			{
 				// load library of designs, strategies, etc.
@@ -596,6 +599,10 @@ namespace FrEee.Game.Objects.Space
 		{
 			Galaxy.Current = Serializer.DeserializeFromString<Galaxy>(serializedData);
 			//Current.SpaceObjectIDCheck("after loading from memory");
+
+
+			if (Current.ModPath == null)
+				Mod.Load(null); // skipped in deserialization because it is null but the mod needs to be loaded!
 
 			if (Empire.Current != null)
 			{
