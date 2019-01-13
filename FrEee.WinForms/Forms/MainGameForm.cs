@@ -1048,13 +1048,13 @@ namespace FrEee.WinForms.Forms
 
 			Enabled = true;
 
-			if (Galaxy.Current.IsWinner)
+			if (Empire.Current.IsWinner)
 			{
 				var form = new GameOverForm(true);
 				form.StartPosition = FormStartPosition.CenterScreen;
 				this.ShowChildForm(form);
 			}
-			if (Galaxy.Current.IsLoser)
+			if (Empire.Current.IsLoser)
 			{
 				var form = new GameOverForm(false);
 				form.StartPosition = FormStartPosition.CenterScreen;
@@ -1207,13 +1207,13 @@ namespace FrEee.WinForms.Forms
 					Enabled = true;
 					Cursor = Cursors.Default;
 
-					if (Galaxy.Current.IsWinner)
+					if (Empire.Current.IsWinner)
 					{
 						var form = new GameOverForm(true);
 						form.StartPosition = FormStartPosition.CenterScreen;
 						this.ShowChildForm(form);
 					}
-					if (Galaxy.Current.IsLoser)
+					if (Empire.Current.IsLoser)
 					{
 						var form = new GameOverForm(false);
 						form.StartPosition = FormStartPosition.CenterScreen;

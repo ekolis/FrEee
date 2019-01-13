@@ -181,16 +181,12 @@ namespace FrEee.Game.Objects.Space
 
 		public bool IsIntelligenceAllowed { get; set; }
 
-		public bool IsLoser { get; private set; }
-
 		/// <summary>
 		/// Is this a single player game? If so, autoprocess the turn after the player takes his turn.
 		/// </summary>
 		public bool IsSinglePlayer { get; set; }
 
 		public bool IsSurrenderAllowed { get; set; }
-
-		public bool IsWinner { get; private set; }
 
 		/// <summary>
 		/// The maximum event severity in this game.
@@ -1325,23 +1321,27 @@ namespace FrEee.Game.Objects.Space
 			{
 				if (vc is TotalEliminationVictoryCondition || Current.TurnNumber > Current.VictoryDelay)
 				{
+					// find winners
 					var winners = new List<Empire>();
 					foreach (var emp in Current.Empires)
 					{
 						if (vc.GetProgress(emp) >= 1d)
 						{
 							// empire won!
+							emp.IsWinner = true;
 							emp.Log.Add(emp.CreateLogMessage(vc.GetVictoryMessage(emp)));
-							Current.IsWinner = true;
+							winners.Add(emp);
 						}
 					}
+
+					// if there were any winners, everyone else lost :(
 					if (winners.Any())
 					{
-						foreach (var emp in Current.Empires.Where(e => !winners.Contains(e)))
+						foreach (var emp in Current.Empires.Except(winners))
 						{
-							// empire lost
+							// empire lost because someone else won
+							emp.IsLoser = true;
 							emp.Log.Add(emp.CreateLogMessage(vc.GetDefeatMessage(emp, winners)));
-							Current.IsLoser = true;
 						}
 					}
 				}
