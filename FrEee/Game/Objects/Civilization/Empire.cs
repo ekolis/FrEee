@@ -1335,5 +1335,9 @@ namespace FrEee.Game.Objects.Civilization
 			foreach (var colony in s.SpaceObjects.OfType<Planet>().Where(p => p.Owner == this).Select(p => p.Colony))
 				colony.TriggerHappinessChange(trigger);
 		}
+
+		public bool IsWinner { get; set; }
+
+		public bool IsLoser { get; set; }
 	}
 }
