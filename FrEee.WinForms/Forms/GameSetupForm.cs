@@ -133,7 +133,7 @@ namespace FrEee.WinForms.Forms
 			spnBonusRemote.Value = (decimal)setup.RemoteMiningModel.ValuePercentageBonus;
 			spnDepletionResourceRemote.Value = (decimal)setup.RemoteMiningModel.ValueDepletionPerResource;
 			chkBonusDepletionRemote.Checked = setup.RemoteMiningModel.BonusAffectsDepletion;
-			spnDepletionResourceRemote.Value = setup.RemoteMiningModel.ValueDepletionPerTurn;
+			spnDepletionTurnRemote.Value = setup.RemoteMiningModel.ValueDepletionPerTurn;
 
 			spnMinValuePlanet.Value = setup.MinPlanetValue;
 			spnMinSpawnValuePlanet.Value = setup.MinSpawnedPlanetValue;
