@@ -315,8 +315,8 @@ namespace FrEee.Game.Objects.Civilization
 		public bool IsDefeated
 		{
 			get
-			{
-				return !Galaxy.Current.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == this).Any();
+			{ 
+				return !OwnedSpaceObjects.Any(sobj => !sobj.IsDisposed);
 			}
 		}
 
