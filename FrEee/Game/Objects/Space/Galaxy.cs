@@ -1199,6 +1199,7 @@ namespace FrEee.Game.Objects.Space
 					{
 						var delta = c.AngerDeltas[race];
 						delta += race == c.Owner.PrimaryRace ? race.HappinessModel.NaturalTurnAngerChangeOurRace : race.HappinessModel.NaturalTurnAngerChangeOtherRaces;
+						delta -= c.StarSystem.GetEmpireAbilityValue(c.Owner, "Change Population Happiness - System").ToInt() * 10;
 						if (delta > race.HappinessModel.MaxPositiveTurnAngerChange)
 							delta = race.HappinessModel.MaxPositiveTurnAngerChange;
 						if (delta < race.HappinessModel.MaxNegativeTurnAngerChange)
