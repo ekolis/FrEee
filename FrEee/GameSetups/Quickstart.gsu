@@ -1,267 +1,323 @@
-FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.8.0, Culture=neutral, PublicKeyToken=null:
-p32:
+FrEee.Game.Setup.GameSetup, FrEee.Core:
+p33:
 	AllowedTrades:
-		:
-		All;
+		:All;
 	EmpirePlacement:
-		:
-		Equidistant;
+		:Equidistant;
 	EmpirePoints:
-		:
-		2000;
+		:2000;
 	EmpireTemplates:
-		System.Collections.Generic.List`1[[FrEee.Game.Setup.EmpireTemplate, FrEee.Core, Version=0.0.8.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-		c1:		
-			:
-			p11:
+		System.Collections.Generic.List`1[[FrEee.Game.Setup.EmpireTemplate, FrEee.Core]], mscorlib:
+		c3:		
+			:p11:
 				AIName:
-					:
-					"AI_Default";
+					:"";
 				AIsCanUse:
-					:
-					True;
+					:True;
 				Color:
-					:
-					255,0,255,255;
+					:255,255,0,0;
 				CultureName:
-					:
-					"Scientists";
+					:"Berzerkers";
 				InsigniaName:
-					:
-					"Eee";
+					:"Jorn";
 				IsPlayerEmpire:
-					:
-					True;
+					:True;
 				LeaderName:
-					:
-					"Eee";
+					:"Grand Emperor";
 				LeaderPortraitName:
-					:
-					"Eee";
+					:"Jorn";
 				Name:
-					:
-					"Eee Consortium";
+					:"Jorn Empire";
 				PrimaryRace:
-					:
-					p7:
+					:p7:
 						Aptitudes:
-							FrEee.Utility.SafeDictionary`2[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], FrEee.Core, Version=0.0.8.0, Culture=neutral, PublicKeyToken=null:
+							FrEee.Utility.SafeDictionary`2[[System.String, mscorlib],[System.Int32, mscorlib]], FrEee.Core:
 							d15:							
-								:
-								"Physical Strength";
-								:
-								100;
-								:
-								"Intelligence";
-								:
-								100;
-								:
-								"Cunning";
-								:
-								100;
-								:
-								"Environmental Resistance";
-								:
-								100;
-								:
-								"Reproduction";
-								:
-								100;
-								:
-								"Happiness";
-								:
-								100;
-								:
-								"Aggressiveness";
-								:
-								100;
-								:
-								"Defensiveness";
-								:
-								100;
-								:
-								"Political Savvy";
-								:
-								100;
-								:
-								"Mining Aptitude";
-								:
-								100;
-								:
-								"Farming Aptitude";
-								:
-								100;
-								:
-								"Refining Aptitude";
-								:
-								100;
-								:
-								"Construction Aptitude";
-								:
-								100;
-								:
-								"Repair Aptitude";
-								:
-								100;
-								:
-								"Maintenance Aptitude";
-								:
-								100;
+								:"Physical Strength";
+								:100;
+								:"Intelligence";
+								:100;
+								:"Cunning";
+								:100;
+								:"Environmental Resistance";
+								:100;
+								:"Reproduction";
+								:100;
+								:"Happiness";
+								:100;
+								:"Aggressiveness";
+								:100;
+								:"Defensiveness";
+								:100;
+								:"Political Savvy";
+								:100;
+								:"Mining Aptitude";
+								:100;
+								:"Farming Aptitude";
+								:100;
+								:"Refining Aptitude";
+								:100;
+								:"Construction Aptitude";
+								:100;
+								:"Repair Aptitude";
+								:100;
+								:"Maintenance Aptitude";
+								:100;
 							;
 						happinessModel:
-							:
-							p1:
+							:p1:
 								ID:
-									:
-									"Peaceful";
+									:"Bloodthirsty";
 							;
 						Name:
-							:
-							"Eee";
+							:"Jorn";
 						NativeAtmosphere:
-							:
-							"Oxygen";
+							:"Carbon Dioxide";
 						NativeSurface:
-							:
-							"Gas Giant";
+							:"Rock";
 						PopulationIconName:
-							:
-							"Eee";
+							:"Jorn";
 						TraitNames:
-							System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
+							System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib:
 							c2:							
-								:
-								"Natural Merchants";
-								:
-								"Propulsion Experts";
+								:"Natural Merchants";
+								:"Propulsion Experts";
 							;
 					;
 				ShipsetName:
-					:
-					"Eee";
+					:"Jorn";
+			;
+			:p10:
+				AIName:
+					:"AI_Default";
+				AIsCanUse:
+					:True;
+				Color:
+					:255,85,0,170;
+				CultureName:
+					:"Engineers";
+				InsigniaName:
+					:"Fractalian";
+				LeaderName:
+					:"Chief Polygon";
+				LeaderPortraitName:
+					:"Fractalian";
+				Name:
+					:"Fractalian Federation";
+				PrimaryRace:
+					:p7:
+						Aptitudes:
+							FrEee.Utility.SafeDictionary`2[[System.String, mscorlib],[System.Int32, mscorlib]], FrEee.Core:
+							d15:							
+								:"Physical Strength";
+								:100;
+								:"Intelligence";
+								:100;
+								:"Cunning";
+								:100;
+								:"Environmental Resistance";
+								:100;
+								:"Reproduction";
+								:100;
+								:"Happiness";
+								:100;
+								:"Aggressiveness";
+								:100;
+								:"Defensiveness";
+								:100;
+								:"Political Savvy";
+								:100;
+								:"Mining Aptitude";
+								:100;
+								:"Farming Aptitude";
+								:100;
+								:"Refining Aptitude";
+								:100;
+								:"Construction Aptitude";
+								:100;
+								:"Repair Aptitude";
+								:100;
+								:"Maintenance Aptitude";
+								:100;
+							;
+						happinessModel:
+							:p1:
+								ID:
+									:"Peaceful";
+							;
+						Name:
+							:"Fractalian";
+						NativeAtmosphere:
+							:"Methane";
+						NativeSurface:
+							:"Ice";
+						PopulationIconName:
+							:"Fractalian";
+						TraitNames:
+							System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib:
+							c1:							
+								:"Crystallurgy";
+							;
+					;
+				ShipsetName:
+					:"Fractalian";
+			;
+			:p10:
+				AIName:
+					:"AI_Default";
+				AIsCanUse:
+					:True;
+				Color:
+					:255,0,0,255;
+				CultureName:
+					:"Neutral";
+				InsigniaName:
+					:"KpiImp";
+				LeaderName:
+					:"Representative";
+				LeaderPortraitName:
+					:"KpiImp";
+				Name:
+					:"Kpilmp Union";
+				PrimaryRace:
+					:p7:
+						Aptitudes:
+							FrEee.Utility.SafeDictionary`2[[System.String, mscorlib],[System.Int32, mscorlib]], FrEee.Core:
+							d15:							
+								:"Physical Strength";
+								:100;
+								:"Intelligence";
+								:100;
+								:"Cunning";
+								:100;
+								:"Environmental Resistance";
+								:100;
+								:"Reproduction";
+								:100;
+								:"Happiness";
+								:100;
+								:"Aggressiveness";
+								:100;
+								:"Defensiveness";
+								:100;
+								:"Political Savvy";
+								:100;
+								:"Mining Aptitude";
+								:100;
+								:"Farming Aptitude";
+								:100;
+								:"Refining Aptitude";
+								:100;
+								:"Construction Aptitude";
+								:100;
+								:"Repair Aptitude";
+								:100;
+								:"Maintenance Aptitude";
+								:100;
+							;
+						happinessModel:
+							:i1;
+						Name:
+							:"Kpilmp";
+						NativeAtmosphere:
+							:"Oxygen";
+						NativeSurface:
+							:"Rock";
+						PopulationIconName:
+							:"KpiImp";
+						TraitNames:
+							System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib:
+							c1:							
+								:"Deeply Religious";
+							;
+					;
+				ShipsetName:
+					:"KpiImp";
 			;
 		;
-	EventFrequency:
-		:
-		0;
 	ForbiddenTechnologyNames:
-		System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
+		System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib:
 		c0:		
 		;
 	GalaxySize:
-		:
-		p2:
-			Height:
-				:
-				30;
-			Width:
-				:
-				40;
-		;
+		:s:40, 30;
 	GalaxyTemplateName:
-		:
-		"Mid-Life";
+		:"Mid-Life";
 	GameName:
-		:
-		"Quickstart";
+		:"Quickstart";
 	GenerateRandomRuins:
-		:
-		True;
+		:True;
 	GenerateUniqueRuins:
-		:
-		True;
+		:True;
 	HomeworldSize:
-		:
-		Huge;
+		:Large;
 	HomeworldsPerEmpire:
-		:
-		1;
+		:1;
 	HomeworldValue:
-		:
-		120;
+		:120;
 	IsAnalysisAllowed:
-		:
-		True;
+		:True;
 	IsIntelligenceAllowed:
-		:
-		True;
+		:True;
 	IsSurrenderAllowed:
-		:
-		True;
+		:True;
 	MaxHomeworldDispersion:
-		:
-		1;
+		:1;
 	MaximumEventSeverity:
-		:
-		High;
+		:High;
 	MaxPlanetValue:
-		:
-		250;
+		:250;
 	MaxSpawnedAsteroidValue:
-		:
-		300;
+		:300;
 	MaxSpawnedPlanetValue:
-		:
-		150;
+		:150;
 	MinSpawnedAsteroidValue:
-		:
-		50;
+		:50;
 	RemoteMiningModel:
-		:
-		p4:
+		:p4:
 			ValueBonus:
-				:
-				0.01;
+				:0.01;
 			ValueDepletionPerResource:
-				:
-				1;
+				:1;
 			ValueDepletionPerTurn:
-				:
-				1;
+				:1;
 			ValuePercentageBonus:
-				:
-				1;
+				:1;
 		;
 	ResourceStorage:
-		:
-		50000;
+		:50000;
+	ScoreDisplay:
+		:OwnOnlyRanked;
 	StandardMiningModel:
-		:
-		p2:
+		:p2:
 			ValueBonus:
-				:
-				0.01;
+				:0.01;
 			ValuePercentageBonus:
-				:
-				1;
+				:1;
 		;
 	StarSystemCount:
-		:
-		30;
+		:15;
 	StarSystemGroups:
-		:
-		1;
+		:1;
 	StartingResearch:
-		:
-		20000;
+		:20000;
 	StartingResources:
-		:
-		20000;
+		:20000;
+	TechnologyCost:
+		:High;
 	VictoryConditions:
-		System.Collections.Generic.List`1[[FrEee.Game.Interfaces.IVictoryCondition, FrEee.Core, Version=0.0.8.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
+		System.Collections.Generic.List`1[[FrEee.Game.Interfaces.IVictoryCondition, FrEee.Core]], mscorlib:
 		c1:		
-			FrEee.Game.Objects.VictoryConditions.TotalEliminationVictoryCondition, FrEee.Core, Version=0.0.8.0, Culture=neutral, PublicKeyToken=null:
+			FrEee.Game.Objects.VictoryConditions.TotalEliminationVictoryCondition, FrEee.Core:
 			p0:
 			;
 		;
 	WarpPointPlacementStrategy:
-		FrEee.Game.Setup.WarpPointPlacementStrategies.EdgeAlignedWarpPointPlacementStrategy, FrEee.Core, Version=0.0.8.0, Culture=neutral, PublicKeyToken=null:
+		FrEee.Game.Setup.WarpPointPlacementStrategies.EdgeAlignedWarpPointPlacementStrategy, FrEee.Core:
 		p2:
 			Description:
-				:
-				"Places warp points along the edge of the system, aligned with the star systems they lead to.";
+				:"Places warp points along the edge of the system, aligned with the star systems they lead to.";
 			Name:
-				:
-				"Edge Aligned";
+				:"Edge Aligned";
 		;
 ;
