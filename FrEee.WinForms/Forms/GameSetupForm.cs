@@ -257,6 +257,7 @@ namespace FrEee.WinForms.Forms
 		private void btnCreateEmpire_Click(object sender, EventArgs e)
 		{
 			var et = new EmpireTemplate();
+			et.IsPlayerEmpire = true;
 			var form = new EmpireSetupForm();
 			form.PointsToSpend = (int)spnEmpirePoints.Value;
 			form.EmpireTemplate = et;
