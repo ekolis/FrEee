@@ -80,7 +80,10 @@ namespace FrEee.WinForms.Forms
 		private void Bind()
 		{
 			if (EmpireTemplate == null)
+			{
 				EmpireTemplate = new EmpireTemplate();
+				EmpireTemplate.IsPlayerEmpire = true;
+			}
 			if (EmpireTemplate.PrimaryRace == null)
 				EmpireTemplate.PrimaryRace = new Race();
 

@@ -17,7 +17,6 @@ namespace FrEee.Game.Setup
 	{
 		public EmpireTemplate()
 		{
-			IsPlayerEmpire = true;
 		}
 
 		/// <summary>
