@@ -894,7 +894,9 @@ namespace FrEee.Utility
 			{
 				// use reflection :(
 				var type = o.GetType();
-				var props = ObjectGraphContext.GetKnownProperties(type).Values.Where(p => !p.GetValue(o, null).SafeEquals(p.PropertyType.DefaultValue()));
+				var props = ObjectGraphContext.GetKnownProperties(type).Values.Where(p =>
+					p.HasAttribute<ForceSerializationWhenDefaultValueAttribute>() || // force serialization of property even if value is null/default?
+					!p.GetValue(o, null).SafeEquals(p.PropertyType.DefaultValue())); // property value is not null/default?
 				w.WriteLine("p" + props.Count() + ":");
 				foreach (var p in props.OrderBy(p => GetSerializationPriority(p)))
 					WriteProperty(w, o, p.PropertyType, p.Name, context.GetObjectProperty(o, p), context, tabLevel);
