@@ -142,4 +142,15 @@ namespace FrEee.Utility
 
 		public int Priority { get; private set; }
 	}
+
+	/// <summary>
+	/// Forces serialization of a property even when it has a default value, e.g. null or zero.
+	/// </summary>
+	[AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
+	public sealed class ForceSerializationWhenDefaultValueAttribute : Attribute
+	{
+		public ForceSerializationWhenDefaultValueAttribute()
+		{
+		}
+	}
 }

@@ -233,6 +233,7 @@ namespace FrEee.Game.Objects.Space
 		/// The mod being played.
 		/// </summary>
 		[SerializationPriority(1)]
+		[ForceSerializationWhenDefaultValue]
 		public string ModPath
 		{
 			get => modPath;
