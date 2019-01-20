@@ -96,6 +96,8 @@ namespace FrEee.Modding
 			{
 				// http://stackoverflow.com/questions/5362771/load-module-from-string-in-python
 				// http://stackoverflow.com/questions/3799545/dynamically-importing-python-module/3799609#3799609
+				if (Text == "")
+					return "";
 				if (ModuleName == "builtins")
 					return
 @"import sys, imp;
