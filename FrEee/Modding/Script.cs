@@ -96,18 +96,21 @@ namespace FrEee.Modding
 			{
 				// http://stackoverflow.com/questions/5362771/load-module-from-string-in-python
 				// http://stackoverflow.com/questions/3799545/dynamically-importing-python-module/3799609#3799609
+				// https://stackoverflow.com/questions/54271292/ironpython-runtime-unboundnameexception-name-str-is-not-defined
 				if (Text == "")
-					return "";
+					return "str = \"\".__class__\n";
 				if (ModuleName == "builtins")
 					return
 @"import sys, imp;
-import __builtin__ as builtins;
+import __builtin__ as builtins
+str = """".__class__
 " + ModuleName + "_code = \"\"\"" + Text + "\"\"\";\n" +
 "exec " + ModuleName + @"_code in " + ModuleName + @".__dict__;
 ";
 				else
 					return
 @"import sys, imp;
+str = """".__class__
 " + ModuleName + "_code = \"\"\"" + Text + "\"\"\";\n" +
 ModuleName + @" = imp.new_module('" + ModuleName + @"');
 exec " + ModuleName + @"_code in " + ModuleName + @".__dict__;
