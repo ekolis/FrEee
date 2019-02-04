@@ -19,7 +19,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A large immobile installation on a colony.
 	/// </summary>
 	[Serializable]
-	public class Facility : IOwnableAbilityObject, IConstructable, IDamageable, IDisposable, IContainable<Planet>, IFormulaHost, IRecyclable, IUpgradeable<Facility>
+	public class Facility : IOwnableAbilityObject, IConstructable, IDamageable, IDisposable, IContainable<Planet>, IFormulaHost, IRecyclable, IUpgradeable<Facility>, IDataObject
 	{
 		public Facility(FacilityTemplate template)
 		{
@@ -313,7 +313,30 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
+		[SerializationPriority(1)]
 		private ModReference<FacilityTemplate> template { get; set; }
+
+		public SafeDictionary<string, object> Data
+		{
+			get
+			{
+				var dict = new SafeDictionary<string, object>();
+				if (ConstructionProgress != Cost)
+					dict.Add(nameof(ConstructionProgress), ConstructionProgress);
+				if (Hitpoints != MaxHitpoints)
+					dict.Add(nameof(Hitpoints), Hitpoints);
+				dict.Add(nameof(ID), ID);
+				dict.Add(nameof(template), template);
+				return dict;
+			}
+			set
+			{
+				template = (ModReference<FacilityTemplate>)value[nameof(template)]; // comes first because other properties depend on its data
+				ConstructionProgress = (ResourceQuantity)(value[nameof(ConstructionProgress)] ?? Cost);
+				Hitpoints = (int)(value[nameof(Hitpoints)] ?? MaxHitpoints);
+				ID = (long)value[nameof(ID)];
+			}
+		}
 
 		public void Dispose()
 		{

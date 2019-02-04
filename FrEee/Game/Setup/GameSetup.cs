@@ -616,6 +616,8 @@ namespace FrEee.Game.Setup
 							hw.Colony.Facilities.Add(res.Instantiate());
 					}
 				}
+				foreach (var f in hw.Colony.Facilities)
+					f.ConstructionProgress = f.Cost;
 			}
 
 			// mark home systems explored
