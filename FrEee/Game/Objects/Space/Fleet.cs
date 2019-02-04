@@ -923,5 +923,7 @@ namespace FrEee.Game.Objects.Space
 			yield return Path.Combine("Pictures", "Races", shipsetPath, imagetype + "_" + imageName);
 			yield return Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_" + imagetype + "_" + imageName);
 		}
+
+		public IEnumerable<Component> Components => Vehicles.SelectMany(q => q.Components);
 	}
 }

@@ -163,6 +163,7 @@
     <Compile Include="Game\Objects\Combat\IBattle.cs" />
     <Compile Include="Game\Objects\Combat\Seeker.cs" />
     <Compile Include="Game\Objects\Events\EventMessage.cs" />
+    <Compile Include="Game\Objects\Technology\ComponentReference.cs" />
     <Compile Include="Modding\ComputedFormula.cs" />
     <Compile Include="Modding\EventTemplate.cs" />
     <Compile Include="Modding\Loaders\EventLoader.cs" />

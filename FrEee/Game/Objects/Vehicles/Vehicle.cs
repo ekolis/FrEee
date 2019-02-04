@@ -95,8 +95,44 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		/// <summary>
+		/// Damage that has been applied to this vehicle's components.
+		/// </summary>
+		public SafeDictionary<MountedComponentTemplate, IList<int>> Damage
+		{
+			get
+			{
+				var dict = new SafeDictionary<MountedComponentTemplate, IList<int>>(true);
+				foreach (var c in Components)
+				{
+					if (c.Hitpoints != c.MaxHitpoints)
+						dict[c.Template].Add(c.MaxHitpoints - c.Hitpoints);
+				}
+				return dict;
+			}
+			set
+			{
+				foreach (var template in Design.Components)
+				{
+					var component = template.Instantiate();
+					Components.Add(component);
+				}
+				foreach (var kvp in value)
+				{
+					var template = kvp.Key;
+					var damages = kvp.Value;
+					for (var i = 0; i < damages.Count; i++)
+					{
+						var component = Components.Where(c => c.Template == template).ElementAt(i);
+						component.Hitpoints = component.MaxHitpoints - damages[i];
+					}
+				}
+			}
+		}
+
+		/// <summary>
 		/// The design of this vehicle.
 		/// </summary>
+		[SerializationPriority(1)]
 		public IDesign Design { get; set; }
 
 		/// <summary>
@@ -754,5 +790,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			return Name;
 		}
+
+		IEnumerable<Component> ICombatant.Components => Components;
 	}
 }

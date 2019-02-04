@@ -362,5 +362,7 @@ namespace FrEee.Game.Objects.Combat
 		{
 			return Name;
 		}
+
+		public IEnumerable<Component> Components => Enumerable.Empty<Component>();
 	}
 }

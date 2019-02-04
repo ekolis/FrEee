@@ -56,7 +56,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 		/// <summary>
 		/// Copies of the weapons from the start of the battle.
 		/// </summary>
-		public IDictionary<long, Component> StartWeapons { get; private set; } = new SafeDictionary<long, Component>();
+		public IDictionary<(long, int), Component> StartWeapons { get; private set; } = new SafeDictionary<(long, int), Component>();
 
 		/// <summary>
 		/// Copies of the combatants from the end of the battle.
@@ -178,7 +178,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 				{
 					var w = c.Weapons.ElementAt(i);
 					var wc = StartCombatants[c.ID].Weapons.ElementAt(i);
-					StartWeapons[w.ID] = wc;
+					StartWeapons[(c.ID, c.Components.IndexOf(w))] = wc;
 				}
 			}
 		}
@@ -412,7 +412,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 						{
 							var w = info.Item2.Weapons.ElementAt(ix);
 							var wc = StartCombatants[info.Item2.ID].Weapons.ElementAt(ix);
-							StartWeapons[w.ID] = wc;
+							StartWeapons[(info.Item2.ID, ix)] = wc;
 						}
 						locations[info.Launchee] = new IntVector2(locations[info.Launcher]);
 						Events.Last().Add(new CombatantLaunchedEvent(this, info.Launcher, info.Launchee, locations[info.Launchee]));

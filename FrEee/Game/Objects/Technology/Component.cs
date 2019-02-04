@@ -19,7 +19,7 @@ namespace FrEee.Game.Objects.Technology
 	/// TODO - should Component implement IOwnable like Facility does?
 	/// </summary>
 	[Serializable]
-	public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IContainable<IVehicle>, IFormulaHost, IReferrable, IUpgradeable<Component>, IDataObject
+	public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IContainable<IVehicle>, IFormulaHost, IUpgradeable<Component>
 	{
 		public Component(IVehicle container, MountedComponentTemplate template)
 		{
@@ -75,31 +75,6 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
-		public SafeDictionary<string, object> Data
-		{
-			get
-			{
-				var dict = new SafeDictionary<string, object>();
-				dict[nameof(container)] = container;
-				if (Hitpoints != MaxHitpoints)
-					dict[nameof(Hitpoints)] = Hitpoints;
-				dict[nameof(ID)] = ID;
-				if (IsDisposed)
-					dict[nameof(IsDisposed)] = IsDisposed;
-				dict[nameof(Template)] = Template;
-				return dict;
-			}
-			set
-			{
-				container = value[nameof(container)].CastTo<GalaxyReference<IVehicle>>();
-				ID = value[nameof(ID)].CastTo<long>();
-				IsDisposed = value[nameof(IsDisposed)].CastTo<bool>();
-				Template = value[nameof(Template)].CastTo<MountedComponentTemplate>();
-				// HP comes after template because it requires knowledge of max HP for the default value
-				Hitpoints = value[nameof(Hitpoints)].CastTo<int>(MaxHitpoints);
-			}
-		}
-
 		/// <summary>
 		/// Component hit chances are normally determined by their maximum hitpoints.
 		/// This is what makes leaky armor work.
@@ -138,12 +113,6 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
-		public long ID
-		{
-			get;
-			set;
-		}
-
 		public IEnumerable<Ability> IntrinsicAbilities
 		{
 			get
@@ -158,12 +127,6 @@ namespace FrEee.Game.Objects.Technology
 		/// Is this component out of commission?
 		/// </summary>
 		public bool IsDestroyed { get { return Hitpoints <= 0; } }
-
-		public bool IsDisposed
-		{
-			get;
-			set;
-		}
 
 		public bool IsObsolescent
 		{
@@ -383,7 +346,6 @@ namespace FrEee.Game.Objects.Technology
 		public void Dispose()
 		{
 			Hitpoints = 0;
-			IsDisposed = true;
 		}
 
 		public int? Repair(int? amount = null)
