@@ -261,7 +261,7 @@ namespace FrEee.Game.Objects.Orders
 			else if (Target is IMobileSpaceObject)
 			{
 				var sobj = (IMobileSpaceObject)Target;
-				if (sobj.IsMemory() && sobj.FindOriginalObject(Owner) != null)
+				if (sobj.IsMemory && sobj.FindOriginalObject(Owner) != null)
 					Target = (ISpaceObject)sobj.FindOriginalObject(Owner);
 				if (!sobj.IsDestroyed)
 					AlternateTarget = Target;

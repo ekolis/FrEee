@@ -194,6 +194,21 @@ namespace FrEee.Game.Objects.Civilization
 			}
 		}
 
+		// TODO - make this a DoNotSerialize property after the game ends
+		public bool IsMemory
+		{
+			get
+			{
+				return Container?.IsMemory ?? true;
+			}
+			set
+			{
+				if (Container == null)
+					return;
+				Container.IsMemory = value;
+			}
+		}
+
 		/// <summary>
 		/// Is this a space yard queue?
 		/// </summary>
@@ -317,7 +332,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <returns></returns>
 		public Visibility CheckVisibility(Empire emp)
 		{
-			if (this.MemoryOwner != emp)
+			if (IsMemory && this.MemoryOwner() != emp)
 				return Visibility.Unknown; // can't see from opponents' memories!
 			var vis = Container.CheckVisibility(emp);
 			if (vis == Visibility.Owned)
@@ -329,7 +344,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			if (IsDisposed)
 				return;
-			if (!this.IsMemory() && Mod.Current != null) // don't update memories if patching mod
+			if (!IsMemory && Mod.Current != null) // don't update memories if patching mod
 				this.UpdateEmpireMemories();
 			Galaxy.Current.UnassignID(this);
 			Orders.Clear();
@@ -565,12 +580,6 @@ namespace FrEee.Game.Objects.Civilization
 			}
 			else
 				return null;
-		}
-
-		public Empire MemoryOwner
-		{
-			get;
-			set;
 		}
 	}
 }
