@@ -31,6 +31,11 @@ namespace FrEee.Game.Interfaces
 		int MaxTargets { get; }
 
 		/// <summary>
+		/// Any components of this combatant.
+		/// </summary>
+		IEnumerable<Component> Components { get; }
+
+		/// <summary>
 		/// Any undamaged weapons this combatant is armed with.
 		/// </summary>
 		IEnumerable<Component> Weapons { get; }

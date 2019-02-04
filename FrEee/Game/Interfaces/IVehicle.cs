@@ -9,7 +9,13 @@ namespace FrEee.Game.Interfaces
 	/// </summary>
 	public interface IVehicle : IConstructable, IOwnableAbilityObject, IReferrable, IDamageable, ICombatant, IRecyclable, IIncomeProducer, IUpgradeable<IVehicle>, INameable
 	{
-		IList<Component> Components { get; }
+		[DoNotSerialize(false)]
+		new IList<Component> Components { get; }
+
+		/// <summary>
+		/// Damage that has been applied to this vehicle's components.
+		/// </summary>
+		SafeDictionary<MountedComponentTemplate, IList<int>> Damage { get; set; }
 
 		/// <summary>
 		/// The design of this vehicle.
