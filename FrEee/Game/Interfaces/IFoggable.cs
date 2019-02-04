@@ -9,9 +9,9 @@ namespace FrEee.Game.Interfaces
 	public interface IFoggable : IReferrable
 	{
 		/// <summary>
-		/// If this is a memory, who owns the memory? Otherwise null.
+		/// Is this object just a memory, or a real object?
 		/// </summary>
-		Empire MemoryOwner { get; set; }
+		bool IsMemory { get; set; }
 
 		/// <summary>
 		/// The time at which this object was last seen.

@@ -228,7 +228,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public bool IsDisposed { get; set; }
 
-		public Empire MemoryOwner
+		public bool IsMemory
 		{
 			get;
 			set;
@@ -599,7 +599,7 @@ namespace FrEee.Game.Objects.Vehicles
 				return;
 			IsDisposed = true;
 			Galaxy.Current.UnassignID(this);
-			if (!this.IsMemory())
+			if (!IsMemory)
 				this.UpdateEmpireMemories();
 			if (this is IUnit u)
 				u.Container?.RemoveUnit(u);
@@ -649,7 +649,7 @@ namespace FrEee.Game.Objects.Vehicles
 				Repair();
 			}
 
-			if (visibility < Visibility.Fogged || visibility < Visibility.Visible && !this.IsMemory())
+			if (visibility < Visibility.Fogged || visibility < Visibility.Visible && !IsMemory)
 				Dispose();
 		}
 
@@ -780,7 +780,7 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 
 			// update memory sight
-			if (!this.IsMemory())
+			if (!IsMemory)
 				this.UpdateEmpireMemories();
 
 			return damage;

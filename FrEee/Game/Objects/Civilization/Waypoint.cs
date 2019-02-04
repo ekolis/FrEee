@@ -30,7 +30,7 @@ namespace FrEee.Game.Objects.Civilization
 			set;
 		}
 
-		public Empire MemoryOwner
+		public bool IsMemory
 		{
 			get;
 			set;

@@ -93,7 +93,7 @@ namespace FrEee.Modding.Templates
 
 		public bool IsDisposed { get; set; }
 
-		public Empire MemoryOwner
+		public bool IsMemory
 		{
 			get;
 			set;

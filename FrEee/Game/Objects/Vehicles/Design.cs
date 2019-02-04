@@ -268,7 +268,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public bool IsDisposed { get; set; }
 
-		public Empire MemoryOwner
+		public bool IsMemory
 		{
 			get;
 			set;
@@ -455,7 +455,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public IEnumerable<T> RealVehicles
 		{
-			get { return Vehicles.Where(v => !v.IsMemory()); }
+			get { return Vehicles.Where(v => !v.IsMemory); }
 		}
 
 		public bool RequiresColonyQueue

@@ -171,7 +171,7 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
-		public bool IsMemory()
+		public bool IsMemory
 		{
 			get; set;
 		}
