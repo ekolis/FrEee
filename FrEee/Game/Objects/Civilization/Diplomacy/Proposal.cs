@@ -46,7 +46,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			set;
 		}
 
-		public bool IsMemory
+		public Empire MemoryOwner
 		{
 			get;
 			set;

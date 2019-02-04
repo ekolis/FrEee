@@ -859,7 +859,7 @@ namespace FrEee.Game.Objects.Space
 			if (Colony != null)
 				Colony.Dispose();
 			Galaxy.Current.UnassignID(this);
-			if (!IsMemory)
+			if (!this.IsMemory())
 				this.UpdateEmpireMemories();
 			IsDisposed = true;
 		}
@@ -1135,7 +1135,7 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			// update memory sight
-			if (!IsMemory)
+			if (!this.IsMemory())
 				this.UpdateEmpireMemories();
 
 			return damage;

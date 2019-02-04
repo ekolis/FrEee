@@ -164,7 +164,7 @@ namespace FrEee.Game.Objects.Space
 
 				// on the server we don't want to count memories as physical space objects
 				if (Empire.Current == null)
-					result = result.Where(x => !x.IsMemory);
+					result = result.Where(x => !x.IsMemory());
 
 				return result.ToArray();
 			}

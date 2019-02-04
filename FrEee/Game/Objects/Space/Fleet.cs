@@ -282,7 +282,7 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public bool IsMemory
+		public Empire MemoryOwner
 		{
 			get;
 			set;
@@ -710,7 +710,7 @@ namespace FrEee.Game.Objects.Space
 			Galaxy.Current.UnassignID(this);
 			Sector = null;
 			Orders.Clear();
-			if (!IsMemory)
+			if (!this.IsMemory())
 				this.UpdateEmpireMemories();
 		}
 

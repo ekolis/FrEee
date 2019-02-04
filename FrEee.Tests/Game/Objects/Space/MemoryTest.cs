@@ -55,7 +55,7 @@ namespace FrEee.Tests.Game.Objects.Space
 			AreEqual(Visibility.Visible, submarine.CheckVisibility(seekers), "Ship is not visible to empire in same star system.");
 			IsNotNull(mem, "Memory was not created for visible ship.");
 			IsNotNull(mem.StarSystem, "Memory was not placed in a star system for visible ship.");
-			IsTrue(mem.IsMemory, "Memory is not flagged as a memory.");
+			IsTrue(mem.IsMemory(), "Memory is not flagged as a memory.");
 
 			// make sure the original vehicle is invisible when it moves
 			HideSubmarine();

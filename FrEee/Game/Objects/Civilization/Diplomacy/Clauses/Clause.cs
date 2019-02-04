@@ -46,7 +46,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 		/// </summary>
 		public bool IsInEffect { get; set; }
 
-		public bool IsMemory
+		public Empire MemoryOwner
 		{
 			get;
 			set;

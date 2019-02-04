@@ -125,7 +125,7 @@ namespace FrEee.Game.Objects.Combat
 
 		public bool IsDisposed { get; set; }
 
-		public bool IsMemory
+		public Empire MemoryOwner
 		{
 			get;
 			set;

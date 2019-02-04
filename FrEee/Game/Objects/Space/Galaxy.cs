@@ -885,7 +885,7 @@ namespace FrEee.Game.Objects.Space
 				status.Message = "Generating resources";
 
 			// resource generation 1: colony income
-			Current.FindSpaceObjects<Planet>().Where(x => !x.IsMemory).Select(p => p.Colony).ExceptSingle(null).SafeForeach(ProcessColonyIncome);
+			Current.FindSpaceObjects<Planet>().Where(x => !x.IsMemory()).Select(p => p.Colony).ExceptSingle(null).SafeForeach(ProcessColonyIncome);
 
 			// resource generation 2: remote mining
 			// TODO - multithread remote mining once I can figure out where adjustedValue should go
@@ -943,7 +943,7 @@ namespace FrEee.Game.Objects.Space
 
 				// pay maintenance on on ships/bases
 				// TODO - allow mod to specify maintenance on units/facilities too?
-				foreach (var v in emp.OwnedSpaceObjects.OfType<SpaceVehicle>().Where(x => !x.IsMemory))
+				foreach (var v in emp.OwnedSpaceObjects.OfType<SpaceVehicle>().Where(x => !x.IsMemory()))
 					emp.StoredResources -= v.MaintenanceCost;
 
 				// if not enough funds, lose ships/bases (weighted by maintenance cost)
@@ -1048,7 +1048,7 @@ namespace FrEee.Game.Objects.Space
 			// construction queues
 			if (status != null)
 				status.Message = "Constructing objects";
-			Current.Referrables.OfType<ConstructionQueue>().Where(q => !q.IsMemory && q.Container.Sector != null).SafeForeach(q => q.ExecuteOrders());
+			Current.Referrables.OfType<ConstructionQueue>().Where(q => !q.IsMemory() && q.Container.Sector != null).SafeForeach(q => q.ExecuteOrders());
 			if (status != null)
 				status.Progress += progressPerOperation;
 
@@ -1088,7 +1088,7 @@ namespace FrEee.Game.Objects.Space
 					Current.MoveShips();
 					Current.didLastTick = true;
 				}
-				foreach (var f in Current.Referrables.OfType<IFoggable>().Where(f => !f.IsMemory))
+				foreach (var f in Current.Referrables.OfType<IFoggable>().Where(f => !f.IsMemory()))
 					f.Timestamp = Current.Timestamp;
 				if (status != null && Current.NextTickSize != double.PositiveInfinity)
 					status.Progress += progressPerOperation * Current.NextTickSize;
@@ -1513,7 +1513,7 @@ namespace FrEee.Game.Objects.Space
 			parser.Property += (pname, o, val) =>
 				{
 					var prop = o.GetType().FindProperty(pname);
-					var isMemory = val is IFoggable && (val as IFoggable).IsMemory;
+					var isMemory = val is IFoggable && (val as IFoggable).IsMemory();
 					canAssign = !prop.HasAttribute<DoNotAssignIDAttribute>() && !isMemory;
 					if (isMemory)
 						return false; // no recursion!
@@ -1561,7 +1561,7 @@ namespace FrEee.Game.Objects.Space
 		public void ComputeNextTickSize()
 		{
 			var objs = FindSpaceObjects<IMobileSpaceObject>().Where(obj => obj.Orders.Any());
-			objs = objs.Where(obj => !obj.IsMemory);
+			objs = objs.Where(obj => !obj.IsMemory());
 			if (objs.Where(v => v.TimeToNextMove > 0).Any() && CurrentTick < 1.0)
 			{
 				// HACK - why are objects getting zero time to next move?!
@@ -1721,7 +1721,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public void MoveShips()
 		{
-			var vlist = FindSpaceObjects<IMobileSpaceObject>().Where(sobj => sobj.Container == null && !sobj.IsMemory).Shuffle();
+			var vlist = FindSpaceObjects<IMobileSpaceObject>().Where(sobj => sobj.Container == null && !sobj.IsMemory()).Shuffle();
 			foreach (var v in vlist)
 			{
 				// mark system explored if not already
@@ -1741,7 +1741,7 @@ namespace FrEee.Game.Objects.Space
 					v.UpdateEmpireMemories();
 					if (v.StarSystem != null && v.Owner != null)
 					{
-						foreach (var sobj in v.StarSystem.FindSpaceObjects<ISpaceObject>().Where(sobj => sobj != v && !sobj.IsMemory && v.Owner.CanSee(sobj)).ToArray())
+						foreach (var sobj in v.StarSystem.FindSpaceObjects<ISpaceObject>().Where(sobj => sobj != v && !sobj.IsMemory() && v.Owner.CanSee(sobj)).ToArray())
 							v.Owner.UpdateMemory(sobj);
 					}
 
@@ -1994,7 +1994,7 @@ namespace FrEee.Game.Objects.Space
 			if (o is IFoggable)
 			{
 				var obj = (IFoggable)o;
-				if (!obj.IsMemory)
+				if (!obj.IsMemory())
 				{
 					var id = obj.ID;
 					var vis = obj.CheckVisibility(CurrentEmpire);
@@ -2003,7 +2003,7 @@ namespace FrEee.Game.Objects.Space
 					if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
 					{
 						CurrentEmpire.Memory[id].CopyToExceptID(obj, IDCopyBehavior.PreserveDestination); // memory sight!
-						obj.IsMemory = true;
+						obj.MemoryOwner = Empire.Current;
 					}
 					obj.Redact(Empire.Current);
 				}
