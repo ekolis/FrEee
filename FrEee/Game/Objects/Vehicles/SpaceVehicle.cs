@@ -361,7 +361,7 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 			constructionQueue.SafeDispose();
 			base.Dispose();
-			if (!IsMemory)
+			if (!this.IsMemory())
 				this.UpdateEmpireMemories();
 		}
 

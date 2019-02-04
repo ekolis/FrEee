@@ -191,7 +191,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 		public void Resolve()
 		{
 			// update memories
-			foreach (var sobj in StarSystem.SpaceObjects.Where(x => !x.IsMemory).ToArray())
+			foreach (var sobj in StarSystem.SpaceObjects.Where(x => !x.IsMemory()).ToArray())
 				sobj.UpdateEmpireMemories();
 
 			Current.Add(this);
@@ -535,7 +535,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 			Previous.Add(this);
 
 			// update memories
-			foreach (var sobj in Combatants.OfType<ISpaceObject>().Where(x => !x.IsMemory).ToArray())
+			foreach (var sobj in Combatants.OfType<ISpaceObject>().Where(x => !x.IsMemory()).ToArray())
 			{
 				foreach (var emp in Empires)
 				{

@@ -440,7 +440,7 @@ namespace FrEee.Utility.Extensions
 		public static IFoggable FindOriginalObject(this IFoggable f, Empire emp)
 		{
 			// not a memory? it is its own real object
-			if (!(f.IsMemory))
+			if (!(f.IsMemory()))
 				return f;
 
 			// look for the real object
@@ -818,15 +818,12 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
-		/// Who does a memory belong to?
+		/// Is an object a memory??
 		/// </summary>
-		/// <param name="f">The memory.</param>
-		/// <returns>Empire to which the memory belongs (null if not memory).</returns>
-		public static Empire MemoryOwner(this IFoggable f)
+		/// <param name="f">The object.</param>
+		public static bool IsMemory(this IFoggable f)
 		{
-			if (!f.IsMemory)
-				return null;
-			return Galaxy.Current.Empires.ExceptSingle(null).SingleOrDefault(x => x.Memory.Values.Contains(f));
+			return f.MemoryOwner != null;
 		}
 
 		public static ILookup<TKey, TValue> MyLookup<TKey, TEnumerable, TValue>(this IEnumerable<KeyValuePair<TKey, TEnumerable>> dict)
@@ -1727,9 +1724,9 @@ namespace FrEee.Utility.Extensions
 		internal static Visibility CheckSpaceObjectVisibility(this ISpaceObject sobj, Empire emp)
 		{
 			bool hasMemory = false;
-			if (sobj.IsMemory)
+			if (sobj.IsMemory())
 			{
-				var mowner = sobj.MemoryOwner();
+				var mowner = sobj.MemoryOwner;
 				if (mowner == emp || mowner == null)
 					return Visibility.Fogged;
 				else
@@ -1759,7 +1756,7 @@ namespace FrEee.Utility.Extensions
 			var sys = sobj.StarSystem;
 			if (sys == null)
 				return Visibility.Unknown;
-			var seers = sys.FindSpaceObjects<ISpaceObject>(s => s.Owner == emp && !s.IsMemory);
+			var seers = sys.FindSpaceObjects<ISpaceObject>(s => s.Owner == emp && !s.IsMemory());
 			if (!seers.Any() || sobj.IsHiddenFrom(emp))
 			{
 				if (Galaxy.Current.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))

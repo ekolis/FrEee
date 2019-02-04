@@ -131,7 +131,7 @@ namespace FrEee.Game.Objects.Space
 
 		public bool IsDisposed { get; set; }
 
-		public bool IsMemory
+		public Empire MemoryOwner
 		{
 			get;
 			set;
@@ -239,7 +239,7 @@ namespace FrEee.Game.Objects.Space
 
 		public Visibility CheckVisibility(Empire emp)
 		{
-			if (FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp && !sobj.IsMemory).Any())
+			if (FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp && !sobj.IsMemory()).Any())
 				return Visibility.Visible;
 			else if (emp.ExploredStarSystems.Contains(this))
 				return Visibility.Fogged;
@@ -258,7 +258,7 @@ namespace FrEee.Game.Objects.Space
 			if (IsDisposed)
 				return;
 			Galaxy.Current.UnassignID(this);
-			if (!IsMemory)
+			if (!this.IsMemory())
 				this.UpdateEmpireMemories();
 		}
 

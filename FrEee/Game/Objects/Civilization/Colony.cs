@@ -95,7 +95,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public bool IsHomeworld { get; set; }
 
-		public bool IsMemory
+		public Empire MemoryOwner
 		{
 			get;
 			set;
@@ -212,7 +212,7 @@ namespace FrEee.Game.Objects.Civilization
 				Container.Colony = null;
 			ConstructionQueue.SafeDispose();
 			Galaxy.Current.UnassignID(this);
-			if (!IsMemory)
+			if (!this.IsMemory())
 				this.UpdateEmpireMemories();
 			IsDisposed = true;
 		}

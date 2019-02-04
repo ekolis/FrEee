@@ -47,9 +47,10 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		/// <summary>
 		/// Messages cannot be memories, as they do not change over time.
 		/// </summary>
-		public bool IsMemory
+		public Empire MemoryOwner
 		{
-			get; set;
+			get;
+			set;
 		}
 
 		/// <summary>

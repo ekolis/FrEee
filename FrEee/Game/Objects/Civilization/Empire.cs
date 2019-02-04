@@ -322,7 +322,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public bool IsDisposed { get; set; }
 
-		public bool IsMemory
+		public Empire MemoryOwner
 		{
 			get;
 			set;
@@ -1048,7 +1048,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <returns></returns>
 		public T Recall<T>(T obj) where T : IFoggable
 		{
-			if (obj.IsMemory)
+			if (obj.IsMemory())
 				return obj;
 			return (T)Memory[obj.ID];
 		}
@@ -1177,7 +1177,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <param name="obj"></param>
 		public void UpdateMemory(IFoggable obj)
 		{
-			if (obj.IsMemory)
+			if (obj.IsMemory())
 				throw new InvalidOperationException("Call UpdateMemory for the physical object, not the memory.");
 
 			// TODO - what happens if a ship/planet is captured by this empire? Then it needs to be updated...
@@ -1208,7 +1208,7 @@ namespace FrEee.Game.Objects.Civilization
 					Memory[obj.ID] = memory;
 				}
 
-				Memory[obj.ID].IsMemory = true;
+				Memory[obj.ID].MemoryOwner = this;
 
 				// if it's a space object we need to set its sector
 				if (obj is ISpaceObject)
@@ -1231,7 +1231,7 @@ namespace FrEee.Game.Objects.Civilization
 
 					foreach (var v in ((Fleet)Memory[obj.ID]).LeafVehicles) // TODO - go through subfleets too
 					{
-						v.IsMemory = true;
+						v.MemoryOwner = this;
 						Memory[v.ID] = v;
 						v.ReassignID();
 					}

@@ -114,7 +114,7 @@ namespace FrEee.Game.Objects.Technology
 
 		public bool IsDisposed { get; set; }
 
-		public bool IsMemory
+		public Empire MemoryOwner
 		{
 			get;
 			set;

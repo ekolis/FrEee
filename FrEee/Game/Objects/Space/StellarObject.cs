@@ -75,7 +75,7 @@ namespace FrEee.Game.Objects.Space
 				dict[nameof(IntrinsicAbilities)] = IntrinsicAbilities;
 				dict[nameof(StellarSize)] = StellarSize;
 				dict[nameof(ID)] = ID;
-				dict[nameof(IsMemory)] = IsMemory;
+				dict[nameof(MemoryOwner)] = MemoryOwner;
 				dict[nameof(Timestamp)] = Timestamp;
 				dict[nameof(ModID)] = ModID;
 				dict[nameof(StoredResources)] = StoredResources;
@@ -91,7 +91,7 @@ namespace FrEee.Game.Objects.Space
 				IntrinsicAbilities = value[nameof(IntrinsicAbilities)].Default(new List<Ability>());
 				StellarSize = value[nameof(StellarSize)].Default<StellarSize>();
 				ID = value[nameof(ID)].Default<long>();
-				IsMemory = value[nameof(IsMemory)].Default<bool>();
+				MemoryOwner = value[nameof(MemoryOwner)].Default<Empire>();
 				Timestamp = value[nameof(Timestamp)].Default<double>();
 				ModID = value[nameof(ModID)].Default<string>();
 				StoredResources = value[nameof(StoredResources)].Default(new ResourceQuantity());
@@ -150,7 +150,7 @@ namespace FrEee.Game.Objects.Space
 			get { return false; }
 		}
 
-		public bool IsMemory
+		public Empire MemoryOwner
 		{
 			get;
 			set;
@@ -282,7 +282,7 @@ namespace FrEee.Game.Objects.Space
 			if (sys != null)
 				sys.Remove(this);
 			Galaxy.Current.UnassignID(this);
-			if (!IsMemory)
+			if (!this.IsMemory())
 				this.UpdateEmpireMemories();
 		}
 
@@ -311,7 +311,7 @@ namespace FrEee.Game.Objects.Space
 		public virtual void Redact(Empire emp)
 		{
 			var vis = CheckVisibility(emp);
-			if (vis < Visibility.Fogged || vis < Visibility.Visible && !IsMemory)
+			if (vis < Visibility.Fogged || vis < Visibility.Visible && !this.IsMemory())
 				Dispose();
 		}
 
