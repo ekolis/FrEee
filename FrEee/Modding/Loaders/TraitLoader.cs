@@ -57,21 +57,24 @@ namespace FrEee.Modding.Loaders
 			}
 
 			// second pass for required/restricted traits
-			foreach (var rec in DataFile.Records)
+			var recs = DataFile.Records.ToArray();
+			for (var i = 0; i < recs.Length; i++)
 			{
+				var rec = recs[i];
 				index = -1;
 
-				t = mod.Traits.Single(t2 => t2.Name == rec.Get<string>("Name", null));
+				t = mod.Traits.ElementAt(i);
 
 				for (int count = 1; ; count++)
 				{
 					var f = rec.FindField(new string[] { "Required Trait", "Required Trait " + count }, ref index, false, index + 1);
 					if (f == null || f.Value == "None")
 						break;
-					var rt = mod.Traits.SingleOrDefault(t2 => t2.Name == f.Value);
-					if (rt == null)
+					var rts = mod.Traits.Where(t2 => t2.Name == f.Value);
+					if (!rts.Any())
 						Mod.Errors.Add(new DataParsingException("Required trait \"" + f.Value + "\" for trait \"" + t.Name + "\" does not exist in RacialTraits.txt.", Mod.CurrentFileName, rec));
-					t.RequiredTraits.Add(rt);
+					foreach (var rt in rts)
+						t.RequiredTraits.Add(rt);
 				}
 
 				for (int count = 1; ; count++)
@@ -79,10 +82,11 @@ namespace FrEee.Modding.Loaders
 					var f = rec.FindField(new string[] { "Restricted Trait", "Restricted Trait " + count }, ref index, false, index + 1);
 					if (f == null || f.Value == "None")
 						break;
-					var rt = mod.Traits.SingleOrDefault(t2 => t2.Name == f.Value);
-					if (rt == null)
+					var rts = mod.Traits.Where(t2 => t2.Name == f.Value);
+					if (!rts.Any())
 						Mod.Errors.Add(new DataParsingException("Restricted trait \"" + f.Value + "\" for trait \"" + t.Name + "\" does not exist in RacialTraits.txt.", Mod.CurrentFileName, rec));
-					t.RestrictedTraits.Add(rt);
+					foreach (var rt in rts)
+						t.RestrictedTraits.Add(rt);
 				}
 			}
 		}
