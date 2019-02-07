@@ -59,7 +59,7 @@ namespace FrEee.Utility.Extensions
 
 		public static T FindByName<T>(this IEnumerable<T> stuff, string name) where T : INamed
 		{
-			return stuff.SingleOrDefault(item => item.Name == name);
+			return stuff.FirstOrDefault(item => item.Name == name);
 		}
 
 		public static TValue FindByName<TKey, TValue>(this IDictionary<TKey, TValue> dict, string name)

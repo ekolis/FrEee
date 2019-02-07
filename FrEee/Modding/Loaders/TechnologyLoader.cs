@@ -54,7 +54,7 @@ namespace FrEee.Modding.Loaders
 			foreach (var tech in mod.Technologies)
 			{
 				// find this tech's record
-				var rec = DataFile.Records.Single(r => r.Get<string>("Name", null) == tech.Name);
+				var rec = DataFile.Records.First(r => r.Get<string>("Name", null) == tech.Name);
 
 				// load its tech reqs
 				// couldn't do it before because some early techs can reference later techs
