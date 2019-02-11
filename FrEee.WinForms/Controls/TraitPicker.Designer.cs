@@ -28,7 +28,9 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.pnlTraits = new System.Windows.Forms.FlowLayoutPanel();
+			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.SuspendLayout();
 			// 
 			// pnlTraits
@@ -59,5 +61,6 @@
 		#endregion
 
 		private System.Windows.Forms.FlowLayoutPanel pnlTraits;
+		private System.Windows.Forms.ToolTip toolTip;
 	}
 }

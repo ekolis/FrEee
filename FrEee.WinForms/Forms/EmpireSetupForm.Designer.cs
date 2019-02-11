@@ -688,7 +688,7 @@
 			this.tabTraits.Controls.Add(this.raceTraitPicker);
 			this.tabTraits.Location = new System.Drawing.Point(4, 29);
 			this.tabTraits.Name = "tabTraits";
-			this.tabTraits.Size = new System.Drawing.Size(519, 642);
+			this.tabTraits.Size = new System.Drawing.Size(519, 722);
 			this.tabTraits.TabIndex = 5;
 			this.tabTraits.Text = "Traits";
 			// 
@@ -700,7 +700,7 @@
 			this.raceTraitPicker.Location = new System.Drawing.Point(0, 0);
 			this.raceTraitPicker.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
 			this.raceTraitPicker.Name = "raceTraitPicker";
-			this.raceTraitPicker.Size = new System.Drawing.Size(519, 642);
+			this.raceTraitPicker.Size = new System.Drawing.Size(519, 722);
 			this.raceTraitPicker.TabIndex = 0;
 			this.raceTraitPicker.Traits = null;
 			this.raceTraitPicker.TraitToggled += new FrEee.WinForms.Controls.TraitPicker.TraitToggledDelegate(this.raceTraitPicker_TraitToggled);
