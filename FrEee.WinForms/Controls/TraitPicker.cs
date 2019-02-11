@@ -45,12 +45,8 @@ namespace FrEee.WinForms.Controls
 					chk.Text = "(" + trait.Cost + " pts) " + trait.Name;
 					chk.Tag = trait;
 					chk.CheckedChanged += chk_CheckedChanged;
+					toolTip.SetToolTip(chk, trait.Description);
 					pnlTraits.Controls.Add(chk);
-
-					var lbl = new Label();
-					lbl.Text = trait.Description;
-					lbl.Padding = new Padding(40, 0, 0, 0);
-					pnlTraits.Controls.Add(lbl);
 				}
 			}
 		}
