@@ -1363,12 +1363,18 @@ namespace FrEee.Game.Objects.Civilization
 						if (Mod.Current.RootPath != null)
 						{
 							var mfname = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Dsgnname", fname);
-							foreach (var n in File.ReadAllLines(mfname))
-								designNames.Add(n);
+							if (File.Exists(mfname))
+							{
+								foreach (var n in File.ReadAllLines(mfname))
+									designNames.Add(n);
+							}
 						}
 						var sfname = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Dsgnname", fname);
-						foreach (var n in File.ReadAllLines(sfname))
-							designNames.Add(n);
+						if (File.Exists(sfname))
+						{
+							foreach (var n in File.ReadAllLines(sfname))
+								designNames.Add(n);
+						}
 						designNames = designNames.Distinct().ToList();
 					}
 					return designNames;
