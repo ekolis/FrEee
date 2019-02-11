@@ -164,6 +164,10 @@ namespace FrEee.WinForms.Forms
 			{
 				ddlCulture.Items.Add(c);
 			}
+			foreach (var n in Mod.Current.DesignNamesFiles)
+			{
+				ddlDesignNames.Items.Add(n);
+			}
 			raceTraitPicker.Traits = Mod.Current.Traits;
 		}
 
@@ -345,6 +349,7 @@ namespace FrEee.WinForms.Forms
 			et.ShipsetName = ddlShipset.Text;
 			et.AIName = ddlAI.Text;
 			et.Culture = (Culture)ddlCulture.SelectedItem;
+			et.DesignNamesFile = (string)ddlDesignNames.SelectedItem;
 		}
 
 		private void spnColor_KeyPress(object sender, KeyPressEventArgs e)

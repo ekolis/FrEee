@@ -1,0 +1,60 @@
+HMCS Algonquin
+HMCS Alvington
+HMCS Antigonish
+HMCS Athabaskan
+HMCS Beacon Hill
+HMCS Border Cities
+HMCS Capilano
+HMCS Cayuga
+HMCS Charlottetown
+HMCS Clifton
+HMCS Crescent
+HMCS Crusader
+HMCS Fort Francis
+HMCS Gatineau
+HMCS Grou
+HMCS Haida
+HMCS Huron
+HMCS Iroquois
+HMCS Kapuskasing
+HMCS Kirkland Lake
+HMCS La Hulloise
+HMCS Levis
+HMCS Llewellyn
+HMCS Lloyd George
+HMCS Magnificent
+HMCS Micmac
+HMCS Middlesex
+HMCS Montreal
+HMCS Moonbeam
+HMCS New Liskeard
+HMCS New Waterford
+HMCS Nootka
+HMCS Ontario
+HMCS Orkney
+HMCS Oshawa
+HMCS Port Colborne
+HMCS Portage
+HMCS Provider
+HMCS Qu'appelle
+HMCS Revelstoke
+HMCS Rockcliffe
+HMCS Royalmount
+HMCS Sackville
+HMCS Sans Peur
+HMCS Sault Ste. Marie
+HMCS Sioux
+HMCS Springhill
+HMCS St. Boniface
+HMCS St. Jerome
+HMCS St. John
+HMCS St. Stephen
+HMCS Sunbeam
+HMCS Swansea
+HMCS Uganda
+HMCS Wallaceburg
+HMCS Warrior
+HMCS Wentworth
+HMCS Whitethroat
+HMCS Winnipeg
+HMCS Woodstock

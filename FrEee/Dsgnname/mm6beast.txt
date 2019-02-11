@@ -1,0 +1,157 @@
+Common Rat
+Large Rat
+Giant Rat
+Goblin
+Goblin Shaman
+Goblin King
+Bat
+Giant Bat
+Vampire Bat
+Blood Sucker
+Brain Sucker
+Soul Sucker
+Spider
+Giant Spider
+Huge Spider
+Thief
+Burglar
+Rogue
+Acolyte of Baa
+Cleric of Baa
+Priest of Baa
+Cobra
+King Cobra
+Queen Cobra
+Cutpurse
+Bounty Hunter
+Assassin
+Cannibal
+Head Hunter
+Witch Doctor
+Apprentice Mage
+Journeyman Mage
+Mage
+Follower of Baa
+Mystic of Baa
+Fanatic of Baa
+Archer
+Master Archer
+Fire Archer
+Magyar
+Magyar Soldier
+Magyar Matron
+Agar's Pet
+Agar's Monster
+Agar's Abomination
+Devil Spawn
+Devil Worker
+Devil Warrior
+Devil Captain
+Devil Master
+Devil King
+Fighter
+Soldier
+Veteran
+Thug
+Ruffian
+Brigand
+Stone Gargoyle
+Marble Gargoyle
+Diamond Gargoyle
+Flying Eye
+Terrible Eye
+Maddening Eye
+Fire Lizard
+Lightning Lizard
+Thunder Lizard
+Flame Drake
+Frost Drake
+Energy Drake
+Wyrm
+Giant Wyrm
+Great Wyrm
+Red Dragon
+Blue Dragon
+Gold Dragon
+Druid
+Great Druid
+Grand Druid
+Dwarf
+Dwarf Warrior
+Dwarf Lord
+Dust Devil
+Twister
+Air Elemental
+Rock Blast
+Earth Blast
+Earth Elemental
+Fire Blast
+Fire Spirit
+Fire Elemental
+Water Beast
+Water Spirit
+Water Elemental
+Genie
+Djinn
+Efreet
+Ghost
+Evil Spirit
+Specter
+Guard
+Lieutenant
+Captain
+Harpy
+Harpy Hag
+Harpy Witch
+Hydra
+Venomous Hydra
+Colossal Hydra
+Defender of Varn
+Sentinel of Varn
+Guardian of Varn
+Death Knight
+Doom Knight
+Cuisinart
+Lich
+Greater Lich
+Power Lich
+Lizard Man
+Lizard Archer
+Lizard Wizard
+Medusa
+Medusa Enchantress
+Gorgon
+Peasant
+Minotaur
+Minotaur Mage
+Minotaur King
+Novice Monk
+Initiate Monk
+Master Monk
+Swordsman
+Expert Swordsman
+Master Swordsman
+Ooze
+Acidic Ooze
+Corrosive Ooze
+Ogre
+Ogre Raider
+Ogre Chieftain
+Patrol Unit
+Enforcer Unit
+Terminator Unit
+Sea Serpent
+Sea Monster
+Sea Terror
+Skeleton
+Skeleton Knight
+Skeleton Lord
+Sorceror
+Magician
+Warlock
+Titan
+Noble Titan
+Supreme Titan
+Wolfman
+Werewolf
+Greater Werewolf

@@ -1,0 +1,79 @@
+Moonbeams - for KirbyEF
+
+THESE IMAGES ARE THE PROPERTY OF WILLIAM ELLIOTT (MLMBD). COPYING OR OTHER WISE USING THESE IMAGES IS STRICTLY PROHIBITED WITHOUT WRITTEN AUTHORIZATION.  (C) 2003
+
+Barge
+Scout
+Escort
+Corvette
+Frigate
+Destroyer
+Destroyer Heavy
+Light Cruiser
+Cruiser
+Cruiser Heavy
+BattleCruiser
+Battleship
+Dreadnought
+Dreadnought Heavy
+Baseship
+Baseship Heavy
+Baseship Massive
+Carrier Tiny
+Carrier Light
+Carrier
+Carrier Heavy
+Carrier Massive
+Colony Ship
+Colony Ship Huge
+Fleet
+Transport Tiny
+Transport Small
+Transport Medium
+Transport Large
+Transport Massive
+SpaceStation
+SpaceStationLarge 1000k
+Battlestation
+BattlestationLarge 2000k
+Warstation
+Starbase
+Drone
+Drone Medium
+Drone Large
+Satellite
+Satellite Medium
+Satellite Large
+Satellite Group
+Mine
+Mine Medium
+Mine Large
+Mine Group
+Fighter Small
+Fighter Medium
+Fighter Large
+Fighter Huge
+Fighter Massive
+Fighter Bomber Small
+Fighter Bomber Medium
+Fighter Bomber Large
+Fighter Group
+Troop Small
+Troop Medium
+Troop Large
+Troop Huge
+Troop Infantry
+Troop Infantry Elite
+Resource Ship
+Resource Station
+Starliner
+Starliner Large
+Weapon Platform small
+Weapon Patform medium
+Weapon Platform large
+Weapon Platform huge
+Worldship
+Race & Pop pics  - Moonbeams_main | 1-128x128 Race Portrait | Moonbeams_Pop_portrait | Moonbeams_Pop_mini |  1-36x36-Shield Animation(8Frames), 1-576x72-BigExplosion(8 Frames)
+
+Needed images:
+

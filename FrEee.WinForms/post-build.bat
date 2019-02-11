@@ -12,5 +12,6 @@ robocopy "%ALL_BUT_FIRST%\..\FrEee\Music" "%ALL_BUT_FIRST%\bin\%1\Music" /e
 robocopy "%ALL_BUT_FIRST%\..\FrEee\Pictures" "%ALL_BUT_FIRST%\bin\%1\Pictures" /e
 robocopy "%ALL_BUT_FIRST%\..\FrEee\Licenses" "%ALL_BUT_FIRST%\bin\%1\Licenses" /e
 robocopy "%ALL_BUT_FIRST%\..\FrEee\Scripts" "%ALL_BUT_FIRST%\bin\%1\Scripts" /e
+robocopy "%ALL_BUT_FIRST%\..\FrEee\Dsgnname" "%ALL_BUT_FIRST%\bin\%1\Dsgnname" /e
 
 echo Done copying assets

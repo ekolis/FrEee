@@ -1,0 +1,154 @@
+Cereus giganteus
+Cereus greggii
+Cereus schottii
+Cereus striatus
+Cereus thurberi
+Corynopuntia clavata
+Corynopuntia pulchella
+Corynopuntia stanlyi
+Corynopuntia stanlyi kunzei 
+Corynopuntia stanlyi Parishii
+Corynopuntia stanlyi Peeblesiana
+Coryphantha macromeris
+Coryphantha missouriensis
+Coryphantha missouriensis marstonii
+Coryphantha orcuttii
+Coryphantha recurvata
+Coryphantha robbinsorum
+Coryphantha sheeri robustispina
+Coryphantha sheeri valida
+Coryphantha vivipara alversonii
+Coryphantha vivipara arizonica
+Coryphantha vivipara bisbeeana
+Coryphantha vivipara buoflama
+Coryphantha vivipara desertii
+Coryphantha vivipara kaibabensis
+Coryphantha vivipara rosea
+Cylindropuntia acanthocarpa
+Cylindropuntia acanthocarpa coloradensis
+Cylindropuntia acanthocarpa ganderi
+Cylindropuntia acanthocarpa major
+Cylindropuntia acanthocarpa thornberi
+Cylindropuntia arbuscula
+Cylindropuntia bigelovii
+Cylindropuntia echinocarpa
+Cylindropuntia fulgida
+Cylindropuntia fulgida mammillata
+Cylindropuntia fulgida mammillata monstrosa
+Cylindropuntia imbricata
+Cylindropuntia kleinae tetracantha
+Cylindropuntia leptocaulis
+Cylindropuntia ramosissima
+Cylindropuntia spinosior
+Cylindropuntia versicolor
+Cylindropuntia whipplei
+Cylindropuntia whipplei multigeniculata
+Cylindropuntia wigginsii
+Echinocactus horizonthalonius
+Echinocactus horizonthalonius nicholii
+Echinocactus polycephalus
+Echinocactus polycephalus xeranthemoides
+Echinocereus chloranthus
+Echinocereus dasyacanthus
+Echinocereus engelmannii
+Echinocereus engelmannii acicularis
+Echinocereus engelmannii chrysocentrus
+Echinocereus engelmannii Howei
+Echinocereus engelmannii nicholii
+Echinocereus engelmannii variegatus
+Echinocereus fasciculatus
+Echinocereus fasciculatus bonkerae
+Echinocereus fasciculatus boyce-thompsonii
+Echinocereus fendleri
+Echinocereus fendleri rectispinus
+Echinocereus ledingii
+Echinocereus pectinatus
+Echinocereus pectinatus neomexicanus
+Echinocereus pectinatus rigidissimus
+Echinocereus stramineus
+Echinocereus triglochidiatus
+Echinocereus triglochidiatus arizonicus
+Echinocereus triglochidiatus gonacanthus
+Echinocereus triglochidiatus melanacanthus
+Echinocereus triglochidiatus mojavensis
+Echinocereus triglochidiatus neomexicanus
+Echinocereus viridiflorus
+Epithelantha micromeris
+Escobaria duncanii
+Escobaria orcuttii koenigii
+Escobaria orcuttii macraxina
+Escobaria tuberculosa
+Ferocactus acanthodes
+Ferocactus acanthodes eastwoodiae
+Ferocactus acanthodes lecontei
+Ferocactus covillei
+Ferocactus wislizenii
+Mammillaria grahamii
+Mammillaria grahamii oliviae
+Mammillaria gummifera applanata
+Mammillaria gummifera macdougalii
+Mammillaria gummifera meiacantha
+Mammillaria lasiacantha
+Mammillaria mainiae
+Mammillaria microcarpa
+Mammillaria tetrancistra
+Mammillaria thornberi
+Mammillaria viridiflora
+Mammillaria wrightii
+Mammillaria wrightii wilcoxii
+Neolloydia acunensis
+Neolloydia erectocentra
+Neolloydia intertexta
+Neolloydia johnsonii
+Neolloydia johnsonii lutescens
+Opuntia basilaris
+Opuntia basilaris aurea
+Opuntia basilaris longiareolata
+Opuntia basilaris ramosa
+Opuntia basilaris Treleasei
+Opuntia basilaris woodburyi
+Opuntia chlorotica
+Opuntia curvospina
+Opuntia erinacea
+Opuntia erinacea hystricina
+Opuntia erinacea ursina
+Opuntia erinacea utahensis
+Opuntia fragilis
+Opuntia fragilis brachyarthra
+Opuntia littoralis martiniana 
+Opuntia littoralis vaseyi
+Opuntia macrorhiza pottsii
+Opuntia macrorhiza pottsii
+Opuntia nicholii
+Opuntia phaeacantha
+Opuntia phaeacantha discata
+Opuntia phaeacantha flavescens
+Opuntia phaeacantha flavispina
+Opuntia phaeacantha laevis
+Opuntia phaeacantha major
+Opuntia phaeacantha superbospina
+Opuntia polyacantha
+Opuntia polyacantha juniperina
+Opuntia polyacantha rufispina
+Opuntia polyacantha trichophora
+Opuntia violacea macrocentra
+Opuntia violacea santa-rita
+Opuntia violacea violacea
+Pediocactus bradyi
+Pediocactus knowltonii
+Pediocactus papyracanthus
+Pediocactus paradinei
+Pediocactus peeblesianus
+Pediocactus peeblesianus fickeiseniae
+Pediocactus sileri
+Pediocactus simpsonii
+Sclerocactus mesae-verde
+Sclerocactus parviflorus blessingiae
+Sclerocactus parviflorus intermedius
+Sclerocactus polyancistrus
+Sclerocactus spinosior
+Sclerocactus whipplei
+Sclerocactus whipplei heilii
+Sclerocactus whipplei reevesii
+Sclerocactus whipplei roseus
+

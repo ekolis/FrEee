@@ -1,0 +1,133 @@
+Comet
+Halley's Comet
+Meteor
+Asteroid
+Ceres
+Planetesimal
+Planetoid
+Satellite
+Moon
+Luna
+Phobos
+Deimos
+Adrastea
+Amalthea
+Ananke
+Callisto
+Carme
+Elara
+Europa
+Ganymede
+Himalia
+Io
+Leda
+Lysithea
+Metis
+Pasiphae
+Sinope
+Thebe
+Atlas
+Calypso
+Dione
+Enceladus
+Epimetheus
+Helene
+Hyperion
+Iapetus
+Janus
+Mimas
+Pan
+Pandora
+Phoebe
+Prometheus
+Rhea
+Telesto
+Tethys
+Titan 
+Ariel
+Belinda
+Caliban
+Cordelia
+Cressida
+Desdemona
+Juliet
+Miranda
+Oberon
+Ophelia
+Portia
+Puck
+Rosalind
+Sycorax
+Titania
+Umbriel
+Despina
+Galatea
+Larissa
+Naiad
+Nereid
+Proteus
+Thalassa
+Triton
+Charon
+Planet
+Mercury
+Venus
+Earth
+Mars
+Jupiter
+Saturn
+Uranus
+Neptune
+Pluto
+Oort Cloud
+Brown Dwarf
+Yellow Dwarf
+White Dwarf
+Red Dwarf
+Star
+Sun
+Sol
+Alpha Centauri
+Proxima Centauri
+Betelgeuse
+Barnard's Star
+Sirius
+Wolf 359
+Altair
+Fomalhaut
+Rana
+Vega
+Antares
+Neutron Star
+Pulsar
+Yellow Giant
+White Giant
+Blue Giant
+Red Giant
+Black Hole
+Constellation
+Orion
+Ursa Major
+Ursa Minor
+Aquarius
+Pisces
+Aries
+Taurus
+Gemini
+Cancer
+Leo
+Virgo
+Libra
+Scorpio
+Sagittarius
+Capricorn
+Star Cluster
+Spiral Arm
+Quasar
+Galaxy
+Milky Way
+Andromeda
+Spiral Galaxy
+Elliptical Galaxy
+Galaxy Cluster
+Universe
