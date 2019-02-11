@@ -148,7 +148,10 @@ namespace FrEee.WinForms.Forms
 			ddlRole.Text = Design == null ? null : Design.Role;
 
 			// bind name
-			// TODO - populate name dropdown from design names text file
+			ddlName.Items.Clear();
+			// TODO - add option to alphabetically sort design names?
+			foreach (var n in Empire.Current.DesignNames)
+				ddlName.Items.Add(n);
 			ddlName.Text = Design == null ? null : Design.BaseName;
 
 			// bind iteration

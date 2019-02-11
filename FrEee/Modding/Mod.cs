@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.AI;
@@ -215,6 +216,36 @@ namespace FrEee.Modding
 		public ICollection<Trait> Traits { get; private set; }
 
 		private SafeDictionary<string, IModObject> objects { get; set; }
+
+		/// <summary>
+		/// Names of files containing lists of design names.
+		/// e.g. Ravager would be loaded from Mods/CurrentMod/Dsgnname/Ravager.txt and also from Dsgnname/Ravager.txt.
+		/// </summary>
+		public IEnumerable<string> DesignNamesFiles
+		{
+			get
+			{
+				var list = new List<string>();
+				string path;
+				if (RootPath != null)
+				{
+					try
+					{
+						path = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", RootPath, "Dsgnname");
+						foreach (var f in Directory.GetFiles(path))
+							list.Add(Path.GetFileNameWithoutExtension(f));
+					}
+					catch (IOException ex)
+					{
+						// nothing to do, path probably doesn't exist
+					}
+				}
+				path = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Dsgnname");
+				foreach (var f in Directory.GetFiles(path))
+					list.Add(Path.GetFileNameWithoutExtension(f));
+				return list.OrderBy(q => q).Distinct();
+			}
+		}
 
 		/// <summary>
 		/// Loads a mod.

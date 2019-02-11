@@ -10,6 +10,7 @@ using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
+using FrEee.Modding.Loaders;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
@@ -17,6 +18,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Tech = FrEee.Game.Objects.Technology.Technology;
 
 namespace FrEee.Game.Objects.Civilization
@@ -1339,5 +1341,44 @@ namespace FrEee.Game.Objects.Civilization
 		public bool IsWinner { get; set; }
 
 		public bool IsLoser { get; set; }
+
+		/// <summary>
+		/// Name of file containing lists of design names.
+		/// e.g. Ravager would be loaded from Mods/CurrentMod/Dsgnname/Ravager.txt and also from Dsgnname/Ravager.txt.
+		/// </summary>
+		public string DesignNamesFile { get; set; }
+
+		private IList<string> designNames;
+
+		public IEnumerable<string> DesignNames
+		{
+			get
+			{
+				try
+				{
+					if (designNames == null)
+					{
+						designNames = new List<string>();
+						var fname = DesignNamesFile + ".txt";
+						if (Mod.Current.RootPath != null)
+						{
+							var mfname = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Dsgnname", fname);
+							foreach (var n in File.ReadAllLines(mfname))
+								designNames.Add(n);
+						}
+						var sfname = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Dsgnname", fname);
+						foreach (var n in File.ReadAllLines(sfname))
+							designNames.Add(n);
+						designNames = designNames.Distinct().ToList();
+					}
+					return designNames;
+				}
+				catch (Exception ex) // file not found etc
+				{
+					designNames = new List<string>();
+					return designNames;
+				}
+			}
+		}
 	}
 }

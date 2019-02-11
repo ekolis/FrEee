@@ -1,5 +1,5 @@
 FrEee.Game.Setup.GameSetup, FrEee.Core:
-p33:
+p32:
 	AllowedTrades:
 		:All;
 	EmpirePlacement:
@@ -9,7 +9,7 @@ p33:
 	EmpireTemplates:
 		System.Collections.Generic.List`1[[FrEee.Game.Setup.EmpireTemplate, FrEee.Core]], mscorlib:
 		c3:		
-			:p11:
+			:p12:
 				AIName:
 					:"";
 				AIsCanUse:
@@ -18,6 +18,8 @@ p33:
 					:255,255,0,0;
 				CultureName:
 					:"Berzerkers";
+				DesignNamesFile:
+					:"Dinosaur";
 				InsigniaName:
 					:"Jorn";
 				IsPlayerEmpire:
@@ -303,8 +305,6 @@ p33:
 		:20000;
 	StartingResources:
 		:20000;
-	TechnologyCost:
-		:High;
 	VictoryConditions:
 		System.Collections.Generic.List`1[[FrEee.Game.Interfaces.IVictoryCondition, FrEee.Core]], mscorlib:
 		c1:		

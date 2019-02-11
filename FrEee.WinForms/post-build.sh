@@ -10,4 +10,5 @@ cp -a -u -v ../FrEee/Music bin/Debug/Music
 cp -a -u -v ../FrEee/Pictures bin/Debug/Pictures
 cp -a -u -v ../FrEee/Licenses bin/Debug/Licenses
 cp -a -u -v ../FrEee/Scripts bin/Debug/Scripts
+cp -a -u -v ../FrEee/Dsgnname bin/Debug/Dsgnname
 

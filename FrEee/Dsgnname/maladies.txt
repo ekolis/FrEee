@@ -1,0 +1,141 @@
+Abrasion
+Acid Reflux
+Acne
+AIDS
+Albinism
+Allergen
+Alzheimer's
+Anemia
+Aneurism
+Anthrax
+Arsenic
+Arthritis
+Astigmatism
+Beriberi
+Blister
+Bronchitis
+Bubonic Plague
+Bunion
+Burn
+Cancer
+Candiditis
+Carcinogen
+Cataract
+Chlamydia
+Colorblindness
+Concussion
+Constipation
+Contusion
+Cyanide
+Cyst
+Cystic Fibrosis
+Cytotoxin
+Dehydration
+Delusion
+Dermatitis
+Diabetes
+Diarrhea
+Down's
+Dwarfism
+Dysentery
+Dysplagia
+E. Coli
+Ebola
+Electra Complex
+Emphysema
+Encephalitis
+Endometriosis
+Erythroblastosis
+Fracture
+Frostbite
+Gallstone
+Gangrene
+Gastroenteritis
+Gigantism
+Gingivitis
+Glaucoma
+Goiter
+Gonorrhea
+Gout
+Gunshot
+Halitosis
+Hantavirus
+Heatstroke
+Hematoma
+Hemophilia
+Hepatitis
+Herpes
+Hyperopia
+Hypothermia
+Influenza
+Insomnia
+Jaundice
+Kaposi's Sarcoma
+Kidney Stone
+Lacerations
+Laryngitis
+Legionnaire's
+Leprosy
+Lou Gehrig's
+Lupus
+Lymphoma
+Malaria
+Male Pattern Baldness
+Malnutrition
+Manic/Depression
+Megalomania
+Meningitis
+Mercury
+Metastasis
+Migraine
+Multiple Sclerosis
+Muscular Dystrophy
+Mustard Gas
+Myocardial Infarction
+Myopia
+Narcolepsy
+Nasopharyngitis
+Nephritis
+Neurosis
+Neurotoxin
+Oedipus Complex
+Paraplegia
+Parkinson's
+Phenylketonuria
+Phobia
+Pleurosis
+Pneumonia
+Polydactyly
+Polyp
+Post-Traumatic Stress Disorder
+Pre-Menstrual Syndrome
+Presbyopia
+Psychosis
+Puncture
+Quadraplegia
+Rabies
+Rosacea
+Salmonella
+Sarin
+Schizophrenia
+Scleroderma
+Scurvy
+Slash
+Sleeping Sickness
+Somnambulism
+Spina Bifida
+Stab
+Staphylococcus
+Streptococcus
+Stroke
+Strychnine
+Suffocation
+Syphilis
+Tinnitis
+Trichinosis
+Tuberculosis
+Tumor
+Ulcer
+Venom
+Wart
+Yellow Fever

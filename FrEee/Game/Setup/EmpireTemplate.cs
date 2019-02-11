@@ -112,6 +112,11 @@ namespace FrEee.Game.Setup
 		/// </summary>
 		public string ShipsetName { get; set; }
 
+		/// <summary>
+		/// The name of the design names file used by this empire.
+		/// </summary>
+		public string DesignNamesFile { get; set; }
+
 		public static EmpireTemplate Load(string filename)
 		{
 			var fs = new FileStream(filename, FileMode.Open);
@@ -166,6 +171,7 @@ namespace FrEee.Game.Setup
 			emp.IsPlayerEmpire = IsPlayerEmpire;
 			emp.IsMinorEmpire = IsMinorEmpire;
 			emp.AI = Mod.Current.EmpireAIs.FindByName(AIName);
+			emp.DesignNamesFile = DesignNamesFile;
 
 			return emp;
 		}

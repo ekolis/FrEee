@@ -1,0 +1,232 @@
+Achernar
+Acrab
+Acrux
+Adara
+Agena
+Al Dhanab
+Al Nair
+Alamak
+Aldebaran
+Alderamin
+Algeiba
+Algenib
+Algol
+Alhena
+Alioth
+Alkaid
+Alnilam
+Alnitak
+Alpha Centauri
+Alpheratz
+Alsuhail
+Altair
+Andromeda
+Ankaa
+Antares
+Antila
+Aphrodite
+Apus
+Aquarius
+Aquila
+Ara
+Arachne
+Arcturus
+Ares
+Aries
+Ariel
+Arneb
+Auriga
+Becrux
+Bellatrix
+Betelgeuse
+Bootes
+Byak Ko
+Caelum
+Callisto
+Camelopardalis
+Cancer
+Canes Venatici
+Canis Major
+Canis Minor
+Canopus
+Capella
+Caph
+Capricornus
+Carina
+Cassiopeia
+Castor
+Centaurus
+Cepheus
+Ceres
+Cetus
+Chameleon
+Charon
+Cih
+Circinus
+Columba
+Coma Berenices
+Corona Australis
+Corona Borealis
+Corvus
+Crater
+Cronus
+Crux
+Cygnus
+Deimos
+Delphinus
+Deneb
+Deneb Kaitos
+Denebola
+Dione
+Dorado
+Draco
+Dschubba
+Dubhe
+Earth
+El Nath
+Eltanin
+Enif
+Equuleus
+Eridanus
+Eros
+Europa
+Fomalhaut
+Fornax
+Gacrux
+Galaxy
+Gamma Centauri
+Ganymede
+Gemini
+Gemma
+Gen Bu
+Gienah
+Grus
+Hades
+Hercules
+Hermes
+Horologium
+Hyades
+Hydra
+Hydrus
+Hyperion
+Hypernova
+Indus
+Io
+Izar
+Jupiter
+Kaus Australis
+Kochab
+Koo She
+Kuiper
+Lacerta
+Leo
+Leo Minor
+Lepus
+Libra
+Lilith
+Luna
+Lupus
+Lynx
+Lyra
+Markab
+Mars
+Menkalinan
+Menkar
+Mensa
+Merak
+Mercury
+Miaplacidus
+Microscopium
+Mintaka
+Mirach
+Miranda
+Mirzam
+Mizar
+Monoceros
+Musca
+Naos
+Nebula
+Neptune
+Neried
+Norma
+Nova
+Nunki
+Oberon
+Octans
+Ophiuchus
+Orion
+Pandora
+Pavo
+Pegasus
+Perseus
+Phecda
+Pheonix
+Phobos
+Pictor
+Pisces
+Piscis Austrinus
+Pliedes
+Pluto
+Polaris
+Pollux
+Posidon
+Procyon
+Procyon
+Proxima Centauri
+Pulsar
+Puppis
+Pyxis
+Quasar
+Ras Alhague
+Regulus
+Reticulum
+Rhea
+Rigel
+Rigel Kentaurus
+Sabik
+Sadr
+Sagitta
+Sagittarius
+Saiph
+Saturn
+Scheat
+Schedar
+Scorpius
+Sculptor
+Scutum
+Sei Ryu
+Serpens
+Sextans
+Shaula
+Sirius
+Sol
+Spica
+Su Zaku
+Supernova
+Tau Ceti
+Taurus
+Telescopium
+Terra
+Tethys
+Theta Centauri
+Titan
+Titania
+Triangulum
+Triangulum Australe
+Triton
+Tucana
+Tureis
+Ultranova
+Umbriel
+Uranus
+Ursa Major
+Ursa Minor
+Vega
+Vela
+Venus
+Virgo
+Volans
+Vulpecula
+Wezen
+Zeus
+Zosma

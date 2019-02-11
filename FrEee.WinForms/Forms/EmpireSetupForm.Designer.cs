@@ -79,6 +79,8 @@
 			this.tabTraits = new System.Windows.Forms.TabPage();
 			this.raceTraitPicker = new FrEee.WinForms.Controls.TraitPicker();
 			this.tabs = new FrEee.WinForms.Controls.GameTabControl();
+			this.label8 = new System.Windows.Forms.Label();
+			this.ddlDesignNames = new System.Windows.Forms.ComboBox();
 			this.tabGeneral.SuspendLayout();
 			this.gamePanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picRacePopulationIcon)).BeginInit();
@@ -98,7 +100,7 @@
 			// 
 			this.txtPointsAvailable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtPointsAvailable.Location = new System.Drawing.Point(183, 690);
+			this.txtPointsAvailable.Location = new System.Drawing.Point(183, 770);
 			this.txtPointsAvailable.Name = "txtPointsAvailable";
 			this.txtPointsAvailable.Size = new System.Drawing.Size(172, 17);
 			this.txtPointsAvailable.TabIndex = 5;
@@ -110,7 +112,7 @@
 			this.btnSaveRace.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnSaveRace.BackColor = System.Drawing.Color.Black;
 			this.btnSaveRace.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSaveRace.Location = new System.Drawing.Point(96, 687);
+			this.btnSaveRace.Location = new System.Drawing.Point(96, 767);
 			this.btnSaveRace.Name = "btnSaveRace";
 			this.btnSaveRace.Size = new System.Drawing.Size(80, 22);
 			this.btnSaveRace.TabIndex = 2;
@@ -123,7 +125,7 @@
 			this.btnLoadRace.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnLoadRace.BackColor = System.Drawing.Color.Black;
 			this.btnLoadRace.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnLoadRace.Location = new System.Drawing.Point(10, 687);
+			this.btnLoadRace.Location = new System.Drawing.Point(10, 767);
 			this.btnLoadRace.Name = "btnLoadRace";
 			this.btnLoadRace.Size = new System.Drawing.Size(80, 22);
 			this.btnLoadRace.TabIndex = 1;
@@ -136,7 +138,7 @@
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.BackColor = System.Drawing.Color.Black;
 			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(362, 687);
+			this.btnCancel.Location = new System.Drawing.Point(362, 767);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(80, 22);
 			this.btnCancel.TabIndex = 3;
@@ -149,7 +151,7 @@
 			this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnOK.BackColor = System.Drawing.Color.Black;
 			this.btnOK.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOK.Location = new System.Drawing.Point(448, 687);
+			this.btnOK.Location = new System.Drawing.Point(448, 767);
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(80, 22);
 			this.btnOK.TabIndex = 4;
@@ -160,6 +162,8 @@
 			// tabGeneral
 			// 
 			this.tabGeneral.BackColor = System.Drawing.Color.Black;
+			this.tabGeneral.Controls.Add(this.label8);
+			this.tabGeneral.Controls.Add(this.ddlDesignNames);
 			this.tabGeneral.Controls.Add(this.label2);
 			this.tabGeneral.Controls.Add(this.gamePanel1);
 			this.tabGeneral.Controls.Add(this.chkAIsCanUse);
@@ -192,7 +196,7 @@
 			this.tabGeneral.Location = new System.Drawing.Point(4, 29);
 			this.tabGeneral.Name = "tabGeneral";
 			this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-			this.tabGeneral.Size = new System.Drawing.Size(519, 642);
+			this.tabGeneral.Size = new System.Drawing.Size(519, 722);
 			this.tabGeneral.TabIndex = 0;
 			this.tabGeneral.Text = "General";
 			// 
@@ -200,7 +204,7 @@
 			// 
 			this.label2.AutoSize = true;
 			this.label2.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label2.Location = new System.Drawing.Point(9, 383);
+			this.label2.Location = new System.Drawing.Point(9, 463);
 			this.label2.Margin = new System.Windows.Forms.Padding(3);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(81, 15);
@@ -227,7 +231,7 @@
 			this.gamePanel1.Controls.Add(this.label13);
 			this.gamePanel1.Controls.Add(this.label15);
 			this.gamePanel1.ForeColor = System.Drawing.Color.White;
-			this.gamePanel1.Location = new System.Drawing.Point(12, 404);
+			this.gamePanel1.Location = new System.Drawing.Point(9, 484);
 			this.gamePanel1.Name = "gamePanel1";
 			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
 			this.gamePanel1.Size = new System.Drawing.Size(494, 232);
@@ -390,7 +394,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.txtCulture.Location = new System.Drawing.Point(22, 291);
 			this.txtCulture.Name = "txtCulture";
-			this.txtCulture.Size = new System.Drawing.Size(210, 89);
+			this.txtCulture.Size = new System.Drawing.Size(210, 140);
 			this.txtCulture.TabIndex = 94;
 			this.txtCulture.Text = "Please choose a culture.";
 			// 
@@ -717,25 +721,44 @@
 			this.tabs.SelectedIndex = 0;
 			this.tabs.SelectedTabBackColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.SelectedTabForeColor = System.Drawing.Color.Black;
-			this.tabs.Size = new System.Drawing.Size(527, 675);
+			this.tabs.Size = new System.Drawing.Size(527, 755);
 			this.tabs.TabBackColor = System.Drawing.Color.Black;
 			this.tabs.TabBorderColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.TabForeColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.TabIndex = 0;
+			// 
+			// label8
+			// 
+			this.label8.AutoSize = true;
+			this.label8.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label8.Location = new System.Drawing.Point(9, 437);
+			this.label8.Margin = new System.Windows.Forms.Padding(3);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(89, 15);
+			this.label8.TabIndex = 100;
+			this.label8.Text = "Design Names";
+			// 
+			// ddlDesignNames
+			// 
+			this.ddlDesignNames.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlDesignNames.FormattingEnabled = true;
+			this.ddlDesignNames.Location = new System.Drawing.Point(138, 434);
+			this.ddlDesignNames.Name = "ddlDesignNames";
+			this.ddlDesignNames.Size = new System.Drawing.Size(180, 23);
+			this.ddlDesignNames.TabIndex = 99;
 			// 
 			// EmpireSetupForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(546, 722);
+			this.ClientSize = new System.Drawing.Size(546, 802);
 			this.Controls.Add(this.txtPointsAvailable);
 			this.Controls.Add(this.btnSaveRace);
 			this.Controls.Add(this.btnLoadRace);
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.tabs);
-			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "EmpireSetupForm";
 			this.ShowInTaskbar = false;
 			this.Text = "Empire Setup";
@@ -811,5 +834,7 @@
 		private System.Windows.Forms.TextBox txtLeaderName;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.ComboBox ddlDesignNames;
 	}
 }

@@ -1,0 +1,89 @@
+--COLONY SHIPS--
+Bendross G
+Bendross I
+Bendross R
+Geia G
+Geia I
+Geia R
+
+--ESCORTS/FRIGATES/DESTROYERS--
+Dagger
+DropShip
+Fer De Lance
+Hvy Pinnace
+Hvy Scout
+Lt Pinnace
+Lt Scout
+Pinnace
+Scout
+Sidewinder
+Viper
+
+--LT CRUISERS/CRUISERS--
+Black Horse
+Black Star
+Brazen
+Cobra
+Corvette
+Cutter
+Free Trader
+GunBoat
+GunStar
+Missile Boat
+Obsidian
+Star Wolf
+
+--BATTLECRUISERS+--
+Dauntless
+Dreadnaught
+Fearless
+Q-Ship
+Star Knight
+Temblor
+WarShip
+Winter Hawk
+
+--CARRIERS--
+JumpShip
+TCV
+
+--TRANSPORTS--
+Drayman
+Orion
+Shuttle
+StarLiner
+
+--FIGHTERS--
+Arrow
+Broadsword
+Centurion
+Crossbow
+DemonHawk
+Hornet
+Rapier
+Sabre
+Scimitar
+Thunderbolt
+
+--TROOPS--
+Lt Horse
+MAU
+Slammer
+
+--MINE--
+Kablooie
+Kaboom
+
+--SATELLITES--
+BattleSat
+
+--WEAPONS PLATFORMS--
+Alpha Base
+Bravo Base
+Charlie Base
+Delta Base
+Echo Base
+
+--SPACE STATIONS/ORBITAL FACILITIES--
+Deep Space
+Kuat Drive Yards
