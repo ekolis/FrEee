@@ -952,7 +952,7 @@ namespace FrEee.Utility
 					File.Exists(Path.Combine(d, name + "_Main.bmp")))
 					list.Add(name);
 			}
-			return list.Distinct();
+			return list.OrderBy(q => q).Distinct();
 		}
 
 		/// <summary>
@@ -995,7 +995,7 @@ namespace FrEee.Utility
 					File.Exists(Path.Combine(d, name + "_Pop_Portrait.bmp")))
 					list.Add(name);
 			}
-			return list.Distinct();
+			return list.OrderBy(q => q).Distinct();
 		}
 
 		/// <summary>
@@ -1026,7 +1026,7 @@ namespace FrEee.Utility
 				return list.Distinct();
 			foreach (var d in Directory.GetDirectories(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races")))
 				list.Add(Path.GetFileNameWithoutExtension(d));
-			return list.Distinct();
+			return list.OrderBy(q => q).Distinct();
 		}
 
 		/// <summary>
