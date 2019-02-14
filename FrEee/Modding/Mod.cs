@@ -265,46 +265,52 @@ namespace FrEee.Modding
 			if (path != null && !Directory.Exists(Path.Combine("Mods", path)))
 				throw new DirectoryNotFoundException($"Could not find mod {path} in the Mods folder.");
 
-			var loaders = new ILoader[]
+			var loaders = new Dictionary<ILoader, int>
 			{
-				new ModInfoLoader(path),
-				new TextLoader(path, "SystemNames.txt", m => m.StarSystemNames),
-				new DesignRoleLoader(path),
-				new ScriptLoader(path),
-				new AbilityRuleLoader(path),
-				new ModSettingsLoader(path),
-				new StellarObjectSizeLoader(path),
-				new StellarAbilityLoader(path),
-				new StellarObjectLoader(path),
-				new TraitLoader(path),
-				new TechnologyLoader(path),
-				new FacilityLoader(path),
-				new HullLoader(path),
-				new DamageTypeLoader(path),
-				new ComponentLoader(path),
-				new MountLoader(path),
-				new StarSystemLoader(path),
-				new GalaxyLoader(path),
-				new HappinessModelLoader(path),
-				new CultureLoader(path),
-				new EmpireAILoader(path),
-				new EventTypeLoader(path),
-				new EventLoader(path),
+				{ new ModInfoLoader(path), 0 },
+				{ new TextLoader(path, "SystemNames.txt", m => m.StarSystemNames), 0 },
+				{ new DesignRoleLoader(path), 0 },
+				{ new ScriptLoader(path), 0 },
+				{ new AbilityRuleLoader(path), 0 },
+				{ new ModSettingsLoader(path), 0 },
+				{ new StellarObjectSizeLoader(path), 0 },
+				{ new StellarAbilityLoader(path), 1 },
+				{ new StellarObjectLoader(path), 2 },
+				{ new TraitLoader(path), 1 },
+				{ new TechnologyLoader(path), 1 },
+				{ new FacilityLoader(path), 2 },
+				{ new HullLoader(path), 2 },
+				{ new DamageTypeLoader(path), 0 },
+				{ new ComponentLoader(path), 2 },
+				{ new MountLoader(path), 2 },
+				{ new StarSystemLoader(path), 3 },
+				{ new GalaxyLoader(path), 4 },
+				{ new HappinessModelLoader(path), 0 },
+				{ new CultureLoader(path), 0 },
+				{ new EmpireAILoader(path) , 0 },
+				{ new EventTypeLoader(path), 0 },
+				{ new EventLoader(path), 1 },
 			};
 
-			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / loaders.Length;
+			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / loaders.Count;
 
 			var used = new HashSet<string>();
 
-			foreach (var loader in loaders)
+			var minPriority = loaders.Values.Min();
+			var maxPriority = loaders.Values.Max();
+
+			for (var p = minPriority; p <= maxPriority; p++)
 			{
-				if (status != null)
-					status.Message = "Loading " + loader.FileName;
-				CurrentFileName = loader.FileName;
-				foreach (var mo in loader.Load(mod).ToArray())
-					mod.AssignID(mo, used);
-				if (status != null)
-					status.Progress += progressPerFile;
+				loaders.Where(q => q.Value == p).ParallelSafeForeach(loader =>
+				{
+					if (status != null)
+						status.Message = "Loading " + loader.Key.FileName;
+					CurrentFileName = loader.Key.FileName; // TODO - parallelize this
+					foreach (var mo in loader.Key.Load(mod).ToArray())
+						mod.AssignID(mo, used);
+					if (status != null)
+						status.Progress += progressPerFile;
+				});
 			}
 
 			CurrentFileName = null;
