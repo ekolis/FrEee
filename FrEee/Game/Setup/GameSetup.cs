@@ -264,7 +264,7 @@ namespace FrEee.Game.Setup
 
 			// remove forbidden techs
 			foreach (var tname in ForbiddenTechnologyNames)
-				gal.Referrables.OfType<Technology>().Single(t => t.Name == tname).Dispose();
+				Mod.Current.Technologies.Single(t => t.Name == tname).Dispose();
 
 			// set omniscient view and all systems seen flags
 			gal.OmniscientView = OmniscientView;
@@ -456,7 +456,7 @@ namespace FrEee.Game.Setup
 
 			// give empire starting techs
 			Galaxy.Current.CleanGameState(); // need to know what the techs in the game are!
-			foreach (var tech in Galaxy.Current.Referrables.OfType<Technology>())
+			foreach (var tech in Mod.Current.Technologies)
 			{
 				switch (StartingTechnologyLevel)
 				{

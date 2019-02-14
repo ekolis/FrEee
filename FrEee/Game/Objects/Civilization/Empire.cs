@@ -1118,7 +1118,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public void RefreshUnlockedItems()
 		{
-			unlockedItems = new HashSet<IUnlockable>(Galaxy.Current.Referrables.OfType<IUnlockable>().Where(r => CheckUnlockStatus(r)));
+			unlockedItems = new HashSet<IUnlockable>(Mod.Current.Objects.OfType<IUnlockable>().Union(Galaxy.Current.Referrables.OfType<IUnlockable>()).Where(r => CheckUnlockStatus(r)));
 		}
 
 		/// <summary>

@@ -520,12 +520,12 @@ namespace FrEee.Modding
 				Mod.Current = Mod.Load(Galaxy.Current.ModPath);
 			foreach (var item in Mod.Current.Objects)
 			{
-				var matches = Galaxy.Current.Referrables.OfType<IModObject>().Where(q => q.ModID == item.ModID);
+				var matches = Mod.Current.Objects.Where(q => q.ModID == item.ModID);
 				if (!matches.Any())
 				{
-					// add new mod objects
+				/*	// add new mod objects
 					if (item is IReferrable r)
-						Galaxy.Current.AssignID(r);
+						Galaxy.Current.AssignID(r);*/
 				}
 				else
 				{
@@ -540,7 +540,7 @@ namespace FrEee.Modding
 						item.CopyTo(matches.First());					
 				}
 			}
-			foreach (var match in Galaxy.Current.Referrables.OfType<IModObject>().ToArray())
+			foreach (var match in Mod.Current.Objects.ToArray())
 			{
 				// delete mod objects that no longer exist
 				if (match.ModID != null && !Mod.Current.Objects.Any(q => q.ModID == match.ModID))
