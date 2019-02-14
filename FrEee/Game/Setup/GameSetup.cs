@@ -456,7 +456,7 @@ namespace FrEee.Game.Setup
 
 			// give empire starting techs
 			Galaxy.Current.CleanGameState(); // need to know what the techs in the game are!
-			foreach (var tech in Mod.Current.Technologies)
+			foreach (var tech in Mod.Current.Technologies.Where(t => !t.IsRacial || emp.Abilities().Any(a => a.Rule.Matches("Tech Area") && a.Value1 == t.RacialTechID)))
 			{
 				switch (StartingTechnologyLevel)
 				{
