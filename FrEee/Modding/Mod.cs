@@ -301,11 +301,13 @@ namespace FrEee.Modding
 
 			for (var p = minPriority; p <= maxPriority; p++)
 			{
+				var files = loaders.Where(q => q.Value == p).Select(q => q.Key.FileName);
+				CurrentFileName = string.Join(" / ", files);
+				if (status != null)
+					status.Message = "Loading " + CurrentFileName;
+
 				loaders.Where(q => q.Value == p).ParallelSafeForeach(loader =>
 				{
-					if (status != null)
-						status.Message = "Loading " + loader.Key.FileName;
-					CurrentFileName = loader.Key.FileName; // TODO - parallelize this
 					foreach (var mo in loader.Key.Load(mod).ToArray())
 						mod.AssignID(mo, used);
 					if (status != null)
