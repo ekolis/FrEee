@@ -1,3 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
@@ -6,12 +12,6 @@ using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -51,9 +51,9 @@ namespace FrEee.Game.Objects.Space
 				if (BackgroundImagePath == null)
 					return null;
 				return Pictures.GetModImage(
-					Path.Combine("Pictures", "Systems", BackgroundImagePath),
 					Path.Combine("Pictures", "Systems", "1024x768", BackgroundImagePath),
-					Path.Combine("Pictures", "Systems", "800x600", BackgroundImagePath)
+					Path.Combine("Pictures", "Systems", "800x600", BackgroundImagePath),
+					Path.Combine("Pictures", "Systems", BackgroundImagePath)
 					);
 			}
 		}
