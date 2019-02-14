@@ -282,7 +282,7 @@ namespace FrEee.Modding
 				{ new HullLoader(path), 3 },
 				{ new DamageTypeLoader(path), 0 },
 				{ new ComponentLoader(path), 3 },
-				{ new MountLoader(path), 2 },
+				{ new MountLoader(path), 3 },
 				{ new StarSystemLoader(path), 3 },
 				{ new GalaxyLoader(path), 4 },
 				{ new HappinessModelLoader(path), 0 },
