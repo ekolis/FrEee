@@ -258,34 +258,6 @@ namespace FrEee.Utility.Extensions
 			return list.BelongingTo(emp);
 		}
 
-		public static void Patch<T>(this ICollection<T> old, IEnumerable<T> nu)
-					where T : class, IModObject
-		{
-			foreach (var item in old.Where(item => !item.StillExists(old, nu)).ToArray())
-			{
-				// delete item that was deleted
-				old.Remove(item);
-				if (item is IReferrable)
-					((IReferrable)item).Dispose();
-			}
-			foreach (var item in nu.ToArray())
-			{
-				var oldItem = old.FindMatch(item, nu);
-				if (oldItem == null)
-				{
-					// add item that was added
-					old.Add(item);
-				}
-				else
-				{
-					// patch item and delete the patch
-					item.CopyTo(oldItem, IDCopyBehavior.PreserveDestination, IDCopyBehavior.PreserveDestination);
-					if (item is IDisposable)
-						(item as IDisposable).Dispose();
-				}
-			}
-		}
-
 		public static IEnumerable<Ability> Stack(this IEnumerable<Ability> abilities, IAbilityObject stackTo)
 		{
 			return abilities.StackToTree(stackTo).Select(g => g.Key);

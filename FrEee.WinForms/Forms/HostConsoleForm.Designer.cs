@@ -38,7 +38,6 @@
 			this.btnClose = new FrEee.WinForms.Controls.GameButton();
 			this.btnProcess = new FrEee.WinForms.Controls.GameButton();
 			this.btnToggleAI = new FrEee.WinForms.Controls.GameButton();
-			this.btnPatchMod = new FrEee.WinForms.Controls.GameButton();
 			this.btnPlayerView = new FrEee.WinForms.Controls.GameButton();
 			this.btnEdit = new FrEee.WinForms.Controls.GameButton();
 			((System.ComponentModel.ISupportInitialize)(this.gridEmpires)).BeginInit();
@@ -150,19 +149,6 @@
 			this.btnToggleAI.UseVisualStyleBackColor = false;
 			this.btnToggleAI.Click += new System.EventHandler(this.btnToggleAI_Click);
 			// 
-			// btnPatchMod
-			// 
-			this.btnPatchMod.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnPatchMod.BackColor = System.Drawing.Color.Black;
-			this.btnPatchMod.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnPatchMod.Location = new System.Drawing.Point(174, 326);
-			this.btnPatchMod.Name = "btnPatchMod";
-			this.btnPatchMod.Size = new System.Drawing.Size(75, 23);
-			this.btnPatchMod.TabIndex = 4;
-			this.btnPatchMod.Text = "Patch Mod";
-			this.btnPatchMod.UseVisualStyleBackColor = false;
-			this.btnPatchMod.Click += new System.EventHandler(this.btnPatchMod_Click);
-			// 
 			// btnPlayerView
 			// 
 			this.btnPlayerView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -197,12 +183,10 @@
 			this.ClientSize = new System.Drawing.Size(504, 361);
 			this.Controls.Add(this.btnEdit);
 			this.Controls.Add(this.btnPlayerView);
-			this.Controls.Add(this.btnPatchMod);
 			this.Controls.Add(this.btnToggleAI);
 			this.Controls.Add(this.btnProcess);
 			this.Controls.Add(this.btnClose);
 			this.Controls.Add(this.gridEmpires);
-			this.ForeColor = System.Drawing.Color.White;
 			this.MinimumSize = new System.Drawing.Size(520, 200);
 			this.Name = "HostConsoleForm";
 			this.Text = "Host Console";
@@ -222,7 +206,6 @@
 		private Controls.GameButton btnClose;
 		private Controls.GameButton btnProcess;
 		private Controls.GameButton btnToggleAI;
-		private Controls.GameButton btnPatchMod;
 		private Controls.GameButton btnPlayerView;
 		private Controls.GameButton btnEdit;
 	}

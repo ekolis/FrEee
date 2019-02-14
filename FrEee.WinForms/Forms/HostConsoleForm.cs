@@ -55,41 +55,6 @@ namespace FrEee.WinForms.Forms
 			MessageBox.Show("Sorry, the scenario editor is not yet implemented.");
 		}
 
-		private void btnPatchMod_Click(object sender, EventArgs e)
-		{
-			var pickerForm = new ModPickerForm();
-			var result = this.ShowChildForm(pickerForm);
-			if (result == DialogResult.OK)
-			{
-				var status = new Status();
-				var t = new Thread(new ThreadStart(() =>
-				{
-					bool doOrDie = true;
-					this.Invoke(new Action(() => { Cursor = Cursors.WaitCursor; }));
-					var mod = Mod.Load(pickerForm.ModPath, false, status, 0.5);
-					if (Mod.Errors.Any())
-						doOrDie = this.ShowChildForm(new ModErrorsForm()) == DialogResult.OK;
-					if (doOrDie)
-					{
-						status.Message = "Backing up GAM file";
-						File.Copy(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Savegame", Galaxy.Current.GameFileName), Path.Combine("Savegame", Galaxy.Current.GameFileName + ".bak"), true);
-						// TODO - back up player GAM files too
-						Mod.Current.Dispose();
-						Mod.Current = mod;
-						Mod.Patch();
-						Galaxy.SaveAll(status);
-					}
-					else
-					{
-						status.Message = "Aborting";
-						status.Progress = 1d;
-					}
-					this.Invoke(new Action(() => { Cursor = Cursors.Default; }));
-				}));
-				this.ShowChildForm(new StatusForm(t, status));
-			}
-		}
-
 		private void btnPlayerView_Click(object sender, EventArgs e)
 		{
 			if (gridEmpires.SelectedRows.Count == 1)
