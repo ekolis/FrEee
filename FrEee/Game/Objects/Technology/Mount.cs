@@ -180,7 +180,7 @@ namespace FrEee.Game.Objects.Technology
 		}
 
 		/// <summary>
-		/// Required component family. Null means no restriction.
+		/// Required component families, comma delimited list. Null means no restriction.
 		/// </summary>
 		public Formula<string> RequiredComponentFamily { get; set; }
 
