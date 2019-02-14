@@ -73,7 +73,7 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
-		/// The current galaxy. Shouldn't change except at loading a game, turn proecssing, or mod patching.
+		/// The current galaxy. Shouldn't change except at loading a game or turn processing.
 		/// </summary>
 		public static Galaxy Current { get; set; }
 
@@ -541,8 +541,6 @@ namespace FrEee.Game.Objects.Space
 				var formula = new ComputedFormula<int>("Galaxy.Current.TurnNumber", null, true);
 				var turn = formula.Value;
 			}
-
-			Mod.Patch();
 		}
 
 		/// <summary>
@@ -563,8 +561,6 @@ namespace FrEee.Game.Objects.Space
 			}
 			fs.Close();
 			fs.Dispose();
-
-			Mod.Patch();
 		}
 
 		/// <summary>
@@ -611,8 +607,6 @@ namespace FrEee.Game.Objects.Space
 				// load library of designs, strategies, etc.
 				Library.Load();
 			}
-
-			Mod.Patch();
 		}
 
 		/// <summary>

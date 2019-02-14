@@ -510,42 +510,5 @@ namespace FrEee.Modding
 		{
 			return RootPath ?? "<Stock>";
 		}
-
-		/// <summary>
-		/// Patches the mod in the current galaxy with the current mod.
-		/// </summary>
-		public static void Patch()
-		{
-			if (Mod.Current == null)
-				Mod.Current = Mod.Load(Galaxy.Current.ModPath);
-			foreach (var item in Mod.Current.Objects)
-			{
-				var matches = Mod.Current.Objects.Where(q => q.ModID == item.ModID);
-				if (!matches.Any())
-				{
-				/*	// add new mod objects
-					if (item is IReferrable r)
-						Galaxy.Current.AssignID(r);*/
-				}
-				else
-				{
-					// patch existing mod o
-					if (item is IReferrable r)
-					{
-						r.CopyToExceptID((IReferrable)matches.First(), IDCopyBehavior.PreserveDestination);
-						foreach (var m in matches.Skip(1).Cast<IReferrable>().ToArray())
-							m.Dispose();
-					}
-					else
-						item.CopyTo(matches.First());					
-				}
-			}
-			foreach (var match in Mod.Current.Objects.ToArray())
-			{
-				// delete mod objects that no longer exist
-				if (match.ModID != null && !Mod.Current.Objects.Any(q => q.ModID == match.ModID))
-					((IReferrable)match).Dispose();
-			}
-		}
 	}
 }
