@@ -271,7 +271,7 @@ namespace FrEee.Modding.Templates
 		public bool CanUseMount(Mount m)
 		{
 			return m == null || (
-			   (m.RequiredComponentFamily == null || Family == m.RequiredComponentFamily) &&
+			   (m.RequiredComponentFamily == null || m.RequiredComponentFamily.Value.Split(',').Select(q => q.Trim()).Contains(Family.Value)) &&
 			   m.WeaponTypes.Value.HasFlag(WeaponType)
 			   );
 		}
