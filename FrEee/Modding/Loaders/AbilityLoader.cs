@@ -30,7 +30,7 @@ namespace FrEee.Modding.Loaders
 					break; // no more abilities
 				var abilname = nfield.CreateFormula<string>(abil).Value;
 
-				var rules = Mod.Current.AbilityRules.Where(r => r.Matches(abilname));
+				var rules = Mod.Current.AbilityRules.Where(r => r.Matches(abilname)).ToArray();
 				if (rules.Count() > 1)
 				{
 					Mod.Errors.Add(new DataParsingException("Ambiguous ability name match for " + abilname + " alias between the following abilities: " + string.Join(", ", rules.Select(r => r.Name).ToArray()) + ".", filename, rec));
