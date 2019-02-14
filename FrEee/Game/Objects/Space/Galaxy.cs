@@ -65,11 +65,11 @@ namespace FrEee.Game.Objects.Space
 			ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
 			Battles = new HashSet<IBattle>();
 			ScriptNotes = new DynamicDictionary();
-			if (Mod.Current != null)
+			/*if (Mod.Current != null)
 			{
 				foreach (var q in Mod.Current.Objects.OfType<IReferrable>())
 					AssignID(q);
-			}
+			}*/
 		}
 
 		/// <summary>
