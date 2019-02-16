@@ -135,7 +135,10 @@ namespace FrEee.Utility.Extensions
 			{
 				if (!knownObjects.ContainsKey(source))
 					knownObjects.Add(source, target);
-				foreach (var sp in source.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.GetGetMethod(true) != null && p.GetIndexParameters().Count() == 0))
+				foreach (var sp in source.GetType().GetProperties(
+					BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+					.Where(p => p.GetGetMethod(true) != null && p.GetIndexParameters().Count() == 0)
+					.OrderBy(p => p.HasAttribute<SerializationPriorityAttribute>() ? p.GetCustomAttribute<SerializationPriorityAttribute>().Priority : int.MaxValue))
 				{
 					var tp = target.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.GetSetMethod(true) != null && p.GetIndexParameters().Count() == 0 && p.Name == sp.Name).SingleOrDefault();
 					if (tp != null)
