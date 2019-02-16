@@ -1354,7 +1354,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static void SetPropertyValue(this object o, string propertyName, object value)
 		{
-			o.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.NonPublic).SetValue(o, value, new object[0]);
+			o.GetType().GetProperty(propertyName).SetValue(o, value, new object[0]);
 		}
 
 		/// <summary>
