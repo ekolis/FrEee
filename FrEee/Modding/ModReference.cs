@@ -100,8 +100,11 @@ namespace FrEee.Modding
 			if (t.ModID == null)
 			{
 				// HACK - why are my items not registered in the mod? does it have something to do with formulas and leveled templates?
-				Mod.Current.AssignID(t, Mod.Current.Objects.Select(q => q.ModID).ToList());
-				Mod.Current.Register(t);
+				lock (Mod.Current.Objects)
+				{
+					Mod.Current.AssignID(t, Mod.Current.Objects.Select(q => q.ModID).ToList());
+					Mod.Current.Register(t);
+				}
 			}
 			return new ModReference<T>(t);
 		}
