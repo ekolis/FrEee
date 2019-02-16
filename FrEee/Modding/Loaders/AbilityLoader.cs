@@ -30,40 +30,43 @@ namespace FrEee.Modding.Loaders
 					break; // no more abilities
 				var abilname = nfield.CreateFormula<string>(abil).Value;
 
-				var rules = Mod.Current.AbilityRules.Where(r => r.Matches(abilname)).ToArray();
-				if (rules.Count() > 1)
+				lock (Mod.Current.AbilityRules)
 				{
-					Mod.Errors.Add(new DataParsingException("Ambiguous ability name match for " + abilname + " alias between the following abilities: " + string.Join(", ", rules.Select(r => r.Name).ToArray()) + ".", filename, rec));
-					continue;
-				}
-				else if (rules.Count() == 0)
-				{
-					// create an ad hoc ability rule
-					abil.Rule = new AbilityRule { Name = abilname };
-					Mod.Current.AbilityRules.Add(abil.Rule);
-				}
-				else
-					abil.Rule = rules.Single();
+					var rules = Mod.Current.AbilityRules.Where(r => r.Matches(abilname)).ToArray();
+					if (rules.Count() > 1)
+					{
+						Mod.Errors.Add(new DataParsingException("Ambiguous ability name match for " + abilname + " alias between the following abilities: " + string.Join(", ", rules.Select(r => r.Name).ToArray()) + ".", filename, rec));
+						continue;
+					}
+					else if (rules.Count() == 0)
+					{
+						// create an ad hoc ability rule
+						abil.Rule = new AbilityRule { Name = abilname };
+						Mod.Current.AbilityRules.Add(abil.Rule);
+					}
+					else
+						abil.Rule = rules.Single();
 
-				abil.Description = rec.Get<string>(new string[] { "Ability " + count + " Descr", "Ability Descr" }, obj);
+					abil.Description = rec.Get<string>(new string[] { "Ability " + count + " Descr", "Ability Descr" }, obj);
 
-				int valnum = 0;
-				int idx = -1;
-				while (true)
-				{
-					valnum++;
+					int valnum = 0;
+					int idx = -1;
+					while (true)
+					{
+						valnum++;
 
-					var vfield = rec.FindField(new string[]
-						{
+						var vfield = rec.FindField(new string[]
+							{
 							"Ability " + count + " Val " + valnum,
 							"Ability " + count + " Val",
 							"Ability Val " + valnum,
 							"Ability Val"
-						}, ref idx, false, idx + 1);
-					if (vfield == null)
-						break;
-					var val = vfield.CreateFormula<string>(abil);
-					abil.Values.Add(val);
+							}, ref idx, false, idx + 1);
+						if (vfield == null)
+							break;
+						var val = vfield.CreateFormula<string>(abil);
+						abil.Values.Add(val);
+					}
 				}
 
 				yield return abil;
