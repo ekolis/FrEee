@@ -309,7 +309,12 @@ namespace FrEee.Modding
 				loaders.Where(q => q.Value == p).ParallelSafeForeach(loader =>
 				{
 					foreach (var mo in loader.Key.Load(mod).ToArray())
-						mod.AssignID(mo, used);
+					{
+						lock (mod.Objects)
+						{
+							mod.AssignID(mo, used);
+						}
+					}
 					if (status != null)
 						status.Progress += progressPerFile;
 				});
