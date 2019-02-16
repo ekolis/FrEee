@@ -1,15 +1,17 @@
-﻿using FrEee.Game.Enumerations;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Vehicles;
+using FrEee.Modding;
+using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace FrEee.Game.Objects.Orders
 {
@@ -82,7 +84,28 @@ namespace FrEee.Game.Objects.Orders
 		/// The construction template.
 		/// </summary>
 		[DoNotSerialize]
-		public TTemplate Template { get { return template; } set { template = value; } }
+		public TTemplate Template
+		{
+			get { return template.Value; }
+			set
+			{
+				if (value is IModObject mo)
+					template = GetModReference<TTemplate>(mo.ReferViaMod().ID);
+				else if (value is IReferrable r)
+					template = new GalaxyReference<TTemplate>(r.ReferViaGalaxy().ID);
+				else
+					throw new Exception($"{template} is not referrable in the galaxy or the mod.");
+			}
+		}
+
+		private IReference<T> GetModReference<T>(string id)
+		{
+			// since T is not guaranteed to be a compile time IModObject implementation
+			var type = typeof(ModReference<>).MakeGenericType(typeof(T));
+			var r = (IReference<T>)Activator.CreateInstance(type);
+			r.SetPropertyValue("ID", id);
+			return r;
+		}
 
 		IConstructionTemplate IConstructionOrder.Template { get { return template.Value; } }
 
@@ -94,7 +117,7 @@ namespace FrEee.Game.Objects.Orders
 		}
 
 		private GalaxyReference<Empire> owner { get; set; }
-		private GalaxyReference<TTemplate> template { get; set; }
+		private IReference<TTemplate> template { get; set; }
 
 		public bool CheckCompletion(ConstructionQueue queue)
 		{
