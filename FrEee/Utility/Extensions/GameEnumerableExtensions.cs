@@ -287,6 +287,8 @@ namespace FrEee.Utility.Extensions
 			var grouped = abilities.GroupBy(a => a.Rule);
 			foreach (var group in grouped)
 			{
+				if (group.Key == null)
+					continue; // invalid ability rule
 				var lookup = group.Key.GroupAndStack(group, stackTo);
 				foreach (var lgroup in lookup)
 				{
