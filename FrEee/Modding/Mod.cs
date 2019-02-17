@@ -331,11 +331,13 @@ namespace FrEee.Modding
 
 		public void AssignID(IModObject mo, ICollection<string> used)
 		{
+			if (mo.ModID != null)
+				return;
 			lock (Objects)
 			{
 				if (mo.Name != null && !used.Contains(mo.Name))
 				{
-					mo.ModID = mo.Name;
+					mo.ModID = mo.GetType().Name + " " + mo.Name;
 					used.Add(mo.Name);
 				}
 				else
