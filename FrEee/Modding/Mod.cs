@@ -337,14 +337,14 @@ namespace FrEee.Modding
 			{
 				if (mo.Name != null && !used.Contains(mo.Name))
 				{
-					mo.ModID = mo.GetType() + " " + mo.Name;
+					mo.ModID = mo.Name;
 					used.Add(mo.Name);
 				}
 				else
 				{
 					// tack a number on
 					int lastnum;
-					var name = (mo.GetType() + " " + mo.Name) ?? ("Generic " + mo.GetType());
+					var name = mo.Name ?? ("Generic " + mo.GetType());
 					var lastword = name.LastWord();
 					if (int.TryParse(lastword, out lastnum))
 					{
@@ -395,6 +395,12 @@ namespace FrEee.Modding
 			{
 				if (mo.ModID == null)
 					AssignID(mo, used);
+				var dupes = Objects.Where(q => q.ModID == mo.ModID); // with same mod ID
+				if (dupes.Count() > 1)
+				{
+					foreach (var dupe in dupes)
+						dupe.ModID = dupe.GetType().Name + " " + dupe.ModID;
+				}
 			}
 		}
 
