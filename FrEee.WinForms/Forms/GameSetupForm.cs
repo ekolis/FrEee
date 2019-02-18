@@ -493,7 +493,9 @@ namespace FrEee.WinForms.Forms
 			// TODO - why are we loading the galaxy twice?
 			Thread t = new Thread(new ThreadStart(() =>
 			{
+#if RELEASE
 				try
+# endif
 				{
 					status.Message = "Setting up galaxy";
 					Galaxy.Initialize(setup, new PRNG((int)spnSeed.Value), status, 1d);
@@ -505,10 +507,12 @@ namespace FrEee.WinForms.Forms
 						Galaxy.Load(name + "_" + turn + "_0001.gam");
 					}
 				}
+#if RELEASE
 				catch (Exception ex)
 				{
 					status.Exception = ex;
 				}
+#endif
 			}));
 			t.Name = "Game Setup";
 			this.ShowChildForm(new StatusForm(t, status));
