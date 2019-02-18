@@ -337,14 +337,15 @@ namespace FrEee.Modding
 			{
 				if (mo.Name != null && !used.Contains(mo.Name))
 				{
-					mo.ModID = mo.Name;
-					used.Add(mo.Name);
+					mo.ModID = mo.GetType() + " " + mo.Name;
+					used.Add(mo.ModID);
 				}
 				else
 				{
 					// tack a number on
 					int lastnum;
 					var name = mo.Name ?? ("Generic " + mo.GetType());
+					name = mo.GetType() + " " + name;
 					var lastword = name.LastWord();
 					if (int.TryParse(lastword, out lastnum))
 					{
@@ -526,7 +527,14 @@ namespace FrEee.Modding
 			if (objects[o.ModID] == o)
 				return; // already registered
 			if (objects[o.ModID] != null)
-				throw new Exception($"Mod object with ID {o.ModID} already exists.");
+			{
+				// another object with this ID exists, prefix object names with their type
+				var old = objects[o.ModID];
+				objects[old.ModID] = null;
+				old.ModID = old.GetType() + " " + old.ModID;
+				o.ModID = o.GetType() + " " + o.ModID;
+				objects[old.ModID] = old;
+			}
 			objects[o.ModID] = o;
 		}
 
