@@ -35,7 +35,9 @@ namespace FrEee.Game.Enumerations
 		[Name("Seekers")]
 		Seeker = 0x200,
 
+		[Name("Any")]
 		All = Ship | /*Base |*/ Fighter | Satellite | Drone | Planet | Seeker,
+
 		Invalid = 0x400,
 	}
 }

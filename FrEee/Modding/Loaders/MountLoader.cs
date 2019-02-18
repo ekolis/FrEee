@@ -49,60 +49,12 @@ namespace FrEee.Modding.Loaders
 				if (wtstring == null)
 					m.WeaponTypes = WeaponTypes.AnyComponent;
 				else
-				{
-					m.WeaponTypes = WeaponTypes.None;
-					foreach (var s in wtstring.Value.Split(',').Select(s => s.Trim()))
-					{
-						if (s == "None") // none here really means not a weapon
-							m.WeaponTypes |= WeaponTypes.NotAWeapon;
-						else if (s == "Direct Fire")
-							m.WeaponTypes |= WeaponTypes.DirectFire;
-						else if (s == "Seeking")
-							m.WeaponTypes |= WeaponTypes.Seeking;
-						else if (s == "Warhead")
-							m.WeaponTypes |= WeaponTypes.Warhead;
-						else if (s == "Point-Defense" || s == "Direct Fire Point-Defense")
-							m.WeaponTypes |= WeaponTypes.DirectFirePointDefense;
-						else if (s == "Seeking Point-Defense")
-							m.WeaponTypes |= WeaponTypes.SeekingPointDefense;
-						else if (s == "Warhead Point-Defense")
-							m.WeaponTypes |= WeaponTypes.WarheadPointDefense;
-						else if (s == "All")
-							m.WeaponTypes |= WeaponTypes.All;
-						else if (s == "Any Component")
-							m.WeaponTypes |= WeaponTypes.AnyComponent;
-						else
-							Mod.Errors.Add(new DataParsingException("Unknown weapon type \"" + s + "\".", Mod.CurrentFileName, rec));
-					}
-				}
+					m.WeaponTypes = wtstring.Value.Capitalize().ParseEnum<WeaponTypes>();
 				var vtstring = rec.Get<string>(new string[] { "Vehicle Type", "Vehicle Type Requirement" }, m);
 				if (vtstring == null)
 					m.VehicleTypes = VehicleTypes.All;
 				else
-				{
-					m.VehicleTypes = VehicleTypes.None;
-					foreach (var s in vtstring.Value.Split(',').Select(s => s.Trim()))
-					{
-						// special cases
-						if (s == "Weapon Platform")
-							m.VehicleTypes |= VehicleTypes.WeaponPlatform;
-						else
-						{
-							bool found = false;
-							foreach (var val in Enum.GetNames(typeof(VehicleTypes)))
-							{
-								if (val == s)
-								{
-									m.VehicleTypes |= val.ParseEnum<VehicleTypes>();
-									found = true;
-									break;
-								}
-							}
-							if (!found)
-								Mod.Errors.Add(new DataParsingException("Unknown vehicle type \"" + s + "\".", Mod.CurrentFileName, rec));
-						}
-					}
-				}
+					m.VehicleTypes = vtstring.Value.Capitalize().ParseEnum<VehicleTypes>();
 				m.AbilityPercentages = AbilityLoader.LoadPercentagesOrModifiers(rec, "Percent", m);
 				m.AbilityModifiers = AbilityLoader.LoadPercentagesOrModifiers(rec, "Modifier", m);
 				m.UnlockRequirements = RequirementLoader.LoadEmpireRequirements(rec, m, RequirementType.Unlock).ToList();
