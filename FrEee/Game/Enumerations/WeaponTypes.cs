@@ -1,5 +1,5 @@
-﻿using FrEee.Utility;
-using System;
+﻿using System;
+using FrEee.Utility;
 
 namespace FrEee.Game.Enumerations
 {
@@ -43,6 +43,8 @@ namespace FrEee.Game.Enumerations
 		/// </summary>
 		[CanonicalName("Direct Fire Point Defense")]
 		[Name("Direct-Fire Point-Defense")]
+		[Name("Point-Defense")]
+		[Name("Point Defense")]
 		DirectFirePointDefense = 0x10,
 
 		/// <summary>
@@ -62,6 +64,7 @@ namespace FrEee.Game.Enumerations
 		/// <summary>
 		/// All types of weapons. Not nonweapons.
 		/// </summary>
+		[Name("Any")]
 		All = DirectFire | Seeking | DirectFirePointDefense | SeekingPointDefense | WarheadPointDefense,
 
 		/// <summary>

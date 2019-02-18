@@ -1,5 +1,5 @@
-﻿using FrEee.Utility;
-using System;
+﻿using System;
+using FrEee.Utility;
 
 namespace FrEee.Game.Enumerations
 {
@@ -45,7 +45,9 @@ namespace FrEee.Game.Enumerations
 		[Name("Weapon Platforms")]
 		WeaponPlatform = 0x80,
 
+		[Name("Any")]
 		All = Ship | Base | Fighter | Satellite | Mine | Troop | Drone | WeaponPlatform,
+		
 		Invalid = 0x1000,
 	}
 }
