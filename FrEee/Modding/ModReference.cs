@@ -25,7 +25,7 @@ namespace FrEee.Modding
 			{
 				if (string.IsNullOrWhiteSpace(ID))
 					return default(T);
-				var obj = (T)Mod.Current.Find(ID);
+				var obj = (T)Mod.Current.Find<T>(ID);
 				if (obj == null)
 					return default(T);
 				if (obj.IsDisposed)
@@ -56,7 +56,7 @@ namespace FrEee.Modding
 		{
 			if (Mod.Current == null)
 				throw new ReferenceException<int, T>("Can't create a reference to an IModObject without a mod.");
-			else if (Mod.Current.Find(id) is T)
+			else if (Mod.Current.Find<T>(id) is T)
 				ID = id;
 			else
 				throw new Exception("Object with ID " + id + " is not a " + typeof(T) + ".");

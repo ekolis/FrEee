@@ -40,7 +40,7 @@ namespace FrEee.Utility
 		protected override TKey LookUp(string id)
 		{
 			if (!dict.ContainsKey(id))
-				dict[id] = (TKey)Mod.Current.Find(id);
+				dict[id] = (TKey)Mod.Current.Find<TKey>(id);
 			return dict[id];
 		}
 	}
