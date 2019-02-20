@@ -303,7 +303,7 @@ namespace FrEee.Game.Objects.Vehicles
 		/// </summary>
 		public bool IsObsolete { get; set; }
 
-		public bool IsValidInMod => Components.All(q => q.IsValidInMod);
+		public bool IsValidInMod => hull.HasValue && Components.All(q => q.IsValidInMod);
 
 		public int Iteration { get; set; }
 
