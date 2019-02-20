@@ -1,13 +1,13 @@
-﻿using FrEee.Game.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 
 namespace FrEee.Utility.Extensions
 {
@@ -54,7 +54,12 @@ namespace FrEee.Utility.Extensions
 		{
 			if (modID == null)
 				return default(T);
-			return items.SingleOrDefault(item => item.ModID == modID);
+			var result = items.SingleOrDefault(item => item.ModID == modID);
+			if (result == null)
+				result = items.SingleOrDefault(item => item.ModID.Substring(item.ModID.IndexOf(" ") + 1) == modID);
+			if (result == null)
+				result = items.SingleOrDefault(item => item.ModID == modID.Substring(modID.IndexOf(" ") + 1));
+			return result;
 		}
 
 		public static T FindByName<T>(this IEnumerable<T> stuff, string name) where T : INamed

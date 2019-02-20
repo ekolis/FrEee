@@ -59,6 +59,8 @@ namespace FrEee.Modding
 			Register(FacilityTemplate.Unknown);
 		}
 
+		private object locker = new object();
+
 		/// <summary>
 		/// The currently loaded mod.
 		/// </summary>
@@ -333,7 +335,7 @@ namespace FrEee.Modding
 		{
 			if (mo.ModID != null)
 				return;
-			lock (Objects)
+			lock (locker)
 			{
 				if (mo.Name != null && !used.Contains(mo.Name))
 				{
@@ -456,13 +458,13 @@ namespace FrEee.Modding
 			return r1 != null && r2 != null && r1 == r2;
 		}
 
-		public IModObject Find(string modid)
+		public T Find<T>(string modid)
+			where T : IModObject
 		{
-			// HACK - for redacted colonies in old games
-			if (modid == "*UNKNOWN*")
-				return FacilityTemplate.Unknown;
-
-			return objects[modid];
+			lock (locker)
+			{
+				return Objects.OfType<T>().FindByModID(modid);
+			}
 		}
 
 		/// <summary>
