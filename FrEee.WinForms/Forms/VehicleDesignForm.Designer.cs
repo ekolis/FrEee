@@ -46,6 +46,8 @@
 			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
 			this.btnSave = new FrEee.WinForms.Controls.GameButton();
 			this.pnlStats = new FrEee.WinForms.Controls.GamePanel();
+			this.txtEngines = new System.Windows.Forms.Label();
+			this.label14 = new System.Windows.Forms.Label();
 			this.txtEvasion = new System.Windows.Forms.Label();
 			this.label18 = new System.Windows.Forms.Label();
 			this.txtAccuracy = new System.Windows.Forms.Label();
@@ -88,8 +90,7 @@
 			this.btnMountInfo = new FrEee.WinForms.Controls.GameButton();
 			this.ddlMount = new System.Windows.Forms.ComboBox();
 			this.btnHelp = new FrEee.WinForms.Controls.GameButton();
-			this.label14 = new System.Windows.Forms.Label();
-			this.txtEngines = new System.Windows.Forms.Label();
+			this.btnMount = new FrEee.WinForms.Controls.GameButton();
 			this.pnlStats.SuspendLayout();
 			this.gamePanel4.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picDetailIcon)).BeginInit();
@@ -307,6 +308,25 @@
 			this.pnlStats.Padding = new System.Windows.Forms.Padding(3);
 			this.pnlStats.Size = new System.Drawing.Size(440, 128);
 			this.pnlStats.TabIndex = 22;
+			// 
+			// txtEngines
+			// 
+			this.txtEngines.AutoSize = true;
+			this.txtEngines.Location = new System.Drawing.Point(84, 100);
+			this.txtEngines.Name = "txtEngines";
+			this.txtEngines.Size = new System.Drawing.Size(30, 13);
+			this.txtEngines.TabIndex = 28;
+			this.txtEngines.Text = "0 / 0";
+			// 
+			// label14
+			// 
+			this.label14.AutoSize = true;
+			this.label14.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label14.Location = new System.Drawing.Point(3, 100);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(45, 13);
+			this.label14.TabIndex = 27;
+			this.label14.Text = "Engines";
 			// 
 			// txtEvasion
 			// 
@@ -767,7 +787,7 @@
 			this.ddlMount.FormattingEnabled = true;
 			this.ddlMount.Location = new System.Drawing.Point(80, 96);
 			this.ddlMount.Name = "ddlMount";
-			this.ddlMount.Size = new System.Drawing.Size(140, 21);
+			this.ddlMount.Size = new System.Drawing.Size(113, 21);
 			this.ddlMount.TabIndex = 31;
 			this.ddlMount.ValueMember = "Mount";
 			this.ddlMount.SelectedIndexChanged += new System.EventHandler(this.ddlMount_SelectedIndexChanged);
@@ -786,24 +806,17 @@
 			this.btnHelp.UseVisualStyleBackColor = false;
 			this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
 			// 
-			// label14
+			// btnMount
 			// 
-			this.label14.AutoSize = true;
-			this.label14.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label14.Location = new System.Drawing.Point(3, 100);
-			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(45, 13);
-			this.label14.TabIndex = 27;
-			this.label14.Text = "Engines";
-			// 
-			// txtEngines
-			// 
-			this.txtEngines.AutoSize = true;
-			this.txtEngines.Location = new System.Drawing.Point(84, 100);
-			this.txtEngines.Name = "txtEngines";
-			this.txtEngines.Size = new System.Drawing.Size(30, 13);
-			this.txtEngines.TabIndex = 28;
-			this.txtEngines.Text = "0 / 0";
+			this.btnMount.BackColor = System.Drawing.Color.Black;
+			this.btnMount.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnMount.Location = new System.Drawing.Point(200, 94);
+			this.btnMount.Name = "btnMount";
+			this.btnMount.Size = new System.Drawing.Size(20, 23);
+			this.btnMount.TabIndex = 33;
+			this.btnMount.Text = "...";
+			this.btnMount.UseVisualStyleBackColor = false;
+			this.btnMount.Click += new System.EventHandler(this.btnMount_Click);
 			// 
 			// VehicleDesignForm
 			// 
@@ -811,6 +824,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(709, 636);
+			this.Controls.Add(this.btnMount);
 			this.Controls.Add(this.btnHelp);
 			this.Controls.Add(this.ddlMount);
 			this.Controls.Add(this.picPortrait);
@@ -919,5 +933,6 @@
 		private Controls.GameButton btnHelp;
 		private System.Windows.Forms.Label txtEngines;
 		private System.Windows.Forms.Label label14;
+		private Controls.GameButton btnMount;
 	}
 }
