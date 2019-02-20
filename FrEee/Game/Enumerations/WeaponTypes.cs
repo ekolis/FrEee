@@ -10,15 +10,11 @@ namespace FrEee.Game.Enumerations
 	public enum WeaponTypes
 	{
 		/// <summary>
-		/// No weapon type specified.
-		/// </summary>
-		None = 0x0,
-
-		/// <summary>
 		/// Not a weapon.
 		/// </summary>
 		[CanonicalName("Not a Weapon")]
 		[Name("Not A Weapon")]
+		[Name("None")]
 		NotAWeapon = 0x1,
 
 		/// <summary>
