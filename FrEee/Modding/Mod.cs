@@ -337,17 +337,21 @@ namespace FrEee.Modding
 				return;
 			lock (locker)
 			{
-				if (mo.Name != null && !used.Contains(mo.Name))
+				var fullname = mo.GetType().Name + " " + mo.Name;
+				if (mo.Name != null && !used.Contains(fullname))
 				{
-					mo.ModID = mo.GetType() + " " + mo.Name;
+					mo.ModID = fullname;
 					used.Add(mo.ModID);
 				}
 				else
 				{
 					// tack a number on
 					int lastnum;
-					var name = mo.Name ?? ("Generic " + mo.GetType());
-					name = mo.GetType() + " " + name;
+					string name;
+					if (mo.Name == null)
+						name = "Generic " + mo.GetType().Name;
+					else
+						name = mo.GetType().Name + " " + mo.Name;
 					var lastword = name.LastWord();
 					if (int.TryParse(lastword, out lastnum))
 					{
