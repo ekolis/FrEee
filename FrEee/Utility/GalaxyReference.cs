@@ -11,11 +11,11 @@ namespace FrEee.Utility
 	/// Can be passed around on the network as a surrogate for said object.
 	/// This class should be used when referencing a server side object from the client.
 	/// It is not necessary to use GalaxyReference when entirely within either the client or the server.
-	/// If the object is not an IReferrable, the object itself will be stored!
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
 	public class GalaxyReference<T> : IReference<long, T>, IPromotable
+		where T : IReferrable
 	{
 		public GalaxyReference()
 		{

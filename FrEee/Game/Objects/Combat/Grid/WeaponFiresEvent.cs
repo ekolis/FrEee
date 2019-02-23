@@ -38,14 +38,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 			set => target = value.ReferViaGalaxy();
 		}
 
-		private GalaxyReference<Component> weapon { get; set; }
-
-		[DoNotSerialize]
-		public Component Weapon
-		{
-			get => weapon?.Value;
-			set => weapon = value.ReferViaGalaxy();
-		}
+		// TODO - make this some sort of reference?
+		public Component Weapon { get; set; }
 
 		public Hit Hit { get; set; }
 		public int Damage { get; set; }

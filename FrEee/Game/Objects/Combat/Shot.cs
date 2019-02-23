@@ -1,10 +1,10 @@
-﻿using FrEee.Game.Interfaces;
+﻿using System.Collections.Generic;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
-using System.Collections.Generic;
 
 namespace FrEee.Game.Objects.Combat
 {
@@ -39,8 +39,21 @@ namespace FrEee.Game.Objects.Combat
 			}
 		}
 
+		/// <summary>
+		/// The specific target of this hit.
+		/// </summary>
 		[DoNotSerialize]
-		public IDamageable Defender { get { return target == null ? null : target.Value; } set { target = value == null ? null : value.ReferViaGalaxy(); } }
+		public IDamageable Defender
+		{
+			get { return target?.Value ?? _target; }
+			set
+			{
+				if (value is IDamageableReferrable dr)
+					target = dr.ReferViaGalaxy();
+				else
+					_target = value;
+			}
+		}
 
 		/// <summary>
 		/// Effective range for damage purposes, due to mount range modifiers
@@ -68,7 +81,8 @@ namespace FrEee.Game.Objects.Combat
 
 		public IEnumerable<Hit> Hits { get; private set; }
 		public int Range { get; set; }
-		public GalaxyReference<IDamageable> target { get; set; }
+		public GalaxyReference<IDamageableReferrable> target { get; set; }
+		private IDamageable _target { get; set; }
 
 		public IDictionary<string, object> Variables
 		{
@@ -81,10 +95,8 @@ namespace FrEee.Game.Objects.Combat
 			}
 		}
 
-		public GalaxyReference<Component> weapon { get; set; }
-
-		[DoNotSerialize]
-		public Component Weapon { get { return weapon; } set { weapon = value; } }
+		// TODO - make this some sort of reference?
+		public Component Weapon { get; set; }
 
 		public int InflictDamage(IDamageable target, PRNG dice = null)
 		{

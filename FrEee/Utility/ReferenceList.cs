@@ -1,13 +1,14 @@
-﻿using FrEee.Game.Interfaces;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FrEee.Game.Interfaces;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility.Extensions;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace FrEee.Utility
 {
 	public class GalaxyReferenceList<T> : ReferenceList<GalaxyReference<T>, T>
+		where T : IReferrable
 	{
 	}
 

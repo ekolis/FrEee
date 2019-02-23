@@ -17,7 +17,7 @@ namespace FrEee.Game.Objects.Orders
 	/// </summary>
 	public class ActivateAbilityOrder : IOrder<IMobileSpaceObject>
 	{
-		public ActivateAbilityOrder(IAbilityObject source, Ability ability, IReferrable target)
+		public ActivateAbilityOrder(IReferrableAbilityObject source, Ability ability, IReferrable target)
 		{
 			Owner = Empire.Current;
 			Source = source;
@@ -62,9 +62,10 @@ namespace FrEee.Game.Objects.Orders
 
 		/// <summary>
 		/// The source of the ability. Probably a component, facility, or hull.
+		/// TODO - fix this now that Component/Facility/Hull are no longer referrable
 		/// </summary>
 		[DoNotSerialize]
-		public IAbilityObject Source { get { return source.Value; } set { source = value.ReferViaGalaxy(); } }
+		public IReferrableAbilityObject Source { get { return source.Value; } set { source = value.ReferViaGalaxy(); } }
 
 		/// <summary>
 		/// What are we activating the ability "against"? Like, what warp point are we destroying, or whatever? Or null if there's no relevant target
@@ -74,7 +75,7 @@ namespace FrEee.Game.Objects.Orders
 
 		private GalaxyReference<Ability> ability { get; set; }
 		private GalaxyReference<Empire> owner { get; set; }
-		private GalaxyReference<IAbilityObject> source { get; set; }
+		private GalaxyReference<IReferrableAbilityObject> source { get; set; }
 		private GalaxyReference<IReferrable> target { get; set; }
 
 		public bool CheckCompletion(IMobileSpaceObject executor)
