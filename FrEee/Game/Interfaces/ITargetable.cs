@@ -5,7 +5,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// Something which can be specifically target by weapons.
 	/// </summary>
-	public interface ITargetable : IDamageable, ITransferrable, IReferrable
+	public interface ITargetable : IDamageableReferrable, ITransferrable
 	{
 		/// <summary>
 		/// Evasion rating of this combatant.

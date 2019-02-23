@@ -73,4 +73,6 @@ namespace FrEee.Game.Interfaces
 		/// <returns>Leftover damage.</returns>
 		int TakeDamage(Hit hit, PRNG dice = null);
 	}
+
+	public interface IDamageableReferrable : IDamageable, IReferrable { }
 }

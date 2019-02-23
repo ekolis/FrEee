@@ -17,7 +17,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A technology that can be researched in the game.
 	/// </summary>
 	[Serializable]
-	public class Technology : IModObject, IResearchable, IReferrable
+	public class Technology : IModObject, IResearchable
 	{
 		public Technology()
 		{
@@ -303,7 +303,6 @@ namespace FrEee.Game.Objects.Technology
 		{
 			if (IsDisposed)
 				return;
-			Galaxy.Current.UnassignID(this);
 			if (Mod.Current != null)
 				Mod.Current.Technologies.Remove(this);
 		}

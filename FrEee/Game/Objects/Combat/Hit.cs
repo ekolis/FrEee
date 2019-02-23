@@ -1,9 +1,9 @@
-﻿using FrEee.Game.Interfaces;
+﻿using System.Collections.Generic;
+using FrEee.Game.Interfaces;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
-using System.Collections.Generic;
 
 namespace FrEee.Game.Objects.Combat
 {
@@ -42,7 +42,18 @@ namespace FrEee.Game.Objects.Combat
 		/// <summary>
 		/// The specific target of this hit.
 		/// </summary>
-		public IDamageable Target { get { return target == null ? null : target.Value; } set { target = value.ReferViaGalaxy(); } }
+		[DoNotSerialize]
+		public IDamageable Target
+		{
+			get { return target?.Value ?? _target; }
+			set
+			{
+				if (value is IDamageableReferrable dr)
+					target = dr.ReferViaGalaxy();
+				else
+					_target = value;
+			}
+		}
 
 		public IDictionary<string, object> Variables
 		{
@@ -57,6 +68,8 @@ namespace FrEee.Game.Objects.Combat
 			}
 		}
 
-		private GalaxyReference<IDamageable> target { get; set; }
+		private GalaxyReference<IDamageableReferrable> target { get; set; }
+
+		private IDamageable _target { get; set; }
 	}
 }

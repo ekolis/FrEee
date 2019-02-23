@@ -1102,6 +1102,7 @@ namespace FrEee.Utility.Extensions
 		}
 
 		public static GalaxyReference<T> ReferViaGalaxy<T>(this T t)
+			where T : IReferrable
 		{
 			if (t == null)
 				return null;

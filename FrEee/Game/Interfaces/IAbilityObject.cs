@@ -41,4 +41,6 @@ namespace FrEee.Game.Interfaces
 		/// </summary>
 		IEnumerable<IAbilityObject> Parents { get; }
 	}
+	
+	public interface IReferrableAbilityObject : IReferrable, IAbilityObject { }
 }

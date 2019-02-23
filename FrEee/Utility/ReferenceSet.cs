@@ -10,6 +10,7 @@ namespace FrEee.Utility
 {
 	[Serializable]
 	public class GalaxyReferenceSet<T> : ReferenceSet<GalaxyReference<T>, T>
+		where T : IReferrable
 	{
 		public GalaxyReferenceSet()
 			: base()

@@ -7,7 +7,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// An object that can move about in space and/or receive orders.
 	/// </summary>
-	public interface IMobileSpaceObject : ICombatSpaceObject, IOrderable, IContainable<Fleet>, IDamageable
+	public interface IMobileSpaceObject : ICombatSpaceObject, IOrderable, IContainable<Fleet>, IDamageableReferrable
 	{
 		new Fleet Container { get; set; }
 
