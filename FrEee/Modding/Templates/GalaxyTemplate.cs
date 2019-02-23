@@ -382,7 +382,7 @@ namespace FrEee.Modding.Templates
 			return Math.Abs(NormalizeAngle(d - middle)) < range;
 		}
 
-		private void NameStellarObjects(StarSystem sys)
+		internal static void NameStellarObjects(StarSystem sys)
 		{
 			int index;
 
