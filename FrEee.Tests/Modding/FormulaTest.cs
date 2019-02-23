@@ -31,13 +31,11 @@ namespace FrEee.Tests.Modding
 			armor.Size = 10;
 			armor.Durability = new ComputedFormula<int>("self.Size * 3", armor, true);
 			Mod.Current.ComponentTemplates.Add(armor);
-			Galaxy.Current.AssignID(armor);
 			var mount = new Mount();
 			mount.ModID = mount.Name = "Scale Mount";
 			mount.DurabilityPercent = 200;
 			mount.SizePercent = new ComputedFormula<int>("design.Hull.Size", mount, true);
 			Mod.Current.Mounts.Add(mount);
-			Galaxy.Current.AssignID(mount);
 			var hull = new Hull<Ship>();
 			hull.ModID = hull.Name = "Generic Hull";
 			hull.Size = 150;

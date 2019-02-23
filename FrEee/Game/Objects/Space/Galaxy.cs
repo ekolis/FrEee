@@ -1985,18 +1985,17 @@ namespace FrEee.Game.Objects.Space
 		{
 			if (o is IReferrable)
 				AssignID(o as IReferrable);
-			if (o is IFoggable)
+			if (o is IFoggable obj && o is IReferrable r)
 			{
-				var obj = (IFoggable)o;
 				if (!obj.IsMemory)
 				{
-					var id = obj.ID;
+					var id = r.ID;
 					var vis = obj.CheckVisibility(CurrentEmpire);
 					if (vis < Visibility.Fogged)
 						obj.Dispose();
 					if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
 					{
-						CurrentEmpire.Memory[id].CopyToExceptID(obj, IDCopyBehavior.PreserveDestination); // memory sight!
+						((IReferrable)CurrentEmpire.Memory[id]).CopyToExceptID(r, IDCopyBehavior.PreserveDestination); // memory sight!
 						obj.IsMemory = true;
 					}
 					obj.Redact(Empire.Current);

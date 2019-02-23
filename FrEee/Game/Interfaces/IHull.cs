@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace FrEee.Game.Interfaces
 {
-	public interface IHull : IModObject, IResearchable, IAbilityContainer, IReferrable, IPictorial, IUpgradeable<IHull>
+	public interface IHull : IModObject, IResearchable, IAbilityContainer, IPictorial, IUpgradeable<IHull>
 	{
 		/// <summary>
 		/// Can this hull use components with the Ship Auxiliary Control ability?

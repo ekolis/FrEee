@@ -27,7 +27,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// An empire attempting to rule the galaxy.
 	/// </summary>
 	[Serializable]
-	public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable<Empire>, IComparable, IFormulaHost
+	public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable<Empire>, IComparable, IFormulaHost, IReferrable
 	{
 		public Empire()
 		{
@@ -1048,7 +1048,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <typeparam name="T"></typeparam>
 		/// <param name="obj"></param>
 		/// <returns></returns>
-		public T Recall<T>(T obj) where T : IFoggable
+		public T Recall<T>(T obj) where T : IFoggable, IReferrable
 		{
 			if (obj.IsMemory)
 				return obj;
@@ -1177,7 +1177,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// or the player decides to delete a sensor ghost.
 		/// </summary>
 		/// <param name="obj"></param>
-		public void UpdateMemory(IFoggable obj)
+		public void UpdateMemory<T>(T obj) where T : IFoggable, IOwnable, IReferrable
 		{
 			if (obj.IsMemory)
 				throw new InvalidOperationException("Call UpdateMemory for the physical object, not the memory.");
@@ -1201,7 +1201,7 @@ namespace FrEee.Game.Objects.Civilization
 				// object exists, update cache with the data
 				if (Memory[obj.ID] != null)
 				{
-					obj.CopyToExceptID(Memory[obj.ID], IDCopyBehavior.Regenerate);
+					obj.CopyToExceptID((T)Memory[obj.ID], IDCopyBehavior.Regenerate);
 				}
 				else
 				{
@@ -1242,7 +1242,7 @@ namespace FrEee.Game.Objects.Civilization
 			else
 			{
 				// object was destroyed, remove from cache
-				var oldid = obj.ID > 0 ? obj.ID : Memory.SingleOrDefault(kvp => kvp.Value == obj).Key;
+				var oldid = obj.ID > 0 ? obj.ID : Memory.SingleOrDefault(kvp => kvp.Value.SafeEquals(obj)).Key;
 				if (oldid > 0)
 					Memory.Remove(oldid);
 			}
