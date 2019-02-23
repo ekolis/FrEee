@@ -40,7 +40,6 @@ namespace FrEee.Tests.Modding
 			hull.ModID = hull.Name = "Generic Hull";
 			hull.Size = 150;
 			Mod.Current.Hulls.Add(hull);
-			Galaxy.Current.AssignID(hull);
 			Mod.Current.RefreshObjects();
 
 			var design = new Design<Ship>();

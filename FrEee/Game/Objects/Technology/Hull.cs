@@ -101,12 +101,6 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
-		public long ID
-		{
-			get;
-			set;
-		}
-
 		public IEnumerable<Ability> IntrinsicAbilities
 		{
 			get { return Abilities; }
@@ -363,7 +357,6 @@ namespace FrEee.Game.Objects.Technology
 		{
 			if (IsDisposed)
 				return;
-			Galaxy.Current.UnassignID(this);
 			if (Mod.Current != null)
 			{
 				var h = (IHull<T>)this;
