@@ -1,6 +1,8 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Technology;
+using FrEee.Modding;
+using FrEee.Utility.Extensions;
 using System;
 using System.Data;
 using System.Drawing;
@@ -34,10 +36,7 @@ namespace FrEee.WinForms.Forms
 
 		private void Bind()
 		{
-			var mounts = Empire.Current.UnlockedItems.OfType<Mount>().Where(m =>
-				m.VehicleTypes.HasFlag(hull.VehicleType) &&
-				(m.MinimumVehicleSize == null || m.MinimumVehicleSize <= hull.Size) &&
-				(m.MaximumVehicleSize == null || m.MinimumVehicleSize >= hull.Size));
+			var mounts = Mod.Current.Mounts.Where(m => hull.CanUseMount(m) && m.IsUnlocked());
 			mountBindingSource.DataSource = mounts.ToArray();
 			gridMounts.Visible = mounts.Any();
 			// TODO - show mount stats somewhere...
