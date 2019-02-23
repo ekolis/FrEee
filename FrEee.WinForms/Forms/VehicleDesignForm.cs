@@ -244,7 +244,7 @@ namespace FrEee.WinForms.Forms
 			ddlMount.Items.Add(new MountInfo(null));
 			if (Design.Hull != null)
 			{
-				foreach (var m in Mod.Current.Mounts.Where(m => Design.Hull.CanUseMount(m)))
+				foreach (var m in Mod.Current.Mounts.Where(m => Design.Hull.CanUseMount(m) && m.IsUnlocked()))
 					ddlMount.Items.Add(new MountInfo(m));
 			}
 			ddlMount.SelectedIndex = 0;
