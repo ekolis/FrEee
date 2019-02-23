@@ -5,7 +5,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// A diplomatic message.
 	/// </summary>
-	public interface IMessage : IFoggable, IPictorial, IPromotable
+	public interface IMessage : IFoggable, IPictorial, IPromotable, IReferrable
 	{
 		IMessage InReplyTo { get; set; }
 		Empire Recipient { get; set; }

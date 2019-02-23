@@ -9,7 +9,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 	/// <summary>
 	/// A clause in a treaty.
 	/// </summary>
-	public abstract class Clause : IOwnable, IFoggable, IPromotable
+	public abstract class Clause : IOwnable, IFoggable, IPromotable, IReferrable
 	{
 		protected Clause(Empire giver, Empire receiver)
 		{

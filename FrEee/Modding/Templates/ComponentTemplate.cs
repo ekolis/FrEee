@@ -19,7 +19,7 @@ namespace FrEee.Modding.Templates
 	/// A template for a vehicle component.
 	/// </summary>
 	[Serializable]
-	public class ComponentTemplate : IModObject, IResearchable, IAbilityContainer, ITemplate<Component>, IReferrable, IUpgradeable<ComponentTemplate>
+	public class ComponentTemplate : IModObject, IResearchable, IAbilityContainer, ITemplate<Component>, IUpgradeable<ComponentTemplate>
 	{
 		public ComponentTemplate()
 		{
@@ -290,7 +290,6 @@ namespace FrEee.Modding.Templates
 		{
 			if (IsDisposed)
 				return;
-			Galaxy.Current.UnassignID(this);
 			if (Mod.Current != null)
 				Mod.Current.ComponentTemplates.Remove(this);
 		}

@@ -263,7 +263,6 @@ namespace FrEee.Game.Objects.Technology
 		{
 			if (IsDisposed)
 				return;
-			Galaxy.Current.UnassignID(this);
 			if (Mod.Current != null)
 				Mod.Current.Mounts.Remove(this);
 		}

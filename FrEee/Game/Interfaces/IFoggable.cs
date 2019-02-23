@@ -1,4 +1,5 @@
-﻿using FrEee.Game.Enumerations;
+﻿using System;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Civilization;
 
 namespace FrEee.Game.Interfaces
@@ -6,7 +7,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// Something that can be obscured by fog of war.
 	/// </summary>
-	public interface IFoggable : IReferrable
+	public interface IFoggable : IDisposable
 	{
 		/// <summary>
 		/// Is this object just a memory, or a real object?

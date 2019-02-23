@@ -422,7 +422,7 @@ namespace FrEee.Utility.Extensions
 			return sobj.FindStarSystem().FindCoordinates(sobj);
 		}
 
-		public static T FindMemory<T>(this T f, Empire emp) where T : IFoggable
+		public static T FindMemory<T>(this T f, Empire emp) where T : IFoggable, IReferrable
 		{
 			if (f == null)
 				return default(T);
@@ -1683,7 +1683,8 @@ namespace FrEee.Utility.Extensions
 		/// <param name="message">A message to display to any empire that can see this event happen.</param>
 		/// <param name="empiresToSkipMessage">Empires to which we don't need to send a message.</param>
 		/// <param name="stillExists"></param>
-		public static void UpdateEmpireMemories(this IFoggable obj, string message = null, params Empire[] empiresToSkipMessage)
+		public static void UpdateEmpireMemories<T>(this T obj, string message = null, params Empire[] empiresToSkipMessage)
+			where T : IFoggable, IReferrable, IOwnable
 		{
 			if (Empire.Current == null)
 			{
