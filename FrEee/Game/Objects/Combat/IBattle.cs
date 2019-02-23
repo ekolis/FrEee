@@ -15,7 +15,6 @@ namespace FrEee.Game.Objects.Combat
 		IList<LogMessage> Log { get; }
 		double Timestamp { get; }
 		IDictionary<long, ICombatant> StartCombatants { get; }
-		IDictionary<(long, int), Component> StartWeapons { get; }
 		IDictionary<long, ICombatant> EndCombatants { get; }
 
 		void Resolve();

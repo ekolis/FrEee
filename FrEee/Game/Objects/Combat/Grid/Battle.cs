@@ -54,11 +54,6 @@ namespace FrEee.Game.Objects.Combat.Grid
 		public IDictionary<long, ICombatant> StartCombatants { get; private set; } = new SafeDictionary<long, ICombatant>();
 
 		/// <summary>
-		/// Copies of the weapons from the start of the battle.
-		/// </summary>
-		public IDictionary<(long, int), Component> StartWeapons { get; private set; } = new SafeDictionary<(long, int), Component>();
-
-		/// <summary>
 		/// Copies of the combatants from the end of the battle.
 		/// </summary>
 		public IDictionary<long, ICombatant> EndCombatants { get; private set; } = new SafeDictionary<long, ICombatant>();
@@ -171,16 +166,6 @@ namespace FrEee.Game.Objects.Combat.Grid
 		{
 			Combatants = combatants.ToHashSet();
 			StartCombatants = combatants.Select(c => new { ID = c.ID, Copy = c.CopyAndAssignNewID() }).ToDictionary(q => q.ID, q => q.Copy);
-
-			foreach (var c in Combatants)
-			{
-				for (var i = 0; i < c.Weapons.Count(); i++)
-				{
-					var w = c.Weapons.ElementAt(i);
-					var wc = StartCombatants[c.ID].Weapons.ElementAt(i);
-					StartWeapons[(c.ID, c.Components.IndexOf(w))] = wc;
-				}
-			}
 		}
 
 		public abstract void PlaceCombatants(SafeDictionary<ICombatant, IntVector2> locations);
@@ -412,7 +397,6 @@ namespace FrEee.Game.Objects.Combat.Grid
 						{
 							var w = info.Item2.Weapons.ElementAt(ix);
 							var wc = StartCombatants[info.Item2.ID].Weapons.ElementAt(ix);
-							StartWeapons[(info.Item2.ID, ix)] = wc;
 						}
 						locations[info.Launchee] = new IntVector2(locations[info.Launcher]);
 						Events.Last().Add(new CombatantLaunchedEvent(this, info.Launcher, info.Launchee, locations[info.Launchee]));

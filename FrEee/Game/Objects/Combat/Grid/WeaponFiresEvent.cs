@@ -43,7 +43,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 		[DoNotSerialize]
 		public Component Weapon
 		{
-			get => weapon?.Value ?? Battle?.StartWeapons?[(Attacker.ID, Attacker.Components.IndexOf(weapon.Value))];
+			get => weapon?.Value;
 			set => weapon = value.ReferViaGalaxy();
 		}
 
