@@ -1,4 +1,9 @@
-﻿using FrEee.Game.Enumerations;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
@@ -9,11 +14,6 @@ using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 
 namespace FrEee.Game.Setup
 {
@@ -557,6 +557,18 @@ namespace FrEee.Game.Setup
 						break;
 				}
 				okSystems = okSystems.ToArray();
+				if (!okSystems.Any())
+				{
+					// replace an inhospitable system with a hospitable one
+					var convertSys = gal.StarSystemLocations.Select(ssl => ssl.Item).Where(sys => !sys.EmpiresCanStartIn).PickRandom(dice);
+					if (convertSys == null)
+						throw new Exception("No suitable system found to place " + emp + "'s homeworld #" + (i + 1) + ". (Try increasing the number of star systems.)");
+					var newSys = Mod.Current.StarSystemTemplates.Where(q => q.EmpiresCanStartIn).PickRandom(dice).Instantiate();
+					newSys.Name = Mod.Current.StarSystemNames.Except(gal.StarSystemLocations.Select(q => q.Item.Name)).PickRandom(dice);
+					GalaxyTemplate.NameStellarObjects(newSys);
+					newSys.CopyTo(convertSys);
+					okSystems = new[] { convertSys };
+				}
 				Planet hw;
 				planets = planets.Where(p => okSystems.Contains(p.FindStarSystem()));
 				if (!planets.Any())
