@@ -564,9 +564,19 @@ namespace FrEee.Game.Setup
 					if (convertSys == null)
 						throw new Exception("No suitable system found to place " + emp + "'s homeworld #" + (i + 1) + ". (Try increasing the number of star systems.)");
 					var newSys = Mod.Current.StarSystemTemplates.Where(q => q.EmpiresCanStartIn).PickRandom(dice).Instantiate();
-					newSys.Name = Mod.Current.StarSystemNames.Except(gal.StarSystemLocations.Select(q => q.Item.Name)).PickRandom(dice);
-					GalaxyTemplate.NameStellarObjects(newSys);
+					var sid = convertSys.ID;
 					newSys.CopyTo(convertSys);
+					convertSys.ID = sid;
+					convertSys.Name = Mod.Current.StarSystemNames.Except(gal.StarSystemLocations.Select(q => q.Item.Name)).PickRandom(dice);
+					foreach (var l in Galaxy.Current.StarSystemLocations)
+					{
+						foreach (var wp in l.Item.FindSpaceObjects<WarpPoint>().Where(q => q.Target.StarSystem == convertSys).ToArray())
+						{
+							wp.Dispose();
+							WarpPointPlacementStrategy.PlaceWarpPoints(Galaxy.Current.StarSystemLocations.Single(q => q.Item == convertSys), l);
+						}
+					}
+					GalaxyTemplate.NameStellarObjects(convertSys);	
 					okSystems = new[] { convertSys };
 				}
 				Planet hw;
