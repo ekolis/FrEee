@@ -93,8 +93,10 @@ namespace FrEee.Game.Objects.Orders
 					template = GetModReference<TTemplate>(mo.ReferViaMod().ID);
 				else if (value is IReferrable r)
 					template = new GalaxyReference<TTemplate>(r.ReferViaGalaxy().ID);
+				else if (value == null)
+					template = null;
 				else
-					throw new Exception($"{template} is not referrable in the galaxy or the mod.");
+					throw new Exception($"{value} is not referrable in the galaxy or the mod.");
 			}
 		}
 

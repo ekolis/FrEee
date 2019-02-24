@@ -635,7 +635,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 						int dmg = 0;
 						var winfo = w.Template.ComponentTemplate.WeaponInfo;
 						var minrng = w.Template.WeaponMinRange;
-						var maxrng = w.Template.WeaponMinRange;
+						var maxrng = w.Template.WeaponMaxRange;
 						var range = locations[c].DistanceToEightWay(locations[target]);
 						var shot = new Shot(c, w, target, range);
 						bool wasArmed = target is Seeker || target.Weapons.Any();

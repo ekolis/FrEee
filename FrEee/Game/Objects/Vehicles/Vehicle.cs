@@ -101,11 +101,15 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
-				var dict = new SafeDictionary<MountedComponentTemplate, IList<int>>(true);
+				var dict = new SafeDictionary<MountedComponentTemplate, IList<int>>();
 				foreach (var c in Components)
 				{
 					if (c.Hitpoints != c.MaxHitpoints)
+					{
+						if (!dict.ContainsKey(c.Template))
+							dict.Add(c.Template, new List<int>());
 						dict[c.Template].Add(c.MaxHitpoints - c.Hitpoints);
+					}
 				}
 				return dict;
 			}

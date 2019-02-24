@@ -67,7 +67,9 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				return container == null ? null : container.Value;
+				if (container == null)
+					container = Galaxy.Current.FindSpaceObjects<IVehicle>().SingleOrDefault(q => q.Components.Contains(this)).ReferViaGalaxy();
+				return container?.Value;
 			}
 			set
 			{
