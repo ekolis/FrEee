@@ -19,7 +19,6 @@ namespace FrEee.WinForms.Forms
 		private void ScoresForm_Load(object sender, EventArgs e)
 		{
 			// show graph
-			// TODO - show other empires' scores in graph
 			foreach (var emp in Galaxy.Current.Empires.ExceptSingle(null))
 			{
 				var dps = new List<double>();
