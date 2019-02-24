@@ -88,6 +88,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlGalaxyMap = new FrEee.WinForms.Controls.GamePanel();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
 			this.pnlDetailReport = new FrEee.WinForms.Controls.GamePanel();
+			this.btnCommands = new FrEee.WinForms.Controls.GameButton();
 			this.pnlLayout.SuspendLayout();
 			this.pnlLeft.SuspendLayout();
 			this.pnlSystemMap.SuspendLayout();
@@ -685,6 +686,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlSubCommands.BackColor = System.Drawing.Color.Black;
 			this.pnlSubCommands.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlSubCommands.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlSubCommands.Controls.Add(this.btnCommands);
 			this.pnlSubCommands.Controls.Add(this.btnWaypoint);
 			this.pnlSubCommands.Controls.Add(this.btnMovementLog);
 			this.pnlSubCommands.Controls.Add(this.btnDecloak);
@@ -908,6 +910,20 @@ namespace FrEee.WinForms.Forms
 			this.pnlDetailReport.Size = new System.Drawing.Size(412, 460);
 			this.pnlDetailReport.TabIndex = 12;
 			// 
+			// btnCommands
+			// 
+			this.btnCommands.BackColor = System.Drawing.Color.Black;
+			this.btnCommands.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnCommands.Location = new System.Drawing.Point(469, 47);
+			this.btnCommands.Name = "btnCommands";
+			this.btnCommands.Size = new System.Drawing.Size(36, 36);
+			this.btnCommands.TabIndex = 24;
+			this.btnCommands.TabStop = false;
+			this.btnCommands.Text = "Cmd";
+			this.toolTip.SetToolTip(this.btnCommands, "View Commands");
+			this.btnCommands.UseVisualStyleBackColor = false;
+			this.btnCommands.Click += new System.EventHandler(this.btnCommands_Click);
+			// 
 			// MainGameForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1001,6 +1017,7 @@ namespace FrEee.WinForms.Forms
 		private GameButton btnMovementLog;
 		private GameButton btnWaypoint;
 		private System.Windows.Forms.ComboBox ddlGalaxyViewMode;
+		private GameButton btnCommands;
 	}
 }
 

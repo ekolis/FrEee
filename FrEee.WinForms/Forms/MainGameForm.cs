@@ -132,6 +132,7 @@ namespace FrEee.WinForms.Forms
 
 				btnPrevIdle.Visible = true;
 				btnNextIdle.Visible = true;
+				btnCommands.Visible = true;
 			}
 		}
 
@@ -1039,6 +1040,7 @@ namespace FrEee.WinForms.Forms
 			LoadButtonImage(btnActivate, "Activate");
 			LoadButtonImage(btnPrevIdle, "Previous");
 			LoadButtonImage(btnNextIdle, "Next");
+			LoadButtonImage(btnCommands, "Commands");
 
 			// TODO - galaxy view background image can depend on galaxy template?
 			galaxyView.BackgroundImage = Pictures.GetModImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "UI", "Map", "quadrant"));
@@ -1667,6 +1669,11 @@ namespace FrEee.WinForms.Forms
 				newReport.Height = pnlDetailReport.Height - newReport.Margin.Bottom - newReport.Margin.Top;
 				newReport.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 			}
+		}
+
+		private void btnCommands_Click(object sender, EventArgs e)
+		{
+			this.ShowChildForm(new CommandsForm());
 		}
 
 		private void VehicleFleetReport_OrdersChanged()
