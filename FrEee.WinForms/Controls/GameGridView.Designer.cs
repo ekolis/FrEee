@@ -32,11 +32,11 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.gridData = new System.Windows.Forms.DataGridView();
 			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.noFilterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.exactlyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.differentFromToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.atLeastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.atMostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.exactlyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.noFilterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.differentFromToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.clearAllFiltersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.pnlConfigsBorder = new FrEee.WinForms.Controls.GamePanel();
 			this.pnlConfigs = new System.Windows.Forms.FlowLayoutPanel();
@@ -76,6 +76,7 @@
 			this.gridData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.gridData.Size = new System.Drawing.Size(584, 316);
 			this.gridData.TabIndex = 31;
+			this.gridData.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.gridData_CellFormatting);
 			this.gridData.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridData_CellMouseDown);
 			this.gridData.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridData_CellMouseEnter);
 			this.gridData.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridData_ColumnHeaderMouseClick);
@@ -96,6 +97,27 @@
 			this.contextMenu.Name = "contextMenu";
 			this.contextMenu.Size = new System.Drawing.Size(153, 136);
 			// 
+			// noFilterToolStripMenuItem
+			// 
+			this.noFilterToolStripMenuItem.Name = "noFilterToolStripMenuItem";
+			this.noFilterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.noFilterToolStripMenuItem.Text = "&No Filter";
+			this.noFilterToolStripMenuItem.Click += new System.EventHandler(this.noFilterToolStripMenuItem_Click);
+			// 
+			// exactlyToolStripMenuItem
+			// 
+			this.exactlyToolStripMenuItem.Name = "exactlyToolStripMenuItem";
+			this.exactlyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.exactlyToolStripMenuItem.Text = "&Exactly";
+			this.exactlyToolStripMenuItem.Click += new System.EventHandler(this.exactlyToolStripMenuItem_Click);
+			// 
+			// differentFromToolStripMenuItem
+			// 
+			this.differentFromToolStripMenuItem.Name = "differentFromToolStripMenuItem";
+			this.differentFromToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.differentFromToolStripMenuItem.Text = "&Different From";
+			this.differentFromToolStripMenuItem.Click += new System.EventHandler(this.differentFromToolStripMenuItem_Click);
+			// 
 			// atLeastToolStripMenuItem
 			// 
 			this.atLeastToolStripMenuItem.Name = "atLeastToolStripMenuItem";
@@ -109,27 +131,6 @@
 			this.atMostToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.atMostToolStripMenuItem.Text = "At &Most";
 			this.atMostToolStripMenuItem.Click += new System.EventHandler(this.atMostToolStripMenuItem_Click);
-			// 
-			// exactlyToolStripMenuItem
-			// 
-			this.exactlyToolStripMenuItem.Name = "exactlyToolStripMenuItem";
-			this.exactlyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.exactlyToolStripMenuItem.Text = "&Exactly";
-			this.exactlyToolStripMenuItem.Click += new System.EventHandler(this.exactlyToolStripMenuItem_Click);
-			// 
-			// noFilterToolStripMenuItem
-			// 
-			this.noFilterToolStripMenuItem.Name = "noFilterToolStripMenuItem";
-			this.noFilterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.noFilterToolStripMenuItem.Text = "&No Filter";
-			this.noFilterToolStripMenuItem.Click += new System.EventHandler(this.noFilterToolStripMenuItem_Click);
-			// 
-			// differentFromToolStripMenuItem
-			// 
-			this.differentFromToolStripMenuItem.Name = "differentFromToolStripMenuItem";
-			this.differentFromToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.differentFromToolStripMenuItem.Text = "&Different From";
-			this.differentFromToolStripMenuItem.Click += new System.EventHandler(this.differentFromToolStripMenuItem_Click);
 			// 
 			// clearAllFiltersToolStripMenuItem
 			// 

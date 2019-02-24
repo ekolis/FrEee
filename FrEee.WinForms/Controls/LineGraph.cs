@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.WinForms.Controls
 {
@@ -58,7 +59,8 @@ namespace FrEee.WinForms.Controls
 
 			// compute boundaries
 			var max = Series.Max(s => s.DataPoints.Max());
-			var horizontalMargin = g.MeasureString(max.ToString(), Font).Width;
+			var maxstr = max.ToUnitString(true);
+			var horizontalMargin = g.MeasureString(maxstr, Font).Width * 2;
 			var verticalMargin = Font.SizeInPoints * pe.Graphics.DpiY / 96f * 2f;
 			var graphBounds = new RectangleF(horizontalMargin, verticalMargin, Width - horizontalMargin * 2, Height - verticalMargin * 2);
 			var headerBounds = new RectangleF(horizontalMargin, 0, graphBounds.Width, verticalMargin);
@@ -87,9 +89,10 @@ namespace FrEee.WinForms.Controls
 				{
 					var val = max / 5d * i;
 					var pos = graphBounds.Bottom - graphBounds.Height / 5f * i;
-					var size = g.MeasureString(val.ToString(), Font);
+					var valstr = val.ToUnitString(true);
+					var size = g.MeasureString(valstr, Font);
 					var rect = new RectangleF(0, pos - size.Height / 2f, horizontalMargin, size.Height);
-					g.DrawString(val.ToString(), Font, Brushes.White, rect, sfRight);
+					g.DrawString(valstr, Font, Brushes.White, rect, sfRight);
 				}
 
 				// draw X-axis and data points
