@@ -76,6 +76,7 @@ namespace FrEee.Game.Objects.Vehicles
 		/// Needs to be protected, not private, so reflection can find it from a derived class.
 		/// Can change CommonExtensions.CopyEnumerableProperties to scan base classes, though...
 		/// </summary>
+		[DoNotSerialize(false)]
 		public IList<Component> Components { get; protected set; }
 
 		public ResourceQuantity ConstructionProgress
@@ -115,6 +116,7 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 			set
 			{
+				Components = new List<Component>();
 				foreach (var template in Design.Components)
 				{
 					var component = template.Instantiate();
