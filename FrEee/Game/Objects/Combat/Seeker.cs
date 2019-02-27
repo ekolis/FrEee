@@ -306,7 +306,6 @@ namespace FrEee.Game.Objects.Combat
 			if (IsDisposed)
 				return;
 			Target = null;
-			Owner = null;
 			Galaxy.Current.UnassignID(this);
 		}
 
