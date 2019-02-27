@@ -666,6 +666,8 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <returns></returns>
 		public int? Repair(int? amount = null)
 		{
+			if (IsDestroyed)
+				return amount; // destroyed vehicles cannot be repaired, keptin!
 			if (amount == null)
 			{
 				foreach (var comp in Components)
