@@ -7,6 +7,7 @@ if exist "C:\Program Files\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\
 )
 cd FrEee.WinForms\bin
 ren Release FrEee
+del FrEee.7z
 "C:\Program Files\7-zip\7z.exe" a FrEee.7z FrEee
 ren FrEee Release
 copy FrEee.7z "%UserProfile%\Google Drive\FrEee Builds\"
