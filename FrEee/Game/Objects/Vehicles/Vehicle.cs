@@ -716,34 +716,10 @@ namespace FrEee.Game.Objects.Vehicles
 			if (IsDestroyed)
 				return damage; // she canna take any more!
 
+			// let shields mitigate incoming damage
+			damage = this.TakeShieldDamage(hit, damage, dice);
+
 			// TODO - make sure we have components that are not immune to the damage type so we don't get stuck in an infinite loop
-			int shieldDmg = 0;
-			int normalShieldPiercing = hit.Shot.DamageType.NormalShieldPiercing.Evaluate(hit);
-			int phasedShieldPiercing = hit.Shot.DamageType.PhasedShieldPiercing.Evaluate(hit);
-			double normalSDF = hit.Shot.DamageType.NormalShieldDamage.Evaluate(hit).Percent();
-			double phasedSDF = hit.Shot.DamageType.PhasedShieldDamage.Evaluate(hit).Percent();
-
-			// how much damage pierced the shields?
-			double piercedShields = 0;
-
-			if (NormalShields > 0)
-			{
-				var dmg = (int)Math.Min(damage * normalSDF, NormalShields);
-				piercedShields += damage * normalShieldPiercing.Percent();
-				NormalShields -= dmg;
-				if (normalSDF != 0)
-					damage -= (int)Math.Ceiling(dmg / normalSDF);
-				shieldDmg += dmg;
-			}
-			if (PhasedShields > 0)
-			{
-				var dmg = (int)Math.Min(damage * phasedSDF, PhasedShields);
-				piercedShields += damage * phasedShieldPiercing.Percent();
-				PhasedShields -= dmg;
-				if (phasedSDF != 0)
-					damage -= (int)Math.Ceiling(dmg / phasedSDF);
-				shieldDmg += dmg;
-			}
 
 			// emissive armor negates a certain amount of damage that penetrates the shields
 			// TODO - emissive should be ineffective vs. armor piercing damage

@@ -1105,9 +1105,11 @@ namespace FrEee.Game.Objects.Space
 			if (Colony == null)
 				return damage; // uninhabited planets can't take damage
 
+			// let shields mitigate incoming damage
+			damage = this.TakeShieldDamage(hit, damage, dice);
+
 			// TODO - to-hit chances not just based on HP?
 			// TODO - per-race population HP?
-			// TODO - planetary shields
 			var popHP = (int)Math.Ceiling(Colony.Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints);
 			var cargoHP = Colony.Cargo.MaxHitpoints;
 			var facilHP = Colony.Facilities.Sum(f => f.MaxHitpoints);
