@@ -21,3 +21,4 @@ if exist "C:\Program Files\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\
 ) else (
 	echo MSBuild v15 is not installed! Download it from https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools^&rel=15#
 )
+pause
