@@ -73,6 +73,12 @@ namespace FrEee.Game.Objects.Combat.Grid
 		public SafeDictionary<ICombatant, Empire> OriginalOwners { get; private set; } = new SafeDictionary<ICombatant, Empire>();
 
 		/// <summary>
+		/// Who launched each unit? So we can recover them after combat.
+		/// </summary>
+		[DoNotSerialize(false)]
+		private SafeDictionary<IVehicle, ICombatant> Launchers { get; set; } = new SafeDictionary<IVehicle, ICombatant>();
+
+		/// <summary>
 		/// Saved-up fractional combat speed from the previous round.
 		/// </summary>
 		[DoNotSerialize(false)]
@@ -391,6 +397,10 @@ namespace FrEee.Game.Objects.Combat.Grid
 					// launch them temporarily for combat
 					foreach (var info in unitsToLaunch)
 					{
+						Launchers[info.Launchee] = info.Launcher;
+						if (info.Launcher is ICargoTransferrer ct && info.Launchee is IUnit u)
+							ct.RemoveUnit(u);
+
 						Combatants.Add(info.Item2);
 						StartCombatants[info.Item2.ID] = info.Item2.Copy();
 						for (var ix = 0; ix < info.Item2.Weapons.Count(); ix++)
@@ -499,6 +509,24 @@ namespace FrEee.Game.Objects.Combat.Grid
 				}
 				if (!hostile)
 					break;
+			}
+
+			// recover units
+			var orphans = new List<IUnit>();
+			foreach (var u in Combatants.OfType<IUnit>())
+			{
+				if (Launchers[u] is ICargoTransferrer cc && cc.CargoStorageFree() >= u.Design.Hull.Size && u.Owner == cc.Owner)
+					cc.Cargo.Units.Add(u);
+				else
+					orphans.Add(u);
+			}
+			foreach (var u in orphans)
+			{
+				var recoverer = Combatants.OfType<ICargoTransferrer>().Where(q => q.CargoStorageFree() >= u.Design.Hull.Size && q.Owner == u.Owner).FirstOrDefault();
+				if (recoverer != null)
+					recoverer.Cargo.Units.Add(u);
+				else
+					u.Dispose(); // no one can recover this unit, it is destroyed
 			}
 
 			// save state of combatants at end of battle - set to undisposed so they don't get purged!
