@@ -1495,6 +1495,40 @@ namespace FrEee.Utility.Extensions
 			return d.TakeDamage("Normal", dmg, dice);
 		}
 
+		public static int TakeShieldDamage(this IDamageable d, Hit hit, int damage, PRNG dice = null)
+		{
+			// TODO - make sure we have components that are not immune to the damage type so we don't get stuck in an infinite loop
+			int shieldDmg = 0;
+			int normalShieldPiercing = hit.Shot.DamageType.NormalShieldPiercing.Evaluate(hit);
+			int phasedShieldPiercing = hit.Shot.DamageType.PhasedShieldPiercing.Evaluate(hit);
+			double normalSDF = hit.Shot.DamageType.NormalShieldDamage.Evaluate(hit).Percent();
+			double phasedSDF = hit.Shot.DamageType.PhasedShieldDamage.Evaluate(hit).Percent();
+
+			// how much damage pierced the shields?
+			double piercedShields = 0;
+
+			if (d.NormalShields > 0)
+			{
+				var dmg = (int)Math.Min(damage * normalSDF, d.NormalShields);
+				piercedShields += damage * normalShieldPiercing.Percent();
+				d.NormalShields -= dmg;
+				if (normalSDF != 0)
+					damage -= (int)Math.Ceiling(dmg / normalSDF);
+				shieldDmg += dmg;
+			}
+			if (d.PhasedShields > 0)
+			{
+				var dmg = (int)Math.Min(damage * phasedSDF, d.PhasedShields);
+				piercedShields += damage * phasedShieldPiercing.Percent();
+				d.PhasedShields -= dmg;
+				if (phasedSDF != 0)
+					damage -= (int)Math.Ceiling(dmg / phasedSDF);
+				shieldDmg += dmg;
+			}
+
+			return damage;
+		}
+
 		/// <summary>
 		/// Multiplies an integer by a scale factor and rounds it.
 		/// </summary>
