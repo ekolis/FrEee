@@ -934,6 +934,47 @@ namespace FrEee.WinForms.Forms
 					GoToWaypoint(8, false);
 				else if (e.KeyCode == Keys.D9)
 					GoToWaypoint(9, false);
+				else if (e.KeyCode == Keys.F2)
+					MessageBox.Show("Sorry, the game menu is not yet implemented."); // TODO - game menu
+				else if (e.KeyCode == Keys.F3)
+					this.ShowChildForm(new DesignListForm());
+				else if (e.KeyCode == Keys.F4 || e.KeyCode == Keys.F5) // planets and colonies screens are combined
+					this.ShowChildForm(new PlanetListForm());
+				else if (e.KeyCode == Keys.F9)
+					this.ShowChildForm(new EmpireListForm());
+				else if (e.KeyCode == Keys.F11)
+					MessageBox.Show("Sorry, the empire status screen is not yet implemented."); // TODO - empire status screen
+				else if (e.KeyCode == Keys.F6)
+					this.ShowChildForm(new ShipListForm());
+				else if (e.KeyCode == Keys.F7)
+					ShowConstructionQueueListForm();
+				else if (e.KeyCode == Keys.F10)
+					this.ShowChildForm(new LogForm(this, Empire.Current.Log));
+				else if (e.KeyCode == Keys.F12)
+					btnEndTurn_Click(btnEndTurn, new EventArgs());
+				else if (e.KeyCode == Keys.F8)
+					ShowResearchForm();
+				else if (e.KeyCode == Keys.Back && btnClearOrders.Visible)
+					ClearOrders();
+				else if (e.KeyCode == Keys.Escape)
+				{
+					if (commandMode == CommandMode.None && starSystemView.SelectedSector != null)
+					{
+						// deselect space object
+						SelectedSpaceObject = null;
+
+						// show star system report
+						var newReport = new StarSystemReport(starSystemView.StarSystem);
+						pnlDetailReport.Controls.Add(newReport);
+						newReport.Left = newReport.Margin.Left;
+						newReport.Width = pnlDetailReport.Width - newReport.Margin.Right - newReport.Margin.Left;
+						newReport.Top = newReport.Margin.Top;
+						newReport.Height = pnlDetailReport.Height - newReport.Margin.Bottom - newReport.Margin.Top;
+						newReport.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+					}
+					else
+						ChangeCommandMode(CommandMode.None, null);
+				}
 			}
 			else if (!e.Shift && !e.Control && e.Alt)
 			{
@@ -958,48 +999,6 @@ namespace FrEee.WinForms.Forms
 					SetWaypoint(8, true);
 				else if (e.KeyCode == Keys.D9)
 					SetWaypoint(9, true);
-			}
-
-			if (e.KeyCode == Keys.F2)
-				MessageBox.Show("Sorry, the game menu is not yet implemented."); // TODO - game menu
-			else if (e.KeyCode == Keys.F3)
-				this.ShowChildForm(new DesignListForm());
-			else if (e.KeyCode == Keys.F4 || e.KeyCode == Keys.F5) // planets and colonies screens are combined
-				this.ShowChildForm(new PlanetListForm());
-			else if (e.KeyCode == Keys.F9)
-				this.ShowChildForm(new EmpireListForm());
-			else if (e.KeyCode == Keys.F11)
-				MessageBox.Show("Sorry, the empire status screen is not yet implemented."); // TODO - empire status screen
-			else if (e.KeyCode == Keys.F6)
-				this.ShowChildForm(new ShipListForm());
-			else if (e.KeyCode == Keys.F7)
-				ShowConstructionQueueListForm();
-			else if (e.KeyCode == Keys.F10)
-				this.ShowChildForm(new LogForm(this, Empire.Current.Log));
-			else if (e.KeyCode == Keys.F12)
-				btnEndTurn_Click(btnEndTurn, new EventArgs());
-			else if (e.KeyCode == Keys.F8)
-				ShowResearchForm();
-			else if (e.KeyCode == Keys.Back && btnClearOrders.Visible)
-				ClearOrders();
-			else if (e.KeyCode == Keys.Escape)
-			{
-				if (commandMode == CommandMode.None && starSystemView.SelectedSector != null)
-				{
-					// deselect space object
-					SelectedSpaceObject = null;
-
-					// show star system report
-					var newReport = new StarSystemReport(starSystemView.StarSystem);
-					pnlDetailReport.Controls.Add(newReport);
-					newReport.Left = newReport.Margin.Left;
-					newReport.Width = pnlDetailReport.Width - newReport.Margin.Right - newReport.Margin.Left;
-					newReport.Top = newReport.Margin.Top;
-					newReport.Height = pnlDetailReport.Height - newReport.Margin.Bottom - newReport.Margin.Top;
-					newReport.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-				}
-				else
-					ChangeCommandMode(CommandMode.None, null);
 			}
 			else if (e.KeyCode == Keys.Control || e.KeyCode == Keys.ControlKey || e.KeyCode == Keys.LControlKey || e.KeyCode == Keys.RControlKey)
 				aggressiveMode = true;
