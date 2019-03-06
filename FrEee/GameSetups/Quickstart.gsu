@@ -8,133 +8,53 @@ p32:
 		:2000;
 	EmpireTemplates:
 		System.Collections.Generic.List`1[[FrEee.Game.Setup.EmpireTemplate, FrEee.Core]], mscorlib:
-		c3:		
-			:p12:
+		c1:		
+			:p10:
 				AIName:
 					:"";
-				AIsCanUse:
-					:True;
 				Color:
-					:255,255,0,0;
+					:255,85,170,255;
 				CultureName:
-					:"Berzerkers";
-				DesignNamesFile:
-					:"Dinosaur";
+					:"Scientists";
 				InsigniaName:
-					:"Jorn";
+					:"Eee";
 				IsPlayerEmpire:
 					:True;
 				LeaderName:
-					:"Grand Emperor";
+					:"Emperor Aeiou";
 				LeaderPortraitName:
-					:"Jorn";
+					:"Eee";
 				Name:
-					:"Jorn Empire";
+					:"Eee Consortium";
 				PrimaryRace:
 					:p7:
 						Aptitudes:
 							FrEee.Utility.SafeDictionary`2[[System.String, mscorlib],[System.Int32, mscorlib]], FrEee.Core:
 							d15:							
 								:"Physical Strength";
-								:100;
+								:50;
 								:"Intelligence";
-								:100;
+								:135;
 								:"Cunning";
-								:100;
+								:50;
 								:"Environmental Resistance";
 								:100;
 								:"Reproduction";
-								:100;
+								:110;
 								:"Happiness";
-								:100;
+								:120;
 								:"Aggressiveness";
 								:100;
 								:"Defensiveness";
-								:100;
+								:103;
 								:"Political Savvy";
-								:100;
+								:50;
 								:"Mining Aptitude";
-								:100;
+								:110;
 								:"Farming Aptitude";
-								:100;
+								:80;
 								:"Refining Aptitude";
-								:100;
-								:"Construction Aptitude";
-								:100;
-								:"Repair Aptitude";
-								:100;
-								:"Maintenance Aptitude";
-								:100;
-							;
-						happinessModel:
-							:p1:
-								ID:
-									:"Bloodthirsty";
-							;
-						Name:
-							:"Jorn";
-						NativeAtmosphere:
-							:"Carbon Dioxide";
-						NativeSurface:
-							:"Rock";
-						PopulationIconName:
-							:"Jorn";
-						TraitNames:
-							System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib:
-							c2:							
-								:"Natural Merchants";
-								:"Propulsion Experts";
-							;
-					;
-				ShipsetName:
-					:"Jorn";
-			;
-			:p10:
-				AIName:
-					:"AI_Default";
-				AIsCanUse:
-					:True;
-				Color:
-					:255,85,0,170;
-				CultureName:
-					:"Engineers";
-				InsigniaName:
-					:"Fractalian";
-				LeaderName:
-					:"Chief Polygon";
-				LeaderPortraitName:
-					:"Fractalian";
-				Name:
-					:"Fractalian Federation";
-				PrimaryRace:
-					:p7:
-						Aptitudes:
-							FrEee.Utility.SafeDictionary`2[[System.String, mscorlib],[System.Int32, mscorlib]], FrEee.Core:
-							d15:							
-								:"Physical Strength";
-								:100;
-								:"Intelligence";
-								:100;
-								:"Cunning";
-								:100;
-								:"Environmental Resistance";
-								:100;
-								:"Reproduction";
-								:100;
-								:"Happiness";
-								:100;
-								:"Aggressiveness";
-								:100;
-								:"Defensiveness";
-								:100;
-								:"Political Savvy";
-								:100;
-								:"Mining Aptitude";
-								:100;
-								:"Farming Aptitude";
-								:100;
-								:"Refining Aptitude";
-								:100;
+								:110;
 								:"Construction Aptitude";
 								:100;
 								:"Repair Aptitude";
@@ -148,93 +68,21 @@ p32:
 									:"Peaceful";
 							;
 						Name:
-							:"Fractalian";
-						NativeAtmosphere:
-							:"Methane";
-						NativeSurface:
-							:"Ice";
-						PopulationIconName:
-							:"Fractalian";
-						TraitNames:
-							System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib:
-							c1:							
-								:"Crystallurgy";
-							;
-					;
-				ShipsetName:
-					:"Fractalian";
-			;
-			:p10:
-				AIName:
-					:"AI_Default";
-				AIsCanUse:
-					:True;
-				Color:
-					:255,0,0,255;
-				CultureName:
-					:"Neutral";
-				InsigniaName:
-					:"KpiImp";
-				LeaderName:
-					:"Representative";
-				LeaderPortraitName:
-					:"KpiImp";
-				Name:
-					:"Kpilmp Union";
-				PrimaryRace:
-					:p7:
-						Aptitudes:
-							FrEee.Utility.SafeDictionary`2[[System.String, mscorlib],[System.Int32, mscorlib]], FrEee.Core:
-							d15:							
-								:"Physical Strength";
-								:100;
-								:"Intelligence";
-								:100;
-								:"Cunning";
-								:100;
-								:"Environmental Resistance";
-								:100;
-								:"Reproduction";
-								:100;
-								:"Happiness";
-								:100;
-								:"Aggressiveness";
-								:100;
-								:"Defensiveness";
-								:100;
-								:"Political Savvy";
-								:100;
-								:"Mining Aptitude";
-								:100;
-								:"Farming Aptitude";
-								:100;
-								:"Refining Aptitude";
-								:100;
-								:"Construction Aptitude";
-								:100;
-								:"Repair Aptitude";
-								:100;
-								:"Maintenance Aptitude";
-								:100;
-							;
-						happinessModel:
-							:i1;
-						Name:
-							:"Kpilmp";
+							:"Eee";
 						NativeAtmosphere:
 							:"Oxygen";
 						NativeSurface:
-							:"Rock";
+							:"Gas Giant";
 						PopulationIconName:
-							:"KpiImp";
+							:"Eee";
 						TraitNames:
 							System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib:
 							c1:							
-								:"Deeply Religious";
+								:"Temporal Knowledge";
 							;
 					;
 				ShipsetName:
-					:"KpiImp";
+					:"Eee";
 			;
 		;
 	ForbiddenTechnologyNames:
@@ -252,7 +100,30 @@ p32:
 	GenerateUniqueRuins:
 		:True;
 	HomeworldSize:
-		:Large;
+		:p11:
+			ConstructionAbilityID:
+				:"0";
+			MaxCargo:
+				:16000;
+			MaxCargoDomed:
+				:1000;
+			MaxFacilities:
+				:25;
+			MaxFacilitiesDomed:
+				:5;
+			MaxPopulation:
+				:8000000000;
+			MaxPopulationDomed:
+				:500000000;
+			ModID:
+				:"StellarObjectSize Huge";
+			Name:
+				:"Huge";
+			StellarObjectType:
+				:"Planet";
+			StellarSize:
+				:Huge;
+		;
 	HomeworldsPerEmpire:
 		:1;
 	HomeworldValue:
@@ -265,8 +136,6 @@ p32:
 		:True;
 	MaxHomeworldDispersion:
 		:1;
-	MaximumEventSeverity:
-		:High;
 	MaxPlanetValue:
 		:250;
 	MaxSpawnedAsteroidValue:
@@ -275,12 +144,12 @@ p32:
 		:150;
 	MinSpawnedAsteroidValue:
 		:50;
+	RandomAIs:
+		:5;
 	RemoteMiningModel:
-		:p4:
+		:p3:
 			ValueBonus:
 				:0.01;
-			ValueDepletionPerResource:
-				:1;
 			ValueDepletionPerTurn:
 				:1;
 			ValuePercentageBonus:
@@ -288,8 +157,8 @@ p32:
 		;
 	ResourceStorage:
 		:50000;
-	ScoreDisplay:
-		:OwnOnlyRanked;
+	Seed:
+		:796844;
 	StandardMiningModel:
 		:p2:
 			ValueBonus:
@@ -298,7 +167,7 @@ p32:
 				:1;
 		;
 	StarSystemCount:
-		:15;
+		:30;
 	StarSystemGroups:
 		:1;
 	StartingResearch:

@@ -99,7 +99,7 @@ namespace FrEee.Game.Setup
 
 		public bool GenerateUniqueRuins { get; set; }
 
-		public StellarSize HomeworldSize { get; set; }
+		public StellarObjectSize HomeworldSize { get; set; }
 
 		public int HomeworldsPerEmpire { get; set; }
 
@@ -430,16 +430,13 @@ namespace FrEee.Game.Setup
 			var hw = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p =>
 						p.Surface == emp.PrimaryRace.NativeSurface &&
 						p.Atmosphere == emp.PrimaryRace.NativeAtmosphere &&
-						p.StellarSize == HomeworldSize &&
+						p.Size == HomeworldSize &&
 						!p.Size.IsConstructed).PickRandom(dice);
 			if (hw == null)
 				throw new Exception("No planets found in SectType.txt with surface " + emp.PrimaryRace.NativeSurface + ", atmosphere " + emp.PrimaryRace.NativeAtmosphere + ", and size " + HomeworldSize + ". Such a planet is required for creating the " + emp + " homeworld.");
 			hw = hw.Instantiate();
 			hw.Name = hwName;
-			hw.Size = Mod.Current.StellarObjectSizes.Where(s =>
-				s.StellarSize == HomeworldSize &&
-				s.StellarObjectType == "Planet" &&
-				!s.IsConstructed).PickRandom(dice);
+			hw.Size = HomeworldSize;
 			hw.ConditionsAmount = Mod.Current.Settings.HomeworldConditions;
 			return hw;
 		}
@@ -598,7 +595,7 @@ namespace FrEee.Game.Setup
 				}
 				else
 					hw = planets.PickRandom(dice);
-				if (hw.Surface != emp.PrimaryRace.NativeSurface || hw.Atmosphere != emp.PrimaryRace.NativeAtmosphere || hw.StellarSize != HomeworldSize)
+				if (hw.Surface != emp.PrimaryRace.NativeSurface || hw.Atmosphere != emp.PrimaryRace.NativeAtmosphere || hw.Size != HomeworldSize)
 				{
 					var replacementHomeworld = MakeHomeworld(emp, hw.Name, dice);
 					replacementHomeworld.CopyTo(hw);

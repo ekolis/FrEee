@@ -38,7 +38,7 @@ namespace FrEee.WinForms.Forms
 			galaxyTemplateBindingSource.DataSource = Mod.Current.GalaxyTemplates;
 			warpPointPlacementStrategyBindingSource.DataSource = WarpPointPlacementStrategy.All;
 			lstTechs.Items.AddRange(Mod.Current.Technologies.Where(t => t.CanBeRemoved).ToArray());
-			foreach (StellarSize item in Enum.GetValues(typeof(StellarSize)))
+			foreach (var item in Mod.Current.StellarObjectSizes.Where(q => q.StellarObjectType == "Planet"))
 				ddlHomeworldSize.Items.Add(item);
 			// TODO - set step-amount for racial points spinbox to the greatest common factor of the mod's racial trait costs? or maybe based on aptitudes too?
 			ddlAllowedTrades.DataSource = Enum.GetValues(typeof(AllowedTrades)).Cast<AllowedTrades>().Select(e => new { Name = e.ToSpacedString(), Value = e }).ToList();
@@ -55,7 +55,7 @@ namespace FrEee.WinForms.Forms
 			{
 				lstTechs.SetItemChecked(i, true);
 			}
-			ddlHomeworldSize.SelectedItem = ddlHomeworldSize.Items.Cast<object>().Last();
+			ddlHomeworldSize.SelectedItem = ddlHomeworldSize.Items.Cast<StellarObjectSize>().Last(q => !q.IsConstructed);
 			ddlEmpirePlacement.SelectedIndex = 2; // equidistant
 			ddlScoreDisplay.SelectedIndex = 0; // own only, no ranking
 			ddlTechCost.SelectedIndex = 0; // low tech cost
@@ -728,7 +728,7 @@ namespace FrEee.WinForms.Forms
 			setup.ResourceStorage = (int)spnResourceStorage.Value;
 			setup.StartingResearch = (int)spnStartResearch.Value;
 			setup.HomeworldsPerEmpire = (int)spnHomeworlds.Value;
-			setup.HomeworldSize = (StellarSize)ddlHomeworldSize.SelectedItem;
+			setup.HomeworldSize = (StellarObjectSize)ddlHomeworldSize.SelectedItem;
 			setup.EmpirePlacement = (EmpirePlacement)(ddlEmpirePlacement.SelectedIndex);
 			setup.MaxHomeworldDispersion = (int)spnMaxDispersion.Value;
 			setup.ScoreDisplay = Enum.GetValues(typeof(ScoreDisplay)).Cast<ScoreDisplay>().ElementAt(ddlScoreDisplay.SelectedIndex);
