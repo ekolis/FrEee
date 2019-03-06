@@ -116,7 +116,7 @@ namespace FrEee.Game.Objects.Combat
 				netAccuracy = 99;
 			if (netAccuracy < 1)
 				netAccuracy = 1;
-			return RandomHelper.Range(1, 100) < netAccuracy;
+			return RandomHelper.Range(0, 99, dice) < netAccuracy;
 		}
 
 		public override string ToString()
