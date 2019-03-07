@@ -108,5 +108,20 @@ namespace FrEee.Modding
 		{
 			return Name;
 		}
+
+		public static bool operator ==(StellarObjectSize s1, StellarObjectSize s2)
+		{
+			if (s1 is null && s2 is null)
+				return true;
+			if (s1 is null || s2 is null)
+				return false;
+			// TODO - compare template parameters somehow?
+			return s1.IsConstructed == s2.IsConstructed && s1.IsDisposed == s2.IsDisposed && s1.MaxCargo == s2.MaxCargo && s1.MaxCargoDomed == s2.MaxCargoDomed && s1.MaxFacilities == s2.MaxFacilities && s1.MaxFacilitiesDomed == s2.MaxFacilitiesDomed && s1.MaxPopulation == s2.MaxPopulation && s1.MaxPopulationDomed == s2.MaxPopulationDomed && s1.ModID == s2.ModID && s1.Name == s2.Name && s1.StellarObjectType == s2.StellarObjectType && s1.StellarSize == s2.StellarSize;
+		}
+
+		public static bool operator !=(StellarObjectSize s1, StellarObjectSize s2)
+		{
+			return !(s1 == s2);
+		}
 	}
 }
