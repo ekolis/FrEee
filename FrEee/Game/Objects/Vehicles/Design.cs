@@ -323,6 +323,7 @@ namespace FrEee.Game.Objects.Vehicles
 					copy.Owner = Empire.Current;
 					copy.Iteration = Empire.Current.KnownDesigns.OwnedBy(Empire.Current).Where(x => x.BaseName == BaseName && x.IsUnlocked()).MaxOrDefault(x => x.Iteration) + 1; // auto assign nex available iteration
 					copy.VehiclesBuilt = 0;
+					copy.IsObsolete = false;
 
 					// use real component templates and mounts from mod, not copies!
 					copy.Components.Clear();

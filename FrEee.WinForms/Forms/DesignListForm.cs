@@ -235,6 +235,7 @@ namespace FrEee.WinForms.Forms
 			copy.Owner = Empire.Current;
 			copy.Iteration++;
 			copy.VehiclesBuilt = 0;
+			copy.IsObsolete = false;
 
 			// use real component templates and mounts from mod, not copies!
 			copy.Components.Clear();
