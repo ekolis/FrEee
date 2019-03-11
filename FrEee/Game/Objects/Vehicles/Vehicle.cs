@@ -1,4 +1,8 @@
-﻿using FrEee.Game.Enumerations;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
@@ -8,10 +12,6 @@ using FrEee.Game.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 
 namespace FrEee.Game.Objects.Vehicles
 {
@@ -724,7 +724,8 @@ namespace FrEee.Game.Objects.Vehicles
 			// emissive armor negates a certain amount of damage that penetrates the shields
 			// TODO - emissive should be ineffective vs. armor piercing damage
 			var emissive = this.GetAbilityValue("Emissive Armor").ToInt();
-			damage -= (int)Math.Round(emissive * hit.Shot.DamageType.EmissiveArmor.Evaluate(hit).Percent());
+			var dt = hit.Shot?.DamageType ?? DamageType.Normal;
+			damage -= (int)Math.Round(emissive * dt.EmissiveArmor.Evaluate(hit).Percent());
 
 			while (damage > 0 && !IsDestroyed)
 			{
@@ -732,7 +733,7 @@ namespace FrEee.Game.Objects.Vehicles
 				var sgfdStart = damage;
 				var sgfdAbility = this.GetAbilityValue("Shield Generation From Damage").ToInt();
 
-				var comps = Components.Where(c => c.Hitpoints > 0 && hit.Shot.DamageType.ComponentPiercing.Evaluate(new Hit(hit.Shot, c, hit.NominalDamage)) < 100);
+				var comps = Components.Where(c => c.Hitpoints > 0 && dt.ComponentPiercing.Evaluate(new Hit(hit.Shot, c, hit.NominalDamage)) < 100);
 				var armor = comps.Where(c => c.HasAbility("Armor"));
 				var internals = comps.Where(c => !c.HasAbility("Armor"));
 				var canBeHit = armor.Any() ? armor : internals;
@@ -740,7 +741,7 @@ namespace FrEee.Game.Objects.Vehicles
 					{
 						// skip components that are completely pierced by this hit
 						var hit2 = new Hit(hit.Shot, c, damage);
-						return hit2.Shot.DamageType.ComponentPiercing.Evaluate(hit2) < 100;
+						return dt.ComponentPiercing.Evaluate(hit2) < 100;
 					}).ToDictionary(c => c, c => c.HitChance).PickWeighted(dice);
 				if (comp == null)
 					break; // no more components to hit
@@ -748,7 +749,7 @@ namespace FrEee.Game.Objects.Vehicles
 				damage = comp.TakeDamage(comphit, dice);
 
 				// shield generation from damage
-				var sgfd = hit.Shot.DamageType.ShieldGenerationFromDamage.Evaluate(hit).PercentOfRounded(Math.Min(sgfdStart - damage, sgfdAbility));
+				var sgfd = dt.ShieldGenerationFromDamage.Evaluate(hit).PercentOfRounded(Math.Min(sgfdStart - damage, sgfdAbility));
 				ReplenishShields(sgfd);
 			}
 

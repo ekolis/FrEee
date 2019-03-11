@@ -4,6 +4,7 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Space;
+using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
@@ -382,8 +383,9 @@ namespace FrEee.Game.Objects.Technology
 		{
 			int damage = hit.NominalDamage;
 			var realhit = new Hit(hit.Shot, this, damage);
-			var df = realhit.Shot.DamageType.ComponentDamage.Evaluate(realhit);
-			var dp = realhit.Shot.DamageType.ComponentPiercing.Evaluate(realhit);
+			var dt = realhit.Shot?.DamageType ?? DamageType.Normal;
+			var df = dt.ComponentDamage.Evaluate(realhit);
+			var dp = dt.ComponentPiercing.Evaluate(realhit);
 			var factoredDmg = df.PercentOfRounded(damage);
 			var piercing = dp.PercentOfRounded(damage);
 			var realdmg = Math.Min(Hitpoints, factoredDmg);

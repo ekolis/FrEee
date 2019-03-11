@@ -1,3 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text;
+using System.Threading.Tasks;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
@@ -10,17 +21,6 @@ using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FrEee.Utility.Extensions
 {
@@ -1499,10 +1499,11 @@ namespace FrEee.Utility.Extensions
 		{
 			// TODO - make sure we have components that are not immune to the damage type so we don't get stuck in an infinite loop
 			int shieldDmg = 0;
-			int normalShieldPiercing = hit.Shot.DamageType.NormalShieldPiercing.Evaluate(hit);
-			int phasedShieldPiercing = hit.Shot.DamageType.PhasedShieldPiercing.Evaluate(hit);
-			double normalSDF = hit.Shot.DamageType.NormalShieldDamage.Evaluate(hit).Percent();
-			double phasedSDF = hit.Shot.DamageType.PhasedShieldDamage.Evaluate(hit).Percent();
+			var dt = hit.Shot?.DamageType ?? DamageType.Normal;
+			int normalShieldPiercing = dt.NormalShieldPiercing.Evaluate(hit);
+			int phasedShieldPiercing = dt.PhasedShieldPiercing.Evaluate(hit);
+			double normalSDF = dt.NormalShieldDamage.Evaluate(hit).Percent();
+			double phasedSDF = dt.PhasedShieldDamage.Evaluate(hit).Percent();
 
 			// how much damage pierced the shields?
 			double piercedShields = 0;
@@ -1784,7 +1785,7 @@ namespace FrEee.Utility.Extensions
 			// You can always scan space objects you are in combat with.
 			// But only their state at the time they were in combat; not for the rest of the turn!
 			// TODO - what about glassed planets, they have no owner...
-			if (Galaxy.Current.Battles.Any(b => 
+			if (Galaxy.Current.Battles.Any(b =>
 			(b.Combatants.OfType<ISpaceObject>().Contains(sobj)
 				|| b.StartCombatants.Values.OfType<ISpaceObject>().Contains(sobj)
 				|| b.EndCombatants.Values.OfType<ISpaceObject>().Contains(sobj))
