@@ -15,7 +15,7 @@ namespace FrEee.Game.Objects.Combat
 		public Hit(Shot shot, IDamageable target, int? nominalDamage = null)
 		{
 			Shot = shot;
-			DamageType = shot.DamageType;
+			DamageType = shot?.DamageType ?? DamageType.Normal;
 			Target = target;
 			NominalDamage = nominalDamage ?? shot.DamageLeft;
 		}
