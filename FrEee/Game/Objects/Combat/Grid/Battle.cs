@@ -629,7 +629,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 				{
 					if (!x.IsAlive)
 						return false;
-					if (!x.Owner.IsEnemyOf(w.Owner, StarSystem))
+					if (!x.Owner.IsEnemyOf(c.Owner, StarSystem))
 						return false;
 					if (!w.CanTarget(x))
 						return false;
@@ -650,7 +650,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 				{
 					if (w.Template.ComponentTemplate.WeaponType == WeaponTypes.Seeking || w.Template.ComponentTemplate.WeaponType == WeaponTypes.SeekingPointDefense)
 					{
-						var seeker = new Seeker(Sector, w.Owner, c, w, target);
+						var seeker = new Seeker(Sector, c.Owner, c, w, target);
 						Galaxy.Current.AssignID(seeker);
 						Combatants.Add(seeker);
 						StartCombatants[seeker.ID] = seeker.Copy();
