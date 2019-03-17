@@ -315,6 +315,7 @@ namespace FrEee.Modding
 						lock (mod.Objects)
 						{
 							mod.AssignID(mo, used);
+							mod.Register(mo);
 						}
 					}
 					if (status != null)
@@ -467,7 +468,12 @@ namespace FrEee.Modding
 		{
 			lock (locker)
 			{
-				return Objects.OfType<T>().FindByModID(modid);
+				var o = objects[modid];
+				if (o is null)
+					return default;
+				if (o is T)
+					return (T)o;
+				throw new InvalidCastException($"Can't convert {o} of type {o.GetType()} to type {typeof(T)}.");
 			}
 		}
 

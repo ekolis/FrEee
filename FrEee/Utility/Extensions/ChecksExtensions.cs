@@ -61,9 +61,9 @@ namespace FrEee.Utility.Extensions
 		{
 			IEnumerable<Ability> abils;
 			if (includeShared && obj is IOwnableAbilityObject)
-				abils = obj.Abilities().Union(obj.SharedAbilities());
+				abils = obj.UnstackedAbilities(true).Union(obj.SharedAbilities());
 			else
-				abils = obj.Abilities();
+				abils = obj.UnstackedAbilities(true);
 			return abils.Any(abil => abil.Rule != null && abil.Rule.Matches(abilityName));
 		}
 
@@ -211,10 +211,15 @@ namespace FrEee.Utility.Extensions
 			int obscurationLevel = 0;
 			if (sobj.CanBeObscured)
 			{
+				if (sobj.StarSystem.Name == "Citronelle")
+				{
+
+				}
+				var so = sys.GetEmpireAbilityValue(sobj.Owner, "System - Sight Obscuration");
 				obscurationLevel = new[]
 				{
 					sys.GetAbilityValue("System - Sight Obscuration"),
-					sys.GetEmpireAbilityValue(sobj.Owner, "System - Sight Obscuration"),
+					so,
 					sec.GetAbilityValue("Sector - Sight Obscuration"),
 					sec.GetEmpireAbilityValue(sobj.Owner, "Sector - Sight Obscuration"),
 				}.Max(a => a.ToInt());

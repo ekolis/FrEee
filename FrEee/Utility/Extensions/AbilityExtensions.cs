@@ -34,16 +34,16 @@ namespace FrEee.Utility.Extensions
 			{
 				// use the ability cache
 				if (Galaxy.Current.AbilityCache[obj] == null)
-					Galaxy.Current.AbilityCache[obj] = obj.UnstackedAbilities(sourceFilter).Stack(obj).ToArray();
+					Galaxy.Current.AbilityCache[obj] = obj.UnstackedAbilities(true, sourceFilter).Stack(obj).ToArray();
 				return Galaxy.Current.AbilityCache[obj];
 			}
 
-			return obj.UnstackedAbilities(sourceFilter).Stack(obj);
+			return obj.UnstackedAbilities(true, sourceFilter).Stack(obj);
 		}
 
 		public static ILookup<Ability, Ability> AbilityTree(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
 		{
-			return obj.UnstackedAbilities(sourceFilter).StackToTree(obj);
+			return obj.UnstackedAbilities(true, sourceFilter).StackToTree(obj);
 		}
 
 		/// <summary>
@@ -325,7 +325,7 @@ namespace FrEee.Utility.Extensions
 			}
 
 			IEnumerable<Ability> abils;
-			var subabils = obj.GetContainedAbilityObjects(emp).SelectMany(o => o.UnstackedAbilities().Where(a => a.Rule.Name == name));
+			var subabils = obj.GetContainedAbilityObjects(emp).SelectMany(o => o.UnstackedAbilities(true).Where(a => a.Rule.Name == name));
 			if (obj is IAbilityObject)
 				abils = ((IAbilityObject)obj).Abilities().Where(a => a.Rule != null && a.Rule.Name == name).Concat(subabils).Stack(obj);
 			else
@@ -475,16 +475,21 @@ namespace FrEee.Utility.Extensions
 		/// <param name="obj"></param>
 		/// <param name="includeShared"></param>
 		/// <returns></returns>
-		public static IEnumerable<Ability> UnstackedAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		public static IEnumerable<Ability> UnstackedAbilities(this IAbilityObject obj, bool includeShared, Func<IAbilityObject, bool> sourceFilter = null)
 		{
 			if (obj == null)
 				return Enumerable.Empty<Ability>();
 
-			// TODO - should we include shared abilities here? HasAbility has a flag to include these...
+			IEnumerable<Ability> result;
 			if (sourceFilter == null || sourceFilter(obj))
-				return obj.IntrinsicAbilities.Concat(obj.SharedAbilities(sourceFilter)).Concat(obj.DescendantAbilities(sourceFilter)).Concat(obj.AncestorAbilities(sourceFilter));
+				result = obj.IntrinsicAbilities.Concat(obj.DescendantAbilities(sourceFilter)).Concat(obj.AncestorAbilities(sourceFilter));
 			else
-				return obj.SharedAbilities(sourceFilter).Concat(obj.DescendantAbilities(sourceFilter)).Concat(obj.AncestorAbilities(sourceFilter));
+				result = obj.DescendantAbilities(sourceFilter).Concat(obj.AncestorAbilities(sourceFilter));
+
+			if (includeShared)
+				result = result.Concat(obj.SharedAbilities(sourceFilter));
+
+			return result;
 		}
 	}
 }
