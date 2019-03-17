@@ -39,27 +39,27 @@ Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := System - Sight Obscuration
-Targets := StarSystem, SpaceObject, Component, Facility
+Targets := StarSystem
 Description := Sensor sweeps below level [%Amount1%] (all sensor types) are prevented against vehicles in this system.
 Value 1 Rule := TakeHighest
 Value 1 Group Rule := Add
 Value 2 Rule := Group
 
 Name := System - Sensor Interference
-Targets := StarSystem, SpaceObject, Component, Facility
+Targets := StarSystem
 Description := Weapon accuracy is reduced by [%Amount1%]% in this system.
 Value 1 Rule := TakeHighest
 Value 1 Group Rule := Add
 Value 2 Rule := Group
 
 Name := System - Shield Disruption
-Targets := StarSystem, SpaceObject, Component, Facility
+Targets := StarSystem
 Description := Vehicles' maximum shield points are reduced by [%Amount1%] in this system.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := System - Damage
-Targets := StarSystem, SpaceObject, Component, Facility
+Targets := StarSystem
 Description := Star system inflicts [%Amount1%] damage to vehicles entering it or remaining in it at the end of a turn.
 Value 1 Rule := Add
 Value 2 Rule := Add
