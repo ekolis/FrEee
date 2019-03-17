@@ -54,11 +54,12 @@ namespace FrEee.Utility.Extensions
 		{
 			if (modID == null)
 				return default(T);
-			var result = items.SingleOrDefault(item => item.ModID == modID);
+			// should be SingleOrDefault for these three checks but FirstOrDefault is faster and we shouldn't really have duplicates to begin with
+			var result = items.FirstOrDefault(item => item.ModID == modID);
 			if (result == null)
-				result = items.SingleOrDefault(item => item.ModID.Substring(item.ModID.IndexOf(" ") + 1) == modID);
+				result = items.FirstOrDefault(item => item.ModID.Substring(item.ModID.IndexOf(" ") + 1) == modID);
 			if (result == null)
-				result = items.SingleOrDefault(item => item.ModID == modID.Substring(modID.IndexOf(" ") + 1));
+				result = items.FirstOrDefault(item => item.ModID == modID.Substring(modID.IndexOf(" ") + 1));
 			return result;
 		}
 

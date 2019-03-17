@@ -25,7 +25,9 @@ namespace FrEee.Modding
 			{
 				if (string.IsNullOrWhiteSpace(ID))
 					return default(T);
-				var obj = (T)Mod.Current.Find<T>(ID);
+				var obj = Mod.Current.Find<T>(ID);
+				if (obj == null)
+					obj = Mod.Current.Objects.OfType<T>().FirstOrDefault(q => q.Name == ID);
 				if (obj == null)
 					return default(T);
 				if (obj.IsDisposed)

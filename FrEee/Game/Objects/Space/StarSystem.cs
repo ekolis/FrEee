@@ -273,7 +273,7 @@ namespace FrEee.Game.Objects.Space
 		public bool DoesSectorHaveAbility(Point coords, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
 			var sobjs = FindSpaceObjects<ISpaceObject>().Where(o => o.Owner == emp && o.FindCoordinates() == coords);
-			return sobjs.SelectMany(o => o.UnstackedAbilities()).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Any();
+			return sobjs.SelectMany(o => o.UnstackedAbilities(true)).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Any();
 		}
 
 		public Point FindCoordinates(ISpaceObject sobj)
@@ -326,7 +326,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		public bool HasAbility(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
-			return FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).SelectMany(o => o.UnstackedAbilities()).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Any();
+			return FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).SelectMany(o => o.UnstackedAbilities(true)).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Any();
 		}
 
 		public bool IsObsoleteMemory(Empire emp)
