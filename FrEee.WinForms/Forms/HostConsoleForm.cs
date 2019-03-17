@@ -88,14 +88,14 @@ namespace FrEee.WinForms.Forms
 							Galaxy.Current.CurrentEmpire = emp;
 							Galaxy.Current.Redact();
 						}
+						Design.ImportFromLibrary();
+						var form = new MainGameForm(true, false);
+						Hide();
+						this.ShowChildForm(form);
+						Show();
+						ReloadGalaxy();
+						Bind(); // in case the host saved the commands
 					}
-					Design.ImportFromLibrary();
-					var form = new MainGameForm(true, false);
-					Hide();
-					this.ShowChildForm(form);
-					Show();
-					ReloadGalaxy();
-					Bind(); // in case the host saved the commands
 				}
 			}
 			else
