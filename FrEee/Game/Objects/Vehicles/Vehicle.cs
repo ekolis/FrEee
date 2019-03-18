@@ -758,8 +758,8 @@ namespace FrEee.Game.Objects.Vehicles
 				if (this is Ship || this is Base)
 				{
 					// trigger ship lost happiness changes
-					Owner.TriggerHappinessChange(hm => hm.OurShipLost);
-					Owner.TriggerHappinessChange(StarSystem, hm => hm.OurShipLostInSystem);
+					Owner?.TriggerHappinessChange(hm => hm.OurShipLost);
+					Owner?.TriggerHappinessChange(StarSystem, hm => hm.OurShipLostInSystem);
 				}
 				Dispose();
 			}
