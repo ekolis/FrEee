@@ -193,7 +193,7 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return 0; }
 		}
 
-		[DoNotCopy(true)]
+		[DoNotCopy(false)]
 		public override Sector Sector
 		{
 			get
