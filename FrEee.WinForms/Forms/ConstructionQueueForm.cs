@@ -457,13 +457,15 @@ namespace FrEee.WinForms.Forms
 		{
 			if (chkOnlyLatest.Checked)
 			{
-				BindFacilityListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any()).OnlyLatestVersions(f => f.Family));
+                // HACK - why are the zero IDs the good ones?!
+				BindFacilityListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.ID == 0 && f.Cost.Any()).OnlyLatestVersions(f => f.Family));
 				BindShipListView(Empire.Current.KnownDesigns.Where(d => d.Owner == Empire.Current && d.HasBeenUnlockedBy(Empire.Current) && !d.IsObsolete));
 				BindUpgradeListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any()).OnlyLatestVersions(f => f.Family));
 			}
 			else
-			{
-				BindFacilityListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any()));
+            {
+                // HACK - why are the zero IDs the good ones?!
+                BindFacilityListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.ID == 0 && f.Cost.Any()));
 				BindShipListView(Empire.Current.KnownDesigns.Where(d => d.Owner == Empire.Current && d.HasBeenUnlockedBy(Empire.Current)));
 				BindUpgradeListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any()));
 			}
