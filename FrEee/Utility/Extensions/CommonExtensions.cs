@@ -145,7 +145,7 @@ namespace FrEee.Utility.Extensions
 
 		public static int CargoStorageFree(this ICargoContainer cc)
 		{
-			return cc.CargoStorage - cc.Cargo.Size;
+			return cc.CargoStorage - (cc.Cargo?.Size ?? 0);
 		}
 
 		/// <summary>
