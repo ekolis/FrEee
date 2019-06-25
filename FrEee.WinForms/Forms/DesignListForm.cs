@@ -215,7 +215,7 @@ namespace FrEee.WinForms.Forms
 		/// <returns></returns>
 		private bool BuildingAnywhere(IConstructionTemplate t)
 		{
-			return Galaxy.Current.FindSpaceObjects<ISpaceObject>().OwnedBy(Empire.Current).Any(o => o.ConstructionQueue != null && o.ConstructionQueue.Orders.Any(o2 => o2.Template == t));
+			return Galaxy.Current.FindSpaceObjects<IConstructor>().OwnedBy(Empire.Current).Any(o => o.ConstructionQueue != null && o.ConstructionQueue.Orders.Any(o2 => o2.Template == t));
 		}
 
 		private void chkForeign_CheckedChanged(object sender, EventArgs e)

@@ -777,5 +777,9 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		IEnumerable<Component> ICombatant.Components => Components;
+
+		// HACK - until we end our game and this can be purged
+		[DoNotSerialize]
+		public virtual ConstructionQueue ConstructionQueue { get; set; }
 	}
 }

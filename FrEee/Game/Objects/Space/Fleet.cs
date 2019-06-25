@@ -139,21 +139,13 @@ namespace FrEee.Game.Objects.Space
 		public double CombatSpeed => Mod.Current.Settings.CombatSpeedPercentPerStrategicSpeed.PercentOf(StrategicSpeed);
 
 		/// <summary>
-		/// Fleets don't have construction queues.
-		/// </summary>
-		public Civilization.ConstructionQueue ConstructionQueue
-		{
-			get { return null; }
-		}
-
-		/// <summary>
 		/// Any construction queues of ships in this fleet and its subfleets.
 		/// </summary>
 		public IEnumerable<ConstructionQueue> ConstructionQueues
 		{
 			get
 			{
-				return Vehicles.SelectMany(sobj =>
+				return Vehicles.OfType<IConstructor>().SelectMany(sobj =>
 					{
 						var list = new List<ConstructionQueue>();
 						if (sobj.ConstructionQueue != null)

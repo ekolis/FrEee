@@ -139,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game\Enumerations\Conditions.cs" />
+    <Compile Include="Game\Interfaces\IConstructor.cs" />
     <Compile Include="Game\Objects\Civilization\PlayerInfo.cs" />
     <Compile Include="Game\Objects\Combat\Grid\BattleEvent.cs" />
     <Compile Include="Game\Objects\Combat\Grid\CombatantAppearsEvent.cs" />
@@ -164,6 +165,7 @@
     <Compile Include="Game\Objects\Combat\Seeker.cs" />
     <Compile Include="Game\Objects\Events\EventMessage.cs" />
     <Compile Include="Game\Objects\Technology\ComponentReference.cs" />
+    <Compile Include="Game\Objects\Vehicles\MajorSpaceVehicle.cs" />
     <Compile Include="Modding\ComputedFormula.cs" />
     <Compile Include="Modding\EventTemplate.cs" />
     <Compile Include="Modding\Loaders\EventLoader.cs" />

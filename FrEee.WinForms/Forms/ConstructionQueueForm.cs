@@ -434,7 +434,7 @@ namespace FrEee.WinForms.Forms
 		/// <returns></returns>
 		private bool BuildingAnywhere(IConstructionTemplate t)
 		{
-			return Galaxy.Current.FindSpaceObjects<ISpaceObject>().OwnedBy(Empire.Current).Any(o => o.ConstructionQueue != null && o.ConstructionQueue.Orders.Any(o2 => o2.Template == t));
+			return Galaxy.Current.FindSpaceObjects<IConstructor>().OwnedBy(Empire.Current).Any(o => o.ConstructionQueue != null && o.ConstructionQueue.Orders.Any(o2 => o2.Template == t));
 		}
 
 		private void CancelChanges()
@@ -543,7 +543,7 @@ namespace FrEee.WinForms.Forms
 			return queues.Sum(c => c.Orders.OfType<UpgradeFacilityOrder>().Where(o => o.Upgrade.Family == facilityFamily).Count());
 		}
 
-		private int CountQueuedVehicles(IEnumerable<ISpaceObject> sobjs, string designBaseName)
+		private int CountQueuedVehicles(IEnumerable<IConstructor> sobjs, string designBaseName)
 		{
 			// TODO - what about refits to or away from this design?
 			return sobjs.Where(sobj => sobj.ConstructionQueue != null).SelectMany(sobj => sobj.ConstructionQueue.Orders).Select(o => o.Template).OfType<IDesign>().Where(d => d.BaseName == designBaseName).Count();
@@ -703,25 +703,25 @@ namespace FrEee.WinForms.Forms
 			resCostRad.Amount = d.Cost[Resource.Radioactives];
 
 			int present, queued;
-			IEnumerable<ISpaceObject> sobjs;
+			IEnumerable<IConstructor> sobjs;
 			var emp = ConstructionQueue.Container.Owner;
 
-			sobjs = new ISpaceObject[] { ConstructionQueue.Container };
+			sobjs = new IConstructor[] { ConstructionQueue.Container };
 			present = CountPresentVehicles(sobjs, d.BaseName);
 			queued = CountQueuedVehicles(sobjs, d.BaseName);
 			lblPresentLocal.Text = MakePresentQueuedString(present, queued);
 
-			sobjs = ConstructionQueue.Container.Sector.SpaceObjects.OwnedBy(emp); ;
+			sobjs = ConstructionQueue.Container.Sector.SpaceObjects.OfType<IConstructor>().OwnedBy(emp); ;
 			present = CountPresentVehicles(sobjs, d.BaseName);
 			queued = CountQueuedVehicles(sobjs, d.BaseName);
 			lblPresentSector.Text = MakePresentQueuedString(present, queued);
 
-			sobjs = ConstructionQueue.Container.StarSystem.SpaceObjects.OwnedBy(emp);
+			sobjs = ConstructionQueue.Container.StarSystem.SpaceObjects.OfType<IConstructor>().OwnedBy(emp);
 			present = CountPresentVehicles(sobjs, d.BaseName);
 			queued = CountQueuedVehicles(sobjs, d.BaseName);
 			lblPresentSystem.Text = MakePresentQueuedString(present, queued);
 
-			sobjs = ConstructionQueue.Owner.OwnedSpaceObjects;
+			sobjs = ConstructionQueue.Owner.OwnedSpaceObjects.OfType<IConstructor>();
 			present = CountPresentVehicles(sobjs, d.BaseName);
 			queued = CountQueuedVehicles(sobjs, d.BaseName);
 			lblPresentEmpire.Text = MakePresentQueuedString(present, queued);

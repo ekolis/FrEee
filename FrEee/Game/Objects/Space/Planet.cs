@@ -21,7 +21,7 @@ namespace FrEee.Game.Objects.Space
 	/// A planet. Planets can be colonized or mined.
 	/// </summary>
 	[Serializable]
-	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpaceObject, ICargoTransferrer, IReferrable, IMobileSpaceObject<Planet>, IMineableSpaceObject, IIncomeProducer, IDataObject, ITransferrable, ITargetable
+	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpaceObject, ICargoTransferrer, IReferrable, IMobileSpaceObject<Planet>, IMineableSpaceObject, IIncomeProducer, IDataObject, ITransferrable, ITargetable, IConstructor
 	{
 		public Planet()
 		{

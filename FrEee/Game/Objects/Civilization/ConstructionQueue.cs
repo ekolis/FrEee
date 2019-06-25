@@ -18,12 +18,12 @@ namespace FrEee.Game.Objects.Civilization
 	/// Something which can construct objects.
 	/// </summary>
 	[Serializable]
-	public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<ISpaceObject>
+	public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<IConstructor>
 	{
-		public ConstructionQueue(ISpaceObject sobj)
+		public ConstructionQueue(IConstructor c)
 		{
 			Orders = new List<IConstructionOrder>();
-			Container = sobj;
+			Container = c;
 			UnspentRate = new ResourceQuantity();
 		}
 
@@ -59,7 +59,7 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				var storage = Container.Sector.SpaceObjects.Where(sobj => sobj.Owner == Owner)
 					.OfType<ICargoContainer>().Sum(cc => cc.CargoStorageFree());
-				var queues = Container.Sector.SpaceObjects.Where
+				var queues = Container.Sector.SpaceObjects.OfType<IConstructor>().Where
 					(sobj => sobj.Owner == Owner && sobj.ConstructionQueue != null)
 					.Select(sobj => sobj.ConstructionQueue);
 				return storage - queues.Sum(q => q.Orders.Select(o => o.Template).OfType<IDesign<IUnit>>().Sum(t => t.Hull.Size));
@@ -80,7 +80,7 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		[DoNotCopy]
-		public ISpaceObject Container { get; set; }
+		public IConstructor Container { get; set; }
 
 		/// <summary>
 		/// The ETA for completion of the whole queue, in turns.
@@ -160,7 +160,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				return Container.Icon;
+				return (Container as ISpaceObject)?.Icon;
 			}
 		}
 

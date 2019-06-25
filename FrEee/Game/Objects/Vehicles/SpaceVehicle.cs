@@ -16,33 +16,12 @@ namespace FrEee.Game.Objects.Vehicles
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public abstract class SpaceVehicle : Vehicle, ICargoTransferrer, IMobileSpaceObject<SpaceVehicle>
+	public abstract class SpaceVehicle : Vehicle, IMobileSpaceObject<SpaceVehicle>
 	{
 		public SpaceVehicle()
 		{
 			Orders = new List<IOrder<SpaceVehicle>>();
-			constructionQueue = new ConstructionQueue(this);
-			Cargo = new Cargo();
 			StoredResources = new ResourceQuantity();
-		}
-
-		public IDictionary<Race, long> AllPopulation
-		{
-			get { return Cargo.Population; }
-		}
-
-		public IEnumerable<IUnit> AllUnits
-		{
-			get
-			{
-				if (this is IUnit)
-					yield return (IUnit)this;
-				if (Cargo != null)
-				{
-					foreach (var u in Cargo.Units)
-						yield return u;
-				}
-			}
 		}
 
 		/// <summary>
@@ -70,8 +49,6 @@ namespace FrEee.Game.Objects.Vehicles
 		/// </summary>
 		public abstract bool CanWarp { get; }
 
-		public Cargo Cargo { get; set; }
-
 		/// <summary>
 		/// Space vehicles' cargo storage depends on their abilities.
 		/// </summary>
@@ -81,18 +58,6 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		public override double CombatSpeed => Mod.Current.Settings.CombatSpeedPercentPerStrategicSpeed.PercentOf(StrategicSpeed) + this.GetAbilityValue("Combat Movement").ToInt();
-
-		public ConstructionQueue ConstructionQueue
-		{
-			get
-			{
-				// only vehicles with a space yard that are not under construction have a construction queue
-				if (this.HasAbility("Space Yard") && Sector != null)
-					return constructionQueue;
-				else
-					return null;
-			}
-		}
 
 		public Fleet Container
 		{
@@ -143,11 +108,11 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return this.HasAbility("Quantum Reactor"); }
 		}
 
-		public bool IsIdle
+		public virtual bool IsIdle
 		{
 			get
 			{
-				return (StrategicSpeed > 0 && !Orders.Any() && Container == null) || (ConstructionQueue != null && ConstructionQueue.IsIdle);
+				return StrategicSpeed > 0 && !Orders.Any() && Container == null;
 			}
 		}
 
@@ -303,7 +268,6 @@ namespace FrEee.Game.Objects.Vehicles
 			set;
 		}
 
-		private ConstructionQueue constructionQueue { get; set; }
 		private Sector sector;
 
 		public void AddOrder(IOrder order)
@@ -311,24 +275,6 @@ namespace FrEee.Game.Objects.Vehicles
 			if (!(order is IOrder<SpaceVehicle>))
 				throw new Exception("Can't add a " + order.GetType() + " to a space vehicle's orders.");
 			Orders.Add((IOrder<SpaceVehicle>)order);
-		}
-
-		public long AddPopulation(Race race, long amount)
-		{
-			var canCargo = Math.Min(amount, (long)(this.CargoStorageFree() / Mod.Current.Settings.PopulationSize));
-			amount -= canCargo;
-			Cargo.Population[race] += canCargo;
-			return amount;
-		}
-
-		public bool AddUnit(IUnit unit)
-		{
-			if (this.CargoStorageFree() >= unit.Design.Hull.Size)
-			{
-				Cargo.Units.Add(unit);
-				return true;
-			}
-			return false;
 		}
 
 		/// <summary>
@@ -354,12 +300,6 @@ namespace FrEee.Game.Objects.Vehicles
 			var sys = this.FindStarSystem();
 			if (sys != null)
 				sys.Remove(this);
-			if (Cargo != null)
-			{
-				foreach (var u in Cargo.Units)
-					u.Dispose();
-			}
-			constructionQueue.SafeDispose();
 			base.Dispose();
 			if (!IsMemory)
 				this.UpdateEmpireMemories();
@@ -404,16 +344,10 @@ namespace FrEee.Game.Objects.Vehicles
 				Orders.Clear();
 				AreOrdersOnHold = false;
 				AreRepeatOrdersEnabled = false;
-
-				// can only see cargo size if scanned but unowed
-				Cargo.SetFakeSize(true);
 			}
 
 			if (vis < Visibility.Scanned)
 			{
-				// can't see cargo at all
-				Cargo.SetFakeSize(false);
-
 				// hide amount of supplies remaining
 				SupplyRemaining = 0;
 			}
@@ -424,24 +358,6 @@ namespace FrEee.Game.Objects.Vehicles
 			if (order != null && !(order is IOrder<SpaceVehicle>))
 				return; // order can't exist here anyway
 			Orders.Remove((IOrder<SpaceVehicle>)order);
-		}
-
-		public long RemovePopulation(Race race, long amount)
-		{
-			var canCargo = Math.Min(amount, Cargo.Population[race]);
-			amount -= canCargo;
-			Cargo.Population[race] -= canCargo;
-			return amount;
-		}
-
-		public bool RemoveUnit(IUnit unit)
-		{
-			if (Cargo.Units.Contains(unit))
-			{
-				Cargo.Units.Remove(unit);
-				return true;
-			}
-			return false;
 		}
 
 		/// <summary>
@@ -464,11 +380,9 @@ namespace FrEee.Game.Objects.Vehicles
 		/// TODO - It should also perform construction here...
 		/// </summary>
 		/// <param name="timeElapsed"></param>
-		public void SpendTime(double timeElapsed)
+		public virtual void SpendTime(double timeElapsed)
 		{
 			TimeToNextMove += timeElapsed;
-			foreach (var u in Cargo.Units.OfType<IMobileSpaceObject>())
-				u.SpendTime(timeElapsed);
 		}
 	}
 }

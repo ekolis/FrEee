@@ -126,7 +126,8 @@ namespace FrEee.WinForms.Forms
 			{
 				// our space vehicles
 				var vnode = treeVehicles.AddItemWithImage(v.Name, v, v.Icon);
-				BindUnitsIn(v, vnode);
+				if (v is ICargoContainer cc)
+					BindUnitsIn(cc, vnode);
 				var orders = Empire.Current.Commands.OfType<AddOrderCommand<SpaceVehicle>>()
 					.Where(x => x.Order is RecycleVehicleInSpaceOrder && x.Executor == v)
 					.Select(x => ((RecycleVehicleInSpaceOrder)x.Order).Behavior.Verb);
