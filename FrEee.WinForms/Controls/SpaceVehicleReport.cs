@@ -100,7 +100,8 @@ namespace FrEee.WinForms.Controls
 				resIncomeRad.Amount = netIncome[Resource.Radioactives];
 
 				// construction data
-				if (Vehicle.ConstructionQueue == null || Vehicle.ConstructionQueue.FirstItemEta == null)
+				var c = Vehicle as IConstructor;
+				if (c is null || c.ConstructionQueue == null || c.ConstructionQueue.FirstItemEta == null)
 				{
 					txtConstructionItem.Text = "(None)";
 					txtConstructionItem.BackColor = Color.Transparent;
@@ -109,31 +110,34 @@ namespace FrEee.WinForms.Controls
 				}
 				else
 				{
-					txtConstructionItem.Text = Vehicle.ConstructionQueue.FirstItemName;
-					txtConstructionItem.BackColor = Vehicle.ConstructionQueue.FirstItemEta <= 1d ? Color.DarkGreen : Color.Transparent;
-					if (Vehicle.ConstructionQueue.Eta != Vehicle.ConstructionQueue.FirstItemEta)
-						txtConstructionTime.Text = Vehicle.ConstructionQueue.FirstItemEta.CeilingString(1) + " turns (" + Vehicle.ConstructionQueue.Eta.CeilingString(1) + " turns for all)";
+					txtConstructionItem.Text = c.ConstructionQueue.FirstItemName;
+					txtConstructionItem.BackColor = c.ConstructionQueue.FirstItemEta <= 1d ? Color.DarkGreen : Color.Transparent;
+					if (c.ConstructionQueue.Eta != c.ConstructionQueue.FirstItemEta)
+						txtConstructionTime.Text = c.ConstructionQueue.FirstItemEta.CeilingString(1) + " turns (" + c.ConstructionQueue.Eta.CeilingString(1) + " turns for all)";
 					else
-						txtConstructionTime.Text = Vehicle.ConstructionQueue.FirstItemEta.CeilingString(1) + " turns";
-					txtConstructionTime.BackColor = Vehicle.ConstructionQueue.Eta <= 1d ? Color.DarkGreen : Color.Transparent;
+						txtConstructionTime.Text = c.ConstructionQueue.FirstItemEta.CeilingString(1) + " turns";
+					txtConstructionTime.BackColor = c.ConstructionQueue.Eta <= 1d ? Color.DarkGreen : Color.Transparent;
 				}
 
 				// component summary
-				txtComponentsFunctional.Text = vehicle.Components.Where(c => !c.IsDestroyed).Count() + " / " + vehicle.Components.Count + " functional";
+				txtComponentsFunctional.Text = vehicle.Components.Where(q => !q.IsDestroyed).Count() + " / " + vehicle.Components.Count + " functional";
 				lstComponentsSummary.Initialize(32, 32);
-				foreach (var g in vehicle.Components.GroupBy(c => c.Template))
+				foreach (var g in vehicle.Components.GroupBy(q => q.Template))
 				{
-					var text = g.Any(c => c.IsDestroyed) ? g.Where(c => !c.IsDestroyed).Count() + " / " + g.Count() : g.Count().ToString();
+					var text = g.Any(q => q.IsDestroyed) ? g.Where(q => !q.IsDestroyed).Count() + " / " + g.Count() : g.Count().ToString();
 					lstComponentsSummary.AddItemWithImage(g.Key.ComponentTemplate.Group, text, g, g.First().Template.Icon);
 				}
 
 				// cargo summary
-				txtCargoSpaceFree.Text = string.Format("{0} / {1} free", (Vehicle.CargoStorage - (Vehicle.Cargo == null ? 0 : Vehicle.Cargo.Size)).Kilotons(), Vehicle.CargoStorage.Kilotons());
 				lstCargoSummary.Initialize(32, 32);
-				foreach (var ug in Vehicle.Cargo.Units.GroupBy(u => u.Design))
-					lstCargoSummary.AddItemWithImage(ug.Key.VehicleTypeName, ug.Count() + "x " + ug.Key.Name, ug, ug.First().Icon);
-				foreach (var pop in Vehicle.Cargo.Population)
-					lstCargoSummary.AddItemWithImage("Population", pop.Value.ToUnitString(true) + " " + pop.Key.Name, pop, pop.Key.Icon);
+				if (Vehicle is ICargoContainer cc)
+				{
+					txtCargoSpaceFree.Text = string.Format("{0} / {1} free", (Vehicle.CargoStorage - (cc.Cargo == null ? 0 : cc.Cargo.Size)).Kilotons(), Vehicle.CargoStorage.Kilotons());
+					foreach (var ug in cc.Cargo.Units.GroupBy(u => u.Design))
+						lstCargoSummary.AddItemWithImage(ug.Key.VehicleTypeName, ug.Count() + "x " + ug.Key.Name, ug, ug.First().Icon);
+					foreach (var pop in cc.Cargo.Population)
+						lstCargoSummary.AddItemWithImage("Population", pop.Value.ToUnitString(true) + " " + pop.Key.Name, pop, pop.Key.Icon);
+				}
 
 				// orders detail
 				chkOnHold.Checked = Vehicle.AreOrdersOnHold;
@@ -148,9 +152,9 @@ namespace FrEee.WinForms.Controls
 					lstOrdersDetail.Items.Add(o);
 
 				// component detail
-				txtComponentsFunctionalDetail.Text = vehicle.Components.Where(c => !c.IsDestroyed).Count() + " / " + vehicle.Components.Count + " functional";
+				txtComponentsFunctionalDetail.Text = vehicle.Components.Where(q => !q.IsDestroyed).Count() + " / " + vehicle.Components.Count + " functional";
 				lstComponentsDetail.Initialize(32, 32);
-				foreach (var g in vehicle.Components.GroupBy(c => new ComponentGroup(c.Template, c.Hitpoints)))
+				foreach (var g in vehicle.Components.GroupBy(q => new ComponentGroup(q.Template, q.Hitpoints)))
 				{
 					var color = g.Key.Hitpoints == g.Key.Template.Durability ? Color.White : g.Key.Hitpoints == 0 ? Color.Red : Color.Yellow;
 					if (g.Count() > 1)
@@ -160,16 +164,19 @@ namespace FrEee.WinForms.Controls
 				}
 
 				// cargo detail
-				txtCargoSpaceFreeDetail.Text = string.Format("{0} / {1} free", (Vehicle.CargoStorage - Vehicle.Cargo.Size).Kilotons(), Vehicle.CargoStorage.Kilotons());
 				lstCargoDetail.Initialize(32, 32);
-				foreach (var ug in Vehicle.Cargo.Units.GroupBy(u => u.Design))
-					lstCargoDetail.AddItemWithImage(ug.Key.VehicleTypeName, ug.Count() + "x " + ug.Key.Name, ug, ug.First().Icon);
-				foreach (var pop in Vehicle.Cargo.Population)
-					lstCargoDetail.AddItemWithImage("Population", pop.Value.ToUnitString(true) + " " + pop.Key.Name, pop, pop.Key.Icon);
+				if (Vehicle is ICargoContainer cc2)
+				{
+					txtCargoSpaceFreeDetail.Text = string.Format("{0} / {1} free", (Vehicle.CargoStorage - cc2.Cargo.Size).Kilotons(), Vehicle.CargoStorage.Kilotons());
+					foreach (var ug in cc2.Cargo.Units.GroupBy(u => u.Design))
+						lstCargoDetail.AddItemWithImage(ug.Key.VehicleTypeName, ug.Count() + "x " + ug.Key.Name, ug, ug.First().Icon);
+					foreach (var pop in cc2.Cargo.Population)
+						lstCargoDetail.AddItemWithImage("Population", pop.Value.ToUnitString(true) + " " + pop.Key.Name, pop, pop.Key.Icon);
+				}
 
 				// abilities
 				abilityTreeView.Abilities = Vehicle.AbilityTree();
-				abilityTreeView.IntrinsicAbilities = Vehicle.IntrinsicAbilities.Concat(Vehicle.Design.Hull.Abilities).Concat(Vehicle.Components.Where(c => !c.IsDestroyed).SelectMany(c => c.Abilities));
+				abilityTreeView.IntrinsicAbilities = Vehicle.IntrinsicAbilities.Concat(Vehicle.Design.Hull.Abilities).Concat(Vehicle.Components.Where(q => !q.IsDestroyed).SelectMany(q => q.Abilities));
 			}
 			ResumeLayout();
 		}

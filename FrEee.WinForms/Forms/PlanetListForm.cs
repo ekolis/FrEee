@@ -54,7 +54,7 @@ namespace FrEee.WinForms.Forms
 				MessageBox.Show("We have no colonizers capable of reaching " + p + ".");
 			}
 			var shortest = paths.WithMin(path => path.Path.Count()).First();
-			var colonizer = shortest.Colonizer;
+			var colonizer = (MajorSpaceVehicle)shortest.Colonizer; // HACK - what if units want to colonize?
 
 			// load population
 			// prefer population of breathers of target planet's atmosphere - don't load nonbreathers races if breathers are present

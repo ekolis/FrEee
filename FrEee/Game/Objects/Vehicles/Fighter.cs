@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Utility;
 using System;
 
 namespace FrEee.Game.Objects.Vehicles
@@ -56,5 +57,13 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			Utility.Extensions.CommonExtensions.Place(this, target);
 		}
+
+		// HACK - until we end our game and this can be purged
+		[DoNotSerialize]
+		private Cargo Cargo { get; set;}
+
+		// HACK - until we end our game and this can be purged
+		[DoNotSerialize]
+		private ConstructionQueue ConstructionQueue { get; set; }
 	}
 }

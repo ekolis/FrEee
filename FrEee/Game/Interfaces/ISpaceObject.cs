@@ -25,11 +25,6 @@ namespace FrEee.Game.Interfaces
 		bool CanWarp { get; }
 
 		/// <summary>
-		/// This space object's construction queue, if any.
-		/// </summary>
-		ConstructionQueue ConstructionQueue { get; }
-
-		/// <summary>
 		/// Does this space object have infinite supplies?
 		/// TODO - make supply a resource?
 		/// </summary>

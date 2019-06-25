@@ -33,7 +33,7 @@ namespace FrEee.WinForms.Objects.GalaxyViewModes
 
 		private ResourceQuantity GetSY(StarSystem sys)
 		{
-			var qs = sys.FindSpaceObjects<ISpaceObject>().OwnedBy(Empire.Current).Select(x => x.ConstructionQueue).Where(q => q != null && q.IsSpaceYardQueue);
+			var qs = sys.FindSpaceObjects<IConstructor>().OwnedBy(Empire.Current).Select(x => x.ConstructionQueue).Where(q => q != null && q.IsSpaceYardQueue);
 			return qs.Sum(q => q.Rate);
 		}
 	}

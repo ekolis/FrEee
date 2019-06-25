@@ -122,7 +122,7 @@ namespace FrEee.WinForms.Forms
 						   || value is Fleet f && f.LeafVehicles.Any(v => v.Abilities().Any(a => a.Rule.Name.StartsWith("Colonize Planet - ")));
 					}
 					btnSentry.Visible = value is IMobileSpaceObject;
-					btnConstructionQueue.Visible = value != null && value.ConstructionQueue != null;
+					btnConstructionQueue.Visible = value is IConstructor c && c.ConstructionQueue != null;
 					btnTransferCargo.Visible = value != null && (value is ICargoContainer && ((ICargoContainer)value).CargoStorage > 0 || value.SupplyStorage > 0 || value.HasInfiniteSupplies);
 					btnRecycle.Visible = starSystemView.SelectedSector.SpaceObjects.Any(sobj => sobj.Owner == Empire.Current && (sobj is Planet || sobj.HasAbility("Space Yard")));
 					btnActivate.Visible = value.ActivatableAbilities().Any();
@@ -338,7 +338,7 @@ namespace FrEee.WinForms.Forms
 
 		private void btnConstructionQueue_Click(object sender, EventArgs e)
 		{
-			if (SelectedSpaceObject != null && SelectedSpaceObject.Owner == Empire.Current && SelectedSpaceObject.ConstructionQueue != null)
+			if (SelectedSpaceObject is IConstructor c && c.Owner == Empire.Current && c.ConstructionQueue != null)
 				ShowConstructionQueueForm(SelectedSpaceObject);
 		}
 
@@ -905,7 +905,7 @@ namespace FrEee.WinForms.Forms
 					IssueSpaceObjectOrder(new SentryOrder());
 				else if (e.KeyCode == Keys.Q && btnConstructionQueue.Visible)
 				{
-					if (SelectedSpaceObject != null && SelectedSpaceObject.Owner == Empire.Current && SelectedSpaceObject.ConstructionQueue != null)
+					if (SelectedSpaceObject is IConstructor c && c.Owner == Empire.Current && c.ConstructionQueue != null)
 						ShowConstructionQueueForm(SelectedSpaceObject);
 				}
 				else if (e.KeyCode == Keys.T && btnTransferCargo.Visible)
@@ -1377,7 +1377,7 @@ namespace FrEee.WinForms.Forms
 
 		private void ShowConstructionQueueForm(ISpaceObject sobj)
 		{
-			this.ShowChildForm(new ConstructionQueueForm(SelectedSpaceObject.ConstructionQueue));
+			this.ShowChildForm(new ConstructionQueueForm((SelectedSpaceObject as IConstructor)?.ConstructionQueue));
 			BindReport();
 			SetUpResourceDisplay();
 		}
