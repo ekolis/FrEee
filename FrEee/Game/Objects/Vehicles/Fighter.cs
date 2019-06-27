@@ -7,7 +7,7 @@ using System;
 namespace FrEee.Game.Objects.Vehicles
 {
 	[Serializable]
-	public class Fighter : SpaceVehicle, IUnit
+	public class Fighter : SpaceVehicle, IUnit, IConstructor // TODO - remove IConstructor after game is over!
 	{
 		public override AbilityTargets AbilityTarget
 		{
@@ -61,9 +61,5 @@ namespace FrEee.Game.Objects.Vehicles
 		// HACK - until we end our game and this can be purged
 		[DoNotSerialize]
 		private Cargo Cargo { get; set;}
-
-		// HACK - until we end our game and this can be purged
-		[DoNotSerialize]
-		private ConstructionQueue ConstructionQueue { get; set; }
 	}
 }

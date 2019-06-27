@@ -200,7 +200,14 @@ namespace FrEee.Utility
 
 			// check type so we don't bother trying to create an object only to find it's the wrong type later
 			if (!desiredType.IsAssignableFrom(type))
+			{
+#if DEBUG
+				return null;
+#endif
+#if RELEASE
 				throw new SerializationException("Expected " + desiredType + ", got " + type + " when parsing new object.");
+#endif
+			}
 
 			// the object!
 			object o;
