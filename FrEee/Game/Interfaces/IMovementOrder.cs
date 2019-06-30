@@ -7,7 +7,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// An order which moves a space object.
 	/// </summary>
-	public interface IMovementOrder : IOrder<IMobileSpaceObject>
+	public interface IMovementOrder : IOrder
 	{
 		/// <summary>
 		/// The sector we are moving to.

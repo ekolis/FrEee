@@ -185,11 +185,11 @@ namespace FrEee.WinForms.Controls
 		{
 			foreach (var order in vehicle.Orders.ToArray())
 			{
-				var addCmd = Empire.Current.Commands.OfType<AddOrderCommand<SpaceVehicle>>().SingleOrDefault(c => c.Order == order);
+				var addCmd = Empire.Current.Commands.OfType<AddOrderCommand>().SingleOrDefault(c => c.Order == order);
 				if (addCmd == null)
 				{
 					// not a newly added order, so create a remove command to take it off the server
-					var remCmd = new RemoveOrderCommand<SpaceVehicle>(Vehicle, order);
+					var remCmd = new RemoveOrderCommand(Vehicle, order);
 					Empire.Current.Commands.Add(remCmd);
 					remCmd.Execute(); // show change locally
 				}
@@ -209,14 +209,14 @@ namespace FrEee.WinForms.Controls
 
 		private void btnDeleteOrder_Click(object sender, System.EventArgs e)
 		{
-			var order = (IOrder<SpaceVehicle>)lstOrdersDetail.SelectedItem;
+			var order = (IOrder)lstOrdersDetail.SelectedItem;
 			if (order != null)
 			{
-				var addCmd = Empire.Current.Commands.OfType<AddOrderCommand<SpaceVehicle>>().SingleOrDefault(c => c.Order == order);
+				var addCmd = Empire.Current.Commands.OfType<AddOrderCommand>().SingleOrDefault(c => c.Order == order);
 				if (addCmd == null)
 				{
 					// not a newly added order, so create a remove command to take it off the server
-					var remCmd = new RemoveOrderCommand<SpaceVehicle>(Vehicle, order);
+					var remCmd = new RemoveOrderCommand(Vehicle, order);
 					Empire.Current.Commands.Add(remCmd);
 					remCmd.Execute(); // show change locally
 				}
@@ -236,7 +236,7 @@ namespace FrEee.WinForms.Controls
 
 		private void btnOrderGoesDown_Click(object sender, System.EventArgs e)
 		{
-			var order = (IOrder<SpaceVehicle>)lstOrdersDetail.SelectedItem;
+			var order = (IOrder)lstOrdersDetail.SelectedItem;
 			if (order != null && vehicle.Orders.IndexOf(order) < vehicle.Orders.Count() - 1)
 			{
 				var cmd = new RearrangeOrdersCommand<SpaceVehicle>(
@@ -252,7 +252,7 @@ namespace FrEee.WinForms.Controls
 
 		private void btnOrderGoesUp_Click(object sender, System.EventArgs e)
 		{
-			var order = (IOrder<SpaceVehicle>)lstOrdersDetail.SelectedItem;
+			var order = (IOrder)lstOrdersDetail.SelectedItem;
 			if (order != null && vehicle.Orders.IndexOf(order) > 0)
 			{
 				var cmd = new RearrangeOrdersCommand<SpaceVehicle>(
@@ -270,7 +270,7 @@ namespace FrEee.WinForms.Controls
 
 		private void btnOrderToBottom_Click(object sender, System.EventArgs e)
 		{
-			var order = (IOrder<SpaceVehicle>)lstOrdersDetail.SelectedItem;
+			var order = (IOrder)lstOrdersDetail.SelectedItem;
 			if (order != null)
 			{
 				var cmd = new RearrangeOrdersCommand<SpaceVehicle>(
@@ -286,7 +286,7 @@ namespace FrEee.WinForms.Controls
 
 		private void btnOrderToTop_Click(object sender, System.EventArgs e)
 		{
-			var order = (IOrder<SpaceVehicle>)lstOrdersDetail.SelectedItem;
+			var order = (IOrder)lstOrdersDetail.SelectedItem;
 			if (order != null)
 			{
 				var cmd = new RearrangeOrdersCommand<SpaceVehicle>(

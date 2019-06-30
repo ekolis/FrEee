@@ -9,7 +9,7 @@ namespace FrEee.Game.Objects.LogMessages
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public class PictorialLogMessage<T> : LogMessage, IPictorialLogMessage<T> where T : IPictorial
+	public class PictorialLogMessage<T> : LogMessage, IPictorialLogMessage<T>
 	{
 		public PictorialLogMessage(string text, T context)
 			: base(text)
@@ -30,7 +30,13 @@ namespace FrEee.Game.Objects.LogMessages
 
 		public override Image Picture
 		{
-			get { return Context?.Portrait; }
+			get
+			{
+				if (Context is IPictorial p)
+					return p.Portrait;
+				else
+					return null;
+			}
 		}
 	}
 }

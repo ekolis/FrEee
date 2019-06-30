@@ -16,7 +16,7 @@ namespace FrEee.Game.Objects.Orders
 	/// TODO - make this also pursue the warp point first
 	/// </summary>
 	[Serializable]
-	public class WarpOrder : IOrder<IMobileSpaceObject>
+	public class WarpOrder : IOrder
 	{
 		public WarpOrder(WarpPoint warpPoint)
 		{
@@ -66,7 +66,7 @@ namespace FrEee.Game.Objects.Orders
 		private GalaxyReference<Empire> owner { get; set; }
 		private GalaxyReference<WarpPoint> warpPoint { get; set; }
 
-		public bool CheckCompletion(IMobileSpaceObject v)
+		public bool CheckCompletion(IOrderable v)
 		{
 			return IsComplete;
 		}
@@ -97,12 +97,13 @@ namespace FrEee.Game.Objects.Orders
 			Galaxy.Current.UnassignID(this);
 		}
 
-		public void Execute(IMobileSpaceObject sobj)
+		public void Execute(IOrderable ord)
 		{
-			var errors = GetErrors(sobj);
+			var errors = GetErrors(ord);
 			foreach (var error in errors)
 				Owner.Log.Add(error);
 
+			var sobj = (IMobileSpaceObject)ord;
 			if (!errors.Any())
 			{
 				var here = sobj.Sector;
@@ -145,9 +146,9 @@ namespace FrEee.Game.Objects.Orders
 			sobj.SpendTime(sobj.TimePerMove);
 		}
 
-		public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject executor)
+		public IEnumerable<LogMessage> GetErrors(IOrderable executor)
 		{
-			// this order doesn'IMobileSpaceObject error
+			// this order doesn't error
 			yield break;
 		}
 

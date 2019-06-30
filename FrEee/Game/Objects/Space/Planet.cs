@@ -26,7 +26,7 @@ namespace FrEee.Game.Objects.Space
 		public Planet()
 		{
 			ResourceValue = new ResourceQuantity();
-			Orders = new List<IOrder<Planet>>();
+			Orders = new List<IOrder>();
 		}
 
 		public override AbilityTargets AbilityTarget
@@ -208,7 +208,7 @@ namespace FrEee.Game.Objects.Space
 				ModID = value[nameof(ModID)].Default<string>();
 				ResourceValue = value[nameof(ResourceValue)].Default(new ResourceQuantity());
 				Colony = value[nameof(Colony)].Default<Colony>();
-				Orders = value[nameof(Orders)].Default(new List<IOrder<Planet>>());
+				Orders = value[nameof(Orders)].Default(new List<IOrder>());
 			}
 		}
 
@@ -487,12 +487,7 @@ namespace FrEee.Game.Objects.Space
 			set;
 		}
 
-		IEnumerable<IOrder> IOrderable.Orders
-		{
-			get { return Orders; }
-		}
-
-		public IList<IOrder<Planet>> Orders
+		public IList<IOrder> Orders
 		{
 			get;
 			private set;
@@ -774,9 +769,9 @@ namespace FrEee.Game.Objects.Space
 
 		public void AddOrder(IOrder order)
 		{
-			if (!(order is IOrder<Planet>))
+			if (!(order is IOrder))
 				throw new Exception("Can't add a " + order.GetType() + " to a planet's orders.");
-			Orders.Add((IOrder<Planet>)order);
+			Orders.Add((IOrder)order);
 		}
 
 		public long AddPopulation(Race race, long amount)
@@ -981,9 +976,9 @@ namespace FrEee.Game.Objects.Space
 
 		public void RearrangeOrder(IOrder order, int delta)
 		{
-			if (!(order is IOrder<Planet>))
+			if (!(order is IOrder))
 				throw new Exception("Can't rearrange a " + order.GetType() + " in a planet's orders.");
-			var o = (IOrder<Planet>)order;
+			var o = (IOrder)order;
 			var newpos = Orders.IndexOf(o) + delta;
 			if (newpos < 0)
 				newpos = 0;
@@ -1016,9 +1011,9 @@ namespace FrEee.Game.Objects.Space
 
 		public void RemoveOrder(IOrder order)
 		{
-			if (order != null && !(order is IOrder<Planet>))
+			if (order != null && !(order is IOrder))
 				return; // order can't exist here anyway
-			Orders.Remove((IOrder<Planet>)order);
+			Orders.Remove((IOrder)order);
 		}
 
 		public long RemovePopulation(Race race, long amount)

@@ -12,7 +12,7 @@ namespace FrEee.Game.Objects.Orders
 	/// <summary>
 	/// An order to transfer cargo from one object to another.
 	/// </summary>
-	public class TransferCargoOrder : IOrder<ICargoTransferrer>
+	public class TransferCargoOrder : IOrder
 	{
 		public TransferCargoOrder(bool isLoadOrder, CargoDelta cargoDelta, ICargoTransferrer target)
 		{
@@ -62,7 +62,7 @@ namespace FrEee.Game.Objects.Orders
 		private GalaxyReference<Empire> owner { get; set; }
 		private GalaxyReference<ICargoTransferrer> target { get; set; }
 
-		public bool CheckCompletion(ICargoTransferrer v)
+		public bool CheckCompletion(IOrderable v)
 		{
 			return IsComplete;
 		}
@@ -76,29 +76,37 @@ namespace FrEee.Game.Objects.Orders
 			Galaxy.Current.UnassignID(this);
 		}
 
-		public void Execute(ICargoTransferrer executor)
+		public void Execute(IOrderable ord)
 		{
-			var errors = GetErrors(executor);
-			if (executor.Owner != null)
+			if (ord is ICargoTransferrer executor)
 			{
-				foreach (var error in errors)
-					executor.Owner.Log.Add(error);
-			}
+				var errors = GetErrors(executor);
+				if (executor.Owner != null)
+				{
+					foreach (var error in errors)
+						executor.Owner.Log.Add(error);
+				}
 
-			if (!errors.Any())
-			{
-				if (IsLoadOrder)
-					Target.TransferCargo(CargoDelta, executor, executor.Owner);
-				else
-					executor.TransferCargo(CargoDelta, Target, executor.Owner);
+				if (!errors.Any())
+				{
+					if (IsLoadOrder)
+						Target.TransferCargo(CargoDelta, executor, executor.Owner);
+					else
+						executor.TransferCargo(CargoDelta, Target, executor.Owner);
+				}
+				IsComplete = true;
 			}
-			IsComplete = true;
 		}
 
-		public IEnumerable<LogMessage> GetErrors(ICargoTransferrer executor)
+		public IEnumerable<LogMessage> GetErrors(IOrderable executor)
 		{
-			if (Target != null && executor.Sector != Target.Sector)
-				yield return executor.CreateLogMessage(executor + " cannot transfer cargo to " + Target + " because they are not in the same sector.");
+			if (executor is ICargoTransferrer t)
+			{
+				if (Target != null && t.Sector != Target.Sector)
+					yield return t.CreateLogMessage(executor + " cannot transfer cargo to " + Target + " because they are not in the same sector.");
+			}
+			else
+				yield return executor.CreateLogMessage($"{executor} cannot transfer cargo.");
 		}
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)

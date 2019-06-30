@@ -5,6 +5,7 @@ using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -107,7 +108,7 @@ namespace FrEee.Game.Objects.Orders
 		private GalaxyReference<Empire> owner { get; set; }
 		private GalaxyReference<ISpaceObject> target { get; set; }
 
-		public bool CheckCompletion(IMobileSpaceObject v)
+		public bool CheckCompletion(IOrderable v)
 		{
 			return IsComplete;
 		}
@@ -138,83 +139,88 @@ namespace FrEee.Game.Objects.Orders
 			Galaxy.Current.UnassignID(this);
 		}
 
-		public void Execute(IMobileSpaceObject sobj)
+		public void Execute(IOrderable ord)
 		{
-			// TODO - movement logs
-			if (KnownTarget == null)
-				IsComplete = true; // target is known to be dead
-			else if (AreWeThereYet(sobj))
-				IsComplete = true; // we've arrived at the target
-			else
+			if (ord is IMobileSpaceObject sobj)
 			{
-				var gotoSector = Pathfind(sobj, sobj.Sector).FirstOrDefault();
-				if (gotoSector != null)
+				// TODO - movement logs
+				if (KnownTarget == null)
+					IsComplete = true; // target is known to be dead
+				else if (AreWeThereYet(sobj))
+					IsComplete = true; // we've arrived at the target
+				else
 				{
-					// move
-					if (gotoSector == null)
+					var gotoSector = Pathfind(sobj, sobj.Sector).FirstOrDefault();
+					if (gotoSector != null)
 					{
-						// try to warp through an unexplored warp point
-						var wps = sobj.Sector.SpaceObjects.OfType<WarpPoint>().Where(w => !w.TargetStarSystemLocation.Item.ExploredByEmpires.Contains(sobj.Owner));
-						var wp = wps.PickRandom();
-						if (wp != null)
+						// move
+						if (gotoSector == null)
 						{
-							// warp through the unexplored warp point
-							sobj.Sector = wp.Target;
+							// try to warp through an unexplored warp point
+							var wps = sobj.Sector.SpaceObjects.OfType<WarpPoint>().Where(w => !w.TargetStarSystemLocation.Item.ExploredByEmpires.Contains(sobj.Owner));
+							var wp = wps.PickRandom();
+							if (wp != null)
+							{
+								// warp through the unexplored warp point
+								sobj.Sector = wp.Target;
+							}
+							else if (!LoggedPathfindingError)
+							{
+								// no warp points to explore and we haven'IMobileSpaceObject told the player yet
+								PathfindingError = sobj.CreateLogMessage("{0} found no unexplored warp points at {1} to enter.".F(sobj, sobj.Sector));
+								sobj.Owner.Log.Add(PathfindingError);
+								LoggedPathfindingError = true;
+							}
 						}
-						else if (!LoggedPathfindingError)
+						else
 						{
-							// no warp points to explore and we haven'IMobileSpaceObject told the player yet
-							PathfindingError = sobj.CreateLogMessage("{0} found no unexplored warp points at {1} to enter.".F(sobj, sobj.Sector));
-							sobj.Owner.Log.Add(PathfindingError);
-							LoggedPathfindingError = true;
+							sobj.Sector = gotoSector;
+							sobj.RefreshDijkstraMap();
+
+							// consume supplies
+							sobj.BurnMovementSupplies();
+
+							// are we there yet, Dad?
+							if (AreWeThereYet(sobj))
+								IsComplete = true; // we've arrived at the target
+
+							// resupply space vehicles
+							// either this vehicle from other space objects, or other vehicles from this one
+							// TODO - this should really be done AFTER battles...
+							if (gotoSector.HasAbility("Supply Generation", sobj.Owner))
+							{
+								foreach (var v in gotoSector.SpaceObjects.OfType<IMobileSpaceObject>().Where(v => v.Owner == sobj.Owner))
+									v.SupplyRemaining = v.SupplyStorage;
+							}
+							if (gotoSector.StarSystem.HasAbility("Supply Generation - System", sobj.Owner) || gotoSector.StarSystem.HasAbility("Supply Generation - System"))
+							{
+								foreach (var v in gotoSector.StarSystem.FindSpaceObjects<IMobileSpaceObject>().Where(v => v.Owner == sobj.Owner))
+									v.SupplyRemaining = v.SupplyStorage;
+							}
 						}
 					}
-					else
+					else if (!LoggedPathfindingError)
 					{
-						sobj.Sector = gotoSector;
-						sobj.RefreshDijkstraMap();
-
-						// consume supplies
-						sobj.BurnMovementSupplies();
-
-						// are we there yet, Dad?
-						if (AreWeThereYet(sobj))
-							IsComplete = true; // we've arrived at the target
-
-						// resupply space vehicles
-						// either this vehicle from other space objects, or other vehicles from this one
-						// TODO - this should really be done AFTER battles...
-						if (gotoSector.HasAbility("Supply Generation", sobj.Owner))
-						{
-							foreach (var v in gotoSector.SpaceObjects.OfType<IMobileSpaceObject>().Where(v => v.Owner == sobj.Owner))
-								v.SupplyRemaining = v.SupplyStorage;
-						}
-						if (gotoSector.StarSystem.HasAbility("Supply Generation - System", sobj.Owner) || gotoSector.StarSystem.HasAbility("Supply Generation - System"))
-						{
-							foreach (var v in gotoSector.StarSystem.FindSpaceObjects<IMobileSpaceObject>().Where(v => v.Owner == sobj.Owner))
-								v.SupplyRemaining = v.SupplyStorage;
-						}
+						// log pathfinding error
+						string reason;
+						if (sobj.StrategicSpeed <= 0)
+							reason = sobj + " is immobile";
+						else
+							reason = "there is no available path leading toward " + Destination;
+						PathfindingError = sobj.CreateLogMessage(sobj + " could not " + Verb + " " + KnownTarget + " because " + reason + ".");
+						sobj.Owner.Log.Add(PathfindingError);
+						LoggedPathfindingError = true;
 					}
 				}
-				else if (!LoggedPathfindingError)
-				{
-					// log pathfinding error
-					string reason;
-					if (sobj.StrategicSpeed <= 0)
-						reason = sobj + " is immobile";
-					else
-						reason = "there is no available path leading toward " + Destination;
-					PathfindingError = sobj.CreateLogMessage(sobj + " could not " + Verb + " " + KnownTarget + " because " + reason + ".");
-					sobj.Owner.Log.Add(PathfindingError);
-					LoggedPathfindingError = true;
-				}
+
+				// spend time
+				sobj.SpendTime(sobj.TimePerMove);
 			}
-
-			// spend time
-			sobj.SpendTime(sobj.TimePerMove);
+			else
+				ord.Owner.RecordLog(ord, $"{ord} cannot pathfind because it is not a mobile space object.");
 		}
 
-		public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject v)
+		public IEnumerable<LogMessage> GetErrors(IOrderable v)
 		{
 			if (PathfindingError != null)
 				yield return PathfindingError;

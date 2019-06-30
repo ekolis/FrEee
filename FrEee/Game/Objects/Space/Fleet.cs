@@ -24,7 +24,7 @@ namespace FrEee.Game.Objects.Space
 		public Fleet()
 		{
 			Vehicles = new GalaxyReferenceSet<IMobileSpaceObject>();
-			Orders = new List<IOrder<Fleet>>();
+			Orders = new List<IOrder>();
 			Timestamp = Galaxy.Current?.Timestamp ?? 0;
 		}
 
@@ -375,12 +375,7 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public IList<IOrder<Fleet>> Orders { get; private set; }
-
-		IEnumerable<IOrder> IOrderable.Orders
-		{
-			get { return Orders; }
-		}
+		public IList<IOrder> Orders { get; private set; }
 
 		public int OrganicsMaintenance
 		{
@@ -638,9 +633,9 @@ namespace FrEee.Game.Objects.Space
 
 		public void AddOrder(IOrder order)
 		{
-			if (!(order is IOrder<Fleet>))
-				throw new InvalidOperationException("Fleets can only accept orders of type IOrder<Fleet>.");
-			Orders.Add((IOrder<Fleet>)order);
+			if (!(order is IOrder))
+				throw new InvalidOperationException("Fleets can only accept orders of type IOrder.");
+			Orders.Add((IOrder)order);
 		}
 
 		public long AddPopulation(Civilization.Race race, long amount)
@@ -727,9 +722,9 @@ namespace FrEee.Game.Objects.Space
 
 		public void RearrangeOrder(IOrder order, int delta)
 		{
-			if (!(order is IOrder<Fleet>))
-				throw new InvalidOperationException("Fleets can only accept orders of type IOrder<Fleet>.");
-			var o = (IOrder<Fleet>)order;
+			if (!(order is IOrder))
+				throw new InvalidOperationException("Fleets can only accept orders of type IOrder.");
+			var o = (IOrder)order;
 			var newpos = Orders.IndexOf(o) + delta;
 			Orders.Remove(o);
 			if (newpos < 0)
@@ -762,9 +757,9 @@ namespace FrEee.Game.Objects.Space
 
 		public void RemoveOrder(IOrder order)
 		{
-			if (!(order is IOrder<Fleet>))
+			if (!(order is IOrder))
 				return; // order can't exist here anyway
-			Orders.Remove((IOrder<Fleet>)order);
+			Orders.Remove((IOrder)order);
 		}
 
 		public long RemovePopulation(Civilization.Race race, long amount)

@@ -161,7 +161,6 @@ namespace FrEee.Utility.Extensions
 		}
 
 		public static PictorialLogMessage<T> CreateLogMessage<T>(this T context, string text, int? turnNumber = null)
-					where T : IPictorial
 		{
 			if (turnNumber == null)
 				return new PictorialLogMessage<T>(text, context);
@@ -1190,15 +1189,15 @@ namespace FrEee.Utility.Extensions
 		/// <param name="obj">The object from which to remove an order.</param>
 		/// <param name="order">The order to remove.</param>
 		/// <returns>The remove-order command created, if any.</returns>
-		public static RemoveOrderCommand<T> RemoveOrderClientSide<T>(this T obj, IOrder<T> order) where T : IOrderable
+		public static RemoveOrderCommand RemoveOrderClientSide(this IOrderable obj, IOrder order)
 		{
 			if (Empire.Current == null)
 				throw new InvalidOperationException("RemoveOrderClientSide is intended for client side use.");
-			var addCmd = Empire.Current.Commands.OfType<AddOrderCommand<T>>().SingleOrDefault(c => c.Order == order);
+			var addCmd = Empire.Current.Commands.OfType<AddOrderCommand>().SingleOrDefault(c => c.Order == order);
 			if (addCmd == null)
 			{
 				// not a newly added order, so create a remove command to take it off the server
-				var remCmd = new RemoveOrderCommand<T>(obj, order);
+				var remCmd = new RemoveOrderCommand(obj, order);
 				Empire.Current.Commands.Add(remCmd);
 				obj.RemoveOrder(order);
 				return remCmd;
@@ -1943,6 +1942,11 @@ namespace FrEee.Utility.Extensions
 			})).Unwrap();
 			runSync.Wait();
 		}*/
+
+		public static void RecordLog<T>(this T t, string text) where T : IOwnable
+		{
+			t.Owner.RecordLog(t, text);
+		}
 	}
 
 	public enum IDCopyBehavior

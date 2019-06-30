@@ -232,9 +232,9 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="order"></param>
 		/// <returns></returns>
-		public static bool IsNew<T>(this IOrder<T> order) where T : IOrderable
+		public static bool IsNew(this IOrder order)
 		{
-			return Galaxy.Current.Referrables.OfType<AddOrderCommand<T>>().Where(cmd => cmd.Order == order).Any();
+			return Galaxy.Current.Referrables.OfType<AddOrderCommand>().Where(cmd => cmd.Order == order).Any();
 		}
 
 		public static bool IsPointDefense(this WeaponTypes wt)
@@ -252,7 +252,7 @@ namespace FrEee.Utility.Extensions
 			return wt == WeaponTypes.Seeking || wt == WeaponTypes.SeekingPointDefense;
 		}
 
-		public static void IssueOrder<T>(this T obj, IOrder<T> order) where T : IOrderable
+		public static void IssueOrder(this IOrderable obj, IOrder order)
 		{
 			if (obj.Owner != Empire.Current)
 				throw new Exception("Cannot issue orders to another empire's objects.");

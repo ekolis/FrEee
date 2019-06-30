@@ -219,14 +219,6 @@ namespace FrEee.Game.Objects.Civilization
 			get { return Container.Name; }
 		}
 
-		IEnumerable<IOrder> IOrderable.Orders
-		{
-			get
-			{
-				return Orders;
-			}
-		}
-
 		public IList<IConstructionOrder> Orders
 		{
 			get;
@@ -296,6 +288,8 @@ namespace FrEee.Game.Objects.Civilization
 				return spent;
 			}
 		}
+
+		IList<IOrder> IOrderable.Orders => Orders.Cast<IOrder>().ToList();
 
 		private ResourceQuantity rate;
 

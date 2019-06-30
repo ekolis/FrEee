@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace FrEee.Game.Objects.Orders
 {
-	public class RecycleFacilityOrCargoOrder : IOrder<IMobileSpaceObject>
+	public class RecycleFacilityOrCargoOrder : IOrder
 	{
 		public RecycleFacilityOrCargoOrder(IRecycleBehavior behavior, IRecyclable target)
 		{
@@ -57,7 +57,7 @@ namespace FrEee.Game.Objects.Orders
 		private GalaxyReference<Empire> owner { get; set; }
 		private GalaxyReference<IRecyclable> target { get; set; }
 
-		public bool CheckCompletion(IMobileSpaceObject executor)
+		public bool CheckCompletion(IOrderable executor)
 		{
 			return IsComplete;
 		}
@@ -71,28 +71,31 @@ namespace FrEee.Game.Objects.Orders
 			Galaxy.Current.UnassignID(this);
 		}
 
-		public void Execute(IMobileSpaceObject executor)
+		public void Execute(IOrderable x)
 		{
-			var errors = GetErrors(executor);
-			if (errors.Any())
+			if (x is IMobileSpaceObject executor)
 			{
-				if (Owner != null)
+				var errors = GetErrors(executor);
+				if (errors.Any())
 				{
-					foreach (var e in errors)
-						Owner.Log.Add(e);
+					if (Owner != null)
+					{
+						foreach (var e in errors)
+							Owner.Log.Add(e);
+					}
+					else
+						IsComplete = true;
+					return;
 				}
-				else
-					IsComplete = true;
-				return;
 			}
 
 			Behavior.Execute(Target);
 			IsComplete = true;
 		}
 
-		public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject executor)
+		public IEnumerable<LogMessage> GetErrors(IOrderable executor)
 		{
-			return Behavior.GetErrors(executor, Target).Concat(SelfErrors);
+			return Behavior.GetErrors(executor as IMobileSpaceObject, Target).Concat(SelfErrors);
 		}
 
 		private IEnumerable<LogMessage> SelfErrors

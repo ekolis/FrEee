@@ -90,7 +90,7 @@ namespace FrEee.Game.Objects.Orders
 
 		private GalaxyReference<Empire> owner { get; set; }
 
-		public bool CheckCompletion(ConstructionQueue queue)
+		public bool CheckCompletion(IOrderable queue)
 		{
 			if (NewFacility == null)
 				return false;
@@ -122,55 +122,63 @@ namespace FrEee.Game.Objects.Orders
 		/// <summary>
 		/// Does 1 turn's worth of building.
 		/// </summary>
-		public void Execute(ConstructionQueue queue)
+		public void Execute(IOrderable ord)
 		{
-			var errors = GetErrors(queue);
-			foreach (var error in errors)
-				queue.Owner.Log.Add(error);
-
-			if (!errors.Any())
+			if (ord is ConstructionQueue queue)
 			{
-				// create item if needed
-				if (NewFacility == null)
-					NewFacility = Upgrade.New.Instantiate();
+				var errors = GetErrors(queue);
+				foreach (var error in errors)
+					queue.Owner.Log.Add(error);
 
-				// apply build rate
-				var costLeft = Cost - NewFacility.ConstructionProgress;
-				var spending = ResourceQuantity.Min(costLeft, queue.UnspentRate);
-				if (spending < queue.Owner.StoredResources)
+				if (!errors.Any())
 				{
-					spending = ResourceQuantity.Min(spending, queue.Owner.StoredResources);
-					queue.Container.CreateLogMessage("Construction of " + Upgrade.New + " at " + queue.Container + " was delayed due to lack of resources.");
-				}
-				queue.Owner.StoredResources -= spending;
-				queue.UnspentRate -= spending;
-				NewFacility.ConstructionProgress += spending;
+					// create item if needed
+					if (NewFacility == null)
+						NewFacility = Upgrade.New.Instantiate();
 
-				// if we're done, delete the old facility and replace it with this one
-				if (CheckCompletion(queue))
-				{
-					var planet = (Planet)queue.Container;
-					planet.Colony.Facilities.Where(f => f.Template == Upgrade.Old).First().Dispose();
-					planet.Colony.Facilities.Add(NewFacility);
+					// apply build rate
+					var costLeft = Cost - NewFacility.ConstructionProgress;
+					var spending = ResourceQuantity.Min(costLeft, queue.UnspentRate);
+					if (spending < queue.Owner.StoredResources)
+					{
+						spending = ResourceQuantity.Min(spending, queue.Owner.StoredResources);
+						queue.Container.CreateLogMessage("Construction of " + Upgrade.New + " at " + queue.Container + " was delayed due to lack of resources.");
+					}
+					queue.Owner.StoredResources -= spending;
+					queue.UnspentRate -= spending;
+					NewFacility.ConstructionProgress += spending;
+
+					// if we're done, delete the old facility and replace it with this one
+					if (CheckCompletion(queue))
+					{
+						var planet = (Planet)queue.Container;
+						planet.Colony.Facilities.Where(f => f.Template == Upgrade.Old).First().Dispose();
+						planet.Colony.Facilities.Add(NewFacility);
+					}
 				}
 			}
 		}
 
-		public IEnumerable<LogMessage> GetErrors(ConstructionQueue queue)
+		public IEnumerable<LogMessage> GetErrors(IOrderable ord)
 		{
-			// validate that new facility is unlocked
-			if (!queue.Owner.HasUnlocked(Upgrade.New))
-				yield return Upgrade.Old.CreateLogMessage(Upgrade.Old + " on " + queue.Container + " could not be upgraded to a " + Upgrade.New + " because we have not yet researched the " + Upgrade.New + ".");
+			if (ord is ConstructionQueue queue)
+			{
+				// validate that new facility is unlocked
+				if (!queue.Owner.HasUnlocked(Upgrade.New))
+					yield return Upgrade.Old.CreateLogMessage(Upgrade.Old + " on " + queue.Container + " could not be upgraded to a " + Upgrade.New + " because we have not yet researched the " + Upgrade.New + ".");
 
-			// validate that new and old facilities are in the same family
-			if (Upgrade.New.Family.Value != Upgrade.Old.Family.Value)
-				yield return Upgrade.Old.CreateLogMessage(Upgrade.Old + " on " + queue.Container + " could not be upgraded to a " + Upgrade.New + " because facilities cannot be upgraded to facilities of a different family.");
+				// validate that new and old facilities are in the same family
+				if (Upgrade.New.Family.Value != Upgrade.Old.Family.Value)
+					yield return Upgrade.Old.CreateLogMessage(Upgrade.Old + " on " + queue.Container + " could not be upgraded to a " + Upgrade.New + " because facilities cannot be upgraded to facilities of a different family.");
 
-			// validate that there is a facility to upgrade
-			var planet = (Planet)queue.Container;
-			var colony = planet.Colony;
-			if (!colony.Facilities.Any(f => f.Template == Upgrade.Old))
-				yield return planet.CreateLogMessage("There are no " + Upgrade.Old + "s on " + planet + " to upgrade.");
+				// validate that there is a facility to upgrade
+				var planet = (Planet)queue.Container;
+				var colony = planet.Colony;
+				if (!colony.Facilities.Any(f => f.Template == Upgrade.Old))
+					yield return planet.CreateLogMessage("There are no " + Upgrade.Old + "s on " + planet + " to upgrade.");
+			}
+			else
+				yield return ord.CreateLogMessage($"{ord} cannot upgrade facilities because it is not a construction queue.");
 		}
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)

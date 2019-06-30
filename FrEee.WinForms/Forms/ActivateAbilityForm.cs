@@ -271,7 +271,7 @@ namespace FrEee.WinForms.Forms
 
 					// issue command
 					var order = new ActivateAbilityOrder(sel.Source, sel.Ability, target);
-					var cmd = new AddOrderCommand<IMobileSpaceObject>(sobj, order);
+					var cmd = new AddOrderCommand(sobj, order);
 					cmd.Execute();
 					Empire.Current.Commands.Add(cmd);
 					Close();

@@ -133,11 +133,11 @@ namespace FrEee.WinForms.Controls
 		{
 			foreach (var order in Fleet.Orders.ToArray())
 			{
-				var addCmd = Empire.Current.Commands.OfType<AddOrderCommand<Fleet>>().SingleOrDefault(c => c.Order == order);
+				var addCmd = Empire.Current.Commands.OfType<AddOrderCommand>().SingleOrDefault(c => c.Order == order);
 				if (addCmd == null)
 				{
 					// not a newly added order, so create a remove command to take it off the server
-					var remCmd = new RemoveOrderCommand<Fleet>(Fleet, order);
+					var remCmd = new RemoveOrderCommand(Fleet, order);
 					Empire.Current.Commands.Add(remCmd);
 					remCmd.Execute(); // show change locally
 				}
@@ -157,14 +157,14 @@ namespace FrEee.WinForms.Controls
 
 		private void btnDeleteOrder_Click(object sender, System.EventArgs e)
 		{
-			var order = (IOrder<Fleet>)lstOrdersDetail.SelectedItem;
+			var order = (IOrder)lstOrdersDetail.SelectedItem;
 			if (order != null)
 			{
-				var addCmd = Empire.Current.Commands.OfType<AddOrderCommand<SpaceVehicle>>().SingleOrDefault(c => c.Order == order);
+				var addCmd = Empire.Current.Commands.OfType<AddOrderCommand>().SingleOrDefault(c => c.Order == order);
 				if (addCmd == null)
 				{
 					// not a newly added order, so create a remove command to take it off the server
-					var remCmd = new RemoveOrderCommand<Fleet>(Fleet, order);
+					var remCmd = new RemoveOrderCommand(Fleet, order);
 					Empire.Current.Commands.Add(remCmd);
 					remCmd.Execute(); // show change locally
 				}
@@ -184,7 +184,7 @@ namespace FrEee.WinForms.Controls
 
 		private void btnOrderGoesDown_Click(object sender, System.EventArgs e)
 		{
-			var order = (IOrder<Fleet>)lstOrdersDetail.SelectedItem;
+			var order = (IOrder)lstOrdersDetail.SelectedItem;
 			if (order != null && Fleet.Orders.IndexOf(order) < Fleet.Orders.Count - 1)
 			{
 				var cmd = new RearrangeOrdersCommand<Fleet>(
@@ -200,7 +200,7 @@ namespace FrEee.WinForms.Controls
 
 		private void btnOrderGoesUp_Click(object sender, System.EventArgs e)
 		{
-			var order = (IOrder<Fleet>)lstOrdersDetail.SelectedItem;
+			var order = (IOrder)lstOrdersDetail.SelectedItem;
 			if (order != null && Fleet.Orders.IndexOf(order) > 0)
 			{
 				var cmd = new RearrangeOrdersCommand<Fleet>(
@@ -218,7 +218,7 @@ namespace FrEee.WinForms.Controls
 
 		private void btnOrderToBottom_Click(object sender, System.EventArgs e)
 		{
-			var order = (IOrder<Fleet>)lstOrdersDetail.SelectedItem;
+			var order = (IOrder)lstOrdersDetail.SelectedItem;
 			if (order != null)
 			{
 				var cmd = new RearrangeOrdersCommand<Fleet>(
@@ -234,7 +234,7 @@ namespace FrEee.WinForms.Controls
 
 		private void btnOrderToTop_Click(object sender, System.EventArgs e)
 		{
-			var order = (IOrder<Fleet>)lstOrdersDetail.SelectedItem;
+			var order = (IOrder)lstOrdersDetail.SelectedItem;
 			if (order != null)
 			{
 				var cmd = new RearrangeOrdersCommand<Fleet>(

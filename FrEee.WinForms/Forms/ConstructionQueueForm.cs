@@ -612,7 +612,7 @@ namespace FrEee.WinForms.Forms
 					{
 						var order = new ConstructionOrder<Facility, FacilityTemplate> { Template = template };
 						ConstructionQueue.Orders.Add(order);
-						var cmd = new AddOrderCommand<ConstructionQueue>
+						var cmd = new AddOrderCommand
 						(
 							ConstructionQueue,
 							order
@@ -751,7 +751,7 @@ namespace FrEee.WinForms.Forms
 						// add to queue
 						var order = design.CreateConstructionOrder(ConstructionQueue);
 						ConstructionQueue.Orders.Add(order);
-						var cmd = new AddOrderCommand<ConstructionQueue>
+						var cmd = new AddOrderCommand
 						(
 							ConstructionQueue,
 							order
@@ -833,7 +833,7 @@ namespace FrEee.WinForms.Forms
 					{
 						var order = new UpgradeFacilityOrder(upgrade);
 						ConstructionQueue.Orders.Add(order);
-						var cmd = new AddOrderCommand<ConstructionQueue>
+						var cmd = new AddOrderCommand
 						(
 							ConstructionQueue,
 							order
@@ -891,7 +891,7 @@ namespace FrEee.WinForms.Forms
 
 		private void RemoveOrder(IConstructionOrder order, bool rebindGui = true)
 		{
-			var cmds = Empire.Current.Commands.OfType<AddOrderCommand<ConstructionQueue>>().Where(o => o.Order == order).ToArray();
+			var cmds = Empire.Current.Commands.OfType<AddOrderCommand>().Where(o => o.Order == order).ToArray();
 			if (cmds.Any())
 			{
 				// remove add-order command since the order is new this turn
@@ -900,7 +900,7 @@ namespace FrEee.WinForms.Forms
 			}
 			else
 			{
-				cmds = newCommands.OfType<AddOrderCommand<ConstructionQueue>>().Where(o => o.Order == order).ToArray();
+				cmds = newCommands.OfType<AddOrderCommand>().Where(o => o.Order == order).ToArray();
 				if (cmds.Any())
 				{
 					// Not only new this turn, but new this instance of this form!
@@ -910,7 +910,7 @@ namespace FrEee.WinForms.Forms
 				else
 				{
 					// add remove-order command
-					var cmd = new RemoveOrderCommand<ConstructionQueue>(ConstructionQueue, order);
+					var cmd = new RemoveOrderCommand(ConstructionQueue, order);
 					newCommands.Add(cmd);
 				}
 			}

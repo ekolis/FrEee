@@ -10,10 +10,10 @@ namespace FrEee.Game.Objects.Commands
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public class RearrangeOrdersCommand<T> : OrderCommand<T>
+	public class RearrangeOrdersCommand<T> : OrderCommand
 		where T : IOrderable
 	{
-		public RearrangeOrdersCommand(T target, IOrder<T> order, int deltaPosition)
+		public RearrangeOrdersCommand(T target, IOrder order, int deltaPosition)
 			: base(target, order)
 		{
 			DeltaPosition = deltaPosition;

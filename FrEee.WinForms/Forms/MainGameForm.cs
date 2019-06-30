@@ -1114,13 +1114,13 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
-		private void IssueSpaceObjectOrder<T>(IOrder<T> order) where T : IOrderable, ISpaceObject
+		private void IssueSpaceObjectOrder(IOrder order)
 		{
 			if (SelectedSpaceObject == null)
 				throw new Exception("No space object is selected to issue order \"" + order + "\" to.");
-			if (!(SelectedSpaceObject is T))
-				throw new Exception("Order \"" + order + "\" cannot be issued to objects of type " + SelectedSpaceObject.GetType() + ". It can only be issued to objects of type " + typeof(T) + ".");
-			((T)SelectedSpaceObject).IssueOrder(order);
+			if (!(SelectedSpaceObject is IOrderable))
+				throw new Exception($"Selected space object {SelectedSpaceObject} is not orderable.");
+			((IOrderable)SelectedSpaceObject).IssueOrder(order);
 			BindReport();
 		}
 
@@ -1422,7 +1422,7 @@ namespace FrEee.WinForms.Forms
 					var order = new MoveOrder(sector, !aggressiveMode);
 					v.AddOrder(order);
 					BindReport();
-					var cmd = new AddOrderCommand<IMobileSpaceObject>(v, order);
+					var cmd = new AddOrderCommand(v, order);
 					Empire.Current.Commands.Add(cmd);
 					starSystemView.Invalidate(); // show move lines
 					ChangeCommandMode(CommandMode.None, null);
