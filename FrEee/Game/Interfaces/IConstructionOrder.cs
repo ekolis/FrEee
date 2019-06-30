@@ -3,7 +3,7 @@ using FrEee.Utility;
 
 namespace FrEee.Game.Interfaces
 {
-	public interface IConstructionOrder : IOrder<ConstructionQueue>, INamed
+	public interface IConstructionOrder : IOrder, INamed
 	{
 		/// <summary>
 		/// The cost of the construction.

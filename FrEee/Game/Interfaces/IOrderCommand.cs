@@ -3,12 +3,11 @@
 	/// <summary>
 	/// A command to manipulate an object's order queue.
 	/// </summary>
-	public interface IOrderCommand<T> : ICommand<T>
-		where T : IOrderable
+	public interface IOrderCommand: ICommand
 	{
 		/// <summary>
 		/// The specific order being manipulated.
 		/// </summary>
-		IOrder<T> Order { get; set; }
+		IOrder Order { get; set; }
 	}
 }

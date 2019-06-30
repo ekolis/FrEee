@@ -90,7 +90,7 @@ namespace FrEee.Game.Objects.Orders
 		private GalaxyReference<Empire> owner { get; set; }
 		private GalaxyReference<Waypoint> target { get; set; }
 
-		public bool CheckCompletion(IMobileSpaceObject v)
+		public bool CheckCompletion(IOrderable v)
 		{
 			return IsComplete;
 		}
@@ -121,59 +121,66 @@ namespace FrEee.Game.Objects.Orders
 			Galaxy.Current.UnassignID(this);
 		}
 
-		public void Execute(IMobileSpaceObject sobj)
+		public void Execute(IOrderable ord)
 		{
-			// TODO - movement logs
-			if (Target == null)
-				IsComplete = true; // target waypoint doesn't exist anymore
-			else if (sobj.Sector == Target.Sector)
-				IsComplete = true; // we've arrived at the target
-			else
+			if (ord is IMobileSpaceObject sobj)
 			{
-				var gotoSector = Pathfind(sobj, sobj.Sector).FirstOrDefault();
-				if (gotoSector != null)
+				// TODO - movement logs
+				if (Target == null)
+					IsComplete = true; // target waypoint doesn't exist anymore
+				else if (sobj.Sector == Target.Sector)
+					IsComplete = true; // we've arrived at the target
+				else
 				{
-					// move
-					sobj.Sector = gotoSector;
-					sobj.RefreshDijkstraMap();
-
-					// consume supplies
-					sobj.BurnMovementSupplies();
-
-					// resupply space vehicles
-					// either this vehicle from other space objects, or other vehicles from this one
-					// TODO - this should really be done AFTER battles...
-					if (gotoSector.HasAbility("Supply Generation", sobj.Owner))
+					var gotoSector = Pathfind(sobj, sobj.Sector).FirstOrDefault();
+					if (gotoSector != null)
 					{
-						foreach (var v in gotoSector.SpaceObjects.OfType<IMobileSpaceObject>().Where(v => v.Owner == sobj.Owner))
-							v.SupplyRemaining = v.SupplyStorage;
+						// move
+						sobj.Sector = gotoSector;
+						sobj.RefreshDijkstraMap();
+
+						// consume supplies
+						sobj.BurnMovementSupplies();
+
+						// resupply space vehicles
+						// either this vehicle from other space objects, or other vehicles from this one
+						// TODO - this should really be done AFTER battles...
+						if (gotoSector.HasAbility("Supply Generation", sobj.Owner))
+						{
+							foreach (var v in gotoSector.SpaceObjects.OfType<IMobileSpaceObject>().Where(v => v.Owner == sobj.Owner))
+								v.SupplyRemaining = v.SupplyStorage;
+						}
+						if (gotoSector.StarSystem.HasAbility("Supply Generation - System", sobj.Owner) || gotoSector.StarSystem.HasAbility("Supply Generation - System"))
+						{
+							foreach (var v in gotoSector.StarSystem.FindSpaceObjects<IMobileSpaceObject>().Where(v => v.Owner == sobj.Owner))
+								v.SupplyRemaining = v.SupplyStorage;
+						}
 					}
-					if (gotoSector.StarSystem.HasAbility("Supply Generation - System", sobj.Owner) || gotoSector.StarSystem.HasAbility("Supply Generation - System"))
+					else if (!LoggedPathfindingError)
 					{
-						foreach (var v in gotoSector.StarSystem.FindSpaceObjects<IMobileSpaceObject>().Where(v => v.Owner == sobj.Owner))
-							v.SupplyRemaining = v.SupplyStorage;
+						// log pathfinding error
+						string reason;
+						if (sobj.StrategicSpeed <= 0)
+							reason = sobj + " is immobile";
+						else
+							reason = "there is no available path leading toward " + Destination;
+						PathfindingError = sobj.CreateLogMessage(sobj + " could not " + Verb + " " + Target + " because " + reason + ".");
+						sobj.Owner.Log.Add(PathfindingError);
+						LoggedPathfindingError = true;
 					}
 				}
-				else if (!LoggedPathfindingError)
-				{
-					// log pathfinding error
-					string reason;
-					if (sobj.StrategicSpeed <= 0)
-						reason = sobj + " is immobile";
-					else
-						reason = "there is no available path leading toward " + Destination;
-					PathfindingError = sobj.CreateLogMessage(sobj + " could not " + Verb + " " + Target + " because " + reason + ".");
-					sobj.Owner.Log.Add(PathfindingError);
-					LoggedPathfindingError = true;
-				}
+
+				// spend time
+				sobj.SpendTime(sobj.TimePerMove);
 			}
-
-			// spend time
-			sobj.SpendTime(sobj.TimePerMove);
+			else
+				ord.RecordLog($"{ord} cannot move to a waypoint because it is not a mobile space object.");
 		}
 
-		public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject v)
+		public IEnumerable<LogMessage> GetErrors(IOrderable v)
 		{
+			if (!(v is IMobileSpaceObject))
+				yield return v.CreateLogMessage($"{v} cannot move to a waypoint because it is not a mobile space object.");
 			if (PathfindingError != null)
 				yield return PathfindingError;
 		}

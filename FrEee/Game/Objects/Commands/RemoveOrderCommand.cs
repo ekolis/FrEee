@@ -11,10 +11,9 @@ namespace FrEee.Game.Objects.Commands
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public class RemoveOrderCommand<T> : OrderCommand<T>
-		where T : IOrderable
+	public class RemoveOrderCommand : OrderCommand
 	{
-		public RemoveOrderCommand(T target, IOrder<T> order)
+		public RemoveOrderCommand(IOrderable target, IOrder order)
 			: base(target, order)
 		{
 		}

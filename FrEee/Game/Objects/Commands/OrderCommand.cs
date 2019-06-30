@@ -12,17 +12,16 @@ namespace FrEee.Game.Objects.Commands
 	/// <typeparam name="T"></typeparam>
 	/// <typeparam name="TOrder"></typeparam>
 	[Serializable]
-	public abstract class OrderCommand<T> : Command<T>, IOrderCommand<T>
-		where T : IOrderable
+	public abstract class OrderCommand : Command<IOrderable>, IOrderCommand
 	{
-		protected OrderCommand(T target, IOrder<T> order)
+		protected OrderCommand(IOrderable target, IOrder order)
 			: base(target)
 		{
 			Order = order;
 		}
 
 		[DoNotSerialize]
-		public virtual IOrder<T> Order
+		public virtual IOrder Order
 		{
 			get
 			{
@@ -34,7 +33,7 @@ namespace FrEee.Game.Objects.Commands
 			}
 		}
 
-		private GalaxyReference<IOrder<T>> order { get; set; }
+		private GalaxyReference<IOrder> order { get; set; }
 
 		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{

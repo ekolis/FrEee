@@ -16,7 +16,7 @@ namespace FrEee.Game.Objects.Orders
 	/// An order for a mobile space object to hold position until enemies are sighted in the system.
 	/// </summary>
 	[Serializable]
-	public class SentryOrder : IOrder<IMobileSpaceObject>
+	public class SentryOrder : IOrder
 	{
 		public SentryOrder()
 		{
@@ -46,7 +46,7 @@ namespace FrEee.Game.Objects.Orders
 
 		private GalaxyReference<Empire> owner { get; set; }
 
-		public bool CheckCompletion(IMobileSpaceObject v)
+		public bool CheckCompletion(IOrderable v)
 		{
 			return IsComplete;
 		}
@@ -72,17 +72,22 @@ namespace FrEee.Game.Objects.Orders
 			Galaxy.Current.UnassignID(this);
 		}
 
-		public void Execute(IMobileSpaceObject sobj)
+		public void Execute(IOrderable ord)
 		{
-			// if hostiles in system, we are done sentrying
-			if (sobj.FindStarSystem().FindSpaceObjects<ICombatSpaceObject>(s => s.IsHostileTo(sobj.Owner)).Any())
-				IsComplete = true;
+			if (ord is IMobileSpaceObject sobj)
+			{
+				// if hostiles in system, we are done sentrying
+				if (sobj.FindStarSystem().FindSpaceObjects<ICombatSpaceObject>(s => s.IsHostileTo(sobj.Owner)).Any())
+					IsComplete = true;
 
-			// spend time
-			sobj.SpendTime(sobj.TimePerMove);
+				// spend time
+				sobj.SpendTime(sobj.TimePerMove);
+			}
+			else
+				ord.Owner.RecordLog(ord, $"{ord} cannot sentry because it is not a mobile space object.");
 		}
 
-		public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject executor)
+		public IEnumerable<LogMessage> GetErrors(IOrderable executor)
 		{
 			// this order doesn't error
 			yield break;

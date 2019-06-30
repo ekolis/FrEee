@@ -71,7 +71,7 @@ namespace FrEee.Game.Objects.Orders
 
 		private GalaxyReference<Empire> owner { get; set; }
 
-		public bool CheckCompletion(IMobileSpaceObject v)
+		public bool CheckCompletion(IOrderable v)
 		{
 			return IsComplete;
 		}
@@ -108,77 +108,82 @@ namespace FrEee.Game.Objects.Orders
 			Galaxy.Current.UnassignID(this);
 		}
 
-		public void Execute(IMobileSpaceObject sobj)
+		public void Execute(IOrderable ord)
 		{
-			// TODO - movement logs
-			if (sobj.Sector == Destination)
+			if (ord is IMobileSpaceObject sobj)
 			{
-				IsComplete = true;
-				return;
+				// TODO - movement logs
+				if (sobj.Sector == Destination)
+				{
+					IsComplete = true;
+					return;
+				}
+				else
+				{
+					var gotoSector = Pathfind(sobj, sobj.Sector).FirstOrDefault();
+					if (gotoSector != null)
+					{
+						// move
+						sobj.Sector = gotoSector;
+						sobj.RefreshDijkstraMap();
+
+						// consume supplies
+						sobj.BurnMovementSupplies();
+
+						// resupply space vehicles
+						// either this vehicle from other space objects, or other vehicles from this one
+						// TODO - this should really be done AFTER battles...
+						if (gotoSector.HasAbility("Supply Generation", sobj.Owner))
+						{
+							foreach (var v in gotoSector.SpaceObjects.OfType<IMobileSpaceObject>().Where(v => v.Owner == sobj.Owner))
+								v.SupplyRemaining = v.SupplyStorage;
+						}
+						if (gotoSector.StarSystem.HasAbility("Supply Generation - System", sobj.Owner) || gotoSector.StarSystem.HasAbility("Supply Generation - System"))
+						{
+							foreach (var v in gotoSector.StarSystem.FindSpaceObjects<IMobileSpaceObject>().Where(v => v.Owner == sobj.Owner))
+								v.SupplyRemaining = v.SupplyStorage;
+						}
+
+						// is it done?
+						if (gotoSector == Destination)
+							IsComplete = true;
+
+						// apply damage from damaging sectors
+						// TODO - apply damage from damaging systems too
+						// TODO - move this out into the Place method so it applies to all movement-type orders and newly constructed vehicles
+						foreach (var damager in gotoSector.SpaceObjects.Where(dsobj => dsobj.HasAbility("Sector - Damage")))
+						{
+							var damage = damager.GetAbilityValue("Sector - Damage").ToInt();
+							// TODO - let sector damage have special damage types?
+							var shot = new Shot(null, null, sobj, 0);
+							var hit = new Hit(shot, sobj, damage);
+							sobj.TakeDamage(hit, null);
+							sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " took " + damage + " damage from entering " + damager + "'s sector."));
+							sobj.ReplenishShields();
+						}
+					}
+					else if (!LoggedPathfindingError)
+					{
+						// log pathfinding error
+						string reason;
+						if (sobj.StrategicSpeed <= 0)
+							reason = sobj + " is immobile";
+						else
+							reason = "there is no available path leading toward " + Destination;
+						PathfindingError = sobj.CreateLogMessage(sobj + " could not move to " + Destination + " because " + reason + ".");
+						sobj.Owner?.Log.Add(PathfindingError);
+						LoggedPathfindingError = true;
+					}
+				}
+
+				// spend time
+				sobj.SpendTime(sobj.TimePerMove);
 			}
 			else
-			{
-				var gotoSector = Pathfind(sobj, sobj.Sector).FirstOrDefault();
-				if (gotoSector != null)
-				{
-					// move
-					sobj.Sector = gotoSector;
-					sobj.RefreshDijkstraMap();
-
-					// consume supplies
-					sobj.BurnMovementSupplies();
-
-					// resupply space vehicles
-					// either this vehicle from other space objects, or other vehicles from this one
-					// TODO - this should really be done AFTER battles...
-					if (gotoSector.HasAbility("Supply Generation", sobj.Owner))
-					{
-						foreach (var v in gotoSector.SpaceObjects.OfType<IMobileSpaceObject>().Where(v => v.Owner == sobj.Owner))
-							v.SupplyRemaining = v.SupplyStorage;
-					}
-					if (gotoSector.StarSystem.HasAbility("Supply Generation - System", sobj.Owner) || gotoSector.StarSystem.HasAbility("Supply Generation - System"))
-					{
-						foreach (var v in gotoSector.StarSystem.FindSpaceObjects<IMobileSpaceObject>().Where(v => v.Owner == sobj.Owner))
-							v.SupplyRemaining = v.SupplyStorage;
-					}
-
-					// is it done?
-					if (gotoSector == Destination)
-						IsComplete = true;
-
-					// apply damage from damaging sectors
-					// TODO - apply damage from damaging systems too
-					// TODO - move this out into the Place method so it applies to all movement-type orders and newly constructed vehicles
-					foreach (var damager in gotoSector.SpaceObjects.Where(dsobj => dsobj.HasAbility("Sector - Damage")))
-					{
-						var damage = damager.GetAbilityValue("Sector - Damage").ToInt();
-						// TODO - let sector damage have special damage types?
-						var shot = new Shot(null, null, sobj, 0);
-						var hit = new Hit(shot, sobj, damage);
-						sobj.TakeDamage(hit, null);
-						sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " took " + damage + " damage from entering " + damager + "'s sector."));
-						sobj.ReplenishShields();
-					}
-				}
-				else if (!LoggedPathfindingError)
-				{
-					// log pathfinding error
-					string reason;
-					if (sobj.StrategicSpeed <= 0)
-						reason = sobj + " is immobile";
-					else
-						reason = "there is no available path leading toward " + Destination;
-					PathfindingError = sobj.CreateLogMessage(sobj + " could not move to " + Destination + " because " + reason + ".");
-					sobj.Owner?.Log.Add(PathfindingError);
-					LoggedPathfindingError = true;
-				}
-			}
-
-			// spend time
-			sobj.SpendTime(sobj.TimePerMove);
+				ord.Owner.RecordLog(ord, $"{ord} cannot be ordered to move because it is not a mobile space object.");
 		}
 
-		public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject v)
+		public IEnumerable<LogMessage> GetErrors(IOrderable v)
 		{
 			if (PathfindingError != null)
 				yield return PathfindingError;

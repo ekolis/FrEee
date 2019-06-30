@@ -11,10 +11,9 @@ namespace FrEee.Game.Objects.Commands
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public class AddOrderCommand<T> : OrderCommand<T>
-		where T : IOrderable
+	public class AddOrderCommand : OrderCommand
 	{
-		public AddOrderCommand(T target, IOrder<T> order)
+		public AddOrderCommand(IOrderable target, IOrder order)
 			: base(target, order)
 		{
 		}
@@ -27,7 +26,7 @@ namespace FrEee.Game.Objects.Commands
 			}
 		}
 
-		public override IOrder<T> Order
+		public override IOrder Order
 		{
 			get
 			{
@@ -40,7 +39,7 @@ namespace FrEee.Game.Objects.Commands
 			}
 		}
 
-		private IOrder<T> NewOrder
+		private IOrder NewOrder
 		{
 			get;
 			set;

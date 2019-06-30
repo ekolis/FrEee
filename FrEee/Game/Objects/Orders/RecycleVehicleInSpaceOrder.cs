@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace FrEee.Game.Objects.Orders
 {
-	public class RecycleVehicleInSpaceOrder : IOrder<SpaceVehicle>
+	public class RecycleVehicleInSpaceOrder : IOrder
 	{
 		public RecycleVehicleInSpaceOrder(IRecycleBehavior behavior)
 		{
@@ -49,7 +49,7 @@ namespace FrEee.Game.Objects.Orders
 
 		private GalaxyReference<Empire> owner { get; set; }
 
-		public bool CheckCompletion(SpaceVehicle executor)
+		public bool CheckCompletion(IOrderable executor)
 		{
 			return IsComplete;
 		}
@@ -63,7 +63,7 @@ namespace FrEee.Game.Objects.Orders
 			Galaxy.Current.UnassignID(this);
 		}
 
-		public void Execute(SpaceVehicle executor)
+		public void Execute(IOrderable executor)
 		{
 			var errors = GetErrors(executor);
 			if (errors.Any() && Owner != null)
@@ -73,13 +73,13 @@ namespace FrEee.Game.Objects.Orders
 				return;
 			}
 
-			Behavior.Execute(executor);
+			Behavior.Execute((IRecyclable)executor);
 			IsComplete = true;
 		}
 
-		public IEnumerable<LogMessage> GetErrors(SpaceVehicle executor)
+		public IEnumerable<LogMessage> GetErrors(IOrderable executor)
 		{
-			return Behavior.GetErrors(executor, executor);
+			return Behavior.GetErrors(executor as IMobileSpaceObject, executor as IRecyclable);
 		}
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)

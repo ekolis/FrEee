@@ -41,6 +41,6 @@ namespace FrEee.Game.Interfaces
 
 	public interface IMobileSpaceObject<T> : IMobileSpaceObject where T : IMobileSpaceObject<T>
 	{
-		new IList<IOrder<T>> Orders { get; }
+		//new IList<IOrder> Orders { get; }
 	}
 }

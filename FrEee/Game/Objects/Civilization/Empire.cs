@@ -770,11 +770,11 @@ namespace FrEee.Game.Objects.Civilization
 		/// <typeparam name="T"></typeparam>
 		/// <typeparam name="TOrder"></typeparam>
 		/// <param name="order"></param>
-		public void BelayOrder<T>(T target, IOrder<T> order)
+		public void BelayOrder<T>(T target, IOrder order)
 			where T : IOrderable
 		{
 			target.RemoveOrder(order);
-			var cmd = new RemoveOrderCommand<T>(target, order);
+			var cmd = new RemoveOrderCommand(target, order);
 			Commands.Add(cmd);
 		}
 
@@ -1018,11 +1018,11 @@ namespace FrEee.Game.Objects.Civilization
 		/// <typeparam name="T"></typeparam>
 		/// <typeparam name="TOrder"></typeparam>
 		/// <param name="order"></param>
-		public void IssueOrder<T>(T target, IOrder<T> order)
+		public void IssueOrder<T>(T target, IOrder order)
 			where T : IOrderable
 		{
 			target.AddOrder(order);
-			var cmd = new AddOrderCommand<T>(target, order);
+			var cmd = new AddOrderCommand(target, order);
 			Commands.Add(cmd);
 		}
 

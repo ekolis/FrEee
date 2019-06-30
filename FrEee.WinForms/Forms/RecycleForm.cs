@@ -102,7 +102,7 @@ namespace FrEee.WinForms.Forms
 					{
 						// facilities
 						var fnode = ftnode.AddItemWithImage(f.Name, f, f.Icon);
-						var orders = Empire.Current.Commands.OfType<AddOrderCommand<Planet>>()
+						var orders = Empire.Current.Commands.OfType<AddOrderCommand>()
 							.Where(x => x.Order is RecycleFacilityOrCargoOrder o && x.Executor == p && o.Target == f)
 							.Select(x => ((RecycleFacilityOrCargoOrder)x.Order).Behavior.Verb);
 						if (orders.Any())
@@ -128,7 +128,7 @@ namespace FrEee.WinForms.Forms
 				var vnode = treeVehicles.AddItemWithImage(v.Name, v, v.Icon);
 				if (v is ICargoContainer cc)
 					BindUnitsIn(cc, vnode);
-				var orders = Empire.Current.Commands.OfType<AddOrderCommand<SpaceVehicle>>()
+				var orders = Empire.Current.Commands.OfType<AddOrderCommand>()
 					.Where(x => x.Order is RecycleVehicleInSpaceOrder && x.Executor == v)
 					.Select(x => ((RecycleVehicleInSpaceOrder)x.Order).Behavior.Verb);
 				if (orders.Any())
@@ -164,7 +164,7 @@ namespace FrEee.WinForms.Forms
 					{
 						// units
 						var unode = udnode.AddItemWithImage(u.Name, u, u.Icon);
-						var orders = Empire.Current.Commands.OfType<AddOrderCommand<IMobileSpaceObject>>()
+						var orders = Empire.Current.Commands.OfType<AddOrderCommand>()
 							.Where(x => x.Order is RecycleFacilityOrCargoOrder o && x.Executor == cc && o.Target == u)
 							.Select(x => ((RecycleFacilityOrCargoOrder)x.Order).Behavior.Verb);
 						if (orders.Any())
@@ -238,11 +238,11 @@ namespace FrEee.WinForms.Forms
 		private void btnScrap_Click(object sender, EventArgs e)
 		{
 			foreach (var f in SelectedFacilities)
-				AddCommand(new AddOrderCommand<Planet>(f.Container, new RecycleFacilityOrCargoOrder(new ScrapBehavior(), f)));
+				AddCommand(new AddOrderCommand(f.Container, new RecycleFacilityOrCargoOrder(new ScrapBehavior(), f)));
 			foreach (var v in SelectedVehiclesInSpace)
-				AddCommand(new AddOrderCommand<SpaceVehicle>(v, new RecycleVehicleInSpaceOrder(new ScrapBehavior())));
+				AddCommand(new AddOrderCommand(v, new RecycleVehicleInSpaceOrder(new ScrapBehavior())));
 			foreach (var u in SelectedUnitsInCargo)
-				AddCommand(new AddOrderCommand<IMobileSpaceObject>((IMobileSpaceObject)u.Container, new RecycleFacilityOrCargoOrder(new ScrapBehavior(), u)));
+				AddCommand(new AddOrderCommand((IMobileSpaceObject)u.Container, new RecycleFacilityOrCargoOrder(new ScrapBehavior(), u)));
 			Bind();
 		}
 

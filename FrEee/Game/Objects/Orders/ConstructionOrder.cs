@@ -121,8 +121,9 @@ namespace FrEee.Game.Objects.Orders
 		private GalaxyReference<Empire> owner { get; set; }
 		private IReference<TTemplate> template { get; set; }
 
-		public bool CheckCompletion(ConstructionQueue queue)
+		public bool CheckCompletion(IOrderable q)
 		{
+			var queue = (ConstructionQueue)q;
 			isComplete = Item.ConstructionProgress >= Item.Cost || GetErrors(queue).Any();
 			return IsComplete;
 		}
@@ -151,8 +152,9 @@ namespace FrEee.Game.Objects.Orders
 		/// <summary>
 		/// Does 1 turn's worth of building.
 		/// </summary>
-		public void Execute(ConstructionQueue queue)
+		public void Execute(IOrderable q)
 		{
+			var queue = (ConstructionQueue)q;
 			var errors = GetErrors(queue);
 			foreach (var error in errors)
 				queue.Owner.Log.Add(error);
@@ -196,8 +198,10 @@ namespace FrEee.Game.Objects.Orders
 			}
 		}
 
-		public IEnumerable<LogMessage> GetErrors(ConstructionQueue queue)
+		public IEnumerable<LogMessage> GetErrors(IOrderable q)
 		{
+			var queue = (ConstructionQueue)q;
+
 			// do we have a valid template?
 			if (Template == null)
 				yield return Owner.CreateLogMessage($"{queue.Container} cannot build a nonexistent template; skipping it. Probably a bug...");

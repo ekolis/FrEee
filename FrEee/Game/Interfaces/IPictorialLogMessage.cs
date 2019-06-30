@@ -1,6 +1,6 @@
 ﻿namespace FrEee.Game.Interfaces
 {
-	public interface IPictorialLogMessage<out T> where T : IPictorial
+	public interface IPictorialLogMessage<out T>
 	{
 		T Context { get; }
 	}

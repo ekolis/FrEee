@@ -20,7 +20,7 @@ namespace FrEee.Game.Objects.Vehicles
 	{
 		public SpaceVehicle()
 		{
-			Orders = new List<IOrder<SpaceVehicle>>();
+			Orders = new List<IOrder>();
 			StoredResources = new ResourceQuantity();
 		}
 
@@ -124,12 +124,7 @@ namespace FrEee.Game.Objects.Vehicles
 		[DoNotSerialize]
 		public int MovementRemaining { get; set; }
 
-		IEnumerable<IOrder> IOrderable.Orders
-		{
-			get { return Orders; }
-		}
-
-		public IList<IOrder<SpaceVehicle>> Orders
+		public IList<IOrder> Orders
 		{
 			get;
 			private set;
@@ -272,9 +267,9 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public void AddOrder(IOrder order)
 		{
-			if (!(order is IOrder<SpaceVehicle>))
+			if (!(order is IOrder))
 				throw new Exception("Can't add a " + order.GetType() + " to a space vehicle's orders.");
-			Orders.Add((IOrder<SpaceVehicle>)order);
+			Orders.Add((IOrder)order);
 		}
 
 		/// <summary>
@@ -319,9 +314,9 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public void RearrangeOrder(IOrder order, int delta)
 		{
-			if (order != null && !(order is IOrder<SpaceVehicle>))
+			if (order != null && !(order is IOrder))
 				throw new Exception("Can't rearrange a " + order.GetType() + " in a space vehicle's orders.");
-			var o = (IOrder<SpaceVehicle>)order;
+			var o = (IOrder)order;
 			var newpos = Orders.IndexOf(o) + delta;
 			Orders.Remove(o);
 			if (newpos < 0)
@@ -355,9 +350,9 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public void RemoveOrder(IOrder order)
 		{
-			if (order != null && !(order is IOrder<SpaceVehicle>))
+			if (order != null && !(order is IOrder))
 				return; // order can't exist here anyway
-			Orders.Remove((IOrder<SpaceVehicle>)order);
+			Orders.Remove((IOrder)order);
 		}
 
 		/// <summary>
