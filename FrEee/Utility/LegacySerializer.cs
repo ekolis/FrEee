@@ -181,6 +181,11 @@ namespace FrEee.Utility
 				{
 					try
 					{
+						// HACK - for old savegame compatibility
+						typename = Regex.Replace(typename, @"IOrder`1\[\[.*?\]\]", "IOrder");
+						typename = Regex.Replace(typename, @"AddOrderCommand`1\[\[.*?\]\]", "AddOrderCommand");
+						typename = Regex.Replace(typename, @"RemoveOrderCommand`1\[\[.*?\]\]", "RemoveOrderCommand");
+
 						type = new SafeType(typename).Type;
 					}
 					catch (Exception ex)
