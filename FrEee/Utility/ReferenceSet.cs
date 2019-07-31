@@ -70,21 +70,39 @@ namespace FrEee.Utility
 
 		private HashSet<TRef> set { get; set; }
 
-		private ISet<T> Set { get { return new HashSet<T>(set.Select(r => r.Value)); } }
+        private bool isSetDirty = true;
+
+        private ISet<T> _Set;
+
+		private ISet<T> Set
+        {
+            get
+            {
+                if (isSetDirty)
+                {
+                    _Set = new HashSet<T>(set.Select(r => r.Value));
+                    isSetDirty = false;
+                }
+                return _Set;
+            }
+        }
 
 		public bool Add(T item)
 		{
+            isSetDirty = true;
 			return set.Add(MakeReference(item));
 		}
 
 		void ICollection<T>.Add(T item)
 		{
-			set.Add(MakeReference(item));
+            isSetDirty = true;
+            set.Add(MakeReference(item));
 		}
 
 		public void Clear()
 		{
-			set.Clear();
+            isSetDirty = true;
+            set.Clear();
 		}
 
 		public bool Contains(T item)
@@ -99,7 +117,8 @@ namespace FrEee.Utility
 
 		public void ExceptWith(IEnumerable<T> other)
 		{
-			set.Clear();
+            isSetDirty = true;
+            set.Clear();
 			var result = Set;
 			result.ExceptWith(other);
 			foreach (var item in result)
@@ -118,7 +137,8 @@ namespace FrEee.Utility
 
 		public void IntersectWith(IEnumerable<T> other)
 		{
-			set.Clear();
+            isSetDirty = true;
+            set.Clear();
 			var result = Set;
 			result.IntersectWith(other);
 			foreach (var item in result)
@@ -152,7 +172,8 @@ namespace FrEee.Utility
 
 		public bool Remove(T item)
 		{
-			if (item == null)
+            isSetDirty = true;
+            if (item == null)
 				return set.RemoveWhere(x => !x.HasValue) > 0; // TODO - remvoe only one null?
 			else
 				return set.Remove(MakeReference(item));
@@ -177,7 +198,8 @@ namespace FrEee.Utility
 
 		public void SymmetricExceptWith(IEnumerable<T> other)
 		{
-			set.Clear();
+            isSetDirty = true;
+            set.Clear();
 			var result = Set;
 			result.SymmetricExceptWith(other);
 			foreach (var item in result)
@@ -186,7 +208,8 @@ namespace FrEee.Utility
 
 		public void UnionWith(IEnumerable<T> other)
 		{
-			set.Clear();
+            isSetDirty = true;
+            set.Clear();
 			var result = Set;
 			result.UnionWith(other);
 			foreach (var item in result)
