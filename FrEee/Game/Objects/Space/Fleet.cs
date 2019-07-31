@@ -385,7 +385,7 @@ namespace FrEee.Game.Objects.Space
 		[DoNotSerialize]
 		public Empire Owner
 		{
-			get { return Vehicles.Where(v => v != null).Select(v => v.Owner).Distinct().SingleOrDefault(); }
+			get { return Vehicles.ExceptSingle(null).FirstOrDefault()?.Owner; } // assume all vehicles have the same owner
 			set
 			{
 				foreach (var v in Vehicles)
