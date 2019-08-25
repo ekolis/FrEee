@@ -1,0 +1,18 @@
+syntax: glob
+bin
+obj
+*.suo
+Thumbs.db
+*.csproj.user
+*.userprefs
+packages/
+*.psess
+*.vspx
+*.vsp
+*.vsps
+*.dmp
+*.diagsession
+*.etl
+*.orig
+.vs
+*.Backup.MuProject
