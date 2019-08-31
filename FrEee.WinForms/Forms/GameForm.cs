@@ -33,7 +33,7 @@ namespace FrEee.WinForms.Forms
 		/// </summary>
 		protected void OpenWikiPage()
 		{
-			Process.Start($"https://bitbucket.org/ekolis/freee/wiki/Screens/{WikiPage}");
+			Process.Start($"https://github.com/ekolis/FrEee/wiki/{WikiPage}");
 		}
 
 		private void GameForm_KeyDown(object sender, KeyEventArgs e)
