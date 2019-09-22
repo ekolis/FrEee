@@ -48,5 +48,10 @@ namespace FrEee.Game.Interfaces
 		bool CanTarget(ITargetable target);
 
 		bool IsHostileTo(Empire emp);
+
+		/// <summary>
+		/// Does this combatant "fill" a tile (prevent other tile-filling combatants from occupying the tile)?
+		/// </summary>
+		bool FillsCombatTile { get; }
 	}
 }

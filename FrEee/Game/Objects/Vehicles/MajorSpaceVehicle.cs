@@ -152,6 +152,8 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		public override bool IsIdle => base.IsIdle || (ConstructionQueue != null && ConstructionQueue.IsIdle);
+
+		public override bool FillsCombatTile => true;
 	}
 }
 

@@ -61,5 +61,7 @@ namespace FrEee.Game.Objects.Vehicles
 		// HACK - until we end our game and this can be purged
 		[DoNotSerialize]
 		private Cargo Cargo { get; set;}
+
+		public override bool FillsCombatTile => false;
 	}
 }

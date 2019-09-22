@@ -281,7 +281,17 @@ namespace FrEee.Game.Objects.Combat.Grid
 									threat = 0;
 								heatmap.AddLinearGradientEightWay(locations[e], threat, threat, -1);
 							}
-							locations[c] = heatmap.FindMin(locations[c], GetCombatSpeedThisRound(c));
+							if (c.FillsCombatTile)
+							{
+								// only one ship/base/planet per tile
+								foreach (var tile in heatmap.ToArray())
+								{
+									if (locations.Any(q => q.Key.FillsCombatTile && q.Value == tile.Key))
+										heatmap.Remove(tile.Key);
+								}
+							}
+							if (heatmap.Any())
+								locations[c] = heatmap.FindMin(locations[c], GetCombatSpeedThisRound(c));
 						}
 						else
 						{
@@ -338,23 +348,34 @@ namespace FrEee.Game.Objects.Combat.Grid
 									tiles.Add(new IntVector2(targetPos.X - maxdmgrange, y));
 									tiles.Add(new IntVector2(targetPos.X + maxdmgrange, y));
 								}
-								var closest = tiles.WithMin(t => t.DistanceToEightWay(locations[c])).First();
-								locations[c] = IntVector2.InterpolateEightWay(locations[c], closest, GetCombatSpeedThisRound(c));
-								var newdist = locations[c].DistanceToEightWay(locations[bestTarget]);
-								if (DistancesToTargets.ContainsKey(c) && newdist >= DistancesToTargets[c] && combatSpeeds[c] <= combatSpeeds[bestTarget] && !c.Weapons.Any(w => w.Template.WeaponMaxRange >= newdist))
+								if (c.FillsCombatTile)
 								{
-									DistancesToTargets.Remove(c);
-									IgnoredTargets[c].Add(bestTarget); // can't catch it, might as well find a new target
-									goodTargets = targetiness.Where(x => !IgnoredTargets[c].Contains(x.Key)).WithMax(x => x.Value);
-									bestTarget = null;
-									if (goodTargets.Any())
-										bestTarget = goodTargets.First().Key;
-									if (bestTarget == null)
-										goto gotosAreVeryEvil;
-									goto gotosAreEvil;
+									foreach (var tile in tiles.ToArray())
+									{
+										if (locations.Any(q => q.Key.FillsCombatTile && q.Value == tile))
+											tiles.Remove(tile);
+									}
 								}
-								else
-									DistancesToTargets[c] = newdist;
+								if (tiles.Any())
+								{
+									var closest = tiles.WithMin(t => t.DistanceToEightWay(locations[c])).First();
+									locations[c] = IntVector2.InterpolateEightWay(locations[c], closest, GetCombatSpeedThisRound(c));
+									var newdist = locations[c].DistanceToEightWay(locations[bestTarget]);
+									if (DistancesToTargets.ContainsKey(c) && newdist >= DistancesToTargets[c] && combatSpeeds[c] <= combatSpeeds[bestTarget] && !c.Weapons.Any(w => w.Template.WeaponMaxRange >= newdist))
+									{
+										DistancesToTargets.Remove(c);
+										IgnoredTargets[c].Add(bestTarget); // can't catch it, might as well find a new target
+										goodTargets = targetiness.Where(x => !IgnoredTargets[c].Contains(x.Key)).WithMax(x => x.Value);
+										bestTarget = null;
+										if (goodTargets.Any())
+											bestTarget = goodTargets.First().Key;
+										if (bestTarget == null)
+											goto gotosAreVeryEvil;
+										goto gotosAreEvil;
+									}
+									else
+										DistancesToTargets[c] = newdist;
+								}
 							}
 							else
 								DistancesToTargets.Remove(c);

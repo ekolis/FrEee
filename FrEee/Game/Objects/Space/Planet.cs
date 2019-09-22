@@ -1213,5 +1213,7 @@ namespace FrEee.Game.Objects.Space
 		public Progress AngerProgress => new Progress(Colony?.AverageAnger ?? 0, Mod.Current.Settings.MaxAnger);
 
 		public IEnumerable<Component> Components => Cargo.Units.OfType<WeaponPlatform>().SelectMany(q => q.Components);
+
+		public bool FillsCombatTile => true;
 	}
 }

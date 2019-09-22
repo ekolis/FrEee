@@ -33,7 +33,7 @@
 			{
 				for (var y = pos.Y - range; y <= pos.Y + range; y++)
 				{
-					if (result == null || this[x, y] > this[result])
+					if (this.ContainsKey(new IntVector2(x, y)) && (result == null || this[x, y] > this[result]))
 						result = new IntVector2(x, y);
 				}
 			}
@@ -47,7 +47,7 @@
 			{
 				for (var y = pos.Y - range; y <= pos.Y + range; y++)
 				{
-					if (result == null || this[x, y] < this[result])
+					if (this.ContainsKey(new IntVector2(x, y))  && (result == null || this[x, y] < this[result]))
 						result = new IntVector2(x, y);
 				}
 			}

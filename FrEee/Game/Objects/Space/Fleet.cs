@@ -912,5 +912,7 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		public IEnumerable<Component> Components => Vehicles.SelectMany(q => q.Components);
+
+		public bool FillsCombatTile => Vehicles.Any(q => q.FillsCombatTile);
 	}
 }

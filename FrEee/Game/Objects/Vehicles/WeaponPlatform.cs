@@ -94,5 +94,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			CommonExtensions.Place(this, target);
 		}
+
+		public override bool FillsCombatTile => false;
 	}
 }
