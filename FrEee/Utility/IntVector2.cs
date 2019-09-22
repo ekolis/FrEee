@@ -1,5 +1,8 @@
 ﻿using FrEee.Utility.Extensions;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FrEee.Utility
 {
@@ -160,6 +163,33 @@ namespace FrEee.Utility
 		public override string ToString()
 		{
 			return $"({X}, {Y})";
+		}
+
+		public static IEnumerable<IntVector2> WithinRadius(int radius)
+		{
+			if (!withinRadius.ContainsKey(radius))
+			{
+				if (radius < 0)
+					withinRadius[radius] = Enumerable.Empty<IntVector2>();
+				else
+				{
+					var list = new List<IntVector2>();
+					for (var x = -radius; x <= radius; x++)
+					{
+						for (var y = -radius; y <= radius; y++)
+							list.Add(new IntVector2(x, y));
+					}
+					withinRadius.Add(radius, list);
+				}
+			}
+			return withinRadius[radius];
+		}
+
+		private static IDictionary<int, IEnumerable<IntVector2>> withinRadius = new Dictionary<int, IEnumerable<IntVector2>>();
+
+		public static IEnumerable<IntVector2> AtRadius(int radius)
+		{
+			return WithinRadius(radius).Except(WithinRadius(radius - 1));
 		}
 	}
 }

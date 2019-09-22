@@ -53,5 +53,10 @@ namespace FrEee.Game.Interfaces
 		/// Does this combatant "fill" a tile (prevent other tile-filling combatants from occupying the tile)?
 		/// </summary>
 		bool FillsCombatTile { get; }
+
+		/// <summary>
+		/// The size of this combatant. Used for determining who goes where in a formation.
+		/// </summary>
+		int Size { get; }
 	}
 }

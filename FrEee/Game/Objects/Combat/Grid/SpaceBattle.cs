@@ -4,9 +4,11 @@ using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using Microsoft.Scripting.Runtime;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Math;
@@ -50,22 +52,47 @@ namespace FrEee.Game.Objects.Combat.Grid
 				// HACK - warp point in sector, assume someone warped
 				// TODO - do this for warp point exits instead since warp points may be one way
 				// warp battles start with everyone in the same square to allow blockades
-				foreach (var c in Combatants)
+				// TODO - just group everyone around the warp point, don't actually put them in the same tile
+				foreach (var c in Combatants.OrderByDescending(q => q.Size))
 					locations.Add(c, new IntVector2());
 			}
 			else
 			{
 				// place all combatants at the points of a regular polygon
-				var sideLength = 21; // make sure no one can shoot each other at the start
-									 // https://stackoverflow.com/questions/32169875/calculating-the-coordinates-of-a-regular-polygon-given-its-center-and-its-side-l
+				var sideLength = 20 + (int)Math.Ceiling((double)Combatants.GroupBy(q => q.Owner).Max(q => q.Count())); // make sure no one can shoot each other at the start
+																													   // https://stackoverflow.com/questions/32169875/calculating-the-coordinates-of-a-regular-polygon-given-its-center-and-its-side-l
 				var radius = sideLength / (2 * Sin(PI / Empires.Count()));
 				var combs = Combatants.ToArray();
-				for (var i = 0; i < Empires.Count(); i++)
+				for (int i = 0; i < Empires.Count(); i++)
 				{
 					var x = radius * Cos(PI / Empires.Count() * (1 + 2 * i));
 					var y = radius * Sin(PI / Empires.Count() * (1 + 2 * i));
-					foreach (var comb in Combatants.Where(q => q.Owner == Empires.ElementAt(i)))
-						locations.Add(comb, new IntVector2((int)x, (int)y));
+					foreach (var comb in Combatants.Where(q => q.Owner == Empires.ElementAt(i)).OrderByDescending(q => q.Size))
+					{
+						// scramble all tile-filling combatants in rings around the largest
+						if (comb.FillsCombatTile)
+						{
+							for (int r = 0; ; r++)
+							{
+								bool done = false;
+								var tiles = IntVector2.AtRadius(r);
+								foreach (var tile in tiles.Shuffle(Dice))
+								{
+									var atHere = locations.Where(q => q.Key.FillsCombatTile && q.Value == tile);
+									if (!atHere.Any())
+									{
+										locations.Add(comb, new IntVector2((int)x + tile.X, (int)y + tile.Y));
+										done = true;
+										break;
+									}
+								}
+								if (done)
+									break;
+							}
+						}
+						else // put non-filling combatants in the center
+							locations.Add(comb, new IntVector2((int)x, (int)y));
+					}
 				}
 			}
 		}

@@ -497,7 +497,7 @@ namespace FrEee.Game.Objects.Space
 			get { return Vehicles.Sum(v => v.ShieldHitpoints); }
 		}
 
-		public int? Size
+		public int Size
 		{
 			get { return Vehicles.ExceptSingle((IMobileSpaceObject)null).Sum(v => v.Size); }
 		}

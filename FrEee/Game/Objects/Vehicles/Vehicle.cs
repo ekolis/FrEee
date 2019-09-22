@@ -530,7 +530,7 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
-		public int? Size
+		public int Size
 		{
 			get { return Design.Hull.Size; }
 		}

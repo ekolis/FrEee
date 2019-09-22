@@ -684,9 +684,9 @@ namespace FrEee.Game.Objects.Space
 		[DoNotSerialize]
 		public StellarObjectSize Size { get { return size; } set { size = value; } }
 
-		int? IMobileSpaceObject.Size
+		int ICombatant.Size
 		{
-			get { return null; }
+			get { return int.MaxValue; }
 		}
 
 		public ResourceQuantity StandardIncomePercentages

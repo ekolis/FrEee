@@ -365,5 +365,7 @@ namespace FrEee.Game.Objects.Combat
 		public IEnumerable<Component> Components => Enumerable.Empty<Component>();
 
 		public bool FillsCombatTile => false;
+
+		public int Size => 0;
 	}
 }

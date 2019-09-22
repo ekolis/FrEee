@@ -20,11 +20,6 @@ namespace FrEee.Game.Interfaces
 		int MovementRemaining { get; set; }
 		new Sector Sector { get; set; }
 
-		/// <summary>
-		/// The tonnage of the object, in kT, or null if it's a planet.
-		/// </summary>
-		int? Size { get; }
-
 		int StrategicSpeed { get; }
 
 		int SupplyRemaining { get; set; }
