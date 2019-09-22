@@ -51,10 +51,9 @@ namespace FrEee.Game.Objects.Combat.Grid
 			{
 				// HACK - warp point in sector, assume someone warped
 				// TODO - do this for warp point exits instead since warp points may be one way
-				// warp battles start with everyone in the same square to allow blockades
-				// TODO - just group everyone around the warp point, don't actually put them in the same tile
+				// warp battles start with everyone mashed together to allow blockades
 				foreach (var c in Combatants.OrderByDescending(q => q.Size))
-					locations.Add(c, new IntVector2());
+					PlaceCombatant(locations, 0, 0, c);
 			}
 			else
 			{
@@ -69,32 +68,37 @@ namespace FrEee.Game.Objects.Combat.Grid
 					var y = radius * Sin(PI / Empires.Count() * (1 + 2 * i));
 					foreach (var comb in Combatants.Where(q => q.Owner == Empires.ElementAt(i)).OrderByDescending(q => q.Size))
 					{
-						// scramble all tile-filling combatants in rings around the largest
-						if (comb.FillsCombatTile)
-						{
-							for (int r = 0; ; r++)
-							{
-								bool done = false;
-								var tiles = IntVector2.AtRadius(r);
-								foreach (var tile in tiles.Shuffle(Dice))
-								{
-									var atHere = locations.Where(q => q.Key.FillsCombatTile && q.Value == tile);
-									if (!atHere.Any())
-									{
-										locations.Add(comb, new IntVector2((int)x + tile.X, (int)y + tile.Y));
-										done = true;
-										break;
-									}
-								}
-								if (done)
-									break;
-							}
-						}
-						else // put non-filling combatants in the center
-							locations.Add(comb, new IntVector2((int)x, (int)y));
+						PlaceCombatant(locations, x, y, comb);
 					}
 				}
 			}
+		}
+
+		private void PlaceCombatant(SafeDictionary<ICombatant, IntVector2> locations, double x, double y, ICombatant comb)
+		{
+			// scramble all tile-filling combatants in rings around the largest
+			if (comb.FillsCombatTile)
+			{
+				for (int r = 0; ; r++)
+				{
+					bool done = false;
+					var tiles = IntVector2.AtRadius(r);
+					foreach (var tile in tiles.Shuffle(Dice))
+					{
+						var atHere = locations.Where(q => q.Key.FillsCombatTile && q.Value == tile);
+						if (!atHere.Any())
+						{
+							locations.Add(comb, new IntVector2((int)x + tile.X, (int)y + tile.Y));
+							done = true;
+							break;
+						}
+					}
+					if (done)
+						break;
+				}
+			}
+			else // put non-filling combatants in the center
+				locations.Add(comb, new IntVector2((int)x, (int)y));
 		}
 
 		/// <summary>
