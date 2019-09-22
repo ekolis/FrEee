@@ -5,6 +5,7 @@ using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using NAudio.MediaFoundation;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -247,7 +248,10 @@ namespace FrEee.WinForms.Controls
 
 							if (here.Count() > 1)
 							{
-								pe.Graphics.DrawString($"{here.Count()} objects", Font, Brushes.White, drawx, drawy + drawsize / 2f, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Far});
+								if (here.Any(q => q is ISpaceObject && q.FillsCombatTile))
+									pe.Graphics.DrawString($"{here.Where(q => q.FillsCombatTile).OfType<ISpaceObject>().Largest().Name} (+{here.Count() - 1})", Font, Brushes.White, drawx, drawy + drawsize / 2f, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Far });
+								else
+									pe.Graphics.DrawString($"{here.Count()} objects", Font, Brushes.White, drawx, drawy + drawsize / 2f, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Far});
 							}
 							else if (here.Count() == 1 && here.Single() is ISpaceObject)
 							{
