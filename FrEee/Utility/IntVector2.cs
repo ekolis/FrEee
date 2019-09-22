@@ -55,9 +55,12 @@ namespace FrEee.Utility
 		/// <param name="start"></param>
 		/// <param name="end"></param>
 		/// <param name="distance"></param>
+		/// <param name="skip">Should we skip moving to the endpoint? (say because it is occupied...)</param>
 		/// <returns></returns>
-		public static IntVector2 InterpolateEightWay(IntVector2 start, IntVector2 end, int distance)
+		public static IntVector2 InterpolateEightWay(IntVector2 start, IntVector2 end, int distance, Func<IntVector2, bool> skip = null)
 		{
+			if (distance <= 0)
+				return start;
 			var trip = end - start;
 			var tripLength = trip.LengthEightWay;
 			if (distance >= tripLength)
@@ -82,6 +85,8 @@ namespace FrEee.Utility
 				}
 				remainingDistance--;
 			}
+			if (skip != null && skip(pos))
+				return InterpolateEightWay(start, end, distance - 1, skip); // TODO - find alternate endpoint rather than just stopping the journey one tile short
 			return pos;
 		}
 
