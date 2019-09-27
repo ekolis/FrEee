@@ -7,7 +7,7 @@ using System;
 namespace FrEee.Game.Objects.Vehicles
 {
 	[Serializable]
-	public class Fighter : SpaceVehicle, IUnit, IConstructor // TODO - remove IConstructor after game is over!
+	public class Fighter : SpaceVehicle, IUnit
 	{
 		public override AbilityTargets AbilityTarget
 		{

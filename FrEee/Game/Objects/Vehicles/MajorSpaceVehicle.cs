@@ -139,7 +139,7 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		private ConstructionQueue constructionQueue { get; set; }
-		public override ConstructionQueue ConstructionQueue
+		public ConstructionQueue ConstructionQueue
 		{
 			get
 			{
