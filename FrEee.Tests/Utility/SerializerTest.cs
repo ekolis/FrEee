@@ -195,6 +195,16 @@ namespace FrEee.Tests.Utility
 			Assert.AreEqual(str, str2);
 		}
 
+		[TestMethod]
+		public void PrivateProperties()
+		{
+			var spy = new Spy();
+			spy.SetSecretCode(42000);
+			var serdata = Serializer.SerializeToString(spy);
+			var spy2 = Serializer.DeserializeFromString<Spy>(serdata);
+			Assert.AreEqual(spy.NotSecretCode, spy2.NotSecretCode);
+		}
+
 		private class Car
 		{
 			public Car(Company manufacturer, string model, int year)
@@ -240,6 +250,20 @@ namespace FrEee.Tests.Utility
 			public Person Partner { get; set; }
 
 			public override string ToString() => $"{Name ?? "Nobody"}, whose partner is {Partner?.Name ?? "nobody"}";
+		}
+
+		private class Spy
+		{
+			public Spy()
+			{
+				
+			}
+
+			private int SecretCode { get; set; }
+
+			public int NotSecretCode => SecretCode;
+
+			public void SetSecretCode(int code) => SecretCode = code;
 		}
 	}
 }

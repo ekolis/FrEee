@@ -616,10 +616,6 @@ namespace FrEee.Utility
 			if (!int.TryParse(s, out count))
 				throw new SerializationException("Expected integer, got \"" + s + "\" when parsing property count.");
 
-			if (type.Name.Contains("Appears"))
-			{
-
-			}
 
 			var dict = new SafeDictionary<string, object>();
 
@@ -635,7 +631,7 @@ namespace FrEee.Utility
 				if (props.ContainsKey(pname))
 				{
 					// TODO - get base class recursively, not just derived class and declaring type
-					var prop = type.GetProperty(pname) ?? props[pname]; // get concrete type property in case it has DoNotSerialize and the abstract type doesn't
+					var prop = type.GetProperty(pname, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance) ?? props[pname]; // get concrete type property in case it has DoNotSerialize and the abstract type doesn't
 					if (prop != null)
 					{
 						if (prop.Name == "StarSystemNames")
@@ -650,7 +646,7 @@ namespace FrEee.Utility
 					}
 					else
 						r.ReadToEndOfLine(';', log); // throw away this property, we don't need it
-													// if p is null or has do not serialize attribute, it must be data from an old version with different property names, so don't crash
+													 // if p is null or has do not serialize attribute, it must be data from an old version with different property names, so don't crash
 				}
 			}
 
