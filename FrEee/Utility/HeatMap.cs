@@ -37,7 +37,7 @@
 						result = new IntVector2(x, y);
 				}
 			}
-			return result;
+			return result ?? pos;
 		}
 
 		public IntVector2 FindMin(IntVector2 pos, int range)
@@ -51,7 +51,7 @@
 						result = new IntVector2(x, y);
 				}
 			}
-			return result;
+			return result ?? pos;
 		}
 	}
 }
