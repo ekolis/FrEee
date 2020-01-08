@@ -304,7 +304,7 @@ namespace FrEee.Game.Setup
 
 			// create player empires
 			foreach (var et in EmpireTemplates)
-			{
+			{		
 				var emp = et.Instantiate();
 				gal.Empires.Add(emp);
 			}
@@ -330,7 +330,7 @@ namespace FrEee.Game.Setup
 					IsPlayerEmpire = false,
 					Color = RandomColor(dice),
 					Culture = Mod.Current.Cultures.PickRandom(dice),
-					AIName = "AI_Default",
+					AIName = Mod.Current.EmpireAIs.PickRandom(dice).Name,
 				};
 				foreach (var apt in Aptitude.All)
 					et.PrimaryRace.Aptitudes[apt.Name] = 100;
@@ -358,7 +358,7 @@ namespace FrEee.Game.Setup
 					IsMinorEmpire = true,
 					Color = RandomColor(dice),
 					Culture = Mod.Current.Cultures.PickRandom(dice),
-					AIName = "AI_Default",
+					AIName = Mod.Current.EmpireAIs.PickRandom(dice).Name,
 				};
 				foreach (var apt in Aptitude.All)
 					et.PrimaryRace.Aptitudes[apt.Name] = 100;
@@ -370,6 +370,11 @@ namespace FrEee.Game.Setup
 			// don't do them in any particular order, so P1 and P2 don't always wind up on opposite sides of the galaxy when using equidistant placement
 			foreach (var emp in gal.Empires.Shuffle(dice))
 				PlaceEmpire(gal, emp, dice);
+
+
+			//Enabled AI ministers, so the AI's actually can do stuff. 
+			foreach (var emp in gal.Empires.Where(x => !x.IsPlayerEmpire && x.AI != null))
+				emp.EnabledMinisters = emp.AI.MinisterNames; 
 
 			// remove ruins if they're not allowed
 			if (!GenerateRandomRuins)

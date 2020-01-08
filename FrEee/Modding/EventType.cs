@@ -19,12 +19,12 @@ namespace FrEee.Modding
 		/// <summary>
 		/// Action to execute when the event occurs.,
 		/// </summary>
-		public Script Action { get; set; }
+		public PythonScript Action { get; set; }
 
 		/// <summary>
 		/// The import statements required to run the target selector and action scripts.
 		/// </summary>
-		public Script Imports { get; set; }
+		public PythonScript Imports { get; set; }
 
 		public bool IsDisposed { get; set; }
 
@@ -45,7 +45,7 @@ namespace FrEee.Modding
 		/// <summary>
 		/// Scripts to set parameters for the event type.
 		/// </summary>
-		public Script Parameters { get; set; }
+		public PythonScript Parameters { get; set; }
 
 		/// <summary>
 		/// Script to select a target for the event.

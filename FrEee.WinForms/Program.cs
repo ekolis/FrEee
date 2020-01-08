@@ -87,7 +87,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 						var responseString = response.Content.ReadAsStringAsync().Result;
 					}
 					var exception = e.Exception;
-					exception.Log();
+					exception.LogFatal();
 					Log(exception);
 					var inner = exception;
 					while (inner is TargetInvocationException)
@@ -305,7 +305,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 			catch (Exception ex)
 			{
 				Console.Error.WriteLine("Exception occurred (" + ex.Message + "): check errorlog.txt for details.");
-				ex.Log();
+				ex.LogFatal();
 				return 3;
 			}
 		}

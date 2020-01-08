@@ -123,7 +123,7 @@ namespace FrEee.Modding
 				fulltext = Text;
 			else
 				fulltext = string.Join("\n", ExternalScripts.Select(q => q.Text)) + "\n" + Text;
-			return ScriptEngine.EvaluateExpression<T>(fulltext, vars);
+			return PythonScriptEngine.EvaluateExpression<T>(fulltext, vars);
 		}
 
 		object IFormula.Evaluate(object host, IDictionary<string, object> variables)
@@ -165,6 +165,6 @@ namespace FrEee.Modding
 		/// <summary>
 		/// The external scripts required to execute this formula.
 		/// </summary>
-		public Script[] ExternalScripts { get; set; }
+		public PythonScript[] ExternalScripts { get; set; }
 	}
 }

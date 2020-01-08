@@ -23,7 +23,7 @@ namespace FrEee.Game.Objects.Commands
 			if (Executor.AI == null)
 				Executor.RecordLog(Executor, $"Could not toggle AI ministers for {Executor} because there is no AI for this empire.");
 			else
-				Executor.AI.EnabledMinisters = EnabledMinisters;
+				Executor.EnabledMinisters = EnabledMinisters;
 		}
 	}
 }

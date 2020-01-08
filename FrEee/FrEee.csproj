@@ -110,6 +110,8 @@
   <ItemGroup>
     <Compile Include="Game\Enumerations\Conditions.cs" />
     <Compile Include="Game\Interfaces\IConstructor.cs" />
+    <Compile Include="Game\Objects\AI\CSAI.cs" />
+    <Compile Include="Game\Objects\AI\PythonAI.cs" />
     <Compile Include="Game\Objects\Civilization\PlayerInfo.cs" />
     <Compile Include="Game\Objects\Combat\Grid\BattleEvent.cs" />
     <Compile Include="Game\Objects\Combat\Grid\CombatantAppearsEvent.cs" />
@@ -145,6 +147,8 @@
     <Compile Include="Modding\Loaders\DesignRoleLoader.cs" />
     <Compile Include="Modding\Loaders\EventTypeLoader.cs" />
     <Compile Include="Modding\EventType.cs" />
+    <Compile Include="Modding\Interfaces\IScript.cs" />
+    <Compile Include="Modding\Scripts\CSScript.cs" />
     <Compile Include="Utility\ClientUtilities.cs" />
     <Compile Include="Utility\Extensions\AbilityExtensions.cs" />
     <Compile Include="Utility\Extensions\ChecksExtensions.cs" />
@@ -374,9 +378,9 @@
     <Compile Include="Modding\PopulationModifier.cs" />
     <Compile Include="Modding\Requirement.cs" />
     <Compile Include="Modding\ResourceFormula.cs" />
-    <Compile Include="Modding\Script.cs" />
-    <Compile Include="Modding\ScriptEngine.cs" />
-    <Compile Include="Modding\ScriptRequirement.cs" />
+    <Compile Include="Modding\Scripts\PythonScript.cs" />
+    <Compile Include="Modding\Scripts\PythonScriptEngine.cs" />
+    <Compile Include="Modding\Scripts\ScriptRequirement.cs" />
     <Compile Include="Modding\Templates\ComponentTemplate.cs" />
     <Compile Include="Game\Objects\Civilization\Empire.cs" />
     <Compile Include="Game\Objects\Technology\DirectFireWeaponInfo.cs" />
@@ -505,6 +509,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Scripts\AI\AI_Default\AI.ministers" />
+    <None Include="Scripts\AI\AI_Default\AI.script" />
+    <None Include="Scripts\AI\TestAI\AI.csx" />
+    <None Include="Scripts\AI\TestAI\AI.ministers" />
+    <None Include="Scripts\AI\TestAI\BasicResearchModule.csx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -517,6 +526,9 @@
     <PackageReference Include="IronPython">
       <Version>2.7.9</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting">
+      <Version>3.4.0</Version>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>7.0.1</Version>
     </PackageReference>
@@ -526,6 +538,13 @@
     <PackageReference Include="valueinjecter">
       <Version>2.3.3</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\AI\AI_Default\AI.py" />
+    <Content Include="Scripts\EndTurn.py" />
+    <Content Include="Scripts\GameInit.py" />
+    <Content Include="Scripts\Global.py" />
+    <Content Include="Scripts\TestInclude.py" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

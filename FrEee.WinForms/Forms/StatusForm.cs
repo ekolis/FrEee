@@ -51,7 +51,7 @@ namespace FrEee.WinForms.Forms
 				Console.Error.WriteLine(status.Exception.ToString());
 				Enabled = true;
 				progressBar.Value = 0;
-				status.Exception.Log();
+				status.Exception.LogFatal();
 				thread.Abort();
 				Close();
 			}

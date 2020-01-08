@@ -39,7 +39,7 @@ namespace FrEee.Modding.Loaders
 					filename = stockFilename;
 				else
 					filename = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Mods", ModPath, "Scripts", name);
-				mod.GlobalScript = Script.Load(filename) ?? Script.Load(stockFilename) ?? new Script(name, "");
+				mod.GlobalScript = PythonScript.Load(filename) ?? PythonScript.Load(stockFilename) ?? new PythonScript(name, "");
 			}
 			{
 				var name = "GameInit";
@@ -49,7 +49,7 @@ namespace FrEee.Modding.Loaders
 					filename = stockFilename;
 				else
 					filename = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Mods", ModPath, "Scripts", name);
-				mod.GameInitScript = Script.Load(filename) ?? Script.Load(stockFilename) ?? new Script(name, "");
+				mod.GameInitScript = PythonScript.Load(filename) ?? PythonScript.Load(stockFilename) ?? new PythonScript(name, "");
 			}
 			{
 				var name = "EndTurn";
@@ -59,7 +59,7 @@ namespace FrEee.Modding.Loaders
 					filename = stockFilename;
 				else
 					filename = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Mods", ModPath, "Scripts", name);
-				mod.EndTurnScript = Script.Load(filename) ?? Script.Load(stockFilename) ?? new Script(name, "");
+				mod.EndTurnScript = PythonScript.Load(filename) ?? PythonScript.Load(stockFilename) ?? new PythonScript(name, "");
 			}
 
 			yield break;
