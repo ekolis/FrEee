@@ -11,8 +11,8 @@ namespace FrEee.Tests.Modding
 		[TestMethod]
 		public void CallFunction()
 		{
-			var script = new Script("test", "def square(x):\n\treturn x ** 2;");
-			Assert.AreEqual(64, ScriptEngine.CallFunction<int>(script, "square", 8));
+			var script = new PythonScript("test", "def square(x):\n\treturn x ** 2;");
+			Assert.AreEqual(64, PythonScriptEngine.CallFunction<int>(script, "square", 8));
 		}
 
 		[TestMethod]
@@ -22,7 +22,7 @@ namespace FrEee.Tests.Modding
 			var variables = new Dictionary<string, object>();
 			variables.Add("x", 6);
 			variables.Add("y", 7);
-			Assert.AreEqual(42, ScriptEngine.EvaluateExpression<int>(expr, variables));
+			Assert.AreEqual(42, PythonScriptEngine.EvaluateExpression<int>(expr, variables));
 		}
 	}
 }

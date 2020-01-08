@@ -32,7 +32,7 @@ namespace FrEee.WinForms.Forms
 				foreach (var minister in kvp.Value)
 				{
 					var index = lstMinisters.Items.Add($"{groupname}: {minister}");
-					if (Empire.Current.AI.EnabledMinisters != null && Empire.Current.AI.EnabledMinisters[groupname] != null && Empire.Current.AI.EnabledMinisters[groupname].Contains(minister))
+					if (Empire.Current.EnabledMinisters != null && Empire.Current.EnabledMinisters[groupname] != null && Empire.Current.EnabledMinisters[groupname].Contains(minister))
 						lstMinisters.SetItemChecked(index, true);
 				}
 			}

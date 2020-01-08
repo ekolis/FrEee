@@ -89,7 +89,7 @@ namespace FrEee.Game.Objects.Events
 			var matches = regex.Matches(Template.Type.Action.Text);
 			foreach (Match m in matches)
 				dict.Add(m.Captures[0].Value, new ComputedFormula<string>(m.Captures[0].Value, this, true).Value);
-			ScriptEngine.RunScript(Template.Type.Action, dict);
+			PythonScriptEngine.RunScript(Template.Type.Action, dict);
 		}
 
 		/// <summary>

@@ -108,17 +108,17 @@ namespace FrEee.Modding
 					typename2 = typename.Substring(0, typename2.IndexOf('`'));
 				imports.Add($"from {genparm.Namespace} import {typename2};");
 			}
-			var script = new Script("Import", string.Join("\n", imports));
+			var script = new PythonScript("Import", string.Join("\n", imports));
 			if (f.ExternalScripts == null)
-				f.ExternalScripts = new Script[] { script };
+				f.ExternalScripts = new PythonScript[] { script };
 			else
 				f.ExternalScripts = f.ExternalScripts.ConcatSingle(script).ToArray();
 			return f;
 		}
 
-		public Script CreateScript(object context)
+		public PythonScript CreateScript(object context)
 		{
-			return new Script("DynamicScript", Value.TrimStart('='));
+			return new PythonScript("DynamicScript", Value.TrimStart('='));
 		}
 
 		/// <summary>

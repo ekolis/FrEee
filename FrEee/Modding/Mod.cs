@@ -109,7 +109,7 @@ namespace FrEee.Modding
 		/// <summary>
 		/// The script which runs after each turn.
 		/// </summary>
-		public Script EndTurnScript { get; set; }
+		public PythonScript EndTurnScript { get; set; }
 
 		/// <summary>
 		/// The event templates in the mod.
@@ -134,12 +134,12 @@ namespace FrEee.Modding
 		/// <summary>
 		/// The script which runs on game initialization, prior to the first turn.
 		/// </summary>
-		public Script GameInitScript { get; set; }
+		public PythonScript GameInitScript { get; set; }
 
 		/// <summary>
 		/// The global Python script module which is available to all scripts in the mod.
 		/// </summary>
-		public Script GlobalScript { get; set; }
+		public PythonScript GlobalScript { get; set; }
 
 		/// <summary>
 		/// The happiness models in the game.

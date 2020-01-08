@@ -144,7 +144,7 @@ namespace FrEee.Tests.Utility
 		{
 			var tname = "FrEee.Modding.Script[], FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null";
 			var st = new SafeType(tname);
-			Assert.AreEqual(typeof(Script[]), st.Type);
+			Assert.AreEqual(typeof(PythonScript[]), st.Type);
 		}
 
 		[TestMethod]

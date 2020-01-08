@@ -52,6 +52,7 @@ namespace FrEee.Game.Objects.Civilization
 			Waypoints = new List<Waypoint>();
 			NumberedWaypoints = new Waypoint[10];
 			Scores = new SafeDictionary<int, int?>();
+			EnabledMinisters = new SafeDictionary<string, ICollection<string>>(); 
 		}
 
 		/// <summary>
@@ -96,6 +97,11 @@ namespace FrEee.Game.Objects.Civilization
 		/// Arbitrary data stored by the AI to maintain state between turns.
 		/// </summary>
 		public DynamicDictionary AINotes { get; internal set; }
+
+		/// <summary>
+		/// The names of any ministers that are enabled, keyed by category.
+		/// </summary>
+		public SafeDictionary<string, ICollection<string>> EnabledMinisters { get; set; }
 
 		/// <summary>
 		/// Should we have a sensor sweep of the entire galaxy from the very start?

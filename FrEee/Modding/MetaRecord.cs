@@ -157,7 +157,7 @@ namespace FrEee.Modding
 		private static Field CreateStaticFormulaField(Field f, IDictionary<string, int> args)
 		{
 			var variables = args.ToDictionary(kvp => kvp.Key, kvp => (object)kvp.Value);
-			var result = ScriptEngine.EvaluateExpression<IConvertible>(f.Value.TrimStart('='), variables).ToStringInvariant();
+			var result = PythonScriptEngine.EvaluateExpression<IConvertible>(f.Value.TrimStart('='), variables).ToStringInvariant();
 			var field = new Field();
 			field.Name = f.Name;
 			field.Value = result;
