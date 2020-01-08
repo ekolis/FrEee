@@ -509,6 +509,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Scripts\AI\AI_Default\AI.ministers" />
+    <None Include="Scripts\AI\AI_Default\AI.script" />
+    <None Include="Scripts\AI\TestAI\AI.csx" />
+    <None Include="Scripts\AI\TestAI\AI.ministers" />
+    <None Include="Scripts\AI\TestAI\BasicResearchModule.csx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -533,6 +538,13 @@
     <PackageReference Include="valueinjecter">
       <Version>2.3.3</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\AI\AI_Default\AI.py" />
+    <Content Include="Scripts\EndTurn.py" />
+    <Content Include="Scripts\GameInit.py" />
+    <Content Include="Scripts\Global.py" />
+    <Content Include="Scripts\TestInclude.py" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

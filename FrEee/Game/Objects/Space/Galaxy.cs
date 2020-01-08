@@ -850,12 +850,21 @@ namespace FrEee.Game.Objects.Space
                 var notes = new Dictionary<int, DynamicDictionary>();
                 foreach (var i in Current.Empires.Where(e => e.AI != null && (e.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)).Select(e => Current.Empires.IndexOf(e)).ToArray())
                 {
-                    LoadFromString(serializedGalaxy);
-                    Current.CurrentEmpire = Current.Empires[i];
-                    Current.Redact();
-                    Current.CurrentEmpire.AI.Act(Current.CurrentEmpire, Current, Current.CurrentEmpire.EnabledMinisters);
-                    cmds.Add(i, Current.CurrentEmpire.Commands);
-                    notes.Add(i, Current.CurrentEmpire.AINotes);
+                    try
+                    {
+                        LoadFromString(serializedGalaxy);
+                        Current.CurrentEmpire = Current.Empires[i];
+                        Current.Redact();
+                        Current.CurrentEmpire.AI.Act(Current.CurrentEmpire, Current, Current.CurrentEmpire.EnabledMinisters);
+                        cmds.Add(i, Current.CurrentEmpire.Commands);
+                        notes.Add(i, Current.CurrentEmpire.AINotes);
+                    }
+                    catch (Exception e)
+                    {
+                        //log the error in the ai and move on. 
+                        //TODO: add in some indication the AI failed. 
+                        e.Log(); 
+                    }
                 }
                 LoadFromString(serializedGalaxy);
                 foreach (var i in Current.Empires.Where(e => e.AI != null && (e.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)).Select(e => Current.Empires.IndexOf(e)).ToArray())

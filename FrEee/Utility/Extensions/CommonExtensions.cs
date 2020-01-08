@@ -753,16 +753,30 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
-		/// Logs an exception in errorlog.txt. Overwrites the old errorlog.txt.
+		/// Logs an exception in fatalerrorlog.txt. Overwrites the old fatalerrorlog.txt.
 		/// </summary>
 		/// <param name="ex"></param>
-		public static void Log(this Exception ex)
+		public static void LogFatal(this Exception ex)
 		{
-			var sw = new StreamWriter("errorlog.txt");
+			var sw = new StreamWriter("fatalerrorlog.txt");
 			sw.WriteLine(ex.GetType().Name + " occurred at " + DateTime.Now + ":");
 			sw.WriteLine(ex.ToString());
 			sw.Close();
 		}
+
+		/// <summary>
+		/// Appends the exception to the end of errorlog.txt. 
+		/// </summary>
+		/// <param name="ex"></param>
+		public static void Log(this Exception ex)
+		{
+			var sw = new StreamWriter("errorlog.txt", true);
+			sw.WriteLine(ex.GetType().Name + " occurred at " + DateTime.Now + ":");
+			sw.WriteLine(ex.ToString());
+			sw.WriteLine(); 
+			sw.Close();
+		}
+
 
 		public static Type MakeActionType(this IEnumerable<Type> parmTypes)
 		{

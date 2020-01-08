@@ -47,6 +47,7 @@ namespace FrEee.Game.Objects.AI
             }
             catch (Exception e)
             {
+                throw; 
                 //error log? 
             }
         }

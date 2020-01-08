@@ -28,11 +28,11 @@ public class Runner
         {
             galaxy = Context;
             empire = Domain;
-            BasicResearch.Run(empire, galaxy); 
+            BasicResearch.Run(empire, galaxy);
         }
         catch (Exception e)
         {
-
+            throw; 
         }
         return empire;  
         
