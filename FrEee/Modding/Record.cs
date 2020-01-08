@@ -206,24 +206,24 @@ namespace FrEee.Modding
 			return result;
 		}
 
-		public Script GetScript(string fieldName, object context = null, bool allowNulls = true)
+		public PythonScript GetScript(string fieldName, object context = null, bool allowNulls = true)
 		{
 			int index = 0;
 			return GetScript(fieldName, context, ref index, allowNulls);
 		}
 
-		public Script GetScript(IEnumerable<string> fieldNames, object context = null, bool allowNulls = true)
+		public PythonScript GetScript(IEnumerable<string> fieldNames, object context = null, bool allowNulls = true)
 		{
 			int index = 0;
 			return GetScript(fieldNames, context, ref index, allowNulls);
 		}
 
-		public Script GetScript(string fieldName, object context, ref int index, bool allowNulls = true, bool allowSkip = true)
+		public PythonScript GetScript(string fieldName, object context, ref int index, bool allowNulls = true, bool allowSkip = true)
 		{
 			return GetScript(new string[] { fieldName }, context, ref index, allowNulls, allowSkip);
 		}
 
-		public Script GetScript(IEnumerable<string> fieldNames, object context, ref int index, bool allowNulls = true, bool allowSkip = true)
+		public PythonScript GetScript(IEnumerable<string> fieldNames, object context, ref int index, bool allowNulls = true, bool allowSkip = true)
 		{
 			Field f;
 			List<Field> fs = new List<Field>();
@@ -234,30 +234,30 @@ namespace FrEee.Modding
 					fs.Add(f);
 				index++;
 			} while (f != null);
-			return new Script("Script", string.Join("\n", fs.Select(f2 => f2.Value)));
+			return new PythonScript("Script", string.Join("\n", fs.Select(f2 => f2.Value)));
 		}
 
-		public IEnumerable<Script> GetScripts(string fieldName, object context, bool allowNulls = true)
+		public IEnumerable<PythonScript> GetScripts(string fieldName, object context, bool allowNulls = true)
 		{
 			int index = 0;
 			return GetScripts(fieldName, context, ref index, allowNulls);
 		}
 
-		public IEnumerable<Script> GetScripts(IEnumerable<string> fieldNames, object context, bool allowNulls = true)
+		public IEnumerable<PythonScript> GetScripts(IEnumerable<string> fieldNames, object context, bool allowNulls = true)
 		{
 			int index = 0;
 			return GetScripts(fieldNames, context, ref index, allowNulls);
 		}
 
-		public IEnumerable<Script> GetScripts(string fieldName, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
+		public IEnumerable<PythonScript> GetScripts(string fieldName, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
 		{
 			return GetScripts(new string[] { fieldName }, context, ref index, allowNulls, startIndex = 0, allowSkip = true);
 		}
 
-		public IEnumerable<Script> GetScripts(IEnumerable<string> fieldNames, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
+		public IEnumerable<PythonScript> GetScripts(IEnumerable<string> fieldNames, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
 		{
 			Field f;
-			var result = new List<Script>();
+			var result = new List<PythonScript>();
 			do
 			{
 				f = FindField(fieldNames, ref index, !allowNulls, startIndex, allowSkip);

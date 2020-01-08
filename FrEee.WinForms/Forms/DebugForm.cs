@@ -15,21 +15,21 @@ namespace FrEee.WinForms.Forms
 			try
 			{
 				// why is the script engine remembering my imports? oh well, it's handy :P
-				ScriptEngine.EvaluateExpression<object>("from FrEee.Modding import Mod");
+				PythonScriptEngine.EvaluateExpression<object>("from FrEee.Modding import Mod");
 				rtbOutput.AppendText("Imported Mod.\n");
 				rtbOutput.AppendText("Mod.Current is currently: " + OrNil(Mod.Current) + "\n");
 
-				ScriptEngine.EvaluateExpression<object>("from FrEee.Game.Objects.Space import Galaxy");
+				PythonScriptEngine.EvaluateExpression<object>("from FrEee.Game.Objects.Space import Galaxy");
 				rtbOutput.AppendText("Imported Galaxy.\n");
 				rtbOutput.AppendText("Galaxy.Current is currently: " + OrNil(Galaxy.Current) + "\n");
 
-				ScriptEngine.EvaluateExpression<object>("from FrEee.Game.Objects.Civilization import Empire");
+				PythonScriptEngine.EvaluateExpression<object>("from FrEee.Game.Objects.Civilization import Empire");
 				rtbOutput.AppendText("Imported Empire.\n");
 				rtbOutput.AppendText("Empire.Current is currently: " + OrNil(Empire.Current) + "\n");
 
 				if (Mod.Current != null)
 				{
-					ScriptEngine.EvaluateExpression<object>(Mod.Current.GlobalScript.FullText);
+					PythonScriptEngine.EvaluateExpression<object>(Mod.Current.GlobalScript.FullText);
 					rtbOutput.AppendText("Ran mod global script.\n");
 				}
 			}
@@ -47,7 +47,7 @@ namespace FrEee.WinForms.Forms
 			rtbOutput.SelectionColor = rtbOutput.ForeColor;
 			try
 			{
-				var result = ScriptEngine.EvaluateExpression<object>("str(" + txtCommand.Text + ")");
+				var result = PythonScriptEngine.EvaluateExpression<object>("str(" + txtCommand.Text + ")");
 				rtbOutput.AppendText(OrNil(result));
 				rtbOutput.AppendText("\n");
 			}

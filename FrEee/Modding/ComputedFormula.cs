@@ -146,7 +146,7 @@ namespace FrEee.Modding
 				fulltext = Text;
 			else
 				fulltext = string.Join("\n", ExternalScripts.Select(q => q.Text)) + "\n" + Text;
-			return ScriptEngine.EvaluateExpression<T>(fulltext, parms);
+			return PythonScriptEngine.EvaluateExpression<T>(fulltext, parms);
 		}
 
 		public override int GetHashCode()

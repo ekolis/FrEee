@@ -513,7 +513,7 @@ namespace FrEee.Game.Objects.Space
             // run init script
             if (status != null)
                 status.Message = "Executing script";
-            ScriptEngine.RunScript<object>(Mod.Current.GameInitScript);
+            PythonScriptEngine.RunScript<object>(Mod.Current.GameInitScript);
             if (status != null)
                 status.Progress += progressPerStep;
 
@@ -822,7 +822,7 @@ namespace FrEee.Game.Objects.Space
 
             //Battle.Previous.Clear();
             Current.Battles = new HashSet<IBattle>();
-            ScriptEngine.ClearScope(); // no caching galaxy between turns!
+            PythonScriptEngine.ClearScope(); // no caching galaxy between turns!
 
             Current.GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
             Current.ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
@@ -1364,7 +1364,7 @@ namespace FrEee.Game.Objects.Space
             // end of turn scripts
             if (status != null)
                 status.Message = "Executing scripts";
-            ScriptEngine.RunScript<object>(Mod.Current.EndTurnScript);
+            PythonScriptEngine.RunScript<object>(Mod.Current.EndTurnScript);
             if (status != null)
                 status.Progress += progressPerOperation;
 
