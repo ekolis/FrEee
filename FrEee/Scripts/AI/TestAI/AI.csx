@@ -28,7 +28,12 @@ public class Runner
         {
             galaxy = Context;
             empire = Domain;
-            BasicResearch.Run(empire, galaxy);
+            if (empire.EnabledMinisters.ContainsKey("Empire Management"))
+            {
+                var managementMinisters = empire.EnabledMinisters["Empire Management"]; 
+                if (managementMinisters.Contains("Research"))
+                    BasicResearch.Run(empire, galaxy);
+            }
         }
         catch (Exception e)
         {
