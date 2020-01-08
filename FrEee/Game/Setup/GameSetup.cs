@@ -374,7 +374,7 @@ namespace FrEee.Game.Setup
 
 			//Enabled AI ministers, so the AI's actually can do stuff. 
 			foreach (var emp in gal.Empires.Where(x => !x.IsPlayerEmpire && x.AI != null))
-				emp.AI.EnabledMinisters = emp.AI.MinisterNames; 
+				emp.EnabledMinisters = emp.AI.MinisterNames; 
 
 			// remove ruins if they're not allowed
 			if (!GenerateRandomRuins)

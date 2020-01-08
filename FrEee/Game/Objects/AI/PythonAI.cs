@@ -15,7 +15,7 @@ namespace FrEee.Game.Objects.AI
         {
         }
 
-        public override void Act(TDomain domain, TContext context)
+        public override void Act(TDomain domain, TContext context, SafeDictionary<string, ICollection<string>> EnabledMinisters)
         {
        
             var variables = new Dictionary<string, object>();

@@ -19,7 +19,6 @@ namespace FrEee.Game.Objects.AI
 			Name = name;
 			Script = script;
 			MinisterNames = ministerNames;
-			EnabledMinisters = new SafeDictionary<string, ICollection<string>>();
 		}
 
 		public bool IsDisposed { get; private set; }
@@ -29,10 +28,6 @@ namespace FrEee.Game.Objects.AI
 		/// </summary>
 		public SafeDictionary<string, ICollection<string>> MinisterNames { get; private set; }
 
-		/// <summary>
-		/// The names of any ministers that are enabled, keyed by category.
-		/// </summary>
-		public SafeDictionary<string, ICollection<string>> EnabledMinisters { get; set; }
 
 		public string ModID { get; set; }
 
@@ -58,7 +53,7 @@ namespace FrEee.Game.Objects.AI
 		/// <param name="domain">The AI's domain of control.</param>
 		/// <param name="context">Contextual data that the AI needs to be aware of.</param>
 		/// <param name="enabledMinisters">The names of any ministers that the player has enabled, keyed by category.</param>
-		public abstract void Act(TDomain domain, TContext context);
+		public abstract void Act(TDomain domain, TContext context, SafeDictionary<string, ICollection<string>> enabledMinisters);
 		
 
 		public void Dispose()

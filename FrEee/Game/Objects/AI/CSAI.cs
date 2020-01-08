@@ -26,7 +26,7 @@ namespace FrEee.Game.Objects.AI
         /// </summary>
         public ScriptRunner<TDomain> ScriptRunner;
 
-        public override void Act(TDomain domain, TContext context)
+        public override void Act(TDomain domain, TContext context, SafeDictionary<string, ICollection<string>> EnabledMinisters)
         {
             try
             {

@@ -842,23 +842,23 @@ namespace FrEee.Game.Objects.Space
             // AI/minister commands
             if (status != null)
                 status.Message = "Playing AI turns";
-            if (Current.Empires.Any(e => e.AI != null && (e.AI.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)))
+            if (Current.Empires.Any(e => e.AI != null && (e.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)))
             {
                 // TODO - use existing player gam file if it exists instead of recreating it in memory
                 var serializedGalaxy = Galaxy.Current.SaveToString();
                 var cmds = new Dictionary<int, IList<ICommand>>();
                 var notes = new Dictionary<int, DynamicDictionary>();
-                foreach (var i in Current.Empires.Where(e => e.AI != null && (e.AI.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)).Select(e => Current.Empires.IndexOf(e)).ToArray())
+                foreach (var i in Current.Empires.Where(e => e.AI != null && (e.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)).Select(e => Current.Empires.IndexOf(e)).ToArray())
                 {
                     LoadFromString(serializedGalaxy);
                     Current.CurrentEmpire = Current.Empires[i];
                     Current.Redact();
-                    Current.CurrentEmpire.AI.Act(Current.CurrentEmpire, Current);
+                    Current.CurrentEmpire.AI.Act(Current.CurrentEmpire, Current, Current.CurrentEmpire.EnabledMinisters);
                     cmds.Add(i, Current.CurrentEmpire.Commands);
                     notes.Add(i, Current.CurrentEmpire.AINotes);
                 }
                 LoadFromString(serializedGalaxy);
-                foreach (var i in Current.Empires.Where(e => e.AI != null && (e.AI.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)).Select(e => Current.Empires.IndexOf(e)).ToArray())
+                foreach (var i in Current.Empires.Where(e => e.AI != null && (e.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)).Select(e => Current.Empires.IndexOf(e)).ToArray())
                 {
                     Current.LoadCommands(Current.Empires[i], cmds[i]);
                     Current.Empires[i].AINotes = notes[i];
