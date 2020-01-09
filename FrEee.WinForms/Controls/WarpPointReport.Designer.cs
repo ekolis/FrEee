@@ -97,7 +97,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.txtAge.AutoSize = true;
 			this.txtAge.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtAge.Location = new System.Drawing.Point(42, 6);
+			this.txtAge.Location = new System.Drawing.Point(156, 38);
 			this.txtAge.Name = "txtAge";
 			this.txtAge.Size = new System.Drawing.Size(47, 15);
 			this.txtAge.TabIndex = 60;

@@ -8,6 +8,7 @@ using FrEee.Utility.Extensions;
 using FrEee.WinForms.Interfaces;
 using FrEee.WinForms.Utility.Extensions;
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -50,12 +51,8 @@ namespace FrEee.WinForms.Controls
 				picPortrait.Image = Fleet.Portrait;
 
 				// timestamp
-				if (Fleet.Timestamp == Galaxy.Current.Timestamp)
-					txtAge.Text = "Current";
-				else if (Galaxy.Current.Timestamp - Fleet.Timestamp <= 1)
-					txtAge.Text = "Last turn";
-				else
-					txtAge.Text = Math.Ceiling(Galaxy.Current.Timestamp - Fleet.Timestamp) + " turns ago";
+				txtAge.Text = Fleet.Timestamp.GetMemoryAgeDescription();
+				txtAge.BackColor = txtAge.Text == "Current" ? Color.Transparent : Color.FromArgb(64, 64, 0);
 
 				// name and stuff
 				txtName.Text = Fleet.Name;

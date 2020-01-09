@@ -54,12 +54,8 @@ namespace FrEee.WinForms.Controls
 				picPortrait.Image = vehicle.Portrait;
 
 				// timestamp
-				if (Vehicle.Timestamp == Galaxy.Current.Timestamp)
-					txtAge.Text = "Current";
-				else if (Galaxy.Current.Timestamp - Vehicle.Timestamp <= 1)
-					txtAge.Text = "Last turn";
-				else
-					txtAge.Text = Math.Ceiling(Galaxy.Current.Timestamp - Vehicle.Timestamp) + " turns ago";
+				txtAge.Text = Vehicle.Timestamp.GetMemoryAgeDescription();
+				txtAge.BackColor = txtAge.Text == "Current" ? Color.Transparent : Color.FromArgb(64, 64, 0);
 
 				// name and stuff
 				txtName.Text = vehicle.Name;

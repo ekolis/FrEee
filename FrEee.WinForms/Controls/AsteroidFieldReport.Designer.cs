@@ -30,6 +30,7 @@ namespace FrEee.WinForms.Controls
 		{
 			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
 			this.pageDetail = new System.Windows.Forms.TabPage();
+			this.txtAge = new System.Windows.Forms.Label();
 			this.txtValueRadioactives = new System.Windows.Forms.Label();
 			this.txtValueOrganics = new System.Windows.Forms.Label();
 			this.txtValueMinerals = new System.Windows.Forms.Label();
@@ -44,7 +45,6 @@ namespace FrEee.WinForms.Controls
 			this.txtName = new System.Windows.Forms.Label();
 			this.pageAbility = new System.Windows.Forms.TabPage();
 			this.abilityTreeView = new FrEee.WinForms.Controls.AbilityTreeView();
-			this.txtAge = new System.Windows.Forms.Label();
 			this.gameTabControl1.SuspendLayout();
 			this.pageDetail.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
@@ -65,6 +65,7 @@ namespace FrEee.WinForms.Controls
 			this.gameTabControl1.SelectedTabForeColor = System.Drawing.Color.Black;
 			this.gameTabControl1.Size = new System.Drawing.Size(320, 459);
 			this.gameTabControl1.TabBackColor = System.Drawing.Color.Black;
+			this.gameTabControl1.TabBorderColor = System.Drawing.Color.CornflowerBlue;
 			this.gameTabControl1.TabForeColor = System.Drawing.Color.CornflowerBlue;
 			this.gameTabControl1.TabIndex = 1;
 			// 
@@ -91,6 +92,16 @@ namespace FrEee.WinForms.Controls
 			this.pageDetail.Size = new System.Drawing.Size(312, 426);
 			this.pageDetail.TabIndex = 0;
 			this.pageDetail.Text = "Detail";
+			// 
+			// txtAge
+			// 
+			this.txtAge.AutoSize = true;
+			this.txtAge.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtAge.Location = new System.Drawing.Point(162, 43);
+			this.txtAge.Name = "txtAge";
+			this.txtAge.Size = new System.Drawing.Size(47, 15);
+			this.txtAge.TabIndex = 55;
+			this.txtAge.Text = "Current";
 			// 
 			// txtValueRadioactives
 			// 
@@ -238,16 +249,6 @@ namespace FrEee.WinForms.Controls
 			this.abilityTreeView.Name = "abilityTreeView";
 			this.abilityTreeView.Size = new System.Drawing.Size(306, 420);
 			this.abilityTreeView.TabIndex = 1;
-			// 
-			// txtAge
-			// 
-			this.txtAge.AutoSize = true;
-			this.txtAge.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtAge.Location = new System.Drawing.Point(46, 9);
-			this.txtAge.Name = "txtAge";
-			this.txtAge.Size = new System.Drawing.Size(47, 15);
-			this.txtAge.TabIndex = 55;
-			this.txtAge.Text = "Current";
 			// 
 			// AsteroidFieldReport
 			// 
