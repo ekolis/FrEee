@@ -15,3 +15,14 @@ robocopy "%ALL_BUT_FIRST%\..\FrEee\Scripts" "%ALL_BUT_FIRST%\bin\%1\Scripts" /e
 robocopy "%ALL_BUT_FIRST%\..\FrEee\Dsgnname" "%ALL_BUT_FIRST%\bin\%1\Dsgnname" /e
 
 echo Done copying assets
+
+CD "%ALL_BUT_FIRST%\bin\%1\Scripts"
+For /R %%G in ("*.csx") do (
+echo %%~fG.temp
+echo %%G
+ren "%%~fG" "%%~nxG.temp"
+findstr /V "../../../bin/Debug/FrEee.Core.dll" "%%G.temp" > "%%~fG"
+del "%%G.temp"
+)
+
+
