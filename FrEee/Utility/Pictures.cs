@@ -468,6 +468,11 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static Image GetIcon(this Race race)
 		{
+			if (race is null)
+				return null;
+			if (race.PopulationIconName == null)
+				return GetGenericImage(typeof(Race));
+
 			if (Mod.Current.RootPath != null)
 			{
 				return
