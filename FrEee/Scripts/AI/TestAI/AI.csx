@@ -1,7 +1,13 @@
-﻿//place any extra usings here. 
+//place any extra usings here. 
 
 //Calling Load will execute the script. However, in this case, it will also allow the classes in the script to be called. 
 #load "BasicResearchModule.csx"
+#load "MinistryOfShipDesign.csx"
+
+#r "../../../bin/Debug/FrEee.Core.dll"
+using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Space;
+using System; 
 
 //Note, at present, classes within scripts cannot be stored in the AI Notes as classes. 
 //Since they are not recognized as the same class the next time a script is run. 
@@ -15,11 +21,13 @@ public class Runner
     Empire empire;
 
     Galaxy galaxy;
-    BasicResearch BasicResearch; 
+    BasicResearch BasicResearch;
+    MinistryOfShipDesign MinistryOfShipDesign; 
 
     public Runner()
     {
-        BasicResearch = new BasicResearch(); 
+        BasicResearch = new BasicResearch();
+        MinistryOfShipDesign = new MinistryOfShipDesign(); 
     }
 
     public Empire Run(Empire Domain, Galaxy Context)
@@ -28,6 +36,11 @@ public class Runner
         {
             galaxy = Context;
             empire = Domain;
+            if (empire.EnabledMinisters.ContainsKey("Design Management"))
+            {
+                MinistryOfShipDesign.Run(empire, galaxy); 
+            }
+
             if (empire.EnabledMinisters.ContainsKey("Empire Management"))
             {
                 var managementMinisters = empire.EnabledMinisters["Empire Management"]; 

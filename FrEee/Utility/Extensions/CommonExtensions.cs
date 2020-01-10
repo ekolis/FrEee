@@ -777,6 +777,18 @@ namespace FrEee.Utility.Extensions
 			sw.Close();
 		}
 
+		/// <summary>
+		/// Logs an error in the AI of the given empire to disk. 
+		/// </summary>
+		/// <param name="empire"></param>
+		/// <param name="error"></param>
+		public static void LogAIMessage(this Empire empire, string message)
+		{
+			var sw = new StreamWriter($"{empire.AI.Name}.log", true);
+			sw.WriteLine($"{DateTime.UtcNow} ({Galaxy.Current.Name}-{empire.ID}):{message}");
+			sw.Close();
+		}
+
 
 		public static Type MakeActionType(this IEnumerable<Type> parmTypes)
 		{

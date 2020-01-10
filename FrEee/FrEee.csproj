@@ -514,6 +514,7 @@
     <None Include="Scripts\AI\TestAI\AI.csx" />
     <None Include="Scripts\AI\TestAI\AI.ministers" />
     <None Include="Scripts\AI\TestAI\BasicResearchModule.csx" />
+    <None Include="Scripts\AI\TestAI\MinistryOfShipDesign.csx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
