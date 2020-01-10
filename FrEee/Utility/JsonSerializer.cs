@@ -83,5 +83,37 @@ namespace FrEee.Utility
 				dobj.InitializeData(ctx);
 			return JsonConvert.SerializeObject(kos);
 		}
+
+
+		static JsonSerializerSettings SimpleConverterSettings =  new JsonSerializerSettings
+			{
+				ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
+				Formatting = Formatting.Indented,
+				MissingMemberHandling = MissingMemberHandling.Ignore,
+				ObjectCreationHandling = ObjectCreationHandling.Auto,
+				TypeNameHandling = TypeNameHandling.None,
+				TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple, 
+				ContractResolver = new JsonContractResolver()
+			};
+
+		/// <summary>
+		/// Simple Json serializer access. Use this for Script Json serialization. 
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		public static string SerializeObjectToJson(object obj)
+		{
+			return JsonConvert.SerializeObject(obj,SimpleConverterSettings); 
+		}
+		/// <summary>
+		/// Simple json deserializer access. Use this for Script Json serialization. 
+		/// </summary> 
+		/// <typeparam name="T"></typeparam>
+		/// <param name="json"></param>
+		/// <returns></returns>
+		public static T DeserializeObjectFromJson<T>(string json)
+		{
+			return JsonConvert.DeserializeObject<T>(json, SimpleConverterSettings); 
+		}
 	}
 }

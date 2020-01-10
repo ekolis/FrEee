@@ -6,6 +6,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Vehicles; 
 using System.Linq; 
+
 /// <summary>
 /// Class devoted to designing ships and units
 /// </summary>

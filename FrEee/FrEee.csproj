@@ -162,6 +162,7 @@
     <Compile Include="Utility\Extensions\UnitHandlingExtensions.cs" />
     <Compile Include="Utility\HeatMap.cs" />
     <Compile Include="Utility\IntVector2.cs" />
+    <Compile Include="Utility\JsonContractResolver.cs" />
     <Compile Include="Utility\JsonSerializer.cs" />
     <Compile Include="Utility\LegacySerializer.cs" />
     <Compile Include="Utility\MathX.cs" />
@@ -514,7 +515,9 @@
     <None Include="Scripts\AI\TestAI\AI.csx" />
     <None Include="Scripts\AI\TestAI\AI.ministers" />
     <None Include="Scripts\AI\TestAI\BasicResearchModule.csx" />
+    <None Include="Scripts\AI\TestAI\MinistryOfConstruction.csx" />
     <None Include="Scripts\AI\TestAI\MinistryOfShipDesign.csx" />
+    <None Include="Scripts\AI\TestAI\Plan.csx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
