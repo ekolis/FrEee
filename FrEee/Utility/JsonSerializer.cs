@@ -18,6 +18,7 @@ namespace FrEee.Utility
 				ObjectCreationHandling = ObjectCreationHandling.Auto,
 				TypeNameHandling = TypeNameHandling.All,
 				TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple,
+				ContractResolver = new JsonContractResolver()
 			};
 		}
 

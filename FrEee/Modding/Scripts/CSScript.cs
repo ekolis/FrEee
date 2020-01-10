@@ -67,7 +67,7 @@ namespace FrEee.Modding
 			//By defauly, the resolver looks in the same directory as the script. 
 			var options = ScriptOptions.Default.AddImports("System", "System.Linq", "FrEee", "FrEee.Game.Objects.AI",
 				"FrEee.Game.Objects.Civilization", "FrEee.Game.Objects.Space", "FrEee.Utility", "FrEee.Game.Objects.Commands",
-				"FrEee.Modding.Templates", "FrEee.Modding", "Newtonsoft.Json")
+				"FrEee.Modding.Templates", "FrEee.Modding")
 				.WithReferences(typeof(CSScript).Assembly).
 				WithSourceResolver(new SourceFileResolver(ImmutableArray<string>.Empty, Directory));
 			return CSharpScript.Create<TReturn>(Text, options, typeof(TGlobalType)).CreateDelegate();
