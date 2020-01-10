@@ -61,12 +61,12 @@ public class Runner
             {
                 var managementMinisters = empire.EnabledMinisters["Vehicle Management"];
 
-                PlanManager.CurrentPlans.ColonizationPlans.Add(new ColonizationPlan()
-                {
-                    AwaitingBuild = false,
-                    IsComplete = true,
-                    Planet = empire.ExploredStarSystems.ElementAt(0).SpaceObjects.OfType<Planet>().FirstOrDefault(x => !x.HasColony),
-                });
+                //PlanManager.CurrentPlans.ColonizationPlans.Add(new ColonizationPlan()
+                //{
+                //    AwaitingBuild = false,
+                //    IsComplete = true,
+                //    Planet = empire.ExploredStarSystems.ElementAt(0).SpaceObjects.OfType<Planet>().FirstOrDefault(x => !x.HasColony),
+                //});
 
                 //PlanManager.CurrentPlans.Add(new ColonizationPlan() { IsComplete = false, Type = "test" }); 
             }
