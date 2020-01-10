@@ -2,6 +2,7 @@ using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Interfaces;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace FrEee.WinForms.Controls
@@ -45,12 +46,8 @@ namespace FrEee.WinForms.Controls
 			else
 			{
 				Visible = true;
-				if (Star.Timestamp == Galaxy.Current.Timestamp)
-					txtAge.Text = "Current";
-				else if (Galaxy.Current.Timestamp - Star.Timestamp <= 1)
-					txtAge.Text = "Last turn";
-				else
-					txtAge.Text = Math.Ceiling(Galaxy.Current.Timestamp - Star.Timestamp) + " turns ago";
+				txtAge.Text = Star.Timestamp.GetMemoryAgeDescription();
+				txtAge.BackColor = txtAge.Text == "Current" ? Color.Transparent : Color.FromArgb(64, 64, 0);
 				txtAge.Text = Star.Age;
 				txtBrightness.Text = Star.Brightness;
 				txtName.Text = Star.Name;

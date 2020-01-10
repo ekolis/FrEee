@@ -113,6 +113,7 @@ namespace FrEee.WinForms.Controls
 			this.lstAbilities.BackColor = System.Drawing.Color.Black;
 			this.lstAbilities.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.lstAbilities.ForeColor = System.Drawing.Color.White;
+			this.lstAbilities.HideSelection = false;
 			this.lstAbilities.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1});
 			this.lstAbilities.Location = new System.Drawing.Point(4, 169);
@@ -158,7 +159,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.Location = new System.Drawing.Point(28, 11);
+			this.label1.Location = new System.Drawing.Point(166, 45);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(47, 15);
 			this.label1.TabIndex = 56;

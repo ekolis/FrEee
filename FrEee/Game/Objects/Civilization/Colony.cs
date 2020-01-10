@@ -237,6 +237,8 @@ namespace FrEee.Game.Objects.Civilization
 				Facilities.Clear();
 				for (int i = 0; i < facilCount; i++)
 					Facilities.Add(new Facility(unknownFacilityTemplate));
+				Anger.Clear();
+				AngerDeltas.Clear();
 			}
 			if (visibility < Visibility.Fogged)
 				Dispose();

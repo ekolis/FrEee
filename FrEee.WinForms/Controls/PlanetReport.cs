@@ -76,12 +76,8 @@ namespace FrEee.WinForms.Controls
 				Planet.DrawPopulationBars(picPortrait.Image, 128);
 				Planet.DrawStatusIcons(picPortrait.Image);
 
-				if (Planet.Timestamp == Galaxy.Current.Timestamp)
-					txtAge.Text = "Current";
-				else if (Galaxy.Current.Timestamp - Planet.Timestamp <= 1)
-					txtAge.Text = "Last turn";
-				else
-					txtAge.Text = Math.Ceiling(Galaxy.Current.Timestamp - Planet.Timestamp) + " turns ago";
+				txtAge.Text = Planet.Timestamp.GetMemoryAgeDescription();
+				txtAge.BackColor = txtAge.Text == "Current" ? Color.Transparent : Color.FromArgb(64, 64, 0);
 
 				txtName.Text = Planet.Name;
 				txtSizeSurface.Text = Planet.Size + " " + Planet.Surface + " Planet";
