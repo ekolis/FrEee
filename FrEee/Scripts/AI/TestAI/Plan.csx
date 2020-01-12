@@ -5,6 +5,7 @@ using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using FrEee.Utility.Extensions;
+using FrEee.Game.Objects.Orders;
 
 public static class PlanManager
 {
@@ -55,13 +56,13 @@ public class PlanList
 {
     public List<ColonizationPlan> ColonizationPlans;
 
-    public List<BuildPlan> BuildPlans; 
+    public List<ShipBuildPlan> ShipBuildPlans; 
 
 
     public PlanList()
     {
         ColonizationPlans = new List<ColonizationPlan>();
-        BuildPlans = new List<BuildPlan>(); 
+        ShipBuildPlans = new List<ShipBuildPlan>(); 
     }
 
     public void AssignAllIds()
@@ -69,7 +70,7 @@ public class PlanList
         foreach (var p in ColonizationPlans)
             if (p.PlanId == null)
                 p.AssignId();
-        foreach (var p in BuildPlans)
+        foreach (var p in ShipBuildPlans)
             if (p.PlanId == null)
                 p.AssignId();
     }
@@ -119,21 +120,38 @@ public class ColonizationPlan : Plan
     public bool AwaitingBuild;
 
     /// <summary>
-    /// The build plan that uses this plan. 
+    /// The Shipbuild plan that uses this plan. 
     /// </summary>
-    public string BuildPlanId; 
+    public string ShipBuildPlanId; 
 
 }
 
 [Serializable]
-public class BuildPlan :Plan
+public class ShipBuildPlan :Plan
 {
     [DoNotSerialize]
-    public override string TypeShorthand => "B";
+    public override string TypeShorthand => "BS";
 
     /// <summary>
     /// The planId of the plan that requires this to be built. 
     /// </summary>
-    public string RequestPlanId; 
+    public string RequestPlanId;
+
+    /// <summary>
+    /// The role this build is made for. 
+    /// </summary>
+    public string Role;
+
+    /// <summary>
+    /// Whether or not the order to build the ship has been sent. 
+    /// </summary>
+    public bool SentOrder;
+
+    /// <summary>
+    /// The construction order reference. 
+    /// </summary>
+    public GalaxyReference<ConstructionOrder> ConstructionOrderReference;
+
+
 
 }
