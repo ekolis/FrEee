@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Orders;
+using FrEee.Game.Objects.Vehicles;
+using System.Linq; 
 
 public static class PlanManager
 {
@@ -45,6 +47,12 @@ public static class PlanManager
     }
 
 
+    public static void RemoveCompleted()
+    {
+        CurrentPlans.ColonizationPlans.RemoveAll(x => x.IsComplete);
+        CurrentPlans.ShipBuildPlans.RemoveAll(x => x.IsComplete); 
+    }
+
     
 }
 
@@ -57,6 +65,17 @@ public class PlanList
     public List<ColonizationPlan> ColonizationPlans;
 
     public List<ShipBuildPlan> ShipBuildPlans; 
+
+    [DoNotSerialize]
+    public IEnumerable<Plan> AllPlans { 
+        get
+        {
+            var plans = new List<Plan>();
+            plans.AddRange(ColonizationPlans);
+            plans.AddRange(ShipBuildPlans);
+            return plans; 
+        } 
+    }
 
 
     public PlanList()
@@ -88,6 +107,11 @@ public abstract class Plan
 
     public bool IsComplete;
 
+    /// <summary>
+    /// The priority of the plan. Higher is better.  
+    /// </summary>
+    public int Priority; 
+
 
     public void AssignId()
     {
@@ -108,11 +132,34 @@ public class ColonizationPlan : Plan
     [DoNotSerialize]
     public Planet Planet { get { return new GalaxyReference<Planet>(PlanetId);  } set { PlanetId = value.ID; } }
 
+    /// <summary>
+    /// The planet that will build the colony ship to colonize this world. 
+    /// </summary>
+    [DoNotSerialize]
+    public Planet SourcePlanet { get { return new GalaxyReference<Planet>(SourcePlanetId); } set { SourcePlanetId = value.ID; } }
+
+    [DoNotSerialize]
+    public ShipBuildPlan ShipBuildPlan
+    {
+        get
+        {
+            if (ShipBuildPlanId == null)
+                return null;
+
+            return PlanManager.CurrentPlans.ShipBuildPlans.FirstOrDefault(x => x.PlanId == ShipBuildPlanId); 
+        }
+    }
+
 
     /// <summary>
     /// The Id of the planet. 
     /// </summary>
-    public long PlanetId; 
+    public long PlanetId;
+
+    /// <summary>
+    /// The source planet to build from. 
+    /// </summary>
+    public long SourcePlanetId; 
 
     /// <summary>
     /// Whether this plan is awaiting the build to complete. 
@@ -122,7 +169,28 @@ public class ColonizationPlan : Plan
     /// <summary>
     /// The Shipbuild plan that uses this plan. 
     /// </summary>
-    public string ShipBuildPlanId; 
+    public string ShipBuildPlanId;
+
+    /// <summary>
+    /// Whether or not the colony ship has been despatched. 
+    /// </summary>
+    public bool ColonyShipDespatched; 
+
+    /// <summary>
+    /// The ship that will colonize this world. 
+    /// </summary>
+    [DoNotSerialize]
+    public Ship Ship { get { return new GalaxyReference<Ship>(ShipId); }  set { ShipId = value.ID; } }
+
+    /// <summary>
+    /// The colony ship Id. 
+    /// </summary>
+    public long ShipId;
+
+    /// <summary>
+    /// The Id of this colony command. 
+    /// </summary>
+    public long ColonyCommandId; 
 
 }
 
@@ -142,15 +210,19 @@ public class ShipBuildPlan :Plan
     /// </summary>
     public string Role;
 
+
     /// <summary>
     /// Whether or not the order to build the ship has been sent. 
     /// </summary>
     public bool SentOrder;
 
+    [DoNotSerialize]
+    public ConstructionQueue ConstructionQueue { get { return new GalaxyReference<ConstructionQueue>(ConstructionQueueID); } set { ConstructionQueueID = value.ID; } }
+
     /// <summary>
-    /// The construction order reference. 
+    /// The ID of the construction queue
     /// </summary>
-    public GalaxyReference<ConstructionOrder> ConstructionOrderReference;
+    public long ConstructionQueueID; 
 
 
 

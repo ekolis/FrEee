@@ -1,4 +1,5 @@
 ﻿#r "../../../bin/Debug/FrEee.Core.dll"
+#load "Plan.csx"
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility; 
@@ -9,11 +10,17 @@ using System;
 /// </summary>
 public class MinistryOfConstruction
 {
-    Empire empire;
-    Galaxy Galaxy; 
+     
 
-    public void Run(Empire empire, Galaxy galaxy)
+    public void ConstructShips(Empire empire, Galaxy galaxy)
     {
+
+    }
+
+
+    public void ConstructUnits(Empire empire, Galaxy galaxy)
+    {
+
     }
 
 }

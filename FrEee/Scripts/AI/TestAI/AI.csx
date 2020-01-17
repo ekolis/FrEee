@@ -4,6 +4,7 @@
 #load "BasicResearchModule.csx"
 #load "MinistryOfShipDesign.csx"
 #load "MinistryOfConstruction.csx"
+#load "MinistryOfColonization.csx"
 #load "Plan.csx"
 
 #r "../../../bin/Debug/FrEee.Core.dll"
@@ -26,13 +27,15 @@ public class Runner
     Galaxy galaxy;
     BasicResearch BasicResearch;
     MinistryOfShipDesign MinistryOfShipDesign;
-    MinistryOfConstruction MinistryOfConstruction; 
+    MinistryOfConstruction MinistryOfConstruction;
+    MinistryOfColonization MinistryOfColonization; 
 
     public Runner()
     {
         BasicResearch = new BasicResearch();
         MinistryOfShipDesign = new MinistryOfShipDesign();
-        MinistryOfConstruction = new MinistryOfConstruction(); 
+        MinistryOfConstruction = new MinistryOfConstruction();
+        MinistryOfColonization = new MinistryOfColonization(); 
     }
 
     public Empire Run(Empire Domain, Galaxy Context)
@@ -61,17 +64,18 @@ public class Runner
             {
                 var managementMinisters = empire.EnabledMinisters["Vehicle Management"];
 
-                //PlanManager.CurrentPlans.ColonizationPlans.Add(new ColonizationPlan()
-                //{
-                //    AwaitingBuild = false,
-                //    IsComplete = true,
-                //    Planet = empire.ExploredStarSystems.ElementAt(0).SpaceObjects.OfType<Planet>().FirstOrDefault(x => !x.HasColony),
-                //});
+                if (managementMinisters.Contains("Colonization"))
+                    MinistryOfColonization.Run(empire, galaxy);
 
-                //PlanManager.CurrentPlans.Add(new ColonizationPlan() { IsComplete = false, Type = "test" }); 
+
+               
+                if (managementMinisters.Contains("Ship Construction"))
+                    MinistryOfConstruction.ConstructShips(empire, galaxy);
+                if (managementMinisters.Contains("Unit Construction"))
+                    MinistryOfConstruction.ConstructUnits(empire, galaxy); 
             }
 
-
+            PlanManager.RemoveCompleted(); 
             PlanManager.Pack(); 
         }
         catch (Exception e)
