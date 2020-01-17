@@ -64,7 +64,11 @@ public class Runner
             {
                 var managementMinisters = empire.EnabledMinisters["Vehicle Management"];
 
-                if (managementMinisters.Contains("Colonization"))
+                if (managementMinisters.Contains("Ship Construction"))
+                    MinistryOfConstruction.HandleNewlyConstructedShips(empire, galaxy); 
+
+                   
+               if (managementMinisters.Contains("Colonization"))
                     MinistryOfColonization.Run(empire, galaxy);
 
 

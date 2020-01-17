@@ -9,8 +9,8 @@ using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Interfaces;
 using FrEee.Utility.Extensions;
-using FrEee.Game.Objects.Commands; 
-
+using FrEee.Game.Objects.Commands;
+using FrEee.Game.Objects.LogMessages; 
 
 
 /// <summary>
@@ -22,7 +22,62 @@ public class MinistryOfConstruction
 
     public Galaxy Galaxy; 
      
+    /// <summary>
+    /// Finds all the newly constructed ships and deals with them. 
+    /// </summary>
+    /// <param name="empire"></param>
+    /// <param name="galaxy"></param>
+    public void HandleNewlyConstructedShips(Empire empire, Galaxy galaxy)
+    {
+        var completedShips = empire.Log.Where(x => x.LogMessageType == FrEee.Game.Objects.LogMessages.LogMessageType.ConstructionComplete); 
+           // && x.TurnNumber == Galaxy.TurnNumber); 
+        foreach(var shiplog in completedShips)
+        {
+            var pict = shiplog as PictorialLogMessage<IConstructable>;
+            if (pict != null)
+            {
+                var ship = pict.Context as Ship;
+                if (ship != null)
+                {
 
+                    Empire.LogAIMessage($"Found ship construction message:{pict.Text}");
+                    //get the plan from the PlanManager. 
+                    var plan = PlanManager.CurrentPlans.ShipBuildPlans.FirstOrDefault(x => x.SentOrder
+                        && x.DesignBaseName == ship.Design.BaseName
+                        && x.ConstructionQueue.Container.Sector == ship.Sector);
+                    if (plan == null || plan.RequestPlanId == null)
+                        continue;
+                    Empire.LogAIMessage($"Found build plan:{plan.PlanId} for {plan.RequestPlanId}");
+                    var callingPlan = PlanManager.CurrentPlans.GetPlan(plan.RequestPlanId);
+                    if (callingPlan == null) //forgot to cancel a ship we no longer need? Well, that sucks. 
+                        continue;
+                    switch (callingPlan.TypeShorthand)
+                    {
+                        case "C":
+                            var p = callingPlan as ColonizationPlan;
+                            p.Ship = ship;
+                            p.AwaitingBuild = false;
+                            break;
+
+
+                    }
+
+                    Empire.LogAIMessage($"Ship completed: planid:{plan.PlanId} shipId:{ship.ID}");
+                    plan.IsComplete = true;
+                }
+                else
+                    Empire.LogAIMessage($"Construction completed of {pict.Text}"); 
+            }
+            else
+                Empire.LogAIMessage($"Construction of non IConstructable found: {shiplog.Text}"); 
+        }
+    }
+
+    /// <summary>
+    /// Constructs any ships that have been requested at a free shipyard. 
+    /// </summary>
+    /// <param name="empire"></param>
+    /// <param name="galaxy"></param>
     public void ConstructShips(Empire empire, Galaxy galaxy)
     {
 
@@ -49,6 +104,7 @@ public class MinistryOfConstruction
                 constrQueue.AddOrder(order); 
                 plan.ConstructionQueue = constrQueue;
                 plan.SentOrder = true;
+                plan.DesignBaseName = design.BaseName; 
                 var cmd = new AddOrderCommand
                         (
                             constrQueue,
@@ -70,7 +126,7 @@ public class MinistryOfConstruction
 
     public void ConstructUnits(Empire empire, Galaxy galaxy)
     {
-
+        //TODO. 
     }
 
 
@@ -95,6 +151,9 @@ public class MinistryOfConstruction
         throw new Exception("Unable to find design to build"); 
     }
 
+
+
+    
 }
 
 

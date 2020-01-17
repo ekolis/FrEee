@@ -93,6 +93,16 @@ public class PlanList
             if (p.PlanId == null)
                 p.AssignId();
     }
+
+    /// <summary>
+    /// gets the chosen plan, or null. 
+    /// </summary>
+    /// <param name="planId"></param>
+    /// <returns></returns>
+    public Plan GetPlan(string planId)
+    {
+        return AllPlans.FirstOrDefault(x => x.PlanId == planId); 
+    }
 }
 
 
@@ -115,7 +125,7 @@ public abstract class Plan
 
     public void AssignId()
     {
-        PlanId = $"{TypeShorthand}-{DateTime.Now.Ticks}";
+        PlanId = $"{TypeShorthand}-{DateTime.UtcNow.Ticks}-{PlanManager.CurrentPlans.AllPlans.Count()}";
     }
 }
 
@@ -132,7 +142,7 @@ public class ColonizationPlan : Plan
     [DoNotSerialize]
     public Planet Planet { get {
             if (PlanetId == 0)
-                return null; return new GalaxyReference<Planet>(PlanetId);  } set { PlanetId = value.ID; } }
+                return null; return GalaxyReference<Planet>.GetGalaxyReference(PlanetId);  } set { PlanetId = value.ID; } }
 
     /// <summary>
     /// The planet that will build the colony ship to colonize this world. 
@@ -141,7 +151,7 @@ public class ColonizationPlan : Plan
     public Planet SourcePlanet { get
         {
             if (SourcePlanetId == 0)
-                return null; return new GalaxyReference<Planet>(SourcePlanetId); } set { SourcePlanetId = value.ID; } }
+                return null; return GalaxyReference<Planet>.GetGalaxyReference(SourcePlanetId); } set { SourcePlanetId = value.ID; } }
 
     [DoNotSerialize]
     public ShipBuildPlan ShipBuildPlan
@@ -189,9 +199,17 @@ public class ColonizationPlan : Plan
     {
         get
         {
-            if (ShipId == 0)
-                return null;
-            return new GalaxyReference<Ship>(ShipId);
+            try
+            {
+                if (ShipId == 0)
+                    return null;
+                return GalaxyReference<Ship>.GetGalaxyReference(ShipId);
+            }
+            catch (IndexOutOfRangeException) //something has gone wrong and for some reason we tried to access an invalid ship. 
+            {
+                ShipId = 0;
+                return null; 
+            }
         }
         set { ShipId = value.ID; }
     }
@@ -237,7 +255,7 @@ public class ShipBuildPlan :Plan
     [DoNotSerialize]
     public StarSystem StarSystem { get {
             if (StarSystemId == 0)
-                return null; return new GalaxyReference<StarSystem>(StarSystemId); }set{ StarSystemId = value.ID; } }
+                return null; return GalaxyReference<StarSystem>.GetGalaxyReference(StarSystemId); }set{ StarSystemId = value.ID; } }
 
     /// <summary>
     /// The star system this object is to be built in, if any. 
@@ -248,7 +266,7 @@ public class ShipBuildPlan :Plan
     [DoNotSerialize]
     public ConstructionQueue ConstructionQueue { get {
             if (ConstructionQueueID == 0)
-                return null; return new GalaxyReference<ConstructionQueue>(ConstructionQueueID); } set { ConstructionQueueID = value.ID; } }
+                return null; return GalaxyReference<ConstructionQueue>.GetGalaxyReference(ConstructionQueueID); } set { ConstructionQueueID = value.ID; } }
 
     /// <summary>
     /// The ID of the construction queue

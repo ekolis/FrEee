@@ -856,8 +856,7 @@ namespace FrEee.Game.Objects.Space
                         Current.CurrentEmpire = Current.Empires[i];
                         Current.Redact();
                         Current.CurrentEmpire.AI.Act(Current.CurrentEmpire, Current, Current.CurrentEmpire.EnabledMinisters);
-                        cmds.Add(i, Current.CurrentEmpire.Commands);
-                        notes.Add(i, Current.CurrentEmpire.AINotes);
+                       
                     }
                     catch (Exception e)
                     {
@@ -865,12 +864,27 @@ namespace FrEee.Game.Objects.Space
                         //TODO: add in some indication the AI failed. 
                         e.Log(); 
                     }
+                    finally
+                    {
+                        //these always need to happen, otherwise the code below will throw an exception as it looks for the missing commands. 
+                        cmds.Add(i, Current.CurrentEmpire.Commands);
+                        notes.Add(i, Current.CurrentEmpire.AINotes);
+                    }
                 }
                 LoadFromString(serializedGalaxy);
                 foreach (var i in Current.Empires.Where(e => e.AI != null && (e.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)).Select(e => Current.Empires.IndexOf(e)).ToArray())
                 {
-                    Current.LoadCommands(Current.Empires[i], cmds[i]);
-                    Current.Empires[i].AINotes = notes[i];
+                    try
+                    {
+                        Current.LoadCommands(Current.Empires[i], cmds[i]);
+                        Current.Empires[i].AINotes = notes[i];
+                    }
+                    catch(Exception e)
+                    {
+                        //log the error and move on so we don't take down FrEee entirely. 
+                        //TODO: add in some indication the AI failed with commands. 
+                        e.Log(); 
+                    }
                 }
             }
             if (status != null)

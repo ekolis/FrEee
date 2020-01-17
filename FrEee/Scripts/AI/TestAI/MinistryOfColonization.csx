@@ -36,6 +36,7 @@ public class MinistryOfColonization
     /// </summary>
     public void PlanExpansion()
     {
+
         var currentplanetsPlanned = PlanManager.CurrentPlans.ColonizationPlans.Select(x => x.PlanetId);
         var currentTech = new List<string>();
         var empireDesigns = Empire.KnownDesigns.Where(x => x.Owner == Empire);
@@ -79,8 +80,8 @@ public class MinistryOfColonization
                 continue;
             //work out the priority. 
 
-            CalculateScore(colonyPlan); 
-
+            CalculateScore(colonyPlan);
+            colonyPlan.AssignId(); 
             PlanManager.CurrentPlans.ColonizationPlans.Add(colonyPlan); 
             
         }
@@ -92,6 +93,18 @@ public class MinistryOfColonization
     /// </summary>
     public void ProcessColonization()
     {
+        //If the plan is completed, say so, or someone else got there first? 
+        foreach (var plan in PlanManager.CurrentPlans.ColonizationPlans.Where(x => x.ColonyShipDespatched && x.Planet.HasColony))
+        {
+            plan.IsComplete = true;
+            if (plan.ShipBuildPlan != null)
+            {
+                plan.ShipBuildPlan.IsComplete = true;
+            }
+            if (plan.Ship != null)
+                plan.Ship.Orders.Clear();
+        }
+
         //Assign unassigned colony ships to the colony plan
         var unassignedShips = Empire.OwnedSpaceObjects.OfType<Ship>().Where(x =>
         (x.HasAbility("Colonize Planet - Rock") || x.HasAbility("Colonize Planet - Ice") || x.HasAbility("Colonize Planet - Gas"))
@@ -184,17 +197,7 @@ public class MinistryOfColonization
             plan.ColonyShipDespatched = true; 
         }
 
-        //If the plan is completed, say so, or someone else got there first? 
-        foreach (var plan in PlanManager.CurrentPlans.ColonizationPlans.Where(x => x.ColonyShipDespatched && x.Planet.HasColony))
-        {
-            plan.IsComplete = true;
-            if (plan.ShipBuildPlan != null)
-            {
-                plan.ShipBuildPlan.IsComplete = true;
-            }
-            if (plan.Ship != null)
-                plan.Ship.Orders.Clear(); 
-        }
+       
     }
 
     /// <summary>
@@ -215,6 +218,7 @@ public class MinistryOfColonization
             };
             buildPlan.AssignId();
             plan.ShipBuildPlanId = buildPlan.PlanId;
+            buildPlan.RequestPlanId = plan.PlanId; 
             PlanManager.CurrentPlans.ShipBuildPlans.Add(buildPlan); 
         }
     }
