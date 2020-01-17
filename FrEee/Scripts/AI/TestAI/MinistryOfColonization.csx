@@ -188,6 +188,10 @@ public class MinistryOfColonization
         foreach (var plan in PlanManager.CurrentPlans.ColonizationPlans.Where(x => x.ColonyShipDespatched && x.Planet.HasColony))
         {
             plan.IsComplete = true;
+            if (plan.ShipBuildPlan != null)
+            {
+                plan.ShipBuildPlan.IsComplete = true;
+            }
             if (plan.Ship != null)
                 plan.Ship.Orders.Clear(); 
         }
@@ -227,7 +231,11 @@ public class MinistryOfColonization
             //someone else settled this world, so cancel the plan. 
             if (plan.Planet.Colony != null)
             {
-                plan.IsComplete = true; 
+                plan.IsComplete = true;
+                if (plan.ShipBuildPlan != null)
+                {
+                    plan.ShipBuildPlan.IsComplete = true;
+                }
                 continue;
             }
 
