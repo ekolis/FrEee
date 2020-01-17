@@ -275,7 +275,7 @@ public class MinistryOfColonization
     void CalculateScore(ColonizationPlan colonyPlan)
     {       
         var planet = colonyPlan.Planet;
-        colonyPlan.Priority = 1000; //initial value; 
+        colonyPlan.Priority = 100; //initial value; 
 
 
         colonyPlan.Priority -= Pathfinder.EstimateDistance(colonyPlan.SourcePlanet.Sector, planet.Sector, Empire);
