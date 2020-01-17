@@ -110,6 +110,16 @@ namespace FrEee.WinForms.Forms
 				if (MessageBox.Show("Not all players have uploaded PLR files. Process the turn anyway?", "Confirm Processing", MessageBoxButtons.YesNo) == DialogResult.No)
 					return;
 			}
+			ProcessTurn(); 
+			MessageBox.Show("Turn successfully processed. It is now turn " + Galaxy.Current.TurnNumber + " (stardate " + Galaxy.Current.Stardate + ").");
+			Cursor = Cursors.Default;
+			CacheGalaxy();
+			Bind();
+		}
+
+
+		void ProcessTurn()
+		{
 			var status = new Status { Message = "Initializing" };
 			var t = new Thread(new ThreadStart(() =>
 			{
@@ -118,10 +128,6 @@ namespace FrEee.WinForms.Forms
 				Galaxy.SaveAll(status, 1.0);
 			}));
 			this.ShowChildForm(new StatusForm(t, status));
-			MessageBox.Show("Turn successfully processed. It is now turn " + Galaxy.Current.TurnNumber + " (stardate " + Galaxy.Current.Stardate + ").");
-			Cursor = Cursors.Default;
-			CacheGalaxy();
-			Bind();
 		}
 
 		private void btnToggleAI_Click(object sender, EventArgs e)
@@ -158,6 +164,23 @@ namespace FrEee.WinForms.Forms
 		private void ReloadGalaxy()
 		{
 			Galaxy.LoadFromString(serializedGalaxy);
+		}
+
+		private void autoProcess_CheckedChanged(object sender, EventArgs e)
+		{
+			autoProcessTimer.Enabled = autoProcess.Checked; 
+		}
+
+		private void autoProcessTimer_Tick(object sender, EventArgs e)
+		{
+			var empStatuses = gridEmpires.Rows.Cast<DataGridViewRow>().Select(r => r.DataBoundItem).Cast<EmpireStatus>();
+			if (empStatuses.Any(s => s.PlrUploadStatus == PlrUploadStatus.NotUploaded))
+			{
+				return;
+			}
+			autoProcessTimer.Stop(); 
+			ProcessTurn();
+			autoProcessTimer.Start(); 
 		}
 	}
 }
