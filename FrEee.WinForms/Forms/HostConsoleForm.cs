@@ -131,6 +131,11 @@ namespace FrEee.WinForms.Forms
 				var status = (EmpireStatus)gridEmpires.SelectedRows[0].DataBoundItem;
 				var emp = status.Empire;
 				emp.IsPlayerEmpire = !emp.IsPlayerEmpire;
+				//ensure that the AI can actually do stuff by turning on all the ministers, or turn them off if the player is taking over. 
+				if (emp.IsPlayerEmpire)
+					emp.EnabledMinisters = new SafeDictionary<string, System.Collections.Generic.ICollection<string>>();
+				else
+					emp.EnabledMinisters = emp.AI?.MinisterNames ?? new SafeDictionary<string, System.Collections.Generic.ICollection<string>>(); 
 				var saveStatus = new Status { Message = "Initializing" };
 				var t = new Thread(new ThreadStart(() =>
 				{
