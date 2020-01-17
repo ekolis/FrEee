@@ -862,6 +862,7 @@ namespace FrEee.Game.Objects.Space
                     {
                         //log the error in the ai and move on. 
                         //TODO: add in some indication the AI failed. 
+                        Current.CurrentEmpire.Log.Add(new GenericLogMessage($"AI Error when processing:{e.Message}", LogMessageType.Error)); 
                         e.Log(); 
                     }
                     finally
