@@ -403,7 +403,7 @@ namespace FrEee.Game.Objects.Space
 			if (e != null && !ExploredByEmpires.Contains(e))
 			{
 				ExploredByEmpires.Add(e);
-				e.RecordLog(this, $"We have explored the {Name} system.");
+				e.RecordLog(this, $"We have explored the {Name} system.", LogMessages.LogMessageType.Generic);
 			}
 		}
 	}

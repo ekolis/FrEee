@@ -33,9 +33,9 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		public override void Execute()
 		{
 			if (Proposal.IsResolved)
-				Executor.Log.Add(Target.CreateLogMessage("The proposal \"" + Proposal + "\" has already been resolved and cannot be rejected now."));
+				Executor.Log.Add(Target.CreateLogMessage("The proposal \"" + Proposal + "\" has already been resolved and cannot be rejected now.", LogMessages.LogMessageType.Error));
 			else
-				Target.Log.Add(Executor.CreateLogMessage("The " + Executor + " has rejected our proposal (" + Proposal + ")."));
+				Target.Log.Add(Executor.CreateLogMessage("The " + Executor + " has rejected our proposal (" + Proposal + ").", LogMessages.LogMessageType.Diplomacy));
 		}
 
 		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)

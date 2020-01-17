@@ -11,14 +11,14 @@ namespace FrEee.Game.Objects.LogMessages
 	[Serializable]
 	public class PictorialLogMessage<T> : LogMessage, IPictorialLogMessage<T>
 	{
-		public PictorialLogMessage(string text, T context)
-			: base(text)
+		public PictorialLogMessage(string text, T context, LogMessageType logMessageType = LogMessageType.Generic)
+			: base(text, logMessageType)
 		{
 			Context = context;
 		}
 
-		public PictorialLogMessage(string text, int turn, T context)
-			: base(text, turn)
+		public PictorialLogMessage(string text, int turn, T context, LogMessageType logMessageType = LogMessageType.Generic)
+			: base(text, turn, logMessageType)
 		{
 			Context = context;
 		}

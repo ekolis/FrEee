@@ -17,7 +17,7 @@ namespace FrEee.Game.Objects.Commands
 		{
 			// validation
 			if (Executor.Container == null)
-				Issuer.Log.Add(Executor.CreateLogMessage(Executor + " cannot leave its fleet because it is not currently in a fleet."));
+				Issuer.Log.Add(Executor.CreateLogMessage(Executor + " cannot leave its fleet because it is not currently in a fleet.", LogMessages.LogMessageType.Error));
 			else
 			{
 				// remove from fleet

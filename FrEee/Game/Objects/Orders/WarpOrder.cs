@@ -119,11 +119,11 @@ namespace FrEee.Game.Objects.Orders
 						sobj.TakeNormalDamage(dmg);
 						if (sobj.IsDestroyed)
 						{
-							sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " was destroyed by turbulence when traversing " + WarpPoint + "."));
+							sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " was destroyed by turbulence when traversing " + WarpPoint + ".", LogMessageType.Generic));
 							return;
 						}
 						else
-							sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " took " + dmg + " points of damage from turbulence when traversing " + WarpPoint + "."));
+							sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " took " + dmg + " points of damage from turbulence when traversing " + WarpPoint + ".", LogMessageType.Generic));
 					}
 
 					sobj.Sector = WarpPoint.Target;
@@ -138,7 +138,7 @@ namespace FrEee.Game.Objects.Orders
 				else
 				{
 					// can'IMobileSpaceObject warp here, maybe the GUI should have issued a move order?
-					((ISpaceObject)sobj).Owner.Log.Add(sobj.CreateLogMessage(sobj + " cannot warp via " + WarpPoint + " because it is not currently located at the warp point."));
+					((ISpaceObject)sobj).Owner.Log.Add(sobj.CreateLogMessage(sobj + " cannot warp via " + WarpPoint + " because it is not currently located at the warp point.", LogMessageType.Warning));
 				}
 			}
 

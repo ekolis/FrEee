@@ -158,7 +158,7 @@ namespace FrEee.Game.Objects.Orders
 							var shot = new Shot(null, null, sobj, 0);
 							var hit = new Hit(shot, sobj, damage);
 							sobj.TakeDamage(hit, null);
-							sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " took " + damage + " damage from entering " + damager + "'s sector."));
+							sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " took " + damage + " damage from entering " + damager + "'s sector.", LogMessageType.Generic));
 							sobj.ReplenishShields();
 						}
 					}
@@ -170,7 +170,7 @@ namespace FrEee.Game.Objects.Orders
 							reason = sobj + " is immobile";
 						else
 							reason = "there is no available path leading toward " + Destination;
-						PathfindingError = sobj.CreateLogMessage(sobj + " could not move to " + Destination + " because " + reason + ".");
+						PathfindingError = sobj.CreateLogMessage(sobj + " could not move to " + Destination + " because " + reason + ".", LogMessageType.Warning);
 						sobj.Owner?.Log.Add(PathfindingError);
 						LoggedPathfindingError = true;
 					}
@@ -180,7 +180,7 @@ namespace FrEee.Game.Objects.Orders
 				sobj.SpendTime(sobj.TimePerMove);
 			}
 			else
-				ord.Owner.RecordLog(ord, $"{ord} cannot be ordered to move because it is not a mobile space object.");
+				ord.Owner.RecordLog(ord, $"{ord} cannot be ordered to move because it is not a mobile space object.", LogMessageType.Error);
 		}
 
 		public IEnumerable<LogMessage> GetErrors(IOrderable v)

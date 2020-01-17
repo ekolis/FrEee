@@ -55,9 +55,9 @@ namespace FrEee.Game.Objects.Commands
 
 			// validation
 			if (Fleet.Sector != null && Executor.Sector != Fleet.Sector)
-				Issuer.Log.Add(Executor.CreateLogMessage(Executor + " cannot join " + Fleet + " because they are not in the same sector."));
+				Issuer.Log.Add(Executor.CreateLogMessage(Executor + " cannot join " + Fleet + " because they are not in the same sector.", LogMessages.LogMessageType.Warning));
 			else if (Fleet.Owner != null && Fleet.Owner != Issuer && CreateFleetCommand == null)
-				Issuer.Log.Add(Executor.CreateLogMessage(Executor + " cannot join " + Fleet + " because this fleet does not belong to us."));
+				Issuer.Log.Add(Executor.CreateLogMessage(Executor + " cannot join " + Fleet + " because this fleet does not belong to us.", LogMessages.LogMessageType.Warning));
 			else
 			{
 				// remove from old fleet

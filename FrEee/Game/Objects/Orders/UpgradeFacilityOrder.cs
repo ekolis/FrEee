@@ -142,7 +142,7 @@ namespace FrEee.Game.Objects.Orders
 					if (spending < queue.Owner.StoredResources)
 					{
 						spending = ResourceQuantity.Min(spending, queue.Owner.StoredResources);
-						queue.Container.CreateLogMessage("Construction of " + Upgrade.New + " at " + queue.Container + " was delayed due to lack of resources.");
+						queue.Container.CreateLogMessage("Construction of " + Upgrade.New + " at " + queue.Container + " was delayed due to lack of resources.", LogMessageType.Generic);
 					}
 					queue.Owner.StoredResources -= spending;
 					queue.UnspentRate -= spending;
@@ -165,20 +165,20 @@ namespace FrEee.Game.Objects.Orders
 			{
 				// validate that new facility is unlocked
 				if (!queue.Owner.HasUnlocked(Upgrade.New))
-					yield return Upgrade.Old.CreateLogMessage(Upgrade.Old + " on " + queue.Container + " could not be upgraded to a " + Upgrade.New + " because we have not yet researched the " + Upgrade.New + ".");
+					yield return Upgrade.Old.CreateLogMessage(Upgrade.Old + " on " + queue.Container + " could not be upgraded to a " + Upgrade.New + " because we have not yet researched the " + Upgrade.New + ".", LogMessageType.Error);
 
 				// validate that new and old facilities are in the same family
 				if (Upgrade.New.Family.Value != Upgrade.Old.Family.Value)
-					yield return Upgrade.Old.CreateLogMessage(Upgrade.Old + " on " + queue.Container + " could not be upgraded to a " + Upgrade.New + " because facilities cannot be upgraded to facilities of a different family.");
+					yield return Upgrade.Old.CreateLogMessage(Upgrade.Old + " on " + queue.Container + " could not be upgraded to a " + Upgrade.New + " because facilities cannot be upgraded to facilities of a different family.", LogMessageType.Error);
 
 				// validate that there is a facility to upgrade
 				var planet = (Planet)queue.Container;
 				var colony = planet.Colony;
 				if (!colony.Facilities.Any(f => f.Template == Upgrade.Old))
-					yield return planet.CreateLogMessage("There are no " + Upgrade.Old + "s on " + planet + " to upgrade.");
+					yield return planet.CreateLogMessage("There are no " + Upgrade.Old + "s on " + planet + " to upgrade.", LogMessageType.Error);
 			}
 			else
-				yield return ord.CreateLogMessage($"{ord} cannot upgrade facilities because it is not a construction queue.");
+				yield return ord.CreateLogMessage($"{ord} cannot upgrade facilities because it is not a construction queue.", LogMessageType.Error);
 		}
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
