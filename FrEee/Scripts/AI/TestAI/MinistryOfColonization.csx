@@ -102,7 +102,7 @@ public class MinistryOfColonization
             ColonizationPlan currentPlan = null;
             int currentPriority = int.MinValue; 
             foreach(var plan in PlanManager.CurrentPlans.ColonizationPlans.Where(x => x.Ship == null 
-                && x.ShipBuildPlanId == null && ship.HasAbility(x.Planet.ColonizationAbilityName)))
+                && (x.ShipBuildPlanId == null || !x.ShipBuildPlan.SentOrder)  && ship.HasAbility(x.Planet.ColonizationAbilityName)))
             {
                 var distance = Pathfinder.EstimateDistance(ship.Sector, plan.Planet.Sector, Empire);
                 var potentialPriority =  plan.Priority - (distance * 100); 
@@ -117,7 +117,11 @@ public class MinistryOfColonization
                 continue; 
 
             currentPlan.Ship = ship;
-            currentPlan.AwaitingBuild = false; 
+            currentPlan.AwaitingBuild = false;
+            if (currentPlan.ShipBuildPlan != null)
+            {
+                currentPlan.ShipBuildPlan.IsComplete = true;
+            }
         }
 
 
@@ -202,7 +206,8 @@ public class MinistryOfColonization
                 RequestPlanId = plan.PlanId,
                 SentOrder = false,
                 Role = plan.Planet.ColonizationAbilityName, 
-                Priority = plan.Priority
+                Priority = plan.Priority, 
+                ConstructionQueue = plan.SourcePlanet?.ConstructionQueue
             };
             buildPlan.AssignId();
             plan.ShipBuildPlanId = buildPlan.PlanId;

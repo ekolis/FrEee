@@ -130,13 +130,18 @@ public class ColonizationPlan : Plan
     /// The planet intended to colonize. 
     /// </summary>
     [DoNotSerialize]
-    public Planet Planet { get { return new GalaxyReference<Planet>(PlanetId);  } set { PlanetId = value.ID; } }
+    public Planet Planet { get {
+            if (PlanetId == 0)
+                return null; return new GalaxyReference<Planet>(PlanetId);  } set { PlanetId = value.ID; } }
 
     /// <summary>
     /// The planet that will build the colony ship to colonize this world. 
     /// </summary>
     [DoNotSerialize]
-    public Planet SourcePlanet { get { return new GalaxyReference<Planet>(SourcePlanetId); } set { SourcePlanetId = value.ID; } }
+    public Planet SourcePlanet { get
+        {
+            if (SourcePlanetId == 0)
+                return null; return new GalaxyReference<Planet>(SourcePlanetId); } set { SourcePlanetId = value.ID; } }
 
     [DoNotSerialize]
     public ShipBuildPlan ShipBuildPlan
@@ -180,7 +185,16 @@ public class ColonizationPlan : Plan
     /// The ship that will colonize this world. 
     /// </summary>
     [DoNotSerialize]
-    public Ship Ship { get { return new GalaxyReference<Ship>(ShipId); }  set { ShipId = value.ID; } }
+    public Ship Ship
+    {
+        get
+        {
+            if (ShipId == 0)
+                return null;
+            return new GalaxyReference<Ship>(ShipId);
+        }
+        set { ShipId = value.ID; }
+    }
 
     /// <summary>
     /// The colony ship Id. 
@@ -210,6 +224,10 @@ public class ShipBuildPlan :Plan
     /// </summary>
     public string Role;
 
+    /// <summary>
+    /// The basename of this design. 
+    /// </summary>
+    public string DesignBaseName; 
 
     /// <summary>
     /// Whether or not the order to build the ship has been sent. 
@@ -217,7 +235,20 @@ public class ShipBuildPlan :Plan
     public bool SentOrder;
 
     [DoNotSerialize]
-    public ConstructionQueue ConstructionQueue { get { return new GalaxyReference<ConstructionQueue>(ConstructionQueueID); } set { ConstructionQueueID = value.ID; } }
+    public StarSystem StarSystem { get {
+            if (StarSystemId == 0)
+                return null; return new GalaxyReference<StarSystem>(StarSystemId); }set{ StarSystemId = value.ID; } }
+
+    /// <summary>
+    /// The star system this object is to be built in, if any. 
+    /// </summary>
+    public long StarSystemId; 
+
+
+    [DoNotSerialize]
+    public ConstructionQueue ConstructionQueue { get {
+            if (ConstructionQueueID == 0)
+                return null; return new GalaxyReference<ConstructionQueue>(ConstructionQueueID); } set { ConstructionQueueID = value.ID; } }
 
     /// <summary>
     /// The ID of the construction queue
