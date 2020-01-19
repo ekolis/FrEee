@@ -12,7 +12,9 @@
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using System;
-using System.Linq; 
+using System.Linq;
+using FrEee.Utility.Extensions;
+
 
 //Note, at present, classes within scripts cannot be stored in the AI Notes as classes. 
 //Since they are not recognized as the same class the next time a script is run. 
@@ -98,25 +100,11 @@ public class Runner
         }
         catch (Exception e)
         {
+            empire.LogAIMessage($"Exception by AI:{e.Message}"); 
             throw; 
         }
         return empire;  
         
     }
-
-
-    //void SetResearch()
-    //{
-    //    if (empire.ResearchQueue.Count() < 3)
-    //    {
-    //        var cmd = new ResearchCommand();
-    //        foreach (var current in empire.ResearchQueue)
-    //        {
-    //            cmd.Queue.Add(current);
-    //        }
-    //        cmd.Queue.Add(empire.AvailableTechnologies.ElementAt(0));
-    //        empire.ResearchCommand = cmd;
-    //    }
-    //}
 }
 
