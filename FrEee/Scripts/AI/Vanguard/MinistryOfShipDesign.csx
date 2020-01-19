@@ -48,7 +48,7 @@ public class MinistryOfShipDesign
         }
         if (!empiresDesigns.Any(x => x.Role == "Colonize Planet - Gas")
             && (componentTemplate = Empire.UnlockedItems.OfType<ComponentTemplate>()
-            .FirstOrDefault(x => !x.IsObsolete && x.HasAbility("Colonize Planet - Gas"))) != null)
+            .FirstOrDefault(x => !x.IsObsolete && x.HasAbility("Colonize Planet - Gas Giant"))) != null)
         {
             DesignColonyShip(componentTemplate);
         }

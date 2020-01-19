@@ -50,11 +50,10 @@ public class Runner
             PlanManager.Empire = empire;
             PlanManager.Unpack(); 
 
-            if (empire.EnabledMinisters.ContainsKey("Colony Management"))
+            if (empire.EnabledMinisters.ContainsKey("Facility Management"))
             {
-                //TODO: move this into Empire Management, and remove Colony management entirely. 
                 //split up the facility management into construction, upgrades, and replacement? make it its own category? 
-                var colonyManagement = empire.EnabledMinisters["Colony Management"];
+                var colonyManagement = empire.EnabledMinisters["Facility Management"];
                 if (colonyManagement.Contains("Facility Construction"))
                     MinistryOfInfrastructure.Run(empire, galaxy);
             }
@@ -71,18 +70,22 @@ public class Runner
                     BasicResearch.Run(empire, galaxy);
             }
 
+
+            if (empire.EnabledMinisters.ContainsKey("Vehicle Management"))
+                if (empire.EnabledMinisters["Vehicle Management"].Contains("Ship Construction"))
+                    MinistryOfConstruction.HandleNewlyConstructedShips(empire, galaxy);
+
+            if (empire.EnabledMinisters.ContainsKey("Expansion"))
+            {
+                var managementMinisters = empire.EnabledMinisters["Expansion"];
+
+                if (managementMinisters.Contains("Colonization"))
+                    MinistryOfColonization.Run(empire, galaxy);
+            }
+
             if (empire.EnabledMinisters.ContainsKey("Vehicle Management"))
             {
                 var managementMinisters = empire.EnabledMinisters["Vehicle Management"];
-
-                if (managementMinisters.Contains("Ship Construction"))
-                    MinistryOfConstruction.HandleNewlyConstructedShips(empire, galaxy); 
-
-                   
-               if (managementMinisters.Contains("Colonization"))
-                    MinistryOfColonization.Run(empire, galaxy);
-
-
                
                 if (managementMinisters.Contains("Ship Construction"))
                     MinistryOfConstruction.ConstructShips(empire, galaxy);

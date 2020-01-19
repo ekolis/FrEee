@@ -45,7 +45,10 @@ public class MinistryOfColonization
         if (empireDesigns.Any(x => x.Role == "Colonize Planet - Ice"))
             currentTech.Add("Colonize Planet - Ice");
         if (empireDesigns.Any(x => x.Role == "Colonize Planet - Gas"))
+        {
             currentTech.Add("Colonize Planet - Gas");
+            currentTech.Add("Colonize Planet - Gas Giant"); 
+        }
 
 
         var possibles = Empire.ExploredStarSystems.SelectMany(x => x.FindSpaceObjects<Planet>
@@ -212,7 +215,7 @@ public class MinistryOfColonization
                 IsComplete = false,
                 RequestPlanId = plan.PlanId,
                 SentOrder = false,
-                Role = plan.Planet.ColonizationAbilityName, 
+                Role = plan.Planet.ColonizationAbilityName == "Colonize Planet - Gas Giant" ? "Colonize Planet - Gas" : plan.Planet.ColonizationAbilityName, 
                 Priority = plan.Priority, 
                 ConstructionQueue = plan.SourcePlanet?.ConstructionQueue
             };

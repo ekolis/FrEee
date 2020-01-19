@@ -1,8 +1,3 @@
-Colony Management
-	Facility Construction
-	Ship Construction
-	Unit Contruction
-	Miscellaneous Orders
 Design Management
 	Ship Design
 	Unit Design
@@ -11,9 +6,14 @@ Empire Management
 	Politics
 	Research
 	Intelligence
-Vehicle Management
+Facility Management
+	Facility Construction
+	Facility Upgrading
+	Facility Replacement
+Expansion
 	Exploration
 	Colonization
+Vehicle Management
 	Attack
 	Defense
 	Ship Construction
