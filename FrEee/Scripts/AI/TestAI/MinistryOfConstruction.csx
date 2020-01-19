@@ -29,8 +29,9 @@ public class MinistryOfConstruction
     /// <param name="galaxy"></param>
     public void HandleNewlyConstructedShips(Empire empire, Galaxy galaxy)
     {
-        var completedShips = empire.Log.Where(x => x.LogMessageType == FrEee.Game.Objects.LogMessages.LogMessageType.ConstructionComplete); 
-           // && x.TurnNumber == Galaxy.TurnNumber); 
+        
+        var completedShips = empire.Log.Where(x => x.LogMessageType == FrEee.Game.Objects.LogMessages.LogMessageType.ConstructionComplete
+            && x.TurnNumber == Galaxy.Current.TurnNumber); 
         foreach(var shiplog in completedShips)
         {
             var pict = shiplog as PictorialLogMessage<IConstructable>;
@@ -69,7 +70,7 @@ public class MinistryOfConstruction
                     Empire.LogAIMessage($"Construction completed of {pict.Text}"); 
             }
             else
-                Empire.LogAIMessage($"Construction of non IConstructable found: {shiplog.Text}"); 
+                Empire.LogAIMessage($"Construction of non IConstructable found: {shiplog?.Text}"); 
         }
     }
 
