@@ -120,7 +120,7 @@ public class MinistryOfInfrastructure
     /// </summary>
     /// <param name="planet"></param>
     /// <returns></returns>
-    protected FacilityTemplate GetResourceFacility(Planet planet)
+    protected FacilityTemplate GetResourceFacility(Planet planet, int randMin = 10, int randMax = 100)
     {
         return (from faci in AvailableFacilities
         where (faci.HasAbility("Resource Generation - Minerals")
@@ -128,7 +128,8 @@ public class MinistryOfInfrastructure
            || faci.HasAbility("Resource Generation - Radioactives")
            || faci.HasAbility("Point Generation - Research")
            || faci.HasAbility("Point Generation - Intelligence"))
-        orderby GetScoreForFacility(planet, faci) descending
+           //ensure a little random in the scores, so not always building what is best. 
+        orderby GetScoreForFacility(planet, faci) + RandomHelper.Range(randMin, randMax) descending
         select faci).FirstOrDefault(); 
 
             
@@ -148,13 +149,14 @@ public class MinistryOfInfrastructure
         var pcts = planet.StandardIncomePercentages;
         foreach (var abil in facilityTemplate.Abilities().Where(abil => abil.Rule.Name.StartsWith(prefix)))
         {
-            var resource = Resource.Find(abil.Rule.Name.Substring(prefix.Length));
+            var resourceName = abil.Rule.Name.Substring(prefix.Length);
+            var resource = Resource.Find(resourceName);
             var amount = abil.Value1.ToInt();
 
             if (resource.HasValue)
                 amount = Galaxy.Current.StandardMiningModel.GetRate(amount, planet.ResourceValue[resource], pcts[resource] / 100d);
 
-            score += amount; 
+            score += amount + GetResourceScoreMultiplier(resource); 
         }
         prefix = "Point Generation - ";
         foreach (var abil in facilityTemplate.Abilities().Where(abil => abil.Rule.Name.StartsWith(prefix)))
@@ -162,10 +164,62 @@ public class MinistryOfInfrastructure
             var resoruceName = abil.Rule.Name.Substring(prefix.Length);
             var resource = Resource.Find(resoruceName);
             var amount = abil.Value1.ToInt() * pcts[resource] / 100;
-            score += (amount); 
+
+            score += amount + GetResourceScoreMultiplier(resource); 
         }
 
         return score; 
+    }
+
+    /// <summary>
+    /// Modifies the default score of a facility by the current aspects of the empire. 
+    /// </summary>
+    /// <param name="resourceName"></param>
+    /// <returns></returns>
+    int GetResourceScoreMultiplier(Resource resourceName)
+    {
+        var income = Empire.NetIncomeLessConstruction[resourceName]; 
+        switch(resourceName.Name)
+        {
+            case "Minerals":
+                if (income < 0)
+                    return 10000; 
+                if (income < 10000)
+                    return 1000;
+                if (income < 100000)
+                    return 100;
+                return 0;
+            case "Organics":
+                //TODO: add changes for Organic tech. 
+                if (income < 0)
+                    return 5000;
+                if (income < 10000)
+                    return 500;
+                if (income < 100000)
+                    return 50; 
+                return 0;
+            case "Radioactives":
+                //TODO: add changes for Crystal tech. 
+                if (income < 0)
+                    return 5000;
+                if (income < 10000)
+                    return 500;
+                if (income < 100000)
+                    return 50;
+                return 0;
+
+            case "Research":
+                if (income / Empire.ColonizedPlanets.Count() < 1000)
+                    return 1000;
+                return 100;
+
+            case "Intelligence":
+                if (income / Empire.ColonizedPlanets.Count() < 1000)
+                    return 1000;
+                return 0;
+        }
+
+        return 0; 
     }
 
 
