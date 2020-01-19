@@ -517,6 +517,7 @@
     <None Include="Scripts\AI\TestAI\BasicResearchModule.csx" />
     <None Include="Scripts\AI\TestAI\MinistryOfColonization.csx" />
     <None Include="Scripts\AI\TestAI\MinistryOfConstruction.csx" />
+    <None Include="Scripts\AI\TestAI\MinistryOfInfrastructure.csx" />
     <None Include="Scripts\AI\TestAI\MinistryOfShipDesign.csx" />
     <None Include="Scripts\AI\TestAI\Plan.csx" />
   </ItemGroup>

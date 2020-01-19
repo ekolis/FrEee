@@ -5,6 +5,7 @@
 #load "MinistryOfShipDesign.csx"
 #load "MinistryOfConstruction.csx"
 #load "MinistryOfColonization.csx"
+#load "MinistryOfInfrastructure.csx"
 #load "Plan.csx"
 
 #r "../../../bin/Debug/FrEee.Core.dll"
@@ -28,14 +29,16 @@ public class Runner
     BasicResearch BasicResearch;
     MinistryOfShipDesign MinistryOfShipDesign;
     MinistryOfConstruction MinistryOfConstruction;
-    MinistryOfColonization MinistryOfColonization; 
+    MinistryOfColonization MinistryOfColonization;
+    MinistryOfInfrastructure MinistryOfInfrastructure; 
 
     public Runner()
     {
         BasicResearch = new BasicResearch();
         MinistryOfShipDesign = new MinistryOfShipDesign();
         MinistryOfConstruction = new MinistryOfConstruction();
-        MinistryOfColonization = new MinistryOfColonization(); 
+        MinistryOfColonization = new MinistryOfColonization();
+        MinistryOfInfrastructure = new MinistryOfInfrastructure(); 
     }
 
     public Empire Run(Empire Domain, Galaxy Context)
@@ -46,6 +49,16 @@ public class Runner
             empire = Domain;
             PlanManager.Empire = empire;
             PlanManager.Unpack(); 
+
+            if (empire.EnabledMinisters.ContainsKey("Colony Management"))
+            {
+                //TODO: move this into Empire Management, and remove Colony management entirely. 
+                //split up the facility management into construction, upgrades, and replacement? make it its own category? 
+                var colonyManagement = empire.EnabledMinisters["Colony Management"];
+                if (colonyManagement.Contains("Facility Construction"))
+                    MinistryOfInfrastructure.Run(empire, galaxy);
+            }
+
             if (empire.EnabledMinisters.ContainsKey("Design Management"))
             {
                 MinistryOfShipDesign.Run(empire, galaxy); 
@@ -57,8 +70,6 @@ public class Runner
                 if (managementMinisters.Contains("Research"))
                     BasicResearch.Run(empire, galaxy);
             }
-
-
 
             if (empire.EnabledMinisters.ContainsKey("Vehicle Management"))
             {

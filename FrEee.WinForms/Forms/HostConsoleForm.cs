@@ -174,12 +174,16 @@ namespace FrEee.WinForms.Forms
 		private void autoProcessTimer_Tick(object sender, EventArgs e)
 		{
 			var empStatuses = gridEmpires.Rows.Cast<DataGridViewRow>().Select(r => r.DataBoundItem).Cast<EmpireStatus>();
-			if (empStatuses.Any(s => s.PlrUploadStatus == PlrUploadStatus.NotUploaded))
+			if (empStatuses.Any(s => s.PlrUploadStatus == PlrUploadStatus.NotUploaded) 
+				|| empStatuses.All(s => s.PlrUploadStatus == PlrUploadStatus.Defeated))
 			{
 				return;
 			}
 			autoProcessTimer.Stop(); 
 			ProcessTurn();
+			Cursor = Cursors.Default;
+			CacheGalaxy();
+			Bind();
 			autoProcessTimer.Start(); 
 		}
 	}
