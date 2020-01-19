@@ -54,6 +54,8 @@ public class MinistryOfInfrastructure
                 var chosenFacility = GetEmpireVitalFaciltiesForSystem(planet.StarSystem);
                 if (chosenFacility == null)
                     chosenFacility = GetPlanetVitalFacilities(planet);
+                //TODO: add in non-vital system and planet facility checks. Ie; Resource boosters. Is it worth building one etc. 
+                //Might want that to be facility replacement? 
                 if (chosenFacility == null)
                     chosenFacility = GetResourceFacility(planet);
                 if (chosenFacility == null)
@@ -111,7 +113,7 @@ public class MinistryOfInfrastructure
     /// <returns></returns>
     protected FacilityTemplate GetPlanetVitalFacilities(Planet planet)
     {
-        //TODO: handle things like planet increasing planets. 
+        //TODO: handle things that every planet needs. 
         return null; 
     }
 
@@ -188,7 +190,7 @@ public class MinistryOfInfrastructure
                     return 1000;
                 if (income < 100000)
                     return 100;
-                return 0;
+                return 10;
             case "Organics":
                 //TODO: add changes for Organic tech. 
                 if (income < 0)
@@ -199,7 +201,7 @@ public class MinistryOfInfrastructure
                     return 50; 
                 return 0;
             case "Radioactives":
-                //TODO: add changes for Crystal tech. 
+                //TODO: add changes for Crystal/Temporal tech. 
                 if (income < 0)
                     return 5000;
                 if (income < 10000)

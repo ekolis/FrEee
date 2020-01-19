@@ -102,7 +102,7 @@ namespace FrEee.Utility
 		/// </summary>
 		/// <param name="obj"></param>
 		/// <returns></returns>
-		public static string SerializeObjectToJson(object obj)
+		public static string SerializeObject(object obj)
 		{
 			return JsonConvert.SerializeObject(obj,SimpleConverterSettings); 
 		}
@@ -112,7 +112,7 @@ namespace FrEee.Utility
 		/// <typeparam name="T"></typeparam>
 		/// <param name="json"></param>
 		/// <returns></returns>
-		public static T DeserializeObjectFromJson<T>(string json)
+		public static T DeserializeObject<T>(string json)
 		{
 			return JsonConvert.DeserializeObject<T>(json, SimpleConverterSettings); 
 		}

@@ -25,7 +25,7 @@ public static class PlanManager
             var str = Empire.AINotes["PlanList"] as string;
             if (str != null)
             {
-                CurrentPlans = FrEee.Utility.JsonSerializer.DeserializeObjectFromJson<PlanList>(str);
+                CurrentPlans = FrEee.Utility.JsonSerializer.DeserializeObject<PlanList>(str);
                 return; 
             }
         }          
@@ -41,7 +41,7 @@ public static class PlanManager
         if (Empire.AINotes.ContainsKey("PlanList"))
             Empire.AINotes.Remove("PlanList");
 
-        var serializedPlans = FrEee.Utility.JsonSerializer.SerializeObjectToJson(CurrentPlans);
+        var serializedPlans = FrEee.Utility.JsonSerializer.SerializeObject(CurrentPlans);
         Empire.LogAIMessage(serializedPlans); 
         Empire.AINotes.Add("PlanList", serializedPlans); 
     }

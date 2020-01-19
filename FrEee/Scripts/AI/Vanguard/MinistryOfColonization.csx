@@ -189,7 +189,7 @@ public class MinistryOfColonization
                 }
                 else
                 {
-                    //insert code to head to nearest colony? 
+                    //TODO: insert code to head to nearest colony? 
                     continue; 
                 }
             }
@@ -284,8 +284,11 @@ public class MinistryOfColonization
         colonyPlan.Priority -= Pathfinder.EstimateDistance(colonyPlan.SourcePlanet.Sector, planet.Sector, Empire);
         if (planet.StarSystem.HasAbility(Empire, "Spaceport"))
             colonyPlan.Priority += 100;
+
         if (planet.Atmosphere == Empire.PrimaryRace.NativeAtmosphere)
-            colonyPlan.Priority += 500;
+            colonyPlan.Priority += 100 * planet.Size.MaxFacilities;
+        else
+            colonyPlan.Priority += 100 * planet.Size.MaxFacilitiesDomed;
 
 
 

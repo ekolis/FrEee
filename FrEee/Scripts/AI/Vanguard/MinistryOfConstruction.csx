@@ -84,7 +84,7 @@ public class MinistryOfConstruction
 
         var toBuild = PlanManager.CurrentPlans.ShipBuildPlans.Where(x => !x.SentOrder && !x.IsComplete);
 
-        //insert some way that the government can assign priority to individual build plans based on the plan they are for. 
+        //TODO: insert some way that the government can assign priority to individual build plans based on the plan they are for. 
         foreach (var constrQueue in empire.ConstructionQueues.Where(x => x.IsIdle && x.IsSpaceYardQueue).ToList())
         {
             var possibles = from potential in toBuild
