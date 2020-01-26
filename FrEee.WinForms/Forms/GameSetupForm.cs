@@ -144,21 +144,8 @@ namespace FrEee.WinForms.Forms
 			spnMinSpawnValueAsteroid.Value = setup.MinSpawnedAsteroidValue;
 			spnMaxSpawnValueAsteroid.Value = setup.MaxSpawnedAsteroidValue;
 
-			switch (setup.StartingTechnologyLevel)
-			{
-				case StartingTechnologyLevel.Low:
-					ddlStartTech.SelectedIndex = 0;
-					break;
-
-				case StartingTechnologyLevel.Medium:
-					ddlStartTech.SelectedIndex = 1;
-					break;
-
-				case StartingTechnologyLevel.High:
-					ddlStartTech.SelectedIndex = 2;
-					break;
-			}
-			ddlStartTech.SelectedIndex = (int)setup.TechnologyCost;
+			ddlTechCost.SelectedIndex = (int)setup.TechnologyCost;
+			ddlStartTech.SelectedIndex = (int)setup.StartingTechnologyLevel;
 			for (int i = 0; i < lstTechs.Items.Count; i++)
 				lstTechs.SetItemChecked(i, !setup.ForbiddenTechnologyNames.Contains(((Technology)lstTechs.Items[i]).Name));
 			ddlTechUniqueness.SelectedItem = ddlTechUniqueness.Items.Cast<dynamic>().SingleOrDefault(x => x.Value == setup.TechnologyUniqueness);
