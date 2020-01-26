@@ -317,5 +317,32 @@ namespace FrEee.Modding.Templates
 		{
 			return Name;
 		}
+
+		public override bool Equals(object obj)
+		{
+			return obj is ComponentTemplate t && t == this;
+		}
+
+		public override int GetHashCode()
+		{
+			if (ModID is null)
+				return base.GetHashCode();
+			return ModID.GetHashCode();
+		}
+
+		public static bool operator ==(ComponentTemplate t1, ComponentTemplate t2)
+		{
+			if (t1 is null && t2 is null)
+				return true;
+			if (t1 is null || t2 is null)
+				return false;
+			// treat component templates with the same mod ID as duplicates
+			return t1.ModID == t2.ModID;
+		}
+
+		public static bool operator !=(ComponentTemplate t1, ComponentTemplate t2)
+		{
+			return !(t1 == t2);
+		}
 	}
 }
