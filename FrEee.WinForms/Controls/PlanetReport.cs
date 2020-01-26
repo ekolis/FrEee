@@ -1,3 +1,4 @@
+using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Space;
@@ -96,12 +97,19 @@ namespace FrEee.WinForms.Controls
 				else
 				{
 					var pop = Planet.Colony.Population.Sum(kvp => kvp.Value);
-					if (Planet.PopulationChangePerTurn > 0)
-						txtPopulation.Text = pop.ToUnitString(true) + " / " + Planet.MaxPopulation.ToUnitString(true) + " (+" + Planet.PopulationChangePerTurn.ToUnitString(true) + ")";
-					else if (Planet.PopulationChangePerTurn < 0)
-						txtPopulation.Text = pop.ToUnitString(true) + " / " + Planet.MaxPopulation.ToUnitString(true) + " (" + Planet.PopulationChangePerTurn.ToUnitString(true) + ")";
+					if (Planet.Colony.CheckVisibility(Empire.Current) >= Visibility.Scanned)
+					{
+						if (Planet.PopulationChangePerTurn > 0)
+							txtPopulation.Text = pop.ToUnitString(true) + " / " + Planet.MaxPopulation.ToUnitString(true) + " (+" + Planet.PopulationChangePerTurn.ToUnitString(true) + ")";
+						else if (Planet.PopulationChangePerTurn < 0)
+							txtPopulation.Text = pop.ToUnitString(true) + " / " + Planet.MaxPopulation.ToUnitString(true) + " (" + Planet.PopulationChangePerTurn.ToUnitString(true) + ")";
+						else
+							txtPopulation.Text = pop.ToUnitString(true) + " / " + Planet.MaxPopulation.ToUnitString(true) + " (stagnant)";
+					}
 					else
-						txtPopulation.Text = pop.ToUnitString(true) + " / " + Planet.MaxPopulation.ToUnitString(true) + " (stagnant)";
+					{
+						txtPopulation.Text = pop.ToUnitString(true) + " / " + Planet.MaxPopulation.ToUnitString(true);
+					}
 				}
 
 				if (Planet.Colony == null)
@@ -180,7 +188,12 @@ namespace FrEee.WinForms.Controls
 				{
 					var col = Planet.Colony;
 					foreach (var race in Planet.AllPopulation.Keys)
-						lstRaces.AddItemWithImage(null, $"{race.Name}: {col.Moods[race]} ({col.Anger[race]})", race, race.Icon);
+					{
+						if (Planet.Colony.CheckVisibility(Empire.Current) >= Visibility.Scanned)
+							lstRaces.AddItemWithImage(null, $"{race.Name}: {col.Moods[race]} ({col.Anger[race]})", race, race.Icon);
+						else
+							lstRaces.AddItemWithImage(null, race.Name, race, race.Icon);
+					}
 				}
 
 				// load cargo
