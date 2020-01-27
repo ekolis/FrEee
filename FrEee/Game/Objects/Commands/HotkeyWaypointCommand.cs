@@ -37,7 +37,7 @@ namespace FrEee.Game.Objects.Commands
 			var emp = Executor.Owner;
 			if (emp != Issuer)
 			{
-				Issuer.Log.Add(Issuer.CreateLogMessage("We cannot issue a command to hotkey another empire's waypoints!"));
+				Issuer.Log.Add(Issuer.CreateLogMessage("We cannot issue a command to hotkey another empire's waypoints!", LogMessages.LogMessageType.Error));
 				return;
 			}
 
@@ -70,7 +70,7 @@ namespace FrEee.Game.Objects.Commands
 				}
 
 				if (count > 0)
-					emp.Log.Add(Issuer.CreateLogMessage(count + " vehicles were redirected from " + oldWaypoint + " to " + Executor + "."));
+					emp.Log.Add(Issuer.CreateLogMessage(count + " vehicles were redirected from " + oldWaypoint + " to " + Executor + ".", LogMessages.LogMessageType.Generic));
 			}
 		}
 	}

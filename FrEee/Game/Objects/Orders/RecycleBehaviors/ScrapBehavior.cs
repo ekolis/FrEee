@@ -25,7 +25,7 @@ namespace FrEee.Game.Objects.Orders.RecycleBehaviors
 				if (target.Owner != null) // if not, it's already scrapped?
 				{
 					target.Owner.StoredResources += val;
-					target.Owner.Log.Add(target.CreateLogMessage("We have scrapped " + target + " and reclaimed " + val + "."));
+					target.Owner.Log.Add(target.CreateLogMessage("We have scrapped " + target + " and reclaimed " + val + ".", LogMessageType.Generic));
 				}
 				target.Dispose();
 
@@ -42,13 +42,13 @@ namespace FrEee.Game.Objects.Orders.RecycleBehaviors
 				yield break;
 			}
 			if (target.IsDisposed)
-				yield return target.CreateLogMessage($"{target} cannot be scrapped because it is already destroyed.");
+				yield return target.CreateLogMessage($"{target} cannot be scrapped because it is already destroyed.", LogMessageType.Error);
 			if (target.RecycleContainer != executor)
-				yield return target.CreateLogMessage(target + " cannot be scrapped by " + executor + " because " + target + " does not belong to " + executor + ".");
+				yield return target.CreateLogMessage(target + " cannot be scrapped by " + executor + " because " + target + " does not belong to " + executor + ".", LogMessageType.Error);
 			if ((target is Ship || target is Base) && !executor.Sector.SpaceObjects.Any(sobj => sobj.Owner == executor.Owner && sobj.HasAbility("Space Yard")))
-				yield return target.CreateLogMessage(target + " cannot be scrapped at " + executor.Sector + " because there is no space yard present in that sector.");
+				yield return target.CreateLogMessage(target + " cannot be scrapped at " + executor.Sector + " because there is no space yard present in that sector.", LogMessageType.Error);
 			if ((target is IUnit) && !executor.Sector.SpaceObjects.Any(sobj => sobj.Owner == executor.Owner && (sobj is Planet || sobj.HasAbility("Space Yard"))))
-				yield return target.CreateLogMessage(target + " cannot be scrapped at " + executor.Sector + " because there is no space yard or colony present in that sector.");
+				yield return target.CreateLogMessage(target + " cannot be scrapped at " + executor.Sector + " because there is no space yard or colony present in that sector.", LogMessageType.Error);
 		}
 	}
 }

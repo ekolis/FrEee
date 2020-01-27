@@ -160,12 +160,12 @@ namespace FrEee.Utility.Extensions
 				throw new Exception(cmd + " contained a non-client-safe type " + badVals.First().Value.GetType() + " in property " + badVals.First().Name);
 		}
 
-		public static PictorialLogMessage<T> CreateLogMessage<T>(this T context, string text, int? turnNumber = null)
+		public static PictorialLogMessage<T> CreateLogMessage<T>(this T context, string text,LogMessageType logMessageType, int? turnNumber = null)
 		{
 			if (turnNumber == null)
-				return new PictorialLogMessage<T>(text, context);
+				return new PictorialLogMessage<T>(text, context, logMessageType);
 			else
-				return new PictorialLogMessage<T>(text, turnNumber.Value, context);
+				return new PictorialLogMessage<T>(text, turnNumber.Value, context, logMessageType);
 		}
 
 		public static void DealWithMines(this ISpaceObject sobj)
@@ -238,9 +238,9 @@ namespace FrEee.Utility.Extensions
 
 				// logging!
 				if (minesDetonated.Any() || minesSwept.Any() || minesAttacking.Any())
-					owner.Log.Add(sobj.CreateLogMessage(sobj + " encountered a mine field at " + sector + " and took " + totalDamage + " points of damage, sweeping " + minesSwept.Sum(kvp => kvp.Value) + " mines."));
+					owner.Log.Add(sobj.CreateLogMessage(sobj + " encountered a mine field at " + sector + " and took " + totalDamage + " points of damage, sweeping " + minesSwept.Sum(kvp => kvp.Value) + " mines.", LogMessageType.Generic));
 				foreach (var emp in minesSwept.Keys.Union(minesDetonated.Keys).Union(minesAttacking.Keys))
-					emp.Log.Add(sobj.CreateLogMessage(sobj + " encountered our mine field at " + sector + ". " + minesDetonated[emp] + " of our mines detonated, " + minesAttacking[emp] + " others fired weapons, and " + minesSwept[emp] + " were swept. " + sector.SpaceObjects.OfType<Mine>().Where(m => m.Owner == emp).Count() + " mines remain in the sector."));
+					emp.Log.Add(sobj.CreateLogMessage(sobj + " encountered our mine field at " + sector + ". " + minesDetonated[emp] + " of our mines detonated, " + minesAttacking[emp] + " others fired weapons, and " + minesSwept[emp] + " were swept. " + sector.SpaceObjects.OfType<Mine>().Where(m => m.Owner == emp).Count() + " mines remain in the sector.", LogMessageType.Generic));
 			}
 		}
 
@@ -306,7 +306,7 @@ namespace FrEee.Utility.Extensions
 					if (obj.CheckVisibility(emp) >= Visibility.Visible)
 					{
 						if (message != null && !empiresToSkipMessage.Contains(emp))
-							emp.RecordLog(obj, message);
+							emp.RecordLog(obj, message, LogMessageType.Generic);
 					}
 				}
 			}
@@ -777,6 +777,18 @@ namespace FrEee.Utility.Extensions
 			sw.Close();
 		}
 
+		/// <summary>
+		/// Logs an error in the AI of the given empire to disk. 
+		/// </summary>
+		/// <param name="empire"></param>
+		/// <param name="error"></param>
+		public static void LogAIMessage(this Empire empire, string message)
+		{
+			var sw = new StreamWriter($"{empire.AI.Name}.log", true);
+			sw.WriteLine($"{DateTime.UtcNow} ({Galaxy.Current.Name}-{empire.ID}):{message}");
+			sw.Close();
+		}
+
 
 		public static Type MakeActionType(this IEnumerable<Type> parmTypes)
 		{
@@ -939,7 +951,7 @@ namespace FrEee.Utility.Extensions
 					return;
 				}
 			}
-			unit.Owner.Log.Add(unit.CreateLogMessage(unit + " was lost due to insufficient cargo space at " + target + "."));
+			unit.Owner.Log.Add(unit.CreateLogMessage(unit + " was lost due to insufficient cargo space at " + target + ".", LogMessageType.Warning));
 		}
 
 		/// <summary>
@@ -1585,7 +1597,7 @@ namespace FrEee.Utility.Extensions
 				dest.AddPopulation(kvp.Key, amount);
 
 				if (amount < kvp.Value)
-					emp.Log.Add(src.CreateLogMessage(src + " could transfer only " + amount.ToUnitString(true) + " of the desired " + kvp.Value.ToUnitString(true) + " " + kvp.Key + " population to " + dest + " due to lack of population available or lack of storage space."));
+					emp.Log.Add(src.CreateLogMessage(src + " could transfer only " + amount.ToUnitString(true) + " of the desired " + kvp.Value.ToUnitString(true) + " " + kvp.Key + " population to " + dest + " due to lack of population available or lack of storage space.", LogMessageType.Warning));
 			}
 
 			// transfer any-population
@@ -1606,7 +1618,7 @@ namespace FrEee.Utility.Extensions
 				dest.AddPopulation(kvp.Key, amount);
 
 				if (amount < anyPopLeft)
-					emp.Log.Add(src.CreateLogMessage(src + " could transfer only " + amount.ToUnitString(true) + " of the desired " + kvp.Value.ToUnitString(true) + " general population to " + dest + " due to lack of population available or lack of storage space."));
+					emp.Log.Add(src.CreateLogMessage(src + " could transfer only " + amount.ToUnitString(true) + " of the desired " + kvp.Value.ToUnitString(true) + " general population to " + dest + " due to lack of population available or lack of storage space.", LogMessageType.Warning));
 
 				if (amount == 0)
 					continue;
@@ -1744,7 +1756,7 @@ namespace FrEee.Utility.Extensions
 					{
 						emp.UpdateMemory(obj);
 						if (message != null && !empiresToSkipMessage.Contains(emp))
-							emp.RecordLog(obj, message);
+							emp.RecordLog(obj, message, LogMessageType.Generic);
 					}
 				}
 			}
@@ -1858,32 +1870,32 @@ namespace FrEee.Utility.Extensions
 
 		private static void LogUnitTransferFailed(IDesign<IUnit> design, ICargoContainer src, ICargoContainer dest, int actualTonnage, int desiredTonnage, Empire emp)
 		{
-			emp.Log.Add(src.CreateLogMessage("Only " + actualTonnage.Kilotons() + " of " + desiredTonnage.Kilotons() + " worth of " + design + " class " + design.VehicleTypeName + "s could be transferred from " + src + " to " + dest + " because there are not enough in " + src + "'s cargo or " + dest + "'s cargo is full."));
+			emp.Log.Add(src.CreateLogMessage("Only " + actualTonnage.Kilotons() + " of " + desiredTonnage.Kilotons() + " worth of " + design + " class " + design.VehicleTypeName + "s could be transferred from " + src + " to " + dest + " because there are not enough in " + src + "'s cargo or " + dest + "'s cargo is full.", LogMessageType.Warning));
 		}
 
 		private static void LogUnitTransferFailed(string role, ICargoContainer src, ICargoContainer dest, int actualTonnage, int desiredTonnage, Empire emp)
 		{
-			emp.Log.Add(src.CreateLogMessage("Only " + actualTonnage.Kilotons() + " of " + desiredTonnage.Kilotons() + " worth of " + role + " units could be transferred from " + src + " to " + dest + " because there are not enough in " + src + "'s cargo or " + dest + "'s cargo is full."));
+			emp.Log.Add(src.CreateLogMessage("Only " + actualTonnage.Kilotons() + " of " + desiredTonnage.Kilotons() + " worth of " + role + " units could be transferred from " + src + " to " + dest + " because there are not enough in " + src + "'s cargo or " + dest + "'s cargo is full.", LogMessageType.Warning));
 		}
 
 		private static void LogUnitTransferFailed(VehicleTypes vt, ICargoContainer src, ICargoContainer dest, int actualTonnage, int desiredTonnage, Empire emp)
 		{
-			emp.Log.Add(src.CreateLogMessage("Only " + actualTonnage.Kilotons() + " of " + desiredTonnage.Kilotons() + " worth of " + vt.ToSpacedString().ToLower() + "s could be transferred from " + src + " to " + dest + " because there are not enough in " + src + "'s cargo or " + dest + "'s cargo is full."));
+			emp.Log.Add(src.CreateLogMessage("Only " + actualTonnage.Kilotons() + " of " + desiredTonnage.Kilotons() + " worth of " + vt.ToSpacedString().ToLower() + "s could be transferred from " + src + " to " + dest + " because there are not enough in " + src + "'s cargo or " + dest + "'s cargo is full.", LogMessageType.Warning));
 		}
 
 		private static void LogUnitTransferFailedHostile(IUnit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
 		{
-			emp.Log.Add(src.CreateLogMessage(unit + " could not be transferred from " + src + " to " + dest + " because " + unit + " is hostile."));
+			emp.Log.Add(src.CreateLogMessage(unit + " could not be transferred from " + src + " to " + dest + " because " + unit + " is hostile.", LogMessageType.Warning));
 		}
 
 		private static void LogUnitTransferFailedNoStorage(IUnit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
 		{
-			emp.Log.Add(src.CreateLogMessage(unit + " could not be transferred from " + src + " to " + dest + " because " + dest + "'s cargo is full."));
+			emp.Log.Add(src.CreateLogMessage(unit + " could not be transferred from " + src + " to " + dest + " because " + dest + "'s cargo is full.", LogMessageType.Warning));
 		}
 
 		private static void LogUnitTransferFailedNotPresent(IUnit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
 		{
-			emp.Log.Add(src.CreateLogMessage(unit + " could not be transferred from " + src + " to " + dest + " because it is not in " + src + "'s cargo."));
+			emp.Log.Add(src.CreateLogMessage(unit + " could not be transferred from " + src + " to " + dest + " because it is not in " + src + "'s cargo.", LogMessageType.Warning));
 		}
 
 		private static void TryTransferUnit(IUnit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
@@ -1957,9 +1969,9 @@ namespace FrEee.Utility.Extensions
 			runSync.Wait();
 		}*/
 
-		public static void RecordLog<T>(this T t, string text) where T : IOwnable
+		public static void RecordLog<T>(this T t, string text, LogMessageType logMessageType) where T : IOwnable
 		{
-			t.Owner.RecordLog(t, text);
+			t.Owner.RecordLog(t, text, logMessageType);
 		}
 	}
 

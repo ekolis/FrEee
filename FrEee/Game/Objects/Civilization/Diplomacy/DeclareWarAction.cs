@@ -22,8 +22,8 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			foreach (var clause in Executor.GetTreaty(Target))
 				clause.Dispose();
 			// TODO - some sort of formal war state
-			Executor.Log.Add(Target.CreateLogMessage("We have declared war on the " + Target + "."));
-			Target.Log.Add(Executor.CreateLogMessage("The " + Executor + " has declared war on us!"));
+			Executor.Log.Add(Target.CreateLogMessage("We have declared war on the " + Target + ".", LogMessages.LogMessageType.Diplomacy));
+			Target.Log.Add(Executor.CreateLogMessage("The " + Executor + " has declared war on us!", LogMessages.LogMessageType.Diplomacy));
 		}
 	}
 }

@@ -184,11 +184,11 @@ namespace FrEee.Game.Objects.Orders
 					if (spending.IsEmpty)
 					{
 						if (!queue.IsConstructionDelayed) // don't spam messages!
-							Owner.Log.Add(queue.Container.CreateLogMessage("Construction of " + Template + " at " + queue.Container + " was paused due to lack of resources."));
+							Owner.Log.Add(queue.Container.CreateLogMessage("Construction of " + Template + " at " + queue.Container + " was paused due to lack of resources.", LogMessageType.Generic));
 					}
 					else
 					{
-						Owner.Log.Add(queue.Container.CreateLogMessage("Construction of " + Template + " at " + queue.Container + " was slowed due to lack of resources."));
+						Owner.Log.Add(queue.Container.CreateLogMessage("Construction of " + Template + " at " + queue.Container + " was slowed due to lack of resources.", LogMessageType.Generic));
 					}
 					queue.IsConstructionDelayed = true;
 				}
@@ -204,11 +204,11 @@ namespace FrEee.Game.Objects.Orders
 
 			// do we have a valid template?
 			if (Template == null)
-				yield return Owner.CreateLogMessage($"{queue.Container} cannot build a nonexistent template; skipping it. Probably a bug...");
+				yield return Owner.CreateLogMessage($"{queue.Container} cannot build a nonexistent template; skipping it. Probably a bug...", LogMessageType.Error);
 
 			// validate that what's being built is unlocked
 			if (!queue.Owner.HasUnlocked(Template))
-				yield return Template.CreateLogMessage(Template + " cannot be built at " + queue.Container + " because we have not yet researched it.");
+				yield return Template.CreateLogMessage(Template + " cannot be built at " + queue.Container + " because we have not yet researched it.", LogMessageType.Warning);
 		}
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)

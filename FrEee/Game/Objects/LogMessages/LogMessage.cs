@@ -7,16 +7,18 @@ namespace FrEee.Game.Objects.LogMessages
 	[Serializable]
 	public abstract class LogMessage
 	{
-		protected LogMessage(string text)
+		protected LogMessage(string text, LogMessageType logMessageType)
 		{
 			Text = text;
 			TurnNumber = Galaxy.Current.TurnNumber;
+			LogMessageType = logMessageType;
 		}
 
-		protected LogMessage(string text, int turn)
+		protected LogMessage(string text, int turn, LogMessageType logMessageType)
 		{
 			Text = text;
 			TurnNumber = turn;
+			LogMessageType =logMessageType; 
 		}
 
 		/// <summary>
@@ -33,5 +35,24 @@ namespace FrEee.Game.Objects.LogMessages
 		/// The turn number on which the log message was generated.
 		/// </summary>
 		public int TurnNumber { get; set; }
+
+		/// <summary>
+		/// The type of this message. 
+		/// </summary>
+		public LogMessageType LogMessageType { get; set; }
+
+		
+	}
+	public enum LogMessageType
+	{
+		Generic,
+		Error,
+		Warning,
+		ResearchComplete,
+		ConstructionComplete, 
+		PlanetColonised, 
+		Battle, 
+		Victory,
+		Diplomacy,
 	}
 }

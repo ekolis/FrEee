@@ -21,7 +21,7 @@ namespace FrEee.Game.Objects.Commands
 		public override void Execute()
 		{
 			if (Executor.AI == null)
-				Executor.RecordLog(Executor, $"Could not toggle AI ministers for {Executor} because there is no AI for this empire.");
+				Executor.RecordLog(Executor, $"Could not toggle AI ministers for {Executor} because there is no AI for this empire.", LogMessages.LogMessageType.Error);
 			else
 				Executor.EnabledMinisters = EnabledMinisters;
 		}

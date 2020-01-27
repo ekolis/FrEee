@@ -28,171 +28,205 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			this.gridEmpires = new System.Windows.Forms.DataGridView();
-			this.Insignia = new System.Windows.Forms.DataGridViewImageColumn();
-			this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.plrUploadStatusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.empireStatusBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.btnClose = new FrEee.WinForms.Controls.GameButton();
-			this.btnProcess = new FrEee.WinForms.Controls.GameButton();
-			this.btnToggleAI = new FrEee.WinForms.Controls.GameButton();
-			this.btnPlayerView = new FrEee.WinForms.Controls.GameButton();
-			this.btnEdit = new FrEee.WinForms.Controls.GameButton();
-			((System.ComponentModel.ISupportInitialize)(this.gridEmpires)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.empireStatusBindingSource)).BeginInit();
-			this.SuspendLayout();
-			// 
-			// gridEmpires
-			// 
-			this.gridEmpires.AllowUserToAddRows = false;
-			this.gridEmpires.AllowUserToDeleteRows = false;
-			this.gridEmpires.AllowUserToResizeRows = false;
-			this.gridEmpires.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.gridEmpires = new System.Windows.Forms.DataGridView();
+            this.Insignia = new System.Windows.Forms.DataGridViewImageColumn();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.plrUploadStatusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.empireStatusBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.btnClose = new FrEee.WinForms.Controls.GameButton();
+            this.btnProcess = new FrEee.WinForms.Controls.GameButton();
+            this.btnToggleAI = new FrEee.WinForms.Controls.GameButton();
+            this.btnPlayerView = new FrEee.WinForms.Controls.GameButton();
+            this.btnEdit = new FrEee.WinForms.Controls.GameButton();
+            this.autoProcess = new System.Windows.Forms.CheckBox();
+            this.timer = new System.Windows.Forms.Label();
+            this.autoProcessTimer = new System.Windows.Forms.Timer(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.gridEmpires)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.empireStatusBindingSource)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // gridEmpires
+            // 
+            this.gridEmpires.AllowUserToAddRows = false;
+            this.gridEmpires.AllowUserToDeleteRows = false;
+            this.gridEmpires.AllowUserToResizeRows = false;
+            this.gridEmpires.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.gridEmpires.AutoGenerateColumns = false;
-			this.gridEmpires.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-			this.gridEmpires.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-			this.gridEmpires.BackgroundColor = System.Drawing.Color.Black;
-			this.gridEmpires.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.gridEmpires.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.gridEmpires.AutoGenerateColumns = false;
+            this.gridEmpires.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.gridEmpires.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.gridEmpires.BackgroundColor = System.Drawing.Color.Black;
+            this.gridEmpires.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridEmpires.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Insignia,
             this.nameDataGridViewTextBoxColumn,
             this.plrUploadStatusDataGridViewTextBoxColumn});
-			this.gridEmpires.DataSource = this.empireStatusBindingSource;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.gridEmpires.DefaultCellStyle = dataGridViewCellStyle1;
-			this.gridEmpires.GridColor = System.Drawing.Color.White;
-			this.gridEmpires.Location = new System.Drawing.Point(12, 12);
-			this.gridEmpires.MultiSelect = false;
-			this.gridEmpires.Name = "gridEmpires";
-			this.gridEmpires.ReadOnly = true;
-			this.gridEmpires.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-			this.gridEmpires.RowHeadersVisible = false;
-			this.gridEmpires.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.gridEmpires.Size = new System.Drawing.Size(480, 300);
-			this.gridEmpires.TabIndex = 0;
-			// 
-			// Insignia
-			// 
-			this.Insignia.DataPropertyName = "Insignia";
-			this.Insignia.HeaderText = "Icon";
-			this.Insignia.Name = "Insignia";
-			this.Insignia.ReadOnly = true;
-			this.Insignia.Width = 34;
-			// 
-			// nameDataGridViewTextBoxColumn
-			// 
-			this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-			this.nameDataGridViewTextBoxColumn.HeaderText = "Empire";
-			this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-			this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-			this.nameDataGridViewTextBoxColumn.Width = 64;
-			// 
-			// plrUploadStatusDataGridViewTextBoxColumn
-			// 
-			this.plrUploadStatusDataGridViewTextBoxColumn.DataPropertyName = "PlrUploadStatus";
-			this.plrUploadStatusDataGridViewTextBoxColumn.HeaderText = "Status";
-			this.plrUploadStatusDataGridViewTextBoxColumn.Name = "plrUploadStatusDataGridViewTextBoxColumn";
-			this.plrUploadStatusDataGridViewTextBoxColumn.ReadOnly = true;
-			this.plrUploadStatusDataGridViewTextBoxColumn.Width = 62;
-			// 
-			// empireStatusBindingSource
-			// 
-			this.empireStatusBindingSource.AllowNew = false;
-			this.empireStatusBindingSource.DataSource = typeof(FrEee.Game.Objects.Civilization.EmpireStatus);
-			// 
-			// btnClose
-			// 
-			this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnClose.BackColor = System.Drawing.Color.Black;
-			this.btnClose.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnClose.Location = new System.Drawing.Point(417, 326);
-			this.btnClose.Name = "btnClose";
-			this.btnClose.Size = new System.Drawing.Size(75, 23);
-			this.btnClose.TabIndex = 1;
-			this.btnClose.Text = "Close";
-			this.btnClose.UseVisualStyleBackColor = false;
-			this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-			// 
-			// btnProcess
-			// 
-			this.btnProcess.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnProcess.BackColor = System.Drawing.Color.Black;
-			this.btnProcess.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnProcess.Location = new System.Drawing.Point(336, 326);
-			this.btnProcess.Name = "btnProcess";
-			this.btnProcess.Size = new System.Drawing.Size(75, 23);
-			this.btnProcess.TabIndex = 2;
-			this.btnProcess.Text = "Process Turn";
-			this.btnProcess.UseVisualStyleBackColor = false;
-			this.btnProcess.Click += new System.EventHandler(this.btnProcess_Click);
-			// 
-			// btnToggleAI
-			// 
-			this.btnToggleAI.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnToggleAI.BackColor = System.Drawing.Color.Black;
-			this.btnToggleAI.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnToggleAI.Location = new System.Drawing.Point(255, 326);
-			this.btnToggleAI.Name = "btnToggleAI";
-			this.btnToggleAI.Size = new System.Drawing.Size(75, 23);
-			this.btnToggleAI.TabIndex = 3;
-			this.btnToggleAI.Text = "Toggle AI";
-			this.btnToggleAI.UseVisualStyleBackColor = false;
-			this.btnToggleAI.Click += new System.EventHandler(this.btnToggleAI_Click);
-			// 
-			// btnPlayerView
-			// 
-			this.btnPlayerView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnPlayerView.BackColor = System.Drawing.Color.Black;
-			this.btnPlayerView.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnPlayerView.Location = new System.Drawing.Point(12, 326);
-			this.btnPlayerView.Name = "btnPlayerView";
-			this.btnPlayerView.Size = new System.Drawing.Size(75, 23);
-			this.btnPlayerView.TabIndex = 5;
-			this.btnPlayerView.Text = "Player View";
-			this.btnPlayerView.UseVisualStyleBackColor = false;
-			this.btnPlayerView.Click += new System.EventHandler(this.btnPlayerView_Click);
-			// 
-			// btnEdit
-			// 
-			this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnEdit.BackColor = System.Drawing.Color.Black;
-			this.btnEdit.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnEdit.Location = new System.Drawing.Point(93, 326);
-			this.btnEdit.Name = "btnEdit";
-			this.btnEdit.Size = new System.Drawing.Size(75, 23);
-			this.btnEdit.TabIndex = 6;
-			this.btnEdit.Text = "Edit Game";
-			this.btnEdit.UseVisualStyleBackColor = false;
-			this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
-			// 
-			// HostConsoleForm
-			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(504, 361);
-			this.Controls.Add(this.btnEdit);
-			this.Controls.Add(this.btnPlayerView);
-			this.Controls.Add(this.btnToggleAI);
-			this.Controls.Add(this.btnProcess);
-			this.Controls.Add(this.btnClose);
-			this.Controls.Add(this.gridEmpires);
-			this.MinimumSize = new System.Drawing.Size(520, 200);
-			this.Name = "HostConsoleForm";
-			this.Text = "Host Console";
-			((System.ComponentModel.ISupportInitialize)(this.gridEmpires)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.empireStatusBindingSource)).EndInit();
-			this.ResumeLayout(false);
+            this.gridEmpires.DataSource = this.empireStatusBindingSource;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.gridEmpires.DefaultCellStyle = dataGridViewCellStyle1;
+            this.gridEmpires.GridColor = System.Drawing.Color.White;
+            this.gridEmpires.Location = new System.Drawing.Point(12, 12);
+            this.gridEmpires.MultiSelect = false;
+            this.gridEmpires.Name = "gridEmpires";
+            this.gridEmpires.ReadOnly = true;
+            this.gridEmpires.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.gridEmpires.RowHeadersVisible = false;
+            this.gridEmpires.RowHeadersWidth = 46;
+            this.gridEmpires.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridEmpires.Size = new System.Drawing.Size(480, 283);
+            this.gridEmpires.TabIndex = 0;
+            // 
+            // Insignia
+            // 
+            this.Insignia.DataPropertyName = "Insignia";
+            this.Insignia.HeaderText = "Icon";
+            this.Insignia.MinimumWidth = 6;
+            this.Insignia.Name = "Insignia";
+            this.Insignia.ReadOnly = true;
+            this.Insignia.Width = 36;
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Empire";
+            this.nameDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+            this.nameDataGridViewTextBoxColumn.Width = 74;
+            // 
+            // plrUploadStatusDataGridViewTextBoxColumn
+            // 
+            this.plrUploadStatusDataGridViewTextBoxColumn.DataPropertyName = "PlrUploadStatus";
+            this.plrUploadStatusDataGridViewTextBoxColumn.HeaderText = "Status";
+            this.plrUploadStatusDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.plrUploadStatusDataGridViewTextBoxColumn.Name = "plrUploadStatusDataGridViewTextBoxColumn";
+            this.plrUploadStatusDataGridViewTextBoxColumn.ReadOnly = true;
+            this.plrUploadStatusDataGridViewTextBoxColumn.Width = 68;
+            // 
+            // empireStatusBindingSource
+            // 
+            this.empireStatusBindingSource.AllowNew = false;
+            this.empireStatusBindingSource.DataSource = typeof(FrEee.Game.Objects.Civilization.EmpireStatus);
+            // 
+            // btnClose
+            // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClose.BackColor = System.Drawing.Color.Black;
+            this.btnClose.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.btnClose.Location = new System.Drawing.Point(417, 326);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(75, 23);
+            this.btnClose.TabIndex = 1;
+            this.btnClose.Text = "Close";
+            this.btnClose.UseVisualStyleBackColor = false;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // btnProcess
+            // 
+            this.btnProcess.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnProcess.BackColor = System.Drawing.Color.Black;
+            this.btnProcess.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.btnProcess.Location = new System.Drawing.Point(336, 326);
+            this.btnProcess.Name = "btnProcess";
+            this.btnProcess.Size = new System.Drawing.Size(75, 23);
+            this.btnProcess.TabIndex = 2;
+            this.btnProcess.Text = "Process Turn";
+            this.btnProcess.UseVisualStyleBackColor = false;
+            this.btnProcess.Click += new System.EventHandler(this.btnProcess_Click);
+            // 
+            // btnToggleAI
+            // 
+            this.btnToggleAI.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnToggleAI.BackColor = System.Drawing.Color.Black;
+            this.btnToggleAI.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.btnToggleAI.Location = new System.Drawing.Point(255, 326);
+            this.btnToggleAI.Name = "btnToggleAI";
+            this.btnToggleAI.Size = new System.Drawing.Size(75, 23);
+            this.btnToggleAI.TabIndex = 3;
+            this.btnToggleAI.Text = "Toggle AI";
+            this.btnToggleAI.UseVisualStyleBackColor = false;
+            this.btnToggleAI.Click += new System.EventHandler(this.btnToggleAI_Click);
+            // 
+            // btnPlayerView
+            // 
+            this.btnPlayerView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPlayerView.BackColor = System.Drawing.Color.Black;
+            this.btnPlayerView.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.btnPlayerView.Location = new System.Drawing.Point(12, 326);
+            this.btnPlayerView.Name = "btnPlayerView";
+            this.btnPlayerView.Size = new System.Drawing.Size(75, 23);
+            this.btnPlayerView.TabIndex = 5;
+            this.btnPlayerView.Text = "Player View";
+            this.btnPlayerView.UseVisualStyleBackColor = false;
+            this.btnPlayerView.Click += new System.EventHandler(this.btnPlayerView_Click);
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEdit.BackColor = System.Drawing.Color.Black;
+            this.btnEdit.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.btnEdit.Location = new System.Drawing.Point(93, 326);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(75, 23);
+            this.btnEdit.TabIndex = 6;
+            this.btnEdit.Text = "Edit Game";
+            this.btnEdit.UseVisualStyleBackColor = false;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // autoProcess
+            // 
+            this.autoProcess.AutoSize = true;
+            this.autoProcess.Location = new System.Drawing.Point(255, 301);
+            this.autoProcess.Name = "autoProcess";
+            this.autoProcess.Size = new System.Drawing.Size(97, 19);
+            this.autoProcess.TabIndex = 7;
+            this.autoProcess.Text = "Auto-process";
+            this.autoProcess.UseVisualStyleBackColor = true;
+            this.autoProcess.CheckedChanged += new System.EventHandler(this.autoProcess_CheckedChanged);
+            // 
+            // timer
+            // 
+            this.timer.AutoSize = true;
+            this.timer.Location = new System.Drawing.Point(358, 305);
+            this.timer.Name = "timer";
+            this.timer.Size = new System.Drawing.Size(0, 15);
+            this.timer.TabIndex = 8;
+            // 
+            // autoProcessTimer
+            // 
+            this.autoProcessTimer.Interval = 10000;
+            this.autoProcessTimer.Tick += new System.EventHandler(this.autoProcessTimer_Tick);
+            // 
+            // HostConsoleForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Black;
+            this.ClientSize = new System.Drawing.Size(504, 361);
+            this.Controls.Add(this.timer);
+            this.Controls.Add(this.autoProcess);
+            this.Controls.Add(this.btnEdit);
+            this.Controls.Add(this.btnPlayerView);
+            this.Controls.Add(this.btnToggleAI);
+            this.Controls.Add(this.btnProcess);
+            this.Controls.Add(this.btnClose);
+            this.Controls.Add(this.gridEmpires);
+            this.MinimumSize = new System.Drawing.Size(520, 200);
+            this.Name = "HostConsoleForm";
+            this.Text = "Host Console";
+            ((System.ComponentModel.ISupportInitialize)(this.gridEmpires)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.empireStatusBindingSource)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
 		}
 
@@ -208,5 +242,8 @@
 		private Controls.GameButton btnToggleAI;
 		private Controls.GameButton btnPlayerView;
 		private Controls.GameButton btnEdit;
-	}
+		private System.Windows.Forms.CheckBox autoProcess;
+		private System.Windows.Forms.Label timer;
+        private System.Windows.Forms.Timer autoProcessTimer;
+    }
 }

@@ -362,7 +362,7 @@ namespace FrEee.Game.Objects.Technology
 				if (planet.Colony == null)
 					throw new ArgumentException("Facilities can only be placed on colonized planets.");
 				if (planet.Colony.Facilities.Count >= planet.MaxFacilities)
-					planet.Colony.Owner.Log.Add(planet.CreateLogMessage(this + " cannot be constructed at " + planet + " because there is no more space available for facilities there."));
+					planet.Colony.Owner.Log.Add(planet.CreateLogMessage(this + " cannot be constructed at " + planet + " because there is no more space available for facilities there.", LogMessages.LogMessageType.Warning));
 				else
 					planet.Colony.Facilities.Add(this);
 			}

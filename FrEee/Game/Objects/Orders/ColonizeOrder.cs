@@ -139,25 +139,25 @@ namespace FrEee.Game.Objects.Orders
 							var progress = sobj.Owner.ResearchProgress.SingleOrDefault(p => p.Item == tech);
 							if (progress != null)
 								progress.Value = 0;
-							sobj.Owner.Log.Add(tech.CreateLogMessage("We have advanced from level " + oldlvl + " to level " + newlvl + " in " + tech + "!"));
+							sobj.Owner.Log.Add(tech.CreateLogMessage("We have advanced from level " + oldlvl + " to level " + newlvl + " in " + tech + "!", LogMessageType.ResearchComplete));
 							foreach (var item in newStuff)
-								sobj.Owner.Log.Add(item.CreateLogMessage("We have unlocked a new " + item.ResearchGroup.ToLower() + ", the " + item + "!"));
+								sobj.Owner.Log.Add(item.CreateLogMessage("We have unlocked a new " + item.ResearchGroup.ToLower() + ", the " + item + "!", LogMessageType.ResearchComplete));
 						}
 						if (i == 0)
-							sobj.Owner.Log.Add(Planet.CreateLogMessage(msg));
+							sobj.Owner.Log.Add(Planet.CreateLogMessage(msg, LogMessageType.PlanetColonised));
 					}
 
 					// unique ruins?
 					foreach (var abil in Planet.Abilities().Where(a => a.Rule.Name == "Ancient Ruins Unique"))
 					{
 						if (sobj.Owner.UniqueTechsFound.Contains(abil.Value1))
-							sobj.Owner.Log.Add(Planet.CreateLogMessage("We have discovered \"unique\" technology from the ancient ruins on " + Planet + ", but it appears we have already found this one elsewhere. Perhaps it was not as unique as we had thought..."));
+							sobj.Owner.Log.Add(Planet.CreateLogMessage("We have discovered \"unique\" technology from the ancient ruins on " + Planet + ", but it appears we have already found this one elsewhere. Perhaps it was not as unique as we had thought...", LogMessageType.ResearchComplete));
 						else
 						{
-							sobj.Owner.Log.Add(Planet.CreateLogMessage("We have discovered new unique technology from the ancient ruins on " + Planet + "."));
+							sobj.Owner.Log.Add(Planet.CreateLogMessage("We have discovered new unique technology from the ancient ruins on " + Planet + ".", LogMessageType.ResearchComplete));
 							sobj.Owner.UniqueTechsFound.Add(abil.Value1);
 							foreach (var tech in Mod.Current.Technologies.Where(t => t.UniqueTechID == abil.Value1 && sobj.Owner.HasUnlocked(t)))
-								sobj.Owner.Log.Add(tech.CreateLogMessage("We have unlocked a new " + tech.ResearchGroup.ToLower() + ", the " + tech + "!"));
+								sobj.Owner.Log.Add(tech.CreateLogMessage("We have unlocked a new " + tech.ResearchGroup.ToLower() + ", the " + tech + "!", LogMessageType.ResearchComplete));
 						}
 					}
 
@@ -166,7 +166,7 @@ namespace FrEee.Game.Objects.Orders
 						Planet.IntrinsicAbilities.Remove(a);
 
 					// log it!
-					sobj.Owner.Log.Add(Planet.CreateLogMessage(sobj + " has founded a new colony on " + Planet + "."));
+					sobj.Owner.Log.Add(Planet.CreateLogMessage(sobj + " has founded a new colony on " + Planet + ".", LogMessageType.PlanetColonised));
 
 					// update pursue/evade orders to target planet now instead of ship
 					foreach (var o in Galaxy.Current.Referrables.OfType<PursueOrder>().Where(q => q.Target == sobj))
@@ -191,7 +191,7 @@ namespace FrEee.Game.Objects.Orders
 				sobj.SpendTime(sobj.TimePerMove);
 			}
 			else
-				Owner.Log.Append(Owner.CreateLogMessage($"Could not assign a colonize order to ${ord} because it is not a mobile space object."));
+				Owner.Log.Append(Owner.CreateLogMessage($"Could not assign a colonize order to ${ord} because it is not a mobile space object.", LogMessageType.Error));
 		}
 
 		public IEnumerable<LogMessage> GetErrors(IOrderable o)
@@ -201,31 +201,31 @@ namespace FrEee.Game.Objects.Orders
 				if (sobj.Sector != Planet.Sector)
 				{
 					// can't colonize here, maybe the GUI should have issued a move order?
-					yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because it is not currently located at the planet.");
+					yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because it is not currently located at the planet.", LogMessageType.Warning);
 				}
 				if (Planet.Colony != null)
 				{
 					// planet is already colonized!
-					yield return Planet.CreateLogMessage(Planet + " cannot be colonized by " + sobj + " because there is already a colony there belonging to the " + Planet.Colony.Owner + ".");
+					yield return Planet.CreateLogMessage(Planet + " cannot be colonized by " + sobj + " because there is already a colony there belonging to the " + Planet.Colony.Owner + ".", LogMessageType.Warning);
 				}
 				if (!(sobj.HasAbility(Planet.ColonizationAbilityName) || sobj is Fleet f && f.LeafVehicles.Any(v => v.HasAbility(Planet.ColonizationAbilityName))))
 				{
 					// no such colony module
-					yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because it lacks a " + Planet.Surface + " colony module.");
+					yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because it lacks a " + Planet.Surface + " colony module.", LogMessageType.Warning);
 				}
 				if (Galaxy.Current.CanColonizeOnlyBreathable && Planet.Atmosphere != sobj.Owner.PrimaryRace.NativeAtmosphere)
 				{
 					// can only colonize breathable atmosphere (due to game setup option)
-					yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because we can only colonize " + sobj.Owner.PrimaryRace.NativeAtmosphere + " planets.");
+					yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because we can only colonize " + sobj.Owner.PrimaryRace.NativeAtmosphere + " planets.", LogMessageType.Warning);
 				}
 				if (Galaxy.Current.CanColonizeOnlyHomeworldSurface && Planet.Surface != sobj.Owner.PrimaryRace.NativeSurface)
 				{
 					// can only colonize breathable atmosphere (due to game setup option)
-					yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because we can only colonize " + sobj.Owner.PrimaryRace.NativeSurface + " planets.");
+					yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because we can only colonize " + sobj.Owner.PrimaryRace.NativeSurface + " planets.", LogMessageType.Warning);
 				}
 			}
 			else
-				yield return o.CreateLogMessage($"{o} cannot colonize {Planet} because it is not a mobile space object.");
+				yield return o.CreateLogMessage($"{o} cannot colonize {Planet} because it is not a mobile space object.", LogMessageType.Error);
 		}
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)

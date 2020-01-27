@@ -113,8 +113,8 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			var errors = GivePackage.Errors.Concat(ReceivePackage.Errors);
 			if (errors.Any())
 			{
-				Executor.Log.Add(Recipient.CreateLogMessage("We could not execute a trade with the " + Recipient + " because: " + errors.First()));
-				Recipient.Log.Add(Executor.CreateLogMessage("We could not execute a trade with the " + Executor + " because: " + errors.First()));
+				Executor.Log.Add(Recipient.CreateLogMessage("We could not execute a trade with the " + Recipient + " because: " + errors.First(), LogMessages.LogMessageType.Error));
+				Recipient.Log.Add(Executor.CreateLogMessage("We could not execute a trade with the " + Executor + " because: " + errors.First(), LogMessages.LogMessageType.Error));
 			}
 			else
 			{

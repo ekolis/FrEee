@@ -34,7 +34,7 @@ namespace FrEee.Game.Objects.Commands
 			Message.Owner.SentMessages.Add(Message);
 			// TODO - comms interference intel projects
 			Message.Recipient.IncomingMessages.Add(Message);
-			Message.Recipient.Log.Add(Message.CreateLogMessage("We have received a diplomatic message from the " + Message.Owner + ": " + Message.Text));
+			Message.Recipient.Log.Add(Message.CreateLogMessage("We have received a diplomatic message from the " + Message.Owner + ": " + Message.Text, LogMessages.LogMessageType.Diplomacy));
 			if (Message is ActionMessage)
 			{
 				// execute unilateral action

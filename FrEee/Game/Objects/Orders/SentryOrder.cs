@@ -84,7 +84,7 @@ namespace FrEee.Game.Objects.Orders
 				sobj.SpendTime(sobj.TimePerMove);
 			}
 			else
-				ord.Owner.RecordLog(ord, $"{ord} cannot sentry because it is not a mobile space object.");
+				ord.Owner.RecordLog(ord, $"{ord} cannot sentry because it is not a mobile space object.", LogMessageType.Error);
 		}
 
 		public IEnumerable<LogMessage> GetErrors(IOrderable executor)
