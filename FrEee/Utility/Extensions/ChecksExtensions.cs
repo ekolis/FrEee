@@ -301,5 +301,15 @@ namespace FrEee.Utility.Extensions
 		{
 			return self.NewerVersions.Contains(other);
 		}
+
+		/// <summary>
+		/// Determines if this object is a memory of a known object.
+		/// </summary>
+		/// <param name="sobj">The object to check.</param>
+		/// <returns>true if it is a memory of a known object, otherwise false.</returns>
+		public static bool IsMemoryOfKnownObject(this ISpaceObject sobj)
+		{
+			return sobj.IsMemory && Empire.Current == null && (sobj.ID == 0 || Galaxy.Current.referrables.ContainsKey(sobj.ID));
+		}
 	}
 }
