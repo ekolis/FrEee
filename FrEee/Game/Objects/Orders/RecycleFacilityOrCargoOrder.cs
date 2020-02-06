@@ -103,7 +103,7 @@ namespace FrEee.Game.Objects.Orders
 			get
 			{
 				if (Target is ICombatant c && c.IsHostileTo(Owner))
-					yield return c.CreateLogMessage($"You can't {Behavior.Verb} {c} because it belongs to a hostile empire.");
+					yield return c.CreateLogMessage($"You can't {Behavior.Verb} {c} because it belongs to a hostile empire.", LogMessageType.Error);
 			}
 		}
 

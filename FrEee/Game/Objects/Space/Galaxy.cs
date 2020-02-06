@@ -624,9 +624,9 @@ namespace FrEee.Game.Objects.Space
             {
                 var ratio = p.Colony.MerchantsRatio;
                 if (ratio == 0)
-                    p.Owner.Log.Add(p.CreateLogMessage(p + " earned no income due to lack of a spaceport."));
+                    p.Owner.Log.Add(p.CreateLogMessage(p + " earned no income due to lack of a spaceport.", LogMessageType.Warning));
                 else if (ratio < 1)
-                    p.Owner.Log.Add(p.CreateLogMessage(p + " earned only " + Math.Floor(ratio * 100) + "% of normal income due to lack of a spaceport."));
+                    p.Owner.Log.Add(p.CreateLogMessage(p + " earned only " + Math.Floor(ratio * 100) + "% of normal income due to lack of a spaceport.", LogMessageType.Warning));
             }
 
             // give owner his income
@@ -675,7 +675,7 @@ namespace FrEee.Game.Objects.Space
                     pop[race] = (long)(pop[race] / ratio);
                 }
                 if (!wasFull && p.Owner != null)
-                    p.Owner.RecordLog(p, "{0} has completely filled up with population. Building colonizers or transports is advised.".F(p));
+                    p.Owner.RecordLog(p, "{0} has completely filled up with population. Building colonizers or transports is advised.".F(p), LogMessageType.Generic);
             }
 
             // deal with population in cargo
@@ -716,9 +716,9 @@ namespace FrEee.Game.Objects.Space
                 p.ResourceValue[r] += modifier;
                 p.ResourceValue[r] = p.ResourceValue[r].LimitToRange(Current.MinPlanetValue, Current.MaxPlanetValue);
                 if (!wasFull && p.ResourceValue[r] == Current.MaxPlanetValue && p.Owner != null)
-                    p.Owner.RecordLog(p, "{0}'s {1} have been completely replenished. Its value is at the absolute maximum.".F(p, r));
+                    p.Owner.RecordLog(p, "{0}'s {1} have been completely replenished. Its value is at the absolute maximum.".F(p, r), LogMessageType.Generic);
                 if (!wasEmpty && p.ResourceValue[r] == Current.MinPlanetValue && p.Owner != null)
-                    p.Owner.RecordLog(p, "{0} has been stripped dry of {1}. Its value is at the bare minimum.".F(p, r));
+                    p.Owner.RecordLog(p, "{0} has been stripped dry of {1}. Its value is at the bare minimum.".F(p, r), LogMessageType.Generic);
             }
         }
 
@@ -856,21 +856,36 @@ namespace FrEee.Game.Objects.Space
                         Current.CurrentEmpire = Current.Empires[i];
                         Current.Redact();
                         Current.CurrentEmpire.AI.Act(Current.CurrentEmpire, Current, Current.CurrentEmpire.EnabledMinisters);
-                        cmds.Add(i, Current.CurrentEmpire.Commands);
-                        notes.Add(i, Current.CurrentEmpire.AINotes);
+                       
                     }
                     catch (Exception e)
                     {
                         //log the error in the ai and move on. 
                         //TODO: add in some indication the AI failed. 
+                        Current.CurrentEmpire.Log.Add(new GenericLogMessage($"AI Error when processing:{e.Message}", LogMessageType.Error)); 
                         e.Log(); 
+                    }
+                    finally
+                    {
+                        //these always need to happen, otherwise the code below will throw an exception as it looks for the missing commands. 
+                        cmds.Add(i, Current.CurrentEmpire.Commands);
+                        notes.Add(i, Current.CurrentEmpire.AINotes);
                     }
                 }
                 LoadFromString(serializedGalaxy);
                 foreach (var i in Current.Empires.Where(e => e.AI != null && (e.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)).Select(e => Current.Empires.IndexOf(e)).ToArray())
                 {
-                    Current.LoadCommands(Current.Empires[i], cmds[i]);
-                    Current.Empires[i].AINotes = notes[i];
+                    try
+                    {
+                        Current.LoadCommands(Current.Empires[i], cmds[i]);
+                        Current.Empires[i].AINotes = notes[i];
+                    }
+                    catch(Exception e)
+                    {
+                        //log the error and move on so we don't take down FrEee entirely. 
+                        //TODO: add in some indication the AI failed with commands. 
+                        e.Log(); 
+                    }
                 }
             }
             if (status != null)
@@ -960,7 +975,7 @@ namespace FrEee.Game.Objects.Space
                     var ship = emp.OwnedSpaceObjects.OfType<SpaceVehicle>().PickWeighted(x => x.MaintenanceCost.Sum(y => y.Value));
                     if (ship != null)
                     {
-                        emp.Log.Add(ship.CreateLogMessage(ship + " fell into disrepair and was scuttled due to lack of funding for maintenance."));
+                        emp.Log.Add(ship.CreateLogMessage(ship + " fell into disrepair and was scuttled due to lack of funding for maintenance.", LogMessageType.Warning));
                         ship.Dispose();
                     }
                 }
@@ -971,9 +986,9 @@ namespace FrEee.Game.Objects.Space
                     if (cmd.Issuer == emp)
                     {
                         if (cmd.Executor == null)
-                            cmd.Issuer.Log.Add(cmd.Issuer.CreateLogMessage("Attempted to issue " + cmd.GetType() + " to a nonexistent object with ID=" + cmd.ExecutorID + ". This is probably a game bug."));
+                            cmd.Issuer.Log.Add(cmd.Issuer.CreateLogMessage("Attempted to issue " + cmd.GetType() + " to a nonexistent object with ID=" + cmd.ExecutorID + ". This is probably a game bug.", LogMessageType.Error));
                         else if (cmd.Issuer != cmd.Executor.Owner && cmd.Issuer != cmd.Executor)
-                            cmd.Issuer.Log.Add(cmd.Issuer.CreateLogMessage("We cannot issue commands to " + cmd.Executor + " because it does not belong to us!"));
+                            cmd.Issuer.Log.Add(cmd.Issuer.CreateLogMessage("We cannot issue commands to " + cmd.Executor + " because it does not belong to us!", LogMessageType.Error));
                         else
                             cmd.Execute();
                     }
@@ -1118,7 +1133,7 @@ namespace FrEee.Game.Objects.Space
                 battle.Resolve();
                 Current.Battles.Add(battle);
                 foreach (var emp in battle.Empires)
-                    emp.Log.Add(battle.CreateLogMessage(battle.NameFor(emp)));
+                    emp.Log.Add(battle.CreateLogMessage(battle.NameFor(emp), LogMessageType.Battle));
             }
 
             Current.EnableAbilityCache();
@@ -1216,9 +1231,9 @@ namespace FrEee.Game.Objects.Space
 
                         // TODO - display reason for growing happy/unhappy
                         if (delta >= 100)
-                            c.Owner.RecordLog(c.Container, $"The {race} population of {c.Container} is growing very unhappy.");
+                            c.Owner.RecordLog(c.Container, $"The {race} population of {c.Container} is growing very unhappy.", LogMessageType.Generic);
                         else if (delta <= -100)
-                            c.Owner.RecordLog(c.Container, $"The {race} population of {c.Container} is growing very happy.");
+                            c.Owner.RecordLog(c.Container, $"The {race} population of {c.Container} is growing very happy.", LogMessageType.Generic);
                     }
                 }
             });
@@ -1334,7 +1349,7 @@ namespace FrEee.Game.Objects.Space
                         {
                             // empire won!
                             emp.IsWinner = true;
-                            emp.Log.Add(emp.CreateLogMessage(vc.GetVictoryMessage(emp)));
+                            emp.Log.Add(emp.CreateLogMessage(vc.GetVictoryMessage(emp), LogMessageType.Victory));
                             winners.Add(emp);
                         }
                     }
@@ -1346,7 +1361,7 @@ namespace FrEee.Game.Objects.Space
                         {
                             // empire lost because someone else won
                             emp.IsLoser = true;
-                            emp.Log.Add(emp.CreateLogMessage(vc.GetDefeatMessage(emp, winners)));
+                            emp.Log.Add(emp.CreateLogMessage(vc.GetDefeatMessage(emp, winners), LogMessageType.Victory));
                         }
                     }
                 }
@@ -1708,9 +1723,9 @@ namespace FrEee.Game.Objects.Space
                 foreach (var cmd in CurrentEmpire.Commands)
                 {
                     if (cmd.Executor == null)
-                        CurrentEmpire.Log.Add(CurrentEmpire.CreateLogMessage($"{cmd} cannot be issued because its executor does not exist. Probably a bug..."));
+                        CurrentEmpire.Log.Add(CurrentEmpire.CreateLogMessage($"{cmd} cannot be issued because its executor does not exist. Probably a bug...", LogMessageType.Error));
                     else if (cmd.Issuer != cmd.Executor.Owner && cmd.Issuer != cmd.Executor)
-                        CurrentEmpire.Log.Add(CurrentEmpire.CreateLogMessage("We cannot issue commands to " + cmd.Executor + " because it does not belong to us!"));
+                        CurrentEmpire.Log.Add(CurrentEmpire.CreateLogMessage("We cannot issue commands to " + cmd.Executor + " because it does not belong to us!", LogMessageType.Error));
                     else
                         cmd.Execute();
                 }
@@ -1767,7 +1782,7 @@ namespace FrEee.Game.Objects.Space
                     battle.Resolve();
                     Battles.Add(battle);
                     foreach (var emp in battle.Empires)
-                        emp.Log.Add(battle.CreateLogMessage(battle.NameFor(emp)));
+                        emp.Log.Add(battle.CreateLogMessage(battle.NameFor(emp), LogMessageType.Battle));
                     lastBattleTimestamps[sector] = Current.Timestamp;
                 }
             }

@@ -103,10 +103,10 @@ namespace FrEee.Game.Objects.Orders
 			if (executor is ICargoTransferrer t)
 			{
 				if (Target != null && t.Sector != Target.Sector)
-					yield return t.CreateLogMessage(executor + " cannot transfer cargo to " + Target + " because they are not in the same sector.");
+					yield return t.CreateLogMessage(executor + " cannot transfer cargo to " + Target + " because they are not in the same sector.", LogMessageType.Warning);
 			}
 			else
-				yield return executor.CreateLogMessage($"{executor} cannot transfer cargo.");
+				yield return executor.CreateLogMessage($"{executor} cannot transfer cargo.", LogMessageType.Warning);
 		}
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)

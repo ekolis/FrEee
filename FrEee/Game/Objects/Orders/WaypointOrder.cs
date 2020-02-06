@@ -164,7 +164,7 @@ namespace FrEee.Game.Objects.Orders
 							reason = sobj + " is immobile";
 						else
 							reason = "there is no available path leading toward " + Destination;
-						PathfindingError = sobj.CreateLogMessage(sobj + " could not " + Verb + " " + Target + " because " + reason + ".");
+						PathfindingError = sobj.CreateLogMessage(sobj + " could not " + Verb + " " + Target + " because " + reason + ".", LogMessageType.Warning);
 						sobj.Owner.Log.Add(PathfindingError);
 						LoggedPathfindingError = true;
 					}
@@ -174,13 +174,13 @@ namespace FrEee.Game.Objects.Orders
 				sobj.SpendTime(sobj.TimePerMove);
 			}
 			else
-				ord.RecordLog($"{ord} cannot move to a waypoint because it is not a mobile space object.");
+				ord.RecordLog($"{ord} cannot move to a waypoint because it is not a mobile space object.", LogMessageType.Error);
 		}
 
 		public IEnumerable<LogMessage> GetErrors(IOrderable v)
 		{
 			if (!(v is IMobileSpaceObject))
-				yield return v.CreateLogMessage($"{v} cannot move to a waypoint because it is not a mobile space object.");
+				yield return v.CreateLogMessage($"{v} cannot move to a waypoint because it is not a mobile space object.", LogMessageType.Error);
 			if (PathfindingError != null)
 				yield return PathfindingError;
 		}

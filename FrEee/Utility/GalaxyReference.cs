@@ -17,6 +17,21 @@ namespace FrEee.Utility
 	public class GalaxyReference<T> : IReference<long, T>, IPromotable
 		where T : IReferrable
 	{
+
+		/// <summary>
+		/// Either will create a new Galaxy Reference with the given id, or return null.
+		/// Useful to allow a client to store an ID locally for reference, when the server might destroy said ID. 
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public static GalaxyReference<T> GetGalaxyReference(long id)
+		{
+			if (Galaxy.Current.referrables.ContainsKey(id))
+				return new GalaxyReference<T>(id);
+
+			return null; 
+		}
+
 		public GalaxyReference()
 		{
 			InitializeCache();
@@ -55,6 +70,8 @@ namespace FrEee.Utility
 		{
 			if (Galaxy.Current == null)
 				throw new ReferenceException<int, T>("Can't create a reference to an IReferrable without a galaxy.");
+			else if (!Galaxy.Current.referrables.ContainsKey(id))
+				throw new IndexOutOfRangeException($"The id of {id} is not currently a valid reference"); 
 			else if (Galaxy.Current.referrables[id] is T)
 				ID = id;
 			else

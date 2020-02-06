@@ -296,14 +296,14 @@ namespace FrEee.Game.Objects.Civilization
 		public void AddOrder(IOrder order)
 		{
 			if (order == null)
-				Owner.Log.Append(Container.CreateLogMessage($"Can't add a null order to {this}. Probably a bug..."));
+				Owner.Log.Append(Container.CreateLogMessage($"Can't add a null order to {this}. Probably a bug...",logMessageType: LogMessages.LogMessageType.Error));
 			else if (!(order is IConstructionOrder))
-				Owner.Log.Append(Container.CreateLogMessage($"Can't add a {order.GetType()} to {this}. Probably a bug..."));
+				Owner.Log.Append(Container.CreateLogMessage($"Can't add a {order.GetType()} to {this}. Probably a bug...", logMessageType: LogMessages.LogMessageType.Error));
 			else
 			{
 				var co = (IConstructionOrder)order;
 				if (co.Template == null)
-					Owner.Log.Append(Container.CreateLogMessage($"Can't add an order with no template to {this}. Probably a bug..."));
+					Owner.Log.Append(Container.CreateLogMessage($"Can't add an order with no template to {this}. Probably a bug...", logMessageType: LogMessages.LogMessageType.Error));
 				else
 					Orders.Add(co);
 			}
@@ -377,7 +377,7 @@ namespace FrEee.Game.Objects.Civilization
 					{
 						// can't build that here!
 						Orders.RemoveAt(0);
-						Owner.Log.Add(Container.CreateLogMessage(order.Template + " cannot be built at " + this + " because " + reasonForNotBuilding));
+						Owner.Log.Add(Container.CreateLogMessage(order.Template + " cannot be built at " + this + " because " + reasonForNotBuilding, LogMessages.LogMessageType.Error));
 					}
 					else
 					{
@@ -426,9 +426,9 @@ namespace FrEee.Game.Objects.Civilization
 			foreach (var g in builtThisTurn.GroupBy(i => i.Template))
 			{
 				if (g.Count() == 1)
-					Owner.Log.Add(g.First().CreateLogMessage(g.First() + " has been constructed at " + Name + "."));
+					Owner.Log.Add(g.First().CreateLogMessage(g.First() + " has been constructed at " + Name + ".", logMessageType: LogMessages.LogMessageType.ConstructionComplete));
 				else
-					Owner.Log.Add(g.First().CreateLogMessage(g.Count() + "x " + g.Key + " have been constructed at " + Name + "."));
+					Owner.Log.Add(g.First().CreateLogMessage(g.Count() + "x " + g.Key + " have been constructed at " + Name + ".", logMessageType: LogMessages.LogMessageType.ConstructionComplete));
 			}
 			return didStuff;
 		}
@@ -489,7 +489,7 @@ namespace FrEee.Game.Objects.Civilization
 		public void RemoveOrder(IOrder order)
 		{
 			if (order == null)
-				Owner.Log.Add(Container.CreateLogMessage("Attempted to remove a null order from " + this + ". This is likely a game bug."));
+				Owner.Log.Add(Container.CreateLogMessage("Attempted to remove a null order from " + this + ". This is likely a game bug.", LogMessages.LogMessageType.Error));
 			else if (!(order is IConstructionOrder))
 				return; // order can't exist here anyway
 			else

@@ -33,10 +33,10 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		public override void Execute()
 		{
 			if (Proposal.IsResolved)
-				Executor.Log.Add(Target.CreateLogMessage("The proposal \"" + Proposal + "\" has already been resolved and cannot be accepted now."));
+				Executor.Log.Add(Target.CreateLogMessage("The proposal \"" + Proposal + "\" has already been resolved and cannot be accepted now.", LogMessages.LogMessageType.Error));
 			else
 			{
-				Target.Log.Add(Executor.CreateLogMessage("The " + Executor + " has accepted our proposal (" + Proposal + ")."));
+				Target.Log.Add(Executor.CreateLogMessage("The " + Executor + " has accepted our proposal (" + Proposal + ").", LogMessages.LogMessageType.Generic));
 				Proposal.Execute();
 			}
 		}

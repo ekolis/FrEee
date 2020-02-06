@@ -61,8 +61,8 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 						}
 						else
 							hasProgress.Value = giveProgress.Value;
-						Giver.Log.Add(Receiver.CreateLogMessage("The " + Receiver + " has achieved a breakthrough in " + tech + " due to our cooperative research treaty."));
-						Receiver.Log.Add(tech.CreateLogMessage("We have achieved a breakthrough in " + tech + " due to our cooperative research treaty with the " + Giver + "."));
+						Giver.Log.Add(Receiver.CreateLogMessage("The " + Receiver + " has achieved a breakthrough in " + tech + " due to our cooperative research treaty.", LogMessages.LogMessageType.Generic));
+						Receiver.Log.Add(tech.CreateLogMessage("We have achieved a breakthrough in " + tech + " due to our cooperative research treaty with the " + Giver + ".", LogMessages.LogMessageType.ResearchComplete));
 					}
 				}
 			}

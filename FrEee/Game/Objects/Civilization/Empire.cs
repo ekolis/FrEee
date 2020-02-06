@@ -1061,17 +1061,17 @@ namespace FrEee.Game.Objects.Civilization
 			return (T)Memory[obj.ID];
 		}
 
-		public void RecordLog(string text)
+		public void RecordLog(string text, LogMessageType logMessageType)
 		{
-			Log.Add(new GenericLogMessage(text));
+			Log.Add(new GenericLogMessage(text, logMessageType));
 		}
 
-		public void RecordLog(object context, string text)
+		public void RecordLog(object context, string text, LogMessageType logMessageType)
 		{
 			if (context is IPictorial)
-				Log.Add((context as IPictorial).CreateLogMessage(text));
+				Log.Add((context as IPictorial).CreateLogMessage(text, logMessageType));
 			else
-				RecordLog(text);
+				RecordLog(text, logMessageType);
 		}
 
 		public void Redact(Empire emp)
@@ -1148,9 +1148,9 @@ namespace FrEee.Game.Objects.Civilization
 				ResearchedTechnologies[tech]++;
 			}
 			if (ResearchedTechnologies[tech] > oldlvl)
-				Log.Add(tech.CreateLogMessage("We have advanced from level " + oldlvl + " to level " + ResearchedTechnologies[tech] + " in " + tech + "!"));
+				Log.Add(tech.CreateLogMessage("We have advanced from level " + oldlvl + " to level " + ResearchedTechnologies[tech] + " in " + tech + "!", LogMessageType.ResearchComplete));
 			foreach (var item in newStuff)
-				Log.Add(item.CreateLogMessage("We have unlocked a new " + item.ResearchGroup.ToLower() + ", the " + item + "!"));
+				Log.Add(item.CreateLogMessage("We have unlocked a new " + item.ResearchGroup.ToLower() + ", the " + item + "!", LogMessageType.ResearchComplete));
 
 			// if it was in the queue and we advanced a level, remove the first instance (for each level advanced)
 			for (int i = 0; i < advanced; i++)
@@ -1199,7 +1199,7 @@ namespace FrEee.Game.Objects.Civilization
 				// in that case you will need to gift your own comms channels to that empire
 				// if you want them to be able to message you apart from replying to your messages
 				EncounteredEmpires.Add(obj.Owner);
-				Log.Add(obj.Owner.CreateLogMessage("We have encountered a new empire, the " + obj.Owner + "."));
+				Log.Add(obj.Owner.CreateLogMessage("We have encountered a new empire, the " + obj.Owner + ".", LogMessageType.Generic));
 			}
 
 			if (obj.ID > 0)

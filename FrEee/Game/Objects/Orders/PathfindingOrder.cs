@@ -167,7 +167,7 @@ namespace FrEee.Game.Objects.Orders
 							else if (!LoggedPathfindingError)
 							{
 								// no warp points to explore and we haven'IMobileSpaceObject told the player yet
-								PathfindingError = sobj.CreateLogMessage("{0} found no unexplored warp points at {1} to enter.".F(sobj, sobj.Sector));
+								PathfindingError = sobj.CreateLogMessage("{0} found no unexplored warp points at {1} to enter.".F(sobj, sobj.Sector), LogMessageType.Warning);
 								sobj.Owner.Log.Add(PathfindingError);
 								LoggedPathfindingError = true;
 							}
@@ -207,7 +207,7 @@ namespace FrEee.Game.Objects.Orders
 							reason = sobj + " is immobile";
 						else
 							reason = "there is no available path leading toward " + Destination;
-						PathfindingError = sobj.CreateLogMessage(sobj + " could not " + Verb + " " + KnownTarget + " because " + reason + ".");
+						PathfindingError = sobj.CreateLogMessage(sobj + " could not " + Verb + " " + KnownTarget + " because " + reason + ".", LogMessageType.Warning);
 						sobj.Owner.Log.Add(PathfindingError);
 						LoggedPathfindingError = true;
 					}
@@ -217,7 +217,7 @@ namespace FrEee.Game.Objects.Orders
 				sobj.SpendTime(sobj.TimePerMove);
 			}
 			else
-				ord.Owner.RecordLog(ord, $"{ord} cannot pathfind because it is not a mobile space object.");
+				ord.Owner.RecordLog(ord, $"{ord} cannot pathfind because it is not a mobile space object.", LogMessageType.Error);
 		}
 
 		public IEnumerable<LogMessage> GetErrors(IOrderable v)

@@ -78,7 +78,7 @@ namespace FrEee.Game.Objects.Events
 				{
 					var context = new SafeDictionary<string, object>();
 					var text = m.Text.Evaluate(context);
-					emp.RecordLog(this, text);
+					emp.RecordLog(this, text, LogMessages.LogMessageType.Generic);
 				}
 			}
 
@@ -146,7 +146,7 @@ namespace FrEee.Game.Objects.Events
 				{
 					var context = new SafeDictionary<string, object>();
 					var text = m.Text.Evaluate(context);
-					emp.RecordLog(this, text);
+					emp.RecordLog(this, text, LogMessages.LogMessageType.Generic);
 				}
 			}
 		}

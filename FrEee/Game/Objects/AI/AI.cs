@@ -66,5 +66,8 @@ namespace FrEee.Game.Objects.AI
 		{
 			return Name;
 		}
+
+
+
 	}
 }

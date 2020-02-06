@@ -19,13 +19,13 @@ namespace FrEee.Game.Objects.Commands
 			var emp = Executor.Owner;
 			if (emp != Issuer)
 			{
-				Issuer.Log.Add(Issuer.CreateLogMessage("We cannot issue a command to delete another empire's waypoints!"));
+				Issuer.Log.Add(Issuer.CreateLogMessage("We cannot issue a command to delete another empire's waypoints!", LogMessages.LogMessageType.Error));
 				return;
 			}
 
 			Executor.Dispose();
 
-			Issuer.Log.Add(Issuer.CreateLogMessage(Executor.AlteredQueuesOnDelete + " vehicles' orders were truncated when " + Executor + " was deleted."));
+			Issuer.Log.Add(Issuer.CreateLogMessage(Executor.AlteredQueuesOnDelete + " vehicles' orders were truncated when " + Executor + " was deleted.", LogMessages.LogMessageType.Warning));
 		}
 	}
 }

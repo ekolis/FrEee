@@ -8,12 +8,12 @@ namespace FrEee.Game.Objects.LogMessages
 	[Serializable]
 	public class GenericLogMessage : LogMessage
 	{
-		public GenericLogMessage(string text)
-			: base(text)
+		public GenericLogMessage(string text, LogMessageType logMessageType = LogMessageType.Generic)
+			: base(text, logMessageType)
 		{
 		}
 
-		public GenericLogMessage(string text, int turn) : base(text, turn)
+		public GenericLogMessage(string text, int turn, LogMessageType logMessageType = LogMessageType.Generic) : base(text, turn, logMessageType)
 		{ }
 
 		public override System.Drawing.Image Picture

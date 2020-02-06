@@ -92,8 +92,8 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 				// pay proportional to debt to each empire
 				toPay = Debt / totalDebt * maxGiveable;
 				var unpaid = Debt - toPay;
-				Giver.Log.Add(Receiver.CreateLogMessage("We were unable to fulfill our tribute obligations to the " + Receiver + ". We fell short by " + unpaid.ToUnitString(true) + " " + Resource.Name.ToLower() + "."));
-				Receiver.Log.Add(Giver.CreateLogMessage("The " + Giver + "was unable to fulfill its tribute obligations. They fell short by " + unpaid.ToUnitString(true) + " " + Resource.Name.ToLower() + "."));
+				Giver.Log.Add(Receiver.CreateLogMessage("We were unable to fulfill our tribute obligations to the " + Receiver + ". We fell short by " + unpaid.ToUnitString(true) + " " + Resource.Name.ToLower() + ".", LogMessages.LogMessageType.Generic));
+				Receiver.Log.Add(Giver.CreateLogMessage("The " + Giver + "was unable to fulfill its tribute obligations. They fell short by " + unpaid.ToUnitString(true) + " " + Resource.Name.ToLower() + ".", LogMessages.LogMessageType.Generic));
 			}
 
 			// transfer resources
