@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -951,13 +952,17 @@ namespace FrEee.Game.Objects.Space
                 status.Progress += progressPerOperation;
 
             //Current.SpaceObjectIDCheck("after resource generation");
-
             // empire stuff
             // TODO - multithread this, we'll need to get rid of the (1 of 4) or whatever after "Maintaining empires" :(
-            foreach (var emp in Current.Empires)
+            //foreach (var emp in Current.Empires)        
+            if (status != null)
+                status.Message = "Maintaining empires";
+
+            Parallel.ForEach(Current.Empires, emp =>
+
             {
-                if (status != null)
-                    status.Message = "Maintaining empires (" + (Current.Empires.IndexOf(emp) + 1) + " of " + Current.Empires.Count + ")";
+                //if (status != null)
+                //    status.Message = "Maintaining empires (" + (Current.Empires.IndexOf(emp) + 1) + " of " + Current.Empires.Count + ")";
 
                 // pay maintenance on on ships/bases
                 // TODO - allow mod to specify maintenance on units/facilities too?
@@ -1054,7 +1059,7 @@ namespace FrEee.Game.Objects.Space
                     status.Progress += progressPerOperation;
 
                 //Current.SpaceObjectIDCheck("after empire maintenance for " + emp);
-            }
+            }); 
 
             // validate fleets and share supplies
             foreach (var f in Current.FindSpaceObjects<Fleet>().ToArray())
