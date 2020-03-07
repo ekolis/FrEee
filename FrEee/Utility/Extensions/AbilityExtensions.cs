@@ -188,18 +188,20 @@ namespace FrEee.Utility.Extensions
 
 		public static IEnumerable<IAbilityObject> Descendants(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
 		{
-			if (obj == null)
-				yield break;
-			// TODO - filter out duplicate descendants
-			foreach (var c in obj.Children)
+			var result = new HashSet<IAbilityObject>();
+			if (obj != null)
 			{
-				if (c != null && (sourceFilter == null || sourceFilter(c)))
+				foreach (var c in obj.Children)
 				{
-					yield return c;
-					foreach (var x in c.Descendants(sourceFilter))
-						yield return x;
+					if (c != null && !result.Contains(c) && (sourceFilter == null || sourceFilter(c)))
+					{
+						result.Add(c);
+						foreach (var x in c.Descendants(sourceFilter))
+							result.Add(x);
+					}
 				}
 			}
+			return result;
 		}
 
 		public static IEnumerable<Ability> EmpireAbilities(this ICommonAbilityObject obj, Empire emp, Func<IAbilityObject, bool> sourceFilter = null)
