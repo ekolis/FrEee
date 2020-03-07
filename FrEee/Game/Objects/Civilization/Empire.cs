@@ -799,11 +799,15 @@ namespace FrEee.Game.Objects.Civilization
 
 		public bool CanScan(IFoggable o)
 		{
+			if (o is ISpaceObject sobj)
+				return sobj.HasVisibility(this, Visibility.Scanned);
 			return o.CheckVisibility(this) >= Visibility.Scanned;
 		}
 
 		public bool CanSee(IFoggable o)
 		{
+			if (o is ISpaceObject sobj)
+				return sobj.HasVisibility(this, Visibility.Visible);
 			return o.CheckVisibility(this) >= Visibility.Visible;
 		}
 

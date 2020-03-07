@@ -285,7 +285,7 @@ namespace FrEee.Utility
 			if (emp != null && !emp.HasExplored(sector.StarSystem))
 				return null; // no cheating!
 			if (findWarpIn) // find a warp point leading into the system
-				return Galaxy.Current.FindSpaceObjects<WarpPoint>().Where(wp => wp.Target != null && wp.Target.StarSystem == sector.StarSystem && wp.CheckVisibility(emp) >= Visibility.Fogged).Select(wp => wp.Target).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault();
+				return Galaxy.Current.FindSpaceObjects<WarpPoint>().Where(wp => wp.Target != null && wp.Target.StarSystem == sector.StarSystem && wp.HasVisibility(emp, Visibility.Fogged)).Select(wp => wp.Target).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault(); // use HasVisibility instead of CheckVisibility, it's faster when all we want is visible/invisible and don't care about scanning
 			else // find a warp point leading out of the system
 				return sector.StarSystem.FindSpaceObjects<WarpPoint>().Select(wp => new Sector(sector.StarSystem, wp.FindCoordinates())).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault();
 		}
