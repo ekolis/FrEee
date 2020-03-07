@@ -135,10 +135,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				foreach (var o in OwnedSpaceObjects)
-					yield return o;
-				if (PrimaryRace != null)
-					yield return PrimaryRace;
+				return OwnedSpaceObjects.Cast<IAbilityObject>().ConcatSingle(PrimaryRace);
 			}
 		}
 
