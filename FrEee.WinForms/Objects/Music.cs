@@ -171,10 +171,10 @@ namespace FrEee.WinForms.Objects
 						IEnumerable<string> files = Enumerable.Empty<string>();
 						try
 						{
-							files = Directory.GetFiles(folder, "*.ogg").Union(
-								Directory.GetFiles(folder, "*.mp3")).Union(
-								Directory.GetFiles(folder, "*.wav")).Union(
-								Directory.GetFiles(folder, "*.aiff")).Union(
+							files = Directory.GetFiles(folder, "*.ogg").Concat(
+								Directory.GetFiles(folder, "*.mp3")).Concat(
+								Directory.GetFiles(folder, "*.wav")).Concat(
+								Directory.GetFiles(folder, "*.aiff")).Concat(
 								Directory.GetFiles(folder, "*.aif"));
 						}
 						catch

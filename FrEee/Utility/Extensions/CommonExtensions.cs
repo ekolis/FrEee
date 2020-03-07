@@ -179,7 +179,7 @@ namespace FrEee.Utility.Extensions
 					return;
 
 				// shuffle up the mines so they hit in a random order
-				var mines = sector.SpaceObjects.OfType<Mine>().Union(sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.LeafVehicles.OfType<Mine>())).Where(m => m.IsHostileTo(sobj.Owner)).Shuffle().ToList();
+				var mines = sector.SpaceObjects.OfType<Mine>().Concat(sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.LeafVehicles.OfType<Mine>())).Where(m => m.IsHostileTo(sobj.Owner)).Shuffle().ToList();
 
 				// for log messages
 				var totalDamage = 0;
@@ -1271,7 +1271,7 @@ namespace FrEee.Utility.Extensions
 			var survivors = b.Combatants.Where(c => c.IsAlive);
 			var ourSurvivors = survivors.Where(c => c.Owner == emp);
 			var allySurvivors = survivors.Where(c => c.Owner.IsAllyOf(emp, b.StarSystem));
-			var friendlySurvivors = ourSurvivors.Union(allySurvivors);
+			var friendlySurvivors = ourSurvivors.Concat(allySurvivors);
 			var enemySurvivors = survivors.Where(c => c.Owner.IsEnemyOf(emp, b.StarSystem));
 			if (friendlySurvivors.Any() && enemySurvivors.Any())
 				return "stalemate";

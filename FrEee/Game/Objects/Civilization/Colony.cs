@@ -54,7 +54,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				return Facilities.Cast<IAbilityObject>().Union(Cargo.Units.Cast<IAbilityObject>());
+				return Facilities.Cast<IAbilityObject>().Concat(Cargo.Units.Cast<IAbilityObject>());
 			}
 		}
 
