@@ -135,7 +135,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				return OwnedSpaceObjects.Cast<IAbilityObject>().ConcatSingle(PrimaryRace);
+				return OwnedSpaceObjects.Cast<IAbilityObject>().Append(PrimaryRace);
 			}
 		}
 
