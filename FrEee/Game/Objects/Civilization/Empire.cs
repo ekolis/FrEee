@@ -103,6 +103,11 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public SafeDictionary<string, ICollection<string>> EnabledMinisters { get; set; }
 
+		// HACK - we are loading up the Galaxy Seen ability way too many times during pathfinding and this is slowing it down massively.
+		// yes, this means that an empire gaining/losing this ability would have to wait until the next turn to actually gain or lose it
+		// but this is the easiest way I can think of to fix pathfinding and this is a rather edge case.
+		private bool? allSystemsExploredFromStart = null;
+
 		/// <summary>
 		/// Should we have a sensor sweep of the entire galaxy from the very start?
 		/// </summary>
@@ -110,7 +115,9 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				return Galaxy.Current.AllSystemsExploredFromStart || this.HasAbility("Galaxy Seen");
+				if (allSystemsExploredFromStart is null)
+					allSystemsExploredFromStart = Galaxy.Current.AllSystemsExploredFromStart || this.HasAbility("Galaxy Seen");
+				return allSystemsExploredFromStart.Value;
 			}
 		}
 
