@@ -2,6 +2,7 @@
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 
 namespace FrEee.Game.Objects.Vehicles
@@ -48,7 +49,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			var vis = base.CheckVisibility(emp);
 			var sobj = Container as ISpaceObject;
-			if (sobj != null && sobj.CheckVisibility(emp) >= Visibility.Scanned)
+			if (sobj != null && sobj.HasVisibility(emp, Visibility.Scanned))
 				vis = Visibility.Scanned;
 			return vis;
 		}

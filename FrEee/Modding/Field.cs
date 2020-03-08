@@ -112,7 +112,7 @@ namespace FrEee.Modding
 			if (f.ExternalScripts == null)
 				f.ExternalScripts = new PythonScript[] { script };
 			else
-				f.ExternalScripts = f.ExternalScripts.ConcatSingle(script).ToArray();
+				f.ExternalScripts = f.ExternalScripts.Append(script).ToArray();
 			return f;
 		}
 

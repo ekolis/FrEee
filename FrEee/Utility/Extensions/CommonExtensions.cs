@@ -179,7 +179,7 @@ namespace FrEee.Utility.Extensions
 					return;
 
 				// shuffle up the mines so they hit in a random order
-				var mines = sector.SpaceObjects.OfType<Mine>().Union(sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.LeafVehicles.OfType<Mine>())).Where(m => m.IsHostileTo(sobj.Owner)).Shuffle().ToList();
+				var mines = sector.SpaceObjects.OfType<Mine>().Concat(sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.LeafVehicles.OfType<Mine>())).Where(m => m.IsHostileTo(sobj.Owner)).Shuffle().ToList();
 
 				// for log messages
 				var totalDamage = 0;
@@ -1271,7 +1271,7 @@ namespace FrEee.Utility.Extensions
 			var survivors = b.Combatants.Where(c => c.IsAlive);
 			var ourSurvivors = survivors.Where(c => c.Owner == emp);
 			var allySurvivors = survivors.Where(c => c.Owner.IsAllyOf(emp, b.StarSystem));
-			var friendlySurvivors = ourSurvivors.Union(allySurvivors);
+			var friendlySurvivors = ourSurvivors.Concat(allySurvivors);
 			var enemySurvivors = survivors.Where(c => c.Owner.IsEnemyOf(emp, b.StarSystem));
 			if (friendlySurvivors.Any() && enemySurvivors.Any())
 				return "stalemate";
@@ -1784,69 +1784,6 @@ namespace FrEee.Utility.Extensions
 			if (emp == Empire.Current)
 				return "We";
 			return "The " + emp.Name;
-		}
-
-		internal static Visibility CheckSpaceObjectVisibility(this ISpaceObject sobj, Empire emp)
-		{
-			bool hasMemory = false;
-			if (sobj.IsMemory)
-			{
-				var mowner = sobj.MemoryOwner();
-				if (mowner == emp || mowner == null)
-					return Visibility.Fogged;
-				else
-					return Visibility.Unknown; // can't see other players' memories
-			}
-			else
-			{
-				var mem = sobj.FindMemory(emp);
-				if (mem != null)
-					hasMemory = true;
-			}
-
-			if (emp == sobj.Owner)
-				return Visibility.Owned;
-
-			// You can always scan space objects you are in combat with.
-			// But only their state at the time they were in combat; not for the rest of the turn!
-			// TODO - what about glassed planets, they have no owner...
-			if (Galaxy.Current.Battles.Any(b =>
-			(b.Combatants.OfType<ISpaceObject>().Contains(sobj)
-				|| b.StartCombatants.Values.OfType<ISpaceObject>().Contains(sobj)
-				|| b.EndCombatants.Values.OfType<ISpaceObject>().Contains(sobj))
-			&& b.Combatants.Any(c => c.Owner == emp)))
-				return Visibility.Scanned;
-
-			// do we have anything that can see it?
-			var sys = sobj.StarSystem;
-			if (sys == null)
-				return Visibility.Unknown;
-			var seers = sys.FindSpaceObjects<ISpaceObject>(s => s.Owner == emp && !s.IsMemory);
-			if (!seers.Any() || sobj.IsHiddenFrom(emp))
-			{
-				if (Galaxy.Current.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
-					return Visibility.Visible;
-				if (emp.AllSystemsExploredFromStart)
-					return Visibility.Fogged;
-				var known = emp.Memory[sobj.ID];
-				if (known != null && sobj.GetType() == known.GetType())
-					return Visibility.Fogged;
-				else if (Galaxy.Current.Battles.Any(b => b.Combatants.Any(c => c.ID == sobj.ID) && b.Combatants.Any(c => c.Owner == emp)))
-					return Visibility.Fogged;
-				else if (hasMemory)
-					return Visibility.Fogged;
-				else
-					return Visibility.Unknown;
-			}
-			if (!sobj.HasAbility("Scanner Jammer"))
-			{
-				var scanners = seers.Where(s =>
-					s.HasAbility("Long Range Scanner") && s.GetAbilityValue("Long Range Scanner").ToInt() >= s.Sector.Coordinates.EightWayDistance(sobj.FindSector().Coordinates)
-					|| s.HasAbility("Long Range Scanner - System"));
-				if (scanners.Any())
-					return Visibility.Scanned;
-			}
-			return Visibility.Visible;
 		}
 
 		private static Expression CreateParam(ParameterExpression[] paramsOfDelegate, int i, ParameterInfo callParamType, Queue<object> queueMissingParams)

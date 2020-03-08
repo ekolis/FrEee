@@ -10,14 +10,9 @@ namespace FrEee.Utility.Extensions
 	/// </summary>
 	public static class EnumerableExtensions
 	{
-		public static IEnumerable<T> ConcatSingle<T>(this IEnumerable<T> ts, T t)
-		{
-			return ts.Concat(t.SingleItem());
-		}
-
 		public static IEnumerable<T> ConcatSingle<T>(this T t1, T t2)
 		{
-			return t1.SingleItem().ConcatSingle(t2);
+			return t1.SingleItem().Append(t2);
 		}
 
 		public static IEnumerable<T> ExceptSingle<T>(this IEnumerable<T> src, T badguy)

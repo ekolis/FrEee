@@ -85,7 +85,7 @@ namespace FrEee.Game.Objects.Vehicles
 			if (Owner == emp)
 				return Visibility.Owned;
 			var sobj = Container as ISpaceObject;
-			if (sobj != null && sobj.CheckVisibility(emp) >= Visibility.Scanned)
+			if (sobj != null && sobj.HasVisibility(emp, Visibility.Scanned))
 				return Visibility.Scanned;
 			return Visibility.Unknown;
 		}

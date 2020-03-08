@@ -47,11 +47,11 @@ namespace FrEee.WinForms.Forms
 			get
 			{
 				return
-					Mod.Current.Traits.Cast<IUnlockable>().Union(
-					Mod.Current.Technologies.Cast<IUnlockable>()).Union(
-					Mod.Current.Hulls.Cast<IUnlockable>()).Union(
-					Mod.Current.ComponentTemplates.Cast<IUnlockable>()).Union(
-					Mod.Current.Mounts.Cast<IUnlockable>()).Union(
+					Mod.Current.Traits.Cast<IUnlockable>().Concat(
+					Mod.Current.Technologies.Cast<IUnlockable>()).Concat(
+					Mod.Current.Hulls.Cast<IUnlockable>()).Concat(
+					Mod.Current.ComponentTemplates.Cast<IUnlockable>()).Concat(
+					Mod.Current.Mounts.Cast<IUnlockable>()).Concat(
 					Mod.Current.FacilityTemplates.Cast<IUnlockable>());
 			}
 		}

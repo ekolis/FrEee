@@ -311,5 +311,163 @@ namespace FrEee.Utility.Extensions
 		{
 			return sobj.IsMemory && Empire.Current == null && (sobj.ID == 0 || Galaxy.Current.referrables.ContainsKey(sobj.ID));
 		}
+
+		/// <summary>
+		/// Determines the level of visibility of a space object to an empire.
+		/// <br/>
+		/// If you only need to verify that a space object has at least a certain level of visibility,
+		/// it is less expensive to call <see cref="HasVisibility(ISpaceObject, Empire, Visibility)"/>.
+		/// </summary>
+		/// <param name="sobj">The space object to check.</param>
+		/// <param name="emp">The empire to check against.</param>
+		/// <returns>The visibility level.</returns>
+		internal static Visibility CheckSpaceObjectVisibility(this ISpaceObject sobj, Empire emp)
+		{
+			bool hasMemory = false;
+			if (sobj.IsMemory)
+			{
+				var mowner = sobj.MemoryOwner();
+				if (mowner == emp || mowner == null)
+					return Visibility.Fogged;
+				else
+					return Visibility.Unknown; // can't see other players' memories
+			}
+			else
+			{
+				var mem = sobj.FindMemory(emp);
+				if (mem != null)
+					hasMemory = true;
+			}
+
+			if (emp == sobj.Owner)
+				return Visibility.Owned;
+
+			// You can always scan space objects you are in combat with.
+			// But only their state at the time they were in combat; not for the rest of the turn!
+			// TODO - what about glassed planets, they have no owner...
+			if (Galaxy.Current.Battles.Any(b =>
+			(b.Combatants.OfType<ISpaceObject>().Contains(sobj)
+				|| b.StartCombatants.Values.OfType<ISpaceObject>().Contains(sobj)
+				|| b.EndCombatants.Values.OfType<ISpaceObject>().Contains(sobj))
+			&& b.Combatants.Any(c => c.Owner == emp)))
+				return Visibility.Scanned;
+
+			// do we have anything that can see it?
+			var sys = sobj.StarSystem;
+			if (sys == null)
+				return Visibility.Unknown;
+			var seers = sys.FindSpaceObjects<ISpaceObject>(s => s.Owner == emp && !s.IsMemory);
+			if (!seers.Any() || sobj.IsHiddenFrom(emp))
+			{
+				if (Galaxy.Current.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
+					return Visibility.Visible;
+				if (emp.AllSystemsExploredFromStart)
+					return Visibility.Fogged;
+				var known = emp.Memory[sobj.ID];
+				if (known != null && sobj.GetType() == known.GetType())
+					return Visibility.Fogged;
+				else if (Galaxy.Current.Battles.Any(b => b.Combatants.Any(c => c.ID == sobj.ID) && b.Combatants.Any(c => c.Owner == emp)))
+					return Visibility.Fogged;
+				else if (hasMemory)
+					return Visibility.Fogged;
+				else
+					return Visibility.Unknown;
+			}
+			if (!sobj.HasAbility("Scanner Jammer"))
+			{
+				var scanners = seers.Where(s =>
+					s.HasAbility("Long Range Scanner") && s.GetAbilityValue("Long Range Scanner").ToInt() >= s.Sector.Coordinates.EightWayDistance(sobj.FindSector().Coordinates)
+					|| s.HasAbility("Long Range Scanner - System"));
+				if (scanners.Any())
+					return Visibility.Scanned;
+			}
+			return Visibility.Visible;
+		}
+
+		/// <summary>
+		/// Checks for a specific visibility level of a space object for an empire.
+		/// If the object has that level of visibility or higher, we return true.
+		/// </summary>
+		/// <remarks>
+		/// This allows us to short circuit the more expensive scanner code.
+		/// See also parallel code at <see cref="CheckSpaceObjectVisibility(ISpaceObject, Empire)"/>
+		/// </remarks>
+		/// <param name="sobj">The space object to check.</param>
+		/// <param name="emp">The empire to check against.</param>
+		/// <param name="desiredVisibility">The requested visibility level.</param>
+		/// <returns>true if the space object has at least the requested visibility level, otherwise false.</returns>
+		public static bool HasVisibility(this ISpaceObject sobj, Empire emp, Visibility desiredVisibility)
+		{
+			bool hasMemory = false;
+			if (sobj.IsMemory)
+			{
+				var mowner = sobj.MemoryOwner();
+				if (mowner == emp || mowner == null)
+					return Visibility.Fogged >= desiredVisibility;
+				else
+					return Visibility.Unknown >= desiredVisibility; // can't see other players' memories
+			}
+			else
+			{
+				var mem = sobj.FindMemory(emp);
+				if (mem != null)
+					hasMemory = true;
+			}
+
+			if (emp == sobj.Owner)
+				return Visibility.Owned >= desiredVisibility;
+
+			// You can always scan space objects you are in combat with.
+			// But only their state at the time they were in combat; not for the rest of the turn!
+			// TODO - what about glassed planets, they have no owner...
+			if (Galaxy.Current.Battles.Any(b =>
+			(b.Combatants.OfType<ISpaceObject>().Contains(sobj)
+				|| b.StartCombatants.Values.OfType<ISpaceObject>().Contains(sobj)
+				|| b.EndCombatants.Values.OfType<ISpaceObject>().Contains(sobj))
+			&& b.Combatants.Any(c => c.Owner == emp)))
+				return Visibility.Scanned >= desiredVisibility;
+
+			// do we have anything that can see it?
+			var sys = sobj.StarSystem;
+			if (sys == null)
+				return Visibility.Unknown >= desiredVisibility;
+			var seers = sys.FindSpaceObjects<ISpaceObject>(s => s.Owner == emp && !s.IsMemory);
+			if (!seers.Any() || sobj.IsHiddenFrom(emp))
+			{
+				if (Galaxy.Current.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
+					return Visibility.Visible >= desiredVisibility;
+				if (emp.AllSystemsExploredFromStart)
+					return Visibility.Fogged >= desiredVisibility;
+				var known = emp.Memory[sobj.ID];
+				if (known != null && sobj.GetType() == known.GetType())
+					return Visibility.Fogged >= desiredVisibility;
+				else if (Galaxy.Current.Battles.Any(b => b.Combatants.Any(c => c.ID == sobj.ID) && b.Combatants.Any(c => c.Owner == emp)))
+					return Visibility.Fogged >= desiredVisibility;
+				else if (hasMemory)
+					return Visibility.Fogged >= desiredVisibility;
+				else
+					return Visibility.Unknown >= desiredVisibility;
+			}
+
+			// short circuit scanner code: we now know that the object is either visible or scanned
+			// so if we only care if it's visible or less, we can skip the scanner check.
+			if (Visibility.Visible >= desiredVisibility)
+				return true;
+
+			if (!sobj.HasAbility("Scanner Jammer"))
+			{
+				var scanners = seers.Where(s =>
+					s.HasAbility("Long Range Scanner") && s.GetAbilityValue("Long Range Scanner").ToInt() >= s.Sector.Coordinates.EightWayDistance(sobj.FindSector().Coordinates)
+					|| s.HasAbility("Long Range Scanner - System"));
+				if (scanners.Any())
+					return Visibility.Scanned >= desiredVisibility;
+			}
+
+			// we know that the requested visibility level is greater than "visible"
+			// and the object has a scanner jammer
+			// therefore it can't be scanned, and we already know it's not owned, we checked that up top
+			// so we can just return false because the requested visibility (scanned or owned) can't be met
+			return false;
+		}
 	}
 }
