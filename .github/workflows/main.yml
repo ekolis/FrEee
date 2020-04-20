@@ -14,4 +14,5 @@ jobs:
       - name: Build .NET Framework
         run: |
            cd "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
+           .\MSBuild.exe -t:restore
            .\MSBuild.exe $Env:GITHUB_WORKSPACE
