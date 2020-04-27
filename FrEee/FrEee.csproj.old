@@ -1,0 +1,567 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E19A4330-CE19-45D6-BCFC-375E065EF041}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FrEee</RootNamespace>
+    <AssemblyName>FrEee.Core</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\FrEee.Core.xml</DocumentationFile>
+    <NoWarn>1591, 1572, 1573, 1711, 1712</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>FrEeeStrongName.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\x86\Debug\FrEee.Core.xml</DocumentationFile>
+    <NoWarn>1591, 1572, 1573, 1711, 1712</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>bin\x64\Debug\FrEee.Core.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Game\Enumerations\Conditions.cs" />
+    <Compile Include="Game\Interfaces\IConstructor.cs" />
+    <Compile Include="Game\Objects\AI\CSAI.cs" />
+    <Compile Include="Game\Objects\AI\PythonAI.cs" />
+    <Compile Include="Game\Objects\Civilization\PlayerInfo.cs" />
+    <Compile Include="Game\Objects\Combat\Grid\BattleEvent.cs" />
+    <Compile Include="Game\Objects\Combat\Grid\CombatantAppearsEvent.cs" />
+    <Compile Include="Game\Objects\Combat\Grid\CombatantDisappearsEvent.cs" />
+    <Compile Include="Game\Objects\Combat\Grid\CombatantLaunchedEvent.cs" />
+    <Compile Include="Game\Objects\Combat\Grid\CombatantsCollideEvent.cs" />
+    <Compile Include="Game\Objects\Combat\Grid\GroundBattle.cs" />
+    <Compile Include="Game\Objects\Combat\Grid\SpaceBattle.cs" />
+    <Compile Include="Game\Objects\Commands\MinisterToggleCommand.cs" />
+    <Compile Include="Game\Objects\Commands\SetPlayerInfoCommand.cs" />
+    <Compile Include="Game\Objects\Commands\ToggleOrdersOnHoldCommand.cs" />
+    <Compile Include="Game\Objects\Commands\ToggleRepeatOrdersCommand.cs" />
+    <Compile Include="Game\Objects\Events\Event.cs" />
+    <Compile Include="Game\Enumerations\EventMessageTarget.cs" />
+    <Compile Include="Game\Enumerations\EventSeverity.cs" />
+    <Compile Include="Game\Objects\Combat\Grid\Extensions.cs" />
+    <Compile Include="Game\Objects\Combat\Grid\Battle.cs" />
+    <Compile Include="Game\Objects\Combat\Grid\CombatantDestroyedEvent.cs" />
+    <Compile Include="Game\Objects\Combat\Grid\IBattleEvent.cs" />
+    <Compile Include="Game\Objects\Combat\Grid\CombatantMovesEvent.cs" />
+    <Compile Include="Game\Objects\Combat\Grid\WeaponFiresEvent.cs" />
+    <Compile Include="Game\Objects\Combat\IBattle.cs" />
+    <Compile Include="Game\Objects\Combat\Seeker.cs" />
+    <Compile Include="Game\Objects\Events\EventMessage.cs" />
+    <Compile Include="Game\Objects\Technology\ComponentReference.cs" />
+    <Compile Include="Game\Objects\Vehicles\MajorSpaceVehicle.cs" />
+    <Compile Include="Modding\ComputedFormula.cs" />
+    <Compile Include="Modding\EventTemplate.cs" />
+    <Compile Include="Modding\Loaders\EventLoader.cs" />
+    <Compile Include="Modding\ObjectFormula.cs" />
+    <Compile Include="Modding\Formula.cs" />
+    <Compile Include="Modding\LiteralFormula.cs" />
+    <Compile Include="Modding\Loaders\DesignRoleLoader.cs" />
+    <Compile Include="Modding\Loaders\EventTypeLoader.cs" />
+    <Compile Include="Modding\EventType.cs" />
+    <Compile Include="Modding\Interfaces\IScript.cs" />
+    <Compile Include="Modding\Scripts\CSScript.cs" />
+    <Compile Include="Utility\ClientUtilities.cs" />
+    <Compile Include="Utility\Extensions\AbilityExtensions.cs" />
+    <Compile Include="Utility\Extensions\ChecksExtensions.cs" />
+    <Compile Include="Utility\Extensions\CopyingExtensions.cs" />
+    <Compile Include="Utility\Extensions\ComparisonExtensions.cs" />
+    <Compile Include="Utility\Extensions\ConversionExtensions.cs" />
+    <Compile Include="Utility\Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Utility\Extensions\GameEnumerableExtensions.cs" />
+    <Compile Include="Utility\Extensions\MathExtensions.cs" />
+    <Compile Include="Utility\Extensions\StringHandlingExtensions.cs" />
+    <Compile Include="Utility\Extensions\UnitHandlingExtensions.cs" />
+    <Compile Include="Utility\HeatMap.cs" />
+    <Compile Include="Utility\IntVector2.cs" />
+    <Compile Include="Utility\JsonContractResolver.cs" />
+    <Compile Include="Utility\JsonSerializer.cs" />
+    <Compile Include="Utility\LegacySerializer.cs" />
+    <Compile Include="Utility\MathX.cs" />
+    <Compile Include="Utility\ResourceProgress.cs" />
+    <Compile Include="Utility\SimpleDataObject.cs" />
+    <Compile Include="Utility\DataReference.cs" />
+    <Compile Include="FrEeeConstants.cs" />
+    <Compile Include="Game\Enumerations\AbilityTargets.cs" />
+    <Compile Include="Game\Enumerations\AbilityValueRule.cs" />
+    <Compile Include="Game\Enumerations\AllianceLevel.cs" />
+    <Compile Include="Game\Enumerations\AllowedTrades.cs" />
+    <Compile Include="Game\Enumerations\EmpirePlacement.cs" />
+    <Compile Include="Game\Enumerations\Mood.cs" />
+    <Compile Include="Game\Enumerations\Relations.cs" />
+    <Compile Include="Game\Enumerations\ScoreDisplay.cs" />
+    <Compile Include="Game\Enumerations\SharingPriority.cs" />
+    <Compile Include="Game\Enumerations\StartingTechnologyLevel.cs" />
+    <Compile Include="Game\Enumerations\TechnologyCost.cs" />
+    <Compile Include="Game\Enumerations\WeaponTypes.cs" />
+    <Compile Include="Game\Enumerations\WeaponTargets.cs" />
+    <Compile Include="Game\Enumerations\StellarSize.cs" />
+    <Compile Include="Game\Enumerations\VehicleTypes.cs" />
+    <Compile Include="Game\Enumerations\Visibility.cs" />
+    <Compile Include="Game\Interfaces\ICargoTransferrer.cs" />
+    <Compile Include="Game\Interfaces\IAbilityObject.cs" />
+    <Compile Include="Game\Interfaces\ICargoContainer.cs" />
+    <Compile Include="Game\Interfaces\ICombatSpaceObject.cs" />
+    <Compile Include="Game\Interfaces\ICommand.cs" />
+    <Compile Include="Game\Interfaces\IConstructable.cs" />
+    <Compile Include="Game\Interfaces\IConstructionTemplate.cs" />
+    <Compile Include="Game\Interfaces\IConstructionOrder.cs" />
+    <Compile Include="Game\Interfaces\IContainable.cs" />
+    <Compile Include="Game\Interfaces\ICleanable.cs" />
+    <Compile Include="Game\Interfaces\ICreateDesignCommand.cs" />
+    <Compile Include="Game\Interfaces\IDamageable.cs" />
+    <Compile Include="Utility\IData.cs" />
+    <Compile Include="Utility\IDataObject.cs" />
+    <Compile Include="Game\Interfaces\IDesign.cs" />
+    <Compile Include="Game\Interfaces\IErrorProne.cs" />
+    <Compile Include="Game\Interfaces\IFoggable.cs" />
+    <Compile Include="Game\Interfaces\IHull.cs" />
+    <Compile Include="Game\Interfaces\IIncomeProducer.cs" />
+    <Compile Include="Game\Interfaces\ILocated.cs" />
+    <Compile Include="Game\Interfaces\IMessage.cs" />
+    <Compile Include="Game\Interfaces\IMineableSpaceObject.cs" />
+    <Compile Include="Game\Interfaces\IMobileSpaceObject.cs" />
+    <Compile Include="Game\Interfaces\IMovementOrder.cs" />
+    <Compile Include="Game\Interfaces\INameable.cs" />
+    <Compile Include="Game\Interfaces\IOrderCommand.cs" />
+    <Compile Include="Game\Interfaces\IOwnable.cs" />
+    <Compile Include="Game\Interfaces\IOwnableAbilityObject.cs" />
+    <Compile Include="Game\Interfaces\IPathfindingOrder.cs" />
+    <Compile Include="Game\Interfaces\IPictorial.cs" />
+    <Compile Include="Game\Interfaces\IPictorialLogMessage.cs" />
+    <Compile Include="Game\Interfaces\IPlanetOrder.cs" />
+    <Compile Include="Game\Interfaces\IPromotable.cs" />
+    <Compile Include="Game\Interfaces\IRecyclable.cs" />
+    <Compile Include="Game\Interfaces\IRecycleBehavior.cs" />
+    <Compile Include="Game\Interfaces\IReference.cs" />
+    <Compile Include="Game\Interfaces\IReferenceEnumerable.cs" />
+    <Compile Include="Game\Interfaces\IReferrable.cs" />
+    <Compile Include="Game\Interfaces\ICombatant.cs" />
+    <Compile Include="Game\Interfaces\ICommonAbilityObject.cs" />
+    <Compile Include="Game\Interfaces\IStellarObject.cs" />
+    <Compile Include="Game\Interfaces\ITargetable.cs" />
+    <Compile Include="Game\Interfaces\IUnit.cs" />
+    <Compile Include="Game\Interfaces\IUnlockable.cs" />
+    <Compile Include="Game\Interfaces\IUpgradeable.cs" />
+    <Compile Include="Game\Interfaces\IVehicle.cs" />
+    <Compile Include="Game\Interfaces\IVictoryCondition.cs" />
+    <Compile Include="Game\Objects\Civilization\SectorWaypoint.cs" />
+    <Compile Include="Game\Objects\Civilization\SpaceObjectWaypoint.cs" />
+    <Compile Include="Game\Objects\Civilization\Waypoint.cs" />
+    <Compile Include="Game\Objects\AI\AI.cs" />
+    <Compile Include="Game\Objects\Civilization\Aptitude.cs" />
+    <Compile Include="Game\Objects\Civilization\Cargo.cs" />
+    <Compile Include="Game\Objects\Civilization\CargoDelta.cs" />
+    <Compile Include="Game\Objects\Civilization\Culture.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\AcceptProposalAction.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\ActionMessage.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Action.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\AllianceClause.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\Clause.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\CooperativeResearchClause.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\ShareAbilityClause.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\ShareCombatLogsClause.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\ShareDesignsClause.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\ShareVisionClause.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\TributeClause.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\RejectProposalAction.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\DeclareWarAction.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\GeneralMessage.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Message.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Proposal.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\ProposalMessage.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\BreakTreatyAction.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Package.cs" />
+    <Compile Include="Game\Objects\Civilization\EmpireStatus.cs" />
+    <Compile Include="Game\Objects\Civilization\HappinessModel.cs" />
+    <Compile Include="Game\Objects\Civilization\Race.cs" />
+    <Compile Include="Game\Objects\Civilization\Trait.cs" />
+    <Compile Include="Game\Objects\Combat\Hit.cs" />
+    <Compile Include="Game\Objects\Combat\Shot.cs" />
+    <Compile Include="Game\Objects\Commands\SetPrivateNameCommand.cs" />
+    <Compile Include="Game\Objects\Commands\SetPublicNameCommand.cs" />
+    <Compile Include="Game\Objects\Commands\DeleteWaypointCommand.cs" />
+    <Compile Include="Game\Objects\Commands\HotkeyWaypointCommand.cs" />
+    <Compile Include="Game\Objects\Commands\DeleteMessageCommand.cs" />
+    <Compile Include="Game\Objects\Commands\LeaveFleetCommand.cs" />
+    <Compile Include="Game\Objects\Commands\DisbandFleetCommand.cs" />
+    <Compile Include="Game\Objects\Commands\CreateFleetCommand.cs" />
+    <Compile Include="Game\Objects\Commands\JoinFleetCommand.cs" />
+    <Compile Include="Game\Objects\Commands\OrderCommand.cs" />
+    <Compile Include="Game\Objects\Commands\ResearchCommand.cs" />
+    <Compile Include="Game\Objects\Commands\SendMessageCommand.cs" />
+    <Compile Include="Game\Objects\Commands\SetObsoleteFlagCommand.cs" />
+    <Compile Include="Game\Objects\Commands\CreateWaypointCommand.cs" />
+    <Compile Include="Game\Objects\Commands\SetPlayerNoteCommand.cs" />
+    <Compile Include="Game\Objects\Commands\ClearPrivateNameCommand.cs" />
+    <Compile Include="Game\Objects\Commands\ClearPlayerNoteCommand.cs" />
+    <Compile Include="Game\Objects\LogMessages\GenericLogMessage.cs" />
+    <Compile Include="Game\Objects\LogMessages\LogMessage.cs" />
+    <Compile Include="Game\Objects\Commands\CreateDesignCommand.cs" />
+    <Compile Include="Game\Objects\LogMessages\PictorialLogMessage.cs" />
+    <Compile Include="Game\Objects\Orders\ActivateAbilityOrder.cs" />
+    <Compile Include="Game\Objects\Orders\ColonizeOrder.cs" />
+    <Compile Include="Game\Objects\Orders\PathfindingOrder.cs" />
+    <Compile Include="Game\Objects\Orders\RecycleBehaviors\ScrapBehavior.cs" />
+    <Compile Include="Game\Objects\Orders\RecycleFacilityOrCargoOrder.cs" />
+    <Compile Include="Game\Objects\Orders\RecycleVehicleInSpaceOrder.cs" />
+    <Compile Include="Game\Objects\Orders\UpgradeFacilityOrder.cs" />
+    <Compile Include="Game\Objects\Orders\SentryOrder.cs" />
+    <Compile Include="Game\Objects\Orders\EvadeOrder.cs" />
+    <Compile Include="Game\Objects\Orders\PursueOrder.cs" />
+    <Compile Include="Game\Objects\Orders\TransferCargoOrder.cs" />
+    <Compile Include="Game\Objects\Orders\WarpOrder.cs" />
+    <Compile Include="Game\Objects\Orders\MoveOrder.cs" />
+    <Compile Include="Game\Objects\Orders\WaypointOrder.cs" />
+    <Compile Include="Game\Objects\SimulatedObjectWrappers.cs" />
+    <Compile Include="Game\Objects\Space\Fleet.cs" />
+    <Compile Include="Game\Objects\Technology\FacilityUpgrade.cs" />
+    <Compile Include="Game\Objects\Technology\Hull.cs" />
+    <Compile Include="Game\Objects\Technology\Mount.cs" />
+    <Compile Include="Game\Objects\Technology\MountedComponentTemplate.cs" />
+    <Compile Include="Game\Objects\Vehicles\SpaceVehicle.cs" />
+    <Compile Include="Game\Objects\Vehicles\Base.cs" />
+    <Compile Include="Game\Objects\Vehicles\Design.cs" />
+    <Compile Include="Game\Interfaces\INamed.cs" />
+    <Compile Include="Game\Interfaces\IOrder.cs" />
+    <Compile Include="Game\Interfaces\IOrderable.cs" />
+    <Compile Include="Game\Interfaces\IResearchable.cs" />
+    <Compile Include="Game\Interfaces\ISpaceObject.cs" />
+    <Compile Include="Game\Interfaces\ITemplate.cs" />
+    <Compile Include="Game\Objects\Abilities\Ability.cs" />
+    <Compile Include="Game\Objects\Abilities\AbilityRule.cs" />
+    <Compile Include="Game\Objects\Civilization\Colony.cs" />
+    <Compile Include="Game\Objects\Civilization\ConstructionQueue.cs" />
+    <Compile Include="Game\Objects\Combat\BeamWeaponDisplayEffect.cs" />
+    <Compile Include="Game\Objects\Combat\ProjectileWeaponDisplayEffect.cs" />
+    <Compile Include="Game\Objects\Combat\SeekerWeaponDisplayEffect.cs" />
+    <Compile Include="Game\Objects\Combat\WeaponDisplayEffect.cs" />
+    <Compile Include="Game\Objects\Technology\Component.cs" />
+    <Compile Include="Game\Objects\Technology\Facility.cs" />
+    <Compile Include="Game\Objects\Vehicles\Drone.cs" />
+    <Compile Include="Game\Objects\Vehicles\Fighter.cs" />
+    <Compile Include="Game\Objects\Vehicles\Mine.cs" />
+    <Compile Include="Game\Objects\Vehicles\Satellite.cs" />
+    <Compile Include="Game\Objects\Vehicles\Ship.cs" />
+    <Compile Include="Game\Objects\Vehicles\Troop.cs" />
+    <Compile Include="Game\Objects\Vehicles\Vehicle.cs" />
+    <Compile Include="Game\Objects\Vehicles\WeaponPlatform.cs" />
+    <Compile Include="Game\Objects\VictoryConditions\PeaceVictoryCondition.cs" />
+    <Compile Include="Game\Objects\VictoryConditions\TechnologyVictoryCondition.cs" />
+    <Compile Include="Game\Objects\VictoryConditions\ScorePercentageVictoryCondition.cs" />
+    <Compile Include="Game\Objects\VictoryConditions\ScoreVictoryCondition.cs" />
+    <Compile Include="Game\Objects\VictoryConditions\SurvivalVictoryCondition.cs" />
+    <Compile Include="Game\Objects\VictoryConditions\MajorEmpireEliminationVictoryCondition.cs" />
+    <Compile Include="Game\Objects\VictoryConditions\TotalEliminationVictoryCondition.cs" />
+    <Compile Include="Game\Setup\EmpireTemplate.cs" />
+    <Compile Include="Game\Setup\WarpPointPlacementStrategies\CenterWarpPointPlacementStrategy.cs" />
+    <Compile Include="Game\Setup\WarpPointPlacementStrategies\PlanetWarpPointPlacementStrategy.cs" />
+    <Compile Include="Game\Setup\WarpPointPlacementStrategies\StarWarpPointPlacementStrategy.cs" />
+    <Compile Include="Game\Setup\WarpPointPlacementStrategies\RandomWarpPointPlacementStrategy.cs" />
+    <Compile Include="Game\Setup\WarpPointPlacementStrategies\RandomAlignedWarpPointPlacementStrategy.cs" />
+    <Compile Include="Game\Setup\WarpPointPlacementStrategies\EdgeAlignedWarpPointPlacementStrategy.cs" />
+    <Compile Include="Game\Setup\WarpPointPlacementStrategies\WarpPointPlacementStrategy.cs" />
+    <Compile Include="Modding\DamageType.cs" />
+    <Compile Include="Modding\Enumerations\RequirementType.cs" />
+    <Compile Include="Modding\FormulaContext.cs" />
+    <Compile Include="Modding\Enumerations\FormulaType.cs" />
+    <Compile Include="Modding\ModReference.cs" />
+    <Compile Include="Modding\Interfaces\IFormula.cs" />
+    <Compile Include="Modding\Interfaces\IFormulaHost.cs" />
+    <Compile Include="Modding\Interfaces\IModObject.cs" />
+    <Compile Include="Modding\Loaders\EmpireAILoader.cs" />
+    <Compile Include="Modding\Loaders\DamageTypeLoader.cs" />
+    <Compile Include="Modding\Loaders\RequirementLoader.cs" />
+    <Compile Include="Modding\Loaders\ScriptLoader.cs" />
+    <Compile Include="Modding\Loaders\PopulationModifierLoader.cs" />
+    <Compile Include="Modding\Loaders\CultureLoader.cs" />
+    <Compile Include="Modding\Loaders\DataFileLoader.cs" />
+    <Compile Include="Modding\Loaders\ModInfoLoader.cs" />
+    <Compile Include="Modding\Loaders\ModSettingsLoader.cs" />
+    <Compile Include="Modding\Loaders\TextLoader.cs" />
+    <Compile Include="Modding\Loaders\HappinessModelLoader.cs" />
+    <Compile Include="Modding\Loaders\HullLoader.cs" />
+    <Compile Include="Modding\Loaders\MountLoader.cs" />
+    <Compile Include="Modding\Loaders\TraitLoader.cs" />
+    <Compile Include="Modding\Loaders\StarSystemLoader.cs" />
+    <Compile Include="Modding\MetaRecord.cs" />
+    <Compile Include="Modding\MetaRecordParameter.cs" />
+    <Compile Include="Modding\ModInfo.cs" />
+    <Compile Include="Modding\ModSettings.cs" />
+    <Compile Include="Modding\PopulationModifier.cs" />
+    <Compile Include="Modding\Requirement.cs" />
+    <Compile Include="Modding\ResourceFormula.cs" />
+    <Compile Include="Modding\Scripts\PythonScript.cs" />
+    <Compile Include="Modding\Scripts\PythonScriptEngine.cs" />
+    <Compile Include="Modding\Scripts\ScriptRequirement.cs" />
+    <Compile Include="Modding\Templates\ComponentTemplate.cs" />
+    <Compile Include="Game\Objects\Civilization\Empire.cs" />
+    <Compile Include="Game\Objects\Technology\DirectFireWeaponInfo.cs" />
+    <Compile Include="Modding\Templates\FacilityTemplate.cs" />
+    <Compile Include="Game\Objects\Commands\AddOrderCommand.cs" />
+    <Compile Include="Game\Objects\Commands\Command.cs" />
+    <Compile Include="Game\Objects\Commands\RearrangeOrdersCommand.cs" />
+    <Compile Include="Game\Objects\Commands\RemoveOrderCommand.cs" />
+    <Compile Include="Game\Objects\Orders\ConstructionOrder.cs" />
+    <Compile Include="Game\Objects\Technology\SeekingWeaponInfo.cs" />
+    <Compile Include="Game\Objects\Technology\Technology.cs" />
+    <Compile Include="Game\Objects\Technology\TechnologyRequirement.cs" />
+    <Compile Include="Game\Objects\Space\AsteroidField.cs" />
+    <Compile Include="Game\Objects\Space\Galaxy.cs" />
+    <Compile Include="Game\Objects\Space\ObjectLocation.cs" />
+    <Compile Include="Game\Objects\Space\Planet.cs" />
+    <Compile Include="Game\Objects\Space\Sector.cs" />
+    <Compile Include="Game\Objects\Space\Star.cs" />
+    <Compile Include="Game\Objects\Space\StarSystem.cs" />
+    <Compile Include="Game\Objects\Space\StellarObject.cs" />
+    <Compile Include="Game\Objects\Space\Storm.cs" />
+    <Compile Include="Game\Objects\Space\WarpPoint.cs" />
+    <Compile Include="Game\Setup\GameSetup.cs" />
+    <Compile Include="Game\Objects\Technology\WarheadWeaponInfo.cs" />
+    <Compile Include="Game\Objects\Technology\WeaponInfo.cs" />
+    <Compile Include="Game\Interfaces\IStarSystemPlacementStrategy.cs" />
+    <Compile Include="Modding\Loaders\AbilityRuleLoader.cs" />
+    <Compile Include="Modding\Loaders\ComponentLoader.cs" />
+    <Compile Include="Modding\Loaders\FacilityLoader.cs" />
+    <Compile Include="Modding\Loaders\StellarObjectLoader.cs" />
+    <Compile Include="Modding\Loaders\GalaxyLoader.cs" />
+    <Compile Include="Modding\Loaders\StellarAbilityLoader.cs" />
+    <Compile Include="Modding\Loaders\StellarObjectSizeLoader.cs" />
+    <Compile Include="Modding\Loaders\TechnologyLoader.cs" />
+    <Compile Include="Modding\StellarObjectSize.cs" />
+    <Compile Include="Game\Setup\StarSystemPlacementStrategies\ClusteredStarSystemPlacementStrategy.cs" />
+    <Compile Include="Game\Setup\StarSystemPlacementStrategies\GridStarSystemPlacementStrategy.cs" />
+    <Compile Include="Game\Setup\StarSystemPlacementStrategies\SpiralStarSystemPlacementStrategy.cs" />
+    <Compile Include="Game\Setup\StarSystemPlacementStrategies\DiffuseStarSystemPlacementStrategy.cs" />
+    <Compile Include="Game\Setup\StarSystemPlacementStrategies\RandomStarSystemPlacementStrategy.cs" />
+    <Compile Include="Modding\Templates\GalaxyTemplate.cs" />
+    <Compile Include="Modding\Templates\RandomAbilityTemplate.cs" />
+    <Compile Include="Modding\StellarObjectLocations\CircleRadiusStellarObjectLocation.cs" />
+    <Compile Include="Modding\StellarObjectLocations\CoordStellarObjectLocation.cs" />
+    <Compile Include="Modding\Templates\AsteroidFieldTemplate.cs" />
+    <Compile Include="Modding\Templates\StormTemplate.cs" />
+    <Compile Include="Modding\DataFile.cs" />
+    <Compile Include="Modding\DataParsingException.cs" />
+    <Compile Include="Modding\Field.cs" />
+    <Compile Include="Modding\Loaders\AbilityLoader.cs" />
+    <Compile Include="Modding\Loaders\ILoader.cs" />
+    <Compile Include="Modding\Interfaces\IStellarObjectLocation.cs" />
+    <Compile Include="Modding\Templates\PlanetTemplate.cs" />
+    <Compile Include="Modding\Record.cs" />
+    <Compile Include="Modding\StellarObjectLocations\RingStellarObjectLocation.cs" />
+    <Compile Include="Modding\Mod.cs" />
+    <Compile Include="Modding\StellarObjectLocations\SameAsStellarObjectLocation.cs" />
+    <Compile Include="Modding\Templates\StarSystemTemplate.cs" />
+    <Compile Include="Modding\Templates\StarTemplate.cs" />
+    <Compile Include="Modding\EmpireTraitRequirement.cs" />
+    <Compile Include="Utility\ClientSideCache.cs" />
+    <Compile Include="Utility\DynamicDictionary.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\FreeTradeClause.cs" />
+    <Compile Include="Utility\HashCodeMasher.cs" />
+    <Compile Include="Utility\DataScalar.cs" />
+    <Compile Include="Utility\NameAttribute.cs" />
+    <Compile Include="Utility\PRNG.cs" />
+    <Compile Include="Utility\Extensions\Parser.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\ClientSafeAttribute.cs" />
+    <Compile Include="Utility\ConnectivityGraph.cs" />
+    <Compile Include="Utility\Extensions\CommonExtensions.cs" />
+    <Compile Include="Utility\Extensions\TaskFactoryExtensions.cs" />
+    <Compile Include="Utility\Library.cs" />
+    <Compile Include="Utility\ObjectGraphParser.cs" />
+    <Compile Include="Utility\Pathfinder.cs" />
+    <Compile Include="Utility\Pictures.cs" />
+    <Compile Include="Utility\Progress.cs" />
+    <Compile Include="Utility\ProgressDisplayMode.cs" />
+    <Compile Include="Utility\RandomHelper.cs" />
+    <Compile Include="Utility\GalaxyReference.cs" />
+    <Compile Include="Utility\MiningModel.cs" />
+    <Compile Include="Utility\ReferenceKeyedDictionary.cs" />
+    <Compile Include="Utility\ReferenceList.cs" />
+    <Compile Include="Utility\ReferenceSet.cs" />
+    <Compile Include="Utility\Resource.cs" />
+    <Compile Include="Utility\ResourceQuantity.cs" />
+    <Compile Include="Utility\SafeDictionary.cs" />
+    <Compile Include="Utility\SafeType.cs" />
+    <Compile Include="Utility\SequenceEqualityComparer.cs" />
+    <Compile Include="Utility\Serializer.cs" />
+    <Compile Include="Utility\Status.cs" />
+    <Compile Include="Utility\Stringifiers\ResourceQuantityStringifier.cs" />
+    <Compile Include="Utility\Stringifiers\DoubleLiteralFormulaStringifier.cs" />
+    <Compile Include="Utility\Stringifiers\IStringifier.cs" />
+    <Compile Include="Utility\Stringifiers\IntLiteralFormulaStringifier.cs" />
+    <Compile Include="Utility\Stringifiers\PopulationModifierStringifier.cs" />
+    <Compile Include="Utility\Stringifiers\StringLiteralFormulaStringifier.cs" />
+    <Compile Include="Utility\Stringifiers\SizeStringifier.cs" />
+    <Compile Include="Utility\Stringifiers\PointStringifier.cs" />
+    <Compile Include="Utility\Stringifiers\Stringifier.cs" />
+    <Compile Include="Utility\Stringifiers\StringifierLibrary.cs" />
+    <Compile Include="Utility\Vector2.cs" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="FrEeeStrongName.snk" />
+    <None Include="GameSetups\Quickstart.gsu">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\DataSources\FrEee.Game.Space.Planet.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="Scripts\AI\AI_Default\AI.ministers" />
+    <None Include="Scripts\AI\AI_Default\AI.script" />
+    <None Include="Scripts\AI\Vanguard\AI.csx" />
+    <None Include="Scripts\AI\Vanguard\AI.ministers" />
+    <None Include="Scripts\AI\Vanguard\BasicResearchModule.csx" />
+    <None Include="Scripts\AI\Vanguard\MinistryOfColonization.csx" />
+    <None Include="Scripts\AI\Vanguard\MinistryOfConstruction.csx" />
+    <None Include="Scripts\AI\Vanguard\MinistryOfInfrastructure.csx" />
+    <None Include="Scripts\AI\Vanguard\MinistryOfShipDesign.csx" />
+    <None Include="Scripts\AI\Vanguard\Plan.csx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Game\Objects\Combat\Simple\" />
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="IronPython">
+      <Version>2.7.9</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting">
+      <Version>3.4.0</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>7.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Svg">
+      <Version>2.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="valueinjecter">
+      <Version>2.3.3</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\AI\AI_Default\AI.py" />
+    <Content Include="Scripts\EndTurn.py" />
+    <Content Include="Scripts\GameInit.py" />
+    <Content Include="Scripts\Global.py" />
+    <Content Include="Scripts\TestInclude.py" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

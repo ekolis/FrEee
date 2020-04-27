@@ -3,7 +3,7 @@ using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Drawing;
 
 namespace FrEee.Tests.Game.Objects.Abilities
@@ -11,14 +11,13 @@ namespace FrEee.Tests.Game.Objects.Abilities
 	/// <summary>
 	/// Tests abilities and ability rules.
 	/// </summary>
-	[TestClass]
 	public class AbilityTest
 	{
 		public AbilityTest()
 		{
 		}
 
-		[TestMethod]
+		[Test]
 		public void AbilitiesFromMultipleSources()
 		{
 			// initialize galaxy

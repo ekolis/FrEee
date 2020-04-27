@@ -1,24 +1,15 @@
-﻿using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Combat;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Technology;
-using FrEee.Game.Objects.Vehicles;
-using FrEee.Modding;
-using FrEee.Modding.Templates;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
+﻿using FrEee.Modding.Templates;
+using NUnit.Framework;
 using System.Drawing;
-using System.Linq;
 
 namespace FrEee.Tests.Modding
 {
 	/// <summary>
 	/// Tests galaxy templates.
 	/// </summary>
-	[TestClass]
 	public class GalaxyTemplateTest
 	{
-		[TestMethod]
+		[Test]
 		public void IntersectionsAtEndpointsDoNotCount()
 		{
 			var p1 = new Point(0, 0);
@@ -28,7 +19,7 @@ namespace FrEee.Tests.Modding
 			Assert.IsFalse(GalaxyTemplate.IntersectsExceptAtEnds(p1, p2, q1, q2));
 		}
 
-		[TestMethod]
+		[Test]
 		public void IntersectionsAtEndpointAndMiddleDoCount()
 		{
 			var p1 = new Point(0, 0);
@@ -38,7 +29,7 @@ namespace FrEee.Tests.Modding
 			Assert.IsTrue(GalaxyTemplate.IntersectsExceptAtEnds(p1, p2, q1, q2));
 		}
 
-		[TestMethod]
+		[Test]
 		public void CrossoverIntersectionsCount()
 		{
 			var p1 = new Point(-1, -1);
@@ -48,7 +39,7 @@ namespace FrEee.Tests.Modding
 			Assert.IsTrue(GalaxyTemplate.IntersectsExceptAtEnds(p1, p2, q1, q2));
 		}
 
-		[TestMethod]
+		[Test]
 		public void VerticalAndHorizontalIntersectionsCount()
 		{
 			var p1 = new Point(-1, 0);
@@ -58,7 +49,7 @@ namespace FrEee.Tests.Modding
 			Assert.IsTrue(GalaxyTemplate.IntersectsExceptAtEnds(p1, p2, q1, q2));
 		}
 
-		[TestMethod]
+		[Test]
 		public void CollinearIntersectionsCount()
 		{
 			var p1 = new Point(0, 0);
@@ -68,7 +59,7 @@ namespace FrEee.Tests.Modding
 			Assert.IsTrue(GalaxyTemplate.IntersectsExceptAtEnds(p1, p2, q1, q2));
 		}
 
-		[TestMethod]
+		[Test]
 		public void WarpPointAngularDistance()
 		{
 			Assert.IsTrue(GalaxyTemplate.AngleIsInRangeExclusive(15, 0, 60));

@@ -6,18 +6,17 @@ using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 namespace FrEee.Tests.Utility
 {
-	[TestClass]
 	public class SerializerTest
 	{
-		[ClassInitialize]
-		public static void ClassInit(TestContext ctx)
+		[OneTimeSetUp]
+		public static void ClassInit()
 		{
 			// silly unit tests can't find their own assembly
 			SafeType.ForceLoadType(typeof(SerializerTest));
@@ -25,7 +24,7 @@ namespace FrEee.Tests.Utility
 			SafeType.ForceLoadType(typeof(Company));
 		}
 
-		[TestMethod]
+		[Test]
 		public void CircularReferences()
 		{
 			var george = new Person("George");
@@ -37,7 +36,7 @@ namespace FrEee.Tests.Utility
 			Assert.AreEqual(george.ToString(), george2.ToString());
 		}
 
-		[TestMethod]
+		[Test]
 		public void MagicTypes()
 		{
 			var p = new System.Drawing.Point(6, 9);
@@ -46,7 +45,7 @@ namespace FrEee.Tests.Utility
 			Assert.AreEqual(p, p2);
 		}
 
-		[TestMethod]
+		[Test]
 		public void Roundtrip()
 		{
 			var chevy = new Company("Chevrolet");
@@ -56,7 +55,7 @@ namespace FrEee.Tests.Utility
 			Assert.AreEqual(car.ToString(), car2.ToString());
 		}
 
-		[TestMethod]
+		[Test]
 		public void Scalar()
 		{
 			var answer = 42;
@@ -65,7 +64,7 @@ namespace FrEee.Tests.Utility
 			Assert.AreEqual(answer, answer2);
 		}
 
-		[TestMethod]
+		[Test]
 		public void NestedDictionary()
 		{
 			var dict = new SafeDictionary<string, SafeDictionary<string, string>>(true);
@@ -75,7 +74,7 @@ namespace FrEee.Tests.Utility
 			Assert.AreEqual(dict["test"]["fred"], dict2["test"]["fred"]);
 		}
 
-		[TestMethod]
+		[Test]
 		public void NestedCrossAssembly()
 		{
 			var list = new List<Formula<string>>();
@@ -85,25 +84,25 @@ namespace FrEee.Tests.Utility
 			Assert.AreEqual(list.First(), list2.First());
 		}
 
-		[TestMethod]
+		[Test]
 		public void NestedCrossAssemblySafeTypeName()
 		{
 			var s = SafeType.GetShortTypeName(typeof(List<Formula<string>>));
-			Assert.AreEqual("System.Collections.Generic.List`1[[FrEee.Modding.Formula`1[[System.String, mscorlib]], FrEee.Core]], mscorlib", s);
+			Assert.AreEqual("System.Collections.Generic.List`1[[FrEee.Modding.Formula`1[[System.String, System.Private.CoreLib]], FrEee.Core]], System.Private.CoreLib", s);
 		}
 
-		[TestMethod]
+		[Test]
 		public void NestedDictionaries()
 		{
 			var s = SafeType.GetShortTypeName(typeof(IDictionary<AbilityRule, IDictionary<int, Formula<int>>>));
-			Assert.AreEqual("System.Collections.Generic.IDictionary`2[[FrEee.Game.Objects.Abilities.AbilityRule, FrEee.Core],[System.Collections.Generic.IDictionary`2[[System.Int32, mscorlib],[FrEee.Modding.Formula`1[[System.Int32, mscorlib]], FrEee.Core]], mscorlib]], mscorlib", s);
+			Assert.AreEqual("System.Collections.Generic.IDictionary`2[[FrEee.Game.Objects.Abilities.AbilityRule, FrEee.Core],[System.Collections.Generic.IDictionary`2[[System.Int32, System.Private.CoreLib],[FrEee.Modding.Formula`1[[System.Int32, System.Private.CoreLib]], FrEee.Core]], System.Private.CoreLib]], System.Private.CoreLib", s);
 		}
 
-		[TestMethod]
+		[Test]
 		public void LookUpComplexType()
 		{
 			{
-				var tname = "System.Collections.Generic.List`1[[FrEee.Modding.Formula`1[[System.String, mscorlib]], FrEee.Core]], mscorlib";
+				var tname = "System.Collections.Generic.List`1[[FrEee.Modding.Formula`1[[System.String, System.Private.CoreLib]], FrEee.Core]], System.Private.CoreLib";
 				var st = new SafeType(tname);
 				Assert.AreEqual(typeof(List<Formula<string>>), st.Type);
 			}
@@ -113,18 +112,18 @@ namespace FrEee.Tests.Utility
 				Assert.AreEqual(typeof(ConstructionOrder<Ship, Design<Ship>>), st.Type);
 			}
 			{
-				var tname = "System.Collections.Generic.Dictionary`2[[FrEee.Game.Objects.Abilities.AbilityRule, FrEee.Core],[FrEee.Modding.Formula`1[[System.Int32, mscorlib]], mscorlib";
+				var tname = "System.Collections.Generic.Dictionary`2[[FrEee.Game.Objects.Abilities.AbilityRule, FrEee.Core],[FrEee.Modding.Formula`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib";
 				var st = new SafeType(tname);
 				Assert.AreEqual(typeof(Dictionary<AbilityRule, Formula<int>>), st.Type);
 			}
 			{
-				var tname = "System.Collections.Generic.IDictionary`2[[FrEee.Game.Objects.Abilities.AbilityRule, FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null],[System.Collections.Generic.IDictionary`2[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[FrEee.Modding.Formula`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]";
+				var tname = "System.Collections.Generic.IDictionary`2[[FrEee.Game.Objects.Abilities.AbilityRule, FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null],[System.Collections.Generic.IDictionary`2[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[FrEee.Modding.Formula`1[[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]";
 				var st = new SafeType(tname);
 				Assert.AreEqual(typeof(IDictionary<AbilityRule, IDictionary<int, Formula<int>>>), st.Type);
 			}
 		}
 
-		[TestMethod]
+		[Test]
 		public void LegacyLookUpComplexType()
 		{
 			{
@@ -139,7 +138,8 @@ namespace FrEee.Tests.Utility
 			}
 		}
 
-		[TestMethod]
+		[Test]
+		[Ignore("Script type no longer in existence")]
 		public void LegacyLookUpArrays()
 		{
 			var tname = "FrEee.Modding.Script[], FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null";
@@ -147,7 +147,7 @@ namespace FrEee.Tests.Utility
 			Assert.AreEqual(typeof(PythonScript[]), st.Type);
 		}
 
-		[TestMethod]
+		[Test]
 		public void CorrectAbilities()
 		{
 			Mod.Load(null);
@@ -167,7 +167,7 @@ namespace FrEee.Tests.Utility
 		}
 
 
-		[TestMethod]
+		[Test]
 		public void CorrectAbilities2()
 		{
 			Mod.Load(null);
@@ -176,7 +176,7 @@ namespace FrEee.Tests.Utility
 			Assert.AreEqual(800, Mod.Current.FacilityTemplates.Single(x => x.Name == "Mineral Miner Facility I").GetAbilityValue("Resource Generation - Minerals").ToInt());
 		}
 
-		[TestMethod]
+		[Test]
 		public void EmpireStoredResources()
 		{
 			var emp = new Empire();
@@ -186,7 +186,7 @@ namespace FrEee.Tests.Utility
 			Assert.AreEqual(emp.StoredResources, emp2.StoredResources);
 		}
 
-		[TestMethod]
+		[Test]
 		public void QuotedStrings()
 		{
 			var str = "\"Hello world!\"";
@@ -195,7 +195,7 @@ namespace FrEee.Tests.Utility
 			Assert.AreEqual(str, str2);
 		}
 
-		[TestMethod]
+		[Test]
 		public void PrivateProperties()
 		{
 			var spy = new Spy();

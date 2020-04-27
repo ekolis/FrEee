@@ -4,16 +4,14 @@ using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Drawing;
-using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace FrEee.Tests.Game.Objects.Space
 {
 	/// <summary>
 	/// Tests memory sight / fog of war.
 	/// </summary>
-	[TestClass]
 	public class MemoryTest
 	{
 		/// <summary>
@@ -46,30 +44,30 @@ namespace FrEee.Tests.Game.Objects.Space
 		/// </summary>
 		private StarSystem there;
 
-		[TestMethod]
+		[Test]
 		public void CreatingMemory()
 		{
 			// make sure a memory is created when the vehicle is seen
 			submarine.UpdateEmpireMemories();
 			var mem = (Ship)seekers.Memory[submarine.ID];
-			AreEqual(Visibility.Visible, submarine.CheckVisibility(seekers), "Ship is not visible to empire in same star system.");
-			IsNotNull(mem, "Memory was not created for visible ship.");
-			IsNotNull(mem.StarSystem, "Memory was not placed in a star system for visible ship.");
-			IsTrue(mem.IsMemory, "Memory is not flagged as a memory.");
+			Assert.AreEqual(Visibility.Visible, submarine.CheckVisibility(seekers), "Ship is not visible to empire in same star system.");
+			Assert.IsNotNull(mem, "Memory was not created for visible ship.");
+			Assert.IsNotNull(mem.StarSystem, "Memory was not placed in a star system for visible ship.");
+			Assert.IsTrue(mem.IsMemory, "Memory is not flagged as a memory.");
 
 			// make sure the original vehicle is invisible when it moves
 			HideSubmarine();
-			AreEqual(Visibility.Fogged, submarine.CheckVisibility(seekers), "Ship is not fogged after it's left the star system.");
+			Assert.AreEqual(Visibility.Fogged, submarine.CheckVisibility(seekers), "Ship is not fogged after it's left the star system.");
 
 			// make sure the memory was not updated when the sub was moved
-			AreEqual(here, mem.StarSystem, "Memory of ship was updated even though it is no longer visible.");
+			Assert.AreEqual(here, mem.StarSystem, "Memory of ship was updated even though it is no longer visible.");
 
 			// make sure the memory is visible to the correct empire
-			AreEqual(Visibility.Fogged, mem.CheckVisibility(seekers), "Memory is not fogged.");
-			AreEqual(Visibility.Unknown, mem.CheckVisibility(hiders), "Other empire's memory is not hidden from empire owning vehicle.");
+			Assert.AreEqual(Visibility.Fogged, mem.CheckVisibility(seekers), "Memory is not fogged.");
+			Assert.AreEqual(Visibility.Unknown, mem.CheckVisibility(hiders), "Other empire's memory is not hidden from empire owning vehicle.");
 		}
 
-		[TestMethod]
+		[Test]
 		public void NotDisappearingMemory()
 		{
 			// create memory of vehicle
@@ -83,11 +81,11 @@ namespace FrEee.Tests.Game.Objects.Space
 			Galaxy.Current.Redact();
 
 			// make sure it's still visible as a memory
-			AreEqual(Visibility.Fogged, submarine.CheckVisibility(seekers), "Ship is not fogged after it's left the star system.");
-			AreEqual(here.GetSector(0, 0), submarine.Sector, $"Ship should be appearing in its last known location {here.GetSector(0, 0)} but it's actually appearing at {submarine.Sector}.");
+			Assert.AreEqual(Visibility.Fogged, submarine.CheckVisibility(seekers), "Ship is not fogged after it's left the star system.");
+			Assert.AreEqual(here.GetSector(0, 0), submarine.Sector, $"Ship should be appearing in its last known location {here.GetSector(0, 0)} but it's actually appearing at {submarine.Sector}.");
 		}
 
-		[TestInitialize]
+		[SetUp]
 		public void Setup()
 		{
 			// initialize galaxy

@@ -1,5 +1,5 @@
 ﻿using FrEee.Utility.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,10 +8,9 @@ namespace FrEee.Tests.Utility.Extensions
 	/// <summary>
 	/// Tests extension methods.
 	/// </summary>
-	[TestClass]
 	public class CommonExtensionsTest
 	{
-		[TestMethod]
+		[Test]
 		public void PercentOfRounded()
 		{
 			Assert.AreEqual(2, 50.PercentOfRounded(4));
@@ -22,7 +21,7 @@ namespace FrEee.Tests.Utility.Extensions
 			Assert.AreEqual(-3, 50.PercentOfRounded(-5));
 		}
 
-		[TestMethod]
+		[Test]
 		public void SpawnTasksAsync()
 		{
 			var nums = new List<int>();

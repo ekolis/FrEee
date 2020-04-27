@@ -31,7 +31,7 @@ namespace FrEee.WinForms.Forms
 		private MainMenuForm()
 		{
 			InitializeComponent();
-			pictureBox1.Image = Image.FromFile(Properties.Resources.FrEeeSplash);
+			pictureBox1.Image = Properties.Resources.Splash;
 			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
 			catch { }
 		}

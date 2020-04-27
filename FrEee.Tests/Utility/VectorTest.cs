@@ -1,12 +1,11 @@
 ﻿using FrEee.Utility;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace FrEee.Tests.Utility
 {
-	[TestClass]
 	public class VectorTest
 	{
-		[TestMethod]
+		[Test]
 		public void IntVector2AddLinearGradientEightWay()
 		{
 			var map = new HeatMap();
@@ -17,7 +16,7 @@ namespace FrEee.Tests.Utility
 			Assert.AreEqual(0, map[99, 99]);
 		}
 
-		[TestMethod]
+		[Test]
 		public void IntVector2InterpolationEightWay()
 		{
 			var v1 = new IntVector2(-1, 3);

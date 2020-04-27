@@ -5,7 +5,7 @@ using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,13 +14,12 @@ namespace FrEee.Tests.Modding
 	/// <summary>
 	/// Tests data file formulas.
 	/// </summary>
-	[TestClass]
 	public class FormulaTest
 	{
 		/// <summary>
 		/// Tests dynamic formulas.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void DynamicFormula()
 		{
 			var gal = new Galaxy();
@@ -49,7 +48,7 @@ namespace FrEee.Tests.Modding
 			design.Components.Add(mct);
 			mct.Container = design;
 			design.Owner = emp;
-			Assert.AreEqual<int>(30, armor.Durability); // 10 * 3
+			Assert.AreEqual(30, armor.Durability.Value); // 10 * 3
 			Assert.AreEqual(mct.Durability, 60); // 30 * 200%
 			Assert.AreEqual(15, mct.Size); // 10 * 150%
 		}
@@ -57,7 +56,7 @@ namespace FrEee.Tests.Modding
 		/// <summary>
 		/// Tests dynamic formulas.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void DynamicFormulaWithParameters()
 		{
 			var gal = new Galaxy();
@@ -70,7 +69,7 @@ namespace FrEee.Tests.Modding
 		/// <summary>
 		/// Makes sure that meta records with no parameters still generate records.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void NoFormula()
 		{
 			var data = "Name := Capital Ship Missile I";
@@ -78,13 +77,13 @@ namespace FrEee.Tests.Modding
 			Assert.AreEqual(0, metarec.Parameters.Count());
 			var recs = metarec.Instantiate();
 			Assert.AreEqual(1, recs.Count());
-			Assert.AreEqual<string>("Capital Ship Missile I", recs.First().Get<string>("Name", null));
+			Assert.AreEqual("Capital Ship Missile I", recs.First().Get<string>("Name", null).Value);
 		}
 
 		/// <summary>
 		/// Tests static formulas.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void StaticFormula()
 		{
 			var data =
@@ -111,7 +110,7 @@ Name := ='Nuclear Missile ' + warhead.ToRomanNumeral() + ' S' + speed.ToString()
 		/// <summary>
 		/// Tests string interpolation dynamic formulas.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void StringInterpolationDynamic()
 		{
 			var field = new Field("Test := Test Case {{42 + 69}}");
@@ -125,7 +124,7 @@ Name := ='Nuclear Missile ' + warhead.ToRomanNumeral() + ' S' + speed.ToString()
 		/// Tests string interpolation mixed formulas.
 		/// Mixed formulas should be treated as dynamic.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void StringInterpolationMixed()
 		{
 			var field = new Field("Test := Test Case {42} {{69}}");
@@ -138,7 +137,7 @@ Name := ='Nuclear Missile ' + warhead.ToRomanNumeral() + ' S' + speed.ToString()
 		/// <summary>
 		/// Tests string interpolation static formulas.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void StringInterpolationStatic()
 		{
 			var field = new Field("Test := Test Case {42 + 69}");
@@ -151,7 +150,7 @@ Name := ='Nuclear Missile ' + warhead.ToRomanNumeral() + ' S' + speed.ToString()
 		/// <summary>
 		/// Tests SE4/SE5 style replacement strings.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void ReplacementStrings()
 		{
 			var field = new Field("Test := [%Amount1] [%Amount2%]");

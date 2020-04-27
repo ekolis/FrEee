@@ -1,15 +1,14 @@
-﻿using System;
-using FrEee.Game.Objects.Space;
+﻿using FrEee.Game.Objects.Space;
 using FrEee.Game.Setup;
 using FrEee.Modding;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace FrEee.Tests.Game.Setup
 {
-	[TestClass]
 	public class GameSetupTest
 	{
-		[TestMethod]
+		[Test]
+		[Ignore("quickstart needs to be rebuilt in new version")]
 		public void Quickstart()
 		{
 			var setup = GameSetup.Load(@"..\..\..\..\FrEee\GameSetups\quickstart.gsu");
