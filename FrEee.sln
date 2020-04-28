@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Rebracer.xml = Rebracer.xml
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrEee.WinForms", "FrEee.WinForms\FrEee.WinForms.csproj", "{61615A88-CFD2-474E-BE6D-6D0A46AA6E5C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrEee.WinForms", "FrEee.WinForms\FrEee.WinForms.csproj", "{61615A88-CFD2-474E-BE6D-6D0A46AA6E5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
