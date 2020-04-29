@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -7,70 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Mods\ComponentLoaderTest\Data\Components.txt" />
-    <None Remove="Mods\DynamicFormulaWithParameters\Data\Components.txt" />
-    <None Remove="Mods\Include Mod\Data\Components.txt" />
-    <None Remove="Mods\Include Mod\Data\LandVehicleSizes\VehicleSizeTroops.txt" />
-    <None Remove="Mods\Include Mod\Data\LandVehicleSizes\VehicleSizeWeaponPlatforms.txt" />
-    <None Remove="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeCarriers.txt" />
-    <None Remove="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeColonyShips.txt" />
-    <None Remove="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeCombatShips.txt" />
-    <None Remove="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeFighters.txt" />
-    <None Remove="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeMines.txt" />
-    <None Remove="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeSatelites.txt" />
-    <None Remove="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeStations.txt" />
-    <None Remove="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeTransports.txt" />
-    <None Remove="Mods\Include Mod\Data\VehicleSize.txt" />
-    <None Remove="Mods\WeaponInfoTest\Data\Components.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Mods\ComponentLoaderTest\Data\Components.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Mods\DynamicFormulaWithParameters\Data\Components.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Mods\Include Mod\Data\Components.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Mods\Include Mod\Data\LandVehicleSizes\VehicleSizeTroops.txt" />
-    <Content Include="Mods\Include Mod\Data\LandVehicleSizes\VehicleSizeWeaponPlatforms.txt" />
-    <Content Include="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeCarriers.txt" />
-    <Content Include="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeColonyShips.txt" />
-    <Content Include="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeCombatShips.txt" />
-    <Content Include="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeFighters.txt" />
-    <Content Include="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeMines.txt" />
-    <Content Include="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeSatelites.txt" />
-    <Content Include="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeStations.txt" />
-    <Content Include="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeTransports.txt" />
-    <Content Include="Mods\Include Mod\Data\VehicleSize.txt" />
-    <Content Include="Mods\WeaponInfoTest\Data\Components.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="nunit" Version="3.12.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Game\Objects\ai\" />
-    <Folder Include="Game\Objects\civilization\" />
-    <Folder Include="Game\Objects\Combat\grid\" />
-    <Folder Include="Game\Objects\Combat\simple\" />
-    <Folder Include="Game\Objects\commands\" />
-    <Folder Include="Game\Objects\logmessages\" />
+    <None Include="Mods\**" CopyToOutputDirectory="Always" LinkBase="Mods\" />
+    <None Include="Savegame\**" CopyToOutputDirectory="Always" LinkBase="Savegame\" />
+    <None Include="..\FrEee\Data\**"  CopyToOutputDirectory="Always" LinkBase="Data\" />
+    <None Include="..\FrEee\Mods\**" CopyToOutputDirectory="Always" LinkBase="Mods\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FrEee\FrEee.csproj" />
-  </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="call post-build.bat $(OutDir) $(ProjectDir)" />
-  </Target>
+    <PackageReference Include="nunit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
+  </ItemGroup>
 
 </Project>

@@ -16,7 +16,7 @@ robocopy "%ALL_BUT_FIRST%\..\FrEee\Dsgnname" "%ALL_BUT_FIRST%\%1\Dsgnname" /e
 
 echo Done copying assets
 
-CD "%ALL_BUT_FIRST%\bin\%1\Scripts"
+CD "%ALL_BUT_FIRST%\%1\Scripts"
 For /R %%G in ("*.csx") do (
 echo %%~fG.temp
 echo %%G
