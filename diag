@@ -1668,7 +1668,7 @@ windir = C:\WINDOWS
                        obj\Debug\FrEee.Core.dll
                            TargetPath = FrEee.Core.dll
                    _ExplicitReference
-                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                    _OutputPathItem
                        bin\Debug\
                    _ResolveComReferenceCache
@@ -3378,7 +3378,7 @@ windir = C:\WINDOWS
                        obj\Debug\FrEee.Core.dll
                            TargetPath = FrEee.Core.dll
                    _ExplicitReference
-                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                    _GenerateRestoreProjectPathWalkOutputs
                        F:\Programming\Projects\FrEee\FrEee\FrEee.csproj
                    _OutputPathItem
@@ -5440,7 +5440,7 @@ windir = C:\WINDOWS
                        obj\Debug\FrEee.Core.dll
                            TargetPath = FrEee.Core.dll
                    _ExplicitReference
-                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                    _GenerateRestoreProjectPathWalkOutputs
                        F:\Programming\Projects\FrEee\FrEee\FrEee.csproj
                    _OutputPathItem
@@ -8022,7 +8022,7 @@ windir = C:\WINDOWS
                        obj\Debug\FrEee.Core.dll
                            TargetPath = FrEee.Core.dll
                    _ExplicitReference
-                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                    _GenerateRestoreProjectPathWalkOutputs
                        F:\Programming\Projects\FrEee\FrEee\FrEee.csproj
                    _OutputPathItem
@@ -12960,7 +12960,7 @@ windir = C:\WINDOWS
                        obj\Debug\FrEee.Core.dll
                            TargetPath = FrEee.Core.dll
                    _ExplicitReference
-                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                    _OutputPathItem
                        bin\Debug\
                    _ResolveComReferenceCache
@@ -17568,7 +17568,7 @@ windir = C:\WINDOWS
                              WindowsBase
                              System.Core
                                      Implicit=true (TaskId:44)
-                     Task Parameter:AssemblyFiles=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll (TaskId:44)
+                     Task Parameter:AssemblyFiles=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll (TaskId:44)
                      Task Parameter:
                          TargetFrameworkDirectories=
                              C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\
@@ -17654,7 +17654,7 @@ windir = C:\WINDOWS
                          WindowsBase (TaskId:44)
                          System.Core (TaskId:44)
                      AssemblyFiles: (TaskId:44)
-                         C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll (TaskId:44)
+                         C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll (TaskId:44)
                      CandidateAssemblyFiles: (TaskId:44)
                      TargetFrameworkDirectories: (TaskId:44)
                          C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\,C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\Facades\ (TaskId:44)
@@ -17704,9 +17704,9 @@ windir = C:\WINDOWS
                          C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\ (TaskId:44)
                      LatestTargetFrameworkDirectories: (TaskId:44)
                      ProfileTablesLocation: (TaskId:44)
-                     Primary reference "mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089". (TaskId:44)
-                         Resolved file path is "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll". (TaskId:44)
-                         Reference found at search path location "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll". (TaskId:44)
+                     Primary reference "System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089". (TaskId:44)
+                         Resolved file path is "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll". (TaskId:44)
+                         Reference found at search path location "C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll". (TaskId:44)
                          This reference is not "CopyLocal" because it's in a Frameworks directory. (TaskId:44)
                          The ImageRuntimeVersion for this reference is "v4.0.30319". (TaskId:44)
                      Primary reference "System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089". (TaskId:44)
@@ -17805,14 +17805,14 @@ windir = C:\WINDOWS
                                      ReferenceSourceTarget=ResolveAssemblyReference
                                      ResolvedFrom={TargetFrameworkDirectory}
                                      Version=4.0.0.0
-                             C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                             C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                      CopyLocal=false
                                      FrameworkFile=true
-                                     FusionName=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+                                     FusionName=System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
                                      ImageRuntime=v4.0.30319
-                                     OriginalItemSpec=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                                     OriginalItemSpec=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                      ReferenceSourceTarget=ResolveAssemblyReference
-                                     ResolvedFrom=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                                     ResolvedFrom=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                      Version=4.0.0.0
                              C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.ComponentModel.Composition.dll
                                      CopyLocal=false
@@ -17937,14 +17937,14 @@ windir = C:\WINDOWS
                                      ReferenceSourceTarget=ResolveAssemblyReference
                                      ResolvedFrom={TargetFrameworkDirectory}
                                      Version=4.0.0.0
-                             C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                             C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                      CopyLocal=false
                                      FrameworkFile=true
-                                     FusionName=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+                                     FusionName=System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
                                      ImageRuntime=v4.0.30319
-                                     OriginalItemSpec=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                                     OriginalItemSpec=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                      ReferenceSourceTarget=ResolveAssemblyReference
-                                     ResolvedFrom=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                                     ResolvedFrom=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                      Version=4.0.0.0
                              C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.ComponentModel.Composition.dll
                                      CopyLocal=false
@@ -18073,7 +18073,7 @@ windir = C:\WINDOWS
                    Target "GetReferenceAssemblyPaths" skipped. Previously built successfully.
 19:33:09.951   3:8>Target "ImplicitlyExpandDesignTimeFacades: (TargetId:57)" in file "C:\Program Files\dotnet\sdk\5.0.100-preview.2.20176.6\Microsoft.NETFramework.CurrentVersion.targets" from project "F:\Programming\Projects\FrEee\FrEee\FrEee.csproj" (target "ResolveReferences" depends on it):
                    Task "Message" skipped, due to false condition; ('%(ReferencePath.ResolvedFrom)' == 'ImplicitlyExpandDesignTimeFacades') was evaluated as ('{TargetFrameworkDirectory}' == 'ImplicitlyExpandDesignTimeFacades').
-                   Task "Message" skipped, due to false condition; ('%(ReferencePath.ResolvedFrom)' == 'ImplicitlyExpandDesignTimeFacades') was evaluated as ('C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll' == 'ImplicitlyExpandDesignTimeFacades').
+                   Task "Message" skipped, due to false condition; ('%(ReferencePath.ResolvedFrom)' == 'ImplicitlyExpandDesignTimeFacades') was evaluated as ('C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll' == 'ImplicitlyExpandDesignTimeFacades').
 19:33:09.951   3:8>Done building target "ImplicitlyExpandDesignTimeFacades" in project "FrEee.csproj".: (TargetId:57)
 19:33:09.951   3:8>Target "ResolveReferences: (TargetId:58)" in file "C:\Program Files\dotnet\sdk\5.0.100-preview.2.20176.6\Microsoft.Common.CurrentVersion.targets" from project "F:\Programming\Projects\FrEee\FrEee\FrEee.csproj" (target "CoreBuild" depends on it):
 19:33:09.951   3:8>Done building target "ResolveReferences" in project "FrEee.csproj".: (TargetId:58)
@@ -18387,15 +18387,15 @@ windir = C:\WINDOWS
                                    Version=4.0.0.0
                    Added Item(s): 
                        ReferencePathWithRefAssemblies=
-                           C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                           C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                    CopyLocal=false
                                    FrameworkFile=true
-                                   FusionName=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+                                   FusionName=System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
                                    ImageRuntime=v4.0.30319
-                                   OriginalItemSpec=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
-                                   ReferenceAssembly=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                                   OriginalItemSpec=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
+                                   ReferenceAssembly=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                    ReferenceSourceTarget=ResolveAssemblyReference
-                                   ResolvedFrom=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                                   ResolvedFrom=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                    Version=4.0.0.0
                    Added Item(s): 
                        ReferencePathWithRefAssemblies=
@@ -18572,15 +18572,15 @@ windir = C:\WINDOWS
                                      ReferenceSourceTarget=ResolveAssemblyReference
                                      ResolvedFrom={TargetFrameworkDirectory}
                                      Version=4.0.0.0
-                             C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                             C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                      CopyLocal=false
                                      FrameworkFile=true
-                                     FusionName=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+                                     FusionName=System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
                                      ImageRuntime=v4.0.30319
-                                     OriginalItemSpec=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
-                                     ReferenceAssembly=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                                     OriginalItemSpec=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
+                                     ReferenceAssembly=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                      ReferenceSourceTarget=ResolveAssemblyReference
-                                     ResolvedFrom=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                                     ResolvedFrom=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                      Version=4.0.0.0
                              C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.ComponentModel.Composition.dll
                                      CopyLocal=false
@@ -19264,15 +19264,15 @@ windir = C:\WINDOWS
                                    ReferenceSourceTarget=ResolveAssemblyReference
                                    ResolvedFrom={TargetFrameworkDirectory}
                                    Version=4.0.0.0
-                           C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                           C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                    CopyLocal=false
                                    FrameworkFile=true
-                                   FusionName=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+                                   FusionName=System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
                                    ImageRuntime=v4.0.30319
-                                   OriginalItemSpec=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
-                                   ReferenceAssembly=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                                   OriginalItemSpec=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
+                                   ReferenceAssembly=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                    ReferenceSourceTarget=ResolveAssemblyReference
-                                   ResolvedFrom=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                                   ResolvedFrom=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                    Version=4.0.0.0
                            C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.ComponentModel.Composition.dll
                                    CopyLocal=false
@@ -19801,15 +19801,15 @@ windir = C:\WINDOWS
                                      ReferenceSourceTarget=ResolveAssemblyReference
                                      ResolvedFrom={TargetFrameworkDirectory}
                                      Version=4.0.0.0
-                             C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                             C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                      CopyLocal=false
                                      FrameworkFile=true
-                                     FusionName=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+                                     FusionName=System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
                                      ImageRuntime=v4.0.30319
-                                     OriginalItemSpec=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
-                                     ReferenceAssembly=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                                     OriginalItemSpec=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
+                                     ReferenceAssembly=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                      ReferenceSourceTarget=ResolveAssemblyReference
-                                     ResolvedFrom=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                                     ResolvedFrom=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                      Version=4.0.0.0
                              C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.ComponentModel.Composition.dll
                                      CopyLocal=false
@@ -19950,11 +19950,11 @@ windir = C:\WINDOWS
 19:33:09.964   3:8>Done building target "_GenerateCompileDependencyCache" in project "FrEee.csproj".: (TargetId:76)
                    Target "_ComputeNonExistentFileProperty" skipped, due to false condition; (('$(BuildingInsideVisualStudio)' == 'true') and ('$(BuildingOutOfProcess)' != 'true') and (('$(BuildingProject)' == 'false') or ('$(UseHostCompilerIfAvailable)' == 'true'))) was evaluated as (('' == 'true') and ('' != 'true') and (('true' == 'false') or ('true' == 'true'))).
                    Target "ResolveCodeAnalysisRuleSet" skipped, due to false condition; ('$(CodeAnalysisRuleSet)' != '') was evaluated as ('' != '').
-                   Target "ShimReferencePathsWhenCommonTargetsDoesNotUnderstandReferenceAssemblies" skipped, due to false condition; ('@(ReferencePathWithRefAssemblies)' == '') was evaluated as ('C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\Microsoft.CSharp.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.ComponentModel.Composition.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Core.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Data.DataSetExtensions.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Data.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Drawing.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Numerics.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Windows.Forms.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Xml.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Xml.Linq.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\WindowsBase.dll' == '').
+                   Target "ShimReferencePathsWhenCommonTargetsDoesNotUnderstandReferenceAssemblies" skipped, due to false condition; ('@(ReferencePathWithRefAssemblies)' == '') was evaluated as ('C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\Microsoft.CSharp.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.ComponentModel.Composition.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Core.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Data.DataSetExtensions.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Data.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Drawing.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Numerics.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Windows.Forms.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Xml.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Xml.Linq.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\WindowsBase.dll' == '').
 19:33:09.965   3:8>Target "_BeforeVBCSCoreCompile: (TargetId:77)" in file "C:\Program Files\dotnet\sdk\5.0.100-preview.2.20176.6\Roslyn\Microsoft.Managed.Core.targets" from project "F:\Programming\Projects\FrEee\FrEee\FrEee.csproj" (target "CoreCompile" depends on it):
                    Set Property: UseSharedCompilation=true
 19:33:09.965   3:8>Done building target "_BeforeVBCSCoreCompile" in project "FrEee.csproj".: (TargetId:77)
-                   Target "ShimReferencePathsWhenCommonTargetsDoesNotUnderstandReferenceAssemblies" skipped, due to false condition; ('@(ReferencePathWithRefAssemblies)' == '') was evaluated as ('C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\Microsoft.CSharp.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.ComponentModel.Composition.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Core.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Data.DataSetExtensions.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Data.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Drawing.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Numerics.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Windows.Forms.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Xml.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Xml.Linq.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\WindowsBase.dll' == '').
+                   Target "ShimReferencePathsWhenCommonTargetsDoesNotUnderstandReferenceAssemblies" skipped, due to false condition; ('@(ReferencePathWithRefAssemblies)' == '') was evaluated as ('C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\Microsoft.CSharp.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.ComponentModel.Composition.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Core.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Data.DataSetExtensions.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Data.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Drawing.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Numerics.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Windows.Forms.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Xml.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Xml.Linq.dll;C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\WindowsBase.dll' == '').
                    Target "_SetPathMapFromSourceRoots" skipped, due to false condition; ('$(DeterministicSourcePaths)' == 'true') was evaluated as ('' == 'true').
 19:33:09.965   3:8>Target "CoreCompile: (TargetId:78)" in file "C:\Program Files\dotnet\sdk\5.0.100-preview.2.20176.6\Roslyn\Microsoft.CSharp.Core.targets" from project "F:\Programming\Projects\FrEee\FrEee\FrEee.csproj" (target "Compile" depends on it):
                    Building target "CoreCompile" completely.
@@ -19990,15 +19990,15 @@ windir = C:\WINDOWS
                                      ReferenceSourceTarget=ResolveAssemblyReference
                                      ResolvedFrom={TargetFrameworkDirectory}
                                      Version=4.0.0.0
-                             C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                             C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                      CopyLocal=false
                                      FrameworkFile=true
-                                     FusionName=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+                                     FusionName=System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
                                      ImageRuntime=v4.0.30319
-                                     OriginalItemSpec=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
-                                     ReferenceAssembly=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                                     OriginalItemSpec=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
+                                     ReferenceAssembly=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                      ReferenceSourceTarget=ResolveAssemblyReference
-                                     ResolvedFrom=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                                     ResolvedFrom=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                      Version=4.0.0.0
                              C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.ComponentModel.Composition.dll
                                      CopyLocal=false
@@ -20528,7 +20528,7 @@ windir = C:\WINDOWS
                      Task Parameter:UseSharedCompilation=True (TaskId:55)
                      Task Parameter:Utf8Output=True (TaskId:55)
                      Task Parameter:WarningLevel=4 (TaskId:55)
-                     C:\Program Files\dotnet\dotnet.exe exec "C:\Program Files\dotnet\sdk\5.0.100-preview.2.20176.6\Roslyn\bincore\csc.dll" /noconfig /nowarn:1591,1572,1573,1711,1712,1701,1702 /nostdlib+ /platform:AnyCPU /errorreport:prompt /warn:4 /doc:bin\Debug\FrEee.Core.xml /define:DEBUG;TRACE /highentropyva+ /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\Microsoft.CSharp.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.ComponentModel.Composition.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Core.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Data.DataSetExtensions.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Data.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Drawing.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Numerics.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Windows.Forms.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Xml.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Xml.Linq.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\WindowsBase.dll" /debug+ /debug:full /filealign:512 /optimize- /out:obj\Debug\FrEee.Core.dll /subsystemversion:6.00 /resource:obj\Debug\FrEee.Properties.Resources.resources /target:library /utf8output /langversion:7.3 Game\Enumerations\Conditions.cs Game\Interfaces\IConstructor.cs Game\Objects\AI\CSAI.cs Game\Objects\AI\PythonAI.cs Game\Objects\Civilization\PlayerInfo.cs Game\Objects\Combat\Grid\BattleEvent.cs Game\Objects\Combat\Grid\CombatantAppearsEvent.cs Game\Objects\Combat\Grid\CombatantDisappearsEvent.cs Game\Objects\Combat\Grid\CombatantLaunchedEvent.cs Game\Objects\Combat\Grid\CombatantsCollideEvent.cs Game\Objects\Combat\Grid\GroundBattle.cs Game\Objects\Combat\Grid\SpaceBattle.cs Game\Objects\Commands\MinisterToggleCommand.cs Game\Objects\Commands\SetPlayerInfoCommand.cs Game\Objects\Commands\ToggleOrdersOnHoldCommand.cs Game\Objects\Commands\ToggleRepeatOrdersCommand.cs Game\Objects\Events\Event.cs Game\Enumerations\EventMessageTarget.cs Game\Enumerations\EventSeverity.cs Game\Objects\Combat\Grid\Extensions.cs Game\Objects\Combat\Grid\Battle.cs Game\Objects\Combat\Grid\CombatantDestroyedEvent.cs Game\Objects\Combat\Grid\IBattleEvent.cs Game\Objects\Combat\Grid\CombatantMovesEvent.cs Game\Objects\Combat\Grid\WeaponFiresEvent.cs Game\Objects\Combat\IBattle.cs Game\Objects\Combat\Seeker.cs Game\Objects\Events\EventMessage.cs Game\Objects\Technology\ComponentReference.cs Game\Objects\Vehicles\MajorSpaceVehicle.cs Modding\ComputedFormula.cs Modding\EventTemplate.cs Modding\Loaders\EventLoader.cs Modding\ObjectFormula.cs Modding\Formula.cs Modding\LiteralFormula.cs Modding\Loaders\DesignRoleLoader.cs Modding\Loaders\EventTypeLoader.cs Modding\EventType.cs Modding\Interfaces\IScript.cs Modding\Scripts\CSScript.cs Utility\ClientUtilities.cs Utility\Extensions\AbilityExtensions.cs Utility\Extensions\ChecksExtensions.cs Utility\Extensions\CopyingExtensions.cs Utility\Extensions\ComparisonExtensions.cs Utility\Extensions\ConversionExtensions.cs Utility\Extensions\EnumerableExtensions.cs Utility\Extensions\GameEnumerableExtensions.cs Utility\Extensions\MathExtensions.cs Utility\Extensions\StringHandlingExtensions.cs Utility\Extensions\UnitHandlingExtensions.cs Utility\HeatMap.cs Utility\IntVector2.cs Utility\JsonContractResolver.cs Utility\JsonSerializer.cs Utility\LegacySerializer.cs Utility\MathX.cs Utility\ResourceProgress.cs Utility\SimpleDataObject.cs Utility\DataReference.cs FrEeeConstants.cs Game\Enumerations\AbilityTargets.cs Game\Enumerations\AbilityValueRule.cs Game\Enumerations\AllianceLevel.cs Game\Enumerations\AllowedTrades.cs Game\Enumerations\EmpirePlacement.cs Game\Enumerations\Mood.cs Game\Enumerations\Relations.cs Game\Enumerations\ScoreDisplay.cs Game\Enumerations\SharingPriority.cs Game\Enumerations\StartingTechnologyLevel.cs Game\Enumerations\TechnologyCost.cs Game\Enumerations\WeaponTypes.cs Game\Enumerations\WeaponTargets.cs Game\Enumerations\StellarSize.cs Game\Enumerations\VehicleTypes.cs Game\Enumerations\Visibility.cs Game\Interfaces\ICargoTransferrer.cs Game\Interfaces\IAbilityObject.cs Game\Interfaces\ICargoContainer.cs Game\Interfaces\ICombatSpaceObject.cs Game\Interfaces\ICommand.cs Game\Interfaces\IConstructable.cs Game\Interfaces\IConstructionTemplate.cs Game\Interfaces\IConstructionOrder.cs Game\Interfaces\IContainable.cs Game\Interfaces\ICleanable.cs Game\Interfaces\ICreateDesignCommand.cs Game\Interfaces\IDamageable.cs Utility\IData.cs Utility\IDataObject.cs Game\Interfaces\IDesign.cs Game\Interfaces\IErrorProne.cs Game\Interfaces\IFoggable.cs Game\Interfaces\IHull.cs Game\Interfaces\IIncomeProducer.cs Game\Interfaces\ILocated.cs Game\Interfaces\IMessage.cs Game\Interfaces\IMineableSpaceObject.cs Game\Interfaces\IMobileSpaceObject.cs Game\Interfaces\IMovementOrder.cs Game\Interfaces\INameable.cs Game\Interfaces\IOrderCommand.cs Game\Interfaces\IOwnable.cs Game\Interfaces\IOwnableAbilityObject.cs Game\Interfaces\IPathfindingOrder.cs Game\Interfaces\IPictorial.cs Game\Interfaces\IPictorialLogMessage.cs Game\Interfaces\IPlanetOrder.cs Game\Interfaces\IPromotable.cs Game\Interfaces\IRecyclable.cs Game\Interfaces\IRecycleBehavior.cs Game\Interfaces\IReference.cs Game\Interfaces\IReferenceEnumerable.cs Game\Interfaces\IReferrable.cs Game\Interfaces\ICombatant.cs Game\Interfaces\ICommonAbilityObject.cs Game\Interfaces\IStellarObject.cs Game\Interfaces\ITargetable.cs Game\Interfaces\IUnit.cs Game\Interfaces\IUnlockable.cs Game\Interfaces\IUpgradeable.cs Game\Interfaces\IVehicle.cs Game\Interfaces\IVictoryCondition.cs Game\Objects\Civilization\SectorWaypoint.cs Game\Objects\Civilization\SpaceObjectWaypoint.cs Game\Objects\Civilization\Waypoint.cs Game\Objects\AI\AI.cs Game\Objects\Civilization\Aptitude.cs Game\Objects\Civilization\Cargo.cs Game\Objects\Civilization\CargoDelta.cs Game\Objects\Civilization\Culture.cs Game\Objects\Civilization\Diplomacy\AcceptProposalAction.cs Game\Objects\Civilization\Diplomacy\ActionMessage.cs Game\Objects\Civilization\Diplomacy\Action.cs Game\Objects\Civilization\Diplomacy\Clauses\AllianceClause.cs Game\Objects\Civilization\Diplomacy\Clauses\Clause.cs Game\Objects\Civilization\Diplomacy\Clauses\CooperativeResearchClause.cs Game\Objects\Civilization\Diplomacy\Clauses\ShareAbilityClause.cs Game\Objects\Civilization\Diplomacy\Clauses\ShareCombatLogsClause.cs Game\Objects\Civilization\Diplomacy\Clauses\ShareDesignsClause.cs Game\Objects\Civilization\Diplomacy\Clauses\ShareVisionClause.cs Game\Objects\Civilization\Diplomacy\Clauses\TributeClause.cs Game\Objects\Civilization\Diplomacy\RejectProposalAction.cs Game\Objects\Civilization\Diplomacy\DeclareWarAction.cs Game\Objects\Civilization\Diplomacy\GeneralMessage.cs Game\Objects\Civilization\Diplomacy\Message.cs Game\Objects\Civilization\Diplomacy\Proposal.cs Game\Objects\Civilization\Diplomacy\ProposalMessage.cs Game\Objects\Civilization\Diplomacy\BreakTreatyAction.cs Game\Objects\Civilization\Diplomacy\Package.cs Game\Objects\Civilization\EmpireStatus.cs Game\Objects\Civilization\HappinessModel.cs Game\Objects\Civilization\Race.cs Game\Objects\Civilization\Trait.cs Game\Objects\Combat\Hit.cs Game\Objects\Combat\Shot.cs Game\Objects\Commands\SetPrivateNameCommand.cs Game\Objects\Commands\SetPublicNameCommand.cs Game\Objects\Commands\DeleteWaypointCommand.cs Game\Objects\Commands\HotkeyWaypointCommand.cs Game\Objects\Commands\DeleteMessageCommand.cs Game\Objects\Commands\LeaveFleetCommand.cs Game\Objects\Commands\DisbandFleetCommand.cs Game\Objects\Commands\CreateFleetCommand.cs Game\Objects\Commands\JoinFleetCommand.cs Game\Objects\Commands\OrderCommand.cs Game\Objects\Commands\ResearchCommand.cs Game\Objects\Commands\SendMessageCommand.cs Game\Objects\Commands\SetObsoleteFlagCommand.cs Game\Objects\Commands\CreateWaypointCommand.cs Game\Objects\Commands\SetPlayerNoteCommand.cs Game\Objects\Commands\ClearPrivateNameCommand.cs Game\Objects\Commands\ClearPlayerNoteCommand.cs Game\Objects\LogMessages\GenericLogMessage.cs Game\Objects\LogMessages\LogMessage.cs Game\Objects\Commands\CreateDesignCommand.cs Game\Objects\LogMessages\PictorialLogMessage.cs Game\Objects\Orders\ActivateAbilityOrder.cs Game\Objects\Orders\ColonizeOrder.cs Game\Objects\Orders\PathfindingOrder.cs Game\Objects\Orders\RecycleBehaviors\ScrapBehavior.cs Game\Objects\Orders\RecycleFacilityOrCargoOrder.cs Game\Objects\Orders\RecycleVehicleInSpaceOrder.cs Game\Objects\Orders\UpgradeFacilityOrder.cs Game\Objects\Orders\SentryOrder.cs Game\Objects\Orders\EvadeOrder.cs Game\Objects\Orders\PursueOrder.cs Game\Objects\Orders\TransferCargoOrder.cs Game\Objects\Orders\WarpOrder.cs Game\Objects\Orders\MoveOrder.cs Game\Objects\Orders\WaypointOrder.cs Game\Objects\SimulatedObjectWrappers.cs Game\Objects\Space\Fleet.cs Game\Objects\Technology\FacilityUpgrade.cs Game\Objects\Technology\Hull.cs Game\Objects\Technology\Mount.cs Game\Objects\Technology\MountedComponentTemplate.cs Game\Objects\Vehicles\SpaceVehicle.cs Game\Objects\Vehicles\Base.cs Game\Objects\Vehicles\Design.cs Game\Interfaces\INamed.cs Game\Interfaces\IOrder.cs Game\Interfaces\IOrderable.cs Game\Interfaces\IResearchable.cs Game\Interfaces\ISpaceObject.cs Game\Interfaces\ITemplate.cs Game\Objects\Abilities\Ability.cs Game\Objects\Abilities\AbilityRule.cs Game\Objects\Civilization\Colony.cs Game\Objects\Civilization\ConstructionQueue.cs Game\Objects\Combat\BeamWeaponDisplayEffect.cs Game\Objects\Combat\ProjectileWeaponDisplayEffect.cs Game\Objects\Combat\SeekerWeaponDisplayEffect.cs Game\Objects\Combat\WeaponDisplayEffect.cs Game\Objects\Technology\Component.cs Game\Objects\Technology\Facility.cs Game\Objects\Vehicles\Drone.cs Game\Objects\Vehicles\Fighter.cs Game\Objects\Vehicles\Mine.cs Game\Objects\Vehicles\Satellite.cs Game\Objects\Vehicles\Ship.cs Game\Objects\Vehicles\Troop.cs Game\Objects\Vehicles\Vehicle.cs Game\Objects\Vehicles\WeaponPlatform.cs Game\Objects\VictoryConditions\PeaceVictoryCondition.cs Game\Objects\VictoryConditions\TechnologyVictoryCondition.cs Game\Objects\VictoryConditions\ScorePercentageVictoryCondition.cs Game\Objects\VictoryConditions\ScoreVictoryCondition.cs Game\Objects\VictoryConditions\SurvivalVictoryCondition.cs Game\Objects\VictoryConditions\MajorEmpireEliminationVictoryCondition.cs Game\Objects\VictoryConditions\TotalEliminationVictoryCondition.cs Game\Setup\EmpireTemplate.cs Game\Setup\WarpPointPlacementStrategies\CenterWarpPointPlacementStrategy.cs Game\Setup\WarpPointPlacementStrategies\PlanetWarpPointPlacementStrategy.cs Game\Setup\WarpPointPlacementStrategies\StarWarpPointPlacementStrategy.cs Game\Setup\WarpPointPlacementStrategies\RandomWarpPointPlacementStrategy.cs Game\Setup\WarpPointPlacementStrategies\RandomAlignedWarpPointPlacementStrategy.cs Game\Setup\WarpPointPlacementStrategies\EdgeAlignedWarpPointPlacementStrategy.cs Game\Setup\WarpPointPlacementStrategies\WarpPointPlacementStrategy.cs Modding\DamageType.cs Modding\Enumerations\RequirementType.cs Modding\FormulaContext.cs Modding\Enumerations\FormulaType.cs Modding\ModReference.cs Modding\Interfaces\IFormula.cs Modding\Interfaces\IFormulaHost.cs Modding\Interfaces\IModObject.cs Modding\Loaders\EmpireAILoader.cs Modding\Loaders\DamageTypeLoader.cs Modding\Loaders\RequirementLoader.cs Modding\Loaders\ScriptLoader.cs Modding\Loaders\PopulationModifierLoader.cs Modding\Loaders\CultureLoader.cs Modding\Loaders\DataFileLoader.cs Modding\Loaders\ModInfoLoader.cs Modding\Loaders\ModSettingsLoader.cs Modding\Loaders\TextLoader.cs Modding\Loaders\HappinessModelLoader.cs Modding\Loaders\HullLoader.cs Modding\Loaders\MountLoader.cs Modding\Loaders\TraitLoader.cs Modding\Loaders\StarSystemLoader.cs Modding\MetaRecord.cs Modding\MetaRecordParameter.cs Modding\ModInfo.cs Modding\ModSettings.cs Modding\PopulationModifier.cs Modding\Requirement.cs Modding\ResourceFormula.cs Modding\Scripts\PythonScript.cs Modding\Scripts\PythonScriptEngine.cs Modding\Scripts\ScriptRequirement.cs Modding\Templates\ComponentTemplate.cs Game\Objects\Civilization\Empire.cs Game\Objects\Technology\DirectFireWeaponInfo.cs Modding\Templates\FacilityTemplate.cs Game\Objects\Commands\AddOrderCommand.cs Game\Objects\Commands\Command.cs Game\Objects\Commands\RearrangeOrdersCommand.cs Game\Objects\Commands\RemoveOrderCommand.cs Game\Objects\Orders\ConstructionOrder.cs Game\Objects\Technology\SeekingWeaponInfo.cs Game\Objects\Technology\Technology.cs Game\Objects\Technology\TechnologyRequirement.cs Game\Objects\Space\AsteroidField.cs Game\Objects\Space\Galaxy.cs Game\Objects\Space\ObjectLocation.cs Game\Objects\Space\Planet.cs Game\Objects\Space\Sector.cs Game\Objects\Space\Star.cs Game\Objects\Space\StarSystem.cs Game\Objects\Space\StellarObject.cs Game\Objects\Space\Storm.cs Game\Objects\Space\WarpPoint.cs Game\Setup\GameSetup.cs Game\Objects\Technology\WarheadWeaponInfo.cs Game\Objects\Technology\WeaponInfo.cs Game\Interfaces\IStarSystemPlacementStrategy.cs Modding\Loaders\AbilityRuleLoader.cs Modding\Loaders\ComponentLoader.cs Modding\Loaders\FacilityLoader.cs Modding\Loaders\StellarObjectLoader.cs Modding\Loaders\GalaxyLoader.cs Modding\Loaders\StellarAbilityLoader.cs Modding\Loaders\StellarObjectSizeLoader.cs Modding\Loaders\TechnologyLoader.cs Modding\StellarObjectSize.cs Game\Setup\StarSystemPlacementStrategies\ClusteredStarSystemPlacementStrategy.cs Game\Setup\StarSystemPlacementStrategies\GridStarSystemPlacementStrategy.cs Game\Setup\StarSystemPlacementStrategies\SpiralStarSystemPlacementStrategy.cs Game\Setup\StarSystemPlacementStrategies\DiffuseStarSystemPlacementStrategy.cs Game\Setup\StarSystemPlacementStrategies\RandomStarSystemPlacementStrategy.cs Modding\Templates\GalaxyTemplate.cs Modding\Templates\RandomAbilityTemplate.cs Modding\StellarObjectLocations\CircleRadiusStellarObjectLocation.cs Modding\StellarObjectLocations\CoordStellarObjectLocation.cs Modding\Templates\AsteroidFieldTemplate.cs Modding\Templates\StormTemplate.cs Modding\DataFile.cs Modding\DataParsingException.cs Modding\Field.cs Modding\Loaders\AbilityLoader.cs Modding\Loaders\ILoader.cs Modding\Interfaces\IStellarObjectLocation.cs Modding\Templates\PlanetTemplate.cs Modding\Record.cs Modding\StellarObjectLocations\RingStellarObjectLocation.cs Modding\Mod.cs Modding\StellarObjectLocations\SameAsStellarObjectLocation.cs Modding\Templates\StarSystemTemplate.cs Modding\Templates\StarTemplate.cs Modding\EmpireTraitRequirement.cs Utility\ClientSideCache.cs Utility\DynamicDictionary.cs Game\Objects\Civilization\Diplomacy\Clauses\FreeTradeClause.cs Utility\HashCodeMasher.cs Utility\DataScalar.cs Utility\NameAttribute.cs Utility\PRNG.cs Utility\Extensions\Parser.cs Properties\AssemblyInfo.cs Utility\ClientSafeAttribute.cs Utility\ConnectivityGraph.cs Utility\Extensions\CommonExtensions.cs Utility\Extensions\TaskFactoryExtensions.cs Utility\Library.cs Utility\ObjectGraphParser.cs Utility\Pathfinder.cs Utility\Pictures.cs Utility\Progress.cs Utility\ProgressDisplayMode.cs Utility\RandomHelper.cs Utility\GalaxyReference.cs Utility\MiningModel.cs Utility\ReferenceKeyedDictionary.cs Utility\ReferenceList.cs Utility\ReferenceSet.cs Utility\Resource.cs Utility\ResourceQuantity.cs Utility\SafeDictionary.cs Utility\SafeType.cs Utility\SequenceEqualityComparer.cs Utility\Serializer.cs Utility\Status.cs Utility\Stringifiers\ResourceQuantityStringifier.cs Utility\Stringifiers\DoubleLiteralFormulaStringifier.cs Utility\Stringifiers\IStringifier.cs Utility\Stringifiers\IntLiteralFormulaStringifier.cs Utility\Stringifiers\PopulationModifierStringifier.cs Utility\Stringifiers\StringLiteralFormulaStringifier.cs Utility\Stringifiers\SizeStringifier.cs Utility\Stringifiers\PointStringifier.cs Utility\Stringifiers\Stringifier.cs Utility\Stringifiers\StringifierLibrary.cs Utility\Vector2.cs Properties\Resources.Designer.cs Properties\Settings.Designer.cs "obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs" (TaskId:55)
+                     C:\Program Files\dotnet\dotnet.exe exec "C:\Program Files\dotnet\sdk\5.0.100-preview.2.20176.6\Roslyn\bincore\csc.dll" /noconfig /nowarn:1591,1572,1573,1711,1712,1701,1702 /nostdlib+ /platform:AnyCPU /errorreport:prompt /warn:4 /doc:bin\Debug\FrEee.Core.xml /define:DEBUG;TRACE /highentropyva+ /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\Microsoft.CSharp.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.ComponentModel.Composition.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Core.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Data.DataSetExtensions.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Data.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Drawing.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Numerics.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Windows.Forms.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Xml.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Xml.Linq.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\WindowsBase.dll" /debug+ /debug:full /filealign:512 /optimize- /out:obj\Debug\FrEee.Core.dll /subsystemversion:6.00 /resource:obj\Debug\FrEee.Properties.Resources.resources /target:library /utf8output /langversion:7.3 Game\Enumerations\Conditions.cs Game\Interfaces\IConstructor.cs Game\Objects\AI\CSAI.cs Game\Objects\AI\PythonAI.cs Game\Objects\Civilization\PlayerInfo.cs Game\Objects\Combat\Grid\BattleEvent.cs Game\Objects\Combat\Grid\CombatantAppearsEvent.cs Game\Objects\Combat\Grid\CombatantDisappearsEvent.cs Game\Objects\Combat\Grid\CombatantLaunchedEvent.cs Game\Objects\Combat\Grid\CombatantsCollideEvent.cs Game\Objects\Combat\Grid\GroundBattle.cs Game\Objects\Combat\Grid\SpaceBattle.cs Game\Objects\Commands\MinisterToggleCommand.cs Game\Objects\Commands\SetPlayerInfoCommand.cs Game\Objects\Commands\ToggleOrdersOnHoldCommand.cs Game\Objects\Commands\ToggleRepeatOrdersCommand.cs Game\Objects\Events\Event.cs Game\Enumerations\EventMessageTarget.cs Game\Enumerations\EventSeverity.cs Game\Objects\Combat\Grid\Extensions.cs Game\Objects\Combat\Grid\Battle.cs Game\Objects\Combat\Grid\CombatantDestroyedEvent.cs Game\Objects\Combat\Grid\IBattleEvent.cs Game\Objects\Combat\Grid\CombatantMovesEvent.cs Game\Objects\Combat\Grid\WeaponFiresEvent.cs Game\Objects\Combat\IBattle.cs Game\Objects\Combat\Seeker.cs Game\Objects\Events\EventMessage.cs Game\Objects\Technology\ComponentReference.cs Game\Objects\Vehicles\MajorSpaceVehicle.cs Modding\ComputedFormula.cs Modding\EventTemplate.cs Modding\Loaders\EventLoader.cs Modding\ObjectFormula.cs Modding\Formula.cs Modding\LiteralFormula.cs Modding\Loaders\DesignRoleLoader.cs Modding\Loaders\EventTypeLoader.cs Modding\EventType.cs Modding\Interfaces\IScript.cs Modding\Scripts\CSScript.cs Utility\ClientUtilities.cs Utility\Extensions\AbilityExtensions.cs Utility\Extensions\ChecksExtensions.cs Utility\Extensions\CopyingExtensions.cs Utility\Extensions\ComparisonExtensions.cs Utility\Extensions\ConversionExtensions.cs Utility\Extensions\EnumerableExtensions.cs Utility\Extensions\GameEnumerableExtensions.cs Utility\Extensions\MathExtensions.cs Utility\Extensions\StringHandlingExtensions.cs Utility\Extensions\UnitHandlingExtensions.cs Utility\HeatMap.cs Utility\IntVector2.cs Utility\JsonContractResolver.cs Utility\JsonSerializer.cs Utility\LegacySerializer.cs Utility\MathX.cs Utility\ResourceProgress.cs Utility\SimpleDataObject.cs Utility\DataReference.cs FrEeeConstants.cs Game\Enumerations\AbilityTargets.cs Game\Enumerations\AbilityValueRule.cs Game\Enumerations\AllianceLevel.cs Game\Enumerations\AllowedTrades.cs Game\Enumerations\EmpirePlacement.cs Game\Enumerations\Mood.cs Game\Enumerations\Relations.cs Game\Enumerations\ScoreDisplay.cs Game\Enumerations\SharingPriority.cs Game\Enumerations\StartingTechnologyLevel.cs Game\Enumerations\TechnologyCost.cs Game\Enumerations\WeaponTypes.cs Game\Enumerations\WeaponTargets.cs Game\Enumerations\StellarSize.cs Game\Enumerations\VehicleTypes.cs Game\Enumerations\Visibility.cs Game\Interfaces\ICargoTransferrer.cs Game\Interfaces\IAbilityObject.cs Game\Interfaces\ICargoContainer.cs Game\Interfaces\ICombatSpaceObject.cs Game\Interfaces\ICommand.cs Game\Interfaces\IConstructable.cs Game\Interfaces\IConstructionTemplate.cs Game\Interfaces\IConstructionOrder.cs Game\Interfaces\IContainable.cs Game\Interfaces\ICleanable.cs Game\Interfaces\ICreateDesignCommand.cs Game\Interfaces\IDamageable.cs Utility\IData.cs Utility\IDataObject.cs Game\Interfaces\IDesign.cs Game\Interfaces\IErrorProne.cs Game\Interfaces\IFoggable.cs Game\Interfaces\IHull.cs Game\Interfaces\IIncomeProducer.cs Game\Interfaces\ILocated.cs Game\Interfaces\IMessage.cs Game\Interfaces\IMineableSpaceObject.cs Game\Interfaces\IMobileSpaceObject.cs Game\Interfaces\IMovementOrder.cs Game\Interfaces\INameable.cs Game\Interfaces\IOrderCommand.cs Game\Interfaces\IOwnable.cs Game\Interfaces\IOwnableAbilityObject.cs Game\Interfaces\IPathfindingOrder.cs Game\Interfaces\IPictorial.cs Game\Interfaces\IPictorialLogMessage.cs Game\Interfaces\IPlanetOrder.cs Game\Interfaces\IPromotable.cs Game\Interfaces\IRecyclable.cs Game\Interfaces\IRecycleBehavior.cs Game\Interfaces\IReference.cs Game\Interfaces\IReferenceEnumerable.cs Game\Interfaces\IReferrable.cs Game\Interfaces\ICombatant.cs Game\Interfaces\ICommonAbilityObject.cs Game\Interfaces\IStellarObject.cs Game\Interfaces\ITargetable.cs Game\Interfaces\IUnit.cs Game\Interfaces\IUnlockable.cs Game\Interfaces\IUpgradeable.cs Game\Interfaces\IVehicle.cs Game\Interfaces\IVictoryCondition.cs Game\Objects\Civilization\SectorWaypoint.cs Game\Objects\Civilization\SpaceObjectWaypoint.cs Game\Objects\Civilization\Waypoint.cs Game\Objects\AI\AI.cs Game\Objects\Civilization\Aptitude.cs Game\Objects\Civilization\Cargo.cs Game\Objects\Civilization\CargoDelta.cs Game\Objects\Civilization\Culture.cs Game\Objects\Civilization\Diplomacy\AcceptProposalAction.cs Game\Objects\Civilization\Diplomacy\ActionMessage.cs Game\Objects\Civilization\Diplomacy\Action.cs Game\Objects\Civilization\Diplomacy\Clauses\AllianceClause.cs Game\Objects\Civilization\Diplomacy\Clauses\Clause.cs Game\Objects\Civilization\Diplomacy\Clauses\CooperativeResearchClause.cs Game\Objects\Civilization\Diplomacy\Clauses\ShareAbilityClause.cs Game\Objects\Civilization\Diplomacy\Clauses\ShareCombatLogsClause.cs Game\Objects\Civilization\Diplomacy\Clauses\ShareDesignsClause.cs Game\Objects\Civilization\Diplomacy\Clauses\ShareVisionClause.cs Game\Objects\Civilization\Diplomacy\Clauses\TributeClause.cs Game\Objects\Civilization\Diplomacy\RejectProposalAction.cs Game\Objects\Civilization\Diplomacy\DeclareWarAction.cs Game\Objects\Civilization\Diplomacy\GeneralMessage.cs Game\Objects\Civilization\Diplomacy\Message.cs Game\Objects\Civilization\Diplomacy\Proposal.cs Game\Objects\Civilization\Diplomacy\ProposalMessage.cs Game\Objects\Civilization\Diplomacy\BreakTreatyAction.cs Game\Objects\Civilization\Diplomacy\Package.cs Game\Objects\Civilization\EmpireStatus.cs Game\Objects\Civilization\HappinessModel.cs Game\Objects\Civilization\Race.cs Game\Objects\Civilization\Trait.cs Game\Objects\Combat\Hit.cs Game\Objects\Combat\Shot.cs Game\Objects\Commands\SetPrivateNameCommand.cs Game\Objects\Commands\SetPublicNameCommand.cs Game\Objects\Commands\DeleteWaypointCommand.cs Game\Objects\Commands\HotkeyWaypointCommand.cs Game\Objects\Commands\DeleteMessageCommand.cs Game\Objects\Commands\LeaveFleetCommand.cs Game\Objects\Commands\DisbandFleetCommand.cs Game\Objects\Commands\CreateFleetCommand.cs Game\Objects\Commands\JoinFleetCommand.cs Game\Objects\Commands\OrderCommand.cs Game\Objects\Commands\ResearchCommand.cs Game\Objects\Commands\SendMessageCommand.cs Game\Objects\Commands\SetObsoleteFlagCommand.cs Game\Objects\Commands\CreateWaypointCommand.cs Game\Objects\Commands\SetPlayerNoteCommand.cs Game\Objects\Commands\ClearPrivateNameCommand.cs Game\Objects\Commands\ClearPlayerNoteCommand.cs Game\Objects\LogMessages\GenericLogMessage.cs Game\Objects\LogMessages\LogMessage.cs Game\Objects\Commands\CreateDesignCommand.cs Game\Objects\LogMessages\PictorialLogMessage.cs Game\Objects\Orders\ActivateAbilityOrder.cs Game\Objects\Orders\ColonizeOrder.cs Game\Objects\Orders\PathfindingOrder.cs Game\Objects\Orders\RecycleBehaviors\ScrapBehavior.cs Game\Objects\Orders\RecycleFacilityOrCargoOrder.cs Game\Objects\Orders\RecycleVehicleInSpaceOrder.cs Game\Objects\Orders\UpgradeFacilityOrder.cs Game\Objects\Orders\SentryOrder.cs Game\Objects\Orders\EvadeOrder.cs Game\Objects\Orders\PursueOrder.cs Game\Objects\Orders\TransferCargoOrder.cs Game\Objects\Orders\WarpOrder.cs Game\Objects\Orders\MoveOrder.cs Game\Objects\Orders\WaypointOrder.cs Game\Objects\SimulatedObjectWrappers.cs Game\Objects\Space\Fleet.cs Game\Objects\Technology\FacilityUpgrade.cs Game\Objects\Technology\Hull.cs Game\Objects\Technology\Mount.cs Game\Objects\Technology\MountedComponentTemplate.cs Game\Objects\Vehicles\SpaceVehicle.cs Game\Objects\Vehicles\Base.cs Game\Objects\Vehicles\Design.cs Game\Interfaces\INamed.cs Game\Interfaces\IOrder.cs Game\Interfaces\IOrderable.cs Game\Interfaces\IResearchable.cs Game\Interfaces\ISpaceObject.cs Game\Interfaces\ITemplate.cs Game\Objects\Abilities\Ability.cs Game\Objects\Abilities\AbilityRule.cs Game\Objects\Civilization\Colony.cs Game\Objects\Civilization\ConstructionQueue.cs Game\Objects\Combat\BeamWeaponDisplayEffect.cs Game\Objects\Combat\ProjectileWeaponDisplayEffect.cs Game\Objects\Combat\SeekerWeaponDisplayEffect.cs Game\Objects\Combat\WeaponDisplayEffect.cs Game\Objects\Technology\Component.cs Game\Objects\Technology\Facility.cs Game\Objects\Vehicles\Drone.cs Game\Objects\Vehicles\Fighter.cs Game\Objects\Vehicles\Mine.cs Game\Objects\Vehicles\Satellite.cs Game\Objects\Vehicles\Ship.cs Game\Objects\Vehicles\Troop.cs Game\Objects\Vehicles\Vehicle.cs Game\Objects\Vehicles\WeaponPlatform.cs Game\Objects\VictoryConditions\PeaceVictoryCondition.cs Game\Objects\VictoryConditions\TechnologyVictoryCondition.cs Game\Objects\VictoryConditions\ScorePercentageVictoryCondition.cs Game\Objects\VictoryConditions\ScoreVictoryCondition.cs Game\Objects\VictoryConditions\SurvivalVictoryCondition.cs Game\Objects\VictoryConditions\MajorEmpireEliminationVictoryCondition.cs Game\Objects\VictoryConditions\TotalEliminationVictoryCondition.cs Game\Setup\EmpireTemplate.cs Game\Setup\WarpPointPlacementStrategies\CenterWarpPointPlacementStrategy.cs Game\Setup\WarpPointPlacementStrategies\PlanetWarpPointPlacementStrategy.cs Game\Setup\WarpPointPlacementStrategies\StarWarpPointPlacementStrategy.cs Game\Setup\WarpPointPlacementStrategies\RandomWarpPointPlacementStrategy.cs Game\Setup\WarpPointPlacementStrategies\RandomAlignedWarpPointPlacementStrategy.cs Game\Setup\WarpPointPlacementStrategies\EdgeAlignedWarpPointPlacementStrategy.cs Game\Setup\WarpPointPlacementStrategies\WarpPointPlacementStrategy.cs Modding\DamageType.cs Modding\Enumerations\RequirementType.cs Modding\FormulaContext.cs Modding\Enumerations\FormulaType.cs Modding\ModReference.cs Modding\Interfaces\IFormula.cs Modding\Interfaces\IFormulaHost.cs Modding\Interfaces\IModObject.cs Modding\Loaders\EmpireAILoader.cs Modding\Loaders\DamageTypeLoader.cs Modding\Loaders\RequirementLoader.cs Modding\Loaders\ScriptLoader.cs Modding\Loaders\PopulationModifierLoader.cs Modding\Loaders\CultureLoader.cs Modding\Loaders\DataFileLoader.cs Modding\Loaders\ModInfoLoader.cs Modding\Loaders\ModSettingsLoader.cs Modding\Loaders\TextLoader.cs Modding\Loaders\HappinessModelLoader.cs Modding\Loaders\HullLoader.cs Modding\Loaders\MountLoader.cs Modding\Loaders\TraitLoader.cs Modding\Loaders\StarSystemLoader.cs Modding\MetaRecord.cs Modding\MetaRecordParameter.cs Modding\ModInfo.cs Modding\ModSettings.cs Modding\PopulationModifier.cs Modding\Requirement.cs Modding\ResourceFormula.cs Modding\Scripts\PythonScript.cs Modding\Scripts\PythonScriptEngine.cs Modding\Scripts\ScriptRequirement.cs Modding\Templates\ComponentTemplate.cs Game\Objects\Civilization\Empire.cs Game\Objects\Technology\DirectFireWeaponInfo.cs Modding\Templates\FacilityTemplate.cs Game\Objects\Commands\AddOrderCommand.cs Game\Objects\Commands\Command.cs Game\Objects\Commands\RearrangeOrdersCommand.cs Game\Objects\Commands\RemoveOrderCommand.cs Game\Objects\Orders\ConstructionOrder.cs Game\Objects\Technology\SeekingWeaponInfo.cs Game\Objects\Technology\Technology.cs Game\Objects\Technology\TechnologyRequirement.cs Game\Objects\Space\AsteroidField.cs Game\Objects\Space\Galaxy.cs Game\Objects\Space\ObjectLocation.cs Game\Objects\Space\Planet.cs Game\Objects\Space\Sector.cs Game\Objects\Space\Star.cs Game\Objects\Space\StarSystem.cs Game\Objects\Space\StellarObject.cs Game\Objects\Space\Storm.cs Game\Objects\Space\WarpPoint.cs Game\Setup\GameSetup.cs Game\Objects\Technology\WarheadWeaponInfo.cs Game\Objects\Technology\WeaponInfo.cs Game\Interfaces\IStarSystemPlacementStrategy.cs Modding\Loaders\AbilityRuleLoader.cs Modding\Loaders\ComponentLoader.cs Modding\Loaders\FacilityLoader.cs Modding\Loaders\StellarObjectLoader.cs Modding\Loaders\GalaxyLoader.cs Modding\Loaders\StellarAbilityLoader.cs Modding\Loaders\StellarObjectSizeLoader.cs Modding\Loaders\TechnologyLoader.cs Modding\StellarObjectSize.cs Game\Setup\StarSystemPlacementStrategies\ClusteredStarSystemPlacementStrategy.cs Game\Setup\StarSystemPlacementStrategies\GridStarSystemPlacementStrategy.cs Game\Setup\StarSystemPlacementStrategies\SpiralStarSystemPlacementStrategy.cs Game\Setup\StarSystemPlacementStrategies\DiffuseStarSystemPlacementStrategy.cs Game\Setup\StarSystemPlacementStrategies\RandomStarSystemPlacementStrategy.cs Modding\Templates\GalaxyTemplate.cs Modding\Templates\RandomAbilityTemplate.cs Modding\StellarObjectLocations\CircleRadiusStellarObjectLocation.cs Modding\StellarObjectLocations\CoordStellarObjectLocation.cs Modding\Templates\AsteroidFieldTemplate.cs Modding\Templates\StormTemplate.cs Modding\DataFile.cs Modding\DataParsingException.cs Modding\Field.cs Modding\Loaders\AbilityLoader.cs Modding\Loaders\ILoader.cs Modding\Interfaces\IStellarObjectLocation.cs Modding\Templates\PlanetTemplate.cs Modding\Record.cs Modding\StellarObjectLocations\RingStellarObjectLocation.cs Modding\Mod.cs Modding\StellarObjectLocations\SameAsStellarObjectLocation.cs Modding\Templates\StarSystemTemplate.cs Modding\Templates\StarTemplate.cs Modding\EmpireTraitRequirement.cs Utility\ClientSideCache.cs Utility\DynamicDictionary.cs Game\Objects\Civilization\Diplomacy\Clauses\FreeTradeClause.cs Utility\HashCodeMasher.cs Utility\DataScalar.cs Utility\NameAttribute.cs Utility\PRNG.cs Utility\Extensions\Parser.cs Properties\AssemblyInfo.cs Utility\ClientSafeAttribute.cs Utility\ConnectivityGraph.cs Utility\Extensions\CommonExtensions.cs Utility\Extensions\TaskFactoryExtensions.cs Utility\Library.cs Utility\ObjectGraphParser.cs Utility\Pathfinder.cs Utility\Pictures.cs Utility\Progress.cs Utility\ProgressDisplayMode.cs Utility\RandomHelper.cs Utility\GalaxyReference.cs Utility\MiningModel.cs Utility\ReferenceKeyedDictionary.cs Utility\ReferenceList.cs Utility\ReferenceSet.cs Utility\Resource.cs Utility\ResourceQuantity.cs Utility\SafeDictionary.cs Utility\SafeType.cs Utility\SequenceEqualityComparer.cs Utility\Serializer.cs Utility\Status.cs Utility\Stringifiers\ResourceQuantityStringifier.cs Utility\Stringifiers\DoubleLiteralFormulaStringifier.cs Utility\Stringifiers\IStringifier.cs Utility\Stringifiers\IntLiteralFormulaStringifier.cs Utility\Stringifiers\PopulationModifierStringifier.cs Utility\Stringifiers\StringLiteralFormulaStringifier.cs Utility\Stringifiers\SizeStringifier.cs Utility\Stringifiers\PointStringifier.cs Utility\Stringifiers\Stringifier.cs Utility\Stringifiers\StringifierLibrary.cs Utility\Vector2.cs Properties\Resources.Designer.cs Properties\Settings.Designer.cs "obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs" (TaskId:55)
                      Using shared compilation with compiler from directory: C:\Program Files\dotnet\sdk\5.0.100-preview.2.20176.6\Roslyn\bincore (TaskId:55)
                      Microsoft (R) Visual C# Compiler version 3.6.0-2.20153.4 (6f2112b5) (TaskId:55)
                      Copyright (C) Microsoft Corporation. All rights reserved. (TaskId:55)
@@ -20716,14 +20716,14 @@ windir = C:\WINDOWS
                                      ReferenceSourceTarget=ResolveAssemblyReference
                                      ResolvedFrom={TargetFrameworkDirectory}
                                      Version=4.0.0.0
-                             C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                             C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                      CopyLocal=false
                                      FrameworkFile=true
-                                     FusionName=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+                                     FusionName=System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
                                      ImageRuntime=v4.0.30319
-                                     OriginalItemSpec=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                                     OriginalItemSpec=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                      ReferenceSourceTarget=ResolveAssemblyReference
-                                     ResolvedFrom=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                                     ResolvedFrom=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                      Version=4.0.0.0
                              C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.ComponentModel.Composition.dll
                                      CopyLocal=false
@@ -20848,14 +20848,14 @@ windir = C:\WINDOWS
                                      ReferenceSourceTarget=ResolveAssemblyReference
                                      ResolvedFrom={TargetFrameworkDirectory}
                                      Version=4.0.0.0
-                             C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                             C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                      CopyLocal=false
                                      FrameworkFile=true
-                                     FusionName=mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+                                     FusionName=System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
                                      ImageRuntime=v4.0.30319
-                                     OriginalItemSpec=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                                     OriginalItemSpec=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                      ReferenceSourceTarget=ResolveAssemblyReference
-                                     ResolvedFrom=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                                     ResolvedFrom=C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                                      Version=4.0.0.0
                              C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.ComponentModel.Composition.dll
                                      CopyLocal=false
@@ -22611,7 +22611,7 @@ windir = C:\WINDOWS
                        obj\Debug\FrEee.Core.dll
                            TargetPath = FrEee.Core.dll
                    _ExplicitReference
-                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                    _InboxNETStandardFolders
                        C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\
                        C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\Facades\
@@ -22696,13 +22696,13 @@ windir = C:\WINDOWS
                            OriginalItemSpec = Microsoft.CSharp
                            Version = 4.0.0.0
                            ReferenceSourceTarget = ResolveAssemblyReference
-                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
-                           ResolvedFrom = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
+                           ResolvedFrom = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                            CopyLocal = false
-                           FusionName = mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+                           FusionName = System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
                            FrameworkFile = true
                            ImageRuntime = v4.0.30319
-                           OriginalItemSpec = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                           OriginalItemSpec = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                            Version = 4.0.0.0
                            ReferenceSourceTarget = ResolveAssemblyReference
                        C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.ComponentModel.Composition.dll
@@ -22827,13 +22827,13 @@ windir = C:\WINDOWS
                            OriginalItemSpec = Microsoft.CSharp
                            Version = 4.0.0.0
                            ReferenceSourceTarget = ResolveAssemblyReference
-                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
-                           ResolvedFrom = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
+                           ResolvedFrom = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                            CopyLocal = false
-                           FusionName = mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+                           FusionName = System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
                            FrameworkFile = true
                            ImageRuntime = v4.0.30319
-                           OriginalItemSpec = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                           OriginalItemSpec = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                            Version = 4.0.0.0
                            ReferenceSourceTarget = ResolveAssemblyReference
                        C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.ComponentModel.Composition.dll
@@ -23407,16 +23407,16 @@ windir = C:\WINDOWS
                            Version = 4.0.0.0
                            ReferenceSourceTarget = ResolveAssemblyReference
                            ReferenceAssembly = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\Microsoft.CSharp.dll
-                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
-                           ResolvedFrom = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
+                           ResolvedFrom = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                            CopyLocal = false
-                           FusionName = mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+                           FusionName = System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
                            FrameworkFile = true
                            ImageRuntime = v4.0.30319
-                           OriginalItemSpec = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                           OriginalItemSpec = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                            Version = 4.0.0.0
                            ReferenceSourceTarget = ResolveAssemblyReference
-                           ReferenceAssembly = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                           ReferenceAssembly = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                        C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.ComponentModel.Composition.dll
                            ResolvedFrom = {TargetFrameworkDirectory}
                            CopyLocal = false
@@ -24264,16 +24264,16 @@ windir = C:\WINDOWS
                            Version = 4.0.0.0
                            ReferenceSourceTarget = ResolveAssemblyReference
                            ReferenceAssembly = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\Microsoft.CSharp.dll
-                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
-                           ResolvedFrom = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
+                           ResolvedFrom = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                            CopyLocal = false
-                           FusionName = mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+                           FusionName = System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
                            FrameworkFile = true
                            ImageRuntime = v4.0.30319
-                           OriginalItemSpec = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                           OriginalItemSpec = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                            Version = 4.0.0.0
                            ReferenceSourceTarget = ResolveAssemblyReference
-                           ReferenceAssembly = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                           ReferenceAssembly = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                        C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.ComponentModel.Composition.dll
                            ResolvedFrom = {TargetFrameworkDirectory}
                            CopyLocal = false
@@ -24408,16 +24408,16 @@ windir = C:\WINDOWS
                            Version = 4.0.0.0
                            ReferenceSourceTarget = ResolveAssemblyReference
                            ReferenceAssembly = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\Microsoft.CSharp.dll
-                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
-                           ResolvedFrom = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                       C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
+                           ResolvedFrom = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                            CopyLocal = false
-                           FusionName = mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+                           FusionName = System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
                            FrameworkFile = true
                            ImageRuntime = v4.0.30319
-                           OriginalItemSpec = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                           OriginalItemSpec = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                            Version = 4.0.0.0
                            ReferenceSourceTarget = ResolveAssemblyReference
-                           ReferenceAssembly = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll
+                           ReferenceAssembly = C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Private.CoreLib.dll
                        C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.ComponentModel.Composition.dll
                            ResolvedFrom = {TargetFrameworkDirectory}
                            CopyLocal = false

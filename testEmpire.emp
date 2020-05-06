@@ -23,7 +23,7 @@ p12:
 	PrimaryRace:
 		:p7:
 			Aptitudes:
-				FrEee.Utility.SafeDictionary`2[[System.String, mscorlib],[System.Int32, mscorlib]], FrEee.Core:
+				FrEee.Utility.SafeDictionary`2[[System.String, System.Private.CoreLib],[System.Int32, System.Private.CoreLib]], FrEee.Core:
 				d15:				
 					:"Physical Strength";
 					:100;
@@ -70,7 +70,7 @@ p12:
 			PopulationIconName:
 				:"Fractalian";
 			TraitNames:
-				System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib:
+				System.Collections.Generic.List`1[[System.String, System.Private.CoreLib]], System.Private.CoreLib:
 				c0:				
 				;
 		;

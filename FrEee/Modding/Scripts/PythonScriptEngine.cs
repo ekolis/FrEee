@@ -24,7 +24,7 @@ namespace FrEee.Modding
 		{
 			engine = Python.CreateEngine();
 			engine.Runtime.LoadAssembly(typeof(string).Assembly); // load System.dll
-			engine.Runtime.LoadAssembly(typeof(Uri).Assembly); // load mscorlib.dll
+			engine.Runtime.LoadAssembly(typeof(Uri).Assembly); // load System.Private.CoreLib.dll
 			engine.Runtime.LoadAssembly(Assembly.GetAssembly(typeof(Enumerable))); // load System.Core.dll
 			engine.Runtime.LoadAssembly(Assembly.GetAssembly(typeof(CommonExtensions))); // load FrEee.Core.dll
 			scope = engine.CreateScope();
