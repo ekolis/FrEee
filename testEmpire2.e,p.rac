@@ -1,0 +1,54 @@
+FrEee.Game.Objects.Civilization.Race, FrEee.Core:
+p7:
+	Aptitudes:
+		FrEee.Utility.SafeDictionary`2[[System.String, System.Private.CoreLib],[System.Int32, System.Private.CoreLib]], FrEee.Core:
+		d15:		
+			:"Physical Strength";
+			:100;
+			:"Intelligence";
+			:100;
+			:"Cunning";
+			:100;
+			:"Environmental Resistance";
+			:100;
+			:"Reproduction";
+			:100;
+			:"Happiness";
+			:100;
+			:"Aggressiveness";
+			:100;
+			:"Defensiveness";
+			:100;
+			:"Political Savvy";
+			:100;
+			:"Mining Aptitude";
+			:100;
+			:"Farming Aptitude";
+			:100;
+			:"Refining Aptitude";
+			:100;
+			:"Construction Aptitude";
+			:100;
+			:"Repair Aptitude";
+			:100;
+			:"Maintenance Aptitude";
+			:100;
+		;
+	happinessModel:
+		:p1:
+			ID:
+				:"HappinessModel Peaceful";
+		;
+	Name:
+		:"qweqwe";
+	NativeAtmosphere:
+		:"Oxygen";
+	NativeSurface:
+		:"Ice";
+	PopulationIconName:
+		:"Fractalian";
+	TraitNames:
+		System.Collections.Generic.List`1[[System.String, System.Private.CoreLib]], System.Private.CoreLib:
+		c0:		
+		;
+;

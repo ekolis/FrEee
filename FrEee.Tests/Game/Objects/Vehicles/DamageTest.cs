@@ -6,7 +6,7 @@ using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,7 +15,6 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 	/// <summary>
 	/// Tests damage to vehicles.
 	/// </summary>
-	[TestClass]
 	public class DamageTest
 	{
 		/// <summary>
@@ -38,8 +37,8 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		/// </summary>
 		private static Ship ship;
 
-		[ClassInitialize]
-		public static void ClassInit(TestContext ctx)
+		[OneTimeSetUp]
+		public static void ClassInit()
 		{
 			// initialize galaxy
 			Mod.Load(null);
@@ -82,7 +81,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		/// Ship speed should degrade as engines take damage.
 		/// Also, ships should go the proper speed when undamaged.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void EngineDamage()
 		{
 			// sanity check
@@ -97,11 +96,6 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 
 				Assert.AreEqual(GetExpectedSpeed(ship), ship.StrategicSpeed);
 			}
-		}
-
-		[TestInitialize]
-		public void Init()
-		{
 		}
 
 		private int GetExpectedSpeed(Ship ship)

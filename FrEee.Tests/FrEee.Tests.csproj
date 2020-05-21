@@ -1,208 +1,24 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{16D44CA4-5037-4537-93BF-C18F21F1A335}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FrEee.Tests</RootNamespace>
-    <AssemblyName>FrEee.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
-    <IsCodedUITest>False</IsCodedUITest>
-    <TestProjectType>UnitTest</TestProjectType>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>7.3</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>7.3</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>7.3</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-    <LangVersion>7.3</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <LangVersion>7.3</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <LangVersion>7.3</LangVersion>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System" />
-    <Reference Include="System.Drawing" />
+    <None Include="Mods\**" CopyToOutputDirectory="Always" LinkBase="Mods\" />
+    <None Include="Savegame\**" CopyToOutputDirectory="Always" LinkBase="Savegame\" />
+    <None Include="..\FrEee\Data\**"  CopyToOutputDirectory="Always" LinkBase="Data\" />
+    <None Include="..\FrEee\Mods\**" CopyToOutputDirectory="Always" LinkBase="Mods\" />
   </ItemGroup>
-  <Choose>
-    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-      </ItemGroup>
-    </When>
-    <Otherwise />
-  </Choose>
+
   <ItemGroup>
-    <Compile Include="Game\Objects\Abilities\AbilityTest.cs" />
-    <Compile Include="Game\Objects\Combat\DamageTypesTest.cs" />
-    <Compile Include="Game\Objects\Orders\ConstructionTest.cs" />
-    <Compile Include="Game\Objects\Space\MemoryTest.cs" />
-    <Compile Include="Game\Objects\Technology\TechnologyTest.cs" />
-    <Compile Include="Game\Objects\Technology\WeaponInfoTest.cs" />
-    <Compile Include="Game\Objects\Vehicles\ResupplyTest.cs" />
-    <Compile Include="Game\Objects\Vehicles\CloakingTest.cs" />
-    <Compile Include="Game\Objects\Vehicles\DamageTest.cs" />
-    <Compile Include="Game\Setup\GameSetupTest.cs" />
-    <Compile Include="Modding\Loaders\ComponentLoaderTest.cs" />
-    <Compile Include="Modding\Templates\GalaxyTemplateTest.cs" />
-    <Compile Include="TestUtilities.cs" />
-    <Compile Include="Modding\FormulaTest.cs" />
-    <Compile Include="Modding\Loaders\LoaderTest.cs" />
-    <Compile Include="Modding\ScriptEngineTest.cs" />
-    <Compile Include="Modding\StockMod.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility\AssemblyInitializer.cs" />
-    <Compile Include="Utility\Extensions\EnumerableExtensionsTest.cs" />
-    <Compile Include="Utility\MathXTest.cs" />
-    <Compile Include="Utility\DataTest.cs" />
-    <Compile Include="Utility\Extensions\CommonExtensionsTest.cs" />
-    <Compile Include="Utility\Extensions\ParserTest.cs" />
-    <Compile Include="Utility\PrngTest.cs" />
-    <Compile Include="Utility\SerializerTest.cs" />
-    <Compile Include="Utility\VectorTest.cs" />
+    <ProjectReference Include="..\FrEee\FrEee.csproj" />
+
+    <PackageReference Include="nunit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Game\Objects\AI\" />
-    <Folder Include="Game\Objects\Civilization\" />
-    <Folder Include="Game\Objects\Combat\Grid\" />
-    <Folder Include="Game\Objects\Combat\Simple\" />
-    <Folder Include="Game\Objects\Commands\" />
-    <Folder Include="Game\Objects\LogMessages\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\FrEee\FrEee.csproj">
-      <Project>{e19a4330-ce19-45d6-bcfc-375e065ef041}</Project>
-      <Name>FrEee</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Mods\DynamicFormulaWithParameters\Data\Components.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Mods\Include Mod\Data\Components.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Mods\Include Mod\Data\LandVehicleSizes\VehicleSizeTroops.txt" />
-    <Content Include="Mods\Include Mod\Data\LandVehicleSizes\VehicleSizeWeaponPlatforms.txt" />
-    <Content Include="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeCarriers.txt" />
-    <Content Include="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeColonyShips.txt" />
-    <Content Include="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeCombatShips.txt" />
-    <Content Include="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeFighters.txt" />
-    <Content Include="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeMines.txt" />
-    <Content Include="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeSatelites.txt" />
-    <Content Include="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeStations.txt" />
-    <Content Include="Mods\Include Mod\Data\SpaceVehicleSizes\VehicleSizeTransports.txt" />
-    <Content Include="Mods\Include Mod\Data\VehicleSize.txt" />
-    <Content Include="Mods\ComponentLoaderTest\Data\Components.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Mods\WeaponInfoTest\Data\Components.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="MSTest.TestAdapter">
-      <Version>1.3.2</Version>
-    </PackageReference>
-    <PackageReference Include="MSTest.TestFramework">
-      <Version>1.3.2</Version>
-    </PackageReference>
-  </ItemGroup>
-  <Choose>
-    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>"$(ProjectDir)post-build.bat" $(ConfigurationName) $(ProjectDir)</PostBuildEvent>
-  </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

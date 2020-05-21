@@ -5,7 +5,7 @@ using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Drawing;
 
 namespace FrEee.Tests.Game.Objects.Vehicles
@@ -13,7 +13,6 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 	/// <summary>
 	/// Tests cloaking of vehicles.
 	/// </summary>
-	[TestClass]
 	public class CloakingTest
 	{
 		/// <summary>
@@ -41,8 +40,8 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		/// </summary>
 		private static StarSystem sys;
 
-		[ClassInitialize]
-		public static void ClassInit(TestContext ctx)
+		[OneTimeSetUp]
+		public static void ClassInit()
 		{
 			// initialize galaxy
 			new Galaxy();
@@ -73,7 +72,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		/// <summary>
 		/// If we have no cloaks, and they have a sensor, they should still be able to see us.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void AnySensorNoCloakCanSee()
 		{
 			AddSensorAbility(destroyer.Hull, "Foobar", 1);
@@ -83,7 +82,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		/// <summary>
 		/// If we have high level sight obscuration from our star system, we should be hidden.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void HighLevelSectorSightObscuration()
 		{
 			AddSensorAbility(destroyer.Hull, "Foobar", 1);
@@ -94,7 +93,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		/// <summary>
 		/// If we have a cloak, and they have a higher level sensor of the same type, they should be able to see us.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void HighLevelSensorCanSee()
 		{
 			AddSensorAbility(destroyer.Hull, "Foobar", 2);
@@ -102,7 +101,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			Assert.IsFalse(submarine.IsHiddenFrom(seekers), "Submarine should be visible.");
 		}
 
-		[TestInitialize]
+		[SetUp]
 		public void Init()
 		{
 			// create star system
@@ -117,7 +116,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		/// <summary>
 		/// If we have a cloak, and they have a lower level sensor of the same type, we should be hidden.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void LowLevelSensorCantSee()
 		{
 			AddSensorAbility(destroyer.Hull, "Foobar", 1);
@@ -128,7 +127,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		/// <summary>
 		/// If we have a cloak, and they have a different type of sensor that we don't have a cloak in, they should be able to see us.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void MismatchedSensorTypeCanSee()
 		{
 			AddSensorAbility(destroyer.Hull, "Narf", 1);
@@ -139,7 +138,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		/// <summary>
 		/// If everyone is in a nebula with a system cloaking ability, the enemy ship should be hidden.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void NebulaCantSee()
 		{
 			AddSensorAbility(destroyer.Hull, "Foobar", 1);
@@ -150,7 +149,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		/// <summary>
 		/// If we have a cloak, and they have no sensors, they should not be able to see us.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void NoSensorAnyCloakCantSee()
 		{
 			AddCloakAbility(submarine.Hull, "Foobar", 1);
@@ -160,7 +159,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		/// <summary>
 		/// If we have no cloaks, and they have no sensors, they should still be able to see us.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void NoSensorNoCloakCanSee()
 		{
 			// by default the ships will have no abilities, so let's just test
@@ -170,7 +169,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		/// <summary>
 		/// If we have a cloak, and they have the same level sensor of the same type, they should be able to see us.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void SameLevelSensorCanSee()
 		{
 			AddSensorAbility(destroyer.Hull, "Foobar", 1);
@@ -181,7 +180,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		/// <summary>
 		/// If the enemy is in a storm with a sector cloaking ability, the enemy ship should be hidden.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void StormCantSee()
 		{
 			AddSensorAbility(destroyer.Hull, "Foobar", 1);

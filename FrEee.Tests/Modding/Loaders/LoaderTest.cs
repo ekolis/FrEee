@@ -1,15 +1,14 @@
 ﻿using FrEee.Modding;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace FrEee.Tests.Modding.Loaders
 {
 	/// <summary>
 	/// Tests mod loaders.
 	/// </summary>
-	[TestClass]
 	public class LoaderTest
 	{
-		[TestMethod]
+		[Test]
 		public void LoadIncludeModWithoutErrors()
 		{
 			var mod = Mod.Load("Include Mod");
@@ -21,7 +20,7 @@ namespace FrEee.Tests.Modding.Loaders
 		/// <summary>
 		/// Makes sure the stock mod loads with no errors.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void LoadStockModWithoutErrors()
 		{
 			Mod.Load(null);
