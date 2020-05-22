@@ -300,8 +300,6 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public Image Icon32 => Icon.Resize(32);
-
 		public int IntelligenceIncome { get { return this.GrossIncome()[Resource.Intelligence]; } }
 
 		IEnumerable<Ability> IAbilityObject.IntrinsicAbilities
