@@ -29,24 +29,18 @@ namespace FrEee.Game.Objects.Space
 			Orders = new List<IOrder>();
 		}
 
-		public override AbilityTargets AbilityTarget
-		{
-			get { return AbilityTargets.Planet; }
-		}
+		public override AbilityTargets AbilityTarget => AbilityTargets.Planet;
 
 		public int Accuracy
 		{
-			get
-			{
-				return
-					Mod.Current.Settings.PlanetAccuracy
-					+ this.GetAbilityValue("Combat To Hit Offense Plus").ToInt()
-					- this.GetAbilityValue("Combat To Hit Offense Minus").ToInt()
-					+ (Owner == null || Owner.Culture == null ? 0 : Owner.Culture.SpaceCombat)
-					+ Sector.GetEmpireAbilityValue(Owner, "Combat Modifier - Sector").ToInt()
-					+ StarSystem.GetEmpireAbilityValue(Owner, "Combat Modifier - System").ToInt()
-					+ Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
-			}
+			get =>
+				Mod.Current.Settings.PlanetAccuracy
+				+ this.GetAbilityValue("Combat To Hit Offense Plus").ToInt()
+				- this.GetAbilityValue("Combat To Hit Offense Minus").ToInt()
+				+ (Owner == null || Owner.Culture == null ? 0 : Owner.Culture.SpaceCombat)
+				+ Sector.GetEmpireAbilityValue(Owner, "Combat Modifier - Sector").ToInt()
+				+ StarSystem.GetEmpireAbilityValue(Owner, "Combat Modifier - System").ToInt()
+				+ Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
 		}
 
 		public IDictionary<Race, long> AllPopulation
@@ -65,10 +59,7 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public IEnumerable<IUnit> AllUnits
-		{
-			get { return Cargo == null ? Enumerable.Empty<IUnit>() : Cargo.Units; }
-		}
+		public IEnumerable<IUnit> AllUnits => Cargo?.Units ?? Enumerable.Empty<IUnit>();
 
 		/// <summary>
 		/// Are this object's orders on hold?
@@ -83,20 +74,14 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// TODO - planetary "armor" facilities that soak damage first?
 		/// </summary>
-		public int ArmorHitpoints
-		{
-			get { return Cargo == null ? 0 : Cargo.ArmorHitpoints; }
-		}
+		public int ArmorHitpoints => Cargo?.ArmorHitpoints ?? 0;
 
 		/// <summary>
 		/// The atmospheric composition (e.g. methane, oxygen, carbon dioxide) of this planet.
 		/// </summary>
 		public string Atmosphere { get; set; }
 
-		public override bool CanBeInFleet
-		{
-			get { return false; }
-		}
+		public override bool CanBeInFleet => false;
 
 		public override bool CanBeObscured => true;
 
@@ -104,34 +89,16 @@ namespace FrEee.Game.Objects.Space
 		/// If planets had engines, they could warp...
 		/// (Sure, why not?)
 		/// </summary>
-		public override bool CanWarp { get { return true; } }
+		public override bool CanWarp => true;
 
-		public Cargo Cargo
-		{
-			get { return Colony == null ? null : Colony.Cargo; }
-		}
+		public Cargo Cargo => Colony?.Cargo;
 
-		public Progress CargoFill
-		{
-			get
-			{
-				var cargo = 0;
-				if (Colony != null)
-					cargo = Colony.Cargo.Size;
-				return new Progress(cargo, MaxCargo);
-			}
-		}
+		public Progress CargoFill => new Progress(Colony?.Cargo.Size ?? 0, MaxCargo);
 
 		/// <summary>
 		/// Planets get cargo storage both from facilities and intrinsically.
 		/// </summary>
-		public int CargoStorage
-		{
-			get
-			{
-				return MaxCargo + this.GetAbilityValue("Cargo Storage").ToInt();
-			}
-		}
+		public int CargoStorage => MaxCargo + this.GetAbilityValue("Cargo Storage").ToInt();
 
 		public override IEnumerable<IAbilityObject> Children
 		{
@@ -147,20 +114,14 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public Conditions Conditions => Mod.Current.Settings.ConditionsThresholds.Where(x => x.Value <= ConditionsAmount).WithMax(x => x.Value).Single().Key;
 
-        public Progress ConditionsProgress => new Progress(ConditionsAmount, Mod.Current.Settings.MaxConditions);
+		public Progress ConditionsProgress => new Progress(ConditionsAmount, Mod.Current.Settings.MaxConditions);
 
 		/// <summary>
 		/// Numeric representation of plantery conditions.
 		/// </summary>
 		public int ConditionsAmount { get; set; }
 
-		public string ColonizationAbilityName
-		{
-			get
-			{
-				return "Colonize Planet - " + Surface;
-			}
-		}
+		public string ColonizationAbilityName => "Colonize Planet - " + Surface;
 
 		/// <summary>
 		/// The colony on this planet, if any.
@@ -169,20 +130,9 @@ namespace FrEee.Game.Objects.Space
 
 		public double CombatSpeed => 0;
 
-		public override ConstructionQueue ConstructionQueue
-		{
-			get
-			{
-				if (Colony != null)
-					return Colony.ConstructionQueue;
-				return null;
-			}
-		}
+		public override ConstructionQueue ConstructionQueue => Colony?.ConstructionQueue;
 
-		public Fleet Container
-		{
-			get; set;
-		}
+		public Fleet Container { get; set; }
 
 		public override SafeDictionary<string, object> Data
 		{
@@ -261,14 +211,11 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public bool HasColony { get { return Colony != null; } }
+		public bool HasColony => Colony != null;
 
-		public bool HasSpaceYard { get { return this.HasAbility("Space Yard"); } }
+		public bool HasSpaceYard => this.HasAbility("Space Yard");
 
-		public int HitChance
-		{
-			get { return 1; }
-		}
+		public int HitChance => 1;
 
 		[DoNotSerialize]
 		public int Hitpoints
@@ -300,80 +247,35 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public int IntelligenceIncome { get { return this.GrossIncome()[Resource.Intelligence]; } }
+		public int IntelligenceIncome => this.GrossIncome()[Resource.Intelligence];
 
-		IEnumerable<Ability> IAbilityObject.IntrinsicAbilities
-		{
-			get { return IntrinsicAbilities; }
-		}
+		IEnumerable<Ability> IAbilityObject.IntrinsicAbilities => IntrinsicAbilities;
 
 		public bool IsAlive => Colony != null;
 
 		/// <summary>
 		/// Planets can't be destroyed in combat.
 		/// </summary>
-		public bool IsDestroyed
-		{
-			get { return false; }
-		}
+		public bool IsDestroyed => false;
 
 		/// <summary>
 		/// Is this planet domed? Domed planets usually have less space for population, facilities, and cargo.
 		/// </summary>
-		public bool IsDomed
-		{
-			get
-			{
-				if (Colony == null)
-					return false;
-				return Colony.Population.Any(kvp => kvp.Key.NativeAtmosphere != Atmosphere);
-			}
-		}
+		public bool IsDomed => Colony?.Population.Any(kvp => kvp.Key.NativeAtmosphere != Atmosphere) ?? false;
 
-		public override bool IsIdle
-		{
-			get
-			{
-				if (Colony == null)
-					return false;
-				return ConstructionQueue != null && ConstructionQueue.IsIdle;
-			}
-		}
+		public override bool IsIdle => Colony?.ConstructionQueue?.IsIdle ?? false;
 
 		/// <summary>
 		/// Planets currently cost nothing to maintain.
 		/// TODO - moddable unit/population/facility maintenance
 		/// </summary>
-		public ResourceQuantity MaintenanceCost
-		{
-			get { return new ResourceQuantity(); }
-		}
+		public ResourceQuantity MaintenanceCost => new ResourceQuantity();
 
-		public int MaxArmorHitpoints
-		{
-			get { return Cargo == null ? 0 : Cargo.MaxArmorHitpoints; }
-		}
+		public int MaxArmorHitpoints => Cargo?.MaxArmorHitpoints ?? 0;
 
-		public int MaxCargo
-		{
-			get
-			{
-				// TODO - cargo facilities and such
-				if (IsDomed)
-					return Size.MaxCargoDomed;
-				return Size.MaxCargo;
-			}
-		}
+		public int MaxCargo => IsDomed ? Size.MaxCargoDomed : Size.MaxCargo;
 
-		public int MaxFacilities
-		{
-			get
-			{
-				if (IsDomed)
-					return Size.MaxFacilitiesDomed;
-				return Size.MaxFacilities;
-			}
-		}
+		public int MaxFacilities => IsDomed ? Size.MaxFacilitiesDomed : Size.MaxFacilities;
 
 		public int MaxHitpoints
 		{
@@ -420,16 +322,7 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public long MaxPopulation
-		{
-			get
-			{
-				// TODO - abilities that modify max pop
-				if (IsDomed)
-					return Size.MaxPopulationDomed;
-				return Size.MaxPopulation;
-			}
-		}
+		public long MaxPopulation => IsDomed ? Size.MaxPopulationDomed : Size.MaxPopulation;
 
 		public int MaxShieldHitpoints
 		{
@@ -469,41 +362,26 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public int MineralsIncome { get { return this.GrossIncome()[Resource.Minerals]; } }
+		public int MineralsIncome => this.GrossIncome()[Resource.Minerals];
 
-		public double MineralsValue { get { return ResourceValue[Resource.Minerals]; } }
+		public double MineralsValue => ResourceValue[Resource.Minerals];
 
-		public int MovementRemaining
-		{
-			get;
-			set;
-		}
+		public int MovementRemaining { get; set; }
 
-		public int NormalShields
-		{
-			get;
-			set;
-		}
+		public int NormalShields { get; set; }
 
-		public IList<IOrder> Orders
-		{
-			get;
-			private set;
-		}
+		public IList<IOrder> Orders { get; private set; }
 
-		public int OrganicsIncome { get { return this.GrossIncome()[Resource.Organics]; } }
+		public int OrganicsIncome => this.GrossIncome()[Resource.Organics];
 
-		public double OrganicsValue { get { return ResourceValue[Resource.Organics]; } }
+		public double OrganicsValue => ResourceValue[Resource.Organics];
 
 		/// <summary>
 		/// The empire which has a colony on this planet, if any.
 		/// </summary>
 		public Empire Owner
 		{
-			get
-			{
-				return Colony == null ? null : Colony.Owner;
-			}
+			get => Colony?.Owner;
 			set
 			{
 				if (Colony == null && value != null)
@@ -530,22 +408,12 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public int PhasedShields
-		{
-			get;
-			set;
-		}
+		public int PhasedShields { get; set; }
 
 		/// <summary>
 		/// Expected population change for the upcoming turn due to reproduction, cloning, and plagues.
 		/// </summary>
-		public long PopulationChangePerTurn
-		{
-			get
-			{
-				return PopulationChangePerTurnPerRace.Sum(kvp => kvp.Value);
-			}
-		}
+		public long PopulationChangePerTurn => PopulationChangePerTurnPerRace.Sum(kvp => kvp.Value);
 
 		/// <summary>
 		/// Expected population change for the upcoming turn due to reproduction, cloning, and plagues.
@@ -597,26 +465,15 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public long PopulationStorageFree
-		{
-			get { return MaxPopulation - (Colony == null ? 0L : Colony.Population.Sum(kvp => kvp.Value)); }
-		}
+		public long PopulationStorageFree => MaxPopulation - (Colony?.Population.Sum(kvp => kvp.Value) ?? 0);
 
-		public int RadioactivesIncome { get { return this.GrossIncome()[Resource.Radioactives]; } }
+		public int RadioactivesIncome => this.GrossIncome()[Resource.Radioactives];
 
-		public double RadioactivesValue { get { return ResourceValue[Resource.Radioactives]; } }
+		public double RadioactivesValue => ResourceValue[Resource.Radioactives];
 
-		public ResourceQuantity RemoteMiningIncomePercentages
-		{
-			get
-			{
-				if (HasColony)
-					return Colony.RemoteMiningIncomePercentages;
-				return new ResourceQuantity();
-			}
-		}
+		public ResourceQuantity RemoteMiningIncomePercentages => Colony?.RemoteMiningIncomePercentages ?? new ResourceQuantity();
 
-		public int ResearchIncome { get { return this.GrossIncome()[Resource.Research]; } }
+		public int ResearchIncome => this.GrossIncome()[Resource.Research];
 
 		/// <summary>
 		/// Base resource generation, not taking into account value.
@@ -659,10 +516,7 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public int ShieldHitpoints
-		{
-			get { return NormalShields + PhasedShields; }
-		}
+		public int ShieldHitpoints => NormalShields + PhasedShields;
 
 		public int ShieldModifiers
 		{
@@ -680,30 +534,16 @@ namespace FrEee.Game.Objects.Space
 		/// The PlanetSize.txt entry for this asteroid field's size.
 		/// </summary>
 		[DoNotSerialize]
-		public StellarObjectSize Size { get { return size; } set { size = value; } }
+		public StellarObjectSize Size { get => size; set => size = value; }
 
-		int ICombatant.Size
-		{
-			get { return int.MaxValue; }
-		}
+		int ICombatant.Size => int.MaxValue;
 
-		public ResourceQuantity StandardIncomePercentages
-		{
-			get
-			{
-				if (HasColony)
-					return Colony.StandardIncomePercentages;
-				return new ResourceQuantity();
-			}
-		}
+		public ResourceQuantity StandardIncomePercentages => Colony?.StandardIncomePercentages ?? new ResourceQuantity();
 
 		/// <summary>
 		/// TODO - planetary engines? but how would we do engines per move?
 		/// </summary>
-		public int StrategicSpeed
-		{
-			get { return 0; }
-		}
+		public int StrategicSpeed => 0;
 
 		public int SupplyRemaining
 		{
@@ -725,19 +565,12 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Planets can't currently move, but they can execute orders at the end of the turn.
 		/// </summary>
-		public double TimePerMove
-		{
-			get { return 1; }
-		}
+		public double TimePerMove => 1;
 
 		/// <summary>
 		/// Fractional turns until the planet has saved up another move point.
 		/// </summary>
-		public double TimeToNextMove
-		{
-			get;
-			set;
-		}
+		public double TimeToNextMove { get; set; }
 
 		public IEnumerable<Component> Weapons
 		{
@@ -749,13 +582,7 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public WeaponTargets WeaponTargetType
-		{
-			get
-			{
-				return WeaponTargets.Planet;
-			}
-		}
+		public WeaponTargets WeaponTargetType => WeaponTargets.Planet;
 
 		/// <summary>
 		/// Used for naming.
@@ -805,12 +632,7 @@ namespace FrEee.Game.Objects.Space
 			// do nothing
 		}
 
-		public bool CanTarget(ITargetable target)
-		{
-			if (Cargo == null)
-				return false;
-			return Cargo.Units.OfType<WeaponPlatform>().Any(wp => wp.CanTarget(target));
-		}
+		public bool CanTarget(ITargetable target) => Cargo?.Units.OfType<WeaponPlatform>().Any(wp => wp.CanTarget(target)) ?? false;
 
 		/// <summary>
 		/// Deletes this planet and spawns an asteroid field with the same name, sector, size, and value as this planet.
@@ -933,10 +755,7 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public bool ExecuteOrders()
-		{
-			return this.ExecuteMobileSpaceObjectOrders();
-		}
+		public bool ExecuteOrders() => this.ExecuteMobileSpaceObjectOrders();
 
 		/// <summary>
 		/// Just copy the planet's data.
@@ -949,10 +768,7 @@ namespace FrEee.Game.Objects.Space
 			return result;
 		}
 
-		public override bool IsHostileTo(Empire emp)
-		{
-			return Owner == null ? false : Owner.IsEnemyOf(emp, StarSystem);
-		}
+		public override bool IsHostileTo(Empire emp) => Owner?.IsEnemyOf(emp, StarSystem) ?? false;
 
 		/*/// <summary>
 		/// The planet's gross income, taking into presence presence or lack of a spaceport.
