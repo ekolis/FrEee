@@ -1347,7 +1347,7 @@ namespace FrEee.Utility.Extensions
 						{
 							context.SetObjectProperty(o, prop, val);
 						}
-						catch (NullReferenceException ex)
+						catch (NullReferenceException)
 						{
 							if (o == null && prop == null)
 								Console.Error.WriteLine($"Attempted to set unknown property {pname} on a null object.");
@@ -1358,7 +1358,7 @@ namespace FrEee.Utility.Extensions
 							else
 								throw;
 						}
-						catch (InvalidCastException ex)
+						catch (InvalidCastException)
 						{
 							Console.Error.WriteLine($"Could not set property {pname} of object {o} of type {o.GetType()} to value {val} of type {val.GetType()}.");
 							throw;

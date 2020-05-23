@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -237,7 +237,7 @@ namespace FrEee.Modding
 						foreach (var f in Directory.GetFiles(path))
 							list.Add(Path.GetFileNameWithoutExtension(f));
 					}
-					catch (IOException ex)
+					catch (IOException)
 					{
 						// nothing to do, path probably doesn't exist
 					}

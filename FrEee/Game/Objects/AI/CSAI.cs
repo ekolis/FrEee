@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Utility;
@@ -45,7 +45,7 @@ namespace FrEee.Game.Objects.AI
                     domain = result;
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw; 
                 //error log? 
