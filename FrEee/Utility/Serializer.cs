@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Runtime.Serialization;
@@ -73,8 +73,11 @@ namespace FrEee.Utility
 		{
 			if (EnableJsonSerializer)
 			{
+				// warning disabled because code waits for the TODO - enable JSON serializer
+#pragma warning disable CS0162 // Unreachable code detected
 				var js = new JsonSerializer();
 				return js.DeserializeFromString(s);
+#pragma warning restore CS0162 // Unreachable code detected
 			}
 			else
 			{
@@ -108,8 +111,11 @@ namespace FrEee.Utility
 		{
 			if (EnableJsonSerializer)
 			{
+				// warning disabled because code waits for the TODO - enable JSON serializer
+#pragma warning disable CS0162 // Unreachable code detected
 				var js = new JsonSerializer();
 				return js.SerializeToString(o);
+#pragma warning restore CS0162 // Unreachable code detected
 			}
 			else
 			{
