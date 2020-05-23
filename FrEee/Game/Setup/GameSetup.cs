@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -54,7 +54,7 @@ namespace FrEee.Game.Setup
 		/// </summary>
 		public IList<EmpireTemplate> EmpireTemplates { get; private set; }
 
-		//// <summary>
+		/// <summary>
 		/// Per mille chance of a random event occurring, per turn, per player.
 		/// </summary>
 		public double EventFrequency { get; set; }
