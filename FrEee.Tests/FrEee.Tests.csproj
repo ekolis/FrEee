@@ -4,12 +4,24 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <Version>0.0.9</Version>
+
+    <Copyright>Copyright © 2013-2020</Copyright>
+
+    <Company />
+
+    <Product>FrEee</Product>
+
+    <PackageProjectUrl>http://edkolis.com/freee</PackageProjectUrl>
+
+    <Description>Unit tests for FrEee</Description>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="Mods\**" CopyToOutputDirectory="Always" LinkBase="Mods\" />
     <None Include="Savegame\**" CopyToOutputDirectory="Always" LinkBase="Savegame\" />
-    <None Include="..\FrEee\Data\**"  CopyToOutputDirectory="Always" LinkBase="Data\" />
+    <None Include="..\FrEee\Data\**" CopyToOutputDirectory="Always" LinkBase="Data\" />
     <None Include="..\FrEee\Mods\**" CopyToOutputDirectory="Always" LinkBase="Mods\" />
   </ItemGroup>
 
