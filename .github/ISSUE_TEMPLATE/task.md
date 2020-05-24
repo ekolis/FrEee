@@ -8,6 +8,6 @@ assignees: ''
 
 ---
 
-** What needs to be done? **
+**What needs to be done?**
 
 Describe what needs to be done here.
