@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Game.Enumerations;
@@ -100,11 +100,11 @@ namespace FrEee.Game.Objects.Orders
 			}
 		}
 
-		private IReference<T> GetModReference<T>(string id)
+		private IReference<U> GetModReference<U>(string id)
 		{
 			// since T is not guaranteed to be a compile time IModObject implementation
-			var type = typeof(ModReference<>).MakeGenericType(typeof(T));
-			var r = (IReference<T>)Activator.CreateInstance(type);
+			var type = typeof(ModReference<>).MakeGenericType(typeof(U));
+			var r = (IReference<U>)Activator.CreateInstance(type);
 			r.SetPropertyValue("ID", id);
 			return r;
 		}
