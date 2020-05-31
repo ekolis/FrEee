@@ -997,7 +997,7 @@ namespace FrEee.Utility.Extensions
 		{
 			var sb = new StringBuilder();
 			int data = 0;
-			bool escaping = false, quoting = false;
+			bool escaping = false;
 			do
 			{
 				data = r.Read();
