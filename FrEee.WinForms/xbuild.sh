@@ -1,3 +1,6 @@
+# TODO: .NET core can pick *.bat or *.sh on build
+# building could be moved to use that facility
+
 nuget restore -PackagesDirectory "../packages"
 
 # Prevent post-build events (which is a batch file) from running

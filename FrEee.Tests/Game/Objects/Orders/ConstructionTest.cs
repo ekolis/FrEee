@@ -3,15 +3,13 @@ using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Utility.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+using NUnit.Framework;
 
 namespace FrEee.Tests.Game.Objects.Orders
 {
 	/// <summary>
 	/// Tests construction queue capabilities.
 	/// </summary>
-	[TestClass]
 	public class ConstructionTest
 	{
 		private static Colony colony;
@@ -20,8 +18,8 @@ namespace FrEee.Tests.Game.Objects.Orders
 		private static Race race;
 		private static FacilityTemplate sy;
 
-		[ClassInitialize]
-		public static void ClassInit(TestContext ctx)
+		[OneTimeSetUp]
+		public static void ClassInit()
 		{
 			// initialize galaxy
 			new Galaxy();
@@ -38,7 +36,7 @@ namespace FrEee.Tests.Game.Objects.Orders
 			sy = Mod.Current.FacilityTemplates.FindByName("Space Yard Facility I");
 		}
 
-		[TestInitialize]
+		[SetUp]
 		public void Init()
 		{
 			// initialize colony
@@ -53,14 +51,14 @@ namespace FrEee.Tests.Game.Objects.Orders
 		/// <summary>
 		/// If there's no population on a colony, it shouldn't be able to build anything.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void NoPopNoBuild()
 		{
 			colony.Population.Clear();
-			IsTrue(planet.ConstructionQueue.Rate.IsEmpty);
+			Assert.IsTrue(planet.ConstructionQueue.Rate.IsEmpty);
 
 			colony.Population[race] = 0;
-			IsTrue(planet.ConstructionQueue.Rate.IsEmpty);
+			Assert.IsTrue(planet.ConstructionQueue.Rate.IsEmpty);
 		}
 
 		// TODO - test construction of facilities/units/ships

@@ -1,16 +1,14 @@
-using FrEee.Utility;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FrEee.Utility;
+using NUnit.Framework;
 
 namespace FrEee.Tests.Utility
 {
 	/// <summary>
 	/// Tests math.
 	/// </summary>
-	[TestClass]
 	public class MathXTest
 	{
-		[TestMethod]
+		[Test]
 		public void Ceiling()
 		{
 			Assert.AreEqual(0, MathX.Ceiling(0, 0));

@@ -5,16 +5,14 @@ using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Drawing;
-using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace FrEee.Tests.Game.Objects.Vehicles
 {
 	/// <summary>
 	/// Tests resupply of vehicles.
 	/// </summary>
-	[TestClass]
 	public class ResupplyTest
 	{
 		private static Empire empire;
@@ -24,8 +22,8 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		private static int supplyPerComp;
 		private static StarSystem sys;
 
-		[ClassInitialize]
-		public static void ClassInit(TestContext ctx)
+		[OneTimeSetUp]
+		public static void ClassInit()
 		{
 			// initialize galaxy
 			new Galaxy();
@@ -73,14 +71,14 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		/// <summary>
 		/// Can ships in fleets resupply each other?
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void FleetResupply()
 		{
 			ship1.SupplyRemaining = supplyPerComp;
 			ship2.SupplyRemaining = supplyPerComp;
 			fleet.ShareSupplies();
-			AreEqual(supplyPerComp * 2 / 4, ship1.SupplyRemaining);
-			AreEqual(supplyPerComp * 6 / 4, ship2.SupplyRemaining);
+			Assert.AreEqual(supplyPerComp * 2 / 4, ship1.SupplyRemaining);
+			Assert.AreEqual(supplyPerComp * 6 / 4, ship2.SupplyRemaining);
 		}
 
 		// TODO - test quantum reactors

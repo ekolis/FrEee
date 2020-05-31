@@ -1,5 +1,6 @@
 using FrEee.Utility.Extensions;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -79,7 +80,7 @@ namespace FrEee.Utility
 			}
 		}
 
-		private Dictionary<TKey, TValue> dict;
+		private ConcurrentDictionary<TKey, TValue> dict;
 
 		public TValue this[TKey key]
 		{
@@ -173,7 +174,7 @@ namespace FrEee.Utility
 		{
 			if (dict == null)
 				return false;
-			return dict.Remove(key);
+			return dict.TryRemove(key, out _);
 		}
 
 		public bool Remove(KeyValuePair<TKey, TValue> item)
@@ -198,7 +199,7 @@ namespace FrEee.Utility
 		private void InitDict()
 		{
 			if (dict == null)
-				dict = new Dictionary<TKey, TValue>();
+				dict = new ConcurrentDictionary<TKey, TValue>();
 		}
 	}
 }

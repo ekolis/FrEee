@@ -4,11 +4,10 @@ using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Utility.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace FrEee.Tests.Game.Objects.Technology
 {
-	[TestClass]
 	public class TechnologyTest
 	{
 		private Empire emp;
@@ -17,8 +16,8 @@ namespace FrEee.Tests.Game.Objects.Technology
 		/// Loads the stock mod. Done once before running ALL the tests (not each individually; that would be pointless).
 		// TODO - hardcode some techs so we aren't reliant on stock files
 		/// </summary>
-		[ClassInitialize]
-		public static void ClassInit(TestContext ctx)
+		[OneTimeSetUp]
+		public static void ClassInit()
 		{
 			Mod.Load(null);
 		}
@@ -26,7 +25,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 		/// <summary>
 		/// Tests the ability of an empire to research technologies using percentage allocation.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void PercentageResearch()
 		{
 			var mod = Mod.Current;
@@ -58,7 +57,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 			Assert.AreEqual(2, emp.ResearchedTechnologies[tech]);
 		}
 
-		[TestMethod]
+		[Test]
 		public void QueuedResearch()
 		{
 			// for convenience
@@ -114,7 +113,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 		/// <summary>
 		/// Sets up a game. Done once before EACH test.
 		/// </summary>
-		[TestInitialize]
+		[SetUp]
 		public void TestInit()
 		{
 			new Galaxy();

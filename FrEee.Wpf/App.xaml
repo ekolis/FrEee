@@ -1,7 +1,7 @@
 ﻿<Application
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:FrEee.Wpf" xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="FrEee.Wpf.App"
+             xmlns:local="clr-namespace:FrEee.Wpf" xmlns:System="clr-namespace:System;assembly=System.Private.CoreLib" x:Class="FrEee.Wpf.App"
              >
     <Application.Resources>
         <Image x:Key="FrEeeIcon" Source="Pictures/FrEee.ico"/>

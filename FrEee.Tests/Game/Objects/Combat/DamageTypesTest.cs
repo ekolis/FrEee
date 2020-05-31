@@ -1,17 +1,15 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 using System.Linq;
 
 namespace FrEee.Tests.Game.Objects.Combat
 {
-	[TestClass]
 	public class DamageTypesTest
 	{
 		private static Mod mod;
@@ -21,8 +19,8 @@ namespace FrEee.Tests.Game.Objects.Combat
 		private Ship defender;
 		private IDesign<Ship> defenderDesign;
 
-		[ClassInitialize]
-		public static void ClassInit(TestContext ctx)
+		[OneTimeSetUp]
+		public static void ClassInit()
 		{
 			// load stock mod
 			mod = Mod.Load(null);
@@ -33,7 +31,7 @@ namespace FrEee.Tests.Game.Objects.Combat
 				Galaxy.Current.AssignID(r);
 		}
 
-		[TestInitialize]
+		[SetUp]
 		public void Init()
 		{
 			// create dummy designs
@@ -52,7 +50,7 @@ namespace FrEee.Tests.Game.Objects.Combat
 		/// <summary>
 		/// Makes sure that normal damage doesn't pierce shields or armor, and can destroy a ship.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void NormalDamageVersusShips()
 		{
 			attackerDesign.AddComponent(mod.ComponentTemplates.FindByName("Depleted Uranium Cannon I"));
@@ -77,7 +75,7 @@ namespace FrEee.Tests.Game.Objects.Combat
 		/// <summary>
 		/// Makes sure that "only engines" damage damages engines and shields only.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void OnlyEnginesDamageVersusShips()
 		{
 			attackerDesign.AddComponent(mod.ComponentTemplates.FindByName("Ionic Disperser I"));
@@ -99,7 +97,7 @@ namespace FrEee.Tests.Game.Objects.Combat
 		/// <summary>
 		/// Makes sure that "shields only" damage only damages shields.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void ShieldsOnlyDamageVersusShips()
 		{
 			attackerDesign.AddComponent(mod.ComponentTemplates.FindByName("Shield Depleter I"));
@@ -116,7 +114,7 @@ namespace FrEee.Tests.Game.Objects.Combat
 		/// <summary>
 		/// Makes sure that "skips normal shields" damage skips normal shields, but not armor or phased shields, and can destroy a ship.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void SkipsNormalShieldsDamageVersusShips()
 		{
 			attackerDesign.AddComponent(mod.ComponentTemplates.FindByName("Phased - Polaron Beam I"));

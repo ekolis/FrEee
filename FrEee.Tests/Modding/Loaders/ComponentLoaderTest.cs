@@ -1,17 +1,16 @@
 ﻿using FrEee.Modding;
 using FrEee.Utility.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace FrEee.Tests.Modding.Loaders
 {
 	/// <summary>
 	/// Summary description for ComponentLoaderTest
 	/// </summary>
-	[TestClass]
 	public class ComponentLoaderTest
 	{
-		[ClassInitialize]
-		public static void ClassInit(TestContext ctx)
+		[OneTimeSetUp]
+		public static void ClassInit()
 		{
 			Mod.Load("ComponentLoaderTest");
 		}
@@ -19,7 +18,7 @@ namespace FrEee.Tests.Modding.Loaders
 		/// <summary>
 		/// Makes sure standard weapons have sane values for their minimum/maximum range.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void WeaponRange()
 		{
 			var w = Mod.Current.ComponentTemplates.FindByName("Range 2 Weapon");
@@ -30,7 +29,7 @@ namespace FrEee.Tests.Modding.Loaders
 		/// <summary>
 		/// Makes sure weapons with blind spots have sane values for their minimum/maximum range.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void WeaponRangeBlindSpot()
 		{
 			var w = Mod.Current.ComponentTemplates.FindByName("Blind Spot Weapon");

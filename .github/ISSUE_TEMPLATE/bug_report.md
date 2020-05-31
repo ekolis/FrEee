@@ -26,4 +26,4 @@ A clear and concise description of what actually happened.
 If applicable, add screenshots to help explain your problem.
 
 **Additional context**
-Add any other context about the problem here.
+Add any other context about the problem here. Maybe upload appropriate savegame files?

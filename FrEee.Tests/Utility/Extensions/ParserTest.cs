@@ -1,6 +1,6 @@
 ﻿using FrEee.Utility;
 using FrEee.Utility.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System;
 
 namespace FrEee.Tests.Utility.Extensions
@@ -8,13 +8,12 @@ namespace FrEee.Tests.Utility.Extensions
 	/// <summary>
 	/// Tests parsing capabilities.
 	/// </summary>
-	[TestClass]
 	public class ParserTest
 	{
 		/// <summary>
 		/// Makes sure nonexistent enum values throw an exception.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void BadEnumValues()
 		{
 			try
@@ -32,7 +31,7 @@ namespace FrEee.Tests.Utility.Extensions
 		/// <summary>
 		/// Makes sure decimals are parsed correctly.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void Decimals()
 		{
 			Assert.AreEqual(9000, "0.009M".ParseUnits());
@@ -41,7 +40,7 @@ namespace FrEee.Tests.Utility.Extensions
 		/// <summary>
 		/// Makes sure duplicate enum values throw an exception.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void DuplicateEnumValues()
 		{
 			// duplicate canonical names
@@ -72,7 +71,7 @@ namespace FrEee.Tests.Utility.Extensions
 		/// <summary>
 		/// Makes sure we can find enums by custom names.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void FindEnumByName()
 		{
 			// test by alias name
@@ -87,7 +86,7 @@ namespace FrEee.Tests.Utility.Extensions
 		/// <summary>
 		/// Makes sure we can parse flags enums.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void FlagsEnum()
 		{
 			Assert.AreEqual(Rush.RushCoil | Rush.RushJet, "Rush Coil, Rush Jet".ParseEnum<Rush>());
@@ -96,7 +95,7 @@ namespace FrEee.Tests.Utility.Extensions
 		/// <summary>
 		/// Makes sure millis and megas don't get mixed up.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void MilliMegas()
 		{
 			Assert.AreEqual(1e6, "1M".ParseUnits(true));
@@ -108,7 +107,7 @@ namespace FrEee.Tests.Utility.Extensions
 		/// <summary>
 		/// Makes sure plain old numbers still get parsed.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void RawNumbers()
 		{
 			Assert.AreEqual(9000, "9000".ParseUnits());
@@ -117,7 +116,7 @@ namespace FrEee.Tests.Utility.Extensions
 		/// <summary>
 		/// Makes sure standard enums are parsed correctly.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void StandardEnums()
 		{
 			Assert.AreEqual(Rush.Rush, "Rush".ParseEnum<Rush>());
@@ -129,7 +128,7 @@ namespace FrEee.Tests.Utility.Extensions
 		/// <summary>
 		/// Makes sure units are parsed correctly.
 		/// </summary>
-		[TestMethod]
+		[Test]
 		public void StandardUnits()
 		{
 			Assert.AreEqual(9000, "9k".ParseUnits());
