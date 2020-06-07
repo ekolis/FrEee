@@ -168,10 +168,7 @@ namespace FrEee.Utility
 			// find data type
 			var typename = r.ReadTo(':', log).Trim();
 			Type type;
-			if (typename.Contains("Dictionary") && typename.Contains("AbilityRule"))
-			{
-
-			}
+			typename = typename.Replace("mscorlib", "System.Private.CoreLib"); // in case we have a legacy .NET Framework generated save
 			if (string.IsNullOrWhiteSpace(typename))
 				type = desiredType;
 			else
