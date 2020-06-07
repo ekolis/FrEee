@@ -152,7 +152,7 @@ namespace FrEee.Game.Objects.Orders
 					if (CheckCompletion(queue))
 					{
 						var planet = (Planet)queue.Container;
-						planet.Colony.Facilities.Where(f => f.Template == Upgrade.Old).First().Dispose();
+						planet.Colony.Facilities.Where(f => f.Template.ModID == Upgrade.Old.ModID).First().Dispose(); // HACK - why are we getting duplicate facility templates?
 						planet.Colony.Facilities.Add(NewFacility);
 					}
 				}
@@ -174,7 +174,7 @@ namespace FrEee.Game.Objects.Orders
 				// validate that there is a facility to upgrade
 				var planet = (Planet)queue.Container;
 				var colony = planet.Colony;
-				if (!colony.Facilities.Any(f => f.Template == Upgrade.Old))
+				if (!colony.Facilities.Any(f => f.Template.ModID == Upgrade.Old.ModID)) // HACK - why are we getting duplicate facility templates?
 					yield return planet.CreateLogMessage("There are no " + Upgrade.Old + "s on " + planet + " to upgrade.", LogMessageType.Error);
 			}
 			else
