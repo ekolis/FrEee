@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility.Extensions;
 using FrEee.Utility.Stringifiers;
@@ -168,7 +168,6 @@ namespace FrEee.Utility
 			// find data type
 			var typename = r.ReadTo(':', log).Trim();
 			Type type;
-			typename = typename.Replace("mscorlib", "System.Private.CoreLib"); // in case we have a legacy .NET Framework generated save
 			if (string.IsNullOrWhiteSpace(typename))
 				type = desiredType;
 			else
@@ -187,7 +186,15 @@ namespace FrEee.Utility
 					}
 					catch (Exception ex)
 					{
-						throw new SerializationException("Unknown data type '" + typename + "'. Perhaps this data was serialized with an incompatible version of the application?", ex);
+						try
+						{
+							typename = typename.Replace("mscorlib", "System.Private.CoreLib"); // in case we have a legacy .NET Framework generated save
+							type = new SafeType(typename).Type;
+						}
+						catch (Exception ex2)
+						{
+							throw new SerializationException("Unknown data type '" + typename + "'. Perhaps this data was serialized with an incompatible version of the application?", ex2);
+						}
 					}
 				}
 				if (type == null)
