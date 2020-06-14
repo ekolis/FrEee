@@ -1393,7 +1393,7 @@ namespace FrEee.Game.Objects.Civilization
 					}
 					return designNames;
 				}
-				catch (Exception ex) // file not found etc
+				catch (Exception) // file not found etc
 				{
 					designNames = new List<string>();
 					return designNames;

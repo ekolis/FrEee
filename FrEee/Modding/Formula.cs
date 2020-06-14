@@ -1,4 +1,4 @@
-﻿using FrEee.Modding.Interfaces;
+using FrEee.Modding.Interfaces;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -191,7 +191,7 @@ namespace FrEee.Modding
 			return Value.CompareTo(other.Value);
 		}
 
-		object IFormula.Evaluate(object host, IDictionary<string, object> variables = null)
+		object IFormula.Evaluate(object host, IDictionary<string, object> variables)
 		{
 			return Evaluate(host, variables);
 		}
