@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Combat;
 using FrEee.Modding;
 using FrEee.Utility;
 
@@ -71,7 +71,7 @@ namespace FrEee.Game.Interfaces
 		/// Takes damage.
 		/// </summary>
 		/// <returns>Leftover damage.</returns>
-		int TakeDamage(Hit hit, PRNG dice = null);
+		int TakeDamage(Hit hit, PRNG? dice = null);
 	}
 
 	public interface IDamageableReferrable : IDamageable, IReferrable { }

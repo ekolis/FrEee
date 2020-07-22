@@ -4,6 +4,7 @@
     <OutputType>Library</OutputType>
     <AssemblyName>FrEee.Core</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DocumentationFile>bin\Debug\FrEee.Core.xml</DocumentationFile>

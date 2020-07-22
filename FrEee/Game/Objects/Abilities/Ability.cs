@@ -24,7 +24,7 @@ namespace FrEee.Game.Objects.Abilities
 			Values = new List<Formula<string>>();
 		}
 
-		public Ability(IAbilityObject container, AbilityRule rule, string description = null, params object[] values)
+		public Ability(IAbilityObject container, AbilityRule rule, string? description = null, params object[] values)
 		{
 			Container = container;
 			Rule = rule;
@@ -92,44 +92,22 @@ namespace FrEee.Game.Objects.Abilities
 			}
 		}
 
-		public long ID
-		{
-			get;
-			set;
-		}
+		public long ID { get; set; }
 
-		public bool IsDisposed
-		{
-			get;
-			set;
-		}
+		public bool IsDisposed { get; set; }
 
-		public string ModID
-		{
-			get;
-			set;
-		}
+		public string ModID { get; set; }
 
-		public string Name
-		{
-			get { return null; } // TODO - should abilities even have names?
-		}
+		// TODO - should abilities even have names?
+		public string? Name => null;
 
-		public Empire Owner
-		{
-			get
-			{
-				if (Container is IOwnable)
-					return (Container as IOwnable).Owner;
-				return null;
-			}
-		}
+		public Empire? Owner => (Container as IOwnable)?.Owner;
 
 		/// <summary>
 		/// The ability rule which defines what ability this is.
 		/// </summary>
 		[DoNotCopy]
-		public AbilityRule Rule { get { return rule; } set { rule = value; } }
+		public AbilityRule Rule { get => rule; set => rule = value; }
 
 		/// <summary>
 		/// Parameters from the mod meta templates.
@@ -139,24 +117,12 @@ namespace FrEee.Game.Objects.Abilities
 		/// <summary>
 		/// The first value of the ability. Not all abilities have values, so this might be null!
 		/// </summary>
-		public Formula<string> Value1
-		{
-			get
-			{
-				return Values.ElementAtOrDefault(0);
-			}
-		}
+		public Formula<string> Value1 => Values.ElementAtOrDefault(0);
 
 		/// <summary>
 		/// The second value of the ability. Not all abilities have two values, so this might be null!
 		/// </summary>
-		public Formula<string> Value2
-		{
-			get
-			{
-				return Values.ElementAtOrDefault(1);
-			}
-		}
+		public Formula<string> Value2 => Values.ElementAtOrDefault(1);
 
 		/// <summary>
 		/// Extra data for the ability.
@@ -182,8 +148,8 @@ namespace FrEee.Game.Objects.Abilities
 		{
 			if (IsDisposed)
 				return;
-			if (Container is IAbilityContainer)
-				(Container as IAbilityContainer).Abilities.Remove(this);
+			if (Container is IAbilityContainer abilityContainer)
+				abilityContainer.Abilities.Remove(this);
 			Galaxy.Current.UnassignID(this);
 		}
 

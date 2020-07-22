@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding.Templates;
@@ -122,7 +122,7 @@ namespace FrEee.Game.Interfaces
 		/// </summary>
 		IEnumerable<string> Warnings { get; }
 
-		void AddComponent(ComponentTemplate ct, Mount m = null);
+		void AddComponent(ComponentTemplate ct, Mount? m = null);
 
 		/// <summary>
 		/// Creates an order to build this design.

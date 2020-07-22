@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
 
 namespace FrEee.Game.Interfaces
@@ -9,7 +9,7 @@ namespace FrEee.Game.Interfaces
 	public interface IOwnable
 	{
 		[DoNotCopy]
-		Empire Owner { get; }
+		Empire? Owner { get; }
 	}
 
 	/// <summary>

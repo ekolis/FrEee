@@ -291,13 +291,13 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="list"></param>
 		/// <param name="condition"></param>
-		public static void DisposeAll<T>(this IEnumerable<T> list, Func<T, bool> condition = null) where T : IDisposable
+		public static void DisposeAll<T>(this IEnumerable<T> list, Func<T, bool>? condition = null) where T : IDisposable
 		{
 			foreach (var d in list.Where(d => condition == null || condition(d)).ToArray())
 				d.Dispose();
 		}
 
-		public static void DisposeAndLog(this IFoggable obj, string message = null, params Empire[] empiresToSkipMessage)
+		public static void DisposeAndLog(this IFoggable obj, string? message = null, params Empire[] empiresToSkipMessage)
 		{
 			if (Empire.Current == null)
 			{
@@ -393,7 +393,7 @@ namespace FrEee.Utility.Extensions
 		/// Finds the cargo container which contains this unit.
 		/// </summary>
 		/// <returns></returns>
-		public static ICargoContainer FindContainer(this IUnit unit)
+		public static ICargoContainer? FindContainer(this IUnit unit)
 		{
 			var containers = Galaxy.Current.FindSpaceObjects<ICargoContainer>().Where(cc => !(cc is Fleet) && cc.Cargo != null && cc.Cargo.Units.Contains(unit));
 			if (!containers.Any())
@@ -424,7 +424,7 @@ namespace FrEee.Utility.Extensions
 		public static T FindMemory<T>(this T f, Empire emp) where T : IFoggable, IReferrable
 		{
 			if (f == null)
-				return default(T);
+				return default;
 			if (emp == null)
 				return f; // host can see everything
 			return (T)emp.Memory[f.ID];
@@ -456,23 +456,23 @@ namespace FrEee.Utility.Extensions
 		/// <param name="t"></param>
 		/// <param name="propName"></param>
 		/// <returns></returns>
-		public static PropertyInfo FindProperty(this Type type, string propName)
+		public static PropertyInfo? FindProperty(this Type type, string propName)
 		{
 			var p = type.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 			if (p != null)
-				return p.DeclaringType.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+				return p.DeclaringType?.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 			var b = type.BaseType;
 			if (b != null)
 			{
 				var bp = b.FindProperty(propName);
 				if (bp != null)
-					return bp.DeclaringType.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+					return bp.DeclaringType?.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 			}
 			foreach (var i in type.GetInterfaces())
 			{
 				var ip = i.FindProperty(propName);
 				if (ip != null)
-					return ip.DeclaringType.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+					return ip.DeclaringType?.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 			}
 			return null;
 		}
@@ -482,7 +482,7 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="sobj"></param>
 		/// <returns></returns>
-		public static Sector FindSector(this ISpaceObject sobj)
+		public static Sector? FindSector(this ISpaceObject sobj)
 		{
 			var sys = sobj.FindStarSystem();
 			if (sys == null)
@@ -496,7 +496,7 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="sobj"></param>
 		/// <returns></returns>
-		public static StarSystem FindStarSystem(this ISpaceObject sobj)
+		public static StarSystem? FindStarSystem(this ISpaceObject sobj)
 		{
 			var loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.Contains(sobj));
 			/*if (loc == null)
@@ -632,7 +632,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="o"></param>
 		/// <param name="propertyName"></param>
 		/// <returns></returns>
-		public static object GetPropertyValue(this object o, string propertyName)
+		public static object? GetPropertyValue(this object o, string propertyName)
 		{
 			if (o == null)
 				return null;
@@ -651,50 +651,28 @@ namespace FrEee.Utility.Extensions
 			return o == null ? 0 : o.GetHashCode();
 		}
 
-		public static Type GetVehicleType(this VehicleTypes vt)
-		{
-			switch (vt)
+		public static Type GetVehicleType(this VehicleTypes vt) =>
+			vt switch
 			{
-				case VehicleTypes.Ship:
-					return typeof(Ship);
-
-				case VehicleTypes.Base:
-					return typeof(Base);
-
-				case VehicleTypes.Fighter:
-					return typeof(Fighter);
-
-				case VehicleTypes.Troop:
-					return typeof(Troop);
-
-				case VehicleTypes.Mine:
-					return typeof(Mine);
-
-				case VehicleTypes.Satellite:
-					return typeof(Satellite);
-
-				case VehicleTypes.Drone:
-					return typeof(Drone);
-
-				case VehicleTypes.WeaponPlatform:
-					return typeof(WeaponPlatform);
-
-				default:
-					throw new Exception("No type is available for vehicle type " + vt);
-			}
-		}
+				VehicleTypes.Ship => typeof(Ship),
+				VehicleTypes.Base => typeof(Base),
+				VehicleTypes.Fighter => typeof(Fighter),
+				VehicleTypes.Troop => typeof(Troop),
+				VehicleTypes.Mine => typeof(Mine),
+				VehicleTypes.Satellite => typeof(Satellite),
+				VehicleTypes.Drone => typeof(Drone),
+				VehicleTypes.WeaponPlatform => typeof(WeaponPlatform),
+				_ => throw new Exception("No type is available for vehicle type " + vt)
+			};
 
 		/// <summary>
 		/// All income provided by an object.
 		/// </summary>
 		/// <param name="o"></param>
 		/// <returns></returns>
-		public static ResourceQuantity GrossIncome(this IIncomeProducer o)
-		{
-			return o.StandardIncome() + o.RemoteMiningIncome() + o.RawResourceIncome();
-		}
+		public static ResourceQuantity GrossIncome(this IIncomeProducer o) => o.StandardIncome() + o.RemoteMiningIncome() + o.RawResourceIncome();
 
-		public static object Instantiate(this Type type, params object[] args)
+		public static object? Instantiate(this Type type, params object[] args)
 		{
 			if (type.Name == "Battle")
 				return typeof(SpaceBattle).Instantiate(); // HACK - old savegame compatibility
@@ -704,15 +682,9 @@ namespace FrEee.Utility.Extensions
 				return FormatterServices.GetSafeUninitializedObject(type);
 		}
 
-		public static T Instantiate<T>(params object[] args)
-		{
-			return (T)typeof(T).Instantiate(args);
-		}
+		public static T Instantiate<T>(params object[] args) => (T)typeof(T).Instantiate(args);
 
-		public static bool IsUnlocked(this IUnlockable u)
-		{
-			return u.UnlockRequirements.All(r => r.IsMetBy(Empire.Current));
-		}
+		public static bool IsUnlocked(this IUnlockable u) => u.UnlockRequirements.All(r => r.IsMetBy(Empire.Current));
 
 		/// <summary>
 		/// Limits a value to a range.
@@ -725,7 +697,7 @@ namespace FrEee.Utility.Extensions
 		public static int LimitToRange(this int value, int min, int max)
 		{
 			if (min > max)
-				throw new ArgumentOutOfRangeException("Min is {0} and can't be larger than max which is {1}!".F(min, max));
+				throw new ArgumentOutOfRangeException($"Min is {min} and can't be larger than max which is {max}!");
 			if (value > max)
 				value = max;
 			if (value < min)
@@ -744,7 +716,7 @@ namespace FrEee.Utility.Extensions
 		public static double LimitToRange(this double value, double min, double max)
 		{
 			if (min > max)
-				throw new ArgumentOutOfRangeException("Min is {0} and can't be larger than max which is {1}!".F(min, max));
+				throw new ArgumentOutOfRangeException($"Min is {min} and can't be larger than max which is {max}!");
 			if (value > max)
 				value = max;
 			if (value < min)
