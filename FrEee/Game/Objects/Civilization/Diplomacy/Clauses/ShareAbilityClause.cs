@@ -1,6 +1,8 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Utility.Extensions;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 {
@@ -21,18 +23,9 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 		/// </summary>
 		public AbilityRule AbilityRule { get; set; }
 
-		public override string BriefDescription
-		{
-			get { return "Share Ability (" + AbilityRule.Name + ") - " + Priority + " Priority"; }
-		}
+		public override string BriefDescription => $"Share Ability ({AbilityRule.Name}) - {Priority} Priority";
 
-		public override string FullDescription
-		{
-			get
-			{
-				return Giver.WeOrName() + " will share the " + AbilityRule.Name + " ability with " + Receiver.UsOrName() + " at " + Priority.ToString().ToLower() + " priority.";
-			}
-		}
+		public override string FullDescription => $"{Giver.WeOrName()} will share the {AbilityRule.Name} ability with {Receiver.UsOrName()} at {Priority.ToString().ToLower()} priority.";
 
 		/// <summary>
 		/// The priority of sharing with this empire.

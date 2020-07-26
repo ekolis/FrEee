@@ -1,7 +1,9 @@
-﻿using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Utility.Extensions;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 {
@@ -15,18 +17,9 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 		{
 		}
 
-		public override string BriefDescription
-		{
-			get { return "Share Combat Logs"; }
-		}
+		public override string BriefDescription => "Share Combat Logs";
 
-		public override string FullDescription
-		{
-			get
-			{
-				return Giver.WeOrName() + " will share all combat logs with " + Receiver.UsOrName();
-			}
-		}
+		public override string FullDescription => $"{Giver.WeOrName()} will share all combat logs with {Receiver.UsOrName()}";
 
 		public override void PerformAction()
 		{

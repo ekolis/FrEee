@@ -1,8 +1,10 @@
-﻿using FrEee.Modding;
+using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.AI
 {
@@ -28,14 +30,9 @@ namespace FrEee.Game.Objects.AI
 		/// </summary>
 		public SafeDictionary<string, ICollection<string>> MinisterNames { get; private set; }
 
+		public string? ModID { get; set; }
 
-		public string ModID { get; set; }
-
-		public string Name
-		{
-			get;
-			private set;
-		}
+		public string Name { get; private set; }
 
 		/// <summary>
 		/// The script to run.
@@ -45,7 +42,7 @@ namespace FrEee.Game.Objects.AI
 		/// <summary>
 		/// Parameters from the mod meta templates.
 		/// </summary>
-		public IDictionary<string, object> TemplateParameters { get; set; }
+		public IDictionary<string, object>? TemplateParameters { get; set; }
 
 		/// <summary>
 		/// Allows the AI to act on its domain using information from its context.
@@ -54,7 +51,6 @@ namespace FrEee.Game.Objects.AI
 		/// <param name="context">Contextual data that the AI needs to be aware of.</param>
 		/// <param name="enabledMinisters">The names of any ministers that the player has enabled, keyed by category.</param>
 		public abstract void Act(TDomain domain, TContext context, SafeDictionary<string, ICollection<string>> enabledMinisters);
-		
 
 		public void Dispose()
 		{
@@ -62,12 +58,6 @@ namespace FrEee.Game.Objects.AI
 			IsDisposed = true;
 		}
 
-		public override string ToString()
-		{
-			return Name;
-		}
-
-
-
+		public override string ToString() => Name;
 	}
 }

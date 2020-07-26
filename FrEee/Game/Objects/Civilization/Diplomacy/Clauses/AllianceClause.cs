@@ -1,8 +1,10 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Commands;
 using FrEee.Utility.Extensions;
 using System.Collections.Generic;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 {
@@ -22,13 +24,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 		/// </summary>
 		public AllianceLevel AllianceLevel { get; set; }
 
-		public override string BriefDescription
-		{
-			get
-			{
-				return AllianceLevel.ToSpacedString();
-			}
-		}
+		public override string BriefDescription => AllianceLevel.ToSpacedString();
 
 		public override string FullDescription
 		{

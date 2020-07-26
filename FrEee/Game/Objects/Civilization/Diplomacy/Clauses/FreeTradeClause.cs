@@ -1,4 +1,4 @@
-﻿using FrEee.Modding;
+using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
@@ -23,36 +23,19 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 		/// </summary>
 		public int Amount { get; set; }
 
-		public override string BriefDescription
-		{
-			get { return "Free Trade (" + Resource + ")"; }
-		}
+		public override string BriefDescription => $"Free Trade ({Resource})";
 
-		public override string FullDescription
-		{
-			get
-			{
-				return Receiver.WeOrName() + " will receive income equal to " + TradePercentage + "% of " + Giver.UsOrName().Possessive() + " gross " + Resource.Name.ToLower() + " income (will increase to " + Mod.Current.Settings.MaxTradePercent + "% over " + Math.Ceiling(Mod.Current.Settings.MaxTradePercent - TradePercentage) / Mod.Current.Settings.TradePercentPerTurn + " turns).";
-			}
-		}
+		public override string FullDescription => $"{Receiver.WeOrName()} will receive income equal to {TradePercentage}% of {Giver.UsOrName().Possessive()} gross {Resource.Name.ToLower()} income (will increase to {Mod.Current.Settings.MaxTradePercent}% over {Math.Ceiling(Mod.Current.Settings.MaxTradePercent - TradePercentage) / Mod.Current.Settings.TradePercentPerTurn} turns).";
 
 		/// <summary>
 		/// The resource being traded.
 		/// </summary>
-		public Resource Resource
-		{
-			get;
-			set;
-		}
+		public Resource Resource { get; set; }
 
 		/// <summary>
 		/// The percentage of the giver's income that will be traded.
 		/// </summary>
-		public double TradePercentage
-		{
-			get;
-			set;
-		}
+		public double TradePercentage { get; set; }
 
 		public override void PerformAction()
 		{

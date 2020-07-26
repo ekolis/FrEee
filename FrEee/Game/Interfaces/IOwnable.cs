@@ -9,7 +9,7 @@ namespace FrEee.Game.Interfaces
 	public interface IOwnable
 	{
 		[DoNotCopy]
-		Empire? Owner { get; }
+		Empire Owner { get; }
 	}
 
 	/// <summary>

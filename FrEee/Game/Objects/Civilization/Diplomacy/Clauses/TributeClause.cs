@@ -1,6 +1,8 @@
-﻿using FrEee.Utility;
+using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 {
@@ -19,18 +21,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 			IsPercentage = isPercentage;
 		}
 
-		public override string BriefDescription
-		{
-			get
-			{
-				string qty;
-				if (IsPercentage)
-					qty = Quantity + "%";
-				else
-					qty = Quantity.ToUnitString(true);
-				return "Tribute (" + Resource + ") - " + qty;
-			}
-		}
+		public override string BriefDescription => $"Tribute ({Resource}) - {(IsPercentage ? Quantity + "%" : Quantity.ToUnitString(true))}";
 
 		/// <summary>
 		/// The amount of tribute owed.
@@ -45,16 +36,9 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 			}
 		}
 
-		public override string FullDescription
-		{
-			get
-			{
-				if (IsPercentage)
-					return Giver.WeOrName() + " will pay " + Receiver.UsOrName() + " a tribute of " + Quantity + "% of " + Giver.WeOrName(false).Possessive() + " gross " + Resource.Name.ToLower() + " income.";
-				else
-					return Giver.WeOrName() + " will pay " + Receiver.UsOrName() + " a tribute of " + Quantity.ToUnitString(true) + " " + Resource.Name.ToLower() + " per turn.";
-			}
-		}
+		public override string FullDescription => IsPercentage
+					? $"{Giver.WeOrName()} will pay {Receiver.UsOrName()} a tribute of {Quantity}% of {Giver.WeOrName(false).Possessive()} gross {Resource.Name.ToLower()} income."
+					: $"{Giver.WeOrName()} will pay {Receiver.UsOrName()} a tribute of {Quantity.ToUnitString(true)} {Resource.Name.ToLower()} per turn.";
 
 		/// <summary>
 		/// Is this a percentage or a flat rate?
@@ -69,11 +53,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 		/// <summary>
 		/// The resource being traded.
 		/// </summary>
-		public Resource Resource
-		{
-			get;
-			set;
-		}
+		public Resource Resource { get; set; }
 
 		public override void PerformAction()
 		{

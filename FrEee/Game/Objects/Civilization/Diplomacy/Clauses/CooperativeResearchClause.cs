@@ -1,8 +1,10 @@
-﻿using FrEee.Modding;
+using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System.Linq;
 using Tech = FrEee.Game.Objects.Technology.Technology;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 {
@@ -18,18 +20,9 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 		{
 		}
 
-		public override string BriefDescription
-		{
-			get { return "Cooperative Research"; }
-		}
+		public override string BriefDescription => "Cooperative Research";
 
-		public override string FullDescription
-		{
-			get
-			{
-				return Receiver.WeOrName() + " has a " + Mod.Current.Settings.CooperativeResearchBreakthroughChance + "% chance of achieving a breakthrough each turn in any technology that " + Giver.WeOrName(false) + " " + (Giver == Empire.Current ? "are" : "is") + " more advanced in, provided " + Receiver.WeOrName() + " meet" + (Receiver == Empire.Current ? "" : "s") + " the prerequisites.";
-			}
-		}
+		public override string FullDescription => $"{Receiver.WeOrName()} has a {Mod.Current.Settings.CooperativeResearchBreakthroughChance}% chance of achieving a breakthrough each turn in any technology that {Giver.WeOrName(false)} {(Giver == Empire.Current ? "are" : "is")} more advanced in, provided {Receiver.WeOrName()} meet{(Receiver == Empire.Current ? "" : "s")} the prerequisites.";
 
 		public override void PerformAction()
 		{
@@ -60,7 +53,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 							hasProgress.Value = 0;
 						}
 						else
-							hasProgress.Value = giveProgress.Value;
+							hasProgress.Value = giveProgress?.Value ?? 0;
 						Giver.Log.Add(Receiver.CreateLogMessage("The " + Receiver + " has achieved a breakthrough in " + tech + " due to our cooperative research treaty.", LogMessages.LogMessageType.Generic));
 						Receiver.Log.Add(tech.CreateLogMessage("We have achieved a breakthrough in " + tech + " due to our cooperative research treaty with the " + Giver + ".", LogMessages.LogMessageType.ResearchComplete));
 					}

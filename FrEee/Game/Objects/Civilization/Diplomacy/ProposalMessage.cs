@@ -1,6 +1,8 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using System;
 using System.Collections.Generic;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Civilization.Diplomacy
 {
@@ -18,28 +20,16 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			Proposal = new Proposal(recipient);
 		}
 
-		public override IEnumerable<string> IconPaths
-		{
-			get
-			{
-				return Proposal.Owner.IconPaths;
-			}
-		}
+		public override IEnumerable<string> IconPaths => Proposal.Owner.IconPaths;
 
-		public override IEnumerable<string> PortraitPaths
-		{
-			get
-			{
-				return Proposal.Owner.PortraitPaths;
-			}
-		}
+		public override IEnumerable<string> PortraitPaths => Proposal.Owner.PortraitPaths;
 
 		/// <summary>
 		/// The proposal in question.
 		/// </summary>
 		public Proposal Proposal { get; set; }
 
-		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			if (done == null)
 				done = new HashSet<IPromotable>();

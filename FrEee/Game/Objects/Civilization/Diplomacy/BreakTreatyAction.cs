@@ -1,4 +1,6 @@
-﻿using FrEee.Utility.Extensions;
+using FrEee.Utility.Extensions;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Civilization.Diplomacy
 {
@@ -12,10 +14,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		{
 		}
 
-		public override string Description
-		{
-			get { return "Break Treaty"; }
-		}
+		public override string Description => "Break Treaty";
 
 		public override void Execute()
 		{

@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
+#nullable enable
+
 namespace FrEee.Game.Objects.Abilities
 {
 	/// <summary>
@@ -34,7 +36,7 @@ namespace FrEee.Game.Objects.Abilities
 		/// A default description for abilities which do not provide their own description.
 		/// Can use, e.g. [%Amount1%] to specify the amount in the Value 1 field.
 		/// </summary>
-		public Formula<string> Description { get; set; }
+		public Formula<string>? Description { get; set; }
 
 		/// <summary>
 		/// The rules for stacking abilities after grouping.
@@ -70,25 +72,14 @@ namespace FrEee.Game.Objects.Abilities
 			}
 		}
 
-		public bool IsDisposed
-		{
-			get
-			{
-				// can't be disposed of
-				return false;
-			}
-		}
+		public bool IsDisposed => false; // can't be disposed of
 
-		public string ModID
-		{
-			get;
-			set;
-		}
+		public string? ModID { get; set; }
 
 		/// <summary>
 		/// The name of the ability to which this rule applies.
 		/// </summary>
-		public string Name { get; set; }
+		public string? Name { get; set; }
 
 		/// <summary>
 		/// Valid targets for this ability.
@@ -98,7 +89,7 @@ namespace FrEee.Game.Objects.Abilities
 		/// <summary>
 		/// Parameters from the mod meta templates.
 		/// </summary>
-		public IDictionary<string, object> TemplateParameters { get; set; }
+		public IDictionary<string, object>? TemplateParameters { get; set; }
 
 		/// <summary>
 		/// The rules for grouping and stacking abilities.
@@ -110,20 +101,14 @@ namespace FrEee.Game.Objects.Abilities
 		/// </summary>
 		/// <param name="nameOrAlias">The name or alias.</param>
 		/// <returns>The ability rule, or null if none matches.</returns>
-		public static AbilityRule Find(string nameOrAlias)
-		{
-			return Mod.Current.AbilityRules.Where(r => r.Matches(nameOrAlias)).SingleOrDefault();
-		}
+		public static AbilityRule Find(string nameOrAlias) => Mod.Current.AbilityRules.Where(r => r.Matches(nameOrAlias)).SingleOrDefault();
 
 		/// <summary>
 		/// Can this ability target something?
 		/// </summary>
 		/// <param name="target"></param>
 		/// <returns></returns>
-		public bool CanTarget(AbilityTargets target)
-		{
-			return Targets.HasFlag(target);
-		}
+		public bool CanTarget(AbilityTargets target) => Targets.HasFlag(target);
 
 		public void Dispose()
 		{
@@ -209,13 +194,14 @@ namespace FrEee.Game.Objects.Abilities
 		/// <returns></returns>
 		public bool StartsWith(string prefix)
 		{
+			if (Name is null)
+			{
+				return false;
+			}
 			return Name.StartsWith(prefix) || Aliases.Any(a => a.StartsWith(prefix));
 		}
 
-		public override string ToString()
-		{
-			return Name;
-		}
+		public override string ToString() => Name ?? string.Empty;
 
 		private ILookup<Ability, Ability> Stack(IEnumerable<Ability> abilities, IAbilityObject stackingTo, bool groupStacking)
 		{

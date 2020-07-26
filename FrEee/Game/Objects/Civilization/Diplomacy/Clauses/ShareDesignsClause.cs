@@ -1,4 +1,6 @@
-﻿using FrEee.Utility.Extensions;
+using FrEee.Utility.Extensions;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 {
@@ -12,18 +14,9 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 		{
 		}
 
-		public override string BriefDescription
-		{
-			get { return "Share Designs"; }
-		}
+		public override string BriefDescription => "Share Designs";
 
-		public override string FullDescription
-		{
-			get
-			{
-				return Giver.WeOrName() + " will share all known vehicle designs with " + Receiver.UsOrName();
-			}
-		}
+		public override string FullDescription => $"{Giver.WeOrName()} will share all known vehicle designs with {Receiver.UsOrName()}";
 
 		public override void PerformAction()
 		{

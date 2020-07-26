@@ -12,6 +12,6 @@ namespace FrEee.Game.Interfaces
 		/// </summary>
 		/// <param name="idmap"></param>
 		/// <param name="done">Any promoted objects that are already done replacing IDs.</param>
-		void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null);
+		void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null);
 	}
 }

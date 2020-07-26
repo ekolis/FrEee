@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Game.Objects.Space;
@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Tech = FrEee.Game.Objects.Technology.Technology;
 
+#nullable enable
+
 namespace FrEee.Game.Objects.Civilization.Diplomacy
 {
 	/// <summary>
@@ -16,7 +18,10 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 	/// </summary>
 	public class Package : IOwnable, IPromotable
 	{
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+		// initialized via property
 		public Package(Empire owner, Empire recipient)
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 		{
 			Owner = owner;
 			Recipient = recipient;
@@ -76,32 +81,20 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			}
 		}
 
-		public bool IsEmpty
-		{
-			get
-			{
-				return !TreatyClauses.Any() && !Planets.Any() && !Vehicles.Any() && !Resources.Any(r => r.Value != 0) && !Technology.Any() && !StarCharts.Any() && !CommunicationChannels.Any();
-			}
-		}
+		public bool IsEmpty => !TreatyClauses.Any() && !Planets.Any() && !Vehicles.Any() && !Resources.Any(r => r.Value != 0) && !Technology.Any() && !StarCharts.Any() && !CommunicationChannels.Any();
 
 		/// <summary>
 		/// Is this a valid package?
 		/// </summary>
-		public bool IsValid
-		{
-			get
-			{
-				return !Errors.Any();
-			}
-		}
+		public bool IsValid => !Errors.Any();
 
 		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		public Empire Owner { get => owner; set => owner = value; }
 
 		public GalaxyReferenceSet<Planet> Planets { get; private set; }
 
 		[DoNotSerialize]
-		public Empire Recipient { get { return recipient; } set { recipient = value; } }
+		public Empire Recipient { get => recipient; set => recipient = value; }
 
 		public ResourceQuantity Resources { get; private set; }
 		public GalaxyReferenceSet<StarSystem> StarCharts { get; private set; }
@@ -112,7 +105,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		private GalaxyReference<Empire> owner { get; set; }
 		private GalaxyReference<Empire> recipient { get; set; }
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			if (done == null)
 				done = new HashSet<IPromotable>();
@@ -126,7 +119,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 
 		public override string ToString()
 		{
-			var items = new List<string>();
+			var items = new List<string?>();
 			if (TreatyClauses.Any())
 			{
 				if (TreatyClauses.Count == 1)

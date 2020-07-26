@@ -196,7 +196,7 @@ namespace FrEee.Modding
 			return Evaluate(host, variables);
 		}
 
-		public abstract T Evaluate(object host, IDictionary<string, object>? variables = null);
+		public abstract T Evaluate(object host, IDictionary<string, object> variables = null);
 
 		public override string ToString()
 		{
@@ -212,7 +212,7 @@ namespace FrEee.Modding
 			}
 		}
 
-		public abstract Formula<string> ToStringFormula(CultureInfo? c = null);
+		public abstract Formula<string> ToStringFormula(CultureInfo c = null);
 
 		protected abstract T ComputeValue();
 	}

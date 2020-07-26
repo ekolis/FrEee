@@ -1,4 +1,6 @@
-﻿using FrEee.Utility.Extensions;
+using FrEee.Utility.Extensions;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Civilization.Diplomacy
 {
@@ -12,10 +14,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		{
 		}
 
-		public override string Description
-		{
-			get { return "Declare War"; }
-		}
+		public override string Description => "Declare War";
 
 		public override void Execute()
 		{

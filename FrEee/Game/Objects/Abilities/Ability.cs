@@ -24,7 +24,7 @@ namespace FrEee.Game.Objects.Abilities
 			Values = new List<Formula<string>>();
 		}
 
-		public Ability(IAbilityObject container, AbilityRule rule, string? description = null, params object[] values)
+		public Ability(IAbilityObject container, AbilityRule rule, string description = null, params object[] values)
 		{
 			Container = container;
 			Rule = rule;
@@ -99,9 +99,9 @@ namespace FrEee.Game.Objects.Abilities
 		public string ModID { get; set; }
 
 		// TODO - should abilities even have names?
-		public string? Name => null;
+		public string Name => null;
 
-		public Empire? Owner => (Container as IOwnable)?.Owner;
+		public Empire Owner => (Container as IOwnable)?.Owner;
 
 		/// <summary>
 		/// The ability rule which defines what ability this is.

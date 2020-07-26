@@ -1,17 +1,18 @@
+using System;
+using System.Collections.Generic;
+
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Utility;
+
 using Microsoft.CodeAnalysis.Scripting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.AI
 {
-    [Serializable]
+	[Serializable]
     public class CSAI<TDomain, TContext> : AI<TDomain, TContext> where TDomain : Empire where TContext : Galaxy
     {
         public CSAI(string name, CSScript script, SafeDictionary<string, ICollection<string>> ministerNames) 
@@ -19,7 +20,6 @@ namespace FrEee.Game.Objects.AI
         {
             ScriptRunner = script.CreateScriptObject<Globals, TDomain>(); 
         }
-
 
         /// <summary>
         /// The object that holds a cs script within memory. 
@@ -59,10 +59,10 @@ namespace FrEee.Game.Objects.AI
     /// </summary>
     public class Globals
     {
-        public Empire Domain;
+        public Empire? Domain;
 
-        public Galaxy Context;
+        public Galaxy? Context;
 
-        public SafeDictionary<string, ICollection<string>> EnabledMinisters;
+        public SafeDictionary<string, ICollection<string>>? EnabledMinisters;
     }
 }

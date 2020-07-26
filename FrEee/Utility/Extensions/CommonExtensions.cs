@@ -291,13 +291,13 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="list"></param>
 		/// <param name="condition"></param>
-		public static void DisposeAll<T>(this IEnumerable<T> list, Func<T, bool>? condition = null) where T : IDisposable
+		public static void DisposeAll<T>(this IEnumerable<T> list, Func<T, bool> condition = null) where T : IDisposable
 		{
 			foreach (var d in list.Where(d => condition == null || condition(d)).ToArray())
 				d.Dispose();
 		}
 
-		public static void DisposeAndLog(this IFoggable obj, string? message = null, params Empire[] empiresToSkipMessage)
+		public static void DisposeAndLog(this IFoggable obj, string message = null, params Empire[] empiresToSkipMessage)
 		{
 			if (Empire.Current == null)
 			{
@@ -393,7 +393,7 @@ namespace FrEee.Utility.Extensions
 		/// Finds the cargo container which contains this unit.
 		/// </summary>
 		/// <returns></returns>
-		public static ICargoContainer? FindContainer(this IUnit unit)
+		public static ICargoContainer FindContainer(this IUnit unit)
 		{
 			var containers = Galaxy.Current.FindSpaceObjects<ICargoContainer>().Where(cc => !(cc is Fleet) && cc.Cargo != null && cc.Cargo.Units.Contains(unit));
 			if (!containers.Any())
@@ -456,7 +456,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="t"></param>
 		/// <param name="propName"></param>
 		/// <returns></returns>
-		public static PropertyInfo? FindProperty(this Type type, string propName)
+		public static PropertyInfo FindProperty(this Type type, string propName)
 		{
 			var p = type.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 			if (p != null)
@@ -482,7 +482,7 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="sobj"></param>
 		/// <returns></returns>
-		public static Sector? FindSector(this ISpaceObject sobj)
+		public static Sector FindSector(this ISpaceObject sobj)
 		{
 			var sys = sobj.FindStarSystem();
 			if (sys == null)
@@ -496,7 +496,7 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="sobj"></param>
 		/// <returns></returns>
-		public static StarSystem? FindStarSystem(this ISpaceObject sobj)
+		public static StarSystem FindStarSystem(this ISpaceObject sobj)
 		{
 			var loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.Contains(sobj));
 			/*if (loc == null)
@@ -632,7 +632,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="o"></param>
 		/// <param name="propertyName"></param>
 		/// <returns></returns>
-		public static object? GetPropertyValue(this object o, string propertyName)
+		public static object GetPropertyValue(this object o, string propertyName)
 		{
 			if (o == null)
 				return null;
@@ -672,7 +672,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static ResourceQuantity GrossIncome(this IIncomeProducer o) => o.StandardIncome() + o.RemoteMiningIncome() + o.RawResourceIncome();
 
-		public static object? Instantiate(this Type type, params object[] args)
+		public static object Instantiate(this Type type, params object[] args)
 		{
 			if (type.Name == "Battle")
 				return typeof(SpaceBattle).Instantiate(); // HACK - old savegame compatibility

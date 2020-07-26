@@ -14,9 +14,9 @@ namespace FrEee.Utility
 
 		object Value { get; }
 
-		void InitializeData(ObjectGraphContext? ctx = null);
+		void InitializeData(ObjectGraphContext ctx = null);
 
-		void InitializeValue(ObjectGraphContext? ctx = null);
+		void InitializeValue(ObjectGraphContext ctx = null);
 	}
 
 	/// <summary>
@@ -30,7 +30,7 @@ namespace FrEee.Utility
 			Type = typeof(object);
 		}
 
-		public SimpleDataObject(object o, ObjectGraphContext? ctx = null)
+		public SimpleDataObject(object o, ObjectGraphContext ctx = null)
 		{
 			Context = ctx ?? new ObjectGraphContext();
 			if (o != null)
@@ -48,7 +48,7 @@ namespace FrEee.Utility
 			}
 		}
 
-		public SimpleDataObject(SafeDictionary<string, IData> simpleData, ObjectGraphContext? ctx = null)
+		public SimpleDataObject(SafeDictionary<string, IData> simpleData, ObjectGraphContext ctx = null)
 		{
 			SimpleData = simpleData;
 			Context = ctx ?? new ObjectGraphContext();
@@ -140,7 +140,7 @@ namespace FrEee.Utility
 		[NonSerialized]
 		private object value;
 
-		public static ISimpleDataObject Create(object o, ObjectGraphContext? ctx = null)
+		public static ISimpleDataObject Create(object o, ObjectGraphContext ctx = null)
 		{
 			if (o == null)
 				return null;
@@ -148,7 +148,7 @@ namespace FrEee.Utility
 			return new SimpleDataObject(o, ctx);
 		}
 
-		public static ISimpleDataObject Load(SafeDictionary<string, IData> simpleData, ObjectGraphContext? ctx = null)
+		public static ISimpleDataObject Load(SafeDictionary<string, IData> simpleData, ObjectGraphContext ctx = null)
 		{
 			if (simpleData == null)
 				return null;
@@ -156,19 +156,19 @@ namespace FrEee.Utility
 			return new SimpleDataObject(simpleData, ctx);
 		}
 
-		public void InitializeData(ObjectGraphContext? ctx = null)
+		public void InitializeData(ObjectGraphContext ctx = null)
 		{
 			Data = Value.GetData(ctx ?? Context);
 		}
 
-		public void InitializeValue(ObjectGraphContext? ctx = null)
+		public void InitializeValue(ObjectGraphContext ctx = null)
 		{
 			if (Context.GetID(Value) == null)
 				Context.Add(Value);
 			Value.SetData(Data, ctx ?? Context);
 		}
 
-		public T Reconstitute<T>(ObjectGraphContext? ctx = null)
+		public T Reconstitute<T>(ObjectGraphContext ctx = null)
 		{
 			var result = (T)typeof(T).Instantiate();
 			result.SetData(Data, ctx ?? new ObjectGraphContext());

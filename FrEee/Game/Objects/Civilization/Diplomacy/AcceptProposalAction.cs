@@ -1,7 +1,9 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System.Collections.Generic;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Civilization.Diplomacy
 {
@@ -11,22 +13,22 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 	/// <typeparam name="T"></typeparam>
 	public class AcceptProposalAction : Action
 	{
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+		// initialized via property
 		public AcceptProposalAction(Proposal proposal)
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 			: base(proposal.Executor)
 		{
 			Proposal = proposal;
 		}
 
-		public override string Description
-		{
-			get { return "Reject " + Proposal; }
-		}
+		public override string Description => $"Reject {Proposal}";
 
 		/// <summary>
 		/// The proposal in question.
 		/// </summary>
 		[DoNotSerialize]
-		public Proposal Proposal { get { return proposal; } set { proposal = value; } }
+		public Proposal Proposal { get => proposal; set => proposal = value; }
 
 		private GalaxyReference<Proposal> proposal { get; set; }
 
@@ -41,10 +43,9 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			}
 		}
 
-		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
-			if (done == null)
-				done = new HashSet<IPromotable>();
+			done ??= new HashSet<IPromotable>();
 			if (!done.Contains(this))
 			{
 				done.Add(this);
