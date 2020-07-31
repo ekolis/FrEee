@@ -1,4 +1,6 @@
-﻿using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Space;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -8,25 +10,12 @@ namespace FrEee.Game.Objects.Civilization
 	public class SectorWaypoint : Waypoint
 	{
 		public SectorWaypoint(Sector sector)
-			: base()
-		{
-			Sector = sector;
-		}
+			: base() => Sector = sector;
 
-		public override string Name
-		{
-			get { return "Waypoint at " + Sector.Name; }
-		}
+		public override string Name => "Waypoint at " + Sector?.Name;
 
-		public override Sector Sector
-		{
-			get;
-			set;
-		}
+		public override Sector? Sector { get; set; }
 
-		public override StarSystem StarSystem
-		{
-			get { return Sector.StarSystem; }
-		}
+		public override StarSystem? StarSystem => Sector?.StarSystem;
 	}
 }

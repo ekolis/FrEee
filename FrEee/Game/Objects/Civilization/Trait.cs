@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Modding;
@@ -7,6 +7,8 @@ using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -28,10 +30,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public IList<Ability> Abilities { get; private set; }
 
-		public AbilityTargets AbilityTarget
-		{
-			get { return AbilityTargets.Trait; }
-		}
+		public AbilityTargets AbilityTarget => AbilityTargets.Trait;
 
 		public IEnumerable<IAbilityObject> Children
 		{
@@ -41,14 +40,14 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The cost of this trait, in empire points.
 		/// </summary>
-		public Formula<int> Cost { get; set; }
+		public Formula<int>? Cost { get; set; }
 
-		public Formula<string> Description { get; set; }
+		public Formula<string>? Description { get; set; }
 
 		/// <summary>
 		/// TODO - trait pictures
 		/// </summary>
-		public Image Icon { get { return null; } }
+		public Image? Icon => null;
 
 		public Image Icon32 => Icon.Resize(32);
 
@@ -60,29 +59,16 @@ namespace FrEee.Game.Objects.Civilization
 			}
 		}
 
-		public IEnumerable<Ability> IntrinsicAbilities
-		{
-			get { return Abilities; }
-		}
+		public IEnumerable<Ability> IntrinsicAbilities => Abilities;
 
-		public bool IsDisposed
-		{
-			// TODO - disposable traits?
-			get { return false; }
-		}
+		// TODO - disposable traits?
+		public bool IsDisposed => false;
 
-		public string ModID { get; set; }
+		public string? ModID { get; set; }
 
-		public string Name
-		{
-			get;
-			set;
-		}
+		public string? Name { get; set; }
 
-		string INamed.Name
-		{
-			get { return Name; }
-		}
+		string? INamed.Name => Name;
 
 		public IEnumerable<IAbilityObject> Parents
 		{
@@ -95,7 +81,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// TODO - trait pictures
 		/// </summary>
-		public Image Portrait { get { return null; } }
+		public Image? Portrait => null;
 
 		public IEnumerable<string> PortraitPaths
 		{
@@ -110,10 +96,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public IList<Trait> RequiredTraits { get; private set; }
 
-		public string ResearchGroup
-		{
-			get { return "Trait"; }
-		}
+		public string ResearchGroup => "Trait";
 
 		/// <summary>
 		/// Traits that cannot be chosen alongside this trait.
@@ -123,7 +106,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Parameters from the mod meta templates.
 		/// </summary>
-		public IDictionary<string, object> TemplateParameters { get; set; }
+		public IDictionary<string, object>? TemplateParameters { get; set; }
 
 		public IList<Requirement<Empire>> UnlockRequirements
 		{
@@ -143,9 +126,6 @@ namespace FrEee.Game.Objects.Civilization
 			// nothing to do
 		}
 
-		public override string ToString()
-		{
-			return Name;
-		}
+		public override string ToString() => Name ?? string.Empty;
 	}
 }

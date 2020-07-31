@@ -21,6 +21,8 @@ using System.Linq;
 using System.Reflection;
 using Tech = FrEee.Game.Objects.Technology.Technology;
 
+#nullable enable
+
 namespace FrEee.Game.Objects.Civilization
 {
 	/// <summary>
@@ -39,7 +41,7 @@ namespace FrEee.Game.Objects.Civilization
 			ResearchedTechnologies = new ModReferenceKeyedDictionary<Tech, int>();
 			AccumulatedResearch = new ModReferenceKeyedDictionary<Tech, int>();
 			ResearchSpending = new ModReferenceKeyedDictionary<Tech, int>();
-			ResearchQueue = new ModReferenceList<Technology.Technology>();
+			ResearchQueue = new ModReferenceList<Tech>();
 			UniqueTechsFound = new List<string>();
 			Memory = new SafeDictionary<long, IFoggable>();
 			AINotes = new DynamicDictionary();
@@ -58,40 +60,25 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The current empire being controlled by the player.
 		/// </summary>
-		public static Empire Current
-		{
-			get
-			{
-				if (Galaxy.Current == null)
-					return null;
-				return Galaxy.Current.CurrentEmpire;
-			}
-		}
+		public static Empire? Current => Galaxy.Current?.CurrentEmpire;
 
 		/// <summary>
 		/// Information about the player controlling this empire.
 		/// </summary>
-		public PlayerInfo PlayerInfo { get; set; }
+		public PlayerInfo? PlayerInfo { get; set; }
 
-		public AbilityTargets AbilityTarget
-		{
-			get { return AbilityTargets.Empire; }
-		}
+		public AbilityTargets AbilityTarget => AbilityTargets.Empire;
 
 		/// <summary>
 		/// Accumulated research points.
 		/// </summary>
-		public ModReferenceKeyedDictionary<Tech, int> AccumulatedResearch
-		{
-			get;
-			private set;
-		}
+		public ModReferenceKeyedDictionary<Tech, int> AccumulatedResearch { get; private set; }
 
 		/// <summary>
 		/// The AI which controls the behavior of empires of this race.
 		/// </summary>
 		[DoNotSerialize]
-		public AI<Empire, Galaxy> AI { get { return ai; } set { ai = value; } }
+		public AI<Empire, Galaxy> AI { get => ai; set => ai = value; }
 
 		/// <summary>
 		/// Arbitrary data stored by the AI to maintain state between turns.
@@ -124,45 +111,27 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Technologies which are available for research.
 		/// </summary>
-		public IEnumerable<Technology.Technology> AvailableTechnologies
-		{
-			get
-			{
-				return Mod.Current.Technologies.Where(
-					t => HasUnlocked(t) && ResearchedTechnologies[t] < t.MaximumLevel);
-			}
-		}
+		public IEnumerable<Tech> AvailableTechnologies => Mod.Current.Technologies.Where(t => HasUnlocked(t) && ResearchedTechnologies[t] < t.MaximumLevel);
 
 		/// <summary>
 		/// Bonus research available to spend this turn only.
 		/// </summary>
 		public int BonusResearch { get; set; }
 
-		public IEnumerable<IAbilityObject> Children
-		{
-			get
-			{
-				return OwnedSpaceObjects.Cast<IAbilityObject>().Append(PrimaryRace);
-			}
-		}
+		public IEnumerable<IAbilityObject?> Children => OwnedSpaceObjects.Cast<IAbilityObject>().Append(PrimaryRace);
 
 		/// <summary>
 		/// Planets colonized by the empire.
 		/// </summary>
-		public IEnumerable<Planet> ColonizedPlanets
-		{
-			get
-			{
-				return Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item).SelectMany(ss => ss.FindSpaceObjects<Planet>(p => p.Owner == this && !p.IsMemoryOfKnownObject()));
-			}
-		}
+		public IEnumerable<Planet> ColonizedPlanets =>
+			Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item).SelectMany(ss => ss.FindSpaceObjects<Planet>(p => p.Owner == this && !p.IsMemoryOfKnownObject()));
 
 		public ResourceQuantity ColonyIncome
 		{
 			get
 			{
 				// shouldn't change except at turn processing...
-				if (colonyIncome == null || Empire.Current == null)
+				if (colonyIncome == null || Current == null)
 				{
 					colonyIncome = ColonizedPlanets.Sum(p => p.GrossIncome());
 				}
@@ -184,30 +153,19 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// All construction queues owned by this empire.
 		/// </summary>
-		public IEnumerable<ConstructionQueue> ConstructionQueues
-		{
-			get
-			{
-				return Galaxy.Current.Referrables.OfType<ConstructionQueue>().Where(q => q.Owner == this && q.Container.Sector != null && q.Rate.Any(kvp => kvp.Value > 0));
-			}
-		}
+		public IEnumerable<ConstructionQueue> ConstructionQueues =>
+			Galaxy.Current.Referrables.OfType<ConstructionQueue>().Where(q => q.Owner == this && q.Container.Sector != null && q.Rate.Any(kvp => kvp.Value > 0));
 
 		/// <summary>
 		/// Spending on construction this turn.
 		/// </summary>
-		public ResourceQuantity ConstructionSpending
-		{
-			get
-			{
-				return ConstructionQueues.Sum(q => q.UpcomingSpending);
-			}
-		}
+		public ResourceQuantity ConstructionSpending => ConstructionQueues.Sum(q => q.UpcomingSpending);
 
 		/// <summary>
 		/// The empire's culture.
 		/// </summary>
 		[DoNotSerialize]
-		public Culture Culture { get { return culture; } set { culture = value; } }
+		public Culture Culture { get => culture; set => culture = value; }
 
 		/// <summary>
 		/// Any empires that this empire has encountered.
@@ -218,10 +176,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Finds star systems explored by the empire.
 		/// </summary>
-		public IEnumerable<StarSystem> ExploredStarSystems
-		{
-			get { return Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item).Where(sys => sys.ExploredByEmpires.Contains(this)); }
-		}
+		public IEnumerable<StarSystem> ExploredStarSystems => Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item).Where(sys => sys.ExploredByEmpires.Contains(this));
 
 		/// <summary>
 		/// Any treaty clauses this empire is offering to other empires.
@@ -271,10 +226,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The insignia icon for this empire.
 		/// </summary>
-		public Image Icon
-		{
-			get { return Pictures.GetIcon(this); }
-		}
+		public Image Icon => Pictures.GetIcon(this);
 
 		public Image Icon32 => Icon.Resize(32);
 
@@ -305,7 +257,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The name of the insignia picture file, relative to Pictures/Insignia.
 		/// </summary>
-		public string InsigniaName { get; set; }
+		public string? InsigniaName { get; set; }
 
 		/// <summary>
 		/// Empires don't have intrinsic abilities.
@@ -324,13 +276,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// Is this empire defeated?
 		/// An empire is defeated when it no longer controls any space objects.
 		/// </summary>
-		public bool IsDefeated
-		{
-			get
-			{ 
-				return !OwnedSpaceObjects.Any(sobj => !sobj.IsDisposed);
-			}
-		}
+		public bool IsDefeated => !OwnedSpaceObjects.Any(sobj => !sobj.IsDisposed);
 
 		public bool IsDisposed { get; set; }
 
@@ -358,12 +304,12 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The name and/or title of the leader of the empire.
 		/// </summary>
-		public string LeaderName { get; set; }
+		public string? LeaderName { get; set; }
 
 		/// <summary>
 		/// The name of the leader's image file, relative to Pictures/Leaders.
 		/// </summary>
-		public string LeaderPortraitName { get; set; }
+		public string? LeaderPortraitName { get; set; }
 
 		/// <summary>
 		/// Empire history log.
@@ -393,49 +339,31 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The name of the empire.
 		/// </summary>
-		public string Name { get; set; }
+		public string? Name { get; set; }
 
 		/// <summary>
 		/// Gross income less maintenance.
 		/// TODO - should we include tributes here?
 		/// </summary>
-		public ResourceQuantity NetIncome
-		{
-			get { return GrossDomesticIncome - Maintenance; }
-		}
+		public ResourceQuantity NetIncome => GrossDomesticIncome - Maintenance;
 
 		/// <summary>
 		/// Net income less construction spending.
 		/// </summary>
-		public ResourceQuantity NetIncomeLessConstruction
-		{
-			get
-			{
-				return NetIncome - ConstructionSpending;
-			}
-		}
+		public ResourceQuantity NetIncomeLessConstruction => NetIncome - ConstructionSpending;
 
 		/// <summary>
 		/// Numbered waypoints that are on hotkeys.
 		/// </summary>
-		public Waypoint[] NumberedWaypoints { get; private set; }
+		public Waypoint?[] NumberedWaypoints { get; private set; }
 
-		public IEnumerable<ISpaceObject> OwnedSpaceObjects
-		{
-			get
-			{
-				return Galaxy.Current.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == this);
-			}
-		}
+		public IEnumerable<ISpaceObject> OwnedSpaceObjects => Galaxy.Current.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == this);
 
 		/// <summary>
 		/// Empires don't really have owners...
 		/// They could be said to own themselves but it makes more sense for referencing purposes to have no owner.
 		/// </summary>
-		public Empire Owner
-		{
-			get { return null; }
-		}
+		public Empire? Owner => null;
 
 		public IEnumerable<IAbilityObject> Parents
 		{
@@ -453,10 +381,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The leader portrait for this empire.
 		/// </summary>
-		public Image Portrait
-		{
-			get { return Pictures.GetPortrait(this); }
-		}
+		public Image Portrait => Pictures.GetPortrait(this);
 
 		public IEnumerable<string> PortraitPaths
 		{
@@ -466,7 +391,7 @@ namespace FrEee.Game.Objects.Civilization
 					yield return x;
 
 				// fall back on population icon
-				foreach (var x in PrimaryRace.IconPaths)
+				foreach (var x in PrimaryRace?.IconPaths ?? new List<string>())
 					yield return x;
 			}
 		}
@@ -474,7 +399,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The native race of this empire.
 		/// </summary>
-		public Race PrimaryRace { get; set; }
+		public Race? PrimaryRace { get; set; }
 
 		/// <summary>
 		/// Privately visible names set by the player on various game objects.
@@ -538,8 +463,8 @@ namespace FrEee.Game.Objects.Civilization
 								{
 									var amount = miner.GetAbilityValue(rule.Name).ToInt();
 									int modifier = 100;
-									if (resource.Aptitude != null)
-										modifier = miner.Owner.PrimaryRace.Aptitudes[resource.Aptitude.Name];
+									if (resource.Aptitude?.Name != null)
+										modifier = miner.Owner.PrimaryRace?.Aptitudes[resource.Aptitude.Name] ?? 100;
 									var income = amount * sobj.ResourceValue[resource] * modifier / 100 / 100;
 									var sectorEmpire = Tuple.Create(miner.Sector, miner.Owner);
 
@@ -604,7 +529,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Progress towards completing next levels of techs.
 		/// </summary>
-		public IEnumerable<ModProgress<Tech>> ResearchProgress
+		public IEnumerable<ModProgress<Tech>>? ResearchProgress
 		{
 			get
 			{
@@ -682,18 +607,14 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The name of the shipset, relative to Pictures/Shipsets.
 		/// </summary>
-		public string ShipsetPath { get; set; }
+		public string? ShipsetPath { get; set; }
 
 		/// <summary>
 		/// The resources stored by the empire.
 		/// </summary>
 		public ResourceQuantity StoredResources { get; set; }
 
-		public double Timestamp
-		{
-			get;
-			set;
-		}
+		public double Timestamp { get; set; }
 
 		/// <summary>
 		/// The empire's resource income from free trade treaties with other empires.
@@ -729,7 +650,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// Unlocked items such as component and facility templates.
 		/// </summary>
 		[DoNotSerialize]
-		public IEnumerable<IUnlockable> UnlockedItems
+		public IEnumerable<IUnlockable>? UnlockedItems
 		{
 			get
 			{
@@ -739,40 +660,35 @@ namespace FrEee.Game.Objects.Civilization
 			}
 		}
 
-		public IDictionary<string, object> Variables
-		{
-			get
-			{
-				// let scripters refer to empire as empire, not just as host, because host would be confusing
-				return new Dictionary<string, object>
+		// let scripters refer to empire as empire, not just as host, because host would be confusing
+		public IDictionary<string, object> Variables =>
+				new Dictionary<string, object>
 				{
 					{"empire", this}
 				};
-			}
-		}
 
 		/// <summary>
 		/// Waypoints set by this empire.
 		/// </summary>
 		public IList<Waypoint> Waypoints { get; private set; }
 
-		private ModReference<AI<Empire, Galaxy>> ai { get; set; }
-		private ModReference<Culture> culture { get; set; }
-		private ResourceQuantity colonyIncome;
+		private ModReference<AI<Empire, Galaxy>>? ai { get; set; }
+		private ModReference<Culture>? culture { get; set; }
+		private ResourceQuantity? colonyIncome;
 
-		private ResourceQuantity grossDomesticIncome;
+		private ResourceQuantity? grossDomesticIncome;
 
-		private ResourceQuantity maintenance;
+		private ResourceQuantity? maintenance;
 
-		private ResourceQuantity rawResourceIncome;
+		private ResourceQuantity? rawResourceIncome;
 
-		private IDictionary<(ISpaceObject, IMineableSpaceObject), ResourceQuantity> remoteMiners;
-		private ResourceQuantity remoteMiningIncome;
+		private IDictionary<(ISpaceObject, IMineableSpaceObject), ResourceQuantity>? remoteMiners;
+		private ResourceQuantity? remoteMiningIncome;
 
-		private ModProgress<Tech>[] researchProgress;
-		private ResourceQuantity tradeIncome;
+		private ModProgress<Tech>[]? researchProgress;
+		private ResourceQuantity? tradeIncome;
 
-		private ISet<IUnlockable> unlockedItems;
+		private ISet<IUnlockable>? unlockedItems;
 
 		/// <summary>
 		/// Belays (cancels) an order.
@@ -815,7 +731,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			if (item == null)
 				return true;
-			if (item is IFoggable && (item as IFoggable).CheckVisibility(this) < Visibility.Fogged)
+			if (item is IFoggable foggable && foggable.CheckVisibility(this) < Visibility.Fogged)
 				return false; // can't have unlocked something you haven't seen
 							  // TODO - racial/unique tech should just be requirements
 			if (item is Tech && ((Tech)item).IsRacial && !this.Abilities().Any(a => a.Rule != null && a.Rule.Matches("Tech Area") && a.Value1 == ((Tech)item).RacialTechID))
@@ -835,15 +751,9 @@ namespace FrEee.Game.Objects.Civilization
 				return Visibility.Unknown;
 		}
 
-		public int CompareTo(Empire other)
-		{
-			return Name.CompareTo(other.Name);
-		}
+		public int CompareTo(Empire? other) => Name?.CompareTo(other?.Name) ?? 0;
 
-		public int CompareTo(object obj)
-		{
-			return Name.CompareTo(obj.ToString());
-		}
+		public int CompareTo(object? obj) => Name?.CompareTo(obj?.ToString()) ?? 0;
 
 		/// <summary>
 		/// Recomputes the empire's research progress stats.
@@ -913,7 +823,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <param name="other"></param>
 		/// <param name="sys"></param>
 		/// <returns></returns>
-		public Relations GetRelations(Empire other, StarSystem sys)
+		public Relations GetRelations(Empire other, StarSystem? sys)
 		{
 			if (other == null)
 				return Relations.Unknown;
@@ -992,7 +902,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		/// <param name="other"></param>
 		/// <returns></returns>
-		public bool IsAllyOf(Empire other, StarSystem sys)
+		public bool IsAllyOf(Empire other, StarSystem? sys)
 		{
 			if (other == null)
 				return false; // can't be allied to nobody/host
@@ -1125,9 +1035,9 @@ namespace FrEee.Game.Objects.Civilization
 		public void RefreshUnlockedItem(IUnlockable u)
 		{
 			if (CheckUnlockStatus(u))
-				unlockedItems.Add(u);
+				unlockedItems?.Add(u);
 			else
-				unlockedItems.Remove(u);
+				unlockedItems?.Remove(u);
 		}
 
 		public void RefreshUnlockedItems()
@@ -1180,10 +1090,7 @@ namespace FrEee.Game.Objects.Civilization
 			return advanced;
 		}
 
-		public override string ToString()
-		{
-			return Name;
-		}
+		public override string ToString() => Name ?? string.Empty;
 
 		/// <summary>
 		/// Updates the memory sight cache for an object.
@@ -1262,8 +1169,13 @@ namespace FrEee.Game.Objects.Civilization
 			}
 		}
 
-		private IEnumerable<string> GetImagePaths(string imagename, string imagetype)
+		private IEnumerable<string> GetImagePaths(string? imagename, string imagetype)
 		{
+			if (imagename is null)
+			{
+				throw new ArgumentNullException(nameof(imagename));
+			}
+
 			if (Mod.Current?.RootPath != null)
 			{
 				yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", imagename, imagetype);
@@ -1360,9 +1272,9 @@ namespace FrEee.Game.Objects.Civilization
 		/// Name of file containing lists of design names.
 		/// e.g. Ravager would be loaded from Mods/CurrentMod/Dsgnname/Ravager.txt and also from Dsgnname/Ravager.txt.
 		/// </summary>
-		public string DesignNamesFile { get; set; }
+		public string? DesignNamesFile { get; set; }
 
-		private IList<string> designNames;
+		private IList<string>? designNames;
 
 		public IEnumerable<string> DesignNames
 		{
@@ -1376,14 +1288,14 @@ namespace FrEee.Game.Objects.Civilization
 						var fname = DesignNamesFile + ".txt";
 						if (Mod.Current.RootPath != null)
 						{
-							var mfname = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Dsgnname", fname);
+							var mfname = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) ?? string.Empty, "Mods", Mod.Current.RootPath, "Dsgnname", fname);
 							if (File.Exists(mfname))
 							{
 								foreach (var n in File.ReadAllLines(mfname))
 									designNames.Add(n);
 							}
 						}
-						var sfname = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Dsgnname", fname);
+						var sfname = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) ?? string.Empty, "Dsgnname", fname);
 						if (File.Exists(sfname))
 						{
 							foreach (var n in File.ReadAllLines(sfname))

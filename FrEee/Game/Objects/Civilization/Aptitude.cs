@@ -1,6 +1,8 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using System;
 using System.Collections.Generic;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -36,11 +38,11 @@ namespace FrEee.Game.Objects.Civilization
 			}
 		}
 
-		public string AbilityName { get; set; }
+		public string? AbilityName { get; set; }
 
 		public int Cost { get; set; }
 
-		public string Description { get; set; }
+		public string? Description { get; set; }
 
 		public int HighCost { get; set; }
 
@@ -50,7 +52,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public int MinPercent { get; set; }
 
-		public string Name { get; set; }
+		public string? Name { get; set; }
 
 		public int Threshold { get; set; }
 
@@ -181,9 +183,6 @@ namespace FrEee.Game.Objects.Civilization
 				return 0;
 		}
 
-		public override string ToString()
-		{
-			return Name;
-		}
+		public override string ToString() => Name ?? string.Empty;
 	}
 }

@@ -1,8 +1,10 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -13,7 +15,7 @@ namespace FrEee.Game.Objects.Civilization
 	public class Culture : IModObject
 	{
 		public int Construction { get; set; }
-		public string Description { get; set; }
+		public string? Description { get; set; }
 		public int GroundCombat { get; set; }
 		public int Happiness { get; set; }
 
@@ -33,20 +35,15 @@ namespace FrEee.Game.Objects.Civilization
 
 		public int Intelligence { get; set; }
 
-		public bool IsDisposed
-		{
-			get
-			{
+		public bool IsDisposed =>
 				// can't be disposed of
-				return false;
-			}
-		}
+				false;
 
 		public int MaintenanceReduction { get; set; }
-		public string ModID { get; set; }
-		public string Name { get; set; }
+		public string? ModID { get; set; }
+		public string? Name { get; set; }
 
-		string INamed.Name { get { return Name; } }
+		string? INamed.Name => Name;
 		public int Production { get; set; }
 
 		public int Repair { get; set; }
@@ -56,7 +53,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Parameters from the mod meta templates.
 		/// </summary>
-		public IDictionary<string, object> TemplateParameters { get; set; }
+		public IDictionary<string, object>? TemplateParameters { get; set; }
 
 		public int Trade { get; set; }
 
@@ -65,9 +62,6 @@ namespace FrEee.Game.Objects.Civilization
 			// nothing to do
 		}
 
-		public override string ToString()
-		{
-			return Name;
-		}
+		public override string ToString() => Name ?? string.Empty;
 	}
 }

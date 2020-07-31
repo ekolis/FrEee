@@ -1,6 +1,8 @@
-﻿using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Space;
 using System.Drawing;
 using System.IO;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -16,10 +18,10 @@ namespace FrEee.Game.Objects.Civilization
 
 		public Empire Empire { get; set; }
 
-		public Image Insignia { get { return Empire.Icon; } }
-		public bool IsDefeated { get { return Empire.IsDefeated; } }
-		public bool IsPlayerEmpire { get { return Empire.IsPlayerEmpire; } }
-		public string Name { get { return Empire.Name; } }
+		public Image Insignia => Empire.Icon;
+		public bool IsDefeated => Empire.IsDefeated;
+		public bool IsPlayerEmpire => Empire.IsPlayerEmpire;
+		public string? Name => Empire.Name;
 
 		public PlrUploadStatus PlrUploadStatus
 		{

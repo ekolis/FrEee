@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Space;
@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
+#nullable enable
+
 namespace FrEee.Game.Objects.Civilization
 {
 	/// <summary>
@@ -22,7 +24,7 @@ namespace FrEee.Game.Objects.Civilization
 	{
 		public ConstructionQueue(IConstructor c)
 		{
-			Orders = new List<IConstructionOrder>();
+			Orders = new List<IConstructionOrder?>();
 			Container = c;
 			UnspentRate = new ResourceQuantity();
 		}
@@ -44,9 +46,9 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				if (!(Container is ICargoContainer))
-					return 0;
-				return ((ICargoContainer)Container).CargoStorageFree() - Orders.Select(o => o.Template).OfType<IDesign<IUnit>>().Sum(t => t.Hull.Size);
+				if (Container is ICargoContainer cargoContainer)
+					return cargoContainer.CargoStorageFree() - Orders.Select(o => o?.Template).OfType<IDesign<IUnit>>().Sum(t => t.Hull.Size);
+				return 0;
 			}
 		}
 
@@ -62,19 +64,19 @@ namespace FrEee.Game.Objects.Civilization
 				var queues = Container.Sector.SpaceObjects.OfType<IConstructor>().Where
 					(sobj => sobj.Owner == Owner && sobj.ConstructionQueue != null)
 					.Select(sobj => sobj.ConstructionQueue);
-				return storage - queues.Sum(q => q.Orders.Select(o => o.Template).OfType<IDesign<IUnit>>().Sum(t => t.Hull.Size));
+				return storage - queues.Sum(q => q.Orders.Select(o => o?.Template).OfType<IDesign<IUnit>>().Sum(t => t.Hull.Size));
 			}
 		}
 
 		/// <summary>
 		/// The colony (if any) associated with this queue.
 		/// </summary>
-		public Colony Colony
+		public Colony? Colony
 		{
 			get
 			{
-				if (Container is Planet)
-					return ((Planet)Container).Colony;
+				if (Container is Planet planet)
+					return planet.Colony;
 				return null;
 			}
 		}
@@ -96,7 +98,7 @@ namespace FrEee.Game.Objects.Civilization
 					return double.PositiveInfinity;
 				if (!Orders.Any())
 					return 0d;
-				var remainingCost = Orders.Select(o => o.Cost - (o.Item == null ? new ResourceQuantity() : o.Item.ConstructionProgress)).Aggregate((r1, r2) => r1 + r2);
+				var remainingCost = Orders.Select(o => o?.Cost - (o?.Item == null ? new ResourceQuantity() : o.Item.ConstructionProgress)).Aggregate((r1, r2) => r1 + r2);
 				return remainingCost.Max(kvp => (double)kvp.Value / (double)Rate[kvp.Key]);
 			}
 		}
@@ -124,7 +126,7 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				if (!Orders.Any())
 					return null;
-				var remainingCost = Orders[0].Cost - (Orders[0].Item == null ? new ResourceQuantity() : Orders[0].Item.ConstructionProgress);
+				var remainingCost = Orders[0]?.Cost - (Orders[0]?.Item == null ? new ResourceQuantity() : Orders[0]?.Item.ConstructionProgress);
 				return remainingCost.Max(kvp => (double)kvp.Value / (double)Rate[kvp.Key]);
 			}
 		}
@@ -132,48 +134,38 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The icon for the item being constructed.
 		/// </summary>
-		public Image FirstItemIcon
+		public Image? FirstItemIcon
 		{
 			get
 			{
 				if (!Orders.Any())
 					return Pictures.GetSolidColorImage(Color.Transparent);
-				return Orders.First().Template.Icon;
+				return Orders?.First()?.Template.Icon;
 			}
 		}
 
 		/// <summary>
 		/// The name of the first item.
 		/// </summary>
-		public string FirstItemName
+		public string? FirstItemName
 		{
 			get
 			{
 				if (!Orders.Any())
 					return null;
-				return Orders[0].Template.Name;
+				return Orders[0]?.Template.Name;
 			}
 		}
 
 		[DoNotSerialize]
-		public Image Icon
-		{
-			get
-			{
-				return (Container as ISpaceObject)?.Icon;
-			}
-		}
+		public Image? Icon => Container?.Icon;
 
-		public long ID
-		{
-			get;
-			set;
-		}
+		public long ID { get; set; }
 
 		/// <summary>
 		/// Is this a colony queue?
 		/// </summary>
-		public bool IsColonyQueue { get { return Colony != null; } }
+		public bool IsColonyQueue => Colony != null;
 
 		/// <summary>
 		/// Has construction been delayed this turn due to lack of resources etc?
@@ -197,10 +189,7 @@ namespace FrEee.Game.Objects.Civilization
 		// TODO - make this a DoNotSerialize property after the game ends
 		public bool IsMemory
 		{
-			get
-			{
-				return Container?.IsMemory ?? true;
-			}
+			get => Container?.IsMemory ?? true;
 			set
 			{
 				if (Container == null)
@@ -212,23 +201,13 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Is this a space yard queue?
 		/// </summary>
-		public bool IsSpaceYardQueue { get { return Container.HasAbility("Space Yard"); } }
+		public bool IsSpaceYardQueue => Container.HasAbility("Space Yard");
 
-		public string Name
-		{
-			get { return Container.Name; }
-		}
+		public string Name => Container.Name;
 
-		public IList<IConstructionOrder> Orders
-		{
-			get;
-			private set;
-		}
+		public IList<IConstructionOrder?> Orders { get; private set; }
 
-		public Empire Owner
-		{
-			get { return Container.Owner; }
-		}
+		public Empire Owner => Container.Owner;
 
 		/// <summary>
 		/// The rate at which this queue can construct.
@@ -249,9 +228,9 @@ namespace FrEee.Game.Objects.Civilization
 			}
 		}
 
-		public int RateMinerals { get { return Rate[Resource.Minerals]; } }
-		public int RateOrganics { get { return Rate[Resource.Organics]; } }
-		public int RateRadioactives { get { return Rate[Resource.Radioactives]; } }
+		public int RateMinerals => Rate[Resource.Minerals];
+		public int RateOrganics => Rate[Resource.Organics];
+		public int RateRadioactives => Rate[Resource.Radioactives];
 		public double Timestamp { get; set; }
 
 		/// <summary>
@@ -275,8 +254,8 @@ namespace FrEee.Game.Objects.Civilization
 					var spentThisRound = new ResourceQuantity();
 					foreach (var o in Orders)
 					{
-						var left = o.Cost;
-						if (o.Item != null)
+						var left = o?.Cost;
+						if (o?.Item != null)
 							left -= o.Item.ConstructionProgress;
 						left = ResourceQuantity.Min(left, Rate - spent);
 						spent += left;
@@ -291,7 +270,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		IList<IOrder> IOrderable.Orders => Orders.Cast<IOrder>().ToList();
 
-		private ResourceQuantity rate;
+		private ResourceQuantity? rate;
 
 		public void AddOrder(IOrder order)
 		{
@@ -314,10 +293,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		/// <param name="item"></param>
 		/// <returns></returns>
-		public bool CanConstruct(IConstructionTemplate item)
-		{
-			return GetReasonForBeingUnableToConstruct(item) == null;
-		}
+		public bool CanConstruct(IConstructionTemplate item) => GetReasonForBeingUnableToConstruct(item) == null;
 
 		/// <summary>
 		/// Only the owner of a space object can see its construction queue.
@@ -357,7 +333,7 @@ namespace FrEee.Game.Objects.Civilization
 
 			UnspentRate = Rate;
 			var empty = new ResourceQuantity();
-			var builtThisTurn = new HashSet<IConstructable>();
+			var builtThisTurn = new HashSet<IConstructable?>();
 			bool done = false;
 			while (!done && Orders.Any() && (Owner.StoredResources > empty || UpcomingSpending.IsEmpty))
 			{
@@ -390,16 +366,16 @@ namespace FrEee.Game.Objects.Civilization
 						{
 							// upgrade facility orders place their own facilities
 							if (!(order is UpgradeFacilityOrder))
-								order.Item.Place(Container);
+								order?.Item?.Place(Container);
 							Orders.Remove(order);
 							if (AreRepeatOrdersEnabled)
 							{
-								var copy = order.Copy<IConstructionOrder>();
-								copy.Reset();
+								var copy = order?.Copy();
+								copy?.Reset();
 								Orders.Add(copy);
 							}
-							builtThisTurn.Add(order.Item);
-							if (order.Item is Ship || order.Item is Base)
+							builtThisTurn.Add(order?.Item);
+							if (order?.Item is Ship || order?.Item is Base)
 							{
 								// trigger ship built happiness changes
 								Owner.TriggerHappinessChange(hm => hm.AnyShipConstructed);
@@ -407,7 +383,7 @@ namespace FrEee.Game.Objects.Civilization
 									p.Colony.TriggerHappinessChange(hm => hm.ShipConstructed);
 
 							}
-							if (order.Item is Facility)
+							if (order?.Item is Facility)
 							{
 								// trigger facility built happiness changes
 								if (Container is Planet p)
@@ -423,7 +399,7 @@ namespace FrEee.Game.Objects.Civilization
 				if (!AreRepeatOrdersEnabled)
 					done = true;
 			}
-			foreach (var g in builtThisTurn.GroupBy(i => i.Template))
+			foreach (var g in builtThisTurn.GroupBy(i => i?.Template))
 			{
 				if (g.Count() == 1)
 					Owner.Log.Add(g.First().CreateLogMessage(g.First() + " has been constructed at " + Name + ".", logMessageType: LogMessages.LogMessageType.ConstructionComplete));
@@ -438,7 +414,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		/// <param name="item"></param>
 		/// <returns></returns>
-		public string GetReasonForBeingUnableToConstruct(IConstructionTemplate item)
+		public string? GetReasonForBeingUnableToConstruct(IConstructionTemplate item)
 		{
 			if (item == null)
 				return "Construction template does not exist.";
@@ -460,7 +436,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			if (order != null && !(order is IConstructionOrder))
 				throw new Exception("Can't rearrange a " + order.GetType() + " in a construction queue's orders.");
-			var o = (IConstructionOrder)order;
+			var o = (IConstructionOrder?)order;
 			var newpos = Orders.IndexOf(o) + delta;
 			if (newpos < 0)
 				newpos = 0;
@@ -496,10 +472,7 @@ namespace FrEee.Game.Objects.Civilization
 				Orders.Remove((IConstructionOrder)order);
 		}
 
-		public override string ToString()
-		{
-			return Container + "'s construction queue";
-		}
+		public override string ToString() => Container + "'s construction queue";
 
 		private ResourceQuantity ComputeRate()
 		{
@@ -546,13 +519,13 @@ namespace FrEee.Game.Objects.Civilization
 			if (Container is IVehicle)
 			{
 				// apply aptitude modifier for empire's primary race
-				rate *= Owner.PrimaryRace.Aptitudes[Aptitude.Construction.Name] / 100d;
+				rate *= Owner?.PrimaryRace?.Aptitudes[Aptitude.Construction.Name] ?? 100 / 100d;
 			}
 
 			return rate;
 		}
 
-		private ResourceQuantity ComputeSYAbilityRate()
+		private ResourceQuantity? ComputeSYAbilityRate()
 		{
 			if (Container.HasAbility("Space Yard"))
 			{
@@ -561,7 +534,7 @@ namespace FrEee.Game.Objects.Civilization
 				for (int i = 1; i <= 3; i++)
 				{
 					var amount = Container.GetAbilityValue("Space Yard", 2, true, true, a => a.Value1 == i.ToString()).ToInt();
-					Resource res = null;
+					Resource? res = null;
 					if (i == 1)
 						res = Resource.Minerals;
 					else if (i == 2)

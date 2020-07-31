@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+#nullable enable
+
 namespace FrEee.Game.Objects.Civilization
 {
 	/// <summary>
@@ -25,10 +27,7 @@ namespace FrEee.Game.Objects.Civilization
 			Cargo = new Cargo();
 		}
 
-		public AbilityTargets AbilityTarget
-		{
-			get { return AbilityTargets.Planet; }
-		}
+		public AbilityTargets AbilityTarget => AbilityTargets.Planet;
 
 		/// <summary>
 		/// The anger level of each race on this colony.
@@ -50,30 +49,14 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public Cargo Cargo { get; set; }
 
-		public IEnumerable<IAbilityObject> Children
-		{
-			get
-			{
-				return Facilities.Cast<IAbilityObject>().Concat(Cargo.Units.Cast<IAbilityObject>());
-			}
-		}
+		public IEnumerable<IAbilityObject> Children => Facilities.Cast<IAbilityObject>().Concat(Cargo.Units.Cast<IAbilityObject>());
 
 		/// <summary>
 		/// This colony's construction queue.
 		/// </summary>
-		public ConstructionQueue ConstructionQueue
-		{
-			get;
-			set;
-		}
+		public ConstructionQueue? ConstructionQueue { get; set; }
 
-		public Planet Container
-		{
-			get
-			{
-				return Galaxy.Current.FindSpaceObjects<Planet>().SingleOrDefault(p => p.Colony == this);
-			}
-		}
+		public Planet Container => Galaxy.Current.FindSpaceObjects<Planet>().SingleOrDefault(p => p.Colony == this);
 
 		/// <summary>
 		/// The facilities on this colony.
@@ -95,11 +78,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public bool IsHomeworld { get; set; }
 
-		public bool IsMemory
-		{
-			get;
-			set;
-		}
+		public bool IsMemory { get; set; }
 
 		/// <summary>
 		/// Ratio of population that has the "No Spaceports" ability.
@@ -128,7 +107,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The empire which owns this colony.
 		/// </summary>
-		public Empire Owner { get; set; }
+		public Empire? Owner { get; set; }
 
 		public IEnumerable<IAbilityObject> Parents
 		{
@@ -143,15 +122,9 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public SafeDictionary<Race, long> Population { get; private set; }
 
-		public ResourceQuantity RemoteMiningIncomePercentages
-		{
-			get { return Owner.PrimaryRace.IncomePercentages; }
-		}
+		public ResourceQuantity? RemoteMiningIncomePercentages => Owner?.PrimaryRace?.IncomePercentages;
 
-		public ResourceQuantity ResourceValue
-		{
-			get { return Container.ResourceValue; }
-		}
+		public ResourceQuantity ResourceValue => Container.ResourceValue;
 
 		[DoNotSerialize(false)]
 		public Sector Sector { get => Container.Sector; set => throw new NotSupportedException("Can't set the sector of a colony."); }
@@ -170,9 +143,9 @@ namespace FrEee.Game.Objects.Civilization
 				foreach (var r in Resource.All)
 				{
 					var aptfactor = 1d;
-					if (r.Aptitude != null)
+					if (r.Aptitude?.Name != null)
 						aptfactor = Population.Sum(kvp => (kvp.Key.Aptitudes[r.Aptitude.Name] / 100d) * (double)kvp.Value / (double)totalpop);
-					var cultfactor = (100 + r.CultureModifier(Owner.Culture)) / 100d;
+					var cultfactor = (100 + r.CultureModifier(Owner?.Culture)) / 100d;
 
 					result += (int)(100 * popfactor * aptfactor * cultfactor * moodfactor) * r;
 				}
@@ -181,7 +154,7 @@ namespace FrEee.Game.Objects.Civilization
 			}
 		}
 
-		public StarSystem StarSystem => Container?.StarSystem;
+		public StarSystem? StarSystem => Container?.StarSystem;
 
 		public double Timestamp { get; set; }
 
@@ -217,10 +190,7 @@ namespace FrEee.Game.Objects.Civilization
 			IsDisposed = true;
 		}
 
-		public bool IsObsoleteMemory(Empire emp)
-		{
-			return Container == null || Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
-		}
+		public bool IsObsoleteMemory(Empire emp) => Container == null || Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
 
 		public void Redact(Empire emp)
 		{

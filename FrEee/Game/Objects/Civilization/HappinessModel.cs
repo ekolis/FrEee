@@ -1,6 +1,8 @@
-﻿using FrEee.Modding;
+using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using System.Collections.Generic;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -18,22 +20,19 @@ namespace FrEee.Game.Objects.Civilization
 		public int BattleInSystemLoss { get; set; }
 		public int BattleInSystemStalemate { get; set; }
 		public int BattleInSystemWin { get; set; }
-		public string Description { get; set; }
+		public string? Description { get; set; }
 		public int EnemyPlanetCaptured { get; set; }
 		public int EnemyShipInSector { get; set; }
 		public int EnemyShipInSystem { get; set; }
 		public int EnemyTroopsOnPlanet { get; set; }
 		public int FacilityConstructed { get; set; }
 
-		public bool IsDisposed
-		{
-			get; private set;
-		}
+		public bool IsDisposed { get; private set; }
 
 		public int MaxNegativeTurnAngerChange { get; set; }
 		public int MaxPositiveTurnAngerChange { get; set; }
-		public string ModID { get; set; }
-		public string Name { get; set; }
+		public string? ModID { get; set; }
+		public string? Name { get; set; }
 		public int NaturalTurnAngerChangeOtherRaces { get; set; }
 		public int NaturalTurnAngerChangeOurRace { get; set; }
 		public int OneMillionPopulationKilled { get; set; }
@@ -53,7 +52,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Parameters from the mod meta templates.
 		/// </summary>
-		public IDictionary<string, object> TemplateParameters { get; set; }
+		public IDictionary<string, object>? TemplateParameters { get; set; }
 
 		public int TreatyMilitaryAlliance { get; set; }
 		public int TreatyNonAggression { get; set; }
@@ -74,9 +73,6 @@ namespace FrEee.Game.Objects.Civilization
 			IsDisposed = true;
 		}
 
-		public override string ToString()
-		{
-			return Name;
-		}
+		public override string ToString() => Name ?? string.Empty;
 	}
 }

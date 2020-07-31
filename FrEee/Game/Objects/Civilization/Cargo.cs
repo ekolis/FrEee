@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Combat;
 using FrEee.Modding;
 using FrEee.Utility;
@@ -6,6 +6,8 @@ using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -20,15 +22,9 @@ namespace FrEee.Game.Objects.Civilization
 			Units = new HashSet<IUnit>();
 		}
 
-		public int ArmorHitpoints
-		{
-			get { return Units.Sum(u => u.ArmorHitpoints); }
-		}
+		public int ArmorHitpoints => Units.Sum(u => u.ArmorHitpoints);
 
-		public int HitChance
-		{
-			get { return 1; }
-		}
+		public int HitChance => 1;
 
 		[DoNotSerialize(false)]
 		public int Hitpoints
@@ -44,20 +40,11 @@ namespace FrEee.Game.Objects.Civilization
 			}
 		}
 
-		public int HullHitpoints
-		{
-			get { return Units.Sum(u => u.HullHitpoints) + (int)(Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints); }
-		}
+		public int HullHitpoints => Units.Sum(u => u.HullHitpoints) + (int)(Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints);
 
-		public bool IsDestroyed
-		{
-			get { return Hitpoints <= 0; }
-		}
+		public bool IsDestroyed => Hitpoints <= 0;
 
-		public int MaxArmorHitpoints
-		{
-			get { return Units.Sum(u => u.MaxArmorHitpoints); }
-		}
+		public int MaxArmorHitpoints => Units.Sum(u => u.MaxArmorHitpoints);
 
 		public int MaxHitpoints
 		{
@@ -68,25 +55,13 @@ namespace FrEee.Game.Objects.Civilization
 			}
 		}
 
-		public int MaxHullHitpoints
-		{
-			get { return Units.Sum(u => u.MaxHullHitpoints); }
-		}
+		public int MaxHullHitpoints => Units.Sum(u => u.MaxHullHitpoints);
 
-		public int MaxNormalShields
-		{
-			get { return 0; }
-		}
+		public int MaxNormalShields => 0;
 
-		public int MaxPhasedShields
-		{
-			get { return 0; }
-		}
+		public int MaxPhasedShields => 0;
 
-		public int MaxShieldHitpoints
-		{
-			get { return Units.Sum(u => u.MaxShieldHitpoints); }
-		}
+		public int MaxShieldHitpoints => Units.Sum(u => u.MaxShieldHitpoints);
 
 		[DoNotSerialize(false)]
 		public int NormalShields
@@ -119,10 +94,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public SafeDictionary<Race, long> Population { get; set; }
 
-		public int ShieldHitpoints
-		{
-			get { return Units.Sum(u => u.ShieldHitpoints); }
-		}
+		public int ShieldHitpoints => Units.Sum(u => u.ShieldHitpoints);
 
 		/// <summary>
 		/// The amount of space taken by this cargo.
@@ -200,7 +172,7 @@ namespace FrEee.Game.Objects.Civilization
 			Units.Clear();
 		}
 
-		public int TakeDamage(Hit hit, PRNG dice = null)
+		public int TakeDamage(Hit hit, PRNG? dice = null)
 		{
 			int damage = hit.NominalDamage;
 			if (Population.Any() && Units.Any())
@@ -226,7 +198,7 @@ namespace FrEee.Game.Objects.Civilization
 				return damage; // nothing to damage
 		}
 
-		private int TakePopulationDamage(Hit hit, int damage, PRNG dice = null)
+		private int TakePopulationDamage(Hit hit, int damage, PRNG? dice = null)
 		{
 			int inflicted = 0;
 			for (int i = 0; i < damage; i++)
@@ -249,7 +221,7 @@ namespace FrEee.Game.Objects.Civilization
 			return damage - inflicted;
 		}
 
-		private int TakeUnitDamage(Hit hit, int damage, PRNG dice = null)
+		private int TakeUnitDamage(Hit hit, int damage, PRNG? dice = null)
 		{
 			// units with more HP are more likely to get hit first, like with leaky armor
 			var units = Units.Where(u => !u.IsDestroyed).ToDictionary(u => u, u => u.MaxHitpoints);

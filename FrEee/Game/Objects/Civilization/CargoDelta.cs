@@ -1,10 +1,12 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -63,7 +65,7 @@ namespace FrEee.Game.Objects.Civilization
 		public GalaxyReferenceSet<IUnit> Units { get; private set; }
 		public SafeDictionary<VehicleTypes, int?> UnitTypeTonnage { get; private set; }
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			if (done == null)
 				done = new HashSet<IPromotable>();
@@ -91,7 +93,7 @@ namespace FrEee.Game.Objects.Civilization
 			else if (AnyPopulation != 0)
 				items.Add(AnyPopulation.ToUnitString() + " Population of Any Race");
 			foreach (var unit in Units)
-				items.Add(unit.ToString());
+				items.Add(unit.ToString() ?? "null unit");
 			foreach (var kvp in UnitDesignTonnage)
 			{
 				if (kvp.Value == null)

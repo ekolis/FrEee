@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Space;
@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -25,15 +27,9 @@ namespace FrEee.Game.Objects.Civilization
 			Aptitudes = new SafeDictionary<string, int>();
 		}
 
-		public IEnumerable<Ability> Abilities
-		{
-			get { return Traits.SelectMany(t => t.Abilities); }
-		}
+		public IEnumerable<Ability> Abilities => Traits.SelectMany(t => t.Abilities);
 
-		public AbilityTargets AbilityTarget
-		{
-			get { return AbilityTargets.Race; }
-		}
+		public AbilityTargets AbilityTarget => AbilityTargets.Race;
 
 		/// <summary>
 		/// Aptitudes of this race.
@@ -41,10 +37,7 @@ namespace FrEee.Game.Objects.Civilization
 		// TODO - convert to NamedDictionary
 		public IDictionary<string, int> Aptitudes { get; private set; }
 
-		public IEnumerable<IAbilityObject> Children
-		{
-			get { return Traits; }
-		}
+		public IEnumerable<IAbilityObject> Children => Traits;
 
 		/// <summary>
 		/// The race's happiness model.
@@ -55,10 +48,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The population icon.
 		/// </summary>
-		public Image Icon
-		{
-			get { return Pictures.GetIcon(this); }
-		}
+		public Image Icon => Pictures.GetIcon(this);
 
 		public Image Icon32 => Icon.Resize(32);
 
@@ -88,7 +78,7 @@ namespace FrEee.Game.Objects.Civilization
 				foreach (var r in Resource.All)
 				{
 					var factor = 1d;
-					if (r.Aptitude != null)
+					if (r.Aptitude?.Name != null)
 						factor *= Aptitudes[r.Aptitude.Name] / 100d;
 					result += (int)(100 * factor) * r;
 				}
@@ -106,25 +96,22 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The name of this race. Also used for picture names.
 		/// </summary>
-		public string Name { get; set; }
+		public string? Name { get; set; }
 
 		/// <summary>
 		/// The atmosphere which this race breathes.
 		/// </summary>
-		public string NativeAtmosphere { get; set; }
+		public string? NativeAtmosphere { get; set; }
 
 		/// <summary>
 		/// The native planet surface type of this race.
 		/// </summary>
-		public string NativeSurface { get; set; }
+		public string? NativeSurface { get; set; }
 
 		/// <summary>
 		/// Races have no owner.
 		/// </summary>
-		public Empire Owner
-		{
-			get { return null; }
-		}
+		public Empire? Owner => null;
 
 		public IEnumerable<IAbilityObject> Parents
 		{
@@ -138,23 +125,14 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The population icon name for this race.
 		/// </summary>
-		public string PopulationIconName { get; set; }
+		public string? PopulationIconName { get; set; }
 
 		/// <summary>
 		/// The population portrait.
 		/// </summary>
-		public Image Portrait
-		{
-			get { return Pictures.GetPortrait(this); }
-		}
+		public Image Portrait => Pictures.GetPortrait(this);
 
-		public IEnumerable<string> PortraitPaths
-		{
-			get
-			{
-				return IconPaths;
-			}
-		}
+		public IEnumerable<string> PortraitPaths => IconPaths;
 
 		/// <summary>
 		/// The names of the race's traits.
@@ -164,12 +142,9 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The traits of the race.
 		/// </summary>
-		public IEnumerable<Trait> Traits { get { return Mod.Current.Traits.Join(TraitNames, t => t.Name, n => n, (t, n) => t); } }
+		public IEnumerable<Trait> Traits => Mod.Current.Traits.Join(TraitNames, t => t.Name, n => n, (t, n) => t);
 
-		public IEnumerable<Ability> UnstackedAbilities
-		{
-			get { return Abilities; }
-		}
+		public IEnumerable<Ability> UnstackedAbilities => Abilities;
 
 		public IEnumerable<string> Warnings
 		{
@@ -200,7 +175,7 @@ namespace FrEee.Game.Objects.Civilization
 			}
 		}
 
-		private ModReference<HappinessModel> happinessModel { get; set; }
+		private ModReference<HappinessModel>? happinessModel { get; set; }
 
 		public static Race Load(string filename)
 		{
@@ -215,11 +190,8 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		/// <param name="emp"></param>
 		/// <returns></returns>
-		public Visibility CheckVisibility(Empire emp)
-		{
-			// TODO - hide races until first contact
-			return Visibility.Scanned;
-		}
+		// TODO - hide races until first contact
+		public Visibility CheckVisibility(Empire emp) => Visibility.Scanned;
 
 		public void Dispose()
 		{
@@ -235,13 +207,15 @@ namespace FrEee.Game.Objects.Civilization
 			fs.Close(); fs.Dispose();
 		}
 
-		public override string ToString()
-		{
-			return Name;
-		}
+		public override string ToString() => Name ?? string.Empty;
 
-		private IEnumerable<string> GetImagePaths(string imagename, string imagetype)
+		private IEnumerable<string> GetImagePaths(string? imagename, string imagetype)
 		{
+			if (imagename is null)
+			{
+				throw new ArgumentNullException(nameof(imagename));
+			}
+
 			if (Mod.Current?.RootPath != null)
 			{
 				yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", imagename, imagetype);

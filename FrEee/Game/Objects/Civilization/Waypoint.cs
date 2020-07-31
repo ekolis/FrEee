@@ -1,10 +1,12 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using System.Collections.Generic;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -18,38 +20,22 @@ namespace FrEee.Game.Objects.Civilization
 			Owner = Empire.Current;
 		}
 
-		public long ID
-		{
-			get;
-			set;
-		}
+		public long ID { get; set; }
 
-		public bool IsDisposed
-		{
-			get;
-			set;
-		}
+		public bool IsDisposed { get; set; }
 
-		public bool IsMemory
-		{
-			get;
-			set;
-		}
+		public bool IsMemory { get; set; }
 
 		public abstract string Name { get; }
 
 		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		public Empire? Owner { get { return owner; } set { owner = value; } }
 
-		public abstract Sector Sector { get; set; }
+		public abstract Sector? Sector { get; set; }
 
-		public abstract StarSystem StarSystem { get; }
+		public abstract StarSystem? StarSystem { get; }
 
-		public double Timestamp
-		{
-			get;
-			set;
-		}
+		public double Timestamp { get; set; }
 
 		/// <summary>
 		/// Number of vehicles whose orders were altered when this waypoint was deleted.
@@ -57,7 +43,7 @@ namespace FrEee.Game.Objects.Civilization
 		[DoNotSerialize]
 		internal int AlteredQueuesOnDelete { get; private set; }
 
-		private GalaxyReference<Empire> owner { get; set; }
+		private GalaxyReference<Empire>? owner { get; set; }
 
 		/// <summary>
 		/// Only the waypoint's owner can see it.
@@ -95,7 +81,7 @@ namespace FrEee.Game.Objects.Civilization
 					if (order is WaypointOrder)
 					{
 						var wo = order as WaypointOrder;
-						if (wo.Target == this)
+						if (wo?.Target == this)
 							foundWaypoint = true;
 					}
 					if (foundWaypoint)
@@ -108,10 +94,7 @@ namespace FrEee.Game.Objects.Civilization
 			Galaxy.Current.UnassignID(this);
 		}
 
-		public bool IsObsoleteMemory(Empire emp)
-		{
-			return false;
-		}
+		public bool IsObsoleteMemory(Empire emp) => false;
 
 		public void Redact(Empire emp)
 		{
@@ -119,14 +102,11 @@ namespace FrEee.Game.Objects.Civilization
 				Dispose();
 		}
 
-		public virtual void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public virtual void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			// doesn't use client objects, nothing to do here
 		}
 
-		public override string ToString()
-		{
-			return Name;
-		}
+		public override string ToString() => Name;
 	}
 }

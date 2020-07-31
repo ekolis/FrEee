@@ -1,8 +1,10 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -11,40 +13,22 @@ namespace FrEee.Game.Objects.Civilization
 	/// </summary>
 	public class SpaceObjectWaypoint : Waypoint
 	{
-		public SpaceObjectWaypoint(ISpaceObject sobj)
-		{
-			SpaceObject = sobj;
-		}
+		public SpaceObjectWaypoint(ISpaceObject sobj) => SpaceObject = sobj;
 
-		public override string Name
-		{
-			get { return "Waypoint at " + SpaceObject.Name; }
-		}
+		public override string Name => "Waypoint at " + SpaceObject?.Name;
 
 		[DoNotSerialize(false)]
-		public override Sector Sector
+		public override Sector? Sector
 		{
-			get
-			{
-				return SpaceObject?.Sector;
-			}
-			set
-			{
-				throw new InvalidOperationException("Cannot set the sector of a space object waypoint.");
-			}
+			get => SpaceObject?.Sector;
+			set => throw new InvalidOperationException("Cannot set the sector of a space object waypoint.");
 		}
 
 		[DoNotSerialize]
-		public ISpaceObject SpaceObject { get { return spaceObject.Value; } set { spaceObject = value.ReferViaGalaxy(); } }
+		public ISpaceObject? SpaceObject { get => spaceObject?.Value; set => spaceObject = value?.ReferViaGalaxy(); }
 
-		public override StarSystem StarSystem
-		{
-			get
-			{
-				return SpaceObject.StarSystem;
-			}
-		}
+		public override StarSystem? StarSystem => SpaceObject?.StarSystem;
 
-		private GalaxyReference<ISpaceObject> spaceObject { get; set; }
+		private GalaxyReference<ISpaceObject>? spaceObject { get; set; }
 	}
 }
