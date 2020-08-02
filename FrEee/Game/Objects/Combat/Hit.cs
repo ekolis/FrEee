@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using FrEee.Game.Interfaces;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Combat
 {
@@ -17,7 +19,7 @@ namespace FrEee.Game.Objects.Combat
 			Shot = shot;
 			DamageType = shot?.DamageType ?? DamageType.Normal;
 			Target = target;
-			NominalDamage = nominalDamage ?? shot.DamageLeft;
+			NominalDamage = nominalDamage ?? shot?.DamageLeft ?? 0;
 		}
 
 		public Hit(DamageType dt, int damage, IDamageable target)
@@ -37,15 +39,15 @@ namespace FrEee.Game.Objects.Combat
 		/// <summary>
 		/// The shot which inflicted this hit.
 		/// </summary>
-		public Shot Shot { get; set; }
+		public Shot? Shot { get; set; }
 
 		/// <summary>
 		/// The specific target of this hit.
 		/// </summary>
 		[DoNotSerialize]
-		public IDamageable Target
+		public IDamageable? Target
 		{
-			get { return target?.Value ?? _target; }
+			get => target?.Value ?? _target;
 			set
 			{
 				if (value is IDamageableReferrable dr)
@@ -55,21 +57,21 @@ namespace FrEee.Game.Objects.Combat
 			}
 		}
 
-		public IDictionary<string, object> Variables
+		public IDictionary<string, object?> Variables
 		{
 			get
 			{
-				var sv = Shot.Variables;
-				var result = new SafeDictionary<string, object>();
-				foreach (var v in sv)
+				var sv = Shot?.Variables;
+				var result = new SafeDictionary<string, object?>();
+				foreach (var v in sv ?? new Dictionary<string, object?>())
 					result.Add(v);
 				result["target"] = Target;
 				return result;
 			}
 		}
 
-		private GalaxyReference<IDamageableReferrable> target { get; set; }
+		private GalaxyReference<IDamageableReferrable>? target { get; set; }
 
-		private IDamageable _target { get; set; }
+		private IDamageable? _target { get; set; }
 	}
 }

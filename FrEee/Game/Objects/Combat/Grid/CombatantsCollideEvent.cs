@@ -1,6 +1,8 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Combat.Grid
 {
@@ -21,12 +23,24 @@ namespace FrEee.Game.Objects.Combat.Grid
 		}
 
 
-		private GalaxyReference<ICombatant> target { get; set; }
+		private GalaxyReference<ICombatant?>? target { get; set; }
 
 		[DoNotSerialize]
-		public ICombatant Target
+		public ICombatant? Target
 		{
-			get => target?.Value ?? Battle?.StartCombatants?[target.ID];
+			get
+			{
+				if (target?.Value != null)
+				{
+					return target.Value;
+				}
+				else if (target?.ID != null)
+				{
+					return Battle?.StartCombatants?[target.ID];
+				}
+				return null;
+			}
+
 			set => target = value.ReferViaGalaxy();
 		}
 

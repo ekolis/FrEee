@@ -1,17 +1,17 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.LogMessages;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
-using Microsoft.Scripting.Runtime;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
+
 using static System.Math;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Combat.Grid
 {
@@ -39,15 +39,15 @@ namespace FrEee.Game.Objects.Combat.Grid
 		{
 			base.Initialize(combatants);
 
-			Empires = Sector.SpaceObjects.OfType<ICombatSpaceObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray();
+			Empires = Sector?.SpaceObjects.OfType<ICombatSpaceObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray();
 
-			int moduloID = (int)(Sector.StarSystem.ID % 100000);
+			int moduloID = (int)(Sector?.StarSystem.ID ?? 0 % 100000);
 			Dice = new PRNG((int)(moduloID / Galaxy.Current.Timestamp * 10));
 		}
 
 		public override void PlaceCombatants(SafeDictionary<ICombatant, IntVector2> locations)
 		{
-			if (Sector.SpaceObjects.OfType<WarpPoint>().Any())
+			if (Sector?.SpaceObjects.OfType<WarpPoint>().Any() ?? false)
 			{
 				// HACK - warp point in sector, assume someone warped
 				// TODO - do this for warp point exits instead since warp points may be one way
@@ -108,10 +108,10 @@ namespace FrEee.Game.Objects.Combat.Grid
 		{
 			get
 			{
-				if (Sector.SpaceObjects.OfType<StellarObject>().Any())
+				if (Sector?.SpaceObjects.OfType<StellarObject>().Any() ?? false)
 					return "Battle at " + Sector.SpaceObjects.OfType<StellarObject>().Largest();
-				var coords = Sector.Coordinates;
-				return "Battle at " + Sector.StarSystem + " sector (" + coords.X + ", " + coords.Y + ")";
+				var coords = Sector?.Coordinates ?? new System.Drawing.Point(0, 0);
+				return "Battle at " + Sector?.StarSystem ?? string.Empty + " sector (" + coords.X + ", " + coords.Y + ")";
 			}
 		}
 
@@ -119,7 +119,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 		public override void ModifyHappiness()
 		{
-			foreach (var e in Empires)
+			foreach (var e in Empires ?? Enumerable.Empty<Empire>())
 			{
 				switch (this.ResultFor(e))
 				{

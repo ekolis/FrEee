@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Combat
 {
@@ -13,7 +15,7 @@ namespace FrEee.Game.Objects.Combat
 	/// </summary>
 	public class Shot : IFormulaHost
 	{
-		public Shot(ICombatant attacker, Component weapon, IDamageable defender, int range)
+		public Shot(ICombatant? attacker, Component weapon, IDamageable defender, int range)
 		{
 			Attacker = attacker;
 			Weapon = weapon;
@@ -22,10 +24,10 @@ namespace FrEee.Game.Objects.Combat
 			DamageLeft = FullDamage;
 		}
 
-		public GalaxyReference<ICombatant> attacker { get; set; }
+		public GalaxyReference<ICombatant>? attacker { get; set; }
 
 		[DoNotSerialize]
-		public ICombatant Attacker { get { return attacker == null ? null : attacker.Value; } set { attacker = value == null ? null : value.ReferViaGalaxy(); } }
+		public ICombatant? Attacker { get { return attacker == null ? null : attacker.Value; } set { attacker = value == null ? null : value.ReferViaGalaxy(); } }
 
 		public int DamageLeft { get; private set; }
 
@@ -43,9 +45,9 @@ namespace FrEee.Game.Objects.Combat
 		/// The specific target of this hit.
 		/// </summary>
 		[DoNotSerialize]
-		public IDamageable Defender
+		public IDamageable? Defender
 		{
-			get { return target?.Value ?? _target; }
+			get => target?.Value ?? _target;
 			set
 			{
 				if (value is IDamageableReferrable dr)
@@ -79,35 +81,26 @@ namespace FrEee.Game.Objects.Combat
 			}
 		}
 
-		public IEnumerable<Hit> Hits { get; private set; }
+		public IEnumerable<Hit>? Hits { get; private set; }
 		public int Range { get; set; }
-		public GalaxyReference<IDamageableReferrable> target { get; set; }
-		private IDamageable _target { get; set; }
+		public GalaxyReference<IDamageableReferrable>? target { get; set; }
+		private IDamageable? _target { get; set; }
 
-		public IDictionary<string, object> Variables
-		{
-			get
-			{
-				return new Dictionary<string, object>
-				{
-					{ "range", Range},
-				};
-			}
-		}
+		public IDictionary<string, object?> Variables => new Dictionary<string, object?> { { "range", Range } };
 
 		// TODO - make this some sort of reference?
 		public Component Weapon { get; set; }
 
-		public int InflictDamage(IDamageable target, PRNG dice = null)
+		public int InflictDamage(IDamageable target, PRNG? dice = null)
 		{
 			var hit = new Hit(this, target, DamageLeft);
 			DamageLeft = target.TakeDamage(hit, dice);
 			return DamageLeft;
 		}
 
-		public bool RollAccuracy(PRNG dice = null)
+		public bool RollAccuracy(PRNG? dice = null)
 		{
-			var accuracy = Weapon.Template.WeaponAccuracy + Attacker.Accuracy + Mod.Current.Settings.WeaponAccuracyPointBlank - Range * Mod.Current.Settings.WeaponAccuracyLossPerSquare;
+			var accuracy = Weapon.Template.WeaponAccuracy + Attacker?.Accuracy + Mod.Current.Settings.WeaponAccuracyPointBlank - Range * Mod.Current.Settings.WeaponAccuracyLossPerSquare;
 			int evasion = 0;
 			if (Defender is ITargetable t)
 				evasion = t.Evasion;
@@ -119,9 +112,6 @@ namespace FrEee.Game.Objects.Combat
 			return RandomHelper.Range(0, 99, dice) < netAccuracy;
 		}
 
-		public override string ToString()
-		{
-			return Attacker + "'s " + Weapon + " vs. " + Defender + " at range " + Range + " (" + DamageLeft + " damage left)";
-		}
+		public override string ToString() => $"{Attacker}'s {Weapon} vs. {Defender} at range {Range} ({DamageLeft} damage left)";
 	}
 }

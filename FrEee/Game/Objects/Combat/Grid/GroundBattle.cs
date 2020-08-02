@@ -1,16 +1,16 @@
-﻿using FrEee.Game.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Combat.Grid
 {
@@ -59,7 +59,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 		public override void PlaceCombatants(SafeDictionary<ICombatant, IntVector2> locations)
 		{
 			// in ground combat, for now everyone is right on top of each other
-			foreach (var c in Combatants)
+			foreach (var c in Combatants ?? new HashSet<ICombatant>())
 				locations.Add(c, new IntVector2());
 		}
 
@@ -67,7 +67,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 		public override void ModifyHappiness()
 		{
-			foreach (var e in Empires)
+			foreach (var e in Empires ?? Enumerable.Empty<Empire>())
 			{
 				switch (this.ResultFor(e))
 				{
@@ -85,7 +85,6 @@ namespace FrEee.Game.Objects.Combat.Grid
 						}
 						break;
 				}
-
 			}
 		}
 

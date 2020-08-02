@@ -1,10 +1,12 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Combat
 {
@@ -14,33 +16,21 @@ namespace FrEee.Game.Objects.Combat
 	[Serializable]
 	public abstract class WeaponDisplayEffect : IPictorial
 	{
-		protected WeaponDisplayEffect(string name)
-		{
-			Name = name;
-		}
+		protected WeaponDisplayEffect(string name) => Name = name;
 
 		/// <summary>
 		/// The pixel offset to the first sprite in the global sprite sheet.
 		/// </summary>
 		public abstract Point GlobalSpriteOffset { get; }
 
-		public Image GlobalSpriteSheet
-		{
-			get
-			{
-				return Pictures.GetModImage(Path.Combine("Pictures", "Combat", GlobalSpriteSheetName));
-			}
-		}
+		public Image GlobalSpriteSheet => Pictures.GetModImage(Path.Combine("Pictures", "Combat", GlobalSpriteSheetName));
 
 		/// <summary>
 		/// The name of the sprite sheet to use.
 		/// </summary>
 		public abstract string GlobalSpriteSheetName { get; }
 
-		public Image Icon
-		{
-			get { return GetIcon(null); }
-		}
+		public Image Icon => GetIcon(null);
 
 		public Image Icon32 => Icon.Resize(32);
 
@@ -59,18 +49,9 @@ namespace FrEee.Game.Objects.Combat
 		/// </summary>
 		public string Name { get; set; }
 
-		public Image Portrait
-		{
-			get { return Icon; }
-		}
+		public Image Portrait => Icon;
 
-		public IEnumerable<string> PortraitPaths
-		{
-			get
-			{
-				return IconPaths;
-			}
-		}
+		public IEnumerable<string> PortraitPaths => IconPaths;
 
 		/// <summary>
 		/// The pixel offset to the first sprite in the shipset-specific sprite sheet.
@@ -87,11 +68,10 @@ namespace FrEee.Game.Objects.Combat
 		/// </summary>
 		public abstract Size SpriteSize { get; }
 
-		public Image GetIcon(string shipset)
+		public Image GetIcon(string? shipset)
 		{
 			// see if we have a positive number to use a sprite sheet
-			int index = 0;
-			int.TryParse(Name, out index);
+			int.TryParse(Name, out var index);
 
 			if (index > 0)
 			{
@@ -115,8 +95,8 @@ namespace FrEee.Game.Objects.Combat
 				{
 					// no sprite sheets found
 					return Pictures.GetModImage(
-						Path.Combine("Pictures", "Races", shipset, Name),
-						Path.Combine("Pictures", "Races", shipset, shipset + "_" + Name),
+						Path.Combine("Pictures", "Races", shipset ?? string.Empty, Name),
+						Path.Combine("Pictures", "Races", shipset ?? string.Empty, shipset + "_" + Name),
 						Path.Combine("Pictures", "Combat", Name));
 				}
 
@@ -132,15 +112,12 @@ namespace FrEee.Game.Objects.Combat
 			{
 				// use individual sprites
 				return Pictures.GetModImage(
-					Path.Combine("Pictures", "Races", shipset, Name),
-					Path.Combine("Pictures", "Races", shipset, shipset + "_" + Name),
+					Path.Combine("Pictures", "Races", shipset ?? string.Empty, Name),
+					Path.Combine("Pictures", "Races", shipset ?? string.Empty, shipset + "_" + Name),
 					Path.Combine("Pictures", "Combat", Name));
 			}
 		}
 
-		public Image LoadShipsetSpriteSheet(string shipset)
-		{
-			return Pictures.GetModImage(Path.Combine("Pictures", "Races", shipset, ShipsetSpriteSheetName));
-		}
+		public Image LoadShipsetSpriteSheet(string? shipset) => Pictures.GetModImage(Path.Combine("Pictures", "Races", shipset ?? string.Empty, ShipsetSpriteSheetName));
 	}
 }

@@ -1,7 +1,8 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Utility;
-using System;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Combat.Grid
 {
@@ -10,7 +11,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 		public CombatantAppearsEvent(IBattle battle, ICombatant combatant, IntVector2 position)
 			: base(battle, combatant, position, position)
 		{
-			IsUnarmed = !(Combatant is Seeker) && !Combatant.Weapons.Any();
+			IsUnarmed = !(Combatant is Seeker) && !Combatant!.Weapons.Any();
 		}
 
 		public bool IsUnarmed { get; set; }

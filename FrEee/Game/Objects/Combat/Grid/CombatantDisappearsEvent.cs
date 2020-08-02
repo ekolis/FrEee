@@ -1,6 +1,8 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Utility;
 using System;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Combat.Grid
 {

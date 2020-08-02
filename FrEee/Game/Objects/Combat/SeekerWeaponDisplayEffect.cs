@@ -1,5 +1,7 @@
-﻿using System;
+using System;
 using System.Drawing;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Combat
 {
@@ -11,29 +13,14 @@ namespace FrEee.Game.Objects.Combat
 		{
 		}
 
-		public override Point GlobalSpriteOffset
-		{
-			get { return new Point(); }
-		}
+		public override Point GlobalSpriteOffset => new Point();
 
-		public override string GlobalSpriteSheetName
-		{
-			get { return "Seekers"; }
-		}
+		public override string GlobalSpriteSheetName => "Seekers";
 
-		public override Point ShipsetSpriteOffset
-		{
-			get { return new Point(40, 0); }
-		}
+		public override Point ShipsetSpriteOffset => new Point(40, 0);
 
-		public override string ShipsetSpriteSheetName
-		{
-			get { return "Main"; }
-		}
+		public override string ShipsetSpriteSheetName => "Main";
 
-		public override Size SpriteSize
-		{
-			get { return new Size(20, 20); }
-		}
+		public override Size SpriteSize => new Size(20, 20);
 	}
 }

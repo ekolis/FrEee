@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using static System.Math;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Combat.Grid
 {
@@ -46,7 +48,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 		/// <summary>
 		/// The combatants in this battle.
 		/// </summary>
-		public ISet<ICombatant> Combatants { get; protected set; }
+		public ISet<ICombatant>? Combatants { get; protected set; }
 
 		/// <summary>
 		/// Copies of the combatants from the start of the battle.
@@ -89,37 +91,25 @@ namespace FrEee.Game.Objects.Combat.Grid
 		/// </summary>
 		public abstract int DamagePercentage { get; }
 
-		public PRNG Dice { get; set; }
+		public PRNG? Dice { get; set; }
 
 		/// <summary>
 		/// The number of rounds this battle lasted.
 		/// </summary>
-		public int Duration => Events.Count;
+		public int Duration => Events?.Count ?? 0;
 
 		/// <summary>
 		/// The empires engaged in battle.
 		/// </summary>
-		public IEnumerable<Empire> Empires { get; protected set; }
+		public IEnumerable<Empire>? Empires { get; protected set; }
 
-		public List<IList<IBattleEvent>> Events
-		{
-			get; private set;
-		}
+		public List<IList<IBattleEvent>>? Events { get; private set; }
 
-		public Image Icon
-		{
-			get { return Combatants.OfType<ISpaceObject>().Largest()?.Icon; }
-		}
+		public Image? Icon => Combatants.OfType<ISpaceObject>().Largest()?.Icon;
 
 		public Image Icon32 => Icon.Resize(32);
 
-		public IEnumerable<string> IconPaths
-		{
-			get
-			{
-				return Combatants.OfType<ISpaceObject>().Largest()?.IconPaths ?? Enumerable.Empty<string>();
-			}
-		}
+		public IEnumerable<string> IconPaths => Combatants.OfType<ISpaceObject>().Largest()?.IconPaths ?? Enumerable.Empty<string>();
 
 		private SafeDictionary<ICombatant, int> DistancesToTargets { get; } = new SafeDictionary<ICombatant, int>();
 
@@ -136,42 +126,30 @@ namespace FrEee.Game.Objects.Combat.Grid
 		/// </summary>
 		public abstract string Name { get; }
 
-		public System.Drawing.Image Portrait
-		{
-			get { return Combatants.OfType<ISpaceObject>().Largest()?.Portrait; }
-		}
+		public Image? Portrait => Combatants.OfType<ISpaceObject>().Largest()?.Portrait;
 
-		public IEnumerable<string> PortraitPaths
-		{
-			get
-			{
-				return Combatants.OfType<ISpaceObject>().Largest()?.PortraitPaths ?? Enumerable.Empty<string>();
-			}
-		}
+		public IEnumerable<string> PortraitPaths => Combatants.OfType<ISpaceObject>().Largest()?.PortraitPaths ?? Enumerable.Empty<string>();
 
 		/// <summary>
 		/// The sector in which this battle took place.
 		/// </summary>
-		public Sector Sector { get; set; }
+		public Sector? Sector { get; set; }
 
 		/// <summary>
 		/// The star system in which this battle took place.
 		/// </summary>
-		public StarSystem StarSystem { get { return Sector.StarSystem; } }
+		public StarSystem? StarSystem => Sector?.StarSystem;
 
 		public double Timestamp { get; private set; }
 
 		public IList<IntVector2> UpperLeft { get; private set; } = new List<IntVector2>();
 
-		public int GetDiameter(int round)
-		{
-			return UpperLeft[round].DistanceToEightWay(LowerRight[round]) + 1;
-		}
+		public int GetDiameter(int round) => UpperLeft[round].DistanceToEightWay(LowerRight[round]) + 1;
 
 		public virtual void Initialize(IEnumerable<ICombatant> combatants)
 		{
 			Combatants = combatants.ToHashSet();
-			StartCombatants = combatants.Select(c => new { ID = c.ID, Copy = c.CopyAndAssignNewID() }).ToDictionary(q => q.ID, q => q.Copy);
+			StartCombatants = combatants.Select(c => new { c.ID, Copy = c.CopyAndAssignNewID() }).ToDictionary(q => q.ID, q => q.Copy);
 		}
 
 		public abstract void PlaceCombatants(SafeDictionary<ICombatant, IntVector2> locations);
@@ -182,7 +160,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 		public void Resolve()
 		{
 			// update memories
-			foreach (var sobj in StarSystem.SpaceObjects.Where(x => !x.IsMemory).ToArray())
+			foreach (var sobj in StarSystem?.SpaceObjects.Where(x => !x.IsMemory).ToArray() ?? Array.Empty<ISpaceObject>())
 				sobj.UpdateEmpireMemories();
 
 			Current.Add(this);
@@ -195,6 +173,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 			Events = new List<IList<IBattleEvent>>();
 
 			UpdateBounds(0, locations.Values);
+
+			Combatants ??= new HashSet<ICombatant>();
 
 			// let all combatants scan each other
 			foreach (var c in Combatants)
@@ -297,7 +277,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 						{
 							// move to max range that we can inflict max damage on best target
 							var goodTargets = targetiness.Where(x => !IgnoredTargets[c].Contains(x.Key)).WithMax(x => x.Value);
-							ICombatant bestTarget = null;
+							ICombatant? bestTarget = null;
 							if (goodTargets.Any())
 								bestTarget = goodTargets.First().Key;
 							if (bestTarget == null)
@@ -330,7 +310,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 								{
 									// adjust desired range due to seeker speed and target speed if retreating
 									var roundsToClose = c.Weapons.Where(w => w.Template.ComponentTemplate.WeaponInfo.IsSeeker).Max(w =>
-										(int)Math.Ceiling((double)w.Template.WeaponMaxRange / (double)(w.Template.ComponentTemplate.WeaponInfo as SeekingWeaponInfo).SeekerSpeed));
+										(int)Math.Ceiling(w.Template.WeaponMaxRange / (double)(w.Template.ComponentTemplate.WeaponInfo as SeekingWeaponInfo)?.SeekerSpeed));
 									var distanceAdjustment = (int)Ceiling(combatSpeeds[bestTarget] * roundsToClose);
 									maxdmgrange -= distanceAdjustment;
 									if (maxdmgrange < 0)
@@ -556,11 +536,11 @@ namespace FrEee.Game.Objects.Combat.Grid
 				c.IsDisposed = false;
 
 			// validate fleets since some ships might have died
-			foreach (var fleet in Sector.SpaceObjects.OfType<Fleet>())
+			foreach (var fleet in Sector?.SpaceObjects.OfType<Fleet>() ?? Enumerable.Empty<Fleet>())
 				fleet.Validate();
 
 			// replenish combatants' shields
-			foreach (var combatant in Sector.SpaceObjects.OfType<ICombatant>())
+			foreach (var combatant in Sector?.SpaceObjects.OfType<ICombatant>() ?? Enumerable.Empty<ICombatant>())
 				combatant.ReplenishShields();
 
 			// mark battle complete
@@ -570,7 +550,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 			// update memories
 			foreach (var sobj in Combatants.OfType<ISpaceObject>().Where(x => !x.IsMemory).ToArray())
 			{
-				foreach (var emp in Empires)
+				foreach (var emp in Empires ?? Enumerable.Empty<Empire>())
 				{
 					emp.UpdateMemory(sobj); ;
 				}
@@ -582,10 +562,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 		public abstract void ModifyHappiness();
 
-		public override string ToString()
-		{
-			return Name;
-		}
+		public override string ToString() => Name;
 
 		private void CheckSeekerDetonation(Seeker s, SafeDictionary<ICombatant, IntVector2> locations)
 		{
@@ -673,7 +650,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 					{
 						var seeker = new Seeker(Sector, c.Owner, c, w, target);
 						Galaxy.Current.AssignID(seeker);
-						Combatants.Add(seeker);
+						Combatants?.Add(seeker);
 						StartCombatants[seeker.ID] = seeker.Copy();
 						locations[seeker] = new IntVector2(locations[c]);
 						Events.Last().Add(new CombatantLaunchedEvent(this, c, seeker, locations[seeker]));
@@ -746,10 +723,10 @@ namespace FrEee.Game.Objects.Combat.Grid
 		{
 			foreach (var seeker in Combatants.OfType<Seeker>().ToArray())
 				seeker.Dispose();
-			Combatants.Clear();
+			Combatants?.Clear();
 			if (CombatSpeedBuffer != null)
 				CombatSpeedBuffer.Clear();
-			Events.Clear();
+			Events?.Clear();
 			LowerRight.Clear();
 			if (StartCombatants != null)
 				StartCombatants.Clear();

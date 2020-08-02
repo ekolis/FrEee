@@ -914,7 +914,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		/// <param name="other"></param>
 		/// <returns></returns>
-		public bool IsEnemyOf(Empire other, StarSystem sys)
+		public bool IsEnemyOf(Empire other, StarSystem? sys)
 		{
 			if (other == null)
 				return false; // can't be hostile to nobody/host
@@ -1248,9 +1248,9 @@ namespace FrEee.Game.Objects.Civilization
 		/// Triggers a happiness change in a star system.
 		/// </summary>
 		/// <param name="trigger">The trigger function.</param>
-		public void TriggerHappinessChange(StarSystem s, Func<HappinessModel, int> trigger)
+		public void TriggerHappinessChange(StarSystem? s, Func<HappinessModel, int> trigger)
 		{
-			foreach (var colony in s.FindSpaceObjects<Planet>().Where(p => p.Owner == this).Select(p => p.Colony))
+			foreach (var colony in s?.FindSpaceObjects<Planet>().Where(p => p.Owner == this).Select(p => p.Colony) ?? Enumerable.Empty<Colony>())
 				colony.TriggerHappinessChange(trigger);
 		}
 
@@ -1258,9 +1258,9 @@ namespace FrEee.Game.Objects.Civilization
 		/// Triggers a happiness change in a sector.
 		/// </summary>
 		/// <param name="trigger">The trigger function.</param>
-		public void TriggerHappinessChange(Sector s, Func<HappinessModel, int> trigger)
+		public void TriggerHappinessChange(Sector? s, Func<HappinessModel, int> trigger)
 		{
-			foreach (var colony in s.SpaceObjects.OfType<Planet>().Where(p => p.Owner == this).Select(p => p.Colony))
+			foreach (var colony in s?.SpaceObjects.OfType<Planet>().Where(p => p.Owner == this).Select(p => p.Colony) ?? Enumerable.Empty<Colony>())
 				colony.TriggerHappinessChange(trigger);
 		}
 
