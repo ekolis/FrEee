@@ -1,5 +1,7 @@
-﻿using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Civilization;
 using System.Collections.Generic;
+
+#nullable enable
 
 namespace FrEee.Game.Interfaces
 {
@@ -9,14 +11,14 @@ namespace FrEee.Game.Interfaces
 	/// </summary>
 	public interface ICommand : IPromotable
 	{
-		IReferrable Executor { get; }
+		IReferrable? Executor { get; }
 
-		long ExecutorID { get; }
+		long? ExecutorID { get; }
 
 		/// <summary>
 		/// The empire issuing the command.
 		/// </summary>
-		Empire Issuer { get; }
+		Empire? Issuer { get; }
 
 		/// <summary>
 		/// Any new (from the client) objects referred to by this command.
@@ -32,11 +34,11 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// A command to some object.
 	/// </summary>
-	public interface ICommand<T> : ICommand where T : IReferrable
+	public interface ICommand<T> : ICommand where T : class, IReferrable
 	{
 		/// <summary>
 		/// The object whose queue is being manipulated.
 		/// </summary>
-		new T Executor { get; set; }
+		new T? Executor { get; set; }
 	}
 }

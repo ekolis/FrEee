@@ -60,7 +60,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		/// </summary>
 		public bool IsTentative { get; set; }
 
-		public Empire Owner => Executor;
+		public Empire? Owner => Executor;
 
 		/// <summary>
 		/// The package being received in return.
@@ -99,7 +99,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			var errors = GivePackage?.Errors.Concat(ReceivePackage?.Errors);
 			if (errors?.Any() ?? false)
 			{
-				Executor.Log.Add(Recipient.CreateLogMessage("We could not execute a trade with the " + Recipient + " because: " + errors.First(), LogMessages.LogMessageType.Error));
+				Executor?.Log.Add(Recipient.CreateLogMessage("We could not execute a trade with the " + Recipient + " because: " + errors.First(), LogMessages.LogMessageType.Error));
 				Recipient.Log.Add(Executor.CreateLogMessage("We could not execute a trade with the " + Executor + " because: " + errors.First(), LogMessages.LogMessageType.Error));
 			}
 			else

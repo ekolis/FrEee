@@ -72,8 +72,11 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 			}
 		}
 
-		private void DeclareWar(Empire emp)
+		private void DeclareWar(Empire? emp)
 		{
+			if (emp is null)
+				return;
+
 			// send declaration of war to the empire in question
 			// note that you might not have even encountered them yet, but meh...
 			var response = new ActionMessage(emp);
@@ -81,8 +84,8 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 			response.Text = "Our allies have forced our hand. We must declare war!";
 			response.Action = new DeclareWarAction(emp);
 			var cmd = new SendMessageCommand(response);
-			Empire.Current.Commands.Add(cmd);
-			Empire.Current.TriggerHappinessChange(hm => hm.TreatyWar);
+			Empire.Current?.Commands.Add(cmd);
+			Empire.Current?.TriggerHappinessChange(hm => hm.TreatyWar);
 			emp.TriggerHappinessChange(hm => hm.TreatyWar);
 		}
 	}

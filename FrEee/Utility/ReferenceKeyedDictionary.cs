@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
@@ -10,7 +10,7 @@ using System.Linq;
 namespace FrEee.Utility
 {
 	public class GalaxyReferenceKeyedDictionary<TKey, TValue> : ReferenceKeyedDictionary<long, GalaxyReference<TKey>, TKey, TValue>
-			where TKey : IReferrable
+			where TKey : class, IReferrable
 	{
 		private SafeDictionary<long, TKey> dict = new SafeDictionary<long, TKey>();
 

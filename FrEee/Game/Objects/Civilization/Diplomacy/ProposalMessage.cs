@@ -20,9 +20,9 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			Proposal = new Proposal(recipient);
 		}
 
-		public override IEnumerable<string> IconPaths => Proposal.Owner.IconPaths;
+		public override IEnumerable<string>? IconPaths => Proposal.Owner?.IconPaths;
 
-		public override IEnumerable<string> PortraitPaths => Proposal.Owner.PortraitPaths;
+		public override IEnumerable<string>? PortraitPaths => Proposal.Owner?.PortraitPaths;
 
 		/// <summary>
 		/// The proposal in question.

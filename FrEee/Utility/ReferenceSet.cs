@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility.Extensions;
@@ -10,7 +10,7 @@ namespace FrEee.Utility
 {
 	[Serializable]
 	public class GalaxyReferenceSet<T> : ReferenceSet<GalaxyReference<T>, T>
-		where T : IReferrable
+		where T : class, IReferrable
 	{
 		public GalaxyReferenceSet()
 			: base()

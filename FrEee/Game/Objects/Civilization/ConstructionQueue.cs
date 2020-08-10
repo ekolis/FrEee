@@ -507,7 +507,10 @@ namespace FrEee.Game.Objects.Civilization
 				{
 					double aptmod = 0d;
 					foreach (var ratio in ratios)
-						aptmod += ((ratio.Race.Aptitudes[Aptitude.Construction.Name] / 100d)) * ratio.Ratio;
+					{
+						if (Aptitude.Construction.Name != null)
+							aptmod += ratio.Race.Aptitudes[Aptitude.Construction.Name] / 100d * ratio.Ratio;
+					}
 					rate *= aptmod;
 
 					// apply culture modifier
@@ -516,7 +519,7 @@ namespace FrEee.Game.Objects.Civilization
 			}
 			if (rate == null)
 				rate = new ResourceQuantity();
-			if (Container is IVehicle)
+			if (Container is IVehicle && Aptitude.Construction.Name != null)
 			{
 				// apply aptitude modifier for empire's primary race
 				rate *= Owner?.PrimaryRace?.Aptitudes[Aptitude.Construction.Name] ?? 100 / 100d;

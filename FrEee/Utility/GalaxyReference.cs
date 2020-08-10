@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
 using System;
@@ -15,9 +15,8 @@ namespace FrEee.Utility
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
 	public class GalaxyReference<T> : IReference<long, T>, IPromotable
-		where T : IReferrable
+		where T : class, IReferrable
 	{
-
 		/// <summary>
 		/// Either will create a new Galaxy Reference with the given id, or return null.
 		/// Useful to allow a client to store an ID locally for reference, when the server might destroy said ID. 

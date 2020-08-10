@@ -27,11 +27,11 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			TurnNumber = Galaxy.Current.TurnNumber;
 		}
 
-		public Image Icon => Owner == Empire.Current ? Recipient.Icon : Owner.Icon;
+		public Image? Icon => Owner == Empire.Current ? Recipient.Icon : Owner?.Icon;
 
 		public Image Icon32 => Icon.Resize(32);
 
-		public abstract IEnumerable<string> IconPaths { get; }
+		public abstract IEnumerable<string>? IconPaths { get; }
 
 		public long ID { get; set; }
 
@@ -48,11 +48,11 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		/// The empire sending this message.
 		/// </summary>
 		[DoNotSerialize]
-		public Empire Owner { get => owner; set => owner = value; }
+		public Empire? Owner { get => owner; set => owner = value; }
 
 		public Image? Portrait => Owner == Empire.Current ? Recipient.Portrait : Owner?.Portrait;
 
-		public abstract IEnumerable<string> PortraitPaths { get; }
+		public abstract IEnumerable<string>? PortraitPaths { get; }
 
 		/// <summary>
 		/// The empire receiving the message.
@@ -69,7 +69,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 
 		public int TurnNumber { get; set; }
 
-		private GalaxyReference<Empire> owner { get; set; }
+		private GalaxyReference<Empire?> owner { get; set; }
 
 		private GalaxyReference<Empire> recipient { get; set; }
 

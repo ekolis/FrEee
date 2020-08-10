@@ -13,6 +13,8 @@ using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 
+#nullable enable
+
 namespace FrEee.Game.Objects.Orders
 {
 	/// <summary>
@@ -20,38 +22,22 @@ namespace FrEee.Game.Objects.Orders
 	/// </summary>
 	[Serializable]
 	public class ConstructionOrder<T, TTemplate> : IConstructionOrder
-		where T : IConstructable
-		where TTemplate : ITemplate<T>, IReferrable, IConstructionTemplate
+		where T : class, IConstructable
+		where TTemplate : class, ITemplate<T>, IReferrable, IConstructionTemplate
 	{
-		public ConstructionOrder()
-		{
-			Owner = Empire.Current;
-		}
+		public ConstructionOrder() => Owner = Empire.Current;
 
-		public bool ConsumesMovement
-		{
-			get { return false; }
-		}
+		public bool ConsumesMovement => false;
 
-		public ResourceQuantity Cost
-		{
-			get { return Template?.Cost ?? new ResourceQuantity(); }
-		}
+		public ResourceQuantity Cost => Template?.Cost ?? new ResourceQuantity();
 
 		public long ID { get; set; }
 
 		public bool IsComplete
 		{
-			get
-			{
-				if (isComplete == null)
-					return false; // haven't checked completion yet, so it's probably safe to say it's incomplete
-				return isComplete.Value;
-			}
-			set
-			{
-				isComplete = value;
-			}
+			// null means we haven't checked completion yet, so it's probably safe to say it's incomplete
+			get => isComplete ?? false;
+			set => isComplete = value;
 		}
 
 		public bool IsDisposed { get; set; }
@@ -59,34 +45,25 @@ namespace FrEee.Game.Objects.Orders
 		/// <summary>
 		/// The item being built.
 		/// </summary>
-		public T Item { get; set; }
+		public T? Item { get; set; }
 
-		IConstructable IConstructionOrder.Item
-		{
-			get { return Item; }
-		}
+		IConstructable? IConstructionOrder.Item => Item;
 
-		public string Name
-		{
-			get
-			{
-				return Template.Name;
-			}
-		}
+		public string? Name => Template?.Name;
 
 		/// <summary>
 		/// The empire which issued the order.
 		/// </summary>
 		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		public Empire? Owner { get => owner; set => owner = value; }
 
 		/// <summary>
 		/// The construction template.
 		/// </summary>
 		[DoNotSerialize]
-		public TTemplate Template
+		public TTemplate? Template
 		{
-			get { return template.Value; }
+			get => template?.Value;
 			set
 			{
 				if (value is IModObject mo)
@@ -100,31 +77,27 @@ namespace FrEee.Game.Objects.Orders
 			}
 		}
 
-		private IReference<U> GetModReference<U>(string id)
+		private IReference<U>? GetModReference<U>(string id)
 		{
 			// since T is not guaranteed to be a compile time IModObject implementation
 			var type = typeof(ModReference<>).MakeGenericType(typeof(U));
-			var r = (IReference<U>)Activator.CreateInstance(type);
+			var r = (IReference<U>?)Activator.CreateInstance(type);
 			r.SetPropertyValue("ID", id);
 			return r;
 		}
 
-		IConstructionTemplate IConstructionOrder.Template { get { return template.Value; } }
+		IConstructionTemplate? IConstructionOrder.Template => template?.Value;
 
 		[DoNotSerialize]
-		private bool? isComplete
-		{
-			get;
-			set;
-		}
+		private bool? isComplete { get; set; }
 
-		private GalaxyReference<Empire> owner { get; set; }
-		private IReference<TTemplate> template { get; set; }
+		private GalaxyReference<Empire?>? owner { get; set; }
+		private IReference<TTemplate>? template { get; set; }
 
 		public bool CheckCompletion(IOrderable q)
 		{
 			var queue = (ConstructionQueue)q;
-			isComplete = Item.ConstructionProgress >= Item.Cost || GetErrors(queue).Any();
+			isComplete = Item?.ConstructionProgress >= Item?.Cost || GetErrors(queue).Any();
 			return IsComplete;
 		}
 
@@ -164,8 +137,8 @@ namespace FrEee.Game.Objects.Orders
 				// create item if needed
 				if (Item == null)
 				{
-					Item = Template.Instantiate();
-					if (!(Item is Facility))
+					Item = Template?.Instantiate();
+					if (!(Item is Facility) && Item != null)
 						Item.Owner = queue.Owner;
 					if (Item is SpaceVehicle)
 					{
@@ -176,7 +149,7 @@ namespace FrEee.Game.Objects.Orders
 				}
 
 				// apply build rate
-				var costLeft = Item.Cost - Item.ConstructionProgress;
+				var costLeft = Item?.Cost - Item?.ConstructionProgress;
 				var spending = ResourceQuantity.Min(costLeft, queue.UnspentRate);
 				if (!(spending <= queue.Owner.StoredResources))
 				{
@@ -184,17 +157,18 @@ namespace FrEee.Game.Objects.Orders
 					if (spending.IsEmpty)
 					{
 						if (!queue.IsConstructionDelayed) // don't spam messages!
-							Owner.Log.Add(queue.Container.CreateLogMessage("Construction of " + Template + " at " + queue.Container + " was paused due to lack of resources.", LogMessageType.Generic));
+							Owner?.Log.Add(queue.Container.CreateLogMessage("Construction of " + Template + " at " + queue.Container + " was paused due to lack of resources.", LogMessageType.Generic));
 					}
 					else
 					{
-						Owner.Log.Add(queue.Container.CreateLogMessage("Construction of " + Template + " at " + queue.Container + " was slowed due to lack of resources.", LogMessageType.Generic));
+						Owner?.Log.Add(queue.Container.CreateLogMessage("Construction of " + Template + " at " + queue.Container + " was slowed due to lack of resources.", LogMessageType.Generic));
 					}
 					queue.IsConstructionDelayed = true;
 				}
 				queue.Owner.StoredResources -= spending;
 				queue.UnspentRate -= spending;
-				Item.ConstructionProgress += spending;
+				if (Item != null)
+					Item.ConstructionProgress += spending;
 			}
 		}
 
@@ -211,20 +185,20 @@ namespace FrEee.Game.Objects.Orders
 				yield return Template.CreateLogMessage(Template + " cannot be built at " + queue.Container + " because we have not yet researched it.", LogMessageType.Warning);
 		}
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			if (done == null)
 				done = new HashSet<IPromotable>();
 			if (!done.Contains(this))
 			{
 				done.Add(this);
-				template.ReplaceClientIDs(idmap, done);
+				template?.ReplaceClientIDs(idmap, done);
 			}
 		}
 
 		public void Reset()
 		{
-			Item = default(T);
+			Item = default;
 		}
 	}
 }

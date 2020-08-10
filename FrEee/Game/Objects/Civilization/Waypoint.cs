@@ -43,7 +43,7 @@ namespace FrEee.Game.Objects.Civilization
 		[DoNotSerialize]
 		internal int AlteredQueuesOnDelete { get; private set; }
 
-		private GalaxyReference<Empire>? owner { get; set; }
+		private GalaxyReference<Empire?>? owner { get; set; }
 
 		/// <summary>
 		/// Only the waypoint's owner can see it.

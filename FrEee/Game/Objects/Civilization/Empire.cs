@@ -868,8 +868,12 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		/// <param name="emp"></param>
 		/// <returns></returns>
-		public IEnumerable<Clause> GetTreaty(Empire emp)
+		public IEnumerable<Clause> GetTreaty(Empire? emp)
 		{
+			if (emp is null)
+			{
+				return Enumerable.Empty<Clause>();
+			}
 			return GivenTreatyClauses[emp].Union(ReceivedTreatyClauses[emp]);
 		}
 
@@ -890,8 +894,12 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		/// <param name="item"></param>
 		/// <returns></returns>
-		public bool HasUnlocked(IUnlockable item)
+		public bool HasUnlocked(IUnlockable? item)
 		{
+			if (item is null)
+			{
+				return false;
+			}
 			return CheckUnlockStatus(item);
 			// TODO - fix caching of unlock status
 			//			return item == null || UnlockedItems.Contains(item);

@@ -15,11 +15,11 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		{
 		}
 
-		public override IEnumerable<string> IconPaths => Owner.IconPaths;
+		public override IEnumerable<string>? IconPaths => Owner?.IconPaths;
 
-		public override IEnumerable<string> PortraitPaths => Owner.PortraitPaths;
+		public override IEnumerable<string>? PortraitPaths => Owner?.PortraitPaths;
 
-		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done)
+		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done)
 		{
 			// nothing to do
 		}

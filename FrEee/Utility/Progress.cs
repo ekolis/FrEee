@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility.Extensions;
@@ -7,7 +7,7 @@ using System;
 namespace FrEee.Utility
 {
 	public class GalaxyProgress<T> : Progress<GalaxyReference<T>, T>
-		where T: IReferrable
+		where T: class, IReferrable
 	{
 		public GalaxyProgress(T item, long value, long maximum, long incrementalProgressBeforeDelay = 0, double? delay = 0, long extraIncrementalProgressAfterDelay = 0)
 			: base(item, value, maximum, incrementalProgressBeforeDelay, delay, extraIncrementalProgressAfterDelay)

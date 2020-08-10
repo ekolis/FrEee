@@ -176,8 +176,11 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		/// Transfers this package to a target empire.
 		/// </summary>
 		/// <param name="target"></param>
-		public void Transfer(Empire target)
+		public void Transfer(Empire? target)
 		{
+			if (target is null)
+				return;
+
 			var errors = Errors.ToArray();
 			if (errors.Any())
 				throw new Exception("Attempting to transfer an invalid package (" + this + "): " + errors.First());

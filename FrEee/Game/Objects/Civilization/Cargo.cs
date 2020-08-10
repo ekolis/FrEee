@@ -209,7 +209,7 @@ namespace FrEee.Game.Objects.Civilization
 					break; // no more population
 				double popHPPerPerson = Mod.Current.Settings.PopulationHitpoints;
 				// TODO - don't ceiling the popKilled, just stack it up
-				int popKilled = (int)Math.Ceiling(hit.Shot.DamageType.PopulationDamage.Evaluate(hit.Shot) / popHPPerPerson);
+				int popKilled = (int)Math.Ceiling(hit.Shot?.DamageType.PopulationDamage.Evaluate(hit.Shot) ?? 0 / popHPPerPerson);
 				Population[race] -= popKilled;
 				if (Population[race] < 0)
 					Population[race] = 0;
