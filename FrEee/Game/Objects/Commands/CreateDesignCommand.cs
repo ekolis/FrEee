@@ -1,9 +1,11 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Commands
 {
@@ -35,8 +37,8 @@ namespace FrEee.Game.Objects.Commands
 		{
 			Design.VehiclesBuilt = 0; // in case it was tested in the simulator
 			if (Design.Warnings.Any())
-				Issuer.Log.Add(Design.CreateLogMessage("The " + Design.Name + " " + Design.VehicleTypeName + " design cannot be saved because it has warnings.", LogMessages.LogMessageType.Warning));
-			Issuer.KnownDesigns.Add(Design);
+				Issuer?.Log.Add(Design.CreateLogMessage("The " + Design.Name + " " + Design.VehicleTypeName + " design cannot be saved because it has warnings.", LogMessages.LogMessageType.Warning));
+			Issuer?.KnownDesigns.Add(Design);
 		}
 	}
 }

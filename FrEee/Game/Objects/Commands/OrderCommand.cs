@@ -1,8 +1,10 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Commands
 {
@@ -21,21 +23,15 @@ namespace FrEee.Game.Objects.Commands
 		}
 
 		[DoNotSerialize]
-		public virtual IOrder Order
+		public virtual IOrder? Order
 		{
-			get
-			{
-				return order.Value;
-			}
-			set
-			{
-				order = value.ReferViaGalaxy();
-			}
+			get => order?.Value;
+			set => order = value.ReferViaGalaxy();
 		}
 
-		private GalaxyReference<IOrder> order { get; set; }
+		private GalaxyReference<IOrder?>? order { get; set; }
 
-		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			if (done == null)
 				done = new HashSet<IPromotable>();
@@ -43,7 +39,7 @@ namespace FrEee.Game.Objects.Commands
 			{
 				done.Add(this);
 				base.ReplaceClientIDs(idmap, done);
-				order.ReplaceClientIDs(idmap, done);
+				order?.ReplaceClientIDs(idmap, done);
 			}
 		}
 	}

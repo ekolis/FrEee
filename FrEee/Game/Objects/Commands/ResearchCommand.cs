@@ -1,8 +1,10 @@
-﻿using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System.Linq;
 using Tech = FrEee.Game.Objects.Technology.Technology;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Commands
 {
@@ -36,22 +38,22 @@ namespace FrEee.Game.Objects.Commands
 			// make sure no techs are prioritized or queued that the empire can't research
 			foreach (var kvp in Spending.ToArray())
 			{
-				if (!Executor.HasUnlocked(kvp.Key))
+				if (!Executor?.HasUnlocked(kvp.Key) ?? false)
 					Spending[kvp.Key] = 0;
 			}
-			foreach (Technology.Technology tech in Queue.ToArray())
+			foreach (var tech in Queue.ToArray())
 			{
-				if (!Executor.HasUnlocked(tech))
+				if (!Executor?.HasUnlocked(tech) ?? false)
 					Queue.Remove(tech);
 			}
 
 			// save to empire
-			Executor.ResearchSpending.Clear();
+			Executor?.ResearchSpending.Clear();
 			foreach (var kvp in Spending)
-				Executor.ResearchSpending.Add(kvp);
-			Executor.ResearchQueue.Clear();
+				Executor?.ResearchSpending.Add(kvp);
+			Executor?.ResearchQueue.Clear();
 			foreach (var tech in Queue)
-				Executor.ResearchQueue.Add(tech);
+				Executor?.ResearchQueue.Add(tech);
 		}
 	}
 }

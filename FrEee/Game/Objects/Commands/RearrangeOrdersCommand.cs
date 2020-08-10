@@ -1,7 +1,9 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
 using System;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Commands
 {
@@ -22,21 +24,17 @@ namespace FrEee.Game.Objects.Commands
 		/// <summary>
 		/// How many spaces up (if negative) or down (if positive) to move the order.
 		/// </summary>
-		public int DeltaPosition
-		{
-			get;
-			set;
-		}
+		public int DeltaPosition { get; set; }
 
 		public override void Execute()
 		{
-			if (Issuer == Executor.Owner)
+			if (Issuer == Executor?.Owner)
 			{
-				Executor.RearrangeOrder(Order, DeltaPosition);
+				Executor?.RearrangeOrder(Order, DeltaPosition);
 			}
 			else
 			{
-				Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Executor + " belonging to " + Executor.Owner + "!", Galaxy.Current.TurnNumber));
+				Issuer?.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Executor + " belonging to " + Executor?.Owner + "!", Galaxy.Current.TurnNumber));
 			}
 		}
 	}

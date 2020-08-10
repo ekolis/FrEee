@@ -1,7 +1,9 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Commands
 {
@@ -17,13 +19,15 @@ namespace FrEee.Game.Objects.Commands
 		}
 
 		[DoNotSerialize]
-		public IReferrable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
+		public IReferrable? Target { get => target?.Value; set => target = value.ReferViaGalaxy(); }
 
-		private GalaxyReference<IReferrable> target { get; set; }
+		private GalaxyReference<IReferrable?>? target { get; set; }
 
 		public override void Execute()
 		{
-			Executor.PlayerNotes.Remove(target);
+			if (target is null)
+				return;
+			Executor?.PlayerNotes.Remove(target);
 		}
 	}
 }

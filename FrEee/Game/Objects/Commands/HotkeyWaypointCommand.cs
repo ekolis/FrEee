@@ -1,9 +1,11 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
 using System;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Commands
 {
@@ -34,16 +36,17 @@ namespace FrEee.Game.Objects.Commands
 		public override void Execute()
 		{
 			// sanity check
-			var emp = Executor.Owner;
+			var emp = Executor?.Owner;
 			if (emp != Issuer)
 			{
-				Issuer.Log.Add(Issuer.CreateLogMessage("We cannot issue a command to hotkey another empire's waypoints!", LogMessages.LogMessageType.Error));
+				Issuer?.Log.Add(Issuer.CreateLogMessage("We cannot issue a command to hotkey another empire's waypoints!", LogMessages.LogMessageType.Error));
 				return;
 			}
 
 			// replace old waypoint
-			var oldWaypoint = emp.NumberedWaypoints[Hotkey];
-			emp.NumberedWaypoints[Hotkey] = Executor;
+			var oldWaypoint = emp?.NumberedWaypoints[Hotkey];
+			if (emp?.NumberedWaypoints != null)
+				emp.NumberedWaypoints[Hotkey] = Executor;
 
 			if (Redirect)
 			{
@@ -58,7 +61,7 @@ namespace FrEee.Game.Objects.Commands
 						if (order is WaypointOrder)
 						{
 							var wo = order as WaypointOrder;
-							if (wo.Target == oldWaypoint)
+							if (wo?.Target == oldWaypoint && wo?.Target != null)
 							{
 								wo.Target = Executor;
 								found = true;
@@ -70,7 +73,7 @@ namespace FrEee.Game.Objects.Commands
 				}
 
 				if (count > 0)
-					emp.Log.Add(Issuer.CreateLogMessage(count + " vehicles were redirected from " + oldWaypoint + " to " + Executor + ".", LogMessages.LogMessageType.Generic));
+					emp?.Log.Add(Issuer.CreateLogMessage(count + " vehicles were redirected from " + oldWaypoint + " to " + Executor + ".", LogMessages.LogMessageType.Generic));
 			}
 		}
 	}

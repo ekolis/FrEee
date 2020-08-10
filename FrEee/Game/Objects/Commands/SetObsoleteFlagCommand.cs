@@ -1,7 +1,9 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System.Collections.Generic;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Commands
 {
@@ -24,7 +26,7 @@ namespace FrEee.Game.Objects.Commands
 		/// The design to set the flag on if it's already knwon by the server.
 		/// </summary>
 		[DoNotSerialize]
-		public IDesign Design { get { return design?.Value; } set { design = value.ReferViaGalaxy(); } }
+		public IDesign? Design { get => design?.Value; set => design = value.ReferViaGalaxy(); }
 
 		/// <summary>
 		/// The flag state to set.
@@ -34,7 +36,7 @@ namespace FrEee.Game.Objects.Commands
 		/// <summary>
 		/// The design to set the flag on if it's only in the library and not in the game or it's a brand new design.
 		/// </summary>
-		public IDesign NewDesign { get; set; }
+		public IDesign? NewDesign { get; set; }
 
 		public override IEnumerable<IReferrable> NewReferrables
 		{
@@ -45,20 +47,21 @@ namespace FrEee.Game.Objects.Commands
 			}
 		}
 
-		private GalaxyReference<IDesign> design { get; set; }
+		private GalaxyReference<IDesign?>? design { get; set; }
 
 		public override void Execute()
 		{
 			if (NewDesign != null)
 			{
 				// allows obsoleting designs that are on the library or newly created (not on the server yet)
-				Issuer.KnownDesigns.Add(NewDesign);
+				Issuer?.KnownDesigns.Add(NewDesign);
 				Design = NewDesign;
 			}
-			Design.IsObsolete = IsObsolete;
+			if (Design != null)
+				Design.IsObsolete = IsObsolete;
 		}
 
-		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			if (done == null)
 				done = new HashSet<IPromotable>();

@@ -1,7 +1,9 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Commands
 {
@@ -13,18 +15,16 @@ namespace FrEee.Game.Objects.Commands
 	{
 		public DeleteMessageCommand(IMessage msg)
 			: base(Empire.Current)
-		{
-			Message = msg;
-		}
+			=> Message = msg;
 
-		public IMessage Message { get { return message.Value; } set { message = value.ReferViaGalaxy(); } }
+		public IMessage? Message { get => message?.Value; set => message = value.ReferViaGalaxy(); }
 
-		private GalaxyReference<IMessage> message { get; set; }
+		private GalaxyReference<IMessage?>? message { get; set; }
 
 		public override void Execute()
 		{
-			Executor.IncomingMessages.Remove(Message);
-			Executor.SentMessages.Remove(Message);
+			Executor?.IncomingMessages.Remove(Message);
+			Executor?.SentMessages.Remove(Message);
 		}
 	}
 }

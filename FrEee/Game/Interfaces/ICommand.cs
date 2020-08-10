@@ -23,7 +23,7 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// Any new (from the client) objects referred to by this command.
 		/// </summary>
-		IEnumerable<IReferrable> NewReferrables { get; }
+		IEnumerable<IReferrable?> NewReferrables { get; }
 
 		/// <summary>
 		/// Executes the command.

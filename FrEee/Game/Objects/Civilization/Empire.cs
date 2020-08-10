@@ -45,12 +45,12 @@ namespace FrEee.Game.Objects.Civilization
 			UniqueTechsFound = new List<string>();
 			Memory = new SafeDictionary<long, IFoggable>();
 			AINotes = new DynamicDictionary();
-			PlayerNotes = new SafeDictionary<GalaxyReference<IReferrable>, string>();
-			PrivateNames = new SafeDictionary<GalaxyReference<INameable>, string>();
+			PlayerNotes = new SafeDictionary<GalaxyReference<IReferrable?>, string>();
+			PrivateNames = new SafeDictionary<GalaxyReference<INameable?>, string?>();
 			EncounteredEmpires = new HashSet<Empire>();
 			EncounteredEmpires.Add(this);
-			IncomingMessages = new HashSet<IMessage>();
-			SentMessages = new HashSet<IMessage>();
+			IncomingMessages = new HashSet<IMessage?>();
+			SentMessages = new HashSet<IMessage?>();
 			Waypoints = new List<Waypoint>();
 			NumberedWaypoints = new Waypoint[10];
 			Scores = new SafeDictionary<int, int?>();
@@ -88,7 +88,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The names of any ministers that are enabled, keyed by category.
 		/// </summary>
-		public SafeDictionary<string, ICollection<string>> EnabledMinisters { get; set; }
+		public SafeDictionary<string, ICollection<string>>? EnabledMinisters { get; set; }
 
 		// HACK - we are loading up the Galaxy Seen ability way too many times during pathfinding and this is slowing it down massively.
 		// yes, this means that an empire gaining/losing this ability would have to wait until the next turn to actually gain or lose it
@@ -252,7 +252,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Incoming messages that are awaiting a response.
 		/// </summary>
-		public ICollection<IMessage> IncomingMessages { get; private set; }
+		public ICollection<IMessage?> IncomingMessages { get; private set; }
 
 		/// <summary>
 		/// The name of the insignia picture file, relative to Pictures/Insignia.
@@ -376,7 +376,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Notes set by the player on various game objects.
 		/// </summary>
-		public SafeDictionary<GalaxyReference<IReferrable>, string> PlayerNotes { get; private set; }
+		public SafeDictionary<GalaxyReference<IReferrable?>, string> PlayerNotes { get; private set; }
 
 		/// <summary>
 		/// The leader portrait for this empire.
@@ -404,7 +404,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Privately visible names set by the player on various game objects.
 		/// </summary>
-		public SafeDictionary<GalaxyReference<INameable>, string> PrivateNames { get; private set; }
+		public SafeDictionary<GalaxyReference<INameable?>, string?> PrivateNames { get; private set; }
 
 		/// <summary>
 		/// Income via raw resource generation ("Generate Points") abilities (not standard or remote mining, or standard point generation).
@@ -602,7 +602,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Messages sent by this empire.
 		/// </summary>
-		public ICollection<IMessage> SentMessages { get; private set; }
+		public ICollection<IMessage?> SentMessages { get; private set; }
 
 		/// <summary>
 		/// The name of the shipset, relative to Pictures/Shipsets.

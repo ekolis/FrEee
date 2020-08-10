@@ -1,4 +1,6 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Commands
 {
@@ -20,6 +22,8 @@ namespace FrEee.Game.Objects.Commands
 
 		public override void Execute()
 		{
+			if (Executor is null)
+				return;
 			Executor.Name = Name;
 		}
 	}

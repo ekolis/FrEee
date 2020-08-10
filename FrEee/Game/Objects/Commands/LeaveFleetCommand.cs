@@ -1,5 +1,7 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Utility.Extensions;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Commands
 {
@@ -16,8 +18,8 @@ namespace FrEee.Game.Objects.Commands
 		public override void Execute()
 		{
 			// validation
-			if (Executor.Container == null)
-				Issuer.Log.Add(Executor.CreateLogMessage(Executor + " cannot leave its fleet because it is not currently in a fleet.", LogMessages.LogMessageType.Error));
+			if (Executor?.Container == null)
+				Issuer?.Log.Add(Executor.CreateLogMessage(Executor + " cannot leave its fleet because it is not currently in a fleet.", LogMessages.LogMessageType.Error));
 			else
 			{
 				// remove from fleet

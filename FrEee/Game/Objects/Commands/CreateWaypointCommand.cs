@@ -1,6 +1,8 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using System.Collections.Generic;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Commands
 {
@@ -20,7 +22,7 @@ namespace FrEee.Game.Objects.Commands
 		/// </summary>
 		public int? Hotkey { get; private set; }
 
-		public override IEnumerable<IReferrable> NewReferrables
+		public override IEnumerable<IReferrable?> NewReferrables
 		{
 			get
 			{
@@ -37,7 +39,7 @@ namespace FrEee.Game.Objects.Commands
 
 		public override void Execute()
 		{
-			if (!Executor.Waypoints.Contains(Waypoint))
+			if (Executor != null && !Executor.Waypoints.Contains(Waypoint))
 				Executor.Waypoints.Add(Waypoint); // add new waypoint
 		}
 	}

@@ -1,5 +1,10 @@
-﻿using FrEee.Game.Objects.Space;
+using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Space;
+
+using System;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Commands
 {
@@ -15,13 +20,13 @@ namespace FrEee.Game.Objects.Commands
 
 		public override void Execute()
 		{
-			foreach (var v in Executor.Vehicles.ToArray())
+			foreach (var v in Executor?.Vehicles.ToArray() ?? Array.Empty<IMobileSpaceObject>())
 			{
-				Executor.Vehicles.Remove(v);
+				Executor?.Vehicles.Remove(v);
 				v.Container = null;
-				Executor.Sector.Place(v);
+				Executor?.Sector.Place(v);
 			}
-			Executor.Dispose();
+			Executor?.Dispose();
 		}
 	}
 }

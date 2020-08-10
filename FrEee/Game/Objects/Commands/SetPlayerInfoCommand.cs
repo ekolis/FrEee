@@ -1,9 +1,10 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.LogMessages;
-using FrEee.Game.Objects.Space;
 using System;
 using System.Collections.Generic;
+
+using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Commands
 {
@@ -29,9 +30,10 @@ namespace FrEee.Game.Objects.Commands
 
 		public override void Execute()
 		{
-			Executor.PlayerInfo = PlayerInfo;
+			if (Executor != null)
+				Executor.PlayerInfo = PlayerInfo;
 		}
 
-		public PlayerInfo PlayerInfo { get; set; }
+		public PlayerInfo? PlayerInfo { get; set; }
 	}
 }

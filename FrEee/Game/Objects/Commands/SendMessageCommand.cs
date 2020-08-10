@@ -1,8 +1,10 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Civilization.Diplomacy;
 using FrEee.Utility.Extensions;
 using System.Collections.Generic;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Commands
 {
@@ -19,7 +21,7 @@ namespace FrEee.Game.Objects.Commands
 
 		public IMessage Message { get; set; }
 
-		public override IEnumerable<IReferrable> NewReferrables
+		public override IEnumerable<IReferrable?> NewReferrables
 		{
 			get
 			{
@@ -38,11 +40,11 @@ namespace FrEee.Game.Objects.Commands
 			if (Message is ActionMessage)
 			{
 				// execute unilateral action
-				((ActionMessage)Message).Action.Execute();
+				((ActionMessage)Message).Action?.Execute();
 			}
 		}
 
-		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			if (done == null)
 				done = new HashSet<IPromotable>();

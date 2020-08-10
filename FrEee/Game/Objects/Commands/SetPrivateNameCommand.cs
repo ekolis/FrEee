@@ -1,7 +1,9 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Commands
 {
@@ -10,6 +12,7 @@ namespace FrEee.Game.Objects.Commands
 	/// </summary>
 	public class SetPrivateNameCommand : Command<Empire>
 	{
+		// TODO: why isn't "name" used here?
 		public SetPrivateNameCommand(Empire empire, INameable target, string name)
 			: base(empire)
 		{
@@ -19,18 +22,20 @@ namespace FrEee.Game.Objects.Commands
 		/// <summary>
 		/// The name to set.
 		/// </summary>
-		public string Name { get; set; }
+		public string? Name { get; set; }
 
 		/// <summary>
 		/// What are we clearing the name on?
 		/// </summary>
 		[DoNotSerialize]
-		public INameable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
+		public INameable? Target { get => target?.Value; set => target = value.ReferViaGalaxy(); }
 
-		private GalaxyReference<INameable> target { get; set; }
+		private GalaxyReference<INameable?>? target { get; set; }
 
 		public override void Execute()
 		{
+			if (Executor is null || target is null)
+				return;
 			Executor.PrivateNames[target] = Name;
 		}
 	}

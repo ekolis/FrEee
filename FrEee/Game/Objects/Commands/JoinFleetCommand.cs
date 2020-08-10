@@ -1,8 +1,10 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System.Collections.Generic;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Commands
 {
@@ -23,18 +25,18 @@ namespace FrEee.Game.Objects.Commands
 			CreateFleetCommand = cmd;
 		}
 
-		public CreateFleetCommand CreateFleetCommand { get; set; }
+		public CreateFleetCommand? CreateFleetCommand { get; set; }
 
 		[DoNotSerialize]
-		public Fleet Fleet
+		public Fleet? Fleet
 		{
 			get
 			{
-				return fleet == null || fleet.ID <= 0 ? (Fleet)CreateFleetCommand.Fleet : (Fleet)fleet;
+				return fleet == null || fleet.ID <= 0 ? CreateFleetCommand?.Fleet : (Fleet?)fleet;
 			}
 			set
 			{
-				if (!value.HasValidID())
+				if (!value.HasValidID() && value != null)
 				{
 					// HACK - why is the fleet beign disposed?!
 					value.IsDisposed = false;
@@ -45,7 +47,7 @@ namespace FrEee.Game.Objects.Commands
 			}
 		}
 
-		private GalaxyReference<Fleet> fleet { get; set; }
+		private GalaxyReference<Fleet?>? fleet { get; set; }
 
 		public override void Execute()
 		{
@@ -54,26 +56,29 @@ namespace FrEee.Game.Objects.Commands
 				Fleet = CreateFleetCommand.Fleet;
 
 			// validation
-			if (Fleet.Sector != null && Executor.Sector != Fleet.Sector)
-				Issuer.Log.Add(Executor.CreateLogMessage(Executor + " cannot join " + Fleet + " because they are not in the same sector.", LogMessages.LogMessageType.Warning));
-			else if (Fleet.Owner != null && Fleet.Owner != Issuer && CreateFleetCommand == null)
-				Issuer.Log.Add(Executor.CreateLogMessage(Executor + " cannot join " + Fleet + " because this fleet does not belong to us.", LogMessages.LogMessageType.Warning));
+			if (Fleet?.Sector != null && Executor?.Sector != Fleet.Sector)
+				Issuer?.Log.Add(Executor.CreateLogMessage(Executor + " cannot join " + Fleet + " because they are not in the same sector.", LogMessages.LogMessageType.Warning));
+			else if (Fleet?.Owner != null && Fleet.Owner != Issuer && CreateFleetCommand == null)
+				Issuer?.Log.Add(Executor.CreateLogMessage(Executor + " cannot join " + Fleet + " because this fleet does not belong to us.", LogMessages.LogMessageType.Warning));
 			else
 			{
 				// remove from old fleet
-				if (Executor.Container != null)
+				if (Executor?.Container != null)
 					Executor.Container.Vehicles.Remove(Executor);
 
-				if (Fleet.Sector == null)
-					Fleet.Sector = Executor.Sector;
+				if (Fleet != null && Fleet.Sector == null)
+					Fleet.Sector = Executor?.Sector;
 
 				// add to new fleet
-				Fleet.Vehicles.Add(Executor);
-				Executor.Container = Fleet;
+				if (Executor != null)
+				{
+					Fleet?.Vehicles.Add(Executor);
+					Executor.Container = Fleet;
+				}
 			}
 		}
 
-		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			if (done == null)
 				done = new HashSet<IPromotable>();
@@ -81,7 +86,7 @@ namespace FrEee.Game.Objects.Commands
 			{
 				done.Add(this);
 				base.ReplaceClientIDs(idmap, done);
-				fleet.ReplaceClientIDs(idmap, done);
+				fleet?.ReplaceClientIDs(idmap, done);
 			}
 		}
 	}

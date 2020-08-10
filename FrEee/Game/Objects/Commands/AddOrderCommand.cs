@@ -1,8 +1,10 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
 using System;
 using System.Collections.Generic;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Commands
 {
@@ -18,7 +20,7 @@ namespace FrEee.Game.Objects.Commands
 		{
 		}
 
-		public override IEnumerable<IReferrable> NewReferrables
+		public override IEnumerable<IReferrable?> NewReferrables
 		{
 			get
 			{
@@ -26,12 +28,9 @@ namespace FrEee.Game.Objects.Commands
 			}
 		}
 
-		public override IOrder Order
+		public override IOrder? Order
 		{
-			get
-			{
-				return NewOrder;
-			}
+			get => NewOrder;
 			set
 			{
 				base.Order = value;
@@ -39,16 +38,12 @@ namespace FrEee.Game.Objects.Commands
 			}
 		}
 
-		private IOrder NewOrder
-		{
-			get;
-			set;
-		}
+		private IOrder? NewOrder { get; set; }
 
 		public override void Execute()
 		{
 			if (Executor == null)
-				Issuer.Log.Add(new GenericLogMessage("Attempted to add an order to nonexistent object with ID=" + executor.ID + ". This is probably a game bug."));
+				Issuer?.Log.Add(new GenericLogMessage("Attempted to add an order to nonexistent object with ID=" + executor?.ID + ". This is probably a game bug."));
 			else if (Issuer == Executor.Owner)
 			{
 				if (Order is IConstructionOrder && ((IConstructionOrder)Order).Item != null)
@@ -59,10 +54,10 @@ namespace FrEee.Game.Objects.Commands
 					Executor.AddOrder(Order);
 			}
 			else
-				Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Executor + " belonging to " + Executor.Owner + "!", Galaxy.Current.TurnNumber));
+				Issuer?.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Executor + " belonging to " + Executor.Owner + "!", Galaxy.Current.TurnNumber));
 		}
 
-		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			if (done == null)
 				done = new HashSet<IPromotable>();
@@ -70,7 +65,7 @@ namespace FrEee.Game.Objects.Commands
 			{
 				done.Add(this);
 				base.ReplaceClientIDs(idmap, done);
-				NewOrder.ReplaceClientIDs(idmap, done);
+				NewOrder?.ReplaceClientIDs(idmap, done);
 			}
 		}
 	}

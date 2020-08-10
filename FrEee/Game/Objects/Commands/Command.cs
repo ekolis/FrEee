@@ -34,7 +34,7 @@ namespace FrEee.Game.Objects.Commands
 		[DoNotSerialize]
 		public Empire? Issuer { get => issuer; set => issuer = value; }
 
-		public virtual IEnumerable<IReferrable> NewReferrables
+		public virtual IEnumerable<IReferrable?> NewReferrables
 		{
 			get
 			{

@@ -1,5 +1,7 @@
-﻿using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Utility.Extensions;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Commands
 {
@@ -16,16 +18,16 @@ namespace FrEee.Game.Objects.Commands
 		public override void Execute()
 		{
 			// sanity check
-			var emp = Executor.Owner;
+			var emp = Executor?.Owner;
 			if (emp != Issuer)
 			{
-				Issuer.Log.Add(Issuer.CreateLogMessage("We cannot issue a command to delete another empire's waypoints!", LogMessages.LogMessageType.Error));
+				Issuer?.Log.Add(Issuer.CreateLogMessage("We cannot issue a command to delete another empire's waypoints!", LogMessages.LogMessageType.Error));
 				return;
 			}
 
-			Executor.Dispose();
+			Executor?.Dispose();
 
-			Issuer.Log.Add(Issuer.CreateLogMessage(Executor.AlteredQueuesOnDelete + " vehicles' orders were truncated when " + Executor + " was deleted.", LogMessages.LogMessageType.Warning));
+			Issuer?.Log.Add(Issuer.CreateLogMessage(Executor?.AlteredQueuesOnDelete + " vehicles' orders were truncated when " + Executor + " was deleted.", LogMessages.LogMessageType.Warning));
 		}
 	}
 }
