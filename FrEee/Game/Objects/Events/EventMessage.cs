@@ -1,9 +1,6 @@
-﻿using FrEee.Modding.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using FrEee.Modding.Interfaces;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Events
 {
@@ -12,7 +9,7 @@ namespace FrEee.Game.Objects.Events
 	/// </summary>
 	public class EventMessage
 	{
-		public IFormula<string> Title { get; set; }
-		public IFormula<string> Text { get; set; }
+		public IFormula<string>? Title { get; set; }
+		public IFormula<string>? Text { get; set; }
 	}
 }

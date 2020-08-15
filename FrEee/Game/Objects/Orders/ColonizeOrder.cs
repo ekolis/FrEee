@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
@@ -10,6 +10,8 @@ using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Orders
 {
@@ -25,18 +27,11 @@ namespace FrEee.Game.Objects.Orders
 			Planet = planet;
 		}
 
-		public bool ConsumesMovement
-		{
-			get { return true; }
-		}
+		public bool ConsumesMovement => true;
 
 		public long ID { get; set; }
 
-		public bool IsComplete
-		{
-			get;
-			set;
-		}
+		public bool IsComplete { get; set; }
 
 		public bool IsDisposed { get; set; }
 
@@ -44,21 +39,18 @@ namespace FrEee.Game.Objects.Orders
 		/// The empire which issued the order.
 		/// </summary>
 		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		public Empire? Owner { get => owner; set => owner = value; }
 
 		/// <summary>
 		/// The planet we are colonizing.
 		/// </summary>
 		[DoNotSerialize]
-		public Planet Planet { get { return planet; } set { planet = value; } }
+		public Planet Planet { get => planet; set => planet = value; }
 
-		private GalaxyReference<Empire> owner { get; set; }
-		private GalaxyReference<Planet> planet { get; set; }
+		private GalaxyReference<Empire?>? owner { get; set; }
+		private GalaxyReference<Planet>? planet { get; set; }
 
-		public bool CheckCompletion(IOrderable v)
-		{
-			return IsComplete;
-		}
+		public bool CheckCompletion(IOrderable v) => IsComplete;
 
 		/// <summary>
 		/// Orders are visible only to their owners.
@@ -105,7 +97,7 @@ namespace FrEee.Game.Objects.Orders
 				{
 					// colonize now!!!
 					Planet.Colony = new Colony { Owner = sobj.Owner };
-					Owner.TriggerHappinessChange(hm => hm.PlanetColonized);
+					Owner?.TriggerHappinessChange(hm => hm.PlanetColonized);
 					Planet.Colony.ConstructionQueue = new ConstructionQueue(Planet);
 					if (sobj is ICargoContainer cc)
 					{
@@ -191,7 +183,7 @@ namespace FrEee.Game.Objects.Orders
 				sobj.SpendTime(sobj.TimePerMove);
 			}
 			else
-				Owner.Log.Append(Owner.CreateLogMessage($"Could not assign a colonize order to ${ord} because it is not a mobile space object.", LogMessageType.Error));
+				Owner?.Log.Append(Owner.CreateLogMessage($"Could not assign a colonize order to ${ord} because it is not a mobile space object.", LogMessageType.Error));
 		}
 
 		public IEnumerable<LogMessage> GetErrors(IOrderable o)
@@ -213,29 +205,26 @@ namespace FrEee.Game.Objects.Orders
 					// no such colony module
 					yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because it lacks a " + Planet.Surface + " colony module.", LogMessageType.Warning);
 				}
-				if (Galaxy.Current.CanColonizeOnlyBreathable && Planet.Atmosphere != sobj.Owner.PrimaryRace.NativeAtmosphere)
+				if (Galaxy.Current.CanColonizeOnlyBreathable && Planet.Atmosphere != sobj.Owner.PrimaryRace?.NativeAtmosphere)
 				{
 					// can only colonize breathable atmosphere (due to game setup option)
-					yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because we can only colonize " + sobj.Owner.PrimaryRace.NativeAtmosphere + " planets.", LogMessageType.Warning);
+					yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because we can only colonize " + sobj.Owner.PrimaryRace?.NativeAtmosphere + " planets.", LogMessageType.Warning);
 				}
-				if (Galaxy.Current.CanColonizeOnlyHomeworldSurface && Planet.Surface != sobj.Owner.PrimaryRace.NativeSurface)
+				if (Galaxy.Current.CanColonizeOnlyHomeworldSurface && Planet.Surface != sobj.Owner.PrimaryRace?.NativeSurface)
 				{
 					// can only colonize breathable atmosphere (due to game setup option)
-					yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because we can only colonize " + sobj.Owner.PrimaryRace.NativeSurface + " planets.", LogMessageType.Warning);
+					yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because we can only colonize " + sobj.Owner.PrimaryRace?.NativeSurface + " planets.", LogMessageType.Warning);
 				}
 			}
 			else
 				yield return o.CreateLogMessage($"{o} cannot colonize {Planet} because it is not a mobile space object.", LogMessageType.Error);
 		}
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			// This type does not use client objects, so nothing to do here.
 		}
 
-		public override string ToString()
-		{
-			return "Colonize " + Planet.Name;
-		}
+		public override string ToString() => "Colonize " + Planet.Name;
 	}
 }

@@ -1,4 +1,6 @@
-﻿using System;
+using System;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.LogMessages
 {
@@ -16,9 +18,6 @@ namespace FrEee.Game.Objects.LogMessages
 		public GenericLogMessage(string text, int turn, LogMessageType logMessageType = LogMessageType.Generic) : base(text, turn, logMessageType)
 		{ }
 
-		public override System.Drawing.Image Picture
-		{
-			get { return null; }
-		}
+		public override System.Drawing.Image? Picture => null;
 	}
 }

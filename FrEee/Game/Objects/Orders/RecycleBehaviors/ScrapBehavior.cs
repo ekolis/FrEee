@@ -1,10 +1,12 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Utility.Extensions;
 using System.Collections.Generic;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Orders.RecycleBehaviors
 {
@@ -14,7 +16,7 @@ namespace FrEee.Game.Objects.Orders.RecycleBehaviors
 	/// </summary>
 	public class ScrapBehavior : IRecycleBehavior
 	{
-		public string Verb { get { return "Scrap"; } }
+		public string Verb => "Scrap";
 
 		public void Execute(IRecyclable target, bool didRecycle = false)
 		{

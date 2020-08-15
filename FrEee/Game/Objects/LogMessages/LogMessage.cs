@@ -1,6 +1,8 @@
-﻿using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Space;
 using System;
 using System.Drawing;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.LogMessages
 {
@@ -24,7 +26,7 @@ namespace FrEee.Game.Objects.LogMessages
 		/// <summary>
 		/// A picture to display with the log message.
 		/// </summary>
-		public abstract Image Picture { get; }
+		public abstract Image? Picture { get; }
 
 		/// <summary>
 		/// The text of the log message.

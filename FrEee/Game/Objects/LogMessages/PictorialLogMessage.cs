@@ -1,6 +1,8 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using System;
 using System.Drawing;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.LogMessages
 {
@@ -28,7 +30,7 @@ namespace FrEee.Game.Objects.LogMessages
 		/// </summary>
 		public T Context { get; set; }
 
-		public override Image Picture
+		public override Image? Picture
 		{
 			get
 			{

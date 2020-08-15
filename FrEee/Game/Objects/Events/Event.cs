@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
@@ -9,6 +9,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Events
 {
@@ -27,14 +29,8 @@ namespace FrEee.Game.Objects.Events
 		/// <summary>
 		/// The empires which are affected by this event and need log messages.
 		/// </summary>
-		public IEnumerable<Empire> AffectedEmpires
-		{
-			get
-			{
-				// TODO - affected empires only
-				return Galaxy.Current.Empires;
-			}
-		}
+		// TODO - affected empires only
+		public IEnumerable<Empire> AffectedEmpires => Galaxy.Current.Empires;
 
 		public Image Icon => Pictures.GetModImage(IconPaths.ToArray());
 
@@ -55,7 +51,7 @@ namespace FrEee.Game.Objects.Events
 		/// <summary>
 		/// The object affected by this script.
 		/// </summary>
-		public IReferrable Target { get; private set; }
+		public IReferrable? Target { get; private set; }
 
 		/// <summary>
 		/// The template for this event.
@@ -77,18 +73,19 @@ namespace FrEee.Game.Objects.Events
 				foreach (var emp in AffectedEmpires)
 				{
 					var context = new SafeDictionary<string, object>();
-					var text = m.Text.Evaluate(context);
-					emp.RecordLog(this, text, LogMessages.LogMessageType.Generic);
+					var text = m.Text?.Evaluate(context);
+					emp.RecordLog(this, text ?? string.Empty, LogMessages.LogMessageType.Generic);
 				}
 			}
 
-			var dict = new SafeDictionary<string, object>();
+			var dict = new SafeDictionary<string, object?>();
 			dict.Add("target", Target);
 			// SE4/SE5 style replacement strings turn into dynamic formulas
 			var regex = new Regex(@"\[\%(.*?)\%?\]");
 			var matches = regex.Matches(Template.Type.Action.Text);
-			foreach (Match m in matches)
-				dict.Add(m.Captures[0].Value, new ComputedFormula<string>(m.Captures[0].Value, this, true).Value);
+			foreach (Match? m in matches)
+				if (m?.Captures[0].Value != null)
+					dict.Add(m.Captures[0].Value, new ComputedFormula<string>(m.Captures[0].Value, this, true).Value);
 			PythonScriptEngine.RunScript(Template.Type.Action, dict);
 		}
 
@@ -145,8 +142,8 @@ namespace FrEee.Game.Objects.Events
 				foreach (var emp in AffectedEmpires)
 				{
 					var context = new SafeDictionary<string, object>();
-					var text = m.Text.Evaluate(context);
-					emp.RecordLog(this, text, LogMessages.LogMessageType.Generic);
+					var text = m.Text?.Evaluate(context);
+					emp.RecordLog(this, text ?? string.Empty, LogMessages.LogMessageType.Generic);
 				}
 			}
 		}

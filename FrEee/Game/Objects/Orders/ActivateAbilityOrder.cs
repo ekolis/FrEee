@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
@@ -10,6 +10,8 @@ using FrEee.Utility.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
+#nullable enable
+
 namespace FrEee.Game.Objects.Orders
 {
 	/// <summary>
@@ -17,7 +19,10 @@ namespace FrEee.Game.Objects.Orders
 	/// </summary>
 	public class ActivateAbilityOrder : IOrder
 	{
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+		// initiated as GalaxyReference properties
 		public ActivateAbilityOrder(IReferrableAbilityObject source, Ability ability, IReferrable target)
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 		{
 			Owner = Empire.Current;
 			Source = source;
@@ -29,18 +34,11 @@ namespace FrEee.Game.Objects.Orders
 		/// What ability to activate?
 		/// </summary>
 		[DoNotSerialize]
-		public Ability Ability { get { return ability.Value; } set { ability = value.ReferViaGalaxy(); } }
+		public Ability Ability { get => ability.Value; set => ability = value.ReferViaGalaxy(); }
 
-		public bool ConsumesMovement
-		{
-			get { return false; }
-		}
+		public bool ConsumesMovement => false;
 
-		public long ID
-		{
-			get;
-			set;
-		}
+		public long ID { get; set; }
 
 		public bool IsComplete
 		{
@@ -58,7 +56,7 @@ namespace FrEee.Game.Objects.Orders
 		/// The empire which issued the order.
 		/// </summary>
 		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		public Empire? Owner { get => owner; set => owner = value; }
 
 		/// <summary>
 		/// The source of the ability. Probably a component, facility, or hull.
@@ -74,7 +72,7 @@ namespace FrEee.Game.Objects.Orders
 		public IReferrable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
 
 		private GalaxyReference<Ability> ability { get; set; }
-		private GalaxyReference<Empire> owner { get; set; }
+		private GalaxyReference<Empire?> owner { get; set; }
 		private GalaxyReference<IReferrableAbilityObject> source { get; set; }
 		private GalaxyReference<IReferrable> target { get; set; }
 
@@ -113,19 +111,18 @@ namespace FrEee.Game.Objects.Orders
 						// TODO - normalize supplies on other stuff, not just space vehicles
 						if (executor is SpaceVehicle)
 							(executor as SpaceVehicle).NormalizeSupplies();
-						Owner.RecordLog(executor, executor + " has activated its emergency resupply pod and now has " + executor.SupplyRemaining.ToUnitString(true) + " supplies.", LogMessageType.Generic);
+						Owner?.RecordLog(executor, executor + " has activated its emergency resupply pod and now has " + executor.SupplyRemaining.ToUnitString(true) + " supplies.", LogMessageType.Generic);
 					}
 					else if (Ability.Rule.Matches("Emergency Energy"))
 					{
-						if (executor is Vehicle)
+						if (executor is Vehicle vehicle)
 						{
-							var v = executor as Vehicle;
-							v.EmergencySpeed += Ability.Value1.Value.ToInt();
-							Owner.RecordLog(executor, executor + " has activated its emergency propulsion and has had its speed boosted to " + v.StrategicSpeed + " temporarily.", LogMessageType.Generic);
+							vehicle.EmergencySpeed += Ability.Value1.Value.ToInt();
+							Owner?.RecordLog(executor, executor + " has activated its emergency propulsion and has had its speed boosted to " + vehicle.StrategicSpeed + " temporarily.", LogMessageType.Generic);
 						}
 						else
 						{
-							Owner.RecordLog(executor, executor + " cannot activate emergency propulsion because it is not a vehicle.", LogMessageType.Error);
+							Owner?.RecordLog(executor, executor + " cannot activate emergency propulsion because it is not a vehicle.", LogMessageType.Error);
 							return;
 						}
 					}
@@ -133,7 +130,7 @@ namespace FrEee.Game.Objects.Orders
 					{
 						// destroy ship/planet/whatever BOOM!
 						// TODO - make sure units with self destruct ability don't allow a ship or planet carrying them in cargo to self destruct...
-						Owner.RecordLog(executor, executor + " has successfully self-destructed.", LogMessageType.Generic);
+						Owner?.RecordLog(executor, executor + " has successfully self-destructed.", LogMessageType.Generic);
 						executor.DisposeAndLog("The {0}'s {2} has apparently self-destructed.".F(Owner, executor), Owner);
 					}
 					else if (Ability.Rule.Matches("Open Warp Point"))
@@ -142,20 +139,20 @@ namespace FrEee.Game.Objects.Orders
 						var fromSys = executor.StarSystem;
 						if (fromSector == null || fromSys == null)
 						{
-							Owner.RecordLog(executor, executor + " cannot open a warp point because it is not located in space.", LogMessageType.Warning);
+							Owner?.RecordLog(executor, executor + " cannot open a warp point because it is not located in space.", LogMessageType.Warning);
 							return;
 						}
 						var toSys = Target as StarSystem;
-						if (toSys == null && Target is ILocated)
-							toSys = (Target as ILocated).StarSystem;
+						if (toSys == null && Target is ILocated located)
+							toSys = located.StarSystem;
 						if (toSys == null)
 						{
-							Owner.RecordLog(executor, executor + " cannot open a warp point because no target system is specified.", LogMessageType.Error);
+							Owner?.RecordLog(executor, executor + " cannot open a warp point because no target system is specified.", LogMessageType.Error);
 							return;
 						}
 						if (fromSys.Coordinates.EightWayDistance(toSys.Coordinates) > Ability.Value1.Value.ToInt())
 						{
-							Owner.RecordLog(executor, executor + " cannot open a warp point to " + toSys + " because " + toSys + " is too far away.", LogMessageType.Warning);
+							Owner?.RecordLog(executor, executor + " cannot open a warp point to " + toSys + " because " + toSys + " is too far away.", LogMessageType.Warning);
 							return;
 						}
 						// TODO - limit to one warp point between any two systems?
@@ -184,13 +181,13 @@ namespace FrEee.Game.Objects.Orders
 							toSector.Place(wp2);
 
 							// let empires know that warp points were created
-							Owner.RecordLog(wp1, "{0} has opened a warp point connecting {1} to {2}.".F(executor, fromSys, toSys), LogMessageType.Generic);
+							Owner?.RecordLog(wp1, "{0} has opened a warp point connecting {1} to {2}.".F(executor, fromSys, toSys), LogMessageType.Generic);
 							wp1.UpdateEmpireMemories("A new warp point to {0} has been created by the {1} in the {2} system.".F(toSys, Owner, fromSys), Owner);
 							wp2.UpdateEmpireMemories("A new warp point to {0} has appeared in the {1} system.".F(fromSys, toSys), Owner);
 						}
 						else
 						{
-							Owner.RecordLog(executor, executor + " cannot open a warp point because it lacks the necessary supplies.", LogMessageType.Warning);
+							Owner?.RecordLog(executor, executor + " cannot open a warp point because it lacks the necessary supplies.", LogMessageType.Warning);
 							return;
 						}
 					}
@@ -201,12 +198,12 @@ namespace FrEee.Game.Objects.Orders
 						// sanity checking, make sure we have a valid warp point to close here
 						if (wp == null)
 						{
-							Owner.RecordLog(executor, executor + " cannot close a warp point because no warp point is specified to close.", LogMessageType.Error);
+							Owner?.RecordLog(executor, executor + " cannot close a warp point because no warp point is specified to close.", LogMessageType.Error);
 							return;
 						}
 						if (wp.Sector != executor.Sector)
 						{
-							Owner.RecordLog(executor, executor + " cannot close " + wp + " because " + wp + " is not in the same sector as " + executor + ".", LogMessageType.Warning);
+							Owner?.RecordLog(executor, executor + " cannot close " + wp + " because " + wp + " is not in the same sector as " + executor + ".", LogMessageType.Warning);
 							return;
 						}
 
@@ -216,14 +213,14 @@ namespace FrEee.Game.Objects.Orders
 						// check for supplies and close WP
 						if (Ability.BurnSupplies())
 						{
-							Owner.RecordLog(wp, "We have successfully closed the warp point connecting {0} to {1}.".F(wp.StarSystem, wp.Target.StarSystem), LogMessageType.Generic);
+							Owner?.RecordLog(wp, "We have successfully closed the warp point connecting {0} to {1}.".F(wp.StarSystem, wp.Target.StarSystem), LogMessageType.Generic);
 							wp.DisposeAndLog("The {0} has closed the warp point connecting {1} to {2}.", Owner);
 							foreach (var otherwp in otherwps)
 								otherwp.DisposeAndLog("The warp point connecting {0} to {1} has closed.", Owner);
 						}
 						else
 						{
-							Owner.RecordLog(executor, executor + " cannot close " + wp + " because it lacks the necessary supplies.", LogMessageType.Warning);
+							Owner?.RecordLog(executor, executor + " cannot close " + wp + " because it lacks the necessary supplies.", LogMessageType.Warning);
 						}
 					}
 					else if (Ability.Rule.Matches("Create Planet"))
@@ -279,8 +276,8 @@ namespace FrEee.Game.Objects.Orders
 					if (Source.HasAbility("Destroyed On Use"))
 					{
 						// TODO - log destruction
-						if (Source is IDamageable)
-							(Source as IDamageable).Hitpoints = 0;
+						if (Source is IDamageable damageable)
+							damageable.Hitpoints = 0;
 						if (Source is IHull)
 							executor.Dispose(); // hull destruction kills the whole ship!
 					}
@@ -289,10 +286,9 @@ namespace FrEee.Game.Objects.Orders
 					if (Source.HasAbility("Space Object Destroyed On Use"))
 					{
 						// TODO - log destruction
-						if (executor is Planet)
+						if (executor is Planet planet)
 						{
-							var p = executor as Planet;
-							p.ConvertToAsteroidField();
+							planet.ConvertToAsteroidField();
 						}
 						else
 						{
@@ -310,10 +306,10 @@ namespace FrEee.Game.Objects.Orders
 				yield return executor.CreateLogMessage(executor + " does not intrinsically possess the ability \"" + Ability + "\" with ID=" + Ability.ID + ".", LogMessageType.Error);
 			if (!Ability.Rule.IsActivatable)
 				yield return executor.CreateLogMessage("The ability \"" + Ability + "\" cannot be activated. It is a passive ability.", LogMessageType.Error);
-			if (Source is IDamageable && (Source as IDamageable).IsDestroyed)
+			if (Source is IDamageable damageable && damageable.IsDestroyed)
 				yield return executor.CreateLogMessage(executor + " cannot activate " + Source + "'s ability because " + Source + " is destroyed.", LogMessageType.Error);
 		}
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			// no new client objects here, nothing to do
 		}
