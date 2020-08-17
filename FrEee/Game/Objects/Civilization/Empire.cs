@@ -60,7 +60,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The current empire being controlled by the player.
 		/// </summary>
-		public static Empire? Current => Galaxy.Current?.CurrentEmpire;
+		public static Empire Current => Galaxy.Current.CurrentEmpire;
 
 		/// <summary>
 		/// Information about the player controlling this empire.

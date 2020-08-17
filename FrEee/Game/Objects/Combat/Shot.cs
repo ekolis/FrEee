@@ -15,7 +15,7 @@ namespace FrEee.Game.Objects.Combat
 	/// </summary>
 	public class Shot : IFormulaHost
 	{
-		public Shot(ICombatant? attacker, Component weapon, IDamageable defender, int range)
+		public Shot(ICombatant? attacker, Component? weapon, IDamageable defender, int range)
 		{
 			Attacker = attacker;
 			Weapon = weapon;
@@ -64,7 +64,7 @@ namespace FrEee.Game.Objects.Combat
 		{
 			get
 			{
-				var r = Range - (Weapon.Template.Mount == null ? 0 : Weapon.Template.Mount.WeaponRangeModifier.Evaluate(Weapon));
+				var r = Range - (Weapon?.Template.Mount == null ? 0 : Weapon.Template.Mount.WeaponRangeModifier.Evaluate(Weapon));
 				if (r < 1)
 					return 1;
 				return r;
@@ -89,7 +89,7 @@ namespace FrEee.Game.Objects.Combat
 		public IDictionary<string, object?> Variables => new Dictionary<string, object?> { { "range", Range } };
 
 		// TODO - make this some sort of reference?
-		public Component Weapon { get; set; }
+		public Component? Weapon { get; set; }
 
 		public int InflictDamage(IDamageable target, PRNG? dice = null)
 		{
@@ -100,7 +100,7 @@ namespace FrEee.Game.Objects.Combat
 
 		public bool RollAccuracy(PRNG? dice = null)
 		{
-			var accuracy = Weapon.Template.WeaponAccuracy + Attacker?.Accuracy + Mod.Current.Settings.WeaponAccuracyPointBlank - Range * Mod.Current.Settings.WeaponAccuracyLossPerSquare;
+			var accuracy = Weapon?.Template.WeaponAccuracy + Attacker?.Accuracy + Mod.Current.Settings.WeaponAccuracyPointBlank - Range * Mod.Current.Settings.WeaponAccuracyLossPerSquare;
 			int evasion = 0;
 			if (Defender is ITargetable t)
 				evasion = t.Evasion;

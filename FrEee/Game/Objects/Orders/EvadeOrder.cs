@@ -1,10 +1,12 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Orders
 {
@@ -20,10 +22,7 @@ namespace FrEee.Game.Objects.Orders
 		{
 		}
 
-		public override string Verb
-		{
-			get { return "evade"; }
-		}
+		public override string Verb => "evade";
 
 		/// <summary>
 		/// Finds the path for executing this order.
@@ -68,7 +67,7 @@ namespace FrEee.Game.Objects.Orders
 			else
 			{
 				// target is immobile! no need to flee, unless it's in the same sector
-				if (Target.Sector == me.FindSector())
+				if (Target?.Sector == me.FindSector())
 				{
 					// don't need to go through warp points to evade it, the warp points might be one way!
 					var moves = Pathfinder.GetPossibleMoves(me.Sector, false, me.Owner);
@@ -79,10 +78,7 @@ namespace FrEee.Game.Objects.Orders
 			}
 		}
 
-		protected override bool AreWeThereYet(IMobileSpaceObject me)
-		{
-			// gotta keep on running...
-			return Target == null || Target.IsDisposed;
-		}
+		// gotta keep on running...
+		protected override bool AreWeThereYet(IMobileSpaceObject me) => Target == null || Target.IsDisposed;
 	}
 }

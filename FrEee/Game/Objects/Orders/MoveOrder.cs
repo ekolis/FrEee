@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+#nullable enable
+
 namespace FrEee.Game.Objects.Orders
 {
 	/// <summary>
@@ -20,7 +22,7 @@ namespace FrEee.Game.Objects.Orders
 	{
 		public MoveOrder(Sector destination, bool avoidEnemies)
 		{
-			Owner = Empire.Current;
+			owner = Empire.Current;
 			Destination = destination;
 			AvoidEnemies = avoidEnemies;
 			// TODO - add flag for "avoid damaging sectors"? but how to specify in UI?
@@ -31,10 +33,7 @@ namespace FrEee.Game.Objects.Orders
 		/// </summary>
 		public bool AvoidEnemies { get; set; }
 
-		public bool ConsumesMovement
-		{
-			get { return true; }
-		}
+		public bool ConsumesMovement => true;
 
 		/// <summary>
 		/// The sector we are moving to.
@@ -43,11 +42,7 @@ namespace FrEee.Game.Objects.Orders
 
 		public long ID { get; set; }
 
-		public bool IsComplete
-		{
-			get;
-			set;
-		}
+		public bool IsComplete { get; set; }
 
 		public bool IsDisposed { get; set; }
 
@@ -61,32 +56,24 @@ namespace FrEee.Game.Objects.Orders
 		/// The empire which issued the order.
 		/// </summary>
 		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		public Empire Owner { get => owner; set => owner = value; }
 
 		/// <summary>
 		/// Any pathfinding error that we might have found.
 		/// </summary>
 		[DoNotSerialize]
-		public LogMessage PathfindingError { get; private set; }
+		public LogMessage? PathfindingError { get; private set; }
 
 		private GalaxyReference<Empire> owner { get; set; }
 
-		public bool CheckCompletion(IOrderable v)
-		{
-			return IsComplete;
-		}
+		public bool CheckCompletion(IOrderable v) => IsComplete;
 
 		/// <summary>
 		/// Orders are visible only to their owners.
 		/// </summary>
 		/// <param name="emp"></param>
 		/// <returns></returns>
-		public Visibility CheckVisibility(Empire emp)
-		{
-			if (emp == Owner)
-				return Visibility.Visible;
-			return Visibility.Unknown;
-		}
+		public Visibility CheckVisibility(Empire emp) => emp == Owner ? Visibility.Visible : Visibility.Unknown;
 
 		/// <summary>
 		/// Creates a Dijkstra map for this order's movement.
@@ -95,9 +82,7 @@ namespace FrEee.Game.Objects.Orders
 		/// <param name="start"></param>
 		/// <returns></returns>
 		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start)
-		{
-			return Pathfinder.CreateDijkstraMap(me, start, Destination, AvoidEnemies, true);
-		}
+			=> Pathfinder.CreateDijkstraMap(me, start, Destination, AvoidEnemies, true);
 
 		public void Dispose()
 		{
@@ -195,9 +180,7 @@ namespace FrEee.Game.Objects.Orders
 		/// <param name="sobj">The space object executing the order.</param>
 		/// <returns></returns>
 		public IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start)
-		{
-			return Pathfinder.Pathfind(me, start, Destination, AvoidEnemies, true, me.DijkstraMap);
-		}
+			=> Pathfinder.Pathfind(me, start, Destination, AvoidEnemies, true, me.DijkstraMap);
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done)
 		{

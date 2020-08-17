@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+#nullable enable
+
 namespace FrEee.Game.Objects.Orders
 {
 	/// <summary>
@@ -20,21 +22,14 @@ namespace FrEee.Game.Objects.Orders
 	{
 		public SentryOrder()
 		{
-			Owner = Empire.Current;
+			owner = Empire.Current;
 		}
 
-		public bool ConsumesMovement
-		{
-			get { return true; }
-		}
+		public bool ConsumesMovement => true;
 
 		public long ID { get; set; }
 
-		public bool IsComplete
-		{
-			get;
-			set;
-		}
+		public bool IsComplete { get; set; }
 
 		public bool IsDisposed { get; set; }
 
@@ -42,14 +37,11 @@ namespace FrEee.Game.Objects.Orders
 		/// The empire which issued the order.
 		/// </summary>
 		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		public Empire Owner { get => owner; set => owner = value; }
 
 		private GalaxyReference<Empire> owner { get; set; }
 
-		public bool CheckCompletion(IOrderable v)
-		{
-			return IsComplete;
-		}
+		public bool CheckCompletion(IOrderable v) => IsComplete;
 
 		/// <summary>
 		/// Orders are visible only to their owners.
@@ -93,14 +85,11 @@ namespace FrEee.Game.Objects.Orders
 			yield break;
 		}
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			// This type does not use client objects, so nothing to do here.
 		}
 
-		public override string ToString()
-		{
-			return "Sentry";
-		}
+		public override string ToString() => "Sentry";
 	}
 }

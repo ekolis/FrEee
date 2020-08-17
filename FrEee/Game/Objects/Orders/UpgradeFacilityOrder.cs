@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+#nullable enable
+
 namespace FrEee.Game.Objects.Orders
 {
 	/// <summary>
@@ -20,19 +22,13 @@ namespace FrEee.Game.Objects.Orders
 	{
 		public UpgradeFacilityOrder(FacilityUpgrade fu)
 		{
-			Owner = Empire.Current;
+			owner = Empire.Current;
 			Upgrade = fu;
 		}
 
-		public bool ConsumesMovement
-		{
-			get { return false; }
-		}
+		public bool ConsumesMovement => false;
 
-		public ResourceQuantity Cost
-		{
-			get { return Upgrade.Cost; }
-		}
+		public ResourceQuantity Cost => Upgrade.Cost;
 
 		public long ID { get; set; }
 
@@ -44,37 +40,27 @@ namespace FrEee.Game.Objects.Orders
 					return false; // haven't checked completion yet, so it's probably safe to say it's incomplete
 				return isComplete.Value;
 			}
-			set
-			{ isComplete = value; }
+			set => isComplete = value;
 		}
 
 		public bool IsDisposed { get; set; }
 
-		IConstructable IConstructionOrder.Item
-		{
-			get { return NewFacility; }
-		}
+		IConstructable? IConstructionOrder.Item => NewFacility;
 
-		public string Name
-		{
-			get
-			{
-				return "Upgrade to " + Upgrade.New.Name;
-			}
-		}
+		public string Name => "Upgrade to " + Upgrade.New.Name;
 
 		/// <summary>
 		/// The facility being built.
 		/// </summary>
-		public Facility NewFacility { get; set; }
+		public Facility? NewFacility { get; set; }
 
 		/// <summary>
 		/// The empire which issued the order.
 		/// </summary>
 		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		public Empire Owner { get => owner; set => owner = value; }
 
-		IConstructionTemplate IConstructionOrder.Template { get { return Upgrade.New; } }
+		IConstructionTemplate IConstructionOrder.Template => Upgrade.New;
 
 		/// <summary>
 		/// The upgrade to perform.
@@ -82,11 +68,7 @@ namespace FrEee.Game.Objects.Orders
 		public FacilityUpgrade Upgrade { get; set; }
 
 		[DoNotSerialize]
-		private bool? isComplete
-		{
-			get;
-			set;
-		}
+		private bool? isComplete { get; set; }
 
 		private GalaxyReference<Empire> owner { get; set; }
 
@@ -181,7 +163,7 @@ namespace FrEee.Game.Objects.Orders
 				yield return ord.CreateLogMessage($"{ord} cannot upgrade facilities because it is not a construction queue.", LogMessageType.Error);
 		}
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			if (done == null)
 				done = new HashSet<IPromotable>();
@@ -192,9 +174,6 @@ namespace FrEee.Game.Objects.Orders
 			}
 		}
 
-		public void Reset()
-		{
-			NewFacility = null;
-		}
+		public void Reset() => NewFacility = null;
 	}
 }

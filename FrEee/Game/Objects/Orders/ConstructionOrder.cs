@@ -25,7 +25,7 @@ namespace FrEee.Game.Objects.Orders
 		where T : class, IConstructable
 		where TTemplate : class, ITemplate<T>, IReferrable, IConstructionTemplate
 	{
-		public ConstructionOrder() => Owner = Empire.Current;
+		public ConstructionOrder() => owner = Empire.Current;
 
 		public bool ConsumesMovement => false;
 
@@ -55,7 +55,7 @@ namespace FrEee.Game.Objects.Orders
 		/// The empire which issued the order.
 		/// </summary>
 		[DoNotSerialize]
-		public Empire? Owner { get => owner; set => owner = value; }
+		public Empire Owner { get => owner; set => owner = value; }
 
 		/// <summary>
 		/// The construction template.
@@ -91,7 +91,7 @@ namespace FrEee.Game.Objects.Orders
 		[DoNotSerialize]
 		private bool? isComplete { get; set; }
 
-		private GalaxyReference<Empire?>? owner { get; set; }
+		private GalaxyReference<Empire> owner { get; set; }
 		private IReference<TTemplate>? template { get; set; }
 
 		public bool CheckCompletion(IOrderable q)

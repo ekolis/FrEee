@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
@@ -7,6 +7,8 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System.Collections.Generic;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Orders
 {
@@ -18,8 +20,8 @@ namespace FrEee.Game.Objects.Orders
 	{
 		public WaypointOrder(Waypoint target, bool avoidEnemies)
 		{
-			Owner = Empire.Current;
-			Target = target;
+			owner = Empire.Current;
+			this.target = target;
 			AvoidEnemies = avoidEnemies;
 			// TODO - add flag for "avoid damaging sectors"? but how to specify in UI?
 		}
@@ -29,23 +31,13 @@ namespace FrEee.Game.Objects.Orders
 		/// </summary>
 		public bool AvoidEnemies { get; set; }
 
-		public bool ConsumesMovement
-		{
-			get { return true; }
-		}
+		public bool ConsumesMovement => true;
 
-		public Sector Destination
-		{
-			get { return Target.Sector; }
-		}
+		public Sector? Destination => Target.Sector;
 
 		public long ID { get; set; }
 
-		public bool IsComplete
-		{
-			get;
-			set;
-		}
+		public bool IsComplete { get; set; }
 
 		public bool IsDisposed { get; set; }
 
@@ -59,58 +51,39 @@ namespace FrEee.Game.Objects.Orders
 		/// The empire which issued the order.
 		/// </summary>
 		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		public Empire Owner { get => owner; set => owner = value; }
 
 		/// <summary>
 		/// Any pathfinding error that we might have found.
 		/// </summary>
 		[DoNotSerialize]
-		public LogMessage PathfindingError { get; private set; }
+		public LogMessage? PathfindingError { get; private set; }
 
 		/// <summary>
 		/// The target we are pursuing.
 		/// </summary>
 		[DoNotSerialize]
-		public Waypoint Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
+		public Waypoint Target { get => target.Value; set => target = value.ReferViaGalaxy(); }
 
 		/// <summary>
 		/// A verb used to describe this order.
 		/// </summary>
-		public string Verb
-		{
-			get
-			{
-				if (AvoidEnemies)
-					return "navigate to";
-				else
-					return "patrol";
-			}
-		}
+		public string Verb => AvoidEnemies ? "navigate to" : "patrol";
 
 		private GalaxyReference<Empire> owner { get; set; }
 		private GalaxyReference<Waypoint> target { get; set; }
 
-		public bool CheckCompletion(IOrderable v)
-		{
-			return IsComplete;
-		}
+		public bool CheckCompletion(IOrderable v) => IsComplete;
 
 		/// <summary>
 		/// Orders are visible only to their owners.
 		/// </summary>
 		/// <param name="emp"></param>
 		/// <returns></returns>
-		public Visibility CheckVisibility(Empire emp)
-		{
-			if (emp == Owner)
-				return Visibility.Visible;
-			return Visibility.Unknown;
-		}
+		public Visibility CheckVisibility(Empire emp) => emp == Owner ? Visibility.Visible : Visibility.Unknown;
 
 		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start)
-		{
-			return Pathfinder.CreateDijkstraMap(me, start, Destination, AvoidEnemies, true);
-		}
+			=> Pathfinder.CreateDijkstraMap(me, start, Destination, AvoidEnemies, true);
 
 		public void Dispose()
 		{
@@ -191,21 +164,10 @@ namespace FrEee.Game.Objects.Orders
 		/// <param name="sobj">The space object executing the order.</param>
 		/// <param name="start">The start location (need not be the current location, in case there are prior orders queued).</param>
 		/// <returns></returns>
-		public IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start)
-		{
-			return Pathfinder.Pathfind(me, start, Destination, AvoidEnemies, true, me.DijkstraMap);
-		}
+		public IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start) => Pathfinder.Pathfind(me, start, Destination, AvoidEnemies, true, me.DijkstraMap);
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done)
-		{
-			target.ReplaceClientIDs(idmap, done);
-		}
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done) => target.ReplaceClientIDs(idmap, done);
 
-		public override string ToString()
-		{
-			if (Target == null)
-				return "Unknown " + Verb + " order";
-			return Verb.Capitalize() + " " + Target;
-		}
+		public override string ToString() => Target == null ? $"Unknown {Verb} order" : $"{Verb.Capitalize()} {Target}";
 	}
 }

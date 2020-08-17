@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
@@ -8,6 +8,8 @@ using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Orders
 {
@@ -20,56 +22,39 @@ namespace FrEee.Game.Objects.Orders
 	{
 		public WarpOrder(WarpPoint warpPoint)
 		{
-			Owner = Empire.Current;
-			WarpPoint = warpPoint;
+			owner = Empire.Current;
+			this.warpPoint = warpPoint;
 		}
 
-		public bool ConsumesMovement
-		{
-			get { return true; }
-		}
+		public bool ConsumesMovement => true;
 
-		public Sector Destination
-		{
-			get { return WarpPoint.Target; }
-		}
+		public Sector Destination => WarpPoint.Target;
 
 		public long ID { get; set; }
 
-		public bool IsComplete
-		{
-			get;
-			set;
-		}
+		public bool IsComplete { get; set; }
 
 		public bool IsDisposed { get; set; }
 
 		[DoNotSerialize]
-		public bool LoggedPathfindingError
-		{
-			get;
-			private set;
-		}
+		public bool LoggedPathfindingError { get; private set; }
 
 		/// <summary>
 		/// The empire which issued the order.
 		/// </summary>
 		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		public Empire Owner { get => owner; set => owner = value; }
 
 		/// <summary>
 		/// The warp point we are using.
 		/// </summary>
 		[DoNotSerialize]
-		public WarpPoint WarpPoint { get { return warpPoint; } set { warpPoint = value; } }
+		public WarpPoint WarpPoint { get => warpPoint; set => warpPoint = value; }
 
 		private GalaxyReference<Empire> owner { get; set; }
 		private GalaxyReference<WarpPoint> warpPoint { get; set; }
 
-		public bool CheckCompletion(IOrderable v)
-		{
-			return IsComplete;
-		}
+		public bool CheckCompletion(IOrderable v) => IsComplete;
 
 		/// <summary>
 		/// Orders are visible only to their owners.
@@ -84,9 +69,7 @@ namespace FrEee.Game.Objects.Orders
 		}
 
 		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start)
-		{
-			return Pathfinder.CreateDijkstraMap(me, start, Destination, false, true);
-		}
+			=> Pathfinder.CreateDijkstraMap(me, start, Destination, false, true);
 
 		public void Dispose()
 		{
@@ -153,11 +136,9 @@ namespace FrEee.Game.Objects.Orders
 		}
 
 		public IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start)
-		{
-			return Pathfinder.Pathfind(me, start, Destination, false, true, me.DijkstraMap);
-		}
+			=> Pathfinder.Pathfind(me, start, Destination, false, true, me.DijkstraMap);
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			// This type does not use client objects, so nothing to do here.
 		}

@@ -1,13 +1,14 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Orders
 {
@@ -20,7 +21,7 @@ namespace FrEee.Game.Objects.Orders
 	{
 		protected PathfindingOrder(ISpaceObject target, bool avoidEnemies)
 		{
-			Owner = Empire.Current;
+			owner = Empire.Current;
 			Target = target;
 			AvoidEnemies = avoidEnemies;
 			// TODO - add flag for "avoid damaging sectors"? but how to specify in UI?
@@ -30,41 +31,27 @@ namespace FrEee.Game.Objects.Orders
 		/// Alternate target. This should be the largest ship in a fleet when a fleet is being pursued.
 		/// </summary>
 		[DoNotSerialize]
-		public ISpaceObject AlternateTarget
-		{
-			get;
-			private set;
-		}
+		public ISpaceObject? AlternateTarget { get; private set; }
 
 		/// <summary>
 		/// Should pathfinding avoid enemies?
 		/// </summary>
 		public bool AvoidEnemies { get; set; }
 
-		public bool ConsumesMovement
-		{
-			get { return true; }
-		}
+		public bool ConsumesMovement => true;
 
-		public Sector Destination
-		{
-			get { return KnownTarget?.Sector; }
-		}
+		public Sector? Destination => KnownTarget?.Sector;
 
 		public long ID { get; set; }
 
-		public bool IsComplete
-		{
-			get;
-			set;
-		}
+		public bool IsComplete { get; set; }
 
 		public bool IsDisposed { get; set; }
 
 		/// <summary>
 		/// Either the target itself, or the memory of the target, if it's not visible.
 		/// </summary>
-		public ISpaceObject KnownTarget
+		public ISpaceObject? KnownTarget
 		{
 			get
 			{
@@ -86,19 +73,19 @@ namespace FrEee.Game.Objects.Orders
 		/// The empire which issued the order.
 		/// </summary>
 		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		public Empire Owner { get => owner; set => owner = value; }
 
 		/// <summary>
 		/// Any pathfinding error that we might have found.
 		/// </summary>
 		[DoNotSerialize]
-		public LogMessage PathfindingError { get; private set; }
+		public LogMessage? PathfindingError { get; private set; }
 
 		/// <summary>
 		/// The target we are pursuing.
 		/// </summary>
 		[DoNotSerialize]
-		public ISpaceObject Target { get { return target?.Value; } set { target = value.ReferViaGalaxy(); } }
+		public ISpaceObject? Target { get => target?.Value; set => target = value.ReferViaGalaxy(); }
 
 		/// <summary>
 		/// A verb used to describe this order.
@@ -106,29 +93,19 @@ namespace FrEee.Game.Objects.Orders
 		public abstract string Verb { get; }
 
 		private GalaxyReference<Empire> owner { get; set; }
-		private GalaxyReference<ISpaceObject> target { get; set; }
+		private GalaxyReference<ISpaceObject?>? target { get; set; }
 
-		public bool CheckCompletion(IOrderable v)
-		{
-			return IsComplete;
-		}
+		public bool CheckCompletion(IOrderable v) => IsComplete;
 
 		/// <summary>
 		/// Orders are visible only to their owners.
 		/// </summary>
 		/// <param name="emp"></param>
 		/// <returns></returns>
-		public Visibility CheckVisibility(Empire emp)
-		{
-			if (emp == Owner)
-				return Visibility.Visible;
-			return Visibility.Unknown;
-		}
+		public Visibility CheckVisibility(Empire emp) => emp == Owner ? Visibility.Visible : Visibility.Unknown;
 
 		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start)
-		{
-			return Pathfinder.CreateDijkstraMap(me, start, Destination, AvoidEnemies, true);
-		}
+			=> Pathfinder.CreateDijkstraMap(me, start, Destination, AvoidEnemies, true);
 
 		public void Dispose()
 		{

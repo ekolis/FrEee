@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
@@ -6,6 +6,8 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System.Collections.Generic;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Orders
 {
@@ -16,7 +18,7 @@ namespace FrEee.Game.Objects.Orders
 	{
 		public TransferCargoOrder(bool isLoadOrder, CargoDelta cargoDelta, ICargoTransferrer target)
 		{
-			Owner = Empire.Current;
+			owner = Empire.Current;
 			IsLoadOrder = isLoadOrder;
 			CargoDelta = cargoDelta;
 			Target = target;
@@ -27,18 +29,11 @@ namespace FrEee.Game.Objects.Orders
 		/// </summary>
 		public CargoDelta CargoDelta { get; set; }
 
-		public bool ConsumesMovement
-		{
-			get { return false; }
-		}
+		public bool ConsumesMovement => false;
 
 		public long ID { get; set; }
 
-		public bool IsComplete
-		{
-			get;
-			set;
-		}
+		public bool IsComplete { get; set; }
 
 		public bool IsDisposed { get; set; }
 
@@ -46,13 +41,13 @@ namespace FrEee.Game.Objects.Orders
 		/// The empire which issued the order.
 		/// </summary>
 		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		public Empire Owner { get => owner; set => owner = value; }
 
 		/// <summary>
 		/// The cargo transferrer to which the cargo will be transferred, or null to launch/recover to/from space.
 		/// </summary>
 		[DoNotSerialize]
-		public ICargoTransferrer Target { get { return target?.Value; } set { target = value.ReferViaGalaxy(); } }
+		public ICargoTransferrer? Target { get => target?.Value; set => target = value.ReferViaGalaxy(); }
 
 		/// <summary>
 		/// True if this is a load order, false if it is a drop order.
@@ -60,12 +55,9 @@ namespace FrEee.Game.Objects.Orders
 		private bool IsLoadOrder { get; set; }
 
 		private GalaxyReference<Empire> owner { get; set; }
-		private GalaxyReference<ICargoTransferrer> target { get; set; }
+		private GalaxyReference<ICargoTransferrer?>? target { get; set; }
 
-		public bool CheckCompletion(IOrderable v)
-		{
-			return IsComplete;
-		}
+		public bool CheckCompletion(IOrderable v) => IsComplete;
 
 		public void Dispose()
 		{
@@ -109,7 +101,7 @@ namespace FrEee.Game.Objects.Orders
 				yield return executor.CreateLogMessage($"{executor} cannot transfer cargo.", LogMessageType.Warning);
 		}
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			if (done == null)
 				done = new HashSet<IPromotable>();
@@ -125,17 +117,11 @@ namespace FrEee.Game.Objects.Orders
 		{
 			if (Target == null)
 			{
-				if (IsLoadOrder)
-					return "Recover " + CargoDelta;
-				else
-					return "Launch " + CargoDelta;
+				return IsLoadOrder ? $"Recover {CargoDelta}" : $"Launch {CargoDelta}";
 			}
 			else
 			{
-				if (IsLoadOrder)
-					return "Load " + CargoDelta + " from " + Target;
-				else
-					return "Drop " + CargoDelta + " at " + Target;
+				return IsLoadOrder ? $"Load {CargoDelta} from {Target}" : $"Drop {CargoDelta} at {Target}";
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
@@ -6,6 +6,8 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System.Collections.Generic;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Orders
 {
@@ -19,48 +21,30 @@ namespace FrEee.Game.Objects.Orders
 
 		public IRecycleBehavior Behavior { get; private set; }
 
-		public bool ConsumesMovement
-		{
-			get { return false; }
-		}
+		public bool ConsumesMovement => false;
 
-		public long ID
-		{
-			get;
-			set;
-		}
+		public long ID { get; set; }
 
-		public bool IsComplete
-		{
-			get;
-			set;
-		}
+		public bool IsComplete { get; set; }
 
-		public bool IsDisposed
-		{
-			get;
-			set;
-		}
+		public bool IsDisposed { get; set; }
 
 		/// <summary>
 		/// The empire which issued the order.
 		/// </summary>
 		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		public Empire? Owner { get => owner; set => owner = value; }
 
 		/// <summary>
 		/// The facility or unit in cargo to recycle.
 		/// </summary>
 		[DoNotSerialize]
-		public IRecyclable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
+		public IRecyclable? Target { get => target?.Value; set => target = value.ReferViaGalaxy(); }
 
-		private GalaxyReference<Empire> owner { get; set; }
-		private GalaxyReference<IRecyclable> target { get; set; }
+		private GalaxyReference<Empire?>? owner { get; set; }
+		private GalaxyReference<IRecyclable?>? target { get; set; }
 
-		public bool CheckCompletion(IOrderable executor)
-		{
-			return IsComplete;
-		}
+		public bool CheckCompletion(IOrderable executor) => IsComplete;
 
 		public void Dispose()
 		{
@@ -93,10 +77,7 @@ namespace FrEee.Game.Objects.Orders
 			IsComplete = true;
 		}
 
-		public IEnumerable<LogMessage> GetErrors(IOrderable executor)
-		{
-			return Behavior.GetErrors(executor as IMobileSpaceObject, Target).Concat(SelfErrors);
-		}
+		public IEnumerable<LogMessage> GetErrors(IOrderable executor) => Behavior.GetErrors(executor as IMobileSpaceObject, Target).Concat(SelfErrors);
 
 		private IEnumerable<LogMessage> SelfErrors
 		{
@@ -107,14 +88,11 @@ namespace FrEee.Game.Objects.Orders
 			}
 		}
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			// This type does not use client objects, so nothing to do here.
 		}
 
-		public override string ToString()
-		{
-			return Behavior.Verb + " " + Target;
-		}
+		public override string ToString() => Behavior.Verb + " " + Target;
 	}
 }

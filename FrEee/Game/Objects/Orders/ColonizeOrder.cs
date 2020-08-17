@@ -23,8 +23,8 @@ namespace FrEee.Game.Objects.Orders
 	{
 		public ColonizeOrder(Planet planet)
 		{
-			Owner = Empire.Current;
-			Planet = planet;
+			owner = Empire.Current;
+			this.planet = planet;
 		}
 
 		public bool ConsumesMovement => true;
@@ -39,7 +39,7 @@ namespace FrEee.Game.Objects.Orders
 		/// The empire which issued the order.
 		/// </summary>
 		[DoNotSerialize]
-		public Empire? Owner { get => owner; set => owner = value; }
+		public Empire Owner { get => owner; set => owner = value; }
 
 		/// <summary>
 		/// The planet we are colonizing.
@@ -47,8 +47,8 @@ namespace FrEee.Game.Objects.Orders
 		[DoNotSerialize]
 		public Planet Planet { get => planet; set => planet = value; }
 
-		private GalaxyReference<Empire?>? owner { get; set; }
-		private GalaxyReference<Planet>? planet { get; set; }
+		private GalaxyReference<Empire> owner { get; set; }
+		private GalaxyReference<Planet> planet { get; set; }
 
 		public bool CheckCompletion(IOrderable v) => IsComplete;
 

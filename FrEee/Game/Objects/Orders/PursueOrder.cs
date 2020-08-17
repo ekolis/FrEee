@@ -1,8 +1,10 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Orders
 {
@@ -23,7 +25,7 @@ namespace FrEee.Game.Objects.Orders
 			{
 				if (KnownTarget == null)
 					return "pursue";
-				else if (AvoidEnemies && KnownTarget.Owner != null && (!(KnownTarget is ICombatant) || !(KnownTarget as ICombatant).IsHostileTo(Owner)))
+				else if (AvoidEnemies && KnownTarget.Owner != null && (!(KnownTarget is ICombatant) || !((ICombatant)KnownTarget).IsHostileTo(Owner)))
 					return "escort";
 				else
 					return "pursue";
@@ -40,9 +42,6 @@ namespace FrEee.Game.Objects.Orders
 			return Pathfinder.Pathfind(me, start, Destination, AvoidEnemies, true, me.DijkstraMap);
 		}
 
-		protected override bool AreWeThereYet(IMobileSpaceObject me)
-		{
-			return me.Sector == Destination;
-		}
+		protected override bool AreWeThereYet(IMobileSpaceObject me) => me.Sector == Destination;
 	}
 }
