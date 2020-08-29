@@ -88,7 +88,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The names of any ministers that are enabled, keyed by category.
 		/// </summary>
-		public SafeDictionary<string, ICollection<string>>? EnabledMinisters { get; set; }
+		public SafeDictionary<string, ICollection<string>> EnabledMinisters { get; set; }
 
 		// HACK - we are loading up the Galaxy Seen ability way too many times during pathfinding and this is slowing it down massively.
 		// yes, this means that an empire gaining/losing this ability would have to wait until the next turn to actually gain or lose it
@@ -769,7 +769,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// Computes the score of this empire.
 		/// </summary>
 		/// <param name="viewer">The empire viewing this empire's score, or null for the host view. If the score isn't meant to be visible, it will be set to null.</param>
-		public int? ComputeScore(Empire viewer)
+		public int? ComputeScore(Empire? viewer)
 		{
 			// can we see it?
 			// TODO - rankings too, not just scores
@@ -1028,7 +1028,7 @@ namespace FrEee.Game.Objects.Civilization
 			// eliminate memories of objects that are actually visible
 			foreach (var kvp in Memory.ToArray())
 			{
-				var original = (IFoggable)Galaxy.Current.GetReferrable(kvp.Key);
+				var original = (IFoggable?)Galaxy.Current.GetReferrable(kvp.Key);
 				if (original != null && original.CheckVisibility(emp) >= Visibility.Visible)
 				{
 					kvp.Value.Dispose();

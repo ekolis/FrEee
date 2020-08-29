@@ -14,7 +14,7 @@ namespace FrEee.Game.Objects.Combat
 	/// </summary>
 	public class Hit : IFormulaHost
 	{
-		public Hit(Shot shot, IDamageable target, int? nominalDamage = null)
+		public Hit(Shot? shot, IDamageable target, int? nominalDamage = null)
 		{
 			Shot = shot;
 			DamageType = shot?.DamageType ?? DamageType.Normal;

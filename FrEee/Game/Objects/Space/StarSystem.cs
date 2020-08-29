@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
@@ -12,6 +11,8 @@ using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+
+#nullable enable
 
 namespace FrEee.Game.Objects.Space
 {
@@ -39,12 +40,9 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public IList<Ability> Abilities { get; private set; }
 
-		public AbilityTargets AbilityTarget
-		{
-			get { return AbilityTargets.StarSystem; }
-		}
+		public AbilityTargets AbilityTarget => AbilityTargets.StarSystem;
 
-		public Image BackgroundImage
+		public Image? BackgroundImage
 		{
 			get
 			{
@@ -61,7 +59,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The path to the background image, relative to Pictures/Systems.
 		/// </summary>
-		public string BackgroundImagePath { get; set; }
+		public string? BackgroundImagePath { get; set; }
 
 		public IEnumerable<IAbilityObject> Children
 		{
@@ -83,15 +81,12 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The description of this star system.
 		/// </summary>
-		public string Description { get; set; }
+		public string? Description { get; set; }
 
 		/// <summary>
 		/// The number of sectors across the star system.
 		/// </summary>
-		public int Diameter
-		{
-			get { return Math.Max(0, Radius * 2 + 1); }
-		}
+		public int Diameter => Math.Max(0, Radius * 2 + 1);
 
 		/// <summary>
 		/// If true, empire homeworlds can be located in this system.
@@ -103,39 +98,19 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public ICollection<Empire> ExploredByEmpires { get; private set; }
 
-		public Image Icon
-		{
-			get { return BackgroundImage; }
-		}
+		public Image? Icon => BackgroundImage;
 
 		public Image Icon32 => Icon.Resize(32);
 
-		public IEnumerable<string> IconPaths
-		{
-			get
-			{
-				return PortraitPaths;
-			}
-		}
+		public IEnumerable<string> IconPaths => PortraitPaths;
 
-		public long ID
-		{
-			get;
-			set;
-		}
+		public long ID { get; set; }
 
-		public IEnumerable<Ability> IntrinsicAbilities
-		{
-			get { return Abilities; }
-		}
+		public IEnumerable<Ability> IntrinsicAbilities => Abilities;
 
 		public bool IsDisposed { get; set; }
 
-		public bool IsMemory
-		{
-			get;
-			set;
-		}
+		public bool IsMemory { get; set; }
 
 		public ObjectLocation<StarSystem> Location
 		{
@@ -155,7 +130,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The name of this star system.
 		/// </summary>
-		public string Name { get; set; }
+		public string? Name { get; set; }
 
 		/// <summary>
 		/// If true, the background image for this system will be centered, not tiled, in combat.
@@ -165,10 +140,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Star systems are not owned, per se.
 		/// </summary>
-		public Empire Owner
-		{
-			get { return null; }
-		}
+		public Empire? Owner => null;
 
 		public IEnumerable<IAbilityObject> Parents
 		{
@@ -178,16 +150,13 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public Image Portrait
-		{
-			get { return BackgroundImage; }
-		}
+		public Image? Portrait => BackgroundImage;
 
 		public IEnumerable<string> PortraitPaths
 		{
 			get
 			{
-				yield return Path.Combine("Systems", BackgroundImagePath);
+				yield return Path.Combine("Systems", BackgroundImagePath ?? string.Empty);
 			}
 		}
 
@@ -215,7 +184,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public ICollection<ObjectLocation<ISpaceObject>> SpaceObjectLocations { get; private set; }
 
-		public IEnumerable<ISpaceObject> SpaceObjects { get { return FindSpaceObjects<ISpaceObject>(); } }
+		public IEnumerable<ISpaceObject> SpaceObjects => FindSpaceObjects<ISpaceObject>();
 
 		public double Timestamp { get; set; }
 
@@ -223,9 +192,9 @@ namespace FrEee.Game.Objects.Space
 		/// Abilities for random warp points that appear in this system.
 		/// </summary>
 		[DoNotSerialize]
-		public RandomAbilityTemplate WarpPointAbilities { get { return warpPointAbilities; } set { warpPointAbilities = value; } }
+		public RandomAbilityTemplate? WarpPointAbilities { get => warpPointAbilities; set => warpPointAbilities = value; }
 
-		private ModReference<RandomAbilityTemplate> warpPointAbilities { get; set; }
+		private ModReference<RandomAbilityTemplate?>? warpPointAbilities { get; set; }
 
 		public bool AreCoordsInBounds(int x, int y)
 		{
@@ -270,7 +239,7 @@ namespace FrEee.Game.Objects.Space
 		/// <param name="index"></param>
 		/// <param name="filter"></param>
 		/// <returns></returns>
-		public bool DoesSectorHaveAbility(Point coords, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
+		public bool DoesSectorHaveAbility(Point coords, Empire emp, string name, int index = 1, Func<Ability, bool>? filter = null)
 		{
 			var sobjs = FindSpaceObjects<ISpaceObject>().Where(o => o.Owner == emp && o.FindCoordinates() == coords);
 			return sobjs.SelectMany(o => o.UnstackedAbilities(true)).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Any();
@@ -294,7 +263,7 @@ namespace FrEee.Game.Objects.Space
 		/// <typeparam name="T">The type of space object.</typeparam>
 		/// <param name="criteria">The criteria.</param>
 		/// <returns>The matching space objects.</returns>
-		public IEnumerable<T> FindSpaceObjects<T>(Func<T, bool> criteria = null)
+		public IEnumerable<T> FindSpaceObjects<T>(Func<T, bool>? criteria = null)
 		{
 			return SpaceObjectLocations.Select(l => l.Item).OfType<T>().Where(l => criteria == null || criteria(l));
 		}
@@ -324,7 +293,7 @@ namespace FrEee.Game.Objects.Space
 		/// <param name="index"></param>
 		/// <param name="filter"></param>
 		/// <returns></returns>
-		public bool HasAbility(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
+		public bool HasAbility(Empire emp, string name, int index = 1, Func<Ability, bool>? filter = null)
 		{
 			return FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).SelectMany(o => o.UnstackedAbilities(true)).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Any();
 		}
@@ -334,7 +303,7 @@ namespace FrEee.Game.Objects.Space
 			return CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
 		}
 
-		public Sector PickRandomSector(PRNG prng = null)
+		public Sector PickRandomSector(PRNG? prng = null)
 		{
 			return new Sector(this, new Point(RandomHelper.Range(-Radius, Radius, prng), RandomHelper.Range(-Radius, Radius, prng)));
 		}
@@ -388,10 +357,7 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public override string ToString()
-		{
-			return Name;
-		}
+		public override string ToString() => Name ?? string.Empty;
 
 		/// <summary>
 		/// Marks this system as explored by a particular empire and adds an appropriate log entry for the player.

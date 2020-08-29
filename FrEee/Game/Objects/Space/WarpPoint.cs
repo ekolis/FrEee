@@ -6,6 +6,8 @@ using FrEee.Utility.Extensions;
 using System;
 using System.Linq;
 
+#nullable enable
+
 namespace FrEee.Game.Objects.Space
 {
 	/// <summary>
@@ -14,10 +16,7 @@ namespace FrEee.Game.Objects.Space
 	[Serializable]
 	public class WarpPoint : StellarObject, ITemplate<WarpPoint>, IReferrable, IDataObject
 	{
-		public override AbilityTargets AbilityTarget
-		{
-			get { return AbilityTargets.WarpPoint; }
-		}
+		public override AbilityTargets AbilityTarget => AbilityTargets.WarpPoint;
 
 		public override bool CanBeObscured => false;
 
@@ -49,28 +48,22 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public bool IsUnusual { get; set; }
 
-		public Empire Owner
-		{
-			get
-			{
-				return null;
-			}
-		}
+		public Empire? Owner => null;
 
 		/// <summary>
 		/// The sector that ships will appear in when they go through this warp point.
 		/// If null, the warp point is still unexplored by the current empire.
 		/// </summary>
-		public Sector Target { get; set; }
+		public Sector? Target { get; set; }
 
 		/// <summary>
 		/// The star system that ships will appear in when they go through this warp point.
 		/// </summary>
-		public ObjectLocation<StarSystem> TargetStarSystemLocation
+		public ObjectLocation<StarSystem>? TargetStarSystemLocation
 		{
 			get
 			{
-				if (Target == null)
+				if (Target is null)
 					return null;
 				return Galaxy.Current.StarSystemLocations.SingleOrDefault(ssl => ssl.Item == Target.StarSystem);
 			}
@@ -80,8 +73,8 @@ namespace FrEee.Game.Objects.Space
 		{
 			if (closeBothWays)
 			{
-				var wps = Target.SpaceObjects.OfType<WarpPoint>().Where(q => q.Target == Sector);
-				foreach (var wp in wps)
+				var wps = Target?.SpaceObjects.OfType<WarpPoint>().Where(q => q.Target == Sector);
+				foreach (var wp in wps ?? Enumerable.Empty<WarpPoint>())
 					wp.Dispose();
 			}
 			Dispose();

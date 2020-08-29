@@ -22,6 +22,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
+#nullable enable
+
 namespace FrEee.Game.Objects.Space
 {
     /// <summary>
@@ -120,7 +122,7 @@ namespace FrEee.Game.Objects.Space
         /// <summary>
         /// The empire whose turn it is.
         /// </summary>
-        public Empire CurrentEmpire { get; set; }
+        public Empire? CurrentEmpire { get; set; }
 
         /// <summary>
         /// The current tick in turn processing. 0 = start of turn, 1 = end of turn.
@@ -227,14 +229,14 @@ namespace FrEee.Game.Objects.Space
             get { return StarSystemLocations.MinOrDefault(ssl => ssl.Location.Y); }
         }
 
-        private string modPath;
+        private string? modPath;
 
         /// <summary>
         /// The mod being played.
         /// </summary>
         [SerializationPriority(1)]
         [ForceSerializationWhenDefaultValue]
-        public string ModPath
+        public string? ModPath
         {
             get => modPath;
             set
@@ -280,7 +282,12 @@ namespace FrEee.Game.Objects.Space
         /// </summary>
         public int PlayerNumber
         {
-            get { return Empires.IndexOf(CurrentEmpire) + 1; }
+            get
+            {
+                 if (CurrentEmpire is null)
+                     return 0;
+                 return Empires.IndexOf(CurrentEmpire) + 1;
+            }
         }
 
         public IEnumerable<IReferrable> Referrables { get { return referrables.Values; } }
@@ -288,7 +295,7 @@ namespace FrEee.Game.Objects.Space
         /// <summary>
         /// Model to use for remote mining.
         /// </summary>
-        public MiningModel RemoteMiningModel { get; set; }
+        public MiningModel? RemoteMiningModel { get; set; }
 
         /// <summary>
         /// Who can view empire scores?
@@ -303,7 +310,7 @@ namespace FrEee.Game.Objects.Space
         /// <summary>
         /// Model to use for standard planetary mining.
         /// </summary>
-        public MiningModel StandardMiningModel { get; set; }
+        public MiningModel? StandardMiningModel { get; set; }
 
         /// <summary>
         /// The current stardate. Advances 0.1 years per turn.
@@ -392,7 +399,7 @@ namespace FrEee.Game.Objects.Space
         /// </summary>
         public int VictoryDelay { get; set; }
 
-        public WarpPointPlacementStrategy WarpPointPlacementStrategy { get; set; }
+        public WarpPointPlacementStrategy? WarpPointPlacementStrategy { get; set; }
 
         public int Width
         {
@@ -447,7 +454,7 @@ namespace FrEee.Game.Objects.Space
             get
             {
                 if (stringValue == null)
-                    StringValue = SaveToString(false);
+                    stringValue = SaveToString(false);
                 return stringValue;
             }
             private set
@@ -462,18 +469,18 @@ namespace FrEee.Game.Objects.Space
 
         private IDictionary<Sector, double> lastBattleTimestamps = new SafeDictionary<Sector, double>();
 
-        private string stringValue;
+        private string? stringValue;
 
         public static string GetEmpireCommandsSavePath(string gameName, int turnNumber, int empireNumber)
         {
-            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Savegame", String.Format("{0}_{1}_{2:d4}{3}", gameName, turnNumber, empireNumber, FrEeeConstants.PlayerCommandsSaveGameExtension));
+            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "Savegame", string.Format("{0}_{1}_{2:d4}{3}", gameName, turnNumber, empireNumber, FrEeeConstants.PlayerCommandsSaveGameExtension));
         }
 
         public static string GetGameSavePath(string gameName, int turnNumber, int empireNumber)
         {
-            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Savegame", empireNumber < 1 ?
-                String.Format("{0}_{1}{2}", gameName, turnNumber, FrEeeConstants.SaveGameExtension) :
-                String.Format("{0}_{1}_{2:d4}{3}", gameName, turnNumber, empireNumber, FrEeeConstants.SaveGameExtension));
+            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, "Savegame", empireNumber < 1 ?
+                string.Format("{0}_{1}{2}", gameName, turnNumber, FrEeeConstants.SaveGameExtension) :
+                string.Format("{0}_{1}_{2:d4}{3}", gameName, turnNumber, empireNumber, FrEeeConstants.SaveGameExtension));
         }
 
         /// <summary>
@@ -482,7 +489,7 @@ namespace FrEee.Game.Objects.Space
         /// <exception cref="InvalidOperationException">if there is no mod loaded.</exception>
         /// <param name="status">A status object to report status back to the GUI.</param>
         /// <param name="desiredProgress">How much progress should we report back to the GUI when we're done initializing the galaxy? 1.0 means all done with everything that needs to be done.</param>
-        public static void Initialize(GameSetup gsu, PRNG dice, Status status = null, double desiredProgress = 1.0)
+        public static void Initialize(GameSetup gsu, PRNG dice, Status? status = null, double desiredProgress = 1.0)
         {
             if (Mod.Current == null)
                 throw new InvalidOperationException("Cannot initialize a galaxy without a mod. Load a mod into Mod.Current first.");
@@ -550,7 +557,7 @@ namespace FrEee.Game.Objects.Space
         /// <param name="filename"></param>
         public static void Load(string filename)
         {
-            var fs = new FileStream(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory, filename), FileMode.Open);
+            var fs = new FileStream(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) ?? string.Empty, FrEeeConstants.SaveGameDirectory, filename), FileMode.Open);
             Current = Serializer.Deserialize<Galaxy>(fs);
             if (Current.ModPath == null)
                 Mod.Load(null); // skipped in deserialization because it is null but the mod needs to be loaded!
@@ -616,7 +623,6 @@ namespace FrEee.Game.Objects.Space
         public static void ProcessColonyIncome(Colony c)
         {
             var p = c.Container;
-            var sys = p.StarSystem;
             var income = p.GrossIncome();
 
             // log messages
@@ -645,7 +651,7 @@ namespace FrEee.Game.Objects.Space
             incomeWithoutValue += income[Resource.Intelligence] * Resource.Research;
             foreach (var kvp in incomeWithoutValue)
             {
-                p.ResourceValue[kvp.Key] -= Current.StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
+                p.ResourceValue[kvp.Key] -= Current.StandardMiningModel?.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]) ?? 0;
             }
         }
 
@@ -729,7 +735,7 @@ namespace FrEee.Game.Objects.Space
         /// <returns>Player empires which did not submit commands and are not defeated.</returns>
         /// <exception cref="InvalidOperationException">if the current empire is not null, or this galaxy is not the current galaxy..</exception>
         // TODO - make non-static so we don't have to say Current. everywhere
-        public static IEnumerable<Empire> ProcessTurn(bool safeMode, Status status = null, double desiredProgress = 1d)
+        public static IEnumerable<Empire> ProcessTurn(bool safeMode, Status? status = null, double desiredProgress = 1d)
         {
             //Current.SpaceObjectIDCheck("at start of turn");
 
@@ -783,8 +789,8 @@ namespace FrEee.Game.Objects.Space
                 status.Message = "Triggering events";
             }
 
-            var dice = new PRNG(HashCodeMasher.Mash(Current.Empires.Where(e => !e.IsDefeated)) + Current.TurnNumber);
-            if (RandomHelper.PerMilleChance(Current.EventFrequency * Current.Empires.Where(e => !e.IsDefeated).Count(), dice))
+            var dice = new PRNG(HashCodeMasher.Mash(Current.Empires.Where(e => e != null && !e.IsDefeated)) + Current.TurnNumber);
+            if (RandomHelper.PerMilleChance(Current.EventFrequency * Current.Empires.Where(e => e != null && !e.IsDefeated).Count(), dice))
             {
                 // trigger a new event
                 var templates = Mod.Current.EventTemplates.Where(t => t.Severity <= Current.MaximumEventSeverity);
@@ -855,21 +861,21 @@ namespace FrEee.Game.Objects.Space
                         LoadFromString(serializedGalaxy);
                         Current.CurrentEmpire = Current.Empires[i];
                         Current.Redact();
-                        Current.CurrentEmpire.AI.Act(Current.CurrentEmpire, Current, Current.CurrentEmpire.EnabledMinisters);
+                        Current.CurrentEmpire.AI.Act(Current.CurrentEmpire, Current, Current.CurrentEmpire.EnabledMinisters ?? new SafeDictionary<string, ICollection<string>>());
                        
                     }
                     catch (Exception e)
                     {
                         //log the error in the ai and move on. 
                         //TODO: add in some indication the AI failed. 
-                        Current.CurrentEmpire.Log.Add(new GenericLogMessage($"AI Error when processing:{e.Message}", LogMessageType.Error)); 
+                        Current.CurrentEmpire?.Log.Add(new GenericLogMessage($"AI Error when processing:{e.Message}", LogMessageType.Error)); 
                         e.Log(); 
                     }
                     finally
                     {
                         //these always need to happen, otherwise the code below will throw an exception as it looks for the missing commands. 
-                        cmds.Add(i, Current.CurrentEmpire.Commands);
-                        notes.Add(i, Current.CurrentEmpire.AINotes);
+                        cmds.Add(i, Current.CurrentEmpire?.Commands ?? Array.Empty<ICommand>());
+                        notes.Add(i, Current.CurrentEmpire?.AINotes ?? new DynamicDictionary());
                     }
                 }
                 LoadFromString(serializedGalaxy);
@@ -903,7 +909,7 @@ namespace FrEee.Game.Objects.Space
                 status.Message = "Generating resources";
 
             // resource generation 1: colony income
-            Current.FindSpaceObjects<Planet>().Where(x => !x.IsMemory).Select(p => p.Colony).ExceptSingle(null).SafeForeach(ProcessColonyIncome);
+            Current.FindSpaceObjects<Planet>().Where(x => !x.IsMemory).Select(p => p.Colony).SafeForeach(ProcessColonyIncome);
 
             // resource generation 2: remote mining
             // TODO - multithread remote mining once I can figure out where adjustedValue should go
@@ -916,9 +922,8 @@ namespace FrEee.Game.Objects.Space
                     // unlike most other operations, miners that are out of supplies still function
                     // because having to resupply miners would be a pain :P
                     var miner = kvp.Key.Item1;
-                    if (miner is SpaceVehicle)
+                    if (miner is SpaceVehicle sv)
                     {
-                        var sv = miner as SpaceVehicle;
                         var miningComps = sv.Components.Where(c => c.Abilities().Any(a => a.Rule.StartsWith("Remote Resource Generation - ")));
                         var burn = miningComps.Sum(c => c.Template.SupplyUsage);
                         sv.SupplyRemaining -= burn;
@@ -933,7 +938,7 @@ namespace FrEee.Game.Objects.Space
                         if (amount > 0 && adjustedValue[mined][r] == 0)
                         {
                             // resource was mined here, but hasn't been adjusted yet
-                            adjustedValue[mined][r] = Current.RemoteMiningModel.GetDecay(kvp.Value[r], mined.ResourceValue[r]);
+                            adjustedValue[mined][r] = Current.RemoteMiningModel?.GetDecay(kvp.Value[r], mined.ResourceValue[r]) ?? 0;
                             mined.ResourceValue[r] -= adjustedValue[mined][r];
                         }
                     }
@@ -1132,7 +1137,7 @@ namespace FrEee.Game.Objects.Space
                 var battle = new GroundBattle(p);
                 battle.Resolve();
                 Current.Battles.Add(battle);
-                foreach (var emp in battle.Empires)
+                foreach (var emp in battle.Empires ?? Enumerable.Empty<Empire>())
                     emp.Log.Add(battle.CreateLogMessage(battle.NameFor(emp), LogMessageType.Battle));
             }
 
@@ -1217,7 +1222,7 @@ namespace FrEee.Game.Objects.Space
                     if (!race.HasAbility("Population Emotionless") && race.HappinessModel != null)
                     {
                         var delta = c.AngerDeltas[race];
-                        delta += race == c.Owner.PrimaryRace ? race.HappinessModel.NaturalTurnAngerChangeOurRace : race.HappinessModel.NaturalTurnAngerChangeOtherRaces;
+                        delta += race == c.Owner?.PrimaryRace ? race.HappinessModel.NaturalTurnAngerChangeOurRace : race.HappinessModel.NaturalTurnAngerChangeOtherRaces;
                         delta -= c.StarSystem.GetEmpireAbilityValue(c.Owner, "Change Population Happiness - System").ToInt() * 10;
                         if (delta > race.HappinessModel.MaxPositiveTurnAngerChange)
                             delta = race.HappinessModel.MaxPositiveTurnAngerChange;
@@ -1231,9 +1236,9 @@ namespace FrEee.Game.Objects.Space
 
                         // TODO - display reason for growing happy/unhappy
                         if (delta >= 100)
-                            c.Owner.RecordLog(c.Container, $"The {race} population of {c.Container} is growing very unhappy.", LogMessageType.Generic);
+                            c.Owner?.RecordLog(c.Container, $"The {race} population of {c.Container} is growing very unhappy.", LogMessageType.Generic);
                         else if (delta <= -100)
-                            c.Owner.RecordLog(c.Container, $"The {race} population of {c.Container} is growing very happy.", LogMessageType.Generic);
+                            c.Owner?.RecordLog(c.Container, $"The {race} population of {c.Container} is growing very happy.", LogMessageType.Generic);
                     }
                 }
             });
@@ -1259,7 +1264,7 @@ namespace FrEee.Game.Objects.Space
                 foreach (var v in Current.FindSpaceObjects<IMobileSpaceObject>().Where(v => v.Owner == emp && v.Sector != null && (v is Ship || v is Base || v is Fleet)))
                 {
                     var pts = v.Sector.GetEmpireAbilityValue(emp, "Component Repair").ToInt() - usedPts[v.Sector];
-                    usedPts[v.Sector] += pts - v.Repair(pts).Value;
+                    usedPts[v.Sector] += pts - v.Repair(pts) ?? 0;
                 }
             }
 
@@ -1397,7 +1402,7 @@ namespace FrEee.Game.Objects.Space
 
             //Current.SpaceObjectIDCheck("at end of turn");
 
-            Current.StringValue = null;
+            Current.stringValue = null;
 
             return missingPlrs;
         }
@@ -1429,7 +1434,7 @@ namespace FrEee.Game.Objects.Space
         /// Saves the master view and all players' views of the galaxy, unless single player, in which case only the first player's view is saved.
         /// </summary>
         /// <exception cref="InvalidOperationException">if CurrentEmpire is not null.</exception>
-        public static void SaveAll(Status status = null, double desiredProgress = 1d)
+        public static void SaveAll(Status? status = null, double desiredProgress = 1d)
         {
             if (Current.CurrentEmpire != null)
                 throw new InvalidOperationException("Can only save player galaxy views from the master galaxy view.");
@@ -1531,7 +1536,7 @@ namespace FrEee.Game.Objects.Space
             parser.Property += (pname, o, val) =>
                 {
                     var prop = o.GetType().FindProperty(pname);
-                    var isMemory = val is IFoggable && (val as IFoggable).IsMemory;
+                    var isMemory = (val is IFoggable ifoggable) && ifoggable.IsMemory;
                     canAssign = !prop.HasAttribute<DoNotAssignIDAttribute>() && !isMemory;
                     if (isMemory)
                         return false; // no recursion!
@@ -1633,7 +1638,7 @@ namespace FrEee.Game.Objects.Space
         /// <typeparam name="T"></typeparam>
         /// <param name="condition"></param>
         /// <returns></returns>
-        public IEnumerable<T> Find<T>(Func<T, bool> condition = null) where T : IReferrable
+        public IEnumerable<T> Find<T>(Func<T, bool>? condition = null) where T : IReferrable
         {
             if (condition == null)
                 condition = t => true;
@@ -1646,7 +1651,7 @@ namespace FrEee.Game.Objects.Space
         /// <typeparam name="T">The type of space object.</typeparam>
         /// <param name="criteria">The criteria.</param>
         /// <returns>The matching space objects.</returns>
-        public IEnumerable<T> FindSpaceObjects<T>(Func<T, bool> criteria = null)
+        public IEnumerable<T> FindSpaceObjects<T>(Func<T, bool>? criteria = null)
         {
             return StarSystemLocations.SelectMany(l => l.Item.FindSpaceObjects<T>(criteria));
         }
@@ -1661,14 +1666,14 @@ namespace FrEee.Game.Objects.Space
             return GetEmpireCommandsSavePath(Name, TurnNumber, Empires.IndexOf(emp) + 1);
         }
 
-        public string GetGameSavePath(Empire emp = null)
+        public string GetGameSavePath(Empire? emp = null)
         {
             if (emp == null)
                 emp = CurrentEmpire;
             return GetGameSavePath(Name, TurnNumber, emp == null ? 0 : (Empires.IndexOf(emp) + 1));
         }
 
-        public IReferrable GetReferrable(long key)
+        public IReferrable? GetReferrable(long key)
         {
             if (!referrables.ContainsKey(key))
                 return null;
@@ -1681,10 +1686,10 @@ namespace FrEee.Game.Objects.Space
         /// <typeparam name="T"></typeparam>
         /// <param name="fakeobj">The fake referrable.</param>
         /// <returns></returns>
-        public T GetReferrable<T>(T fakeobj)
-            where T : IReferrable
+        public T? GetReferrable<T>(T fakeobj)
+            where T : class, IReferrable
         {
-            return (T)GetReferrable(fakeobj.ID);
+            return (T?)GetReferrable(fakeobj.ID);
         }
 
         /// <summary>
@@ -1781,14 +1786,14 @@ namespace FrEee.Game.Objects.Space
                     var battle = new SpaceBattle(sector);
                     battle.Resolve();
                     Battles.Add(battle);
-                    foreach (var emp in battle.Empires)
+                    foreach (var emp in battle.Empires ?? Enumerable.Empty<Empire>())
                         emp.Log.Add(battle.CreateLogMessage(battle.NameFor(emp), LogMessageType.Battle));
                     lastBattleTimestamps[sector] = Current.Timestamp;
                 }
             }
         }
 
-        public Sector PickRandomSector(PRNG prng = null)
+        public Sector PickRandomSector(PRNG? prng = null)
         {
             return StarSystemLocations.PickRandom(prng).Item.PickRandomSector(prng);
         }
@@ -1818,10 +1823,10 @@ namespace FrEee.Game.Objects.Space
                 StarSystemLocations.Remove(x);
 
             // delete memories since they've been copied to "physical" objects already
-            foreach (var kvp in Empire.Current.Memory.ToArray())
+            foreach (var kvp in Empire.Current?.Memory.ToArray() ?? Array.Empty<KeyValuePair<long, IFoggable>>())
             {
                 kvp.Value.Dispose();
-                Empire.Current.Memory.Remove(kvp);
+                Empire.Current?.Memory.Remove(kvp);
             }
         }
 
@@ -1851,9 +1856,9 @@ namespace FrEee.Game.Objects.Space
                 filename = Name + "_" + TurnNumber + ".gam";
             else
                 filename = Name + "_" + TurnNumber + "_" + (Empires.IndexOf(CurrentEmpire) + 1).ToString("d4") + ".gam";
-            if (!Directory.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory)))
-                Directory.CreateDirectory(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory));
-            var fs = new FileStream(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory, filename), FileMode.Create);
+            if (!Directory.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) ?? string.Empty, FrEeeConstants.SaveGameDirectory)))
+                Directory.CreateDirectory(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) ?? string.Empty, FrEeeConstants.SaveGameDirectory));
+            var fs = new FileStream(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) ?? string.Empty, FrEeeConstants.SaveGameDirectory, filename), FileMode.Create);
             Serializer.Serialize(this, fs);
             fs.Close(); fs.Dispose();
             return filename;
@@ -1984,15 +1989,15 @@ namespace FrEee.Game.Objects.Space
             var idmap = new Dictionary<long, long>();
             foreach (var cmd in cmds)
             {
-                if (cmd.NewReferrables.Any(r => r.IsDisposed))
+                if (cmd.NewReferrables.Any(r => r?.IsDisposed ?? true))
                 {
-                    emp.Log.Add(new GenericLogMessage("Command \"" + cmd + "\" contained a reference to deleted object \"" + cmd.NewReferrables.First(r => r.IsDisposed) + "\" and will be ignored. This may be a game bug."));
+                    emp.Log.Add(new GenericLogMessage("Command \"" + cmd + "\" contained a reference to deleted or null object \"" + cmd.NewReferrables.First(r => r?.IsDisposed ?? true) + "\" and will be ignored. This may be a game bug."));
                     continue;
                 }
                 emp.Commands.Add(cmd);
-                foreach (var r in cmd.NewReferrables)
+                foreach (var r in cmd.NewReferrables.Where(r => r != null))
                 {
-                    var clientid = r.ID;
+                    var clientid = r!.ID;
                     var serverid = AssignID(r);
                     if (idmap.ContainsKey(clientid))
                     {
@@ -2010,8 +2015,8 @@ namespace FrEee.Game.Objects.Space
 
         private void redactParser_StartObject(object o)
         {
-            if (o is IReferrable)
-                AssignID(o as IReferrable);
+            if (o is IReferrable ireferrable)
+                AssignID(ireferrable);
             if (o is IFoggable obj && o is IReferrable r)
             {
                 if (!obj.IsMemory)
@@ -2020,7 +2025,7 @@ namespace FrEee.Game.Objects.Space
                     var vis = obj.CheckVisibility(CurrentEmpire);
                     if (vis < Visibility.Fogged)
                         obj.Dispose();
-                    if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
+                    if (vis == Visibility.Fogged && CurrentEmpire != null && CurrentEmpire.Memory.ContainsKey(id))
                     {
                         var mem = (IReferrable)CurrentEmpire.Memory[id];
                         mem.CopyToExceptID(r, IDCopyBehavior.PreserveDestination); // memory sight!
@@ -2034,7 +2039,7 @@ namespace FrEee.Game.Objects.Space
                 {
                     // memories are only visible to the empire which is seeing them!
                     // well unless we add some sort of intel project to see them or something...
-                    if (!CurrentEmpire.Memory.Values.Contains(obj))
+                    if (CurrentEmpire != null && !CurrentEmpire.Memory.Values.Contains(obj))
                         obj.Dispose();
                 }
             }
@@ -2052,27 +2057,6 @@ namespace FrEee.Game.Objects.Space
                 throw new InvalidOperationException("Can't serialize commands if there is no current empire.");
 
             Serializer.Serialize(CurrentEmpire.Commands, stream);
-        }
-
-        /// <summary>
-        /// Disposes of any space objects that aren't in space, under construction, or part of the mod definition.
-        /// </summary>
-        private void SpaceObjectCleanup()
-        {
-            foreach (var sobj in Referrables.OfType<ISpaceObject>().ToArray())
-            {
-                bool dispose = true;
-                if (sobj.Sector != null)
-                    dispose = false; // save space objects that are in space
-                else if (this is IUnit u && u.FindContainer() != null) // save units that are in cargo
-                    dispose = false;
-                else if (Mod.Current.StellarObjectTemplates.Contains(sobj as StellarObject))
-                    dispose = false; // save stellar objects that are part of the mod templates
-                else if (Referrables.OfType<ConstructionQueue>().Any(q => q.Orders.Any(o => o.Item == sobj as IConstructable)))
-                    dispose = false; // save constructable space objects under construction
-                if (dispose)
-                    sobj.Dispose();
-            }
         }
 
         // TODO - replace all those duplicate properties with a reference to the game setup

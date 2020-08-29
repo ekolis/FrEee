@@ -5,6 +5,8 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
 
+#nullable enable
+
 namespace FrEee.Game.Objects.Space
 {
 	/// <summary>
@@ -15,27 +17,24 @@ namespace FrEee.Game.Objects.Space
 	{
 		// TODO - do stars in SE4 have a size property?
 
-		public override AbilityTargets AbilityTarget
-		{
-			get { return AbilityTargets.Star; }
-		}
+		public override AbilityTargets AbilityTarget => AbilityTargets.Star;
 
 		/// <summary>
 		/// The age of this star. (For flavor)
 		/// </summary>
-		public string Age { get; set; }
+		public string? Age { get; set; }
 
 		/// <summary>
 		/// The brightness of this star. (For flavor)
 		/// </summary>
-		public string Brightness { get; set; }
+		public string? Brightness { get; set; }
 
 		public override bool CanBeObscured => false;
 
 		/// <summary>
 		/// The color of this star. (For flavor)
 		/// </summary>
-		public string Color { get; set; }
+		public string? Color { get; set; }
 
 		public override SafeDictionary<string, object> Data
 		{
@@ -64,13 +63,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public bool IsDestroyed { get; set; }
 
-		public Empire Owner
-		{
-			get
-			{
-				return null;
-			}
-		}
+		public Empire? Owner => null;
 
 		/// <summary>
 		/// Detonates this star. All space vehicles in the system will be destroyed and all planets will be converted to asteroid fields.

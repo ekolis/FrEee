@@ -61,7 +61,7 @@ namespace FrEee.Game.Objects.Commands
 						if (order is WaypointOrder)
 						{
 							var wo = order as WaypointOrder;
-							if (wo?.Target == oldWaypoint && wo?.Target != null)
+							if (wo?.Target == oldWaypoint && wo?.Target != null && Executor != null)
 							{
 								wo.Target = Executor;
 								found = true;

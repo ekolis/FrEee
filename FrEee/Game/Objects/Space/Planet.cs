@@ -15,6 +15,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 
+#nullable enable
+
 namespace FrEee.Game.Objects.Space
 {
 	/// <summary>
@@ -79,7 +81,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The atmospheric composition (e.g. methane, oxygen, carbon dioxide) of this planet.
 		/// </summary>
-		public string Atmosphere { get; set; }
+		public string? Atmosphere { get; set; }
 
 		public override bool CanBeInFleet => false;
 
@@ -91,7 +93,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public override bool CanWarp => true;
 
-		public Cargo Cargo => Colony?.Cargo;
+		public Cargo? Cargo => Colony?.Cargo;
 
 		public Progress CargoFill => new Progress(Colony?.Cargo.Size ?? 0, MaxCargo);
 
@@ -126,13 +128,13 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The colony on this planet, if any.
 		/// </summary>
-		public Colony Colony { get; set; }
+		public Colony? Colony { get; set; }
 
 		public double CombatSpeed => 0;
 
-		public override ConstructionQueue ConstructionQueue => Colony?.ConstructionQueue;
+		public override ConstructionQueue? ConstructionQueue => Colony?.ConstructionQueue;
 
-		public Fleet Container { get; set; }
+		public Fleet? Container { get; set; }
 
 		public override SafeDictionary<string, object> Data
 		{
@@ -158,16 +160,12 @@ namespace FrEee.Game.Objects.Space
 				ModID = value[nameof(ModID)].Default<string>();
 				ResourceValue = value[nameof(ResourceValue)].Default(new ResourceQuantity());
 				Colony = value[nameof(Colony)].Default<Colony>();
-				Orders = value[nameof(Orders)].Default(new List<IOrder>());
+				Orders = value[nameof(Orders)].Default(new List<IOrder?>());
 			}
 		}
 
 		[DoNotSerialize]
-		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> DijkstraMap
-		{
-			get;
-			set;
-		}
+		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>>? DijkstraMap { get; set; }
 
 		public int Evasion
 		{
@@ -224,7 +222,7 @@ namespace FrEee.Game.Objects.Space
 			{
 				if (Colony == null)
 					return 0;
-				return Cargo.Hitpoints + Colony.Facilities.Sum(f => f.Hitpoints) + (int)AllPopulation.Sum(kvp => kvp.Value * Mod.Current.Settings.PopulationHitpoints);
+				return (Cargo?.Hitpoints ?? 0) + Colony.Facilities.Sum(f => f.Hitpoints) + (int)AllPopulation.Sum(kvp => kvp.Value * Mod.Current.Settings.PopulationHitpoints);
 			}
 			set
 			{
@@ -233,9 +231,7 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		public int HullHitpoints
-		{
-			get { return Colony == null ? 0 : (Colony.Facilities.Sum(f => f.Hitpoints) + (int)(Colony.Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints) + Cargo.HullHitpoints); }
-		}
+			=> Colony == null ? 0 : (Colony.Facilities.Sum(f => f.Hitpoints) + (int)(Colony.Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints) + Cargo?.HullHitpoints ?? 0);
 
 		public override Image Icon
 		{
@@ -283,14 +279,12 @@ namespace FrEee.Game.Objects.Space
 			{
 				if (Colony == null)
 					return 0;
-				return Cargo.MaxHitpoints + Colony.Facilities.Sum(f => f.MaxHitpoints);
+				return (Cargo?.MaxHitpoints ?? 0) + Colony.Facilities.Sum(f => f.MaxHitpoints);
 			}
 		}
 
 		public int MaxHullHitpoints
-		{
-			get { return Colony == null ? 0 : (Colony.Facilities.Sum(f => f.MaxHitpoints) + (int)(Colony.Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints) + Cargo.MaxHullHitpoints); }
-		}
+			=> Colony == null ? 0 : (Colony.Facilities.Sum(f => f.MaxHitpoints) + (int)(Colony.Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints) + (Cargo?.MaxHullHitpoints ?? 0));
 
 		public int MaxNormalShields
 		{
@@ -370,7 +364,7 @@ namespace FrEee.Game.Objects.Space
 
 		public int NormalShields { get; set; }
 
-		public IList<IOrder> Orders { get; private set; }
+		public IList<IOrder?> Orders { get; private set; }
 
 		public int OrganicsIncome => this.GrossIncome()[Resource.Organics];
 
@@ -379,7 +373,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The empire which has a colony on this planet, if any.
 		/// </summary>
-		public Empire Owner
+		public Empire? Owner
 		{
 			get => Colony?.Owner;
 			set
@@ -560,7 +554,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The surface composition (e.g. rock, ice, gas) of this planet.
 		/// </summary>
-		public string Surface { get; set; }
+		public string? Surface { get; set; }
 
 		/// <summary>
 		/// Planets can't currently move, but they can execute orders at the end of the turn.
@@ -588,9 +582,9 @@ namespace FrEee.Game.Objects.Space
 		/// Used for naming.
 		/// </summary>
 		[DoNotSerialize]
-		internal Planet MoonOf { get; set; }
+		internal Planet? MoonOf { get; set; }
 
-		private ModReference<StellarObjectSize> size { get; set; }
+		private ModReference<StellarObjectSize>? size { get; set; }
 
 		public void AddOrder(IOrder order)
 		{
@@ -618,7 +612,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			if (this.CargoStorageFree() >= unit.Design.Hull.Size)
 			{
-				Colony.Cargo.Units.Add(unit);
+				Colony?.Cargo.Units.Add(unit);
 				return true;
 			}
 			return false;
@@ -686,7 +680,7 @@ namespace FrEee.Game.Objects.Space
 		/// <param name="img"></param>
 		public void DrawPopulationBars(Image img, int? expectedSize = null)
 		{
-			if (Colony != null)
+			if (Colony != null && Colony.Owner != null)
 			{
 				// draw population bar
 				var g = Graphics.FromImage(img);
@@ -741,10 +735,10 @@ namespace FrEee.Game.Objects.Space
 			if (Colony == null && Empire.Current != null && Empire.Current.UnlockedItems.OfType<ComponentTemplate>().Where(c => c.HasAbility(ColonizationAbilityName)).Any())
 			{
 				Brush brush;
-				if (Atmosphere == Empire.Current.PrimaryRace.NativeAtmosphere)
+				if (Atmosphere == Empire.Current.PrimaryRace?.NativeAtmosphere)
 					brush = Brushes.Green;
 				else if (
-					Empire.Current.ColonizedPlanets.Any(p => p.Colony.Population.Any(kvp => kvp.Key.NativeAtmosphere == Atmosphere)) ||
+					Empire.Current.ColonizedPlanets.Any(p => p.Colony!.Population.Any(kvp => kvp.Key.NativeAtmosphere == Atmosphere)) ||
 					Empire.Current.OwnedSpaceObjects.OfType<ICargoContainer>().Any(cc => cc.Cargo.Population.Any(kvp => kvp.Key.NativeAtmosphere == Atmosphere))
 					)
 					brush = Brushes.Yellow;
@@ -827,7 +821,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			if (order != null && !(order is IOrder))
 				return; // order can't exist here anyway
-			Orders.Remove((IOrder)order);
+			Orders.Remove(order);
 		}
 
 		public long RemovePopulation(Race race, long amount)
@@ -845,7 +839,7 @@ namespace FrEee.Game.Objects.Space
 
 		public bool RemoveUnit(IUnit unit)
 		{
-			if (Colony.Cargo.Units.Contains(unit))
+			if (Colony?.Cargo.Units.Contains(unit) ?? false)
 			{
 				Colony.Cargo.Units.Remove(unit);
 				return true;
@@ -907,7 +901,7 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public int TakeDamage(Hit hit, PRNG dice = null)
+		public int TakeDamage(Hit hit, PRNG? dice = null)
 		{
 			var damage = hit.NominalDamage;
 
@@ -928,7 +922,7 @@ namespace FrEee.Game.Objects.Space
 				if (num == 0)
 					damage = TakePopulationDamage(hit, dice);
 				else if (num == 1)
-					damage = Cargo.TakeDamage(hit, dice);
+					damage = Cargo?.TakeDamage(hit, dice) ?? damage;
 				else if (num == 2)
 					damage = TakeFacilityDamage(hit, dice);
 				hit = new Hit(hit.Shot, this, damage);
@@ -937,11 +931,11 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			// if planet was completely glassed, remove the colony
-			if (!Colony.Population.Any(p => p.Value > 0) && !Cargo.Units.Any() && !Cargo.Population.Any(p => p.Value > 0) && !Colony.Facilities.Any())
+			if (!Colony.Population.Any(p => p.Value > 0) && (Cargo is null || (!Cargo.Units.Any() && !Cargo.Population.Any(p => p.Value > 0))) && !Colony.Facilities.Any())
 			{
 				if (Colony.IsHomeworld)
-					Colony.Owner.TriggerHappinessChange(hm => hm.OurHomeworldLost);
-				Colony.Owner.TriggerHappinessChange(hm => hm.OurPlanetLost);
+					Colony.Owner?.TriggerHappinessChange(hm => hm.OurHomeworldLost);
+				Colony.Owner?.TriggerHappinessChange(hm => hm.OurPlanetLost);
 				Colony.Dispose();
 			}
 
@@ -952,7 +946,7 @@ namespace FrEee.Game.Objects.Space
 			return damage;
 		}
 
-		public void TakePopulationDamage(int popFactorsKilled, PRNG dice = null)
+		public void TakePopulationDamage(int popFactorsKilled, PRNG? dice = null)
 		{
 			if (Colony == null)
 				return;
@@ -973,7 +967,7 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		private int TakeFacilityDamage(Hit hit, PRNG dice = null)
+		private int TakeFacilityDamage(Hit hit, PRNG? dice = null)
 		{
 			if (Colony == null)
 				return hit.NominalDamage;
@@ -985,7 +979,7 @@ namespace FrEee.Game.Objects.Space
 				{
 					// skip facilities that are completely pierced by this hit
 					var hit2 = new Hit(hit.Shot, f, damage);
-					return hit2.Shot.DamageType.ComponentPiercing.Evaluate(hit2) < 100;
+					return hit2.Shot?.DamageType.ComponentPiercing.Evaluate(hit2) < 100;
 				}).ToDictionary(f => f, f => f.HitChance).PickWeighted(dice);
 				if (facil == null)
 					break; // no more facilities to hit
@@ -995,7 +989,7 @@ namespace FrEee.Game.Objects.Space
 			return damage;
 		}
 
-		private int TakePopulationDamage(Hit hit, PRNG dice = null)
+		private int TakePopulationDamage(Hit hit, PRNG? dice = null)
 		{
 			if (Colony == null)
 				return hit.NominalDamage;
@@ -1010,7 +1004,7 @@ namespace FrEee.Game.Objects.Space
 					break; // no more population
 				double popHPPerPerson = Mod.Current.Settings.PopulationHitpoints;
 				// TODO - don't ceiling the popKilled, just stack it up
-				int popKilled = (int)Math.Ceiling(hit.Shot.DamageType.PopulationDamage.Evaluate(hit.Shot) / 100 / popHPPerPerson);
+				int popKilled = (int)Math.Ceiling((hit.Shot?.DamageType.PopulationDamage.Evaluate(hit.Shot) ?? 0) / 100 / popHPPerPerson);
 				totalPopKilled += popKilled;
 				Colony.Population[race] -= popKilled;
 				if (Colony.Population[race] < 0)
@@ -1026,7 +1020,7 @@ namespace FrEee.Game.Objects.Space
 
 		public Progress AngerProgress => new Progress(Colony?.AverageAnger ?? 0, Mod.Current.Settings.MaxAnger);
 
-		public IEnumerable<Component> Components => Cargo.Units.OfType<WeaponPlatform>().SelectMany(q => q.Components);
+		public IEnumerable<Component>? Components => Cargo?.Units.OfType<WeaponPlatform>().SelectMany(q => q.Components);
 
 		public bool FillsCombatTile => true;
 	}

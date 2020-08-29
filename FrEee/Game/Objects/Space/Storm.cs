@@ -5,6 +5,8 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
 
+#nullable enable
+
 namespace FrEee.Game.Objects.Space
 {
 	/// <summary>
@@ -13,17 +15,14 @@ namespace FrEee.Game.Objects.Space
 	[Serializable]
 	public class Storm : StellarObject, ITemplate<Storm>, IDataObject
 	{
-		public override AbilityTargets AbilityTarget
-		{
-			get { return AbilityTargets.Storm; }
-		}
+		public override AbilityTargets AbilityTarget => AbilityTargets.Storm;
 
 		public override bool CanBeObscured => false;
 
 		/// <summary>
 		/// Some sort of combat image? Where are these stored anyway?
 		/// </summary>
-		public string CombatTile { get; set; }
+		public string? CombatTile { get; set; }
 
 		public override SafeDictionary<string, object> Data
 		{
@@ -40,13 +39,7 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public Empire Owner
-		{
-			get
-			{
-				return null;
-			}
-		}
+		public Empire? Owner => null;
 
 		/// <summary>
 		/// Just copy the storm's data.

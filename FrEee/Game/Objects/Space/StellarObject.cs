@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 
+#nullable enable
+
 namespace FrEee.Game.Objects.Space
 {
 	/// <summary>
@@ -28,39 +30,27 @@ namespace FrEee.Game.Objects.Space
 		[DoNotSerialize]
 		public IList<Ability> Abilities
 		{
-			get
-			{
-				return IntrinsicAbilities;
-			}
-			set
-			{
-				IntrinsicAbilities = value;
-			}
+			get => IntrinsicAbilities;
+			set => IntrinsicAbilities = value;
 		}
 
 		public abstract AbilityTargets AbilityTarget { get; }
 
-		public virtual bool CanBeInFleet
-		{
-			get { return false; }
-		}
+		public virtual bool CanBeInFleet => false;
 
 		public abstract bool CanBeObscured { get; }
 
 		/// <summary>
 		/// Stellar objects can't normally warp.
 		/// </summary>
-		public virtual bool CanWarp { get { return false; } }
+		public virtual bool CanWarp => false;
 
 		public virtual IEnumerable<IAbilityObject> Children
 		{
 			get { yield break; }
 		}
 
-		public virtual ConstructionQueue ConstructionQueue
-		{
-			get { return null; }
-		}
+		public virtual ConstructionQueue? ConstructionQueue => null;
 
 		public virtual SafeDictionary<string, object> Data
 		{
@@ -101,27 +91,15 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// A description of this stellar object.
 		/// </summary>
-		public string Description { get; set; }
+		public string? Description { get; set; }
 
-		public bool HasInfiniteSupplies
-		{
-			get { return this.HasAbility("Quantum Reactor"); }
-		}
+		public bool HasInfiniteSupplies => this.HasAbility("Quantum Reactor");
 
-		public virtual Image Icon
-		{
-			get { return Pictures.GetIcon(this); }
-		}
+		public virtual Image Icon => Pictures.GetIcon(this);
 
 		public Image Icon32 => Icon.Resize(32);
 
-		public IEnumerable<string> IconPaths
-		{
-			get
-			{
-				return PortraitPaths;
-			}
-		}
+		public IEnumerable<string> IconPaths => PortraitPaths;
 
 		public long ID { get; set; }
 
@@ -135,56 +113,36 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public IList<Ability> IntrinsicAbilities { get; private set; }
 
-		IEnumerable<Ability> IAbilityObject.IntrinsicAbilities
-		{
-			get { return IntrinsicAbilities; }
-		}
+		IEnumerable<Ability> IAbilityObject.IntrinsicAbilities => IntrinsicAbilities;
 
 		public bool IsDisposed { get; set; }
 
 		/// <summary>
 		/// Stellar objects by default can't be idle, because they can't take orders or build stuff to begin with.
 		/// </summary>
-		public virtual bool IsIdle
-		{
-			get { return false; }
-		}
+		public virtual bool IsIdle => false;
 
-		public bool IsMemory
-		{
-			get;
-			set;
-		}
+		public bool IsMemory { get; set; }
 
 		/// <summary>
 		/// Used for naming.
 		/// </summary>
 		public bool IsUnique { get; set; }
 
-		public string ModID
-		{
-			get;
-			set;
-		}
+		public string? ModID { get; set; }
 
 		/// <summary>
 		/// The name of this stellar object.
 		/// </summary>
-		public string Name { get; set; }
+		public string? Name { get; set; }
 
-		Empire IOwnable.Owner
-		{
-			get
-			{
-				return null;
-			}
-		}
+		Empire? IOwnable.Owner => null;
 
 		public virtual IEnumerable<IAbilityObject> Parents
 		{
 			get
 			{
-				if (Sector != null)
+				if (!(Sector is null))
 					yield return Sector;
 			}
 		}
@@ -193,30 +151,27 @@ namespace FrEee.Game.Objects.Space
 		/// Name of the picture used to represent this stellar object, excluding the file extension.
 		/// PNG files will be searched first, then BMP.
 		/// </summary>
-		public string PictureName { get; set; }
+		public string? PictureName { get; set; }
 
 		[DoNotSerialize]
-		public Image Portrait
-		{
-			get { return Pictures.GetPortrait(this); }
-		}
+		public Image Portrait => Pictures.GetPortrait(this);
 
 		public IEnumerable<string> PortraitPaths
 		{
 			get
 			{
 				if (Mod.Current.RootPath != null)
-					yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Planets", PictureName);
-				yield return Path.Combine("Pictures", "Planets", PictureName);
+					yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Planets", PictureName ?? string.Empty);
+				yield return Path.Combine("Pictures", "Planets", PictureName ?? string.Empty);
 			}
 		}
 
 		[DoNotCopy(false)]
-		public virtual Sector Sector
+		public virtual Sector? Sector
 		{
 			get
 			{
-				if (sector == null)
+				if (sector is null)
 					sector = this.FindSector();
 				return sector;
 			}
@@ -224,7 +179,7 @@ namespace FrEee.Game.Objects.Space
 			{
 				var oldsector = sector;
 				sector = value;
-				if (value == null)
+				if (value is null)
 				{
 					if (oldsector != null)
 						oldsector.Remove(this);
@@ -237,38 +192,28 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public StarSystem StarSystem
-		{
-			get { return Sector?.StarSystem; }
-		}
+		public StarSystem? StarSystem => Sector?.StarSystem;
 
-		public StellarSize StellarSize
-		{
-			get;
-			set;
-		}
+		public StellarSize StellarSize { get; set; }
 
 		/// <summary>
 		/// Resources stored on this stellar object.
 		/// </summary>
 		public ResourceQuantity StoredResources { get; private set; }
 
-		public int SupplyStorage
-		{
-			get { return this.GetAbilityValue("Supply Storage").ToInt(); }
-		}
+		public int SupplyStorage => this.GetAbilityValue("Supply Storage").ToInt();
 
 		/// <summary>
 		/// Parameters from the mod meta templates.
 		/// </summary>
-		public IDictionary<string, object> TemplateParameters { get; set; }
+		public IDictionary<string, object>? TemplateParameters { get; set; }
 
 		public double Timestamp { get; set; }
-		private Sector sector;
+		private Sector? sector;
 
 		public Visibility CheckVisibility(Empire emp)
 		{
-			if ((Sector == null || StarSystem == null) && Mod.Current.StellarObjectTemplates.Contains(this))
+			if ((Sector is null || StarSystem == null) && Mod.Current.StellarObjectTemplates.Contains(this))
 				return Visibility.Scanned; // can always see the mod
 
 			return this.CheckSpaceObjectVisibility(emp);
@@ -291,10 +236,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		/// <param name="emp"></param>
 		/// <returns></returns>
-		public virtual bool IsHostileTo(Empire emp)
-		{
-			return false;
-		}
+		public virtual bool IsHostileTo(Empire emp) => false;
 
 		public bool IsObsoleteMemory(Empire emp)
 		{
@@ -315,9 +257,6 @@ namespace FrEee.Game.Objects.Space
 				Dispose();
 		}
 
-		public override string ToString()
-		{
-			return Name;
-		}
+		public override string ToString() => Name ?? string.Empty;
 	}
 }

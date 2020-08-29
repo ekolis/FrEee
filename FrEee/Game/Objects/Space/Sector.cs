@@ -10,6 +10,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 
+#nullable enable
+
 namespace FrEee.Game.Objects.Space
 {
 	/// <summary>
@@ -20,94 +22,47 @@ namespace FrEee.Game.Objects.Space
 	{
 		public Sector(StarSystem starSystem, Point coordinates)
 		{
-			StarSystem = starSystem;
+			this.starSystem = starSystem;
 			Coordinates = coordinates;
 		}
 
-		public AbilityTargets AbilityTarget
-		{
-			get { return AbilityTargets.Sector; }
-		}
+		public AbilityTargets AbilityTarget => AbilityTargets.Sector;
 
 		/// <summary>
 		/// Sectors don't contain population. (They kind of die in space...)
 		/// </summary>
-		public IDictionary<Race, long> AllPopulation
-		{
-			get { return new Dictionary<Race, long>(); }
-		}
+		public IDictionary<Race, long> AllPopulation => new Dictionary<Race, long>();
 
-		public IEnumerable<IUnit> AllUnits
-		{
-			get { return StarSystem.SpaceObjectLocations.Where(l => l.Location == Coordinates).Select(l => l.Item).OfType<IUnit>().ToList(); }
-		}
+		public IEnumerable<IUnit> AllUnits => StarSystem.SpaceObjectLocations.Where(l => l.Location == Coordinates).Select(l => l.Item).OfType<IUnit>().ToList();
 
-		public Cargo Cargo
-		{
-			get
-			{
-				// TODO - implement sector cargo once we have unit groups
-				return new Cargo();
-			}
-		}
+		// TODO - implement sector cargo once we have unit groups
+		public Cargo Cargo => new Cargo();
 
 		/// <summary>
 		/// Sectors can contain practically infinite cargo.
 		/// </summary>
-		public int CargoStorage
-		{
-			get { return int.MaxValue; }
-		}
+		public int CargoStorage => int.MaxValue;
 
-		public IEnumerable<IAbilityObject> Children
-		{
-			get { return SpaceObjects; }
-		}
+		public IEnumerable<IAbilityObject> Children => SpaceObjects;
 
 		public Point Coordinates { get; set; }
 
-		public Image Icon
-		{
-			get
-			{
-				return SpaceObjects.Largest()?.Icon ?? StarSystem?.Icon;
-			}
-		}
+		public Image? Icon => SpaceObjects.Largest()?.Icon ?? StarSystem?.Icon;
 
 		public Image Icon32 => Icon.Resize(32);
 
-		public IEnumerable<string> IconPaths
-		{
-			get
-			{
-				return SpaceObjects.Largest()?.IconPaths ?? StarSystem?.IconPaths;
-			}
-		}
+		public IEnumerable<string>? IconPaths => SpaceObjects.Largest()?.IconPaths ?? StarSystem?.IconPaths;
 
 		public IEnumerable<Ability> IntrinsicAbilities
 		{
 			get { yield break; }
 		}
 
-		public bool IsContested
-		{
-			get
-			{
-				return SpaceObjects.Select(sobj => sobj.Owner).Distinct().ExceptSingle((Empire)null).Count() > 1;
-			}
-		}
+		public bool IsContested => SpaceObjects.Select(sobj => sobj.Owner).Distinct().ExceptSingle((Empire)null).Count() > 1;
 
-		public string Name
-		{
-			get
-			{
-				if (StarSystem == null)
-					return "(Unexplored)";
-				return StarSystem + " (" + Coordinates.X + ", " + Coordinates.Y + ")";
-			}
-		}
+		public string Name => StarSystem == null ? "(Unexplored)" : $"{StarSystem} ({Coordinates.X}, {Coordinates.Y})";
 
-		public Empire Owner
+		public Empire? Owner
 		{
 			get
 			{
@@ -126,26 +81,11 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public long PopulationStorageFree
-		{
-			get { return 0; }
-		}
+		public long PopulationStorageFree => 0;
 
-		public Image Portrait
-		{
-			get
-			{
-				return SpaceObjects.Largest()?.Portrait ?? StarSystem?.Portrait;
-			}
-		}
+		public Image? Portrait => SpaceObjects.Largest()?.Portrait ?? StarSystem?.Portrait;
 
-		public IEnumerable<string> PortraitPaths
-		{
-			get
-			{
-				return SpaceObjects.Largest()?.PortraitPaths ?? StarSystem?.PortraitPaths;
-			}
-		}
+		public IEnumerable<string>? PortraitPaths => SpaceObjects.Largest()?.PortraitPaths ?? StarSystem?.PortraitPaths;
 
 		[DoNotSerialize(false)]
 		Sector ILocated.Sector
@@ -171,29 +111,23 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		[DoNotSerialize]
-		public StarSystem StarSystem { get { return starSystem; } set { starSystem = value; } }
+		public StarSystem StarSystem { get => starSystem; set => starSystem = value; }
 
 		private GalaxyReference<StarSystem> starSystem { get; set; }
 
-		public static bool operator !=(Sector s1, Sector s2)
-		{
-			return !(s1 == s2);
-		}
+		public static bool operator !=(Sector? s1, Sector? s2) => !(s1 == s2);
 
-		public static bool operator ==(Sector s1, Sector s2)
+		public static bool operator ==(Sector? s1, Sector? s2)
 		{
 			if (s1.IsNull() && s2.IsNull())
 				return true;
 			if (s1.IsNull() || s2.IsNull())
 				return false;
-			return s1.starSystem == s2.starSystem && s1.Coordinates == s2.Coordinates;
+			return s1?.starSystem == s2?.starSystem && s1?.Coordinates == s2?.Coordinates;
 		}
 
-		public long AddPopulation(Race race, long amount)
-		{
-			// population jettisoned into space just disappears without a trace...
-			return 0;
-		}
+		// population jettisoned into space just disappears without a trace...
+		public long AddPopulation(Race race, long amount) => 0;
 
 		public bool AddUnit(IUnit unit)
 		{
@@ -224,7 +158,7 @@ namespace FrEee.Game.Objects.Space
 			throw new NotImplementedException();
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			// TODO - upgrade equals to use "as" operator
 			if (obj is Sector)
@@ -315,7 +249,7 @@ namespace FrEee.Game.Objects.Space
 			return false;
 		}
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			if (done == null)
 				done = new HashSet<IPromotable>();

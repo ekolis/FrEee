@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
@@ -14,6 +14,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 
+#nullable enable
+
 namespace FrEee.Game.Objects.Space
 {
 	/// <summary>
@@ -28,21 +30,12 @@ namespace FrEee.Game.Objects.Space
 			Timestamp = Galaxy.Current?.Timestamp ?? 0;
 		}
 
-		public AbilityTargets AbilityTarget
-		{
-			get { return AbilityTargets.Fleet; }
-		}
+		public AbilityTargets AbilityTarget => AbilityTargets.Fleet;
 
-		public int Accuracy
-		{
-			get
-			{
-				// TODO - fleet experience
-				return 0;
-			}
-		}
+		// TODO - fleet experience
+		public int Accuracy => 0;
 
-		public IDictionary<Civilization.Race, long> AllPopulation
+		public IDictionary<Race, long> AllPopulation
 		{
 			get
 			{
@@ -82,40 +75,22 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public bool AreRepeatOrdersEnabled { get; set; }
 
-		public int ArmorHitpoints
-		{
-			get { return Vehicles.Sum(v => v.ArmorHitpoints); }
-		}
+		public int ArmorHitpoints => Vehicles.Sum(v => v.ArmorHitpoints);
 
 		/// <summary>
 		/// Fleets can be nested.
 		/// </summary>
-		public bool CanBeInFleet
-		{
-			get { return true; }
-		}
+		public bool CanBeInFleet => true;
 
 		public bool CanBeObscured => true;
 
-		public bool CanWarp
-		{
-			get { return Vehicles.All(sobj => sobj.CanWarp); }
-		}
+		public bool CanWarp => Vehicles.All(sobj => sobj.CanWarp);
 
-		public Cargo Cargo
-		{
-			get { return Vehicles.OfType<ICargoContainer>().Sum(cc => cc.Cargo); }
-		}
+		public Cargo Cargo => Vehicles.OfType<ICargoContainer>().Sum(cc => cc.Cargo);
 
-		public int CargoStorage
-		{
-			get { return Vehicles.OfType<ICargoContainer>().Sum(cc => cc.CargoStorage); }
-		}
+		public int CargoStorage => Vehicles.OfType<ICargoContainer>().Sum(cc => cc.CargoStorage);
 
-		public IEnumerable<IAbilityObject> Children
-		{
-			get { return Vehicles; }
-		}
+		public IEnumerable<IAbilityObject> Children => Vehicles;
 
 		/// <summary>
 		/// Any combatants contained in this fleet and any subfleets.
@@ -128,7 +103,7 @@ namespace FrEee.Game.Objects.Space
 				{
 					var list = new List<ICombatant>();
 					if (sobj is ICombatant)
-						list.Add((ICombatant)sobj);
+						list.Add(sobj);
 					if (sobj is Fleet)
 						list.AddRange(((Fleet)sobj).Combatants);
 					return list;
@@ -157,50 +132,25 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public Fleet Container
-		{
-			get; set;
-		}
+		public Fleet? Container { get; set; }
 
 		[DoNotSerialize]
-		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> DijkstraMap
-		{
-			get;
-			set;
-		}
+		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>>? DijkstraMap { get; set; }
 
-		public int Evasion
-		{
-			get
-			{
-				// TODO - fleet experience
-				return 0;
-			}
-		}
+		// TODO - fleet experience
+		public int Evasion => 0;
 
-		public ResourceQuantity GrossIncome
-		{
-			get { return Vehicles.OfType<IIncomeProducer>().Sum(v => v.GrossIncome()); }
-		}
+		public ResourceQuantity GrossIncome => Vehicles.OfType<IIncomeProducer>().Sum(v => v.GrossIncome());
 
 		/// <summary>
 		/// Fleets share supplies, so if any space object has infinite supplies, the fleet does.
 		/// </summary>
-		public bool HasInfiniteSupplies
-		{
-			get { return Vehicles.ExceptSingle(null).Any(sobj => sobj.HasInfiniteSupplies); }
-		}
+		public bool HasInfiniteSupplies => Vehicles.Any(sobj => sobj.HasInfiniteSupplies);
 
 		/// <summary>
 		/// Chance of hitting each ship in a fleet is equal, so this value is the number of ships in the fleet.
 		/// </summary>
-		public int HitChance
-		{
-			get
-			{
-				return LeafVehicles.Count();
-			}
-		}
+		public int HitChance => LeafVehicles.Count();
 
 		/// <summary>
 		/// The hitpoints of this fleet. Cannot set this property; attempting to do so will throw a NotSupportedException.
@@ -208,20 +158,14 @@ namespace FrEee.Game.Objects.Space
 		[DoNotSerialize(false)]
 		public int Hitpoints
 		{
-			get
-			{
-				return Vehicles.Sum(sobj => sobj.Hitpoints);
-			}
+			get => Vehicles.Sum(sobj => sobj.Hitpoints);
 			set
 			{
 				throw new NotSupportedException("Cannot set fleet hitpoints directly. Try setting the hitpoints of individual ship components.");
 			}
 		}
 
-		public int HullHitpoints
-		{
-			get { return Vehicles.Sum(v => v.HullHitpoints); }
-		}
+		public int HullHitpoints => Vehicles.Sum(v => v.HullHitpoints);
 
 		public Image Icon
 		{
@@ -234,19 +178,9 @@ namespace FrEee.Game.Objects.Space
 
 		public Image Icon32 => Icon.Resize(32);
 
-		public IEnumerable<string> IconPaths
-		{
-			get
-			{
-				return GetImagePaths("Mini");
-			}
-		}
+		public IEnumerable<string> IconPaths => GetImagePaths("Mini");
 
-		public long ID
-		{
-			get;
-			set;
-		}
+		public long ID { get; set; }
 
 		public IEnumerable<Ability> IntrinsicAbilities
 		{
@@ -259,28 +193,15 @@ namespace FrEee.Game.Objects.Space
 
 		public bool IsAlive => Vehicles.Any(x => x.IsAlive);
 
-		public bool IsDestroyed
-		{
-			get { return Vehicles.ExceptSingle(null).All(sobj => sobj.IsDestroyed); }
-		}
+		public bool IsDestroyed => Vehicles.All(sobj => sobj.IsDestroyed);
 
 		public bool IsDisposed { get; set; }
 
-		public bool IsIdle
-		{
-			get
-			{
-				return StrategicSpeed > 0 && !Orders.Any() && Container == null || ConstructionQueues.Any(q => q.Eta < 1);
-			}
-		}
+		public bool IsIdle => StrategicSpeed > 0 && !Orders.Any() && Container == null || ConstructionQueues.Any(q => q.Eta < 1);
 
-		public bool IsMemory
-		{
-			get;
-			set;
-		}
+		public bool IsMemory { get; set; }
 
-		public bool IsOurs { get { return Owner == Empire.Current; } }
+		public bool IsOurs => Owner == Empire.Current;
 
 		/// <summary>
 		/// All space vehicles in this fleet and subfleets, but not counting the subfleets themselves.
@@ -304,40 +225,19 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public ResourceQuantity MaintenanceCost
-		{
-			get { return Vehicles.Sum(v => v.MaintenanceCost); }
-		}
+		public ResourceQuantity MaintenanceCost => Vehicles.Sum(v => v.MaintenanceCost);
 
-		public int MaxArmorHitpoints
-		{
-			get { return Vehicles.Sum(v => v.MaxArmorHitpoints); }
-		}
+		public int MaxArmorHitpoints => Vehicles.Sum(v => v.MaxArmorHitpoints);
 
-		public int MaxHitpoints
-		{
-			get { return Vehicles.Sum(sobj => sobj.MaxHitpoints); }
-		}
+		public int MaxHitpoints => Vehicles.Sum(sobj => sobj.MaxHitpoints);
 
-		public int MaxHullHitpoints
-		{
-			get { return Vehicles.Sum(v => v.MaxHullHitpoints); }
-		}
+		public int MaxHullHitpoints => Vehicles.Sum(v => v.MaxHullHitpoints);
 
-		public int MaxNormalShields
-		{
-			get { return Vehicles.Sum(sobj => sobj.MaxNormalShields); }
-		}
+		public int MaxNormalShields => Vehicles.Sum(sobj => sobj.MaxNormalShields);
 
-		public int MaxPhasedShields
-		{
-			get { return Vehicles.Sum(sobj => sobj.MaxPhasedShields); }
-		}
+		public int MaxPhasedShields => Vehicles.Sum(sobj => sobj.MaxPhasedShields);
 
-		public int MaxShieldHitpoints
-		{
-			get { return Vehicles.Sum(v => v.MaxShieldHitpoints); }
-		}
+		public int MaxShieldHitpoints => Vehicles.Sum(v => v.MaxShieldHitpoints);
 
 		/// <summary>
 		/// Fleets can't fire on enemies directly; the contained ships do.
@@ -346,18 +246,11 @@ namespace FrEee.Game.Objects.Space
 
 		public double MerchantsRatio => Owner.HasAbility("No Spaceports") ? 1.0 : 0.0;
 
-		public int MineralsMaintenance
-		{
-			get { return MaintenanceCost[Resource.Minerals]; }
-		}
+		public int MineralsMaintenance => MaintenanceCost[Resource.Minerals];
 
 		public int MovementRemaining { get; set; }
 
-		public string Name
-		{
-			get;
-			set;
-		}
+		public string? Name { get; set; }
 
 		/// <summary>
 		/// The normal shields of this fleet. Cannot set this property; attempting to do so will throw a NotSupportedException.
@@ -365,10 +258,7 @@ namespace FrEee.Game.Objects.Space
 		[DoNotSerialize(false)]
 		public int NormalShields
 		{
-			get
-			{
-				return Vehicles.Sum(sobj => sobj.NormalShields);
-			}
+			get => Vehicles.Sum(sobj => sobj.NormalShields);
 			set
 			{
 				throw new NotSupportedException("Cannot set fleet shields directly. Try setting the shields of individual ships.");
@@ -377,15 +267,13 @@ namespace FrEee.Game.Objects.Space
 
 		public IList<IOrder> Orders { get; private set; }
 
-		public int OrganicsMaintenance
-		{
-			get { return MaintenanceCost[Resource.Organics]; }
-		}
+		public int OrganicsMaintenance => MaintenanceCost[Resource.Organics];
 
+		// assume all vehicles have the same owner
 		[DoNotSerialize]
-		public Empire Owner
+		public Empire? Owner
 		{
-			get { return Vehicles.ExceptSingle(null).FirstOrDefault()?.Owner; } // assume all vehicles have the same owner
+			get => Vehicles.FirstOrDefault()?.Owner;
 			set
 			{
 				foreach (var v in Vehicles)
@@ -425,10 +313,7 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public long PopulationStorageFree
-		{
-			get { return 0L; }
-		}
+		public long PopulationStorageFree => 0L;
 
 		public Image Portrait
 		{
@@ -439,33 +324,18 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public IEnumerable<string> PortraitPaths
-		{
-			get
-			{
-				return GetImagePaths("Portrait");
-			}
-		}
+		public IEnumerable<string> PortraitPaths => GetImagePaths("Portrait");
 
-		public int RadioactivesMaintenance
-		{
-			get { return MaintenanceCost[Resource.Radioactives]; }
-		}
+		public int RadioactivesMaintenance => MaintenanceCost[Resource.Radioactives];
 
-		public ResourceQuantity RemoteMiningIncomePercentages
-		{
-			get { return Owner.PrimaryRace.IncomePercentages; }
-		}
+		public ResourceQuantity? RemoteMiningIncomePercentages => Owner?.PrimaryRace?.IncomePercentages;
 
 		/// <summary>
 		/// Fleets have no resource value.
 		/// </summary>
-		public ResourceQuantity ResourceValue
-		{
-			get { return new ResourceQuantity(); }
-		}
+		public ResourceQuantity ResourceValue => new ResourceQuantity();
 
-		public Sector Sector
+		public Sector? Sector
 		{
 			get
 			{
@@ -492,54 +362,27 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public int ShieldHitpoints
-		{
-			get { return Vehicles.Sum(v => v.ShieldHitpoints); }
-		}
+		public int ShieldHitpoints => Vehicles.Sum(v => v.ShieldHitpoints);
 
-		public int Size
-		{
-			get { return Vehicles.ExceptSingle((IMobileSpaceObject)null).Sum(v => v.Size); }
-		}
+		public int Size => Vehicles.Sum(v => v.Size);
 
-		public ResourceQuantity StandardIncomePercentages
-		{
-			get { return Owner.PrimaryRace.IncomePercentages; }
-		}
+		public ResourceQuantity? StandardIncomePercentages => Owner?.PrimaryRace?.IncomePercentages;
 
-		public StarSystem StarSystem
-		{
-			get { return this.FindStarSystem(); }
-		}
+		public StarSystem StarSystem => this.FindStarSystem();
 
 		/// <summary>
 		/// Resources stored in this fleet.
 		/// Note that modifying this value will have no effect on the individual vehicles in the fleet;
 		/// we just don't have a handy read only resource quantity type.
 		/// </summary>
-		public ResourceQuantity StoredResources
-		{
-			get
-			{
-				return Vehicles.Sum(v => v.StoredResources);
-			}
-		}
+		public ResourceQuantity StoredResources => Vehicles.Sum(v => v.StoredResources);
 
-		public int StrategicSpeed
-		{
-			get { return Vehicles.MinOrDefault(sobj => sobj.StrategicSpeed); }
-		}
+		public int StrategicSpeed => Vehicles.MinOrDefault(sobj => sobj.StrategicSpeed);
 
 		/// <summary>
 		/// The amount of supply which this fleet can store.
 		/// </summary>
-		public int SupplyCapacity
-		{
-			get
-			{
-				return this.GetAbilityValue("Supply Storage").ToInt();
-			}
-		}
+		public int SupplyCapacity => this.GetAbilityValue("Supply Storage").ToInt();
 
 		[DoNotSerialize(false)]
 		public int SupplyRemaining
@@ -566,7 +409,7 @@ namespace FrEee.Game.Objects.Space
 						sobj.SupplyRemaining = 0;
 						continue;
 					}
-					var amount = (int)Math.Floor((double)sobj.SupplyStorage / (double)storage * available);
+					var amount = (int)Math.Floor(sobj.SupplyStorage / (double)storage * available);
 					sobj.SupplyRemaining = amount;
 					spent += amount;
 				}
@@ -575,7 +418,7 @@ namespace FrEee.Game.Objects.Space
 				{
 					while (roundingError > 0)
 					{
-						var sobj2 = Vehicles.WithMin(sobj => (double)sobj.SupplyRemaining / (double)sobj.SupplyStorage).PickRandom();
+						var sobj2 = Vehicles.WithMin(sobj => sobj.SupplyRemaining / (double)sobj.SupplyStorage).PickRandom();
 						sobj2.SupplyRemaining += 1;
 						roundingError -= 1;
 					}
@@ -586,29 +429,14 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public int SupplyStorage
-		{
-			get { return Vehicles.Sum(sobj => sobj.SupplyStorage); }
-		}
+		public int SupplyStorage => Vehicles.Sum(sobj => sobj.SupplyStorage);
 
-		public double TimePerMove
-		{
-			get
-			{
-				if (!Vehicles.Any())
-					return double.PositiveInfinity;
-				return Vehicles.Max(sobj => sobj.TimePerMove);
-			}
-		}
+		public double TimePerMove => !Vehicles.Any() ? double.PositiveInfinity : Vehicles.Max(sobj => sobj.TimePerMove);
 
 		public double Timestamp { get; set; }
 
 		[DoNotSerialize]
-		public double TimeToNextMove
-		{
-			get;
-			set;
-		}
+		public double TimeToNextMove { get; set; }
 
 		/// <summary>
 		/// The space objects in the fleet.
@@ -616,20 +444,14 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public GalaxyReferenceSet<IMobileSpaceObject> Vehicles { get; private set; }
 
-		public IEnumerable<Component> Weapons
-		{
-			get { return Vehicles.SelectMany(sobj => sobj.Weapons); }
-		}
+		public IEnumerable<Component> Weapons => Vehicles.SelectMany(sobj => sobj.Weapons);
 
 		/// <summary>
 		/// Fleets cannot be directly targeted by weapons. Target the individual ships instead.
 		/// </summary>
-		public WeaponTargets WeaponTargetType
-		{
-			get { return WeaponTargets.None; }
-		}
+		public WeaponTargets WeaponTargetType => WeaponTargets.None;
 
-		private Sector sector;
+		private Sector? sector;
 
 		public void AddOrder(IOrder order)
 		{
@@ -666,10 +488,7 @@ namespace FrEee.Game.Objects.Space
 				v.BurnMovementSupplies();
 		}
 
-		public bool CanTarget(ITargetable target)
-		{
-			return Vehicles.Any(sobj => sobj.CanTarget(target));
-		}
+		public bool CanTarget(ITargetable target) => Vehicles.Any(sobj => sobj.CanTarget(target));
 
 		/// <summary>
 		/// Fleets are as visible as their most visible space object. Not that the others will actually be that visible...
@@ -691,7 +510,7 @@ namespace FrEee.Game.Objects.Space
 			if (IsDisposed)
 				return;
 			IsDisposed = true;
-			foreach (var v in Vehicles.ExceptSingle(null))
+			foreach (var v in Vehicles)
 				v.Container = null;
 			Vehicles.Clear();
 			Galaxy.Current.UnassignID(this);
@@ -703,15 +522,12 @@ namespace FrEee.Game.Objects.Space
 
 		public bool ExecuteOrders()
 		{
-			if (!Vehicles.ExceptSingle(null).Any())
+			if (!Vehicles.Any())
 				return false; // fleets with no vehicles can't execute orders
 			return this.ExecuteMobileSpaceObjectOrders();
 		}
 
-		public bool IsHostileTo(Empire emp)
-		{
-			return Owner != null && Owner.IsEnemyOf(emp, StarSystem);
-		}
+		public bool IsHostileTo(Empire emp) => Owner != null && Owner.IsEnemyOf(emp, StarSystem);
 
 		public bool IsObsoleteMemory(Empire emp)
 		{
@@ -724,7 +540,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			if (!(order is IOrder))
 				throw new InvalidOperationException("Fleets can only accept orders of type IOrder.");
-			var o = (IOrder)order;
+			var o = order;
 			var newpos = Orders.IndexOf(o) + delta;
 			Orders.Remove(o);
 			if (newpos < 0)
@@ -759,10 +575,10 @@ namespace FrEee.Game.Objects.Space
 		{
 			if (!(order is IOrder))
 				return; // order can't exist here anyway
-			Orders.Remove((IOrder)order);
+			Orders.Remove(order);
 		}
 
-		public long RemovePopulation(Civilization.Race race, long amount)
+		public long RemovePopulation(Race race, long amount)
 		{
 			foreach (var ct in Vehicles.OfType<ICargoTransferrer>())
 			{
@@ -789,7 +605,7 @@ namespace FrEee.Game.Objects.Space
 			return amount;
 		}
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			if (done == null)
 				done = new HashSet<IPromotable>();
@@ -841,7 +657,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Assigns damage to a random ship in the fleet. If damage is left over, it leaks to the next ship.
 		/// </summary>
-		public int TakeDamage(Hit hit, PRNG dice = null)
+		public int TakeDamage(Hit hit, PRNG? dice = null)
 		{
 			var vs = LeafVehicles.Shuffle().ToList();
 			var dmg = hit.NominalDamage;
@@ -855,10 +671,7 @@ namespace FrEee.Game.Objects.Space
 			return dmg;
 		}
 
-		public override string ToString()
-		{
-			return Name;
-		}
+		public override string ToString() => Name ?? string.Empty;
 
 		/// <summary>
 		/// Remove any invalid objects from the fleet and any valid subfleets.
@@ -869,19 +682,19 @@ namespace FrEee.Game.Objects.Space
 		/// * Space objects that are not located in the same sector as this fleet
 		/// * Space objects that are destroyed
 		/// </summary>
-		public void Validate(ICollection<Fleet> ancestors = null)
+		public void Validate(ICollection<Fleet>? ancestors = null)
 		{
 			if (ancestors == null)
 				ancestors = new List<Fleet>();
 			ancestors.Add(this);
 			foreach (var sobj in Vehicles.ToArray())
 			{
-				if (sobj == null || sobj.Owner != Owner || (sobj is Fleet && ancestors.Contains((Fleet)sobj)) || sobj.Sector != Sector || sobj.IsDestroyed)
+				if (sobj.Owner != Owner || (sobj is Fleet && ancestors.Contains((Fleet)sobj)) || sobj.Sector != Sector || sobj.IsDestroyed)
 					Vehicles.Remove(sobj);
 				else if (sobj is Fleet)
 					((Fleet)sobj).Validate(ancestors);
 			}
-			if (!Vehicles.ExceptSingle(null).Any())
+			if (!Vehicles.Any())
 				Dispose();
 		}
 

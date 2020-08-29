@@ -6,6 +6,8 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
 
+#nullable enable
+
 namespace FrEee.Game.Objects.Space
 {
 	/// <summary>
@@ -14,27 +16,21 @@ namespace FrEee.Game.Objects.Space
 	[Serializable]
 	public class AsteroidField : StellarObject, ITemplate<AsteroidField>, IMineableSpaceObject, IDataObject
 	{
-		public AsteroidField()
-		{
-			ResourceValue = new ResourceQuantity();
-		}
+		public AsteroidField() => ResourceValue = new ResourceQuantity();
 
-		public override AbilityTargets AbilityTarget
-		{
-			get { return AbilityTargets.AsteroidField; }
-		}
+		public override AbilityTargets AbilityTarget => AbilityTargets.AsteroidField;
 
 		/// <summary>
 		/// The atmospheric composition (e.g. methane, oxygen, carbon dioxide) of this asteroid field.
 		/// </summary>
-		public string Atmosphere { get; set; }
+		public string? Atmosphere { get; set; }
 
 		public override bool CanBeObscured => true;
 
 		/// <summary>
 		/// Some sort of combat image? Where are these stored anyway?
 		/// </summary>
-		public string CombatTile { get; set; }
+		public string? CombatTile { get; set; }
 
 		public override SafeDictionary<string, object> Data
 		{
@@ -60,19 +56,13 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public double MineralsValue { get { return ResourceValue[Resource.Minerals]; } }
+		public double MineralsValue => ResourceValue[Resource.Minerals];
 
-		public double OrganicsValue { get { return ResourceValue[Resource.Organics]; } }
+		public double OrganicsValue => ResourceValue[Resource.Organics];
 
-		public Empire Owner
-		{
-			get
-			{
-				return null;
-			}
-		}
+		public Empire? Owner => null;
 
-		public double RadioactivesValue { get { return ResourceValue[Resource.Radioactives]; } }
+		public double RadioactivesValue => ResourceValue[Resource.Radioactives];
 
 		/// <summary>
 		/// The resource value of this asteroid field, in %.
@@ -83,14 +73,14 @@ namespace FrEee.Game.Objects.Space
 		/// The PlanetSize.txt entry for this asteroid field's size.
 		/// </summary>
 		[DoNotSerialize]
-		public StellarObjectSize Size { get { return size; } set { size = value; } }
+		public StellarObjectSize Size { get => size; set => size = value; }
 
 		/// <summary>
 		/// The surface composition (e.g. rock, ice, gas) of this asteroid field.
 		/// </summary>
-		public string Surface { get; set; }
+		public string? Surface { get; set; }
 
-		private ModReference<StellarObjectSize> size { get; set; }
+		private ModReference<StellarObjectSize>? size { get; set; }
 
 		/// <summary>
 		/// Just copy the asteroid field's data.

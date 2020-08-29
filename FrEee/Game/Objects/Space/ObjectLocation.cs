@@ -2,6 +2,8 @@ using FrEee.Utility;
 using System;
 using System.Drawing;
 
+#nullable enable
+
 namespace FrEee.Game.Objects.Space
 {
 	/// <summary>

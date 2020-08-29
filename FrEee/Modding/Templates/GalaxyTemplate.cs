@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -8,6 +8,8 @@ using FrEee.Game.Setup;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+
+#nullable enable
 
 namespace FrEee.Modding.Templates
 {
@@ -26,17 +28,14 @@ namespace FrEee.Modding.Templates
 		/// <summary>
 		/// A description of this galaxy template.
 		/// </summary>
-		public string Description { get; set; }
+		public string? Description { get; set; }
 
 		/// <summary>
 		/// Setup parameters for the game.
 		/// </summary>
-		public GameSetup GameSetup { get; set; }
+		public GameSetup? GameSetup { get; set; }
 
-		public bool IsDisposed
-		{
-			get; private set;
-		}
+		public bool IsDisposed { get; private set; }
 
 		/// <summary>
 		/// Preferred maximum warp points per system. May be overridden for connectivity purposes.
@@ -54,21 +53,17 @@ namespace FrEee.Modding.Templates
 		/// </summary>
 		public int MinWarpPointAngle { get; set; }
 
-		public string ModID
-		{
-			get;
-			set;
-		}
+		public string? ModID { get; set; }
 
 		/// <summary>
 		/// The name of this galaxy template.
 		/// </summary>
-		public string Name { get; set; }
+		public string? Name { get; set; }
 
 		/// <summary>
 		/// Algorithm for placing stars on the galaxy map.
 		/// </summary>
-		public IStarSystemPlacementStrategy StarSystemPlacementStrategy { get; set; }
+		public IStarSystemPlacementStrategy? StarSystemPlacementStrategy { get; set; }
 
 		/// <summary>
 		/// Chances for each type of star system to appear.
@@ -78,7 +73,7 @@ namespace FrEee.Modding.Templates
 		/// <summary>
 		/// Parameters from the mod meta templates.
 		/// </summary>
-		public IDictionary<string, object> TemplateParameters { get; set; }
+		public IDictionary<string, object>? TemplateParameters { get; set; }
 
 		public void Dispose()
 		{
@@ -95,8 +90,13 @@ namespace FrEee.Modding.Templates
 
 		/// <param name="status">A status object to report status back to the GUI.</param>
 		/// <param name="desiredProgress">How much progress should we report back to the GUI when we're done initializing the galaxy? 1.0 means all done with everything that needs to be done.</param>
-		public Galaxy Instantiate(Status status, double desiredProgress, PRNG dice)
+		public Galaxy Instantiate(Status? status, double desiredProgress, PRNG dice)
 		{
+			if (GameSetup is null || StarSystemPlacementStrategy is null)
+			{
+				throw new ArgumentNullException($"{nameof(GameSetup)} or {nameof(StarSystemPlacementStrategy)} are null");
+			}
+
 			var gal = new Galaxy();
 			gal.Width = GameSetup.GalaxySize.Width;
 			gal.Height = GameSetup.GalaxySize.Height;
@@ -148,11 +148,14 @@ namespace FrEee.Modding.Templates
 			while (wpsGenerated < gal.StarSystemLocations.Count * 2)
 			{
 				// pick 2 systems
-				ObjectLocation<StarSystem> startLocation = null, endLocation = null;
-				(startLocation, endLocation) = MinDistanceDisconnectedSystemPair(graph);
+				(var startLocation, var endLocation) = MinDistanceDisconnectedSystemPair(graph);
 
 				// create the warp points
-				if (startLocation != null && endLocation != null)
+				if (startLocation is null || endLocation is null)
+				{
+					break;
+				}
+				else
 				{
 					GameSetup.WarpPointPlacementStrategy.PlaceWarpPoints(startLocation, endLocation);
 
@@ -161,8 +164,6 @@ namespace FrEee.Modding.Templates
 
 					wpsGenerated++;
 				}
-				else
-					break;
 				if (status != null)
 					status.Progress += progressPerWarp;
 			}
@@ -175,12 +176,12 @@ namespace FrEee.Modding.Templates
 			return gal;
 		}
 
-		private (ObjectLocation<StarSystem>, ObjectLocation<StarSystem>) MinDistanceDisconnectedSystemPair(ConnectivityGraph<ObjectLocation<StarSystem>> graph)
+		private (ObjectLocation<StarSystem>?, ObjectLocation<StarSystem>?) MinDistanceDisconnectedSystemPair(ConnectivityGraph<ObjectLocation<StarSystem>> graph)
 		{
 			if (graph.Subgraphs.Count() == 0)
 				return (null, null);
 
-			(ObjectLocation<StarSystem>, ObjectLocation<StarSystem>) best = (null, null);
+			(ObjectLocation<StarSystem>?, ObjectLocation<StarSystem>?) best = (null, null);
 			int bestDistance = int.MaxValue;
 
 			if (graph.Subgraphs.Count() == 1)
