@@ -1,4 +1,6 @@
-﻿namespace FrEee.WinForms.DataGridView
+#nullable enable
+
+namespace FrEee.WinForms.DataGridView
 {
 	/// <summary>
 	/// Display modes for progress bars.

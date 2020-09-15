@@ -1,8 +1,10 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Utility.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+
+#nullable enable
 
 namespace FrEee.Utility
 {
@@ -30,10 +32,7 @@ namespace FrEee.Utility
 		[field: NonSerialized]
 		public ObjectGraphContext Context { get; set; }
 
-		public string Data
-		{
-			get; set;
-		}
+		public string? Data { get; set; }
 
 		public bool HasValue
 		{
@@ -47,14 +46,8 @@ namespace FrEee.Utility
 		[JsonIgnore]
 		public int ID
 		{
-			get
-			{
-				return int.Parse(Data);
-			}
-			set
-			{
-				Data = value.ToString();
-			}
+			get => int.Parse(Data);
+			set => Data = value.ToString();
 		}
 
 		[JsonIgnore]
@@ -83,20 +76,11 @@ namespace FrEee.Utility
 			}
 		}
 
-		object IData.Value
-		{
-			get
-			{
-				return Value;
-			}
-		}
+		object? IData.Value => Value;
 
-		public static implicit operator T(DataReference<T> reference)
-		{
-			return reference.Value;
-		}
+		public static implicit operator T(DataReference<T> reference) => reference.Value;
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			// nothing to do here, this is just used for serialization and such
 		}

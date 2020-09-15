@@ -1,4 +1,6 @@
-﻿namespace FrEee.Utility
+#nullable enable
+
+namespace FrEee.Utility
 {
 	/// <summary>
 	/// Used for abstract classes that want to define serialization data without requiring inherited classes use said data.

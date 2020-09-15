@@ -1,5 +1,7 @@
-﻿using FrEee.Utility.Extensions;
+using FrEee.Utility.Extensions;
 using System;
+
+#nullable enable
 
 namespace FrEee.Utility
 {
@@ -7,7 +9,7 @@ namespace FrEee.Utility
 	///  A generic two dimensional vector.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class Vector2<T> : IEquatable<Vector2<T>>
+	public class Vector2<T> : IEquatable<Vector2<T>> where T : struct
 	{
 		public Vector2()
 			: this(default(T), default(T))
@@ -28,8 +30,10 @@ namespace FrEee.Utility
 		public T X { get; set; }
 		public T Y { get; set; }
 
-		public bool Equals(Vector2<T> other)
+		public bool Equals(Vector2<T>? other)
 		{
+			if (other is null)
+				return false;
 			return X.SafeEquals(other.X) && Y.SafeEquals(other.Y);
 		}
 	}

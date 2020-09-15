@@ -1,13 +1,15 @@
-﻿using FrEee.Utility.Extensions;
+using FrEee.Utility.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Globalization;
+
+#nullable enable
 
 namespace FrEee.Utility
 {
 	public static class DataScalar
 	{
-		public static IDataScalar Create<T>(T o)
+		public static IDataScalar? Create<T>(T o)
 		{
 			if (o == null)
 				return null;
@@ -24,17 +26,11 @@ namespace FrEee.Utility
 	[Serializable]
 	public class DataScalar<T> : IDataScalar
 	{
-		public DataScalar(T value = default(T))
-		{
-			Value = value;
-		}
+		public DataScalar(T value = default) => Value = value;
 
 		public string Data
 		{
-			get
-			{
-				return Type.Name + ":" + Convert.ToString(Value, CultureInfo.InvariantCulture);
-			}
+			get => Type.Name + ":" + Convert.ToString(Value, CultureInfo.InvariantCulture);
 			set
 			{
 				var data = value.Substring(value.IndexOf(":") + 1);
@@ -48,15 +44,9 @@ namespace FrEee.Utility
 		[JsonIgnore]
 		public T Value { get; set; }
 
-		object IData.Value { get { return Value; } }
+		object? IData.Value => Value;
 
-		private SafeType Type
-		{
-			get
-			{
-				return new SafeType(typeof(T));
-			}
-		}
+		private SafeType Type => new SafeType(typeof(T));
 	}
 
 	public interface IDataScalar : IData

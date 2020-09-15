@@ -1,9 +1,11 @@
-﻿using FrEee.Utility.Extensions;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+
+#nullable enable
 
 namespace FrEee.Utility
 {
@@ -31,7 +33,7 @@ namespace FrEee.Utility
 		/// <summary>
 		/// The items in the library.
 		/// </summary>
-		private static ISet<object> Items { get; set; }
+		private static ISet<object?> Items { get; set; }
 
 		/// <summary>
 		/// Deletes objects from the library.
@@ -39,7 +41,7 @@ namespace FrEee.Utility
 		/// <typeparam name="T">The type of object to delete.</typeparam>
 		/// <param name="condition">Condition to apply when selecting objects to delete.</param>
 		/// <returns>Number of objects deleted.</returns>
-		public static int Delete<T>(Func<T, bool> condition = null, bool autosave = true)
+		public static int Delete<T>(Func<T, bool>? condition = null, bool autosave = true)
 		{
 			// defaults to deleting all
 			if (condition == null)
@@ -64,7 +66,7 @@ namespace FrEee.Utility
 		/// <param name="cleaner">Anything special to do to the copied object before saving it.</param>
 		/// <param name="autosave"></param>
 		/// <param name="o"></param>
-		public static void Export<T>(T o, Action<T> cleaner = null, bool autosave = true)
+		public static void Export<T>(T o, Action<T>? cleaner = null, bool autosave = true)
 		{
 			var c = o.CopyAndAssignNewID();
 			// TODO - unassign ID in galaxy? does it matter?
@@ -81,7 +83,7 @@ namespace FrEee.Utility
 		/// <typeparam name="T">The type of object to import.</typeparam>
 		/// <param name="condition">Condition to apply when selecting objects to import.</param>
 		/// <returns>Copied objects imported.</returns>
-		public static IEnumerable<T> Import<T>(Func<T, bool> condition = null)
+		public static IEnumerable<T> Import<T>(Func<T, bool>? condition = null)
 		{
 			// defaults to loading all
 			if (condition == null)
@@ -101,20 +103,20 @@ namespace FrEee.Utility
 					File.Move("Library.dat", FilePath);
 
 				var fs = File.OpenRead(FilePath);
-				Items = Serializer.Deserialize<ISet<object>>(fs);
+				Items = Serializer.Deserialize<ISet<object?>>(fs);
 				fs.Close(); fs.Dispose();
 			}
 			catch (IOException)
 			{
 				// file not found, leave library empty
 				// TODO - log somewhere?
-				Items = new HashSet<object>();
+				Items = new HashSet<object?>();
 			}
 			catch (SerializationException)
 			{
 				// bad data, leave library empty
 				// TODO - log somewhere?
-				Items = new HashSet<object>();
+				Items = new HashSet<object?>();
 			}
 		}
 

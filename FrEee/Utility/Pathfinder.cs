@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
+#nullable enable
+
 namespace FrEee.Utility
 {
 	/// <summary>
@@ -16,7 +18,7 @@ namespace FrEee.Utility
 	/// </summary>
 	public static class Pathfinder
 	{
-		public static IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors)
+		public static IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject? me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors)
 		{
 			// step 2a (do it here so we can return map if start or end is null): empty map with nodes, their costs, and previous-node references
 			var map = new Dictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>>();
@@ -32,11 +34,11 @@ namespace FrEee.Utility
 			var queue = new Dictionary<int, ISet<PathfinderNode<Sector>>>();
 
 			// step 2b: empty set of previously visited nodes
-			var visited = new HashSet<Sector>();
+			var visited = new HashSet<Sector?>();
 
 			// step 3: add start node and cost
 			queue.Add(0, new HashSet<PathfinderNode<Sector>>());
-			queue[0].Add(new PathfinderNode<Sector>(start, 0, null, EstimateDistance(start, end, me == null ? null : me.Owner)));
+			queue[0].Add(new PathfinderNode<Sector>(start, 0, null, EstimateDistance(start, end, me?.Owner)));
 
 			// step 4: quit if there are no nodes (all paths exhausted without finding goal)
 			bool success = false;
@@ -59,18 +61,18 @@ namespace FrEee.Utility
 					success = true;
 
 				// step 7: check possible moves
-				var moves = GetPossibleMoves(node.Location, me == null ? true : me.CanWarp, me == null ? null : me.Owner);
+				var moves = GetPossibleMoves(node.Location, me == null ? true : me.CanWarp, me?.Owner);
 
 				// step 7a: remove blocked points (aka calculate cost)
 				if (avoidEnemies)
 					// avoid enemies, except at the destination
-					moves = moves.Where(m => m == null || m == end || !m.SpaceObjects.Where(sobj => sobj.CheckVisibility(me.Owner) >= Visibility.Visible || sobj.FindMemory(me.Owner)?.Sector == m).OfType<ICombatant>().Any(sobj => sobj.IsHostileTo(me == null ? null : me.Owner)));
+					moves = moves.Where(m => m == null || m == end || !m.SpaceObjects.Where(sobj => sobj.CheckVisibility(me?.Owner) >= Visibility.Visible || sobj.FindMemory(me?.Owner)?.Sector == m).OfType<ICombatant>().Any(sobj => sobj.IsHostileTo(me == null ? null : me.Owner)));
 				if (avoidDamagingSectors)
 					// don't avoid the destination, even if it is a damaging sector
-					moves = moves.Where(m => m == end || m == null || !m.SpaceObjects.Where(sobj => sobj.CheckVisibility(me.Owner) >= Visibility.Visible || sobj.FindMemory(me.Owner)?.Sector == m).Any(sobj => sobj.GetAbilityValue("Sector - Damage").ToInt() > 0));
+					moves = moves.Where(m => m == end || m == null || !m.SpaceObjects.Where(sobj => sobj.CheckVisibility(me?.Owner) >= Visibility.Visible || sobj.FindMemory(me?.Owner)?.Sector == m).Any(sobj => sobj.GetAbilityValue("Sector - Damage").ToInt() > 0));
 
 				// step 7b: update priority queue
-				Action<Sector> f = move =>
+				Action<Sector?> f = move =>
 				{
 					// When we lock the queue, we do so because it is being checked and modified by other threads,
 					// and we don't want them stepping on each other's toes.
@@ -79,7 +81,7 @@ namespace FrEee.Utility
 					if (!visited.Contains(move))
 					{
 						// didn't visit yet
-						var newnode = new PathfinderNode<Sector>(move, node.Cost + 1, node, EstimateDistance(move, end, me == null ? null : me.Owner));
+						var newnode = new PathfinderNode<Sector>(move, node.Cost + 1, node, EstimateDistance(move, end, me?.Owner));
 						lock (queue)
 						{
 							if (!queue.ContainsKey(newnode.Cost))
@@ -146,7 +148,7 @@ namespace FrEee.Utility
 					success = true;
 
 				// step 7: check possible moves
-				var moves = node.Location.FindSpaceObjects<WarpPoint>().Select(wp => wp.TargetStarSystemLocation.Item);
+				var moves = node.Location?.FindSpaceObjects<WarpPoint>().Select(wp => wp.TargetStarSystemLocation?.Item);
 
 				// step 7a: remove blocked points (aka calculate cost)
 				// nothing to do here
@@ -247,7 +249,7 @@ namespace FrEee.Utility
 		/// <param name="start"></param>
 		/// <param name="end"></param>
 		/// <returns></returns>
-		public static int EstimateDistance(Sector start, Sector end, Empire emp)
+		public static int EstimateDistance(Sector? start, Sector end, Empire? emp)
 		{
 			if (start == null)
 				return 0;
@@ -256,7 +258,7 @@ namespace FrEee.Utility
 			int ftlDistance = int.MaxValue;
 
 			// same system? just go along grid, ignoring obstacles
-			if (start != null && end != null && start.StarSystem == end.StarSystem)
+			if (start.StarSystem == end.StarSystem)
 				sublightDistance = start.Coordinates.EightWayDistance(end.Coordinates);
 
 			// different system? find nearest warp point in each system, and assume they are connected to each other ("warp nexus")
@@ -276,7 +278,7 @@ namespace FrEee.Utility
 			return Math.Min(sublightDistance, ftlDistance);
 		}
 
-		public static Sector FindNearestWarpPointSectorInSystem(Sector sector, Empire emp, bool findWarpIn)
+		public static Sector? FindNearestWarpPointSectorInSystem(Sector sector, Empire emp, bool findWarpIn)
 		{
 			if (sector == null)
 				return null;
@@ -290,7 +292,7 @@ namespace FrEee.Utility
 				return sector.StarSystem.FindSpaceObjects<WarpPoint>().Select(wp => new Sector(sector.StarSystem, wp.FindCoordinates())).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault();
 		}
 
-		public static IEnumerable<Sector> GetPossibleMoves(Sector s, bool canWarp, Empire emp)
+		public static IEnumerable<Sector?> GetPossibleMoves(Sector? s, bool canWarp, Empire? emp)
 		{
 			var moves = new List<Sector>();
 
@@ -329,7 +331,7 @@ namespace FrEee.Utility
 		/// <param name="end"></param>
 		/// <param name="avoidEnemies"></param>
 		/// <returns></returns>
-		public static IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors, IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> map)
+		public static IEnumerable<Sector?> Pathfind(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors, IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> map)
 		{
 			bool cacheEnabled = Galaxy.Current.IsAbilityCacheEnabled;
 			if (!cacheEnabled)
@@ -346,7 +348,7 @@ namespace FrEee.Utility
 				return Enumerable.Empty<Sector>(); // nowhere to go!
 
 			var nodes = new List<PathfinderNode<Sector>>();
-			PathfinderNode<Sector> node;
+			PathfinderNode<Sector>? node;
 
 			if (map.Keys.Any(n => n.Location == end))
 			{
@@ -379,7 +381,7 @@ namespace FrEee.Utility
 		/// <param name="end"></param>
 		/// <param name="avoidEnemies"></param>
 		/// <returns></returns>
-		public static IEnumerable<StarSystem> Pathfind(StarSystem start, StarSystem end)
+		public static IEnumerable<StarSystem?> Pathfind(StarSystem start, StarSystem end)
 		{
 			if (start == end)
 				return Enumerable.Empty<StarSystem>();
@@ -432,7 +434,7 @@ namespace FrEee.Utility
 		/// <param name="end"></param>
 		/// <param name="avoidEnemies"></param>
 		/// <returns></returns>
-		public static IEnumerable<T> Pathfind<T>(T start, T end, ConnectivityGraph<T> graph)
+		public static IEnumerable<T?> Pathfind<T>(T start, T end, ConnectivityGraph<T> graph)
 		{
 			if (start.Equals(end))
 				return Enumerable.Empty<T>();
@@ -479,7 +481,7 @@ namespace FrEee.Utility
 
 	public class PathfinderNode<T>
 	{
-		public PathfinderNode(T location, int cost, PathfinderNode<T> previousNode, int minRemaining = 0)
+		public PathfinderNode(T? location, int cost, PathfinderNode<T>? previousNode, int minRemaining = 0)
 		{
 			Location = location;
 			Cost = cost;
@@ -495,7 +497,7 @@ namespace FrEee.Utility
 		/// <summary>
 		/// The current location.
 		/// </summary>
-		public T Location { get; set; }
+		public T? Location { get; set; }
 
 		/// <summary>
 		/// A minimum estimate on the remaining cost to reach the destination.
@@ -506,7 +508,7 @@ namespace FrEee.Utility
 		/// <summary>
 		/// The previous node in the current path.
 		/// </summary>
-		public PathfinderNode<T> PreviousNode { get; set; }
+		public PathfinderNode<T>? PreviousNode { get; set; }
 
 		public override string ToString()
 		{

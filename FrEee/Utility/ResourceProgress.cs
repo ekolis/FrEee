@@ -1,6 +1,8 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Utility
 {
@@ -26,14 +28,8 @@ namespace FrEee.Utility
 				yield return new KeyValuePair<Resource, Progress>(r, new Progress(Value[r], Maximum[r], IncrementalProgress[r]));
 		}
 
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-		public override string ToString()
-		{
-			return string.Format("{0} / {1} ({2:+#;-#;0} per turn", Value, Maximum, IncrementalProgress);
-		}
+		public override string ToString() => string.Format("{0} / {1} ({2:+#;-#;0} per turn", Value, Maximum, IncrementalProgress);
 	}
 }

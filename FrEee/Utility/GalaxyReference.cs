@@ -4,6 +4,8 @@ using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 
+#nullable enable
+
 namespace FrEee.Utility
 {
 	/// <summary>
@@ -23,7 +25,7 @@ namespace FrEee.Utility
 		/// </summary>
 		/// <param name="id"></param>
 		/// <returns></returns>
-		public static GalaxyReference<T> GetGalaxyReference(long id)
+		public static GalaxyReference<T>? GetGalaxyReference(long id)
 		{
 			if (Galaxy.Current.referrables.ContainsKey(id))
 				return new GalaxyReference<T>(id);
@@ -83,9 +85,9 @@ namespace FrEee.Utility
 			{
 				if (ID <= 0)
 					return value;
-				var obj = (T)Galaxy.Current.GetReferrable(ID);
+				var obj = (T?)Galaxy.Current.GetReferrable(ID);
 				if (obj == null)
-					return default(T);
+					return default;
 				/*if (obj is IReferrable && (obj as IReferrable).IsDisposed)
 					return default(T);*/
 				return obj;
@@ -104,40 +106,37 @@ namespace FrEee.Utility
 		/// Resolves the reference.
 		/// </summary>
 		/// <returns></returns>
-		public T Value
+		public T? Value
 		{
 			get
 			{
 				if (cache == null)
 					InitializeCache();
-				return cache.Value;
+				return cache?.Value;
 			}
 		}
 
 		[field: NonSerialized]
-		private T value { get; set; }
+		private T? value { get; set; }
 
 		[NonSerialized]
-		private ClientSideCache<T> cache;
+		private ClientSideCache<T>? cache;
 
-		public static implicit operator GalaxyReference<T>(T t)
+		public static implicit operator GalaxyReference<T>?(T t)
 		{
 			if (t == null)
 				return null;
 			return new GalaxyReference<T>(t);
 		}
 
-		public static implicit operator T(GalaxyReference<T> r)
+		public static implicit operator T?(GalaxyReference<T>? r)
 		{
-			if (r == null)
+			if (r is null)
 				return default(T);
 			return r.Value;
 		}
 
-		public static bool operator !=(GalaxyReference<T> r1, GalaxyReference<T> r2)
-		{
-			return !(r1 == r2);
-		}
+		public static bool operator !=(GalaxyReference<T> r1, GalaxyReference<T> r2) => !(r1 == r2);
 
 		public static bool operator ==(GalaxyReference<T> r1, GalaxyReference<T> r2)
 		{
@@ -148,7 +147,7 @@ namespace FrEee.Utility
 			return r1.ID == r2.ID;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			// TODO - upgrade equals to use "as" operator
 			if (obj is GalaxyReference<T>)
@@ -156,12 +155,9 @@ namespace FrEee.Utility
 			return false;
 		}
 
-		public override int GetHashCode()
-		{
-			return ID.GetHashCode();
-		}
+		public override int GetHashCode() => ID.GetHashCode();
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			if (done == null)
 				done = new HashSet<IPromotable>();

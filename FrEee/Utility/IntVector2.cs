@@ -1,8 +1,9 @@
-﻿using FrEee.Utility.Extensions;
+using FrEee.Utility.Extensions;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Utility
 {
@@ -60,7 +61,7 @@ namespace FrEee.Utility
 		/// <param name="distance"></param>
 		/// <param name="skip">Should we skip moving to the endpoint? (say because it is occupied...)</param>
 		/// <returns></returns>
-		public static IntVector2 InterpolateEightWay(IntVector2 start, IntVector2 end, int distance, Func<IntVector2, bool> skip = null)
+		public static IntVector2 InterpolateEightWay(IntVector2 start, IntVector2 end, int distance, Func<IntVector2, bool>? skip = null)
 		{
 			if (distance <= 0)
 				return start;
@@ -143,16 +144,16 @@ namespace FrEee.Utility
 			return (dest - this).LengthManhattan;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			if (obj is IntVector2 v)
 				return this.Equals(v);
 			return false;
 		}
 
-		public bool Equals(IntVector2 other)
+		public bool Equals(IntVector2? other)
 		{
-			return X == other.X && Y == other.Y;
+			return X == other?.X && Y == other?.Y;
 		}
 
 		public override int GetHashCode()

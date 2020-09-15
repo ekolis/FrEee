@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Utility
 {
 	internal class SequenceEqualityComparer<T> : IEqualityComparer<IEnumerable<T>>
 	{
-		public bool Equals(IEnumerable<T> x, IEnumerable<T> y)
+		public bool Equals(IEnumerable<T>? x, IEnumerable<T>? y)
 		{
 			if (x.Count() != y.Count())
 				return false;

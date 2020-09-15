@@ -5,6 +5,8 @@ using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility.Extensions;
 
+#nullable enable
+
 namespace FrEee.Utility
 {
 	public class GalaxyReferenceList<T> : ReferenceList<GalaxyReference<T>, T>
@@ -17,7 +19,7 @@ namespace FrEee.Utility
 	{
 	}
 
-	public class ReferenceList<TRef, T> : IList<T>, IReferenceEnumerable, IPromotable
+	public class ReferenceList<TRef, T> : IList<T?>, IReferenceEnumerable, IPromotable
 				where TRef : IReference<T>
 	{
 		public ReferenceList()
@@ -37,7 +39,7 @@ namespace FrEee.Utility
 
 		private IList<TRef> list { get; set; }
 
-		public T this[int index]
+		public T? this[int index]
 		{
 			get
 			{
@@ -49,7 +51,7 @@ namespace FrEee.Utility
 			}
 		}
 
-		public void Add(T item)
+		public void Add(T? item)
 		{
 			list.Add(MakeReference(item));
 		}
@@ -59,17 +61,17 @@ namespace FrEee.Utility
 			list.Clear();
 		}
 
-		public bool Contains(T item)
+		public bool Contains(T? item)
 		{
 			return list.Any(r => r.Value.Equals(item));
 		}
 
-		public void CopyTo(T[] array, int arrayIndex)
+		public void CopyTo(T?[] array, int arrayIndex)
 		{
 			list.Select(x => x.Value).ToList().CopyTo(array, arrayIndex);
 		}
 
-		public IEnumerator<T> GetEnumerator()
+		public IEnumerator<T?> GetEnumerator()
 		{
 			return list.Select(x => x.Value).GetEnumerator();
 		}
@@ -79,19 +81,19 @@ namespace FrEee.Utility
 			return GetEnumerator();
 		}
 
-		public int IndexOf(T item)
+		public int IndexOf(T? item)
 		{
 			if (!list.Any(r => r.Value.Equals(item)))
 				return -1;
 			return list.Select((x, i) => new { Item = x, Index = i }).First(x => x.Item.Value.Equals(item)).Index;
 		}
 
-		public void Insert(int index, T item)
+		public void Insert(int index, T? item)
 		{
 			list.Insert(index, MakeReference(item));
 		}
 
-		public bool Remove(T item)
+		public bool Remove(T? item)
 		{
 			var i = IndexOf(item);
 			if (i >= 0)
@@ -123,7 +125,7 @@ namespace FrEee.Utility
 			}
 		}
 
-		private static TRef MakeReference(T item)
+		private static TRef MakeReference(T? item)
 		{
 			return (TRef)typeof(TRef).Instantiate(item);
 		}

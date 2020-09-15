@@ -1,4 +1,6 @@
-﻿namespace FrEee.Utility
+#nullable enable
+
+namespace FrEee.Utility
 {
 	/// <summary>
 	/// A heatmap, used for pathfinding and the like.
@@ -28,7 +30,7 @@
 
 		public IntVector2 FindMax(IntVector2 pos, int range)
 		{
-			IntVector2 result = null;
+			IntVector2? result = null;
 			for (var x = pos.X - range; x <= pos.X + range; x++)
 			{
 				for (var y = pos.Y - range; y <= pos.Y + range; y++)
@@ -42,7 +44,7 @@
 
 		public IntVector2 FindMin(IntVector2 pos, int range)
 		{
-			IntVector2 result = null;
+			IntVector2? result = null;
 			for (var x = pos.X - range; x <= pos.X + range; x++)
 			{
 				for (var y = pos.Y - range; y <= pos.Y + range; y++)

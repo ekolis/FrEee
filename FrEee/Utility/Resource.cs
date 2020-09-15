@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility.Extensions;
 using System;
@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Utility
 {
@@ -33,12 +35,12 @@ namespace FrEee.Utility
 		/// All resources in the game.
 		/// TODO - moddable resources?
 		/// </summary>
-		public static IEnumerable<Resource> All { get { return all; } }
+		public static IEnumerable<Resource> All => all;
 
 		/// <summary>
 		/// The aptitude (if any) which affects the generation rate of this resource.
 		/// </summary>
-		public Aptitude Aptitude { get; set; }
+		public Aptitude? Aptitude { get; set; }
 
 		/// <summary>
 		/// A color used to represent the resource.
@@ -58,10 +60,7 @@ namespace FrEee.Utility
 		/// <summary>
 		/// An icon used to represent this resource.
 		/// </summary>
-		public Image Icon
-		{
-			get { return Pictures.GetIcon(this); }
-		}
+		public Image Icon => Pictures.GetIcon(this);
 
 		public Image Icon32 => Icon.Resize(32);
 
@@ -86,11 +85,7 @@ namespace FrEee.Utility
 		/// <summary>
 		/// The name of the resource.
 		/// </summary>
-		public string Name
-		{
-			get;
-			set;
-		}
+		public string Name { get; set; }
 
 		/// <summary>
 		/// The name of the picture to use for this resource.
@@ -100,18 +95,9 @@ namespace FrEee.Utility
 		/// <summary>
 		/// Just use the icon image.
 		/// </summary>
-		public Image Portrait
-		{
-			get { return Icon; }
-		}
+		public Image Portrait => Icon;
 
-		public IEnumerable<string> PortraitPaths
-		{
-			get
-			{
-				return IconPaths;
-			}
-		}
+		public IEnumerable<string> PortraitPaths => IconPaths;
 
 		public static readonly Resource Intelligence = new Resource
 		{
@@ -187,15 +173,9 @@ namespace FrEee.Utility
 
 		private static IEnumerable<Resource> all;
 
-		public static Resource Find(string name)
-		{
-			return All.SingleOrDefault(r => r.Name == name);
-		}
+		public static Resource Find(string name) => All.SingleOrDefault(r => r.Name == name);
 
-		public static bool operator !=(Resource r1, Resource r2)
-		{
-			return !(r1 == r2);
-		}
+		public static bool operator !=(Resource r1, Resource r2) => !(r1 == r2);
 
 		public static ResourceQuantity operator *(int quantity, Resource resource)
 		{
@@ -204,10 +184,7 @@ namespace FrEee.Utility
 			return q;
 		}
 
-		public static ResourceQuantity operator *(Resource r, int quantity)
-		{
-			return quantity * r;
-		}
+		public static ResourceQuantity operator *(Resource r, int quantity) => quantity * r;
 
 		public static bool operator ==(Resource r1, Resource r2)
 		{
@@ -218,7 +195,7 @@ namespace FrEee.Utility
 			return r1.Name == r2.Name && r1.Color == r2.Color && r1.IsGlobal == r2.IsGlobal && r1.IsLocal == r2.IsLocal && r1.PictureName == r2.PictureName;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			var r = obj as Resource;
 			if (ReferenceEquals(r, null))
@@ -226,14 +203,8 @@ namespace FrEee.Utility
 			return this == r;
 		}
 
-		public override int GetHashCode()
-		{
-			return Name.GetSafeHashCode();
-		}
+		public override int GetHashCode() => Name.GetSafeHashCode();
 
-		public override string ToString()
-		{
-			return Name;
-		}
+		public override string ToString() => Name;
 	}
 }

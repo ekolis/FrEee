@@ -1,5 +1,7 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
+
+#nullable enable
 
 namespace FrEee.Game.Interfaces
 {
@@ -12,7 +14,7 @@ namespace FrEee.Game.Interfaces
 	public interface IReference<out TValue> : IPromotable
 	{
 		bool HasValue { get; }
-		TValue Value { get; }
+		TValue? Value { get; }
 	}
 
 	/// <summary>
@@ -38,10 +40,10 @@ namespace FrEee.Game.Interfaces
 		protected ReferenceException(SerializationInfo info, StreamingContext ctx)
 					: base(info, ctx)
 		{
-			ID = (TID)info.GetValue("ID", typeof(TID));
+			ID = (TID?)info.GetValue("ID", typeof(TID));
 		}
 
-		public TID ID { get; private set; }
+		public TID? ID { get; private set; }
 
 		public Type Type { get { return typeof(TValue); } }
 

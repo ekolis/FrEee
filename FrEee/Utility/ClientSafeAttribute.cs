@@ -1,4 +1,6 @@
-﻿using System;
+using System;
+
+#nullable enable
 
 namespace FrEee.Utility
 {

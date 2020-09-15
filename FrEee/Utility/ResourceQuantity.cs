@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+#nullable enable
+
 namespace FrEee.Utility
 {
 	/// <summary>
@@ -14,7 +16,7 @@ namespace FrEee.Utility
 		/// <summary>
 		/// Is this quantity all zeroes?
 		/// </summary>
-		public bool IsEmpty { get { return this.All(kvp => kvp.Value == 0); } }
+		public bool IsEmpty => this.All(kvp => kvp.Value == 0);
 
 		public ResourceQuantity()
 		{
@@ -70,7 +72,7 @@ namespace FrEee.Utility
 			return result;
 		}
 
-		public static bool operator !=(ResourceQuantity r1, ResourceQuantity r2)
+		public static bool operator !=(ResourceQuantity? r1, ResourceQuantity? r2)
 		{
 			return !(r1 == r2);
 		}
@@ -124,13 +126,13 @@ namespace FrEee.Utility
 			return true;
 		}
 
-		public static bool operator ==(ResourceQuantity r1, ResourceQuantity r2)
+		public static bool operator ==(ResourceQuantity? r1, ResourceQuantity? r2)
 		{
 			if (r1.IsNull() && r2.IsNull())
 				return true;
 			if (r1.IsNull() || r2.IsNull())
 				return false;
-			foreach (var key in r1.Keys.Union(r2.Keys))
+			foreach (var key in r1!.Keys.Union(r2!.Keys))
 			{
 				if (r1[key] != r2[key])
 					return false;
@@ -199,19 +201,19 @@ namespace FrEee.Utility
 			this[key] += value;
 		}
 
-		public int CompareTo(ResourceQuantity other)
+		public int CompareTo(ResourceQuantity? other)
 		{
 			return this.Sum(kvp => kvp.Value).CompareTo(other.Sum(kvp => kvp.Value));
 		}
 
-		public int CompareTo(object obj)
+		public int CompareTo(object? obj)
 		{
 			if (obj is ResourceQuantity)
 				return CompareTo((ResourceQuantity)obj);
-			return this.Sum(kvp => kvp.Value).CompareTo(obj.ToString().ToInt());
+			return this.Sum(kvp => kvp.Value).CompareTo(obj?.ToString().ToInt());
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			if (obj is ResourceQuantity rq)
 				return this == rq;

@@ -1,8 +1,10 @@
-using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Runtime.Serialization;
-using System.Text;
+
+using Newtonsoft.Json;
+
+#nullable enable
 
 namespace FrEee.Utility
 {
@@ -15,7 +17,7 @@ namespace FrEee.Utility
 
 		public static bool IsDeserializing { get; private set; }
 
-		public static T Deserialize<T>(string s)
+		public static T? Deserialize<T>(string s)
 		{
 			IsDeserializing = true;
 			T t;
@@ -31,12 +33,12 @@ namespace FrEee.Utility
 			return t;
 		}
 
-		public static T Deserialize<T>(Stream str)
+		public static T? Deserialize<T>(Stream str)
 		{
-			return (T)Deserialize(str);
+			return (T?)Deserialize(str);
 		}
 
-		public static object Deserialize(Stream str)
+		public static object? Deserialize(Stream str)
 		{
 			try
 			{
@@ -64,12 +66,12 @@ namespace FrEee.Utility
 			}
 		}
 
-		public static T DeserializeFromString<T>(string s)
+		public static T? DeserializeFromString<T>(string s)
 		{
-			return (T)DeserializeFromString(s);
+			return (T?)DeserializeFromString(s);
 		}
 
-		public static object DeserializeFromString(string s)
+		public static object? DeserializeFromString(string s)
 		{
 			if (EnableJsonSerializer)
 			{

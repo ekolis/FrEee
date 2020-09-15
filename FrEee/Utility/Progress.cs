@@ -3,6 +3,9 @@ using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility.Extensions;
 using System;
+using System.Diagnostics.CodeAnalysis;
+
+#nullable enable
 
 namespace FrEee.Utility
 {
@@ -112,13 +115,12 @@ namespace FrEee.Utility
 		/// <summary>
 		/// The item being worked towards.
 		/// </summary>
-		public T Item { get { return item.Value; } set { item = value.Refer<TRef, T>(); } }
+		[MaybeNull]
+		public T Item { get => item.Value; set => item = value.Refer<TRef, T>(); }
 
-		private TRef item { get; set; }
+		[NotNull]
+		private TRef? item { get; set; }
 
-		public override string ToString()
-		{
-			return string.Format("{0}: {1}", Item, base.ToString());
-		}
+		public override string ToString() => $"{Item}: {base.ToString()}";
 	}
 }

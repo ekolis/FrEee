@@ -1,4 +1,6 @@
-﻿namespace FrEee.Utility
+#nullable enable
+
+namespace FrEee.Utility
 {
 	/// <summary>
 	/// A model for how resources should be mined.
@@ -21,8 +23,8 @@
 		/// </summary>
 		public double Rate
 		{
-			get { return RatePercentage / 100d; }
-			set { RatePercentage = value * 100d; }
+			get => RatePercentage / 100d;
+			set => RatePercentage = value * 100d;
 		}
 
 		/// <summary>
@@ -35,8 +37,8 @@
 		/// </summary>
 		public double ValueBonus
 		{
-			get { return ValuePercentageBonus / 100d; }
-			set { ValuePercentageBonus = value * 100d; }
+			get => ValuePercentageBonus / 100d;
+			set => ValuePercentageBonus = value * 100d;
 		}
 
 		/// <summary>

@@ -96,7 +96,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Empires which have explored this star system.
 		/// </summary>
-		public ICollection<Empire> ExploredByEmpires { get; private set; }
+		public ICollection<Empire?> ExploredByEmpires { get; private set; }
 
 		public Image? Icon => BackgroundImage;
 

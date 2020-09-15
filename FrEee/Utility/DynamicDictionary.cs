@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Utility
 {
@@ -15,30 +17,15 @@ namespace FrEee.Utility
 			dict = new SafeDictionary<object, object>();
 		}
 
-		public int Count
-		{
-			get { return dict.Count; }
-		}
+		public int Count => dict.Count;
 
-		public bool IsEmpty
-		{
-			get { return dict.Count == 0; }
-		}
+		public bool IsEmpty => dict.Count == 0;
 
-		public bool IsReadOnly
-		{
-			get { return dict.IsReadOnly; }
-		}
+		public bool IsReadOnly => dict.IsReadOnly;
 
-		public ICollection<object> Keys
-		{
-			get { return dict.Keys; }
-		}
+		public ICollection<object> Keys => dict.Keys;
 
-		public ICollection<object> Values
-		{
-			get { return dict.Values; }
-		}
+		public ICollection<object> Values => dict.Values;
 
 		private SafeDictionary<object, object> dict { get; set; }
 
@@ -50,71 +37,32 @@ namespace FrEee.Utility
 					dict[key] = new DynamicDictionary();
 				return dict[key];
 			}
-			set
-			{
-				dict[key] = value;
-			}
+			set => dict[key] = value;
 		}
 
-		public void Add(object key, object value)
-		{
-			dict.Add(key, value);
-		}
+		public void Add(object key, object value) => dict.Add(key, value);
 
-		public void Add(KeyValuePair<object, object> item)
-		{
-			dict.Add(item);
-		}
+		public void Add(KeyValuePair<object, object> item) => dict.Add(item);
 
-		public void Clear()
-		{
-			dict.Clear();
-		}
+		public void Clear() => dict.Clear();
 
-		public bool Contains(KeyValuePair<object, object> item)
-		{
-			return dict.Contains(item);
-		}
+		public bool Contains(KeyValuePair<object, object> item) => dict.Contains(item);
 
-		public bool ContainsKey(object key)
-		{
-			return dict.ContainsKey(key);
-		}
+		public bool ContainsKey(object key) => dict.ContainsKey(key);
 
-		public void CopyTo(KeyValuePair<object, object>[] array, int arrayIndex)
-		{
-			dict.CopyTo(array, arrayIndex);
-		}
+		public void CopyTo(KeyValuePair<object, object>[] array, int arrayIndex) => dict.CopyTo(array, arrayIndex);
 
-		public override IEnumerable<string> GetDynamicMemberNames()
-		{
-			return dict.Keys.OfType<string>();
-		}
+		public override IEnumerable<string> GetDynamicMemberNames() => dict.Keys.OfType<string>();
 
-		public IEnumerator<KeyValuePair<object, object>> GetEnumerator()
-		{
-			return dict.GetEnumerator();
-		}
+		public IEnumerator<KeyValuePair<object, object>> GetEnumerator() => dict.GetEnumerator();
 
-		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
+		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
 
-		public bool HasProperty(string prop)
-		{
-			return dict.ContainsKey(prop);
-		}
+		public bool HasProperty(string prop) => dict.ContainsKey(prop);
 
-		public bool Remove(object key)
-		{
-			return dict.Remove(key);
-		}
+		public bool Remove(object key) => dict.Remove(key);
 
-		public bool Remove(KeyValuePair<object, object> item)
-		{
-			return dict.Remove(item);
-		}
+		public bool Remove(KeyValuePair<object, object> item) => dict.Remove(item);
 
 		public override bool TryGetIndex(GetIndexBinder binder, object[] indexes, out object result)
 		{

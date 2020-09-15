@@ -1,5 +1,7 @@
-﻿using FrEee.Utility.Extensions;
+using FrEee.Utility.Extensions;
 using System.Collections;
+
+#nullable enable
 
 namespace FrEee.Utility
 {

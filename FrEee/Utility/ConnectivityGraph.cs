@@ -1,7 +1,9 @@
-﻿using FrEee.Utility.Extensions;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Utility
 {
@@ -30,31 +32,16 @@ namespace FrEee.Utility
 		/// <summary>
 		/// Any connections that have been made.
 		/// </summary>
-		public SafeDictionary<T, HashSet<T>> Connections
-		{
-			get { return connections; }
-		}
+		public SafeDictionary<T, HashSet<T>> Connections => connections;
 
-		public int Count
-		{
-			get { return items.Count; }
-		}
+		public int Count => items.Count;
 
 		/// <summary>
 		/// Is the graph connected? That is, are any two nodes connected? Or, is there no more than one subgraph?
 		/// </summary>
-		public bool IsConnected
-		{
-			get
-			{
-				return Subgraphs.Count() <= 1;
-			}
-		}
+		public bool IsConnected => Subgraphs.Count() <= 1;
 
-		public bool IsReadOnly
-		{
-			get { return items.IsReadOnly; }
-		}
+		public bool IsReadOnly => items.IsReadOnly;
 
 		/// <summary>
 		/// Any discrete connected subgraphs of this graph.
@@ -158,7 +145,7 @@ namespace FrEee.Utility
 		/// <param name="t2"></param>
 		/// <param name="traversed"></param>
 		/// <returns>The distance, or null if either the destination cannot be reached or the start node has already been traversed..</returns>
-		public int? ComputeDistance(T start, T end, ICollection<T> traversed = null)
+		public int? ComputeDistance(T start, T end, ICollection<T>? traversed = null)
 		{
 			if (traversed == null)
 				traversed = new HashSet<T>();
@@ -168,7 +155,7 @@ namespace FrEee.Utility
 
 			traversed.Add(start);
 
-			if ((object)start == (object)end)
+			if ((object?)start == (object?)end)
 				return 0; // we're already there!
 
 			var exits = GetExits(start);
@@ -330,7 +317,7 @@ namespace FrEee.Utility
 			var result = items.Remove(item);
 			foreach (var kvp in connections.ToArray())
 			{
-				if ((object)kvp.Key == (object)item)
+				if ((object?)kvp.Key == (object?)item)
 					connections.Remove(item);
 				else if (kvp.Value.Contains(item))
 					kvp.Value.Remove(item);

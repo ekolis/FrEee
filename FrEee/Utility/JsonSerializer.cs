@@ -1,8 +1,10 @@
-﻿using FrEee.Utility.Extensions;
+using FrEee.Utility.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Utility
 {
@@ -22,7 +24,7 @@ namespace FrEee.Utility
 			};
 		}
 
-		public object DeserializeFromString(string s)
+		public object? DeserializeFromString(string s)
 		{
 			var list = JsonConvert.DeserializeObject<List<object>>(s);
 			if (list.Count == 0)
@@ -31,35 +33,33 @@ namespace FrEee.Utility
 			if (first == null)
 				return null;
 			// TODO - make IData and ISimpleDataObject implement a common interface
-			if (first is ISimpleDataObject)
+			if (first is ISimpleDataObject f)
 			{
-				var f = first as ISimpleDataObject;
 				foreach (var item in list)
 				{
-					if (item is ISimpleDataObject)
+					if (item is ISimpleDataObject dobj)
 					{
-						var dobj = item as ISimpleDataObject;
 						dobj.Context = f.Context;
 						foreach (var r in dobj.SimpleData.Values.OfType<IDataReference>())
 							r.Context = f.Context;
 					}
-					if (item is IData)
-						f.Context.Add((item as IData).Value);
+					if (item is IData data)
+						f.Context.Add(data.Value);
 				}
 			}
 			foreach (var item in list.OfType<ISimpleDataObject>())
 				item.InitializeValue();
-			if (first is ISimpleDataObject)
-				return (first as ISimpleDataObject).Value;
-			if (first is IData)
-				return (first as IData).Value;
+			if (first is ISimpleDataObject fsdo)
+				return fsdo.Value;
+			if (first is IData fData)
+				return fData.Value;
 			return first;
 		}
 
 		public string SerializeToString(object o)
 		{
 			var ctx = new ObjectGraphContext();
-			var kos = new List<object>();
+			var kos = new List<object?>();
 			var parser = new ObjectGraphParser();
 			if (o == null)
 			{
@@ -112,7 +112,7 @@ namespace FrEee.Utility
 		/// <typeparam name="T"></typeparam>
 		/// <param name="json"></param>
 		/// <returns></returns>
-		public static T DeserializeObject<T>(string json)
+		public static T? DeserializeObject<T>(string json)
 		{
 			return JsonConvert.DeserializeObject<T>(json, SimpleConverterSettings); 
 		}

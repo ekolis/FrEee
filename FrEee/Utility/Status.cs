@@ -1,4 +1,6 @@
-﻿using System;
+using System;
+
+#nullable enable
 
 namespace FrEee.Utility
 {
@@ -10,7 +12,7 @@ namespace FrEee.Utility
 		/// <summary>
 		/// Any exception that may have occurred.
 		/// </summary>
-		public Exception Exception
+		public Exception? Exception
 		{
 			get { return exception; }
 			set
@@ -24,7 +26,7 @@ namespace FrEee.Utility
 		/// <summary>
 		/// Message indicating current sub-operation.
 		/// </summary>
-		public string Message
+		public string? Message
 		{
 			get { return message; }
 			set
@@ -51,11 +53,11 @@ namespace FrEee.Utility
 			}
 		}
 
-		private Exception exception;
-		private string message;
+		private Exception? exception;
+		private string? message;
 		private double progress;
 
-		public event ChangedDelegate Changed;
+		public event ChangedDelegate? Changed;
 
 		public delegate void ChangedDelegate();
 	}

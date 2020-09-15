@@ -4,6 +4,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
+#nullable enable
+
 namespace FrEee.Utility
 {
 	/// <summary>
@@ -12,7 +14,7 @@ namespace FrEee.Utility
 	/// <typeparam name="TKey"></typeparam>
 	/// <typeparam name="TValue"></typeparam>
 	[Serializable]
-	public class SafeDictionary<TKey, TValue> : IDictionary<TKey, TValue>
+	public class SafeDictionary<TKey, TValue> : IDictionary<TKey, TValue?> where TKey : notnull
 	{
 		public SafeDictionary()
 			: this(false)
@@ -25,7 +27,7 @@ namespace FrEee.Utility
 			AutoInit = autoInit;
 		}
 
-		public SafeDictionary(IDictionary<TKey, TValue> tocopy, bool autoInit = false)
+		public SafeDictionary(IDictionary<TKey, TValue?> tocopy, bool autoInit = false)
 			: this(autoInit)
 		{
 			foreach (var kvp in tocopy)
@@ -40,7 +42,7 @@ namespace FrEee.Utility
 		/// <summary>
 		/// For initializing newly created values.
 		/// </summary>
-		public object[] AutoInitArgs { get; set; }
+		public object[]? AutoInitArgs { get; set; }
 
 		public int Count
 		{
@@ -70,24 +72,24 @@ namespace FrEee.Utility
 			}
 		}
 
-		public ICollection<TValue> Values
+		public ICollection<TValue?> Values
 		{
 			get
 			{
 				if (dict == null)
-					return new List<TValue>();
+					return new List<TValue?>();
 				return dict.Values;
 			}
 		}
 
-		private ConcurrentDictionary<TKey, TValue> dict;
+		private ConcurrentDictionary<TKey, TValue?> dict;
 
-		public TValue this[TKey key]
+		public TValue? this[TKey key]
 		{
 			get
 			{
 				if (dict == null)
-					return default(TValue);
+					return default;
 				TValue val;
 				if (dict.TryGetValue(key, out val))
 					return val;
@@ -104,11 +106,11 @@ namespace FrEee.Utility
 						catch
 						{
 							// can't instantiate the object
-							return default(TValue);
+							return default;
 						}
 					}
 					else
-						return default(TValue);
+						return default;
 				}
 			}
 			set
@@ -118,12 +120,12 @@ namespace FrEee.Utility
 			}
 		}
 
-		public virtual void Add(TKey key, TValue value)
+		public virtual void Add(TKey key, TValue? value)
 		{
 			this[key] = value;
 		}
 
-		public virtual void Add(KeyValuePair<TKey, TValue> item)
+		public virtual void Add(KeyValuePair<TKey, TValue?> item)
 		{
 			this[item.Key] = item.Value;
 		}
@@ -134,7 +136,7 @@ namespace FrEee.Utility
 				dict.Clear();
 		}
 
-		public bool Contains(KeyValuePair<TKey, TValue> item)
+		public bool Contains(KeyValuePair<TKey, TValue?> item)
 		{
 			if (dict == null)
 				return false;
@@ -152,16 +154,16 @@ namespace FrEee.Utility
 			return dict.ContainsKey(key);
 		}
 
-		public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+		public void CopyTo(KeyValuePair<TKey, TValue?>[] array, int arrayIndex)
 		{
 			if (dict != null)
-				((IDictionary<TKey, TValue>)dict).CopyTo(array, arrayIndex);
+				((IDictionary<TKey, TValue?>)dict).CopyTo(array, arrayIndex);
 		}
 
-		public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+		public IEnumerator<KeyValuePair<TKey, TValue?>> GetEnumerator()
 		{
 			if (dict == null)
-				return Enumerable.Empty<KeyValuePair<TKey, TValue>>().GetEnumerator();
+				return Enumerable.Empty<KeyValuePair<TKey, TValue?>>().GetEnumerator();
 			return dict.GetEnumerator();
 		}
 
@@ -177,17 +179,17 @@ namespace FrEee.Utility
 			return dict.TryRemove(key, out _);
 		}
 
-		public bool Remove(KeyValuePair<TKey, TValue> item)
+		public bool Remove(KeyValuePair<TKey, TValue?> item)
 		{
 			if (dict == null)
 				return false;
-			return ((IDictionary<TKey, TValue>)dict).Remove(item);
+			return ((IDictionary<TKey, TValue?>)dict).Remove(item);
 		}
 
-		public bool TryGetValue(TKey key, out TValue value)
+		public bool TryGetValue(TKey key, out TValue? value)
 		{
 			if (dict == null)
-				value = default(TValue);
+				value = default;
 			else
 				value = this[key];
 			return true;
@@ -199,7 +201,7 @@ namespace FrEee.Utility
 		private void InitDict()
 		{
 			if (dict == null)
-				dict = new ConcurrentDictionary<TKey, TValue>();
+				dict = new ConcurrentDictionary<TKey, TValue?>();
 		}
 	}
 }

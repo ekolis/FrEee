@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+#nullable enable
+
 namespace FrEee.Utility
 {
 	[Serializable]
@@ -72,7 +74,7 @@ namespace FrEee.Utility
 
         private bool isSetDirty = true;
 
-        private ISet<T> _Set;
+        private ISet<T> _Set = new HashSet<T>();
 
 		private ISet<T> Set
         {
@@ -179,7 +181,7 @@ namespace FrEee.Utility
 				return set.Remove(MakeReference(item));
 		}
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			if (done == null)
 				done = new HashSet<IPromotable>();

@@ -1,4 +1,4 @@
-﻿using FrEee.Utility.Extensions;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+
+#nullable enable
 
 namespace FrEee.Utility
 {
@@ -96,7 +98,7 @@ namespace FrEee.Utility
 		public IEnumerable<string> PropertyStack { get { return propertyStack; } }
 
 		[field: NonSerialized]
-		internal Queue<object> ObjectQueue { get; set; }
+		internal Queue<object?> ObjectQueue { get; set; }
 
 		[NonSerialized]
 		internal Stack<object> objectStack;
@@ -212,7 +214,7 @@ namespace FrEee.Utility
 			return null;
 		}
 
-		public object GetObjectProperty(object obj, PropertyInfo prop)
+		public object? GetObjectProperty(object obj, PropertyInfo prop)
 		{
 			AddProperties(obj.GetType());
 			// lambda expressions don't seem to work on structs
@@ -261,7 +263,7 @@ namespace FrEee.Utility
 
 			public static ReferenceEqualityComparer Instance { get; private set; }
 
-			public new bool Equals(object x, object y)
+			public new bool Equals(object? x, object? y)
 			{
 				return ReferenceEquals(x, y);
 			}
@@ -278,7 +280,7 @@ namespace FrEee.Utility
 	/// </summary>
 	public class ObjectGraphParser
 	{
-		public IDictionary<Type, IList<object>> Parse(object o, ObjectGraphContext context = null)
+		public IDictionary<Type, IList<object>> Parse(object? o, ObjectGraphContext? context = null)
 		{
 			// set up our context if we haven't already
 			if (context == null)
@@ -409,7 +411,7 @@ namespace FrEee.Utility
 			}
 		}
 
-		private void ParseProperty(string propertyName, object o, object val, ObjectGraphContext context)
+		private void ParseProperty(string propertyName, object o, object? val, ObjectGraphContext context)
 		{
 			context.propertyStack.Push(propertyName);
 			bool recurse = true; // if no event handler, assume we are parsing recursively (really adding subproperties to queue)
@@ -425,37 +427,37 @@ namespace FrEee.Utility
 		/// <summary>
 		/// Raised when a new array is encountered.
 		/// </summary>
-		public event ArrayDimensionsDelegate ArrayDimensions;
+		public event ArrayDimensionsDelegate? ArrayDimensions;
 
 		/// <summary>
 		/// Raised when a new object is finished being parsed.
 		/// </summary>
-		public event ObjectDelegate EndObject;
+		public event ObjectDelegate? EndObject;
 
 		/// <summary>
 		/// Raised when an item in a collection is encountered.
 		/// </summary>
-		public event ObjectDelegate Item;
+		public event ObjectDelegate? Item;
 
 		/// <summary>
 		/// Raised when a previously encountered object is encountered again.
 		/// </summary>
-		public event ObjectDelegate KnownObject;
+		public event ObjectDelegate? KnownObject;
 
 		/// <summary>
 		/// Raised when a null reference is encountered.
 		/// </summary>
-		public event ObjectDelegate Null;
+		public event ObjectDelegate? Null;
 
 		/// <summary>
 		/// Raised when an object's property is encountered.
 		/// </summary>
-		public event PropertyDelegate Property;
+		public event PropertyDelegate? Property;
 
 		/// <summary>
 		/// Raised when a new object is encountered.
 		/// </summary>
-		public event ObjectDelegate StartObject;
+		public event ObjectDelegate? StartObject;
 
 		/// <summary>
 		/// Delegate for when an array's dimensions are encountered.
@@ -467,7 +469,7 @@ namespace FrEee.Utility
 		/// Delegate for when an object is encountered.
 		/// </summary>
 		/// <param name="o">The object encountered.</param>
-		public delegate void ObjectDelegate(object o);
+		public delegate void ObjectDelegate(object? o);
 
 		/// <summary>
 		/// Delegate for when an object's property is encountered.
@@ -476,6 +478,6 @@ namespace FrEee.Utility
 		/// <param name="o">The object possessing the property.</param>
 		/// <param name="val">The value of the property.</param>
 		/// <returns>true to recursively parse the property value, false to skip it</returns>
-		public delegate bool PropertyDelegate(string propertyName, object o, object val);
+		public delegate bool PropertyDelegate(string propertyName, object o, object? val);
 	}
 }

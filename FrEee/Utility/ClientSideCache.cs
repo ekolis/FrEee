@@ -1,5 +1,7 @@
-﻿using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Civilization;
 using System;
+
+#nullable enable
 
 namespace FrEee.Utility
 {
@@ -10,28 +12,19 @@ namespace FrEee.Utility
 	/// <typeparam name="T"></typeparam>
 	public class ClientSideCache<T>
 	{
-		public ClientSideCache(Func<T> compute)
+		public ClientSideCache(Func<T?> compute)
 		{
 			this.compute = compute;
 			IsDirty = true;
 		}
 
-		public bool IsCacheEnabled
-		{
-			get
-			{
-				return IsServerSideCacheEnabled || Empire.Current != null;
-			}
-		}
+		public bool IsCacheEnabled => IsServerSideCacheEnabled || Empire.Current != null;
 
 		public bool IsDirty { get; private set; }
 
 		public bool IsServerSideCacheEnabled
 		{
-			get
-			{
-				return isServerSideCacheEnabled;
-			}
+			get => isServerSideCacheEnabled;
 			set
 			{
 				isServerSideCacheEnabled = value;
@@ -40,35 +33,32 @@ namespace FrEee.Utility
 			}
 		}
 
-		public T Value
+		public T? Value
 		{
 			get
 			{
 				if (IsCacheEnabled)
 				{
-					if (!IsDirty)
-						return value;
-					else
+					if (IsDirty || value is null)
 					{
 						value = compute();
 						IsDirty = false;
 						return value;
 					}
+					else
+						return value;
 				}
 				else
 					return compute();
 			}
 		}
 
-		private Func<T> compute;
+		private Func<T?> compute;
 
 		private bool isServerSideCacheEnabled;
 
-		private T value;
+		private T? value;
 
-		public static implicit operator T(ClientSideCache<T> cache)
-		{
-			return cache.Value;
-		}
+		public static implicit operator T?(ClientSideCache<T> cache) => cache.Value;
 	}
 }

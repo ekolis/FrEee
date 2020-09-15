@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
+
+#nullable enable
 
 namespace FrEee.Utility
 {

@@ -5,24 +5,25 @@ using FrEee.Modding.Interfaces;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Utility
 {
 	public class GalaxyReferenceKeyedDictionary<TKey, TValue> : ReferenceKeyedDictionary<long, GalaxyReference<TKey>, TKey, TValue>
 			where TKey : class, IReferrable
 	{
-		private SafeDictionary<long, TKey> dict = new SafeDictionary<long, TKey>();
+		private SafeDictionary<long, TKey?> dict = new SafeDictionary<long, TKey?>();
 
-		protected override long ExtractID(TKey key)
-		{
-			return key.ID;
-		}
+		protected override long ExtractID(TKey key) => key.ID;
 
+		[return: MaybeNull]
 		protected override TKey LookUp(long id)
 		{
 			if (!dict.ContainsKey(id))
-				dict[id] = (TKey)Galaxy.Current.GetReferrable(id);
+				dict[id] = (TKey?)Galaxy.Current.GetReferrable(id);
 			return dict[id];
 		}
 	}
@@ -32,15 +33,12 @@ namespace FrEee.Utility
 	{
 		private SafeDictionary<string, TKey> dict = new SafeDictionary<string, TKey>();
 
-		protected override string ExtractID(TKey key)
-		{
-			return key.ModID;
-		}
+		protected override string ExtractID(TKey key) => key.ModID;
 
 		protected override TKey LookUp(string id)
 		{
 			if (!dict.ContainsKey(id))
-				dict[id] = (TKey)Mod.Current.Find<TKey>(id);
+				dict[id] = Mod.Current.Find<TKey>(id);
 			return dict[id];
 		}
 	}
@@ -49,9 +47,13 @@ namespace FrEee.Utility
 	/// A safe dictionary keyed with transparent references.
 	/// </summary>
 	public abstract class ReferenceKeyedDictionary<TID, TRef, TKey, TValue> : IDictionary<TKey, TValue>, IPromotable, IReferenceEnumerable
+		where TKey : notnull
 		where TRef : IReference<TKey>
 	{
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+		// initialized as part of InitDict()
 		public ReferenceKeyedDictionary()
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 		{
 			InitDict();
 		}
@@ -161,7 +163,7 @@ namespace FrEee.Utility
 			return dict.Remove(ExtractID(item.Key));
 		}
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable>? done = null)
 		{
 			InitDict();
 			if (done == null)
@@ -171,8 +173,8 @@ namespace FrEee.Utility
 				done.Add(this);
 				foreach (var r in dict.Keys)
 				{
-					if (r is IPromotable)
-						(r as IPromotable).ReplaceClientIDs(idmap, done);
+					if (r is IPromotable promotable)
+						promotable.ReplaceClientIDs(idmap, done);
 				}
 			}
 		}

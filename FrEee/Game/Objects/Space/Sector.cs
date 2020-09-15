@@ -181,7 +181,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		/// <param name="emp"></param>
 		/// <returns></returns>
-		public bool IsExploredBy(Empire emp)
+		public bool IsExploredBy(Empire? emp)
 		{
 			if (StarSystem == null)
 				return false;

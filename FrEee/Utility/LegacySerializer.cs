@@ -1,5 +1,4 @@
 using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
 using FrEee.Utility.Extensions;
 using FrEee.Utility.Stringifiers;
 using System;
@@ -15,13 +14,15 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
+#nullable enable
+
 namespace FrEee.Utility
 {
 	internal static class LegacySerializer
 	{
 		private static IList<Task> propertySetterTasks = new List<Task>();
 
-		public static object Deserialize(Stream s, Type desiredType, ObjectGraphContext context = null, StringBuilder log = null)
+		public static object? Deserialize(Stream s, Type desiredType, ObjectGraphContext? context = null, StringBuilder? log = null)
 		{
 			var sr = new StreamReader(s);
 			var result = Deserialize(sr, desiredType, true, context, log);
@@ -29,19 +30,19 @@ namespace FrEee.Utility
 			return result;
 		}
 
-		internal static T Deserialize<T>(Stream s, ObjectGraphContext context = null)
+		internal static T? Deserialize<T>(Stream s, ObjectGraphContext? context = null)
 		{
 			var sr = new StreamReader(new BufferedStream(s));
 			var result = Deserialize<T>(sr, context);
 			return result;
 		}
 
-		internal static T Deserialize<T>(TextReader r, ObjectGraphContext context = null)
+		internal static T? Deserialize<T>(TextReader r, ObjectGraphContext? context = null)
 		{
-			return (T)Deserialize(r, typeof(T), true, context);
+			return (T?)Deserialize(r, typeof(T), true, context);
 		}
 
-		internal static void Serialize<T>(T o, TextWriter w, ObjectGraphContext context = null, int tabLevel = 0)
+		internal static void Serialize<T>(T o, TextWriter w, ObjectGraphContext? context = null, int tabLevel = 0)
 		{
 			if (o == null)
 				Serialize(o, w, typeof(T), context, tabLevel);
@@ -54,7 +55,7 @@ namespace FrEee.Utility
 			return SafeType.GetShortTypeName(t);
 		}
 
-		internal static void Serialize(object o, TextWriter w, Type desiredType, ObjectGraphContext context = null, int tabLevel = 0)
+		internal static void Serialize(object? o, TextWriter w, Type desiredType, ObjectGraphContext? context = null, int tabLevel = 0)
 		{
 			var tabs = new string('\t', tabLevel);
 
@@ -153,7 +154,7 @@ namespace FrEee.Utility
 				w.Flush();
 		}
 
-		private static object Deserialize(TextReader r, Type desiredType, bool isRoot, ObjectGraphContext context = null, StringBuilder log = null)
+		private static object? Deserialize(TextReader r, Type desiredType, bool isRoot, ObjectGraphContext? context = null, StringBuilder? log = null)
 		{
 			// set up our serialization context if we haven't already
 			if (context == null)
@@ -219,7 +220,7 @@ namespace FrEee.Utility
 			}
 
 			// the object!
-			object o;
+			object? o;
 
 			if (StringifierLibrary.Instance.All?.Any(x => x.SupportedType.IsAssignableFrom(type)) ?? false)
 			{
@@ -280,10 +281,10 @@ namespace FrEee.Utility
 			return o;
 		}
 
-		private static Array DeserializeArray(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		private static Array? DeserializeArray(TextReader r, Type type, ObjectGraphContext context, StringBuilder? log)
 		{
 			// arrays
-			Array o;
+			Array? o;
 			// read bounds or id number
 			var fin = r.Read();
 			while (fin != 0 && char.IsWhiteSpace((char)fin))
@@ -371,7 +372,7 @@ namespace FrEee.Utility
 			return o;
 		}
 
-		private static IEnumerable DeserializeDictionary(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		private static IEnumerable DeserializeDictionary(TextReader r, Type type, ObjectGraphContext context, StringBuilder? log)
 		{
 			IEnumerable o;
 			int size;
@@ -388,7 +389,7 @@ namespace FrEee.Utility
 				itemType = typeof(KeyValuePair<object, object>);
 			else
 				// HACK - Resources inherits from a dictionary type
-				itemType = typeof(KeyValuePair<,>).MakeGenericType(type.BaseType.GetGenericArguments());
+				itemType = typeof(KeyValuePair<,>).MakeGenericType(type.BaseType?.GetGenericArguments());
 
 			var collParm = Expression.Parameter(typeof(object), "coll");
 			var keyParm = Expression.Parameter(typeof(object), "key");
@@ -427,9 +428,9 @@ namespace FrEee.Utility
 			return o;
 		}
 
-		private static IEnumerable DeserializeList(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		private static IEnumerable? DeserializeList(TextReader r, Type type, ObjectGraphContext context, StringBuilder? log)
 		{
-			IEnumerable o;
+			IEnumerable? o;
 			int size;
 			var sizeStr = r.ReadTo(':', log);
 			if (!int.TryParse(sizeStr, out size))
@@ -487,7 +488,7 @@ namespace FrEee.Utility
 				var item = Deserialize(r, itemType, false, context, log);
 				lambdaAdder.DynamicInvoke(coll, item);
 			}
-			o = (IEnumerable)coll;
+			o = (IEnumerable?)coll;
 
 			// clean up
 			ReadSemicolon(r, type, log);
@@ -495,9 +496,9 @@ namespace FrEee.Utility
 			return o;
 		}
 
-		private static IEnumerable DeserializeCollection(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		private static IEnumerable? DeserializeCollection(TextReader r, Type type, ObjectGraphContext context, StringBuilder? log)
 		{
-			IEnumerable o = null;
+			IEnumerable? o = null;
 			// collections
 			// read size or id number
 			var fin = r.Read();
@@ -549,9 +550,9 @@ namespace FrEee.Utility
 			return o;
 		}
 
-		private static object DeserializeStringifiedObject(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		private static object? DeserializeStringifiedObject(TextReader r, Type type, ObjectGraphContext context, StringBuilder? log)
 		{
-			object o;
+			object? o;
 			// read tag to see if it's actually a stringified object
 			var fin = r.Read();
 			while (fin != 0 && char.IsWhiteSpace((char)fin))
@@ -564,7 +565,7 @@ namespace FrEee.Utility
 				log.Append((char)fin);
 			if (fin == 's')
 			{
-				IStringifier stringifier = null;
+				IStringifier? stringifier = null;
 				var t = type;
 				while (stringifier == null && t != null)
 				{
@@ -608,7 +609,7 @@ namespace FrEee.Utility
 			return o;
 		}
 
-		private static object DeserializeObjectWithProperties(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		private static object DeserializeObjectWithProperties(TextReader r, Type type, ObjectGraphContext context, StringBuilder? log)
 		{
 			// create object and add it to our context
 			var o = type.Instantiate();
@@ -621,7 +622,7 @@ namespace FrEee.Utility
 				throw new SerializationException("Expected integer, got \"" + s + "\" when parsing property count.");
 
 
-			var dict = new SafeDictionary<string, object>();
+			var dict = new SafeDictionary<string, object?>();
 
 			// deserialize the properties
 			var props = ObjectGraphContext.GetKnownProperties(type, true);
@@ -665,7 +666,7 @@ namespace FrEee.Utility
 			return o;
 		}
 
-		private static object DeserializeObjectWithID(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		private static object DeserializeObjectWithID(TextReader r, Type type, ObjectGraphContext context, StringBuilder? log)
 		{
 			// ID - need to find known object
 			int id;
@@ -681,10 +682,10 @@ namespace FrEee.Utility
 			return context.KnownObjects[type][id];
 		}
 
-		private static object DeserializeObject(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		private static object? DeserializeObject(TextReader r, Type type, ObjectGraphContext context, StringBuilder? log)
 		{
 			// read property count or id number
-			object o;
+			object? o;
 			var fin = r.Read();
 			while (fin != 0 && char.IsWhiteSpace((char)fin))
 			{
@@ -713,9 +714,9 @@ namespace FrEee.Utility
 			return o;
 		}
 
-		private static string DeserializeString(TextReader r, ObjectGraphContext context, StringBuilder log)
+		private static string? DeserializeString(TextReader r, ObjectGraphContext context, StringBuilder? log)
 		{
-			string o;
+			string? o;
 			bool foundRealSemicolon = false;
 			StringBuilder sb = new StringBuilder();
 			int quotes = 0;
@@ -750,7 +751,7 @@ namespace FrEee.Utility
 			return int.MaxValue;
 		}
 
-		private static void ReadSemicolon(TextReader r, Type type, StringBuilder log)
+		private static void ReadSemicolon(TextReader r, Type type, StringBuilder? log)
 		{
 			// read the semicolon at the end and any whitespace
 			int ender;
@@ -764,7 +765,7 @@ namespace FrEee.Utility
 			} while (ender != ';');
 		}
 
-		private static void Serialize<T>(T o, Stream s, ObjectGraphContext context = null, int tabLevel = 0)
+		private static void Serialize<T>(T o, Stream s, ObjectGraphContext? context = null, int tabLevel = 0)
 		{
 			var sw = new StreamWriter(new BufferedStream(s));
 			Serialize(o, sw, context);
@@ -819,7 +820,7 @@ namespace FrEee.Utility
 				w.WriteLine("d" + list.Cast<object>().Count() + ":" + tabs);
 				isDict = true;
 			}
-			else if (type.BaseType.GetGenericArguments().Length == 2)
+			else if (type.BaseType?.GetGenericArguments().Length == 2)
 			{
 				// HACK - Resources inherits from a dictionary type
 				itemType = typeof(KeyValuePair<,>).MakeGenericType(type.BaseType.GetGenericArguments());
@@ -879,11 +880,11 @@ namespace FrEee.Utility
 		private static void WriteObject(object o, TextWriter w, ObjectGraphContext context, int tabLevel)
 		{
 			// serialize object type and field count
-			if (o is IDataObject)
+			if (o is IDataObject dataObject)
 			{
 				// use data object code! :D
 				var type = o.GetType();
-				var data = (o as IDataObject).Data;
+				var data = dataObject.Data;
 				w.WriteLine("p" + data.Count + ":");
 				foreach (var kvp in data)
 				{
@@ -964,7 +965,7 @@ namespace FrEee.Utility
 
 		private static void WriteStringifiedObject(object o, TextWriter w)
 		{
-			IStringifier stringifier = null;
+			IStringifier? stringifier = null;
 			var t = o.GetType();
 			while (stringifier == null && t != null)
 			{
