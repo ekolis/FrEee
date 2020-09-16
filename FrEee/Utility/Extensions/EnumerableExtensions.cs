@@ -1,7 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
+#nullable enable
 
 namespace FrEee.Utility.Extensions
 {
@@ -44,26 +46,26 @@ namespace FrEee.Utility.Extensions
 			return -1;
 		}
 
-		public static T MaxOrDefault<T>(this IEnumerable<T> stuff)
+		public static T? MaxOrDefault<T>(this IEnumerable<T> stuff)
 		{
 			if (!stuff.Any())
 				return default(T);
 			return stuff.Max();
 		}
 
-		public static TProp MaxOrDefault<TItem, TProp>(this IEnumerable<TItem> stuff, Func<TItem, TProp> selector)
+		public static TProp? MaxOrDefault<TItem, TProp>(this IEnumerable<TItem> stuff, Func<TItem, TProp> selector)
 		{
 			return stuff.Select(selector).MaxOrDefault();
 		}
 
-		public static T MinOrDefault<T>(this IEnumerable<T> stuff)
+		public static T? MinOrDefault<T>(this IEnumerable<T> stuff)
 		{
 			if (!stuff.Any())
 				return default(T);
 			return stuff.Min();
 		}
 
-		public static TProp MinOrDefault<TItem, TProp>(this IEnumerable<TItem> stuff, Func<TItem, TProp> selector)
+		public static TProp? MinOrDefault<TItem, TProp>(this IEnumerable<TItem> stuff, Func<TItem, TProp> selector)
 		{
 			return stuff.Select(selector).MinOrDefault();
 		}
@@ -76,7 +78,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="item"></param>
 		/// <param name="wrap"></param>
 		/// <returns></returns>
-		public static T Next<T>(this IEnumerable<T> list, T item, bool wrap = false)
+		public static T? Next<T>(this IEnumerable<T> list, T item, bool wrap = false)
 		{
 			var index = list.IndexOf(item) + 1;
 			if (index >= list.Count())
@@ -109,7 +111,7 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		public static T PickRandom<T>(this IEnumerable<T> src, PRNG prng = null)
+		public static T? PickRandom<T>(this IEnumerable<T> src, PRNG? prng = null)
 		{
 			if (!src.Any())
 				return default(T);
@@ -122,11 +124,11 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		public static T PickWeighted<T>(this IDictionary<T, int> src, PRNG prng = null)
+		public static T? PickWeighted<T>(this IDictionary<T, int> src, PRNG? prng = null)
 		{
 			var total = src.Sum(kvp => kvp.Value);
 			int num;
-			if (prng == null)
+			if (prng is null)
 				num = RandomHelper.Next(total);
 			else
 				num = prng.Next(total);
@@ -147,11 +149,11 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		public static T PickWeighted<T>(this IDictionary<T, long> src, PRNG prng = null)
+		public static T? PickWeighted<T>(this IDictionary<T, long> src, PRNG? prng = null)
 		{
 			var total = src.Sum(kvp => kvp.Value);
 			long num;
-			if (prng == null)
+			if (prng is null)
 				num = RandomHelper.Next(total);
 			else
 				num = prng.Next(total);
@@ -171,11 +173,11 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		public static T PickWeighted<T>(this IDictionary<T, double> src, PRNG prng = null)
+		public static T? PickWeighted<T>(this IDictionary<T, double> src, PRNG? prng = null)
 		{
 			var total = src.Sum(kvp => kvp.Value);
 			double num;
-			if (prng == null)
+			if (prng is null)
 				num = RandomHelper.Next(total);
 			else
 				num = prng.Next(total);
@@ -189,17 +191,17 @@ namespace FrEee.Utility.Extensions
 			return default(T); // nothing to pick...
 		}
 
-		public static T PickWeighted<T>(this IEnumerable<T> src, Func<T, int> weighter, PRNG prng = null)
+		public static T? PickWeighted<T>(this IEnumerable<T> src, Func<T, int> weighter, PRNG? prng = null)
 		{
 			return src.ToDictionary(x => x, x => weighter(x)).PickWeighted(prng);
 		}
 
-		public static T PickWeighted<T>(this IEnumerable<T> src, Func<T, long> weighter, PRNG prng = null)
+		public static T? PickWeighted<T>(this IEnumerable<T> src, Func<T, long> weighter, PRNG? prng = null)
 		{
 			return src.ToDictionary(x => x, x => weighter(x)).PickWeighted(prng);
 		}
 
-		public static T PickWeighted<T>(this IEnumerable<T> src, Func<T, double> weighter, PRNG prng = null)
+		public static T? PickWeighted<T>(this IEnumerable<T> src, Func<T, double> weighter, PRNG? prng = null)
 		{
 			return src.ToDictionary(x => x, x => weighter(x)).PickWeighted(prng);
 		}
@@ -212,7 +214,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="item"></param>
 		/// <param name="wrap"></param>
 		/// <returns></returns>
-		public static T Previous<T>(this IEnumerable<T> list, T item, bool wrap = false)
+		public static T? Previous<T>(this IEnumerable<T> list, T item, bool wrap = false)
 		{
 			var index = list.IndexOf(item) - 1;
 			if (index < 0)
@@ -245,7 +247,7 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> src, PRNG prng = null)
+		public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> src, PRNG? prng = null)
 		{
 			return src.Select(value => (RandomHelper.Next(int.MaxValue, prng), value)).OrderBy(q => q.Item1).Select(q => q.value);
 		}
@@ -303,7 +305,7 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		public static IEnumerable<T> ThenShuffle<T>(this IOrderedEnumerable<T> src, PRNG prng = null)
+		public static IEnumerable<T> ThenShuffle<T>(this IOrderedEnumerable<T> src, PRNG? prng = null)
 		{
 			return src.ThenBy(t => RandomHelper.Next(int.MaxValue, prng));
 		}

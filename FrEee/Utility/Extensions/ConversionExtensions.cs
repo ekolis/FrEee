@@ -1,8 +1,10 @@
-﻿using FrEee.Modding.Interfaces;
+using FrEee.Modding.Interfaces;
 using System;
 using System.Drawing;
 using System.Globalization;
 using System.Text;
+
+#nullable enable
 
 namespace FrEee.Utility.Extensions
 {
@@ -38,9 +40,9 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="o"></param>
 		/// <returns></returns>
-		public static T CastTo<T>(this object o, T defaultValue = default(T))
+		public static T? CastTo<T>(this object o, T defaultValue = default(T))
 		{
-			return (T)((o ?? defaultValue) ?? default(T));
+			return (T?)((o ?? defaultValue) ?? default(T));
 		}
 
 		/// <summary>
@@ -144,7 +146,7 @@ namespace FrEee.Utility.Extensions
 			return new Point(v.X, v.Y);
 		}
 
-		public static string ToSafeString(this object o)
+		public static string? ToSafeString(this object o)
 		{
 			if (o == null)
 				return null;

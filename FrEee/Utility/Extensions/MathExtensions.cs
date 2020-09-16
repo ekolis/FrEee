@@ -1,8 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+#nullable enable
 
 namespace FrEee.Utility.Extensions
 {
@@ -14,7 +16,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="num">The number.</param>
 		/// <param name="decimalPlaces">The decimal places.</param>
 		/// <returns></returns>
-		public static string CeilingString(this double? num, int decimalPlaces = 0)
+		public static string? CeilingString(this double? num, int decimalPlaces = 0)
 		{
 			if (num == null)
 				return null;

@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
@@ -12,6 +12,8 @@ using System.Drawing;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
+
+#nullable enable
 
 namespace FrEee.Utility.Extensions
 {
@@ -33,7 +35,7 @@ namespace FrEee.Utility.Extensions
 		{
 			if (attributeCache[mi] == null)
 				attributeCache[mi] = Attribute.GetCustomAttributes(mi).ToArray();
-			var atts = attributeCache[mi].OfType<T>();
+			var atts = attributeCache[mi]?.OfType<T>();
 			foreach (var att in atts)
 				yield return att;
 			if (interfaceCache[mi.DeclaringType] == null)
@@ -42,7 +44,7 @@ namespace FrEee.Utility.Extensions
 			{
 				if (memberCache[i] == null)
 					memberCache[i] = i.GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).ToArray(); // TODO - refactor into method
-				var mi2 = memberCache[i].SingleOrDefault(x => x.MemberType == mi.MemberType && x.Name == mi.Name);
+				var mi2 = memberCache[i]?.SingleOrDefault(x => x.MemberType == mi.MemberType && x.Name == mi.Name);
 				if (mi2 != null)
 				{
 					foreach (var att2 in mi2.GetAttributes<T>())
@@ -75,9 +77,9 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static bool HasAbility(this ICommonAbilityObject obj, string abilityName, Empire emp, bool includeShared = true)
 		{
-			IEnumerable<Ability> abils;
+			IEnumerable<Ability>? abils;
 			if (includeShared)
-				abils = obj.EmpireAbilities(emp).Union(obj.SharedAbilities(emp));
+				abils = obj.EmpireAbilities(emp)?.Union(obj.SharedAbilities(emp));
 			else
 				abils = obj.EmpireAbilities(emp);
 			return abils.Any(abil => abil.Rule != null && abil.Rule.Matches(abilityName));
@@ -196,8 +198,8 @@ namespace FrEee.Utility.Extensions
 		{
 			var sys = sobj.StarSystem;
 			var sec = sobj.Sector;
-			var sensors = sys.EmpireAbilities(emp).Where(a => a.Rule.Name == "Sensor Level");
-			var cloaks = sobj.Abilities().Where(a => a.Rule.Name == "Cloak Level");
+			var sensors = sys.EmpireAbilities(emp)?.Where(a => a.Rule.Name == "Sensor Level");
+			var cloaks = sobj.Abilities()?.Where(a => a.Rule.Name == "Cloak Level");
 			var joined = from sensor in sensors
 						 join cloak in cloaks on sensor.Value1.Value equals cloak.Value1.Value into gj
 						 from subcloak in gj.DefaultIfEmpty()

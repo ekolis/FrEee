@@ -22,6 +22,8 @@ using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 
+#nullable enable
+
 namespace FrEee.Utility.Extensions
 {
 	public static class CommonExtensions
@@ -36,7 +38,7 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="o"></param>
 		/// <returns></returns>
-		public static T As<T>(this object o, bool throwExceptionIfWrongType = false)
+		public static T? As<T>(this object o, bool throwExceptionIfWrongType = false)
 			where T : class
 		{
 			return o as T;
@@ -92,16 +94,17 @@ namespace FrEee.Utility.Extensions
 			}
 		}
 
-		public static Delegate BuildDelegate(this MethodInfo method, params object[] missingParamValues)
+		public static Delegate? BuildDelegate(this MethodInfo method, params object[] missingParamValues)
 		{
 			var parms = method.GetParameters();
 			var parmTypes = parms.Select(p => p.ParameterType).ToArray();
 			var delegateType = method.ReturnType == typeof(void) ? MakeActionType(parmTypes) : MakeFuncType(parmTypes, method.ReturnType);
 			var builder = typeof(CommonExtensions).GetMethods().Single(m => m.Name == "BuildDelegate" && m.GetGenericArguments().Length == 1).MakeGenericMethod(delegateType);
-			return (Delegate)builder.Invoke(null, new object[] { method, missingParamValues });
+			return (Delegate?)builder.Invoke(null, new object[] { method, missingParamValues });
 		}
 
 		public static Formula<TValue> BuildMultiConditionalLessThanOrEqual<TKey, TValue>(this IDictionary<TKey, TValue> thresholds, object context, string variableName, TValue defaultValue)
+					where TKey : notnull
 					where TValue : IConvertible, IComparable, IComparable<TValue>
 		{
 			var sorted = new SortedDictionary<TKey, TValue>(thresholds);
@@ -137,8 +140,8 @@ namespace FrEee.Utility.Extensions
 		/// <returns>true if successful or unnecessary, otherwise false</returns>
 		public static bool BurnSupplies(this Component comp)
 		{
-			if (comp.Container is IMobileSpaceObject)
-				return (comp.Container as IMobileSpaceObject).BurnSupplies(comp.Template.SupplyUsage);
+			if (comp.Container is IMobileSpaceObject mso)
+				return mso.BurnSupplies(comp.Template.SupplyUsage);
 			else
 				return true; // other component containers don't use supplies
 		}
@@ -157,7 +160,7 @@ namespace FrEee.Utility.Extensions
 			var vals = cmd.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(f => !f.GetCustomAttributes(true).OfType<DoNotSerializeAttribute>().Any() && f.GetGetMethod(true) != null && f.GetSetMethod(true) != null).Select(prop => new { Name = prop.Name, Value = prop.GetValue(cmd, new object[0]) });
 			var badVals = vals.Where(val => val.Value != null && !val.Value.GetType().IsClientSafe());
 			if (badVals.Any())
-				throw new Exception(cmd + " contained a non-client-safe type " + badVals.First().Value.GetType() + " in property " + badVals.First().Name);
+				throw new Exception(cmd + " contained a non-client-safe type " + badVals.First().Value?.GetType() + " in property " + badVals.First().Name);
 		}
 
 		public static PictorialLogMessage<T> CreateLogMessage<T>(this T context, string text,LogMessageType logMessageType, int? turnNumber = null)
@@ -277,10 +280,10 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
-		public static object DefaultValue(this Type t)
+		public static object? DefaultValue(this Type t)
 		{
 			if (defaultValueCache[t] == null)
-				defaultValueCache[t] = typeof(CommonExtensions).GetMethod("GetDefaultGeneric", BindingFlags.NonPublic | BindingFlags.Static).MakeGenericMethod(t).Invoke(null, null);
+				defaultValueCache[t] = typeof(CommonExtensions).GetMethod("GetDefaultGeneric", BindingFlags.NonPublic | BindingFlags.Static)?.MakeGenericMethod(t).Invoke(null, null);
 			return defaultValueCache[t];
 		}
 
@@ -393,7 +396,7 @@ namespace FrEee.Utility.Extensions
 		/// Finds the cargo container which contains this unit.
 		/// </summary>
 		/// <returns></returns>
-		public static ICargoContainer FindContainer(this IUnit unit)
+		public static ICargoContainer? FindContainer(this IUnit unit)
 		{
 			var containers = Galaxy.Current.FindSpaceObjects<ICargoContainer>().Where(cc => !(cc is Fleet) && cc.Cargo != null && cc.Cargo.Units.Contains(unit));
 			if (!containers.Any())
@@ -421,13 +424,13 @@ namespace FrEee.Utility.Extensions
 			return sobj.FindStarSystem().FindCoordinates(sobj);
 		}
 
-		public static T FindMemory<T>(this T f, Empire emp) where T : IFoggable, IReferrable
+		public static T? FindMemory<T>(this T f, Empire emp) where T : IFoggable, IReferrable
 		{
 			if (f == null)
 				return default;
 			if (emp == null)
 				return f; // host can see everything
-			return (T)emp.Memory[f.ID];
+			return (T?)emp.Memory[f.ID];
 		}
 
 		/// <summary>
@@ -436,7 +439,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="f"></param>
 		/// <param name="emp"></param>
 		/// <returns></returns>
-		public static IFoggable FindOriginalObject(this IFoggable f, Empire emp)
+		public static IFoggable? FindOriginalObject(this IFoggable f, Empire emp)
 		{
 			// not a memory? it is its own real object
 			if (!(f.IsMemory))
@@ -456,7 +459,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="t"></param>
 		/// <param name="propName"></param>
 		/// <returns></returns>
-		public static PropertyInfo FindProperty(this Type type, string propName)
+		public static PropertyInfo? FindProperty(this Type type, string propName)
 		{
 			var p = type.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 			if (p != null)
@@ -482,7 +485,7 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="sobj"></param>
 		/// <returns></returns>
-		public static Sector FindSector(this ISpaceObject sobj)
+		public static Sector? FindSector(this ISpaceObject sobj)
 		{
 			var sys = sobj.FindStarSystem();
 			if (sys == null)
@@ -496,7 +499,7 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="sobj"></param>
 		/// <returns></returns>
-		public static StarSystem FindStarSystem(this ISpaceObject sobj)
+		public static StarSystem? FindStarSystem(this ISpaceObject sobj)
 		{
 			var loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.Contains(sobj));
 			/*if (loc == null)
@@ -505,7 +508,7 @@ namespace FrEee.Utility.Extensions
 				// TODO - this might be kind of slow; might want a reverse memory lookup
 				loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.FindSpaceObjects<ISpaceObject>().Any(s => Galaxy.Current.Empires.ExceptSingle(null).Any(e => e.Memory[s.ID] == sobj)));
 			}*/
-			if (loc == null)
+			if (loc is null)
 				return null;
 			return loc.Item;
 		}
@@ -632,7 +635,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="o"></param>
 		/// <param name="propertyName"></param>
 		/// <returns></returns>
-		public static object GetPropertyValue(this object o, string propertyName)
+		public static object? GetPropertyValue(this object o, string propertyName)
 		{
 			if (o == null)
 				return null;
@@ -672,7 +675,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static ResourceQuantity GrossIncome(this IIncomeProducer o) => o.StandardIncome() + o.RemoteMiningIncome() + o.RawResourceIncome();
 
-		public static object Instantiate(this Type type, params object[] args)
+		public static object? Instantiate(this Type type, params object[] args)
 		{
 			if (type.Name == "Battle")
 				return typeof(SpaceBattle).Instantiate(); // HACK - old savegame compatibility
@@ -682,7 +685,7 @@ namespace FrEee.Utility.Extensions
 				return FormatterServices.GetSafeUninitializedObject(type);
 		}
 
-		public static T Instantiate<T>(params object[] args) => (T)typeof(T).Instantiate(args);
+		public static T? Instantiate<T>(params object[] args) => (T?)typeof(T).Instantiate(args);
 
 		public static bool IsUnlocked(this IUnlockable u) => u.UnlockRequirements.All(r => r.IsMetBy(Empire.Current));
 
@@ -819,7 +822,7 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="f">The memory.</param>
 		/// <returns>Empire to which the memory belongs (null if not memory).</returns>
-		public static Empire MemoryOwner(this IFoggable f)
+		public static Empire? MemoryOwner(this IFoggable f)
 		{
 			if (!f.IsMemory)
 				return null;
@@ -873,11 +876,11 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="o"></param>
 		/// <returns></returns>
-		public static T Parse<T>(this string s)
+		public static T? Parse<T>(this string s)
 		{
 			var parser = typeof(T).GetMethod("Parse", BindingFlags.Static);
 			var expr = Expression.Call(parser);
-			return (T)expr.Method.Invoke(null, new object[] { s });
+			return (T?)expr.Method.Invoke(null, new object[] { s });
 		}
 
 		/// <summary>
@@ -1024,7 +1027,7 @@ namespace FrEee.Utility.Extensions
 		public static string ReadToEndOfLine(this TextReader r, char c, StringBuilder log)
 		{
 			var sb = new StringBuilder();
-			string data = "";
+			string? data = "";
 			do
 			{
 				data = r.ReadLine();
@@ -1093,12 +1096,12 @@ namespace FrEee.Utility.Extensions
 			Galaxy.Current.AssignID(r);
 		}
 
-		public static TRef Refer<TRef, T>(this T t) where TRef : IReference<T>
+		public static TRef? Refer<TRef, T>(this T t) where TRef : IReference<T>
 		{
-			return (TRef)typeof(TRef).Instantiate(t);
+			return (TRef?)typeof(TRef).Instantiate(t);
 		}
 
-		public static GalaxyReference<T> ReferViaGalaxy<T>(this T t)
+		public static GalaxyReference<T>? ReferViaGalaxy<T>(this T t)
 			where T : class, IReferrable
 		{
 			if (t == null)
@@ -1106,7 +1109,7 @@ namespace FrEee.Utility.Extensions
 			return new GalaxyReference<T>(t);
 		}
 
-		public static ModReference<T> ReferViaMod<T>(this T t) where T : IModObject
+		public static ModReference<T>? ReferViaMod<T>(this T t) where T : IModObject
 		{
 			if (t == null)
 				return null;
@@ -1187,7 +1190,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="obj">The object from which to remove an order.</param>
 		/// <param name="order">The order to remove.</param>
 		/// <returns>The remove-order command created, if any.</returns>
-		public static RemoveOrderCommand RemoveOrderClientSide(this IOrderable obj, IOrder order)
+		public static RemoveOrderCommand? RemoveOrderClientSide(this IOrderable obj, IOrder order)
 		{
 			if (Empire.Current == null)
 				throw new InvalidOperationException("RemoveOrderClientSide is intended for client side use.");
@@ -1215,7 +1218,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="image"></param>
 		/// <param name="size"></param>
 		/// <returns></returns>
-		public static Image Resize(this Image image, int size)
+		public static Image? Resize(this Image image, int size)
 		{
 			if (image == null)
 				return null;
@@ -1352,7 +1355,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static void SetPropertyValue(this object o, string propertyName, object value)
 		{
-			o.GetType().GetProperty(propertyName).SetValue(o, value, new object[0]);
+			o.GetType().GetProperty(propertyName)?.SetValue(o, value, new object[0]);
 		}
 
 		/// <summary>
@@ -1716,7 +1719,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="message">A message to display to any empire that can see this event happen.</param>
 		/// <param name="empiresToSkipMessage">Empires to which we don't need to send a message.</param>
 		/// <param name="stillExists"></param>
-		public static void UpdateEmpireMemories<T>(this T obj, string message = null, params Empire[] empiresToSkipMessage)
+		public static void UpdateEmpireMemories<T>(this T obj, string? message = null, params Empire[] empiresToSkipMessage)
 			where T : IFoggable, IReferrable, IOwnable
 		{
 			if (Empire.Current == null)
@@ -1772,7 +1775,7 @@ namespace FrEee.Utility.Extensions
 			return Expression.Constant(null);
 		}
 
-		private static T GetDefaultGeneric<T>()
+		private static T? GetDefaultGeneric<T>()
 		{
 			return default(T);
 		}

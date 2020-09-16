@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -8,6 +8,8 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
+
+#nullable enable
 
 namespace FrEee.Utility.Extensions
 {
@@ -23,7 +25,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="list"></param>
 		/// <param name="emp"></param>
 		/// <returns></returns>
-		public static IEnumerable<T> BelongingTo<T>(this IEnumerable<T> list, Empire emp) where T : IOwnable
+		public static IEnumerable<T> BelongingTo<T>(this IEnumerable<T> list, Empire? emp) where T : IOwnable
 		{
 			return list.Where(t => t.Owner == emp);
 		}
@@ -49,7 +51,7 @@ namespace FrEee.Utility.Extensions
 			return stuff.Where(item => item.Name == name);
 		}
 
-		public static T FindByModID<T>(this IEnumerable<T> items, string modID)
+		public static T? FindByModID<T>(this IEnumerable<T> items, string modID)
 							where T : IModObject
 		{
 			if (modID == null)
@@ -63,24 +65,24 @@ namespace FrEee.Utility.Extensions
 			return result;
 		}
 
-		public static T FindByName<T>(this IEnumerable<T> stuff, string name) where T : INamed
+		public static T? FindByName<T>(this IEnumerable<T> stuff, string name) where T : INamed
 		{
 			return stuff.FirstOrDefault(item => item.Name == name);
 		}
 
-		public static TValue FindByName<TKey, TValue>(this IDictionary<TKey, TValue> dict, string name)
+		public static TValue? FindByName<TKey, TValue>(this IDictionary<TKey, TValue> dict, string name)
 							where TKey : INamed
 		{
 			return dict[dict.Keys.FindByName(name)];
 		}
 
-		public static T FindByTypeNameIndex<T>(this IEnumerable<T> items, Type type, string name, int index)
+		public static T? FindByTypeNameIndex<T>(this IEnumerable<T> items, Type type, string name, int index)
 							where T : IModObject
 		{
 			return items.Where(item => item.GetType() == type && item.Name == name).ElementAtOrDefault(index);
 		}
 
-		public static T FindMatch<T>(this IEnumerable<T> items, T nu, IEnumerable<T> nuItems)
+		public static T? FindMatch<T>(this IEnumerable<T> items, T nu, IEnumerable<T> nuItems)
 							where T : class, IModObject
 		{
 			return items.FindByModID(nu.ModID) ?? items.FindByTypeNameIndex(nu.GetType(), nu.Name, nuItems.GetIndex(nu));
@@ -106,7 +108,7 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="objects">The group of space objects.</param>
 		/// <returns>The largest space object.</returns>
-		public static ISpaceObject Largest(this IEnumerable<ISpaceObject> objects)
+		public static ISpaceObject? Largest(this IEnumerable<ISpaceObject> objects)
 		{
 			if (objects.OfType<Star>().Any())
 			{
@@ -143,7 +145,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="src"></param>
 		/// <param name="selector"></param>
 		/// <returns></returns>
-		public static TCompared Majority<T, TCompared>(this IEnumerable<T> src, Func<T, TCompared> selector)
+		public static TCompared? Majority<T, TCompared>(this IEnumerable<T> src, Func<T, TCompared> selector)
 		{
 			var groups = src.GroupBy(x => selector(x));
 			groups = groups.WithMax(g => g.Count());
@@ -210,11 +212,11 @@ namespace FrEee.Utility.Extensions
 			}
 		}
 
-		public static IEnumerable<T> OnlyLatestVersions<T>(this IEnumerable<T> stuff, Func<T, string> familySelector)
+		public static IEnumerable<T?> OnlyLatestVersions<T>(this IEnumerable<T> stuff, Func<T, string> familySelector)
 					where T : class
 		{
-			string family = null;
-			T latest = null;
+			string? family = null;
+			T? latest = null;
 			foreach (var t in stuff)
 			{
 				if (family == null)

@@ -1,12 +1,15 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Technology;
-using Omu.ValueInjecter;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+
+using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Technology;
+
+using Omu.ValueInjecter;
+
+#nullable enable
 
 namespace FrEee.Utility.Extensions
 {
@@ -60,7 +63,7 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T">The type of object to copy.</typeparam>
 		/// <param name="obj">The object to copy.</param>
 		/// <returns>The copy.</returns>
-		public static T Copy<T>(this T obj)
+		public static T? Copy<T>(this T obj)
 		{
 			if (obj == null)
 				return default(T);
@@ -76,7 +79,7 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="obj"></param>
 		/// <returns></returns>
-		public static T CopyAndAssignNewID<T>(this T obj)
+		public static T? CopyAndAssignNewID<T>(this T obj)
 		{
 			if (obj == null)
 				return default(T);
@@ -111,7 +114,7 @@ namespace FrEee.Utility.Extensions
 
 		private class OnlySafePropertiesInjection : ConventionInjection
 		{
-			public OnlySafePropertiesInjection(object root, bool deep, IDCopyBehavior rootBehavior, IDCopyBehavior subordinateBehavior, IDictionary<object, object> known = null)
+			public OnlySafePropertiesInjection(object root, bool deep, IDCopyBehavior rootBehavior, IDCopyBehavior subordinateBehavior, IDictionary<object, object>? known = null)
 			{
 				Root = root;
 				DeepCopy = deep;
@@ -170,7 +173,7 @@ namespace FrEee.Utility.Extensions
 								}
 							}
 
-							object sv = null;
+							object? sv = null;
 
 							if (doit && CanCopyFully(sp) && DeepCopy)
 							{
@@ -207,8 +210,8 @@ namespace FrEee.Utility.Extensions
 						}
 					}
 				}
-				if (target is ICleanable)
-					(target as ICleanable).Clean();
+				if (target is ICleanable cleanable)
+					cleanable.Clean();
 			}
 
 			protected override bool Match(ConventionInfo c)
@@ -219,7 +222,7 @@ namespace FrEee.Utility.Extensions
 					c.Target.Type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(p => PropertyMatches(p, c.TargetProp.Name));
 			}
 
-			private object CopyObject(object parent, object sv)
+			private object? CopyObject(object parent, object? sv)
 			{
 				if (sv == null)
 					return null;
@@ -280,7 +283,7 @@ namespace FrEee.Utility.Extensions
 							var skv = skvp.GetPropertyValue("Value");
 							var tk = CopyObject(sv, sk);
 							var tkv = CopyObject(sv, skv);
-							adder.Invoke(tc, new object[] { tk, tkv });
+							adder.Invoke(tc, new object?[] { tk, tkv });
 						}
 					}
 					else

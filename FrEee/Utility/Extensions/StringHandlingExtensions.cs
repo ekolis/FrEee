@@ -1,4 +1,6 @@
-﻿using System.Linq;
+using System.Linq;
+
+#nullable enable
 
 namespace FrEee.Utility.Extensions
 {
@@ -9,7 +11,7 @@ namespace FrEee.Utility.Extensions
 			return s[0].ToString().ToLowerInvariant() + s.Substring(1);
 		}
 
-		public static string Capitalize(this string s)
+		public static string? Capitalize(this string s)
 		{
 			if (s == null)
 				return null;
@@ -44,7 +46,7 @@ namespace FrEee.Utility.Extensions
 			return string.Format(format, args);
 		}
 
-		public static string LastWord(this string s)
+		public static string? LastWord(this string s)
 		{
 			if (s == null)
 				return null;

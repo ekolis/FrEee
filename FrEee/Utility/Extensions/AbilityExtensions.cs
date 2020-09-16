@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
@@ -7,11 +11,8 @@ using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+#nullable enable
 
 namespace FrEee.Utility.Extensions
 {
@@ -25,7 +26,7 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="obj"></param>
 		/// <returns></returns>
-		public static IEnumerable<Ability> Abilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		public static IEnumerable<Ability>? Abilities(this IAbilityObject obj, Func<IAbilityObject, bool>? sourceFilter = null)
 		{
 			if (obj == null)
 				return Enumerable.Empty<Ability>();
@@ -41,7 +42,7 @@ namespace FrEee.Utility.Extensions
 			return obj.UnstackedAbilities(true, sourceFilter).Stack(obj);
 		}
 
-		public static ILookup<Ability, Ability> AbilityTree(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		public static ILookup<Ability, Ability> AbilityTree(this IAbilityObject obj, Func<IAbilityObject, bool>? sourceFilter = null)
 		{
 			return obj.UnstackedAbilities(true, sourceFilter).StackToTree(obj);
 		}
@@ -130,7 +131,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="obj"></param>
 		/// <param name="includeShared"></param>
 		/// <returns></returns>
-		public static IEnumerable<Ability> AncestorAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		public static IEnumerable<Ability> AncestorAbilities(this IAbilityObject obj, Func<IAbilityObject, bool>? sourceFilter = null)
 		{
 			var abils = new List<Ability>();
 			foreach (var p in obj.Ancestors(sourceFilter).ExceptSingle(null))
@@ -138,7 +139,7 @@ namespace FrEee.Utility.Extensions
 			return abils.Where(a => a.Rule == null || a.Rule.CanTarget(obj.AbilityTarget));
 		}
 
-		public static IEnumerable<IAbilityObject> Ancestors(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		public static IEnumerable<IAbilityObject> Ancestors(this IAbilityObject obj, Func<IAbilityObject, bool>? sourceFilter = null)
 		{
 			if (obj == null)
 				yield break;
@@ -178,7 +179,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="obj"></param>
 		/// <param name="includeShared"></param>
 		/// <returns></returns>
-		public static IEnumerable<Ability> DescendantAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		public static IEnumerable<Ability> DescendantAbilities(this IAbilityObject obj, Func<IAbilityObject, bool>? sourceFilter = null)
 		{
 			var abils = new List<Ability>();
 			foreach (var c in obj.Descendants(sourceFilter))
@@ -186,7 +187,7 @@ namespace FrEee.Utility.Extensions
 			return abils.Where(a => a.Rule == null || a.Rule.CanTarget(obj.AbilityTarget));
 		}
 
-		public static IEnumerable<IAbilityObject> Descendants(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		public static IEnumerable<IAbilityObject> Descendants(this IAbilityObject obj, Func<IAbilityObject, bool>? sourceFilter = null)
 		{
 			var result = new HashSet<IAbilityObject>();
 			if (obj != null)
@@ -204,7 +205,7 @@ namespace FrEee.Utility.Extensions
 			return result;
 		}
 
-		public static IEnumerable<Ability> EmpireAbilities(this ICommonAbilityObject obj, Empire emp, Func<IAbilityObject, bool> sourceFilter = null)
+		public static IEnumerable<Ability>? EmpireAbilities(this ICommonAbilityObject obj, Empire emp, Func<IAbilityObject, bool>? sourceFilter = null)
 		{
 			if (obj == null)
 				return Enumerable.Empty<Ability>();
@@ -234,7 +235,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="obj"></param>
 		/// <param name="sourceFilter"></param>
 		/// <returns></returns>
-		public static IEnumerable<Ability> EmpireCommonAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		public static IEnumerable<Ability> EmpireCommonAbilities(this IAbilityObject obj, Func<IAbilityObject, bool>? sourceFilter = null)
 		{
 			// Unowned objects cannot empire common abilities.
 			var ownable = obj as IOwnableAbilityObject;
@@ -308,7 +309,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="index"></param>
 		/// <param name="filter"></param>
 		/// <returns></returns>
-		public static string GetEmpireAbilityValue(this ICommonAbilityObject obj, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
+		public static string? GetEmpireAbilityValue(this ICommonAbilityObject obj, Empire emp, string name, int index = 1, Func<Ability, bool>? filter = null)
 		{
 			if (obj == null)
 				return null;
@@ -326,14 +327,14 @@ namespace FrEee.Utility.Extensions
 				}
 			}
 
-			IEnumerable<Ability> abils;
+			IEnumerable<Ability>? abils;
 			var subabils = obj.GetContainedAbilityObjects(emp).SelectMany(o => o.UnstackedAbilities(true).Where(a => a.Rule.Name == name));
 			if (obj is IAbilityObject)
-				abils = ((IAbilityObject)obj).Abilities().Where(a => a.Rule != null && a.Rule.Name == name).Concat(subabils).Stack(obj);
+				abils = ((IAbilityObject)obj).Abilities()?.Where(a => a.Rule != null && a.Rule.Name == name).Concat(subabils).Stack(obj);
 			else
 				abils = subabils;
-			abils = abils.Where(a => a.Rule != null && a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
-			string result;
+			abils = abils?.Where(a => a.Rule != null && a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
+			string? result;
 			if (!abils.Any())
 				result = null;
 			else
@@ -356,25 +357,25 @@ namespace FrEee.Utility.Extensions
 		/// <param name="index">The ability value index (usually 1 or 2).</param>
 		/// <param name="filter">A filter for the abilities. For instance, you might want to filter by the ability grouping rule's value.</param>
 		/// <returns>The ability value.</returns>
-		public static string GetAbilityValue(this IAbilityObject obj, string name, int index = 1, bool includeShared = true, bool includeEmpireCommon = true, Func<Ability, bool> filter = null)
+		public static string? GetAbilityValue(this IAbilityObject obj, string name, int index = 1, bool includeShared = true, bool includeEmpireCommon = true, Func<Ability, bool>? filter = null)
 		{
 			if (obj == null)
 				return null;
 
 			var abils = obj.Abilities();
 			if (includeShared)
-				abils = abils.Union(obj.SharedAbilities());
+				abils = abils?.Union(obj.SharedAbilities());
 			if (includeEmpireCommon)
-				abils = abils.Union(obj.EmpireCommonAbilities());
+				abils = abils?.Union(obj.EmpireCommonAbilities());
 
-			abils = abils.Where(a => a.Rule != null && a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
+			abils = abils?.Where(a => a.Rule != null && a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
 			abils = abils.Stack(obj);
 			if (!abils.Any())
 				return null;
 			return abils.First().Values[index - 1];
 		}
 
-		public static string GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name, IAbilityObject stackTo, int index = 1, bool includeShared = true, bool includeEmpireCommon = true, Func<Ability, bool> filter = null)
+		public static string? GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name, IAbilityObject stackTo, int index = 1, bool includeShared = true, bool includeEmpireCommon = true, Func<Ability, bool>? filter = null)
 		{
 			var tuples = objs.Squash(o => o.Abilities());
 			if (includeShared)
@@ -392,7 +393,7 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="obj"></param>
 		/// <returns></returns>
-		public static IEnumerable<Ability> SharedAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		public static IEnumerable<Ability> SharedAbilities(this IAbilityObject obj, Func<IAbilityObject, bool>? sourceFilter = null)
 		{
 			// Unowned objects cannot have abilities shared to them.
 			var ownable = obj as IOwnableAbilityObject;
@@ -420,7 +421,7 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="obj"></param>
 		/// <returns></returns>
-		public static IEnumerable<Ability> SharedAbilities(this ICommonAbilityObject obj, Empire empire, Func<IAbilityObject, bool> sourceFilter = null)
+		public static IEnumerable<Ability> SharedAbilities(this ICommonAbilityObject obj, Empire empire, Func<IAbilityObject, bool>? sourceFilter = null)
 		{
 			if (obj == null)
 				yield break;
@@ -477,7 +478,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="obj"></param>
 		/// <param name="includeShared"></param>
 		/// <returns></returns>
-		public static IEnumerable<Ability> UnstackedAbilities(this IAbilityObject obj, bool includeShared, Func<IAbilityObject, bool> sourceFilter = null)
+		public static IEnumerable<Ability> UnstackedAbilities(this IAbilityObject obj, bool includeShared, Func<IAbilityObject, bool>? sourceFilter = null)
 		{
 			if (obj == null)
 				return Enumerable.Empty<Ability>();
