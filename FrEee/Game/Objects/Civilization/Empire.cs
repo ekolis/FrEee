@@ -811,7 +811,7 @@ namespace FrEee.Game.Objects.Civilization
 			foreach (var x in OwnedSpaceObjects.OfType<SpaceVehicle>().ToArray())
 				x.Dispose();
 			foreach (var x in ColonizedPlanets.ToArray())
-				x.Colony.Dispose();
+				x.Colony?.Dispose();
 		}
 
 		/// <summary>

@@ -15,6 +15,6 @@ namespace FrEee.Utility
 		string Data { get; set; }
 
 		[JsonIgnore]
-		object Value { get; }
+		object? Value { get; }
 	}
 }

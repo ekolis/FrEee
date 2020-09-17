@@ -140,10 +140,10 @@ namespace FrEee.Game.Objects.Abilities
 				if (existingKey == null)
 				{
 					dict[key] = new List<Ability>();
-					dict[key].Add(a);
+					dict[key]!.Add(a);
 				}
 				else
-					dict[existingKey].Add(a);
+					dict[existingKey]!.Add(a);
 			}
 
 			// stack abilities

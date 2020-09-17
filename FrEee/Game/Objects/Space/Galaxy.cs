@@ -132,7 +132,7 @@ namespace FrEee.Game.Objects.Space
         /// <summary>
         /// The empires participating in the game.
         /// </summary>
-        public IList<Empire> Empires { get; private set; }
+        public IList<Empire?> Empires { get; private set; }
 
         /// <summary>
         /// Per mille chance of a random event occurring, per turn, per player.

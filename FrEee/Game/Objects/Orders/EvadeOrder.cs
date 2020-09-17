@@ -29,7 +29,7 @@ namespace FrEee.Game.Objects.Orders
 		/// </summary>
 		/// <param name="sobj">The space object executing the order.</param>
 		/// <returns></returns>
-		public override IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start)
+		public override IEnumerable<Sector?>? Pathfind(IMobileSpaceObject me, Sector start)
 		{
 			if (Target is IMobileSpaceObject)
 			{
@@ -38,13 +38,13 @@ namespace FrEee.Game.Objects.Orders
 					// warping via any warp point that leads outside the system should be safe, so prioritize those!
 					var sys = me.FindStarSystem();
 					var paths = sys.FindSpaceObjects<WarpPoint>()
-						.Where(wp => wp.TargetStarSystemLocation == null || wp.TargetStarSystemLocation.Item != sys)
+						.Where(wp => wp.TargetStarSystemLocation is null || wp.TargetStarSystemLocation.Item != sys)
 						.Select(wp => new { WarpPoint = wp, Path = Pathfinder.Pathfind(me, start, wp.Sector, AvoidEnemies, true, me.DijkstraMap) });
 					if (paths.Any())
 					{
 						// found a warp point to flee to!
 						var shortest = paths.WithMin(path => path.Path.Count()).PickRandom();
-						return shortest.Path.Concat(new Sector[] { shortest.WarpPoint.Target });
+						return shortest?.Path.Concat(new Sector?[] { shortest.WarpPoint.Target });
 					}
 				}
 
@@ -56,7 +56,7 @@ namespace FrEee.Game.Objects.Orders
 				if (goodMoves.Any())
 				{
 					// just go there and recompute the path next time we can move - the enemy may have moved too
-					return new Sector[] { goodMoves.PickRandom() };
+					return new Sector?[] { goodMoves.PickRandom() };
 				}
 				else
 				{
@@ -71,7 +71,7 @@ namespace FrEee.Game.Objects.Orders
 				{
 					// don't need to go through warp points to evade it, the warp points might be one way!
 					var moves = Pathfinder.GetPossibleMoves(me.Sector, false, me.Owner);
-					return new Sector[] { moves.PickRandom() };
+					return new Sector?[] { moves.PickRandom() };
 				}
 				else
 					return Enumerable.Empty<Sector>();

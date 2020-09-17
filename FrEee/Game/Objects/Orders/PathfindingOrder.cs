@@ -209,7 +209,7 @@ namespace FrEee.Game.Objects.Orders
 		/// <param name="sobj">The space object executing the order.</param>
 		/// <param name="start">The start location (need not be the current location, in case there are prior orders queued).</param>
 		/// <returns></returns>
-		public abstract IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start);
+		public abstract IEnumerable<Sector?>? Pathfind(IMobileSpaceObject me, Sector start);
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done)
 		{

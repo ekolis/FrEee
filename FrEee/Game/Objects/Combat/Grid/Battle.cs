@@ -220,9 +220,9 @@ namespace FrEee.Game.Objects.Combat.Grid
 					var oldpos = locations[c];
 					if (c is Seeker s)
 					{
-						if (locations[s] == null)
+						if (locations[s] is null)
 							continue; // HACK - seeker is destroyed but still showing up in turn order
-						if (locations[s.Target] == null)
+						if (locations[s.Target] is null)
 						{
 							s.Hitpoints = 0; // seekers self destruct when their target is destroyed
 							Events.Last().Add(new CombatantDestroyedEvent(this, s, locations[s]));

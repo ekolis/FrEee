@@ -32,7 +32,7 @@ namespace FrEee.Game.Objects.Space
 			Radius = radius;
 			Abilities = new List<Ability>();
 			SpaceObjectLocations = new HashSet<ObjectLocation<ISpaceObject>>();
-			ExploredByEmpires = new HashSet<Empire>();
+			ExploredByEmpires = new HashSet<Empire?>();
 		}
 
 		/// <summary>

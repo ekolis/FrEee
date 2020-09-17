@@ -16,7 +16,7 @@ namespace FrEee.Utility
 	{
 		static Library()
 		{
-			Items = new HashSet<object>();
+			Items = new HashSet<object?>();
 		}
 
 		/// <summary>
