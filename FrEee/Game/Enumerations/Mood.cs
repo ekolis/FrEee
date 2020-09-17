@@ -1,4 +1,6 @@
-﻿namespace FrEee.Game.Enumerations
+#nullable enable
+
+namespace FrEee.Game.Enumerations
 {
 	/// <summary>
 	/// Population mood.

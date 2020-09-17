@@ -1,4 +1,6 @@
-﻿namespace FrEee.Game.Enumerations
+#nullable enable
+
+namespace FrEee.Game.Enumerations
 {
 	/// <summary>
 	/// Determines who will receive a message when an event occurs.

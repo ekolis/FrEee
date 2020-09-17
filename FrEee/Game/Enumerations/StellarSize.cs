@@ -1,3 +1,5 @@
+#nullable enable
+
 namespace FrEee.Game.Enumerations
 {
 	/// <summary>

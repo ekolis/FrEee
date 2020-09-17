@@ -1,4 +1,6 @@
-﻿using FrEee.Utility;
+using FrEee.Utility;
+
+#nullable enable
 
 namespace FrEee.Game.Enumerations
 {
