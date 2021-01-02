@@ -27,10 +27,10 @@
     <DocumentationFile>bin\x64\Debug\FrEee.Core.xml</DocumentationFile>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+		<OutputPath>bin\x64\Release\</OutputPath>
+		<CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+	</PropertyGroup>
   <ItemGroup>
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -41,7 +41,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Game\Objects\Combat\Simple\" />
-    <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="IronPython">
