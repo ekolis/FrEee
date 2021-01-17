@@ -16,7 +16,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.100
+        dotnet-version: 5.0.x
     - name: Install dependencies
       run: dotnet restore
     - name: Build
@@ -29,5 +29,5 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: FrEee.WinForms
-        path: "*"
+        path: FrEee.WinForms\bin\Release\net5.0-windows\
 
