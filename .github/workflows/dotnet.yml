@@ -25,9 +25,14 @@ jobs:
     #  uses: skx/github-action-publish-binaries@release-0.14
     #- name: Test
     #  run: dotnet test --no-restore --verbosity normal
+    - name: Copy Directory
+      uses: MadaraUchiha/copy-action@0.0.1
+      with:
+        source: FrEee.WinForms\bin\Release\net5.0-windows
+        target: FrEee.WinForms\Artifact\FrEee.WinForms\FrEee
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: FrEee.WinForms
-        path: FrEee.WinForms\bin\Release\net5.0-windows\
+        path: FrEee.WinForms\Artifact\FrEee.WinForms
 
