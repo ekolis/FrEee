@@ -28,5 +28,6 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        path: *
+        name: FrEee.WinForms
+        path: "*"
 
