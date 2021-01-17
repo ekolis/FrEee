@@ -23,10 +23,10 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     #- name: github-action-publish-binaries
     #  uses: skx/github-action-publish-binaries@release-0.14
-    - name: Test
-      run: dotnet test --no-restore --verbosity normal
+    #- name: Test
+    #  run: dotnet test --no-restore --verbosity normal
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        path: D:\a\FrEee\FrEee\FrEee.WinForms\\bin\Release\net5.0\
+        path: *
 
