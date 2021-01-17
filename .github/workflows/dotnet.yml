@@ -28,5 +28,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        path: D:\a\FrEee\FrEee\FrEee.WinForms\\bin\Release\net5\
+        path: D:\a\FrEee\FrEee\FrEee.WinForms\\bin\Release\net5.0\
 
