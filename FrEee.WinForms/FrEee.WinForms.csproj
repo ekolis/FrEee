@@ -1,47 +1,43 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
-
-    <PropertyGroup>
-        <OutputType>WinExe</OutputType>
-        <TargetFramework>net5.0-windows</TargetFramework>
-        <UseWindowsForms>true</UseWindowsForms>
-        <Product>FrEee</Product>
-        <Company />
-        <Version>0.0.9</Version>
-        <Copyright>Copyright © 2013-2020</Copyright>
-        <PackageProjectUrl>http://edkolis.com/freee</PackageProjectUrl>
-        <Description>Windows Forms GUI for FrEee</Description>
-    </PropertyGroup>
-
-    <ItemGroup>
-      <PackageReference Include="IronPython" Version="2.7.9" />
-      <PackageReference Include="Microsoft.AppCenter.Analytics" Version="3.2.1" />
-      <PackageReference Include="Microsoft.AppCenter.Crashes" Version="3.2.1" />
-      <PackageReference Include="NAudio" Version="1.10.0" />
-      <PackageReference Include="NAudio.Vorbis" Version="1.2.0" />
-      <PackageReference Include="System.ComponentModel.Composition" Version="4.7.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\FrEee\FrEee.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Update="Properties/Resources.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>Resources.resx</DependentUpon>
-      </Compile>
-    </ItemGroup>
-
-    <ItemGroup>
-      <EmbeddedResource Update="Properties/Resources.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
-    </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="call post-build.bat $(OutDir) $(ProjectDir)" />
-  </Target>
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net5.0-windows</TargetFramework>
+		<UseWindowsForms>true</UseWindowsForms>
+		<Product>FrEee</Product>
+		<Company />
+		<Version>0.0.9</Version>
+		<Copyright>Copyright © 2013-2021</Copyright>
+		<PackageProjectUrl>http://edkolis.com/freee</PackageProjectUrl>
+		<Description>Windows Forms GUI for FrEee</Description>
+		<ApplicationIcon>FrEee.ico</ApplicationIcon>
+		<Nullable>enable</Nullable>
+		<StartupObject>FrEee.WinForms.Program</StartupObject>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="IronPython" Version="2.7.11" />
+		<PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.1.0" />
+		<PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.1.0" />
+		<PackageReference Include="NAudio" Version="1.10.0" />
+		<PackageReference Include="NAudio.Vorbis" Version="1.2.0" />
+		<PackageReference Include="System.ComponentModel.Composition" Version="5.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\FrEee\FrEee.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="Properties/Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Properties/Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="call post-build.bat $(OutDir) $(ProjectDir)" />
+	</Target>
 </Project>
