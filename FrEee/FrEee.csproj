@@ -32,14 +32,6 @@
 		<CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
 	</PropertyGroup>
   <ItemGroup>
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="GameSetups\Quickstart.gsu">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Game\Objects\Combat\Simple\" />
   </ItemGroup>
   <ItemGroup>
@@ -63,13 +55,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\AI\AI_Default\AI.py" />
-    <Content Include="Scripts\EndTurn.py" />
-    <Content Include="Scripts\GameInit.py" />
-    <Content Include="Scripts\Global.py" />
-    <Content Include="Scripts\TestInclude.py" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Remove="Game\Objects\Combat2\Battle_Space.cs" />
     <Compile Remove="Game\Objects\Combat2\combatObjects.cs" />
     <Compile Remove="Game\Objects\Combat2\CombatPlanet.cs" />
@@ -89,6 +74,6 @@
   </ItemGroup>
   <PropertyGroup>
     <PackageProjectUrl>http://edkolis.com/freee</PackageProjectUrl>
-    <ApplicationIcon>Pictures\FrEee.ico</ApplicationIcon>
+    <ApplicationIcon>FrEee.ico</ApplicationIcon>
   </PropertyGroup>
 </Project>

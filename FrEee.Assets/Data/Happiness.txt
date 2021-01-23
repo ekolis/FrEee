@@ -1,0 +1,159 @@
+=======================================================================================
+HAPPINESS DATA FILE
+=======================================================================================
+
+Population Happiness Levels:
+Pop Anger Pct      Description     Res Mod   
+75 - 100           Rioting         0%        
+60 - 74            Angry           60%       
+45 - 59            Unhappy         80%       
+30 - 44            Indifferent     100%      
+15 - 29            Happy           120%      
+0 - 14             Jubiliant       140%      
+
+
+Population Happiness Effects:
+- Riot prevents any point generation from that planet.
+- If a planet riots for sufficient time, it may rebel.
+- Rebellion changes the planet to a new owner.
+- Happiness level modifies output of the planet.
+
+All values are in 10ths of a percent.
+
+=======================================================================================
+*BEGIN*
+=======================================================================================
+
+Name                             := Peaceful
+Description                      := Populations respond well to good events such as ships being constructed, colonies being created, Partnership treaties, etc. They respond poorly to enemy ships, wars, and plagues. 
+Max Positive Anger Change        := 200
+Max Negative Anger Change        := -200
+Homeworld Lost                   := 100
+Any Planet Lost                  := 50
+Any Planet Colonized             := -10
+Any Our Planet Captured          := 50
+Any Enemy Planet Captured        := -30
+Any Ship Lost                    := 1
+Any Ship Constructed             := 0
+New Treaty War                   := 100
+New Treaty Non Intercourse       := 50 
+New Treaty None                  := 0
+New Treaty Non Aggression        := 0
+New Treaty Subjugated (Sub)      := 200
+New Treaty Protectorate (Sub)    := 150
+New Treaty Subjugated (Dom)      := 0
+New Treaty Protectorate (Dom)    := 0
+New Treaty Trade                 := -20
+New Treaty Trade and Research    := -30
+New Treaty Military Alliance     := -50
+New Treaty Partnership           := -100
+Battle in System - Win           := -20
+Battle in System - Loss          := 20
+Battle in System - Stalemate     := 0
+Battle in Sector - Win           := -50
+Battle in Sector - Loss          := 50
+Battle in Sector - Stalemate     := 10
+Enemy Ship in System             := 5
+Enemy Ship in Sector             := 8
+Our Ship in Sector               := -10
+Our Ship in System               := -3
+Enemy Troops on Planet           := 200
+Our Troops on Planet             := -2
+1M Population Killed             := 1
+Ship Lost in System              := 2
+Ship Constructed                 := -5
+Facility Constructed             := -5
+Planet Plagued                   := 200
+Natural Decrease                 := -20
+Natural Decrease for Other Races := 20
+
+Name                             := Bloodthirsty
+Description                      := Populations love wars and the destruction of their enemies. They respond poorly to any combat losses or peace of any kind. 
+Max Positive Anger Change        := 200
+Max Negative Anger Change        := -200
+Homeworld Lost                   := 100
+Any Planet Lost                  := 1
+Any Planet Colonized             := 10
+Any Our Planet Captured          := 50
+Any Enemy Planet Captured        := -50
+Any Ship Lost                    := 2
+Any Ship Constructed             := 0
+New Treaty War                   := -100
+New Treaty Non Intercourse       := 0 
+New Treaty None                  := 0
+New Treaty Non Aggression        := 0
+New Treaty Subjugated (Sub)      := 200
+New Treaty Protectorate (Sub)    := 150
+New Treaty Subjugated (Dom)      := 0
+New Treaty Protectorate (Dom)    := 0
+New Treaty Trade                 := 50
+New Treaty Trade and Research    := 50
+New Treaty Military Alliance     := 100
+New Treaty Partnership           := 150
+Battle in System - Win           := -100
+Battle in System - Loss          := 50
+Battle in System - Stalemate     := 0
+Battle in Sector - Win           := -150
+Battle in Sector - Loss          := 100
+Battle in Sector - Stalemate     := 50
+Enemy Ship in System             := 2
+Enemy Ship in Sector             := 5
+Our Ship in Sector               := -5
+Our Ship in System               := -1
+Enemy Troops on Planet           := 150
+Our Troops on Planet             := -2
+1M Population Killed             := 1
+Ship Lost in System              := 2
+Ship Constructed                 := -50
+Facility Constructed             := 0
+Planet Plagued                   := 200
+Natural Decrease                 := -20
+Natural Decrease for Other Races := 20
+
+Name                             := Neutral
+Description                      := Populations prefer that their race is left alone and scorns all treaties. They respond poorly to any unusual events. 
+Max Positive Anger Change        := 200
+Max Negative Anger Change        := -200
+Homeworld Lost                   := 20
+Any Planet Lost                  := 20
+Any Planet Colonized             := 20
+Any Our Planet Captured          := 20
+Any Enemy Planet Captured        := 20
+Any Ship Lost                    := 1
+Any Ship Constructed             := 1
+New Treaty War                   := 100
+New Treaty Non Intercourse       := -100 
+New Treaty None                  := -100
+New Treaty Non Aggression        := 100
+New Treaty Subjugated (Sub)      := 100
+New Treaty Protectorate (Sub)    := 100
+New Treaty Subjugated (Dom)      := 100
+New Treaty Protectorate (Dom)    := 100
+New Treaty Trade                 := 100
+New Treaty Trade and Research    := 100
+New Treaty Military Alliance     := 100
+New Treaty Partnership           := 100
+Battle in System - Win           := 20
+Battle in System - Loss          := 20
+Battle in System - Stalemate     := 20
+Battle in Sector - Win           := 20
+Battle in Sector - Loss          := 20
+Battle in Sector - Stalemate     := 20
+Enemy Ship in System             := 1
+Enemy Ship in Sector             := 1
+Our Ship in Sector               := 0
+Our Ship in System               := 0
+Enemy Troops on Planet           := 20
+Our Troops on Planet             := -2
+1M Population Killed             := 1
+Ship Lost in System              := 1
+Ship Constructed                 := 0
+Facility Constructed             := 0
+Planet Plagued                   := 20
+Natural Decrease                 := -50
+Natural Decrease for Other Races := 20
+
+=======================================================================================
+*END*
+=======================================================================================
+

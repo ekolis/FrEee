@@ -1,0 +1,1175 @@
+=======================================================================================
+TECH AREA DATA FILE
+=======================================================================================
+
+Name: 
+  Name of the technology
+
+Group:
+  The group name this technology will be under. Any group name can be used.
+
+Description:
+  Description of the technology.
+
+Maximum Level:
+  The maximum level of this tech area that can be achieved.
+
+Level Cost:
+  The cost to increase one level in this tech area. The cost increases by
+  the game setup factor as the levels get higher.
+
+Start Level:
+  The level at which the player starts the game.
+  The 3 colonization tech areas are a special case which the game will set
+  higher based on your racial traits.
+
+Raise Level:
+  If a medium level of technology is chosen in the game setup, then this level
+  is the starting level for each player (if the Start Level is higher than this
+  value, the Start Level is used).
+
+Racial Area:
+  This is a user-defined number which is connected to the Racial Traits. Some
+  Racial Traits allow for certain tech areas to be available. If this number
+  is greater than zero, then this technology area will only be shown to the
+  player if they have the racial trait with the corresponding Racial Area id.
+  Current Values are:
+    1 - Psychic
+    2 - Deeply Religious
+    3 - Temporal Knowledge
+    4 - Crystallurgy
+    5 - Organic Manipulation
+
+Unique Area:
+  This is a user-defined number which is connected to certain abilities such
+  as Ancient Ruins Unique. Some abilities will cause a unique tech to become
+  available. If this number is greater than zero, then this technology area 
+  will only be shown to the player if they have the attained\activated the
+  ability with the corresponding Unique Area id.
+
+Can Be Removed:
+  Whether this tech area can be un-selected for use in the game. Be careful
+  that you do not allow a required tech to be removed from the game. 
+
+Number of Tech Req:
+  This is the number of other tech areas that are required to be completed 
+  before this one will be displayed. 
+
+Tech Area Req #, Tech Level Req #:
+  The tech area and level required.
+
+=======================================================================================
+*BEGIN*
+=======================================================================================
+
+Name                  := Rock Planet Colonization
+Group                 := Applied Science
+Description           := Creation of colonies which can survive on rock based planets.
+Maximum Level         := 1
+Level Cost            := 500000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Ice Planet Colonization
+Group                 := Applied Science
+Description           := Creation of colonies which can survive on ice based planets.
+Maximum Level         := 1
+Level Cost            := 500000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Gas Giant Colonization
+Group                 := Applied Science
+Description           := Creation of colonies which can survive within gas giant planets.
+Maximum Level         := 1
+Level Cost            := 500000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Ship Construction
+Group                 := Applied Science
+Description           := The construction of starships and their support components.
+Maximum Level         := 9
+Level Cost            := 10000
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Base Construction
+Group                 := Applied Science
+Description           := The construction of bases which exist completely in space.
+Maximum Level         := 3
+Level Cost            := 100000
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Fighters
+Group                 := Applied Science
+Description           := The construction of fighter vehicles and their support components.
+Maximum Level         := 5
+Level Cost            := 100000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Construction
+Tech Level Req 1      := 1
+
+Name                  := Troops
+Group                 := Applied Science
+Description           := The construction of ground troops used to capture planets.
+Maximum Level         := 3
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Construction
+Tech Level Req 1      := 1
+
+Name                  := Mines
+Group                 := Applied Science
+Description           := The construction of small space mines.
+Maximum Level         := 5
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Construction
+Tech Level Req 1      := 1
+
+Name                  := Weapon Platforms
+Group                 := Applied Science
+Description           := The construction of planet-based weapons platforms.
+Maximum Level         := 3
+Level Cost            := 50000
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Satellites
+Group                 := Applied Science
+Description           := The construction of satellites to be dropped in space.
+Maximum Level         := 3
+Level Cost            := 50000
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Space Yards
+Group                 := Applied Science
+Description           := Technology to construct Space Yards, which in turn construct all the structures and vehicles for an empire.
+Maximum Level         := 3
+Level Cost            := 100000
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Cargo
+Group                 := Applied Science
+Description           := The ability to store and transport cargo through space.
+Maximum Level         := 3
+Level Cost            := 30000
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Repair
+Group                 := Applied Science
+Description           := The ability to repair damage to ships and bases in space.
+Maximum Level         := 3
+Level Cost            := 10000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 0
+
+Name                  := Resupply
+Group                 := Applied Science
+Description           := Equipment necessary to resupply ship in space.
+Maximum Level         := 5
+Level Cost            := 50000
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Propulsion
+Group                 := Applied Science
+Description           := The use of ions to propel a starship through space.
+Maximum Level         := 12
+Level Cost            := 5000
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Armor
+Group                 := Applied Science
+Description           := Standard alloy based armor used on the exterior of a starship.
+Maximum Level         := 6
+Level Cost            := 5000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Chemistry
+Tech Level Req 1      := 1
+
+Name                  := Shields
+Group                 := Applied Science
+Description           := Protective energy barrier which surrounds a starship or base.
+Maximum Level         := 10
+Level Cost            := 10000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Physics
+Tech Level Req 1      := 1
+
+Name                  := Cloaking
+Group                 := Applied Science
+Description           := Stealth technology which defeats EM Passive sensors.
+Maximum Level         := 3
+Level Cost            := 40000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Physics
+Tech Level Req 1      := 3
+
+Name                  := Sensors
+Group                 := Applied Science
+Description           := Sensors which detect objects in space by analyzing incoming electro-magnetic waves.
+Maximum Level         := 6
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Physics
+Tech Level Req 1      := 1
+
+Name                  := Scanners
+Group                 := Applied Science
+Description           := Scanners which can analyze details of other starships.
+Maximum Level         := 3
+Level Cost            := 100000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Physics
+Tech Level Req 1      := 2
+
+Name                  := Combat Support
+Group                 := Applied Science
+Description           := Technology used to aid ships during combat.
+Maximum Level         := 4
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Military Science
+Tech Level Req 1      := 1
+
+Name                  := Computers
+Group                 := Applied Science
+Description           := Advanced computer technology used for storage and processing.
+Maximum Level         := 6
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Industry
+Tech Level Req 1      := 1
+
+Name                  := Resource Manipulation
+Group                 := Applied Science
+Description           := Technology to convert resources from one type to another.
+Maximum Level         := 3
+Level Cost            := 200000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Chemistry
+Tech Level Req 1      := 2
+
+Name                  := Minerals Extraction
+Group                 := Applied Science
+Description           := The ability to extract minerals from a planet.
+Maximum Level         := 9
+Level Cost            := 50000
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Organics Extraction
+Group                 := Applied Science
+Description           := The ability to grow and cultivate organic materials on a planet.
+Maximum Level         := 9
+Level Cost            := 50000
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Radioactives Extraction
+Group                 := Applied Science
+Description           := The ability to locate and refine radioactive materials within a planet.
+Maximum Level         := 9
+Level Cost            := 50000
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Stellar Manipulation
+Group                 := Applied Science
+Description           := Technology to manipulate spatial bodies.
+Maximum Level         := 8
+Level Cost            := 100000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Astrophysics
+Tech Level Req 1      := 1
+
+Name                  := Applied Research
+Group                 := Applied Science
+Description           := The capability of an empire to research new technologies.
+Maximum Level         := 3
+Level Cost            := 100000
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Applied Intelligence
+Group                 := Applied Science
+Description           := The capability of an empire to gather and perform intelligence actions.
+Maximum Level         := 4
+Level Cost            := 100000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 0
+
+Name                  := Medical Technology
+Group                 := Applied Science
+Description           := Medical science to manipulate organic materials.
+Maximum Level         := 5
+Level Cost            := 20000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Biology
+Tech Level Req 1      := 1
+
+Name                  := Organic Technology
+Group                 := Applied Science
+Description           := Advanced utilization of organic forms to create structures.
+Maximum Level         := 6
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 5
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Organic Engineering
+Tech Level Req 1      := 1
+
+Name                  := Psychic Technology
+Group                 := Applied Science
+Description           := Psychic ability to detect other beings and read their thoughts.
+Maximum Level         := 6
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 1
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Psychic Studies
+Tech Level Req 1      := 1
+
+Name                  := Religious Technology
+Group                 := Applied Science
+Description           := The specific utilization of religion to achieve goals.
+Maximum Level         := 4
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 2
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Religious Studies
+Tech Level Req 1      := 1
+
+Name                  := Temporal Technology
+Group                 := Applied Science
+Description           := Science of altering time streams to produce specific results.
+Maximum Level         := 6
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 3
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Temporal Studies
+Tech Level Req 1      := 1
+
+Name                  := Crystalline Technology
+Group                 := Applied Science
+Description           := Science of using crystalline materials for construction of devices.
+Maximum Level         := 6
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 4
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Crystallurgy
+Tech Level Req 1      := 1
+
+Name                  := Planet Utilization
+Group                 := Applied Science
+Description           := Science governing understanding and utilization of a planets resources.
+Maximum Level         := 9
+Level Cost            := 20000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Planetary Engineering
+Tech Level Req 1      := 1
+
+Name                  := Advanced Military Science
+Group                 := Applied Science
+Description           := The training, study, and improvement of martial practices.
+Maximum Level         := 6
+Level Cost            := 5000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Military Science
+Tech Level Req 1      := 2
+
+Name                  := Applied Political Science
+Group                 := Applied Science
+Description           := The process of government and its execution.
+Maximum Level         := 3
+Level Cost            := 5000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Psychology
+Tech Level Req 1      := 1
+
+Name                  := Astrophysics
+Group                 := Theoretical Science
+Description           := The science of astronomy dealing with the physical properties of the universe.
+Maximum Level         := 2
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 0
+
+Name                  := Biology
+Group                 := Theoretical Science
+Description           := Science which deals with the processes and physical characteristics of all life forms.
+Maximum Level         := 1
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 0
+
+Name                  := Chemistry
+Group                 := Theoretical Science
+Description           := The science dealing with the composition and properties of substances.
+Maximum Level         := 2
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 0
+
+Name                  := Construction
+Group                 := Theoretical Science
+Description           := The science of constructing vehicles and buildings.
+Maximum Level         := 1
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 0
+
+Name                  := Crystallurgy
+Group                 := Theoretical Science
+Description           := The science of manipulating crystals and their resonance waves.
+Maximum Level         := 1
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 4
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Industry
+Group                 := Theoretical Science
+Description           := The science of creating and utilizing large scale manufacturing machinery.
+Maximum Level         := 1
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 0
+
+Name                  := Military Science
+Group                 := Theoretical Science
+Description           := The science of military practices and the strategic, tactical, and logistic theories that determine them.
+Maximum Level         := 2
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 0
+
+Name                  := Organic Engineering
+Group                 := Theoretical Science
+Description           := The technology of designing and creating organic forms to serve specific needs.
+Maximum Level         := 1
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 5
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Physics
+Group                 := Theoretical Science
+Description           := The science dealing with the properties and interactions of matter and energy.
+Maximum Level         := 4
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 0
+
+Name                  := Planetary Engineering
+Group                 := Theoretical Science
+Description           := The science of designing and manipulating a planetary habitat.
+Maximum Level         := 1
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 0
+
+Name                  := Psychic Studies
+Group                 := Theoretical Science
+Description           := The science of mental abilities and interaction.
+Maximum Level         := 2
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 1
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Psychology
+Group                 := Theoretical Science
+Description           := The science dealing with the mind and with mental and emotional processes.
+Maximum Level         := 1
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 0
+
+Name                  := Religious Studies
+Group                 := Theoretical Science
+Description           := The study of religions and belief systems.
+Maximum Level         := 1
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 2
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Temporal Studies
+Group                 := Theoretical Science
+Description           := The study of temporal phenomenon and manipulation.
+Maximum Level         := 2
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 3
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Energy Stream Weapons
+Group                 := Weapon Technology
+Description           := Weapons employing a continuous stream of energy.
+Maximum Level         := 12
+Level Cost            := 5000
+Start Level           := 0
+Raise Level           := 2
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Physics
+Tech Level Req 1      := 1
+
+Name                  := Energy Pulse Weapons
+Group                 := Weapon Technology
+Description           := Weapons which fire bursts of intense energy at enemy ships.
+Maximum Level         := 6
+Level Cost            := 10000
+Start Level           := 0
+Raise Level           := 2
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Physics
+Tech Level Req 1      := 1
+
+Name                  := Missile Weapons
+Group                 := Weapon Technology
+Description           := Guided missile weapons which seek after and hit enemy ships.
+Maximum Level         := 7
+Level Cost            := 15000
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Projectile Weapons
+Group                 := Weapon Technology
+Description           := Weapons which fire projectiles at other ships.
+Maximum Level         := 5
+Level Cost            := 2500
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Torpedo Weapons
+Group                 := Weapon Technology
+Description           := Seeking torpedo which homes in and detonates against enemy vessels.
+Maximum Level         := 10
+Level Cost            := 5000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Military Science
+Tech Level Req 1      := 1
+
+Name                  := High-Energy Discharge Weapons
+Group                 := Weapon Technology
+Description           := Weapons which employ massive energy releases to damage enemy ships.
+Maximum Level         := 10
+Level Cost            := 20000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Propulsion
+Tech Level Req 1      := 7
+
+Name                  := Phased-Energy Weapons
+Group                 := Weapon Technology
+Description           := Weapons using phased-energy to bypass normal shields.
+Maximum Level         := 5
+Level Cost            := 5000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Physics
+Tech Level Req 1      := 2
+
+Name                  := Point-Defense Weapons
+Group                 := Weapon Technology
+Description           := Weapons which specifically target and destroy incoming seekers.
+Maximum Level         := 5
+Level Cost            := 5000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Military Science
+Tech Level Req 1      := 1
+
+Name                  := Shield Damaging Weapons
+Group                 := Weapon Technology
+Description           := Weapons designed to damage shields and their generators.
+Maximum Level         := 10
+Level Cost            := 5000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Shields
+Tech Level Req 1      := 4
+
+Name                  := Tractor\Repulser Weapons
+Group                 := Weapon Technology
+Description           := Weapons which move enemy vessels through space.
+Maximum Level         := 9
+Level Cost            := 5000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Astrophysics
+Tech Level Req 1      := 1
+
+Name                  := Weapon Overloading Weapons
+Group                 := Weapon Technology
+Description           := Weapons designed to damage weapons on enemy ships.
+Maximum Level         := 5
+Level Cost            := 5000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Military Science
+Tech Level Req 1      := 2
+
+Name                  := Engine Overloading Weapons
+Group                 := Weapon Technology
+Description           := Weapons which overload and destroy the engines on enemy ships.
+Maximum Level         := 10
+Level Cost            := 5000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Propulsion
+Tech Level Req 1      := 4
+
+Name                  := Gravitational Weapons
+Group                 := Weapon Technology
+Description           := Weapons which use gravitational forces to rip enemy ships apart.
+Maximum Level         := 5
+Level Cost            := 5000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Astrophysics
+Tech Level Req 1      := 2
+
+Name                  := Warp Weapons
+Group                 := Weapon Technology
+Description           := Weapons which create small warp points at the location of their targets.
+Maximum Level         := 3
+Level Cost            := 5000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Physics
+Tech Level Req 1      := 4
+
+Name                  := Biological Weapons
+Group                 := Weapon Technology
+Description           := Biological weapons which attack by means of viruses and plagues.
+Maximum Level         := 5
+Level Cost            := 5000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Biology
+Tech Level Req 1      := 1
+
+Name                  := Planetary Weapons
+Group                 := Weapon Technology
+Description           := Weapons designed to damage planets and their inhabitants.
+Maximum Level         := 10
+Level Cost            := 5000
+Start Level           := 0
+Raise Level           := 0
+Unique Area           := 0
+Racial Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 0
+
+Name                  := Ship Capture
+Group                 := Weapon Technology
+Description           := Technology used to board and conquer other ships.
+Maximum Level         := 5
+Level Cost            := 5000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Military Science
+Tech Level Req 1      := 2
+
+Name                  := Temporal Weapons
+Group                 := Weapon Technology
+Description           := Weapons which use temporal manipulation to cause ill effects.
+Maximum Level         := 7
+Level Cost            := 25000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 3
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Temporal Studies
+Tech Level Req 1      := 2
+
+Name                  := Psychic Weapons
+Group                 := Weapon Technology
+Description           := Weapons which use psychic energy to manipulate people and ships.
+Maximum Level         := 6
+Level Cost            := 25000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 1
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Psychic Studies
+Tech Level Req 1      := 2
+
+Name                  := Computer Combat
+Group                 := Weapon Technology
+Description           := The ability to attack the computer components of another ship.
+Maximum Level         := 3
+Level Cost            := 5000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Computers
+Tech Level Req 1      := 4
+
+Name                  := Null-Space Weapons
+Group                 := Weapon Technology
+Description           := Weapons which cause rifts of null-space where they hit.
+Maximum Level         := 3
+Level Cost            := 5000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Astrophysics
+Tech Level Req 1      := 2
+
+Name                  := Organic Weapons
+Group                 := Weapon Technology
+Description           := Weapons using organic materials and delivery methods.
+Maximum Level         := 10
+Level Cost            := 20000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 5
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Organic Engineering
+Tech Level Req 1      := 1
+
+Name                  := Crystalline Weapons
+Group                 := Weapon Technology
+Description           := Weapons using the directed resonance waves of crystals.
+Maximum Level         := 10
+Level Cost            := 20000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 4
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Crystallurgy
+Tech Level Req 1      := 1
+
+Name                  := Troop Weapons
+Group                 := Weapon Technology
+Description           := Weapons employed by troops on a planet's surface.
+Maximum Level         := 3
+Level Cost            := 5000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Troops
+Tech Level Req 1      := 1
+
+Name                  := Explosive Warheads
+Group                 := Weapon Technology
+Description           := Warheads which cause damage to enemy ships upon exploding.
+Maximum Level         := 3
+Level Cost            := 5000
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Smaller Weapons
+Group                 := Weapon Technology
+Description           := Normal ship based weapons miniaturized to fit on smaller vehicles.
+Maximum Level         := 3
+Level Cost            := 5000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 0
+
+Name                  := Massive Shield Depleting Weapons
+Group                 := Weapon Technology
+Description           := Weapons designed to deplete all of a target's shields.
+Maximum Level         := 1
+Level Cost            := 30000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 1
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Massive Engine Destroying Weapons
+Group                 := Weapon Technology
+Description           := Weapons which destroy all of the engines on enemy ships.
+Maximum Level         := 1
+Level Cost            := 30000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 2
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Neural Computer Interface
+Group                 := Applied Science
+Description           := Advanced computer interface which connects ships during combat.
+Maximum Level         := 1
+Level Cost            := 30000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 3
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Massive Planetary Shielding
+Group                 := Applied Science
+Description           := Massive shield generators which can protect an entire planet.
+Maximum Level         := 1
+Level Cost            := 100000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 4
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+Name                  := Gravitational Technology
+Group                 := Applied Science
+Description           := Science of manipulating gravity fields.
+Maximum Level         := 3
+Level Cost            := 50000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Astrophysics
+Tech Level Req 1      := 2
+
+Name                  := Stellar Harnessing 
+Group                 := Applied Science
+Description           := Science of utilizing the energy of stars.
+Maximum Level         := 6
+Level Cost            := 10000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := True
+Number of Tech Req    := 1
+Tech Area Req 1       := Astrophysics
+Tech Level Req 1      := 1
+
+Name                  := Drones
+Group                 := Applied Science
+Description           := The construction of small self-directed space vehicles.
+Maximum Level         := 3
+Level Cost            := 100000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+Number of Tech Req    := 0
+
+=======================================================================================
+*END*
+=======================================================================================

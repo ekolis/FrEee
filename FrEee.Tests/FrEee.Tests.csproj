@@ -1,38 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-
-    <IsPackable>false</IsPackable>
-
-    <Version>0.0.9</Version>
-
-    <Copyright>Copyright © 2013-2020</Copyright>
-
-    <Company />
-
-    <Product>FrEee</Product>
-
-    <PackageProjectUrl>http://edkolis.com/freee</PackageProjectUrl>
-
-    <Description>Unit tests for FrEee</Description>
-
-    <ApplicationIcon>FrEee.ico</ApplicationIcon>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="Mods\**" CopyToOutputDirectory="Always" LinkBase="Mods\" />
-    <None Include="Savegame\**" CopyToOutputDirectory="Always" LinkBase="Savegame\" />
-    <None Include="..\FrEee\Data\**" CopyToOutputDirectory="Always" LinkBase="Data\" />
-    <None Include="..\FrEee\Mods\**" CopyToOutputDirectory="Always" LinkBase="Mods\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\FrEee\FrEee.csproj" />
-
-    <PackageReference Include="nunit" Version="3.12.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
-  </ItemGroup>
-
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<IsPackable>false</IsPackable>
+		<Version>0.0.9</Version>
+		<Copyright>Copyright © 2013-2021</Copyright>
+		<Company />
+		<Product>FrEee</Product>
+		<PackageProjectUrl>http://edkolis.com/freee</PackageProjectUrl>
+		<Description>Unit tests for FrEee</Description>
+		<ApplicationIcon>FrEee.ico</ApplicationIcon>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Include="Mods\**" CopyToOutputDirectory="Always" LinkBase="Mods\" />
+		<None Include="Savegame\**" CopyToOutputDirectory="Always" LinkBase="Savegame\" />
+		<None Include="..\FrEee\Data\**" CopyToOutputDirectory="Always" LinkBase="Data\" />
+		<None Include="..\FrEee\Mods\**" CopyToOutputDirectory="Always" LinkBase="Mods\" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\FrEee.Assets\FrEee.Assets.csproj" />
+		<ProjectReference Include="..\FrEee\FrEee.csproj" />
+		<PackageReference Include="nunit" Version="3.13.0" />
+		<PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
+	</ItemGroup>
 </Project>

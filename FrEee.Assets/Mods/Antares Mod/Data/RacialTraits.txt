@@ -1,0 +1,207 @@
+=======================================================================================
+RACIAL TRAITS DATA FILE
+=======================================================================================
+
+
+
+=======================================================================================
+*BEGIN*
+=======================================================================================
+
+Name                  := Feudalism
+Description           := Empire is governed by a loose-knit coalition of rival clans. +200% mining and planetary construction rate, but -50% research and -10% happiness. 
+Pic Num               := 0
+General Type          := Government
+Cost                  := -400
+Trait Type            := Resource Gen Modifier Empire - Minerals
+Value                 := 200
+Trait Type            := Planetary SY Rate
+Value                 := 200
+Trait Type            := Empire Point Generation Modifier - Research
+Value                 := -50
+Trait Type            := Change Population Happiness - Empire
+Value                 := -10
+Restricted Trait      := Dictatorship
+Restricted Trait      := Democracy
+Restricted Trait      := Unification
+
+Name                  := Dictatorship
+Description           := Empire is governed by a single leader who rules with an iron fist, claw, tentacle, etc. +10% intelligence effectiveness, but -10% happiness.
+Pic Num               := 0
+General Type          := Government
+Cost                  := 0
+Trait Type            := Empire Point Generation Modifier - Intelligence
+Value                 := 10
+Trait Type            := Change Population Happiness - Empire
+Value                 := -10
+Restricted Trait      := Feudalism
+Restricted Trait      := Democracy
+Restricted Trait      := Unification
+
+Name                  := Democracy
+Description           := Empire is governed by leaders who are elected by the people. +50% research, but -5% intelligence effectiveness.
+Pic Num               := 0
+General Type          := Government
+Cost                  := 700
+Trait Type            := Empire Point Generation Modifier - Research
+Value                 := 50
+Trait Type            := Empire Point Generation Modifier - Intelligence
+Value                 := -5
+Restricted Trait      := Feudalism
+Restricted Trait      := Dictatorship
+Restricted Trait      := Unification
+
+Name                  := Unification
+Description           := Empire is not "governed". It simply exists via the singular collective will of the people. +50% farming, mining, and planetary construction. +7% intelligence effectiveness. Populations do not grow angry or happy.
+Pic Num               := 0
+General Type          := Government
+Cost                  := 600
+Trait Type            := Resource Gen Modifier Empire - Minerals
+Value                 := 50
+Trait Type            := Resource Gen Modifier Empire - Organics
+Value                 := 50
+Trait Type            := Planetary SY Rate
+Value                 := 50
+Trait Type            := Empire Point Generation Modifier - Intelligence
+Value                 := 7
+Trait Type            := Population Emotionless
+Restricted Trait      := Feudalism
+Restricted Trait      := Dictatorship
+Restricted Trait      := Democracy
+
+Name                  := Aquatic
+Description           := Race is capable of living underwater. +15% planetary cargo/facility space, and +10% farming.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 500
+Trait Type            := Planet Storage Space
+Value                 := 15
+Trait Type            := Resource Gen Modifier Empire - Organics
+Value                 := 10
+
+Name                  := Subterranean
+Description           := Race is capable of living underground. +20% planetary cargo/facility space, and +10% ground combat defense.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 600
+Trait Type            := Planet Storage Space
+Value                 := 20
+Trait Type            := Empire - Change Ground Defense
+Value                 := 10
+
+Name                  := Tolerant
+Description           := Race is capable of living in even the harshest of conditions. +50% planetary cargo/facility space.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 1000
+Trait Type            := Planet Storage Space
+Value                 := 50
+
+Name                  := Cybernetic
+Description           := Race is part biological, and part mechanical. Can build basic planetary facilities for half the normal organics cost. Also gains access to the Cybernetic Repair Interface, allowing ships to repair themselves in combat.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 400
+Trait Type            := Tech Area
+Value                 := Cybernetic
+
+Name                  := Lithovore
+Description           := Race does not eat food, and can subsist on common minerals. Can build basic planetary facilities and colony modules for one-tenth the normal organics cost.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 1000
+Trait Type            := Tech Area
+Value                 := Lithovore
+
+Name                  := Repulsive
+Description           := Race is viewed with disgust by other sentient life-forms, and always finds itself the victim of "unfortunate coincidences". +400% chance for bad random events.
+Pic Num               := 0
+General Type          := Disadvantage
+Cost                  := -600
+Trait Type            := Luck
+Value                 := 400
+Restricted Trait      := Charismatic
+
+Name                  := Charismatic
+Description           := Race is looked upon favorably by other sentient life-forms, and never finds itself the victim of "unfortunate coincidences". Bad random events never occur.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 300
+Trait Type            := Luck
+Value                 := -100
+Restricted Trait      := Repulsive
+
+Name                  := Uncreative
+Description           := Race is not particularly clever when it comes to scientific endeavors. Unexpected research breakthroughs never occur.
+Pic Num               := 0
+General Type          := Disadvantage
+Cost                  := -400
+Trait Type            := Breakthrough Chance
+Value                 := -100
+Restricted Trait      := Creative
+
+Name                  := Creative
+Description           := Race is exceptionally clever when it comes to scientific endeavors. +200% chance for unexpected research breakthroughs.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 800
+Trait Type            := Breakthrough Chance
+Value                 := 200
+Restricted Trait      := Uncreative
+
+Name                  := Fantastic Traders
+Description           := Empire is geared around economic growth. Can earn resource income from systems that lack a shipyard, and can build banks for one-quarter the normal cost.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 400
+Trait Type            := No Spaceports
+Trait Type            := Tech Area
+Value                 := Fantastic Traders
+
+Name                  := Telepathic
+Description           := Race is capable of manipulating matter and energy using the mind. +20% intelligence effectiveness. Also gains access to the Allegiance Subverter, which can take control of enemy ships remotely.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 600
+Trait Type            := Empire Point Generation Modifier - Intelligence
+Value                 := 20
+Trait Type            := Tech Area
+Value                 := Telepathic
+
+Name                  := Omniscient
+Description           := Race is capable of detecting far-off objects and events using the mind. Can see the entire galaxy map from the beginning of the game. Also gains access to the Psionic Scanner, which can detect cloaked ships.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 300
+Trait Type            := Galaxy Seen
+Trait Type            := Tech Area
+Value                 := Omniscient
+
+Name                  := Transdimensional
+Description           := Race is capable of folding space using the mind. All space vehicles gain +2 speed.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 500
+Trait Type            := Vehicle Speed
+Value                 := 2
+
+Name                  := Stealthy Ships
+Description           := Empire's military is geared around first strikes and evading detection. Gains access to the Photon Sheath, a highly advanced cloaking device.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 400
+Trait Type            := Tech Area
+Value                 := Stealthy Ships
+
+Name                  := Warlords
+Description           := Empire is geared around military conquest. Gains access to elite ship and fleet training facilities.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 400
+Trait Type            := Tech Area
+Value                 := Warlords
+
+=======================================================================================
+*END*
+=======================================================================================
+

@@ -1,0 +1,140 @@
+Adjutant
+Advocate
+Aggressor
+Allegiance
+Alliance
+Ambition
+Ambush
+Annihilator
+Antagonist
+Apocalypse
+Arbitrator
+Armageddon
+Atrocities
+Attack 1
+Attack 2
+Attack 3
+Attack 4
+Attack 5
+Bandit
+Blade
+Broad Sword
+Brutal
+Brute
+Carnage
+Chaos
+Conquer
+Conquest
+Convict
+Corrupt
+Crusher
+Decimator
+Defender
+Discriminator
+Dominion
+Doppelganger
+Double Helix
+Endless
+Enforcer
+Evil
+Executioner
+Exile
+Exterminator
+Felon
+Forbidden
+Forgotten
+Forsaken
+Founder
+Frightening
+Gladiator
+Grave Digger
+Grim Reaper
+Ground Pounder
+Helix
+Hell
+Hellfire
+Hellspawn
+Hideous
+Holocaust
+Honor
+Horrible
+Horror
+ID
+Institution
+Insurrection
+Interdictor
+Interrogatory
+Intolerant
+Intrusion
+Invader
+Jackal
+Jem'Hadar
+Judge
+Judge Advocate
+Judge General
+Kahn
+Killer
+Klux
+Last Man
+Legislator
+Liberator
+Magnificent
+Majestic
+Malcontent
+Malice
+Mallet
+Malpractice
+Monster
+Muller
+Needless
+Nuisance
+Obliterator
+Offender
+Onlooker
+Oppressor
+Overlord
+Pandora
+Prejudice
+Protagonist
+Protégé
+Prowler
+Punisher
+Rebellion
+Repaginate
+Satisfaction
+Scavenger
+Scorpion
+Shadow
+Sidious
+Sinister
+Slaughter
+Social Order
+Strangler
+Success
+Sudation
+Supremacy
+Tantrum
+Tolerance
+Torture
+Torture
+Traitor
+Treason
+Tsunami
+Underachiever
+Undertaker
+Uprising
+Utopia
+Vanquisher
+Vendetta
+Victim
+Victory
+Violator
+Vorta
+Vulgar
+War Hammer
+War Master
+Warlord
+Warrior
+Widowmaker
+Zealot
+

@@ -1,0 +1,2364 @@
+=======================================================================================
+TECH AREA DATA FILE
+=======================================================================================
+
+Name: 
+  Name of the technology
+
+Group:
+  The group name this technology will be under. Any group name can be used.
+
+Description:
+  Description of the technology.
+
+Maximum Level:
+  The maximum level of this tech area that can be achieved.
+
+Level Cost:
+  The cost to increase one level in this tech area. The cost increases by
+  the game setup factor as the levels get higher.
+
+Start Level:
+  The level at which the player starts the game.
+  The 3 colonization tech areas are a special case which the game will set
+  higher based on your racial traits.
+
+Raise Level:
+  If a medium level of technology is chosen in the game setup, then this level
+  is the starting level for each player (if the Start Level is higher than this
+  value, the Start Level is used).
+
+Racial Area:
+  This is a user-defined number which is connected to the Racial Traits. Some
+  Racial Traits allow for certain tech areas to be available. If this number
+  is greater than zero, then this technology area will only be shown to the
+  player if they have the racial trait with the corresponding Racial Area id.
+  Current Values are:
+    1 - Psychic
+    2 - Deeply Religious
+    3 - Temporal Knowledge
+    4 - Crystallurgy
+    5 - Organic Manipulation
+
+Unique Area:
+  This is a user-defined number which is connected to certain abilities such
+  as Ancient Ruins Unique. Some abilities will cause a unique tech to become
+  available. If this number is greater than zero, then this technology area 
+  will only be shown to the player if they have the attained\activated the
+  ability with the corresponding Unique Area id.
+
+Can Be Removed:
+  Whether this tech area can be un-selected for use in the game. Be careful
+  that you do not allow a required tech to be removed from the game. 
+
+Number of Tech Req:
+  This is the number of other tech areas that are required to be completed 
+  before this one will be displayed. 
+
+Tech Area Req #, Tech Level Req #:
+  The tech area and level required.
+  
+TODO - make sure weapons-type tech areas have enough levels for the modifiers that require extra levels of theoretical techs
+
+=======================================================================================
+*BEGIN*
+=======================================================================================
+
+Name                  := Rock Planet Colonization
+Group                 := Colonization
+Description           := Creation of colonies which can survive on rock based planets.
+Maximum Level         := 1
+Level Cost            := 10000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+
+Name                  := Ice Planet Colonization
+Group                 := Colonization
+Description           := Creation of colonies which can survive on ice based planets.
+Maximum Level         := 1
+Level Cost            := 10000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+
+Name                  := Gas Giant Colonization
+Group                 := Colonization
+Description           := Creation of colonies which can survive within gas giant planets.
+Maximum Level         := 1
+Level Cost            := 10000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+
+Name                  := Construction
+Group                 := Theory
+Description           := Construction techniques to allow building of larger and larger structures.
+Maximum Level         := 13
+Level Cost            := 50
+Start Level           := 1
+Raise Level           := 3
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+
+Name                  := Power
+Group                 := Theory
+Description           := Means of providing energy to devices.
+Maximum Level         := 12
+Level Cost            := 75
+Start Level           := 1
+Raise Level           := 3
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+
+Name                  := Chemistry
+Group                 := Theory
+Description           := The manipulation of matter and its various forms.
+Maximum Level         := 11
+Level Cost            := 100
+Start Level           := 1
+Raise Level           := 2
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+
+Name                  := Sociology
+Group                 := Theory
+Description           := The study of interactions between sentient beings.
+Maximum Level         := 5
+Level Cost            := 200
+Start Level           := 0
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+
+Name                  := Computers
+Group                 := Theory
+Description           := Devices which store and manipulate information.
+Maximum Level         := 12
+Level Cost            := 75
+Start Level           := 1
+Raise Level           := 2
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+
+Name                  := Biology
+Group                 := Theory
+Description           := The study of cells and genetics, the building blocks of life.
+Maximum Level         := 11
+Level Cost            := 100
+Start Level           := 1
+Raise Level           := 2
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+
+Name                  := Physics
+Group                 := Theory
+Description           := The study of the basic laws governing the behavior of the universe.
+Maximum Level         := 15
+Level Cost            := 50
+Start Level           := 1
+Raise Level           := 3
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+
+Name                  := Force Fields
+Group                 := Theory
+Description           := Devices capable of manipulating energy and spacetime.
+Maximum Level         := 13
+Level Cost            := 100
+Start Level           := 0
+Raise Level           := 2
+Racial Area           := 0
+Unique Area           := 0
+Can Be Removed        := False
+
+Name                  := Anti-Missile Rockets
+Group                 := Defenses
+Description           := Point-defense rockets capable of shooting down enemy missiles.
+Maximum Level         := 1
+Level Cost            := 80
+Start Level           := 0
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Interceptors
+Group                 := Hulls
+Description           := Small fighters used for dogfighting and point defense.
+Maximum Level         := 1
+Level Cost            := 80
+Start Level           := 0
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Reinforced Hull
+Group                 := Defenses
+Description           := Hull bracing used to increase the structural integrity of a ship.
+Maximum Level         := 1
+Level Cost            := 80
+Start Level           := 0
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Automated Factories
+Group                 := Industry
+Description           := Automated factories which increase the build rate and income of a colony.
+Maximum Level         := 1
+Level Cost            := 150
+Start Level           := 0
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 3
+Can Be Removed        := True
+
+Name                  := Weapon Platforms
+Group                 := Hulls
+Description           := Ground-based defensive platforms capable of firing into space to defend a colony.
+Maximum Level         := 1
+Level Cost            := 150
+Start Level           := 0
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 3
+Can Be Removed        := True
+
+Name                  := Battle Pods
+Group                 := Support
+Description           := Modular components which expand the hull space of a ship.
+Maximum Level         := 1
+Level Cost            := 250
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 4
+Can Be Removed        := True
+
+Name                  := Troop Pods
+Group                 := Weapons
+Description           := Boarding parties trained in capturing enemy ships.
+Maximum Level         := 1
+Level Cost            := 250
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 4
+Can Be Removed        := True
+
+Name                  := Space Port
+Group                 := Economy
+Description           := Interplanetary trading post which increases the income of a star system.
+Maximum Level         := 1
+Level Cost            := 400
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 5
+Can Be Removed        := True
+
+Name                  := Armored Troops
+Group                 := Hulls
+Description           := Heavy troops used for conquering or defending colonies.
+Maximum Level         := 1
+Level Cost            := 400
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 5
+Can Be Removed        := True
+
+Name                  := Robo-Miners
+Group                 := Industry
+Description           := Automated mines which increase the industrial output of a colony.
+Maximum Level         := 1
+Level Cost            := 650
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Battlestation
+Group                 := Hulls
+Description           := Large orbital base of operations. Provides fleet support and colony defense capabilities.
+Maximum Level         := 1
+Level Cost            := 650
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Powered Armor
+Group                 := Defenses
+Description           := Infantry-scale armor allowing for a huge increase in soldiers' life expectancy.
+Maximum Level         := 1
+Level Cost            := 650
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Fast Missile Racks
+Group                 := Weapons
+Description           := Automated reloaders that increase the rate of fire of missile weapons.
+Maximum Level         := 1
+Level Cost            := 900
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 7
+Can Be Removed        := True
+
+Name                  := Advanced Damage Control
+Group                 := Defenses
+Description           := Repair systems capable of fixing damage in deep space, without a shipyard.
+Maximum Level         := 1
+Level Cost            := 900
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 7
+Can Be Removed        := True
+
+Name                  := Assault Shuttles
+Group                 := Weapons
+Description           := Boarding parties that are deployed via fighters.
+Maximum Level         := 1
+Level Cost            := 900
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 7
+Can Be Removed        := True
+
+Name                  := Titan Construction
+Group                 := Hulls
+Description           := Massive warships capable of singlehandedly laying waste to entire colonies.
+Maximum Level         := 1
+Level Cost            := 1150
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 8
+Can Be Removed        := True
+
+Name                  := Battleoids
+Group                 := Hulls
+Description           := Assault mecha used for conquering or defending colonies.
+Maximum Level         := 1
+Level Cost            := 1150
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 8
+Can Be Removed        := True
+
+Name                  := Recyclotron
+Group                 := Industry
+Description           := Advanced recycling center which can completely reclaim resources from scrapped ships.
+Maximum Level         := 1
+Level Cost            := 1500
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 9
+Can Be Removed        := True
+
+Name                  := Automated Repair Unit
+Group                 := Defenses
+Description           := Drones that can repair damage to a ship's armor and critical systems in combat.
+Maximum Level         := 1
+Level Cost            := 1500
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 9
+Can Be Removed        := True
+
+Name                  := Artificial Planet Construction
+Group                 := Industry
+Description           := The ability to construct planets out of asteroid fields.
+Maximum Level         := 1
+Level Cost            := 1500
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 9
+Can Be Removed        := True
+
+Name                  := Robotic Factory
+Group                 := Industry
+Description           := Advanced version of the Automated Factory which provides a greater boost to build rate and income.
+Maximum Level         := 1
+Level Cost            := 2000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 10
+Can Be Removed        := True
+
+Name                  := Bombers
+Group                 := Hulls
+Description           := Medium sized fighters used to bombard enemy ships.
+Maximum Level         := 1
+Level Cost            := 2000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 10
+Can Be Removed        := True
+
+Name                  := Deep Core Mine
+Group                 := Industry
+Description           := Enormous mines which provide a massive boost to production on a colony.
+Maximum Level         := 1
+Level Cost            := 3500
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 11
+Can Be Removed        := True
+
+Name                  := Star Fortress
+Group                 := Hulls
+Description           := Colossal orbital base of operations. Provides fleet support and colony defense capabilities.
+Maximum Level         := 1
+Level Cost            := 6000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 12
+Can Be Removed        := True
+
+Name                  := Advanced City Planning
+Group                 := Civilian
+Description           := The ability to build arcologies, which increase population reproduction and happiness due to the excellent environmental conditions.
+Maximum Level         := 1
+Level Cost            := 6000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 12
+Can Be Removed        := True
+
+Name                  := Heavy Fighters
+Group                 := Hulls
+Description           := Large fighters capable of taking on several smaller fighters at once, or bombarding enemy ships.
+Maximum Level         := 1
+Level Cost            := 6000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 12
+Can Be Removed        := True
+
+Name                  := Doom Star Construction
+Group                 := Hulls
+Description           := ...Did that asteroid just SHOOT at us?
+Maximum Level         := 1
+Level Cost            := 7500
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 13
+Can Be Removed        := True
+
+Name                  := Artemis System Net
+Group                 := Hulls
+Description           := Network of explosive mines that detonate when enemy ships enter the sector.
+Maximum Level         := 1
+Level Cost            := 7500
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Construction
+Tech Level Req        := 13
+Can Be Removed        := True
+
+Name                  := Nuclear Drive
+Group                 := Drives
+Description           := Drive powered by nuclear fission.
+Maximum Level         := 1
+Level Cost            := 50
+Start Level           := 1
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Power
+Tech Level Req        := 1
+Can Be Removed        := True
+
+Name                  := Nuclear Bomb
+Group                 := Weapons
+Description           := Nuclear fission explosive dropped on planets, or on ships by bombers.
+Maximum Level         := 1
+Level Cost            := 50
+Start Level           := 1
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Power
+Tech Level Req        := 1
+Can Be Removed        := True
+
+Name                  := Fusion Drive
+Group                 := Drives
+Description           := Drive powered by nuclear fusion.
+Maximum Level         := 1
+Level Cost            := 250
+Start Level           := 0
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Power
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Fusion Bomb
+Group                 := Weapons
+Description           := Nuclear fusion explosive dropped on planets, or on ships by bombers.
+Maximum Level         := 1
+Level Cost            := 250
+Start Level           := 1
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Power
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Augmented Engines
+Group                 := Drives
+Description           := Afterburners used to increase the speed of a ship in combat.
+Maximum Level         := 1
+Level Cost            := 250
+Start Level           := 0
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Power
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Ion Drive
+Group                 := Drives
+Description           := Drive powered by ionized plasma.
+Maximum Level         := 1
+Level Cost            := 900
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Power
+Tech Level Req        := 3
+Can Be Removed        := True
+
+Name                  := Ion Pulse Cannon
+Group                 := Weapons
+Description           := Weapon which fires an ion discharge, disabling the internal systems of unshielded targets.
+Maximum Level         := 1
+Level Cost            := 900
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Power
+Tech Level Req        := 3
+Can Be Removed        := True
+
+Name                  := Shield Capacitor
+Group                 := Defenses
+Description           := Reserve battery which allows shields to regenerate faster.
+Maximum Level         := 1
+Level Cost            := 900
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Power
+Tech Level Req        := 3
+Can Be Removed        := True
+
+Name                  := Antimatter Drive
+Group                 := Drives
+Description           := Drive powered by antimatter annihilation.
+Maximum Level         := 1
+Level Cost            := 2000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Power
+Tech Level Req        := 4
+Can Be Removed        := True
+
+Name                  := Antimatter Torpedo
+Group                 := Weapons
+Description           := Torpedo containing an antimatter warhead.
+Maximum Level         := 1
+Level Cost            := 2000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Power
+Tech Level Req        := 4
+Can Be Removed        := True
+
+Name                  := Antimatter Bomb
+Group                 := Weapons
+Description           := Antimatter explosive dropped on planets, or on ships by bombers.
+Maximum Level         := 1
+Level Cost            := 2000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Power
+Tech Level Req        := 4
+Can Be Removed        := True
+
+Name                  := Transporters
+Group                 := Weapons
+Description           := Teleportation device which allows bombs to be dropped on planets from a distance.
+Maximum Level         := 1
+Level Cost            := 2750
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Power
+Tech Level Req        := 5
+Can Be Removed        := True
+
+Name                  := Matter Transmuter
+Group                 := Civilian
+Description           := Devices capable of transmuting inorganic building materials into edible biomass, or vice versa.
+Maximum Level         := 1
+Level Cost            := 2750
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Power
+Tech Level Req        := 5
+Can Be Removed        := True
+
+Name                  := High Energy Focus
+Group                 := Weapons
+Description           := Beam weapon enhancement which greatly increases damage.
+Maximum Level         := 1
+Level Cost            := 3500
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Power
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Energy Absorber
+Group                 := Defenses
+Description           := Armor capable of regenerating the ship's shields when hit.
+Maximum Level         := 1
+Level Cost            := 3500
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Power
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Megafluxers
+Group                 := Support
+Description           := Miniaturized electronics that reduce the size of most ship components.
+Maximum Level         := 1
+Level Cost            := 3500
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Power
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Proton Torpedo
+Group                 := Weapons
+Description           := High-speed torpedo composed of an unstable element.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Power
+Tech Level Req        := 7
+Can Be Removed        := True
+
+Name                  := Hyper Drive
+Group                 := Drives
+Description           := Drive powered by hyperspace folding.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Power
+Tech Level Req        := 7
+Can Be Removed        := True
+
+Name                  := Hyper-X Capacitor
+Group                 := Drives
+Description           := Beam weapon enhancement which greatly reduces weapon size, allowing more weapons to be mounted.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Power
+Tech Level Req        := 7
+Can Be Removed        := True
+
+Name                  := Interphased Drive
+Group                 := Drives
+Description           := Drive powered by subspace phase manipulation.
+Maximum Level         := 1
+Level Cost            := 10000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Power
+Tech Level Req        := 8
+Can Be Removed        := True
+
+Name                  := Plasma Torpedo
+Group                 := Weapons
+Description           := Powerful quark-gluon plasma torpedo which is highly effective at close range.
+Maximum Level         := 1
+Level Cost            := 10000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Power
+Tech Level Req        := 8
+Can Be Removed        := True
+
+Name                  := Nuclear Missile
+Group                 := Weapons
+Description           := Missile with a nuclear fission warhead.
+Maximum Level         := 1
+Level Cost            := 50
+Start Level           := 1
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Chemistry
+Tech Level Req        := 1
+Can Be Removed        := True
+
+Name                  := Standard Fuel Cells
+Group                 := Support
+Description           := Standard chemical fuel cells that enable a ship to travel in deep space.
+Maximum Level         := 1
+Level Cost            := 50
+Start Level           := 1
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Chemistry
+Tech Level Req        := 1
+Can Be Removed        := True
+
+Name                  := Extended Fuel Tanks
+Group                 := Support
+Description           := Fuel cell expansion which extends a ship's range.
+Maximum Level         := 1
+Level Cost            := 50
+Start Level           := 1
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Chemistry
+Tech Level Req        := 1
+Can Be Removed        := True
+
+Name                  := Titanium Armor
+Group                 := Defenses
+Description           := Standard metallic armor placed on the exterior of a ship to prevent damage.
+Maximum Level         := 1
+Level Cost            := 50
+Start Level           := 1
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Chemistry
+Tech Level Req        := 1
+Can Be Removed        := True
+
+Name                  := Deuterium Fuel Cells
+Group                 := Support
+Description           := Deuterium powered fuel cells that enable a ship to travel in deep space.
+Maximum Level         := 1
+Level Cost            := 250
+Start Level           := 0
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Chemistry
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Tri-Titanium Armor
+Group                 := Defenses
+Description           := Dense metallic armor placed on the exterior of a ship to prevent damage.
+Maximum Level         := 1
+Level Cost            := 250
+Start Level           := 0
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Chemistry
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Merculite Missile
+Group                 := Weapons
+Description           := Hybrid chemical/nuclear missile.
+Maximum Level         := 1
+Level Cost            := 650
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Chemistry
+Tech Level Req        := 3
+Can Be Removed        := True
+
+Name                  := Pollution Processor
+Group                 := Industry
+Description           := Facility which reduces pollution, increasing both industrial output and environmental conditions slightly.
+Maximum Level         := 1
+Level Cost            := 650
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Chemistry
+Tech Level Req        := 3
+Can Be Removed        := True
+
+Name                  := Pulson Missile
+Group                 := Weapons
+Description           := Powerful missile with an exotic-matter warhead.
+Maximum Level         := 1
+Level Cost            := 1150
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Chemistry
+Tech Level Req        := 4
+Can Be Removed        := True
+
+Name                  := Atmospheric Renewer
+Group                 := Civilian
+Description           := Atmospheric cleansing facility which increases a planet's conditions.
+Maximum Level         := 1
+Level Cost            := 1150
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Chemistry
+Tech Level Req        := 4
+Can Be Removed        := True
+
+Name                  := Iridium Fuel Cells
+Group                 := Support
+Description           := Iridium powered fuel cells that enable a ship to travel in deep space.
+Maximum Level         := 1
+Level Cost            := 1150
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Chemistry
+Tech Level Req        := 4
+Can Be Removed        := True
+
+Name                  := Nano Disassemblers
+Group                 := Industry
+Description           := Nanites which increase the construction rate of a colony, as well as the amount of resources reclaimed by scrapping ships.
+Maximum Level         := 1
+Level Cost            := 2000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Chemistry
+Tech Level Req        := 5
+Can Be Removed        := True
+
+Name                  := Microlite Construction
+Group                 := Support
+Description           := Advanced materials technology which reduces the construction cost of a component.
+Maximum Level         := 1
+Level Cost            := 2000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Chemistry
+Tech Level Req        := 5
+Can Be Removed        := True
+
+Name                  := Zortrium Armor
+Group                 := Defenses
+Description           := Transuranic metallic armor placed on the exterior of a ship to prevent damage.
+Maximum Level         := 1
+Level Cost            := 2000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Chemistry
+Tech Level Req        := 5
+Can Be Removed        := True
+
+Name                  := Zeon Missile
+Group                 := Weapons
+Description           := They said noble gases couldn't be radioactive. Boy, were they wrong...
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Chemistry
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Neutronium Armor
+Group                 := Defenses
+Description           := Hyper-dense armor placed on the exterior of a ship to prevent damage.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Chemistry
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Uridium Fuel Cells
+Group                 := Support
+Description           := Uridium powered fuel cells that enable a ship to travel in deep space.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Chemistry
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Thorium Fuel Cells
+Group                 := Support
+Description           := Thorium powered fuel cells that enable a ship to travel in deep space with unlimited range.
+Maximum Level         := 1
+Level Cost            := 10000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Chemistry
+Tech Level Req        := 7
+Can Be Removed        := True
+
+Name                  := Adamantium Armor
+Group                 := Defenses
+Description           := Crystalline armor placed on the exterior of a ship to prevent damage.
+Maximum Level         := 1
+Level Cost            := 10000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Chemistry
+Tech Level Req        := 7
+Can Be Removed        := True
+
+Name                  := Space Academy
+Group                 := Support
+Description           := Military academy which trains starship officers and crews.
+Maximum Level         := 1
+Level Cost            := 150
+Start Level           := 0
+Raise Level           := 1
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Sociology
+Tech Level Req        := 1
+Can Be Removed        := True
+
+Name                  := Xeno Psychology
+Group                 := Civilian
+Description           := The ability to build embassies, which increase trade with other empires.
+Maximum Level         := 1
+Level Cost            := 650
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Sociology
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Alien Control Center
+Group                 := Civilian
+Description           := Means to pacify populations.
+Maximum Level         := 1
+Level Cost            := 650
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Sociology
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Planetary Stock Exchange
+Group                 := Economy
+Description           := Trade center which increases income on a planet.
+Maximum Level         := 1
+Level Cost            := 1150
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Sociology
+Tech Level Req        := 3
+Can Be Removed        := True
+
+Name                  := Astro University
+Group                 := Research
+Description           := Academic center which increases the research output of a colony.
+Maximum Level         := 1
+Level Cost            := 2000
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := 0
+Unique Area           := 0
+Tech Area Req         := Sociology
+Tech Level Req        := 4
+Can Be Removed        := True
+
+Name                  := Confederation
+Group                 := Civilian
+Description           := Advanced form of the Feudalism government.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := Feudalism
+Unique Area           := 0
+Tech Area Req         := Sociology
+Tech Level Req        := 5
+Can Be Removed        := True
+
+Name                  := Imperium
+Group                 := Civilian
+Description           := Advanced form of the Dictatorship government.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := Dictatorship
+Unique Area           := 0
+Tech Area Req         := Sociology
+Tech Level Req        := 5
+Can Be Removed        := True
+
+Name                  := Federation
+Group                 := Civilian
+Description           := Advanced form of the Democracy government.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := Democracy
+Unique Area           := 0
+Tech Area Req         := Sociology
+Tech Level Req        := 5
+Can Be Removed        := True
+
+Name                  := Galactic Unification
+Group                 := Civilian
+Description           := Advanced form of the Unification government.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Racial Area           := Unification
+Unique Area           := 0
+Tech Area Req         := Sociology
+Tech Level Req        := 5
+Can Be Removed        := True
+
+Name                  := Galactic Currency Exchange
+Group                 := Economy
+Description           := Galaxy wide stock market which increases income throughout the empire.
+Maximum Level         := 1
+Level Cost            := 6000
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Sociology
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Electronic Computer
+Group                 := Weapons
+Description           := Electronic computer which increases a ship's weapons accuracy.
+Maximum Level         := 1
+Level Cost            := 50
+Start Level           := 1
+Raise Level           := 1
+Tech Area Req         := Computers
+Tech Level Req        := 1
+Can Be Removed        := True
+
+Name                  := Research Laboratory
+Group                 := Research
+Description           := Laboratory which conducts research for an empire.
+Maximum Level         := 1
+Level Cost            := 150
+Start Level           := 0
+Raise Level           := 1
+Tech Area Req         := Computers
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Optronic Computer
+Group                 := Weapons
+Description           := Optical computer which increases a ship's weapons accuracy.
+Maximum Level         := 1
+Level Cost            := 150
+Start Level           := 0
+Raise Level           := 1
+Tech Area Req         := Computers
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Neural Scanner
+Group                 := Intelligence
+Description           := Mind reading device which increases espionage effectiveness.
+Maximum Level         := 1
+Level Cost            := 400
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 3
+Can Be Removed        := True
+
+Name                  := Scout Lab
+Group                 := Research
+Description           := Mobile research lab which can be installed on a starship.
+Maximum Level         := 1
+Level Cost            := 400
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 3
+Can Be Removed        := True
+
+Name                  := Security Stations
+Group                 := Defenses
+Description           := Automated anti-personnel turrets used to protect a ship's crew from enemy boarding parties.
+Maximum Level         := 1
+Level Cost            := 400
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 3
+Can Be Removed        := True
+
+Name                  := Positronic Computer
+Group                 := Weapons
+Description           := Positronic computer which increases a ship's weapons accuracy.
+Maximum Level         := 1
+Level Cost            := 900
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 4
+Can Be Removed        := True
+
+Name                  := Planetary Supercomputer
+Group                 := Weapons
+Description           := Massive computer system which increases a planet's research output.
+Maximum Level         := 1
+Level Cost            := 900
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 4
+Can Be Removed        := True
+
+Name                  := Holo Simulator
+Group                 := Civilian
+Description           := Virtual reality system which increases population happiness.
+Maximum Level         := 1
+Level Cost            := 900
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 4
+Can Be Removed        := True
+
+Name                  := Emissions Guidance System
+Group                 := Weapons
+Description           := Missile enhancement designed to specifically target a ship's engines and other weak points, bypassing armor.
+Maximum Level         := 1
+Level Cost            := 1500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 5
+Can Be Removed        := True
+
+Name                  := Cyber-Security Link
+Group                 := Intelligence
+Description           := Brain/machine interface which improves espionage effectiveness.
+Maximum Level         := 1
+Level Cost            := 1500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 5
+Can Be Removed        := True
+
+Name                  := Cybertronic Computer
+Group                 := Weapons
+Description           := Partly biological computer which increases a ship's weapons accuracy.
+Maximum Level         := 1
+Level Cost            := 2750
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Autolab
+Group                 := Research
+Description           := Completely automated research lab. (May or may not contain cake.)
+Maximum Level         := 1
+Level Cost            := 2750
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Structural Analyzer
+Group                 := Weapons
+Description           := Specialized targeting computer which analyzes enemy ships for weak points, increasing damage inflicted by weapons.
+Maximum Level         := 1
+Level Cost            := 2750
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Android Farmers
+Group                 := Civilian
+Description           := Android farmers which efficiently produce food for a colony.
+Maximum Level         := 1
+Level Cost            := 3500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 7
+Can Be Removed        := True
+
+Name                  := Android Workers
+Group                 := Civilian
+Description           := Android workers which efficiently produce minerals for a colony.
+Maximum Level         := 1
+Level Cost            := 3500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 7
+Can Be Removed        := True
+
+Name                  := Android Scientists
+Group                 := Civilian
+Description           := Android scientists which efficiently produce research points for a colony.
+Maximum Level         := 1
+Level Cost            := 3500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 7
+Can Be Removed        := True
+
+Name                  := Virtual Reality Network
+Group                 := Civilian
+Description           := Galaxy wide network providing virtual reality entertainment, increasing population happiness.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 8
+Can Be Removed        := True
+
+Name                  := Galactic Cybernet
+Group                 := Research
+Description           := Galaxy wide network providing scientists access to research data.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 8
+Can Be Removed        := True
+
+Name                  := Pleasure Dome
+Group                 := Civilian
+Description           := Truly immersive virtual reality system which increases population happiness drastically.
+Maximum Level         := 1
+Level Cost            := 6000
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 9
+Can Be Removed        := True
+
+Name                  := Moleculartronic Computer
+Group                 := Weapons
+Description           := Quantum computer which increases a ship's weapons accuracy.
+Maximum Level         := 1
+Level Cost            := 6000
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 9
+Can Be Removed        := True
+
+Name                  := Achilles Targeting Unit
+Group                 := Weapons
+Description           := Advanced targeting computer which analyzes enemy ships for weak points, greatly increasing damage inflicted by weapons.
+Maximum Level         := 1
+Level Cost            := 6000
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 9
+Can Be Removed        := True
+
+Name                  := Hydroponic Farm
+Group                 := Civilian
+Description           := Self-contained farm which allows food to be grown even on marginally habitable worlds.
+Maximum Level         := 1
+Level Cost            := 80
+Start Level           := 1
+Raise Level           := 1
+Tech Area Req         := Biology
+Tech Level Req        := 1
+Can Be Removed        := True
+
+Name                  := Biospheres
+Group                 := Civilian
+Description           := Habitation and storage domes which allow more of a planet's surface to be colonized.
+Maximum Level         := 1
+Level Cost            := 80
+Start Level           := 1
+Raise Level           := 1
+Tech Area Req         := Biology
+Tech Level Req        := 1
+Can Be Removed        := True
+
+Name                  := Cloning Center
+Group                 := Civilian
+Description           := Medical facility which grows artificial replacement organs, increasing population growth rate on a colony.
+Maximum Level         := 1
+Level Cost            := 400
+Start Level           := 0
+Raise Level           := 1
+Tech Area Req         := Biology
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Soil Enrichment
+Group                 := Civilian
+Description           := Advanced fertilization techniques which increase the food output of a colony.
+Maximum Level         := 1
+Level Cost            := 400
+Start Level           := 0
+Raise Level           := 1
+Tech Area Req         := Biology
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Death Spores
+Group                 := Weapons
+Description           := Biological weapon which is dropped on a planet from orbit, inflicting a plague on the colonists.
+Maximum Level         := 1
+Level Cost            := 400
+Start Level           := 0
+Raise Level           := 1
+Tech Area Req         := Biology
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Telepathic Training
+Group                 := Intelligence
+Description           := Training of spies' latent telepathic talents, increasing their effectiveness.
+Maximum Level         := 1
+Level Cost            := 900
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Biology
+Tech Level Req        := 3
+Can Be Removed        := True
+
+Name                  := Microbiotics
+Group                 := Civilian
+Description           := Genetically engineered microorganisms used to treat diseases, increasing population growth rates and curing plagues.
+Maximum Level         := 1
+Level Cost            := 900
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Biology
+Tech Level Req        := 3
+Can Be Removed        := True
+
+Name                  := Terraforming
+Group                 := Civilian
+Description           := The ability to shape a planetary environment to suit colonists's needs. Allows changing a planet's atmosphere.
+Maximum Level         := 1
+Level Cost            := 1150
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Biology
+Tech Level Req        := 4
+Can Be Removed        := True
+
+Name                  := Subterranean Farms
+Group                 := Civilian
+Description           := Underground farms using plants engineered to survive without sunlight, increasing the farming capacity of a colony.
+Maximum Level         := 1
+Level Cost            := 1500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Biology
+Tech Level Req        := 5
+Can Be Removed        := True
+
+Name                  := Weather Controller
+Group                 := Civilian
+Description           := The ability to shape a planet's climate, increasing farming productivity and living conditions.
+Maximum Level         := 1
+Level Cost            := 1500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Biology
+Tech Level Req        := 5
+Can Be Removed        := True
+
+Name                  := Psionics
+Group                 := Intelligence
+Description           := Mastery of all forms of telekinesis and telepathy. Increases spying effectiveness, and allows dictatorships to instill fear in their populace.
+Maximum Level         := 1
+Level Cost            := 2750
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Biology
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Heightened Intelligence
+Group                 := Research
+Description           := Genetic engineering which increases the intelligence of a race, improving research effectiveness.
+Maximum Level         := 1
+Level Cost            := 2750
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Biology
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Bio Terminator
+Group                 := Weapons
+Description           := Terrifying bioweapon which is even more lethal than death spores.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Biology
+Tech Level Req        := 7
+Can Be Removed        := True
+
+Name                  := Universal Antidote
+Group                 := Civilian
+Description           := A panacea capable of curing all illness. Dramatically increases population growth rates, and can also be used to cure plagues.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Biology
+Tech Level Req        := 7
+Can Be Removed        := True
+
+Name                  := Biomorphic Fungi
+Group                 := Civilian
+Description           := Unlike Soylent Green, this superfood is not made of people! Increases farming output on all worlds, even those with no organics value.
+Maximum Level         := 1
+Level Cost            := 7500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Biology
+Tech Level Req        := 8
+Can Be Removed        := True
+
+Name                  := Gaia Transformation
+Group                 := Civilian
+Description           := Accelerated terraforming process which can transform a barren rock to a paradise in practically the blink of an eye.
+Maximum Level         := 1
+Level Cost            := 7500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Biology
+Tech Level Req        := 8
+Can Be Removed        := True
+
+Name                  := Evolutionary Mutation
+Group                 := Civilian
+Description           := All living things want to accentuate their strengths. Using genetic engineering, you too can do so! This technology has different effects depending on your racial traits.
+Maximum Level         := 1
+Level Cost            := 7500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Biology
+Tech Level Req        := 8
+Can Be Removed        := True
+
+Name                  := Laser Cannon
+Group                 := Weapons
+Description           := Pew pew pew! Imma fahrin mah lazzor! This basic beam weapon isn't very powerful, but it can be modified to pierce armor.
+Maximum Level         := 1
+Level Cost            := 50
+Start Level           := 1
+Raise Level           := 1
+Tech Area Req         := Physics
+Tech Level Req        := 1
+Can Be Removed        := True
+
+Name                  := Laser Rifle
+Group                 := Weapons
+Description           := Handheld version of the laser cannon which can be used by infantry and boarding parties. Still just as good at disintegrating things, but it only works on people-sized things.
+Maximum Level         := 1
+Level Cost            := 50
+Start Level           := 1
+Raise Level           := 1
+Tech Area Req         := Physics
+Tech Level Req        := 1
+Can Be Removed        := True
+
+Name                  := Space Scanner
+Group                 := Sensors
+Description           := Basic radar device capable of scanning nearby ships in detail.
+Maximum Level         := 1
+Level Cost            := 50
+Start Level           := 1
+Raise Level           := 1
+Tech Area Req         := Physics
+Tech Level Req        := 1
+Can Be Removed        := True
+
+Name                  := Fusion Beam
+Group                 := Weapons
+Description           := A weaponized version of the radiation emitted by a fusion reactor. Can be modified to envelop the target.
+Maximum Level         := 1
+Level Cost            := 150
+Start Level           := 0
+Raise Level           := 1
+Tech Area Req         := Physics
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Fusion Rifle
+Group                 := Weapons
+Description           := Handheld version of the fusion beam which can be used by infantry and boarding parties.
+Maximum Level         := 1
+Level Cost            := 150
+Start Level           := 0
+Raise Level           := 1
+Tech Area Req         := Physics
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Tachyon Communication
+Group                 := Support
+Description           := FTL communication systems which help to coordinate fleet movements and train ship crews.
+Maximum Level         := 1
+Level Cost            := 250
+Start Level           := 0
+Raise Level           := 1
+Tech Area Req         := Physics
+Tech Level Req        := 3
+Can Be Removed        := True
+
+Name                  := Tachyon Scanner
+Group                 := Sensors
+Description           := FTL scanner capable of detecting lightly stealthed ships, and scanning nearby ships in detail.
+Maximum Level         := 1
+Level Cost            := 250
+Start Level           := 0
+Raise Level           := 1
+Tech Area Req         := Physics
+Tech Level Req        := 3
+Can Be Removed        := True
+
+Name                  := Neutron Blaster
+Group                 := Weapons
+Description           := Lethal radiation beam which kills a ship's crew.
+Maximum Level         := 1
+Level Cost            := 900
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Physics
+Tech Level Req        := 4
+Can Be Removed        := True
+
+Name                  := Neutron Scanner
+Group                 := Sensors
+Description           := Piercing neutrino scanner capable of detecting stealthed ships, and scanning nearby ships in detail.
+Maximum Level         := 1
+Level Cost            := 900
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Physics
+Tech Level Req        := 4
+Can Be Removed        := True
+
+Name                  := Tractor Beam
+Group                 := Weapons
+Description           := Gravitational beam which draws a ship closer, making it easier to board or hit with short-range weapons.
+Maximum Level         := 1
+Level Cost            := 1150
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Physics
+Tech Level Req        := 5
+Can Be Removed        := True
+
+Name                  := Graviton Beam
+Group                 := Weapons
+Description           := Gravitational wave weapon which rips a ship apart. Inflicts heavy damage on unshielded targets.
+Maximum Level         := 1
+Level Cost            := 1150
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Physics
+Tech Level Req        := 5
+Can Be Removed        := True
+
+Name                  := Subspace Communication
+Group                 := Support
+Description           := Advanced FTL communication systems which help to coordinate fleet movements and train ship crews.
+Maximum Level         := 1
+Level Cost            := 1500
+Start Level           := 0
+Raise Level           := 1
+Tech Area Req         := Physics
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Jump Gate
+Group                 := Support
+Description           := Technology which allows the creation of artificial warp points, speeding up transit between star systems.
+Maximum Level         := 1
+Level Cost            := 1500
+Start Level           := 0
+Raise Level           := 1
+Tech Area Req         := Physics
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Phasor
+Group                 := Weapons
+Description           := Subspace phased-light weapon based on the laser. Can be modified to pierce shields.
+Maximum Level         := 1
+Level Cost            := 2000
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Physics
+Tech Level Req        := 7
+Can Be Removed        := True
+
+Name                  := Phasor Rifle
+Group                 := Weapons
+Description           := Handheld version of the phasor which can be used by infantry and boarding parties.
+Maximum Level         := 1
+Level Cost            := 2000
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Physics
+Tech Level Req        := 7
+Can Be Removed        := True
+
+Name                  := Plasma Cannon
+Group                 := Weapons
+Description           := Powerful plasma weapon which envelops the target, doing heavy damage if the target lacks shields. This weapon has a short range and is rather inaccurate, however.
+Maximum Level         := 1
+Level Cost            := 3500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Physics
+Tech Level Req        := 8
+Can Be Removed        := True
+
+Name                  := Plasma Rifle
+Group                 := Weapons
+Description           := Handheld version of the plasma cannon which can be used by infantry and boarding parties. Now you're playing with power!
+Maximum Level         := 1
+Level Cost            := 3500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Physics
+Tech Level Req        := 8
+Can Be Removed        := True
+
+Name                  := Plasma Web
+Group                 := Weapons
+Description           := Ensnaring plasma weapon which burns out the target's weapons.
+Maximum Level         := 1
+Level Cost            := 3500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Physics
+Tech Level Req        := 8
+Can Be Removed        := True
+
+Name                  := Disruptor Cannon
+Group                 := Weapons
+Description           := Weapon which fires a bolt of exotic matter at the target. Damage is not reduced by range.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Physics
+Tech Level Req        := 9
+Can Be Removed        := True
+
+Name                  := Dimensional Portal
+Group                 := Weapons
+Description           := Advanced version of the Jump Gate which has a longer range.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Physics
+Tech Level Req        := 9
+Can Be Removed        := True
+
+Name                  := Hyperspace Communication
+Group                 := Support
+Description           := Top-of-the-line FTL communication systems which help to coordinate fleet movements and train ship crews.
+Maximum Level         := 1
+Level Cost            := 6000
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Physics
+Tech Level Req        := 10
+Can Be Removed        := True
+
+Name                  := Sensors
+Group                 := Sensors
+Description           := Hyperspace scanner capable of detecting heavily stealthed ships, and scanning nearby ships in detail.
+Maximum Level         := 1
+Level Cost            := 6000
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Physics
+Tech Level Req        := 10
+Can Be Removed        := True
+
+Name                  := Mauler Device
+Group                 := Weapons
+Description           := Weapon which builds up an electrical potential across multiple spacetime dimensions and discharges it at a target. High accuracy, but low damage at range.
+Maximum Level         := 1
+Level Cost            := 6000
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Physics
+Tech Level Req        := 10
+Can Be Removed        := True
+
+Name                  := Time Warp Facilitator
+Group                 := Drives
+Description           := Device which folds time for a ship, allowing it to travel faster in combat and inflict more damage with its weapons.
+Maximum Level         := 1
+Level Cost            := 15000
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Physics
+Tech Level Req        := 11
+Can Be Removed        := True
+
+Name                  := Stellar Converter
+Group                 := Weapons
+Description           := A truly massive plasma cannon, powered by plasma teleported from the solar core, capable of destroying entire planets when fully charged.
+Maximum Level         := 1
+Level Cost            := 15000
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Physics
+Tech Level Req        := 11
+Can Be Removed        := True
+
+Name                  := Star Gate
+Group                 := Weapons
+Description           := The longest ranged Jump Gate in existence.
+Maximum Level         := 1
+Level Cost            := 15000
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Physics
+Tech Level Req        := 11
+Can Be Removed        := True
+
+Name                  := Class I Shield
+Group                 := Defenses
+Description           := Magnetic shield generator capable of protecting a starship from weapons fire and regenerating over time.
+Maximum Level         := 1
+Level Cost            := 250
+Start Level           := 0
+Raise Level           := 1
+Tech Area Req         := Force Fields
+Tech Level Req        := 1
+Can Be Removed        := True
+
+Name                  := Mass Driver
+Group                 := Weapons
+Description           := High velocity railgun which fires a magnetized shell at enemy ships. Can be modified to pierce armor.
+Maximum Level         := 1
+Level Cost            := 250
+Start Level           := 0
+Raise Level           := 1
+Tech Area Req         := Force Fields
+Tech Level Req        := 1
+Can Be Removed        := True
+
+Name                  := ECM Jammer
+Group                 := Defenses
+Description           := Targeting system scrambler which disrupts enemy missile locks. Has no effect on direct fire weapons.
+Maximum Level         := 1
+Level Cost            := 250
+Start Level           := 0
+Raise Level           := 1
+Tech Area Req         := Force Fields
+Tech Level Req        := 1
+Can Be Removed        := True
+
+Name                  := Anti-Grav Harness
+Group                 := Defenses
+Description           := Allows ground troops to fly, increasing their evasion.
+Maximum Level         := 1
+Level Cost            := 650
+Start Level           := 0
+Raise Level           := 1
+Tech Area Req         := Force Fields
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Inertial Stabilizer
+Group                 := Defenses
+Description           := Inertial damper field which cushions a ship's crew against extreme G-forces, allowing the ship to take more drastic evasive maneuvers.
+Maximum Level         := 1
+Level Cost            := 650
+Start Level           := 0
+Raise Level           := 1
+Tech Area Req         := Force Fields
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Gyro Destabilizer
+Group                 := Weapons
+Description           := Gravitational distortion field which inflicts a small amount of damage on a ship, ignoring shields and armor.
+Maximum Level         := 1
+Level Cost            := 650
+Start Level           := 0
+Raise Level           := 1
+Tech Area Req         := Force Fields
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Class III Shield
+Group                 := Weapons
+Description           := Gravitic shield generator which is three times as strong as the standard shield generator.
+Maximum Level         := 1
+Level Cost            := 900
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Force Fields
+Tech Level Req        := 3
+Can Be Removed        := True
+
+Name                  := Planetary Radiation Shield
+Group                 := Defenses
+Description           := Defensive shield covering an entire planet. Blocks light weapons fire, and gradually increases a planet's conditions over time due to lessened solar radiation.
+Maximum Level         := 1
+Level Cost            := 900
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Force Fields
+Tech Level Req        := 3
+Can Be Removed        := True
+
+Name                  := Stealth Field
+Group                 := Stealth
+Description           := Advanced absorbing materials which prevent a ship from being detected except by ships with specially designed sensors.
+Maximum Level         := 1
+Level Cost            := 1500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Force Fields
+Tech Level Req        := 4
+Can Be Removed        := True
+
+Name                  := Personal Shield
+Group                 := Defenses
+Description           := Portable shield generator used by ground troops.
+Maximum Level         := 1
+Level Cost            := 1500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Force Fields
+Tech Level Req        := 4
+Can Be Removed        := True
+
+Name                  := Stealth Suit
+Group                 := Intelligence
+Description           := Renders a person nearly invisible, making espionage all the easier.
+Maximum Level         := 1
+Level Cost            := 1500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Force Fields
+Tech Level Req        := 4
+Can Be Removed        := True
+
+Name                  := Pulsar
+Group                 := Weapons
+Description           := Short range, rapid fire subspace distortion weapon capable of targeting ships, fighters, and missiles.
+Maximum Level         := 1
+Level Cost            := 2000
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Force Fields
+Tech Level Req        := 5
+Can Be Removed        := True
+
+Name                  := Lightning Field
+Group                 := Defenses
+Description           := Defensive electrical field which burns out missile targeting systems.
+Maximum Level         := 1
+Level Cost            := 2000
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Force Fields
+Tech Level Req        := 5
+Can Be Removed        := True
+
+Name                  := Class V Shield
+Group                 := Defenses
+Description           := Subspace shield generator which is five times as strong as the standard shield generator.
+Maximum Level         := 1
+Level Cost            := 2750
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Force Fields
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Multi-Wave ECM Jammer
+Group                 := Defenses
+Description           := Advanced targeting system scrambler which disrupts enemy missile locks. Has no effect on direct fire weapons.
+Maximum Level         := 1
+Level Cost            := 2750
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Force Fields
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Gauss Cannon
+Group                 := Weapons
+Description           := Relativistic railgun which fires a magnetized pellet at enemy ships. Can be modified to pierce armor.
+Maximum Level         := 1
+Level Cost            := 2750
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Force Fields
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Cloaking Device
+Group                 := Stealth
+Description           := Active cloaking field which prevents a ship from being detected except by ships with highly specialized sensors. Also increases evasion and jams missiles.
+Maximum Level         := 1
+Level Cost            := 3500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Force Fields
+Tech Level Req        := 7
+Can Be Removed        := True
+
+Name                  := Hard Shields
+Group                 := Defenses
+Description           := Modified shield generators that block more damage and resist shield piercing weapons.
+Maximum Level         := 1
+Level Cost            := 3500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Force Fields
+Tech Level Req        := 7
+Can Be Removed        := True
+
+Name                  := Class VII Shield
+Group                 := Defenses
+Description           := Quantum shield generator which is seven times as strong as the standard shield generator.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Force Fields
+Tech Level Req        := 8
+Can Be Removed        := True
+
+Name                  := Planetary Flux Shield
+Group                 := Defenses
+Description           := Defensive shield covering an entire planet. Blocks moderate weapons fire, and gradually increases a planet's conditions over time due to lessened solar radiation.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Force Fields
+Tech Level Req        := 8
+Can Be Removed        := True
+
+Name                  := Wide Area Jammer
+Group                 := Defenses
+Description           := Ultimate targeting system scrambler which disrupts enemy missile locks. Has no effect on direct fire weapons.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Force Fields
+Tech Level Req        := 8
+Can Be Removed        := True
+
+Name                  := Displacement Device
+Group                 := Defenses
+Description           := Creates sensor ghosts, causing enemy weapons fire to frequently miss.
+Maximum Level         := 1
+Level Cost            := 7500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Force Fields
+Tech Level Req        := 9
+Can Be Removed        := True
+
+Name                  := Subspace Teleporter
+Group                 := Drives
+Description           := Teleportation device which drastically improves a ship's combat speed.
+Maximum Level         := 1
+Level Cost            := 7500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Force Fields
+Tech Level Req        := 9
+Can Be Removed        := True
+
+Name                  := Inertial Nullifier
+Group                 := Defenses
+Description           := Advanced damper field which cushions a ship's crew against extreme G-forces, allowing the ship to take more drastic evasive maneuvers.
+Maximum Level         := 1
+Level Cost            := 7500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Force Fields
+Tech Level Req        := 9
+Can Be Removed        := True
+
+Name                  := Class X Shield
+Group                 := Defenses
+Description           := Temporal shield generator which is ten times as strong as the standard shield generator.
+Maximum Level         := 1
+Level Cost            := 15000
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Force Fields
+Tech Level Req        := 10
+Can Be Removed        := True
+
+Name                  := Planetary Barrier Shield
+Group                 := Defenses
+Description           := Defensive shield covering an entire planet. Blocks heavy weapons fire, and gradually increases a planet's conditions over time due to lessened solar radiation.
+Maximum Level         := 1
+Level Cost            := 15000
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Force Fields
+Tech Level Req        := 10
+Can Be Removed        := True
+
+Name                  := Phasing Cloak
+Group                 := Stealth
+Description           := Temporal cloaking field which prevents a ship from being detected except by ships with the best sensors available. Also increases evasion and jams missiles.
+Maximum Level         := 1
+Level Cost            := 15000
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Force Fields
+Tech Level Req        := 10
+Can Be Removed        := True
+
+Name                  := Death Ray
+Group                 := Weapons
+Description           := Ancient beam weapon which fires a concentrated burst of gamma rays.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Unique Area           := Death Ray
+Can Be Removed        := True
+
+Name                  := Reflection Field
+Group                 := Defenses
+Description           := Ancient device which surrounds a ship in a temporal sheath, greatly increasing its evasion.
+Maximum Level         := 1
+Level Cost            := 2000
+Start Level           := 0
+Raise Level           := 0
+Unique Area           := Reflection Field
+Can Be Removed        := True
+
+Name                  := Damper Field
+Group                 := Defenses
+Description           := Ancient device which negates enemy weapons fire, up to a certain limit.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Unique Area           := Damper Field
+Can Be Removed        := True
+
+Name                  := Quantum Detonator
+Group                 := Defenses
+Description           := Ancient device which allows a ship to self-destruct, and will activate automatically if the ship is captured.
+Maximum Level         := 1
+Level Cost            := 900
+Start Level           := 0
+Raise Level           := 0
+Unique Area           := Quantum Detonator
+Can Be Removed        := True
+
+Name                  := Particle Beam
+Group                 := Weapons
+Description           := Ancient beam weapon which fires a stream of shield-piercing polaron particles.
+Maximum Level         := 1
+Level Cost            := 2750
+Start Level           := 0
+Raise Level           := 0
+Unique Area           := Particle Beam
+Can Be Removed        := True
+
+Name                  := Spatial Compressor
+Group                 := Weapons
+Description           := Ancient subspace distortion weapon. Similar to the Pulsar, it fires rapidly and can target ships, fighters, and missiles, but is more powerful and skips shields.
+Maximum Level         := 1
+Level Cost            := 2750
+Start Level           := 0
+Raise Level           := 0
+Unique Area           := Spatial Compressor
+Can Be Removed        := True
+
+Name                  := Xentronium Armor
+Group                 := Defenses
+Description           := Ancient exotic-matter armor placed on the exterior of a ship to prevent damage.
+Maximum Level         := 1
+Level Cost            := 6000
+Start Level           := 0
+Raise Level           := 0
+Unique Area           := Xentronium Armor
+Can Be Removed        := True
+
+Name                  := Black Hole Generator
+Group                 := Weapons
+Description           := Ancient weapon which creates a miniature black hole inside an enemy ship, eating it from the inside out.
+Maximum Level         := 1
+Level Cost            := 6000
+Start Level           := 0
+Raise Level           := 0
+Unique Area           := Black Hole Generator
+Can Be Removed        := True
+
+Name                  := Cybernetic Repair Interface
+Group                 := Support
+Description           := Unique to Cybernetic races, this technology allows ships to repair themselves in combat, even without an Automated Repair Unit.
+Maximum Level         := 1
+Level Cost            := 1
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := Cybernetic
+Can Be Removed        := True
+
+Name                  := Inorganic Infrastructure
+Group                 := Civilian
+Description           := Unique to Lithovores, this technology allows construction of basic planetary facilities and colony modules for one-tenth the normal organics cost.
+Maximum Level         := 1
+Level Cost            := 1
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := Lithovore
+Can Be Removed        := True
+
+Name                  := Advanced Banking
+Group                 := Civilian
+Description           := Unique to Fantastic Traders, this technology allows construction of banks for one-quarter the normal cost.
+Maximum Level         := 1
+Level Cost            := 1
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := Fantastic Traders
+Can Be Removed        := True
+
+Name                  := Mental Subversion
+Group                 := Weapons
+Description           := Unique to Telepathic races, this technology allows ship crews to seize control of enemy ships remotely by mind-controlling their crew.
+Maximum Level         := 1
+Level Cost            := 1
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := Telepathic
+Can Be Removed        := True
+
+Name                  := Clairvoyance
+Group                 := Support
+Description           := Unique to Omniscient races, this technology allows detection of all cloaked ships in a system, regardless of how strongly they are cloaked.
+Maximum Level         := 1
+Level Cost            := 1
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := Omniscient
+Can Be Removed        := True
+
+Name                  := Advanced Stealth
+Group                 := Defenses
+Description           := Unique to races with Stealthy Ships, this technology allows ships to completely evade detection, except by Omniscient races.
+Maximum Level         := 1
+Level Cost            := 1
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := Stealthy Ships
+Can Be Removed        := True
+
+Name                  := Elite Military Training
+Group                 := Support
+Description           := Unique to Warlords, this technology allows for superior ship and fleet training, both in terms of speed and quality.
+Maximum Level         := 1
+Level Cost            := 1
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := Warlords
+Can Be Removed        := True
+
+=======================================================================================
+*END*
+=======================================================================================

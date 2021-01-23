@@ -1,0 +1,148 @@
+=======================================================================================
+DEFAULT DESIGN TYPES DATA FILE
+=======================================================================================
+
+Maximum Default Design Types Allowed = 255
+
+These are the default starting Design Types for every player.
+
+Name:
+  The short name of the design type.
+
+=======================================================================================
+*BEGIN*
+=======================================================================================
+
+Name                 := ---Ships
+
+Name                 := Attack Ship (Direct Fire)
+
+Name                 := Attack Ship (Seekers)
+
+Name                 := Attack Ship (Special)
+
+Name                 := Point-Defense Ship
+
+Name                 := Kamikaze Ship
+
+Name                 := Bombardment Ship
+
+Name                 := Recon Ship
+
+Name                 := Colony (Rock)
+
+Name                 := Colony (Ice)
+
+Name                 := Colony (Gas)
+
+Name                 := Colony (Multiple)
+
+Name                 := Space Yard Ship
+
+Name                 := Repair Ship
+
+Name                 := Population Transport
+
+Name                 := Troop Transport
+
+Name                 := Carrier
+
+Name                 := Mine Layer
+
+Name                 := Mine Sweeper
+
+Name                 := Satellite Carrier
+
+Name                 := Drone Carrier
+
+Name                 := Unit Carrier (Multiple)
+
+Name                 := Boarding Ship
+
+Name                 := Mining Ship
+
+Name                 := Warp Point Manipulator
+
+Name                 := Storm Manipulator
+
+Name                 := Planet Manipulator
+
+Name                 := Star Manipulator
+
+Name                 := ---Bases
+
+Name                 := Defense Base (Direct Fire)
+
+Name                 := Defense Base (Seekers)
+
+Name                 := Defense Base (Special)
+
+Name                 := Point-Defense Base
+
+Name                 := Bombardment Base
+
+Name                 := Space Yard Base
+
+Name                 := Repair Base
+
+Name                 := Launch Base
+
+Name                 := Mining Base
+
+Name                 := World Construction Base
+
+Name                 := ---Fighters
+
+Name                 := Dogfighter
+
+Name                 := Anti-Ship Fighter
+
+Name                 := Bomber
+
+Name                 := Kamikaze Fighter
+
+Name                 := ---Mines
+
+Name                 := Mine
+
+Name                 := ---Satellites
+
+Name                 := Defense Satellite (Direct Fire)
+
+Name                 := Defense Satellite (Seekers)
+
+Name                 := Defense Satellite (Special)
+
+Name                 := Recon Satellite
+
+Name                 := Mining Satellite
+
+Name                 := ---Troops
+
+Name                 := Troop
+
+Name                 := ---Weapons Platforms
+
+Name                 := Weapons Platform (Direct Fire)
+
+Name                 := Weapons Platform (Seekers)
+
+Name                 := Weapons Platform (Special)
+
+Name                 := Combat Support Platform
+
+Name                 := Recon Platform
+
+Name                 := ---Drones
+
+Name                 := Anti-Ship Drone
+
+Name                 := Anti-Planet Drone
+
+Name                 := Recon Drone
+
+=======================================================================================
+*END*
+=======================================================================================
+
+
