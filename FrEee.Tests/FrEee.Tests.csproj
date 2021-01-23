@@ -9,6 +9,7 @@
 		<PackageProjectUrl>http://edkolis.com/freee</PackageProjectUrl>
 		<Description>Unit tests for FrEee</Description>
 		<ApplicationIcon>FrEee.ico</ApplicationIcon>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
 		<None Include="Mods\**" CopyToOutputDirectory="Always" LinkBase="Mods\" />

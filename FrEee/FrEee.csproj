@@ -7,6 +7,7 @@
 		<Copyright>Copyright © 2013-2021</Copyright>
 		<PackageProjectUrl>http://edkolis.com/freee</PackageProjectUrl>
 		<ApplicationIcon>Pictures\FrEee.ico</ApplicationIcon>
+		<Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DocumentationFile>bin\Debug\FrEee.Core.xml</DocumentationFile>
