@@ -11,6 +11,7 @@
 		<Description>Windows Forms GUI for FrEee</Description>
 		<ApplicationIcon>FrEee.ico</ApplicationIcon>
 		<Nullable>enable</Nullable>
+		<StartupObject>FrEee.WinForms.Program</StartupObject>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="IronPython" Version="2.7.9" />
