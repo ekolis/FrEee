@@ -1,16 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
-		<IsPackable>false</IsPackable>
-		<Version>0.0.9</Version>
-		<Copyright>Copyright © 2013-2021</Copyright>
-		<Company />
-		<Product>FrEee</Product>
-		<PackageProjectUrl>http://edkolis.com/freee</PackageProjectUrl>
 		<Description>Unit tests for FrEee</Description>
-		<ApplicationIcon>FrEee.ico</ApplicationIcon>
-		<Nullable>enable</Nullable>
 	</PropertyGroup>
+	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
 	<ItemGroup>
 		<None Include="Mods\**" CopyToOutputDirectory="Always" LinkBase="Mods\" />
 		<None Include="Savegame\**" CopyToOutputDirectory="Always" LinkBase="Savegame\" />

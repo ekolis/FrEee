@@ -1,10 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <ApplicationIcon>FrEee.ico</ApplicationIcon>
+		<OutputType>Library</OutputType>
+		<AssemblyName>FrEee.Assets</AssemblyName>
+		<Description>Art, music, data files, and scripts that are included with FrEee</Description>
   </PropertyGroup>
-
+	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
   <ItemGroup>
     <Content Include="Data\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -34,5 +35,4 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
   </ItemGroup>
-
 </Project>

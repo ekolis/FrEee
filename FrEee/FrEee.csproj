@@ -1,79 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>net5.0</TargetFrameworks>
-    <OutputType>Library</OutputType>
-    <AssemblyName>FrEee.Core</AssemblyName>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DocumentationFile>bin\Debug\FrEee.Core.xml</DocumentationFile>
-    <NoWarn>1591, 1572, 1573, 1711, 1712</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>FrEeeStrongName.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>bin\x86\Debug\FrEee.Core.xml</DocumentationFile>
-    <NoWarn>1591, 1572, 1573, 1711, 1712</NoWarn>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>bin\x64\Debug\FrEee.Core.xml</DocumentationFile>
-    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-		<OutputPath>bin\x64\Release\</OutputPath>
-		<CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+	<PropertyGroup>
+		<TargetFrameworks>net5.0</TargetFrameworks>
+		<OutputType>Library</OutputType>
+		<AssemblyName>FrEee.Core</AssemblyName>
+		<ProjectGuid>eca7a08b-992a-43ec-8d98-2ae887897343</ProjectGuid>
+		<Description>Open source Space Empires IV clone</Description>
 	</PropertyGroup>
-  <ItemGroup>
-    <Folder Include="Game\Objects\Combat\Simple\" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="IronPython">
-      <Version>2.7.9</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting">
-      <Version>3.4.0</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.3</Version>
-    </PackageReference>
-    <PackageReference Include="Svg">
-      <Version>3.0.102</Version>
-    </PackageReference>
-    <PackageReference Include="System.ComponentModel.Composition" Version="4.7.0" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-    <PackageReference Include="valueinjecter">
-      <Version>2.3.3</Version>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Game\Objects\Combat2\Battle_Space.cs" />
-    <Compile Remove="Game\Objects\Combat2\combatObjects.cs" />
-    <Compile Remove="Game\Objects\Combat2\CombatPlanet.cs" />
-    <Compile Remove="Game\Objects\Combat2\CombatReplayLog.cs" />
-    <Compile Remove="Game\Objects\Combat2\CombatSeeker.cs" />
-    <Compile Remove="Game\Objects\Combat2\CombatShot.cs" />
-    <Compile Remove="Game\Objects\Combat2\CombatVehicle.cs" />
-    <Compile Remove="Game\Objects\Combat2\CombatWeapon.cs" />
-    <Compile Remove="Game\Objects\Combat2\ControlledCombatObject.cs" />
-    <Compile Remove="Game\Objects\Combat2\StrategyBlocks.cs" />
-    <Compile Remove="Game\Objects\Combat2\StrategyObject.cs" />
-    <Compile Remove="Game\Objects\Combat2\Tactics\Tactic.cs" />
-    <Compile Remove="Game\Objects\Combat2\Tactics\TacticBlock.cs" />
-    <Compile Remove="Game\Objects\Combat2\Tactics\TacticNode.cs" />
-    <Compile Remove="Game\Objects\Combat\Simple\Battle.cs" />
-    <Compile Remove="Game\Objects\Commands\EditStrategyCommand.cs" />
-  </ItemGroup>
-  <PropertyGroup>
-    <PackageProjectUrl>http://edkolis.com/freee</PackageProjectUrl>
-    <ApplicationIcon>FrEee.ico</ApplicationIcon>
-  </PropertyGroup>
+	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
+	<ItemGroup>
+		<PackageReference Include="IronPython" Version="2.7.9" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="3.4.0" />
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+		<PackageReference Include="Svg" Version="3.0.102" />
+		<PackageReference Include="System.ComponentModel.Composition" Version="4.7.0" />
+		<PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+		<PackageReference Include="valueinjecter" Version="2.3.3" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Remove="Game\Objects\Combat2\*.cs" />
+		<Compile Remove="Game\Objects\Combat2\Tactics\*.cs" />
+		<Compile Remove="Game\Objects\Combat\Simple\Battle.cs" />
+		<Compile Remove="Game\Objects\Commands\EditStrategyCommand.cs" />
+	</ItemGroup>
 </Project>
