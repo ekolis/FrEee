@@ -16,6 +16,8 @@
     <PackageProjectUrl>http://edkolis.com/freee</PackageProjectUrl>
 
     <Description>Unit tests for FrEee</Description>
+
+    <ApplicationIcon>FrEee.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>

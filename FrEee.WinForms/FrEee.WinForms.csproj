@@ -10,6 +10,7 @@
         <Copyright>Copyright © 2013-2020</Copyright>
         <PackageProjectUrl>http://edkolis.com/freee</PackageProjectUrl>
         <Description>Windows Forms GUI for FrEee</Description>
+        <ApplicationIcon>FrEee.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>

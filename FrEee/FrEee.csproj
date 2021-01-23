@@ -89,5 +89,6 @@
   </ItemGroup>
   <PropertyGroup>
     <PackageProjectUrl>http://edkolis.com/freee</PackageProjectUrl>
+    <ApplicationIcon>Pictures\FrEee.ico</ApplicationIcon>
   </PropertyGroup>
 </Project>
