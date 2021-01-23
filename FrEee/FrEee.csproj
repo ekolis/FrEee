@@ -36,9 +36,6 @@
 		<CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
 	</PropertyGroup>
   <ItemGroup>
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-  <ItemGroup>
     <None Update="GameSetups\Quickstart.gsu">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
