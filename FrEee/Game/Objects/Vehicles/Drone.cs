@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility.Extensions;
@@ -16,7 +16,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public override bool CanWarp
 		{
-			get { return true; }
+			get { return !Owner?.IsMinorEmpire ?? true; }
 		}
 
 		ICargoContainer IContainable<ICargoContainer>.Container
