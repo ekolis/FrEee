@@ -89,7 +89,7 @@ namespace FrEee.Game.Objects.Space
 		/// If planets had engines, they could warp...
 		/// (Sure, why not?)
 		/// </summary>
-		public override bool CanWarp => true;
+		public override bool CanWarp => !Owner?.IsMinorEmpire ?? true;
 
 		public Cargo Cargo => Colony?.Cargo;
 
