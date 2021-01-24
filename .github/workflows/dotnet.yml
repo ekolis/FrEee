@@ -25,7 +25,8 @@ jobs:
     #  uses: skx/github-action-publish-binaries@release-0.14
     #- name: Test
     #  run: dotnet test --no-restore --verbosity normal
-    - shell: bash
+    - name: Create Artifact
+      shell: bash
       run: |
         mkdir Artifact
         mkdir Artifact/FrEee.WinForms
