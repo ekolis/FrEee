@@ -1,0 +1,132 @@
+=======================================================================================
+STELLAR ABILITY TYPES DATA FILE
+=======================================================================================
+
+Name:
+  Any identifying name for this Stellar Type. This will be used in the 
+  System Types file to specify this set of possible abilities.
+
+Number of Poss Abilities:
+  The number of possible abilities for this stellar type. This can range
+  from 0 - 100.
+
+Ability X Chance:
+  The chance that this ability will be present in the stellar object. 
+  This chance can range from 0 - 1000. The total of all the chances
+  for all of the abilities of this Stellar Object should be equal to or
+  less than 1000. Values are in 10ths of a percent.
+
+Ability X Type:
+  System - Sight Obscuration, System - Sensor Interference, System - Shield Disruption,
+  System - Damage, System - Ability Required
+
+Ability X Descr: 
+  Any general description of this ability.
+
+Ability X Val 1:
+  This value is dependent on the Ability X Type. See the Abilities description text 
+  file for more information.
+
+Ability X Val 2: 
+  This value is dependent on the Ability X Type. See the Abilities description text 
+  file for more information.
+
+=======================================================================================
+*BEGIN*
+=======================================================================================
+
+Name                      := Normal Planet
+Number of Poss Abilities  := 7
+Ability 1 Chance          := 5
+Ability 1 Type            := Ancient Ruins
+Ability 1 Descr           := There are ancient ruins on this planet from a long dead civilization.
+Ability 1 Val 1           := 1
+Ability 1 Val 2           := 0
+Ability 2 Chance          := 5
+Ability 2 Type            := Ancient Ruins
+Ability 2 Descr           := There are buried alien cities on this planet that have long been deserted.
+Ability 2 Val 1           := 2
+Ability 2 Val 2           := 0
+Ability 3 Chance          := 5
+Ability 3 Type            := Ancient Ruins
+Ability 3 Descr           := Sensors indicate some kind of advanced technological devices left on this planet.
+Ability 3 Val 1           := 3
+Ability 3 Val 2           := 0
+Ability 4 Chance          := 5
+Ability 4 Type            := Ancient Ruins Unique
+Ability 4 Descr           := We have detected advanced technology present on this planet.
+Ability 4 Val 1           := 1
+Ability 4 Val 2           := 0
+Ability 5 Chance          := 5
+Ability 5 Type            := Ancient Ruins Unique
+Ability 5 Descr           := We have detected advanced technology present on this planet.
+Ability 5 Val 1           := 2
+Ability 5 Val 2           := 0
+Ability 6 Chance          := 5
+Ability 6 Type            := Ancient Ruins Unique
+Ability 6 Descr           := We have detected advanced technology present on this planet.
+Ability 6 Val 1           := 3
+Ability 6 Val 2           := 0
+Ability 7 Chance          := 5
+Ability 7 Type            := Ancient Ruins Unique
+Ability 7 Descr           := We have detected advanced technology present on this planet.
+Ability 7 Val 1           := 4
+Ability 7 Val 2           := 0
+
+Name                      := Normal Asteroids
+Number of Poss Abilities  := 0
+
+Name                      := Normal Destroyed Star
+Number of Poss Abilities  := 0
+
+Name                      := Normal Star
+Number of Poss Abilities  := 2
+Ability 1 Chance          := 100
+Ability 1 Type            := Star - Unstable
+Ability 1 Descr           := Star is unstable and could collapse at any time.
+Ability 1 Val 1           := 0
+Ability 1 Val 2           := 0
+Ability 2 Chance          := 100
+Ability 2 Type            := Star - Unstable
+Ability 2 Descr           := Star is prone to violent eruptions and has an unstable core.
+Ability 2 Val 1           := 0
+Ability 2 Val 2           := 0
+
+Name                      := Normal Storm
+Number of Poss Abilities  := 4
+Ability 1 Chance          := 250
+Ability 1 Type            := Sector - Damage
+Ability 1 Descr           := Turbulence causes damage to space vehicles.
+Ability 1 Val 1           := 200
+Ability 1 Val 2           := 1
+Ability 2 Chance          := 250
+Ability 2 Type            := Sector - Sight Obscuration
+Ability 2 Descr           := This storm is opaque to most scanners.
+Ability 2 Val 1           := 3
+Ability 2 Val 2           := 0
+Ability 3 Chance          := 250
+Ability 3 Type            := Sector - Sensor Interference
+Ability 3 Descr           := There is heavy radiation causing combat sensor interference.
+Ability 3 Val 1           := -50
+Ability 3 Val 2           := 0
+Ability 4 Chance          := 250
+Ability 4 Type            := Sector - Shield Disruption
+Ability 4 Descr           := Ion radiation renders all shields useless. 
+Ability 4 Val 1           := 5000
+Ability 4 Val 2           := 0
+
+Name                      := Normal Warp Point
+Number of Poss Abilities  := 0
+
+Name                      := Unstable Warp Point
+Number of Poss Abilities  := 1
+Ability 1 Chance          := 1000
+Ability 1 Type            := Warp Point - Turbulence
+Ability 1 Descr           := Strong gravitic fields causes damage to ships.
+Ability 1 Val 1           := 200
+Ability 1 Val 2           := 0
+
+=======================================================================================
+*END*
+=======================================================================================
+

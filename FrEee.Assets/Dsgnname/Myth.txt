@@ -1,0 +1,41 @@
+Zeus
+Ares
+Athena
+Apollo
+Aphrodite
+Mars
+Demeter
+Dyonysis
+Narcissus
+Persephone
+Hermes
+Calypso
+Achilles
+Hercules
+Poseidon
+Cyclops
+Centaur
+Red Dragon
+Green Dragon
+Blue Dragon
+Black Dragon
+Silver Dragon
+Gold Dragon
+White Dragon
+Vampire
+Zombie
+Storm Giant
+Hill Giant
+Stone Golem
+Iron Golem
+Beholder
+Black Pudding
+Doppleganger
+Phoenix
+Wyvern
+Wraith
+Sea Witch
+Demon
+Daemon
+Will O Wisp
+

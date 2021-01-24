@@ -1,0 +1,14 @@
+Vehicle Control
+Shields
+Engines
+Weapons
+Armor
+Sensors
+Construction
+Colonizing
+Miscellaneous
+Cargo
+Unit Launch
+Supply
+Remote Mining
+Stellar Manipulation

@@ -1,0 +1,14 @@
+Empire
+Hegemony
+Alliance
+Oligarchy
+Confederation
+Protectorate
+Consortium
+Federation
+Commonwealth
+Imperium
+Hive
+Clan
+Society
+Collective

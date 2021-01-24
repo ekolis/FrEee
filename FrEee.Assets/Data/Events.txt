@@ -1,0 +1,262 @@
+=======================================================================================
+EVENTS DATA FILE
+=======================================================================================
+
+Type:
+Ship - Damage, 
+Ship - Lose Movement, 
+Ship - Lose Supply, 
+Ship - Experience Change, 
+Ship - Cargo Damage, 
+Ship - Moved,
+Planet - Conditions Change, 
+Planet - Value Change, 
+Planet - Population Change, 
+Planet - Population Anger Change, 
+Planet - Population Riot, 
+Planet - Population Rebel, 
+Planet - Cargo Damage, 
+Planet - Facility Damage, 
+Points - Change, 
+Research - Delete Project, 
+Intel - Delete Project, 
+Planet - Created
+Planet - Destroyed
+Star - Created
+Star - Destroyed
+Warp Point - Closed
+Warp Point - Opened
+Planet - Plague
+Planet - Plague Cured
+
+
+Replacement Symbols used for Messages: 
+[%SystemName]          - Target System Name           
+[%SectorName]          - Target Sector Name (Number)
+[%SourceEmperorName]   - Source Emperor's Name (includes Title)
+[%SourceEmpireName]    - Source Empire Name (includes Empire Type)
+[%VehicleName]         - Vehicle Name
+[%VehicleSize]         - Vehicle Size
+[%PlanetName]          - Planet Name
+[%DesignName]          - Design Name
+[%TechName]            - Tech Area Name
+[%TreatyName]          - Political Treaty
+[%FacilityName]        - Facility Name
+[%StarName]            - Star Name
+[%WarpPointName]       - Warp Point Name
+[%ActualAmount]        - Actual Effect Amount (Can't be used for Start Message)
+
+Severity:
+ Low, Medium, High, Catastrophic
+
+Message To:
+  None, Owner, Sector, System, All
+
+Time Till Completion:
+  If this number is greater than zero, then this is a timed event.
+  This will be approximately the number of turns until the event occurs.
+  The Start Message is given at the beginning, and the Message is given
+  at the end.
+
+=======================================================================================
+*BEGIN*
+=======================================================================================
+
+Type                      := Ship - Damage
+Severity                  := Low
+Effect Amount             := 50
+Message To                := Owner
+Num Messages              := 1
+Message Title 1           := Ion Storm
+Message 1                 := An ion storm has damaged ship [%VehicleName] in the [%SystemName] system. 
+Picture                   := ShipDamaged
+Time Till Completion      := 0
+Num Start Messages        := 0
+
+Type                      := Ship - Lose Movement
+Severity                  := Low
+Effect Amount             := 1
+Message To                := Owner
+Num Messages              := 1
+Message Title 1           := Engine Accident
+Message 1                 := An accident aboard [%VehicleName] has caused it to lose some of its movement. 
+Picture                   := ShipDamaged
+Time Till Completion      := 0
+Num Start Messages        := 0
+
+Type                      := Ship - Lose Supply
+Severity                  := Low
+Effect Amount             := 1000
+Message To                := Owner
+Num Messages              := 1
+Message Title 1           := Fuel Leak
+Message 1                 := A fuel leak aboard [%VehicleName] has caused it to lose some of its supplies. 
+Picture                   := ShipDamaged
+Time Till Completion      := 0
+Num Start Messages        := 0
+
+Type                      := Ship - Cargo Damage
+Severity                  := Low
+Effect Amount             := 1000
+Message To                := Owner
+Num Messages              := 1
+Message Title 1           := Explosive Decompression
+Message 1                 := An accident aboard [%VehicleName] has caused it to expel its cargo into space. All of its cargo has been lost. 
+Picture                   := ShipDamaged
+Time Till Completion      := 0
+Num Start Messages        := 0
+
+Type                      := Ship - Moved
+Severity                  := Low
+Effect Amount             := 3
+Message To                := Owner
+Num Messages              := 1
+Message Title 1           := Spatial Anomaly
+Message 1                 := A freak spatial anomaly has transported [%VehicleName] to an entirely different solar system! 
+Picture                   := ShipMoved
+Time Till Completion      := 0
+Num Start Messages        := 0
+
+Type                      := Planet - Conditions Change
+Severity                  := Low
+Effect Amount             := -5
+Message To                := Owner
+Num Messages              := 1
+Message Title 1           := Cosmic Storm
+Message 1                 := A cosmic storm has damaged the conditions on planet [%PlanetName]. 
+Picture                   := PlanetConditionsWorse
+Time Till Completion      := 0
+Num Start Messages        := 0
+
+Type                      := Planet - Value Change
+Severity                  := Low
+Effect Amount             := -20
+Message To                := Owner
+Num Messages              := 1
+Message Title 1           := Cosmic Storm
+Message 1                 := A cosmic storm has damaged the value of planet [%PlanetName]. 
+Picture                   := PlanetValueWorse
+Time Till Completion      := 0
+Num Start Messages        := 0
+
+Type                      := Planet - Population Change
+Severity                  := Low
+Effect Amount             := -50
+Message To                := Owner
+Num Messages              := 1
+Message Title 1           := Earthquake
+Message 1                 := An earthquake on planet [%PlanetName] has killed [%ActualAmount]M people.
+Picture                   := FacilityDestroyed
+Time Till Completion      := 0
+Num Start Messages        := 0
+
+Type                      := Planet - Population Rebel
+Severity                  := High
+Effect Amount             := 1
+Message To                := Owner
+Num Messages              := 1
+Message Title 1           := Rebellion
+Message 1                 := The population of [%PlanetName] has rebelled against us and formed a new nation.
+Picture                   := PopulationAngry
+Time Till Completion      := 0
+Num Start Messages        := 0
+
+Type                      := Planet - Facility Damage
+Severity                  := Medium
+Effect Amount             := 2
+Message To                := Owner
+Num Messages              := 1
+Message Title 1           := Meteor Strike
+Message 1                 := [%PlanetName] has been hit by a rogue meteor. [%ActualAmount] facilities have been destroyed.
+Picture                   := FacilityDestroyed
+Time Till Completion      := 0
+Num Start Messages        := 0
+
+Type                      := Planet - Cargo Damage
+Severity                  := Medium
+Effect Amount             := 100
+Message To                := Owner
+Num Messages              := 1
+Message Title 1           := Meteor Strike
+Message 1                 := [%PlanetName] has been hit by a rogue meteor. There has been damage to the cargo stored there.
+Picture                   := FacilityDestroyed
+Time Till Completion      := 0
+Num Start Messages        := 0
+
+Type                      := Points - Change
+Severity                  := Medium
+Effect Amount             := -3000
+Message To                := Owner
+Num Messages              := 1
+Message Title 1           := Space Rust
+Message 1                 := Space Rust has infected much of our resource stores. We have lost [%ActualAmount] resources.
+Picture                   := FacilityDestroyed
+Time Till Completion      := 0
+Num Start Messages        := 0
+
+Type                      := Planet - Plague
+Severity                  := Medium
+Effect Amount             := 1
+Message To                := System
+Num Messages              := 1
+Message Title 1           := Plague
+Message 1                 := A deadly plague has broken out on [%PlanetName]. The people are crying out for a cure!
+Picture                   := PlagueBreaksOut
+Time Till Completion      := 0
+Num Start Messages        := 0
+
+Type                      := Planet - Population Change
+Severity                  := Medium
+Effect Amount             := -100
+Message To                := Owner
+Num Messages              := 1
+Message Title 1           := Fire Storm
+Message 1                 := A fire storm has struck [%PlanetName] in the [%SystemName] system. [%ActualAmount]M were killed in the storm.
+Picture                   := DetectProblem
+Time Till Completion      := 3
+Num Start Messages        := 1
+Start Message Title 1     := Fire Storm
+Start Message 1           := A massive fire storm is sweeping over [%PlanetName]. It will kill millions of people in approximately 0.3 years.
+
+Type                      := Planet - Destroyed
+Severity                  := Catastrophic
+Effect Amount             := 1
+Message To                := System
+Num Messages              := 1
+Message Title 1           := 
+Message 1                 := 
+Picture                   := PlanetDestroyed
+Time Till Completion      := 10
+Num Start Messages        := 1
+Start Message Title 1     := Core Instability Detected
+Start Message 1           := A growing core instability has been detected within planet [%PlanetName]. Our scientists predict it will destroy itself in approximately 1 year.
+
+Type                      := Star - Destroyed
+Severity                  := Catastrophic
+Effect Amount             := 1
+Message To                := System
+Num Messages              := 1
+Message Title 1           := 
+Message 1                 := 
+Picture                   := StarDestroyed
+Time Till Completion      := 30
+Num Start Messages        := 1
+Start Message Title 1     := Plasma Instability Detected
+Start Message 1           := A plasma instability has been detected within the star [%StarName]. Our scientists predict it will destroy itself in approximately 3 years.
+
+Type                      := Warp Point - Closed
+Severity                  := High
+Effect Amount             := 1
+Message To                := System
+Num Messages              := 1
+Message Title 1           := 
+Message 1                 := 
+Picture                   := WPClosed
+Time Till Completion      := 5
+Num Start Messages        := 1
+Start Message Title 1     := Warp Point Fluctuation Detected
+Start Message 1           := [%WarpPointName] is fluctuating from gravitational shear forces. Our scientists conclude it will collapse within 0.5 years. 
+
+=======================================================================================
+*END*
+=======================================================================================

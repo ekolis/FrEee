@@ -1,0 +1,238 @@
+Abjurer
+Acid Arrow
+Acid Bolt
+Acid Cloud
+Acid Lash
+Acid Storm
+Adept
+Agannazar
+Air Mage
+Airbolt
+Alacrity
+Alchemist
+Alhoon
+Anagakok
+Arcana
+Arcane
+Archmage
+Arrow of Bone
+Artificer
+Astral
+Aura
+Ball Lightning
+Barrin
+Battle Mage
+Bebilith
+Belker
+Bigby
+Blacksphere
+Blackstaff
+Blade of Doom
+Blizzard
+Bodak
+Bone Blade
+Bone Javelin
+Book
+Burning Hands
+Chain Lightning
+Channeller
+Chaos Shield
+Chill Touch
+Chromatic Blade
+Chromatic Orb
+Chronomancer
+Circle of Flame
+Cloudkill
+Color Spray
+Cone of Cold
+Conjurer
+Crystal Dagger
+Crystal Dirk
+Curse
+Cyclone
+Dancing Lights
+Darkbolt
+Darkning Bolt
+Death Spell
+Defiler
+Dimensionalist
+Disintigrate
+Disruption
+Diviner
+Djinni
+Draco-lich
+Dragon
+Dragon Breath
+Drawmij
+Dream Mage
+Earth Mage
+Efreeti
+Eladrin
+Elementalist
+Elminster
+Elron
+Elros
+Emirokil
+Enchanter
+Energy Drain
+Evoker
+Familiar
+Finger of Death
+Fire Burst
+Fire Lance
+Fire Mage
+Fire Phantom
+Fire Shield
+Fire Storm
+Fireball
+Fireball
+Firestaff
+Fist of Stone
+Flame Arrow
+Flame Ray
+Flaming Blade
+Flaming Fist
+Flaming Sphere
+Flying Fist
+Force Mage
+Frost Mage
+Frost Shroud
+Frostfire
+Galeb Dhur
+Gandalf
+Geas
+Genie
+Ghost Armor
+Ghul
+Golem
+Grimoire
+Healer Mage
+Herbalist
+Hex
+Homonculus
+Ice Knife
+Ice Storm
+Icelance
+Illusionist
+Incantation
+Incantrix
+Incendiary Cloud
+Initiate
+Invisible Stalker
+Invoker
+Ironguard
+Janni
+Lance of Disruption
+Leomund
+Libram
+Lich
+Light
+Lightning Bolt
+Lightning Bolt
+Lightning Rod
+Lightning Storm
+Lightning Strike
+Maelstrom
+Mage
+Magic Fist
+Magic Missile
+Magic Staff
+Melf
+Mentalist
+Metamorphosis
+Meteor Shower
+Meteor Swarm
+Mordenkainen
+Mystic
+Mythal
+Nature Mage
+Naz-gul
+Necromancer
+Neogi
+Neophyte
+Nystul
+Nystul
+Omnivancer
+Otiluke
+Otto
+Paramander
+Petrification
+Phantasmagoria
+Phantasmal Force
+Phantasmal Killer
+Phantom
+Phantom Wind
+Poison
+Polymorph
+Preserver
+Quasit
+Radagast
+Rary
+Reggelid
+Rune
+Sage
+Sauron
+Savant
+Scroll
+Sea Mage
+Shadow Bolt
+Shadow Dancer
+Shield
+Shield Guardian
+Shocking Grasp
+Skybolt
+Solar
+Song Mage
+Sorcerer
+Sorcerer-King
+Sorceress
+Spectral Force
+Spectral Hand
+Spellshaper
+Storm Mage
+Summoner
+Sunburst
+Technomancer
+Telekinesis
+Teleportation
+Tenser
+Thunder Lance
+Thunder Staff
+Tiefling
+Tome
+Transmuter
+Urza
+Volrath
+Vortex
+Wall of Bones
+Wall of Fire
+Wall of Fog
+Wall of Force
+Wall of Gloom
+Wall of Ice
+Wall of Iron
+Wall of Sand
+Wall of Stone
+Wall of Thorns
+Wall of Water
+Wall of Wood
+War Wizard
+Warlock
+Watch-Mage
+Water Mage
+Weather Mage
+Web
+Wild Mage
+Wildfire
+Wildwind
+Wind Blade
+Wind Wall
+Witch
+Wizard
+Wizard Eye
+Wizard Sight
+Wu Jen
+Wylunde
+Yrthak
+Yuan-ti
+Zephyr

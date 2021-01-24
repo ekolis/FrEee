@@ -1,0 +1,143 @@
+Agincourt
+Ajax
+Alabama
+Alexander
+Anson
+Arkansas
+Arizona
+Barham
+Bayern
+Bellerophon
+Benbow
+Bismarck
+Blucher
+Borodino
+Bouvet
+Bretagne
+California
+Canada
+Canopus
+Centurion
+Collingwood
+Colorado
+Colossus
+Conqueror
+Courageous
+Dandolo
+Derfflinger
+Dreadnought
+Deutschland
+Duke of York
+Dunkerque
+Erin
+Foch
+Frederich Der Grosse
+Fuso
+Goeben
+Golith
+Gneisenau
+Graf Spee
+Grosser Kurfuerst
+Hannover
+Haruna
+Helgoland
+Hercules
+Hessen
+Hiei
+Hindenberg
+Hood
+Howe
+Hyuga
+Idaho
+Indefatigable
+Inflexible
+Indiana
+Invincible
+Iowa
+Iron Duke
+Ise
+Kaiser
+King George V
+Kirishima
+Koenig
+Kongo
+Kronprinz Wilhelm
+Lemnos
+Lion
+Littorio
+Lord Nelson
+Lorraine
+Luetzow
+Malaya
+Markgraf
+Marlborough
+Maryland
+Massachusetts
+Mississippi
+Missouri
+Moltke
+Monarch
+Musashi
+Mutsu
+Nagato
+Nassau
+Neptune
+New Jersey
+New Mexico
+New York
+New Zealand
+Nevada
+North Carolina
+Oklahoma
+Oldenburg
+Orion
+Ostfriesland
+Pennsylvania
+Petropavlosk
+Pommern
+Posen
+Provence
+Prince of Wales
+Princess Royal
+Prinz Regent Luitpold
+Queen Elizabeth
+Queen Mary
+Ramillies
+Rheinland
+Renown
+Repulse
+Revenge
+Resolution
+Richelieu
+Rodney
+Royal Oak
+Royal Sovereign
+Scharnhorst
+Scheer
+Schlesien
+Schleswig-Holstein
+Seydlitz
+South Dakota
+St. Vincent
+Strasbourg
+Superb
+Suvaroff
+Temeraire
+Tennessee
+Texas
+Thueringin
+Thunderer
+Tiger
+Tirpitz
+Tzarevotcj
+Valiant
+Vanguard
+Vittorio Veneto
+Von Der Tann
+Warspite
+Washington
+Westfalen
+West Virginia
+Wisconsin
+Yamashiro
+Yamato

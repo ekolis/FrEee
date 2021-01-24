@@ -3,16 +3,10 @@
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net5.0-windows</TargetFramework>
 		<UseWindowsForms>true</UseWindowsForms>
-		<Product>FrEee</Product>
-		<Company />
-		<Version>0.0.9</Version>
-		<Copyright>Copyright © 2013-2021</Copyright>
-		<PackageProjectUrl>http://edkolis.com/freee</PackageProjectUrl>
 		<Description>Windows Forms GUI for FrEee</Description>
-		<ApplicationIcon>FrEee.ico</ApplicationIcon>
-		<Nullable>enable</Nullable>
 		<StartupObject>FrEee.WinForms.Program</StartupObject>
 	</PropertyGroup>
+	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
 	<ItemGroup>
 		<PackageReference Include="IronPython" Version="2.7.11" />
 		<PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.1.0" />
@@ -20,8 +14,7 @@
 		<PackageReference Include="NAudio" Version="1.10.0" />
 		<PackageReference Include="NAudio.Vorbis" Version="1.2.0" />
 		<PackageReference Include="System.ComponentModel.Composition" Version="5.0.0" />
-	</ItemGroup>
-	<ItemGroup>
+		<ProjectReference Include="..\FrEee.Assets\FrEee.Assets.csproj" />
 		<ProjectReference Include="..\FrEee\FrEee.csproj" />
 	</ItemGroup>
 	<ItemGroup>
@@ -38,6 +31,6 @@
 		</EmbeddedResource>
 	</ItemGroup>
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="call post-build.bat $(OutDir) $(ProjectDir)" />
+	  <Exec Command="post-build.bat" />
 	</Target>
 </Project>

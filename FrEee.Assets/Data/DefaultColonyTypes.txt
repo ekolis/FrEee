@@ -1,0 +1,32 @@
+=======================================================================================
+DEFAULT COLONY TYPES DATA FILE
+=======================================================================================
+
+These are the default starting Colony Types for every player.
+
+Name:
+  The short name of the colony type.
+
+=======================================================================================
+*BEGIN*
+=======================================================================================
+
+Name                 := Military Installation
+
+Name                 := Mining Colony
+
+Name                 := Farming Colony
+
+Name                 := Refining Colony
+
+Name                 := Resupply Base
+
+Name                 := Research Compound
+
+Name                 := Intelligence Compound
+
+Name                 := Construction Yard
+
+=======================================================================================
+*END*
+=======================================================================================

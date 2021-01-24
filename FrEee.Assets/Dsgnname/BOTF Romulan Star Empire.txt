@@ -1,0 +1,225 @@
+R.N.S. Albatross
+R.N.S. Apnex
+R.N.S. Argus
+R.N.S. Baetis
+R.N.S. Battle Roc
+R.N.S. Battlecrow
+R.N.S. Battlehawk
+R.N.S. Beehive
+R.N.S. Beetle
+R.N.S. Besra
+R.N.S. Black Argus
+R.N.S. Black Dove
+R.N.S. Black Finch
+R.N.S. Black Hawk
+R.N.S. Black Heron
+R.N.S. Black Kite
+R.N.S. Black Owl
+R.N.S. Black Raven
+R.N.S. Black Roc
+R.N.S. Black Swan
+R.N.S. Blackbill
+R.N.S. Blackbird
+R.N.S. Blackwing
+R.N.S. Blood Comet
+R.N.S. Blood Crow
+R.N.S. Blood Heron
+R.N.S. Blood Kite
+R.N.S. Blood Owl
+R.N.S. Blood Raven
+R.N.S. Blood Roc
+R.N.S. Bloodcrown
+R.N.S. Bloodhawk
+R.N.S. Bloodwing
+R.N.S. Blue Dove
+R.N.S. Blue Eagle
+R.N.S. Blue Falcon
+R.N.S. Blue Finch
+R.N.S. Blue Heron
+R.N.S. Blue Kite
+R.N.S. Blue Macaw
+R.N.S. Blue Petrel
+R.N.S. Blue Robin
+R.N.S. Blue Stork
+R.N.S. Bluebill
+R.N.S. Bluebird
+R.N.S. Bluejay
+R.N.S. Bobwhite
+R.N.S. Cha'Joh
+R.N.S. Cicada
+R.N.S. Comet
+R.N.S. Condor
+R.N.S. Cricket
+R.N.S. Crow
+R.N.S. Dark Comet
+R.N.S. Dark Eagle
+R.N.S. Dark Falcon
+R.N.S. Dark Heron
+R.N.S. Dark Kite
+R.N.S. Dark Martin
+R.N.S. Dark Raptor
+R.N.S. Dark Raven
+R.N.S. Darkfeather
+R.N.S. Darkwing
+R.N.S. D'deridex
+R.N.S. D'dredar
+R.N.S. Death Comet
+R.N.S. Death Crow
+R.N.S. Death Eagle
+R.N.S. Death Hawk
+R.N.S. Death Heron
+R.N.S. Death Kite
+R.N.S. Death Raven
+R.N.S. Death Roc
+R.N.S. Deathwing
+R.N.S. Decius
+R.N.S. Devoras
+R.N.S. Dragonfly
+R.N.S. D'renet
+R.N.S. D'retex
+R.N.S. D'ridren
+R.N.S. Drunella
+R.N.S. Eagle
+R.N.S. Falcon
+R.N.S. Fire Condor
+R.N.S. Fire Eagle
+R.N.S. Fire Kite
+R.N.S. Fire Martin
+R.N.S. Fire Owl
+R.N.S. Fire Petrel
+R.N.S. Fireback
+R.N.S. Firecrow
+R.N.S. Firehawk
+R.N.S. Flea
+R.N.S. Gadfly
+R.N.S. Gal Gath'thong
+R.N.S. Gannet
+R.N.S. Gnat
+R.N.S. Goraxus
+R.N.S. Goshawk
+R.N.S. Gull
+R.N.S. Gyrfalcon
+R.N.S. Haakona
+R.N.S. Hawk
+R.N.S. Hawkmoth
+R.N.S. Heron
+R.N.S. Hornet
+R.N.S. Horsefly
+R.N.S. Katydid
+R.N.S. Kazhara
+R.N.S. Kestrel
+R.N.S. Killdeer
+R.N.S. Killer Bee
+R.N.S. Kingfisher
+R.N.S. Kite
+R.N.S. Locust
+R.N.S. Mantis
+R.N.S. Martin
+R.N.S. Mayfly
+R.N.S. Merlin
+R.N.S. Mosquito
+R.N.S. Moth
+R.N.S. Night Eagle
+R.N.S. Night Heron
+R.N.S. Night Owl
+R.N.S. Night Raven
+R.N.S. Night Roc
+R.N.S. Nightcrow
+R.N.S. Nighthawk
+R.N.S. Nightwing
+R.N.S. Osprey
+R.N.S. Parasite
+R.N.S. Pelican
+R.N.S. Peregrine
+R.N.S. Petrel
+R.N.S. Pi
+R.N.S. Ptarmigan
+R.N.S. Queen Bee
+R.N.S. Quetzal
+R.N.S. Raptor
+R.N.S. Raven
+R.N.S. R'daran
+R.N.S. R'derex
+R.N.S. Red Comet
+R.N.S. Red Condor
+R.N.S. Red Crane
+R.N.S. Red Dove
+R.N.S. Red Falcon
+R.N.S. Red Finch
+R.N.S. Red Heron
+R.N.S. Red Kite
+R.N.S. Red Martin
+R.N.S. Red Petrel
+R.N.S. Red Raptor
+R.N.S. Red Raven
+R.N.S. Red Robin
+R.N.S. Red Shriek
+R.N.S. Red Stork
+R.N.S. Red Swan
+R.N.S. Red Tail
+R.N.S. Red Vulture
+R.N.S. Red Wren
+R.N.S. Redbill
+R.N.S. Redfeather
+R.N.S. Redwing
+R.N.S. Roach
+R.N.S. R'tan
+R.N.S. Sawfly
+R.N.S. Shadow Roc
+R.N.S. Shadowcrow
+R.N.S. Shadowhawk
+R.N.S. Shadowkite
+R.N.S. Shikra
+R.N.S. Silent Crow
+R.N.S. Silent Hawk
+R.N.S. Silent Kite
+R.N.S. Silent Owl
+R.N.S. Stealthcrow
+R.N.S. stealthkite
+R.N.S. Stealthwing
+R.N.S. Stonefly
+R.N.S. Storm Eagle
+R.N.S. Storm Hawk
+R.N.S. Storm Heron
+R.N.S. Storm Petrel
+R.N.S. Storm Raven
+R.N.S. Storm Roc
+R.N.S. Storm Wing
+R.N.S. Stormcrow
+R.N.S. Strom Owl
+R.N.S. Swarm
+R.N.S. Terix
+R.N.S. Termite
+R.N.S. Thunder Owl
+R.N.S. Thunderbird
+R.N.S. Thundercrow
+R.N.S. Thunderfly
+R.N.S. Thunderhawk
+R.N.S. Thunderkite
+R.N.S. Thunderwing
+R.N.S. Tick
+R.N.S. T'Pau
+R.N.S. Vulture
+R.N.S. War Comet
+R.N.S. War Crow
+R.N.S. War Eagle
+R.N.S. War Falcon
+R.N.S. War Hawk
+R.N.S. War Heron
+R.N.S. War Kestrel
+R.N.S. War Kite
+R.N.S. War Martin
+R.N.S. War Petrel
+R.N.S. War Vulture
+R.N.S. Wasp
+R.N.S. White Argus
+R.N.S. White Comet
+R.N.S. White Crane
+R.N.S. White Crow
+R.N.S. White Dove
+R.N.S. White Eagle
+R.N.S. White Hawk
+R.N.S. White Owl
+R.N.S. White Raven
+R.N.S. White Roc
+R.N.S. White Swan

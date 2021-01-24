@@ -1,0 +1,284 @@
+Acanthite
+Actinolite
+Adamite
+Aegirine
+Aeschynite
+Ajoite
+Agate
+Albite
+Alexandrite
+Allanite
+Altaite
+Alunite
+Amblygonite
+Amethyst
+Analcime
+Anapaite
+Anatase
+Andalusite
+Andersonite
+Andesine
+Andesite
+Andesite Porphyry
+Andradite
+Angelite
+Anorthosite
+Anhydrite
+Ankerite
+Anthracite
+Amphibole
+Amphibiolite Schist
+Amygdaloidal
+Apatite
+Aragonite
+Augite
+Arkose
+Ash
+Azurite
+Bakerite
+Baratovite
+Barite
+Basalt
+Biotite
+Biotite Mica
+Bixbyite
+Blodite
+Breccia
+Bronzitite
+Brucite
+Calaverite
+Calcite
+Calcite Vein
+Caledonite
+Calomel
+Cement
+Citrine
+Clay
+Clinopyroxene
+Clinopyroxenite
+Cryolite
+Chalcedony
+Chalk
+Chert
+Chlorite
+Chloritoid
+Coal
+Coesite
+Connermara Marble
+Conglomerate
+Cordierite
+Crenulation Cleavage
+Crystal
+Dacite
+Danburite
+Datolite
+Diabase
+Diaboleite
+Diamond
+Diorite
+Dolerite
+Dolomite
+Dundasite
+Dunite
+Eclogite
+Eclogite Retrograded
+Ellenbergerite
+Elpidote
+Emerald
+Epidote
+Erionite
+Esperite
+Fayalite
+Fedorite
+Feldspar
+Ferberite
+Fluorite
+Foliated Rock
+Foliation
+Gabbro
+Gadolinite
+Galena
+Garnet Mica
+Garnet Mica Schist
+Gem
+Gneiss
+Grain
+Granite
+Granitic Gneiss
+Granoblastic
+Granodiorite
+Granophyre
+Graphite
+Greenschist
+Greywacke
+Glaucophane
+Gypsum
+Gyrolite
+Halite
+Hematite
+Hessite
+Heulandite
+Horneblende
+Hornfels
+Hornfels Banded
+Hornfels Spotted
+Hpeite
+HydroMagnesite
+HydroZincite
+Hypersthene
+Hornblende
+Igneous Rock
+Ignimbirte
+Indicolite
+Inesite
+Iolite
+Jade
+Jadeite
+Jarosite
+Jordanite
+K-Spar
+Kaolinite
+Kimberlite
+Kinoite
+Komatiite
+Knaufite
+Kunzite
+Kyanite
+Labradorite
+Laueite
+Lazurite
+Leucite
+Limestone
+Limonite
+Linarite
+Magma
+Magnesite
+Magnetite
+Marble
+Mesh
+Mesolite
+Metamorphic Rock
+Mica
+Mica Schist
+Microcline
+Microsyenite
+Millarite
+Millerite
+Mimetite
+Mineral
+Minium
+Mixite
+Moctezumite
+Moldavite
+Monazite
+Morganite
+Muscovite
+Mylonite
+Myrmekite
+Nealite
+Nepheline
+Nepheline Basalt
+Niter
+Norite
+Obsidian
+Olivine
+Onyx
+Oolitic
+Oolitic Limestones
+Opal
+Orthoclase
+Orthopyroxene
+Otavite
+Pachnolite
+Palisades
+Palygorskite
+Papagoite
+Peridotite
+Phyllite
+Piemontite
+Pitchstone
+Plagioclase
+Poikilitic
+Porphyroblastic
+Porophyroclastic
+Pumice
+Pyrite
+Pyrite Cristals
+Pyroclastics
+Pyroxene
+Pyroxene Hormfels
+Quartz
+Quartz Coesited
+Quart8zite
+Raite
+Realgar
+Rhodolite
+Rhodonite
+Rhyolite
+Rock
+Ruby
+Rutile
+Sand
+Sanidine
+Sandstone
+Scheelite
+Scholzite
+Scorodite
+Scorzalite
+Scapolite
+Schist
+Scoria
+Sedimentary Rock
+Septarian Nodules
+Sericitic
+Sklodowskite
+Skutterudite
+Shale
+Shelly Limestone
+Silicon
+Sillicate
+Sillimanite
+Slate
+Snowflake Obsidian
+Spherulites
+Spinel
+Spinifex
+Sricite
+Staurolite
+Stilpnomelane
+Stone
+Subgrain
+Syenite
+Talc
+Talc-Termolite Schist
+Tanzanite
+Tektites
+Termolite
+Tincalconite
+Titanite
+Topaz
+Tonalite
+Tourmaline
+Tuff
+Turquoise
+Ulexite
+Uraninite
+Uranocircite
+Uvite
+Vauxite
+Vesicles
+Vesuvianite
+Vitrophyre
+Volcanic
+Volcanic Rock
+Walpurgite
+Wardite
+Whiteschist
+Wolfeite
+Wulfenite
+Xenotime
+Yuksporite
+Zeolite
+Zeunerite
+Zircon
+Zoisite
