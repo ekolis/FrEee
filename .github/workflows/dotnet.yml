@@ -37,4 +37,17 @@ jobs:
       with:
         name: FrEee.WinForms
         path: Artifact/FrEee.WinForms
-
+    - name: Create Release
+      uses: actions/create-release@v1
+      with:
+        tag_name: ${{github.ref}}
+        release_name: ${{github.ref}}
+        body: Auto-generated prerelease build
+        prerelease: true
+    - name: Upload a Release Asset
+      uses: actions/upload-release-asset@v1.0.2
+      with:
+          upload_url: ${{steps.create_release.outputs.upload_url}} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./FrEee.WinForms.zip
+          asset_name: FrEee.WinForms.zip
+          asset_content_type: application/zip
