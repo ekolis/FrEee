@@ -37,12 +37,18 @@ jobs:
       with:
         name: FrEee.WinForms
         path: Artifact/FrEee.WinForms
+    - name: Create Release Tag
+      id: createReleaseTag
+      uses: 2428392/gh-truncate-string-action@v1.0.0
+      with:
+        stringToTruncate: ${{github.sha}}
+        maxLength: 10
     - name: Create Release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{github.sha}}
+        tag_name: ${{steps.createReleaseTag.outputs.string}}
         release_name: ${{github.sha}}
         body: Auto-generated prerelease build
         prerelease: true
