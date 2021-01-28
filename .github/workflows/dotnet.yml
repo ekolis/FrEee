@@ -42,11 +42,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{github.ref}}
-        release_name: ${{github.ref}}
+        tag_name: ${{github.sha}}
+        release_name: ${{github.sha}}
         body: Auto-generated prerelease build
         prerelease: true
-        token: ${{ secrets.GITHUB_TOKEN }}
     - name: Upload a Release Asset
       uses: actions/upload-release-asset@v1
       env:
