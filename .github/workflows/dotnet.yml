@@ -1,55 +1,59 @@
 name: .NET
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+	push:
+		branches: [ master ]
+	pull_request:
+		branches: [ master ]
 
 jobs:
-  build:
+	build:
 
-    runs-on: windows-latest
+		runs-on: windows-latest
 
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
-    - name: Install dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-    #- name: github-action-publish-binaries
-    #  uses: skx/github-action-publish-binaries@release-0.14
-    #- name: Test
-    #  run: dotnet test --no-restore --verbosity normal
-    - name: Create Artifact
-      shell: bash
-      run: |
-        mkdir Artifact
-        mkdir Artifact/FrEee.WinForms
-        mkdir Artifact/FrEee.WinForms/FrEee
-        mv FrEee.WinForms/bin/Release/net5.0-windows/* Artifact/FrEee.WinForms/FrEee/
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: FrEee.WinForms
-        path: Artifact/FrEee.WinForms
-    - name: Create Release
-      uses: actions/create-release@v1
-      with:
-        tag_name: ${{github.ref}}
-        release_name: ${{github.ref}}
-        body: Auto-generated prerelease build
-        prerelease: true
-        token: ${{secrets.GITHUB_TOKEN}}  
-    - name: Upload a Release Asset
-      uses: actions/upload-release-asset@v1.0.2
-      with:
-          upload_url: ${{steps.create_release.outputs.upload_url}} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./FrEee.WinForms.zip
-          asset_name: FrEee.WinForms.zip
-          asset_content_type: application/zip
-          token: ${{secrets.GITHUB_TOKEN}}
+		steps:
+		- uses: actions/checkout@v2
+		- name: Setup .NET
+			uses: actions/setup-dotnet@v1
+			with:
+				dotnet-version: 5.0.x
+		- name: Install dependencies
+			run: dotnet restore
+		- name: Build
+			run: dotnet build --configuration Release --no-restore
+		#- name: github-action-publish-binaries
+		#	uses: skx/github-action-publish-binaries@release-0.14
+		#- name: Test
+		#	run: dotnet test --no-restore --verbosity normal
+		- name: Create Artifact
+			shell: bash
+			run: |
+				mkdir Artifact
+				mkdir Artifact/FrEee.WinForms
+				mkdir Artifact/FrEee.WinForms/FrEee
+				mv FrEee.WinForms/bin/Release/net5.0-windows/* Artifact/FrEee.WinForms/FrEee/
+		- name: Upload Artifact
+			uses: actions/upload-artifact@v2
+			with:
+				name: FrEee.WinForms
+				path: Artifact/FrEee.WinForms
+		- name: Create Release
+			uses: actions/create-release@v1
+			env:
+				GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+			with:
+				tag_name: ${{github.ref}}
+				release_name: ${{github.ref}}
+				body: Auto-generated prerelease build
+				prerelease: true
+				token: ${{secrets.GITHUB_TOKEN}}	
+		- name: Upload a Release Asset
+			uses: actions/upload-release-asset@v1.0.2
+			env:
+				GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+			with:
+					upload_url: ${{steps.create_release.outputs.upload_url}} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+					asset_path: ./FrEee.WinForms.zip
+					asset_name: FrEee.WinForms.zip
+					asset_content_type: application/zip
+					token: ${{secrets.GITHUB_TOKEN}}
