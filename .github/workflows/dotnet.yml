@@ -22,7 +22,7 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
-    - name: dotnet-tests-report
+    - name: Test
       uses: zyborg/dotnet-tests-report@v1.3.0
       with:
         project_path: FrEee.Tests/FrEee.Tests.csproj
@@ -35,24 +35,24 @@ jobs:
         skip_check_run: false
         set_check_status_from_test_outcome: false # true = fail the build if tests fail
         #trx_xsl_path: # optional
-    - name: Prepare Artifact Files
+    - name: Prepare artifact files
       shell: bash
       run: |
         mkdir Artifact
         mkdir Artifact/FrEee.WinForms
         mkdir Artifact/FrEee.WinForms/FrEee
         mv FrEee.WinForms/bin/Release/net5.0-windows/* Artifact/FrEee.WinForms/FrEee/
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: FrEee.WinForms.zip
-        path: Artifact/FrEee.WinForms/FrEee
-    - name: Create Release Tag
+    - name: Create release tag
       id: createReleaseTag
       uses: 2428392/gh-truncate-string-action@v1.0.0
       with:
         stringToTruncate: ${{github.sha}}
         maxLength: 10
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}
+        path: Artifact/FrEee.WinForms
     - name: Create Release
       id: createRelease
       uses: actions/create-release@v1
@@ -74,7 +74,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-          upload_url: ${{ steps.createRelease.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: FrEee.WinForms.zip
-          asset_name: FrEee.WinForms.zip
+          upload_url: "${{ steps.createRelease.outputs.upload_url }}" # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}
+          asset_name: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}
           asset_content_type: application/zip
