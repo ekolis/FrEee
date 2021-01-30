@@ -45,10 +45,12 @@ jobs:
         release_name: ${{github.sha}}
         body: Auto-generated prerelease build
         prerelease: true
-    - name: Upload Release Artifact
-      uses: Roang-zero1/github-upload-release-artifacts-action@v2.1.0
+    - name: Upload a Release Asset
+      uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        args: Artifact/FrEee.WinForms/FrEee/FrEee.WinForms.zip
-
+          upload_url: ${{ steps.createRelease.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: Artifact/FrEee.WinForms/FrEee//FrEee.WinForms.zip
+          asset_name: FrEee.WinForms.zip
+          asset_content_type: application/zip
