@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
@@ -130,7 +130,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="obj"></param>
 		/// <param name="includeShared"></param>
 		/// <returns></returns>
-		public static IEnumerable<Ability> AncestorAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		public static IEnumerable<Ability> AncestorAbilities(this IAbilityObject obj, Func<IAbilityObject, bool>? sourceFilter = null)
 		{
 			var abils = new List<Ability>();
 			foreach (var p in obj.Ancestors(sourceFilter).ExceptSingle(null))
@@ -138,7 +138,7 @@ namespace FrEee.Utility.Extensions
 			return abils.Where(a => a.Rule == null || a.Rule.CanTarget(obj.AbilityTarget));
 		}
 
-		public static IEnumerable<IAbilityObject> Ancestors(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		public static IEnumerable<IAbilityObject> Ancestors(this IAbilityObject obj, Func<IAbilityObject, bool>? sourceFilter = null)
 		{
 			if (obj == null)
 				yield break;
@@ -178,7 +178,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="obj"></param>
 		/// <param name="includeShared"></param>
 		/// <returns></returns>
-		public static IEnumerable<Ability> DescendantAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		public static IEnumerable<Ability> DescendantAbilities(this IAbilityObject obj, Func<IAbilityObject, bool>? sourceFilter = null)
 		{
 			var abils = new List<Ability>();
 			foreach (var c in obj.Descendants(sourceFilter))
@@ -186,14 +186,15 @@ namespace FrEee.Utility.Extensions
 			return abils.Where(a => a.Rule == null || a.Rule.CanTarget(obj.AbilityTarget));
 		}
 
-		public static IEnumerable<IAbilityObject> Descendants(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		public static IEnumerable<IAbilityObject> Descendants(this IAbilityObject obj, Func<IAbilityObject, bool>? sourceFilter = null)
 		{
-			var result = new HashSet<IAbilityObject>();
+			// we can't use a HashSet here because e.g. ships can have multiples of the same engine template installed
+			List<IAbilityObject> result = new();
 			if (obj != null)
 			{
 				foreach (var c in obj.Children)
 				{
-					if (c != null && !result.Contains(c) && (sourceFilter == null || sourceFilter(c)))
+					if (c is not null && (sourceFilter is null || sourceFilter(c)))
 					{
 						result.Add(c);
 						foreach (var x in c.Descendants(sourceFilter))
@@ -392,7 +393,7 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="obj"></param>
 		/// <returns></returns>
-		public static IEnumerable<Ability> SharedAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		public static IEnumerable<Ability> SharedAbilities(this IAbilityObject obj, Func<IAbilityObject, bool>? sourceFilter = null)
 		{
 			// Unowned objects cannot have abilities shared to them.
 			var ownable = obj as IOwnableAbilityObject;
@@ -477,19 +478,22 @@ namespace FrEee.Utility.Extensions
 		/// <param name="obj"></param>
 		/// <param name="includeShared"></param>
 		/// <returns></returns>
-		public static IEnumerable<Ability> UnstackedAbilities(this IAbilityObject obj, bool includeShared, Func<IAbilityObject, bool> sourceFilter = null)
+		public static IEnumerable<Ability> UnstackedAbilities(this IAbilityObject obj, bool includeShared, Func<IAbilityObject, bool>? sourceFilter = null)
 		{
 			if (obj == null)
 				return Enumerable.Empty<Ability>();
 
 			IEnumerable<Ability> result;
+			var descendantAbilities = obj.DescendantAbilities(sourceFilter);
+			var ancestorAbilities = obj.AncestorAbilities(sourceFilter);
+			var sharedAbilities = obj.SharedAbilities(sourceFilter);
 			if (sourceFilter == null || sourceFilter(obj))
-				result = obj.IntrinsicAbilities.Concat(obj.DescendantAbilities(sourceFilter)).Concat(obj.AncestorAbilities(sourceFilter));
+				result = obj.IntrinsicAbilities.Concat(descendantAbilities).Concat(ancestorAbilities);
 			else
-				result = obj.DescendantAbilities(sourceFilter).Concat(obj.AncestorAbilities(sourceFilter));
+				result = descendantAbilities.Concat(ancestorAbilities);
 
 			if (includeShared)
-				result = result.Concat(obj.SharedAbilities(sourceFilter));
+				result = result.Concat(sharedAbilities);
 
 			return result;
 		}
