@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Objects.AI;
+using FrEee.Game.Objects.AI;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding.Interfaces;
@@ -104,9 +104,10 @@ namespace FrEee.Modding.Loaders
 								}
 							}
 						}
-						var ai = new CSAI<Empire, Galaxy>(Path.GetFileName(empFolder), script, ministers);
-						mod.EmpireAIs.Add(ai);
-						yield return ai;
+						// TODO: fix CSAI crash loading FrEee.Core.dll
+						//var ai = new CSAI<Empire, Galaxy>(Path.GetFileName(empFolder), script, ministers);
+						//mod.EmpireAIs.Add(ai);
+						//yield return ai;
 					}
 				}
 			}

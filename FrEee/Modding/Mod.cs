@@ -175,7 +175,7 @@ namespace FrEee.Modding
 		/// <summary>
 		/// The path to the mod's root folder, relative to the Mods folder.
 		/// </summary>
-		public string RootPath { get; set; }
+		public string? RootPath { get; set; }
 
 		/// <summary>
 		/// General mod settings.
@@ -256,7 +256,7 @@ namespace FrEee.Modding
 		/// <param name="setCurrent">Set the current mod to the new mod?</param>
 		/// <param name="status">A status object to report status back to the GUI.</param>
 		/// <param name="desiredProgress">How much progress should we report back to the GUI when we're done loading the mod? 1.0 means all done with everything that needs to be done.</param>
-		public static Mod Load(string path, bool setCurrent = true, Status status = null, double desiredProgress = 1.0)
+		public static Mod Load(string? path, bool setCurrent = true, Status? status = null, double desiredProgress = 1.0)
 		{
 			var mod = new Mod();
 			mod.RootPath = path;

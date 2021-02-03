@@ -1,7 +1,11 @@
-﻿using FrEee.Game.Objects.Civilization;
+﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Abilities;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
+using FrEee.Modding.Templates;
 using FrEee.Utility.Extensions;
 using NUnit.Framework;
 using System.Drawing;
@@ -13,33 +17,50 @@ namespace FrEee.Tests.Game.Objects.Abilities
 	/// </summary>
 	public class AbilityTest
 	{
-		public AbilityTest()
+		StarSystem sys;
+		Empire emp;
+		IDesign<Ship> design;
+		IHull<Ship> hull;
+		Ship ship;
+
+		[SetUp]
+		public void Initialize()
 		{
+			// create galaxy
+			new Galaxy();
+
+			// load mod
+			Mod.Load(null);
+
+			// create star system
+			sys = new(0);
+			Galaxy.Current.StarSystemLocations.Add(new(sys, new Point()));
+
+			// create empire
+			emp = new();
+			emp.Name = "Galactic Empire";
+
+			// create ship design
+			design = new Design<Ship>()
+			{
+				BaseName = "Shippy",
+				Owner = emp,
+			};
+
+			// create hull
+			hull = design.CreateHull();
+			hull.ThrustPerMove = 1;
 		}
 
 		[Test]
 		public void AbilitiesFromMultipleSources()
 		{
-			// initialize galaxy
-			new Galaxy();
-			Mod.Current = Mod.Load(null);
-			var sys = new StarSystem(0);
-			Galaxy.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(sys, new Point()));
-
-			// initialize empire
-			var emp = new Empire();
-			emp.Name = "Galactic Empire";
-
-			// create a ship
-			var design = new Design<Ship>();
-			design.BaseName = "Shippy";
-			design.CreateHull();
-			design.Owner = emp;
-			var ship = design.Instantiate();
+			// create ship
+			ship = design.Instantiate();
 			ship.Owner = emp;
 
 			// create a storm
-			var storm = new Storm();
+			Storm storm = new();
 
 			// place 'em
 			ship.Sector = sys.GetSector(0, 0);
@@ -63,6 +84,31 @@ namespace FrEee.Tests.Game.Objects.Abilities
 			Assert.AreEqual(2, ship.GetAbilityValue("Combat Modifier - Sector").ToInt());
 			Assert.AreEqual(4, ship.GetAbilityValue("Combat Modifier - System").ToInt());
 			Assert.AreEqual(8, ship.GetAbilityValue("Combat Modifier - Empire").ToInt());
+		}
+
+		[Test]
+		public void AbilitiesFromIdenticalComponents()
+		{
+			// create engine component template
+			ComponentTemplate engineTemplate = new()
+			{
+				Name = "Ion Engine"
+			};
+			engineTemplate.Abilities.Add(new Ability(
+				engineTemplate,
+				AbilityRule.Find("Standard Ship Movement"),
+				null,
+				1));
+
+			// add some engines
+			int numEngines = 6;
+			for (var i = 0; i < numEngines; i++)
+			{
+				design.AddComponent(engineTemplate);
+			}
+
+			// test thrust
+			Assert.AreEqual(numEngines, design.StrategicSpeed);
 		}
 	}
 }
