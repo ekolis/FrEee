@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
@@ -24,41 +24,25 @@ namespace FrEee.Tests.Game.Objects.Abilities
 		Ship ship;
 
 		[SetUp]
-		public void Initialize()
+		public void SetUp()
 		{
 			// create galaxy
-			new Galaxy();
-
-			// load mod
-			Mod.Load(null);
+			TestUtilities.CreateGalaxyWithMod();
 
 			// create star system
 			sys = new(0);
 			Galaxy.Current.StarSystemLocations.Add(new(sys, new Point()));
 
-			// create empire
-			emp = new();
-			emp.Name = "Galactic Empire";
-
-			// create ship design
-			design = new Design<Ship>()
-			{
-				BaseName = "Shippy",
-				Owner = emp,
-			};
-
-			// create hull
-			hull = design.CreateHull();
-			hull.ThrustPerMove = 1;
+			// create stuff
+			emp = TestUtilities.CreateEmpire();
+			design = TestUtilities.CreateDesign<Ship>(emp);
+			hull = TestUtilities.CreateHull(design);
+			ship = TestUtilities.CreateVehicle(design, emp);
 		}
 
 		[Test]
 		public void AbilitiesFromMultipleSources()
 		{
-			// create ship
-			ship = design.Instantiate();
-			ship.Owner = emp;
-
 			// create a storm
 			Storm storm = new();
 
