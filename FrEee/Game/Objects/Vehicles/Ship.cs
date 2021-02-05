@@ -16,7 +16,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public override bool CanWarp
 		{
-			get { return Owner?.IsMinorEmpire ?? true; }
+			get { return !Owner?.IsMinorEmpire ?? true; }
 		}
 
 		public override bool ParticipatesInGroundCombat
