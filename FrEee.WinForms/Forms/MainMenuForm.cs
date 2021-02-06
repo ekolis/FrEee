@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Setup;
 using FrEee.Modding;
@@ -233,15 +233,28 @@ namespace FrEee.WinForms.Forms
 
 		private void btnResume_Click(object sender, EventArgs e)
 		{
-			var mostRecent = Directory.GetFiles(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Savegame"))
-				.Select(filePath => new KeyValuePair<string, DateTime>(filePath, File.GetLastWriteTime(filePath)))
-				.OrderByDescending(kvp => kvp.Value)
-				.Where(kvp => Regex.Match(kvp.Key, @"_\d+_\d+.gam$").Success)
-				.ToList();
-			if (mostRecent.Any())
-				LoadGalaxyFromFile(mostRecent.First().Key, true);
+			string savegameDir = Program.GetPath(FrEeeConstants.SaveGameDirectory);
+			string noSavesMessage = "No games to resume; please create a new game.";
+
+			if (Directory.Exists(savegameDir))
+			{
+				// Savegame folder exists, find recent saves
+				var mostRecent = Directory.GetFiles(savegameDir)
+					   .Select(filePath => new KeyValuePair<string, DateTime>(filePath, File.GetLastWriteTime(filePath)))
+					   .OrderByDescending(kvp => kvp.Value)
+					   .Where(kvp => Regex.Match(kvp.Key, @"_\d+_\d+.gam$").Success)
+					   .ToList();
+				if (mostRecent.Any())
+					LoadGalaxyFromFile(mostRecent.First().Key, true);
+				else
+					MessageBox.Show(noSavesMessage);
+			}
 			else
-				MessageBox.Show("No games to resume; please create a new game.");
+			{
+				// Savegame folder doesn't exist, create it
+				Directory.CreateDirectory(savegameDir);
+				MessageBox.Show(noSavesMessage);
+			}
 		}
 
 		private void btnScenario_Click(object sender, EventArgs e)
