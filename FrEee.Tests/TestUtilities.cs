@@ -1,5 +1,8 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
+using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using System;
 using System.Reflection;
@@ -8,23 +11,52 @@ namespace FrEee.Tests
 {
 	public static class TestUtilities
 	{
+		public static Galaxy CreateGalaxyWithMod(string? modPath = null)
+		{
+			Galaxy gal = new();
+			Mod.Current = Mod.Load(modPath);
+			return gal;
+		}
+
+		public static Empire CreateEmpire(string name = "Galactic Empire")
+		 => new() { Name = name };
+
 		public static IHull<T> CreateHull<T>(string name)
 			where T : IVehicle
 		{
-			IHull<T> hull = new Hull<T>();
-			hull.Name = name;
-			hull.ModID = name;
+			Hull<T> hull = new()
+			{
+				Name = name,
+				ModID = name,
+				ThrustPerMove = 1
+			};
 			Mod.Current.Hulls.Add(hull);
 			Mod.Current.Register(hull);
 			return hull;
 		}
 
-		public static IHull<T> CreateHull<T>(this IDesign<T> design, string name = null)
+		public static IHull<T> CreateHull<T>(this IDesign<T> design, string? name = null)
 			where T : IVehicle
 		{
 			var hull = CreateHull<T>(name ?? design.BaseName);
 			design.Hull = hull;
 			return hull;
+		}
+
+		public static IDesign<T> CreateDesign<T>(Empire owner, string name = "Generic Design")
+			where T : IVehicle
+			=> new Design<T>()
+			{
+				BaseName = name,
+				Owner = owner,
+			};
+
+		public static T CreateVehicle<T>(IDesign<T> design, Empire owner)
+			where T : IVehicle
+		{
+			var vehicle = design.Instantiate();
+			vehicle.Owner = owner;
+			return vehicle;
 		}
 
 		///// <summary>

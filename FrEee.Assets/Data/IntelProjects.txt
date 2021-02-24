@@ -1,0 +1,661 @@
+=======================================================================================
+INTELLIGENCE PROJECTS DATA FILE
+=======================================================================================
+
+Type:
+Ship - Damage, Ship - Lose Movement, Ship - Lose Supply, Ship - Rebel, 
+Ship - Experience Change, Ship - Cargo Damage, Ship - Orders Change, 
+Ship - Locations, Ship - Concentrations, Ship - Construction Info, 
+Ship Designs - Steal, Planet - Conditions Change, Planet - Value Change, 
+Planet - Population Change, Planet - Population Anger Change, 
+Planet - Population Rebel, Planet - Cargo Damage, Planet - Facility Damage, 
+Planet - Info, Planet - Locations, Points - Change, Points - Steal, 
+Research - Steal, Research - Delete Project, Intel - Delete Project, 
+Politics - Disrupt Trade, Politics - Intercept Messages, Politics - Fake Messages, 
+Politics - Treaty Info, Politics - Prevent Messages, System - Info, Empire - Info, 
+Unit Designs - Steal, Tech Level - Info
+
+Replacement Symbols used for Messages: 
+[%SystemName]          - Target System Name           
+[%SectorName]          - Target Sector Name (Number)
+[%SourceEmperorName]   - Source Emperor's Name (includes Title)
+[%SourceEmpireName]    - Source Empire Name (includes Empire Type)
+[%TargetEmperorName]   - Target Emperor's Name (includes Title)
+[%TargetEmpireName]    - Target Empire Name (includes Empire Type)
+[%OtherEmperorName]    - Other Emperor's Name (includes Title)
+[%OtherEmpireName]     - Other Empire Name (includes Empire Type) 
+[%VehicleName]         - Vehicle Name
+[%VehicleSize]         - Vehicle Size
+[%PlanetName]          - Planet Name
+[%DesignName]          - Design Name
+[%TechName]            - Tech Area Name
+[%TreatyName]          - Political Treaty
+[%FacilityName]        - Facility Name
+
+
+
+For all Messages:
+The text "Intelligence Minister: " will be added to the front of all messages relating to 
+intelligence projects.
+For the Target Message, additional sentences may be added to the end of the message. For 
+example, if the target is able to determine who caused the intelligence, a sentence such
+as "We suspect the XXX Empire..." will be added to the message.
+
+
+=======================================================================================
+*BEGIN*
+=======================================================================================
+
+Name                      := Ship Bomb
+Description               := Spies attempt to plant a bomb on a starship.
+Group                     := Ship Sabotage
+Cost                      := 10000
+Type                      := Ship - Damage
+Effect Amount             := 80
+Num Source Messages       := 1
+Source Message 1          := Our operatives have successfully damaged the ship [%VehicleName] of the [%TargetEmpireName] in the [%SystemName] system.
+Num Target Messages       := 1
+Target Message Title 1    := Ship Damaged
+Target Message 1          := A bomb has exploded aboard ship [%VehicleName] in the [%SystemName] system. 
+Source Picture            := IntelSabotageByUs
+Target Picture            := ShipDamaged                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 1
+
+Name                      := Engine Damage
+Description               := Spies attempt to sabotage the movement of a starship.
+Group                     := Ship Sabotage
+Cost                      := 10000
+Type                      := Ship - Lose Movement
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := Our operatives have been able to slow down the ship [%VehicleName] of the [%TargetEmpireName] in the [%SystemName] system.
+Num Target Messages       := 1
+Target Message Title 1    := Ship Lost Movement
+Target Message 1          := Saboteurs have rendered the ship [%VehicleName] unable to move in the [%SystemName] system.
+Source Picture            := IntelSabotageByUs
+Target Picture            := ShipDamaged                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 1
+
+Name                      := Fuel Leak
+Description               := Spies quickly bleed a ship of its supplies. 
+Group                     := Ship Sabotage
+Cost                      := 10000
+Type                      := Ship - Lose Supply
+Effect Amount             := 1000                   
+Num Source Messages       := 1
+Source Message 1          := Our spies have been able to deplete the supplies of the [%TargetEmpireName]'s ship [%VehicleName] in the [%SystemName] system.
+Num Target Messages       := 1
+Target Message Title 1    := Supplies Lost
+Target Message 1          := For dubious reasons, our ship [%VehicleName] has lost all of its supplies.
+Source Picture            := IntelSabotageByUs
+Target Picture            := ShipDamaged                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 1
+
+Name                      := Crew Insurrection
+Description               := Spies incite the crew of a ship to rebel and join your empire.
+Group                     := Ship Sabotage
+Cost                      := 50000
+Type                      := Ship - Rebel
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := Our valiant forces have persuaded the ship [%VehicleName] of the [%TargetEmpireName] to join us! 
+Num Target Messages       := 1
+Target Message Title 1    := Mutiny
+Target Message 1          := The crew of the vessel [%VehicleName] have mutinied and joined the [%SourceEmpireName].
+Source Picture            := IntelSabotageByUs
+Target Picture            := ShipDamaged                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 2
+
+Name                      := Crew Rotation
+Description               := Through faked messages, an experienced crew is broken up and reassigned.
+Group                     := Ship Sabotage
+Cost                      := 5000
+Type                      := Ship - Experience Change
+Effect Amount             := -50                   
+Num Source Messages       := 1
+Source Message 1          := Our spies have successfully broken up the experienced crew of the [%TargetEmpireName] ship [%VehicleName].
+Num Target Messages       := 1
+Target Message Title 1    := Crew Snafu
+Target Message 1          := For some unknown reason, our experienced crew of the ship [%VehicleName] has been reassigned.
+Source Picture            := IntelSabotageByUs
+Target Picture            := ShipDamaged                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 2
+
+Name                      := Cargo Bomb
+Description               := A small bomb placed in a cargo hold causes damage to the ship's cargo.
+Group                     := Ship Sabotage
+Cost                      := 5000
+Type                      := Ship - Cargo Damage
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := A well placed bomb by one of our operatives has damaged the cargo of ship [%VehicleName] owned by the [%TargetEmpireName].
+Num Target Messages       := 1
+Target Message Title 1    := Cargo Damage
+Target Message 1          := The ship [%VehicleName] has survived a bomb in its cargo hold, but has lost some cargo.
+Source Picture            := IntelSabotageByUs
+Target Picture            := ShipDamaged                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 1
+
+Name                      := Order Snafu
+Description               := Faked messages gives a ship new and incorrect orders.
+Group                     := Ship Sabotage
+Cost                      := 10000
+Type                      := Ship - Orders Change
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := Our operatives have been able to give the [%TargetEmpireName] ship [%VehicleName] new orders.
+Num Target Messages       := 1
+Target Message Title 1    := Orders Changed
+Target Message 1          := Our ship [%VehicleName] has had its orders changed.
+Source Picture            := IntelSabotageByUs
+Target Picture            := ShipDamaged                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 1
+
+Name                      := Force Concentrations
+Description               := Stolen empire communications detail ship concentrations in various systems.
+Group                     := General Espionage
+Cost                      := 10000
+Type                      := Ship - Concentrations
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := Our operatives have successfully retrieved documentation on the [%TargetEmpireName]'s ship concentrations.
+Num Target Messages       := 1
+Target Message Title 1    := Information Stolen
+Target Message 1          := Detailed information about our force concentrations have been stolen.
+Source Picture            := IntelEspionageByUs
+Target Picture            := IntelEspionageAgainstUs                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 2
+
+Name                      := Queue Concentrations
+Description               := Census materials on the largest concentrations of construction queues in the empire.
+Group                     := General Espionage
+Cost                      := 10000
+Type                      := Ship - Construction Info
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := Our spies have retrieved details on the [%TargetEmpireName]'s construction queue locations.
+Num Target Messages       := 1
+Target Message Title 1    := Information Stolen
+Target Message 1          := Our construction queue locations have been stolen from the records department.
+Source Picture            := IntelEspionageByUs
+Target Picture            := IntelEspionageAgainstUs                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 2
+
+Name                      := Ship Blueprints
+Description               := Spies infiltrate construction yards and return with complete ship schematics.
+Group                     := General Espionage
+Cost                      := 15000
+Type                      := Ship Designs - Steal
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := A daring intelligence operation has resulted in ship schematics of the [%DesignName] from the [%TargetEmpireName].
+Num Target Messages       := 1
+Target Message Title 1    := Ship Designs Stolen
+Target Message 1          := Our design for the [%DesignName] have been compromised by enemy forces.
+Source Picture            := IntelEspionageByUs
+Target Picture            := IntelEspionageAgainstUs                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 2
+
+Name                      := Weather Disruptions
+Description               := Carefully planted atmosphere bombs damage the conditions of the planet.
+Group                     := Planet Sabotage
+Cost                      := 20000
+Type                      := Planet - Conditions Change
+Effect Amount             := -8                   
+Num Source Messages       := 1
+Source Message 1          := An atmospheric bomb planted by our spies has damaged the conditions of planet [%PlanetName] owned by the [%TargetEmpireName].
+Num Target Messages       := 1
+Target Message Title 1    := Planet Conditions Damaged
+Target Message 1          := A saboteur has detonated an atmospheric bomb damaging the conditions of planet [%PlanetName].
+Source Picture            := IntelSabotageByUs
+Target Picture            := PlanetConditionsWorse
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 3
+
+Name                      := Ground Contamination
+Description               := Pollutants and other created disasters permanently decrease the planet's value.
+Group                     := Planet Sabotage
+Cost                      := 20000
+Type                      := Planet - Value Change
+Effect Amount             := -10
+Num Source Messages       := 1
+Source Message 1          := Through an ingenious ground contamination, the value of planet [%PlanetName] has been decreased.
+Num Target Messages       := 1
+Target Message Title 1    := Planet Value Damaged
+Target Message 1          := A suspicious ground contamination on planet [%PlanetName] has decreased its value.
+Source Picture            := IntelSabotageByUs
+Target Picture            := PlanetValueWorse        
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 3
+
+Name                      := Food Contamination
+Description               := Food contamination kills large sections of the population.
+Group                     := Planet Sabotage
+Cost                      := 15000
+Type                      := Planet - Population Change
+Effect Amount             := -100                   
+Num Source Messages       := 1
+Source Message 1          := Our operatives have covertly contaminated large batches of the food supply on planet [%PlanetName]. A sizeable portion of the local population has died.
+Num Target Messages       := 1
+Target Message Title 1    := Food Contamination
+Target Message 1          := A suspicious food contamination on planet [%PlanetName] has killed many people.
+Source Picture            := IntelSabotageByUs
+Target Picture            := PopulationAngry                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 2
+
+Name                      := Anarchy Groups
+Description               := Spies foster dissident groups who incense the general population.
+Group                     := Planet Sabotage
+Cost                      := 15000
+Type                      := Planet - Population Anger Change
+Effect Amount             := 70                   
+Num Source Messages       := 1
+Source Message 1          := Our spies on planet [%PlanetName] have supported rampages by local anarchy groups. The population is growing angrier.
+Num Target Messages       := 1
+Target Message Title 1    := Anarchy Group Uprising
+Target Message 1          := Anarchy groups on planet [%PlanetName] have risen up and caused civil unrest. They may be backed by foreign powers.
+Source Picture            := IntelSabotageByUs
+Target Picture            := PopulationAngry                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 2
+
+Name                      := Puppet Political Parties
+Description               := Through political donations and sympathetic politicians, operatives install a government on a planet which rebels against their empire.
+Group                     := Planet Sabotage
+Cost                      := 100000
+Type                      := Planet - Population Rebel
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := Our machinations on planet [%PlanetName] have paid off. They have rebelled and joined us!
+Num Target Messages       := 1
+Target Message Title 1    := Planetary Rebellion
+Target Message 1          := Planet [%PlanetName] has rebelled and joined the [%SourceEmpireName]. They must be stopped!
+Source Picture            := IntelSabotageByUs
+Target Picture            := PlanetRebels                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 4
+
+Name                      := Cargo Maintenance Problems
+Description               := Operatives disrupt the normal maintenance cycle of units on a planet, resulting in significant damage.
+Group                     := Planet Sabotage
+Cost                      := 10000
+Type                      := Planet - Cargo Damage
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := Our operatives have caused the destruction of some of the cargo on planet [%PlanetName].
+Num Target Messages       := 1
+Target Message Title 1    := Units Destroyed
+Target Message 1          := Outside forces have manipulated the maintenance cycles on planet [%PlanetName] and caused some cargo to be destroyed.
+Source Picture            := IntelSabotageByUs
+Target Picture            := PlanetDamaged                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 2
+
+Name                      := Industrial Sabotage
+Description               := Machinery sabotage leads to entire facilities rendered unusable.
+Group                     := Planet Sabotage
+Cost                      := 25000
+Type                      := Planet - Facility Damage
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := Industrial spies have caused the complete destruction of an entire facility on planet [%PlanetName].
+Num Target Messages       := 1
+Target Message Title 1    := Facility Destroyed
+Target Message 1          := Industrial spies have destroyed one of our facilities on planet [%PlanetName].
+Source Picture            := IntelSabotageByUs
+Target Picture            := PlanetDamaged 
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 3
+
+Name                      := Covert Recon
+Description               := Reconnaissance operatives convey details about other planets.
+Group                     := General Espionage
+Cost                      := 5000
+Type                      := Planet - Info
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := We have obtained detailed information on planet [%PlanetName].
+Num Target Messages       := 1
+Target Message Title 1    := Planet Espionage
+Target Message 1          := Our planet [%PlanetName] has been scanned covertly.
+Source Picture            := IntelEspionageByUs
+Target Picture            := IntelEspionageAgainstUs                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 2
+
+Name                      := Census Thefts
+Description               := Spies procure the latest data about an empire's planets locations.
+Group                     := General Espionage
+Cost                      := 5000
+Type                      := Planet - Locations
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := We have procured detailed information on the planets held by the [%TargetEmpireName].
+Num Target Messages       := 1
+Target Message Title 1    := Census Data Stolen
+Target Message 1          := Covert forces have stolen census information about our planets.
+Source Picture            := IntelEspionageByUs
+Target Picture            := IntelEspionageAgainstUs                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 2
+
+Name                      := Economic Disruption
+Description               := Operatives cause widespread destruction to an empire's economic infrastructure. 
+Group                     := General Sabotage
+Cost                      := 20000
+Type                      := Points - Change
+Effect Amount             := -10000                   
+Num Source Messages       := 1
+Source Message 1          := Our intelligence network has caused widespread damage to the [%TargetEmpireName]'s economy.
+Num Target Messages       := 1
+Target Message Title 1    := Economic Disruption
+Target Message 1          := Unknown forces have destroyed some of our precious resources.
+Source Picture            := IntelSabotageByUs
+Target Picture            := PlanetDamaged                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 3
+
+Name                      := Resource Procurement
+Description               := Bribed transports bring their resources to us.
+Group                     := General Sabotage
+Cost                      := 15000
+Type                      := Points - Steal
+Effect Amount             := 10000                   
+Num Source Messages       := 1
+Source Message 1          := Bribed transports have delivered us resources from the [%TargetEmpireName].
+Num Target Messages       := 1
+Target Message Title 1    := Resources Stolen
+Target Message 1          := Some of our resources have been stolen by outside forces.
+Source Picture            := IntelSabotageByUs
+Target Picture            := IntelEspionageAgainstUs                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 3
+
+Name                      := Technological Espionage
+Description               := Operatives steal technology from another empire.
+Group                     := General Espionage
+Cost                      := 150000
+Type                      := Research - Steal
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := Our operatives have stolen the technology of [%TechName] from the [%TargetEmpireName].
+Num Target Messages       := 1
+Target Message Title 1    := Technology Stolen
+Target Message 1          := Spies have stolen the technology of [%TechName] from us.
+Source Picture            := IntelEspionageByUs
+Target Picture            := IntelEspionageAgainstUs                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 3
+
+Name                      := Technological Sabotage
+Description               := Operatives disrupt research projects currently underway.
+Group                     := General Sabotage
+Cost                      := 45000
+Type                      := Research - Delete Project
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := Deep cover moles in the [%TargetEmpireName] have utterly destroyed one of their research projects.
+Num Target Messages       := 1
+Target Message Title 1    := Research Project Destroyed
+Target Message 1          := All of our current work on one of our research projects has been destroyed by spies. We will have to start again from scratch.
+Source Picture            := IntelSabotageByUs
+Target Picture            := ResearchDamaged                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 3
+
+Name                      := Intelligence Sabotage
+Description               := Our operatives infiltrate and disrupt intelligence operations of another empire.
+Group                     := General Sabotage
+Cost                      := 30000
+Type                      := Intel - Delete Project
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := Deep cover moles in the [%TargetEmpireName] have utterly destroyed one of their intelligence projects.
+Num Target Messages       := 1
+Target Message Title 1    := Intelligence Project Destroyed
+Target Message 1          := All of our current work on one of our intelligence projects has been destroyed by spies. We will have to start again from scratch.
+Source Picture            := IntelSabotageByUs
+Target Picture            := IntelEspionageAgainstUs                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 1
+
+Name                      := Trade Disruption
+Description               := Through intimidation and bribery, merchants cannot complete their transactions.
+Group                     := Political Disruption
+Cost                      := 20000
+Type                      := Politics - Disrupt Trade
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := Our operatives have disrupted the trade between the [%TargetEmpireName] and the [%OtherEmpireName].
+Num Target Messages       := 1
+Target Message Title 1    := Trade Disrupted
+Target Message 1          := Our trade with the [%OtherEmpireName] have been totally disrupted by dark forces.
+Source Picture            := IntelSabotageByUs
+Target Picture            := PlanetDamaged                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 2
+
+Name                      := Communications Taps
+Description               := Specially placed sensors intercept messages between empires.
+Group                     := Political Disruption
+Cost                      := 15000
+Type                      := Politics - Intercept Messages
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := Our communication taps have retrieved messages between the [%TargetEmpireName] and the [%OtherEmpireName].
+Num Target Messages       := 1
+Target Message Title 1    := Communications Compromised
+Target Message 1          := We have discovered a communication tap on our message going to the [%OtherEmpireName].
+Source Picture            := IntelSabotageByUs
+Target Picture            := PlanetDamaged                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 3
+
+Name                      := Communications Mimic
+Description               := Special devices can create messages that appear to come from another empire.
+Group                     := Political Disruption
+Cost                      := 20000
+Type                      := Politics - Fake Messages
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := Our operatives have been able to fake messages between the [%TargetEmpireName] and the [%OtherEmpireName].
+Num Target Messages       := 1
+Target Message Title 1    := Communications Faked
+Target Message 1          := We have discovered that several communications to the [%OtherEmpireName] have been faked and made to look like we sent them!
+Source Picture            := IntelSabotageByUs
+Target Picture            := PlanetDamaged                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 3
+
+Name                      := Embassy Taps
+Description               := Surveillance units unveil the treaties between different empires.
+Group                     := General Espionage
+Cost                      := 15000
+Type                      := Politics - Treaty Info
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := We have uncovered that the [%TargetEmpireName] maintains a treaty of [%TreatyName] with the [%OtherEmpireName].
+Num Target Messages       := 1
+Target Message Title 1    := Political Espionage
+Target Message 1          := Outside forces have learned of our relations with the [%OtherEmpireName].
+Source Picture            := IntelEspionageByUs
+Target Picture            := IntelEspionageAgainstUs                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 2
+
+Name                      := Communication Interceptors
+Description               := Special devices can intercept and prevent messages from getting through between two empires.
+Group                     := Political Disruption
+Cost                      := 10000
+Type                      := Politics - Prevent Messages
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := Our spies have been able to prevent communications between the [%TargetEmpireName] and the [%OtherEmpireName].
+Num Target Messages       := 1
+Target Message Title 1    := Communications Lost
+Target Message 1          := We have discovered that the [%OtherEmpireName] have not received some of our messages.
+Source Picture            := IntelSabotageByUs
+Target Picture            := PlanetDamaged                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 3
+
+Name                      := Empire Star Charts
+Description               := Stolen star charts reveal information about other systems.
+Group                     := General Espionage
+Cost                      := 10000
+Type                      := System - Info
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := Intelligence has procured detailed information of the [%SystemName] system from the [%TargetEmpireName]. 
+Num Target Messages       := 1
+Target Message Title 1    := System Info Stolen
+Target Message 1          := Some outside force has stolen our information on the [%SystemName] system.
+Source Picture            := IntelEspionageByUs
+Target Picture            := IntelEspionageAgainstUs                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 2
+
+Name                      := Empire Archives
+Description               := Operatives raid another empire's libraries for general information.
+Group                     := General Espionage
+Cost                      := 15000
+Type                      := Empire - Info
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := Our operatives have returned with empire level information on the [%TargetEmpireName]. 
+Num Target Messages       := 1
+Target Message Title 1    := Libraries Raided
+Target Message 1          := Unknown operatives have raided our libraries for information about our empire.
+Source Picture            := IntelEspionageByUs
+Target Picture            := IntelEspionageAgainstUs                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 3
+
+Name                      := Unit Blueprints
+Description               := Operatives retrieve the designs for another empire's units.
+Group                     := General Espionage
+Cost                      := 15000
+Type                      := Unit Designs - Steal
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := Bribed engineers of the [%TargetEmpireName] have given us plans on their [%DesignName].
+Num Target Messages       := 1
+Target Message Title 1    := Unit Blueprints Stolen
+Target Message 1          := Our designs for the [%DesignName] have been compromised.
+Source Picture            := IntelEspionageByUs
+Target Picture            := IntelEspionageAgainstUs                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 2
+
+Name                      := Tech Reports
+Description               := Spies for our empire retrieve reports about an empire's current technology levels.
+Group                     := General Espionage
+Cost                      := 20000
+Type                      := Tech Level - Info
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := Covert Ops have retrieved technology reports from the [%TargetEmpireName].
+Num Target Messages       := 1
+Target Message Title 1    := Reports Stolen
+Target Message 1          := Technology reports have been stolen by enemy nations.
+Source Picture            := IntelEspionageByUs
+Target Picture            := IntelEspionageAgainstUs                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 2
+
+Name                      := Counter - Intelligence Level 1
+Description               := Defensive preparations within an empire to prevent enemy intelligence operations. Counter-Intelligence will prevent attacks while it is in progress.
+Group                     := Defense
+Cost                      := 100000
+Type                      := Intelligence Defense
+Effect Amount             := 1                   
+Num Source Messages       := 1
+Source Message 1          := Our counter-intelligence operations have prevented intelligence attacks by the [%TargetEmpireName].
+Num Target Messages       := 1
+Target Message Title 1    := Intelligence Project Defeated
+Target Message 1          := One of our intelligence projects against the [%SourceEmpireName] was defeated by counter-intelligence defenses.
+Source Picture            := IntelSabotageByUs
+Target Picture            := IntelSabotageByUs                   
+Number of Tech Req        := 0
+
+Name                      := Counter - Intelligence Level 2
+Description               := Defensive preparations within an empire to prevent enemy intelligence operations. Counter-Intelligence will prevent attacks while it is in progress.
+Group                     := Defense
+Cost                      := 250000
+Type                      := Intelligence Defense
+Effect Amount             := 2                   
+Num Source Messages       := 1
+Source Message 1          := Our counter-intelligence operations have prevented intelligence attacks by the [%TargetEmpireName].
+Num Target Messages       := 1
+Target Message Title 1    := Intelligence Project Defeated
+Target Message 1          := One of our intelligence projects against the [%SourceEmpireName] was defeated by counter-intelligence defenses.
+Source Picture            := IntelSabotageByUs
+Target Picture            := IntelSabotageByUs                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 1
+
+Name                      := Counter - Intelligence Level 3
+Description               := Defensive preparations within an empire to prevent enemy intelligence operations. Counter-Intelligence will prevent attacks while it is in progress.
+Group                     := Defense
+Cost                      := 500000
+Type                      := Intelligence Defense
+Effect Amount             := 3                   
+Num Source Messages       := 1
+Source Message 1          := Our counter-intelligence operations have prevented intelligence attacks by the [%TargetEmpireName].
+Num Target Messages       := 1
+Target Message Title 1    := Intelligence Project Defeated
+Target Message 1          := One of our intelligence projects against the [%SourceEmpireName] was defeated by counter-intelligence defenses.
+Source Picture            := IntelSabotageByUs
+Target Picture            := IntelSabotageByUs                   
+Number of Tech Req        := 1
+Tech Area Req 1           := Applied Intelligence
+Tech Level Req 1          := 2
+
+=======================================================================================
+*END*
+=======================================================================================

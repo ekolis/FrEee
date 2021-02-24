@@ -24,7 +24,7 @@ namespace FrEee.Game.Objects.Abilities
 			Values = new List<Formula<string>>();
 		}
 
-		public Ability(IAbilityObject container, AbilityRule rule, string description = null, params object[] values)
+		public Ability(IAbilityObject container, AbilityRule rule, string? description = null, params object[] values)
 		{
 			Container = container;
 			Rule = rule;

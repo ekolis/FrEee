@@ -1,0 +1,2379 @@
+=======================================================================================
+SECTOR TYPE DATA FILE
+=======================================================================================
+
+Maximum Sector Types Allowed = 1000
+
+Allowable Values for Physical Type: 
+  None, Planet, Asteroids, Storm, Sun, Warp Point, Destroyed Star, Comet
+
+Allowable Values for Planet Size:
+  Asteroids, Tiny, Small, Medium, Large, Huge
+
+Allowable Values for Planet Physical Type:
+  Rock, Ice, Gas Giant
+
+Allowable Values for Planet Atmosphere:
+  None, Methane, Oxygen, Hydrogen, Carbon Dioxide
+
+NOTE: The following combinations of plant physical type and atmosphere are 
+not allowed: Gas Giant x None.
+
+Allowable Values for all other sizes:
+  Tiny, Small, Medium, Large, Huge
+
+Allowable Values for Star Age:
+  Young, Average, Old, Ancient
+
+Allowable Values for Star Color:
+  Yellow, Red, Purple, Green, Blue, White, Orange
+
+Allowable Values for Star Luminosity:
+  Dim, Average, Bright, Super Bright
+
+=======================================================================================
+*BEGIN*
+=======================================================================================
+
+Physical Type        := Planet
+Picture Num          := 0
+Description          := Huge planet with an abundance of surface minerals.
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 1
+Description          := Huge planet which experiences severe temperature changes.
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 2
+Description          := Huge planet with a deep crust of vegetation.
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 3
+Description          := Huge planet with deep ridges formed by fluvial erosion.
+Planet Size          := Huge
+Planet Physical Type := Ice
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 4
+Description          := Huge planet with heavy cloud cover.
+Planet Size          := Huge
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 5
+Description          := Large planet with a majority of desert land masses.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 6
+Description          := Large planet with vast crystalline chlorine fields.
+Planet Size          := Large
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 7
+Description          := Large planet experiencing differential erosion.
+Planet Size          := Large
+Planet Physical Type := Ice
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 8
+Description          := Large planet with interesting mineral deposits.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 9
+Description          := Large planet with hyper-dense gas oceans.
+Planet Size          := Large
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 10
+Description          := Moderate planet with dense cloud cover.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 11
+Description          := Moderate planet covered in erupting volcanic pores.
+Planet Size          := Medium
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 12
+Description          := Moderate planet with arid land masses.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 13
+Description          := Moderate planet with sulfurus desert regions.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 14
+Description          := Moderate planet with a surface criss-crossed by braided chlorine streams.
+Planet Size          := Medium
+Planet Physical Type := Ice
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 15
+Description          := Small planet containing outstanding microbiotic ocean clusters.
+Planet Size          := Small
+Planet Physical Type := Ice
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 16
+Description          := Small planet known for colorful sub-surface ocean tides.
+Planet Size          := Small
+Planet Physical Type := Ice
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 17
+Description          := Small planet with ash oceans and vigorous volcanic chains.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 18
+Description          := Small planet dominated by chlorine anomalies.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 19
+Description          := Small planet with varying atmospheric storms.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 20
+Description          := Tiny planet with an abundance of microscopic algae.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 21
+Description          := Tiny planet which is noted for its scenic beauty.
+Planet Size          := Tiny
+Planet Physical Type := Ice
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 22
+Description          := Tiny planet with mile-high mountain ranges.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 23
+Description          := Tiny planet with patches of dense crystaline flora.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 24
+Description          := Tiny planet with a very barren surface.
+Planet Size          := Tiny
+Planet Physical Type := Ice
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 25
+Description          := Huge planet with striking deep-layer canyon regions.
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 26
+Description          := Huge planet covered in organic secretions.
+Planet Size          := Huge
+Planet Physical Type := Ice
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 27
+Description          := Tiny planet inhabited by water consuming microbes.
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 28
+Description          := Huge planet known for its crushing temperatures and violent climate.
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 29
+Description          := Huge planet with high-velocity wind storms.
+Planet Size          := Huge
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 30
+Description          := Large planet renowned for its comfortable climate and gentle winds. 
+Planet Size          := Large
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 31
+Description          := Large planet with water-based oceans.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 32
+Description          := Large planet known for its rotating spots. 
+Planet Size          := Large
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 33
+Description          := Large planet known for its floral beauty.
+Planet Size          := Large
+Planet Physical Type := Ice
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 34
+Description          := Large planet with chlorine icebergs.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 35
+Description          := Moderate planet with water based oceans and carbon based life-forms.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 36
+Description          := Moderate planet with massive dormant volcanic regions.
+Planet Size          := Medium
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 37
+Description          := Moderate planet of nickel-iron rock substrates.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 38
+Description          := Moderate planet renowned for its helium gas vents.
+Planet Size          := Medium
+Planet Physical Type := Ice
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 39
+Description          := Moderate planet with over 90% surface area liquid water.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 40
+Description          := Small planet with the ruins of an ancient civilization.
+Planet Size          := Small
+Planet Physical Type := Ice
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 41
+Description          := Small planet with its surface area covered in aggressive vegetation.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 42
+Description          := Small planet known for its active multi-color geysers.
+Planet Size          := Small
+Planet Physical Type := Ice
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 43
+Description          := Small planet containing hybrid chlorophyl based on nitrogen.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 44
+Description          := Small planet with massive tectonic fissures.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 45
+Description          := Tiny planet which occupies a fluctuating elliptic orbit.
+Planet Size          := Tiny
+Planet Physical Type := Ice
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 46
+Description          := Tiny planet with cystalized carbon dioxide lake regions.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 47
+Description          := Tiny planet dotted with transverse ice dunes.
+Planet Size          := Tiny
+Planet Physical Type := Ice
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 48
+Description          := Tiny planet with argon matrix nucleonic particles.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 49
+Description          := Tiny planet with extensive underground caverns.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 50
+Description          := Huge planet rich in calcium and mercurium deposits.
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 51
+Description          := Huge planet with multicolored arial sediments.
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 52
+Description          := Huge planet known as the "Savage Twister".
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 53
+Description          := Huge planet with criss-crossing ice-river networks.
+Planet Size          := Huge
+Planet Physical Type := Ice
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 54
+Description          := Huge planet with periodic atmosphere burn offs.
+Planet Size          := Huge
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 55
+Description          := Large planet eroded by high-velocity hydrogen waves.
+Planet Size          := Large
+Planet Physical Type := Ice
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 56
+Description          := Large planet with 3 layers of atmospheric velocities. 
+Planet Size          := Large
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 57
+Description          := Large planet with no interesting charactersitics.
+Planet Size          := Large
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 58
+Description          := Large planet with gorgeous atmospheric light effects.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 59
+Description          := Large planet with chlorine atmosphere flares.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 60
+Description          := Moderate planet dominated by oceans of brown algae.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 61
+Description          := Medium sized planet composed of 300 kph winds. 
+Planet Size          := Medium
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 62
+Description          := Moderate planet that has been raked by meteorites.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 63
+Description          := Medium sized planet with interesting hydrothermal features.
+Planet Size          := Medium
+Planet Physical Type := Ice
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 64
+Description          := Moderate planet with argon ice patches and dense mineral formations.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 65
+Description          := Small planet with oceans of liquid carbon dioxide.
+Planet Size          := Small
+Planet Physical Type := Ice
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 66
+Description          := Small planet with dense mountain ranges and forest regions.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 67
+Description          := Small semi-frozen planet with intricately rilled and barren terrain.
+Planet Size          := Small
+Planet Physical Type := Ice
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 68
+Description          := Small planet with an active molten core.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 69
+Description          := Small planet with constant electrical discharging storms.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 70
+Description          := Tiny planet with upper crust cracks and deep planetary fissures.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 71
+Description          := Tiny planet with a majority of badland or barren territory.
+Planet Size          := Tiny
+Planet Physical Type := Ice
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 72
+Description          := Tiny planet dominated by carniverous flora.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 73
+Description          := Tiny planet known for its limestone ice caves.
+Planet Size          := Tiny
+Planet Physical Type := Ice
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 74
+Description          := Tiny planet with an upper mantle composed of a 3 mile deep mossy layer.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 75
+Description          := Huge planet which is rumored to be the home of ancient powers.
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 76
+Description          := Huge planet rumored to pull ships down to their destruction.
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 77
+Description          := Huge planet that is opaque to most forms of light.
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 78
+Description          := Huge planet composed of shifting ice plains.
+Planet Size          := Huge
+Planet Physical Type := Ice
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 79
+Description          := Huge planet with no vegetation and massive granite continents.
+Planet Size          := Huge
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 80
+Description          := Large planet with high-velocity cloud cover movement.
+Planet Size          := Large
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 81
+Description          := Large planet with a predominance of dense tropical regions.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 82
+Description          := Large planet covered with huge ice mountains.
+Planet Size          := Large
+Planet Physical Type := Ice
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 83
+Description          := Large planet known for its mesmerizing swirling atmospheric patterns.
+Planet Size          := Large
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 84
+Description          := Large planet with no land masses and is covered in a single liquid ocean.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 85
+Description          := Large planet with arid weather.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 86
+Description          := Medium sized planet containing a hyper-dense planetary core.
+Planet Size          := Medium
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 87
+Description          := Moderate planet with advanced life-form development.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 88
+Description          := Moderate planet with few distinguishing features.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 89
+Description          := Medium sized planet with varying ice densities in the polar regions.
+Planet Size          := Medium
+Planet Physical Type := Ice
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 90
+Description          := Small planet with transient atmospheric flows.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 91
+Description          := Small planet which is relatively uninteresting.
+Planet Size          := Small
+Planet Physical Type := Ice
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 92
+Description          := Small planet with a long deceased intelligent civilization.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 93
+Description          := Small planet known for its methane geysers. 
+Planet Size          := Small
+Planet Physical Type := Ice
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 94
+Description          := Small planet with a gelatinous hydrosphere.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 95
+Description          := Tiny planet covered in a silicate ice fungus. 
+Planet Size          := Tiny
+Planet Physical Type := Ice
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 96
+Description          := Tiny planet with iron-nickel mantel.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 97
+Description          := Tiny planet not know to contain any indigeonous life forms.
+Planet Size          := Tiny
+Planet Physical Type := Ice
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 98
+Description          := Tiny planet with a dominating hydrosphere.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 99
+Description          := Tiny planet with a plethora of animal life forms.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 100
+Description          := Huge planet thought to be a major gravitational force on comets in the system. 
+Planet Size          := Huge
+Planet Physical Type := Ice
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 101
+Description          := Huge planet composed of a rare methane-polymer material. 
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 102
+Description          := Huge planet that periodically shifts along its primary axis. 
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 103
+Description          := Huge planet which is ravaged by methane storms. 
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 104
+Description          := Huge planet with moderately vegetated land masses.
+Planet Size          := Huge
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 105
+Description          := Large planet of little inherent value.
+Planet Size          := Large
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 106
+Description          := Large planet undergoing seismic activity.
+Planet Size          := Large
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 107
+Description          := Large planet with ice sheets floating in the dense atmosphere.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 108
+Description          := Large planet mostly barren of surface deviations.
+Planet Size          := Large
+Planet Physical Type := Ice
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 109
+Description          := Large planet with an extended troposphere.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 110
+Description          := Medium sized planet with no stratosphere.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 111
+Description          := Medium sized planet composed of a relatively high density ice. 
+Planet Size          := Medium
+Planet Physical Type := Ice
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 112
+Description          := Medium sized planet composed of several unknown elements. 
+Planet Size          := Medium
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 113
+Description          := Medium sized planet with many cadmium deposits.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 114
+Description          := Medium sized planet with a very high rotation rate.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 115
+Description          := Small planet with a thick upper-crust of vegetation.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 116
+Description          := Small planet with routine planetary tremors.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 117
+Description          := Small planet with no indiginous life-forms.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 118
+Description          := Small planet not known to contain any interesting properties. 
+Planet Size          := Small
+Planet Physical Type := Ice
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 119
+Description          := Small planet formed from impacted stellar core fragments.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 120
+Description          := Tiny planet composed predominantly of a rare methane-ammonia ice form.
+Planet Size          := Tiny
+Planet Physical Type := Ice
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 121
+Description          := Tiny planet of very light particulate density.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 122
+Description          := Tiny planet which follows an erratic elliptical orbit. 
+Planet Size          := Tiny
+Planet Physical Type := Ice
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 123
+Description          := Tiny planet which periodically undergoes tectonic shifts.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 124
+Description          := Tiny planet with helium based vegetative spores.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 125
+Description          := Huge planet known for its strong gravitational field. 
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 126
+Description          := Huge planet thought to be the final resting place of 2 different ancient cultures. 
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 127
+Description          := Huge planet not known to have any significant features.
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 128
+Description          := Huge planet of very low surface temperature.
+Planet Size          := Huge
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 129
+Description          := Huge planet containing huge slow moving ice sheets which cover the planet.
+Planet Size          := Huge
+Planet Physical Type := Ice
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 130
+Description          := Large planet characterized by its two large polar spots. 
+Planet Size          := Large
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 131
+Description          := Large planet which drifts in its orbit causing massive tidal forces on other planets. 
+Planet Size          := Large
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 132
+Description          := Large planet with vaporous hydrogen clouds.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 133
+Description          := Large planet with high potential evapotranspiration.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 134
+Description          := Large planet that is almost completely solid even at its crust. 
+Planet Size          := Large
+Planet Physical Type := Ice
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 135
+Description          := Medium sized planet composed of 2000 kph wind speeds. 
+Planet Size          := Medium
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 136
+Description          := Medium sized planet which has a large metallic core. 
+Planet Size          := Medium
+Planet Physical Type := Ice
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 137
+Description          := Medium sized planet with large corumdum deposits.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 138
+Description          := Medium sized planet with an abundance of available sub-surface carbonates.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 139
+Description          := Medium sized planet with recent massive crustal rearrangement.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 140
+Description          := Small planet which has been recently bombarded by comets. 
+Planet Size          := Small
+Planet Physical Type := Ice
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 141
+Description          := Small planet with chlorite minerals deposits.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 142
+Description          := Small planet with extensive diastrophism.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 143
+Description          := Small planet scarred by routine meteor impacts. 
+Planet Size          := Small
+Planet Physical Type := Ice
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 144
+Description          := Small planet with extrusive vulcanism.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 145
+Description          := Tiny planet with overgrown vegetation.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 146
+Description          := Tiny planet known to wobble in its orbit through the system.
+Planet Size          := Tiny
+Planet Physical Type := Ice
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 147
+Description          := Tiny planet with large subterranean igneous bodies.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 148
+Description          := Tiny planet thought to house an ice-born lichen lifeform.
+Planet Size          := Tiny
+Planet Physical Type := Ice
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 149
+Description          := Tiny planet with a solid mantle of crystalized argon.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 150
+Description          := Huge planet known for its deep and swirling colors. 
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 151
+Description          := Huge planet thought to have a solid island floating in its atmosphere.
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 152
+Description          := Huge planet rumored to contain many rare elements super-condensed at its core. 
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 153
+Description          := Huge planet with severe soil erosion.
+Planet Size          := Huge
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 154
+Description          := Huge planet which contains stunning ice crystal formations.
+Planet Size          := Huge
+Planet Physical Type := Ice
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 155
+Description          := Large planet known for its intense and unforgiving gravitational pull.
+Planet Size          := Large
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 156
+Description          := Large planet containing highly acidic atmospheric clouds.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 157
+Description          := Large planet renowned for its naturally occuring ice formations.
+Planet Size          := Large
+Planet Physical Type := Ice
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 158
+Description          := Large planet with a large amount of stellar dust in its atmosphere. 
+Planet Size          := Large
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 159
+Description          := Large planet that is experiencing a slow carbonation process.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 160
+Description          := Medium sized planet of little natural value.
+Planet Size          := Medium
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 161
+Description          := Medium sized planet known for its almost bottomless ice canyons.
+Planet Size          := Medium
+Planet Physical Type := Ice
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 162
+Description          := Medium sized planet with intensified quartz veins.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 163
+Description          := Medium sized planet with a stable crystalline structure of its mantle.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 164
+Description          := Medium sized planet with a pronounced continental drift.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 165
+Description          := Small planet known to come to an almost liquid temperature during close orbits. 
+Planet Size          := Small
+Planet Physical Type := Ice
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 166
+Description          := Small planet containing fields of slow-moving ice vegetation.
+Planet Size          := Small
+Planet Physical Type := Ice
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 167
+Description          := Small planet marked by ancient craters.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 168
+Description          := Small planet composed of large pyrite globules.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 169
+Description          := Small planet with outstanding anhydrite stores.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 170
+Description          := Tiny planet that appears to have been of extra-system origin. 
+Planet Size          := Tiny
+Planet Physical Type := Ice
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 171
+Description          := Tiny planet that appears to be a broken off piece of the other nearby planets. 
+Planet Size          := Tiny
+Planet Physical Type := Ice
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 172
+Description          := Tiny planet with a retarded humus production.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 173
+Description          := Tiny planet with a super-abundance of soil microorganisms.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 174
+Description          := Tiny planet with strong weathering activities.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 175
+Description          := Huge planet known of its opaque clouds.
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 176
+Description          := Huge planet which contains strange mountain ranges hundreds of kilometers below the surface. 
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 177
+Description          := Huge planet which appears to have an impacted moon at its core. 
+Planet Size          := Huge
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 178
+Description          := Huge planet known for its great skating!
+Planet Size          := Huge
+Planet Physical Type := Ice
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 179
+Description          := Huge planet surrounded by chlorine ice chunks.
+Planet Size          := Huge
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 180
+Description          := Large planet with a hyper-dense atmosphere.
+Planet Size          := Large
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 181
+Description          := Large planet that contains huge naturally occuring ice bubbles. 
+Planet Size          := Large
+Planet Physical Type := Ice
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 182
+Description          := Large planet with slow leaching of silica.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 183
+Description          := Large planet that strangely rotates against its own poles. 
+Planet Size          := Large
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 184
+Description          := Large planet with an abundance of humic and fulvic acids.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 185
+Description          := Medium size planet with highly differential pedogenic regimes.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 186
+Description          := Mediumn sized planet which appears to be the home of long-dead lifeforms. 
+Planet Size          := Medium
+Planet Physical Type := Ice
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 187
+Description          := Medium size ringed planet with a positive moisture balance during all seasons.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 188
+Description          := Medium size planet with a high concentration of entisols.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 189
+Description          := Medium sized planet of little interest. 
+Planet Size          := Medium
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 190
+Description          := Small planet which has been overly bombarded by cosmic rays.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 191
+Description          := Small planet with a semi-solid atmosphere of vapor particles. 
+Planet Size          := Small
+Planet Physical Type := Ice
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 192
+Description          := Small planet with a very large troposphere.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 193
+Description          := Small planet with eruptions that launch ice spores into space. 
+Planet Size          := Small
+Planet Physical Type := Ice
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 194
+Description          := Small planet with a hyper-charged ionosphere.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 195
+Description          := Tiny planet with some visually stunning rainbow effects.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 196
+Description          := Tiny planet that appears to be crushing under its own graviational pull. 
+Planet Size          := Tiny
+Planet Physical Type := Ice
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 197
+Description          := Tiny planet with an extensive swamp system.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 198
+Description          := Tiny planet that has captured a portion of the sun's flocculus.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 199
+Description          := Tiny planet with a very fast rotation speed. 
+Planet Size          := Tiny
+Planet Physical Type := Ice
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 200
+Description          := Huge planet that had its atmosphere stripped off centuries ago. 
+Planet Size          := Huge
+Planet Physical Type := Ice
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 201
+Description          := Huge planet which contains some stunning noctilucent vapor formations.
+Planet Size          := Huge
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 202
+Description          := Huge planet with a large potential for mining utilization.
+Planet Size          := Huge
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 203
+Description          := Huge planet which is undergoing massive erosion of its topsoil.
+Planet Size          := Huge
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 204
+Description          := Huge planet composed of an ice-silicate material.
+Planet Size          := Huge
+Planet Physical Type := Ice
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 205
+Description          := Large planet known for its ancient alien ice sculptures. 
+Planet Size          := Large
+Planet Physical Type := Ice
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 206
+Description          := Large planet with massive granite formations.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 207
+Description          := Large planet with silicon based vegetative life forms.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 208
+Description          := Large planet with little surface scarring.
+Planet Size          := Large
+Planet Physical Type := Ice
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 209
+Description          := Large planet with large maze-like underground trenches.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 210
+Description          := Moderate planet heavily impacted by stellar bodies.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 211
+Description          := Medium sized planet interesting because of its radioactive ice crystals. 
+Planet Size          := Medium
+Planet Physical Type := Ice
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 212
+Description          := Medium sized planet of little interest.
+Planet Size          := Medium
+Planet Physical Type := Ice
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 213
+Description          := Moderate planet which seems to have been scarred by solar flares.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 214
+Description          := Moderate planet which was formed by meterorite impacts.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 215
+Description          := Small planet which appears to be the solid core of another planet.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 216
+Description          := Small planet which appears to be a moon that has fallen into a stellar orbit. 
+Planet Size          := Small
+Planet Physical Type := Ice
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 217
+Description          := Small planet with a sluggish thermal convection layer.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 218
+Description          := Small planet with routine planetary tremors.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 219
+Description          := Small planet composed of a very light form of methane ice. 
+Planet Size          := Small
+Planet Physical Type := Ice
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 220
+Description          := Tiny planet which follows an almost circular orbit. 
+Planet Size          := Tiny
+Planet Physical Type := Ice
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 221
+Description          := Tiny planet with an active molten core.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 222
+Description          := Tiny planet which has periodic eruptions of core materials. 
+Planet Size          := Tiny
+Planet Physical Type := Ice
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 223
+Description          := Tiny planet of little note.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 224
+Description          := Tiny planet which appears to be an escaped moon.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+
+Physical Type        := Star
+Picture Num          := 225
+Description          := An average yellow star.
+Star Size            := Medium
+Star Age             := Average
+Star Color           := Yellow
+Star Luminosity      := Average
+
+Physical Type        := Star
+Picture Num          := 226
+Description          := A small and dim yellow star.
+Star Size            := Small
+Star Age             := Average
+Star Color           := Yellow
+Star Luminosity      := Dim
+
+Physical Type        := Star
+Picture Num          := 227
+Description          := A very ordinary yellow star.
+Star Size            := Medium
+Star Age             := Average
+Star Color           := Yellow
+Star Luminosity      := Average
+
+Physical Type        := Star
+Picture Num          := 228
+Description          := A small and dim yellow star.
+Star Size            := Small
+Star Age             := Average
+Star Color           := Yellow
+Star Luminosity      := Dim
+
+Physical Type        := Star
+Picture Num          := 229
+Description          := Huge yellow star of moderate age.
+Star Size            := Huge
+Star Age             := Average
+Star Color           := Yellow
+Star Luminosity      := Bright
+
+Physical Type        := Star
+Picture Num          := 230
+Description          := A small and quite dim white star.
+Star Size            := Small
+Star Age             := Average
+Star Color           := White
+Star Luminosity      := Dim
+
+Physical Type        := Star
+Picture Num          := 231
+Description          := An average white star.
+Star Size            := Medium
+Star Age             := Average
+Star Color           := White
+Star Luminosity      := Average
+
+Physical Type        := Star
+Picture Num          := 232
+Description          := An unusually bright white star.
+Star Size            := Small
+Star Age             := Average
+Star Color           := White
+Star Luminosity      := Bright
+
+Physical Type        := Star
+Picture Num          := 233
+Description          := Standard white star with enhanced luminosity.
+Star Size            := Medium
+Star Age             := Average
+Star Color           := White
+Star Luminosity      := Bright
+
+Physical Type        := Star
+Picture Num          := 234
+Description          := Small and dim white star.
+Star Size            := Small
+Star Age             := Average
+Star Color           := White
+Star Luminosity      := Dim
+
+Physical Type        := Star
+Picture Num          := 235
+Description          := A newly-formed blue star. 
+Star Size            := Small
+Star Age             := Young
+Star Color           := Blue
+Star Luminosity      := Dim
+
+Physical Type        := Star
+Picture Num          := 236
+Description          := A moderate blue star early in its lifespan.
+Star Size            := Medium
+Star Age             := Young
+Star Color           := Blue
+Star Luminosity      := Average
+
+Physical Type        := Star
+Picture Num          := 237
+Description          := A small blue star.
+Star Size            := Small
+Star Age             := Young
+Star Color           := Blue
+Star Luminosity      := Average
+
+Physical Type        := Star
+Picture Num          := 238
+Description          := An unusually large blue star with tremendous luminosity.
+Star Size            := Large
+Star Age             := Young
+Star Color           := Blue
+Star Luminosity      := Bright
+
+Physical Type        := Star
+Picture Num          := 239
+Description          := A fairly dim blue star.
+Star Size            := Small
+Star Age             := Young
+Star Color           := Blue
+Star Luminosity      := Dim
+
+Physical Type        := Star
+Picture Num          := 240
+Description          := A moderate red star of extreme age. 
+Star Size            := Medium
+Star Age             := Ancient
+Star Color           := Red
+Star Luminosity      := Average
+
+Physical Type        := Star
+Picture Num          := 241
+Description          := An ancient red star.
+Star Size            := Medium
+Star Age             := Ancient
+Star Color           := Red
+Star Luminosity      := Average
+
+Physical Type        := Star
+Picture Num          := 242
+Description          := A standard red star.
+Star Size            := Medium
+Star Age             := Ancient
+Star Color           := Red
+Star Luminosity      := Average
+
+Physical Type        := Star
+Picture Num          := 243
+Description          := A super bright red star of enormous size.
+Star Size            := Large
+Star Age             := Ancient
+Star Color           := Red
+Star Luminosity      := Super Bright
+
+Physical Type        := Star
+Picture Num          := 244
+Description          := An ancient red star which still gives off a strong luminance.
+Star Size            := Large
+Star Age             := Ancient
+Star Color           := Red
+Star Luminosity      := Bright
+
+Physical Type        := Star
+Picture Num          := 245
+Description          := An older orange star.
+Star Size            := Medium
+Star Age             := Old
+Star Color           := Orange
+Star Luminosity      := Bright
+
+Physical Type        := Star
+Picture Num          := 246
+Description          := And old and small orange star.
+Star Size            := Small
+Star Age             := Old
+Star Color           := Orange
+Star Luminosity      := Average
+
+Physical Type        := Star
+Picture Num          := 247
+Description          := An ordinary orange star of average age. 
+Star Size            := Medium
+Star Age             := Old
+Star Color           := Orange
+Star Luminosity      := Dim
+
+Physical Type        := Star
+Picture Num          := 248
+Description          := A small orange star of relatively old age. 
+Star Size            := Small
+Star Age             := Old
+Star Color           := Orange
+Star Luminosity      := Average
+
+Physical Type        := Star
+Picture Num          := 249
+Description          := A large orange star nearing the end of its cycle. 
+Star Size            := Large
+Star Age             := Old
+Star Color           := Orange
+Star Luminosity      := Bright
+
+Physical Type        := Storm
+Picture Num          := 250
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm5
+
+Physical Type        := Storm
+Picture Num          := 251
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm5
+
+Physical Type        := Storm
+Picture Num          := 252
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm5
+
+Physical Type        := Storm
+Picture Num          := 253
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm5
+
+Physical Type        := Storm
+Picture Num          := 254
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm5
+
+Physical Type        := Storm
+Picture Num          := 255
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm4
+
+Physical Type        := Storm
+Picture Num          := 256
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm4
+
+Physical Type        := Storm
+Picture Num          := 257
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm4
+
+Physical Type        := Storm
+Picture Num          := 258
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm4
+
+Physical Type        := Storm
+Picture Num          := 259
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm4
+
+Physical Type        := Storm
+Picture Num          := 260
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm2
+
+Physical Type        := Storm
+Picture Num          := 261
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm2
+
+Physical Type        := Storm
+Picture Num          := 262
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm2
+
+Physical Type        := Storm
+Picture Num          := 263
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm2
+
+Physical Type        := Storm
+Picture Num          := 264
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm2
+
+Physical Type        := Storm
+Picture Num          := 265
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm1
+
+Physical Type        := Storm
+Picture Num          := 266
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm1
+
+Physical Type        := Storm
+Picture Num          := 267
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm1
+
+Physical Type        := Storm
+Picture Num          := 268
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm1
+
+Physical Type        := Storm
+Picture Num          := 269
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm1
+
+Physical Type        := Storm
+Picture Num          := 270
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm3
+
+Physical Type        := Storm
+Picture Num          := 271
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm3
+
+Physical Type        := Storm
+Picture Num          := 272
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm3
+
+Physical Type        := Storm
+Picture Num          := 273
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm3
+
+Physical Type        := Storm
+Picture Num          := 274
+Description          := A stellar storm composed of plasma fields, energy discharges, and electro-static gasses.
+Storm Size           := Medium
+Combat Tile          := Storm3
+
+Physical Type        := Asteroids
+Picture Num          := 275
+Description          := Tiny field of space rocks orbiting through this system.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+Combat Tile          := Asteroids1
+
+Physical Type        := Asteroids
+Picture Num          := 276
+Description          := Tiny field of space rocks orbiting through this system.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+Combat Tile          := Asteroids1
+
+Physical Type        := Asteroids
+Picture Num          := 277
+Description          := Tiny field of space rocks orbiting through this system.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+Combat Tile          := Asteroids1
+
+Physical Type        := Asteroids
+Picture Num          := 278
+Description          := Tiny field of space rocks orbiting through this system.
+Planet Size          := Tiny
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+Combat Tile          := Asteroids1
+
+Physical Type        := Asteroids
+Picture Num          := 279
+Description          := Small field of space rocks orbiting through this system.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+Combat Tile          := Asteroids1
+
+Physical Type        := Asteroids
+Picture Num          := 280
+Description          := Small field of space rocks orbiting through this system.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+Combat Tile          := Asteroids1
+
+Physical Type        := Asteroids
+Picture Num          := 281
+Description          := Small field of space rocks orbiting through this system.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+Combat Tile          := Asteroids1
+
+Physical Type        := Asteroids
+Picture Num          := 282
+Description          := Small field of space rocks orbiting through this system.
+Planet Size          := Small
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+Combat Tile          := Asteroids1
+
+Physical Type        := Asteroids
+Picture Num          := 283
+Description          := Medium field of space rocks orbiting through this system.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+Combat Tile          := Asteroids1
+
+Physical Type        := Asteroids
+Picture Num          := 284
+Description          := Medium field of space rocks orbiting through this system.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+Combat Tile          := Asteroids1
+
+Physical Type        := Asteroids
+Picture Num          := 285
+Description          := Medium field of space rocks orbiting through this system.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+Combat Tile          := Asteroids1
+
+Physical Type        := Asteroids
+Picture Num          := 286
+Description          := Medium field of space rocks orbiting through this system.
+Planet Size          := Medium
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+Combat Tile          := Asteroids1
+
+Physical Type        := Asteroids
+Picture Num          := 287
+Description          := Large field of space rocks orbiting through this system.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+Combat Tile          := Asteroids1
+
+Physical Type        := Asteroids
+Picture Num          := 288
+Description          := Large field of space rocks orbiting through this system.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+Combat Tile          := Asteroids1
+
+Physical Type        := Asteroids
+Picture Num          := 289
+Description          := Large field of space rocks orbiting through this system.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+Combat Tile          := Asteroids1
+
+Physical Type        := Asteroids
+Picture Num          := 290
+Description          := Large field of space rocks orbiting through this system.
+Planet Size          := Large
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+Combat Tile          := Asteroids1
+
+Physical Type        := Asteroids
+Picture Num          := 291
+Description          := Huge field of space rocks orbiting through this system.
+Planet Size          := Huge
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+Combat Tile          := Asteroids1
+
+Physical Type        := Asteroids
+Picture Num          := 292
+Description          := Huge field of space rocks orbiting through this system.
+Planet Size          := Huge
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+Combat Tile          := Asteroids1
+
+Physical Type        := Asteroids
+Picture Num          := 293
+Description          := Huge field of space rocks orbiting through this system.
+Planet Size          := Huge
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+Combat Tile          := Asteroids1
+
+Physical Type        := Asteroids
+Picture Num          := 294
+Description          := Huge field of space rocks orbiting through this system.
+Planet Size          := Huge
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+Combat Tile          := Asteroids1
+
+Physical Type        := Warp Point
+Picture Num          := 295
+Description          := A smaller than normal warp point.
+Warp Point Size      := Small
+Warp Point One-Way   := FALSE
+Unusual              := TRUE
+
+Physical Type        := Warp Point
+Picture Num          := 296
+Description          := Large stable warp point.
+Warp Point Size      := Large
+Warp Point One-Way   := FALSE
+Unusual              := FALSE
+
+Physical Type        := Warp Point
+Picture Num          := 297
+Description          := This warp point has some unusual graviton emissions. 
+Warp Point Size      := Large
+Warp Point One-Way   := TRUE
+Unusual              := TRUE
+
+Physical Type        := Warp Point
+Picture Num          := 298
+Description          := Unusual warp point which is barely perceptible by normal means. 
+Warp Point Size      := Small
+Warp Point One-Way   := FALSE
+Unusual              := TRUE
+
+Physical Type        := Warp Point
+Picture Num          := 299
+Description          := Odd warp point which appears to be of a different density structure than normal warp points.
+Warp Point Size      := Large
+Warp Point One-Way   := FALSE
+Unusual              := TRUE
+
+Physical Type        := Destroyed Star
+Picture Num          := 240
+Description          := Solid core remnant of an eons old destroyed star.
+Star Size            := Medium
+Star Age             := Average
+Star Color           := Red
+Star Luminosity      := Average
+
+Physical Type        := Planet
+Picture Num          := 300
+Description          := Massive constructed band surrounding a star which is the equivalent of 5 large planets. 
+Planet Size          := Ringworld
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 300
+Description          := Massive constructed band surrounding a star which is the equivalent of 5 large planets. 
+Planet Size          := Ringworld
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 300
+Description          := Massive constructed band surrounding a star which is the equivalent of 5 large planets. 
+Planet Size          := Ringworld
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 300
+Description          := Massive constructed band surrounding a star which is the equivalent of 5 large planets. 
+Planet Size          := Ringworld
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 300
+Description          := Massive constructed band surrounding a star which is the equivalent of 5 large planets. 
+Planet Size          := Ringworld
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 300
+Description          := Massive constructed band surrounding a star which is the equivalent of 5 large planets. 
+Planet Size          := Ringworld
+Planet Physical Type := Ice
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 300
+Description          := Massive constructed band surrounding a star which is the equivalent of 5 large planets. 
+Planet Size          := Ringworld
+Planet Physical Type := Ice
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 300
+Description          := Massive constructed band surrounding a star which is the equivalent of 5 large planets. 
+Planet Size          := Ringworld
+Planet Physical Type := Ice
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 300
+Description          := Massive constructed band surrounding a star which is the equivalent of 5 large planets. 
+Planet Size          := Ringworld
+Planet Physical Type := Ice
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 300
+Description          := Massive constructed band surrounding a star which is the equivalent of 5 large planets. 
+Planet Size          := Ringworld
+Planet Physical Type := Ice
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 300
+Description          := Massive constructed band surrounding a star which is the equivalent of 5 large planets. 
+Planet Size          := Ringworld
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 300
+Description          := Massive constructed band surrounding a star which is the equivalent of 5 large planets. 
+Planet Size          := Ringworld
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 300
+Description          := Massive constructed band surrounding a star which is the equivalent of 5 large planets. 
+Planet Size          := Ringworld
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 300
+Description          := Massive constructed band surrounding a star which is the equivalent of 5 large planets. 
+Planet Size          := Ringworld
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 300
+Description          := Massive constructed band surrounding a star which is the equivalent of 5 large planets. 
+Planet Size          := Ringworld
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 301
+Description          := Massive constructed sphere surrounding a star which is the equivalent of 10 large planets. 
+Planet Size          := Sphereworld
+Planet Physical Type := Rock
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 301
+Description          := Massive constructed sphere surrounding a star which is the equivalent of 10 large planets. 
+Planet Size          := Sphereworld
+Planet Physical Type := Rock
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 301
+Description          := Massive constructed sphere surrounding a star which is the equivalent of 10 large planets. 
+Planet Size          := Sphereworld
+Planet Physical Type := Rock
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 301
+Description          := Massive constructed sphere surrounding a star which is the equivalent of 10 large planets. 
+Planet Size          := Sphereworld
+Planet Physical Type := Rock
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 301
+Description          := Massive constructed sphere surrounding a star which is the equivalent of 10 large planets. 
+Planet Size          := Sphereworld
+Planet Physical Type := Rock
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 301
+Description          := Massive constructed sphere surrounding a star which is the equivalent of 10 large planets. 
+Planet Size          := Sphereworld
+Planet Physical Type := Ice
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 301
+Description          := Massive constructed sphere surrounding a star which is the equivalent of 10 large planets. 
+Planet Size          := Sphereworld
+Planet Physical Type := Ice
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 301
+Description          := Massive constructed sphere surrounding a star which is the equivalent of 10 large planets. 
+Planet Size          := Sphereworld
+Planet Physical Type := Ice
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 301
+Description          := Massive constructed sphere surrounding a star which is the equivalent of 10 large planets. 
+Planet Size          := Sphereworld
+Planet Physical Type := Ice
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 301
+Description          := Massive constructed sphere surrounding a star which is the equivalent of 10 large planets. 
+Planet Size          := Sphereworld
+Planet Physical Type := Ice
+Planet Atmosphere    := Carbon Dioxide
+
+Physical Type        := Planet
+Picture Num          := 301
+Description          := Massive constructed sphere surrounding a star which is the equivalent of 10 large planets. 
+Planet Size          := Sphereworld
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := None
+
+Physical Type        := Planet
+Picture Num          := 301
+Description          := Massive constructed sphere surrounding a star which is the equivalent of 10 large planets. 
+Planet Size          := Sphereworld
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Methane
+
+Physical Type        := Planet
+Picture Num          := 301
+Description          := Massive constructed sphere surrounding a star which is the equivalent of 10 large planets. 
+Planet Size          := Sphereworld
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Oxygen
+
+Physical Type        := Planet
+Picture Num          := 301
+Description          := Massive constructed sphere surrounding a star which is the equivalent of 10 large planets. 
+Planet Size          := Sphereworld
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Hydrogen
+
+Physical Type        := Planet
+Picture Num          := 301
+Description          := Massive constructed sphere surrounding a star which is the equivalent of 10 large planets. 
+Planet Size          := Sphereworld
+Planet Physical Type := Gas Giant
+Planet Atmosphere    := Carbon Dioxide
+
+=======================================================================================
+*END*
+=======================================================================================
+

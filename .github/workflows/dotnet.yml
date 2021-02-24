@@ -1,0 +1,80 @@
+name: .NET
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Test
+      uses: zyborg/dotnet-tests-report@v1.3.0
+      with:
+        project_path: FrEee.Tests/FrEee.Tests.csproj
+        no_restore: true # we already restored above
+        msbuild_configuration: Release
+        msbuild_verbosity: normal # q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+        report_name: TestReport_${{github.sha}}_$NOW
+        report_title: Test Report
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        skip_check_run: false
+        set_check_status_from_test_outcome: false # true = fail the build if tests fail
+        #trx_xsl_path: # optional
+    - name: Prepare artifact files
+      shell: bash
+      run: |
+        mkdir Artifact
+        mkdir Artifact/FrEee.WinForms
+        mkdir Artifact/FrEee.WinForms/FrEee
+        mv FrEee.WinForms/bin/Release/net5.0-windows/* Artifact/FrEee.WinForms/FrEee/
+    - name: Create release tag
+      id: createReleaseTag
+      uses: 2428392/gh-truncate-string-action@v1.0.0
+      with:
+        stringToTruncate: ${{github.sha}}
+        maxLength: 10
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}
+        path: Artifact/FrEee.WinForms
+    - name: Create Release
+      id: createRelease
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{steps.createReleaseTag.outputs.string}}
+        release_name: ${{github.sha}}
+        body: Auto-generated prerelease build
+        prerelease: true
+    # yes, we really do have to download the artifact we just uploaded; this job can't see it automatically
+    - name: Download Artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}
+        path: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+          upload_url: "${{ steps.createRelease.outputs.upload_url }}" # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}
+          asset_name: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}
+          asset_content_type: application/zip

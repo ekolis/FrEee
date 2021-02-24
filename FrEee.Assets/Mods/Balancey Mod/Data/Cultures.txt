@@ -1,0 +1,143 @@
+=======================================================================================
+CULTURES DATA FILE
+=======================================================================================
+
+
+=======================================================================================
+*BEGIN*
+=======================================================================================
+
+Name                  := Neutral
+Description           := A race with no specific advantages or disadvantages.
+Production            := 0
+Research              := 0
+Intelligence          := 0
+Trade                 := 0
+Space Combat          := 0
+Ground Combat         := 0
+Happiness             := 0
+Maintenance           := 0
+SY Rate               := 0
+Repair                := 0
+
+Name                  := Berserkers
+Description           := A highly factioned culture with an unending desire for conquest. Berserkers are tremendous fighters with no apparent regard for personal safety. This single-minded lust for combat takes a toll on their culture's ability to advance its economy.
+Production            := -10
+Research              := -10
+Intelligence          := -10
+Trade                 := -10
+Space Combat          := 30
+Ground Combat         := 30
+Happiness             := 0
+Maintenance           := 0
+SY Rate               := -10
+Repair                := -10
+
+Name                  := Warriors
+Description           := A culture dedicated to the pursuit of combat and conquest. Strong familial bonds hold the society together and allow it to advance in non martial areas. 
+Production            := 0
+Research              := -10
+Intelligence          := -10
+Trade                 := 0
+Space Combat          := 10
+Ground Combat         := 10
+Happiness             := 0
+Maintenance           := 0
+SY Rate               := 0
+Repair                := 0
+
+Name                  := Traders
+Description           := Citizens of this culture are dedicated to the pursuit of meeting other races and establishing trade with them. Their internal economy and fighting ability suffer somewhat, however.
+Production            := -10
+Research              := -10
+Intelligence          := -10
+Trade                 := 50
+Space Combat          := -10
+Ground Combat         := -10
+Happiness             := 0
+Maintenance           := 0
+SY Rate               := 0
+Repair                := 0
+
+Name                  := Politicians
+Description           := A highly political culture allows for advanced trade and superior leadership in combat. However, as often happens with a politically centric directive, the basics of industry are neglected. 
+Production            := -10
+Research              := 10
+Intelligence          := 0
+Trade                 := 10
+Space Combat          := 10
+Ground Combat         := 5
+Happiness             := 5
+Maintenance           := -10
+SY Rate               := -10
+Repair                := -10
+
+Name                  := Artisans
+Description           := A populace devoted to the leisure and cultural pursuits. This society keeps is populations very happy.
+Production            := -5
+Research              := -5
+Intelligence          := -5
+Trade                 := 25
+Space Combat          := -10
+Ground Combat         := -10
+Happiness             := 25
+Maintenance           := -5
+SY Rate               := -5
+Repair                := -5
+
+Name                  := Scientists
+Description           := The majority of the given population are devoted to scientific endeavors.
+Production            := -5
+Research              := 30
+Intelligence          := -5
+Trade                 := -5
+Space Combat          := 0
+Ground Combat         := 0
+Happiness             := 0
+Maintenance           := 0
+SY Rate               := -5
+Repair                := -5
+
+Name                  := Workers
+Description           := A culture which values hard work above all else. Industry is given precedence above all other tasks.
+Production            := 30
+Research              := -10
+Intelligence          := -10
+Trade                 := -10
+Space Combat          := -5
+Ground Combat         := -5
+Happiness             := -10
+Maintenance           := 10
+SY Rate               := 5
+Repair                := 5
+
+Name                  := Schemers
+Description           := A society with a natural disposition towards dark deals and political machinations. This society is adept at intelligence operations.
+Production            := -5
+Research              := -5
+Intelligence          := 30
+Trade                 := -10
+Space Combat          := 0
+Ground Combat         := 0
+Happiness             := -10
+Maintenance           := 0
+SY Rate               := 0
+Repair                := 0
+
+Name                  := Xenophobes
+Description           := An elitist culture which has no desire for interaction with other cultures. They desire to remain apart and distinct from the rest of the galaxy.
+Production            := 10
+Research              := 10
+Intelligence          := 10
+Trade                 := -90
+Space Combat          := 10
+Ground Combat         := 10
+Happiness             := 10
+Maintenance           := 10
+SY Rate               := 10
+Repair                := 10
+
+=======================================================================================
+*END*
+=======================================================================================
+
