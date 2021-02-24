@@ -4,14 +4,16 @@ using Avalonia.Markup.Xaml;
 
 namespace FrEee.Avalonia.Views
 {
-	public class MainWindow : Window
+	public class ShellWindow : Window
 	{
-		public MainWindow()
+		public ShellWindow()
 		{
 			InitializeComponent();
 #if DEBUG
             this.AttachDevTools();
 #endif
+			// this needs to be set in code and not the designer becuse the icon gets copied in from the FrEee.Assets project by the build
+			Icon = new WindowIcon("Pictures/FrEee.ico");
 		}
 
 		private void InitializeComponent()

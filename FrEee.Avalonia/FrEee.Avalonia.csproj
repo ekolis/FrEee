@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
@@ -13,5 +13,14 @@
     <PackageReference Include="Avalonia.Desktop" Version="0.10.0" />
     <PackageReference Include="Avalonia.Diagnostics" Version="0.10.0" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FrEee.Assets\FrEee.Assets.csproj" />
+    <ProjectReference Include="..\FrEee\FrEee.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\ShellWindow.axaml.cs">
+      <DependentUpon>ShellWindow.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>
