@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace FrEee.Avalonia.Views
 {
-	public class ShellWindow : Window
+	public class GameWindow : Window
 	{
-		public ShellWindow()
+		public GameWindow()
 		{
 			InitializeComponent();
 #if DEBUG

@@ -17,9 +17,9 @@ namespace FrEee.Avalonia
 		{
 			if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
 			{
-				desktop.MainWindow = new ShellWindow
+				desktop.MainWindow = new MainMenuWindow
 				{
-					DataContext = new MainWindowViewModel(),
+					DataContext = new MainMenuWindowViewModel(),
 				};
 			}
 
