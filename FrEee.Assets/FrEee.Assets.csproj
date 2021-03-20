@@ -35,4 +35,12 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Pictures\Splash.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Pictures\Splash.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

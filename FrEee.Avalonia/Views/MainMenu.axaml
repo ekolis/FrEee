@@ -1,0 +1,30 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="FrEee.Avalonia.Views.MainMenu">
+	<StackPanel Orientation="Horizontal">
+		<StackPanel>
+			<Label>Configure</Label>
+			<Button Width="200" ToolTip.Tip="Load a mod">Mods</Button>
+			<Button Width="200" ToolTip.Tip="Configure game options">Options</Button>
+		</StackPanel>
+		<StackPanel>
+			<Label>Start</Label>
+			<Button Width="200" ToolTip.Tip="Jump in to a quick single player game">Quickstart</Button>
+			<Button Width="200" ToolTip.Tip="Start a new game">New Game</Button>
+			<Button Width="200" ToolTip.Tip="Play a scenario (not yet implemented)" >Scenario</Button>
+		</StackPanel>
+		<StackPanel>
+			<Label>Continue</Label>
+			<Button Width="200" ToolTip.Tip="Resume the last game you were playing">Resume</Button>
+			<Button Width="200" ToolTip.Tip="Load a game you already started">Load Game</Button>
+		</StackPanel>
+		<StackPanel>
+			<Label>Misc</Label>
+			<Button Width="200" ToolTip.Tip="View a list of people who made this game">Credits</Button>
+			<Button Width="200" ToolTip.Tip="Exit the game">Quit</Button>
+		</StackPanel>
+	</StackPanel>
+</UserControl>

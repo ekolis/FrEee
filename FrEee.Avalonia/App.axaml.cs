@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Layout;
 using Avalonia.Markup.Xaml;
+using Avalonia.Media.Imaging;
 using FrEee.Avalonia.ViewModels;
 using FrEee.Avalonia.Views;
 
@@ -23,12 +24,13 @@ namespace FrEee.Avalonia
 				{
 					DataContext = new MainMenuWindowViewModel(),
 				};
-				win.SetContent(null, new Label
+				var logo = new Image
 				{
-					Content = "Welcome to FrEee!",
-					VerticalAlignment = VerticalAlignment.Center,
-					HorizontalAlignment = HorizontalAlignment.Center,
-				});
+					Source = new Bitmap("Pictures/Splash.jpg")
+				};
+				win.SetContent(Dock.Left, logo);
+				var menu = new MainMenu();
+				win.SetContent(Dock.Right, menu);
 				desktop.MainWindow = win;
 			}
 
