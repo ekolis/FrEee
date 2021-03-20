@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
   </ItemGroup>
