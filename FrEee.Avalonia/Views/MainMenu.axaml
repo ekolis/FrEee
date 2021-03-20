@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+						 xmlns:vm="using:FrEee.Avalonia.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="FrEee.Avalonia.Views.MainMenu">
 	<StackPanel Orientation="Horizontal">
@@ -24,7 +25,7 @@
 		<StackPanel>
 			<Label>Misc</Label>
 			<Button Width="200" ToolTip.Tip="View a list of people who made this game">Credits</Button>
-			<Button Width="200" ToolTip.Tip="Exit the game">Quit</Button>
+			<Button Width="200" ToolTip.Tip="Exit the game" Command="{Binding Quit}">Quit</Button>
 		</StackPanel>
 	</StackPanel>
 </UserControl>

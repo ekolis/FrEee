@@ -20,17 +20,19 @@ namespace FrEee.Avalonia
 		{
 			if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
 			{
-				var win = new GameWindow
+				var win = new GameWindow();
+				var layer = new ViewLayer()
 				{
-					DataContext = new MainMenuWindowViewModel(),
+					Left = new Image
+					{
+						Source = new Bitmap("Pictures/Splash.jpg")
+					},
+					Right = new MainMenu
+					{
+						DataContext = new MainMenuViewModel()
+					},
 				};
-				var logo = new Image
-				{
-					Source = new Bitmap("Pictures/Splash.jpg")
-				};
-				win.SetContent(Dock.Left, logo);
-				var menu = new MainMenu();
-				win.SetContent(Dock.Right, menu);
+				ViewLayer.Push(layer);
 				desktop.MainWindow = win;
 			}
 

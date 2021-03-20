@@ -1,3 +1,4 @@
+using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
@@ -7,15 +8,21 @@ namespace FrEee.Avalonia.Views
 {
 	public class GameWindow : Window
 	{
+		public static GameWindow Instance { get; private set; }
+
 		public GameWindow()
 		{
 			InitializeComponent();
 #if DEBUG
-            this.AttachDevTools();
+			this.AttachDevTools();
 #endif
 			// this needs to be set in code and not the designer becuse the icon gets copied in from the FrEee.Assets project by the build
 			// maybe this could be solved by making FrEee.Assets a shared project?
 			Icon = new WindowIcon("Pictures/FrEee.ico");
+
+			if (Instance is not null)
+				throw new Exception("GameWindow.Instance is already set.");
+			Instance = this;
 		}
 
 		public GameWindow(Control content)
@@ -55,6 +62,11 @@ namespace FrEee.Avalonia.Views
 					break;
 			}
 
+			RefreshDockedControls();
+		}
+
+		private void RefreshDockedControls()
+		{
 			var dockPanel = this.FindControl<DockPanel>("dockPanel");
 			dockPanel.Children.Clear();
 			if (left is not null)
@@ -83,6 +95,16 @@ namespace FrEee.Avalonia.Views
 			}
 		}
 
-		private Control left, right, top, bottom, center;
+		private Control? left, right, top, bottom, center;
+
+		public void Load(ViewLayer layer)
+		{
+			left = layer.Left;
+			right = layer.Right;
+			top = layer.Top;
+			bottom = layer.Bottom;
+			center = layer.Center;
+			RefreshDockedControls();
+		}
 	}
 }
