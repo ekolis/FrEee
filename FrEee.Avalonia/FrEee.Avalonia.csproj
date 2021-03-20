@@ -19,9 +19,6 @@
     <ProjectReference Include="..\FrEee\FrEee.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Views\MainMenuWindow.axaml.cs">
-      <DependentUpon>MainMenuWindow.axaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\GameWindow.axaml.cs">
       <DependentUpon>GameWindow.axaml</DependentUpon>
     </Compile>

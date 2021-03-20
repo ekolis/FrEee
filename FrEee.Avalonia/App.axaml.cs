@@ -1,5 +1,7 @@
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Layout;
 using Avalonia.Markup.Xaml;
 using FrEee.Avalonia.ViewModels;
 using FrEee.Avalonia.Views;
@@ -17,10 +19,17 @@ namespace FrEee.Avalonia
 		{
 			if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
 			{
-				desktop.MainWindow = new MainMenuWindow
+				var win = new GameWindow
 				{
 					DataContext = new MainMenuWindowViewModel(),
 				};
+				win.SetContent(null, new Label
+				{
+					Content = "Welcome to FrEee!",
+					VerticalAlignment = VerticalAlignment.Center,
+					HorizontalAlignment = HorizontalAlignment.Center,
+				});
+				desktop.MainWindow = win;
 			}
 
 			base.OnFrameworkInitializationCompleted();

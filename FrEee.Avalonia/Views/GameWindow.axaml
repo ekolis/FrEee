@@ -6,7 +6,11 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="FrEee.Avalonia.Views.GameWindow"
         Title="FrEee">
-
-    <TextBlock Text="It's a game window!" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+	<DockPanel Name="dockPanel">
+		<TextBlock DockPanel.Dock="Left" Text="left" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Blue"/>
+		<TextBlock DockPanel.Dock="Right" Text="right" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Red"/>
+		<TextBlock DockPanel.Dock="Top" Text="top" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+		<TextBlock DockPanel.Dock="Bottom" Text="bottom" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+		<TextBlock Text="CENTER" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+	</DockPanel>
 </Window>
