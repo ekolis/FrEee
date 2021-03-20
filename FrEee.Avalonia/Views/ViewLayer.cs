@@ -7,6 +7,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using FrEee.Avalonia.ViewModels;
+using FrEee.Game.Objects.Space;
 
 namespace FrEee.Avalonia.Views
 {
@@ -75,10 +76,7 @@ namespace FrEee.Avalonia.Views
 		public static ViewLayer Strategy { get; } =
 			new ViewLayer()
 			{
-				Center = new TextBlock
-				{
-					Text = "This is the main system map and stuff."
-				},
+				Center = new StarSystemMap(new StarSystem(7) { Name = "Sol" }),
 				Left = new TextBlock
 				{
 					Text = "The map tabs go here."
