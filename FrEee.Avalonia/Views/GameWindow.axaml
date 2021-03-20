@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="FrEee.Avalonia.Views.GameWindow"
-        Title="FrEee">
+        Title="FrEee"
+				WindowState="Maximized">
 	<DockPanel Name="dockPanel">
 		<TextBlock DockPanel.Dock="Left" Text="left" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Blue"/>
 		<TextBlock DockPanel.Dock="Right" Text="right" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Red"/>
