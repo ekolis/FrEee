@@ -44,14 +44,14 @@ namespace FrEee.Avalonia.Views
 
 		public static bool Any() => Stack.Any();
 
-		public Control Top { get; set; }
+		public Control? Top { get; set; }
 
-		public Control Bottom { get; set; }
+		public Control? Bottom { get; set; }
 
-		public Control Left { get; set; }
+		public Control? Left { get; set; }
 
-		public Control Right { get; set; }
+		public Control? Right { get; set; }
 
-		public Control Center { get; set; }
+		public Control? Center { get; set; }
 	}
 }
