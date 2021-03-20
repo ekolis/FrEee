@@ -20,7 +20,7 @@
 		<StackPanel>
 			<Label>Continue</Label>
 			<Button Width="200" ToolTip.Tip="Resume the last game you were playing">Resume</Button>
-			<Button Width="200" ToolTip.Tip="Load a game you already started">Load Game</Button>
+			<Button Width="200" ToolTip.Tip="Load a game you already started" Command="{Binding LoadGameAsync}">Load Game</Button>
 		</StackPanel>
 		<StackPanel>
 			<Label>Misc</Label>

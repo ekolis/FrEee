@@ -1,0 +1,2 @@
+﻿This is a dummy text file to make sure the folder is created when building the game.
+It can be safely deleted by players.

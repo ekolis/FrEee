@@ -23,4 +23,9 @@
 		<Compile Remove="Game\Objects\Combat\Simple\Battle.cs" />
 		<Compile Remove="Game\Objects\Commands\EditStrategyCommand.cs" />
 	</ItemGroup>
+	<ItemGroup>
+	  <None Update="FrEee.ico">
+	    <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
 </Project>
