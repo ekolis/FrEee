@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using FrEee.Avalonia.Views;
+using FrEee.Game.Objects.Space;
 
 namespace FrEee.Avalonia.ViewModels
 {
@@ -30,8 +31,12 @@ namespace FrEee.Avalonia.ViewModels
 				AllowMultiple = false,
 			};
 			var filenames = await dlg.ShowAsync(GameWindow.Instance);
+			// TODO: warnings if there's more than one file selected
 			if (filenames.Any())
-				GameWindow.Instance.Load(ViewLayer.Strategy); // TODO: actually load game
+			{
+				Galaxy.Load(filenames.First());
+				GameWindow.Instance.Load(ViewLayer.Strategy);
+			}
 		}
 
 		/// <summary>

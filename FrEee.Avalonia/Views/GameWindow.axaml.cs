@@ -99,11 +99,26 @@ namespace FrEee.Avalonia.Views
 
 		public void Load(ViewLayer layer)
 		{
-			left = layer.Left;
-			right = layer.Right;
-			top = layer.Top;
-			bottom = layer.Bottom;
-			center = layer.Center;
+			if (left is null && layer.LeftLoader is not null)
+				left = layer.LeftLoader();
+			else
+				left = layer.Left;
+			if (right is null && layer.RightLoader is not null)
+				right = layer.RightLoader();
+			else
+				right = layer.Right;
+			if (top is null && layer.TopLoader is not null)
+				top = layer.TopLoader();
+			else
+				top = layer.Top;
+			if (bottom is null && layer.BottomLoader is not null)
+				bottom = layer.BottomLoader();
+			else
+				bottom = layer.Bottom;
+			if (center is null && layer.CenterLoader is not null)
+				center = layer.CenterLoader();
+			else
+				center = layer.Center;
 			RefreshDockedControls();
 		}
 	}

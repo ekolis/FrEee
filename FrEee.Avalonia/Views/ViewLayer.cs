@@ -8,6 +8,7 @@ using Avalonia.Controls;
 using Avalonia.Media.Imaging;
 using FrEee.Avalonia.ViewModels;
 using FrEee.Game.Objects.Space;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Avalonia.Views
 {
@@ -49,13 +50,23 @@ namespace FrEee.Avalonia.Views
 
 		public Control? Top { get; set; }
 
+		public Func<Control?>? TopLoader { get; set; }
+
 		public Control? Bottom { get; set; }
+
+		public Func<Control?>? BottomLoader { get; set; }
 
 		public Control? Left { get; set; }
 
+		public Func<Control?>? LeftLoader { get; set; }
+
 		public Control? Right { get; set; }
 
+		public Func<Control?>? RightLoader { get; set; }
+
 		public Control? Center { get; set; }
+
+		public Func<Control?>? CenterLoader { get; set; }
 
 		/// <summary>
 		/// The main menu which appears when the game is first loaded.
@@ -76,7 +87,7 @@ namespace FrEee.Avalonia.Views
 		public static ViewLayer Strategy { get; } =
 			new ViewLayer()
 			{
-				Center = new StarSystemMap(new StarSystem(7) { Name = "Sol" }),
+				CenterLoader = () => new StarSystemMap(Galaxy.Current.StarSystemLocations.PickRandom().Item),
 				Left = new TextBlock
 				{
 					Text = "The map tabs go here."
