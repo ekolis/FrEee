@@ -41,7 +41,7 @@ jobs:
         mkdir Artifact
         mkdir Artifact/FrEee.WinForms
         mkdir Artifact/FrEee.WinForms/FrEee
-        mv FrEee.WinForms/bin/Release/net5.0-windows/* Artifact/FrEee.WinForms/FrEee/
+        mv FrEee.WinForms/bin/Release/net6.0-windows/* Artifact/FrEee.WinForms/FrEee/
     - name: Create release tag
       id: createReleaseTag
       uses: 2428392/gh-truncate-string-action@v1.0.0
