@@ -75,6 +75,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
           upload_url: https://uploads.github.com/repos/ekolis/FrEee/releases/56787086/assets/FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}
-          asset_path: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}
-          asset_name: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}
+          asset_path: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}.zip
+          asset_name: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}.zip
           asset_content_type: application/zip
