@@ -51,7 +51,7 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}
+        name: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}.zip
         path: Artifact/FrEee.WinForms
     - name: Create Release
       id: createRelease
@@ -67,14 +67,14 @@ jobs:
     - name: Download Artifact
       uses: actions/download-artifact@v2
       with:
-        name: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}
-        path: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}
+        name: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}.zip
+        path: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}.zip
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-          upload_url: https://uploads.github.com/repos/ekolis/FrEee/releases/56787086/assets/FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}
+          upload_url: https://uploads.github.com/repos/ekolis/FrEee/releases/56787086/assets/FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}.zip
           asset_path: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}.zip
           asset_name: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}.zip
           asset_content_type: application/zip
