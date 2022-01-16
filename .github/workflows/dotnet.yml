@@ -54,7 +54,7 @@ jobs:
         name: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}.zip
         path: Artifact/FrEee.WinForms
     - name: Create Release
-      id: createRelease
+      id: create-release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -63,18 +63,12 @@ jobs:
         release_name: ${{github.sha}}
         body: Auto-generated prerelease build
         prerelease: true
-    # yes, we really do have to download the artifact we just uploaded; this job can't see it automatically
-    - name: Download Artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}.zip
-        path: .
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-          upload_url: ${{ steps.createRelease.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: .
-          asset_name: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}.zip
+          upload_url: ${{ steps.create-release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./FrEee.WinForms.zip
+          asset_name: FrEee.WinForms.zip
           asset_content_type: application/zip
