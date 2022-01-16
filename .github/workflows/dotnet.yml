@@ -68,13 +68,13 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}.zip
-        path: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}.zip
+        path: ./FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}.zip
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
           upload_url: ${{ steps.createRelease.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}.zip
+          asset_path: ./FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}.zip
           asset_name: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}.zip
           asset_content_type: application/zip
