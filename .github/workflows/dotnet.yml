@@ -63,6 +63,12 @@ jobs:
         release_name: ${{github.sha}}
         body: Auto-generated prerelease build
         prerelease: true
+    # yes, we really do have to download the artifact we just uploaded; this job can't see it automatically
+    - name: Download Artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}
+        path: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       env:
