@@ -68,7 +68,6 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}.zip
-        path: .
     - name: Upload Release Asset
       uses: actions/upload-release-asset@v1
       env:
