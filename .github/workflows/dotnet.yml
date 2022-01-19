@@ -35,13 +35,6 @@ jobs:
         skip_check_run: false
         set_check_status_from_test_outcome: false # true = fail the build if tests fail
         #trx_xsl_path: # optional
-    - name: Prepare artifact files
-      shell: bash
-      run: |
-        mkdir Artifact
-        mkdir Artifact/FrEee.WinForms
-        mkdir Artifact/FrEee.WinForms/FrEee
-        mv FrEee.WinForms/bin/Release/net6.0-windows/* Artifact/FrEee.WinForms/FrEee/
     - name: Create release tag
       id: createReleaseTag
       uses: 2428392/gh-truncate-string-action@v1.0.0
@@ -56,4 +49,4 @@ jobs:
         tag_name: ${{steps.createReleaseTag.outputs.string}}
         body: Auto-generated prerelease build
         prerelease: true
-        files: Artifact/FrEee.WinForms
+        files: FrEee.WinForms/bin/Release/net6.0-windows
