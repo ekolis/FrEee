@@ -49,4 +49,4 @@ jobs:
         tag_name: ${{steps.createReleaseTag.outputs.string}}
         body: Auto-generated prerelease build
         prerelease: true
-        files: FrEee.WinForms/bin/Release/net6.0-windows
+        files: .
