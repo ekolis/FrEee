@@ -48,23 +48,12 @@ jobs:
       with:
         stringToTruncate: ${{github.sha}}
         maxLength: 10
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}.zip
-        path: Artifact/FrEee.WinForms
-    # yes, we really do have to download the artifact we just uploaded; this job can't see it automatically
-    - name: Download Artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}.zip
     - name: Release
       uses: softprops/action-gh-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{steps.createReleaseTag.outputs.string}}
-        release_name: ${{github.sha}}
         body: Auto-generated prerelease build
         prerelease: true
-        files: FrEee.WinForms-${{steps.createReleaseTag.outputs.string}}.zip
+        files: Artifact/FrEee.WinForms
