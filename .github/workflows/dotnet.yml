@@ -41,6 +41,13 @@ jobs:
       with:
         stringToTruncate: ${{github.sha}}
         maxLength: 10
+    - name: Download Artifacts
+      uses: actions/download-artifact@v2
+      with:
+        path: release-files
+    - name: List Files
+      run: |
+        ls release-files
     - name: Release
       uses: softprops/action-gh-release@v1
       env:
@@ -49,4 +56,4 @@ jobs:
         tag_name: ${{steps.createReleaseTag.outputs.string}}
         body: Auto-generated prerelease build
         prerelease: true
-        files: ./FrEee.WinForms/bin/Debug
+        files: release-files/*
