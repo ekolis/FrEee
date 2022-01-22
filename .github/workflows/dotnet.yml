@@ -41,13 +41,17 @@ jobs:
       with:
         stringToTruncate: ${{github.sha}}
         maxLength: 10
-    - name: Download Artifacts
+    - name: List Files
+      run: ls -s .
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: FrEee-binary-${{steps.createReleaseTag.outputs.string}}.zip
+        path: .
+    - name: Download artifact # yes, this is really necessary
       uses: actions/download-artifact@v2
       with:
         path: release-files
-    - name: List Files
-      run: |
-        ls release-files
     - name: Release
       uses: softprops/action-gh-release@v1
       env:
