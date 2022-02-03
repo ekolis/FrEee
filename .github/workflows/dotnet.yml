@@ -60,4 +60,3 @@ jobs:
         tag_name: ${{steps.createReleaseTag.outputs.string}}
         body: Auto-generated prerelease build
         prerelease: true
-        files: .
