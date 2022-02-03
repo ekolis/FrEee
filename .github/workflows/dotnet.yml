@@ -51,7 +51,7 @@ jobs:
     - name: Download artifact # yes, this is really necessary
       uses: actions/download-artifact@v2
       with:
-        path: release-files
+        path: .
     - name: Release
       uses: softprops/action-gh-release@v1
       env:
@@ -60,4 +60,4 @@ jobs:
         tag_name: ${{steps.createReleaseTag.outputs.string}}
         body: Auto-generated prerelease build
         prerelease: true
-        files: release-files\FrEee-binary-${{steps.createReleaseTag.outputs.string}}.zip
+        files: .
