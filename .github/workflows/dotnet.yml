@@ -54,8 +54,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+        tag_name: ${{steps.createReleaseTag.outputs.string}}
+        release_name: Auto-Build Release ${{steps.createReleaseTag.outputs.string}}
         draft: false
         prerelease: true
     - name: Upload Release Asset
