@@ -53,10 +53,8 @@ jobs:
       with:
         path: .
     - name: Release
-      uses: softprops/action-gh-release@v1
+      uses: anton-yurchenko/git-release@main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{steps.createReleaseTag.outputs.string}}
-        body: Auto-generated prerelease build
-        prerelease: true
+        args: FrEee-binary-${{steps.createReleaseTag.outputs.string}}.zip
