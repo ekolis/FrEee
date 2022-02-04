@@ -58,13 +58,19 @@ jobs:
         release_name: Auto-Build Release ${{steps.createReleaseTag.outputs.string}}
         draft: false
         prerelease: true
+    - name: Get latest release
+      id: latest_release
+      uses: kaliber5/action-get-release@v1
+      with:
+        token: ${{ github.token }}
+        latest: true
     - name: Upload Release Asset
       id: upload-release-asset 
       uses: actions/upload-release-asset@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: https://uploads.github.com/repos/ekolis/FrEee/releases/${{ secrets.GITHUB_TOKEN }}/assets{?name,label}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+        upload_url: ${{ steps.latest_release.outputs.id }}
         asset_path: ./FrEee-binary-${{steps.createReleaseTag.outputs.string}}.zip
         asset_name: FrEee-binary-${{steps.createReleaseTag.outputs.string}}.zip
         asset_content_type: application/zip
