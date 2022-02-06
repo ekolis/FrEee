@@ -47,8 +47,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: FrEee-binary-${{steps.createReleaseTag.outputs.string}}.zip
-        path: FrEee.WinForms\bin\Release\net6.0-windows
-        if-no-files-found: error
+        path: .
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
