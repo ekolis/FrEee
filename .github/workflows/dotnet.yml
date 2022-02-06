@@ -42,12 +42,12 @@ jobs:
         stringToTruncate: ${{github.sha}}
         maxLength: 10
     - name: List Files
-      run: ls -s .
+      run: ls -s .\FrEee.WinForms\bin\Release\net6.0-windows
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
         name: FrEee-binary-${{steps.createReleaseTag.outputs.string}}.zip
-        path: .
+        path: .\FrEee.WinForms\bin\Release\net6.0-windows
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
