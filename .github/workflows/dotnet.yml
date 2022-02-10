@@ -43,11 +43,6 @@ jobs:
         maxLength: 10
     - name: List Files
       run: ls -s .\FrEee.WinForms\bin\Release\net6.0-windows
-    - name: Upload artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: FrEee-binary-${{steps.createReleaseTag.outputs.string}}.zip
-        path: .\FrEee.WinForms\bin\Release\net6.0-windows
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -58,24 +53,8 @@ jobs:
         release_name: Auto-Build Release ${{steps.createReleaseTag.outputs.string}}
         draft: false
         prerelease: true
-    - name: Get latest release
-      id: latest_release
-      uses: kaliber5/action-get-release@v1
-      with:
-        token: ${{ github.token }}
-        latest: true
-    - name: Download artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: FrEee-binary-${{steps.createReleaseTag.outputs.string}}.zip
-    - name: Upload Release Asset
-      id: upload-release-asset 
-      uses: actions/upload-release-asset@v1
+    - uses: alexellis/upload-assets@0.2.2
       env:
-        GITHUB_TOKEN: ${{ github.token }}
-        latest: true
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: https://uploads.github.com/repos/ekolis/FrEee/releases/${{ secrets.GITHUB_TOKEN }}/assets{?name,label}
-        asset_path: .\FrEee-binary-${{steps.createReleaseTag.outputs.string}}.zip
-        asset_name: FrEee-binary-${{steps.createReleaseTag.outputs.string}}.zip
-        asset_content_type: application/zip
+        asset_paths: '[".\FrEee.WinForms\bin\Release\net6.0-windows"]'
