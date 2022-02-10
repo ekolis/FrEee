@@ -53,8 +53,9 @@ jobs:
         release_name: Auto-Build Release ${{steps.createReleaseTag.outputs.string}}
         draft: false
         prerelease: true
-    - uses: alexellis/upload-assets@0.2.2
+    - name: Upload Assets
+      uses: alexellis/upload-assets@0.2.2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        asset_paths: '["./FrEee.WinForms/bin/Release/net6.0-windows"]'
+        asset_paths: '["./FrEee.WinForms/bin/Release/net6.0-windows/*"]'
