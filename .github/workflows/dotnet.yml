@@ -64,7 +64,8 @@ jobs:
       with:
         token: ${{ github.token }}
         latest: true
-    - uses: actions/download-artifact@v2
+    - name: Download artifact
+      uses: actions/download-artifact@v2
       with:
         name: FrEee-binary-${{steps.createReleaseTag.outputs.string}}.zip
     - name: Upload Release Asset
@@ -75,6 +76,6 @@ jobs:
         latest: true
       with:
         upload_url: https://uploads.github.com/repos/ekolis/FrEee/releases/${{ secrets.GITHUB_TOKEN }}/assets{?name,label}
-        asset_path: .\FrEee.WinForms\bin\Release\net6.0-windows\*.*
+        asset_path: .\FrEee-binary-${{steps.createReleaseTag.outputs.string}}.zip
         asset_name: FrEee-binary-${{steps.createReleaseTag.outputs.string}}.zip
         asset_content_type: application/zip
