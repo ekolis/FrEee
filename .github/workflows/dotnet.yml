@@ -61,4 +61,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        asset_paths: '["FrEee-binary-${{steps.createReleaseTag.outputs.string}}.zip"]'
+        asset_paths: '["FrEee-binary-*.zip"]'
