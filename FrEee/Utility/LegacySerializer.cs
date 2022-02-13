@@ -133,7 +133,7 @@ namespace FrEee.Utility
 			// serialize the object
 			if (StringifierLibrary.Instance.All?.Any(x => x.SupportedType.IsAssignableFrom(type)) ?? false)
 				WriteStringifiedObject(o, w);
-			else if (type.IsPrimitive || typeof(Enum).IsAssignableFrom(type) || type.Name == "Nullable`1")
+			else if (type.IsPrimitive || typeof(Enum).IsAssignableFrom(type) || type.Name == "Nullable`1" || type == typeof(decimal))
 				WritePrimitiveOrEnum(o, w);
 			else if (type == typeof(string))
 				WriteString((string)o, w);
@@ -225,7 +225,7 @@ namespace FrEee.Utility
 			{
 				o = DeserializeStringifiedObject(r, type, context, log);
 			}
-			else if (type.IsPrimitive)
+			else if (type.IsPrimitive || type == typeof(decimal))
 			{
 				// parse primitive types
 				var val = r.ReadToEndOfLine(';', log);
