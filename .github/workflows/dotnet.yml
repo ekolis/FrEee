@@ -55,10 +55,10 @@ jobs:
       uses: papeloto/action-zip@v1
       with:
         files: ./FrEee.WinForms/bin/Release/net6.0-windows
-        dest: FrEee-binary.zip
+        dest: FrEee-binary-${{steps.createReleaseTag.outputs.string}}.zip
     - name: Upload assets
       uses: alexellis/upload-assets@0.2.2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        asset_paths: '["FrEee-binary.zip"]'
+        asset_paths: '["FrEee-binary-*.zip"]'
