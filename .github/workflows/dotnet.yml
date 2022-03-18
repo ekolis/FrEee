@@ -41,24 +41,18 @@ jobs:
         maxLength: 10
     - name: List Files
       run: ls -s .\FrEee.WinForms\bin\Release\net6.0-windows
-    - name: Create release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{steps.createReleaseTag.outputs.string}}
-        release_name: Auto-Build Release ${{steps.createReleaseTag.outputs.string}}
-        draft: false
-        prerelease: true
     - name: Zip assets
       uses: papeloto/action-zip@v1
       with:
         files: ./FrEee.WinForms/bin/Release/net6.0-windows
         dest: FrEee-binary-${{steps.createReleaseTag.outputs.string}}.zip
-    - name: Upload assets
-      uses: alexellis/upload-assets@0.2.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Release
+      uses: softprops/action-gh-release@v1
       with:
-        asset_paths: '["FrEee-binary-*.zip"]'
+        files: FrEee-binary-*.zip
+        draft: false
+        prerelease: true
+        name: Auto-Build Release ${{steps.createReleaseTag.outputs.string}}
+        fail_on_unmatched_files: true
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
