@@ -39,12 +39,17 @@ jobs:
       with:
         stringToTruncate: ${{github.sha}}
         maxLength: 10
-    - name: List Files
+    - name: List files
       run: ls -s .\FrEee.WinForms\bin\Release\net6.0-windows
+    - name: Prepare files for zipping
+      run: |
+        cd FrEee.WinForms/bin/Release
+        ren net6.0-windows FrEee
+      shell: cmd
     - name: Zip assets
       uses: papeloto/action-zip@v1
       with:
-        files: ./FrEee.WinForms/bin/Release/net6.0-windows
+        files: ./FrEee.WinForms/bin/Release
         dest: FrEee-binary-${{steps.createReleaseTag.outputs.string}}.zip
     - name: Release
       uses: softprops/action-gh-release@v1
