@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility.Extensions;
 using System;
@@ -46,9 +46,19 @@ namespace FrEee.Utility
 		public Color Color { get; set; }
 
 		/// <summary>
-		/// Function to compute the cultural modifier. A modifier of zero means 100%.
+		/// The name of the <see cref="Culture"/> property that will be used to modify this resource's income,
+		/// or null to not have a modifier.
 		/// </summary>
-		public Func<Culture, int> CultureModifier { get; set; }
+		/// <remarks>
+		/// This property should be of type <see cref="int"/>.
+		/// </remarks>
+		public string? CultureModifierPropertyName { get; set; }
+
+		/// <summary>
+		/// Function to compute the cultural modifier. A modifier of zero means 100%; 100 means doubled, -50 means halved, etc.
+		/// </summary>
+		public int GetCultureModifier(Culture c)
+			=> CultureModifierPropertyName is null ? 0 : (int)c.GetPropertyValue(CultureModifierPropertyName);
 
 		/// <summary>
 		/// Does this resource have a "value" assigned to planets and asteroids?
@@ -122,7 +132,7 @@ namespace FrEee.Utility
 			HasValue = false,
 			PictureName = "Resource5",
 			Aptitude = Aptitude.Cunning,
-			CultureModifier = c => c.Intelligence,
+			CultureModifierPropertyName = nameof(Culture.Intelligence),
 		};
 
 		public static readonly Resource Minerals = new Resource
@@ -134,7 +144,7 @@ namespace FrEee.Utility
 			HasValue = true,
 			PictureName = "Resource1",
 			Aptitude = Aptitude.Mining,
-			CultureModifier = c => c.Production,
+			CultureModifierPropertyName = nameof(Culture.Production),
 		};
 
 		public static readonly Resource Organics = new Resource
@@ -146,7 +156,7 @@ namespace FrEee.Utility
 			HasValue = true,
 			PictureName = "Resource2",
 			Aptitude = Aptitude.Farming,
-			CultureModifier = c => c.Production,
+			CultureModifierPropertyName = nameof(Culture.Production),
 		};
 
 		public static readonly Resource Radioactives = new Resource
@@ -158,7 +168,7 @@ namespace FrEee.Utility
 			HasValue = true,
 			PictureName = "Resource3",
 			Aptitude = Aptitude.Refining,
-			CultureModifier = c => c.Production,
+			CultureModifierPropertyName = nameof(Culture.Production),
 		};
 
 		public static readonly Resource Research = new Resource
@@ -170,7 +180,7 @@ namespace FrEee.Utility
 			HasValue = false,
 			PictureName = "Resource4",
 			Aptitude = Aptitude.Intelligence, // no, seriously
-			CultureModifier = c => c.Research,
+			CultureModifierPropertyName = nameof(Culture.Research),
 		};
 
 		public static readonly Resource Supply = new Resource
@@ -182,7 +192,7 @@ namespace FrEee.Utility
 			HasValue = false,
 			PictureName = "Resource6",
 			Aptitude = null, // TODO - supply aptitude?
-			CultureModifier = c => 0, // TODO - supply culture modifier?
+			CultureModifierPropertyName = null,
 		};
 
 		private static IEnumerable<Resource> all;
