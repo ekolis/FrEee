@@ -172,7 +172,7 @@ namespace FrEee.Game.Objects.Civilization
 					var aptfactor = 1d;
 					if (r.Aptitude != null)
 						aptfactor = Population.Sum(kvp => (kvp.Key.Aptitudes[r.Aptitude.Name] / 100d) * (double)kvp.Value / (double)totalpop);
-					var cultfactor = (100 + r.CultureModifier(Owner.Culture)) / 100d;
+					var cultfactor = (100 + r.GetCultureModifier(Owner.Culture)) / 100d;
 
 					result += (int)(100 * popfactor * aptfactor * cultfactor * moodfactor) * r;
 				}

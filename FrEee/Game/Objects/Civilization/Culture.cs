@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using System;
@@ -26,7 +26,7 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				var result = new ResourceQuantity();
 				foreach (var r in Resource.All)
-					result += (100 + r.CultureModifier(this)) * r;
+					result += (100 + r.GetCultureModifier(this)) * r;
 				return result;
 			}
 		}

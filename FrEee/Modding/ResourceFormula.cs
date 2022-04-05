@@ -1,4 +1,4 @@
-﻿using FrEee.Utility;
+using FrEee.Utility;
 using System.Linq;
 
 namespace FrEee.Modding
