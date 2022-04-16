@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding.Templates;
@@ -137,10 +137,14 @@ namespace FrEee.Game.Interfaces
 		ICreateDesignCommand CreateCreationCommand();
 
 		IVehicle Instantiate();
+
+		IDesign Upgrade();
 	}
 
 	public interface IDesign<out T> : IDesign, IPictorial, IReferrable, IUpgradeable<IDesign<T>> where T : IVehicle
 	{
 		new T Instantiate();
+
+		new IDesign<T> Upgrade();
 	}
 }

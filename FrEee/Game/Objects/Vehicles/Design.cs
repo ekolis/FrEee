@@ -308,41 +308,47 @@ namespace FrEee.Game.Objects.Vehicles
 		public int Iteration { get; set; }
 
 		/// <summary>
-		/// An upgraded version of this design, or this design if it cannot be upgraded.
-		/// TODO - don't create upgraded design if it already exists, just return it?
+		/// The latest iteration of this design.
 		/// </summary>
 		public IDesign<T> LatestVersion
 		{
 			get
 			{
-				if (IsObsolescent)
-				{
-					var copy = this.CopyAndAssignNewID();
-					copy.Hull = Hull.LatestVersion;
-					copy.TurnNumber = Galaxy.Current.TurnNumber;
-					copy.Owner = Empire.Current;
-					copy.Iteration = Empire.Current.KnownDesigns.OwnedBy(Empire.Current).Where(x => x.BaseName == BaseName && x.IsUnlocked()).MaxOrDefault(x => x.Iteration) + 1; // auto assign nex available iteration
-					copy.VehiclesBuilt = 0;
-					copy.IsObsolete = false;
-
-					// use real component templates and mounts from mod, not copies!
-					copy.Components.Clear();
-					foreach (var mct in Components)
-					{
-						// reuse templates so components appear "condensed" on vehicle designer
-						var mount = mct.Mount == null ? null : mct.Mount.LatestVersion;
-						var ct = mct.ComponentTemplate.LatestVersion;
-						var same = copy.Components.FirstOrDefault(x => x.ComponentTemplate == ct && x.Mount == mount);
-						if (same == null)
-							copy.Components.Add(new MountedComponentTemplate(copy, ct, mount));
-						else
-							copy.Components.Add(same);
-					}
-					return copy;
-				}
-				else
-					return this;
+				return Owner.KnownDesigns.OfType<IDesign<T>>().Where(q =>
+					q.Owner == Owner
+					&& q.Name == Name
+				).MaxBy(q => q.Iteration) ?? this;
 			}
+		}
+
+		/// <summary>
+		/// Creates an upgraded version of this design, with the latest upgraded components, etc.
+		/// </summary>
+		/// <returns></returns>
+		public IDesign<T> Upgrade()
+		{
+			var copy = this.CopyAndAssignNewID();
+			copy.Hull = Hull.LatestVersion;
+			copy.TurnNumber = Galaxy.Current.TurnNumber;
+			copy.Owner = Empire.Current;
+			copy.Iteration = Empire.Current.KnownDesigns.OwnedBy(Empire.Current).Where(x => x.BaseName == BaseName && x.IsUnlocked()).MaxOrDefault(x => x.Iteration) + 1; // auto assign nex available iteration
+			copy.VehiclesBuilt = 0;
+			copy.IsObsolete = false;
+
+			// use real component templates and mounts from mod, not copies!
+			copy.Components.Clear();
+			foreach (var mct in Components)
+			{
+				// reuse templates so components appear "condensed" on vehicle designer
+				var mount = mct.Mount == null ? null : mct.Mount.LatestVersion;
+				var ct = mct.ComponentTemplate.LatestVersion;
+				var same = copy.Components.FirstOrDefault(x => x.ComponentTemplate == ct && x.Mount == mount);
+				if (same == null)
+					copy.Components.Add(new MountedComponentTemplate(copy, ct, mount));
+				else
+					copy.Components.Add(same);
+			}
+			return copy;
 		}
 
 		public ResourceQuantity MaintenanceCost
@@ -850,5 +856,8 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 			return paths;
 		}
+
+		IDesign IDesign.Upgrade()
+			=> Upgrade();
 	}
 }
