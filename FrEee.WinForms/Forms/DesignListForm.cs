@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Commands;
@@ -199,7 +199,7 @@ namespace FrEee.WinForms.Forms
 			if (lstDesigns.SelectedItems.Count == 1)
 			{
 				var old = (IDesign)lstDesigns.SelectedItems[0].Tag;
-				var copy = old.IsObsolescent ? old.LatestVersion : CopyDesign(old); // make sure to copy design even if it has no upgradeable parts
+				var copy = old.Upgrade();
 				var form = new VehicleDesignForm();
 				form.Design = copy;
 				this.ShowChildForm(form);
