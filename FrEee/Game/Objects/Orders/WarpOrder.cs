@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
@@ -120,6 +120,7 @@ namespace FrEee.Game.Objects.Orders
 						if (sobj.IsDestroyed)
 						{
 							sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " was destroyed by turbulence when traversing " + WarpPoint + ".", LogMessageType.Generic));
+							IsComplete = true;
 							return;
 						}
 						else
