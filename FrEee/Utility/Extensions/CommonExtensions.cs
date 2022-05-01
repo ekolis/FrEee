@@ -350,7 +350,7 @@ namespace FrEee.Utility.Extensions
 			if (o is Fleet f && !f.Vehicles.ExceptSingle(null).Any())
 				o.Dispose();
 			var runOrders = new List<IOrder>();
-			while (!o.IsDisposed && o.Orders.Any() && (o.TimeToNextMove <= 1e-15 || !o.Orders.First().ConsumesMovement))
+			while (!o.IsDisposed && !o.IsDestroyed && o.Orders.Any() && (o.TimeToNextMove <= 1e-15 || !o.Orders.First().ConsumesMovement))
 			{
 				var order = o.Orders.First();
 				order.Execute(o);
