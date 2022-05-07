@@ -228,9 +228,9 @@ namespace FrEee.Game.Objects.Vehicles
 
 		/// <summary>
 		/// Is this vehicle destroyed?
-		/// Vehicles are destroyed when all internal (non-armor) components are destroyed.
+		/// Vehicles are destroyed when all internal (non-armor) components are destroyed, or when they are disposed.
 		/// </summary>
-		public bool IsDestroyed { get { return Components.Where(q => !q.HasAbility("Armor")).All(c => c.IsDestroyed); } }
+		public bool IsDestroyed { get { return IsDisposed || Components.All(c => c.IsDestroyed || c.HasAbility("Armor")); } }
 
 		public bool IsDisposed { get; set; }
 
