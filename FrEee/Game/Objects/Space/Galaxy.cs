@@ -1188,7 +1188,7 @@ namespace FrEee.Game.Objects.Space
             Current.FindSpaceObjects<ICombatSpaceObject>().SafeForeach(o => o.ReplenishShields());
 
             // modify colony anger
-            foreach (var ship in Current.FindSpaceObjects<SpaceVehicle>().Where(x => x is Ship || x is Base))
+            foreach (var ship in Current.FindSpaceObjects<MajorSpaceVehicle>().Where(x => !x.IsDestroyed))
             {
                 foreach (var emp in Current.Empires.Where(e => e.CanSee(ship)))
                 {
