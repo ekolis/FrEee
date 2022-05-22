@@ -225,6 +225,9 @@ namespace FrEee.Game.Objects.Civilization
 			private set;
 		}
 
+		IEnumerable<IOrder> IOrderable.Orders
+			=> Orders;
+
 		public Empire Owner
 		{
 			get { return Container.Owner; }
@@ -288,8 +291,6 @@ namespace FrEee.Game.Objects.Civilization
 				return spent;
 			}
 		}
-
-		IList<IOrder> IOrderable.Orders => Orders.Cast<IOrder>().ToList();
 
 		private ResourceQuantity rate;
 

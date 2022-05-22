@@ -14,7 +14,7 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// The queued orders.
 		/// </summary>
-		IList<IOrder> Orders { get; }
+		IEnumerable<IOrder> Orders { get; }
 
 		void AddOrder(IOrder order);
 

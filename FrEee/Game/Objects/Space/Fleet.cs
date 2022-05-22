@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
@@ -376,6 +376,9 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		public IList<IOrder> Orders { get; private set; }
+
+		IEnumerable<IOrder> IOrderable.Orders
+			=> Orders;
 
 		public int OrganicsMaintenance
 		{

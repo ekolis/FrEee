@@ -357,12 +357,12 @@ namespace FrEee.Utility.Extensions
 				runOrders.Add(order);
 				if (order.IsComplete && o.Orders.Contains(order))
 				{
-					o.Orders.RemoveAt(0);
+					o.RemoveOrder(o.Orders.First());
 					if (o.AreRepeatOrdersEnabled)
 					{
 						order.IsComplete = false;
-						o.Orders.Add(order);
-						if (runOrders.Count == o.Orders.Count)
+						o.AddOrder(order);
+						if (runOrders.Count == o.Orders.Count())
 							break; // don't get in an infinite loop of repeating orders
 					}
 				}
