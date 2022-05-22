@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
@@ -129,6 +129,9 @@ namespace FrEee.Game.Objects.Vehicles
 			get;
 			private set;
 		}
+
+		IEnumerable<IOrder> IOrderable.Orders
+			=> Orders;
 
 		public override IEnumerable<IAbilityObject> Parents
 		{

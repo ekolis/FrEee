@@ -372,6 +372,9 @@ namespace FrEee.Game.Objects.Space
 
 		public IList<IOrder> Orders { get; private set; }
 
+		IEnumerable<IOrder> IOrderable.Orders
+			=> Orders;
+
 		public int OrganicsIncome => this.GrossIncome()[Resource.Organics];
 
 		public double OrganicsValue => ResourceValue[Resource.Organics];
