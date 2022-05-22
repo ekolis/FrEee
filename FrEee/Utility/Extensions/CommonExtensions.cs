@@ -1604,24 +1604,54 @@ namespace FrEee.Utility.Extensions
 			var anyPopLeft = delta.AnyPopulation;
 			foreach (var kvp in src.AllPopulation.ToArray())
 			{
+				// how much population to transfer for this race?
 				var amount = long.MaxValue;
 
 				// limit by desired amount to transfer
-				if (!delta.AllPopulation)
-					amount = Math.Min(amount, anyPopLeft);
+				amount = Math.Min(amount, anyPopLeft);
 				// limit by amount available
 				amount = Math.Min(amount, kvp.Value);
 				// limit by amount of free space
 				amount = Math.Min(amount, dest.PopulationStorageFree + (long)((dest.CargoStorage - dest.Cargo.Size) / Mod.Current.Settings.PopulationSize));
 
+				// transfer population from source to destination
 				amount -= src.RemovePopulation(kvp.Key, amount);
 				dest.AddPopulation(kvp.Key, amount);
 
+				// log warnings
 				if (amount < anyPopLeft)
 					emp.Log.Add(src.CreateLogMessage(src + " could transfer only " + amount.ToUnitString(true) + " of the desired " + kvp.Value.ToUnitString(true) + " general population to " + dest + " due to lack of population available or lack of storage space.", LogMessageType.Warning));
 
+				// done transferring population
 				if (amount == 0)
 					continue;
+			}
+
+			// transfer all-population
+			if (delta.AllPopulation)
+			{
+				foreach (var kvp in src.AllPopulation.ToArray())
+				{
+					// how much population to transfer for this race?
+					var amount = long.MaxValue;
+
+					// limit by amount available
+					amount = Math.Min(amount, kvp.Value);
+					// limit by amount of free space
+					amount = Math.Min(amount, dest.PopulationStorageFree + (long)((dest.CargoStorage - dest.Cargo.Size) / Mod.Current.Settings.PopulationSize));
+
+					// transfer population from source to destination
+					amount -= src.RemovePopulation(kvp.Key, amount);
+					dest.AddPopulation(kvp.Key, amount);
+
+					// log warnings
+					if (amount < anyPopLeft)
+						emp.Log.Add(src.CreateLogMessage(src + " could transfer only " + amount.ToUnitString(true) + " of the desired " + kvp.Value.ToUnitString(true) + " general population to " + dest + " due to lack of population available or lack of storage space.", LogMessageType.Warning));
+
+					// no population to transfer
+					if (amount == 0)
+						continue;
+				}
 			}
 
 			// clear population that was emptied out
