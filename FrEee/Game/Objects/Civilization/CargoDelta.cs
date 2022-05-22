@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Modding;
 using FrEee.Utility;
@@ -24,7 +24,14 @@ namespace FrEee.Game.Objects.Civilization
 			UnitTypeTonnage = new SafeDictionary<VehicleTypes, int?>();
 		}
 
+		/// <summary>
+		/// Should we transfer as much population as possible, regardless of race?
+		/// </summary>
 		public bool AllPopulation { get; set; }
+
+		/// <summary>
+		/// Amount of population to transfer where the race of the population is irrelevant.
+		/// </summary>
 		public long AnyPopulation { get; set; }
 
 		/// <summary>
