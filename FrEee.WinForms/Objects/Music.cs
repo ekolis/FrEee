@@ -1,4 +1,4 @@
-﻿using FrEee.Utility.Extensions;
+using FrEee.Utility.Extensions;
 using NAudio.Vorbis;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
@@ -16,21 +16,31 @@ namespace FrEee.WinForms.Objects
 	{
 		static Music()
 		{
-			OperatingSystem os = Environment.OSVersion;
-            PlatformID pid = os.Platform;
-			if (pid == PlatformID.Unix)
+			try
 			{
-				Console.WriteLine("Linux detected, disabling Music");
-				linux = true;
-				return;
+				OperatingSystem os = Environment.OSVersion;
+				PlatformID pid = os.Platform;
+				if (pid == PlatformID.Unix)
+				{
+					Console.WriteLine("Linux detected, disabling Music");
+					disableMusic = true;
+					return;
+				}
+
+				waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(48000, 2);
+				mixer = new MixingSampleProvider(waveFormat);
+
+				waveout.Init(mixer);
+				waveout.PlaybackStopped += waveout_PlaybackStopped;
+				waveout.Play();
 			}
-
-			waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(48000, 2);
-			mixer = new MixingSampleProvider(waveFormat);
-
-			waveout.Init(mixer);
-			waveout.PlaybackStopped += waveout_PlaybackStopped;
-			waveout.Play();
+			catch (Exception ex)
+			{
+				Console.WriteLine("Error initializing music; disabling it");
+				Console.WriteLine("See errorlog.txt for details.");
+				disableMusic = true;
+				ex.Log();
+			}
 		}
 
 		// milliseconds
@@ -77,13 +87,13 @@ namespace FrEee.WinForms.Objects
 		private static float musicVolume = 1.0f;
 		private static WaveFormat waveFormat;
 		private static WaveOutEvent waveout = new WaveOutEvent();
-		private static bool linux = false;
+		private static bool disableMusic = false;
 
 		public static void Play(MusicMode mode, MusicMood mood)
 		{
 			if (mode == CurrentMode && mood == CurrentMood)
 				return;
-			if (linux) 
+			if (disableMusic) 
 				return;
 
 			currentMode = mode;
@@ -93,14 +103,14 @@ namespace FrEee.WinForms.Objects
 
 		public static void setVolume(float volume)
 		{
-			if (linux)
+			if (disableMusic)
                 return;
 			musicVolume = volume;
 		}
 
 		public static void StartNewTrack()
 		{
-			if (linux)
+			if (disableMusic)
                 return;
 			// find out what to play
 			var tracks = FindTracks().ToArray();
