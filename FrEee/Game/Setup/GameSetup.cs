@@ -265,7 +265,7 @@ namespace FrEee.Game.Setup
 			gal.CleanGameState();
 
 			// remove forbidden techs
-			foreach (var tname in ForbiddenTechnologyNames)
+			foreach (var tname in ForbiddenTechnologyNames.Distinct())
 				Mod.Current.Technologies.Single(t => t.Name == tname).Dispose();
 
 			// set omniscient view and all systems seen flags
