@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Vehicles;
@@ -709,7 +709,13 @@ namespace FrEee.WinForms.Forms
 			for (int i = 0; i < lstTechs.Items.Count; i++)
 			{
 				if (!lstTechs.GetItemChecked(i))
-					setup.ForbiddenTechnologyNames.Add(((Technology)lstTechs.Items[i]).Name);
+				{
+					var techName = ((Technology)lstTechs.Items[i]).Name;
+					if (!setup.ForbiddenTechnologyNames.Contains(techName))
+					{
+						setup.ForbiddenTechnologyNames.Add(techName);
+					}
+				}
 			}
 			setup.StartingResources = (int)spnStartResources.Value;
 			setup.ResourceStorage = (int)spnResourceStorage.Value;
