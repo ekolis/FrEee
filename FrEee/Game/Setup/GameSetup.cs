@@ -502,7 +502,7 @@ namespace FrEee.Game.Setup
 
 			// find facilities to place on homeworlds
 			var facils = emp.UnlockedItems.OfType<FacilityTemplate>();
-			var sy = facils.WithMax(facil => facil.GetAbilityValue("Space Yard", 2).ToInt()).LastOrDefault();
+			var sy = facils.LastOrDefault(facil => facil.HasAbility("Space Yard"));
 			var sp = facils.LastOrDefault(facil => facil.HasAbility("Spaceport"));
 			var rd = facils.LastOrDefault(facil => facil.HasAbility("Supply Generation"));
 			var min = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Minerals").ToInt()).LastOrDefault();
