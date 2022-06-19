@@ -486,7 +486,7 @@ namespace FrEee.Game.Setup
 			}
 
 			// give empire starting research
-			emp.BonusResearch = StartingResearch + (int)(ResearchPointsPerUnspentEmpirePoint * (EmpirePoints - emp.PrimaryRace.Traits.Sum(q => q.Cost)));
+			emp.BonusResearch = StartingResearch + (int)(ResearchPointsPerUnspentEmpirePoint * (EmpirePoints - emp.PrimaryRace.PointsSpent));
 
 			// TODO - moddable colony techs?
 			string colonyTechName = null;

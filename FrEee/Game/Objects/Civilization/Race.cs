@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Space;
@@ -250,5 +250,11 @@ namespace FrEee.Game.Objects.Civilization
 			yield return Path.Combine("Pictures", "Races", imagename, imagetype);
 			yield return Path.Combine("Pictures", "Races", imagename, Name + "_" + imagetype);
 		}
+
+		/// <summary>
+		/// The number of race points spent when creating this race.
+		/// </summary>
+		public int PointsSpent
+			=> Traits.Sum(q => q.Cost) + Aptitudes.Sum(q => Aptitude.All.Single(w => w.Name == q.Key).GetCost(q.Value));
 	}
 }
