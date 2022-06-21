@@ -772,7 +772,7 @@ namespace FrEee.Game.Objects.Civilization
 		private ModProgress<Tech>[] researchProgress;
 		private ResourceQuantity tradeIncome;
 
-		private ISet<IUnlockable> unlockedItems;
+		private IList<IUnlockable> unlockedItems;
 
 		/// <summary>
 		/// Belays (cancels) an order.
@@ -1132,7 +1132,10 @@ namespace FrEee.Game.Objects.Civilization
 
 		public void RefreshUnlockedItems()
 		{
-			unlockedItems = new HashSet<IUnlockable>(Mod.Current.Objects.OfType<IUnlockable>().Union(Galaxy.Current.Referrables.OfType<IUnlockable>()).Where(r => CheckUnlockStatus(r)));
+			unlockedItems = new List<IUnlockable>(
+				Mod.Current.Objects.OfType<IUnlockable>()
+				.Union(Galaxy.Current.Referrables.OfType<IUnlockable>())
+				.Where(r => CheckUnlockStatus(r)));
 		}
 
 		/// <summary>
