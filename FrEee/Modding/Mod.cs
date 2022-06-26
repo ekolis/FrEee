@@ -29,8 +29,6 @@ namespace FrEee.Modding
 
 			Errors = new List<DataParsingException>();
 
-			objects = new SafeDictionary<string, IModObject>();
-
 			Info = new ModInfo();
 			Settings = new ModSettings();
 			AbilityRules = new List<AbilityRule>();
@@ -56,7 +54,6 @@ namespace FrEee.Modding
 
 			// for redacted colonies
 			FacilityTemplates.Add(FacilityTemplate.Unknown);
-			Register(FacilityTemplate.Unknown);
 		}
 
 		private object locker = new object();
@@ -161,16 +158,13 @@ namespace FrEee.Modding
 		/// </summary>
 		public ICollection<Mount> Mounts { get; private set; }
 
+		private IList<IModObject> objects = new List<IModObject>() { FacilityTemplate.Unknown };
+
 		/// <summary>
 		/// All mod objects.
 		/// </summary>
 		public IEnumerable<IModObject> Objects
-		{
-			get
-			{
-				return objects.Values;
-			}
-		}
+			=> objects;
 
 		/// <summary>
 		/// The path to the mod's root folder, relative to the Mods folder.
@@ -216,8 +210,6 @@ namespace FrEee.Modding
 		/// The race/empire traits in the game.
 		/// </summary>
 		public ICollection<Trait> Traits { get; private set; }
-
-		private SafeDictionary<string, IModObject> objects { get; set; }
 
 		/// <summary>
 		/// Names of files containing lists of design names.
@@ -312,11 +304,7 @@ namespace FrEee.Modding
 				{
 					foreach (var mo in loader.Key.Load(mod).ToArray())
 					{
-						lock (mod.Objects)
-						{
-							mod.AssignID(mo, used);
-							mod.Register(mo);
-						}
+						mod.AssignID(mo, used);
 					}
 					if (status != null)
 						status.Progress += progressPerFile;
@@ -389,7 +377,8 @@ namespace FrEee.Modding
 				if (mo.ModID == null)
 					throw new Exception("Failed to assign mod ID to {0}: {1}".F(mo.GetType(), mo));
 
-				objects[mo.ModID] = mo;
+				if (!objects.Contains(mo))
+					objects.Add(mo);
 			}
 		}
 
@@ -463,18 +452,15 @@ namespace FrEee.Modding
 			return r1 != null && r2 != null && r1 == r2;
 		}
 
-		public T Find<T>(string modid)
+		public T? Find<T>(string modid)
 			where T : IModObject
 		{
+			T? result = default;
 			lock (locker)
 			{
-				var o = objects[modid];
-				if (o is null)
-					return default;
-				if (o is T)
-					return (T)o;
-				throw new InvalidCastException($"Can't convert {o} of type {o.GetType()} to type {typeof(T)}.");
+				result = Objects.OfType<T>().SingleOrDefault(q => q.ModID == modid);
 			}
+			return result;
 		}
 
 		/// <summary>
@@ -485,69 +471,6 @@ namespace FrEee.Modding
 		public AbilityRule FindAbilityRule(string name)
 		{
 			return AbilityRules.SingleOrDefault(r => r.Matches(name));
-		}
-
-		/// <summary>
-		/// Refreshes the object catalog.
-		/// </summary>
-		public void RefreshObjects()
-		{
-			objects.Clear();
-			foreach (var r in AbilityRules)
-				Register(r);
-			foreach (var sos in StellarObjectSizes)
-				Register(sos);
-			foreach (var x in StellarAbilityTemplates)
-				Register(x);
-			foreach (var sot in StellarObjectTemplates)
-				Register(sot);
-			foreach (var t in Traits)
-				Register(t);
-			foreach (var t in Technologies)
-				Register(t);
-			foreach (var f in FacilityTemplates)
-				Register(f);
-			foreach (var h in Hulls)
-				Register(h);
-			foreach (var c in ComponentTemplates)
-				Register(c);
-			foreach (var m in Mounts)
-				Register(m);
-			foreach (var sst in StarSystemTemplates)
-				Register(sst);
-			foreach (var gt in GalaxyTemplates)
-				Register(gt);
-			foreach (var h in HappinessModels)
-				Register(h);
-			foreach (var c in Cultures)
-				Register(c);
-			foreach (var ai in EmpireAIs)
-				Register(ai);
-			foreach (var q in EventTypes)
-				Register(q);
-			foreach (var q in EventTemplates)
-				Register(q);
-		}
-
-		/// <summary>
-		/// Registers this object's ID in the object catalog.
-		/// Does not add it to the appropriate collection!
-		/// </summary>
-		/// <param name="o"></param>
-		public void Register(IModObject o)
-		{
-			if (objects[o.ModID] == o)
-				return; // already registered
-			if (objects[o.ModID] != null)
-			{
-				// another object with this ID exists, prefix object names with their type
-				var old = objects[o.ModID];
-				objects[old.ModID] = null;
-				old.ModID = old.GetType() + " " + old.ModID;
-				o.ModID = o.GetType() + " " + o.ModID;
-				objects[old.ModID] = old;
-			}
-			objects[o.ModID] = o;
 		}
 
 		public override string ToString()

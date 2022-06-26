@@ -31,7 +31,6 @@ namespace FrEee.Tests
 				ThrustPerMove = 1
 			};
 			Mod.Current.Hulls.Add(hull);
-			Mod.Current.Register(hull);
 			return hull;
 		}
 
