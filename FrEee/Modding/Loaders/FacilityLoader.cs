@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Objects.Technology;
+using FrEee.Game.Objects.Technology;
 using FrEee.Modding.Enumerations;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
