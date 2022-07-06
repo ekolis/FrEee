@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
@@ -21,7 +21,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A combination of component template and mount.
 	/// </summary>
 	[Serializable]
-	public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityObject, IPromotable, IContainable<IDesign>, IFormulaHost, IUpgradeable<MountedComponentTemplate>, IPictorial
+	public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityObject, IPromotable, IContainable<IDesign>, IFormulaHost, IUpgradeable<MountedComponentTemplate>, IPictorial, IDataObject
 	{
 		public MountedComponentTemplate(IDesign container, ComponentTemplate ct, Mount mount = null)
 		{
@@ -325,6 +325,22 @@ namespace FrEee.Game.Objects.Technology
 
 		private ModReference<ComponentTemplate> componentTemplate { get; set; }
 		private ModReference<Mount> mount { get; set; }
+		public SafeDictionary<string, object> Data
+		{
+			get => new SafeDictionary<string, object>
+			{
+				// use reference properties' IDs in case they don't exist in the current mod
+				[nameof(ComponentTemplate)] = componentTemplate.ID,
+				[nameof(Mount)] = mount.ID,
+				[nameof(Container)] = Container.ID,
+			};
+			set
+			{
+				componentTemplate = new ModReference<ComponentTemplate>((string)(value[nameof(ComponentTemplate)]);
+				mount = new ModReference<Mount>((string)value[nameof(Mount)]);
+				Container = (IDesign)Galaxy.Current.referrables[(long)value[nameof(Container)]];
+			}
+		}
 
 		public static bool operator !=(MountedComponentTemplate t1, MountedComponentTemplate t2)
 		{
