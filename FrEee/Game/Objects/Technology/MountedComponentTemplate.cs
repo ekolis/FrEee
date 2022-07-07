@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
@@ -45,11 +45,18 @@ namespace FrEee.Game.Objects.Technology
 			var dict = new Dictionary<string, object>(Variables);
 			foreach (var kvp in a.Variables)
 				dict.Add(kvp.Key, kvp.Value);
+			string description;
+			if (a.Description is not null)
+				description = a.Description.Evaluate(dict);
+			else if (a.Rule.Description is not null)
+				description = a.Rule.Description.Evaluate(dict);
+			else
+				description = $"{a.Rule.Name}: {string.Join(",", a.Values.Select(q => q?.ToString()))}";
 			var result = new Ability(this)
 			{
 				Rule = a.Rule,
 				Values = new List<Formula<string>>(a.Values),
-				Description = (a.Description ?? a.Rule.Description).Evaluate(dict),
+				Description = description,
 			};
 			if (Mount != null)
 			{

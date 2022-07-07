@@ -1149,31 +1149,31 @@ Value 2 Rule := Add
 
 Name := Generate Points Minerals
 Targets := Vehicle, Planet, Facility, Component
-Descriptiion := Generates [%Amount1%] minerals per turn.
+Description := Generates [%Amount1%] minerals per turn.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Generate Points Organics
 Targets := Vehicle, Planet, Facility, Component
-Descriptiion := Generates [%Amount1%] organics per turn.
+Description := Generates [%Amount1%] organics per turn.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Generate Points Radioactives
 Targets := Vehicle, Planet, Facility, Component
-Descriptiion := Generates [%Amount1%] radioactives per turn.
+Description := Generates [%Amount1%] radioactives per turn.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Generate Points Research
 Targets := Vehicle, Planet, Facility, Component
-Descriptiion := Generates [%Amount1%] research points per turn.
+Description := Generates [%Amount1%] research points per turn.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Generate Points Intelligence
 Targets := Vehicle, Planet, Facility, Component
-Descriptiion := Generates [%Amount1%] intelligence points per turn.
+Description := Generates [%Amount1%] intelligence points per turn.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
