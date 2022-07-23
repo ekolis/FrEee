@@ -317,11 +317,10 @@ namespace FrEee.Game.Objects.Vehicles
 			get
 			{
 				var shields = MaxUnmodifiedNormalShields;
-				var modifiers = ShieldModifiers;
-				if (modifiers >= 0)
-					return shields; // positive modifiers go to phased shields
-				else
-					return Math.Max(0, shields + modifiers); // negative modifiers go to normal shields first
+				var addmods = (double)MaxUnmodifiedNormalShields / (MaxUnmodifiedNormalShields + MaxUnmodifiedPhasedShields) * -Sector.GetAbilityValue("Sector - Shield Disruption").ToInt();
+				if (double.IsInfinity(addmods) || double.IsNaN(addmods))
+					addmods = 0;
+				return Math.Max(0, (100 + ShieldPercentageModifiers).PercentOfRounded(shields)) + (int)addmods;
 			}
 		}
 
@@ -330,11 +329,10 @@ namespace FrEee.Game.Objects.Vehicles
 			get
 			{
 				var shields = MaxUnmodifiedPhasedShields;
-				var modifiers = ShieldModifiers;
-				if (modifiers >= 0)
-					return shields + modifiers; // positive modifiers go to phased shields
-				else
-					return Math.Max(0, shields + modifiers + MaxUnmodifiedNormalShields); // negative modifiers go to normal shields first
+				var addmods = (double)MaxUnmodifiedPhasedShields / (MaxUnmodifiedNormalShields + MaxUnmodifiedPhasedShields) * -Sector.GetAbilityValue("Sector - Shield Disruption").ToInt();
+				if (double.IsInfinity(addmods) || double.IsNaN(addmods))
+					addmods = 0;
+				return Math.Max(0, (100 + ShieldPercentageModifiers).PercentOfRounded(shields)) + (int)addmods;
 			}
 		}
 
@@ -518,17 +516,20 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return new Progress(ShieldHitpoints, MaxShieldHitpoints); }
 		}
 
-		public int ShieldModifiers
+		public int ShieldPercentageModifiers
 		{
 			get
 			{
+				// TODO: make these multiplicative, at least some of them?
 				return
-						-Sector.GetAbilityValue("Sector - Shield Disruption").ToInt()
-						+ Sector.GetEmpireAbilityValue(Owner, "Shield Modifier - Sector").ToInt()
-						+ StarSystem.GetEmpireAbilityValue(Owner, "Shield Modifier - System").ToInt()
-						+ Owner.GetAbilityValue("Shield Modifier - Empire").ToInt();
+					+ Sector.GetEmpireAbilityValue(Owner, "Shield Modifier - Sector").ToInt()
+					+ StarSystem.GetEmpireAbilityValue(Owner, "Shield Modifier - System").ToInt()
+					+ Owner.GetAbilityValue("Shield Modifier - Empire").ToInt();
 			}
 		}
+
+		public int ShieldAdditiveModifiers
+			=> -Sector.GetAbilityValue("Sector - Shield Disruption").ToInt();
 
 		public int Size
 		{

@@ -3012,7 +3012,7 @@ Tech Area Req 1     := Crystalline Technology
 Tech Level Req 1    := 1
 Number of Abilities := 1
 Ability 1 Type      := Shield Modifier - System
-Ability 1 Descr     := Increases the shield strength of all ships in the system by 20 shield points (only 1 facility per system effective).
+Ability 1 Descr     := Increases the shield strength of all ships in the system by 20% (only 1 facility per system effective).
 Ability 1 Val 1     := 20
 Ability 1 Val 2     := 0
 
@@ -3031,7 +3031,7 @@ Tech Area Req 1     := Crystalline Technology
 Tech Level Req 1    := 2
 Number of Abilities := 1
 Ability 1 Type      := Shield Modifier - System
-Ability 1 Descr     := Increases the shield strength of all ships in the system by 40 shield points (only 1 facility per system effective).
+Ability 1 Descr     := Increases the shield strength of all ships in the system by 40% (only 1 facility per system effective).
 Ability 1 Val 1     := 40
 Ability 1 Val 2     := 0
 
@@ -3050,7 +3050,7 @@ Tech Area Req 1     := Crystalline Technology
 Tech Level Req 1    := 3
 Number of Abilities := 1
 Ability 1 Type      := Shield Modifier - System
-Ability 1 Descr     := Increases the shield strength of all ships in the system by 60 shield points (only 1 facility per system effective).
+Ability 1 Descr     := Increases the shield strength of all ships in the system by 60% (only 1 facility per system effective).
 Ability 1 Val 1     := 60
 Ability 1 Val 2     := 0
 
