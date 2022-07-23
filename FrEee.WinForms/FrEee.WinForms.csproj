@@ -8,12 +8,12 @@
 	</PropertyGroup>
 	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
 	<ItemGroup>
-		<PackageReference Include="IronPython" Version="2.7.11" />
-		<PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.2.0" />
-		<PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.2.0" />
-		<PackageReference Include="NAudio" Version="2.0.0" />
-		<PackageReference Include="NAudio.Vorbis" Version="1.3.1" />
-		<PackageReference Include="System.ComponentModel.Composition" Version="5.0.0" />
+		<PackageReference Include="IronPython" Version="2.7.12" />
+		<PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.5.1" />
+		<PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.5.1" />
+		<PackageReference Include="NAudio" Version="2.1.0" />
+		<PackageReference Include="NAudio.Vorbis" Version="1.5.0" />
+		<PackageReference Include="System.ComponentModel.Composition" Version="6.0.0" />
 		<ProjectReference Include="..\FrEee.Assets\FrEee.Assets.csproj" />
 		<ProjectReference Include="..\FrEee\FrEee.csproj" />
 	</ItemGroup>
