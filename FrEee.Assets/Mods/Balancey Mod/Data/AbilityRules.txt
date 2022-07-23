@@ -1119,19 +1119,19 @@ Value 2 Rule := Add
 
 Name := Shield Modifier - Sector
 Targets := Sector, Planet, Vehicle, Facility, Component
-Description := Modifies vehicles' maximum shield points by [%Amount1%] in this sector.
+Description := Modifies vehicles' maximum shield points by [%Amount1%]% in this sector.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Shield Modifier - System
 Targets := StarSystem, Planet, Vehicle, Facility, Component
-Description := Modifies vehicles' maximum shield points by [%Amount1%] in this system.
+Description := Modifies vehicles' maximum shield points by [%Amount1%]% in this system.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Shield Modifier - Empire
 Targets := Empire, Planet, Vehicle, Facility, Component
-Description := Modifies vehicles' maximum shield points by [%Amount1%] throughout the empire.
+Description := Modifies vehicles' maximum shield points by [%Amount1%]% throughout the empire.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
