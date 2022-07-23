@@ -38,8 +38,17 @@ namespace FrEee.WinForms.Forms
 			galaxyTemplateBindingSource.DataSource = Mod.Current.GalaxyTemplates;
 			warpPointPlacementStrategyBindingSource.DataSource = WarpPointPlacementStrategy.All;
 			lstTechs.Items.AddRange(Mod.Current.Technologies.Where(t => t.CanBeRemoved).ToArray());
-			foreach (var item in Mod.Current.StellarObjectSizes.Where(q => q.StellarObjectType == "Planet"))
+			// only allow homeworlds to be planet sizes that can exist as any planet surface or atmosphere,
+			// to avoid errors placing empires on incompatible planets
+			var surfaces = Mod.Current.StellarObjectTemplates.OfType<Planet>().Select(p => p.Surface).Distinct();
+			var atmospheres = Mod.Current.StellarObjectTemplates.OfType<Planet>().Select(p => p.Atmosphere).Distinct();
+			foreach (var item in Mod.Current.StellarObjectSizes.Where(q =>
+				q.StellarObjectType == "Planet"
+				&& surfaces.All(w => Mod.Current.StellarObjectTemplates.OfType<Planet>().Any(e => e.Size == q && e.Surface == w))
+				&& atmospheres.All(w => Mod.Current.StellarObjectTemplates.OfType<Planet>().Any(e => e.Size == q && e.Atmosphere == w))))
+			{
 				ddlHomeworldSize.Items.Add(item);
+			}
 			// TODO - set step-amount for racial points spinbox to the greatest common factor of the mod's racial trait costs? or maybe based on aptitudes too?
 			ddlAllowedTrades.DataSource = Enum.GetValues(typeof(AllowedTrades)).Cast<AllowedTrades>().Select(e => new { Name = e.ToSpacedString(), Value = e }).ToList();
 			ddlAllowedTrades.SelectedValue = AllowedTrades.All;
