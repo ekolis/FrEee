@@ -78,8 +78,6 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
-		public long ID { get; set; }
-
 		public bool IsDisposed { get; set; }
 
 		public bool IsMemory
@@ -153,11 +151,6 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get { yield break; }
 		}
-
-		/// <summary>
-		/// No one owns mounts; they are shared.
-		/// </summary>
-		public Empire Owner { get { return null; } }
 
 		/// <summary>
 		/// The name of the picture to use for this mount.
