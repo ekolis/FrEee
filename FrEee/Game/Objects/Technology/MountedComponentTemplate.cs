@@ -193,7 +193,7 @@ namespace FrEee.Game.Objects.Technology
 		/// The mount used.
 		/// </summary>
 		[DoNotSerialize]
-		public Mount Mount { get { return mount; } set { mount = value; } }
+		public Mount? Mount { get { return mount; } set { mount = value; } }
 
 		/// <summary>
 		/// The name of the component, prefixed with the short name of the mount (if any).
