@@ -404,8 +404,8 @@ namespace FrEee.WinForms.Forms
 
 		private void btnMenu_Click(object sender, EventArgs e)
 		{
-			// TODO - game menu
-			MessageBox.Show("Sorry, the game menu is not yet implemented.");
+			// TODO - proper game menu, not just the options screen
+			this.ShowChildForm(new OptionsForm());
 		}
 
 		private void btnMove_Click(object sender, EventArgs e)

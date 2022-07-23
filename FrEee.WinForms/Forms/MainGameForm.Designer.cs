@@ -31,7 +31,7 @@ namespace FrEee.WinForms.Forms
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode presenceMode2 = new FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode();
+			FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode presenceMode1 = new FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.btnWaypoint = new FrEee.WinForms.Controls.GameButton();
 			this.btnMovementLog = new FrEee.WinForms.Controls.GameButton();
@@ -65,6 +65,7 @@ namespace FrEee.WinForms.Forms
 			this.btnDesigns = new FrEee.WinForms.Controls.GameButton();
 			this.btnMenu = new FrEee.WinForms.Controls.GameButton();
 			this.progResearch = new FrEee.WinForms.Controls.GameProgressBar();
+			this.btnCommands = new FrEee.WinForms.Controls.GameButton();
 			this.pnlLayout = new FrEee.WinForms.Controls.GamePanel();
 			this.pnlLeft = new System.Windows.Forms.Panel();
 			this.pnlSystemMap = new FrEee.WinForms.Controls.GamePanel();
@@ -88,7 +89,6 @@ namespace FrEee.WinForms.Forms
 			this.pnlGalaxyMap = new FrEee.WinForms.Controls.GamePanel();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
 			this.pnlDetailReport = new FrEee.WinForms.Controls.GamePanel();
-			this.btnCommands = new FrEee.WinForms.Controls.GameButton();
 			this.pnlLayout.SuspendLayout();
 			this.pnlLeft.SuspendLayout();
 			this.pnlSystemMap.SuspendLayout();
@@ -518,6 +518,7 @@ namespace FrEee.WinForms.Forms
 			this.btnMenu.TabStop = false;
 			this.toolTip.SetToolTip(this.btnMenu, "(F2) Menu");
 			this.btnMenu.UseVisualStyleBackColor = false;
+			this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
 			// 
 			// progResearch
 			// 
@@ -542,6 +543,20 @@ namespace FrEee.WinForms.Forms
 			this.toolTip.SetToolTip(this.progResearch, "(F8 / Shift-R) Research");
 			this.progResearch.Value = ((long)(350000));
 			this.progResearch.Click += new System.EventHandler(this.progResearch_Click);
+			// 
+			// btnCommands
+			// 
+			this.btnCommands.BackColor = System.Drawing.Color.Black;
+			this.btnCommands.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnCommands.Location = new System.Drawing.Point(469, 47);
+			this.btnCommands.Name = "btnCommands";
+			this.btnCommands.Size = new System.Drawing.Size(36, 36);
+			this.btnCommands.TabIndex = 24;
+			this.btnCommands.TabStop = false;
+			this.btnCommands.Text = "Cmd";
+			this.toolTip.SetToolTip(this.btnCommands, "View Commands");
+			this.btnCommands.UseVisualStyleBackColor = false;
+			this.btnCommands.Click += new System.EventHandler(this.btnCommands_Click);
 			// 
 			// pnlLayout
 			// 
@@ -633,7 +648,7 @@ namespace FrEee.WinForms.Forms
 			this.searchBox.Name = "searchBox";
 			this.searchBox.ObjectsToSearch = null;
 			this.searchBox.ResultsPopupHeight = 128;
-			this.searchBox.Size = new System.Drawing.Size(320, 21);
+			this.searchBox.Size = new System.Drawing.Size(320, 31);
 			this.searchBox.StarSystem = null;
 			this.searchBox.TabIndex = 0;
 			this.searchBox.TabStop = false;
@@ -860,7 +875,7 @@ namespace FrEee.WinForms.Forms
 			this.ddlGalaxyViewMode.Location = new System.Drawing.Point(3, 495);
 			this.ddlGalaxyViewMode.Margin = new System.Windows.Forms.Padding(0);
 			this.ddlGalaxyViewMode.Name = "ddlGalaxyViewMode";
-			this.ddlGalaxyViewMode.Size = new System.Drawing.Size(411, 23);
+			this.ddlGalaxyViewMode.Size = new System.Drawing.Size(411, 33);
 			this.ddlGalaxyViewMode.TabIndex = 1;
 			this.ddlGalaxyViewMode.SelectedIndexChanged += new System.EventHandler(this.ddlGalaxyViewMode_SelectedIndexChanged);
 			// 
@@ -885,7 +900,7 @@ namespace FrEee.WinForms.Forms
 			this.galaxyView.BackColor = System.Drawing.Color.Black;
 			this.galaxyView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.galaxyView.Location = new System.Drawing.Point(3, 3);
-			this.galaxyView.Mode = presenceMode2;
+			this.galaxyView.Mode = presenceMode1;
 			this.galaxyView.Name = "galaxyView";
 			this.galaxyView.SelectedStarSystem = null;
 			this.galaxyView.Size = new System.Drawing.Size(403, 249);
@@ -910,29 +925,15 @@ namespace FrEee.WinForms.Forms
 			this.pnlDetailReport.Size = new System.Drawing.Size(412, 460);
 			this.pnlDetailReport.TabIndex = 12;
 			// 
-			// btnCommands
-			// 
-			this.btnCommands.BackColor = System.Drawing.Color.Black;
-			this.btnCommands.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCommands.Location = new System.Drawing.Point(469, 47);
-			this.btnCommands.Name = "btnCommands";
-			this.btnCommands.Size = new System.Drawing.Size(36, 36);
-			this.btnCommands.TabIndex = 24;
-			this.btnCommands.TabStop = false;
-			this.btnCommands.Text = "Cmd";
-			this.toolTip.SetToolTip(this.btnCommands, "View Commands");
-			this.btnCommands.UseVisualStyleBackColor = false;
-			this.btnCommands.Click += new System.EventHandler(this.btnCommands_Click);
-			// 
 			// MainGameForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(1270, 779);
 			this.Controls.Add(this.pnlLayout);
 			this.DoubleBuffered = true;
-			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			this.KeyPreview = true;
 			this.Margin = new System.Windows.Forms.Padding(4);
 			this.MinimumSize = new System.Drawing.Size(900, 700);
