@@ -1,6 +1,7 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Technology;
 using Omu.ValueInjecter;
+using Omu.ValueInjecter.Injections;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -109,7 +110,7 @@ namespace FrEee.Utility.Extensions
 			src.CopyTo(dest, IDCopyBehavior.PreserveDestination, subordinateBehavior);
 		}
 
-		private class OnlySafePropertiesInjection : ConventionInjection
+		private class OnlySafePropertiesInjection : LoopInjection
 		{
 			public OnlySafePropertiesInjection(object root, bool deep, IDCopyBehavior rootBehavior, IDCopyBehavior subordinateBehavior, IDictionary<object, object> known = null)
 			{
@@ -143,14 +144,7 @@ namespace FrEee.Utility.Extensions
 					var tp = target.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.GetSetMethod(true) != null && p.GetIndexParameters().Count() == 0 && p.Name == sp.Name).SingleOrDefault();
 					if (tp != null)
 					{
-						var c = new ConventionInfo
-						{
-							Source = new ConventionInfo.TypeInfo { Type = sp.DeclaringType },
-							SourceProp = new ConventionInfo.PropInfo { Name = sp.Name },
-							Target = new ConventionInfo.TypeInfo { Type = tp.DeclaringType },
-							TargetProp = new ConventionInfo.PropInfo { Name = tp.Name },
-						};
-						if (Match(c))
+						if (Match(sp, tp))
 						{
 							bool doit = true;
 							bool regen = false;
@@ -211,13 +205,12 @@ namespace FrEee.Utility.Extensions
 					(target as ICleanable).Clean();
 			}
 
-			protected override bool Match(ConventionInfo c)
-			{
-				return
-					c.SourceProp.Name == c.TargetProp.Name &&
-					c.Source.Type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(p => PropertyMatches(p, c.TargetProp.Name)) &&
-					c.Target.Type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(p => PropertyMatches(p, c.TargetProp.Name));
-			}
+			// TODO: determine if all this logic is necessary
+			private bool Match(PropertyInfo source, PropertyInfo target)
+				=>
+				source.Name == target.Name &&
+				source.DeclaringType!.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(p => PropertyMatches(p, target.Name)) &&
+				target.DeclaringType!.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(p => PropertyMatches(p, target.Name));
 
 			private object CopyObject(object parent, object sv)
 			{
