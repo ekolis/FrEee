@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net6.0</TargetFrameworks>
+		<TargetFrameworks>net7.0</TargetFrameworks>
 		<OutputType>Library</OutputType>
 		<AssemblyName>FrEee.Core</AssemblyName>
 		<ProjectGuid>eca7a08b-992a-43ec-8d98-2ae887897343</ProjectGuid>
