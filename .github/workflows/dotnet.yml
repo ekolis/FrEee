@@ -44,7 +44,7 @@ jobs:
     - name: Prepare files for zipping
       run: |
         cd FrEee.WinForms/bin/Release
-        ren net6.0-windows FrEee
+        ren net7.0-windows FrEee
       shell: cmd
     - name: Zip assets
       uses: papeloto/action-zip@v1
