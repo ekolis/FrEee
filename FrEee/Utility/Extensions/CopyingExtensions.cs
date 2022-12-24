@@ -289,8 +289,8 @@ namespace FrEee.Utility.Extensions
 					var tv = sv.GetType().Instantiate();
 					if (!knownObjects.ContainsKey(sv))
 						knownObjects.Add(sv, tv);
-					// XXX: what does the Map method do in ValueInjecter and how can I replace it?
-					Map(sv, tv);
+					// TODO: determine if the default ID copying behaviors are appropriate here
+					sv.CopyTo(tv);
 					//knownObjects.Remove(parent);
 					return tv;
 				}
