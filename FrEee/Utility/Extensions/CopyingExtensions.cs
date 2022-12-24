@@ -1,7 +1,5 @@
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Technology;
-using Omu.ValueInjecter;
-using Omu.ValueInjecter.Injections;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -66,7 +64,8 @@ namespace FrEee.Utility.Extensions
 			if (obj == null)
 				return default(T);
 			var dest = obj.GetType().Instantiate();
-			dest.InjectFrom(new OnlySafePropertiesInjection(obj, true, IDCopyBehavior.PreserveSource, IDCopyBehavior.PreserveSource), obj);
+			var copier = new OnlySafePropertiesCopier(obj, true, IDCopyBehavior.PreserveSource, IDCopyBehavior.PreserveSource);
+			copier.Copy(obj, dest);
 			return (T)dest;
 		}
 
@@ -82,7 +81,8 @@ namespace FrEee.Utility.Extensions
 			if (obj == null)
 				return default(T);
 			var dest = obj.GetType().Instantiate();
-			dest.InjectFrom(new OnlySafePropertiesInjection(obj, true, IDCopyBehavior.Regenerate, IDCopyBehavior.Regenerate), obj);
+			var copier = new OnlySafePropertiesCopier(obj, true, IDCopyBehavior.Regenerate, IDCopyBehavior.Regenerate);
+			copier.Copy(obj, dest);
 			return (T)dest;
 		}
 
@@ -96,7 +96,8 @@ namespace FrEee.Utility.Extensions
 		{
 			if (src.GetType() != dest.GetType())
 				throw new Exception("Can only copy objects onto objects of the same type.");
-			dest.InjectFrom(new OnlySafePropertiesInjection(src, true, rootBehavior, subordinateBehavior), src);
+			var copier = new OnlySafePropertiesCopier(src, true, rootBehavior, subordinateBehavior);
+			copier.Copy(src, dest);
 		}
 
 		/// <summary>
@@ -110,9 +111,9 @@ namespace FrEee.Utility.Extensions
 			src.CopyTo(dest, IDCopyBehavior.PreserveDestination, subordinateBehavior);
 		}
 
-		private class OnlySafePropertiesInjection : LoopInjection
+		private class OnlySafePropertiesCopier
 		{
-			public OnlySafePropertiesInjection(object root, bool deep, IDCopyBehavior rootBehavior, IDCopyBehavior subordinateBehavior, IDictionary<object, object> known = null)
+			public OnlySafePropertiesCopier(object root, bool deep, IDCopyBehavior rootBehavior, IDCopyBehavior subordinateBehavior, IDictionary<object, object> known = null)
 			{
 				Root = root;
 				DeepCopy = deep;
@@ -132,7 +133,7 @@ namespace FrEee.Utility.Extensions
 			public IDCopyBehavior SubordinateBehavior { get; private set; }
 			private SafeDictionary<object, object> knownObjects = new SafeDictionary<object, object>();
 
-			protected override void Inject(object source, object target)
+			public void Copy(object source, object target)
 			{
 				if (!knownObjects.ContainsKey(source))
 					knownObjects.Add(source, target);
@@ -288,7 +289,8 @@ namespace FrEee.Utility.Extensions
 					var tv = sv.GetType().Instantiate();
 					if (!knownObjects.ContainsKey(sv))
 						knownObjects.Add(sv, tv);
-					Map(sv, tv);
+					// TODO: determine if the default ID copying behaviors are appropriate here
+					sv.CopyTo(tv);
 					//knownObjects.Remove(parent);
 					return tv;
 				}
