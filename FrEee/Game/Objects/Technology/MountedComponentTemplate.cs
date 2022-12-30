@@ -102,6 +102,8 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// The design which contains this mounted component template.
 		/// </summary>
+		[DoNotSerialize]
+		[Populate<MountedComponentTemplateContainerPopulator>]
 		public IDesign Container { get; set; }
 
 		public ResourceQuantity Cost
@@ -387,7 +389,9 @@ namespace FrEee.Game.Objects.Technology
 			if (!done.Contains(this))
 			{
 				done.Add(this);
-				Container.ReplaceClientIDs(idmap, done);
+				// we don't need to do this because the container is only loosely coupled to the MCT
+				// and it will be sanitized for itself anyway
+				//Container.ReplaceClientIDs(idmap, done);
 			}
 		}
 

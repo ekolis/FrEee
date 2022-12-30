@@ -15,9 +15,11 @@ using FrEee.Game.Setup.WarpPointPlacementStrategies;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using Microsoft.Scripting.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -524,26 +526,6 @@ namespace FrEee.Game.Objects.Space
         }
 
         /// <summary>
-        /// Loads a savegame from a stream.
-        /// </summary>
-        /// <param name="stream"></param>
-        public static void Load(Stream stream)
-        {
-            Galaxy.Current = Serializer.Deserialize<Galaxy>(stream);
-            if (Current.ModPath == null)
-                Mod.Load(null); // skipped in deserialization because it is null but the mod needs to be loaded!
-                                //Current.SpaceObjectIDCheck("after loading from disk/memory");
-
-            if (Empire.Current != null)
-            {
-                // initialize IronPython galaxy on load
-                Current.StringValue = Current.SaveToString(false);
-                var formula = new ComputedFormula<int>("Galaxy.Current.TurnNumber", null, true);
-                var turn = formula.Value;
-            }
-        }
-
-        /// <summary>
         /// Loads a savegame from the Savegame folder.
         /// Note that if it was renamed, it might have different game name, turn number, player number, etc. than the filename indicates.
         /// </summary>
@@ -561,6 +543,7 @@ namespace FrEee.Game.Objects.Space
             }
             fs.Close();
             fs.Dispose();
+			Current.PopulatePropertyValues();
         }
 
         /// <summary>
@@ -607,7 +590,40 @@ namespace FrEee.Game.Objects.Space
                 // load library of designs, strategies, etc.
                 Library.Load();
             }
-        }
+
+			Current.PopulatePropertyValues();
+		}
+
+		/// <summary>
+		/// Populates property values specified by <see cref="PopulateAttribute{T}"/>.
+		/// </summary>
+		private void PopulatePropertyValues()
+		{
+			// TODO: cache list of properties to populate when deserializing?
+			// enumerate all referrables
+			foreach (var referrable in Referrables)
+			{
+				// find referrable's properties
+				var props = referrable.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+				foreach (var prop in props)
+				{
+					// search property's attributes for PopulateAttribute<T>
+					foreach (var att in prop.GetCustomAttributes())
+					{
+						if (att.GetType().IsGenericType && att.GetType().GetGenericTypeDefinition() == typeof(PopulateAttribute<>))
+						{
+							// found PopulateAttribute<T>
+							// create populator
+							var populatorType = att.GetType().GetGenericArguments()[0];
+							var populator = (IPopulator)populatorType.Instantiate();
+
+							// get value from populator and save it into the referrable's property
+							prop.SetValue(referrable, populator.Populate(referrable));
+						}
+					}
+				}
+			}
+		}
 
         /// <summary>
         /// Only public for unit tests. You should probably call ProcessTurn instead.
