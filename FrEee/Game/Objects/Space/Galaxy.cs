@@ -524,26 +524,6 @@ namespace FrEee.Game.Objects.Space
         }
 
         /// <summary>
-        /// Loads a savegame from a stream.
-        /// </summary>
-        /// <param name="stream"></param>
-        public static void Load(Stream stream)
-        {
-            Galaxy.Current = Serializer.Deserialize<Galaxy>(stream);
-            if (Current.ModPath == null)
-                Mod.Load(null); // skipped in deserialization because it is null but the mod needs to be loaded!
-                                //Current.SpaceObjectIDCheck("after loading from disk/memory");
-
-            if (Empire.Current != null)
-            {
-                // initialize IronPython galaxy on load
-                Current.StringValue = Current.SaveToString(false);
-                var formula = new ComputedFormula<int>("Galaxy.Current.TurnNumber", null, true);
-                var turn = formula.Value;
-            }
-        }
-
-        /// <summary>
         /// Loads a savegame from the Savegame folder.
         /// Note that if it was renamed, it might have different game name, turn number, player number, etc. than the filename indicates.
         /// </summary>
