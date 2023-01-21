@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
@@ -178,7 +178,9 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return new IAbilityObject[] { Hull }.Concat(Components); }
 		}
 
-		public int CombatSpeed => Mod.Current.Settings.CombatSpeedPercentPerStrategicSpeed.PercentOfRounded(StrategicSpeed) + this.GetAbilityValue("Combat Movement").ToInt();
+		public double CombatSpeed
+			=> Mod.Current.Settings.CombatSpeedPercentPerStrategicSpeed.PercentOf(StrategicSpeed)
+			+ this.GetAbilityValue("Combat Movement").ToDouble();
 
 		/// <summary>
 		/// The components used in this design.
