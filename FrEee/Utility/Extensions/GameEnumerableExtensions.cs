@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -289,19 +289,34 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static ILookup<Ability, Ability> StackToTree(this IEnumerable<Ability> abilities, IAbilityObject stackTo)
 		{
+			// create result list
 			var stacked = new List<Tuple<Ability, Ability>>();
+
+			// group abilities by rule
 			var grouped = abilities.GroupBy(a => a.Rule);
+
 			foreach (var group in grouped)
 			{
 				if (group.Key == null)
 					continue; // invalid ability rule
+
+				// stack this ability group
 				var lookup = group.Key.GroupAndStack(group, stackTo);
+
 				foreach (var lgroup in lookup)
 				{
+					// create a merged ability with a generated description (since ability values are stacked when merged)
+					var mergedAbility = new Ability(stackTo, lgroup.Key.Rule, description: null, values: lgroup.Key.Values);
+
 					foreach (var abil in group)
-						stacked.Add(Tuple.Create(lgroup.Key, abil));
+					{
+						// add this ability to the current group in the result list, using the merged ability as the key
+						stacked.Add(Tuple.Create(mergedAbility, abil));
+					}
 				}
 			}
+
+			// create a lookup from the result list
 			return stacked.ToLookup(t => t.Item1, t => t.Item2);
 		}
 

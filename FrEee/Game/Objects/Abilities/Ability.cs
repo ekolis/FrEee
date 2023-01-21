@@ -24,7 +24,7 @@ namespace FrEee.Game.Objects.Abilities
 			Values = new List<Formula<string>>();
 		}
 
-		public Ability(IAbilityObject container, AbilityRule rule, string? description = null, params object[] values)
+		public Ability(IAbilityObject container, AbilityRule rule, Formula<string>? description = null, params object[] values)
 		{
 			Container = container;
 			Rule = rule;
@@ -32,10 +32,21 @@ namespace FrEee.Game.Objects.Abilities
 			Values = new List<Formula<string>>();
 			foreach (var val in values)
 			{
-				if (val is IFormula)
-					Values.Add((val as IFormula).ToStringFormula());
+				if (val is IFormula f)
+				{
+					Values.Add(f.ToStringFormula());
+				}
+				else if (val is IEnumerable<IFormula> fs)
+				{
+					foreach (var ff in fs)
+					{
+						Values.Add(ff.ToStringFormula());
+					}
+				}
 				else
+				{
 					Values.Add(new LiteralFormula<string>(val.ToString()));
+				}
 			}
 		}
 
@@ -73,7 +84,7 @@ namespace FrEee.Game.Objects.Abilities
 		/// A description of the ability's effects.
 		/// Can use, e.g. [%Amount1%] to specify the amount in the Value 1 field.
 		/// </summary>
-		public Formula<string> Description { get; set; }
+		public Formula<string>? Description { get; set; }
 
 		/// <summary>
 		/// Key for ability groups.
