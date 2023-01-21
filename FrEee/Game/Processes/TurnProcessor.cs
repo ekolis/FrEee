@@ -155,6 +155,7 @@ namespace FrEee.Game.Processes
 					try
 					{
 						Galaxy.LoadFromString(serializedgalaxy);
+						galaxy = Galaxy.Current;
 						galaxy.CurrentEmpire = galaxy.Empires[i];
 						galaxy.Redact();
 						galaxy.CurrentEmpire.AI.Act(galaxy.CurrentEmpire, galaxy, galaxy.CurrentEmpire.EnabledMinisters);
@@ -175,6 +176,7 @@ namespace FrEee.Game.Processes
 					}
 				}
 				Galaxy.LoadFromString(serializedgalaxy);
+				galaxy = Galaxy.Current;
 				foreach (var i in galaxy.Empires.Where(e => e.AI != null && (e.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)).Select(e => galaxy.Empires.IndexOf(e)).ToArray())
 				{
 					try
