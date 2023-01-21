@@ -7,6 +7,7 @@ using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Vehicles;
+using FrEee.Game.Processes;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Controls;
@@ -1194,7 +1195,8 @@ namespace FrEee.WinForms.Forms
 						Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber);
 						status.Progress = 0.25;
 						status.Message = "Processing turn";
-						Galaxy.ProcessTurn(false, status, 0.5);
+						var processor = new TurnProcessor();
+						processor.ProcessTurn(Galaxy.Current, false, status, 0.5);
 						status.Message = "Saving game";
 						Galaxy.SaveAll(status, 0.75);
 						status.Message = "Loading game";

@@ -1,7 +1,8 @@
-﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Space;
+using FrEee.Game.Processes;
 using FrEee.Modding;
 using FrEee.Utility.Extensions;
 using NUnit.Framework;
@@ -11,6 +12,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 	public class TechnologyTest
 	{
 		private Empire emp;
+		private TurnProcessor processor = new();
 
 		/// <summary>
 		/// Loads the stock mod. Done once before running ALL the tests (not each individually; that would be pointless).
@@ -50,7 +52,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 
 			// perform research
 			emp.ResearchCommand = cmd;
-			Galaxy.ProcessTurn(false);
+			processor.ProcessTurn(gal, false);
 
 			// verify research was done
 			// 500K for first level, 1M for second
@@ -89,7 +91,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 
 			// perform research
 			emp.ResearchCommand = cmd;
-			Galaxy.ProcessTurn(false);
+			processor.ProcessTurn(gal, false);
 
 			// should have level 1 in t1 and level 0 in t2
 			Assert.AreEqual(1, emp.ResearchedTechnologies[t1]);
@@ -102,7 +104,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 			// another turn!
 			emp.BonusResearch = 100000;
 			emp.ResearchCommand = cmd;
-			Galaxy.ProcessTurn(false);
+			processor.ProcessTurn(gal, false);
 
 			// should have level 2+ in t1 and level 1+ in t2
 			// (levels could be higher if extra RP gets randomly assigned to those techs)

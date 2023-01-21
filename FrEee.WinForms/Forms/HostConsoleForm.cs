@@ -1,7 +1,8 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
+using FrEee.Game.Processes;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
@@ -124,7 +125,8 @@ namespace FrEee.WinForms.Forms
 			var t = new Thread(new ThreadStart(() =>
 			{
 				status.Message = "Processing turn";
-				Galaxy.ProcessTurn(false, status, 0.5);
+				var processor = new TurnProcessor();
+				processor.ProcessTurn(Galaxy.Current, false, status, 0.5);
 				Galaxy.SaveAll(status, 1.0);
 			}));
 			this.ShowChildForm(new StatusForm(t, status));
