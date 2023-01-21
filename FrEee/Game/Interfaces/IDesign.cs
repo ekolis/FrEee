@@ -28,7 +28,7 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// The movement speed of the design in combat.
 		/// </summary>
-		int CombatSpeed { get; }
+		double CombatSpeed { get; }
 
 		/// <summary>
 		/// The vehicle's components.

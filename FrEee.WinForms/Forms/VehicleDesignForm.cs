@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
@@ -177,7 +177,7 @@ namespace FrEee.WinForms.Forms
 				resCostMin.Amount = Design.Cost[Resource.Minerals];
 				resCostOrg.Amount = Design.Cost[Resource.Organics];
 				resCostRad.Amount = Design.Cost[Resource.Radioactives];
-				txtSpeed.Text = Design.StrategicSpeed.ToString() + " sec/turn; " + Design.CombatSpeed;
+				txtSpeed.Text = Design.StrategicSpeed.ToString() + " sec/turn; " + Design.CombatSpeed.ToString("f2");
 
 				var genPerTurn = Design.GetAbilityValue("Supply Generation Per Turn").ToInt();
 				var genPerStar = Design.GetAbilityValue("Solar Supply Generation").ToInt();
