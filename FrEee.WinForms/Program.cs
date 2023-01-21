@@ -2,6 +2,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
+using FrEee.Game.Processes;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
@@ -289,7 +290,8 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 				status.Changed += new Status.ChangedDelegate(status_Changed);
 
 				Console.WriteLine("Processing turn...");
-				var emps = Galaxy.ProcessTurn(false, status);
+				var processor = new TurnProcessor();
+				var emps = processor.ProcessTurn(Galaxy.Current, false, status);
 				foreach (var emp in emps)
 					Console.WriteLine(emp + " did not submit a PLR file.");
 				if (safe && emps.Any())
