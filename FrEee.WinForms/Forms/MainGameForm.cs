@@ -14,6 +14,7 @@ using FrEee.WinForms.Controls;
 using FrEee.WinForms.Interfaces;
 using FrEee.WinForms.Objects;
 using FrEee.WinForms.Objects.GalaxyViewModes;
+using FrEee.WinForms.Utility;
 using FrEee.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -793,7 +794,7 @@ namespace FrEee.WinForms.Forms
 		{
 			Instance = null;
 			if (QuitOnClose)
-				Application.Exit();
+				Gui.CloseGame();
 		}
 
 		private void GameForm_FormClosing(object sender, FormClosingEventArgs e)

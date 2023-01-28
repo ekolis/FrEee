@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Civilization;
 using FrEee.WinForms.Objects;
 using System;
 using System.IO;
@@ -38,6 +38,8 @@ namespace FrEee.WinForms.Forms
 		private TextBox txtName;
 		private TextBox txtWebsite;
 		private Label label10;
+		private GroupBox groupBox2;
+		private CheckBox chkQuitToMainMenu;
 		private TrackBar sldMusic;
 
 		private void btnCancel_Click(object sender, EventArgs e)
@@ -59,6 +61,7 @@ namespace FrEee.WinForms.Forms
 			ClientSettings.Instance.PlayerInfo.Discord = txtDiscord.Text;
 			ClientSettings.Instance.PlayerInfo.Notes = txtNotes.Text;
 			ClientSettings.Instance.PlayerInfo.Website = txtWebsite.Text;
+			ClientSettings.Instance.QuitToMainMenu = chkQuitToMainMenu.Checked;
 			ClientSettings.Save();
 			Music.setVolume(ClientSettings.Instance.MasterVolume * ClientSettings.Instance.MusicVolume * 1.0e-4f);
 			Music.StartNewTrack();
@@ -177,11 +180,14 @@ namespace FrEee.WinForms.Forms
 			this.label5 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.chkQuitToMainMenu = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.sldMaster)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.sldEffects)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.sldMusic)).BeginInit();
 			this.grpPlayerInfo.SuspendLayout();
+			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// sldMaster
@@ -190,7 +196,7 @@ namespace FrEee.WinForms.Forms
 			this.sldMaster.Location = new System.Drawing.Point(140, 19);
 			this.sldMaster.Maximum = 100;
 			this.sldMaster.Name = "sldMaster";
-			this.sldMaster.Size = new System.Drawing.Size(213, 45);
+			this.sldMaster.Size = new System.Drawing.Size(213, 80);
 			this.sldMaster.TabIndex = 0;
 			this.sldMaster.TickFrequency = 10;
 			// 
@@ -201,7 +207,7 @@ namespace FrEee.WinForms.Forms
 			this.label7.Location = new System.Drawing.Point(6, 19);
 			this.label7.Margin = new System.Windows.Forms.Padding(3);
 			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(39, 13);
+			this.label7.Size = new System.Drawing.Size(77, 30);
 			this.label7.TabIndex = 17;
 			this.label7.Text = "Master";
 			// 
@@ -228,7 +234,7 @@ namespace FrEee.WinForms.Forms
 			this.label2.Location = new System.Drawing.Point(6, 121);
 			this.label2.Margin = new System.Windows.Forms.Padding(3);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(40, 13);
+			this.label2.Size = new System.Drawing.Size(75, 30);
 			this.label2.TabIndex = 21;
 			this.label2.Text = "Effects";
 			// 
@@ -239,7 +245,7 @@ namespace FrEee.WinForms.Forms
 			this.sldEffects.Location = new System.Drawing.Point(140, 121);
 			this.sldEffects.Maximum = 100;
 			this.sldEffects.Name = "sldEffects";
-			this.sldEffects.Size = new System.Drawing.Size(213, 45);
+			this.sldEffects.Size = new System.Drawing.Size(213, 80);
 			this.sldEffects.TabIndex = 2;
 			this.sldEffects.TickFrequency = 10;
 			// 
@@ -250,7 +256,7 @@ namespace FrEee.WinForms.Forms
 			this.label1.Location = new System.Drawing.Point(6, 70);
 			this.label1.Margin = new System.Windows.Forms.Padding(3);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(35, 13);
+			this.label1.Size = new System.Drawing.Size(68, 30);
 			this.label1.TabIndex = 19;
 			this.label1.Text = "Music";
 			// 
@@ -260,7 +266,7 @@ namespace FrEee.WinForms.Forms
 			this.sldMusic.Location = new System.Drawing.Point(140, 70);
 			this.sldMusic.Maximum = 100;
 			this.sldMusic.Name = "sldMusic";
-			this.sldMusic.Size = new System.Drawing.Size(213, 45);
+			this.sldMusic.Size = new System.Drawing.Size(213, 80);
 			this.sldMusic.TabIndex = 1;
 			this.sldMusic.TickFrequency = 10;
 			// 
@@ -269,7 +275,7 @@ namespace FrEee.WinForms.Forms
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.BackColor = System.Drawing.Color.Black;
 			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(295, 508);
+			this.btnCancel.Location = new System.Drawing.Point(295, 585);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
 			this.btnCancel.TabIndex = 5;
@@ -282,7 +288,7 @@ namespace FrEee.WinForms.Forms
 			this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnSave.BackColor = System.Drawing.Color.Black;
 			this.btnSave.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSave.Location = new System.Drawing.Point(214, 508);
+			this.btnSave.Location = new System.Drawing.Point(214, 585);
 			this.btnSave.Name = "btnSave";
 			this.btnSave.Size = new System.Drawing.Size(75, 23);
 			this.btnSave.TabIndex = 4;
@@ -295,7 +301,7 @@ namespace FrEee.WinForms.Forms
 			this.btnSE4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnSE4.BackColor = System.Drawing.Color.Black;
 			this.btnSE4.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSE4.Location = new System.Drawing.Point(12, 501);
+			this.btnSE4.Location = new System.Drawing.Point(12, 578);
 			this.btnSE4.Name = "btnSE4";
 			this.btnSE4.Size = new System.Drawing.Size(104, 30);
 			this.btnSE4.TabIndex = 3;
@@ -331,7 +337,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.txtWebsite.Location = new System.Drawing.Point(57, 146);
 			this.txtWebsite.Name = "txtWebsite";
-			this.txtWebsite.Size = new System.Drawing.Size(190, 20);
+			this.txtWebsite.Size = new System.Drawing.Size(190, 35);
 			this.txtWebsite.TabIndex = 5;
 			// 
 			// label10
@@ -341,7 +347,7 @@ namespace FrEee.WinForms.Forms
 			this.label10.Location = new System.Drawing.Point(7, 149);
 			this.label10.Margin = new System.Windows.Forms.Padding(3);
 			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(46, 13);
+			this.label10.Size = new System.Drawing.Size(87, 30);
 			this.label10.TabIndex = 30;
 			this.label10.Text = "Website";
 			// 
@@ -357,35 +363,35 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.txtDiscord.Location = new System.Drawing.Point(57, 120);
 			this.txtDiscord.Name = "txtDiscord";
-			this.txtDiscord.Size = new System.Drawing.Size(190, 20);
+			this.txtDiscord.Size = new System.Drawing.Size(190, 35);
 			this.txtDiscord.TabIndex = 4;
 			// 
 			// txtIrc
 			// 
 			this.txtIrc.Location = new System.Drawing.Point(57, 94);
 			this.txtIrc.Name = "txtIrc";
-			this.txtIrc.Size = new System.Drawing.Size(190, 20);
+			this.txtIrc.Size = new System.Drawing.Size(190, 35);
 			this.txtIrc.TabIndex = 3;
 			// 
 			// txtEmail
 			// 
 			this.txtEmail.Location = new System.Drawing.Point(57, 68);
 			this.txtEmail.Name = "txtEmail";
-			this.txtEmail.Size = new System.Drawing.Size(190, 20);
+			this.txtEmail.Size = new System.Drawing.Size(190, 35);
 			this.txtEmail.TabIndex = 2;
 			// 
 			// txtPbw
 			// 
 			this.txtPbw.Location = new System.Drawing.Point(57, 42);
 			this.txtPbw.Name = "txtPbw";
-			this.txtPbw.Size = new System.Drawing.Size(190, 20);
+			this.txtPbw.Size = new System.Drawing.Size(190, 35);
 			this.txtPbw.TabIndex = 1;
 			// 
 			// txtName
 			// 
 			this.txtName.Location = new System.Drawing.Point(57, 16);
 			this.txtName.Name = "txtName";
-			this.txtName.Size = new System.Drawing.Size(190, 20);
+			this.txtName.Size = new System.Drawing.Size(190, 35);
 			this.txtName.TabIndex = 0;
 			// 
 			// label9
@@ -395,7 +401,7 @@ namespace FrEee.WinForms.Forms
 			this.label9.Location = new System.Drawing.Point(7, 174);
 			this.label9.Margin = new System.Windows.Forms.Padding(3);
 			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(35, 13);
+			this.label9.Size = new System.Drawing.Size(68, 30);
 			this.label9.TabIndex = 23;
 			this.label9.Text = "Notes";
 			// 
@@ -406,7 +412,7 @@ namespace FrEee.WinForms.Forms
 			this.label8.Location = new System.Drawing.Point(6, 123);
 			this.label8.Margin = new System.Windows.Forms.Padding(3);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(43, 13);
+			this.label8.Size = new System.Drawing.Size(83, 30);
 			this.label8.TabIndex = 22;
 			this.label8.Text = "Discord";
 			// 
@@ -417,7 +423,7 @@ namespace FrEee.WinForms.Forms
 			this.label6.Location = new System.Drawing.Point(7, 97);
 			this.label6.Margin = new System.Windows.Forms.Padding(3);
 			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(25, 13);
+			this.label6.Size = new System.Drawing.Size(45, 30);
 			this.label6.TabIndex = 21;
 			this.label6.Text = "IRC";
 			// 
@@ -428,7 +434,7 @@ namespace FrEee.WinForms.Forms
 			this.label5.Location = new System.Drawing.Point(6, 71);
 			this.label5.Margin = new System.Windows.Forms.Padding(3);
 			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(32, 13);
+			this.label5.Size = new System.Drawing.Size(63, 30);
 			this.label5.TabIndex = 20;
 			this.label5.Text = "Email";
 			// 
@@ -439,7 +445,7 @@ namespace FrEee.WinForms.Forms
 			this.label4.Location = new System.Drawing.Point(7, 45);
 			this.label4.Margin = new System.Windows.Forms.Padding(3);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(32, 13);
+			this.label4.Size = new System.Drawing.Size(57, 30);
 			this.label4.TabIndex = 19;
 			this.label4.Text = "PBW";
 			// 
@@ -450,20 +456,43 @@ namespace FrEee.WinForms.Forms
 			this.label3.Location = new System.Drawing.Point(7, 19);
 			this.label3.Margin = new System.Windows.Forms.Padding(3);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(35, 13);
+			this.label3.Size = new System.Drawing.Size(69, 30);
 			this.label3.TabIndex = 18;
 			this.label3.Text = "Name";
+			// 
+			// groupBox2
+			// 
+			this.groupBox2.Controls.Add(this.chkQuitToMainMenu);
+			this.groupBox2.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.groupBox2.Location = new System.Drawing.Point(12, 501);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(359, 57);
+			this.groupBox2.TabIndex = 22;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "UI";
+			this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+			// 
+			// chkQuitToMainMenu
+			// 
+			this.chkQuitToMainMenu.AutoSize = true;
+			this.chkQuitToMainMenu.Location = new System.Drawing.Point(15, 24);
+			this.chkQuitToMainMenu.Name = "chkQuitToMainMenu";
+			this.chkQuitToMainMenu.Size = new System.Drawing.Size(217, 34);
+			this.chkQuitToMainMenu.TabIndex = 0;
+			this.chkQuitToMainMenu.Text = "Quit to Main Menu";
+			this.chkQuitToMainMenu.UseVisualStyleBackColor = true;
 			// 
 			// OptionsForm
 			// 
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(382, 543);
+			this.ClientSize = new System.Drawing.Size(382, 620);
+			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.grpPlayerInfo);
 			this.Controls.Add(this.btnSE4);
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.btnSave);
 			this.Controls.Add(this.groupBox1);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.MaximizeBox = false;
 			this.Name = "OptionsForm";
 			this.Text = "Options";
 			this.Load += new System.EventHandler(this.OptionsForm_Load);
@@ -474,6 +503,8 @@ namespace FrEee.WinForms.Forms
 			((System.ComponentModel.ISupportInitialize)(this.sldMusic)).EndInit();
 			this.grpPlayerInfo.ResumeLayout(false);
 			this.grpPlayerInfo.PerformLayout();
+			this.groupBox2.ResumeLayout(false);
+			this.groupBox2.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -490,6 +521,12 @@ namespace FrEee.WinForms.Forms
 			sldMaster.Value = Math.Max(0, Math.Min(100, ClientSettings.Instance.MasterVolume));
 			sldMusic.Value = Math.Max(0, Math.Min(100, ClientSettings.Instance.MusicVolume));
 			sldEffects.Value = Math.Max(0, Math.Min(100, ClientSettings.Instance.EffectsVolume));
+			chkQuitToMainMenu.Checked = ClientSettings.Instance.QuitToMainMenu;
+		}
+
+		private void groupBox2_Enter(object sender, EventArgs e)
+		{
+
 		}
 	}
 }

@@ -8,6 +8,7 @@ using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Forms;
+using FrEee.WinForms.Utility;
 using FrEee.WinForms.Utility.Extensions;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
@@ -301,7 +302,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 				}
 				Galaxy.SaveAll();
 				Console.WriteLine("Turn processed successfully. It is now turn " + Galaxy.Current.TurnNumber + " (stardate " + Galaxy.Current.Stardate + ").");
-				Application.Exit();
+				Gui.Exit();
 				return 0;
 			}
 			catch (Exception ex)
