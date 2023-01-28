@@ -53,6 +53,11 @@ namespace FrEee.WinForms.Objects
 		public int MusicVolume { get; set; }
 
 		/// <summary>
+		/// Should the game return to the main menu when the user quits?
+		/// </summary>
+		public bool QuitToMainMenu { get; set; }
+
+		/// <summary>
 		/// Configurations for the planet list.
 		/// </summary>
 		public IList<GridConfig> PlanetListConfigs { get; private set; }
