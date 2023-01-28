@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.DataGridView;
@@ -63,6 +63,8 @@ namespace FrEee.WinForms.Objects
 		/// Configurations for the ship list.
 		/// </summary>
 		public IList<GridConfig> ShipListConfigs { get; private set; }
+
+		// TODO: make this huge list of columns data driven
 
 		private static readonly GridColumnConfig colAnger = new GridColumnConfig("AngerProgress", "Anger", typeof(DataGridViewProgressColumn), Color.Red);
 
