@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Interfaces;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -78,9 +78,9 @@ namespace FrEee.Modding
 				var replacedText = txt;
 				replacedText = "'" + replacedText + "'"; // make it a string
 				replacedText = replacedText.Replace("{{", "' + str(");
-				replacedText = replacedText.Replace("}}", ") + '");
+				replacedText = replacedText.Replace("}}", ").strip('\"') + '"); // strip to trim start/end quotes that get added by str
 				replacedText = replacedText.Replace("{", "' + str(");
-				replacedText = replacedText.Replace("}", ") + '");
+				replacedText = replacedText.Replace("}", ").strip('\"') + '");
 				return new ComputedFormula<T>(replacedText, context, isDynamic);
 			}
 			return new LiteralFormula<T>(txt);
