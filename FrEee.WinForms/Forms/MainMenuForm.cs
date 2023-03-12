@@ -5,6 +5,7 @@ using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Objects;
+using FrEee.WinForms.Utility;
 using FrEee.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -176,7 +177,7 @@ namespace FrEee.WinForms.Forms
 
 		private void btnQuit_Click(object sender, EventArgs e)
 		{
-			Application.Exit();
+			Gui.Exit();
 		}
 
 		private void btnMods_Click(object sender, EventArgs e)
@@ -313,7 +314,7 @@ namespace FrEee.WinForms.Forms
 		private void MainMenuForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			ClientSettings.Save();
-			Application.Exit();
+			Gui.Exit();
 		}
 	}
 }
