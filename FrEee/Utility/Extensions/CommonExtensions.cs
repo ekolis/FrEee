@@ -1642,7 +1642,10 @@ namespace FrEee.Utility.Extensions
 
 					// transfer population from source to destination
 					amount -= src.RemovePopulation(kvp.Key, amount);
-					dest.AddPopulation(kvp.Key, amount);
+					amount += dest.AddPopulation(kvp.Key, amount);
+
+					// put any population that didn't fit back on the source
+					src.AddPopulation(kvp.Key, amount);
 
 					// log warnings
 					if (amount < anyPopLeft)
