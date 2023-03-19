@@ -604,16 +604,25 @@ namespace FrEee.Game.Objects.Space
 
 		public long AddPopulation(Race race, long amount)
 		{
+			// make sure planet has a colony
 			if (Colony == null)
 				return amount; // can't add population with no colony
+
+			// put population in planetary population storage
 			var canPop = Math.Min(amount, PopulationStorageFree);
 			amount -= canPop;
 			Colony.Population[race] += canPop;
-			var canCargo = Math.Min(amount, (long)(this.CargoStorageFree() / Mod.Current.Settings.PopulationSize));
+
+			// don't put population in planetary cargo storage, that's just confusing
+			/*var canCargo = Math.Min(amount, (long)(this.CargoStorageFree() / Mod.Current.Settings.PopulationSize));
 			amount -= canCargo;
-			Colony.Cargo.Population[race] += canCargo;
+			Colony.Cargo.Population[race] += canCargo;*/
+
+			// apply anger to population
 			if (!Colony.Anger.ContainsKey(race))
 				Colony.Anger[race] = Mod.Current.Settings.StartPopulationAnger;
+
+			// return leftover population
 			return amount;
 		}
 
