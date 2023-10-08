@@ -61,7 +61,7 @@ namespace FrEee.Modding
 		/// <summary>
 		/// The currently loaded mod.
 		/// </summary>
-		public static Mod Current { get; set; }
+		//public static Mod Current { get; set; }
 
 		/// <summary>
 		/// The file name being loaded. (For error reporting)
