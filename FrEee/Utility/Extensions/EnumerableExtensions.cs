@@ -109,7 +109,7 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		public static T PickRandom<T>(this IEnumerable<T> src, PRNG prng = null)
+		public static T? PickRandom<T>(this IEnumerable<T> src, PRNG? prng = null)
 		{
 			if (!src.Any())
 				return default(T);

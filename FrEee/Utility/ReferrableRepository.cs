@@ -118,6 +118,38 @@ public class ReferrableRepository
 		//r.ID = -1;
 	}
 
+	/// <summary>
+	/// Finds referrable objects in the repository.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="condition"></param>
+	/// <returns></returns>
+	public IEnumerable<T> Find<T>(Func<T, bool>? condition = null) where T : IReferrable
+	{
+		if (condition == null)
+			condition = t => true;
+		return this.OfType<T>().Where(condition);
+	}
+
+	public IReferrable? GetReferrable(long key)
+	{
+		if (!ContainsKey(key))
+			return null;
+		return this[key];
+	}
+
+	/// <summary>
+	/// Finds the real version of a fake referrable.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <param name="fakeobj">The fake referrable.</param>
+	/// <returns></returns>
+	public T? GetReferrable<T>(T fakeobj)
+		where T : IReferrable
+	{
+		return (T)GetReferrable(fakeobj.ID);
+	}
+
 	public bool ContainsKey(long key)
 	{
 		return Dictionary.ContainsKey(key);

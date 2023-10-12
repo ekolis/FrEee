@@ -12,6 +12,8 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Game.Objects.Commands;
+using FrEee.Game.Objects.Events;
+using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Setup;
 using FrEee.Modding;
@@ -135,6 +137,34 @@ public class Game
 	public double CurrentTick { get; set; }
 
 	/// <summary>
+	/// Current time equals turn number plus tick minus 1.
+	/// </summary>
+	public double Timestamp => TurnNumber + CurrentTick - 1;
+
+	/// <summary>
+	/// The next tick size, for ship movement.
+	/// </summary>
+	public double NextTickSize { get; internal set; }
+
+	public void ComputeNextTickSize()
+	{
+		var objs = Galaxy.FindSpaceObjects<IMobileSpaceObject>().Where(obj => obj.Orders.Any());
+		objs = objs.Where(obj => !obj.IsMemory);
+		if (objs.Where(v => v.TimeToNextMove > 0).Any() && CurrentTick < 1.0)
+		{
+			// HACK - why are objects getting zero time to next move?!
+			var nextTickSize = objs.Where(v => v.TimeToNextMove > 0).Min(v => v.TimeToNextMove);
+			NextTickSize = Math.Min(1.0 - CurrentTick, nextTickSize);
+		}
+		else if (objs.Any())
+		{
+			NextTickSize = objs.Min(v => v.TimePerMove);
+		}
+		else
+			NextTickSize = double.PositiveInfinity;
+	}
+
+	/// <summary>
 	/// Notes that mod scripts can play with.
 	/// </summary>
 	public DynamicDictionary ScriptNotes { get; private set; } = new DynamicDictionary();
@@ -188,7 +218,24 @@ public class Game
 	{
 		get
 		{
-			return Empire.Current != null || isAbilityCacheEnabled;
+			return CurrentEmpire != null || isAbilityCacheEnabled;
+		}
+	}
+
+	/// <summary>
+	/// Events which have been warned of and are pending execution.
+	/// </summary>
+	public ICollection<Event> PendingEvents { get; private set; } = new List<Event>();
+
+	/// <summary>
+	/// Number of turns of uninterrupted galactic peace (Non-Aggression or better between all surviving empires).
+	/// </summary>
+	public int TurnsOfPeace
+	{
+		get
+		{
+			// TODO - treaties
+			return 0;
 		}
 	}
 
@@ -208,10 +255,9 @@ public class Game
 		var galaxyTemplate = Setup.GalaxyTemplate;
 		galaxyTemplate.GameSetup = Setup;
 		Galaxy galaxy = galaxyTemplate.Instantiate(status, startProgress + progressPerStep, Dice);
-		galaxy.IsSinglePlayer = Setup.IsSinglePlayer;
 		status.Message = "Populating galaxy";
 		Setup.PopulateGalaxy(galaxy, Dice);
-		galaxy.SaveTechLevelsForUniqueness();
+		SaveTechLevelsForUniqueness();
 		status.Progress += progressPerStep;
 
 		// run init script
@@ -431,10 +477,8 @@ public class Game
 	/// </summary>
 	/// <param name="gameName"></param>
 	/// <param name="turnNumber"></param>
-	public static void Load(string gameName, int turnNumber)
-	{
-		Load(gameName + "_" + turnNumber + FrEeeConstants.SaveGameExtension);
-	}
+	public static Game Load(string gameName, int turnNumber)
+		=> Load(gameName + "_" + turnNumber + FrEeeConstants.SaveGameExtension);
 
 	/// <summary>
 	/// Loads a player savegame from the Savegame folder.
@@ -442,16 +486,14 @@ public class Game
 	/// <param name="gameName"></param>
 	/// <param name="turnNumber"></param>
 	/// <param name="playerNumber"></param>
-	public static void Load(string gameName, int turnNumber, int playerNumber)
-	{
-		Load(gameName + "_" + turnNumber + "_" + playerNumber.ToString("d4") + FrEeeConstants.SaveGameExtension);
-	}
+	public static Game Load(string gameName, int turnNumber, int playerNumber)
+		=> Load(gameName + "_" + turnNumber + "_" + playerNumber.ToString("d4") + FrEeeConstants.SaveGameExtension);
 
 	/// <summary>
 	/// Loads from a string in memory.
 	/// </summary>
 	/// <param name="serializedData"></param>
-	public static void LoadFromString(string serializedData)
+	public static Game LoadFromString(string serializedData)
 	{
 		var game = Serializer.DeserializeFromString<Game>(serializedData);
 		//Current.SpaceObjectIDCheck("after loading from memory");
@@ -472,6 +514,8 @@ public class Game
 		}
 
 		game.PopulatePropertyValues();
+
+		return game;
 	}
 
 	/// <summary>
@@ -619,6 +663,151 @@ public class Game
 	/// </summary>
 	public static string RootDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
 
+	/// <summary>
+	/// Saves all empires' tech levels in the other empires for uniqueness calculations.
+	/// </summary>
+	internal void SaveTechLevelsForUniqueness()
+	{
+		if (Setup.TechnologyUniqueness != 0)
+		{
+			foreach (var emp in Empires)
+			{
+				emp.OtherPlayersTechLevels.Clear();
+				foreach (var emp2 in Empires.ExceptSingle(emp))
+				{
+					foreach (var tech in Mod.Technologies)
+					{
+						if (emp.OtherPlayersTechLevels[tech] == null)
+							emp.OtherPlayersTechLevels[tech] = new List<int>();
+						emp.OtherPlayersTechLevels[tech].Add(emp2.ResearchedTechnologies[tech]);
+					}
+				}
+			}
+		}
+	}
+
+	/// <summary>
+	/// Disables the server side ability cache.
+	/// </summary>
+	public void DisableAbilityCache()
+	{
+		isAbilityCacheEnabled = false;
+		AbilityCache.Clear();
+		CommonAbilityCache.Clear();
+		SharedAbilityCache.Clear();
+	}
+
+	/// <summary>
+	/// Enables the server side ability cache.
+	/// </summary>
+	public void EnableAbilityCache()
+	{
+		isAbilityCacheEnabled = true;
+	}
+
+	/// <summary>
+	/// Loads player commands into the current game state.
+	/// If this is the host view, commands will be loaded for all players.
+	/// If this is the player view, commands will be immediately executed so as to provide the player with a fresh game state.
+	/// </summary>
+	/// <returns>Player empires which did not submit commands and are not defeated.</returns>
+	public IEnumerable<Empire> LoadCommands()
+	{
+		// whose commands are we loading?
+		var emps = new List<Empire>();
+		if (CurrentEmpire == null)
+			emps.AddRange(Empires);
+		else
+			emps.Add(CurrentEmpire);
+
+		var noCmds = new List<Empire>();
+
+		foreach (var emp in emps)
+		{
+			var plrfile = GetEmpireCommandsSavePath(emp);
+			if (File.Exists(plrfile))
+			{
+				var fs = new FileStream(plrfile, FileMode.Open);
+				var cmds = DeserializeCommands(fs);
+				LoadCommands(emp, cmds);
+				fs.Close(); fs.Dispose();
+			}
+			else if (emp.IsPlayerEmpire)
+				noCmds.Add(emp);
+		}
+
+		if (CurrentEmpire != null)
+		{
+			foreach (var cmd in CurrentEmpire.Commands)
+			{
+				if (cmd.Executor == null)
+					CurrentEmpire.Log.Add(CurrentEmpire.CreateLogMessage($"{cmd} cannot be issued because its executor does not exist. Probably a bug...", LogMessageType.Error));
+				else if (cmd.Issuer != cmd.Executor.Owner && cmd.Issuer != cmd.Executor)
+					CurrentEmpire.Log.Add(CurrentEmpire.CreateLogMessage("We cannot issue commands to " + cmd.Executor + " because it does not belong to us!", LogMessageType.Error));
+				else
+					cmd.Execute();
+			}
+		}
+
+		return noCmds;
+	}
+
+	/// <summary>
+	/// Deserializes the player's commands.
+	/// </summary>
+	/// <param name="stream"></param>
+	/// <returns></returns>
+	private static IList<ICommand> DeserializeCommands(Stream stream)
+	{
+		var cmds = Serializer.Deserialize<IList<ICommand>>(stream);
+
+		// check for client safety
+		foreach (var cmd in cmds.Where(cmd => cmd != null))
+		{
+			cmd.CheckForClientSafety();
+		}
+
+		return cmds;
+	}
+
+	internal void LoadCommands(Empire emp, IList<ICommand> cmds)
+	{
+		cmds = cmds.Where(cmd => cmd != null).Distinct().ToList(); // HACK - why would we have null/duplicate commands in a plr file?!
+		emp.Commands.Clear();
+		var idmap = new Dictionary<long, long>();
+		foreach (var cmd in cmds)
+		{
+			if (cmd.NewReferrables.Any(r => r.IsDisposed))
+			{
+				emp.Log.Add(new GenericLogMessage("Command \"" + cmd + "\" contained a reference to deleted object \"" + cmd.NewReferrables.First(r => r.IsDisposed) + "\" and will be ignored. This may be a game bug."));
+				continue;
+			}
+			emp.Commands.Add(cmd);
+			foreach (var r in cmd.NewReferrables)
+			{
+				var clientid = r.ID;
+				var serverid = ReferrableRepository.AssignID(r);
+				if (idmap.ContainsKey(clientid))
+				{
+					if (idmap[clientid] != serverid)
+						throw new InvalidOperationException($"Adding {r} with ID {serverid} to client ID {clientid} for {emp} when that client ID is already mapped to server ID {idmap[clientid]}.");
+					// else do nothing
+				}
+				else
+					idmap.Add(clientid, serverid);
+			}
+		}
+		foreach (var cmd in cmds)
+			cmd.ReplaceClientIDs(idmap); // convert client IDs to server IDs
+	}
+
+	public override string ToString()
+	{
+		if (CurrentEmpire is null)
+			return Name;
+		return Name + " - " + CurrentEmpire.Name + " - " + CurrentEmpire.LeaderName + " - " + Stardate;
+	}
+
 	#region move this to an AbilityManager or something
 	private bool isAbilityCacheEnabled;
 
@@ -640,7 +829,6 @@ public class Game
 	[DoNotSerialize]
 	internal SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>> CommonAbilityCache { get; private set; }
 	#endregion
-
 
 	#region move this to a TreatyManager or something
 	/// <summary>
