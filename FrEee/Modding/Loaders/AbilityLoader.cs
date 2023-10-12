@@ -1,12 +1,13 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Abilities;
+using FrEee.Interfaces;
+using FrEee.Objects.Abilities;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 
 namespace FrEee.Modding.Loaders
 {
 	public static class AbilityLoader
-	{
+	{ 
 		/// <summary>
 		/// Loads abilities from a record.
 		/// </summary>
@@ -30,9 +31,9 @@ namespace FrEee.Modding.Loaders
 					break; // no more abilities
 				var abilname = nfield.CreateFormula<string>(abil).Value;
 
-				lock (Mod.Current.AbilityRules)
+				lock (The.Mod.AbilityRules)
 				{
-					var rules = Mod.Current.AbilityRules.Where(r => r.Matches(abilname)).ToArray();
+					var rules = The.Game.Mod.AbilityRules.Where(r => r.Matches(abilname)).ToArray();
 					if (rules.Count() > 1)
 					{
 						Mod.Errors.Add(new DataParsingException("Ambiguous ability name match for " + abilname + " alias between the following abilities: " + string.Join(", ", rules.Select(r => r.Name).ToArray()) + ".", filename, rec));
@@ -42,7 +43,7 @@ namespace FrEee.Modding.Loaders
 					{
 						// create an ad hoc ability rule
 						abil.Rule = new AbilityRule { Name = abilname };
-						Mod.Current.AbilityRules.Add(abil.Rule);
+						The.Game.Mod.AbilityRules.Add(abil.Rule);
 					}
 					else
 						abil.Rule = rules.Single();
@@ -95,7 +96,7 @@ namespace FrEee.Modding.Loaders
 				if (nameField == null)
 					break; // no more abilities
 
-				abilRule = Mod.Current.FindAbilityRule(nameField.Value);
+				abilRule = The.Game.Mod.FindAbilityRule(nameField.Value);
 
 				int vcount = 0;
 				while (true)

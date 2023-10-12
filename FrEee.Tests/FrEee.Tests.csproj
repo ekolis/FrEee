@@ -17,4 +17,7 @@
 		<PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Savegame\" />
+	</ItemGroup>
 </Project>

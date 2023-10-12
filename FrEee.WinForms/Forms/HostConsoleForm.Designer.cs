@@ -115,7 +115,7 @@
             // empireStatusBindingSource
             // 
             this.empireStatusBindingSource.AllowNew = false;
-            this.empireStatusBindingSource.DataSource = typeof(FrEee.Game.Objects.Civilization.EmpireStatus);
+            this.empireStatusBindingSource.DataSource = typeof(FrEee.Objects.Civilization.EmpireStatus);
             // 
             // btnClose
             // 

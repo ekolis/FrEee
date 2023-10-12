@@ -9,16 +9,16 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using FrEee.Game.Enumerations;
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Combat;
-using FrEee.Game.Objects.Combat.Grid;
-using FrEee.Game.Objects.Commands;
-using FrEee.Game.Objects.LogMessages;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Technology;
-using FrEee.Game.Objects.Vehicles;
+using FrEee.Enumerations;
+using FrEee.Interfaces;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Combat;
+using FrEee.Objects.Combat.Grid;
+using FrEee.Objects.Commands;
+using FrEee.Objects.LogMessages;
+using FrEee.Objects.Space;
+using FrEee.Objects.Technology;
+using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 
@@ -301,7 +301,7 @@ namespace FrEee.Utility.Extensions
 		{
 			if (Empire.Current == null)
 			{
-				foreach (var emp in Galaxy.Current.Empires)
+				foreach (var emp in The.Game.Empires)
 				{
 					if (obj.CheckVisibility(emp) >= Visibility.Visible)
 					{
@@ -368,10 +368,10 @@ namespace FrEee.Utility.Extensions
 				}
 				didStuff = true;
 			}
-			if (Galaxy.Current.NextTickSize == double.PositiveInfinity)
+			if (The.Game.NextTickSize == double.PositiveInfinity)
 				o.TimeToNextMove = 0;
 			else
-				o.TimeToNextMove -= Galaxy.Current.NextTickSize;
+				o.TimeToNextMove -= The.Game.NextTickSize;
 			return didStuff;
 		}
 
@@ -395,7 +395,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static ICargoContainer FindContainer(this IUnit unit)
 		{
-			var containers = Galaxy.Current.FindSpaceObjects<ICargoContainer>().Where(cc => !(cc is Fleet) && cc.Cargo != null && cc.Cargo.Units.Contains(unit));
+			var containers = The.Galaxy.FindSpaceObjects<ICargoContainer>().Where(cc => !(cc is Fleet) && cc.Cargo != null && cc.Cargo.Units.Contains(unit));
 			if (!containers.Any())
 			{
 				if (unit is IMobileSpaceObject)
@@ -444,7 +444,7 @@ namespace FrEee.Utility.Extensions
 
 			// look for the real object
 			if (emp.Memory.Any(kvp => kvp.Value == f))
-				return (IFoggable)Galaxy.Current.referrables[emp.Memory.Single(kvp => kvp.Value == f).Key];
+				return (IFoggable)The.ReferrableRepository[emp.Memory.Single(kvp => kvp.Value == f).Key];
 
 			// nothing found?
 			return null;
@@ -498,12 +498,12 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static StarSystem FindStarSystem(this ISpaceObject sobj)
 		{
-			var loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.Contains(sobj));
+			var loc = The.Galaxy.StarSystemLocations.SingleOrDefault(l => l.Item.Contains(sobj));
 			/*if (loc == null)
 			{
 				// search memories too
 				// TODO - this might be kind of slow; might want a reverse memory lookup
-				loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.FindSpaceObjects<ISpaceObject>().Any(s => Galaxy.Current.Empires.ExceptSingle(null).Any(e => e.Memory[s.ID] == sobj)));
+				loc = The.Galaxy.StarSystemLocations.SingleOrDefault(l => l.Item.FindSpaceObjects<ISpaceObject>().Any(s => The.Game.Empires.ExceptSingle(null).Any(e => e.Memory[s.ID] == sobj)));
 			}*/
 			if (loc == null)
 				return null;
@@ -785,7 +785,7 @@ namespace FrEee.Utility.Extensions
 		public static void LogAIMessage(this Empire empire, string message)
 		{
 			var sw = new StreamWriter($"{empire.AI.Name}.log", true);
-			sw.WriteLine($"{DateTime.UtcNow} ({Galaxy.Current.Name}-{empire.ID}):{message}");
+			sw.WriteLine($"{DateTime.UtcNow} ({The.Game.Name}-{empire.ID}):{message}");
 			sw.Close();
 		}
 
@@ -851,7 +851,7 @@ namespace FrEee.Utility.Extensions
 		{
 			if (!f.IsMemory)
 				return null;
-			return Galaxy.Current.Empires.ExceptSingle(null).SingleOrDefault(x => x.Memory.Values.Contains(f));
+			return The.Game.Empires.ExceptSingle(null).SingleOrDefault(x => x.Memory.Values.Contains(f));
 		}
 
 		public static ILookup<TKey, TValue> MyLookup<TKey, TEnumerable, TValue>(this IEnumerable<KeyValuePair<TKey, TEnumerable>> dict)
@@ -1118,7 +1118,7 @@ namespace FrEee.Utility.Extensions
 		public static void ReassignID(this IReferrable r)
 		{
 			r.ID = 0;
-			Galaxy.Current.AssignID(r);
+			The.ReferrableRepository.AssignID(r);
 		}
 
 		public static TRef Refer<TRef, T>(this T t) where TRef : IReference<T>
@@ -1459,7 +1459,7 @@ namespace FrEee.Utility.Extensions
 				var amount = abil.Value1.ToInt();
 
 				if (resource.HasValue)
-					amount = Galaxy.Current.StandardMiningModel.GetRate(amount, o.ResourceValue[resource], pcts[resource] / 100d);
+					amount = The.Game.Setup.StandardMiningModel.GetRate(amount, o.ResourceValue[resource], pcts[resource] / 100d);
 
 				income.Add(resource, amount);
 			}
@@ -1782,7 +1782,7 @@ namespace FrEee.Utility.Extensions
 		{
 			if (Empire.Current == null)
 			{
-				foreach (var emp in Galaxy.Current.Empires)
+				foreach (var emp in The.Game.Empires)
 				{
 					var sys = (obj as ILocated)?.StarSystem;
 					if (obj.CheckVisibility(emp) >= Visibility.Visible)

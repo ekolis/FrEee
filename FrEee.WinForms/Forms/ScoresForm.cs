@@ -1,5 +1,5 @@
-﻿using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
+﻿using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.DataGridView;
 using System;
@@ -19,11 +19,11 @@ namespace FrEee.WinForms.Forms
 		private void ScoresForm_Load(object sender, EventArgs e)
 		{
 			// show graph
-			foreach (var emp in Galaxy.Current.Empires.ExceptSingle(null))
+			foreach (var emp in The.Game.Empires.ExceptSingle(null))
 			{
 				var dps = new List<double>();
 				int s = 0;
-				for (var i = 0; i <= Galaxy.Current.TurnNumber; i++)
+				for (var i = 0; i <= The.Game.TurnNumber; i++)
 				{
 					if (emp.Scores[i] == null)
 						dps.Add(s); // carry over score from previous turn
@@ -46,7 +46,7 @@ namespace FrEee.WinForms.Forms
 			grid.CurrentGridConfig.Columns.Add(new GridColumnConfig("Icon", "Insignia", typeof(DataGridViewImageColumn), Color.White));
 			grid.CurrentGridConfig.Columns.Add(new GridColumnConfig("Name", "Empire", typeof(DataGridViewTextBoxColumn), Color.White));
 			grid.CurrentGridConfig.Columns.Add(new GridColumnConfig("Score", "Score", typeof(DataGridViewTextBoxColumn), Color.White, DataGridView.Format.UnitsBForBillions, DataGridView.Sort.Descending));
-			grid.Data = Galaxy.Current.Empires;
+			grid.Data = The.Game.Empires;
 			grid.Initialize();
 		}
 	}

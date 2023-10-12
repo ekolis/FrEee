@@ -1,9 +1,9 @@
-using FrEee.Game.Enumerations;
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Commands;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Technology;
+using FrEee.Enumerations;
+using FrEee.Interfaces;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Commands;
+using FrEee.Objects.Space;
+using FrEee.Objects.Technology;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
@@ -29,7 +29,7 @@ namespace FrEee.WinForms.Forms
 
 		private void BindDesignList()
 		{
-			var emp = Galaxy.Current.CurrentEmpire;
+			var emp = The.Game.CurrentEmpire;
 			IEnumerable<IDesign> designs = emp.KnownDesigns.OrderBy(d => d.Role).ThenBy(d => d.Name).ThenBy(d => d.Iteration);
 
 			// filter by vehicle type
@@ -131,7 +131,7 @@ namespace FrEee.WinForms.Forms
 				}
 				else
 				{
-					if (d.TurnNumber < Galaxy.Current.TurnNumber)
+					if (d.TurnNumber < The.Game.TurnNumber)
 					{
 						// TODO - let player edit old designs only if they have never been added to a queue (like in SE4)?
 						MessageBox.Show("You cannot edit a design that was created on a prior turn.");
@@ -215,7 +215,7 @@ namespace FrEee.WinForms.Forms
 		/// <returns></returns>
 		private bool BuildingAnywhere(IConstructionTemplate t)
 		{
-			return Galaxy.Current.FindSpaceObjects<IConstructor>().OwnedBy(Empire.Current).Any(o => o.ConstructionQueue != null && o.ConstructionQueue.Orders.Any(o2 => o2.Template == t));
+			return The.Galaxy.FindSpaceObjects<IConstructor>().OwnedBy(Empire.Current).Any(o => o.ConstructionQueue != null && o.ConstructionQueue.Orders.Any(o2 => o2.Template == t));
 		}
 
 		private void chkForeign_CheckedChanged(object sender, EventArgs e)
@@ -231,7 +231,7 @@ namespace FrEee.WinForms.Forms
 		private IDesign CopyDesign(IDesign old)
 		{
 			var copy = old.CopyAndAssignNewID();
-			copy.TurnNumber = Galaxy.Current.TurnNumber;
+			copy.TurnNumber = The.Game.TurnNumber;
 			copy.Owner = Empire.Current;
 			copy.Iteration++;
 			copy.VehiclesBuilt = 0;

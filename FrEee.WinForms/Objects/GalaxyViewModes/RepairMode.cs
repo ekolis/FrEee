@@ -1,6 +1,6 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
+﻿using FrEee.Interfaces;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
 using FrEee.Utility.Extensions;
 using System.Drawing;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace FrEee.WinForms.Objects.GalaxyViewModes
 
 		protected override Color GetColor(StarSystem sys)
 		{
-			var max = Galaxy.Current.StarSystemLocations.Max(l => GetRepair(l.Item));
+			var max = The.Galaxy.StarSystemLocations.Max(l => GetRepair(l.Item));
 			if (max == 0)
 				return Color.Black;
 			var sat = Weight(GetRepair(sys), max);

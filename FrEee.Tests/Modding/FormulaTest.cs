@@ -1,8 +1,8 @@
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Combat;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Technology;
-using FrEee.Game.Objects.Vehicles;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Combat;
+using FrEee.Objects.Space;
+using FrEee.Objects.Technology;
+using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using NUnit.Framework;
@@ -41,7 +41,7 @@ namespace FrEee.Tests.Modding
 			Mod.Current.Hulls.Add(hull);
 
 			var design = new Design<Ship>();
-			Galaxy.Current.AssignID(design);
+			The.ReferrableRepository.AssignID(design);
 			var mct = new MountedComponentTemplate(design, armor, mount);
 			design.Hull = hull;
 			design.Components.Add(mct);

@@ -1,5 +1,5 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Space;
+using FrEee.Interfaces;
+using FrEee.Objects.Space;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -26,7 +26,7 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static GalaxyReference<T> GetGalaxyReference(long id)
 		{
-			if (Galaxy.Current.referrables.ContainsKey(id))
+			if (The.Game.ReferrableRepository.ContainsKey(id))
 				return new GalaxyReference<T>(id);
 
 			return null; 
@@ -43,20 +43,20 @@ namespace FrEee.Utility
 			if (t is IReferrable)
 			{
 				var r = (IReferrable)t;
-				if (Galaxy.Current == null)
+				if (The.Game == null)
 					throw new ReferenceException<int, T>("Can't create a reference to an IReferrable without a galaxy.");
 				else if (t == null)
 					ID = 0;
 				else if (r.ID > 0)
 					ID = r.ID;
 				else
-					ID = Galaxy.Current.AssignID(r);
+					ID = The.ReferrableRepository.AssignID(r);
 				if (!HasValue)
 				{
-					Galaxy.Current.referrables[r.ID] = r;
+					The.ReferrableRepository.AssignID(r, r.ID);
 					cache = null; // reset cache
 					if (!HasValue)
-						throw new ArgumentException("{0} does not exist in the current galaxy so it cannot be referenced.".F(t));
+						throw new ArgumentException("{0} does not exist in the current game so it cannot be referenced.".F(t));
 				}
 			}
 			else
@@ -68,11 +68,11 @@ namespace FrEee.Utility
 		public GalaxyReference(long id)
 			: this()
 		{
-			if (Galaxy.Current == null)
+			if (The.Game == null)
 				throw new ReferenceException<int, T>("Can't create a reference to an IReferrable without a galaxy.");
-			else if (!Galaxy.Current.referrables.ContainsKey(id))
+			else if (!The.ReferrableRepository.ContainsKey(id))
 				throw new IndexOutOfRangeException($"The id of {id} is not currently a valid reference"); 
-			else if (Galaxy.Current.referrables[id] is T)
+			else if (The.ReferrableRepository[id] is T)
 				ID = id;
 			else
 				throw new Exception("Object with ID " + id + " is not a " + typeof(T) + ".");
@@ -84,7 +84,7 @@ namespace FrEee.Utility
 			{
 				if (ID <= 0)
 					return value;
-				var obj = (T)Galaxy.Current.GetReferrable(ID);
+				var obj = (T)The.Game.GetReferrable(ID);
 				if (obj == null)
 					return default(T);
 				/*if (obj is IReferrable && (obj as IReferrable).IsDisposed)

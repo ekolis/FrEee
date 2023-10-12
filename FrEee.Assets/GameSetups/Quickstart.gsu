@@ -175,9 +175,9 @@ p32:
 	StartingResources:
 		:20000;
 	VictoryConditions:
-		System.Collections.Generic.List`1[[FrEee.Game.Interfaces.IVictoryCondition, FrEee.Core]], System.Private.CoreLib:
+		System.Collections.Generic.List`1[[FrEee.Interfaces.IVictoryCondition, FrEee.Core]], System.Private.CoreLib:
 		c1:		
-			FrEee.Game.Objects.VictoryConditions.TotalEliminationVictoryCondition, FrEee.Core:
+			FrEee.Objects.VictoryConditions.TotalEliminationVictoryCondition, FrEee.Core:
 			p0:
 			;
 		;

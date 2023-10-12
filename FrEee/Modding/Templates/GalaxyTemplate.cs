@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Setup;
+using FrEee.Interfaces;
+using FrEee.Objects.Space;
+using FrEee.Setup;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
@@ -95,20 +95,11 @@ namespace FrEee.Modding.Templates
 
 		/// <param name="status">A status object to report status back to the GUI.</param>
 		/// <param name="desiredProgress">How much progress should we report back to the GUI when we're done initializing the galaxy? 1.0 means all done with everything that needs to be done.</param>
-		public Galaxy Instantiate(Status? status, double desiredProgress, PRNG dice)
+		public Galaxy Instantiate(Game game, Status? status, double desiredProgress, PRNG dice)
 		{
-			var gal = new Galaxy();
+			var gal = new Galaxy(game);
 			gal.Width = GameSetup.GalaxySize.Width;
 			gal.Height = GameSetup.GalaxySize.Height;
-			gal.MinPlanetValue = GameSetup.MinPlanetValue;
-			gal.MinSpawnedPlanetValue = GameSetup.MinSpawnedPlanetValue;
-			gal.MaxSpawnedPlanetValue = GameSetup.MaxSpawnedPlanetValue;
-			gal.MaxPlanetValue = GameSetup.MaxPlanetValue;
-			gal.MinAsteroidValue = GameSetup.MinAsteroidValue;
-			gal.MinSpawnedAsteroidValue = GameSetup.MinSpawnedAsteroidValue;
-			gal.MaxSpawnedAsteroidValue = GameSetup.MaxSpawnedAsteroidValue;
-			gal.EventFrequency = GameSetup.EventFrequency;
-			gal.MaximumEventSeverity = GameSetup.MaximumEventSeverity;
 			var bounds = new Rectangle(-GameSetup.GalaxySize.Width / 2, -GameSetup.GalaxySize.Height / 2, GameSetup.GalaxySize.Width, GameSetup.GalaxySize.Height);
 
 			var unusedNames = new List<string>(Mod.Current.StarSystemNames);
@@ -194,7 +185,7 @@ namespace FrEee.Modding.Templates
 						if (IntersectsExceptAtEnds(l1.Location, l2.Location, graph))
 							continue;
 						var dist = l1.Location.ManhattanDistance(l2.Location);
-						if (dist < bestDistance && AreWarpPointAnglesOk(l1, l2, Galaxy.Current, MinWarpPointAngle))
+						if (dist < bestDistance && AreWarpPointAnglesOk(l1, l2, The.Galaxy, MinWarpPointAngle))
 						{
 							bestDistance = dist;
 							best = (l1, l2);
@@ -215,7 +206,7 @@ namespace FrEee.Modding.Templates
 							if (graph.AreDirectlyConnected(l1, l2))
 								continue;
 							var dist = l1.Location.ManhattanDistance(l2.Location);
-							if (dist < bestDistance && AreWarpPointAnglesOk(l1, l2, Galaxy.Current, MinWarpPointAngle))
+							if (dist < bestDistance && AreWarpPointAnglesOk(l1, l2, The.Galaxy, MinWarpPointAngle))
 							{
 								bestDistance = dist;
 								best = (l1, l2);

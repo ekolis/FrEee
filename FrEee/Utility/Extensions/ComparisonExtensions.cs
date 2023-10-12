@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Objects.Space;
+﻿using FrEee.Objects.Space;
 using FrEee.Modding.Interfaces;
 using System;
 using System.Globalization;
@@ -91,12 +91,12 @@ namespace FrEee.Utility.Extensions
 		/// <returns>The description.</returns>
 		public static string GetMemoryAgeDescription(this double timestamp)
 		{
-			if (timestamp == Galaxy.Current.Timestamp)
+			if (timestamp == The.Game.Timestamp)
 				return "Current";
-			else if (Galaxy.Current.Timestamp - timestamp <= 1)
+			else if (The.Game.Timestamp - timestamp <= 1)
 				return "Memory from last turn";
 			else
-				return $"Memory from {Math.Ceiling(Galaxy.Current.Timestamp - timestamp)} turns ago";
+				return $"Memory from {Math.Ceiling(The.Game.Timestamp - timestamp)} turns ago";
 		}
 	}
 }

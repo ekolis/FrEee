@@ -1,7 +1,7 @@
-﻿using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Technology;
-using FrEee.Game.Objects.Vehicles;
+﻿using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
+using FrEee.Objects.Technology;
+using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility.Extensions;
@@ -29,7 +29,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			new Galaxy();
 			Mod.Load(null);
 			sys = new StarSystem(0);
-			Galaxy.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(sys, new Point()));
+			The.Galaxy.StarSystemLocations.Add(new ObjectLocation<StarSystem>(sys, new Point()));
 
 			// initialize empires
 			empire = new Empire();

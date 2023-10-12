@@ -1,13 +1,13 @@
-using FrEee.Game.Enumerations;
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Civilization.Diplomacy;
-using FrEee.Game.Objects.Commands;
-using FrEee.Game.Objects.Orders;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Technology;
-using FrEee.Game.Objects.Vehicles;
-using FrEee.Game.Processes;
+using FrEee.Enumerations;
+using FrEee.Interfaces;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Civilization.Diplomacy;
+using FrEee.Objects.Commands;
+using FrEee.Objects.Orders;
+using FrEee.Objects.Space;
+using FrEee.Objects.Technology;
+using FrEee.Objects.Vehicles;
+using FrEee.Processes;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Controls;
@@ -358,7 +358,7 @@ namespace FrEee.WinForms.Forms
 		{
 			var todos = FindTodos();
 
-			if (Galaxy.Current.IsSinglePlayer && !hostView)
+			if (The.Game.IsSinglePlayer && !hostView)
 			{
 				var msg = !todos.Any() ? "Process turn after saving your commands?" : "Process turn after saving your commands? You have:\n\n" + string.Join("\n", todos.ToArray());
 				var result = MessageBox.Show(msg, "FrEee", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
@@ -367,7 +367,7 @@ namespace FrEee.WinForms.Forms
 					SaveCommands(true);
 
 					// show empire log if there's anything new there
-					if (Empire.Current.Log.Any(m => m.TurnNumber == Galaxy.Current.TurnNumber))
+					if (Empire.Current.Log.Any(m => m.TurnNumber == The.Game.TurnNumber))
 						this.ShowChildForm(new LogForm(this, Empire.Current.Log));
 				}
 				else if (result == DialogResult.No)
@@ -561,7 +561,7 @@ namespace FrEee.WinForms.Forms
 			switch (mode)
 			{
 				case CommandMode.None:
-					Text = "FrEee - " + Galaxy.Current;
+					Text = "FrEee - " + The.Game;
 					break;
 
 				case CommandMode.Move:
@@ -660,7 +660,7 @@ namespace FrEee.WinForms.Forms
 
 		private MusicMood FindMusicMood()
 		{
-			var emps = Galaxy.Current.Empires.ExceptSingle(Empire.Current).ExceptSingle(null);
+			var emps = The.Game.Empires.ExceptSingle(Empire.Current).ExceptSingle(null);
 			if (Empire.Current == null)
 				return MusicMood.Peaceful; // we are the host
 			else
@@ -759,7 +759,7 @@ namespace FrEee.WinForms.Forms
 				todos.Add(unallocatedPct.ToString("0%") + " unallocated research");
 
 			var messages = Empire.Current.IncomingMessages.OfType<ProposalMessage>().Count(m =>
-				m.TurnNumber >= Galaxy.Current.TurnNumber - 1 &&
+				m.TurnNumber >= The.Game.TurnNumber - 1 &&
 				!Empire.Current.Commands.OfType<SendMessageCommand>().Where(c => c.Message.InReplyTo == m).Any() &&
 				!Empire.Current.Commands.OfType<DeleteMessageCommand>().Where(c => c.Message == m).Any());
 			if (messages == 1)
@@ -808,7 +808,7 @@ namespace FrEee.WinForms.Forms
 				switch (MessageBox.Show(msg, "FrEee", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
 				{
 					case DialogResult.Yes:
-						SaveCommands(!Galaxy.Current.IsSinglePlayer || hostView);
+						SaveCommands(!The.Game.IsSinglePlayer || hostView);
 						break;
 
 					case DialogResult.No:
@@ -1065,7 +1065,7 @@ namespace FrEee.WinForms.Forms
 			}
 
 			// show empire log if there's anything new there
-			if (Empire.Current.Log.Any(m => m.TurnNumber == Galaxy.Current.TurnNumber))
+			if (Empire.Current.Log.Any(m => m.TurnNumber == The.Game.TurnNumber))
 			{
 				var form = new LogForm(this, Empire.Current.Log);
 				form.StartPosition = FormStartPosition.CenterScreen;
@@ -1181,27 +1181,27 @@ namespace FrEee.WinForms.Forms
 
 		private void SaveCommands(bool endTurn)
 		{
-			Galaxy.Current.SaveCommands();
+			The.Game.SaveCommands();
 			if (endTurn)
 			{
-				if (Galaxy.Current.IsSinglePlayer && !hostView)
+				if (The.Game.IsSinglePlayer && !hostView)
 				{
 					Cursor = Cursors.WaitCursor;
 					Enabled = false;
-					var plrnum = Galaxy.Current.PlayerNumber;
+					var plrnum = The.Game.PlayerNumber;
 					var status = new Status { Message = "Initializing" };
 					var t = new Thread(new ThreadStart(() =>
 					{
 						status.Message = "Loading game";
-						Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber);
+						Galaxy.Load(The.Game.Name, The.Game.TurnNumber);
 						status.Progress = 0.25;
 						status.Message = "Processing turn";
 						var processor = new TurnProcessor();
-						processor.ProcessTurn(Galaxy.Current, false, status, 0.5);
+						processor.ProcessTurn(The.Game, false, status, 0.5);
 						status.Message = "Saving game";
 						Galaxy.SaveAll(status, 0.75);
 						status.Message = "Loading game";
-						Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber, plrnum);
+						Galaxy.Load(The.Game.Name, The.Game.TurnNumber, plrnum);
 						status.Progress = 1.00;
 						// no need to reload designs from library, they're already loaded
 					}));
@@ -1225,7 +1225,7 @@ namespace FrEee.WinForms.Forms
 					}
 				}
 				else if (!hostView)
-					MessageBox.Show("Please send " + Galaxy.Current.CommandFileName + " to the game host.");
+					MessageBox.Show("Please send " + The.Game.CommandFileName + " to the game host.");
 				else
 					MessageBox.Show("Commands saved for " + Empire.Current + ".");
 			}
@@ -1286,7 +1286,7 @@ namespace FrEee.WinForms.Forms
 			Music.Play(MusicMode.Strategic, FindMusicMood());
 
 			// display empire flag
-			picEmpireFlag.Image = Galaxy.Current.CurrentEmpire.Icon;
+			picEmpireFlag.Image = The.Game.CurrentEmpire.Icon;
 
 			// create homesystem tab
 			foreach (var tab in ListTabs().ToArray())
@@ -1311,7 +1311,7 @@ namespace FrEee.WinForms.Forms
 
 			// load space objects for search box
 			if (!searchBox.IsDisposed)
-				searchBox.ObjectsToSearch = Galaxy.Current.FindSpaceObjects<ISpaceObject>();
+				searchBox.ObjectsToSearch = The.Galaxy.FindSpaceObjects<ISpaceObject>();
 
 			// compute warp point connectivity
 			galaxyView.ComputeWarpPointConnectivity();
@@ -1320,11 +1320,11 @@ namespace FrEee.WinForms.Forms
 		private void SetUpResourceDisplay()
 		{
 			var income = Empire.Current.NetIncomeLessConstruction;
-			resMin.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Minerals];
+			resMin.Amount = The.Game.CurrentEmpire.StoredResources[Resource.Minerals];
 			resMin.Change = income[Resource.Minerals];
-			resOrg.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Organics];
+			resOrg.Amount = The.Game.CurrentEmpire.StoredResources[Resource.Organics];
 			resOrg.Change = income[Resource.Organics];
-			resRad.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Radioactives];
+			resRad.Amount = The.Game.CurrentEmpire.StoredResources[Resource.Radioactives];
 			resRad.Change = income[Resource.Radioactives];
 			resRes.Amount = income[Resource.Research];
 			if (Empire.Current.BonusResearch != 0)
@@ -1519,9 +1519,9 @@ namespace FrEee.WinForms.Forms
 					if (sector != null)
 					{
 						var suitablePlanets = sector.SpaceObjects.OfType<Planet>().Where(p => p.Colony == null && v.Abilities().Any(a => a.Rule.Matches("Colonize Planet - " + p.Surface)));
-						if (Galaxy.Current.CanColonizeOnlyBreathable)
+						if (The.Game.CanColonizeOnlyBreathable)
 							suitablePlanets = suitablePlanets.Where(p => p.Atmosphere == Empire.Current.PrimaryRace.NativeAtmosphere);
-						if (Galaxy.Current.CanColonizeOnlyHomeworldSurface)
+						if (The.Game.CanColonizeOnlyHomeworldSurface)
 							suitablePlanets = suitablePlanets.Where(p => p.Surface == Empire.Current.PrimaryRace.NativeSurface);
 						if (suitablePlanets.Any())
 						{

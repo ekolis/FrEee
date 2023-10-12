@@ -1,6 +1,6 @@
-﻿using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Vehicles;
+﻿using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
+using FrEee.Objects.Vehicles;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -20,7 +20,7 @@ namespace FrEee.WinForms.Objects.GalaxyViewModes
 
 		protected override int GetAlpha(StarSystem sys)
 		{
-			var forces = Galaxy.Current.StarSystemLocations.Select(l => new { System = l.Item, Vehicles = l.Item.FindSpaceObjects<SpaceVehicle>() });
+			var forces = The.Galaxy.StarSystemLocations.Select(l => new { System = l.Item, Vehicles = l.Item.FindSpaceObjects<SpaceVehicle>() });
 			var maxTonnage = forces.Max(f => f.Vehicles.Sum(v => v.Design.Hull.Size));
 			var vehicles = sys.FindSpaceObjects<SpaceVehicle>().ToArray();
 			var tonnageHere = vehicles.Sum(v => v.Design.Hull.Size);

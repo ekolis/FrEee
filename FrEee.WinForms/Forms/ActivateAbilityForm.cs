@@ -1,9 +1,9 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Abilities;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Commands;
-using FrEee.Game.Objects.Orders;
-using FrEee.Game.Objects.Space;
+using FrEee.Interfaces;
+using FrEee.Objects.Abilities;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Commands;
+using FrEee.Objects.Orders;
+using FrEee.Objects.Space;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using System;
@@ -86,7 +86,7 @@ namespace FrEee.WinForms.Forms
 					{
 						// find systems in range
 						needsTarget = true;
-						targets = Galaxy.Current.StarSystemLocations.Where(l => sobj.StarSystem != l.Item && sobj.StarSystem.Coordinates.EightWayDistance(l.Location) <= abil.Value1.ToInt()).Select(l => l.Item);
+						targets = The.Galaxy.StarSystemLocations.Where(l => sobj.StarSystem != l.Item && sobj.StarSystem.Coordinates.EightWayDistance(l.Location) <= abil.Value1.ToInt()).Select(l => l.Item);
 						targetType = "star systems within {0} light-years".F(abil.Value1);
 					}
 					else if (abil.Rule.Matches("Close Warp Point"))

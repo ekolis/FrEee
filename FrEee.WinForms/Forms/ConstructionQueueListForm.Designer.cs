@@ -226,7 +226,7 @@
 			// constructionQueueBindingSource
 			// 
 			this.constructionQueueBindingSource.AllowNew = false;
-			this.constructionQueueBindingSource.DataSource = typeof(FrEee.Game.Objects.Civilization.ConstructionQueue);
+			this.constructionQueueBindingSource.DataSource = typeof(FrEee.Objects.Civilization.ConstructionQueue);
 			// 
 			// dataGridViewTextBoxColumn1
 			// 

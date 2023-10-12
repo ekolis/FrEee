@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms
+namespace FrEee.WinForms.Forms
 {
 	partial class GameSetupForm
 	{
@@ -582,7 +582,7 @@
 			// 
 			// warpPointPlacementStrategyBindingSource
 			// 
-			this.warpPointPlacementStrategyBindingSource.DataSource = typeof(FrEee.Game.Setup.WarpPointPlacementStrategies.WarpPointPlacementStrategy);
+			this.warpPointPlacementStrategyBindingSource.DataSource = typeof(FrEee.Setup.WarpPointPlacementStrategies.WarpPointPlacementStrategy);
 			// 
 			// label3
 			// 

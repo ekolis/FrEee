@@ -1,5 +1,5 @@
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Technology;
+using FrEee.Interfaces;
+using FrEee.Objects.Technology;
 using System;
 using System.Collections;
 using System.Collections.Generic;

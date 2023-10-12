@@ -1,8 +1,8 @@
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Orders;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Vehicles;
+using FrEee.Interfaces;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Orders;
+using FrEee.Objects.Space;
+using FrEee.Objects.Vehicles;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.DataGridView;
@@ -109,7 +109,7 @@ namespace FrEee.WinForms.Forms
 		private void grid_RowEnter(object sender, DataGridViewCellEventArgs e)
 		{
 			var planet = (Planet)grid.SelectedItem;
-			foreach (var sys in Galaxy.Current.CurrentEmpire.ExploredStarSystems)
+			foreach (var sys in The.Game.CurrentEmpire.ExploredStarSystems)
 			{
 				if (sys.FindSpaceObjects<Planet>().Any(p => p == planet))
 				{
@@ -132,7 +132,7 @@ namespace FrEee.WinForms.Forms
 
 		private void PlanetListForm_Load(object sender, EventArgs e)
 		{
-			if (Galaxy.Current == null)
+			if (The.Game == null)
 				return;
 
 			// show planet counts
@@ -155,7 +155,7 @@ namespace FrEee.WinForms.Forms
 			txtBreathableOther.Text = uncolonized.Where(p => otherAtmospheres.Contains(p.Atmosphere)).Count().ToString();
 
 			// show colony ship counts
-			colonizers = Galaxy.Current.FindSpaceObjects<SpaceVehicle>(v =>
+			colonizers = The.Galaxy.FindSpaceObjects<SpaceVehicle>(v =>
 				v.Owner == Empire.Current &&
 				(
 					v.Abilities().Any(a => a.Rule.Name.StartsWith("Colonize Planet - "))

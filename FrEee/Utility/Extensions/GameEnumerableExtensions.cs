@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Abilities;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
+using FrEee.Interfaces;
+using FrEee.Objects.Abilities;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 

@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Objects.Space;
+﻿using FrEee.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using NUnit.Framework;
@@ -102,7 +102,7 @@ namespace FrEee.Tests.Utility
 		//public void SimpleDataGameState()
 		//{
 		//	Galaxy.Load("freeefurball_1.gam");
-		//	var gal = Galaxy.Current;
+		//	var gal = The.Game;
 		//	var simple = new SimpleDataObject(gal);
 		//	var sandbox = BuildSandbox();
 		//	simple.Context.KnownObjects.Clear();

@@ -1,6 +1,6 @@
-﻿using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Technology;
+﻿using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
+using FrEee.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Utility.Extensions;
 using NUnit.Framework;

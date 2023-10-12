@@ -1,6 +1,6 @@
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Vehicles;
-using FrEee.Game.Setup;
+using FrEee.Objects.Space;
+using FrEee.Objects.Vehicles;
+using FrEee.Setup;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
@@ -92,11 +92,11 @@ namespace FrEee.WinForms.Forms
 						}
 
 						status.Message = "Setting up galaxy";
-						Galaxy.Initialize(setup, null, status, 1.0);
-						var name = Galaxy.Current.Name;
-						var turn = Galaxy.Current.TurnNumber;
+						Game.Start(Mod.Current, setup, null, status, 1.0);
+						var name = The.Game.Name;
+						var turn = The.Game.TurnNumber;
 						status.Message = "Loading game";
-						Galaxy.Load(name + "_" + turn + "_0001.gam");
+						The.Game = Game.Load(name + "_" + turn + "_0001.gam");
 					}
 				}
 #if RELEASE
@@ -142,7 +142,7 @@ namespace FrEee.WinForms.Forms
 			Cursor = Cursors.WaitCursor;
 			var plrfile = Path.GetFileNameWithoutExtension(filename) + ".plr";
 			Galaxy.Load(filename);
-			if (Galaxy.Current.CurrentEmpire == null)
+			if (The.Game.CurrentEmpire == null)
 			{
 				// host view, load host console
 				Cursor = Cursors.WaitCursor;
@@ -160,7 +160,7 @@ namespace FrEee.WinForms.Forms
 					if (loadPlr == null)
 						loadPlr = MessageBox.Show("Player commands file exists for this turn. Resume turn from where you left off?", "Resume Turn", MessageBoxButtons.YesNo) == DialogResult.Yes;
 					if (loadPlr.Value)
-						Galaxy.Current.LoadCommands();
+						The.Game.LoadCommands();
 				}
 
 				// load library designs

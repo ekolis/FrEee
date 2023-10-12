@@ -1,8 +1,8 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Combat;
-using FrEee.Game.Objects.LogMessages;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Technology;
+﻿using FrEee.Interfaces;
+using FrEee.Objects.Combat;
+using FrEee.Objects.LogMessages;
+using FrEee.Objects.Space;
+using FrEee.Objects.Technology;
 using FrEee.Modding.Templates;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
@@ -44,7 +44,7 @@ namespace FrEee.WinForms.Forms
 			{
 				var item = lstLog.AddItemWithImage(null, message.TurnNumber.ToStardate(), message, message.Picture);
 				item.SubItems.Add(message.Text);
-				if (message.TurnNumber < Galaxy.Current.TurnNumber)
+				if (message.TurnNumber < The.Game.TurnNumber)
 					item.ForeColor = Color.Gray;
 			}
 		}

@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Interfaces;
+﻿using FrEee.Interfaces;
 namespace FrEee.WinForms.Forms
 {
 	partial class HullPickerForm

@@ -1,6 +1,6 @@
-﻿using FrEee.Game.Enumerations;
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Space;
+﻿using FrEee.Enumerations;
+using FrEee.Interfaces;
+using FrEee.Objects.Space;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility.Extensions;
 using System;

@@ -1,10 +1,10 @@
-using FrEee.Game.Enumerations;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Technology;
-using FrEee.Game.Objects.Vehicles;
-using FrEee.Game.Objects.VictoryConditions;
-using FrEee.Game.Setup;
-using FrEee.Game.Setup.WarpPointPlacementStrategies;
+using FrEee.Enumerations;
+using FrEee.Objects.Space;
+using FrEee.Objects.Technology;
+using FrEee.Objects.Vehicles;
+using FrEee.Objects.VictoryConditions;
+using FrEee.Setup;
+using FrEee.Setup.WarpPointPlacementStrategies;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
@@ -30,7 +30,7 @@ namespace FrEee.WinForms.Forms
 			setup = new GameSetup();
 			if (Mod.Current == null)
 				Mod.Load(null);
-			Galaxy.Current = null;
+			The.Game = null;
 
 			spnSeed.Value = DateTime.Now.Millisecond + 1000 * DateTime.Now.Second + 60000 * DateTime.Now.Minute;
 
@@ -495,10 +495,10 @@ namespace FrEee.WinForms.Forms
 				{
 					status.Message = "Setting up galaxy";
 					Galaxy.Initialize(setup, new PRNG((int)spnSeed.Value), status, 1d);
-					if (Galaxy.Current.IsSinglePlayer)
+					if (The.Game.IsSinglePlayer)
 					{
-						var name = Galaxy.Current.Name;
-						var turn = Galaxy.Current.TurnNumber;
+						var name = The.Game.Name;
+						var turn = The.Game.TurnNumber;
 						status.Message = "Loading game";
 						Galaxy.Load(name + "_" + turn + "_0001.gam");
 					}
@@ -515,10 +515,10 @@ namespace FrEee.WinForms.Forms
 
 			if (status.Exception == null)
 			{
-				if (Galaxy.Current.IsSinglePlayer)
+				if (The.Game.IsSinglePlayer)
 				{
-					var name = Galaxy.Current.Name;
-					var turn = Galaxy.Current.TurnNumber;
+					var name = The.Game.Name;
+					var turn = The.Game.TurnNumber;
 					status.Message = "Loading game";
 					Galaxy.Load(name + "_" + turn + "_0001.gam");
 					Design.ImportFromLibrary();
@@ -527,7 +527,7 @@ namespace FrEee.WinForms.Forms
 				}
 				else
 				{
-					MessageBox.Show("The game \"" + Galaxy.Current.Name + "\" has been created. Please distribute the GAM files to appropriate players.");
+					MessageBox.Show("The game \"" + The.Game.Name + "\" has been created. Please distribute the GAM files to appropriate players.");
 					Close();
 				}
 			}
@@ -815,7 +815,7 @@ namespace FrEee.WinForms.Forms
 					// create the galaxy
 					var galtemp = setup.GalaxyTemplate;
 					galtemp.GameSetup = setup;
-					Galaxy.Current = galtemp.Instantiate(status, 1, new PRNG((int)spnSeed.Value));
+					The.Game = galtemp.Instantiate(status, 1, new PRNG((int)spnSeed.Value));
 				}
 				catch (Exception ex)
 				{

@@ -1,7 +1,7 @@
-﻿using FrEee.Game.Enumerations;
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Abilities;
-using FrEee.Game.Objects.Space;
+using FrEee.Enumerations;
+using FrEee.Interfaces;
+using FrEee.Objects.Abilities;
+using FrEee.Objects.Space;
 using FrEee.Modding.Interfaces;
 using FrEee.Modding.StellarObjectLocations;
 using FrEee.Modding.Templates;
@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using Size = FrEee.Game.Enumerations.StellarSize;
+using Size = FrEee.Enumerations.StellarSize;
 
 namespace FrEee.Modding.Loaders
 {

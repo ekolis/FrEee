@@ -1,11 +1,11 @@
-﻿using FrEee.Game.Enumerations;
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Combat;
-using FrEee.Game.Objects.Combat.Grid;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Vehicles;
+﻿using FrEee.Enumerations;
+using FrEee.Interfaces;
+using FrEee.Objects;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Combat;
+using FrEee.Objects.Combat.Grid;
+using FrEee.Objects.Space;
+using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
@@ -28,7 +28,7 @@ namespace FrEee.WinForms.Forms
 
 			BindVehicleTypeList();
 			BindDesignList();
-			Empires = new HashSet<SimulatedEmpire>(Galaxy.Current.Empires.ExceptSingle((Empire)null).Select(e => new SimulatedEmpire(e)));
+			Empires = new HashSet<SimulatedEmpire>(The.Game.Empires.ExceptSingle((Empire)null).Select(e => new SimulatedEmpire(e)));
 			BindEmpireList();
 
 			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
@@ -53,7 +53,7 @@ namespace FrEee.WinForms.Forms
 
 		private void BindDesignList()
 		{
-			var emp = Galaxy.Current.CurrentEmpire;
+			var emp = The.Game.CurrentEmpire;
 			IEnumerable<IDesign> designs = emp.KnownDesigns;
 
 			// filter by vehicle type

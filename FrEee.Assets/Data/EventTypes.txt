@@ -8,11 +8,11 @@ EVENT TYPES DATA FILE
 
 Name 				:= Ship - Damage
 Is Negative	When	:= amount > 0
-Import				:= from FrEee.Game.Objects.Space import Galaxy;
-Import				:= from FrEee.Game.Objects.Vehicles import SpaceVehicle;
-Import				:= from FrEee.Game.Interfaces import IUnit;
-Import				:= from FrEee.Game.Interfaces import IVehicle;
-Target Selector 	:= Galaxy.Current.FindSpaceObjects[SpaceVehicle]().Except[IVehicle](Galaxy.Current.FindSpaceObjects[IUnit]())
+Import				:= from FrEee.Objects.Space import Galaxy;
+Import				:= from FrEee.Objects.Vehicles import SpaceVehicle;
+Import				:= from FrEee.Interfaces import IUnit;
+Import				:= from FrEee.Interfaces import IVehicle;
+Target Selector 	:= The.Galaxy.FindSpaceObjects[SpaceVehicle]().Except[IVehicle](The.Galaxy.FindSpaceObjects[IUnit]())
 Parameter			:= VehicleName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;
 Parameter			:= SectorName = target.Sector.Name;
@@ -20,9 +20,9 @@ Action				:= target.TakeDamage("Skips All Shields", amount);
 
 Name 				:= Ship - Lose Movement
 Is Negative	When	:= amount > 0
-Import				:= from FrEee.Game.Objects.Space import Galaxy;
-Import				:= from FrEee.Game.Objects.Vehicles import Ship;
-Target Selector 	:= Galaxy.Current.FindSpaceObjects[Ship]()
+Import				:= from FrEee.Objects.Space import Galaxy;
+Import				:= from FrEee.Objects.Vehicles import Ship;
+Target Selector 	:= The.Galaxy.FindSpaceObjects[Ship]()
 Parameter			:= VehicleName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;
 Parameter			:= SectorName = target.Sector.Name;
@@ -30,9 +30,9 @@ Action				:= target.MovementRemaining -= amount;
 
 Name 				:= Ship - Lose Supply
 Is Negative	When	:= amount > 0
-Import				:= from FrEee.Game.Objects.Space import Galaxy;
-Import				:= from FrEee.Game.Objects.Vehicles import Ship;
-Target Selector 	:= Galaxy.Current.FindSpaceObjects[Ship]()
+Import				:= from FrEee.Objects.Space import Galaxy;
+Import				:= from FrEee.Objects.Vehicles import Ship;
+Target Selector 	:= The.Galaxy.FindSpaceObjects[Ship]()
 Parameter			:= VehicleName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;
 Parameter			:= SectorName = target.Sector.Name;
@@ -40,9 +40,9 @@ Action				:= target.SupplyRemaining -= amount;
 
 Name 				:= Ship - Cargo Damage
 Is Negative	When	:= amount > 0
-Import				:= from FrEee.Game.Objects.Space import Galaxy;
-Import				:= from FrEee.Game.Interfaces import ICargoContainer;
-Target Selector 	:= Galaxy.Current.FindSpaceObjects[ICargoContainer]()
+Import				:= from FrEee.Objects.Space import Galaxy;
+Import				:= from FrEee.Interfaces import ICargoContainer;
+Target Selector 	:= The.Galaxy.FindSpaceObjects[ICargoContainer]()
 Parameter			:= VehicleName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;
 Parameter			:= SectorName = target.Sector.Name;
@@ -50,22 +50,22 @@ Action				:= target.Cargo.TakeDamage("Skips All Shields", amount);
 
 Name 				:= Ship - Moved
 Is Negative	When	:= true
-Import				:= from FrEee.Game.Objects.Space import Galaxy;
-Import				:= from FrEee.Game.Objects.Vehicles import SpaceVehicle;
-Import				:= from FrEee.Game.Interfaces import IUnit;
-Import				:= from FrEee.Game.Interfaces import IVehicle;
-Target Selector 	:= Galaxy.Current.FindSpaceObjects[SpaceVehicle]().Except[IVehicle](Galaxy.Current.FindSpaceObjects[IUnit]())
+Import				:= from FrEee.Objects.Space import Galaxy;
+Import				:= from FrEee.Objects.Vehicles import SpaceVehicle;
+Import				:= from FrEee.Interfaces import IUnit;
+Import				:= from FrEee.Interfaces import IVehicle;
+Target Selector 	:= The.Galaxy.FindSpaceObjects[SpaceVehicle]().Except[IVehicle](The.Galaxy.FindSpaceObjects[IUnit]())
 Parameter			:= VehicleName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;
 Parameter			:= SectorName = target.Sector.Name;
-Action				:= target.Sector = Galaxy.Current.PickRandomSector();
+Action				:= target.Sector = The.Game.PickRandomSector();
 
 Name 				:= Planet - Conditions Change
 Is Negative	When	:= amount < 0
-Import				:= from FrEee.Game.Objects.Space import Galaxy;
-Import				:= from FrEee.Game.Objects.Space import Planet;
-Import				:= from FrEee.Game.Interfaces import IUnit;
-Target Selector 	:= Galaxy.Current.FindSpaceObjects[Planet]()
+Import				:= from FrEee.Objects.Space import Galaxy;
+Import				:= from FrEee.Objects.Space import Planet;
+Import				:= from FrEee.Interfaces import IUnit;
+Target Selector 	:= The.Galaxy.FindSpaceObjects[Planet]()
 Parameter			:= PlanetName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;
 Parameter			:= SectorName = target.Sector.Name;
@@ -73,11 +73,11 @@ Action				:= # planets don't have conditions yet so do nothing
 
 Name 				:= Planet - Value Change
 Is Negative	When	:= amount < 0
-Import				:= from FrEee.Game.Objects.Space import Galaxy;
-Import				:= from FrEee.Game.Objects.Space import Planet;
-Import				:= from FrEee.Game.Interfaces import IUnit;
+Import				:= from FrEee.Objects.Space import Galaxy;
+Import				:= from FrEee.Objects.Space import Planet;
+Import				:= from FrEee.Interfaces import IUnit;
 Import              := from FrEee.Utility import Resource;
-Target Selector 	:= Galaxy.Current.FindSpaceObjects[Planet]()
+Target Selector 	:= The.Galaxy.FindSpaceObjects[Planet]()
 Parameter			:= PlanetName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;
 Parameter			:= SectorName = target.Sector.Name;
@@ -87,9 +87,9 @@ Action				:= target.Value[Resource.Radioactives] += amount;
 
 Name 				:= Planet - Population Change
 Is Negative	When	:= amount < 0
-Import				:= from FrEee.Game.Objects.Space import Galaxy;
-Import				:= from FrEee.Game.Objects.Space import Planet;
-Target Selector 	:= Galaxy.Current.FindSpaceObjects[Planet]().Where(lambda p: p.Colony != None)
+Import				:= from FrEee.Objects.Space import Galaxy;
+Import				:= from FrEee.Objects.Space import Planet;
+Target Selector 	:= The.Galaxy.FindSpaceObjects[Planet]().Where(lambda p: p.Colony != None)
 Parameter			:= PlanetName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;
 Parameter			:= SectorName = target.Sector.Name;
@@ -97,20 +97,20 @@ Action				:= target.Colony.ChangePopulation(amount);
 
 Name 				:= Planet - Population Rebel
 Is Negative	When	:= true
-Import				:= from FrEee.Game.Objects.Space import Galaxy;
-Import				:= from FrEee.Game.Objects.Space import Planet;
-Target Selector 	:= Galaxy.Current.FindSpaceObjects[Planet]().Where(lambda p: p.Colony != None)
+Import				:= from FrEee.Objects.Space import Galaxy;
+Import				:= from FrEee.Objects.Space import Planet;
+Target Selector 	:= The.Galaxy.FindSpaceObjects[Planet]().Where(lambda p: p.Colony != None)
 Parameter			:= PlanetName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;
 Parameter			:= SectorName = target.Sector.Name;
-Action				:= from FrEee.Game.Objects.Space import Galaxy;
-Action				:= target.Colony = source if source != None else Galaxy.Current.CreateNewEmpire();
+Action				:= from FrEee.Objects.Space import Galaxy;
+Action				:= target.Colony = source if source != None else The.Game.CreateNewEmpire();
 
 Name 				:= Planet - Facility Damage
 Is Negative	When	:= true
-Import				:= from FrEee.Game.Objects.Space import Galaxy;
-Import				:= from FrEee.Game.Objects.Space import Planet;
-Target Selector 	:= Galaxy.Current.FindSpaceObjects[Planet]().Where(lambda p: p.Colony != None)
+Import				:= from FrEee.Objects.Space import Galaxy;
+Import				:= from FrEee.Objects.Space import Planet;
+Target Selector 	:= The.Galaxy.FindSpaceObjects[Planet]().Where(lambda p: p.Colony != None)
 Parameter			:= PlanetName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;
 Parameter			:= SectorName = target.Sector.Name;
@@ -118,9 +118,9 @@ Action				:= target.Colony.Facilities.PickRandom().Dispose() for num in range(0,
 
 Name 				:= Planet - Cargo Damage
 Is Negative	When	:= amount > 0
-Import				:= from FrEee.Game.Objects.Space import Galaxy;
-Import				:= from FrEee.Game.Objects.Space import Planet;
-Target Selector 	:= Galaxy.Current.FindSpaceObjects[Planet]().Where(lambda p: p.Colony != None)
+Import				:= from FrEee.Objects.Space import Galaxy;
+Import				:= from FrEee.Objects.Space import Planet;
+Target Selector 	:= The.Galaxy.FindSpaceObjects[Planet]().Where(lambda p: p.Colony != None)
 Parameter			:= PlanetName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;
 Parameter			:= SectorName = target.Sector.Name;
@@ -129,7 +129,7 @@ Action				:= target.Colony.Cargo.TakeDamage("Skips All Shields", amount);
 Name 				:= Points - Change
 Is Negative	When	:= amount < 0
 Import              := from FrEee.Utility import Resource;
-Target Selector 	:= Galaxy.Current.Empires
+Target Selector 	:= The.Game.Empires
 Action				:= target.StoredResources[Resource.Minerals] += amount;
 Action				:= target.StoredResources[Resource.Organics] += amount; 
 Action				:= target.StoredResources[Resource.Radioactives] += amount;
@@ -137,9 +137,9 @@ Action				:= target.NormalizeStoredResources();
 
 Name 				:= Planet - Plague
 Is Negative	When	:= true
-Import				:= from FrEee.Game.Objects.Space import Galaxy;
-Import				:= from FrEee.Game.Objects.Space import Planet;
-Target Selector 	:= Galaxy.Current.FindSpaceObjects[Planet]().Where(lambda p: p.Colony != None)
+Import				:= from FrEee.Objects.Space import Galaxy;
+Import				:= from FrEee.Objects.Space import Planet;
+Target Selector 	:= The.Galaxy.FindSpaceObjects[Planet]().Where(lambda p: p.Colony != None)
 Parameter			:= PlanetName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;
 Parameter			:= SectorName = target.Sector.Name;
@@ -147,9 +147,9 @@ Action				:= # TODO - implement plagues
 
 Name 				:= Planet - Destroyed
 Is Negative	When	:= true
-Import				:= from FrEee.Game.Objects.Space import Galaxy;
-Import				:= from FrEee.Game.Objects.Space import Planet;
-Target Selector 	:= Galaxy.Current.FindSpaceObjects[Planet]()
+Import				:= from FrEee.Objects.Space import Galaxy;
+Import				:= from FrEee.Objects.Space import Planet;
+Target Selector 	:= The.Galaxy.FindSpaceObjects[Planet]()
 Parameter			:= PlanetName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;
 Parameter			:= SectorName = target.Sector.Name;
@@ -157,9 +157,9 @@ Action				:= target.ConvertToAsteroidField();
 
 Name 				:= Star - Destroyed
 Is Negative	When	:= true
-Import				:= from FrEee.Game.Objects.Space import Galaxy;
-Import				:= from FrEee.Game.Objects.Space import Star;
-Target Selector 	:= Galaxy.Current.FindSpaceObjects[Star]()
+Import				:= from FrEee.Objects.Space import Galaxy;
+Import				:= from FrEee.Objects.Space import Star;
+Target Selector 	:= The.Galaxy.FindSpaceObjects[Star]()
 Parameter			:= StarName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;
 Parameter			:= SectorName = target.Sector.Name;
@@ -167,9 +167,9 @@ Action				:= target.Detonate();
 
 Name 				:= Warp Point - Closed
 Is Negative	When	:= true
-Import				:= from FrEee.Game.Objects.Space import Galaxy;
-Import				:= from FrEee.Game.Objects.Space import WarpPoint;
-Target Selector 	:= Galaxy.Current.FindSpaceObjects[WarpPoint]()
+Import				:= from FrEee.Objects.Space import Galaxy;
+Import				:= from FrEee.Objects.Space import WarpPoint;
+Target Selector 	:= The.Galaxy.FindSpaceObjects[WarpPoint]()
 Parameter			:= WarpPointName = target.Name;
 Parameter			:= SystemName = target.StarSystem.Name;
 Parameter			:= SectorName = target.Sector.Name;

@@ -1,7 +1,7 @@
-﻿using FrEee.Game.Enumerations;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Vehicles;
+﻿using FrEee.Enumerations;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
+using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility.Extensions;
 using NUnit.Framework;
@@ -77,8 +77,8 @@ namespace FrEee.Tests.Game.Objects.Space
 			HideSubmarine();
 
 			// redact things for the empire
-			Galaxy.Current.CurrentEmpire = seekers;
-			Galaxy.Current.Redact();
+			The.Game.CurrentEmpire = seekers;
+			The.Game.Redact();
 
 			// make sure it's still visible as a memory
 			Assert.AreEqual(Visibility.Fogged, submarine.CheckVisibility(seekers), "Ship is not fogged after it's left the star system.");
@@ -95,16 +95,16 @@ namespace FrEee.Tests.Game.Objects.Space
 			// initialize star systems
 			here = new StarSystem(0) { Name = "Here" };
 			there = new StarSystem(0) { Name = "There" };
-			Galaxy.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(here, new Point()));
-			Galaxy.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(there, new Point(1, 1)));
+			The.Galaxy.StarSystemLocations.Add(new ObjectLocation<StarSystem>(here, new Point()));
+			The.Galaxy.StarSystemLocations.Add(new ObjectLocation<StarSystem>(there, new Point(1, 1)));
 
 			// initialize empires
 			seekers = new Empire();
 			seekers.Name = "Seekers";
 			hiders = new Empire();
 			hiders.Name = "Hiders";
-			Galaxy.Current.Empires.Add(seekers);
-			Galaxy.Current.Empires.Add(hiders);
+			The.Game.Empires.Add(seekers);
+			The.Game.Empires.Add(hiders);
 
 			//. initialize exploration
 			here.ExploredByEmpires.Add(seekers);
@@ -129,7 +129,7 @@ namespace FrEee.Tests.Game.Objects.Space
 			submarine.Sector = here.GetSector(0, 0);
 
 			// register objects
-			Galaxy.Current.CleanGameState();
+			The.Game.CleanGameState();
 		}
 
 		private void HideSubmarine()

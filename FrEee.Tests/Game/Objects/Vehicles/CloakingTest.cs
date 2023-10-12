@@ -1,8 +1,8 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Abilities;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Vehicles;
+using FrEee.Interfaces;
+using FrEee.Objects.Abilities;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
+using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility.Extensions;
 using NUnit.Framework;
@@ -106,7 +106,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		{
 			// create star system
 			sys = new StarSystem(0);
-			Galaxy.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(sys, new Point()));
+			The.Galaxy.StarSystemLocations.Add(new ObjectLocation<StarSystem>(sys, new Point()));
 
 			// place ships
 			sys.Place(destroyer, new Point());

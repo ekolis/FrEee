@@ -1,5 +1,5 @@
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
+using FrEee.Interfaces;
+using FrEee.Objects.Civilization;
 using FrEee.Utility.Extensions;
 using FrEee.Utility.Stringifiers;
 using System;

@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Abilities;
-using FrEee.Game.Objects.AI;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Technology;
+using FrEee.Interfaces;
+using FrEee.Objects.Abilities;
+using FrEee.Objects.AI;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
+using FrEee.Objects.Technology;
 using FrEee.Modding.Interfaces;
 using FrEee.Modding.Loaders;
 using FrEee.Modding.Templates;
@@ -61,7 +62,7 @@ namespace FrEee.Modding
 		/// <summary>
 		/// The currently loaded mod.
 		/// </summary>
-		//public static Mod Current { get; set; }
+		public static Mod? Current { get; set; }
 
 		/// <summary>
 		/// The file name being loaded. (For error reporting)

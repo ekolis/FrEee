@@ -1,9 +1,9 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Commands;
-using FrEee.Game.Objects.Orders;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Technology;
+using FrEee.Interfaces;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Commands;
+using FrEee.Objects.Orders;
+using FrEee.Objects.Space;
+using FrEee.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
@@ -434,7 +434,7 @@ namespace FrEee.WinForms.Forms
 		/// <returns></returns>
 		private bool BuildingAnywhere(IConstructionTemplate t)
 		{
-			return Galaxy.Current.FindSpaceObjects<IConstructor>().OwnedBy(Empire.Current).Any(o => o.ConstructionQueue != null && o.ConstructionQueue.Orders.Any(o2 => o2.Template == t));
+			return The.Galaxy.FindSpaceObjects<IConstructor>().OwnedBy(Empire.Current).Any(o => o.ConstructionQueue != null && o.ConstructionQueue.Orders.Any(o2 => o2.Template == t));
 		}
 
 		private void CancelChanges()
@@ -980,9 +980,9 @@ namespace FrEee.WinForms.Forms
 		private void SaveCommands()
 		{
 			foreach (var cmd in newCommands)
-				Galaxy.Current.CurrentEmpire.Commands.Add(cmd);
+				The.Game.CurrentEmpire.Commands.Add(cmd);
 			foreach (var cmd in removedCommands)
-				Galaxy.Current.CurrentEmpire.Commands.Remove(cmd);
+				The.Game.CurrentEmpire.Commands.Remove(cmd);
 		}
 
 		private void btnHelp_Click(object sender, EventArgs e)

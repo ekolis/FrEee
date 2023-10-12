@@ -1,7 +1,7 @@
-﻿using FrEee.Game.Enumerations;
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
+﻿using FrEee.Enumerations;
+using FrEee.Interfaces;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -285,7 +285,7 @@ namespace FrEee.Utility
 			if (emp != null && !emp.HasExplored(sector.StarSystem))
 				return null; // no cheating!
 			if (findWarpIn) // find a warp point leading into the system
-				return Galaxy.Current.FindSpaceObjects<WarpPoint>().Where(wp => wp.Target != null && wp.Target.StarSystem == sector.StarSystem && wp.HasVisibility(emp, Visibility.Fogged)).Select(wp => wp.Target).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault(); // use HasVisibility instead of CheckVisibility, it's faster when all we want is visible/invisible and don't care about scanning
+				return The.Galaxy.FindSpaceObjects<WarpPoint>().Where(wp => wp.Target != null && wp.Target.StarSystem == sector.StarSystem && wp.HasVisibility(emp, Visibility.Fogged)).Select(wp => wp.Target).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault(); // use HasVisibility instead of CheckVisibility, it's faster when all we want is visible/invisible and don't care about scanning
 			else // find a warp point leading out of the system
 				return sector.StarSystem.FindSpaceObjects<WarpPoint>().Select(wp => new Sector(sector.StarSystem, wp.FindCoordinates())).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault();
 		}
@@ -331,9 +331,9 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors, IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> map)
 		{
-			bool cacheEnabled = Galaxy.Current.IsAbilityCacheEnabled;
+			bool cacheEnabled = The.Game.IsAbilityCacheEnabled;
 			if (!cacheEnabled)
-				Galaxy.Current.EnableAbilityCache();
+				The.Game.EnableAbilityCache();
 			if (end == null || end.StarSystem == null || start == end)
 				return Enumerable.Empty<Sector>();
 			if (me != null && me.StrategicSpeed < 1)
@@ -366,7 +366,7 @@ namespace FrEee.Utility
 				node = node.PreviousNode;
 			}
 			if (!cacheEnabled)
-				Galaxy.Current.DisableAbilityCache();
+				The.Game.DisableAbilityCache();
 			return nodes.Select(n => n.Location).Where(s => s != start).Reverse();
 		}
 

@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Objects.Technology;
+﻿using FrEee.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;

@@ -1,5 +1,5 @@
-﻿using FrEee.Game.Enumerations;
-using FrEee.Game.Objects.Abilities;
+﻿using FrEee.Enumerations;
+using FrEee.Objects.Abilities;
 using FrEee.Modding.Interfaces;
 using System;
 using System.Collections.Generic;

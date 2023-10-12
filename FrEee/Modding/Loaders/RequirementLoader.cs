@@ -1,6 +1,6 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Technology;
+﻿using FrEee.Interfaces;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Technology;
 using FrEee.Modding.Enumerations;
 using FrEee.Utility.Extensions;
 using System.Collections.Generic;

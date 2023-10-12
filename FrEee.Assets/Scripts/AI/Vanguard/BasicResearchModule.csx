@@ -1,7 +1,7 @@
 ﻿#r "../../../bin/Debug/FrEee.Core.dll"
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Commands;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
+using FrEee.Objects.Commands;
 using System.Linq;
 /// <summary>
 /// Class that will issue basic research commands. 

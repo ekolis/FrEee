@@ -1,5 +1,5 @@
-﻿using FrEee.Game.Objects.Combat;
-using FrEee.Game.Objects.Space;
+﻿using FrEee.Objects.Combat;
+using FrEee.Objects.Space;
 using FrEee.Modding;
 using NUnit.Framework;
 using System.Linq;

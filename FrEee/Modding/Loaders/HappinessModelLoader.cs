@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
 using FrEee.Modding.Interfaces;
 using System.Collections.Generic;
 

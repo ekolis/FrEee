@@ -1,5 +1,5 @@
-﻿using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
+﻿using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
 using FrEee.Modding;
 using System;
 using System.Drawing;
@@ -19,11 +19,11 @@ namespace FrEee.WinForms.Forms
 				rtbOutput.AppendText("Imported Mod.\n");
 				rtbOutput.AppendText("Mod.Current is currently: " + OrNil(Mod.Current) + "\n");
 
-				PythonScriptEngine.EvaluateExpression<object>("from FrEee.Game.Objects.Space import Galaxy");
+				PythonScriptEngine.EvaluateExpression<object>("from FrEee.Objects.Space import Galaxy");
 				rtbOutput.AppendText("Imported Galaxy.\n");
-				rtbOutput.AppendText("Galaxy.Current is currently: " + OrNil(Galaxy.Current) + "\n");
+				rtbOutput.AppendText("The.Game is currently: " + OrNil(The.Game) + "\n");
 
-				PythonScriptEngine.EvaluateExpression<object>("from FrEee.Game.Objects.Civilization import Empire");
+				PythonScriptEngine.EvaluateExpression<object>("from FrEee.Objects.Civilization import Empire");
 				rtbOutput.AppendText("Imported Empire.\n");
 				rtbOutput.AppendText("Empire.Current is currently: " + OrNil(Empire.Current) + "\n");
 

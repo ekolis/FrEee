@@ -1,7 +1,7 @@
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Vehicles;
+using FrEee.Interfaces;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
+using FrEee.Objects.Vehicles;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.DataGridView;
@@ -61,11 +61,11 @@ namespace FrEee.WinForms.Forms
 
 		private void ShipListForm_Load(object sender, EventArgs e)
 		{
-			if (Galaxy.Current == null)
+			if (The.Game == null)
 				return;
 
 			// show ship/unit/fleet counts
-			sobjs = Galaxy.Current.FindSpaceObjects<IMobileSpaceObject>().Where(o => !(o is Planet) && (!(o is IUnit && ((IUnit)o).Container == null)));
+			sobjs = The.Galaxy.FindSpaceObjects<IMobileSpaceObject>().Where(o => !(o is Planet) && (!(o is IUnit && ((IUnit)o).Container == null)));
 			var ours = sobjs.Where(o => o.Owner == Empire.Current);
 			var ourShips = ours.OfType<SpaceVehicle>();
 			txtShips.Text = ourShips.Count().ToString();

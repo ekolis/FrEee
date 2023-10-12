@@ -1,5 +1,5 @@
-﻿using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace FrEee.WinForms.Objects.GalaxyViewModes
 
 		protected override int GetAlpha(StarSystem sys)
 		{
-			var all = Galaxy.Current.StarSystemLocations.Select(l => new { System = l.Item, Planets = l.Item.FindSpaceObjects<Planet>().Where(p => p.Owner != null || Empire.Current.CanColonize(p)) });
+			var all = The.Galaxy.StarSystemLocations.Select(l => new { System = l.Item, Planets = l.Item.FindSpaceObjects<Planet>().Where(p => p.Owner != null || Empire.Current.CanColonize(p)) });
 			var maxSlots = all.Max(x => GetSlots(x.Planets));
 			var planets = sys.FindSpaceObjects<Planet>().Owned().ToArray();
 			var slotsHere = GetSlots(planets);

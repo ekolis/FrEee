@@ -1,5 +1,5 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Space;
+﻿using FrEee.Interfaces;
+using FrEee.Objects.Space;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
@@ -174,7 +174,7 @@ namespace FrEee.WinForms
 			}
 			else if (TypeMatch<GalaxyReference<IReferrable>>(objectType))
 			{
-				var objs = Galaxy.Current.Referrables.Where(r => objectType.GetGenericArguments()[0].IsAssignableFrom(r.GetType())).ToList();
+				var objs = The.Game.Referrables.Where(r => objectType.GetGenericArguments()[0].IsAssignableFrom(r.GetType())).ToList();
 				objs.Insert(0, null);
 				var pnl = MakeDropdownPanel(objs, obj, newReferrableHandler);
 				ctl = pnl;
@@ -188,7 +188,7 @@ namespace FrEee.WinForms
 			}
 			else if (TypeMatch<IReferrable>(objectType))
 			{
-				var objs = Galaxy.Current.Referrables.Where(r => objectType.IsAssignableFrom(r.GetType())).ToList();
+				var objs = The.Game.Referrables.Where(r => objectType.IsAssignableFrom(r.GetType())).ToList();
 				objs.Insert(0, null);
 				var pnl = MakeDropdownPanel(objs, obj, newReferrableHandler);
 				ctl = pnl;

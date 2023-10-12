@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="Culture" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>FrEee.Game.Objects.Civilization.Culture, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=1f58fa7bbe756d08</TypeInfo>
+   <TypeInfo>FrEee.Objects.Civilization.Culture, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=1f58fa7bbe756d08</TypeInfo>
 </GenericObjectDataSource>

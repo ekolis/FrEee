@@ -1,9 +1,9 @@
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Abilities;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Technology;
-using FrEee.Game.Objects.Vehicles;
+using FrEee.Interfaces;
+using FrEee.Objects.Abilities;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
+using FrEee.Objects.Technology;
+using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility.Extensions;
@@ -27,11 +27,11 @@ namespace FrEee.Tests.Game.Objects.Abilities
 		public void SetUp()
 		{
 			// create galaxy
-			TestUtilities.CreateGalaxyWithMod();
+			var galaxy = TestUtilities.CreateGalaxyWithMod();
 
 			// create star system
 			sys = new(0);
-			Galaxy.Current.StarSystemLocations.Add(new(sys, new Point()));
+			galaxy.StarSystemLocations.Add(new(sys, new Point()));
 
 			// create stuff
 			emp = TestUtilities.CreateEmpire();
@@ -57,7 +57,7 @@ namespace FrEee.Tests.Game.Objects.Abilities
 			design.Hull.AddAbility("Combat Modifier - Empire", 8);
 
 			// make the testing a bit faster
-			Galaxy.Current.EnableAbilityCache();
+			//The.Game.EnableAbilityCache();
 
 			// make sure the ship picked them all up
 			// TODO - we need to define ability scopes since some abilities should apply only to a single empire and others to everyone (see issue #1015)

@@ -1,6 +1,6 @@
-﻿using FrEee.Game.Enumerations;
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Space;
+using FrEee.Enumerations;
+using FrEee.Interfaces;
+using FrEee.Objects.Space;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
@@ -85,9 +85,9 @@ namespace FrEee.Modding.Templates
 			if (abil != null)
 				asteroids.IntrinsicAbilities.Add(abil);
 
-			asteroids.ResourceValue[Resource.Minerals] = RandomHelper.Range(Galaxy.Current.MinSpawnedAsteroidValue, Galaxy.Current.MaxSpawnedAsteroidValue);
-			asteroids.ResourceValue[Resource.Organics] = RandomHelper.Range(Galaxy.Current.MinSpawnedAsteroidValue, Galaxy.Current.MaxSpawnedAsteroidValue);
-			asteroids.ResourceValue[Resource.Radioactives] = RandomHelper.Range(Galaxy.Current.MinSpawnedAsteroidValue, Galaxy.Current.MaxSpawnedAsteroidValue);
+			asteroids.ResourceValue[Resource.Minerals] = RandomHelper.Range(The.Game.Setup.MinSpawnedAsteroidValue, The.Game.Setup.MaxSpawnedAsteroidValue);
+			asteroids.ResourceValue[Resource.Organics] = RandomHelper.Range(The.Game.Setup.MinSpawnedAsteroidValue, The.Game.Setup.MaxSpawnedAsteroidValue);
+			asteroids.ResourceValue[Resource.Radioactives] = RandomHelper.Range(The.Game.Setup.MinSpawnedAsteroidValue, The.Game.Setup.MaxSpawnedAsteroidValue);
 
 			return asteroids;
 		}

@@ -1,4 +1,4 @@
-using FrEee.Game.Objects.Space;
+using FrEee.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Objects.GalaxyViewModes;
@@ -72,9 +72,9 @@ namespace FrEee.WinForms.Controls
 		{
 			get
 			{
-				if (Galaxy.Current == null)
+				if (The.Game == null)
 					return 0;
-				return (int)Math.Min((float)Width / (float)Galaxy.Current.UsedWidth, (float)Height / Galaxy.Current.UsedHeight);
+				return (int)Math.Min((float)Width / (float)The.Game.UsedWidth, (float)Height / The.Game.UsedHeight);
 			}
 		}
 
@@ -88,7 +88,7 @@ namespace FrEee.WinForms.Controls
 
 		public void ComputeWarpPointConnectivity()
 		{
-			warpGraph = new ConnectivityGraph<ObjectLocation<StarSystem>>(Galaxy.Current.StarSystemLocations);
+			warpGraph = new ConnectivityGraph<ObjectLocation<StarSystem>>(The.Galaxy.StarSystemLocations);
 
 			foreach (var ssl in warpGraph)
 			{
@@ -109,15 +109,15 @@ namespace FrEee.WinForms.Controls
 		/// <returns></returns>
 		public StarSystem GetStarSystemAtPoint(Point p)
 		{
-			if (Galaxy.Current == null)
+			if (The.Game == null)
 				return null; // no such sector
 			var drawsize = StarSystemDrawSize;
-			var avgx = (Galaxy.Current.StarSystemLocations.Min(l => l.Location.X) + Galaxy.Current.StarSystemLocations.Max(l => l.Location.X)) / 2f;
-			var avgy = (Galaxy.Current.StarSystemLocations.Min(l => l.Location.Y) + Galaxy.Current.StarSystemLocations.Max(l => l.Location.Y)) / 2f;
+			var avgx = (The.Galaxy.StarSystemLocations.Min(l => l.Location.X) + The.Galaxy.StarSystemLocations.Max(l => l.Location.X)) / 2f;
+			var avgy = (The.Galaxy.StarSystemLocations.Min(l => l.Location.Y) + The.Galaxy.StarSystemLocations.Max(l => l.Location.Y)) / 2f;
 			var x = (int)Math.Round(((float)p.X - Width / 2f) / drawsize + avgx);
 			var y = (int)Math.Round(((float)p.Y - Height / 2f) / drawsize + avgy);
 			var p2 = new Point(x, y);
-			var ssloc = Galaxy.Current.StarSystemLocations.FirstOrDefault(ssl => ssl.Location == p2);
+			var ssloc = The.Galaxy.StarSystemLocations.FirstOrDefault(ssl => ssl.Location == p2);
 			if (ssloc == null)
 				return null;
 			return ssloc.Item;
@@ -190,15 +190,15 @@ namespace FrEee.WinForms.Controls
 				pe.Graphics.DrawImage(backgroundImage, x, y, w, h);
 			}
 
-			if (Galaxy.Current != null)
+			if (The.Game != null)
 			{
 				var drawsize = StarSystemDrawSize;
 				var whitePen = new Pen(Color.White);
 
 				// draw star systems
-				var avgx = (Galaxy.Current.StarSystemLocations.Min(l => l.Location.X) + Galaxy.Current.StarSystemLocations.Max(l => l.Location.X)) / 2f;
-				var avgy = (Galaxy.Current.StarSystemLocations.Min(l => l.Location.Y) + Galaxy.Current.StarSystemLocations.Max(l => l.Location.Y)) / 2f;
-				foreach (var ssl in Galaxy.Current.StarSystemLocations)
+				var avgx = (The.Galaxy.StarSystemLocations.Min(l => l.Location.X) + The.Galaxy.StarSystemLocations.Max(l => l.Location.X)) / 2f;
+				var avgy = (The.Galaxy.StarSystemLocations.Min(l => l.Location.Y) + The.Galaxy.StarSystemLocations.Max(l => l.Location.Y)) / 2f;
+				foreach (var ssl in The.Galaxy.StarSystemLocations)
 				{
 					// where will we draw the star system?
 					var x = ssl.Location.X;// - minx;

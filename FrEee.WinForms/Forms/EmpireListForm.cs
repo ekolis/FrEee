@@ -1,7 +1,7 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Commands;
-using FrEee.Game.Objects.Space;
+﻿using FrEee.Interfaces;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Commands;
+using FrEee.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
@@ -153,7 +153,7 @@ namespace FrEee.WinForms.Forms
 		private void BindEmpires()
 		{
 			lstEmpires.Initialize(128, 128);
-			foreach (var emp in Galaxy.Current.Empires.ExceptSingle((Empire)null))
+			foreach (var emp in The.Game.Empires.ExceptSingle((Empire)null))
 			{
 				var item = lstEmpires.AddItemWithImage(null, emp.Name, emp, emp.Portrait);
 				if (emp == Empire.Current)

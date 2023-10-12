@@ -1,8 +1,8 @@
-using FrEee.Game.Enumerations;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Commands;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Processes;
+using FrEee.Enumerations;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Commands;
+using FrEee.Objects.Space;
+using FrEee.Processes;
 using FrEee.Modding;
 using FrEee.Utility.Extensions;
 using NUnit.Framework;
@@ -31,7 +31,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 		public void PercentageResearch()
 		{
 			var mod = Mod.Current;
-			var gal = Galaxy.Current;
+			var gal = The.Game;
 
 			var tech = mod.Technologies.FindByName("Ice Planet Colonization");
 			tech.LevelCost = 500000; // in case the mod changes
@@ -64,7 +64,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 		{
 			// for convenience
 			var mod = Mod.Current;
-			var gal = Galaxy.Current;
+			var gal = The.Game;
 
 			// set up techs
 			var t1 = mod.Technologies.FindByName("Planetary Weapons");
@@ -119,9 +119,9 @@ namespace FrEee.Tests.Game.Objects.Technology
 		public void TestInit()
 		{
 			new Galaxy();
-			Galaxy.Current.TechnologyCost = TechnologyCost.Low;
+			The.Game.TechnologyCost = TechnologyCost.Low;
 			emp = new Empire();
-			Galaxy.Current.Empires.Add(emp);
+			The.Game.Empires.Add(emp);
 		}
 	}
 }

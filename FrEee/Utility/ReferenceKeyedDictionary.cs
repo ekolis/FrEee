@@ -1,5 +1,5 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Space;
+﻿using FrEee.Interfaces;
+using FrEee.Objects.Space;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility.Extensions;
@@ -22,7 +22,7 @@ namespace FrEee.Utility
 		protected override TKey LookUp(long id)
 		{
 			if (!dict.ContainsKey(id))
-				dict[id] = (TKey)Galaxy.Current.GetReferrable(id);
+				dict[id] = (TKey)The.Game.GetReferrable(id);
 			return dict[id];
 		}
 	}

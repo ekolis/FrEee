@@ -1,8 +1,8 @@
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Vehicles;
-using FrEee.Game.Processes;
+using FrEee.Interfaces;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
+using FrEee.Objects.Vehicles;
+using FrEee.Processes;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
@@ -174,12 +174,12 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 				{
 					try
 					{
-						Galaxy.Current.LoadCommands();
+						The.Game.LoadCommands();
 					}
 					catch
 					{
 						MessageBox.Show("An error occurred while loading your commands. You will need to restart your turn from the beginning.");
-						Galaxy.Load(Galaxy.Current.GameFileName); // in case some commands got loaded
+						Galaxy.Load(The.Game.GameFileName); // in case some commands got loaded
 					}
 				}
 				else
@@ -292,16 +292,16 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 
 				Console.WriteLine("Processing turn...");
 				var processor = new TurnProcessor();
-				var emps = processor.ProcessTurn(Galaxy.Current, false, status);
+				var emps = processor.ProcessTurn(The.Game, false, status);
 				foreach (var emp in emps)
 					Console.WriteLine(emp + " did not submit a PLR file.");
 				if (safe && emps.Any())
 				{
 					Console.Error.WriteLine("Halting turn processing due to missing PLR file(s).");
-					return 101 + Galaxy.Current.Empires.IndexOf(emps.First());
+					return 101 + The.Game.Empires.IndexOf(emps.First());
 				}
 				Galaxy.SaveAll();
-				Console.WriteLine("Turn processed successfully. It is now turn " + Galaxy.Current.TurnNumber + " (stardate " + Galaxy.Current.Stardate + ").");
+				Console.WriteLine("Turn processed successfully. It is now turn " + The.Game.TurnNumber + " (stardate " + The.Game.Stardate + ").");
 				Gui.Exit();
 				return 0;
 			}

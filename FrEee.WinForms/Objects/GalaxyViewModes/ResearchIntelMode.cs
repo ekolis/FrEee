@@ -1,6 +1,6 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
+﻿using FrEee.Interfaces;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System.Drawing;
@@ -20,7 +20,7 @@ namespace FrEee.WinForms.Objects.GalaxyViewModes
 
 		protected override Color GetColor(StarSystem sys)
 		{
-			var max = Galaxy.Current.StarSystemLocations.MaxOfAllResources(l => GetResources(l.Item));
+			var max = The.Galaxy.StarSystemLocations.MaxOfAllResources(l => GetResources(l.Item));
 			foreach (var r in Resource.All)
 				if (max[r] == 0)
 					max[r] = int.MaxValue; // prevent divide by zero

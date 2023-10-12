@@ -1,8 +1,8 @@
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Vehicles;
-using FrEee.Game.Processes;
+using FrEee.Interfaces;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
+using FrEee.Objects.Vehicles;
+using FrEee.Processes;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
@@ -42,8 +42,8 @@ namespace FrEee.WinForms.Forms
 
 		private void Bind()
 		{
-			empireStatusBindingSource.DataSource = Galaxy.Current.Empires.Select(e => new EmpireStatus(e));
-			Text = "Host Console - " + Galaxy.Current.Name + " turn " + Galaxy.Current.TurnNumber;
+			empireStatusBindingSource.DataSource = The.Game.Empires.Select(e => new EmpireStatus(e));
+			Text = "Host Console - " + The.Game.Name + " turn " + The.Game.TurnNumber;
 		}
 
 		private void btnClose_Click(object sender, EventArgs e)
@@ -71,7 +71,7 @@ namespace FrEee.WinForms.Forms
 						if (emp.IsPlayerEmpire)
 						{
 							// load GAM file if possible
-							var savefile = Galaxy.Current.GetGameSavePath(emp);
+							var savefile = The.Game.GetGameSavePath(emp);
 							try
 							{
 								Galaxy.Load(savefile);
@@ -79,15 +79,15 @@ namespace FrEee.WinForms.Forms
 							catch (IOException)
 							{
 								MessageBox.Show("Could not load " + savefile + ". Attempting to recreate player view.");
-								Galaxy.Current.CurrentEmpire = emp;
-								Galaxy.Current.Redact();
+								The.Game.CurrentEmpire = emp;
+								The.Game.Redact();
 							}
 						}
 						else
 						{
 							// AI empires have no GAM files, so create their views in memory
-							Galaxy.Current.CurrentEmpire = emp;
-							Galaxy.Current.Redact();
+							The.Game.CurrentEmpire = emp;
+							The.Game.Redact();
 						}
 						Design.ImportFromLibrary();
 						var form = new MainGameForm(true, false);
@@ -112,7 +112,7 @@ namespace FrEee.WinForms.Forms
 					return;
 			}
 			ProcessTurn(); 
-			MessageBox.Show("Turn successfully processed. It is now turn " + Galaxy.Current.TurnNumber + " (stardate " + Galaxy.Current.Stardate + ").");
+			MessageBox.Show("Turn successfully processed. It is now turn " + The.Game.TurnNumber + " (stardate " + The.Game.Stardate + ").");
 			Cursor = Cursors.Default;
 			CacheGalaxy();
 			Bind();
@@ -126,7 +126,7 @@ namespace FrEee.WinForms.Forms
 			{
 				status.Message = "Processing turn";
 				var processor = new TurnProcessor();
-				processor.ProcessTurn(Galaxy.Current, false, status, 0.5);
+				processor.ProcessTurn(The.Game, false, status, 0.5);
 				Galaxy.SaveAll(status, 1.0);
 			}));
 			this.ShowChildForm(new StatusForm(t, status));
@@ -160,7 +160,7 @@ namespace FrEee.WinForms.Forms
 
 		private void CacheGalaxy()
 		{
-			serializedGalaxy = Serializer.SerializeToString(Galaxy.Current);
+			serializedGalaxy = Serializer.SerializeToString(The.Game);
 		}
 
 		private void ReloadGalaxy()
