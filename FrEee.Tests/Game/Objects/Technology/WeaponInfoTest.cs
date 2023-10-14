@@ -1,4 +1,4 @@
-﻿using FrEee.Objects.Combat;
+using FrEee.Objects.Combat;
 using FrEee.Objects.Space;
 using FrEee.Modding;
 using NUnit.Framework;
@@ -28,7 +28,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 		public void FormulaDamage()
 		{
 			var ct = mod.ComponentTemplates.Single(x => x.Name == "Formula Weapon");
-			var comp = ct.Instantiate();
+			var comp = ct.Instantiate(The.Game);
 			Assert.AreEqual(3, ct.WeaponInfo.MinRange.Value);
 			Assert.AreEqual(5, ct.WeaponInfo.MaxRange.Value);
 			Assert.AreEqual(0, ct.WeaponInfo.GetDamage(new Shot(null, comp, null, 2)));
@@ -43,7 +43,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 		public void NonFormulaDamage()
 		{
 			var ct = mod.ComponentTemplates.Single(x => x.Name == "Non-Formula Weapon");
-			var comp = ct.Instantiate();
+			var comp = ct.Instantiate(The.Game);
 			Assert.AreEqual(3, ct.WeaponInfo.MinRange.Value);
 			Assert.AreEqual(5, ct.WeaponInfo.MaxRange.Value);
 			Assert.AreEqual(0, ct.WeaponInfo.GetDamage(new Shot(null, comp, null, 2)));

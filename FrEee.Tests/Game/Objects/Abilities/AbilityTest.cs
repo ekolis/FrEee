@@ -19,7 +19,7 @@ namespace FrEee.Tests.Game.Objects.Abilities
 	{
 		StarSystem sys;
 		Empire emp;
-		IDesign<Ship> design;
+		Design<Ship> design;
 		IHull<Ship> hull;
 		Ship ship;
 
@@ -37,7 +37,7 @@ namespace FrEee.Tests.Game.Objects.Abilities
 			emp = TestUtilities.CreateEmpire();
 			design = TestUtilities.CreateDesign<Ship>(emp);
 			hull = TestUtilities.CreateHull(design);
-			ship = TestUtilities.CreateVehicle(design, emp);
+			ship = TestUtilities.CreateVehicle<Ship>(design, emp);
 		}
 
 		[Test]

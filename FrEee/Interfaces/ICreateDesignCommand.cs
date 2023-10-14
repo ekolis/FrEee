@@ -6,10 +6,9 @@ namespace FrEee.Interfaces
 	/// <summary>
 	/// A command for an empire to create a design.
 	/// </summary>
-	public interface ICreateDesignCommand<out T>
+	public interface ICreateDesignCommand
 		: ICommand<Empire>
-		where T : IVehicle
 	{
-		IDesign<T> Design { get; }
+		IDesign Design { get; }
 	}
 }

@@ -1,4 +1,4 @@
-﻿using FrEee.Interfaces;
+using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Combat;
 using FrEee.Objects.Space;
@@ -127,7 +127,7 @@ namespace FrEee.WinForms.Forms
 		{
 			if (obj is IVehicle v)
 				return v.Design.Hull.Size;
-			if (obj is IDesign<IVehicle> d)
+			if (obj is IDesign d)
 				return d.Hull.Size;
 			if (obj is Seeker s)
 				return s.MaxHitpoints;

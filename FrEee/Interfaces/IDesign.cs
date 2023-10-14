@@ -8,9 +8,8 @@ using FrEee.Objects.Vehicles;
 
 namespace FrEee.Interfaces
 {
-	public interface IDesign<out T>
-		: INamed, IPictorial, IOwnableAbilityObject, IConstructionTemplate, IPromotable, IReferrable, IFoggable, IUpgradeable<IDesign<T>>, ICleanable, ITemplate<T>
-		where T : IVehicle
+	public interface IDesign
+		: INamed, IPictorial, IOwnableAbilityObject, IConstructionTemplate, IPromotable, IReferrable, IFoggable, IUpgradeable<IDesign>, ICleanable
 	{
 		int Accuracy { get; }
 
@@ -40,7 +39,7 @@ namespace FrEee.Interfaces
 		/// <summary>
 		/// The vehicle's hull.
 		/// </summary>
-		IHull<T> Hull { get; }
+		IHull Hull { get; set; }
 
 		int HullHitpoints { get; }
 
@@ -134,6 +133,15 @@ namespace FrEee.Interfaces
 		/// Creates a command to create this design on the server.
 		/// </summary>
 		/// <returns></returns>
-		ICreateDesignCommand<T> CreateCreationCommand();
+		ICreateDesignCommand CreateCreationCommand();
+
+		/// <summary>
+		/// Creates an upgraded version of this design with the latest technology.
+		/// </summary>
+		/// <returns></returns>
+		IDesign Upgrade();
+
+		// can't implement ITemplate<IDesign> because Design<T> already implements Design<T>
+		IVehicle Instantiate(Game game);
 	}
 }

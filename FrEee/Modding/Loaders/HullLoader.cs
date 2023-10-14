@@ -25,7 +25,7 @@ namespace FrEee.Modding.Loaders
 		{
 			foreach (var rec in DataFile.Records)
 			{
-				IHull<IVehicle> hull;
+				IHull hull;
 				var hullname = rec.Get<string>("Name", null);
 				var hulltype = rec.Get<string>("Vehicle Type", null);
 				switch (hulltype)

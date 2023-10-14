@@ -7,9 +7,8 @@ using System.Drawing;
 
 namespace FrEee.Interfaces
 {
-	public interface IHull<out T>
-		: IModObject, IResearchable, IAbilityContainer, IPictorial, IUpgradeable<IHull<T>>
-		where T : IVehicle
+	public interface IHull
+		: IModObject, IResearchable, IAbilityContainer, IPictorial
 	{
 		/// <summary>
 		/// Can this hull use components with the Ship Auxiliary Control ability?
@@ -86,5 +85,12 @@ namespace FrEee.Interfaces
 		Image GetIcon(string shipsetPath);
 
 		Image GetPortrait(string shipsetPath);
+
+		bool IsObsolescent { get; }
+	}
+
+	public interface IHull<T> : IHull
+	{
+		IHull<T> LatestVersion { get; }
 	}
 }

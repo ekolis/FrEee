@@ -20,7 +20,7 @@ namespace FrEee.Objects.Technology
 		{
 			if (context is MountedComponentTemplate mct)
 			{
-				return The.Game.Referrables.OfType<IDesign<IVehicle>>().SingleOrDefault(q => q.Components.Contains(mct));
+				return The.Game.Referrables.OfType<IDesign>().SingleOrDefault(q => q.Components.Contains(mct));
 			}
 			else
 			{

@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects;
 using FrEee.Objects.Civilization;
@@ -54,7 +54,7 @@ namespace FrEee.WinForms.Forms
 		private void BindDesignList()
 		{
 			var emp = The.Game.CurrentEmpire;
-			IEnumerable<IDesign<IVehicle>> designs = emp.KnownDesigns;
+			IEnumerable<IDesign> designs = emp.KnownDesigns;
 
 			// filter by vehicle type
 			var item = (dynamic)ddlVehicleType.SelectedItem;
@@ -133,7 +133,7 @@ namespace FrEee.WinForms.Forms
 			{
 				// TODO - let player choose a planet?
 				var template = The.Mod.StellarObjectTemplates.OfType<Planet>().Where(p => p.Atmosphere == CurrentEmpire.Empire.PrimaryRace.NativeAtmosphere).PickRandom();
-				var planet = template.Instantiate();
+				var planet = template.Instantiate(The.Game);
 				planet.Name = "Planet";
 				var sim = new SimulatedSpaceObject(planet);
 				var simPlanet = (Planet)sim.SpaceObject;
@@ -166,7 +166,7 @@ namespace FrEee.WinForms.Forms
 			}
 			if (IsGroundCombat)
 			{
-				if (!(dsn is IDesign<Troop>))
+				if (!(dsn is IDesign))
 				{
 					MessageBox.Show("Only troop designs can be added to the vehicle list for ground combat.");
 					return;
@@ -174,7 +174,7 @@ namespace FrEee.WinForms.Forms
 			}
 			else
 			{
-				if (!(dsn is IDesign<SpaceVehicle>))
+				if (!(dsn is IDesign))
 				{
 					MessageBox.Show("Only space vehicle designs can be added to the vehicle list for space combat.");
 					return;
@@ -184,14 +184,14 @@ namespace FrEee.WinForms.Forms
 			// need to set owner *after* copying vehicle!
 			if (IsGroundCombat)
 			{
-				var sv = new SimulatedUnit((Troop)dsn.Instantiate());
+				var sv = new SimulatedUnit((Troop)dsn.Instantiate(The.Game));
 				var v = (Troop)sv.Unit;
 				v.Owner = CurrentEmpire.Empire;
 				CurrentEmpire.Troops.Add(sv);
 			}
 			else
 			{
-				var sv = new SimulatedSpaceObject((SpaceVehicle)dsn.Instantiate());
+				var sv = new SimulatedSpaceObject((SpaceVehicle)dsn.Instantiate(The.Game));
 				var v = (SpaceVehicle)sv.SpaceObject;
 				v.Owner = CurrentEmpire.Empire;
 				v.SupplyRemaining = v.SupplyStorage;
@@ -247,7 +247,7 @@ namespace FrEee.WinForms.Forms
 			{
 				// TODO - let player pick a planet to fight on, or at least specify population for militia
 				var template = The.Mod.StellarObjectTemplates.OfType<Planet>().Where(p => p.Atmosphere == CurrentEmpire.Empire.PrimaryRace.NativeAtmosphere).PickRandom();
-				var planet = template.Instantiate();
+				var planet = template.Instantiate(The.Game);
 				planet.Name = "Planet";
 				var sim = new SimulatedSpaceObject(planet);
 				var simPlanet = (Planet)sim.SpaceObject;

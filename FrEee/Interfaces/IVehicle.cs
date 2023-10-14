@@ -22,7 +22,7 @@ namespace FrEee.Interfaces
 		/// The design of this vehicle.
 		/// </summary>
 		[DoNotCopy]
-		IDesign<IVehicle> Design { get; set; }
+		IDesign Design { get; set; }
 
 		/// <summary>
 		/// Cost to maintain this vehicle per turn.

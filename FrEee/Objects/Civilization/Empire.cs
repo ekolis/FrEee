@@ -34,7 +34,7 @@ namespace FrEee.Objects.Civilization
 			StoredResources = new ResourceQuantity();
 			IntrinsicResourceStorage = new ResourceQuantity();
 			Commands = new List<ICommand>();
-			KnownDesigns = new HashSet<IDesign<IVehicle>>();
+			KnownDesigns = new HashSet<IDesign>();
 			Log = new List<LogMessage>();
 			ResearchedTechnologies = new ModReferenceKeyedDictionary<Tech, int>();
 			AccumulatedResearch = new ModReferenceKeyedDictionary<Tech, int>();
@@ -346,7 +346,7 @@ namespace FrEee.Objects.Civilization
 		/// <summary>
 		/// Designs known by this empire.
 		/// </summary>
-		public ICollection<IDesign<IVehicle>> KnownDesigns { get; private set; }
+		public ICollection<IDesign> KnownDesigns { get; private set; }
 
 		/// <summary>
 		/// The name and/or title of the leader of the empire.

@@ -616,7 +616,7 @@ public class TurnProcessor
 		// update known designs
 		Game.Empires.ParallelSafeForeach(emp =>
 		{
-			foreach (var design in Game.Referrables.OfType<IDesign<IVehicle>>())
+			foreach (var design in Game.Referrables.OfType<IDesign>())
 			{
 				if (design.CheckVisibility(emp) >= Visibility.Scanned && !emp.KnownDesigns.Contains(design))
 					emp.KnownDesigns.Add(design);

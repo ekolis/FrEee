@@ -34,7 +34,7 @@ namespace FrEee.Tests
 			return hull;
 		}
 
-		public static IHull<T> CreateHull<T>(this IDesign<T> design, string? name = null)
+		public static IHull<T> CreateHull<T>(this Design<T> design, string? name = null)
 			where T : IVehicle
 		{
 			var hull = CreateHull<T>(name ?? design.BaseName);
@@ -42,7 +42,7 @@ namespace FrEee.Tests
 			return hull;
 		}
 
-		public static IDesign<T> CreateDesign<T>(Empire owner, string name = "Generic Design")
+		public static Design<T> CreateDesign<T>(Empire owner, string name = "Generic Design")
 			where T : IVehicle
 			=> new Design<T>()
 			{
@@ -50,10 +50,10 @@ namespace FrEee.Tests
 				Owner = owner,
 			};
 
-		public static T CreateVehicle<T>(IDesign<T> design, Empire owner)
+		public static T CreateVehicle<T>(Design<T> design, Empire owner)
 			where T : IVehicle
 		{
-			var vehicle = design.Instantiate();
+			var vehicle = design.Instantiate(null);
 			vehicle.Owner = owner;
 			return vehicle;
 		}

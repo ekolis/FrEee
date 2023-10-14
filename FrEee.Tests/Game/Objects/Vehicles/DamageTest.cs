@@ -73,7 +73,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			// TODO - account for C&C and supply requirements once those are a thing
 
 			// initialize ship
-			ship = design.Instantiate();
+			ship = design.Instantiate(The.Game);
 			ship.Owner = empire;
 		}
 

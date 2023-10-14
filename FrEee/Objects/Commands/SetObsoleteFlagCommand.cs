@@ -9,9 +9,9 @@ namespace FrEee.Objects.Commands
 	/// <summary>
 	/// A command to enable or disable the obsolete flag on a design.
 	/// </summary>
-	public class SetObsoleteFlagCommand : Command<IDesign<IVehicle>>
+	public class SetObsoleteFlagCommand : Command<IDesign>
 	{
-		public SetObsoleteFlagCommand(IDesign<IVehicle> design, bool isObsolete)
+		public SetObsoleteFlagCommand(IDesign design, bool isObsolete)
 			: base(design)
 		{
 			if (design.IsNew)
@@ -25,7 +25,7 @@ namespace FrEee.Objects.Commands
 		/// The design to set the flag on if it's already knwon by the server.
 		/// </summary>
 		[DoNotSerialize]
-		public IDesign<IVehicle> Design { get { return design?.Value; } set { design = value.ReferViaGalaxy(); } }
+		public IDesign Design { get { return design?.Value; } set { design = value.ReferViaGalaxy(); } }
 
 		/// <summary>
 		/// The flag state to set.
@@ -35,7 +35,7 @@ namespace FrEee.Objects.Commands
 		/// <summary>
 		/// The design to set the flag on if it's only in the library and not in the game or it's a brand new design.
 		/// </summary>
-		public IDesign<IVehicle> NewDesign { get; set; }
+		public IDesign NewDesign { get; set; }
 
 		public override IEnumerable<IReferrable> NewReferrables
 		{
@@ -46,7 +46,7 @@ namespace FrEee.Objects.Commands
 			}
 		}
 
-		private GalaxyReference<IDesign<IVehicle>> design { get; set; }
+		private GalaxyReference<IDesign> design { get; set; }
 
 		public override void Execute()
 		{

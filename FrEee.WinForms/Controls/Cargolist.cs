@@ -62,7 +62,7 @@ namespace FrEee.WinForms.Controls
 		public SelectionType CurrentSelectionType { get; private set; }
 		public Race SelectedRace { get; private set; }
 		public IUnit SelectedUnit { get; private set; }
-		public IDesign<IUnit> SelectedUnitDesign { get; private set; }
+		public IDesign SelectedUnitDesign { get; private set; }
 		public string SelectedUnitRole { get; private set; }
 		public VehicleTypes SelectedUnitType { get; private set; }
 		public bool ShowAllUnitsAndPopulationAlways { get; set; }
@@ -230,7 +230,7 @@ namespace FrEee.WinForms.Controls
 					else if ((string)e.Node.Parent.Tag == "Designs")
 					{
 						CurrentSelectionType = SelectionType.UnitDesign;
-						SelectedUnitDesign = (IDesign<IUnit>)e.Node.Tag;
+						SelectedUnitDesign = (IDesign)e.Node.Tag;
 					}
 					else if ((string)e.Node.Parent.Tag == "Units")
 					{
@@ -248,10 +248,10 @@ namespace FrEee.WinForms.Controls
 					CurrentSelectionType = SelectionType.UnitType;
 					SelectedUnitType = (VehicleTypes)e.Node.Tag;
 				}
-				else if (e.Node.Tag is IDesign<IUnit>)
+				else if (e.Node.Tag is IDesign)
 				{
 					CurrentSelectionType = SelectionType.UnitDesign;
-					SelectedUnitDesign = (IDesign<IUnit>)e.Node.Tag;
+					SelectedUnitDesign = (IDesign)e.Node.Tag;
 				}
 				else if (e.Node.Tag is IUnit)
 				{

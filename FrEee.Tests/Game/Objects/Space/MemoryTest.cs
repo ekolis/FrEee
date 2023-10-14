@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
@@ -115,13 +115,13 @@ namespace FrEee.Tests.Game.Objects.Space
 			dsDesign.BaseName = "Destroyer";
 			dsDesign.CreateHull();
 			dsDesign.Owner = seekers;
-			destroyer = dsDesign.Instantiate();
+			destroyer = dsDesign.Instantiate(The.Game);
 			destroyer.Owner = seekers;
 			var subDesign = new Design<Ship>();
 			subDesign.BaseName = "Submarine";
 			subDesign.CreateHull();
 			subDesign.Owner = hiders;
-			submarine = subDesign.Instantiate();
+			submarine = subDesign.Instantiate(The.Game);
 			submarine.Owner = hiders;
 
 			// place ships

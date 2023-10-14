@@ -1,4 +1,4 @@
-﻿using FrEee.Objects.Civilization;
+using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
@@ -46,7 +46,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			dsn1.CreateHull();
 			dsn1.Components.Add(new MountedComponentTemplate(dsn1, storageComp));
 			dsn1.Owner = empire;
-			ship1 = dsn1.Instantiate();
+			ship1 = dsn1.Instantiate(The.Game);
 			ship1.Owner = empire;
 			var dsn2 = new Design<Ship>();
 			dsn2.BaseName = "Shippy McShipface Mk2";
@@ -55,7 +55,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			dsn2.Components.Add(new MountedComponentTemplate(dsn1, storageComp));
 			dsn2.Components.Add(new MountedComponentTemplate(dsn1, storageComp));
 			dsn2.Owner = empire;
-			ship2 = dsn2.Instantiate();
+			ship2 = dsn2.Instantiate(The.Game);
 			ship2.Owner = empire;
 
 			// initialize fleet

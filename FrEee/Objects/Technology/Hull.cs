@@ -186,7 +186,7 @@ namespace FrEee.Objects.Technology
 		/// Mounts cannot currently be obsoleted.
 		/// TODO - add family and roman numeral properties to mounts
 		/// </summary>
-		public IEnumerable<IHull<T>> NewerVersions
+		public IEnumerable<IHull> NewerVersions
 		{
 			get { yield break; }
 		}
@@ -195,7 +195,7 @@ namespace FrEee.Objects.Technology
 		/// Mounts cannot currently be obsoleted.
 		/// TODO - add family and roman numeral properties to mounts
 		/// </summary>
-		public IEnumerable<IHull<T>> OlderVersions
+		public IEnumerable<IHull> OlderVersions
 		{
 			get { yield break; }
 		}
@@ -333,9 +333,9 @@ namespace FrEee.Objects.Technology
 			return Visibility.Scanned;
 		}
 
-		public IDesign<T> CreateDesign()
+		public IDesign CreateDesign()
 		{
-			return new Design<T> { Hull = this };
+			return new Design<T>(this);
 		}
 
 		public void Dispose()

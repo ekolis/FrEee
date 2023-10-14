@@ -98,10 +98,10 @@ namespace FrEee.WinForms.Forms
 						mainGameForm.ShowResearchForm();
 						Close();
 					}
-					else if (context is IHull<IVehicle>)
+					else if (context is IHull)
 					{
 						// go to design screen and create a new design using this hull
-						var hull = (IHull<IVehicle>)context;
+						var hull = (IHull)context;
 						mainGameForm.ShowVehicleDesignForm(new VehicleDesignForm(hull));
 						Close();
 					}

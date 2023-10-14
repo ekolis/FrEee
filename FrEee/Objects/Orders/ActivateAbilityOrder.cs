@@ -281,7 +281,7 @@ namespace FrEee.Objects.Orders
 						// TODO - log destruction
 						if (Source is IDamageable damageable)
 							damageable.Hitpoints = 0;
-						if (Source is IHull<IVehicle>)
+						if (Source is IHull)
 							executor.Dispose(); // hull destruction kills the whole ship!
 					}
 

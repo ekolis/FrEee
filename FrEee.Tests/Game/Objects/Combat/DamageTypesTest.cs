@@ -15,9 +15,9 @@ namespace FrEee.Tests.Game.Objects.Combat
 		private static Mod mod;
 
 		private Ship attacker;
-		private IDesign<Ship> attackerDesign;
+		private Design<Ship> attackerDesign;
 		private Ship defender;
-		private IDesign<Ship> defenderDesign;
+		private Design<Ship> defenderDesign;
 
 		[OneTimeSetUp]
 		public static void ClassInit()
@@ -79,7 +79,7 @@ namespace FrEee.Tests.Game.Objects.Combat
 		public void OnlyEnginesDamageVersusShips()
 		{
 			attackerDesign.AddComponent(mod.ComponentTemplates.FindByName("Ionic Disperser I"));
-			attacker = attackerDesign.Instantiate();
+			attacker = attackerDesign.Instantiate(The.Game);
 
 			// small amounts of damage should hit the shields
 			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Armor I"));
@@ -101,7 +101,7 @@ namespace FrEee.Tests.Game.Objects.Combat
 		public void ShieldsOnlyDamageVersusShips()
 		{
 			attackerDesign.AddComponent(mod.ComponentTemplates.FindByName("Shield Depleter I"));
-			attacker = attackerDesign.Instantiate();
+			attacker = attackerDesign.Instantiate(The.Game);
 
 			// shields should be depleted, ship should not take armor or hull damage
 			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Armor I"));
@@ -118,7 +118,7 @@ namespace FrEee.Tests.Game.Objects.Combat
 		public void SkipsNormalShieldsDamageVersusShips()
 		{
 			attackerDesign.AddComponent(mod.ComponentTemplates.FindByName("Phased - Polaron Beam I"));
-			attacker = attackerDesign.Instantiate();
+			attacker = attackerDesign.Instantiate(The.Game);
 
 			// small amounts of damage should hit the armor
 			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Armor I"));
@@ -136,7 +136,7 @@ namespace FrEee.Tests.Game.Objects.Combat
 			TestDamage(attacker, defender, 99999, expectedHullDmg: defender.HullHitpoints, expectedArmorDmg: defender.ArmorHitpoints, expectedNormalShieldDmg: defender.NormalShields, expectedPhasedShieldDmg: defender.PhasedShields);
 		}
 
-		private void AddComponents(IDesign<IVehicle> d, params string[] compNames)
+		private void AddComponents(IDesign d, params string[] compNames)
 		{
 			foreach (var cn in compNames)
 				d.AddComponent(The.Mod.ComponentTemplates.FindByName(cn));
@@ -150,7 +150,7 @@ namespace FrEee.Tests.Game.Objects.Combat
 
 		private void SetupDefender()
 		{
-			defender = defenderDesign.Instantiate();
+			defender = defenderDesign.Instantiate(The.Game);
 			Heal(defender);
 		}
 

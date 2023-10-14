@@ -19,7 +19,7 @@ namespace FrEee.Objects.Civilization
 			AllPopulation = false;
 			AnyPopulation = 0L;
 			Units = new GalaxyReferenceSet<IUnit>();
-			UnitDesignTonnage = new GalaxyReferenceKeyedDictionary<IDesign<IUnit>, int?>();
+			UnitDesignTonnage = new GalaxyReferenceKeyedDictionary<IDesign, int?>();
 			UnitRoleTonnage = new SafeDictionary<string, int?>();
 			UnitTypeTonnage = new SafeDictionary<VehicleTypes, int?>();
 		}
@@ -65,7 +65,7 @@ namespace FrEee.Objects.Civilization
 		}
 
 		public GalaxyReferenceKeyedDictionary<Race, long?> RacePopulation { get; private set; }
-		public GalaxyReferenceKeyedDictionary<IDesign<IUnit>, int?> UnitDesignTonnage { get; private set; }
+		public GalaxyReferenceKeyedDictionary<IDesign, int?> UnitDesignTonnage { get; private set; }
 		public SafeDictionary<string, int?> UnitRoleTonnage { get; private set; }
 		public GalaxyReferenceSet<IUnit> Units { get; private set; }
 		public SafeDictionary<VehicleTypes, int?> UnitTypeTonnage { get; private set; }

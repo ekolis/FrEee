@@ -1840,7 +1840,7 @@ namespace FrEee.Utility.Extensions
 			return default(T);
 		}
 
-		private static void LogUnitTransferFailed(IDesign<IUnit> design, ICargoContainer src, ICargoContainer dest, int actualTonnage, int desiredTonnage, Empire emp)
+		private static void LogUnitTransferFailed(IDesign design, ICargoContainer src, ICargoContainer dest, int actualTonnage, int desiredTonnage, Empire emp)
 		{
 			emp.Log.Add(src.CreateLogMessage("Only " + actualTonnage.Kilotons() + " of " + desiredTonnage.Kilotons() + " worth of " + design + " class " + design.VehicleTypeName + "s could be transferred from " + src + " to " + dest + " because there are not enough in " + src + "'s cargo or " + dest + "'s cargo is full.", LogMessageType.Warning));
 		}

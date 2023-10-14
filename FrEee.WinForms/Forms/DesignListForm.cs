@@ -30,7 +30,7 @@ namespace FrEee.WinForms.Forms
 		private void BindDesignList()
 		{
 			var emp = The.Game.CurrentEmpire;
-			IEnumerable<IDesign<IVehicle>> designs = emp.KnownDesigns.OrderBy(d => d.Role).ThenBy(d => d.Name).ThenBy(d => d.Iteration);
+			IEnumerable<IDesign> designs = emp.KnownDesigns.OrderBy(d => d.Role).ThenBy(d => d.Name).ThenBy(d => d.Iteration);
 
 			// filter by vehicle type
 			var item = (dynamic)ddlVehicleType.SelectedItem;
@@ -78,7 +78,7 @@ namespace FrEee.WinForms.Forms
 		{
 			if (lstDesigns.SelectedItems.Count == 1)
 			{
-				IDesign<IVehicle> copy = CopyDesign((IDesign)lstDesigns.SelectedItems[0].Tag);
+				IDesign copy = CopyDesign((IDesign)lstDesigns.SelectedItems[0].Tag);
 				var form = new VehicleDesignForm();
 				form.Design = copy;
 				this.ShowChildForm(form);
@@ -107,7 +107,7 @@ namespace FrEee.WinForms.Forms
 				else if (MessageBox.Show("Delete " + design + " from your library?", "Delete Design", MessageBoxButtons.YesNo) == DialogResult.Yes)
 				{
 					// design in the library is just a copy so we need to search for it
-					Library.Delete<IDesign<IVehicle>>(d =>
+					Library.Delete<IDesign>(d =>
 							d.BaseName == design.BaseName &&
 							d.Hull == design.Hull &&
 							d.Components.SequenceEqual(design.Components, new MountedComponentTemplate.SimpleEqualityComparer())
@@ -157,7 +157,7 @@ namespace FrEee.WinForms.Forms
 		{
 			if (lstDesigns.SelectedItems.Count >= 1)
 			{
-				foreach (IDesign<IVehicle> d in lstDesigns.SelectedItems.Cast<ListViewItem>().Select(item => item.Tag))
+				foreach (IDesign d in lstDesigns.SelectedItems.Cast<ListViewItem>().Select(item => item.Tag))
 				{
 					d.IsObsolete = !d.IsObsolete;
 					foreach (var cmd in Empire.Current.Commands.OfType<SetObsoleteFlagCommand>().Where(cmd => (cmd.Design ?? cmd.NewDesign) == d && cmd.IsObsolete != d.IsObsolete).ToArray())
@@ -228,7 +228,7 @@ namespace FrEee.WinForms.Forms
 			BindDesignList();
 		}
 
-		private IDesign<IVehicle> CopyDesign(IDesign<IVehicle> old)
+		private IDesign CopyDesign(IDesign old)
 		{
 			var copy = old.CopyAndAssignNewID();
 			copy.TurnNumber = The.Game.TurnNumber;
@@ -268,7 +268,7 @@ namespace FrEee.WinForms.Forms
 		private void btnExportAll_Click(object sender, EventArgs e)
 		{
 			var designs = Empire.Current.KnownDesigns.OwnedBy(Empire.Current);
-			var lib = Library.Import<IDesign<IVehicle>>(d => d.IsValidInMod);
+			var lib = Library.Import<IDesign>(d => d.IsValidInMod);
 			var count = 0;
 			foreach (var d in designs)
 			{

@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace FrEee.Objects.Vehicles
 {
@@ -39,12 +40,55 @@ namespace FrEee.Objects.Vehicles
 			militiaDesign.Components.Add(new MountedComponentTemplate(militiaDesign, militiaWeapon));
 		}
 
-		public static IDesign<T> Create<T>(IHull<T> hull)
-			where T : IVehicle
+		public static IDesign Create(VehicleTypes vt)
 		{
-			var design = new Design<T>(hull);
-			design.Owner = Empire.Current;
-			return design;
+			IDesign d;
+			switch (vt)
+			{
+				case VehicleTypes.Ship:
+					d = new Design<Ship>();
+					break;
+
+				case VehicleTypes.Base:
+					d = new Design<Base>();
+					break;
+
+				case VehicleTypes.Fighter:
+					d = new Design<Fighter>();
+					break;
+
+				case VehicleTypes.Troop:
+					d = new Design<Troop>();
+					break;
+
+				case VehicleTypes.Mine:
+					d = new Design<Mine>();
+					break;
+
+				case VehicleTypes.Satellite:
+					d = new Design<Satellite>();
+					break;
+
+				case VehicleTypes.Drone:
+					d = new Design<Drone>();
+					break;
+
+				case VehicleTypes.WeaponPlatform:
+					d = new Design<WeaponPlatform>();
+					break;
+
+				default:
+					throw new Exception("Cannot create a design for vehicle type " + vt + ".");
+			}
+			d.Owner = Empire.Current;
+			return d;
+		}
+
+		public static IDesign Create(IHull hull)
+		{
+			var d = Create(hull.VehicleType);
+			d.Hull = hull;
+			return d;
 		}
 
 		/// <summary>
@@ -52,12 +96,12 @@ namespace FrEee.Objects.Vehicles
 		/// Requires a current empire. Should only be called client side.
 		/// </summary>
 		/// <returns>Copied designs imported.</returns>
-		public static IEnumerable<IDesign<IVehicle>> ImportFromLibrary()
+		public static IEnumerable<IDesign> ImportFromLibrary()
 		{
 			if (Empire.Current == null)
 				throw new InvalidOperationException("Can't import designs without a current empire.");
 
-			var designs = Library.Import<IDesign<IVehicle>>(d => d.IsValidInMod && !Empire.Current.KnownDesigns.Any(d2 => d2.Equals(d))).ToArray();
+			var designs = Library.Import<IDesign>(d => d.IsValidInMod && !Empire.Current.KnownDesigns.Any(d2 => d2.Equals(d))).ToArray();
 
 			designs.SafeForeach(d =>
 			{
@@ -82,7 +126,7 @@ namespace FrEee.Objects.Vehicles
 	/// </summary>
 	/// <typeparam name="T">The type of vehicle.</typeparam>
 	[Serializable]
-	public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
+	public class Design<T> : IDesign, ITemplate<T> where T : IVehicle
 	{
 		public Design()
 		{
@@ -261,11 +305,11 @@ namespace FrEee.Objects.Vehicles
 		/// <summary>
 		/// The latest iteration of this design.
 		/// </summary>
-		public IDesign<T> LatestVersion
+		public IDesign LatestVersion
 		{
 			get
 			{
-				return Owner.KnownDesigns.OfType<IDesign<T>>().Where(q =>
+				return Owner.KnownDesigns.OfType<IDesign>().Where(q =>
 					q.Owner == Owner
 					&& q.Name == Name
 				).MaxBy(q => q.Iteration) ?? this;
@@ -276,7 +320,7 @@ namespace FrEee.Objects.Vehicles
 		/// Creates an upgraded version of this design, with the latest upgraded components, etc.
 		/// </summary>
 		/// <returns></returns>
-		public IDesign<T> Upgrade()
+		public IDesign Upgrade()
 		{
 			var copy = this.CopyAndAssignNewID();
 			copy.Hull = Hull.LatestVersion;
@@ -340,21 +384,21 @@ namespace FrEee.Objects.Vehicles
 			}
 		}
 
-		public IEnumerable<IDesign<T>> NewerVersions
+		public IEnumerable<IDesign> NewerVersions
 		{
 			get
 			{
 				// TODO - check design library?
-				return The.Game.Referrables.OfType<IDesign<T>>().Where(d => d.Owner == Owner && d.BaseName == BaseName && d.Iteration > Iteration);
+				return The.Game.Referrables.OfType<IDesign>().Where(d => d.Owner == Owner && d.BaseName == BaseName && d.Iteration > Iteration);
 			}
 		}
 
-		public IEnumerable<IDesign<T>> OlderVersions
+		public IEnumerable<IDesign> OlderVersions
 		{
 			get
 			{
 				// TODO - check design library?
-				return The.Game.Referrables.OfType<IDesign<T>>().Where(d => d.Owner == Owner && d.BaseName == BaseName && d.Iteration < Iteration);
+				return The.Game.Referrables.OfType<IDesign>().Where(d => d.Owner == Owner && d.BaseName == BaseName && d.Iteration < Iteration);
 			}
 		}
 
@@ -659,7 +703,7 @@ namespace FrEee.Objects.Vehicles
 			return o;
 		}
 
-		public ICreateDesignCommand<T> CreateCreationCommand()
+		public ICreateDesignCommand CreateCreationCommand()
 		{
 			return new CreateDesignCommand<T>(this);
 		}
@@ -783,5 +827,11 @@ namespace FrEee.Objects.Vehicles
 			}
 			return paths;
 		}
+
+		ICreateDesignCommand IDesign.CreateCreationCommand() => CreateCreationCommand();
+
+		IVehicle IDesign.Instantiate(Game game) => Instantiate(game);
+
+		IHull IDesign.Hull { get => Hull; set => Hull = value as IHull<T> ?? throw new InvalidCastException("Hull vehicle type does not match."); }
 	}
 }

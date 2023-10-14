@@ -44,8 +44,8 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		public static void ClassInit()
 		{
 			// initialize galaxy
-			new Galaxy();
-			Mod.Load(null);
+			The.Mod = Mod.Load(null);
+			FrEee.Game.Start(The.Mod, null); // TODO: deal with game setup parameter
 
 			// initialize empires
 			seekers = new Empire();
@@ -59,13 +59,13 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			dsDesign.BaseName = "TestDestroyer";
 			dsDesign.CreateHull();
 			dsDesign.Owner = seekers;
-			destroyer = dsDesign.Instantiate();
+			destroyer = dsDesign.Instantiate(The.Game);
 			destroyer.Owner = seekers;
 			var subDesign = new Design<Ship>();
 			subDesign.BaseName = "TestSubmarine";
 			subDesign.CreateHull();
 			subDesign.Owner = hiders;
-			submarine = subDesign.Instantiate();
+			submarine = subDesign.Instantiate(The.Game);
 			submarine.Owner = hiders;
 		}
 

@@ -74,7 +74,7 @@ namespace FrEee.Tests.Modding
 			var data = "Name := Capital Ship Missile I";
 			var metarec = new MetaRecord(data.Split('\n'));
 			Assert.AreEqual(0, metarec.Parameters.Count());
-			var recs = metarec.Instantiate();
+			var recs = metarec.Instantiate(The.Game);
 			Assert.AreEqual(1, recs.Count());
 			Assert.AreEqual("Capital Ship Missile I", recs.First().Get<string>("Name", null).Value);
 		}
@@ -101,7 +101,7 @@ Name := ='Nuclear Missile ' + warhead.ToRomanNumeral() + ' S' + speed.ToString()
 			Assert.AreEqual(1, metarec.Parameters.Last().Minimum);
 			Assert.AreEqual(5, metarec.Parameters.Last().Maximum);
 
-			var recs = metarec.Instantiate();
+			var recs = metarec.Instantiate(The.Game);
 			Assert.AreEqual(15, recs.Count());
 			Assert.AreEqual(1, recs.Where(r => r.Get<string>("Name", null) == "Nuclear Missile III S4").Count());
 		}

@@ -12,15 +12,15 @@ namespace FrEee.Objects.Commands
 	/// A command to create a new vehicle design.
 	/// </summary>
 	[Serializable]
-	public class CreateDesignCommand<T> : Command<Empire>, ICreateDesignCommand<T> where T : IVehicle
+	public class CreateDesignCommand<T> : Command<Empire>, ICreateDesignCommand where T : IVehicle
 	{
-		public CreateDesignCommand(IDesign<T> design)
+		public CreateDesignCommand(IDesign design)
 			: base(Empire.Current)
 		{
 			Design = design;
 		}
 
-		public IDesign<T> Design { get; set; }
+		public IDesign Design { get; set; }
 
 		public override IEnumerable<IReferrable> NewReferrables
 		{

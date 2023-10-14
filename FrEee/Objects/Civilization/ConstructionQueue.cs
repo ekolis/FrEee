@@ -46,7 +46,7 @@ namespace FrEee.Objects.Civilization
 			{
 				if (!(Container is ICargoContainer))
 					return 0;
-				return ((ICargoContainer)Container).CargoStorageFree() - Orders.Select(o => o.Template).OfType<IDesign<IUnit>>().Sum(t => t.Hull.Size);
+				return ((ICargoContainer)Container).CargoStorageFree() - Orders.Select(o => o.Template).OfType<IDesign>().Sum(t => t.Hull.Size);
 			}
 		}
 
@@ -62,7 +62,7 @@ namespace FrEee.Objects.Civilization
 				var queues = Container.Sector.SpaceObjects.OfType<IConstructor>().Where
 					(sobj => sobj.Owner == Owner && sobj.ConstructionQueue != null)
 					.Select(sobj => sobj.ConstructionQueue);
-				return storage - queues.Sum(q => q.Orders.Select(o => o.Template).OfType<IDesign<IUnit>>().Sum(t => t.Hull.Size));
+				return storage - queues.Sum(q => q.Orders.Select(o => o.Template).OfType<IDesign>().Sum(t => t.Hull.Size));
 			}
 		}
 
@@ -188,7 +188,7 @@ namespace FrEee.Objects.Civilization
 		{
 			get
 			{
-				var unlockedHulls = The.Mod.Hulls.OfType<IHull<IUnit>>().Where(h => h.IsUnlocked());
+				var unlockedHulls = The.Mod.Hulls.OfType<IHull>().Where(h => h.IsUnlocked());
 				return (Eta == null || Eta < 1 && !AreRepeatOrdersEnabled)
 					&& (IsSpaceYardQueue || FacilitySlotsFree > 0 || unlockedHulls.Any() && unlockedHulls.Min(h => h.Size) <= CargoStorageFreeInSector);
 			}
