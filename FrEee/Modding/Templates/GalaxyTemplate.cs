@@ -98,6 +98,7 @@ namespace FrEee.Modding.Templates
 		public Galaxy Instantiate(Game game, Status? status, double desiredProgress, PRNG dice)
 		{
 			var gal = new Galaxy();
+			game.Galaxy = gal;
 			gal.Width = GameSetup.GalaxySize.Width;
 			gal.Height = GameSetup.GalaxySize.Height;
 			var bounds = new Rectangle(-GameSetup.GalaxySize.Width / 2, -GameSetup.GalaxySize.Height / 2, GameSetup.GalaxySize.Width, GameSetup.GalaxySize.Height);

@@ -88,7 +88,7 @@ public class Game
 	/// <summary>
 	/// The galaxy in which this game is being played.
 	/// </summary>
-	public Galaxy Galaxy { get; private set; }
+	public Galaxy Galaxy { get; internal set; }
 
 	/// <summary>
 	/// The random numer generator used by this game.
