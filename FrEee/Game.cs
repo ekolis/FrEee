@@ -247,7 +247,7 @@ public class Game
 			throw new InvalidOperationException("Can only save all player games from the master game.");
 		}
 
-		var progressPerSaveLoad = (desiredProgress - status.Progress) / (IsSinglePlayer ? 3 : Empires.Count + 2);
+		var progressPerSaveLoad = (desiredProgress - status.Progress) / (IsSinglePlayer ? 2 : Empires.Count + 1);
 
 		// save master view
 		status.Message = "Saving game (host)";
@@ -258,21 +258,16 @@ public class Game
 		for (var i = 0; i < Empires.Count; i++)
 		{
 			// load, redact, and save master view
-			Load(gamname);
-			if (Empires[i].IsPlayerEmpire)
+			Game playerGame = Load(gamname);
+			if (playerGame.Empires[i].IsPlayerEmpire)
 			{
 				status.Message = "Saving game (player " + (i + 1) + ")";
-				CurrentEmpire = Empires[i];
-				Redact();
-				Save(false); // already asssigned IDs in the redact phase
+				playerGame.CurrentEmpire = Empires[i];
+				playerGame.Redact();
+				playerGame.Save(false); // already asssigned IDs in the redact phase
 				status.Progress += progressPerSaveLoad;
 			}
 		}
-
-		// TODO - only reload master view if we really need to
-		status.Message = "Saving game";
-		Load(gamname);
-		status.Progress += progressPerSaveLoad;
 	}
 
 	public void Save(Stream stream, bool assignIDs = true)
