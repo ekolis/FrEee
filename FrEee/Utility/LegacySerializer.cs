@@ -386,9 +386,20 @@ namespace FrEee.Utility
 				itemType = typeof(KeyValuePair<,>).MakeGenericType(type.GetGenericArguments());
 			else if (type == typeof(DynamicDictionary))
 				itemType = typeof(KeyValuePair<object, object>);
-			else
+			else if (type.Name == "Resources" || type.Name == "ResourceFormula")
+			{
 				// HACK - Resources inherits from a dictionary type
 				itemType = typeof(KeyValuePair<,>).MakeGenericType(type.BaseType.GetGenericArguments());
+			}
+			else if (type.Name == "ReferrableRepository")
+			{
+				// HACK: ReferrableRepository is a dictionary
+				itemType = typeof(KeyValuePair<long, IReferrable>);
+			}
+			else
+			{
+				throw new InvalidOperationException($"Invalid dictionary type {type}.");
+			}
 
 			var collParm = Expression.Parameter(typeof(object), "coll");
 			var keyParm = Expression.Parameter(typeof(object), "key");
@@ -834,7 +845,7 @@ namespace FrEee.Utility
 				itemType = type.GetGenericArguments()[0];
 				w.WriteLine("c" + list.Cast<object>().Count() + ":" + tabs);
 			}
-			if (type.Name == "ReferrableRepository")
+			else if (type.Name == "ReferrableRepository")
 			{
 				// HACK - referral repositories are dictionaries
 				itemType = typeof(KeyValuePair<long, IReferrable>);
