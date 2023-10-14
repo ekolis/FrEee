@@ -24,21 +24,21 @@ namespace FrEee.Tests.Modding
 		{
 			var gal = new Galaxy();
 			Empire emp = new Empire();
-			Mod.Current = new Mod();
+			The.Mod = new Mod();
 			var armor = new ComponentTemplate();
 			armor.Name = armor.ModID = "Armor";
 			armor.Size = 10;
 			armor.Durability = new ComputedFormula<int>("self.Size * 3", armor, true);
-			Mod.Current.ComponentTemplates.Add(armor);
+			The.Mod.ComponentTemplates.Add(armor);
 			var mount = new Mount();
 			mount.ModID = mount.Name = "Scale Mount";
 			mount.DurabilityPercent = 200;
 			mount.SizePercent = new ComputedFormula<int>("design.Hull.Size", mount, true);
-			Mod.Current.Mounts.Add(mount);
+			The.Mod.Mounts.Add(mount);
 			var hull = new Hull<Ship>();
 			hull.ModID = hull.Name = "Generic Hull";
 			hull.Size = 150;
-			Mod.Current.Hulls.Add(hull);
+			The.Mod.Hulls.Add(hull);
 
 			var design = new Design<Ship>();
 			The.ReferrableRepository.AssignID(design);
@@ -60,8 +60,8 @@ namespace FrEee.Tests.Modding
 		{
 			var gal = new Galaxy();
 			Empire emp = new Empire();
-			Mod.Current = Mod.Load("DynamicFormulaWithParameters");
-			var ct = Mod.Current.ComponentTemplates.First();
+			The.Mod = Mod.Load("DynamicFormulaWithParameters");
+			var ct = The.Mod.ComponentTemplates.First();
 			Assert.AreEqual(1, ct.WeaponInfo.GetDamage(new Shot(null, new Component(null, new MountedComponentTemplate(null, ct, null)), null, 1)));
 		}
 

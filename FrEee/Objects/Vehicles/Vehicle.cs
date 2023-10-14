@@ -272,9 +272,9 @@ namespace FrEee.Objects.Vehicles
 			{
 				double pct;
 				if (Design.Hull.VehicleType == VehicleTypes.Ship || Design.Hull.VehicleType == VehicleTypes.Base)
-					pct = Mod.Current.Settings.ShipBaseMaintenanceRate;
+					pct = The.Mod.Settings.ShipBaseMaintenanceRate;
 				else
-					pct = Mod.Current.Settings.UnitMaintenanceRate;
+					pct = The.Mod.Settings.UnitMaintenanceRate;
 
 				if (pct > 0)
 				{
@@ -490,9 +490,9 @@ namespace FrEee.Objects.Vehicles
 			{
 				double ratio;
 				if (this is Ship || this is Base)
-					ratio = Mod.Current.Settings.ScrapShipOrBaseReturnRate;
+					ratio = The.Mod.Settings.ScrapShipOrBaseReturnRate;
 				else
-					ratio = Mod.Current.Settings.ScrapUnitReturnRate;
+					ratio = The.Mod.Settings.ScrapUnitReturnRate;
 				var val = Cost * ratio / 100;
 				if (this is ICargoContainer)
 				{

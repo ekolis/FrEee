@@ -179,7 +179,7 @@ namespace FrEee.WinForms.Controls
 								sf.LineAlignment = StringAlignment.Far; // bottom align our name
 								var name = largest.Name;
 								Brush nameBrush;
-								if (largest.Timestamp < The.Game.Timestamp)
+								if (largest.Timestamp < The.Timestamp)
 									nameBrush = Brushes.Gray;
 								else
 									nameBrush = Brushes.White;

@@ -54,7 +54,7 @@ namespace FrEee.Modding
 		{
 			bool b;
 			if (!bool.TryParse(Value, out b))
-				Mod.Errors.Add(new DataParsingException("Cannot parse \"" + Value + "\" as a boolean.", Mod.CurrentFileName, rec, this));
+				Mod.Errors.Add(new DataParsingException("Cannot parse \"" + Value + "\" as a boolean.", The.ModFileName, rec, this));
 			return b;
 		}
 
@@ -132,7 +132,7 @@ namespace FrEee.Modding
 		{
 			double d;
 			if (!double.TryParse(Value, out d))
-				Mod.Errors.Add(new DataParsingException("Cannot parse \"" + Value + "\" as a double.", Mod.CurrentFileName, rec, this));
+				Mod.Errors.Add(new DataParsingException("Cannot parse \"" + Value + "\" as a double.", The.ModFileName, rec, this));
 			return d;
 		}
 
@@ -147,7 +147,7 @@ namespace FrEee.Modding
 		{
 			T t;
 			if (!Enum.TryParse<T>(Value, out t))
-				Mod.Errors.Add(new DataParsingException("Cannot parse \"" + Value + "\" as an enumerated value of type " + typeof(T).Name + ".", Mod.CurrentFileName, rec, this));
+				Mod.Errors.Add(new DataParsingException("Cannot parse \"" + Value + "\" as an enumerated value of type " + typeof(T).Name + ".", The.ModFileName, rec, this));
 			return t;
 		}
 
@@ -162,7 +162,7 @@ namespace FrEee.Modding
 		{
 			int i;
 			if (!int.TryParse(Value, out i))
-				Mod.Errors.Add(new DataParsingException("Cannot parse \"" + Value + "\" as an integer.", Mod.CurrentFileName, rec, this));
+				Mod.Errors.Add(new DataParsingException("Cannot parse \"" + Value + "\" as an integer.", The.ModFileName, rec, this));
 			return i;
 		}
 
@@ -177,7 +177,7 @@ namespace FrEee.Modding
 		{
 			long l;
 			if (!long.TryParse(Value, out l))
-				Mod.Errors.Add(new DataParsingException("Cannot parse \"" + Value + "\" as a long.", Mod.CurrentFileName, rec, this));
+				Mod.Errors.Add(new DataParsingException("Cannot parse \"" + Value + "\" as a long.", The.ModFileName, rec, this));
 			return l;
 		}
 

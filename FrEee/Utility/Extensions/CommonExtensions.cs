@@ -368,10 +368,10 @@ namespace FrEee.Utility.Extensions
 				}
 				didStuff = true;
 			}
-			if (The.Game.NextTickSize == double.PositiveInfinity)
+			if (The.TurnProcessor.NextTickSize == double.PositiveInfinity)
 				o.TimeToNextMove = 0;
 			else
-				o.TimeToNextMove -= The.Game.NextTickSize;
+				o.TimeToNextMove -= The.TurnProcessor.NextTickSize;
 			return didStuff;
 		}
 
@@ -976,7 +976,7 @@ namespace FrEee.Utility.Extensions
 			var rawResourceIncome = new ResourceQuantity();
 			foreach (var resource in Resource.All)
 			{
-				var rule = Mod.Current.AbilityRules.SingleOrDefault(r => r.Matches("Generate Points " + resource));
+				var rule = The.Mod.AbilityRules.SingleOrDefault(r => r.Matches("Generate Points " + resource));
 				if (rule != null)
 				{
 					var amount = o.GetAbilityValue(rule.Name).ToInt();
@@ -1506,7 +1506,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns>Leftover damage.</returns>
 		public static int TakeDamage(this IDamageable d, string damageTypeName, int damage, PRNG dice = null)
 		{
-			return d.TakeDamage(Mod.Current.DamageTypes.FindByName(damageTypeName), damage, dice);
+			return d.TakeDamage(The.Mod.DamageTypes.FindByName(damageTypeName), damage, dice);
 		}
 
 		/// <summary>
@@ -1590,7 +1590,7 @@ namespace FrEee.Utility.Extensions
 				if (!overrideFreeSpace)
 				{
 					// limit by amount of free space
-					amount = Math.Min(amount, dest.PopulationStorageFree + (long)((dest.CargoStorage - dest.Cargo.Size) / Mod.Current.Settings.PopulationSize));
+					amount = Math.Min(amount, dest.PopulationStorageFree + (long)((dest.CargoStorage - dest.Cargo.Size) / The.Mod.Settings.PopulationSize));
 				}
 
 				amount -= src.RemovePopulation(kvp.Key, amount);
@@ -1612,7 +1612,7 @@ namespace FrEee.Utility.Extensions
 				// limit by amount available
 				amount = Math.Min(amount, kvp.Value);
 				// limit by amount of free space
-				amount = Math.Min(amount, dest.PopulationStorageFree + (long)((dest.CargoStorage - dest.Cargo.Size) / Mod.Current.Settings.PopulationSize));
+				amount = Math.Min(amount, dest.PopulationStorageFree + (long)((dest.CargoStorage - dest.Cargo.Size) / The.Mod.Settings.PopulationSize));
 
 				// transfer population from source to destination
 				amount -= src.RemovePopulation(kvp.Key, amount);
@@ -1638,7 +1638,7 @@ namespace FrEee.Utility.Extensions
 					// limit by amount available
 					amount = Math.Min(amount, kvp.Value);
 					// limit by amount of free space
-					amount = Math.Min(amount, dest.PopulationStorageFree + (long)((dest.CargoStorage - dest.Cargo.Size) / Mod.Current.Settings.PopulationSize));
+					amount = Math.Min(amount, dest.PopulationStorageFree + (long)((dest.CargoStorage - dest.Cargo.Size) / The.Mod.Settings.PopulationSize));
 
 					// transfer population from source to destination
 					amount -= src.RemovePopulation(kvp.Key, amount);

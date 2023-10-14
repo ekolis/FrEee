@@ -350,7 +350,7 @@ namespace FrEee.WinForms.Forms
 				freeTradeNode.AddItemWithImage(res.Name, clause, res.Icon);
 			}
 			var abilNode = treatyNode.AddItemWithImage("Ability Sharing", "Ability Sharing", null);
-			foreach (var abil in Mod.Current.AbilityRules.Where(abil =>
+			foreach (var abil in The.Mod.AbilityRules.Where(abil =>
 				(abil.CanTarget(AbilityTargets.Sector) || abil.CanTarget(AbilityTargets.StarSystem) || abil.CanTarget(AbilityTargets.Galaxy)) &&
 				!package.TreatyClauses.OfType<ShareAbilityClause>().Any(c => c.AbilityRule == abil)))
 			{

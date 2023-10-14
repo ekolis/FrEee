@@ -67,7 +67,7 @@ namespace FrEee.Modding.Templates
 
 		public Planet Instantiate()
 		{
-			var candidates = Mod.Current.StellarObjectTemplates.OfType<Planet>();
+			var candidates = The.Mod.StellarObjectTemplates.OfType<Planet>();
 			if (Atmosphere != null)
 				candidates = candidates.Where(p => p.Atmosphere == Atmosphere);
 			if (Surface != null)
@@ -83,7 +83,7 @@ namespace FrEee.Modding.Templates
 
 			if (planet.Size == null)
 			{
-				var sizes = Mod.Current.StellarObjectSizes.Where(sos => sos.StellarObjectType == "Planet" && !sos.IsConstructed && (StellarSize == null || sos.StellarSize == StellarSize.Value));
+				var sizes = The.Mod.StellarObjectSizes.Where(sos => sos.StellarObjectType == "Planet" && !sos.IsConstructed && (StellarSize == null || sos.StellarSize == StellarSize.Value));
 				planet.Size = sizes.PickRandom();
 			}
 
@@ -95,7 +95,7 @@ namespace FrEee.Modding.Templates
 			planet.ResourceValue[Resource.Organics] = RandomHelper.Range(The.Setup.MinSpawnedPlanetValue, The.Setup.MaxSpawnedPlanetValue);
 			planet.ResourceValue[Resource.Radioactives] = RandomHelper.Range(The.Setup.MinSpawnedPlanetValue, The.Setup.MaxSpawnedPlanetValue);
 
-			planet.ConditionsAmount = RandomHelper.Range(Mod.Current.Settings.MinRandomPlanetConditions, Mod.Current.Settings.MaxRandomPlanetConditions);
+			planet.ConditionsAmount = RandomHelper.Range(The.Mod.Settings.MinRandomPlanetConditions, The.Mod.Settings.MaxRandomPlanetConditions);
 
 			return planet;
 		}

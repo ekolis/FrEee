@@ -1,4 +1,4 @@
-﻿using FrEee.Interfaces;
+using FrEee.Interfaces;
 using FrEee.Objects.Combat;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
@@ -139,7 +139,7 @@ namespace FrEee.Tests.Game.Objects.Combat
 		private void AddComponents(IDesign d, params string[] compNames)
 		{
 			foreach (var cn in compNames)
-				d.AddComponent(Mod.Current.ComponentTemplates.FindByName(cn));
+				d.AddComponent(The.Mod.ComponentTemplates.FindByName(cn));
 		}
 
 		private void Heal(Ship ship)

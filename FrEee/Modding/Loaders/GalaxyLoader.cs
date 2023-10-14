@@ -40,7 +40,7 @@ namespace FrEee.Modding.Loaders
 				rec.TryFindFieldValue("Min Dist Between Systems", out temp, ref index, Mod.Errors, 0, true);
 				int mindist;
 				if (!int.TryParse(temp, out mindist))
-					Mod.Errors.Add(new DataParsingException("Cannot find field \"Min Dist Between Systems\"", Mod.CurrentFileName, rec));
+					Mod.Errors.Add(new DataParsingException("Cannot find field \"Min Dist Between Systems\"", The.ModFileName, rec));
 				galtemp.MinimumStarSystemDistance = mindist;
 
 				rec.TryFindFieldValue("System Placement", out temp, ref index, Mod.Errors, 0, true);
@@ -56,20 +56,20 @@ namespace FrEee.Modding.Loaders
 					galtemp.StarSystemPlacementStrategy = new GridStarSystemPlacementStrategy();
 				else
 				{
-					Mod.Errors.Add(new DataParsingException("Invalid value \"" + temp + "\" for field \"System Placement\". Must be Random, Clusters, Spiral, Diffuse, or Grid.", Mod.CurrentFileName, rec));
+					Mod.Errors.Add(new DataParsingException("Invalid value \"" + temp + "\" for field \"System Placement\". Must be Random, Clusters, Spiral, Diffuse, or Grid.", The.ModFileName, rec));
 					galtemp.StarSystemPlacementStrategy = new RandomStarSystemPlacementStrategy(); // default
 				}
 
 				rec.TryFindFieldValue("Max Warp Points per Sys", out temp, ref index, Mod.Errors, 0, true);
 				int maxwarp;
 				if (!int.TryParse(temp, out maxwarp))
-					Mod.Errors.Add(new DataParsingException("Cannot find field \"Max Warp Points per Sys\"", Mod.CurrentFileName, rec));
+					Mod.Errors.Add(new DataParsingException("Cannot find field \"Max Warp Points per Sys\"", The.ModFileName, rec));
 				galtemp.MaxWarpPointsPerSystem = maxwarp;
 
 				rec.TryFindFieldValue("Min Angle Between WP", out temp, ref index, Mod.Errors, 0, true);
 				int minangle;
 				if (!int.TryParse(temp, out minangle))
-					Mod.Errors.Add(new DataParsingException("Cannot find field \"Min Angle Between WP\"", Mod.CurrentFileName, rec));
+					Mod.Errors.Add(new DataParsingException("Cannot find field \"Min Angle Between WP\"", The.ModFileName, rec));
 				galtemp.MinWarpPointAngle = minangle;
 
 				int count = 1;
@@ -86,7 +86,7 @@ namespace FrEee.Modding.Loaders
 						sst = mod.StarSystemTemplates.FindByName(temp);
 						if (sst == null)
 						{
-							Mod.Errors.Add(new DataParsingException("Could not find star system template \"" + temp + "\".", Mod.CurrentFileName, rec, null));
+							Mod.Errors.Add(new DataParsingException("Could not find star system template \"" + temp + "\".", The.ModFileName, rec, null));
 							continue; // skip this chance
 						}
 					}
@@ -97,7 +97,7 @@ namespace FrEee.Modding.Loaders
 					else
 					{
 						if (!int.TryParse(temp, out chance))
-							Mod.Errors.Add(new DataParsingException("Type Chance field value must be an integer.", Mod.CurrentFileName, rec, null));
+							Mod.Errors.Add(new DataParsingException("Type Chance field value must be an integer.", The.ModFileName, rec, null));
 					}
 					start++;
 

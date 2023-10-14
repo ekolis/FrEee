@@ -43,7 +43,7 @@ namespace FrEee.Modding
 		{
 			get
 			{
-				return Mod.Current.DamageTypes.FindByName("Normal") ?? new DamageType();
+				return The.Mod.DamageTypes.FindByName("Normal") ?? new DamageType();
 			}
 		}
 

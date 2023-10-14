@@ -30,7 +30,7 @@ namespace FrEee.Objects.VictoryConditions
 		{
 			if (emp.IsDefeated)
 				return 0;
-			return (double)emp.ResearchedTechnologies.Where(t => !t.Key.IsRacial && !t.Key.IsUnique).Sum(t => t.Value) / (double)Mod.Current.Technologies.Where(t => !t.IsRacial && !t.IsUnique).Sum(t => t.MaximumLevel);
+			return (double)emp.ResearchedTechnologies.Where(t => !t.Key.IsRacial && !t.Key.IsUnique).Sum(t => t.Value) / (double)The.Mod.Technologies.Where(t => !t.IsRacial && !t.IsUnique).Sum(t => t.MaximumLevel);
 		}
 
 		public string GetVictoryMessage(Empire emp)

@@ -80,7 +80,7 @@ namespace FrEee.Setup
 		[DoNotSerialize]
 		public GalaxyTemplate GalaxyTemplate
 		{
-			get { return Mod.Current.GalaxyTemplates.FindByName(GalaxyTemplateName); }
+			get { return The.Mod.GalaxyTemplates.FindByName(GalaxyTemplateName); }
 			set { GalaxyTemplateName = value.Name; }
 		}
 
@@ -281,8 +281,8 @@ namespace FrEee.Setup
 			for (var i = 1; i <= RandomAIs; i++)
 			{
 				// TODO - load saved EMP files for random AI empires
-				var surface = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => !p.Size.IsConstructed).Select(p => p.Surface).Distinct().PickRandom(dice);
-				var atmosphere = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => !p.Size.IsConstructed && p.Surface == surface).Select(p => p.Atmosphere).Distinct().PickRandom(dice);
+				var surface = The.Mod.StellarObjectTemplates.OfType<Planet>().Where(p => !p.Size.IsConstructed).Select(p => p.Surface).Distinct().PickRandom(dice);
+				var atmosphere = The.Mod.StellarObjectTemplates.OfType<Planet>().Where(p => !p.Size.IsConstructed && p.Surface == surface).Select(p => p.Atmosphere).Distinct().PickRandom(dice);
 				var et = new EmpireTemplate
 				{
 					Name = "Random Empire #" + i,
@@ -295,8 +295,8 @@ namespace FrEee.Setup
 					},
 					IsPlayerEmpire = false,
 					Color = RandomColor(dice),
-					Culture = Mod.Current.Cultures.PickRandom(dice),
-					AIName = Mod.Current.EmpireAIs.PickRandom(dice).Name,
+					Culture = The.Mod.Cultures.PickRandom(dice),
+					AIName = The.Mod.EmpireAIs.PickRandom(dice).Name,
 				};
 				foreach (var apt in Aptitude.All)
 					et.PrimaryRace.Aptitudes[apt.Name] = 100;
@@ -308,8 +308,8 @@ namespace FrEee.Setup
 			for (var i = 1; i <= MinorEmpires; i++)
 			{
 				// TODO - load saved EMP files for minor empires
-				var surface = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => !p.Size.IsConstructed).Select(p => p.Surface).Distinct().PickRandom(dice);
-				var atmosphere = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => !p.Size.IsConstructed && p.Surface == surface).Select(p => p.Atmosphere).Distinct().PickRandom(dice);
+				var surface = The.Mod.StellarObjectTemplates.OfType<Planet>().Where(p => !p.Size.IsConstructed).Select(p => p.Surface).Distinct().PickRandom(dice);
+				var atmosphere = The.Mod.StellarObjectTemplates.OfType<Planet>().Where(p => !p.Size.IsConstructed && p.Surface == surface).Select(p => p.Atmosphere).Distinct().PickRandom(dice);
 				var et = new EmpireTemplate
 				{
 					Name = "Minor Empire #" + i,
@@ -323,8 +323,8 @@ namespace FrEee.Setup
 					IsPlayerEmpire = false,
 					IsMinorEmpire = true,
 					Color = RandomColor(dice),
-					Culture = Mod.Current.Cultures.PickRandom(dice),
-					AIName = Mod.Current.EmpireAIs.PickRandom(dice).Name,
+					Culture = The.Mod.Cultures.PickRandom(dice),
+					AIName = The.Mod.EmpireAIs.PickRandom(dice).Name,
 				};
 				foreach (var apt in Aptitude.All)
 					et.PrimaryRace.Aptitudes[apt.Name] = 100;
@@ -400,7 +400,7 @@ namespace FrEee.Setup
 		/// <param name="emp"></param>
 		private Planet MakeHomeworld(Empire emp, string hwName, PRNG dice)
 		{
-			var hw = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p =>
+			var hw = The.Mod.StellarObjectTemplates.OfType<Planet>().Where(p =>
 						p.Surface == emp.PrimaryRace.NativeSurface &&
 						p.Atmosphere == emp.PrimaryRace.NativeAtmosphere &&
 						p.Size == HomeworldSize)
@@ -410,7 +410,7 @@ namespace FrEee.Setup
 			hw = hw.Instantiate();
 			hw.Name = hwName;
 			hw.Size = HomeworldSize;
-			hw.ConditionsAmount = Mod.Current.Settings.HomeworldConditions;
+			hw.ConditionsAmount = The.Mod.Settings.HomeworldConditions;
 			return hw;
 		}
 
@@ -426,7 +426,7 @@ namespace FrEee.Setup
 
 			// give empire starting techs
 			The.Game.CleanGameState(); // need to know what the techs in the game are!
-			foreach (var tech in Mod.Current.Technologies.Where(t => !t.IsRacial || emp.Abilities().Any(a => a.Rule.Matches("Tech Area") && a.Value1 == t.RacialTechID)))
+			foreach (var tech in The.Mod.Technologies.Where(t => !t.IsRacial || emp.Abilities().Any(a => a.Rule.Matches("Tech Area") && a.Value1 == t.RacialTechID)))
 			{
 				switch (StartingTechnologyLevel)
 				{
@@ -462,7 +462,7 @@ namespace FrEee.Setup
 				colonyTechName = "Ice Planet Colonization";
 			else if (emp.PrimaryRace.NativeSurface == "Gas Giant")
 				colonyTechName = "Gas Giant Colonization";
-			var colonyTech = Mod.Current.Technologies.SingleOrDefault(t => t.Name == colonyTechName);
+			var colonyTech = The.Mod.Technologies.SingleOrDefault(t => t.Name == colonyTechName);
 			if (colonyTech != null && emp.ResearchedTechnologies[colonyTech] < 1)
 				emp.ResearchedTechnologies[colonyTech] = 1;
 
@@ -533,11 +533,11 @@ namespace FrEee.Setup
 					var convertSys = gal.StarSystemLocations.Select(ssl => ssl.Item).Where(sys => !sys.EmpiresCanStartIn).PickRandom(dice);
 					if (convertSys == null)
 						throw new Exception("No suitable system found to place " + emp + "'s homeworld #" + (i + 1) + ". (Try increasing the number of star systems.)");
-					var newSys = Mod.Current.StarSystemTemplates.Where(q => q.EmpiresCanStartIn).PickRandom(dice).Instantiate();
+					var newSys = The.Mod.StarSystemTemplates.Where(q => q.EmpiresCanStartIn).PickRandom(dice).Instantiate();
 					var sid = convertSys.ID;
 					newSys.CopyTo(convertSys);
 					convertSys.ID = sid;
-					convertSys.Name = Mod.Current.StarSystemNames.Except(gal.StarSystemLocations.Select(q => q.Item.Name)).PickRandom(dice);
+					convertSys.Name = The.Mod.StarSystemNames.Except(gal.StarSystemLocations.Select(q => q.Item.Name)).PickRandom(dice);
 					foreach (var l in The.Galaxy.StarSystemLocations)
 					{
 						foreach (var wp in l.Item.FindSpaceObjects<WarpPoint>().Where(q => q.Target.StarSystem == convertSys).ToArray())

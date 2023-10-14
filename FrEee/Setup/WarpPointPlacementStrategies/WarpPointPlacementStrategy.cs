@@ -50,12 +50,12 @@ namespace FrEee.Setup.WarpPointPlacementStrategies
 			if (abil1 != null || abil2 != null)
 			{
 				// use unusual warp point templates
-				wpTemplate = Mod.Current.StellarObjectTemplates.OfType<WarpPoint>().Where(wp => wp.IsUnusual).PickRandom();
+				wpTemplate = The.Mod.StellarObjectTemplates.OfType<WarpPoint>().Where(wp => wp.IsUnusual).PickRandom();
 			}
 			else
 			{
 				// use normal warp point templates
-				wpTemplate = Mod.Current.StellarObjectTemplates.OfType<WarpPoint>().Where(wp => !wp.IsUnusual).PickRandom();
+				wpTemplate = The.Mod.StellarObjectTemplates.OfType<WarpPoint>().Where(wp => !wp.IsUnusual).PickRandom();
 			}
 
 			Sector sector1, sector2;

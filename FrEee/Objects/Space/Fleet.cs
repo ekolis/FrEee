@@ -25,7 +25,7 @@ namespace FrEee.Objects.Space
 		{
 			Vehicles = new GalaxyReferenceSet<IMobileSpaceObject>();
 			Orders = new List<IOrder>();
-			Timestamp = The.Game?.Timestamp ?? 0;
+			Timestamp = The.TurnProcessor?.Timestamp ?? 0;
 		}
 
 		public AbilityTargets AbilityTarget
@@ -136,7 +136,7 @@ namespace FrEee.Objects.Space
 			}
 		}
 
-		public double CombatSpeed => Mod.Current.Settings.CombatSpeedPercentPerStrategicSpeed.PercentOf(StrategicSpeed);
+		public double CombatSpeed => The.Mod.Settings.CombatSpeedPercentPerStrategicSpeed.PercentOf(StrategicSpeed);
 
 		/// <summary>
 		/// Any construction queues of ships in this fleet and its subfleets.
@@ -719,8 +719,8 @@ namespace FrEee.Objects.Space
 		public bool IsObsoleteMemory(Empire emp)
 		{
 			if (StarSystem == null)
-				return Timestamp < The.Game.Timestamp - 1;
-			return StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < The.Game.Timestamp - 1;
+				return Timestamp < The.Timestamp - 1;
+			return StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < The.Timestamp - 1;
 		}
 
 		public void RearrangeOrder(IOrder order, int delta)
@@ -905,10 +905,10 @@ namespace FrEee.Objects.Space
 			else if (LeafVehicles.All(v => v is Mine))
 				imageName = "MineGroup";
 
-			if (Mod.Current.RootPath != null)
+			if (The.Mod.RootPath != null)
 			{
-				yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, imagetype + "_" + imageName);
-				yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_" + imagetype + "_" + imageName);
+				yield return Path.Combine("Mods", The.Mod.RootPath, "Pictures", "Races", shipsetPath, imagetype + "_" + imageName);
+				yield return Path.Combine("Mods", The.Mod.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_" + imagetype + "_" + imageName);
 			}
 			yield return Path.Combine("Pictures", "Races", shipsetPath, imagetype + "_" + imageName);
 			yield return Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_" + imagetype + "_" + imageName);

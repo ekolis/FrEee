@@ -164,7 +164,7 @@ namespace FrEee.Objects.Civilization
 		/// <summary>
 		/// The traits of the race.
 		/// </summary>
-		public IEnumerable<Trait> Traits { get { return Mod.Current.Traits.Join(TraitNames, t => t.Name, n => n, (t, n) => t); } }
+		public IEnumerable<Trait> Traits { get { return The.Mod.Traits.Join(TraitNames, t => t.Name, n => n, (t, n) => t); } }
 
 		public IEnumerable<Ability> UnstackedAbilities
 		{
@@ -183,7 +183,7 @@ namespace FrEee.Objects.Civilization
 					yield return "You must specify a native atmosphere for your race.";
 				if (string.IsNullOrWhiteSpace(NativeSurface))
 					yield return "You must specify a native planet surface for your race.";
-				if (!Mod.Current.StellarObjectTemplates.OfType<Planet>().Any(p => p.Atmosphere == NativeAtmosphere && p.Surface == NativeSurface && !p.Size.IsConstructed))
+				if (!The.Mod.StellarObjectTemplates.OfType<Planet>().Any(p => p.Atmosphere == NativeAtmosphere && p.Surface == NativeSurface && !p.Size.IsConstructed))
 					yield return NativeSurface + " / " + NativeAtmosphere + " is not a valid surface / atmosphere combination for the current mod.";
 				if (HappinessModel == null)
 					yield return "You must specify a happiness model for your race.";
@@ -242,10 +242,10 @@ namespace FrEee.Objects.Civilization
 
 		private IEnumerable<string> GetImagePaths(string imagename, string imagetype)
 		{
-			if (Mod.Current?.RootPath != null)
+			if (The.Mod?.RootPath != null)
 			{
-				yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", imagename, imagetype);
-				yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", imagename, Name + "_" + imagetype);
+				yield return Path.Combine("Mods", The.Mod.RootPath, "Pictures", "Races", imagename, imagetype);
+				yield return Path.Combine("Mods", The.Mod.RootPath, "Pictures", "Races", imagename, Name + "_" + imagetype);
 			}
 			yield return Path.Combine("Pictures", "Races", imagename, imagetype);
 			yield return Path.Combine("Pictures", "Races", imagename, Name + "_" + imagetype);

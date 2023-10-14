@@ -90,7 +90,7 @@ namespace FrEee.Tests.Game.Objects.Space
 		{
 			// initialize galaxy
 			new Galaxy();
-			Mod.Current = new Mod();
+			The.Mod = new Mod();
 
 			// initialize star systems
 			here = new StarSystem(0) { Name = "Here" };
@@ -110,7 +110,7 @@ namespace FrEee.Tests.Game.Objects.Space
 			here.ExploredByEmpires.Add(seekers);
 
 			// initialize ships
-			Assert.IsNotNull(Mod.Current);
+			Assert.IsNotNull(The.Mod);
 			var dsDesign = new Design<Ship>();
 			dsDesign.BaseName = "Destroyer";
 			dsDesign.CreateHull();

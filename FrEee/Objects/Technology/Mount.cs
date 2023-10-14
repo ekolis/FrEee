@@ -166,8 +166,8 @@ namespace FrEee.Objects.Technology
 		{
 			get
 			{
-				if (Mod.Current?.RootPath != null)
-					yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Mounts", PictureName);
+				if (The.Mod?.RootPath != null)
+					yield return Path.Combine("Mods", The.Mod.RootPath, "Pictures", "Mounts", PictureName);
 				yield return Path.Combine("Pictures", "Mounts", PictureName);
 			}
 		}
@@ -256,8 +256,8 @@ namespace FrEee.Objects.Technology
 		{
 			if (IsDisposed)
 				return;
-			if (Mod.Current != null)
-				Mod.Current.Mounts.Remove(this);
+			if (The.Mod != null)
+				The.Mod.Mounts.Remove(this);
 		}
 
 		public bool IsObsoleteMemory(Empire emp)

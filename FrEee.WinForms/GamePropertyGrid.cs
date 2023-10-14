@@ -167,7 +167,7 @@ namespace FrEee.WinForms
 
 			if (TypeMatch<ModReference<IModObject>>(objectType))
 			{
-				var objs = Mod.Current.Objects.Where(r => objectType.GetGenericArguments()[0].IsAssignableFrom(r.GetType())).ToList();
+				var objs = The.Mod.Objects.Where(r => objectType.GetGenericArguments()[0].IsAssignableFrom(r.GetType())).ToList();
 				objs.Insert(0, null);
 				var pnl = MakeDropdownPanel(objs, obj, newModObjectHandler);
 				ctl = pnl;
@@ -181,7 +181,7 @@ namespace FrEee.WinForms
 			}
 			else if (TypeMatch<IModObject>(objectType))
 			{
-				var objs = Mod.Current.Objects.Where(r => objectType.IsAssignableFrom(r.GetType())).ToList();
+				var objs = The.Mod.Objects.Where(r => objectType.IsAssignableFrom(r.GetType())).ToList();
 				objs.Insert(0, null);
 				var pnl = MakeDropdownPanel(objs, obj, newModObjectHandler);
 				ctl = pnl;

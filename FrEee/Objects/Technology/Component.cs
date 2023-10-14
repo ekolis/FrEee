@@ -325,7 +325,7 @@ namespace FrEee.Objects.Technology
 				return;
 
 			// TODO - check range too
-			var tohit = Mod.Current.Settings.WeaponAccuracyPointBlank + Template.WeaponAccuracy + Container.Accuracy - defender.Evasion;
+			var tohit = The.Mod.Settings.WeaponAccuracyPointBlank + Template.WeaponAccuracy + Container.Accuracy - defender.Evasion;
 			// TODO - moddable min/max hit chances with per-weapon overrides
 			if (tohit > 99)
 				tohit = 99;

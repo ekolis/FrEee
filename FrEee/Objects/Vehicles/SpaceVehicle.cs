@@ -57,7 +57,7 @@ namespace FrEee.Objects.Vehicles
 			get { return this.GetAbilityValue("Cargo Storage").ToInt(); }
 		}
 
-		public override double CombatSpeed => Mod.Current.Settings.CombatSpeedPercentPerStrategicSpeed.PercentOf(StrategicSpeed) + this.GetAbilityValue("Combat Movement").ToInt();
+		public override double CombatSpeed => The.Mod.Settings.CombatSpeedPercentPerStrategicSpeed.PercentOf(StrategicSpeed) + this.GetAbilityValue("Combat Movement").ToInt();
 
 		public Fleet Container
 		{
@@ -311,8 +311,8 @@ namespace FrEee.Objects.Vehicles
 		public override bool IsObsoleteMemory(Empire emp)
 		{
 			if (StarSystem == null)
-				return Timestamp < The.Game.Timestamp - 1;
-			return StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < The.Game.Timestamp - 1;
+				return Timestamp < The.Timestamp - 1;
+			return StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < The.Timestamp - 1;
 		}
 
 		public void RearrangeOrder(IOrder order, int delta)

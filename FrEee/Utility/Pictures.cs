@@ -381,7 +381,7 @@ namespace FrEee.Utility
 		public static Image GetIcon(IHull hull, string shipsetPath)
 		{
 			// allow for practically infinite variation in hull sizes within a confined range of image sizes using a log function
-			var maxSize = (double)Mod.Current.Hulls.Max(h => h.Size);
+			var maxSize = (double)The.Mod.Hulls.Max(h => h.Size);
 			var ratio = maxSize / hull.Size;
 			var scale = 1d / (1d + Math.Log10(ratio));
 
@@ -392,11 +392,11 @@ namespace FrEee.Utility
 			var paths = new List<string>();
 			foreach (var s in hull.PictureNames)
 			{
-				if (Mod.Current.RootPath != null)
+				if (The.Mod.RootPath != null)
 				{
-					paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Mini_" + s));
-					paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Mini_" + s)); // for SE4 shipset compatibility
-					paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, s));
+					paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", shipsetPath, "Mini_" + s));
+					paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Mini_" + s)); // for SE4 shipset compatibility
+					paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", shipsetPath, s));
 				}
 				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, "Mini_" + s));
 				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, shipsetPath + "_Mini_" + s)); // for SE4 shipset compatibility
@@ -427,10 +427,10 @@ namespace FrEee.Utility
 			else if (fleet.LeafVehicles.All(v => v is Mine))
 				imageName = "MineGroup";
 
-			if (Mod.Current.RootPath != null)
+			if (The.Mod.RootPath != null)
 			{
-				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Mini_" + imageName));
-				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Mini_" + imageName)); // for SE4 shipset compatibility
+				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", shipsetPath, "Mini_" + imageName));
+				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Mini_" + imageName)); // for SE4 shipset compatibility
 			}
 			paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, "Mini_" + imageName));
 			paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, shipsetPath + "_Mini_" + imageName)); // for SE4 shipset compatibility
@@ -445,10 +445,10 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static Image GetIcon(Resource res)
 		{
-			if (Mod.Current.RootPath != null)
+			if (The.Mod.RootPath != null)
 			{
 				return
-					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "UI", "Resources", res.PictureName)) ??
+					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "UI", "Resources", res.PictureName)) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "UI", "Resources", res.PictureName)) ??
 					GetSolidColorImage(res.Color, 20);
 			}
@@ -473,16 +473,16 @@ namespace FrEee.Utility
 			if (race.PopulationIconName == null)
 				return GetGenericImage(typeof(Race));
 
-			if (Mod.Current.RootPath != null)
+			if (The.Mod.RootPath != null)
 			{
 				return
-					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", race.PopulationIconName, "Pop_Portrait")) ??
-					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", race.PopulationIconName, race.PopulationIconName + "_Pop_Portrait")) ??
+					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", race.PopulationIconName, "Pop_Portrait")) ??
+					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", race.PopulationIconName, race.PopulationIconName + "_Pop_Portrait")) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", race.PopulationIconName, "Pop_Portrait")) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", race.PopulationIconName, race.PopulationIconName + "_Pop_Portrait")) ??
 					// fall back on portrait if icon not found
-					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", race.PopulationIconName, "Race_Portrait")) ??
-					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", race.PopulationIconName, race.PopulationIconName + "_Race_Portrait")) ??
+					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", race.PopulationIconName, "Race_Portrait")) ??
+					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", race.PopulationIconName, race.PopulationIconName + "_Race_Portrait")) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", race.PopulationIconName, "Race_Portrait")) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", race.PopulationIconName, race.PopulationIconName + "_Race_Portrait")) ??
 					GetGenericImage(race.GetType());
@@ -507,12 +507,12 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static Image GetIcon(Empire emp)
 		{
-			if (Mod.Current.RootPath != null)
+			if (The.Mod.RootPath != null)
 			{
 				return
-					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", emp.InsigniaName, "Insignia")) ??
-					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", emp.InsigniaName, emp.InsigniaName + "_Insignia")) ??
-					Crop(GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", emp.InsigniaName, emp.InsigniaName + "_Main")), new Rectangle(0, 0, 26, 18)) ??
+					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", emp.InsigniaName, "Insignia")) ??
+					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", emp.InsigniaName, emp.InsigniaName + "_Insignia")) ??
+					Crop(GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", emp.InsigniaName, emp.InsigniaName + "_Main")), new Rectangle(0, 0, 26, 18)) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", emp.InsigniaName, "Insignia")) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", emp.InsigniaName, emp.InsigniaName + "_Insignia")) ??
 					Crop(GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", emp.InsigniaName, emp.InsigniaName + "_Main")), new Rectangle(0, 0, 26, 18)) ??
@@ -539,12 +539,12 @@ namespace FrEee.Utility
 			var insigniaName = emp.InsigniaName;
 			if (insigniaName == null)
 				GetSolidColorImage(emp.Color);
-			if (Mod.Current.RootPath != null)
+			if (The.Mod.RootPath != null)
 			{
 				return
-					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", insigniaName, "Insignia")) ??
-					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", insigniaName, insigniaName + "_Insignia")) ??
-					Crop(GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", insigniaName, insigniaName + "_Main")), new Rectangle(0, 0, 26, 18)) ??
+					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", insigniaName, "Insignia")) ??
+					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", insigniaName, insigniaName + "_Insignia")) ??
+					Crop(GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", insigniaName, insigniaName + "_Main")), new Rectangle(0, 0, 26, 18)) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", insigniaName, "Insignia")) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", insigniaName, insigniaName + "_Insignia")) ??
 					Crop(GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", insigniaName, insigniaName + "_Main")), new Rectangle(0, 0, 26, 18)) ??
@@ -563,23 +563,23 @@ namespace FrEee.Utility
 
 		public static Image GetModImage(string path)
 		{
-			if (Mod.Current.RootPath == null)
+			if (The.Mod.RootPath == null)
 				return GetCachedImage(path);
 			return GetCachedImage(new string[]
 			{
-				Path.Combine("Mods", Mod.Current.RootPath, path),
+				Path.Combine("Mods", The.Mod.RootPath, path),
 				path
 			});
 		}
 
 		public static Image GetModImage(params string[] paths)
 		{
-			if (Mod.Current.RootPath == null)
+			if (The.Mod.RootPath == null)
 				return GetCachedImage(paths);
 			var allpaths = new List<string>();
 			foreach (var p in paths)
 			{
-				allpaths.Add(Path.Combine("Mods", Mod.Current.RootPath, p));
+				allpaths.Add(Path.Combine("Mods", The.Mod.RootPath, p));
 				allpaths.Add(p);
 			}
 			return GetCachedImage(allpaths);
@@ -610,10 +610,10 @@ namespace FrEee.Utility
 				if (sobj.PictureName == null)
 					return GetGenericImage(sobj.GetType(), scale);
 
-				if (Mod.Current.RootPath != null)
+				if (The.Mod.RootPath != null)
 				{
 					portrait =
-						GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Planets", sobj.PictureName), scale) ??
+						GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Planets", sobj.PictureName), scale) ??
 						GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Planets", sobj.PictureName), scale) ??
 						GetFallbackImage(sobj, scale) ??
 						GetGenericImage(sobj.GetType(), scale);
@@ -675,10 +675,10 @@ namespace FrEee.Utility
 		{
 			if (f.PictureName == null)
 				return GetGenericImage(f.GetType());
-			if (Mod.Current.RootPath != null)
+			if (The.Mod.RootPath != null)
 			{
 				return
-					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Facilities", f.PictureName)) ??
+					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Facilities", f.PictureName)) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Facilities", f.PictureName)) ??
 					GetGenericImage(f.GetType());
 			}
@@ -698,10 +698,10 @@ namespace FrEee.Utility
 		{
 			if (c.PictureName == null)
 				return GetGenericImage(c.GetType());
-			if (Mod.Current.RootPath != null)
+			if (The.Mod.RootPath != null)
 			{
 				return
-					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Components", c.PictureName)) ??
+					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Components", c.PictureName)) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Components", c.PictureName)) ??
 					GetGenericImage(c.GetType());
 			}
@@ -721,10 +721,10 @@ namespace FrEee.Utility
 		{
 			if (m.PictureName == null)
 				return GetGenericImage(m.GetType());
-			if (Mod.Current.RootPath != null)
+			if (The.Mod.RootPath != null)
 			{
 				return
-					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Mounts", m.PictureName)) ??
+					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Mounts", m.PictureName)) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Mounts", m.PictureName)) ??
 					GetGenericImage(m.GetType());
 			}
@@ -746,17 +746,17 @@ namespace FrEee.Utility
 			var paths = new List<string>();
 
 			// allow for practically infinite variation in hull sizes within a confined range of image sizes using a log function
-			var maxSize = (double)Mod.Current.Hulls.Max(h => h.Size);
+			var maxSize = (double)The.Mod.Hulls.Max(h => h.Size);
 			var ratio = maxSize / hull.Size;
 			var scale = 1d / (1d + Math.Log10(ratio));
 
 			foreach (var s in hull.PictureNames)
 			{
-				if (Mod.Current.RootPath != null)
+				if (The.Mod.RootPath != null)
 				{
-					paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Portrait_" + s));
-					paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + s)); // for SE4 shipset compatibility
-					paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, s));
+					paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", shipsetPath, "Portrait_" + s));
+					paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + s)); // for SE4 shipset compatibility
+					paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", shipsetPath, s));
 				}
 				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, "Portrait_" + s));
 				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + s)); // for SE4 shipset compatibility
@@ -787,11 +787,11 @@ namespace FrEee.Utility
 			else if (fleet.LeafVehicles.All(v => v is Mine))
 				imageName = "MineGroup";
 
-			if (Mod.Current.RootPath != null)
+			if (The.Mod.RootPath != null)
 			{
-				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Portrait_" + imageName));
-				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + imageName)); // for SE4 shipset compatibility
-				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, imageName));
+				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", shipsetPath, "Portrait_" + imageName));
+				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + imageName)); // for SE4 shipset compatibility
+				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", shipsetPath, imageName));
 			}
 			paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, "Portrait_" + imageName));
 			paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + imageName)); // for SE4 shipset compatibility
@@ -817,16 +817,16 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static Image GetPortrait(Empire emp)
 		{
-			if (Mod.Current.RootPath != null)
+			if (The.Mod.RootPath != null)
 			{
 				return
-					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", emp.LeaderPortraitName, "Race_Portrait")) ??
-					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", emp.LeaderPortraitName, emp.LeaderPortraitName + "_Race_Portrait")) ??
+					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", emp.LeaderPortraitName, "Race_Portrait")) ??
+					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", emp.LeaderPortraitName, emp.LeaderPortraitName + "_Race_Portrait")) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", emp.LeaderPortraitName, "Race_Portrait")) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", emp.LeaderPortraitName, emp.LeaderPortraitName + "_Race_Portrait")) ??
 					// fall back on icon if portrait not found
-					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", emp.LeaderPortraitName, "Pop_Portrait")) ??
-					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", emp.LeaderPortraitName, emp.LeaderPortraitName + "_Pop_Portrait")) ??
+					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", emp.LeaderPortraitName, "Pop_Portrait")) ??
+					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", emp.LeaderPortraitName, emp.LeaderPortraitName + "_Pop_Portrait")) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", emp.LeaderPortraitName, "Pop_Portrait")) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", emp.LeaderPortraitName, emp.LeaderPortraitName + "_Pop_Portrait")) ??
 					GetGenericImage(emp.GetType());
@@ -913,10 +913,10 @@ namespace FrEee.Utility
 					break;
 			}
 
-			if (Mod.Current.RootPath != null)
+			if (The.Mod.RootPath != null)
 			{
-				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Portrait_" + hullname));
-				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + hullname)); // for SE4 shipset compatibility
+				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", shipsetPath, "Portrait_" + hullname));
+				paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + hullname)); // for SE4 shipset compatibility
 			}
 			paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, "Portrait_" + hullname));
 			paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + hullname)); // for SE4 shipset compatibility
@@ -931,11 +931,11 @@ namespace FrEee.Utility
 		public static IEnumerable<string> ListInsignia()
 		{
 			var list = new List<string>();
-			if (Mod.Current.RootPath != null)
+			if (The.Mod.RootPath != null)
 			{
-				if (!Directory.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races")))
+				if (!Directory.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races")))
 					return list;
-				foreach (var d in Directory.GetDirectories(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races")))
+				foreach (var d in Directory.GetDirectories(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races")))
 				{
 					var name = Path.GetFileNameWithoutExtension(d);
 					if (File.Exists(Path.Combine(d, "Insignia.png")) ||
@@ -967,11 +967,11 @@ namespace FrEee.Utility
 		public static IEnumerable<string> ListLeaderPortraits()
 		{
 			var list = new List<string>();
-			if (Mod.Current.RootPath != null)
+			if (The.Mod.RootPath != null)
 			{
-				if (!Directory.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races")))
+				if (!Directory.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races")))
 					return list;
-				foreach (var d in Directory.GetDirectories(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races")))
+				foreach (var d in Directory.GetDirectories(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races")))
 				{
 					var name = Path.GetFileNameWithoutExtension(d);
 					if (File.Exists(Path.Combine(d, "Race_Portrait.png")) ||
@@ -1020,11 +1020,11 @@ namespace FrEee.Utility
 		public static IEnumerable<string> ListShipsets()
 		{
 			var list = new List<string>();
-			if (Mod.Current.RootPath != null)
+			if (The.Mod.RootPath != null)
 			{
-				if (!Directory.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races")))
+				if (!Directory.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races")))
 					return list;
-				foreach (var d in Directory.GetDirectories(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races")))
+				foreach (var d in Directory.GetDirectories(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races")))
 					list.Add(Path.GetFileNameWithoutExtension(d));
 			}
 			if (!Directory.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races")))
@@ -1051,11 +1051,11 @@ namespace FrEee.Utility
 
 		/*public static Image GetIcon(Seeker seeker)
 		{
-			if (Mod.Current.RootPath != null)
+			if (The.Mod.RootPath != null)
 			{
 				var fx = (SeekerWeaponDisplayEffect)seeker.WeaponInfo.DisplayEffect;
 				return
-					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Races", seeker.Owner.ShipsetPath, fx.Name)) ??
+					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Pictures", "Races", seeker.Owner.ShipsetPath, fx.Name)) ??
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", seeker.Owner.ShipsetPath)) ??
 					GetGenericImage(seeker.GetType());
 			}

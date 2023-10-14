@@ -16,7 +16,7 @@ namespace FrEee.Objects.Civilization.Diplomacy.Clauses
 			: base(giver, receiver)
 		{
 			Resource = resource;
-			TradePercentage = Mod.Current.Settings.StartTradePercent;
+			TradePercentage = The.Mod.Settings.StartTradePercent;
 		}
 
 		/// <summary>
@@ -33,7 +33,7 @@ namespace FrEee.Objects.Civilization.Diplomacy.Clauses
 		{
 			get
 			{
-				return Receiver.WeOrName() + " will receive income equal to " + TradePercentage + "% of " + Giver.UsOrName().Possessive() + " gross " + Resource.Name.ToLower() + " income (will increase to " + Mod.Current.Settings.MaxTradePercent + "% over " + Math.Ceiling(Mod.Current.Settings.MaxTradePercent - TradePercentage) / Mod.Current.Settings.TradePercentPerTurn + " turns).";
+				return Receiver.WeOrName() + " will receive income equal to " + TradePercentage + "% of " + Giver.UsOrName().Possessive() + " gross " + Resource.Name.ToLower() + " income (will increase to " + The.Mod.Settings.MaxTradePercent + "% over " + Math.Ceiling(The.Mod.Settings.MaxTradePercent - TradePercentage) / The.Mod.Settings.TradePercentPerTurn + " turns).";
 			}
 		}
 
@@ -68,9 +68,9 @@ namespace FrEee.Objects.Civilization.Diplomacy.Clauses
 				Receiver.StoredResources[Resource] = Receiver.ResourceStorage[Resource];
 
 			// increase trade percentage
-			TradePercentage += Mod.Current.Settings.TradePercentPerTurn;
-			if (TradePercentage > Mod.Current.Settings.MaxTradePercent)
-				TradePercentage = Mod.Current.Settings.MaxTradePercent;
+			TradePercentage += The.Mod.Settings.TradePercentPerTurn;
+			if (TradePercentage > The.Mod.Settings.MaxTradePercent)
+				TradePercentage = The.Mod.Settings.MaxTradePercent;
 		}
 	}
 }

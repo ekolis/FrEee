@@ -54,7 +54,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			hiders.Name = "Hiders";
 
 			// initialize ships
-			Assert.IsNotNull(Mod.Current);
+			Assert.IsNotNull(The.Mod);
 			var dsDesign = new Design<Ship>();
 			dsDesign.BaseName = "TestDestroyer";
 			dsDesign.CreateHull();
@@ -142,7 +142,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		public void NebulaCantSee()
 		{
 			AddSensorAbility(destroyer.Hull, "Foobar", 1);
-			sys.Abilities.Add(new Ability(sys, Mod.Current.AbilityRules.FindByName("System - Sight Obscuration"), null, 999));
+			sys.Abilities.Add(new Ability(sys, The.Mod.AbilityRules.FindByName("System - Sight Obscuration"), null, 999));
 			Assert.IsTrue(submarine.IsHiddenFrom(seekers), "Submarine should be hidden.");
 		}
 
@@ -185,7 +185,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		{
 			AddSensorAbility(destroyer.Hull, "Foobar", 1);
 			var storm = new Storm();
-			storm.Abilities.Add(new Ability(sys, Mod.Current.AbilityRules.FindByName("Sector - Sight Obscuration"), null, 999));
+			storm.Abilities.Add(new Ability(sys, The.Mod.AbilityRules.FindByName("Sector - Sight Obscuration"), null, 999));
 			sys.Place(storm, new Point());
 			Assert.IsTrue(submarine.IsHiddenFrom(seekers), "Submarine should be hidden.");
 		}
@@ -198,7 +198,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		{
 			var a = new Ability(hull);
 			hull.Abilities.Add(a);
-			a.Rule = Mod.Current.AbilityRules.FindByName("Cloak Level");
+			a.Rule = The.Mod.AbilityRules.FindByName("Cloak Level");
 			a.Values.Add(sightType);
 			a.Values.Add(level.ToString());
 		}
@@ -207,7 +207,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		{
 			var a = new Ability(obj);
 			obj.Abilities.Add(a);
-			a.Rule = Mod.Current.AbilityRules.FindByName("Sector - Sight Obscuration");
+			a.Rule = The.Mod.AbilityRules.FindByName("Sector - Sight Obscuration");
 			a.Values.Add(level.ToString());
 		}
 
@@ -215,7 +215,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		{
 			var a = new Ability(hull);
 			hull.Abilities.Add(a);
-			a.Rule = Mod.Current.AbilityRules.FindByName("Sensor Level");
+			a.Rule = The.Mod.AbilityRules.FindByName("Sensor Level");
 			a.Values.Add(sightType);
 			a.Values.Add(level.ToString());
 		}

@@ -32,7 +32,7 @@ namespace FrEee.WinForms.Forms
 			ddlGroup.Items.Clear();
 			ddlGroup.Items.Add(new { Text = "All" });
 			ddlGroup.Items.Add(new { Text = "In Progress" });
-			foreach (var group in Mod.Current.Technologies.Select(t => t.Group).Distinct())
+			foreach (var group in The.Mod.Technologies.Select(t => t.Group).Distinct())
 				ddlGroup.Items.Add(new { Text = group, GroupName = group });
 			ddlGroup.SelectedItem = ddlGroup.Items.Cast<object>().First();
 

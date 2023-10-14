@@ -188,7 +188,7 @@ namespace FrEee.Objects.Civilization
 		{
 			get
 			{
-				var unlockedHulls = Mod.Current.Hulls.OfType<IHull<IUnit>>().Where(h => h.IsUnlocked());
+				var unlockedHulls = The.Mod.Hulls.OfType<IHull<IUnit>>().Where(h => h.IsUnlocked());
 				return (Eta == null || Eta < 1 && !AreRepeatOrdersEnabled)
 					&& (IsSpaceYardQueue || FacilitySlotsFree > 0 || unlockedHulls.Any() && unlockedHulls.Min(h => h.Size) <= CargoStorageFreeInSector);
 			}
@@ -339,7 +339,7 @@ namespace FrEee.Objects.Civilization
 		{
 			if (IsDisposed)
 				return;
-			if (!IsMemory && Mod.Current != null)
+			if (!IsMemory && The.Mod != null)
 				this.UpdateEmpireMemories();
 			The.ReferrableRepository.UnassignID(this);
 			Orders.Clear();
@@ -454,7 +454,7 @@ namespace FrEee.Objects.Civilization
 
 		public bool IsObsoleteMemory(Empire emp)
 		{
-			return Container == null || Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < The.Game.Timestamp - 1;
+			return Container == null || Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < The.Timestamp - 1;
 		}
 
 		public void RearrangeOrder(IOrder order, int delta)
@@ -508,13 +508,13 @@ namespace FrEee.Objects.Civilization
 			if (Colony != null)
 			{
 				if (rate == null)
-					rate = Mod.Current.Settings.DefaultColonyConstructionRate;
+					rate = The.Mod.Settings.DefaultColonyConstructionRate;
 
 				// apply population modifier
 				var pop = Colony.Population.Sum(p => p.Value);
 				if (pop == 0)
 					return new ResourceQuantity();
-				rate *= Mod.Current.Settings.GetPopulationConstructionFactor(pop);
+				rate *= The.Mod.Settings.GetPopulationConstructionFactor(pop);
 
 				// apply mood modifier
 				// TODO - load mood modifier from mod

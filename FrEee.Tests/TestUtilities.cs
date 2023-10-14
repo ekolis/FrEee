@@ -14,7 +14,7 @@ namespace FrEee.Tests
 		public static Galaxy CreateGalaxyWithMod(string? modPath = null)
 		{
 			Galaxy gal = new();
-			Mod.Current = Mod.Load(modPath);
+			The.Mod = Mod.Load(modPath);
 			return gal;
 		}
 
@@ -30,7 +30,7 @@ namespace FrEee.Tests
 				ModID = name,
 				ThrustPerMove = 1
 			};
-			Mod.Current.Hulls.Add(hull);
+			The.Mod.Hulls.Add(hull);
 			return hull;
 		}
 

@@ -36,7 +36,7 @@ namespace FrEee.Objects.Vehicles
 
 		public long AddPopulation(Race race, long amount)
 		{
-			var canCargo = Math.Min(amount, (long)(this.CargoStorageFree() / Mod.Current.Settings.PopulationSize));
+			var canCargo = Math.Min(amount, (long)(this.CargoStorageFree() / The.Mod.Settings.PopulationSize));
 			amount -= canCargo;
 			Cargo.Population[race] += canCargo;
 			return amount;

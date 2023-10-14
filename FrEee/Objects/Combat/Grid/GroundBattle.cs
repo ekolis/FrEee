@@ -30,7 +30,7 @@ namespace FrEee.Objects.Combat.Grid
 			// TODO - should weapon platforms participate in ground combat like in SE5?
 			Empires = Planet.Cargo.Units.OfType<Troop>().Select(t => t.Owner).Distinct();
 			var combatants = new HashSet<ICombatant>(Planet.Cargo.Units.OfType<Troop>());
-			for (var i = 0; i < Planet.PopulationFill.Value / Mod.Current.Settings.PopulationFactor / (Mod.Current.Settings.PopulationPerMilitia == 0 ? 20 : Mod.Current.Settings.PopulationPerMilitia); i++)
+			for (var i = 0; i < Planet.PopulationFill.Value / The.Mod.Settings.PopulationFactor / (The.Mod.Settings.PopulationPerMilitia == 0 ? 20 : The.Mod.Settings.PopulationPerMilitia); i++)
 			{
 				var militia = Design.MilitiaDesign.Instantiate();
 				militia.Owner = Planet.Owner;
@@ -40,7 +40,7 @@ namespace FrEee.Objects.Combat.Grid
 			Initialize(combatants);
 		}
 
-		public override int DamagePercentage => Mod.Current.Settings.GroundCombatDamagePercent;
+		public override int DamagePercentage => The.Mod.Settings.GroundCombatDamagePercent;
 
 		public Planet Planet { get; private set; }
 
@@ -53,7 +53,7 @@ namespace FrEee.Objects.Combat.Grid
 			Empires = Planet.Cargo.Units.OfType<Troop>().Select(t => t.Owner).Distinct();
 
 			var moduloID = (int)(Planet.ID % 100000);
-			Dice = new PRNG((int)(moduloID / The.Game.Timestamp * 10));
+			Dice = new PRNG((int)(moduloID / The.Timestamp * 10));
 		}
 
 		public override void PlaceCombatants(SafeDictionary<ICombatant, IntVector2> locations)
@@ -63,7 +63,7 @@ namespace FrEee.Objects.Combat.Grid
 				locations.Add(c, new IntVector2());
 		}
 
-		public override int MaxRounds => Mod.Current.Settings.GroundCombatTurns;
+		public override int MaxRounds => The.Mod.Settings.GroundCombatTurns;
 
 		public override void ModifyHappiness()
 		{

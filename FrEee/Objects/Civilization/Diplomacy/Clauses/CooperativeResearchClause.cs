@@ -29,7 +29,7 @@ namespace FrEee.Objects.Civilization.Diplomacy.Clauses
 		{
 			get
 			{
-				return Receiver.WeOrName() + " has a " + Mod.Current.Settings.CooperativeResearchBreakthroughChance + "% chance of achieving a breakthrough each turn in any technology that " + Giver.WeOrName(false) + " " + (Giver == Empire.Current ? "are" : "is") + " more advanced in, provided " + Receiver.WeOrName() + " meet" + (Receiver == Empire.Current ? "" : "s") + " the prerequisites.";
+				return Receiver.WeOrName() + " has a " + The.Mod.Settings.CooperativeResearchBreakthroughChance + "% chance of achieving a breakthrough each turn in any technology that " + Giver.WeOrName(false) + " " + (Giver == Empire.Current ? "are" : "is") + " more advanced in, provided " + Receiver.WeOrName() + " meet" + (Receiver == Empire.Current ? "" : "s") + " the prerequisites.";
 			}
 		}
 
@@ -45,7 +45,7 @@ namespace FrEee.Objects.Civilization.Diplomacy.Clauses
 				var giveAmount = giveProgress == null ? 0 : giveProgress.Value;
 				if (giveLevels > hasLevels || giveLevels == hasLevels && giveAmount > hasAmount)
 				{
-					if (RandomHelper.Next(100d) < Mod.Current.Settings.CooperativeResearchBreakthroughChance)
+					if (RandomHelper.Next(100d) < The.Mod.Settings.CooperativeResearchBreakthroughChance)
 					{
 						// breakthrough!
 						// get 1 level if a full level or more below

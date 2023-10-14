@@ -1,4 +1,4 @@
-﻿using FrEee.Interfaces;
+using FrEee.Interfaces;
 using FrEee.Objects.Space;
 using FrEee.Modding;
 using FrEee.Utility;
@@ -16,7 +16,7 @@ namespace FrEee.Objects.Technology
 			New = nu;
 		}
 
-		public ResourceQuantity Cost => New.Cost.Value * Mod.Current.Settings.UpgradeFacilityPercentCost / 100;
+		public ResourceQuantity Cost => New.Cost.Value * The.Mod.Settings.UpgradeFacilityPercentCost / 100;
 
 		/// <summary>
 		/// The family of facility being upgraded.

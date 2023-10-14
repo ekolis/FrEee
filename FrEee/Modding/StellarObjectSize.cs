@@ -100,7 +100,7 @@ namespace FrEee.Modding
 
 		public void Dispose()
 		{
-			Mod.Current.StellarObjectSizes.Remove(this);
+			The.Mod.StellarObjectSizes.Remove(this);
 			IsDisposed = true;
 		}
 

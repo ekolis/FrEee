@@ -69,7 +69,7 @@ namespace FrEee.WinForms.Controls
 				txtDescription.Text = Facility.Template.Description;
 				double ratio = 1d;
 				if (isUpgrading)
-					ratio = (double)Mod.Current.Settings.UpgradeFacilityPercentCost / 100d;
+					ratio = (double)The.Mod.Settings.UpgradeFacilityPercentCost / 100d;
 				resMin.Amount = (int)(Facility.Template.Cost[Resource.Minerals] * ratio);
 				resOrg.Amount = (int)(Facility.Template.Cost[Resource.Organics] * ratio);
 				resRad.Amount = (int)(Facility.Template.Cost[Resource.Radioactives] * ratio);

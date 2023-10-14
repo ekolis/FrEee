@@ -127,7 +127,7 @@ namespace FrEee.Objects.Orders
 					{
 						var msg = "We have discovered new technology from the ancient ruins on " + Planet + ".";
 						// pick a random tech that's unlocked but not fully researched and level it up
-						var tech = Mod.Current.Technologies.Where(t => sobj.Owner.HasUnlocked(t) && sobj.Owner.ResearchedTechnologies[t] < t.MaximumLevel).PickRandom();
+						var tech = The.Mod.Technologies.Where(t => sobj.Owner.HasUnlocked(t) && sobj.Owner.ResearchedTechnologies[t] < t.MaximumLevel).PickRandom();
 						if (tech == null)
 							msg = "We have discovered ancient ruins on " + Planet + ", but there is nothing left for us to learn.";
 						else
@@ -156,7 +156,7 @@ namespace FrEee.Objects.Orders
 						{
 							sobj.Owner.Log.Add(Planet.CreateLogMessage("We have discovered new unique technology from the ancient ruins on " + Planet + ".", LogMessageType.ResearchComplete));
 							sobj.Owner.UniqueTechsFound.Add(abil.Value1);
-							foreach (var tech in Mod.Current.Technologies.Where(t => t.UniqueTechID == abil.Value1 && sobj.Owner.HasUnlocked(t)))
+							foreach (var tech in The.Mod.Technologies.Where(t => t.UniqueTechID == abil.Value1 && sobj.Owner.HasUnlocked(t)))
 								sobj.Owner.Log.Add(tech.CreateLogMessage("We have unlocked a new " + tech.ResearchGroup.ToLower() + ", the " + tech + "!", LogMessageType.ResearchComplete));
 						}
 					}

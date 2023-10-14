@@ -17,7 +17,7 @@ namespace FrEee.WinForms.Forms
 				// why is the script engine remembering my imports? oh well, it's handy :P
 				PythonScriptEngine.EvaluateExpression<object>("from FrEee.Modding import Mod");
 				rtbOutput.AppendText("Imported Mod.\n");
-				rtbOutput.AppendText("Mod.Current is currently: " + OrNil(Mod.Current) + "\n");
+				rtbOutput.AppendText("The.Mod is currently: " + OrNil(The.Mod) + "\n");
 
 				PythonScriptEngine.EvaluateExpression<object>("from FrEee.Objects.Space import Galaxy");
 				rtbOutput.AppendText("Imported Galaxy.\n");
@@ -27,9 +27,9 @@ namespace FrEee.WinForms.Forms
 				rtbOutput.AppendText("Imported Empire.\n");
 				rtbOutput.AppendText("Empire.Current is currently: " + OrNil(Empire.Current) + "\n");
 
-				if (Mod.Current != null)
+				if (The.Mod != null)
 				{
-					PythonScriptEngine.EvaluateExpression<object>(Mod.Current.GlobalScript.FullText);
+					PythonScriptEngine.EvaluateExpression<object>(The.Mod.GlobalScript.FullText);
 					rtbOutput.AppendText("Ran mod global script.\n");
 				}
 			}

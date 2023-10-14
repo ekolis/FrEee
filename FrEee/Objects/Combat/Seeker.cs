@@ -77,7 +77,7 @@ namespace FrEee.Objects.Combat
 		/// </summary>
 		public int Evasion
 		{
-			get { return Mod.Current.Settings.SeekerEvasion; }
+			get { return The.Mod.Settings.SeekerEvasion; }
 		}
 
 		public int HitChance
@@ -232,10 +232,10 @@ namespace FrEee.Objects.Combat
 
 				var shipsetPath = Owner.ShipsetPath;
 
-				if (Mod.Current?.RootPath != null)
+				if (The.Mod?.RootPath != null)
 				{
-					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Seeker"));
-					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_" + "Seeker"));
+					paths.Add(Path.Combine("Mods", The.Mod.RootPath, "Pictures", "Races", shipsetPath, "Seeker"));
+					paths.Add(Path.Combine("Mods", The.Mod.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_" + "Seeker"));
 				}
 				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Seeker"));
 				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_" + "Seeker"));
@@ -316,7 +316,7 @@ namespace FrEee.Objects.Combat
 
 		public bool IsObsoleteMemory(Empire emp)
 		{
-			return Timestamp < The.Game.Timestamp - 1;
+			return Timestamp < The.Timestamp - 1;
 		}
 
 		public void Redact(Empire emp)

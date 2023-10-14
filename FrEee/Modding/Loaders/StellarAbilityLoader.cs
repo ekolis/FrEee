@@ -57,7 +57,7 @@ namespace FrEee.Modding.Loaders
 				{
 					int chance;
 					if (!int.TryParse(temp, out chance))
-						Mod.Errors.Add(new DataParsingException("Ability Chance field value must be an integer.", Mod.CurrentFileName, rec, null));
+						Mod.Errors.Add(new DataParsingException("Ability Chance field value must be an integer.", The.ModFileName, rec, null));
 					ac.Chance = chance;
 				}
 				start++;
@@ -65,7 +65,7 @@ namespace FrEee.Modding.Loaders
 				if (!rec.TryFindFieldValue(new string[] { "Ability " + count + " Type", "Ability Type" }, out temp, ref start, null, start))
 					yield break; // couldn't load next ability
 				else
-					ac.Ability.Rule = Mod.Current.FindAbilityRule(temp);
+					ac.Ability.Rule = The.Mod.FindAbilityRule(temp);
 				start++;
 
 				if (!rec.TryFindFieldValue(new string[] { "Ability " + count + " Descr", "Ability Descr" }, out temp, ref start, null, start))

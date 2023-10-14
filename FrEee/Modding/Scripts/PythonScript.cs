@@ -63,8 +63,8 @@ namespace FrEee.Modding
 			get
 			{
 				string fullText = "";
-				if (Mod.Current != null && Mod.Current.GlobalScript != null)
-					fullText += Mod.Current.GlobalScript.ModuleImportCode;
+				if (The.Mod != null && The.Mod.GlobalScript != null)
+					fullText += The.Mod.GlobalScript.ModuleImportCode;
 				foreach (var externalScript in AllExternalScripts)
 					fullText += externalScript.ModuleImportCode;
 				fullText += Text;

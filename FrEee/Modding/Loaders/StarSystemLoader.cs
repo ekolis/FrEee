@@ -59,7 +59,7 @@ namespace FrEee.Modding.Loaders
 				foreach (var abil in AbilityLoader.Load(Filename, rec, sst))
 					sst.Abilities.Add(abil);
 
-				sst.WarpPointAbilities = Mod.Current.StellarAbilityTemplates.FindByName(rec.Get<string>("WP Stellar Abil Type", sst));
+				sst.WarpPointAbilities = The.Mod.StellarAbilityTemplates.FindByName(rec.Get<string>("WP Stellar Abil Type", sst));
 
 				int count = 0;
 				int start = 0;
@@ -77,7 +77,7 @@ namespace FrEee.Modding.Loaders
 
 					if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Position", "Obj Position" }, out temp, ref start, null, start))
 					{
-						Mod.Errors.Add(new DataParsingException("Could not find \"Obj Position\" field.", Mod.CurrentFileName, rec));
+						Mod.Errors.Add(new DataParsingException("Could not find \"Obj Position\" field.", The.ModFileName, rec));
 						continue; // skip this stellar object
 					}
 					else
@@ -94,7 +94,7 @@ namespace FrEee.Modding.Loaders
 
 						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Stellar Abil Type", "Obj Stellar Abil Type" }, out temp, ref start, null, start, true))
 						{
-							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Stellar Abil Type\" field for star.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Stellar Abil Type\" field for star.", The.ModFileName, rec));
 							continue; // skip this stellar object
 						}
 						else
@@ -104,13 +104,13 @@ namespace FrEee.Modding.Loaders
 							{
 								template.Abilities = new RandomAbilityTemplate();
 								yield return template.Abilities;
-								Mod.Errors.Add(new DataParsingException("Could not find stellar ability type \"" + temp + "\" in StellarAbilityTypes.txt.", Mod.CurrentFileName, rec));
+								Mod.Errors.Add(new DataParsingException("Could not find stellar ability type \"" + temp + "\" in StellarAbilityTypes.txt.", The.ModFileName, rec));
 							}
 						}
 
 						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Size", "Obj Size" }, out temp, ref start, null, start, true))
 						{
-							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Size\" field for star.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Size\" field for star.", The.ModFileName, rec));
 							continue; // skip this stellar object
 						}
 						else
@@ -125,7 +125,7 @@ namespace FrEee.Modding.Loaders
 								}
 								catch (ArgumentException ex)
 								{
-									Mod.Errors.Add(new DataParsingException("Invalid stellar object size \"" + temp + "\". Must be Tiny, Small, Medium, Large, Huge, or Any.", ex, Mod.CurrentFileName, rec));
+									Mod.Errors.Add(new DataParsingException("Invalid stellar object size \"" + temp + "\". Must be Tiny, Small, Medium, Large, Huge, or Any.", ex, The.ModFileName, rec));
 									continue; // skip this stellar object
 								}
 							}
@@ -134,7 +134,7 @@ namespace FrEee.Modding.Loaders
 
 						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Age", "Obj Age" }, out temp, ref start, null, start))
 						{
-							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Age\" field for star.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Age\" field for star.", The.ModFileName, rec));
 							continue; // skip this stellar object
 						}
 						else
@@ -143,7 +143,7 @@ namespace FrEee.Modding.Loaders
 
 						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Color", "Obj Color" }, out temp, ref start, null, start))
 						{
-							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Color\" field for star.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Color\" field for star.", The.ModFileName, rec));
 							continue; // skip this stellar object
 						}
 						else
@@ -152,7 +152,7 @@ namespace FrEee.Modding.Loaders
 
 						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Luminosity", "Obj Luminosity" }, out temp, ref start, null, start))
 						{
-							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Luminosity\" field for star.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Luminosity\" field for star.", The.ModFileName, rec));
 							continue; // skip this stellar object
 						}
 						else
@@ -167,7 +167,7 @@ namespace FrEee.Modding.Loaders
 
 						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Stellar Abil Type", "Obj Stellar Abil Type" }, out temp, ref start, null, start, true))
 						{
-							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Stellar Abil Type\" field for planet.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Stellar Abil Type\" field for planet.", The.ModFileName, rec));
 							continue; // skip this stellar object
 						}
 						else
@@ -177,13 +177,13 @@ namespace FrEee.Modding.Loaders
 							{
 								template.Abilities = new RandomAbilityTemplate();
 								yield return template.Abilities;
-								Mod.Errors.Add(new DataParsingException("Could not find stellar ability type \"" + temp + "\" in StellarAbilityTypes.txt.", Mod.CurrentFileName, rec));
+								Mod.Errors.Add(new DataParsingException("Could not find stellar ability type \"" + temp + "\" in StellarAbilityTypes.txt.", The.ModFileName, rec));
 							}
 						}
 
 						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Size", "Obj Size" }, out temp, ref start, null, start, true))
 						{
-							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Size\" field for planet.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Size\" field for planet.", The.ModFileName, rec));
 							continue; // skip this stellar object
 						}
 						else
@@ -198,7 +198,7 @@ namespace FrEee.Modding.Loaders
 								}
 								catch (ArgumentException ex)
 								{
-									Mod.Errors.Add(new DataParsingException("Invalid stellar object size \"" + temp + "\". Must be Tiny, Small, Medium, Large, Huge, or Any.", ex, Mod.CurrentFileName, rec));
+									Mod.Errors.Add(new DataParsingException("Invalid stellar object size \"" + temp + "\". Must be Tiny, Small, Medium, Large, Huge, or Any.", ex, The.ModFileName, rec));
 									continue; // skip this stellar object
 								}
 							}
@@ -207,7 +207,7 @@ namespace FrEee.Modding.Loaders
 
 						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Atmosphere", "Obj Atmosphere" }, out temp, ref start, null, start))
 						{
-							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Atmosphere\" field for planet.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Atmosphere\" field for planet.", The.ModFileName, rec));
 							continue; // skip this stellar object
 						}
 						else
@@ -216,7 +216,7 @@ namespace FrEee.Modding.Loaders
 
 						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Composition", "Obj Composition" }, out temp, ref start, null, start))
 						{
-							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Composition\" field for planet.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Composition\" field for planet.", The.ModFileName, rec));
 							continue; // skip this stellar object
 						}
 						else
@@ -231,7 +231,7 @@ namespace FrEee.Modding.Loaders
 
 						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Stellar Abil Type", "Obj Stellar Abil Type" }, out temp, ref start, null, start, true))
 						{
-							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Stellar Abil Type\" field for asteroid field.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Stellar Abil Type\" field for asteroid field.", The.ModFileName, rec));
 							continue; // skip this stellar object
 						}
 						else
@@ -241,13 +241,13 @@ namespace FrEee.Modding.Loaders
 							{
 								template.Abilities = new RandomAbilityTemplate();
 								yield return template.Abilities;
-								Mod.Errors.Add(new DataParsingException("Could not find stellar ability type \"" + temp + "\" in StellarAbilityTypes.txt.", Mod.CurrentFileName, rec));
+								Mod.Errors.Add(new DataParsingException("Could not find stellar ability type \"" + temp + "\" in StellarAbilityTypes.txt.", The.ModFileName, rec));
 							}
 						}
 
 						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Size", "Obj Size" }, out temp, ref start, null, start, true))
 						{
-							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Size\" field for asteroid field.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Size\" field for asteroid field.", The.ModFileName, rec));
 							continue; // skip this stellar object
 						}
 						else
@@ -262,7 +262,7 @@ namespace FrEee.Modding.Loaders
 								}
 								catch (ArgumentException ex)
 								{
-									Mod.Errors.Add(new DataParsingException("Invalid stellar object size \"" + temp + "\". Must be Tiny, Small, Medium, Large, Huge, or Any.", ex, Mod.CurrentFileName, rec));
+									Mod.Errors.Add(new DataParsingException("Invalid stellar object size \"" + temp + "\". Must be Tiny, Small, Medium, Large, Huge, or Any.", ex, The.ModFileName, rec));
 									continue; // skip this stellar object
 								}
 							}
@@ -271,7 +271,7 @@ namespace FrEee.Modding.Loaders
 
 						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Atmosphere", "Obj Atmosphere" }, out temp, ref start, null, start))
 						{
-							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Atmosphere\" field for asteroid field.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Atmosphere\" field for asteroid field.", The.ModFileName, rec));
 							continue; // skip this stellar object
 						}
 						else
@@ -280,7 +280,7 @@ namespace FrEee.Modding.Loaders
 
 						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Composition", "Obj Composition" }, out temp, ref start, null, start))
 						{
-							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Composition\" field for asteroid field.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Composition\" field for asteroid field.", The.ModFileName, rec));
 							continue; // skip this stellar object
 						}
 						else
@@ -295,7 +295,7 @@ namespace FrEee.Modding.Loaders
 
 						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Stellar Abil Type", "Obj Stellar Abil Type" }, out temp, ref start, null, start, true))
 						{
-							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Stellar Abil Type\" field for storm.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Stellar Abil Type\" field for storm.", The.ModFileName, rec));
 							continue; // skip this stellar object
 						}
 						else
@@ -305,13 +305,13 @@ namespace FrEee.Modding.Loaders
 							{
 								template.Abilities = new RandomAbilityTemplate();
 								yield return template.Abilities;
-								Mod.Errors.Add(new DataParsingException("Could not find stellar ability type \"" + temp + "\" in StellarAbilityTypes.txt.", Mod.CurrentFileName, rec));
+								Mod.Errors.Add(new DataParsingException("Could not find stellar ability type \"" + temp + "\" in StellarAbilityTypes.txt.", The.ModFileName, rec));
 							}
 						}
 
 						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Size", "Obj Size" }, out temp, ref start, null, start, true))
 						{
-							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Size\" field for storm.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Size\" field for storm.", The.ModFileName, rec));
 							continue; // skip this stellar object
 						}
 						else
@@ -326,7 +326,7 @@ namespace FrEee.Modding.Loaders
 								}
 								catch (ArgumentException ex)
 								{
-									Mod.Errors.Add(new DataParsingException("Invalid stellar object size \"" + temp + "\". Must be Tiny, Small, Medium, Large, Huge, or Any.", ex, Mod.CurrentFileName, rec));
+									Mod.Errors.Add(new DataParsingException("Invalid stellar object size \"" + temp + "\". Must be Tiny, Small, Medium, Large, Huge, or Any.", ex, The.ModFileName, rec));
 									continue; // skip this stellar object
 								}
 							}
@@ -337,7 +337,7 @@ namespace FrEee.Modding.Loaders
 					}
 					else
 					{
-						Mod.Errors.Add(new DataParsingException("Invalid stellar object type \"" + sobjtype + "\". Must be Star, Planet, Asteroids, or Storm.", Mod.CurrentFileName, rec));
+						Mod.Errors.Add(new DataParsingException("Invalid stellar object type \"" + sobjtype + "\". Must be Star, Planet, Asteroids, or Storm.", The.ModFileName, rec));
 						continue;
 					}
 
@@ -346,7 +346,7 @@ namespace FrEee.Modding.Loaders
 						int ring;
 						if (!int.TryParse(pos.Substring("Ring ".Length), out ring))
 						{
-							Mod.Errors.Add(new DataParsingException("Could not parse stellar object location \"" + pos + "\". Expected integer after Ring.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Could not parse stellar object location \"" + pos + "\". Expected integer after Ring.", The.ModFileName, rec));
 							continue;
 						}
 						sst.StellarObjectLocations.Add(new RingStellarObjectLocation { Ring = ring, StellarObjectTemplate = sobjTemplate });
@@ -363,17 +363,17 @@ namespace FrEee.Modding.Loaders
 						var splitData = coordsData.Split(',');
 						if (splitData.Length < 2)
 						{
-							Mod.Errors.Add(new DataParsingException("Could not parse stellar object location \"" + pos + "\". Expected two comma separated integers after Coord.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Could not parse stellar object location \"" + pos + "\". Expected two comma separated integers after Coord.", The.ModFileName, rec));
 							continue;
 						}
 						if (!int.TryParse(splitData[0].Trim(), out x))
 						{
-							Mod.Errors.Add(new DataParsingException("Could not parse stellar object location \"" + pos + "\". Expected two comma separated integers after Coord.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Could not parse stellar object location \"" + pos + "\". Expected two comma separated integers after Coord.", The.ModFileName, rec));
 							continue;
 						}
 						if (!int.TryParse(splitData[1].Trim(), out y))
 						{
-							Mod.Errors.Add(new DataParsingException("Could not parse stellar object location \"" + pos + "\". Expected two comma separated integers after Coord.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Could not parse stellar object location \"" + pos + "\". Expected two comma separated integers after Coord.", The.ModFileName, rec));
 							continue;
 						}
 						sst.StellarObjectLocations.Add(new CoordStellarObjectLocation { Coordinates = new Point(x, y), UseCenteredCoordinates = isCentered, StellarObjectTemplate = sobjTemplate });
@@ -383,12 +383,12 @@ namespace FrEee.Modding.Loaders
 						int idx;
 						if (!int.TryParse(pos.Substring("Same As ".Length), out idx))
 						{
-							Mod.Errors.Add(new DataParsingException("Could not parse stellar object location \"" + pos + "\". Expected integer after Same As.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Could not parse stellar object location \"" + pos + "\". Expected integer after Same As.", The.ModFileName, rec));
 							continue;
 						}
 						if (idx > sst.StellarObjectLocations.Count)
 						{
-							Mod.Errors.Add(new DataParsingException("A \"Same As\" stellar object location can reference only previously defined locations.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("A \"Same As\" stellar object location can reference only previously defined locations.", The.ModFileName, rec));
 							continue;
 						}
 						sst.StellarObjectLocations.Add(new SameAsStellarObjectLocation { StarSystemTemplate = sst, TargetIndex = idx, StellarObjectTemplate = sobjTemplate });
@@ -398,7 +398,7 @@ namespace FrEee.Modding.Loaders
 						int radius;
 						if (!int.TryParse(pos.Substring("Circle Radius ".Length), out radius))
 						{
-							Mod.Errors.Add(new DataParsingException("Could not parse stellar object location \"" + pos + "\". Expected integer after Circle Radius.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Could not parse stellar object location \"" + pos + "\". Expected integer after Circle Radius.", The.ModFileName, rec));
 							continue;
 						}
 						sst.StellarObjectLocations.Add(new CircleRadiusStellarObjectLocation { Radius = radius, StellarObjectTemplate = sobjTemplate });

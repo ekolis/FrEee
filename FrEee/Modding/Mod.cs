@@ -26,7 +26,8 @@ namespace FrEee.Modding
 	{
 		public Mod()
 		{
-			Current = this;
+			// TODO: determine if we really want to set mod singleton here
+			The.Mod = this;
 
 			Errors = new List<DataParsingException>();
 
@@ -58,12 +59,6 @@ namespace FrEee.Modding
 		}
 
 		private object locker = new object();
-
-		/// <summary>
-		/// The currently loaded mod.
-		/// </summary>
-		[Obsolete("Use The.Mod instead.")]
-		public static Mod? Current { get => The.Mod; set => The.Mod = value; }
 
 		/// <summary>
 		/// The file name being loaded. (For error reporting)
@@ -256,7 +251,7 @@ namespace FrEee.Modding
 			mod.RootPath = path;
 
 			if (setCurrent)
-				Current = mod;
+				The.Mod = mod;
 
 			if (path != null && !Directory.Exists(Path.Combine("Mods", path)))
 				throw new DirectoryNotFoundException($"Could not find mod {path} in the Mods folder.");
@@ -435,8 +430,8 @@ namespace FrEee.Modding
 				c.Dispose();
 			foreach (var ai in EmpireAIs.ToArray())
 				ai.Dispose();
-			if (this == Current)
-				Current = null;
+			if (this == The.Mod)
+				The.Mod = null;
 		}
 
 		/// <summary>

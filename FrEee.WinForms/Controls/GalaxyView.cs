@@ -74,7 +74,7 @@ namespace FrEee.WinForms.Controls
 			{
 				if (The.Game == null)
 					return 0;
-				return (int)Math.Min((float)Width / (float)The.Game.UsedWidth, (float)Height / The.Game.UsedHeight);
+				return (int)Math.Min((float)Width / (float)The.Galaxy.UsedWidth, (float)Height / The.Galaxy.UsedHeight);
 			}
 		}
 

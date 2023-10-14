@@ -74,7 +74,7 @@ namespace FrEee.WinForms.Forms
 							var savefile = The.Game.GetGameSavePath(emp);
 							try
 							{
-								Galaxy.Load(savefile);
+								Game.Load(savefile);
 							}
 							catch (IOException)
 							{
@@ -125,9 +125,9 @@ namespace FrEee.WinForms.Forms
 			var t = new Thread(new ThreadStart(() =>
 			{
 				status.Message = "Processing turn";
-				var processor = new TurnProcessor();
-				processor.ProcessTurn(The.Game, false, status, 0.5);
-				Galaxy.SaveAll(status, 1.0);
+				var processor = new TurnProcessor(The.Game);
+				processor.ProcessTurn(false, status, 0.5);
+				The.Game.SaveAll(status, 1.0);
 			}));
 			this.ShowChildForm(new StatusForm(t, status));
 		}
@@ -148,7 +148,7 @@ namespace FrEee.WinForms.Forms
 				var t = new Thread(new ThreadStart(() =>
 				{
 					saveStatus.Message = "Saving galaxy";
-					Galaxy.SaveAll(saveStatus, 1.0);
+					The.Game.SaveAll(saveStatus, 1.0);
 				}));
 				this.ShowChildForm(new StatusForm(t, saveStatus));
 				CacheGalaxy();
@@ -165,7 +165,7 @@ namespace FrEee.WinForms.Forms
 
 		private void ReloadGalaxy()
 		{
-			Galaxy.LoadFromString(serializedGalaxy);
+			The.Game = Game.LoadFromString(serializedGalaxy);
 		}
 
 		private void autoProcess_CheckedChanged(object sender, EventArgs e)

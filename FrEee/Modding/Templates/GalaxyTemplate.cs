@@ -102,7 +102,7 @@ namespace FrEee.Modding.Templates
 			gal.Height = GameSetup.GalaxySize.Height;
 			var bounds = new Rectangle(-GameSetup.GalaxySize.Width / 2, -GameSetup.GalaxySize.Height / 2, GameSetup.GalaxySize.Width, GameSetup.GalaxySize.Height);
 
-			var unusedNames = new List<string>(Mod.Current.StarSystemNames);
+			var unusedNames = new List<string>(The.Mod.StarSystemNames);
 
 			// create star systems
 			if (status != null)

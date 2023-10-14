@@ -65,7 +65,7 @@ public class TurnProcessor
 				{
 					// purge old battle to save space in the savegame
 					var b = bm.Context;
-					if (b.Timestamp < Game.Timestamp)
+					if (b.Timestamp < Timestamp)
 						b.Dispose();
 				}
 				if (m.TurnNumber < Game.TurnNumber - 10)
@@ -402,22 +402,22 @@ public class TurnProcessor
 			// the order of execution is arbitrary
 			Game.EnableAbilityCache();
 
-			Game.ComputeNextTickSize();
+			ComputeNextTickSize();
 
 			// Don't let ships in fleets move separate from their fleets!
 			MoveShips();
-			tick += Game.NextTickSize;
+			tick += NextTickSize;
 			if (tick >= 1d)
 			{
 				tick = 1d;
-				Game.NextTickSize = 0d;
+				NextTickSize = 0d;
 				MoveShips();
 				didLastTick = true;
 			}
 			foreach (var f in Game.Referrables.OfType<IFoggable>().Where(f => !f.IsMemory))
-				f.Timestamp = Game.Timestamp;
-			if (status != null && Game.NextTickSize != double.PositiveInfinity)
-				status.Progress += progressPerOperation * Game.NextTickSize;
+				f.Timestamp = Timestamp;
+			if (status != null && NextTickSize != double.PositiveInfinity)
+				status.Progress += progressPerOperation * NextTickSize;
 
 			//Game.SpaceObjectIDCheck("after ship movement at T=" + Game.Timestamp);
 
@@ -836,7 +836,7 @@ public class TurnProcessor
 			if (sys == null)
 				continue; // space object is dead, or not done being built
 
-			if (The.Game.CurrentTick == 0d && !v.Orders.OfType<IMovementOrder>().Any())
+			if (CurrentTick == 0d && !v.Orders.OfType<IMovementOrder>().Any())
 				v.DealWithMines();
 
 			bool didStuff = v.ExecuteOrders();
@@ -864,7 +864,7 @@ public class TurnProcessor
 					sobj =>
 						(sobj.IsHostileTo(v.Owner) && sobj.Weapons.Any() || v.IsHostileTo(sobj.Owner) && v.Weapons.Any()) // any enemies?
 						&& (sobj.Owner.CanSee(v) || v.Owner.CanSee(sobj)) // enemies are visible?
-						&& (!lastBattleTimestamps.ContainsKey(sector) || lastBattleTimestamps[sector] < Game.Timestamp - (v.StrategicSpeed == 0 ? 1d : 1d / v.StrategicSpeed)))) // have we fought here too recently?
+						&& (!lastBattleTimestamps.ContainsKey(sector) || lastBattleTimestamps[sector] < Timestamp - (v.StrategicSpeed == 0 ? 1d : 1d / v.StrategicSpeed)))) // have we fought here too recently?
 			{
 				// resolve the battle
 				var battle = new SpaceBattle(sector);
@@ -872,10 +872,43 @@ public class TurnProcessor
 				Galaxy.Battles.Add(battle);
 				foreach (var emp in battle.Empires)
 					emp.Log.Add(battle.CreateLogMessage(battle.NameFor(emp), LogMessageType.Battle));
-				lastBattleTimestamps[sector] = Game.Timestamp;
+				lastBattleTimestamps[sector] = Timestamp;
 			}
 		}
 	}
 
 	private IDictionary<Sector, double> lastBattleTimestamps = new SafeDictionary<Sector, double>();
+
+	/// <summary>
+	/// The current tick in turn processing. 0 = start of turn, 1 = end of turn.
+	/// </summary>
+	public double CurrentTick { get; set; }
+
+	/// <summary>
+	/// Current time equals turn number plus tick minus 1.
+	/// </summary>
+	public double Timestamp => Game.TurnNumber + CurrentTick - 1;
+
+	/// <summary>
+	/// The next tick size, for ship movement.
+	/// </summary>
+	public double NextTickSize { get; internal set; }
+
+	public void ComputeNextTickSize()
+	{
+		var objs = Galaxy.FindSpaceObjects<IMobileSpaceObject>().Where(obj => obj.Orders.Any());
+		objs = objs.Where(obj => !obj.IsMemory);
+		if (objs.Where(v => v.TimeToNextMove > 0).Any() && CurrentTick < 1.0)
+		{
+			// HACK - why are objects getting zero time to next move?!
+			var nextTickSize = objs.Where(v => v.TimeToNextMove > 0).Min(v => v.TimeToNextMove);
+			NextTickSize = Math.Min(1.0 - CurrentTick, nextTickSize);
+		}
+		else if (objs.Any())
+		{
+			NextTickSize = objs.Min(v => v.TimePerMove);
+		}
+		else
+			NextTickSize = double.PositiveInfinity;
+	}
 }

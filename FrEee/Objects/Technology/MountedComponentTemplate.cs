@@ -275,7 +275,7 @@ namespace FrEee.Objects.Technology
 		{
 			get
 			{
-				var design = Container ?? Design.Create(Mod.Current.Hulls.FirstOrDefault(h => ComponentTemplate.VehicleTypes.HasFlag(h.VehicleType)));
+				var design = Container ?? Design.Create(The.Mod.Hulls.FirstOrDefault(h => ComponentTemplate.VehicleTypes.HasFlag(h.VehicleType)));
 				var empire = Container == null ? Empire.Current : Container.Owner;
 				return new Dictionary<string, object>
 				{

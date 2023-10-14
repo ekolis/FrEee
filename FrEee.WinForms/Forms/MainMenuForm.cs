@@ -54,7 +54,7 @@ namespace FrEee.WinForms.Forms
 				{
 #endif
 				bool doOrDie = true;
-				if (Mod.Current == null)
+				if (The.Mod == null)
 				{
 					status.Message = "Loading mod";
 					Mod.Load(null, true, status, 0.5);
@@ -92,7 +92,7 @@ namespace FrEee.WinForms.Forms
 						}
 
 						status.Message = "Setting up galaxy";
-						Game.Start(Mod.Current, setup, null, status, 1.0);
+						Game.Start(The.Mod, setup, null, status, 1.0);
 						var name = The.Game.Name;
 						var turn = The.Game.TurnNumber;
 						status.Message = "Loading game";
@@ -141,7 +141,7 @@ namespace FrEee.WinForms.Forms
 		{
 			Cursor = Cursors.WaitCursor;
 			var plrfile = Path.GetFileNameWithoutExtension(filename) + ".plr";
-			Galaxy.Load(filename);
+			The.Game = Game.Load(filename);
 			if (The.Game.CurrentEmpire == null)
 			{
 				// host view, load host console
@@ -190,7 +190,7 @@ namespace FrEee.WinForms.Forms
 
 		private void btnNew_Click(object sender, EventArgs e)
 		{
-			if (Mod.Current == null)
+			if (The.Mod == null)
 				LoadMod(null);
 			this.ShowChildForm(new GameSetupForm());
 		}
@@ -229,7 +229,7 @@ namespace FrEee.WinForms.Forms
 
 			this.ShowChildForm(new StatusForm(t, status));
 
-			Text = "FrEee - " + Mod.Current.Info.Name;
+			Text = "FrEee - " + The.Mod.Info.Name;
 		}
 
 		private void btnResume_Click(object sender, EventArgs e)

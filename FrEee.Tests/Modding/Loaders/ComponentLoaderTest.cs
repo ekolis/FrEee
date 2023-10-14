@@ -21,7 +21,7 @@ namespace FrEee.Tests.Modding.Loaders
 		[Test]
 		public void WeaponRange()
 		{
-			var w = Mod.Current.ComponentTemplates.FindByName("Range 2 Weapon");
+			var w = The.Mod.ComponentTemplates.FindByName("Range 2 Weapon");
 			Assert.AreEqual(0, w.WeaponInfo.MinRange.Value);
 			Assert.AreEqual(2, w.WeaponInfo.MaxRange.Value);
 		}
@@ -32,7 +32,7 @@ namespace FrEee.Tests.Modding.Loaders
 		[Test]
 		public void WeaponRangeBlindSpot()
 		{
-			var w = Mod.Current.ComponentTemplates.FindByName("Blind Spot Weapon");
+			var w = The.Mod.ComponentTemplates.FindByName("Blind Spot Weapon");
 			Assert.AreEqual(2, w.WeaponInfo.MinRange.Value);
 			Assert.AreEqual(3, w.WeaponInfo.MaxRange.Value);
 		}

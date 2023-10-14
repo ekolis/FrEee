@@ -67,7 +67,7 @@ namespace FrEee.Modding
 					break;
 			}
 			if (logErrors)
-				Mod.Errors.Add(new DataParsingException("Could not find field: " + string.Join(", ", fieldNames.ToArray()) + ".", Mod.CurrentFileName, this));
+				Mod.Errors.Add(new DataParsingException("Could not find field: " + string.Join(", ", fieldNames.ToArray()) + ".", The.ModFileName, this));
 			return null;
 		}
 
@@ -101,7 +101,7 @@ namespace FrEee.Modding
 					return null;
 				else
 				{
-					Mod.Errors.Add(new DataParsingException("Cannot find field \"" + fieldNames.First() + "\".", Mod.CurrentFileName, this, null));
+					Mod.Errors.Add(new DataParsingException("Cannot find field \"" + fieldNames.First() + "\".", The.ModFileName, this, null));
 					return default(T);
 				}
 			}
@@ -134,7 +134,7 @@ namespace FrEee.Modding
 					return null;
 				else
 				{
-					Mod.Errors.Add(new DataParsingException("Cannot find field \"" + fieldNames.First() + "\".", Mod.CurrentFileName, this, null));
+					Mod.Errors.Add(new DataParsingException("Cannot find field \"" + fieldNames.First() + "\".", The.ModFileName, this, null));
 					return new ObjectFormula<T>("None", context, false);
 				}
 			}
@@ -164,7 +164,7 @@ namespace FrEee.Modding
 					return null;
 				else
 				{
-					Mod.Errors.Add(new DataParsingException("Cannot find field \"" + fieldNames.First() + "\".", Mod.CurrentFileName, this, null));
+					Mod.Errors.Add(new DataParsingException("Cannot find field \"" + fieldNames.First() + "\".", The.ModFileName, this, null));
 					return new ObjectFormula<T>("None", context, false);
 				}
 			}

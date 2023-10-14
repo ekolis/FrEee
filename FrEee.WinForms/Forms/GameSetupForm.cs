@@ -28,24 +28,24 @@ namespace FrEee.WinForms.Forms
 		{
 			InitializeComponent();
 			setup = new GameSetup();
-			if (Mod.Current == null)
+			if (The.Mod == null)
 				Mod.Load(null);
 			The.Game = null;
 
 			spnSeed.Value = DateTime.Now.Millisecond + 1000 * DateTime.Now.Second + 60000 * DateTime.Now.Minute;
 
 			// bind data
-			galaxyTemplateBindingSource.DataSource = Mod.Current.GalaxyTemplates;
+			galaxyTemplateBindingSource.DataSource = The.Mod.GalaxyTemplates;
 			warpPointPlacementStrategyBindingSource.DataSource = WarpPointPlacementStrategy.All;
-			lstTechs.Items.AddRange(Mod.Current.Technologies.Where(t => t.CanBeRemoved).ToArray());
+			lstTechs.Items.AddRange(The.Mod.Technologies.Where(t => t.CanBeRemoved).ToArray());
 			// only allow homeworlds to be planet sizes that can exist as any planet surface or atmosphere,
 			// to avoid errors placing empires on incompatible planets
-			var surfaces = Mod.Current.StellarObjectTemplates.OfType<Planet>().Select(p => p.Surface).Distinct();
-			var atmospheres = Mod.Current.StellarObjectTemplates.OfType<Planet>().Select(p => p.Atmosphere).Distinct();
-			foreach (var item in Mod.Current.StellarObjectSizes.Where(q =>
+			var surfaces = The.Mod.StellarObjectTemplates.OfType<Planet>().Select(p => p.Surface).Distinct();
+			var atmospheres = The.Mod.StellarObjectTemplates.OfType<Planet>().Select(p => p.Atmosphere).Distinct();
+			foreach (var item in The.Mod.StellarObjectSizes.Where(q =>
 				q.StellarObjectType == "Planet"
-				&& surfaces.All(w => Mod.Current.StellarObjectTemplates.OfType<Planet>().Any(e => e.Size == q && e.Surface == w))
-				&& atmospheres.All(w => Mod.Current.StellarObjectTemplates.OfType<Planet>().Any(e => e.Size == q && e.Atmosphere == w))))
+				&& surfaces.All(w => The.Mod.StellarObjectTemplates.OfType<Planet>().Any(e => e.Size == q && e.Surface == w))
+				&& atmospheres.All(w => The.Mod.StellarObjectTemplates.OfType<Planet>().Any(e => e.Size == q && e.Atmosphere == w))))
 			{
 				ddlHomeworldSize.Items.Add(item);
 			}
@@ -69,9 +69,9 @@ namespace FrEee.WinForms.Forms
 			ddlTechCost.SelectedIndex = 0; // low tech cost
 
 			ddlEventFrequency.Items.Add(new { Name = $"None", Value = 0 });
-			ddlEventFrequency.Items.Add(new { Name = $"Low ({Mod.Current.Settings.EventFrequencyLow})", Value = Mod.Current.Settings.EventFrequencyLow });
-			ddlEventFrequency.Items.Add(new { Name = $"Medum ({Mod.Current.Settings.EventFrequencyMedium})", Value = Mod.Current.Settings.EventFrequencyMedium });
-			ddlEventFrequency.Items.Add(new { Name = $"High ({Mod.Current.Settings.EventFrequencyHigh})", Value = Mod.Current.Settings.EventFrequencyHigh });
+			ddlEventFrequency.Items.Add(new { Name = $"Low ({The.Mod.Settings.EventFrequencyLow})", Value = The.Mod.Settings.EventFrequencyLow });
+			ddlEventFrequency.Items.Add(new { Name = $"Medum ({The.Mod.Settings.EventFrequencyMedium})", Value = The.Mod.Settings.EventFrequencyMedium });
+			ddlEventFrequency.Items.Add(new { Name = $"High ({The.Mod.Settings.EventFrequencyHigh})", Value = The.Mod.Settings.EventFrequencyHigh });
 			ddlEventFrequency.Items.Add(new { Name = $"Ludicrous (1000)", Value = 1000 });
 			ddlEventFrequency.SelectedItem = ddlEventFrequency.Items.Cast<dynamic>().ElementAt(0);
 
@@ -494,13 +494,13 @@ namespace FrEee.WinForms.Forms
 # endif
 				{
 					status.Message = "Setting up galaxy";
-					Galaxy.Initialize(setup, new PRNG((int)spnSeed.Value), status, 1d);
+					Game.Start(The.Mod, setup, new PRNG((int)spnSeed.Value), status, 1d);
 					if (The.Game.IsSinglePlayer)
 					{
 						var name = The.Game.Name;
 						var turn = The.Game.TurnNumber;
 						status.Message = "Loading game";
-						Galaxy.Load(name + "_" + turn + "_0001.gam");
+						The.Game = Game.Load(name + "_" + turn + "_0001.gam");
 					}
 				}
 #if RELEASE
@@ -520,7 +520,7 @@ namespace FrEee.WinForms.Forms
 					var name = The.Game.Name;
 					var turn = The.Game.TurnNumber;
 					status.Message = "Loading game";
-					Galaxy.Load(name + "_" + turn + "_0001.gam");
+					The.Game = Game.Load(name + "_" + turn + "_0001.gam");
 					Design.ImportFromLibrary();
 					Hide();
 					MainMenuForm.GetInstance().ShowChildForm(new MainGameForm(false, true));
@@ -815,7 +815,7 @@ namespace FrEee.WinForms.Forms
 					// create the galaxy
 					var galtemp = setup.GalaxyTemplate;
 					galtemp.GameSetup = setup;
-					The.Game = galtemp.Instantiate(status, 1, new PRNG((int)spnSeed.Value));
+					Game.Start(The.Mod, setup, new PRNG((int)spnSeed.Value), status, 1);
 				}
 				catch (Exception ex)
 				{

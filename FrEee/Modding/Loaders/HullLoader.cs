@@ -63,7 +63,7 @@ namespace FrEee.Modding.Loaders
 						break;
 
 					default:
-						Mod.Errors.Add(new DataParsingException("Invalid vehicle type \"" + hulltype + "\" specified for " + hullname + " hull.", Mod.CurrentFileName, rec));
+						Mod.Errors.Add(new DataParsingException("Invalid vehicle type \"" + hulltype + "\" specified for " + hullname + " hull.", The.ModFileName, rec));
 						continue;
 				}
 				hull.TemplateParameters = rec.Parameters;

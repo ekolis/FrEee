@@ -68,7 +68,7 @@ namespace FrEee.Modding.Templates
 
 		public Star Instantiate()
 		{
-			var candidates = Mod.Current.StellarObjectTemplates.OfType<Star>();
+			var candidates = The.Mod.StellarObjectTemplates.OfType<Star>();
 			if (StellarSize != null)
 				candidates = candidates.Where(s => s.StellarSize == StellarSize.Value);
 			if (Age != null)

@@ -28,11 +28,11 @@ namespace FrEee.Objects.Vehicles
 			militiaDesign = new Design<Troop>();
 			militiaDesign.BaseName = "Militia";
 			var militiaWeapon = new ComponentTemplate();
-			militiaWeapon.Durability = Mod.Current.Settings.MilitiaHitpoints;
+			militiaWeapon.Durability = The.Mod.Settings.MilitiaHitpoints;
 			militiaWeapon.Name = "Small Arms";
 			militiaWeapon.WeaponInfo = new DirectFireWeaponInfo
 			{
-				Damage = Mod.Current.Settings.MilitiaFirepower,
+				Damage = The.Mod.Settings.MilitiaFirepower,
 				MinRange = 0,
 				MaxRange = 1,
 			};
@@ -179,7 +179,7 @@ namespace FrEee.Objects.Vehicles
 		}
 
 		public double CombatSpeed
-			=> Mod.Current.Settings.CombatSpeedPercentPerStrategicSpeed.PercentOf(StrategicSpeed)
+			=> The.Mod.Settings.CombatSpeedPercentPerStrategicSpeed.PercentOf(StrategicSpeed)
 			+ this.GetAbilityValue("Combat Movement").ToDouble();
 
 		/// <summary>
@@ -359,9 +359,9 @@ namespace FrEee.Objects.Vehicles
 			{
 				double pct;
 				if (Hull.VehicleType == VehicleTypes.Ship || Hull.VehicleType == VehicleTypes.Base)
-					pct = Mod.Current.Settings.ShipBaseMaintenanceRate;
+					pct = The.Mod.Settings.ShipBaseMaintenanceRate;
 				else
-					pct = Mod.Current.Settings.UnitMaintenanceRate;
+					pct = The.Mod.Settings.UnitMaintenanceRate;
 
 				if (pct > 0)
 				{
@@ -848,10 +848,10 @@ namespace FrEee.Objects.Vehicles
 
 			foreach (var s in Hull.PictureNames)
 			{
-				if (Mod.Current.RootPath != null)
+				if (The.Mod.RootPath != null)
 				{
-					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, pathtype + "_" + s));
-					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_" + pathtype + "_" + s)); // for SE4 shipset compatibility
+					paths.Add(Path.Combine("Mods", The.Mod.RootPath, "Pictures", "Races", shipsetPath, pathtype + "_" + s));
+					paths.Add(Path.Combine("Mods", The.Mod.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_" + pathtype + "_" + s)); // for SE4 shipset compatibility
 				}
 				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, pathtype + "_" + s));
 				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_" + pathtype + "_" + s)); // for SE4 shipset compatibility

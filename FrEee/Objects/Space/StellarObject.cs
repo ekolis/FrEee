@@ -205,8 +205,8 @@ namespace FrEee.Objects.Space
 		{
 			get
 			{
-				if (Mod.Current.RootPath != null)
-					yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Planets", PictureName);
+				if (The.Mod.RootPath != null)
+					yield return Path.Combine("Mods", The.Mod.RootPath, "Pictures", "Planets", PictureName);
 				yield return Path.Combine("Pictures", "Planets", PictureName);
 			}
 		}
@@ -268,7 +268,7 @@ namespace FrEee.Objects.Space
 
 		public Visibility CheckVisibility(Empire emp)
 		{
-			if ((Sector == null || StarSystem == null) && Mod.Current.StellarObjectTemplates.Contains(this))
+			if ((Sector == null || StarSystem == null) && The.Mod.StellarObjectTemplates.Contains(this))
 				return Visibility.Scanned; // can always see the mod
 
 			return this.CheckSpaceObjectVisibility(emp);
@@ -299,8 +299,8 @@ namespace FrEee.Objects.Space
 		public bool IsObsoleteMemory(Empire emp)
 		{
 			if (StarSystem == null)
-				return Timestamp < The.Game.Timestamp - 1;
-			return StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < The.Game.Timestamp - 1;
+				return Timestamp < The.Timestamp - 1;
+			return StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < The.Timestamp - 1;
 		}
 
 		/// <summary>

@@ -47,12 +47,12 @@ namespace FrEee.WinForms.Forms
 			get
 			{
 				return
-					Mod.Current.Traits.Cast<IUnlockable>().Concat(
-					Mod.Current.Technologies.Cast<IUnlockable>()).Concat(
-					Mod.Current.Hulls.Cast<IUnlockable>()).Concat(
-					Mod.Current.ComponentTemplates.Cast<IUnlockable>()).Concat(
-					Mod.Current.Mounts.Cast<IUnlockable>()).Concat(
-					Mod.Current.FacilityTemplates.Cast<IUnlockable>());
+					The.Mod.Traits.Cast<IUnlockable>().Concat(
+					The.Mod.Technologies.Cast<IUnlockable>()).Concat(
+					The.Mod.Hulls.Cast<IUnlockable>()).Concat(
+					The.Mod.ComponentTemplates.Cast<IUnlockable>()).Concat(
+					The.Mod.Mounts.Cast<IUnlockable>()).Concat(
+					The.Mod.FacilityTemplates.Cast<IUnlockable>());
 			}
 		}
 
@@ -101,7 +101,7 @@ namespace FrEee.WinForms.Forms
 					// HACK - racial tech requirements are special
 					foreach (var a in trait.Abilities.Where(a => a.Rule.Name == "Tech Area"))
 					{
-						foreach (var tech in Mod.Current.Technologies.Where(t => t.RacialTechID == a.Value1))
+						foreach (var tech in The.Mod.Technologies.Where(t => t.RacialTechID == a.Value1))
 						{
 							if (tech.UnlockRequirements.Count() == 1)
 							{
@@ -157,7 +157,7 @@ namespace FrEee.WinForms.Forms
 						// display racial trait prereqs
 						if (tech.RacialTechID != null && tech.RacialTechID.Trim() != "0")
 						{
-							var traits = Mod.Current.Traits.Where(t => t.Abilities.Any(a => a.Rule != null && a.Rule.Name == "Tech Area" && a.Value1 == tech.RacialTechID));
+							var traits = The.Mod.Traits.Where(t => t.Abilities.Any(a => a.Rule != null && a.Rule.Name == "Tech Area" && a.Value1 == tech.RacialTechID));
 							if (traits.Count() == 1)
 							{
 								var trait = traits.Single();
@@ -176,7 +176,7 @@ namespace FrEee.WinForms.Forms
 							{
 								IEnumerable<Trait> traits;
 								if (u is Technology)
-									traits = Mod.Current.Traits.Where(t => t.Abilities.Any(a => a.Rule != null && a.Rule.Name == "Tech Area" && a.Value1 == tech.RacialTechID));
+									traits = The.Mod.Traits.Where(t => t.Abilities.Any(a => a.Rule != null && a.Rule.Name == "Tech Area" && a.Value1 == tech.RacialTechID));
 								else
 									traits = Enumerable.Empty<Trait>();
 								return new

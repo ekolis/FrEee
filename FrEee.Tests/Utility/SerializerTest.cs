@@ -153,10 +153,10 @@ namespace FrEee.Tests.Utility
 			Mod.Load(null);
 			var ft1 = new FacilityTemplate();
 			ft1.Name = "Mineral Miner Test";
-			ft1.Abilities.Add(new Ability(ft1, Mod.Current.AbilityRules.FindByName("Resource Generation - Minerals"), null, 800));
+			ft1.Abilities.Add(new Ability(ft1, The.Mod.AbilityRules.FindByName("Resource Generation - Minerals"), null, 800));
 			var ft2 = new FacilityTemplate();
 			ft2.Name = "Organics Farm Test";
-			ft2.Abilities.Add(new Ability(ft1, Mod.Current.AbilityRules.FindByName("Resource Generation - Organics"), null, 800));
+			ft2.Abilities.Add(new Ability(ft1, The.Mod.AbilityRules.FindByName("Resource Generation - Organics"), null, 800));
 			var fts = new List<FacilityTemplate> { ft1, ft2 };
 			var serdata = Serializer.SerializeToString(fts);
 			var deser = Serializer.Deserialize<List<FacilityTemplate>>(serdata);
@@ -171,9 +171,9 @@ namespace FrEee.Tests.Utility
 		public void CorrectAbilities2()
 		{
 			Mod.Load(null);
-			var serdata = Serializer.SerializeToString(Mod.Current);
-			Mod.Current = Serializer.DeserializeFromString<Mod>(serdata);
-			Assert.AreEqual(800, Mod.Current.FacilityTemplates.Single(x => x.Name == "Mineral Miner Facility I").GetAbilityValue("Resource Generation - Minerals").ToInt());
+			var serdata = Serializer.SerializeToString(The.Mod);
+			The.Mod = Serializer.DeserializeFromString<Mod>(serdata);
+			Assert.AreEqual(800, The.Mod.FacilityTemplates.Single(x => x.Name == "Mineral Miner Facility I").GetAbilityValue("Resource Generation - Minerals").ToInt());
 		}
 
 		[Test]

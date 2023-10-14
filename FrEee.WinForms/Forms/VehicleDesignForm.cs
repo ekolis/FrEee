@@ -143,7 +143,7 @@ namespace FrEee.WinForms.Forms
 			// bind role
 			ddlRole.Items.Clear();
 			// TODO - add option to alphabetically sort design roles?
-			foreach (var role in Mod.Current.DesignRoles.Union(Empire.Current.KnownDesigns.Where(x => x.Owner == Empire.Current).Select(x => x.Role)))
+			foreach (var role in The.Mod.DesignRoles.Union(Empire.Current.KnownDesigns.Where(x => x.Owner == Empire.Current).Select(x => x.Role)))
 				ddlRole.Items.Add(role);
 			ddlRole.Text = Design == null ? null : Design.Role;
 
@@ -244,7 +244,7 @@ namespace FrEee.WinForms.Forms
 			ddlMount.Items.Add(new MountInfo(null));
 			if (Design.Hull != null)
 			{
-				foreach (var m in Mod.Current.Mounts.Where(m => Design.Hull.CanUseMount(m) && m.IsUnlocked()))
+				foreach (var m in The.Mod.Mounts.Where(m => Design.Hull.CanUseMount(m) && m.IsUnlocked()))
 					ddlMount.Items.Add(new MountInfo(m));
 			}
 			ddlMount.SelectedIndex = 0;

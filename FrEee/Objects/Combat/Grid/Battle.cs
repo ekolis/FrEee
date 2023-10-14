@@ -29,7 +29,7 @@ namespace FrEee.Objects.Combat.Grid
 		{
 			Log = new List<LogMessage>();
 
-			double stardate = The.Game.Timestamp;
+			double stardate = The.Timestamp;
 			Timestamp = stardate;
 		}
 
@@ -695,11 +695,11 @@ gotosAreVeryEvil:
 							Hit hit;
 							if (w.Template.ComponentTemplate.WeaponInfo.IsWarhead)
 							{
-								hit = new Hit(shot, target, w.Template.GetWeaponDamage(range) * Mod.Current.Settings.RammingSourceHitpointsDamagePercent / 100);
+								hit = new Hit(shot, target, w.Template.GetWeaponDamage(range) * The.Mod.Settings.RammingSourceHitpointsDamagePercent / 100);
 								// warheads have a damage modifer
 								target.TakeDamage(hit);
 								// warheads damage the firing ship too
-								c.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range) * Mod.Current.Settings.RammingTargetHitpointsDamagePercent / 100));
+								c.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range) * The.Mod.Settings.RammingTargetHitpointsDamagePercent / 100));
 								// warheads destroy themselves on activation
 								w.Hitpoints = 0;
 							}

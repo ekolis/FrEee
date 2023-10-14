@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FrEee.Modding;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
+using FrEee.Processes;
 using FrEee.Setup;
 using FrEee.Utility;
 
@@ -17,10 +18,15 @@ namespace FrEee;
 public static class The
 {
 	/// <summary>
+	/// The filename of the mod currently being played.
+	/// </summary>
+	public static string ModFileName { get; set; }
+
+	/// <summary>
 	/// The mod currently being played.
 	/// </summary>
 	public static Mod Mod { get; set; }
-	
+
 	/// <summary>
 	/// The game currently being played.
 	/// </summary>
@@ -33,4 +39,8 @@ public static class The
 	public static Galaxy Galaxy => Game.Galaxy;
 
 	public static Empire? Empire { get => Game.CurrentEmpire; set => Game.CurrentEmpire = value; }
+
+	public static TurnProcessor TurnProcessor => Game.TurnProcessor;
+
+	public static double Timestamp => TurnProcessor.Timestamp;
 }

@@ -25,9 +25,9 @@ namespace FrEee.Modding
 			{
 				if (string.IsNullOrWhiteSpace(ID))
 					return default(T);
-				var obj = Mod.Current.Find<T>(ID);
+				var obj = The.Mod.Find<T>(ID);
 				if (obj == null)
-					obj = Mod.Current.Objects.OfType<T>().FirstOrDefault(q => q.Name == ID);
+					obj = The.Mod.Objects.OfType<T>().FirstOrDefault(q => q.Name == ID);
 				if (obj == null)
 					return default(T);
 				if (obj.IsDisposed)
@@ -41,7 +41,7 @@ namespace FrEee.Modding
 			: this()
 		{
 			var mobj = (IModObject)t;
-			if (Mod.Current == null)
+			if (The.Mod == null)
 				throw new ReferenceException<int, T>("Can't create a reference to an IModObject without a mod.");
 			else if (t == null)
 				ID = ""; // dictionaries don't like null keys
@@ -56,9 +56,9 @@ namespace FrEee.Modding
 		public ModReference(string id)
 			: this()
 		{
-			if (Mod.Current == null)
+			if (The.Mod == null)
 				throw new ReferenceException<int, T>("Can't create a reference to an IModObject without a mod.");
-			else if (Mod.Current.Find<T>(id) is T)
+			else if (The.Mod.Find<T>(id) is T)
 				ID = id;
 			else
 				throw new Exception("Object with ID " + id + " is not a " + typeof(T) + ".");
@@ -102,7 +102,7 @@ namespace FrEee.Modding
 			if (t.ModID == null)
 			{
 				// HACK - why are my items not registered in the mod? does it have something to do with formulas and leveled templates?
-				Mod.Current.AssignID(t, Mod.Current.Objects.Select(q => q.ModID).ToList());
+				The.Mod.AssignID(t, The.Mod.Objects.Select(q => q.ModID).ToList());
 			}
 			return new ModReference<T>(t);
 		}

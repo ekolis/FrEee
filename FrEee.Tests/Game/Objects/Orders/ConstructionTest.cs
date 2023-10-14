@@ -33,7 +33,7 @@ namespace FrEee.Tests.Game.Objects.Orders
 			race.Aptitudes["Construction"] = 100;
 
 			// initialize components
-			sy = Mod.Current.FacilityTemplates.FindByName("Space Yard Facility I");
+			sy = The.Mod.FacilityTemplates.FindByName("Space Yard Facility I");
 		}
 
 		[SetUp]

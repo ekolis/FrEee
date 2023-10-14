@@ -242,7 +242,7 @@ namespace FrEee.Objects.Technology
 			{
 				if (!IsRacial)
 					return Enumerable.Empty<Trait>();
-				return Mod.Current.Traits.Where(t => t.Abilities.Any(a => a.Rule.Matches("Tech Area") && a.Value1 == RacialTechID));
+				return The.Mod.Traits.Where(t => t.Abilities.Any(a => a.Rule.Matches("Tech Area") && a.Value1 == RacialTechID));
 			}
 		}
 
@@ -303,8 +303,8 @@ namespace FrEee.Objects.Technology
 		{
 			if (IsDisposed)
 				return;
-			if (Mod.Current != null)
-				Mod.Current.Technologies.Remove(this);
+			if (The.Mod != null)
+				The.Mod.Technologies.Remove(this);
 		}
 
 		public int GetBaseLevelCost(int level)

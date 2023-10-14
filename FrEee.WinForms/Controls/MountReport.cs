@@ -75,7 +75,7 @@ namespace FrEee.WinForms.Controls
 				else
 				{
 					txtComponentFamily.Text = Mount.RequiredComponentFamily.Value;
-					var comp = Mod.Current.ComponentTemplates.Where(ct => Mount.RequiredComponentFamily.Value.Split(',').Select(q => q.Trim()).Contains(ct.Family.Value)).FirstOrDefault();
+					var comp = The.Mod.ComponentTemplates.Where(ct => Mount.RequiredComponentFamily.Value.Split(',').Select(q => q.Trim()).Contains(ct.Family.Value)).FirstOrDefault();
 					if (comp != null)
 						txtComponentFamily.Text += " (" + comp + ", etc.)";
 				}

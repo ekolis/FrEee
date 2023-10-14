@@ -70,7 +70,7 @@ namespace FrEee.Objects.Civilization
 
 		public void Dispose()
 		{
-			Mod.Current.HappinessModels.Remove(this);
+			The.Mod.HappinessModels.Remove(this);
 			IsDisposed = true;
 		}
 

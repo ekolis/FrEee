@@ -136,11 +136,11 @@ namespace FrEee.WinForms.Forms
 			{
 				ddlRacePopulationIcon.Items.Add(icon);
 			}
-			foreach (var surface in Mod.Current.StellarObjectTemplates.OfType<Planet>().Select(p => p.Surface).Distinct())
+			foreach (var surface in The.Mod.StellarObjectTemplates.OfType<Planet>().Select(p => p.Surface).Distinct())
 			{
 				ddlRaceNativeSurface.Items.Add(surface);
 			}
-			foreach (var atmosphere in Mod.Current.StellarObjectTemplates.OfType<Planet>().Select(p => p.Atmosphere).Distinct())
+			foreach (var atmosphere in The.Mod.StellarObjectTemplates.OfType<Planet>().Select(p => p.Atmosphere).Distinct())
 			{
 				ddlRaceNativeAtmosphere.Items.Add(atmosphere);
 			}
@@ -152,23 +152,23 @@ namespace FrEee.WinForms.Forms
 			{
 				ddlShipset.Items.Add(shipset);
 			}
-			foreach (var ai in Mod.Current.EmpireAIs)
+			foreach (var ai in The.Mod.EmpireAIs)
 			{
 				ddlAI.Items.Add(ai);
 			}
-			foreach (var h in Mod.Current.HappinessModels)
+			foreach (var h in The.Mod.HappinessModels)
 			{
 				ddlRaceHappiness.Items.Add(h);
 			}
-			foreach (var c in Mod.Current.Cultures)
+			foreach (var c in The.Mod.Cultures)
 			{
 				ddlCulture.Items.Add(c);
 			}
-			foreach (var n in Mod.Current.DesignNamesFiles)
+			foreach (var n in The.Mod.DesignNamesFiles)
 			{
 				ddlDesignNames.Items.Add(n);
 			}
-			raceTraitPicker.Traits = Mod.Current.Traits;
+			raceTraitPicker.Traits = The.Mod.Traits;
 		}
 
 		private void BindPictures()
@@ -307,7 +307,7 @@ namespace FrEee.WinForms.Forms
 
 		private void ddlShipset_TextChanged(object sender, EventArgs e)
 		{
-			picShipset.Image = Mod.Current.Hulls.First().GetPortrait(ddlShipset.Text);
+			picShipset.Image = The.Mod.Hulls.First().GetPortrait(ddlShipset.Text);
 		}
 
 		private void empireTraitPicker_TraitToggled(Controls.TraitPicker picker, Trait trait, bool state)

@@ -154,7 +154,7 @@ namespace FrEee.Objects.Technology
 		{
 			get
 			{
-				return Mod.Current.FacilityTemplates.NewerVersions(this, t => t.Family);
+				return The.Mod.FacilityTemplates.NewerVersions(this, t => t.Family);
 			}
 		}
 
@@ -162,7 +162,7 @@ namespace FrEee.Objects.Technology
 		{
 			get
 			{
-				return Mod.Current.FacilityTemplates.OlderVersions(this, t => t.Family);
+				return The.Mod.FacilityTemplates.OlderVersions(this, t => t.Family);
 			}
 		}
 
@@ -195,8 +195,8 @@ namespace FrEee.Objects.Technology
 		{
 			get
 			{
-				if (Mod.Current.RootPath != null)
-					yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Facilities", PictureName);
+				if (The.Mod.RootPath != null)
+					yield return Path.Combine("Mods", The.Mod.RootPath, "Pictures", "Facilities", PictureName);
 				yield return Path.Combine("Pictures", "Facilities", PictureName);
 			}
 		}
@@ -260,8 +260,8 @@ namespace FrEee.Objects.Technology
 			if (IsDisposed)
 				return;
 			The.ReferrableRepository.UnassignID(this);
-			if (Mod.Current != null)
-				Mod.Current.FacilityTemplates.Remove(this);
+			if (The.Mod != null)
+				The.Mod.FacilityTemplates.Remove(this);
 		}
 
 		public bool HasBeenUnlockedBy(Empire emp)

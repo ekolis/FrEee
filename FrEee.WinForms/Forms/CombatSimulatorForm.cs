@@ -132,7 +132,7 @@ namespace FrEee.WinForms.Forms
 			else
 			{
 				// TODO - let player choose a planet?
-				var template = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => p.Atmosphere == CurrentEmpire.Empire.PrimaryRace.NativeAtmosphere).PickRandom();
+				var template = The.Mod.StellarObjectTemplates.OfType<Planet>().Where(p => p.Atmosphere == CurrentEmpire.Empire.PrimaryRace.NativeAtmosphere).PickRandom();
 				var planet = template.Instantiate();
 				planet.Name = "Planet";
 				var sim = new SimulatedSpaceObject(planet);
@@ -246,7 +246,7 @@ namespace FrEee.WinForms.Forms
 			if (IsGroundCombat)
 			{
 				// TODO - let player pick a planet to fight on, or at least specify population for militia
-				var template = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => p.Atmosphere == CurrentEmpire.Empire.PrimaryRace.NativeAtmosphere).PickRandom();
+				var template = The.Mod.StellarObjectTemplates.OfType<Planet>().Where(p => p.Atmosphere == CurrentEmpire.Empire.PrimaryRace.NativeAtmosphere).PickRandom();
 				var planet = template.Instantiate();
 				planet.Name = "Planet";
 				var sim = new SimulatedSpaceObject(planet);

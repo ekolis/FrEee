@@ -113,7 +113,7 @@ namespace FrEee.Objects.Abilities
 		/// <returns>The ability rule, or null if none matches.</returns>
 		public static AbilityRule Find(string nameOrAlias)
 		{
-			return Mod.Current.AbilityRules.Where(r => r.Matches(nameOrAlias)).SingleOrDefault();
+			return The.Mod.AbilityRules.Where(r => r.Matches(nameOrAlias)).SingleOrDefault();
 		}
 
 		/// <summary>

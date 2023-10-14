@@ -34,7 +34,7 @@ namespace FrEee.Objects.Space
 		public int Accuracy
 		{
 			get =>
-				Mod.Current.Settings.PlanetAccuracy
+				The.Mod.Settings.PlanetAccuracy
 				+ this.GetAbilityValue("Combat To Hit Offense Plus").ToInt()
 				- this.GetAbilityValue("Combat To Hit Offense Minus").ToInt()
 				+ (Owner == null || Owner.Culture == null ? 0 : Owner.Culture.SpaceCombat)
@@ -112,9 +112,9 @@ namespace FrEee.Objects.Space
 		/// <summary>
 		/// The environmental conditions of this planet. Affects reproduction rate of populations.
 		/// </summary>
-		public Conditions Conditions => Mod.Current.Settings.ConditionsThresholds.Where(x => x.Value <= ConditionsAmount).WithMax(x => x.Value).Single().Key;
+		public Conditions Conditions => The.Mod.Settings.ConditionsThresholds.Where(x => x.Value <= ConditionsAmount).WithMax(x => x.Value).Single().Key;
 
-		public Progress ConditionsProgress => new Progress(ConditionsAmount, Mod.Current.Settings.MaxConditions);
+		public Progress ConditionsProgress => new Progress(ConditionsAmount, The.Mod.Settings.MaxConditions);
 
 		/// <summary>
 		/// Numeric representation of plantery conditions.
@@ -174,7 +174,7 @@ namespace FrEee.Objects.Space
 			get
 			{
 				return
-					Mod.Current.Settings.PlanetEvasion
+					The.Mod.Settings.PlanetEvasion
 					+ this.GetAbilityValue("Combat To Hit Defense Plus").ToInt()
 					- this.GetAbilityValue("Combat To Hit Defense Minus").ToInt()
 					+ (Owner == null || Owner.Culture == null ? 0 : Owner.Culture.SpaceCombat)
@@ -224,7 +224,7 @@ namespace FrEee.Objects.Space
 			{
 				if (Colony == null)
 					return 0;
-				return Cargo.Hitpoints + Colony.Facilities.Sum(f => f.Hitpoints) + (int)AllPopulation.Sum(kvp => kvp.Value * Mod.Current.Settings.PopulationHitpoints);
+				return Cargo.Hitpoints + Colony.Facilities.Sum(f => f.Hitpoints) + (int)AllPopulation.Sum(kvp => kvp.Value * The.Mod.Settings.PopulationHitpoints);
 			}
 			set
 			{
@@ -234,7 +234,7 @@ namespace FrEee.Objects.Space
 
 		public int HullHitpoints
 		{
-			get { return Colony == null ? 0 : Colony.Facilities.Sum(f => f.Hitpoints) + (int)(Colony.Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints) + Cargo.HullHitpoints; }
+			get { return Colony == null ? 0 : Colony.Facilities.Sum(f => f.Hitpoints) + (int)(Colony.Population.Sum(kvp => kvp.Value) * The.Mod.Settings.PopulationHitpoints) + Cargo.HullHitpoints; }
 		}
 
 		public override Image Icon
@@ -289,7 +289,7 @@ namespace FrEee.Objects.Space
 
 		public int MaxHullHitpoints
 		{
-			get { return Colony == null ? 0 : Colony.Facilities.Sum(f => f.MaxHitpoints) + (int)(Colony.Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints) + Cargo.MaxHullHitpoints; }
+			get { return Colony == null ? 0 : Colony.Facilities.Sum(f => f.MaxHitpoints) + (int)(Colony.Population.Sum(kvp => kvp.Value) * The.Mod.Settings.PopulationHitpoints) + Cargo.MaxHullHitpoints; }
 		}
 
 		public int MaxNormalShields
@@ -436,12 +436,12 @@ namespace FrEee.Objects.Space
 					var sys = this.FindStarSystem();
 					var sysModifier = sys == null ? 0 : sys.GetEmpireAbilityValue(Owner, "Modify Reproduction - System").ToInt();
 					var planetModifier = this.GetAbilityValue("Modify Reproduction - Planet").ToInt();
-					var moodModifier = Mod.Current.Settings.MoodReproductionModifiers[Colony.Moods[race]];
-					var conditionsModifier = Mod.Current.Settings.ConditionsReproductionModifiers[Conditions];
+					var moodModifier = The.Mod.Settings.MoodReproductionModifiers[Colony.Moods[race]];
+					var conditionsModifier = The.Mod.Settings.ConditionsReproductionModifiers[Conditions];
 					var reproduction =
-						(Mod.Current.Settings.Reproduction + (race.Aptitudes["Reproduction"] - 100)
+						(The.Mod.Settings.Reproduction + (race.Aptitudes["Reproduction"] - 100)
 							+ sysModifier + planetModifier + moodModifier + conditionsModifier)
-						* Mod.Current.Settings.ReproductionMultiplier
+						* The.Mod.Settings.ReproductionMultiplier
 						/ 100d;
 					if (reproduction < 0)
 						reproduction = 0;
@@ -450,7 +450,7 @@ namespace FrEee.Objects.Space
 					// TODO - allow cloning of populations over the max of a 32 bit int?
 					var sysCloning = sys == null ? 0 : sys.GetEmpireAbilityValue(Owner, "Change Population - System").ToInt();
 					var planetCloning = this.GetAbilityValue("Change Population - Planet").ToInt();
-					deltapop[race] += (sysCloning + planetCloning) * Mod.Current.Settings.PopulationFactor / Colony.Population.Count; // split cloning across races
+					deltapop[race] += (sysCloning + planetCloning) * The.Mod.Settings.PopulationFactor / Colony.Population.Count; // split cloning across races
 				}
 
 				return deltapop;
@@ -614,13 +614,13 @@ namespace FrEee.Objects.Space
 			Colony.Population[race] += canPop;
 
 			// don't put population in planetary cargo storage, that's just confusing
-			/*var canCargo = Math.Min(amount, (long)(this.CargoStorageFree() / Mod.Current.Settings.PopulationSize));
+			/*var canCargo = Math.Min(amount, (long)(this.CargoStorageFree() / The.Mod.Settings.PopulationSize));
 			amount -= canCargo;
 			Colony.Cargo.Population[race] += canCargo;*/
 
 			// apply anger to population
 			if (!Colony.Anger.ContainsKey(race))
-				Colony.Anger[race] = Mod.Current.Settings.StartPopulationAnger;
+				Colony.Anger[race] = The.Mod.Settings.StartPopulationAnger;
 
 			// return leftover population
 			return amount;
@@ -657,7 +657,7 @@ namespace FrEee.Objects.Space
 			var value = ResourceValue;
 			var name = Name;
 
-			var astTemplates = Mod.Current.StellarObjectTemplates.OfType<AsteroidField>().Where(a => a.Size == size);
+			var astTemplates = The.Mod.StellarObjectTemplates.OfType<AsteroidField>().Where(a => a.Size == size);
 			if (astTemplates.Any())
 			{
 				var astTemplate = astTemplates.PickRandom();
@@ -931,7 +931,7 @@ namespace FrEee.Objects.Space
 
 			// TODO - to-hit chances not just based on HP?
 			// TODO - per-race population HP?
-			var popHP = (int)Math.Ceiling(Colony.Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints);
+			var popHP = (int)Math.Ceiling(Colony.Population.Sum(kvp => kvp.Value) * The.Mod.Settings.PopulationHitpoints);
 			var cargoHP = Colony.Cargo.MaxHitpoints;
 			var facilHP = Colony.Facilities.Sum(f => f.MaxHitpoints);
 			var order = new int[] { 0, 1, 2 }.Shuffle(dice);
@@ -968,7 +968,7 @@ namespace FrEee.Objects.Space
 		{
 			if (Colony == null)
 				return;
-			var popKilled = popFactorsKilled * Mod.Current.Settings.PopulationFactor;
+			var popKilled = popFactorsKilled * The.Mod.Settings.PopulationFactor;
 			long totalPop = Colony.Population.Sum(kvp => kvp.Value);
 			long dead = 0;
 			foreach (var race in Colony.Population.Keys)
@@ -1020,7 +1020,7 @@ namespace FrEee.Objects.Space
 				var race = Colony.Population.PickWeighted(dice);
 				if (race == null)
 					break; // no more population
-				var popHPPerPerson = Mod.Current.Settings.PopulationHitpoints;
+				var popHPPerPerson = The.Mod.Settings.PopulationHitpoints;
 				// TODO - don't ceiling the popKilled, just stack it up
 				var popKilled = (int)Math.Ceiling(hit.Shot.DamageType.PopulationDamage.Evaluate(hit.Shot) / 100 / popHPPerPerson);
 				totalPopKilled += popKilled;
@@ -1036,7 +1036,7 @@ namespace FrEee.Objects.Space
 			return damage - inflicted;
 		}
 
-		public Progress AngerProgress => new Progress(Colony?.AverageAnger ?? 0, Mod.Current.Settings.MaxAnger);
+		public Progress AngerProgress => new Progress(Colony?.AverageAnger ?? 0, The.Mod.Settings.MaxAnger);
 
 		public IEnumerable<Component> Components => Cargo.Units.OfType<WeaponPlatform>().SelectMany(q => q.Components);
 

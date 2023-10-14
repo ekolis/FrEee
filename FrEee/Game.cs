@@ -19,6 +19,7 @@ using FrEee.Setup;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Processes;
 
 namespace FrEee;
 
@@ -32,6 +33,7 @@ public class Game
 		Mod = mod;
 		Setup = setup;
 		Dice = dice ?? new PRNG(DateTime.Now.Millisecond + 1000 * DateTime.Now.Second + 60000 * DateTime.Now.Minute);
+		TurnProcessor = new TurnProcessor(this);
 	}
 
 	/// <summary>
@@ -126,39 +128,6 @@ public class Game
 	/// The current stardate. Advances 0.1 years per turn.
 	/// </summary>
 	public string Stardate => TurnNumber.ToStardate();
-
-	/// <summary>
-	/// The current tick in turn processing. 0 = start of turn, 1 = end of turn.
-	/// </summary>
-	public double CurrentTick { get; set; }
-
-	/// <summary>
-	/// Current time equals turn number plus tick minus 1.
-	/// </summary>
-	public double Timestamp => TurnNumber + CurrentTick - 1;
-
-	/// <summary>
-	/// The next tick size, for ship movement.
-	/// </summary>
-	public double NextTickSize { get; internal set; }
-
-	public void ComputeNextTickSize()
-	{
-		var objs = Galaxy.FindSpaceObjects<IMobileSpaceObject>().Where(obj => obj.Orders.Any());
-		objs = objs.Where(obj => !obj.IsMemory);
-		if (objs.Where(v => v.TimeToNextMove > 0).Any() && CurrentTick < 1.0)
-		{
-			// HACK - why are objects getting zero time to next move?!
-			var nextTickSize = objs.Where(v => v.TimeToNextMove > 0).Min(v => v.TimeToNextMove);
-			NextTickSize = Math.Min(1.0 - CurrentTick, nextTickSize);
-		}
-		else if (objs.Any())
-		{
-			NextTickSize = objs.Min(v => v.TimePerMove);
-		}
-		else
-			NextTickSize = double.PositiveInfinity;
-	}
 
 	/// <summary>
 	/// Notes that mod scripts can play with.
@@ -457,7 +426,7 @@ public class Game
 		var game = Serializer.Deserialize<Game>(fs);
 		if (game.ModPath == null)
 			game.Mod = Mod.Load(null); // skipped in deserialization because it is null but the mod needs to be loaded!
-		if (The.Empire != null)
+		if (game.CurrentEmpire != null)
 		{
 			// load library of designs, strategies, etc.
 			Library.Load();
@@ -803,6 +772,11 @@ public class Game
 			return Name;
 		return Name + " - " + CurrentEmpire.Name + " - " + CurrentEmpire.LeaderName + " - " + Stardate;
 	}
+
+	/// <summary>
+	/// A turn processor which can process turns for this game.
+	/// </summary>
+	public TurnProcessor TurnProcessor { get; }
 
 	#region move this to an AbilityManager or something
 	private bool isAbilityCacheEnabled;

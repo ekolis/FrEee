@@ -51,7 +51,7 @@ namespace FrEee.Modding.Templates
 
 		public Storm Instantiate()
 		{
-			var candidates = Mod.Current.StellarObjectTemplates.OfType<Storm>();
+			var candidates = The.Mod.StellarObjectTemplates.OfType<Storm>();
 			if (Size != null)
 				candidates = candidates.Where(p => p.StellarSize == Size.Value);
 			if (!candidates.Any())

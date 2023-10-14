@@ -91,12 +91,12 @@ namespace FrEee.Utility.Extensions
 		/// <returns>The description.</returns>
 		public static string GetMemoryAgeDescription(this double timestamp)
 		{
-			if (timestamp == The.Game.Timestamp)
+			if (timestamp == The.Timestamp)
 				return "Current";
-			else if (The.Game.Timestamp - timestamp <= 1)
+			else if (The.Timestamp - timestamp <= 1)
 				return "Memory from last turn";
 			else
-				return $"Memory from {Math.Ceiling(The.Game.Timestamp - timestamp)} turns ago";
+				return $"Memory from {Math.Ceiling(The.Timestamp - timestamp)} turns ago";
 		}
 	}
 }

@@ -64,7 +64,7 @@ namespace FrEee.WinForms.Forms
 		private void btnEdit_Click(object sender, EventArgs e)
 		{
 			LoadMod(ModPath);
-			var original = Mod.Current.Copy();
+			var original = The.Mod.Copy();
 			Func<bool> save = () =>
 			{
 				// mod is already in memory
@@ -75,13 +75,13 @@ namespace FrEee.WinForms.Forms
 				if (MessageBox.Show("Discard work on this mod?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
 				{
 					// undo
-					Mod.Current = original;
+					The.Mod = original;
 					return true;
 				}
 				else
 					return false; // don't close the form
 			};
-			var form = new EditorForm(Mod.Current, save, cancel);
+			var form = new EditorForm(The.Mod, save, cancel);
 			Hide();
 			this.ShowChildForm(form);
 			Show();
@@ -123,7 +123,7 @@ namespace FrEee.WinForms.Forms
 
 			this.ShowChildForm(new StatusForm(t, status));
 
-			Text = "FrEee - " + Mod.Current.Info.Name;
+			Text = "FrEee - " + The.Mod.Info.Name;
 		}
 
 		private void lstMods_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)

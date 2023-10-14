@@ -62,7 +62,7 @@ namespace FrEee.Modding.Templates
 
 		public AsteroidField Instantiate()
 		{
-			var candidates = Mod.Current.StellarObjectTemplates.OfType<AsteroidField>();
+			var candidates = The.Mod.StellarObjectTemplates.OfType<AsteroidField>();
 			if (Atmosphere != null)
 				candidates = candidates.Where(ast => ast.Atmosphere == Atmosphere);
 			if (Surface != null)
@@ -77,7 +77,7 @@ namespace FrEee.Modding.Templates
 
 			if (asteroids.Size == null)
 			{
-				var sizes = Mod.Current.StellarObjectSizes.Where(sos => sos.StellarObjectType == "Asteroids" && !sos.IsConstructed && (StellarSize == null || sos.StellarSize == StellarSize.Value));
+				var sizes = The.Mod.StellarObjectSizes.Where(sos => sos.StellarObjectType == "Asteroids" && !sos.IsConstructed && (StellarSize == null || sos.StellarSize == StellarSize.Value));
 				asteroids.Size = sizes.PickRandom();
 			}
 

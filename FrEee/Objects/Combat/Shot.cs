@@ -35,7 +35,7 @@ namespace FrEee.Objects.Combat
 			{
 				if (Weapon != null && Weapon.Template.ComponentTemplate.WeaponInfo != null)
 					return Weapon.Template.ComponentTemplate.WeaponInfo.DamageType;
-				return Mod.Current.DamageTypes.FindByName("Normal") ?? new DamageType(); // TODO - moddable damage types for storms, etc.
+				return The.Mod.DamageTypes.FindByName("Normal") ?? new DamageType(); // TODO - moddable damage types for storms, etc.
 			}
 		}
 
@@ -107,7 +107,7 @@ namespace FrEee.Objects.Combat
 
 		public bool RollAccuracy(PRNG dice = null)
 		{
-			var accuracy = Weapon.Template.WeaponAccuracy + Attacker.Accuracy + Mod.Current.Settings.WeaponAccuracyPointBlank - Range * Mod.Current.Settings.WeaponAccuracyLossPerSquare;
+			var accuracy = Weapon.Template.WeaponAccuracy + Attacker.Accuracy + The.Mod.Settings.WeaponAccuracyPointBlank - Range * The.Mod.Settings.WeaponAccuracyLossPerSquare;
 			var evasion = 0;
 			if (Defender is ITargetable t)
 				evasion = t.Evasion;

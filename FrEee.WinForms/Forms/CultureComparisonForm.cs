@@ -19,7 +19,7 @@ namespace FrEee.WinForms.Forms
 				if (gridCultures.Columns.IndexOf(col) > 0)
 					col.Width = 50;
 			}
-			cultureBindingSource.DataSource = Mod.Current.Cultures;
+			cultureBindingSource.DataSource = The.Mod.Cultures;
 		}
 
 		private void btnClose_Click(object sender, EventArgs e)

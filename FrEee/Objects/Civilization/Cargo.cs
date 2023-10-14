@@ -35,7 +35,7 @@ namespace FrEee.Objects.Civilization
 		{
 			get
 			{
-				var popHPPerPerson = Mod.Current.Settings.PopulationHitpoints;
+				var popHPPerPerson = The.Mod.Settings.PopulationHitpoints;
 				return Population.Sum(kvp => (int)Math.Ceiling(kvp.Value * popHPPerPerson)) + Units.Sum(u => u.Hitpoints);
 			}
 			set
@@ -46,7 +46,7 @@ namespace FrEee.Objects.Civilization
 
 		public int HullHitpoints
 		{
-			get { return Units.Sum(u => u.HullHitpoints) + (int)(Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints); }
+			get { return Units.Sum(u => u.HullHitpoints) + (int)(Population.Sum(kvp => kvp.Value) * The.Mod.Settings.PopulationHitpoints); }
 		}
 
 		public bool IsDestroyed
@@ -63,7 +63,7 @@ namespace FrEee.Objects.Civilization
 		{
 			get
 			{
-				var popHPPerPerson = Mod.Current.Settings.PopulationHitpoints;
+				var popHPPerPerson = The.Mod.Settings.PopulationHitpoints;
 				return Population.Sum(kvp => (int)Math.Ceiling(kvp.Value * popHPPerPerson)) + Units.Sum(u => u.MaxHitpoints);
 			}
 		}
@@ -135,7 +135,7 @@ namespace FrEee.Objects.Civilization
 					return fakeSize.Value;
 
 				// TODO - per race population size?
-				return (int)Math.Round(Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationSize) + Units.Sum(u => u.Design.Hull.Size);
+				return (int)Math.Round(Population.Sum(kvp => kvp.Value) * The.Mod.Settings.PopulationSize) + Units.Sum(u => u.Design.Hull.Size);
 			}
 		}
 
@@ -235,7 +235,7 @@ namespace FrEee.Objects.Civilization
 				var race = Population.PickWeighted(dice);
 				if (race == null)
 					break; // no more population
-				var popHPPerPerson = Mod.Current.Settings.PopulationHitpoints;
+				var popHPPerPerson = The.Mod.Settings.PopulationHitpoints;
 				// TODO - don't ceiling the popKilled, just stack it up
 				var popKilled = (int)Math.Ceiling(hit.Shot.DamageType.PopulationDamage.Evaluate(hit.Shot) / popHPPerPerson);
 				Population[race] -= popKilled;

@@ -39,7 +39,7 @@ namespace FrEee.Modding.Loaders
 					if (f == null)
 						break;
 					var abil = new Ability(t);
-					abil.Rule = Mod.Current.FindAbilityRule(f.Value);
+					abil.Rule = The.Mod.FindAbilityRule(f.Value);
 					for (int vcount = 1; ; vcount++)
 					{
 						var vf = rec.FindField(new string[] { "Value", "Value " + vcount }, ref index, false, index + 1);
@@ -51,7 +51,7 @@ namespace FrEee.Modding.Loaders
 				}
 
 				if (t.Abilities.Count == 0)
-					Mod.Errors.Add(new DataParsingException("Trait \"" + t.Name + "\" does not have any abilities.", Mod.CurrentFileName, rec));
+					Mod.Errors.Add(new DataParsingException("Trait \"" + t.Name + "\" does not have any abilities.", The.ModFileName, rec));
 
 				yield return t;
 			}
@@ -72,7 +72,7 @@ namespace FrEee.Modding.Loaders
 						break;
 					var rts = mod.Traits.Where(t2 => t2.Name == f.Value);
 					if (!rts.Any())
-						Mod.Errors.Add(new DataParsingException("Required trait \"" + f.Value + "\" for trait \"" + t.Name + "\" does not exist in RacialTraits.txt.", Mod.CurrentFileName, rec));
+						Mod.Errors.Add(new DataParsingException("Required trait \"" + f.Value + "\" for trait \"" + t.Name + "\" does not exist in RacialTraits.txt.", The.ModFileName, rec));
 					foreach (var rt in rts)
 						t.RequiredTraits.Add(rt);
 				}
@@ -84,7 +84,7 @@ namespace FrEee.Modding.Loaders
 						break;
 					var rts = mod.Traits.Where(t2 => t2.Name == f.Value);
 					if (!rts.Any())
-						Mod.Errors.Add(new DataParsingException("Restricted trait \"" + f.Value + "\" for trait \"" + t.Name + "\" does not exist in RacialTraits.txt.", Mod.CurrentFileName, rec));
+						Mod.Errors.Add(new DataParsingException("Restricted trait \"" + f.Value + "\" for trait \"" + t.Name + "\" does not exist in RacialTraits.txt.", The.ModFileName, rec));
 					foreach (var rt in rts)
 						t.RestrictedTraits.Add(rt);
 				}

@@ -73,7 +73,7 @@ namespace FrEee.Modding.Loaders
 					else if (int.TryParse(word, out num))
 						c.MaxPerVehicle = num;
 					else
-						Mod.Errors.Add(new DataParsingException("Can't parse \"" + word + "\" as a max-per-vehicle restriction.", Mod.CurrentFileName, rec));
+						Mod.Errors.Add(new DataParsingException("Can't parse \"" + word + "\" as a max-per-vehicle restriction.", The.ModFileName, rec));
 				}
 
 				c.Group = rec.Get<string>("General Group", c);
@@ -114,7 +114,7 @@ namespace FrEee.Modding.Loaders
 					else if (string.IsNullOrEmpty(wfield.Value) || wfield.Value == "None")
 						w = null;
 					else
-						Mod.Errors.Add(new DataParsingException("Invalid weapon type \"" + wfield.Value + "\".", Mod.CurrentFileName, rec, wfield));
+						Mod.Errors.Add(new DataParsingException("Invalid weapon type \"" + wfield.Value + "\".", The.ModFileName, rec, wfield));
 					if (w != null)
 					{
 						if (wfield.Value.EndsWith("Point-Defense"))
@@ -159,18 +159,18 @@ namespace FrEee.Modding.Loaders
 							}
 							catch (Exception ex)
 							{
-								Mod.Errors.Add(new DataParsingException("Can't parse \"" + dmgstr + "\" as a damage string: " + ex.Message, Mod.CurrentFileName, rec));
+								Mod.Errors.Add(new DataParsingException("Can't parse \"" + dmgstr + "\" as a damage string: " + ex.Message, The.ModFileName, rec));
 							}
 						}
 
 						var damTypeName = rec.Get<string>("Weapon Damage Type", c);
-						w.DamageType = Mod.Current.DamageTypes.FindByName(damTypeName);
+						w.DamageType = The.Mod.DamageTypes.FindByName(damTypeName);
 
 						if (w.DamageType == null)
 						{
 							// no valid damage type? then make it normal damage and log a warning
 							w.DamageType = DamageType.Normal;
-							Mod.Errors.Add(new DataParsingException("Unknown damage type \"" + damTypeName + "\"; setting " + c + "'s damage type to Normal.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Unknown damage type \"" + damTypeName + "\"; setting " + c + "'s damage type to Normal.", The.ModFileName, rec));
 						}
 
 						w.ReloadRate = rec.Get<double>("Weapon Reload Rate", c);
@@ -184,11 +184,11 @@ namespace FrEee.Modding.Loaders
 						else if (wdisptype == "Seeker")
 							w.DisplayEffect = new SeekerWeaponDisplayEffect(wdispname);
 						else
-							Mod.Errors.Add(new DataParsingException("Invalid weapon display effect type \"" + wdisptype + "\".", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("Invalid weapon display effect type \"" + wdisptype + "\".", The.ModFileName, rec));
 
 						// sanity check
 						if (wdisptype == "Beam" && w is SeekingWeaponInfo)
-							Mod.Errors.Add(new DataParsingException("A seeking weapon cannot use a beam display effect.", Mod.CurrentFileName, rec));
+							Mod.Errors.Add(new DataParsingException("A seeking weapon cannot use a beam display effect.", The.ModFileName, rec));
 
 						w.Sound = rec.Get<string>("Weapon Sound", c);
 						w.Family = rec.Get<string>("Weapon Family", c);

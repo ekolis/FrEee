@@ -118,12 +118,12 @@ namespace FrEee.Objects.Civilization
 		/// <summary>
 		/// The overall mood of the population of this colony.
 		/// </summary>
-		public Mood Mood => Mod.Current.Settings.MoodThresholds.Where(kvp => kvp.Value <= AverageAnger).WithMax(kvp => kvp.Value).Single().Key;
+		public Mood Mood => The.Mod.Settings.MoodThresholds.Where(kvp => kvp.Value <= AverageAnger).WithMax(kvp => kvp.Value).Single().Key;
 
 		/// <summary>
 		/// The mood of each race on this colony.
 		/// </summary>
-		public IReadOnlyDictionary<Race, Mood> Moods => Anger.Select(kvp => new KeyValuePair<Race, Mood>(kvp.Key, Mod.Current.Settings.MoodThresholds.Where(kvp2 => kvp2.Value <= Anger[kvp.Key]).WithMax(kvp2 => kvp2.Value).Single().Key)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+		public IReadOnlyDictionary<Race, Mood> Moods => Anger.Select(kvp => new KeyValuePair<Race, Mood>(kvp.Key, The.Mod.Settings.MoodThresholds.Where(kvp2 => kvp2.Value <= Anger[kvp.Key]).WithMax(kvp2 => kvp2.Value).Single().Key)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
 		/// <summary>
 		/// The empire which owns this colony.
@@ -162,8 +162,8 @@ namespace FrEee.Objects.Civilization
 			{
 				// do modifiers to income
 				var totalpop = Population.Sum(kvp => kvp.Value);
-				var popfactor = Mod.Current.Settings.GetPopulationProductionFactor(totalpop);
-				var moodfactor = Mod.Current.Settings.MoodProductivityModifiers[Mood] / 100d;
+				var popfactor = The.Mod.Settings.GetPopulationProductionFactor(totalpop);
+				var moodfactor = The.Mod.Settings.MoodProductivityModifiers[Mood] / 100d;
 
 				var result = new ResourceQuantity();
 
@@ -219,7 +219,7 @@ namespace FrEee.Objects.Civilization
 
 		public bool IsObsoleteMemory(Empire emp)
 		{
-			return Container == null || Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < The.Game.Timestamp - 1;
+			return Container == null || Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < The.Timestamp - 1;
 		}
 
 		public void Redact(Empire emp)

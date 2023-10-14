@@ -162,8 +162,8 @@ namespace FrEee.Objects.Orders
 						if (Ability.BurnSupplies())
 						{
 							// find suitable warp point templates
-							var wpt1 = Mod.Current.StellarObjectTemplates.OfType<WarpPoint>().Where(wp => !wp.IsUnusual).PickRandom();
-							var wpt2 = Mod.Current.StellarObjectTemplates.OfType<WarpPoint>().Where(wp => !wp.IsUnusual).PickRandom();
+							var wpt1 = The.Mod.StellarObjectTemplates.OfType<WarpPoint>().Where(wp => !wp.IsUnusual).PickRandom();
+							var wpt2 = The.Mod.StellarObjectTemplates.OfType<WarpPoint>().Where(wp => !wp.IsUnusual).PickRandom();
 
 							// figure out where the warp point goes, according to our game setup's warp point placement strategy
 							// only in the target system - in the source system we get a warp point at the sector where the WP opener was

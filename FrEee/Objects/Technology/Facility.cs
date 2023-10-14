@@ -276,7 +276,7 @@ namespace FrEee.Objects.Technology
 
 		public ResourceQuantity ScrapValue
 		{
-			get { return Cost * Mod.Current.Settings.ScrapFacilityReturnRate / 100; }
+			get { return Cost * The.Mod.Settings.ScrapFacilityReturnRate / 100; }
 		}
 
 		public int ShieldHitpoints

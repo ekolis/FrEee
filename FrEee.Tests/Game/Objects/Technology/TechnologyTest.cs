@@ -53,7 +53,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 
 			// perform research
 			emp.ResearchCommand = cmd;
-			processor.ProcessTurn(game, false);
+			processor.ProcessTurn(false);
 
 			// verify research was done
 			// 500K for first level, 1M for second
@@ -64,7 +64,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 		public void QueuedResearch()
 		{
 			// for convenience
-			var mod = Mod.Current;
+			var mod = The.Mod;
 			var gal = The.Game;
 
 			// set up techs
@@ -92,7 +92,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 
 			// perform research
 			emp.ResearchCommand = cmd;
-			processor.ProcessTurn(gal, false);
+			processor.ProcessTurn(false);
 
 			// should have level 1 in t1 and level 0 in t2
 			Assert.AreEqual(1, emp.ResearchedTechnologies[t1]);
@@ -105,7 +105,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 			// another turn!
 			emp.BonusResearch = 100000;
 			emp.ResearchCommand = cmd;
-			processor.ProcessTurn(gal, false);
+			processor.ProcessTurn(false);
 
 			// should have level 2+ in t1 and level 1+ in t2
 			// (levels could be higher if extra RP gets randomly assigned to those techs)
@@ -120,7 +120,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 		public void TestInit()
 		{
 			new Galaxy();
-			The.Game.TechnologyCost = TechnologyCost.Low;
+			The.Setup.TechnologyCost = TechnologyCost.Low;
 			emp = new Empire();
 			The.Game.Empires.Add(emp);
 		}

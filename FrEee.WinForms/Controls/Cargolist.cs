@@ -127,12 +127,12 @@ namespace FrEee.WinForms.Controls
 				TreeNode popNode = null;
 				if (ShowAllUnitsAndPopulationAlways)
 				{
-					popNode = tree.AddItemWithImage(CargoContainer.AllPopulation.Sum(kvp => kvp.Value).ToUnitString(true) + " Total Population (" + ((long)(Mod.Current.Settings.PopulationSize * Mod.Current.Settings.PopulationFactor)).Kilotons() + " per " + Mod.Current.Settings.PopulationFactor.ToUnitString(true) + ")", "Population", Empire.Current.PrimaryRace.Icon);
+					popNode = tree.AddItemWithImage(CargoContainer.AllPopulation.Sum(kvp => kvp.Value).ToUnitString(true) + " Total Population (" + ((long)(The.Mod.Settings.PopulationSize * The.Mod.Settings.PopulationFactor)).Kilotons() + " per " + The.Mod.Settings.PopulationFactor.ToUnitString(true) + ")", "Population", Empire.Current.PrimaryRace.Icon);
 				}
 				if (CargoContainer.AllPopulation.Any())
 				{
 					if (popNode == null)
-						popNode = tree.AddItemWithImage(CargoContainer.AllPopulation.Sum(kvp => kvp.Value).ToUnitString(true) + " Total Population (" + ((long)(Mod.Current.Settings.PopulationSize * Mod.Current.Settings.PopulationFactor)).Kilotons() + " per " + Mod.Current.Settings.PopulationFactor.ToUnitString(true) + ")", "Population", Empire.Current.PrimaryRace.Icon);
+						popNode = tree.AddItemWithImage(CargoContainer.AllPopulation.Sum(kvp => kvp.Value).ToUnitString(true) + " Total Population (" + ((long)(The.Mod.Settings.PopulationSize * The.Mod.Settings.PopulationFactor)).Kilotons() + " per " + The.Mod.Settings.PopulationFactor.ToUnitString(true) + ")", "Population", Empire.Current.PrimaryRace.Icon);
 					foreach (var pop in CargoContainer.AllPopulation)
 						popNode.AddItemWithImage(pop.Value.ToUnitString(true) + " " + pop.Key + " Population", pop.Key, pop.Key.Icon);
 					popNode.Expand();
@@ -185,17 +185,17 @@ namespace FrEee.WinForms.Controls
 				TreeNode popNode = null;
 				if (ShowAllUnitsAndPopulationAlways || CargoDelta.AllPopulation)
 				{
-					popNode = tree.AddItemWithImage("All Population (" + ((long)(Mod.Current.Settings.PopulationSize * Mod.Current.Settings.PopulationFactor)).Kilotons() + " per " + Mod.Current.Settings.PopulationFactor.ToUnitString(true) + ")", "Population", Empire.Current.PrimaryRace.Icon);
+					popNode = tree.AddItemWithImage("All Population (" + ((long)(The.Mod.Settings.PopulationSize * The.Mod.Settings.PopulationFactor)).Kilotons() + " per " + The.Mod.Settings.PopulationFactor.ToUnitString(true) + ")", "Population", Empire.Current.PrimaryRace.Icon);
 					popNode.Expand();
 				}
 				if (CargoDelta.RacePopulation.Any() || CargoDelta.AnyPopulation != 0)
 				{
 					if (popNode == null)
-						popNode = tree.AddItemWithImage("All Population (" + ((long)(Mod.Current.Settings.PopulationSize * Mod.Current.Settings.PopulationFactor)).Kilotons() + " per " + Mod.Current.Settings.PopulationFactor.ToUnitString(true) + ")", "Population", Empire.Current.PrimaryRace.Icon);
+						popNode = tree.AddItemWithImage("All Population (" + ((long)(The.Mod.Settings.PopulationSize * The.Mod.Settings.PopulationFactor)).Kilotons() + " per " + The.Mod.Settings.PopulationFactor.ToUnitString(true) + ")", "Population", Empire.Current.PrimaryRace.Icon);
 					foreach (var pop in CargoDelta.RacePopulation)
-						popNode.AddItemWithImage(pop.Value.ToUnitString(true, 4, "All") + " " + pop.Key + " Population (" + ((long)(Mod.Current.Settings.PopulationSize * Mod.Current.Settings.PopulationFactor)).Kilotons() + " per " + Mod.Current.Settings.PopulationFactor.ToUnitString(true) + ")", pop.Key, pop.Key.Icon);
+						popNode.AddItemWithImage(pop.Value.ToUnitString(true, 4, "All") + " " + pop.Key + " Population (" + ((long)(The.Mod.Settings.PopulationSize * The.Mod.Settings.PopulationFactor)).Kilotons() + " per " + The.Mod.Settings.PopulationFactor.ToUnitString(true) + ")", pop.Key, pop.Key.Icon);
 					if (CargoDelta.AnyPopulation != 0)
-						popNode.AddItemWithImage(CargoDelta.AnyPopulation.ToUnitString(true, 4) + " Population of Any Race (" + ((long)(Mod.Current.Settings.PopulationSize * Mod.Current.Settings.PopulationFactor)).Kilotons() + " per " + Mod.Current.Settings.PopulationFactor.ToUnitString(true) + ")", "Total", Pictures.GetGenericImage(typeof(Race)));
+						popNode.AddItemWithImage(CargoDelta.AnyPopulation.ToUnitString(true, 4) + " Population of Any Race (" + ((long)(The.Mod.Settings.PopulationSize * The.Mod.Settings.PopulationFactor)).Kilotons() + " per " + The.Mod.Settings.PopulationFactor.ToUnitString(true) + ")", "Total", Pictures.GetGenericImage(typeof(Race)));
 					popNode.Expand();
 				}
 

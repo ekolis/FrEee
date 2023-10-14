@@ -59,7 +59,7 @@ namespace FrEee.Modding
 			var preCode = new List<string>();
 			preCode.Add("from FrEee.Modding import Mod;");
 			preCode.Add("if not galaxy is None:");
-			preCode.Add("\tMod.Current = galaxy.Mod;");
+			preCode.Add("\tThe.Mod = galaxy.Mod;");
 			var arglist = new List<string>();
 			for (var i = 0; i < args.Length; i++)
 				arglist.Add("arg" + i);
@@ -207,8 +207,8 @@ namespace FrEee.Modding
 				script.Text + "\n" +
 				string.Join("\n", postCommands.ToArray());
 			var external = new List<PythonScript>(script.ExternalScripts);
-			//if (Mod.Current != null)
-				//external.Add(Mod.Current.GlobalScript);
+			//if (The.Mod != null)
+				//external.Add(The.Mod.GlobalScript);
 			var sc = new ScriptCode("runner", code, external.ToArray());
 			var runner = GetCodeScript(sc);
 			var compiledScript = GetCompiledScript(runner);
@@ -285,8 +285,8 @@ namespace FrEee.Modding
 				script.Text + "\n" +
 				string.Join("\n", postCommands.ToArray());
 			var external = new List<PythonScript>(script.ExternalScripts);
-			if (Mod.Current != null)
-				external.Add(Mod.Current.GlobalScript);
+			if (The.Mod != null)
+				external.Add(The.Mod.GlobalScript);
 			var sc = new ScriptCode("runner", code, external.ToArray());
 			var runner = GetCodeScript(sc);
 			var compiledScript = GetCompiledScript(runner);

@@ -121,7 +121,7 @@ namespace FrEee.Objects.Civilization
 		{
 			get
 			{
-				return Mod.Current.Technologies.Where(
+				return The.Mod.Technologies.Where(
 					t => HasUnlocked(t) && ResearchedTechnologies[t] < t.MaximumLevel);
 			}
 		}
@@ -526,7 +526,7 @@ namespace FrEee.Objects.Civilization
 							foreach (var resource in Resource.All)
 							{
 								// TODO - remote mining of supplies/research/intel? just need abilities for them ;) well, and values...
-								var rule = Mod.Current.AbilityRules.SingleOrDefault(r => r.Matches("Remote Resource Generation - " + resource));
+								var rule = The.Mod.AbilityRules.SingleOrDefault(r => r.Matches("Remote Resource Generation - " + resource));
 								if (rule != null)
 								{
 									var amount = miner.GetAbilityValue(rule.Name).ToInt();
@@ -1126,7 +1126,7 @@ namespace FrEee.Objects.Civilization
 		public void RefreshUnlockedItems()
 		{
 			unlockedItems = new List<IUnlockable>(
-				Mod.Current.Objects.OfType<IUnlockable>()
+				The.Mod.Objects.OfType<IUnlockable>()
 				.Union(The.Game.Referrables.OfType<IUnlockable>())
 				.Where(r => CheckUnlockStatus(r)));
 		}
@@ -1216,7 +1216,7 @@ namespace FrEee.Objects.Civilization
 				else
 				{
 					var memory = obj.CopyAndAssignNewID();
-					memory.Timestamp = The.Game.TurnNumber + The.Game.CurrentTick;
+					memory.Timestamp = The.Game.TurnNumber + The.TurnProcessor.CurrentTick;
 					Memory[obj.ID] = memory;
 				}
 
@@ -1260,10 +1260,10 @@ namespace FrEee.Objects.Civilization
 
 		private IEnumerable<string> GetImagePaths(string imagename, string imagetype)
 		{
-			if (Mod.Current?.RootPath != null)
+			if (The.Mod?.RootPath != null)
 			{
-				yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", imagename, imagetype);
-				yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", imagename, Name + "_" + imagetype);
+				yield return Path.Combine("Mods", The.Mod.RootPath, "Pictures", "Races", imagename, imagetype);
+				yield return Path.Combine("Mods", The.Mod.RootPath, "Pictures", "Races", imagename, Name + "_" + imagetype);
 			}
 			yield return Path.Combine("Pictures", "Races", imagename, imagetype);
 			yield return Path.Combine("Pictures", "Races", imagename, Name + "_" + imagetype);
@@ -1370,9 +1370,9 @@ namespace FrEee.Objects.Civilization
 					{
 						designNames = new List<string>();
 						var fname = DesignNamesFile + ".txt";
-						if (Mod.Current.RootPath != null)
+						if (The.Mod.RootPath != null)
 						{
-							var mfname = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Dsgnname", fname);
+							var mfname = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", The.Mod.RootPath, "Dsgnname", fname);
 							if (File.Exists(mfname))
 							{
 								foreach (var n in File.ReadAllLines(mfname))

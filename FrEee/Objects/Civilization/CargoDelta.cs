@@ -47,11 +47,11 @@ namespace FrEee.Objects.Civilization
 				{
 					if (kvp.Value == null)
 						return null;
-					tonnage += (int)Math.Ceiling(kvp.Value.Value * Mod.Current.Settings.PopulationSize);
+					tonnage += (int)Math.Ceiling(kvp.Value.Value * The.Mod.Settings.PopulationSize);
 				}
 				if (AllPopulation)
 					return null;
-				tonnage += (int)Math.Ceiling(AnyPopulation * Mod.Current.Settings.PopulationSize);
+				tonnage += (int)Math.Ceiling(AnyPopulation * The.Mod.Settings.PopulationSize);
 				foreach (var u in Units)
 					tonnage += u.Design.Hull.Size;
 				foreach (var d in UnitDesignTonnage)

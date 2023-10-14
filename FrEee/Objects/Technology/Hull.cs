@@ -357,10 +357,10 @@ namespace FrEee.Objects.Technology
 		{
 			if (IsDisposed)
 				return;
-			if (Mod.Current != null)
+			if (The.Mod != null)
 			{
 				var h = (IHull<T>)this;
-				Mod.Current.Hulls.Remove(h);
+				The.Mod.Hulls.Remove(h);
 			}
 		}
 
@@ -409,10 +409,10 @@ namespace FrEee.Objects.Technology
 
 			foreach (var s in PictureNames)
 			{
-				if (Mod.Current?.RootPath != null)
+				if (The.Mod?.RootPath != null)
 				{
-					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, pathtype + "_" + s));
-					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_" + pathtype + "_" + s)); // for SE4 shipset compatibility
+					paths.Add(Path.Combine("Mods", The.Mod.RootPath, "Pictures", "Races", shipsetPath, pathtype + "_" + s));
+					paths.Add(Path.Combine("Mods", The.Mod.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_" + pathtype + "_" + s)); // for SE4 shipset compatibility
 				}
 				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, pathtype + "_" + s));
 				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_" + pathtype + "_" + s)); // for SE4 shipset compatibility

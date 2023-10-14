@@ -86,8 +86,8 @@ namespace FrEee.Objects.Vehicles
 		public override bool IsObsoleteMemory(Empire emp)
 		{
 			if (Container == null)
-				return this.MemoryOwner() == emp && Timestamp < The.Game.Timestamp - 1;
-			return Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < The.Game.Timestamp - 1;
+				return this.MemoryOwner() == emp && Timestamp < The.Timestamp - 1;
+			return Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < The.Timestamp - 1;
 		}
 
 		public override void Place(ISpaceObject target)

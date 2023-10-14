@@ -1193,15 +1193,15 @@ namespace FrEee.WinForms.Forms
 					var t = new Thread(new ThreadStart(() =>
 					{
 						status.Message = "Loading game";
-						Galaxy.Load(The.Game.Name, The.Game.TurnNumber);
+						The.Game = Game.Load(The.Game.Name, The.Game.TurnNumber);
 						status.Progress = 0.25;
 						status.Message = "Processing turn";
-						var processor = new TurnProcessor();
-						processor.ProcessTurn(The.Game, false, status, 0.5);
+						var processor = The.TurnProcessor;
+						processor.ProcessTurn(false, status, 0.5);
 						status.Message = "Saving game";
-						Galaxy.SaveAll(status, 0.75);
+						The.Game.SaveAll(status, 0.75);
 						status.Message = "Loading game";
-						Galaxy.Load(The.Game.Name, The.Game.TurnNumber, plrnum);
+						The.Game = Game.Load(The.Game.Name, The.Game.TurnNumber, plrnum);
 						status.Progress = 1.00;
 						// no need to reload designs from library, they're already loaded
 					}));
@@ -1519,9 +1519,9 @@ namespace FrEee.WinForms.Forms
 					if (sector != null)
 					{
 						var suitablePlanets = sector.SpaceObjects.OfType<Planet>().Where(p => p.Colony == null && v.Abilities().Any(a => a.Rule.Matches("Colonize Planet - " + p.Surface)));
-						if (The.Game.CanColonizeOnlyBreathable)
+						if (The.Setup.CanColonizeOnlyBreathable)
 							suitablePlanets = suitablePlanets.Where(p => p.Atmosphere == Empire.Current.PrimaryRace.NativeAtmosphere);
-						if (The.Game.CanColonizeOnlyHomeworldSurface)
+						if (The.Setup.CanColonizeOnlyHomeworldSurface)
 							suitablePlanets = suitablePlanets.Where(p => p.Surface == Empire.Current.PrimaryRace.NativeSurface);
 						if (suitablePlanets.Any())
 						{

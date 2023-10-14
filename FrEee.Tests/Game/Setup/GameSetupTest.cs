@@ -1,7 +1,8 @@
-﻿using FrEee.Objects.Space;
+using FrEee.Objects.Space;
 using FrEee.Setup;
 using FrEee.Modding;
 using NUnit.Framework;
+using FrEee.Utility;
 
 namespace FrEee.Tests.Game.Setup
 {
@@ -12,8 +13,8 @@ namespace FrEee.Tests.Game.Setup
 		public void Quickstart()
 		{
 			var setup = GameSetup.Load(@"..\..\..\..\FrEee\GameSetups\quickstart.gsu");
-			Mod.Current = Mod.Load(null);
-			Galaxy.Initialize(setup, null);
+			The.Mod = Mod.Load(null);
+			FrEee.Game.Start(The.Mod, setup);
 		}
 	}
 }

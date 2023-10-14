@@ -321,7 +321,7 @@ namespace FrEee.WinForms.Forms
 									item.ImageIndex = i;
 									var fu = new FacilityUpgrade(oldf, newf);
 									item.Tag = fu;
-									var cost = newf.Cost * Mod.Current.Settings.UpgradeFacilityPercentCost / 100;
+									var cost = newf.Cost * The.Mod.Settings.UpgradeFacilityPercentCost / 100;
 									var eta = cost.Keys.Max(res => (double)(cost[res]) / (double)ConstructionQueue.Rate[res]);
 									item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.CeilingString(1)));
 									ilFacil.Images.Add(newf.Icon);

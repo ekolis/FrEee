@@ -40,7 +40,7 @@ namespace FrEee.Setup
 		[DoNotSerialize]
 		public Culture Culture
 		{
-			get { return Mod.Current.Cultures.SingleOrDefault(c => c.Name == CultureName); }
+			get { return The.Mod.Cultures.SingleOrDefault(c => c.Name == CultureName); }
 			set { CultureName = value == null ? null : value.Name; }
 		}
 
@@ -150,7 +150,7 @@ namespace FrEee.Setup
 				yield return "Transparent empire colors are not allowed.";
 			if (Culture == null)
 				yield return "You must specify a culture for your empire.";
-			if (!IsPlayerEmpire && Mod.Current.EmpireAIs.FindByName(AIName) == null)
+			if (!IsPlayerEmpire && The.Mod.EmpireAIs.FindByName(AIName) == null)
 				yield return "AI empires require an AI script.";
 			if (PointsSpent > maxPoints)
 				yield return "You have spent too many empire setup points. Only " + maxPoints + " are available.";
@@ -170,7 +170,7 @@ namespace FrEee.Setup
 			emp.Culture = Culture;
 			emp.IsPlayerEmpire = IsPlayerEmpire;
 			emp.IsMinorEmpire = IsMinorEmpire;
-			emp.AI = Mod.Current.EmpireAIs.FindByName(AIName);
+			emp.AI = The.Mod.EmpireAIs.FindByName(AIName);
 			emp.DesignNamesFile = DesignNamesFile;
 
 			return emp;

@@ -42,7 +42,7 @@ namespace FrEee.Objects.Combat.Grid
 			Empires = Sector.SpaceObjects.OfType<ICombatSpaceObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray();
 
 			var moduloID = (int)(Sector.StarSystem.ID % 100000);
-			Dice = new PRNG((int)(moduloID / The.Game.Timestamp * 10));
+			Dice = new PRNG((int)(moduloID / The.Timestamp * 10));
 		}
 
 		public override void PlaceCombatants(SafeDictionary<ICombatant, IntVector2> locations)
@@ -115,7 +115,7 @@ namespace FrEee.Objects.Combat.Grid
 			}
 		}
 
-		public override int MaxRounds => Mod.Current.Settings.SpaceCombatTurns;
+		public override int MaxRounds => The.Mod.Settings.SpaceCombatTurns;
 
 		public override void ModifyHappiness()
 		{

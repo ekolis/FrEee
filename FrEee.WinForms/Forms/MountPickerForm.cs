@@ -36,7 +36,7 @@ namespace FrEee.WinForms.Forms
 
 		private void Bind()
 		{
-			var mounts = Mod.Current.Mounts.Where(m => hull.CanUseMount(m) && m.IsUnlocked());
+			var mounts = The.Mod.Mounts.Where(m => hull.CanUseMount(m) && m.IsUnlocked());
 			mountBindingSource.DataSource = mounts.ToArray();
 			gridMounts.Visible = mounts.Any();
 			// TODO - show mount stats somewhere...

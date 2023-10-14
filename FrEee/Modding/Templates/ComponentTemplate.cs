@@ -160,7 +160,7 @@ namespace FrEee.Modding.Templates
 		{
 			get
 			{
-				return Mod.Current.ComponentTemplates.NewerVersions(this, ct => ct.Family);
+				return The.Mod.ComponentTemplates.NewerVersions(this, ct => ct.Family);
 			}
 		}
 
@@ -168,7 +168,7 @@ namespace FrEee.Modding.Templates
 		{
 			get
 			{
-				return Mod.Current.ComponentTemplates.OlderVersions(this, ct => ct.Family);
+				return The.Mod.ComponentTemplates.OlderVersions(this, ct => ct.Family);
 			}
 		}
 
@@ -201,8 +201,8 @@ namespace FrEee.Modding.Templates
 		{
 			get
 			{
-				if (Mod.Current.RootPath != null)
-					yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Components", PictureName);
+				if (The.Mod.RootPath != null)
+					yield return Path.Combine("Mods", The.Mod.RootPath, "Pictures", "Components", PictureName);
 				yield return Path.Combine("Pictures", "Components", PictureName);
 			}
 		}
@@ -290,8 +290,8 @@ namespace FrEee.Modding.Templates
 		{
 			if (IsDisposed)
 				return;
-			if (Mod.Current != null)
-				Mod.Current.ComponentTemplates.Remove(this);
+			if (The.Mod != null)
+				The.Mod.ComponentTemplates.Remove(this);
 		}
 
 		/// <summary>

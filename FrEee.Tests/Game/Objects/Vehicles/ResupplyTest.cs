@@ -36,11 +36,11 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			empire.Name = "Engi";
 
 			// initialize components
-			storageComp = Mod.Current.ComponentTemplates.FindByName("Supply Storage I");
+			storageComp = The.Mod.ComponentTemplates.FindByName("Supply Storage I");
 			supplyPerComp = storageComp.GetAbilityValue("Supply Storage").ToInt();
 
 			// initialize ships
-			Assert.IsNotNull(Mod.Current);
+			Assert.IsNotNull(The.Mod);
 			var dsn1 = new Design<Ship>();
 			dsn1.BaseName = "Shippy McShipface";
 			dsn1.CreateHull();

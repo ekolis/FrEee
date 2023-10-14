@@ -332,7 +332,7 @@ namespace FrEee.Objects.Space
 
 		public bool IsObsoleteMemory(Empire emp)
 		{
-			return CheckVisibility(emp) >= Visibility.Visible && Timestamp < The.Game.Timestamp - 1;
+			return CheckVisibility(emp) >= Visibility.Visible && Timestamp < The.Timestamp - 1;
 		}
 
 		public Sector PickRandomSector(PRNG prng = null)

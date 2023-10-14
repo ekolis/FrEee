@@ -38,11 +38,6 @@ namespace FrEee.Objects.Space
 			Battles = new HashSet<IBattle>();
 		}
 
-		/// <summary>
-		/// The current galaxy. Shouldn't change except at loading a game or turn processing.
-		/// </summary>
-		// public static Galaxy Current { get; set; }
-
 		public AbilityTargets AbilityTarget
 		{
 			get { return AbilityTargets.Galaxy; }
