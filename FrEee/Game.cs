@@ -742,6 +742,8 @@ public class Game : IAfterDeserialize
 	{
 		TurnProcessor = new(this);
 		AbilityManager = new();
+		GivenTreatyClauseCache = new();
+		ReceivedTreatyClauseCache = new();
 	}
 
 	/// <summary>
@@ -761,12 +763,12 @@ public class Game : IAfterDeserialize
 	/// Cache of treaty clauses given by empires.
 	/// </summary>
 	[DoNotSerialize]
-	internal SafeDictionary<Empire, ILookup<Empire, Clause>> GivenTreatyClauseCache { get; } = new();
+	internal SafeDictionary<Empire, ILookup<Empire, Clause>> GivenTreatyClauseCache { get; private set; }
 
 	/// <summary>
 	/// Cache of treaty clauses received by empires.
 	/// </summary>
 	[DoNotSerialize]
-	internal SafeDictionary<Empire, ILookup<Empire, Clause>> ReceivedTreatyClauseCache { get; } = new();
+	internal SafeDictionary<Empire, ILookup<Empire, Clause>> ReceivedTreatyClauseCache { get; private set;  }
 	#endregion
 }
