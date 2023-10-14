@@ -136,6 +136,7 @@ public class Game
 	/// <summary>
 	/// Any referrable objects in the game, keyed by ID.
 	/// </summary>
+	[SerializationPriority(2)]
 	public ReferrableRepository ReferrableRepository { get; private set; } = new ReferrableRepository();
 
 	/// <summary>
