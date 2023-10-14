@@ -252,7 +252,7 @@ public class Game
 		galaxyTemplate.GameSetup = Setup;
 		var galaxy = galaxyTemplate.Instantiate(status, startProgress + progressPerStep, Dice);
 		status.Message = "Populating galaxy";
-		Setup.PopulateGalaxy(galaxy, Dice);
+		Setup.Initialize(this, Dice);
 		SaveTechLevelsForUniqueness();
 		status.Progress += progressPerStep;
 
@@ -457,7 +457,7 @@ public class Game
 		var game = Serializer.Deserialize<Game>(fs);
 		if (game.ModPath == null)
 			game.Mod = Mod.Load(null); // skipped in deserialization because it is null but the mod needs to be loaded!
-		if (The.GameEmpire != null)
+		if (The.Empire != null)
 		{
 			// load library of designs, strategies, etc.
 			Library.Load();
@@ -498,7 +498,7 @@ public class Game
 		if (game.ModPath is null)
 			game.Mod = Mod.Load(null); // skipped in deserialization because it is null but the mod needs to be loaded!
 
-		if (The.GameEmpire is not null)
+		if (The.Empire is not null)
 		{
 			// initialize IronPython galaxy on load
 			game.StringValue = serializedData;

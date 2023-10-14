@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FrEee.Modding;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
+using FrEee.Setup;
 using FrEee.Utility;
 
 namespace FrEee;
@@ -25,9 +26,11 @@ public static class The
 	/// </summary>
 	public static Game Game { get; set; }
 
+	public static GameSetup Setup => Game.Setup;
+
 	public static ReferrableRepository ReferrableRepository => Game.ReferrableRepository;
 
 	public static Galaxy Galaxy => Game.Galaxy;
 
-	public static Empire? Empire => Game.CurrentEmpire;
+	public static Empire? Empire { get => Game.CurrentEmpire; set => Game.CurrentEmpire = value; }
 }

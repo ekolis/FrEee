@@ -12,7 +12,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 	public class TechnologyTest
 	{
 		private Empire emp;
-		private TurnProcessor processor = new();
+		private TurnProcessor processor;
 
 		/// <summary>
 		/// Loads the stock mod. Done once before running ALL the tests (not each individually; that would be pointless).
@@ -30,8 +30,9 @@ namespace FrEee.Tests.Game.Objects.Technology
 		[Test]
 		public void PercentageResearch()
 		{
-			var mod = Mod.Current;
-			var gal = The.Game;
+			var mod = The.Mod;
+			var game = The.Game;
+			processor = new TurnProcessor(game);
 
 			var tech = mod.Technologies.FindByName("Ice Planet Colonization");
 			tech.LevelCost = 500000; // in case the mod changes
@@ -52,7 +53,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 
 			// perform research
 			emp.ResearchCommand = cmd;
-			processor.ProcessTurn(gal, false);
+			processor.ProcessTurn(game, false);
 
 			// verify research was done
 			// 500K for first level, 1M for second

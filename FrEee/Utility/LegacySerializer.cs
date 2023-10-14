@@ -628,10 +628,6 @@ namespace FrEee.Utility
 			for (int i = 0; i < count; i++)
 			{
 				var pname = r.ReadTo(':', log).Trim();
-				if (type == typeof(Game.Objects.Civilization.Empire) && pname == "StoredResources")
-				{
-
-				}
 				if (props.ContainsKey(pname))
 				{
 					// TODO - get base class recursively, not just derived class and declaring type

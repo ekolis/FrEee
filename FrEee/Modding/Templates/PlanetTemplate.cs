@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Space;
 using FrEee.Modding.Interfaces;
@@ -91,9 +91,9 @@ namespace FrEee.Modding.Templates
 			if (abil != null)
 				planet.IntrinsicAbilities.Add(abil);
 
-			planet.ResourceValue[Resource.Minerals] = RandomHelper.Range(The.Game.MinSpawnedPlanetValue, The.Game.MaxSpawnedPlanetValue);
-			planet.ResourceValue[Resource.Organics] = RandomHelper.Range(The.Game.MinSpawnedPlanetValue, The.Game.MaxSpawnedPlanetValue);
-			planet.ResourceValue[Resource.Radioactives] = RandomHelper.Range(The.Game.MinSpawnedPlanetValue, The.Game.MaxSpawnedPlanetValue);
+			planet.ResourceValue[Resource.Minerals] = RandomHelper.Range(The.Setup.MinSpawnedPlanetValue, The.Setup.MaxSpawnedPlanetValue);
+			planet.ResourceValue[Resource.Organics] = RandomHelper.Range(The.Setup.MinSpawnedPlanetValue, The.Setup.MaxSpawnedPlanetValue);
+			planet.ResourceValue[Resource.Radioactives] = RandomHelper.Range(The.Setup.MinSpawnedPlanetValue, The.Setup.MaxSpawnedPlanetValue);
 
 			planet.ConditionsAmount = RandomHelper.Range(Mod.Current.Settings.MinRandomPlanetConditions, Mod.Current.Settings.MaxRandomPlanetConditions);
 

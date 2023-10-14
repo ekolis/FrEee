@@ -258,7 +258,7 @@ namespace FrEee.Setup
 		}
 
 		// TODO - status messages for the GUI
-		public void PopulateGalaxy(Game game, PRNG dice)
+		public void Initialize(Game game, PRNG dice)
 		{
 			game.Name = GameName;
 

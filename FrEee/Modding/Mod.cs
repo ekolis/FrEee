@@ -62,7 +62,8 @@ namespace FrEee.Modding
 		/// <summary>
 		/// The currently loaded mod.
 		/// </summary>
-		public static Mod? Current { get; set; }
+		[Obsolete("Use The.Mod instead.")]
+		public static Mod? Current { get => The.Mod; set => The.Mod = value; }
 
 		/// <summary>
 		/// The file name being loaded. (For error reporting)

@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Objects.Space;
@@ -190,7 +190,7 @@ namespace FrEee.Objects.Civilization.Diplomacy
 			if (errors.Any())
 				throw new Exception("Attempting to transfer an invalid package (" + this + "): " + errors.First());
 			foreach (var c in TreatyClauses)
-				The.Game.GetReferrable(c).IsInEffect = true;
+				The.ReferrableRepository.GetReferrable(c).IsInEffect = true;
 			foreach (var p in Planets)
 				p.Colony.Owner = target;
 			foreach (var v in Vehicles)

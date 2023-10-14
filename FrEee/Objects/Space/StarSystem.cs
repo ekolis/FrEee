@@ -175,7 +175,7 @@ namespace FrEee.Objects.Space
 		{
 			get
 			{
-				yield return The.Game;
+				yield return The.Galaxy;
 			}
 		}
 

@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
@@ -292,7 +292,7 @@ namespace FrEee.Objects.Combat
 		{
 			if (Owner == emp)
 				return Visibility.Owned;
-			if (The.Game.Battles.Any(b =>
+			if (The.Galaxy.Battles.Any(b =>
 				(b.Combatants.Contains(this)
 					|| b.StartCombatants.Values.Contains(this)
 					|| b.EndCombatants.Values.Contains(this))

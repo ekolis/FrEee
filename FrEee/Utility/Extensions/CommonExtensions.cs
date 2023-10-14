@@ -1459,7 +1459,7 @@ namespace FrEee.Utility.Extensions
 				var amount = abil.Value1.ToInt();
 
 				if (resource.HasValue)
-					amount = The.Game.Setup.StandardMiningModel.GetRate(amount, o.ResourceValue[resource], pcts[resource] / 100d);
+					amount = The.Setup.StandardMiningModel.GetRate(amount, o.ResourceValue[resource], pcts[resource] / 100d);
 
 				income.Add(resource, amount);
 			}

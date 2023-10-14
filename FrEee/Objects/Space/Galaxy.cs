@@ -32,17 +32,11 @@ namespace FrEee.Objects.Space
 	[Serializable]
 	public class Galaxy : ICommonAbilityObject
 	{
-		public Galaxy(Game game)
+		public Galaxy()
 		{
-			Game = game;
 			StarSystemLocations = new List<ObjectLocation<StarSystem>>();
 			Battles = new HashSet<IBattle>();
 		}
-
-		/// <summary>
-		/// The game to which this galaxy belongs.
-		/// </summary>
-		public Game Game { get; private set; }
 
 		/// <summary>
 		/// The current galaxy. Shouldn't change except at loading a game or turn processing.
@@ -162,29 +156,6 @@ namespace FrEee.Objects.Space
 		public Sector PickRandomSector(PRNG? prng = null)
 		{
 			return StarSystemLocations.PickRandom(prng).Item.PickRandomSector(prng);
-		}
-
-
-
-		/// <summary>
-		/// Disposes of any space objects that aren't in space, under construction, or part of the mod definition.
-		/// </summary>
-		private void SpaceObjectCleanup()
-		{
-			foreach (var sobj in Game.Referrables.OfType<ISpaceObject>().ToArray())
-			{
-				var dispose = true;
-				if (sobj.Sector != null)
-					dispose = false; // save space objects that are in space
-				else if (this is IUnit u && u.FindContainer() != null) // save units that are in cargo
-					dispose = false;
-				else if (Game.Mod.StellarObjectTemplates.Contains(sobj as StellarObject))
-					dispose = false; // save stellar objects that are part of the mod templates
-				else if (Game.Referrables.OfType<ConstructionQueue>().Any(q => q.Orders.Any(o => o.Item == sobj as IConstructable)))
-					dispose = false; // save constructable space objects under construction
-				if (dispose)
-					sobj.Dispose();
-			}
 		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿using FrEee.Interfaces;
+using FrEee.Interfaces;
 using FrEee.Objects.Space;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
@@ -22,7 +22,7 @@ namespace FrEee.Utility
 		protected override TKey LookUp(long id)
 		{
 			if (!dict.ContainsKey(id))
-				dict[id] = (TKey)The.Game.GetReferrable(id);
+				dict[id] = (TKey)The.ReferrableRepository.GetReferrable(id);
 			return dict[id];
 		}
 	}

@@ -95,9 +95,9 @@ namespace FrEee.Modding.Templates
 
 		/// <param name="status">A status object to report status back to the GUI.</param>
 		/// <param name="desiredProgress">How much progress should we report back to the GUI when we're done initializing the galaxy? 1.0 means all done with everything that needs to be done.</param>
-		public Galaxy Instantiate(Game game, Status? status, double desiredProgress, PRNG dice)
+		public Galaxy Instantiate(Status? status, double desiredProgress, PRNG dice)
 		{
-			var gal = new Galaxy(game);
+			var gal = new Galaxy();
 			gal.Width = GameSetup.GalaxySize.Width;
 			gal.Height = GameSetup.GalaxySize.Height;
 			var bounds = new Rectangle(-GameSetup.GalaxySize.Width / 2, -GameSetup.GalaxySize.Height / 2, GameSetup.GalaxySize.Width, GameSetup.GalaxySize.Height);

@@ -167,7 +167,7 @@ namespace FrEee.Objects.Orders
 
 							// figure out where the warp point goes, according to our game setup's warp point placement strategy
 							// only in the target system - in the source system we get a warp point at the sector where the WP opener was
-							var toSector = The.Game.Setup.WarpPointPlacementStrategy.GetWarpPointSector(fromSys.Location, toSys.Location);
+							var toSector = The.Setup.WarpPointPlacementStrategy.GetWarpPointSector(fromSys.Location, toSys.Location);
 
 							// create the warp points
 							var wp1 = wpt1.Instantiate();

@@ -182,7 +182,7 @@ public class TurnProcessor
 					notes.Add(i, The.Empire.AINotes);
 				}
 			}
-			Game = FGame.LoadFromString(serializedgalaxy);
+			Game = Game.LoadFromString(serializedgalaxy);
 			foreach (var i in Game.Empires.Where(e => e.AI != null && (e.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)).Select(e => Game.Empires.IndexOf(e)).ToArray())
 			{
 				try
@@ -836,7 +836,7 @@ public class TurnProcessor
 			if (sys == null)
 				continue; // space object is dead, or not done being built
 
-			if (The.GameTick == 0d && !v.Orders.OfType<IMovementOrder>().Any())
+			if (The.Game.CurrentTick == 0d && !v.Orders.OfType<IMovementOrder>().Any())
 				v.DealWithMines();
 
 			bool didStuff = v.ExecuteOrders();

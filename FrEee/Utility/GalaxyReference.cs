@@ -84,7 +84,7 @@ namespace FrEee.Utility
 			{
 				if (ID <= 0)
 					return value;
-				var obj = (T)The.Game.GetReferrable(ID);
+				var obj = (T)The.ReferrableRepository.GetReferrable(ID);
 				if (obj == null)
 					return default(T);
 				/*if (obj is IReferrable && (obj as IReferrable).IsDisposed)

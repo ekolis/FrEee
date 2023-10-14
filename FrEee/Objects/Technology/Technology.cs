@@ -309,18 +309,18 @@ namespace FrEee.Objects.Technology
 
 		public int GetBaseLevelCost(int level)
 		{
-			if (The.Game.TechnologyCost == TechnologyCost.Low)
+			if (The.Setup.TechnologyCost == TechnologyCost.Low)
 				return LevelCost * level;
-			else if (The.Game.TechnologyCost == TechnologyCost.Medium)
+			else if (The.Setup.TechnologyCost == TechnologyCost.Medium)
 			{
 				if (Math.Abs(level) == 1)
 					return LevelCost * level;
 				else
 					return LevelCost * level * level / 2;
 			}
-			else if (The.Game.TechnologyCost == TechnologyCost.High)
+			else if (The.Setup.TechnologyCost == TechnologyCost.High)
 				return LevelCost * level * level;
-			throw new Exception("Invalid technology cost for galaxy: " + The.Game.TechnologyCost);
+			throw new Exception("Invalid technology cost for galaxy: " + The.Setup.TechnologyCost);
 		}
 
 		/// <summary>
@@ -340,10 +340,10 @@ namespace FrEee.Objects.Technology
 		public int GetLevelCost(int level, Empire emp)
 		{
 			var baseCost = GetBaseLevelCost(level);
-			if (The.Game.TechnologyUniqueness == 0)
+			if (The.Setup.TechnologyUniqueness == 0)
 				return baseCost;
 			var playerRatio = emp.OtherPlayersTechLevels[this]?.Count(x => x >= level) ?? 0;
-			var uniquenessFactor = Math.Pow(2, The.Game.TechnologyUniqueness * playerRatio);
+			var uniquenessFactor = Math.Pow(2, The.Setup.TechnologyUniqueness * playerRatio);
 			return (int)(GetBaseLevelCost(level) * uniquenessFactor);
 		}
 

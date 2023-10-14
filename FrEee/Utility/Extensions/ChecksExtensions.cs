@@ -359,7 +359,7 @@ namespace FrEee.Utility.Extensions
 			var seers = sys.FindSpaceObjects<ISpaceObject>(s => s.Owner == emp && !s.IsMemory);
 			if (!seers.Any() || sobj.IsHiddenFrom(emp))
 			{
-				if (The.Game.Setup.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
+				if (The.Setup.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
 					return Visibility.Visible;
 				if (emp.AllSystemsExploredFromStart)
 					return Visibility.Fogged;
@@ -434,7 +434,7 @@ namespace FrEee.Utility.Extensions
 			var seers = sys.FindSpaceObjects<ISpaceObject>(s => s.Owner == emp && !s.IsMemory);
 			if (!seers.Any() || sobj.IsHiddenFrom(emp))
 			{
-				if (The.Game.Setup.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
+				if (The.Setup.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
 					return Visibility.Visible >= desiredVisibility;
 				if (emp.AllSystemsExploredFromStart)
 					return Visibility.Fogged >= desiredVisibility;

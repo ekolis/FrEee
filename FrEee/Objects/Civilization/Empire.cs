@@ -109,7 +109,7 @@ namespace FrEee.Objects.Civilization
 			get
 			{
 				if (allSystemsExploredFromStart is null)
-					allSystemsExploredFromStart = The.Game.Setup.AllSystemsExplored || this.HasAbility("Galaxy Seen");
+					allSystemsExploredFromStart = The.Setup.AllSystemsExplored || this.HasAbility("Galaxy Seen");
 				return allSystemsExploredFromStart.Value;
 			}
 		}
@@ -856,7 +856,7 @@ namespace FrEee.Objects.Civilization
 		{
 			// can we see it?
 			// TODO - rankings too, not just scores
-			var disp = The.Game.Setup.ScoreDisplay;
+			var disp = The.Setup.ScoreDisplay;
 			var showit = false;
 			if (viewer == null)
 				showit = true; // host can see everyone's scores
