@@ -78,6 +78,7 @@ public class Game
 	/// <summary>
 	/// The mod being played in this game.
 	/// </summary>
+	[DoNotSerialize]
 	public Mod Mod { get; private set; }
 
 	/// <summary>
@@ -136,7 +137,7 @@ public class Game
 	/// <summary>
 	/// Any referrable objects in the game, keyed by ID.
 	/// </summary>
-	[SerializationPriority(2)]
+		[SerializationPriority(2)]
 	public ReferrableRepository ReferrableRepository { get; private set; } = new ReferrableRepository();
 
 	/// <summary>
