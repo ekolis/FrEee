@@ -16,7 +16,7 @@ namespace FrEee.Utility;
 /// </summary>
 /// <typeparam name="TValue">The type of object.</typeparam>
 public class ReferrableRepository
-	: IReadOnlyDictionary<long, IReferrable>
+	: IDictionary<long, IReferrable>
 {
 	public IReferrable this[long key] => Dictionary[key];
 
@@ -28,6 +28,15 @@ public class ReferrableRepository
 	/// The dictionary which stores the references.
 	/// </summary>
 	private IDictionary<long, IReferrable> Dictionary { get; set; } = new Dictionary<long, IReferrable>();
+	ICollection<long> IDictionary<long, IReferrable>.Keys => Dictionary.Keys;
+	ICollection<IReferrable> IDictionary<long, IReferrable>.Values => Dictionary.Values;
+	public bool IsReadOnly => Dictionary.IsReadOnly;
+
+	IReferrable IDictionary<long, IReferrable>.this[long key]
+	{
+		get => Dictionary[key];
+		set => Add(key, value);
+	}
 
 	/// <summary>
 	/// Assigns an ID to an object.
@@ -170,4 +179,18 @@ public class ReferrableRepository
 	{
 		return GetEnumerator();
 	}
+
+	public void Add(long key, IReferrable value) => AssignID(value, key);
+
+	public bool Remove(long key) => Dictionary.Remove(key);
+
+	public void Add(KeyValuePair<long, IReferrable> item) => Add(item.Key, item.Value);
+
+	public void Clear() => Dictionary.Clear();
+
+	public bool Contains(KeyValuePair<long, IReferrable> item) => Dictionary.Contains(item);
+
+	public void CopyTo(KeyValuePair<long, IReferrable>[] array, int arrayIndex) => Dictionary.CopyTo(array, arrayIndex);
+
+	public bool Remove(KeyValuePair<long, IReferrable> item) => Remove(item.Key);
 }

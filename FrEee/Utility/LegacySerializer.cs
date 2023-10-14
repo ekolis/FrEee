@@ -834,6 +834,13 @@ namespace FrEee.Utility
 				itemType = type.GetGenericArguments()[0];
 				w.WriteLine("c" + list.Cast<object>().Count() + ":" + tabs);
 			}
+			if (type.Name == "ReferrableRepository")
+			{
+				// HACK - referral repositories are dictionaries
+				itemType = typeof(KeyValuePair<long, IReferrable>);
+				w.WriteLine("d" + list.Cast<object>().Count() + ":" + tabs);
+				isDict = true;
+			}
 			else
 			{
 				// no generic type? probably a list of objects?
