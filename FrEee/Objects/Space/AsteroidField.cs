@@ -96,7 +96,7 @@ namespace FrEee.Objects.Space
 		/// Just copy the asteroid field's data.
 		/// </summary>
 		/// <returns>A copy of the asteroid field.</returns>
-		public AsteroidField Instantiate()
+		public AsteroidField Instantiate(Game game)
 		{
 			var result = this.CopyAndAssignNewID();
 			result.ModID = null;

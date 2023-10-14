@@ -52,7 +52,7 @@ namespace FrEee.Objects.Space
 		/// Just copy the storm's data.
 		/// </summary>
 		/// <returns>A copy of the storm.</returns>
-		public Storm Instantiate()
+		public Storm Instantiate(Game game)
 		{
 			var result = this.CopyAndAssignNewID();
 			result.ModID = null;

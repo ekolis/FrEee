@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Abilities;
 using FrEee.Objects.Civilization;
@@ -140,11 +140,6 @@ namespace FrEee.Objects.Technology
 			get { return this; }
 		}
 
-		IHull IUpgradeable<IHull>.LatestVersion
-		{
-			get { return LatestVersion; }
-		}
-
 		/// <summary>
 		/// Maximum number of engines allowed.
 		/// </summary>
@@ -196,11 +191,6 @@ namespace FrEee.Objects.Technology
 			get { yield break; }
 		}
 
-		IEnumerable<IHull> IUpgradeable<IHull>.NewerVersions
-		{
-			get { return NewerVersions; }
-		}
-
 		/// <summary>
 		/// Mounts cannot currently be obsoleted.
 		/// TODO - add family and roman numeral properties to mounts
@@ -208,11 +198,6 @@ namespace FrEee.Objects.Technology
 		public IEnumerable<IHull<T>> OlderVersions
 		{
 			get { yield break; }
-		}
-
-		IEnumerable<IHull> IUpgradeable<IHull>.OlderVersions
-		{
-			get { return OlderVersions; }
 		}
 
 		public Empire Owner
@@ -359,8 +344,7 @@ namespace FrEee.Objects.Technology
 				return;
 			if (The.Mod != null)
 			{
-				var h = (IHull<T>)this;
-				The.Mod.Hulls.Remove(h);
+				The.Mod.Hulls.Remove(this);
 			}
 		}
 

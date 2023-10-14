@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -138,7 +138,7 @@ namespace FrEee.Modding
 		{
 			get
 			{
-				return MetaRecords.SelectMany(mr => mr.Instantiate());
+				return MetaRecords.SelectMany(mr => mr.Instantiate(The.Game));
 			}
 		}
 

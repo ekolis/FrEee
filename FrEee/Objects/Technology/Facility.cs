@@ -147,7 +147,7 @@ namespace FrEee.Objects.Technology
 			get
 			{
 				if (IsObsolescent)
-					return Template.Instantiate();
+					return Template.Instantiate(The.Game);
 				else
 					return this;
 			}

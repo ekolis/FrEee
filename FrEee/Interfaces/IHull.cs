@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Objects.Technology;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
@@ -7,7 +7,9 @@ using System.Drawing;
 
 namespace FrEee.Interfaces
 {
-	public interface IHull : IModObject, IResearchable, IAbilityContainer, IPictorial, IUpgradeable<IHull>
+	public interface IHull<out T>
+		: IModObject, IResearchable, IAbilityContainer, IPictorial, IUpgradeable<IHull<T>>
+		where T : IVehicle
 	{
 		/// <summary>
 		/// Can this hull use components with the Ship Auxiliary Control ability?
@@ -84,20 +86,5 @@ namespace FrEee.Interfaces
 		Image GetIcon(string shipsetPath);
 
 		Image GetPortrait(string shipsetPath);
-	}
-
-	/// <summary>
-	/// A vehicle hull.
-	/// </summary>
-	public interface IHull<out T> : IHull, IUpgradeable<IHull<T>> where T : IVehicle
-	{
-		new bool IsObsolescent { get; }
-
-		// to deal with ambiguity between implementing IHull and IHull<T>
-		new bool IsObsolete { get; }
-
-		new IHull<T> LatestVersion { get; }
-		new IEnumerable<IHull<T>> NewerVersions { get; }
-		new IEnumerable<IHull<T>> OlderVersions { get; }
 	}
 }

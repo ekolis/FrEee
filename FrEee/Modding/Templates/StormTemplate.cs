@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Space;
 using FrEee.Modding.Interfaces;
@@ -49,17 +49,17 @@ namespace FrEee.Modding.Templates
 			IsDisposed = true;
 		}
 
-		public Storm Instantiate()
+		public Storm Instantiate(Game game)
 		{
-			var candidates = The.Mod.StellarObjectTemplates.OfType<Storm>();
+			var candidates = game.Mod.StellarObjectTemplates.OfType<Storm>();
 			if (Size != null)
 				candidates = candidates.Where(p => p.StellarSize == Size.Value);
 			if (!candidates.Any())
 				throw new Exception("No storms in SectType.txt of stellar size " + Size + "!");
 
-			var storm = candidates.PickRandom().Instantiate();
+			var storm = candidates.PickRandom().Instantiate(game);
 
-			var abil = Abilities.Instantiate();
+			var abil = Abilities.Instantiate(game);
 			if (abil != null)
 				storm.IntrinsicAbilities.Add(abil);
 

@@ -1,5 +1,6 @@
-﻿using FrEee.Interfaces;
+using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
+using FrEee.Objects.Vehicles;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,13 @@ namespace FrEee.Objects.Commands
 	/// A command to create a new vehicle design.
 	/// </summary>
 	[Serializable]
-	public class CreateDesignCommand<T> : Command<Empire>, ICreateDesignCommand where T : IVehicle
+	public class CreateDesignCommand<T> : Command<Empire>, ICreateDesignCommand<T> where T : IVehicle
 	{
 		public CreateDesignCommand(IDesign<T> design)
 			: base(Empire.Current)
 		{
 			Design = design;
 		}
-
-		IDesign ICreateDesignCommand.Design { get { return Design; } }
 
 		public IDesign<T> Design { get; set; }
 

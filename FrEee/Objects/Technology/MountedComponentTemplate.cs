@@ -21,9 +21,9 @@ namespace FrEee.Objects.Technology
 	/// A combination of component template and mount.
 	/// </summary>
 	[Serializable]
-	public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityObject, IPromotable, IContainable<IDesign>, IFormulaHost, IUpgradeable<MountedComponentTemplate>, IPictorial
+	public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityObject, IPromotable, IContainable<IDesign<IVehicle>>, IFormulaHost, IUpgradeable<MountedComponentTemplate>, IPictorial
 	{
-		public MountedComponentTemplate(IDesign container, ComponentTemplate ct, Mount mount = null)
+		public MountedComponentTemplate(IDesign<IVehicle> container, ComponentTemplate ct, Mount mount = null)
 		{
 			Container = container;
 			ComponentTemplate = ct;
@@ -104,7 +104,7 @@ namespace FrEee.Objects.Technology
 		/// </summary>
 		[DoNotSerialize]
 		[Populate<MountedComponentTemplateContainerPopulator>]
-		public IDesign Container { get; set; }
+		public IDesign<IVehicle> Container { get; set; }
 
 		public ResourceQuantity Cost
 		{
@@ -377,7 +377,7 @@ namespace FrEee.Objects.Technology
 			return w.Damage.Evaluate(null, dict) * (Mount?.WeaponDamagePercent.Value ?? 100) / 100;
 		}
 
-		public Component Instantiate()
+		public Component Instantiate(Game game)
 		{
 			return new Component(null, this);
 		}

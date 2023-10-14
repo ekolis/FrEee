@@ -164,7 +164,7 @@ namespace FrEee.Objects.Orders
 				// create item if needed
 				if (Item == null)
 				{
-					Item = Template.Instantiate();
+					Item = Template.Instantiate(The.Game);
 					if (!(Item is Facility))
 						Item.Owner = queue.Owner;
 					if (Item is SpaceVehicle)

@@ -72,7 +72,7 @@ namespace FrEee.WinForms.Forms
 		private void Bind()
 		{
 			var vt = (VehicleTypes)((dynamic)ddlVehicleType.SelectedItem).VehicleType;
-			var hulls = Empire.Current.UnlockedItems.OfType<IHull>().Where(h => vt.HasFlag(h.VehicleType));
+			var hulls = Empire.Current.UnlockedItems.OfType<IHull<IVehicle>>().Where(h => vt.HasFlag(h.VehicleType));
 			lstHulls.Initialize(32, 32);
 			foreach (var hull in hulls)
 			{

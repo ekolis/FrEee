@@ -131,7 +131,7 @@ public class MinistryOfConstruction
     }
 
 
-    IDesign GetDesignForBuildPlan(ShipBuildPlan buildPlan)
+    IDesign<IVehicle> GetDesignForBuildPlan(ShipBuildPlan buildPlan)
     {
         if (buildPlan.DesignBaseName != null)
         {

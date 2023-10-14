@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Abilities;
 using FrEee.Objects.Civilization;
@@ -152,7 +152,7 @@ namespace FrEee.Objects.Technology
 			get
 			{
 				if (IsObsolescent)
-					return Template.LatestVersion.Instantiate();
+					return Template.LatestVersion.Instantiate(The.Game);
 				else
 					return this;
 			}

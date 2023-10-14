@@ -90,8 +90,8 @@ namespace FrEee.Utility
 			var bottomRight = new Point(128, 128);
 			var pts = new Point[] { top, bottomLeft, bottomRight };
 			g.FillPolygon(Brushes.Gray, pts);
-			genericPictures.Add(typeof(IHull), img);
-			genericPictures.Add(typeof(IDesign), img);
+			genericPictures.Add(typeof(IHull<IVehicle>), img);
+			genericPictures.Add(typeof(IDesign<IVehicle>), img);
 			genericPictures.Add(typeof(IVehicle), img);
 			genericPictures.Add(typeof(Seeker), img);
 
@@ -378,7 +378,7 @@ namespace FrEee.Utility
 			return portrait.GetThumbnailImage(32, 32, () => false, IntPtr.Zero);
 		}
 
-		public static Image GetIcon(IHull hull, string shipsetPath)
+		public static Image GetIcon(IHull<IVehicle> hull, string shipsetPath)
 		{
 			// allow for practically infinite variation in hull sizes within a confined range of image sizes using a log function
 			var maxSize = (double)The.Mod.Hulls.Max(h => h.Size);
@@ -737,7 +737,7 @@ namespace FrEee.Utility
 			}
 		}
 
-		public static Image GetPortrait(IHull hull, string shipsetPath)
+		public static Image GetPortrait(IHull<IVehicle> hull, string shipsetPath)
 		{
 			if (shipsetPath == null)
 				return GetGenericImage(hull.GetType());

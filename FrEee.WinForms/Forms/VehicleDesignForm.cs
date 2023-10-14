@@ -38,7 +38,7 @@ namespace FrEee.WinForms.Forms
 			catch { }
 		}
 
-		public VehicleDesignForm(IDesign design)
+		public VehicleDesignForm(IDesign<IVehicle> design)
 		{
 			InitializeComponent();
 			ShowComponentDetails(null);
@@ -68,7 +68,7 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
-		public IDesign Design
+		public IDesign<IVehicle> Design
 		{
 			get { return design; }
 			set
@@ -83,7 +83,7 @@ namespace FrEee.WinForms.Forms
 		/// </summary>
 		private bool abort;
 
-		private IDesign design;
+		private IDesign<IVehicle> design;
 
 		private Mount mount;
 

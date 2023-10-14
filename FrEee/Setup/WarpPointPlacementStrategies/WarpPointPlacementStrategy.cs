@@ -1,4 +1,4 @@
-﻿using FrEee.Interfaces;
+using FrEee.Interfaces;
 using FrEee.Objects.Abilities;
 using FrEee.Objects.Space;
 using FrEee.Modding;
@@ -44,8 +44,8 @@ namespace FrEee.Setup.WarpPointPlacementStrategies
 
 		public void PlaceWarpPoints(ObjectLocation<StarSystem> here, ObjectLocation<StarSystem> there)
 		{
-			var abil1 = here.Item.WarpPointAbilities.Instantiate();
-			var abil2 = there.Item.WarpPointAbilities.Instantiate();
+			var abil1 = here.Item.WarpPointAbilities.Instantiate(The.Game);
+			var abil2 = there.Item.WarpPointAbilities.Instantiate(The.Game);
 			ITemplate<WarpPoint> wpTemplate;
 			if (abil1 != null || abil2 != null)
 			{
@@ -72,12 +72,12 @@ namespace FrEee.Setup.WarpPointPlacementStrategies
 				retries++;
 			} while (sector2.StarSystem == null && retries < 10);
 
-			var wp1 = wpTemplate.Instantiate();
+			var wp1 = wpTemplate.Instantiate(The.Game);
 			wp1.IsOneWay = false;
 			wp1.Name = "Warp Point to " + there.Item;
 			wp1.Target = sector2;
 			sector1.Place(wp1);
-			var wp2 = wpTemplate.Instantiate();
+			var wp2 = wpTemplate.Instantiate(The.Game);
 			wp2.IsOneWay = false;
 			wp2.Name = "Warp Point to " + here.Item;
 			wp2.Target = sector1;

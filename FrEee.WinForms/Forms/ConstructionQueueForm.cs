@@ -267,7 +267,7 @@ namespace FrEee.WinForms.Forms
 			txtFacilitySlotsFree.Text = string.Format("Facility Slots Free: {0}", ConstructionQueue.FacilitySlotsFree);
 		}
 
-		private void BindShipListView(IEnumerable<IDesign> designs)
+		private void BindShipListView(IEnumerable<IDesign<IVehicle>> designs)
 		{
 			lstShips.Initialize(32, 32);
 			foreach (var design in designs.Where(d => ConstructionQueue.CanConstruct(d)).OrderBy(d => d.Role).ThenBy(d => d.Name).ThenBy(d => d.Iteration))
@@ -546,7 +546,7 @@ namespace FrEee.WinForms.Forms
 		private int CountQueuedVehicles(IEnumerable<IConstructor> sobjs, string designBaseName)
 		{
 			// TODO - what about refits to or away from this design?
-			return sobjs.Where(sobj => sobj.ConstructionQueue != null).SelectMany(sobj => sobj.ConstructionQueue.Orders).Select(o => o.Template).OfType<IDesign>().Where(d => d.BaseName == designBaseName).Count();
+			return sobjs.Where(sobj => sobj.ConstructionQueue != null).SelectMany(sobj => sobj.ConstructionQueue.Orders).Select(o => o.Template).OfType<IDesign<IVehicle>>().Where(d => d.BaseName == designBaseName).Count();
 		}
 
 		private int CountUpgradeableFacilities(IEnumerable<Colony> colonies, string facilityFamily)

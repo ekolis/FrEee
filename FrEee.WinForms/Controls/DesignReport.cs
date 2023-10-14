@@ -12,14 +12,14 @@ namespace FrEee.WinForms.Controls
 	/// <summary>
 	/// Displays a report on a vehicle design.
 	/// </summary>
-	public partial class DesignReport : UserControl, IBindable<IDesign>
+	public partial class DesignReport : UserControl, IBindable<IDesign<IVehicle>>
 	{
 		public DesignReport()
 		{
 			InitializeComponent();
 		}
 
-		public DesignReport(IDesign design)
+		public DesignReport(IDesign<IVehicle> design)
 			: this()
 		{
 			Design = design;
@@ -28,7 +28,7 @@ namespace FrEee.WinForms.Controls
 		/// <summary>
 		/// The design for which to display a report.
 		/// </summary>
-		public IDesign Design
+		public IDesign<IVehicle> Design
 		{
 			get { return design; }
 			set
@@ -38,7 +38,7 @@ namespace FrEee.WinForms.Controls
 			}
 		}
 
-		private IDesign design;
+		private IDesign<IVehicle> design;
 
 		public void Bind()
 		{
@@ -100,7 +100,7 @@ namespace FrEee.WinForms.Controls
 			ResumeLayout();
 		}
 
-		public void Bind(IDesign data)
+		public void Bind(IDesign<IVehicle> data)
 		{
 			Design = data;
 			Bind();

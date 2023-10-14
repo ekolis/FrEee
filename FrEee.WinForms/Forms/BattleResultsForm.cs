@@ -127,7 +127,7 @@ namespace FrEee.WinForms.Forms
 		{
 			if (obj is IVehicle v)
 				return v.Design.Hull.Size;
-			if (obj is IDesign d)
+			if (obj is IDesign<IVehicle> d)
 				return d.Hull.Size;
 			if (obj is Seeker s)
 				return s.MaxHitpoints;

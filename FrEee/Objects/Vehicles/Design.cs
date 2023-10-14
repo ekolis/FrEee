@@ -39,55 +39,12 @@ namespace FrEee.Objects.Vehicles
 			militiaDesign.Components.Add(new MountedComponentTemplate(militiaDesign, militiaWeapon));
 		}
 
-		public static IDesign Create(VehicleTypes vt)
+		public static IDesign<T> Create<T>(IHull<T> hull)
+			where T : IVehicle
 		{
-			IDesign d;
-			switch (vt)
-			{
-				case VehicleTypes.Ship:
-					d = new Design<Ship>();
-					break;
-
-				case VehicleTypes.Base:
-					d = new Design<Base>();
-					break;
-
-				case VehicleTypes.Fighter:
-					d = new Design<Fighter>();
-					break;
-
-				case VehicleTypes.Troop:
-					d = new Design<Troop>();
-					break;
-
-				case VehicleTypes.Mine:
-					d = new Design<Mine>();
-					break;
-
-				case VehicleTypes.Satellite:
-					d = new Design<Satellite>();
-					break;
-
-				case VehicleTypes.Drone:
-					d = new Design<Drone>();
-					break;
-
-				case VehicleTypes.WeaponPlatform:
-					d = new Design<WeaponPlatform>();
-					break;
-
-				default:
-					throw new Exception("Cannot create a design for vehicle type " + vt + ".");
-			}
-			d.Owner = Empire.Current;
-			return d;
-		}
-
-		public static IDesign Create(IHull hull)
-		{
-			var d = Create(hull.VehicleType);
-			d.Hull = hull;
-			return d;
+			var design = new Design<T>(hull);
+			design.Owner = Empire.Current;
+			return design;
 		}
 
 		/// <summary>
@@ -95,12 +52,12 @@ namespace FrEee.Objects.Vehicles
 		/// Requires a current empire. Should only be called client side.
 		/// </summary>
 		/// <returns>Copied designs imported.</returns>
-		public static IEnumerable<IDesign> ImportFromLibrary()
+		public static IEnumerable<IDesign<IVehicle>> ImportFromLibrary()
 		{
 			if (Empire.Current == null)
 				throw new InvalidOperationException("Can't import designs without a current empire.");
 
-			var designs = Library.Import<IDesign>(d => d.IsValidInMod && !Empire.Current.KnownDesigns.Any(d2 => d2.Equals(d))).ToArray();
+			var designs = Library.Import<IDesign<IVehicle>>(d => d.IsValidInMod && !Empire.Current.KnownDesigns.Any(d2 => d2.Equals(d))).ToArray();
 
 			designs.SafeForeach(d =>
 			{
@@ -131,6 +88,11 @@ namespace FrEee.Objects.Vehicles
 		{
 			Components = new List<MountedComponentTemplate>();
 			Iteration = 1;
+		}
+
+		public Design(IHull<T> hull) : this()
+		{
+			Hull = hull;
 		}
 
 		public IEnumerable<Ability> Abilities
@@ -207,19 +169,6 @@ namespace FrEee.Objects.Vehicles
 		public int Evasion
 		{
 			get { return this.GetAbilityValue("Combat To Hit Defense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Defense Minus").ToInt(); }
-		}
-
-		[DoNotSerialize]
-		IHull IDesign.Hull
-		{
-			get { return Hull; }
-			set
-			{
-				if (value is Hull<T>)
-					Hull = (Hull<T>)value;
-				else
-					throw new Exception("Can't use a " + value.VehicleType + " hull on a " + VehicleType + " design.");
-			}
 		}
 
 		/// <summary>
@@ -380,11 +329,6 @@ namespace FrEee.Objects.Vehicles
 			}
 		}
 
-		IDesign IUpgradeable<IDesign>.LatestVersion
-		{
-			get { return LatestVersion; }
-		}
-
 		public string Name
 		{
 			get
@@ -396,11 +340,6 @@ namespace FrEee.Objects.Vehicles
 			}
 		}
 
-		IEnumerable<IDesign> IUpgradeable<IDesign>.NewerVersions
-		{
-			get { return NewerVersions; }
-		}
-
 		public IEnumerable<IDesign<T>> NewerVersions
 		{
 			get
@@ -408,11 +347,6 @@ namespace FrEee.Objects.Vehicles
 				// TODO - check design library?
 				return The.Game.Referrables.OfType<IDesign<T>>().Where(d => d.Owner == Owner && d.BaseName == BaseName && d.Iteration > Iteration);
 			}
-		}
-
-		IEnumerable<IDesign> IUpgradeable<IDesign>.OlderVersions
-		{
-			get { return OlderVersions; }
 		}
 
 		public IEnumerable<IDesign<T>> OlderVersions
@@ -725,7 +659,7 @@ namespace FrEee.Objects.Vehicles
 			return o;
 		}
 
-		public ICreateDesignCommand CreateCreationCommand()
+		public ICreateDesignCommand<T> CreateCreationCommand()
 		{
 			return new CreateDesignCommand<T>(this);
 		}
@@ -781,13 +715,13 @@ namespace FrEee.Objects.Vehicles
 			return emp.HasUnlocked(Hull) && Components.All(mct => emp.HasUnlocked(mct.ComponentTemplate) && emp.HasUnlocked(mct.Mount));
 		}
 
-		public T Instantiate()
+		public T Instantiate(Game game)
 		{
 			var t = Activator.CreateInstance<T>();
 			t.Design = this;
 			foreach (var mct in Components)
 			{
-				var c = mct.Instantiate();
+				var c = mct.Instantiate(game);
 				t.Components.Add(c);
 				c.Container = t;
 			}
@@ -795,15 +729,6 @@ namespace FrEee.Objects.Vehicles
 			t.Name = Name + " " + VehiclesBuilt;
 			return t;
 		}
-
-		IVehicle IDesign.Instantiate()
-		{
-			return Instantiate();
-		}
-
-		/*public Combat2.StrategyObject Strategy { get; set; }
-
-		public Tactic Tactic { get; set; }*/
 
 		public bool IsObsoleteMemory(Empire emp)
 		{
@@ -858,8 +783,5 @@ namespace FrEee.Objects.Vehicles
 			}
 			return paths;
 		}
-
-		IDesign IDesign.Upgrade()
-			=> Upgrade();
 	}
 }

@@ -65,7 +65,7 @@ public class MinistryOfShipDesign
 
         var engine = GetLatestEngine(); 
 
-        var hulls = Empire.UnlockedItems.OfType<IHull>().Where(x => x.VehicleType == FrEee.Enumerations.VehicleTypes.Ship && !x.IsObsolete);
+        var hulls = Empire.UnlockedItems.OfType<IHull<IVehicle>>().Where(x => x.VehicleType == FrEee.Enumerations.VehicleTypes.Ship && !x.IsObsolete);
 
         var chosenhull = (from hull in hulls
                          where hull.Size > (lifeSupport.Size * hull.MinLifeSupport)

@@ -33,7 +33,7 @@ namespace FrEee.Modding.Loaders
 
 				lock (The.Mod.AbilityRules)
 				{
-					var rules = The.Game.Mod.AbilityRules.Where(r => r.Matches(abilname)).ToArray();
+					var rules = The.Mod.AbilityRules.Where(r => r.Matches(abilname)).ToArray();
 					if (rules.Count() > 1)
 					{
 						Mod.Errors.Add(new DataParsingException("Ambiguous ability name match for " + abilname + " alias between the following abilities: " + string.Join(", ", rules.Select(r => r.Name).ToArray()) + ".", filename, rec));

@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Space;
 using FrEee.Modding.Interfaces;
@@ -66,9 +66,9 @@ namespace FrEee.Modding.Templates
 			IsDisposed = true;
 		}
 
-		public Star Instantiate()
+		public Star Instantiate(Game game)
 		{
-			var candidates = The.Mod.StellarObjectTemplates.OfType<Star>();
+			var candidates = game.Mod.StellarObjectTemplates.OfType<Star>();
 			if (StellarSize != null)
 				candidates = candidates.Where(s => s.StellarSize == StellarSize.Value);
 			if (Age != null)
@@ -80,9 +80,9 @@ namespace FrEee.Modding.Templates
 			if (!candidates.Any())
 				throw new Exception("No stars in SectType.txt match the criteria:\n\tStellar Size: " + (StellarSize == null ? "Any" : StellarSize.ToString()) + "\n\tAge: " + (Age ?? "Any") + "\n\tColor: " + (Color ?? "Any") + "\n\tBrightness: " + (Brightness ?? "Any"));
 
-			var star = candidates.PickRandom().Instantiate();
+			var star = candidates.PickRandom().Instantiate(game);
 
-			var abil = Abilities.Instantiate();
+			var abil = Abilities.Instantiate(game);
 			if (abil != null)
 				star.IntrinsicAbilities.Add(abil);
 

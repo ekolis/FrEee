@@ -4,13 +4,13 @@ using FrEee.Objects.Technology;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
 using System.Collections.Generic;
+using FrEee.Objects.Vehicles;
 
 namespace FrEee.Interfaces
 {
-	/// <summary>
-	/// A vehicle design.
-	/// </summary>
-	public interface IDesign : INamed, IPictorial, IOwnableAbilityObject, IConstructionTemplate, IPromotable, IFoggable, IUpgradeable<IDesign>, ICleanable
+	public interface IDesign<out T>
+		: INamed, IPictorial, IOwnableAbilityObject, IConstructionTemplate, IPromotable, IReferrable, IFoggable, IUpgradeable<IDesign<T>>, ICleanable, ITemplate<T>
+		where T : IVehicle
 	{
 		int Accuracy { get; }
 
@@ -40,7 +40,7 @@ namespace FrEee.Interfaces
 		/// <summary>
 		/// The vehicle's hull.
 		/// </summary>
-		IHull Hull { get; set; }
+		IHull<T> Hull { get; }
 
 		int HullHitpoints { get; }
 
@@ -134,17 +134,6 @@ namespace FrEee.Interfaces
 		/// Creates a command to create this design on the server.
 		/// </summary>
 		/// <returns></returns>
-		ICreateDesignCommand CreateCreationCommand();
-
-		IVehicle Instantiate();
-
-		IDesign Upgrade();
-	}
-
-	public interface IDesign<out T> : IDesign, IPictorial, IReferrable, IUpgradeable<IDesign<T>> where T : IVehicle
-	{
-		new T Instantiate();
-
-		new IDesign<T> Upgrade();
+		ICreateDesignCommand<T> CreateCreationCommand();
 	}
 }

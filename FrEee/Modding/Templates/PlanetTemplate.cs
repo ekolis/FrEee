@@ -65,9 +65,9 @@ namespace FrEee.Modding.Templates
 			IsDisposed = true;
 		}
 
-		public Planet Instantiate()
+		public Planet Instantiate(Game game)
 		{
-			var candidates = The.Mod.StellarObjectTemplates.OfType<Planet>();
+			var candidates = game.Mod.StellarObjectTemplates.OfType<Planet>();
 			if (Atmosphere != null)
 				candidates = candidates.Where(p => p.Atmosphere == Atmosphere);
 			if (Surface != null)
@@ -79,23 +79,23 @@ namespace FrEee.Modding.Templates
 			if (!candidates.Any())
 				throw new Exception("No planets in SectType.txt match the criteria:\n\tAtmosphere: " + (Atmosphere ?? "Any") + "\n\tSurface: " + (Surface ?? "Any") + "\n\tStellar Size: " + (StellarSize == null ? "Any" : StellarSize.ToString()));
 
-			var planet = candidates.PickRandom().Instantiate();
+			var planet = candidates.PickRandom().Instantiate(game);
 
 			if (planet.Size == null)
 			{
-				var sizes = The.Mod.StellarObjectSizes.Where(sos => sos.StellarObjectType == "Planet" && !sos.IsConstructed && (StellarSize == null || sos.StellarSize == StellarSize.Value));
+				var sizes = game.Mod.StellarObjectSizes.Where(sos => sos.StellarObjectType == "Planet" && !sos.IsConstructed && (StellarSize == null || sos.StellarSize == StellarSize.Value));
 				planet.Size = sizes.PickRandom();
 			}
 
-			var abil = Abilities.Instantiate();
+			var abil = Abilities.Instantiate(game);
 			if (abil != null)
 				planet.IntrinsicAbilities.Add(abil);
 
-			planet.ResourceValue[Resource.Minerals] = RandomHelper.Range(The.Setup.MinSpawnedPlanetValue, The.Setup.MaxSpawnedPlanetValue);
-			planet.ResourceValue[Resource.Organics] = RandomHelper.Range(The.Setup.MinSpawnedPlanetValue, The.Setup.MaxSpawnedPlanetValue);
-			planet.ResourceValue[Resource.Radioactives] = RandomHelper.Range(The.Setup.MinSpawnedPlanetValue, The.Setup.MaxSpawnedPlanetValue);
+			planet.ResourceValue[Resource.Minerals] = RandomHelper.Range(game.Setup.MinSpawnedPlanetValue, game.Setup.MaxSpawnedPlanetValue);
+			planet.ResourceValue[Resource.Organics] = RandomHelper.Range(game.Setup.MinSpawnedPlanetValue, game.Setup.MaxSpawnedPlanetValue);
+			planet.ResourceValue[Resource.Radioactives] = RandomHelper.Range(game.Setup.MinSpawnedPlanetValue, game.Setup.MaxSpawnedPlanetValue);
 
-			planet.ConditionsAmount = RandomHelper.Range(The.Mod.Settings.MinRandomPlanetConditions, The.Mod.Settings.MaxRandomPlanetConditions);
+			planet.ConditionsAmount = RandomHelper.Range(game.Mod.Settings.MinRandomPlanetConditions, game.Mod.Settings.MaxRandomPlanetConditions);
 
 			return planet;
 		}

@@ -91,7 +91,7 @@ namespace FrEee.Objects.Space
 		/// Just copy the warp point's data.
 		/// </summary>
 		/// <returns>A copy of the warp point.</returns>
-		public WarpPoint Instantiate()
+		public WarpPoint Instantiate(Game game)
 		{
 			var result = this.CopyAndAssignNewID();
 			result.ModID = null;

@@ -1,4 +1,4 @@
-﻿using FrEee.Interfaces;
+using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
@@ -32,7 +32,7 @@ namespace FrEee.Objects.Combat.Grid
 			var combatants = new HashSet<ICombatant>(Planet.Cargo.Units.OfType<Troop>());
 			for (var i = 0; i < Planet.PopulationFill.Value / The.Mod.Settings.PopulationFactor / (The.Mod.Settings.PopulationPerMilitia == 0 ? 20 : The.Mod.Settings.PopulationPerMilitia); i++)
 			{
-				var militia = Design.MilitiaDesign.Instantiate();
+				var militia = Design.MilitiaDesign.Instantiate(The.Game);
 				militia.Owner = Planet.Owner;
 				combatants.Add(militia);
 			}

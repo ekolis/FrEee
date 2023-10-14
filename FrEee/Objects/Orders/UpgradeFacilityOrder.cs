@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.LogMessages;
@@ -134,7 +134,7 @@ namespace FrEee.Objects.Orders
 				{
 					// create item if needed
 					if (NewFacility == null)
-						NewFacility = Upgrade.New.Instantiate();
+						NewFacility = Upgrade.New.Instantiate(The.Game);
 
 					// apply build rate
 					var costLeft = Cost - NewFacility.ConstructionProgress;

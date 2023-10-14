@@ -9,7 +9,8 @@ namespace FrEee.Interfaces
 		/// <summary>
 		/// Instantiates an object.
 		/// </summary>
+		/// <param name="game">The game, for context.</param>
 		/// <returns>The new object.</returns>
-		T Instantiate();
+		T Instantiate(Game game);
 	}
 }

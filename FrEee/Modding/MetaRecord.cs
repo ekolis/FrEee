@@ -1,4 +1,4 @@
-﻿using FrEee.Interfaces;
+using FrEee.Interfaces;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -90,7 +90,7 @@ namespace FrEee.Modding
 			}
 		}
 
-		public IEnumerable<Record> Instantiate()
+		public IEnumerable<Record> Instantiate(Game game)
 		{
 			var parms = Parameters.ToArray();
 			if (!parms.Any())

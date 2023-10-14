@@ -661,7 +661,7 @@ namespace FrEee.Objects.Space
 			if (astTemplates.Any())
 			{
 				var astTemplate = astTemplates.PickRandom();
-				var ast = astTemplate.Instantiate();
+				var ast = astTemplate.Instantiate(The.Game);
 				ast.Sector = Sector;
 				ast.ResourceValue = value;
 				ast.Name = name;
@@ -773,7 +773,7 @@ namespace FrEee.Objects.Space
 		/// Just copy the planet's data.
 		/// </summary>
 		/// <returns>A copy of the planet.</returns>
-		public Planet Instantiate()
+		public Planet Instantiate(Game game)
 		{
 			var result = this.CopyAndAssignNewID();
 			result.ModID = null;

@@ -1,4 +1,5 @@
-﻿using FrEee.Objects.Technology;
+using FrEee.Objects.Technology;
+using FrEee.Objects.Vehicles;
 using FrEee.Utility;
 using System.Collections.Generic;
 
@@ -21,7 +22,7 @@ namespace FrEee.Interfaces
 		/// The design of this vehicle.
 		/// </summary>
 		[DoNotCopy]
-		IDesign Design { get; set; }
+		IDesign<IVehicle> Design { get; set; }
 
 		/// <summary>
 		/// Cost to maintain this vehicle per turn.

@@ -1,4 +1,4 @@
-﻿using FrEee.Interfaces;
+using FrEee.Interfaces;
 using FrEee.Objects.Abilities;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
@@ -67,7 +67,7 @@ namespace FrEee.Modding.Templates
 			IsDisposed = true;
 		}
 
-		public Ability Instantiate()
+		public Ability Instantiate(Game game)
 		{
 			var num = RandomHelper.Next(Math.Max(1000, AbilityChances.Sum(ac => ac.Chance)));
 			var howFar = 0;

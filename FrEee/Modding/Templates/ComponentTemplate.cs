@@ -298,7 +298,7 @@ namespace FrEee.Modding.Templates
 		/// Creates a component from this template.
 		/// </summary>
 		/// <returns></returns>
-		public Component Instantiate()
+		public Component Instantiate(Game game)
 		{
 			return new Component(null, new MountedComponentTemplate(null, this, null));
 		}

@@ -1,9 +1,9 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Modding.Interfaces;
 
 namespace FrEee.Interfaces
 {
-	public interface IStellarObject : ISpaceObject, IReferrable, IModObject, IAbilityContainer
+	public interface IStellarObject : ISpaceObject, IModObject, IAbilityContainer
 	{
 		/// <summary>
 		/// A description of this stellar object.

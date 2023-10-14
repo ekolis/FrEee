@@ -1,4 +1,4 @@
-﻿using FrEee.Interfaces;
+using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Modding;
 using FrEee.Utility;
@@ -156,7 +156,7 @@ namespace FrEee.Setup
 				yield return "You have spent too many empire setup points. Only " + maxPoints + " are available.";
 		}
 
-		public Empire Instantiate()
+		public Empire Instantiate(Game game)
 		{
 			var emp = new Empire();
 			emp.Name = Name;

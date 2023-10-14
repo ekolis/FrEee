@@ -170,8 +170,8 @@ namespace FrEee.Objects.Orders
 							var toSector = The.Setup.WarpPointPlacementStrategy.GetWarpPointSector(fromSys.Location, toSys.Location);
 
 							// create the warp points
-							var wp1 = wpt1.Instantiate();
-							var wp2 = wpt2.Instantiate();
+							var wp1 = wpt1.Instantiate(The.Game);
+							var wp2 = wpt2.Instantiate(The.Game);
 
 							// configure the warp points
 							wp1.IsOneWay = false;
@@ -279,9 +279,9 @@ namespace FrEee.Objects.Orders
 					if (Source.HasAbility("Destroyed On Use"))
 					{
 						// TODO - log destruction
-						if (Source is IDamageable)
-							(Source as IDamageable).Hitpoints = 0;
-						if (Source is IHull)
+						if (Source is IDamageable damageable)
+							damageable.Hitpoints = 0;
+						if (Source is IHull<IVehicle>)
 							executor.Dispose(); // hull destruction kills the whole ship!
 					}
 
@@ -289,10 +289,9 @@ namespace FrEee.Objects.Orders
 					if (Source.HasAbility("Space Object Destroyed On Use"))
 					{
 						// TODO - log destruction
-						if (executor is Planet)
+						if (executor is Planet planet)
 						{
-							var p = executor as Planet;
-							p.ConvertToAsteroidField();
+							planet.ConvertToAsteroidField();
 						}
 						else
 						{

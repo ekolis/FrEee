@@ -494,18 +494,20 @@ namespace FrEee.Utility.Extensions
 		/// <summary>
 		/// Finds the star system containing a space object.
 		/// </summary>
-		/// <param name="sobj"></param>
+		/// <param name="sobj">The space object to look for.</param>
+		/// <param name="galaxy">The galaxy to look in (defaults to <see cref="The.Galaxy")./></param>
 		/// <returns></returns>
-		public static StarSystem FindStarSystem(this ISpaceObject sobj)
+		public static StarSystem? FindStarSystem(this ISpaceObject sobj, Galaxy? galaxy = null)
 		{
-			var loc = The.Galaxy.StarSystemLocations.SingleOrDefault(l => l.Item.Contains(sobj));
+			galaxy ??= The.Galaxy;
+			var loc = galaxy.StarSystemLocations.SingleOrDefault(l => l.Item.Contains(sobj));
 			/*if (loc == null)
 			{
 				// search memories too
 				// TODO - this might be kind of slow; might want a reverse memory lookup
 				loc = The.Galaxy.StarSystemLocations.SingleOrDefault(l => l.Item.FindSpaceObjects<ISpaceObject>().Any(s => The.Game.Empires.ExceptSingle(null).Any(e => e.Memory[s.ID] == sobj)));
 			}*/
-			if (loc == null)
+			if (loc is null)
 				return null;
 			return loc.Item;
 		}

@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Events;
 using FrEee.Modding.Interfaces;
@@ -83,7 +83,7 @@ namespace FrEee.Modding
 		/// <returns>
 		/// The new event.
 		/// </returns>
-		public Event Instantiate()
+		public Event Instantiate(Game game)
 		{
 			return new Event(this);
 		}

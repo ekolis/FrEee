@@ -60,7 +60,7 @@ namespace FrEee.Modding.Templates
 			IsDisposed = true;
 		}
 
-		public AsteroidField Instantiate()
+		public AsteroidField Instantiate(Game game)
 		{
 			var candidates = The.Mod.StellarObjectTemplates.OfType<AsteroidField>();
 			if (Atmosphere != null)
@@ -73,7 +73,7 @@ namespace FrEee.Modding.Templates
 			if (!candidates.Any())
 				throw new Exception("No asteroid fields in SectType.txt match the criteria:\n\tAtmosphere: " + (Atmosphere ?? "Any") + "\n\tSurface: " + (Surface ?? "Any") + "\n\tStellar Size: " + (StellarSize == null ? "Any" : StellarSize.ToString()));
 
-			var asteroids = candidates.PickRandom().Instantiate();
+			var asteroids = candidates.PickRandom().Instantiate(game);
 
 			if (asteroids.Size == null)
 			{
@@ -81,13 +81,13 @@ namespace FrEee.Modding.Templates
 				asteroids.Size = sizes.PickRandom();
 			}
 
-			var abil = Abilities.Instantiate();
+			var abil = Abilities.Instantiate(game);
 			if (abil != null)
 				asteroids.IntrinsicAbilities.Add(abil);
 
-			asteroids.ResourceValue[Resource.Minerals] = RandomHelper.Range(The.Setup.MinSpawnedAsteroidValue, The.Setup.MaxSpawnedAsteroidValue);
-			asteroids.ResourceValue[Resource.Organics] = RandomHelper.Range(The.Setup.MinSpawnedAsteroidValue, The.Setup.MaxSpawnedAsteroidValue);
-			asteroids.ResourceValue[Resource.Radioactives] = RandomHelper.Range(The.Setup.MinSpawnedAsteroidValue, The.Setup.MaxSpawnedAsteroidValue);
+			asteroids.ResourceValue[Resource.Minerals] = RandomHelper.Range(game.Setup.MinSpawnedAsteroidValue, game.Setup.MaxSpawnedAsteroidValue);
+			asteroids.ResourceValue[Resource.Organics] = RandomHelper.Range(game.Setup.MinSpawnedAsteroidValue, game.Setup.MaxSpawnedAsteroidValue);
+			asteroids.ResourceValue[Resource.Radioactives] = RandomHelper.Range(game.Setup.MinSpawnedAsteroidValue, game.Setup.MaxSpawnedAsteroidValue);
 
 			return asteroids;
 		}

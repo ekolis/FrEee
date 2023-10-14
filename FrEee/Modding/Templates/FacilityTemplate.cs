@@ -273,7 +273,7 @@ namespace FrEee.Objects.Technology
 		/// Creates a facility from the template.
 		/// </summary>
 		/// <returns></returns>
-		public Facility Instantiate()
+		public Facility Instantiate(Game game)
 		{
 			return new Facility(this);
 		}

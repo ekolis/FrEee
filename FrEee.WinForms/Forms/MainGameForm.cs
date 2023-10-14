@@ -727,7 +727,7 @@ namespace FrEee.WinForms.Forms
 				{
 					idle = true;
 					// however they are not idle if they are not space yards and there's not enough facility/cargo space to build more facilities/units
-					if (!q.IsSpaceYardQueue && q.FacilitySlotsFree == 0 && q.CargoStorageFreeInSector < Empire.Current.UnlockedItems.OfType<IHull>().Where(x => x.VehicleType != VehicleTypes.Ship && x.VehicleType != VehicleTypes.Base).Min(x => x.Size))
+					if (!q.IsSpaceYardQueue && q.FacilitySlotsFree == 0 && q.CargoStorageFreeInSector < Empire.Current.UnlockedItems.OfType<IHull<IVehicle>>().Where(x => x.VehicleType != VehicleTypes.Ship && x.VehicleType != VehicleTypes.Base).Min(x => x.Size))
 						idle = false;
 				}
 				return idle;

@@ -54,7 +54,7 @@ namespace FrEee.Tests.Game.Objects.Combat
 		public void NormalDamageVersusShips()
 		{
 			attackerDesign.AddComponent(mod.ComponentTemplates.FindByName("Depleted Uranium Cannon I"));
-			attacker = attackerDesign.Instantiate();
+			attacker = attackerDesign.Instantiate(The.Game);
 
 			// armor should get hit before hull
 			defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Armor I"));
@@ -136,7 +136,7 @@ namespace FrEee.Tests.Game.Objects.Combat
 			TestDamage(attacker, defender, 99999, expectedHullDmg: defender.HullHitpoints, expectedArmorDmg: defender.ArmorHitpoints, expectedNormalShieldDmg: defender.NormalShields, expectedPhasedShieldDmg: defender.PhasedShields);
 		}
 
-		private void AddComponents(IDesign d, params string[] compNames)
+		private void AddComponents(IDesign<IVehicle> d, params string[] compNames)
 		{
 			foreach (var cn in compNames)
 				d.AddComponent(The.Mod.ComponentTemplates.FindByName(cn));

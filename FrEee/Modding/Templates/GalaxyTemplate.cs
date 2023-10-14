@@ -86,23 +86,23 @@ namespace FrEee.Modding.Templates
 			IsDisposed = true;
 		}
 
-		public Galaxy Instantiate()
+		public Galaxy Instantiate(Game game)
 		{
-			return Instantiate(null, 1.0, new PRNG(RandomSeed));
+			return Instantiate(game, null, 1.0, new PRNG(RandomSeed));
 		}
 
 		public int RandomSeed { get; set; } = DateTime.Now.Millisecond + 1000 * DateTime.Now.Second + 60000 * DateTime.Now.Minute;
 
 		/// <param name="status">A status object to report status back to the GUI.</param>
 		/// <param name="desiredProgress">How much progress should we report back to the GUI when we're done initializing the galaxy? 1.0 means all done with everything that needs to be done.</param>
-		public Galaxy Instantiate(Status? status, double desiredProgress, PRNG dice)
+		public Galaxy Instantiate(Game game, Status? status, double desiredProgress, PRNG dice)
 		{
 			var gal = new Galaxy();
 			gal.Width = GameSetup.GalaxySize.Width;
 			gal.Height = GameSetup.GalaxySize.Height;
 			var bounds = new Rectangle(-GameSetup.GalaxySize.Width / 2, -GameSetup.GalaxySize.Height / 2, GameSetup.GalaxySize.Width, GameSetup.GalaxySize.Height);
 
-			var unusedNames = new List<string>(The.Mod.StarSystemNames);
+			var unusedNames = new List<string>(game.Mod.StarSystemNames);
 
 			// create star systems
 			if (status != null)
@@ -118,7 +118,7 @@ namespace FrEee.Modding.Templates
 
 				var sst = StarSystemTemplateChances.PickWeighted(dice);
 				sst.Dice = dice;
-				var sys = sst.Instantiate();
+				var sys = sst.Instantiate(game);
 				sys.Name = unusedNames.PickRandom(dice);
 				unusedNames.Remove(sys.Name);
 				NameStellarObjects(sys);
@@ -142,7 +142,7 @@ namespace FrEee.Modding.Templates
 				ObjectLocation<StarSystem> startLocation = null, endLocation = null;
 				(startLocation, endLocation) = MinDistanceDisconnectedSystemPair(graph);
 
-				// create the warp points
+				// create game warp points
 				if (startLocation != null && endLocation != null)
 				{
 					GameSetup.WarpPointPlacementStrategy.PlaceWarpPoints(startLocation, endLocation);

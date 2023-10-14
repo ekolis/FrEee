@@ -88,7 +88,7 @@ namespace FrEee.Objects.Space
 		/// Just copy the star's data.
 		/// </summary>
 		/// <returns>A copy of the star.</returns>
-		public Star Instantiate()
+		public Star Instantiate(Game game)
 		{
 			var result = this.CopyAndAssignNewID();
 			result.ModID = null;

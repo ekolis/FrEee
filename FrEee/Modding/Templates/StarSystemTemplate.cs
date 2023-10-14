@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Abilities;
 using FrEee.Objects.Space;
@@ -126,7 +126,7 @@ namespace FrEee.Modding.Templates
 			IsDisposed = true;
 		}
 
-		public StarSystem Instantiate()
+		public StarSystem Instantiate(Game game)
 		{
 			var sys = new StarSystem(Radius);
 			sys.Name = "Unnamed"; // star system will be named later in galaxy generation
@@ -155,7 +155,7 @@ namespace FrEee.Modding.Templates
 				}
 
 				// create object
-				var sobj = loc.StellarObjectTemplate.Instantiate();
+				var sobj = loc.StellarObjectTemplate.Instantiate(game);
 
 				// place object
 				sys.Place(sobj, pos);

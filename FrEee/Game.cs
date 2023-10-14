@@ -47,10 +47,9 @@ public class Game
 	/// <returns>The new game.</returns>
 	public static Game Start(Mod mod, GameSetup gameSetup, PRNG? dice = null, Status? status = null, double desiredProgress = 1.0)
 	{
-		Game game = new(mod, gameSetup, dice);
-		game.Initialize(status ?? new Status(), desiredProgress);
-		The.Game = game;
-		return game;
+		The.Game = new(mod, gameSetup, dice);
+		The.Game.Initialize(status ?? new Status(), desiredProgress);
+		return The.Game;
 	}
 
 	/// <summary>
@@ -137,7 +136,7 @@ public class Game
 	/// <summary>
 	/// Any referrable objects in the game, keyed by ID.
 	/// </summary>
-	public ReferrableRepository ReferrableRepository { get; private set; }
+	public ReferrableRepository ReferrableRepository { get; private set; } = new ReferrableRepository();
 
 	/// <summary>
 	/// Any referrable objects in the game.
@@ -219,7 +218,7 @@ public class Game
 		var progressPerStep = (desiredProgress - startProgress) / 4d;
 		var galaxyTemplate = Setup.GalaxyTemplate;
 		galaxyTemplate.GameSetup = Setup;
-		var galaxy = galaxyTemplate.Instantiate(status, startProgress + progressPerStep, Dice);
+		var galaxy = galaxyTemplate.Instantiate(this, status, startProgress + progressPerStep, Dice);
 		status.Message = "Populating galaxy";
 		Setup.Initialize(this, Dice);
 		SaveTechLevelsForUniqueness();

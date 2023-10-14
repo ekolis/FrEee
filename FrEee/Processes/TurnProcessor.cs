@@ -101,7 +101,7 @@ public class TurnProcessor
 			if (templates.Any())
 			{
 				var template = templates.PickRandom(dice);
-				var evt = template.Instantiate();
+				var evt = template.Instantiate(Game);
 				Game.PendingEvents.Add(evt);
 				evt.Warn();
 			}
@@ -616,7 +616,7 @@ public class TurnProcessor
 		// update known designs
 		Game.Empires.ParallelSafeForeach(emp =>
 		{
-			foreach (var design in Game.Referrables.OfType<IDesign>())
+			foreach (var design in Game.Referrables.OfType<IDesign<IVehicle>>())
 			{
 				if (design.CheckVisibility(emp) >= Visibility.Scanned && !emp.KnownDesigns.Contains(design))
 					emp.KnownDesigns.Add(design);

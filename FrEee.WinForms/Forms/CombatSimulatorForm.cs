@@ -54,7 +54,7 @@ namespace FrEee.WinForms.Forms
 		private void BindDesignList()
 		{
 			var emp = The.Game.CurrentEmpire;
-			IEnumerable<IDesign> designs = emp.KnownDesigns;
+			IEnumerable<IDesign<IVehicle>> designs = emp.KnownDesigns;
 
 			// filter by vehicle type
 			var item = (dynamic)ddlVehicleType.SelectedItem;
