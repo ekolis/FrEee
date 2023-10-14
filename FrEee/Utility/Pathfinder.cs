@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
@@ -331,9 +331,9 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors, IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> map)
 		{
-			bool cacheEnabled = The.Game.IsAbilityCacheEnabled;
+			bool cacheEnabled = The.AbilityManager.IsCacheEnabled;
 			if (!cacheEnabled)
-				The.Game.EnableAbilityCache();
+				The.AbilityManager.EnableServerSideCache();
 			if (end == null || end.StarSystem == null || start == end)
 				return Enumerable.Empty<Sector>();
 			if (me != null && me.StrategicSpeed < 1)
@@ -366,7 +366,7 @@ namespace FrEee.Utility
 				node = node.PreviousNode;
 			}
 			if (!cacheEnabled)
-				The.Game.DisableAbilityCache();
+				The.AbilityManager.DisableServerSideCache();
 			return nodes.Select(n => n.Location).Where(s => s != start).Reverse();
 		}
 

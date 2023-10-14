@@ -121,7 +121,7 @@ public class TurnProcessor
 		// We can enable the ability cache here because space objects aren't changing state yet in any way where order of operations is relevant.
 		// For instance, all construction is supposed to take place simultaneously, so there's no reason to allow one construction order to affect other objects' abilities.
 		// Plus this speeds up turn processing immensely!
-		Game.EnableAbilityCache();
+		Game.AbilityManager.EnableServerSideCache();
 
 		// clear treaty clause cache (empires might have added treaties)
 		Game.GivenTreatyClauseCache.Clear();
@@ -134,8 +134,8 @@ public class TurnProcessor
 		Galaxy.Battles.Clear();
 		PythonScriptEngine.ClearScope(); // no caching galaxy between turns!
 
-		Game.GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
-		Game.ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
+		Game.GivenTreatyClauseCache.Clear();
+		Game.ReceivedTreatyClauseCache.Clear();
 
 		if (status != null)
 			status.Progress += progressPerOperation;
@@ -394,13 +394,13 @@ public class TurnProcessor
 			status.Message = "Moving ships";
 		var tick = 0d;
 		Galaxy.FindSpaceObjects<IMobileSpaceObject>().SafeForeach(CommonExtensions.RefillMovement);
-		Game.DisableAbilityCache(); // ships moving about and fighting can affect abilities!
+		Game.AbilityManager.DisableServerSideCache(); // ships moving about and fighting can affect abilities!
 		while (!didLastTick)
 		{
 			// can at least cache abilities for the duration of a tick
 			// seeing as actions within a tick are supposed to be simultaneous
 			// the order of execution is arbitrary
-			Game.EnableAbilityCache();
+			Game.AbilityManager.EnableServerSideCache();
 
 			ComputeNextTickSize();
 
@@ -421,7 +421,7 @@ public class TurnProcessor
 
 			//Game.SpaceObjectIDCheck("after ship movement at T=" + Game.Timestamp);
 
-			Game.DisableAbilityCache();
+			Game.AbilityManager.DisableServerSideCache();
 		}
 
 		if (status != null)
@@ -444,7 +444,7 @@ public class TurnProcessor
 				emp.Log.Add(battle.CreateLogMessage(battle.NameFor(emp), LogMessageType.Battle));
 		}
 
-		Game.EnableAbilityCache();
+		Game.AbilityManager.EnableServerSideCache();
 
 		// validate fleets again (ships might have been destroyed, consumed supplies, etc...)
 		foreach (var f in Game.Referrables.OfType<Fleet>().ToArray())
@@ -572,8 +572,8 @@ public class TurnProcessor
 		}
 
 		// repairs affect abilities
-		Game.DisableAbilityCache();
-		Game.EnableAbilityCache();
+		Game.AbilityManager.DisableServerSideCache();
+		Game.AbilityManager.EnableServerSideCache();
 
 		// get supplies from reactors, solar panels, etc.
 		Galaxy.FindSpaceObjects<IMobileSpaceObject>().SafeForeach(v =>

@@ -43,4 +43,6 @@ public static class The
 	public static TurnProcessor TurnProcessor => Game.TurnProcessor;
 
 	public static double Timestamp => TurnProcessor.Timestamp;
+
+	public static AbilityManager AbilityManager => Game.AbilityManager;
 }

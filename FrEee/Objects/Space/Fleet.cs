@@ -558,9 +558,9 @@ namespace FrEee.Objects.Space
 				var spent = 0;
 
 				// sharing supplies should not affect abilities
-				bool wasCacheDisabled = !The.Game.IsAbilityCacheEnabled;
+				bool wasCacheDisabled = !The.AbilityManager.IsCacheEnabled;
 				if (wasCacheDisabled)
-					The.Game.EnableAbilityCache();
+					The.AbilityManager.EnableServerSideCache();
 
 				foreach (var sobj in Vehicles)
 				{
@@ -585,7 +585,7 @@ namespace FrEee.Objects.Space
 				}
 
 				if (wasCacheDisabled)
-					The.Game.DisableAbilityCache();
+					The.AbilityManager.DisableServerSideCache();
 			}
 		}
 

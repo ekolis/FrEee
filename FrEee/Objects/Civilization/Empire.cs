@@ -223,8 +223,6 @@ namespace FrEee.Objects.Civilization
 		{
 			get
 			{
-				if (The.Game.GivenTreatyClauseCache == null)
-					The.Game.GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
 				if (!The.Game.GivenTreatyClauseCache.ContainsKey(this))
 					The.Game.GivenTreatyClauseCache.Add(this, The.Game.Referrables.OfType<Clause>().Where(c => c.Giver == this && c.IsInEffect).ToLookup(c => c.Receiver));
 				return The.Game.GivenTreatyClauseCache[this];
@@ -499,8 +497,6 @@ namespace FrEee.Objects.Civilization
 		{
 			get
 			{
-				if (The.Game.ReceivedTreatyClauseCache == null)
-					The.Game.ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
 				if (!The.Game.ReceivedTreatyClauseCache.ContainsKey(this))
 					The.Game.ReceivedTreatyClauseCache.Add(this, The.Game.Referrables.OfType<Clause>().Where(c => c.Receiver == this && c.IsInEffect).ToLookup(c => c.Giver));
 				return The.Game.ReceivedTreatyClauseCache[this];

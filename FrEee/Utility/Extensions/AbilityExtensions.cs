@@ -31,12 +31,12 @@ namespace FrEee.Utility.Extensions
 			if (obj == null)
 				return Enumerable.Empty<Ability>();
 
-			if (sourceFilter == null && The.Game != null && The.Game.IsAbilityCacheEnabled)
+			if (sourceFilter == null && The.Game != null && The.AbilityManager.IsCacheEnabled)
 			{
 				// use the ability cache
-				if (The.Game.AbilityCache[obj] == null)
-					The.Game.AbilityCache[obj] = obj.UnstackedAbilities(true, sourceFilter).Stack(obj).ToArray();
-				return The.Game.AbilityCache[obj];
+				if (The.AbilityManager.Cache[obj] == null)
+					The.AbilityManager.Cache[obj] = obj.UnstackedAbilities(true, sourceFilter).Stack(obj).ToArray();
+				return The.AbilityManager.Cache[obj];
 			}
 
 			return obj.UnstackedAbilities(true, sourceFilter).Stack(obj);
@@ -170,7 +170,7 @@ namespace FrEee.Utility.Extensions
 
 		public static void ClearAbilityCache(this IAbilityObject o)
 		{
-			The.Game.AbilityCache.Remove(o);
+			The.AbilityManager.Cache.Remove(o);
 		}
 
 		/// <summary>
@@ -216,12 +216,12 @@ namespace FrEee.Utility.Extensions
 				var subobjs = obj.GetContainedAbilityObjects(emp);
 				Func<IEnumerable<Ability>> getabils = () =>
 					subobjs.SelectMany(o => o.Abilities()).Where(a => a.Rule.CanTarget(obj.AbilityTarget));
-				if (The.Game.IsAbilityCacheEnabled)
+				if (The.AbilityManager.IsCacheEnabled)
 				{
 					var tuple = Tuple.Create(obj, emp);
-					if (The.Game.CommonAbilityCache[tuple] == null)
-						The.Game.CommonAbilityCache[tuple] = getabils();
-					return The.Game.CommonAbilityCache[tuple];
+					if (The.AbilityManager.CommonCache[tuple] == null)
+						The.AbilityManager.CommonCache[tuple] = getabils();
+					return The.AbilityManager.CommonCache[tuple];
 				}
 				else
 					return getabils();
@@ -315,10 +315,10 @@ namespace FrEee.Utility.Extensions
 			if (obj == null)
 				return null;
 
-			if (filter == null && The.Game.IsAbilityCacheEnabled)
+			if (filter == null && The.AbilityManager.IsCacheEnabled)
 			{
 				// use the cache
-				var cached = The.Game.CommonAbilityCache[Tuple.Create(obj, emp)];
+				var cached = The.AbilityManager.CommonCache[Tuple.Create(obj, emp)];
 				if (cached != null)
 				{
 					if (cached.Any())
@@ -342,8 +342,8 @@ namespace FrEee.Utility.Extensions
 				result = abils.First().Values[index - 1];
 
 			// cache abilities if we can
-			if (filter == null && The.Game.IsAbilityCacheEnabled)
-				The.Game.CommonAbilityCache[Tuple.Create(obj, emp)] = abils.ToArray();
+			if (filter == null && The.AbilityManager.IsCacheEnabled)
+				The.AbilityManager.CommonCache[Tuple.Create(obj, emp)] = abils.ToArray();
 
 			return result;
 		}
@@ -405,14 +405,14 @@ namespace FrEee.Utility.Extensions
 			foreach (var clause in ownable.Owner.ReceivedTreatyClauses.Flatten().OfType<ShareAbilityClause>())
 			{
 				var tuple = Tuple.Create(ownable, clause.Owner);
-				if (The.Game.CurrentEmpire == null || !The.Game.SharedAbilityCache.ContainsKey(tuple))
-					The.Game.SharedAbilityCache[tuple] = FindSharedAbilities(ownable, clause).ToArray();
+				if (The.Game.CurrentEmpire == null || !The.AbilityManager.SharedCache.ContainsKey(tuple))
+					The.AbilityManager.SharedCache[tuple] = FindSharedAbilities(ownable, clause).ToArray();
 			}
 
 			// get cached abilities
-			foreach (var keyTuple in The.Game.SharedAbilityCache.Keys.Where(k => k.Item1 == ownable && (sourceFilter == null || sourceFilter(k.Item2))))
+			foreach (var keyTuple in The.AbilityManager.SharedCache.Keys.Where(k => k.Item1 == ownable && (sourceFilter == null || sourceFilter(k.Item2))))
 			{
-				foreach (var abil in The.Game.SharedAbilityCache[keyTuple])
+				foreach (var abil in The.AbilityManager.SharedCache[keyTuple])
 					yield return abil;
 			}
 		}

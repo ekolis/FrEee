@@ -26,14 +26,14 @@ namespace FrEee;
 /// <summary>
 /// An instance of the game.
 /// </summary>
-public class Game
+public class Game : IAfterDeserialize
 {
 	private Game(Mod mod, GameSetup setup, PRNG? dice = null)
 	{
 		Mod = mod;
 		Setup = setup;
 		Dice = dice ?? new PRNG(DateTime.Now.Millisecond + 1000 * DateTime.Now.Second + 60000 * DateTime.Now.Minute);
-		TurnProcessor = new TurnProcessor(this);
+		AfterDeserialize();
 	}
 
 	/// <summary>
@@ -173,18 +173,6 @@ public class Game
 		set
 		{
 			stringValue = value;
-		}
-	}
-
-	/// <summary>
-	/// Is the ability cache enabled?
-	/// Always enabled on the client side; only when a flag is set on the server side.
-	/// </summary>
-	public bool IsAbilityCacheEnabled
-	{
-		get
-		{
-			return CurrentEmpire != null || isAbilityCacheEnabled;
 		}
 	}
 
@@ -648,25 +636,6 @@ public class Game
 	}
 
 	/// <summary>
-	/// Disables the server side ability cache.
-	/// </summary>
-	public void DisableAbilityCache()
-	{
-		isAbilityCacheEnabled = false;
-		AbilityCache.Clear();
-		CommonAbilityCache.Clear();
-		SharedAbilityCache.Clear();
-	}
-
-	/// <summary>
-	/// Enables the server side ability cache.
-	/// </summary>
-	public void EnableAbilityCache()
-	{
-		isAbilityCacheEnabled = true;
-	}
-
-	/// <summary>
 	/// Loads player commands into the current game state.
 	/// If this is the host view, commands will be loaded for all players.
 	/// If this is the player view, commands will be immediately executed so as to provide the player with a fresh game state.
@@ -769,44 +738,35 @@ public class Game
 		return Name + " - " + CurrentEmpire.Name + " - " + CurrentEmpire.LeaderName + " - " + Stardate;
 	}
 
+	public void AfterDeserialize()
+	{
+		TurnProcessor = new(this);
+		AbilityManager = new();
+	}
+
 	/// <summary>
 	/// A turn processor which can process turns for this game.
 	/// </summary>
-	public TurnProcessor TurnProcessor { get; }
-
-	#region move this to an AbilityManager or something
-	private bool isAbilityCacheEnabled;
+	[DoNotSerialize]
+	public TurnProcessor TurnProcessor { get; private set; }
 
 	/// <summary>
-	/// Cache of abilities that are shared to empires from other objects due to treaties.
+	/// Manages ability caches.
 	/// </summary>
 	[DoNotSerialize]
-	internal SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>> SharedAbilityCache { get; private set; } = new SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>>();
-
-	/// <summary>
-	/// Cache of abilities belonging to game objects.
-	/// </summary>
-	[DoNotSerialize]
-	internal SafeDictionary<IAbilityObject, IEnumerable<Ability>> AbilityCache { get; private set; } = new SafeDictionary<IAbilityObject, IEnumerable<Ability>>();
-
-	/// <summary>
-	/// Cache of abilities belonging to common game objects that can have different abilities for each empire.
-	/// </summary>
-	[DoNotSerialize]
-	internal SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>> CommonAbilityCache { get; private set; } = new SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>>();
-	#endregion
+	internal AbilityManager AbilityManager { get; private set; }
 
 	#region move this to a TreatyManager or something
 	/// <summary>
 	/// Cache of treaty clauses given by empires.
 	/// </summary>
 	[DoNotSerialize]
-	internal SafeDictionary<Empire, ILookup<Empire, Clause>> GivenTreatyClauseCache { get; set; }
+	internal SafeDictionary<Empire, ILookup<Empire, Clause>> GivenTreatyClauseCache { get; } = new();
 
 	/// <summary>
 	/// Cache of treaty clauses received by empires.
 	/// </summary>
 	[DoNotSerialize]
-	internal SafeDictionary<Empire, ILookup<Empire, Clause>> ReceivedTreatyClauseCache { get; set; }
+	internal SafeDictionary<Empire, ILookup<Empire, Clause>> ReceivedTreatyClauseCache { get; } = new();
 	#endregion
 }
