@@ -786,19 +786,19 @@ public class Game
 	/// Cache of abilities that are shared to empires from other objects due to treaties.
 	/// </summary>
 	[DoNotSerialize]
-	internal SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>> SharedAbilityCache { get; private set; }
+	internal SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>> SharedAbilityCache { get; private set; } = new SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>>();
 
 	/// <summary>
 	/// Cache of abilities belonging to game objects.
 	/// </summary>
 	[DoNotSerialize]
-	internal SafeDictionary<IAbilityObject, IEnumerable<Ability>> AbilityCache { get; private set; }
+	internal SafeDictionary<IAbilityObject, IEnumerable<Ability>> AbilityCache { get; private set; } = new SafeDictionary<IAbilityObject, IEnumerable<Ability>>();
 
 	/// <summary>
 	/// Cache of abilities belonging to common game objects that can have different abilities for each empire.
 	/// </summary>
 	[DoNotSerialize]
-	internal SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>> CommonAbilityCache { get; private set; }
+	internal SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>> CommonAbilityCache { get; private set; } = new SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>>();
 	#endregion
 
 	#region move this to a TreatyManager or something
