@@ -195,6 +195,7 @@ namespace FrEee.Modding
 			preCommands.Add("import FrEee");
 			preCommands.Add("import FrEee.Utility");
 			preCommands.Add("clr.ImportExtensions(FrEee.Utility.Extensions)");
+			preCommands.Add("from FrEee import The");
 			preCommands.Add("from FrEee.Modding import Mod");
 			preCommands.Add("from FrEee.Objects.Space import Galaxy");
 			preCommands.Add("from FrEee.Objects.Civilization import Empire");
@@ -277,6 +278,7 @@ namespace FrEee.Modding
 			preCommands.Add("import FrEee");
 			preCommands.Add("import FrEee.Utility");
 			preCommands.Add("clr.ImportExtensions(FrEee.Utility.Extensions)");
+			preCommands.Add("from FrEee import The");
 			preCommands.Add("from FrEee.Modding import Mod");
 			preCommands.Add("from FrEee.Objects.Space import Galaxy");
 			preCommands.Add("from FrEee.Objects.Civilization import Empire");

@@ -1,4 +1,4 @@
-﻿using FrEee.Objects.Civilization;
+using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Modding;
 using System;
@@ -15,6 +15,7 @@ namespace FrEee.WinForms.Forms
 			try
 			{
 				// why is the script engine remembering my imports? oh well, it's handy :P
+				PythonScriptEngine.EvaluateExpression<object>("from FrEee import The");
 				PythonScriptEngine.EvaluateExpression<object>("from FrEee.Modding import Mod");
 				rtbOutput.AppendText("Imported Mod.\n");
 				rtbOutput.AppendText("The.Mod is currently: " + OrNil(The.Mod) + "\n");
