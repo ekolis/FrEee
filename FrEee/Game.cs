@@ -99,7 +99,7 @@ public class Game : IAfterDeserialize
 	/// <summary>
 	/// Is this a single-player game?
 	/// </summary>
-	public bool IsSinglePlayer { get; set; }
+	public bool IsSinglePlayer { get; set; } // TODO: actually let this be chaged mid-game?
 
 	/// <summary>
 	/// The empires participating in the game.
@@ -213,6 +213,7 @@ public class Game : IAfterDeserialize
 		Setup.Initialize(this, Dice);
 		SaveTechLevelsForUniqueness();
 		status.Progress += progressPerStep;
+		IsSinglePlayer = Setup.IsSinglePlayer;
 
 		// run init script
 		status.Message = "Executing script";
@@ -250,7 +251,7 @@ public class Game : IAfterDeserialize
 			if (playerGame.Empires[i].IsPlayerEmpire)
 			{
 				status.Message = "Saving game (player " + (i + 1) + ")";
-				playerGame.CurrentEmpire = Empires[i];
+				playerGame.CurrentEmpire = playerGame.Empires[i];
 				playerGame.Redact();
 				playerGame.Save(false); // already asssigned IDs in the redact phase
 				status.Progress += progressPerSaveLoad;
