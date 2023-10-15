@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Interfaces;
-using FrEee.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Combat.Grid;
 using FrEee.Objects.Combat;
