@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 namespace FrEee.Utility
 {
+	// XXX: Just use this class as a temporary holder for links between IDs and objects; add a [SerializeAsGameReference] attribute to replace all the duplicated properties
 	/// <summary>
 	/// A lightweight reference to some object in the current game.
 	/// Can be passed around on the network as a surrogate for said object.
