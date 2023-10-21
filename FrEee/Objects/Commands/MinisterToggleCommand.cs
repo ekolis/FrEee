@@ -1,30 +1,27 @@
-﻿using FrEee.Interfaces;
+using System.Collections.Generic;
 using FrEee.Objects.Civilization;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
-using FrEee.Utility.Serialization;
 
 namespace FrEee.Objects.Commands
 {
 	/// <summary>
-	/// Clears a player note.
+	/// Toggles AI ministers.
 	/// </summary>
-	public class ClearPlayerNoteCommand : Command<Empire>
+	public class MinisterToggleCommand : Command<Empire>
 	{
-		public ClearPlayerNoteCommand(IReferrable target)
+		public MinisterToggleCommand()
 			: base(Empire.Current)
 		{
-			Target = target;
 		}
 
-		[DoNotSerialize]
-		public IReferrable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
-
-		private GameReference<IReferrable> target { get; set; }
+		public SafeDictionary<string, ICollection<string>> EnabledMinisters { get; set; }
 
 		public override void Execute()
 		{
-			Executor.PlayerNotes.Remove(target);
+			if (Executor.AI == null)
+				Executor.RecordLog(Executor, $"Could not toggle AI ministers for {Executor} because there is no AI for this empire.", LogMessages.LogMessageType.Error);
+			else
+				Executor.EnabledMinisters = EnabledMinisters;
 		}
 	}
 }
