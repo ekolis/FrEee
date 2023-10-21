@@ -89,7 +89,7 @@ namespace FrEee.Objects.Orders
 				return;
 			foreach (var sobj in The.Game.Referrables.OfType<IMobileSpaceObject>())
 				sobj.RemoveOrder(this);
-			The.ReferrableRepository.UnassignID(this);
+			The.ReferrableRepository.Remove(this);
 		}
 
 		public void Execute(IOrderable ord)

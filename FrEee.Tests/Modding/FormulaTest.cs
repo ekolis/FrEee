@@ -41,7 +41,7 @@ namespace FrEee.Tests.Modding
 			The.Mod.Hulls.Add(hull);
 
 			var design = new Design<Ship>();
-			The.ReferrableRepository.AssignID(design);
+			The.ReferrableRepository.Add(design);
 			var mct = new MountedComponentTemplate(design, armor, mount);
 			design.Hull = hull;
 			design.Components.Add(mct);

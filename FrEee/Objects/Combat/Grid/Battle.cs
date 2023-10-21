@@ -673,7 +673,7 @@ gotosAreVeryEvil:
 					if (w.Template.ComponentTemplate.WeaponType == WeaponTypes.Seeking || w.Template.ComponentTemplate.WeaponType == WeaponTypes.SeekingPointDefense)
 					{
 						var seeker = new Seeker(Sector, c.Owner, c, w, target);
-						The.ReferrableRepository.AssignID(seeker);
+						The.ReferrableRepository.Add(seeker);
 						Combatants.Add(seeker);
 						StartCombatants[seeker.ID] = seeker.Copy();
 						locations[seeker] = new IntVector2(locations[c]);

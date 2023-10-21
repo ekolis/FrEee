@@ -136,7 +136,7 @@ namespace FrEee.Objects.Orders
 				return;
 			foreach (var v in The.Galaxy.FindSpaceObjects<IMobileSpaceObject>())
 				v.RemoveOrder(this);
-			The.ReferrableRepository.UnassignID(this);
+			The.ReferrableRepository.Remove(this);
 		}
 
 		public void Execute(IOrderable ord)

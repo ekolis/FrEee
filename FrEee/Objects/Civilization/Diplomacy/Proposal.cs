@@ -107,7 +107,7 @@ namespace FrEee.Objects.Civilization.Diplomacy
 		{
 			if (IsDisposed)
 				return;
-			The.ReferrableRepository.UnassignID(this);
+			The.ReferrableRepository.Remove(this);
 		}
 
 		public override void Execute()

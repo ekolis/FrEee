@@ -85,7 +85,7 @@ namespace FrEee.Objects.Orders
 				else if (v is Planet p)
 					p.Orders.Remove(this);
 			}
-			The.ReferrableRepository.UnassignID(this);
+			The.ReferrableRepository.Remove(this);
 		}
 
 		public void Execute(IOrderable ord)

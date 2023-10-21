@@ -88,10 +88,10 @@ public class PlanList
     {
         foreach (var p in ColonizationPlans)
             if (p.PlanId == null)
-                p.AssignId();
+                p.Add();
         foreach (var p in ShipBuildPlans)
             if (p.PlanId == null)
-                p.AssignId();
+                p.Add();
     }
 
     /// <summary>

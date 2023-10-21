@@ -51,10 +51,10 @@ namespace FrEee.Utility
 				else if (r.ID > 0)
 					ID = r.ID;
 				else
-					ID = The.ReferrableRepository.AssignID(r);
+					ID = The.ReferrableRepository.Add(r);
 				if (!HasValue)
 				{
-					The.ReferrableRepository.AssignID(r, r.ID);
+					The.ReferrableRepository.Add(r, r.ID);
 					cache = null; // reset cache
 					if (!HasValue)
 						throw new ArgumentException("{0} does not exist in the current game so it cannot be referenced.".F(t));

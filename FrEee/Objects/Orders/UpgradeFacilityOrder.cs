@@ -116,7 +116,7 @@ namespace FrEee.Objects.Orders
 				return;
 			foreach (var v in The.Game.Referrables.OfType<ConstructionQueue>())
 				v.Orders.Remove(this);
-			The.ReferrableRepository.UnassignID(this);
+			The.ReferrableRepository.Remove(this);
 		}
 
 		/// <summary>

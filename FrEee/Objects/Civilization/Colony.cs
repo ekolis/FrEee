@@ -211,7 +211,7 @@ namespace FrEee.Objects.Civilization
 			if (Container != null)
 				Container.Colony = null;
 			ConstructionQueue.SafeDispose();
-			The.ReferrableRepository.UnassignID(this);
+			The.ReferrableRepository.Remove(this);
 			if (!IsMemory)
 				this.UpdateEmpireMemories();
 			IsDisposed = true;

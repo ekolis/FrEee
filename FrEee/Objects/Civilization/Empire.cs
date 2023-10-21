@@ -884,7 +884,7 @@ namespace FrEee.Objects.Civilization
 		{
 			if (IsDisposed)
 				return;
-			The.ReferrableRepository.UnassignID(this);
+			The.ReferrableRepository.Remove(this);
 			if (The.Game.Empires.Contains(this))
 				The.Game.Empires[The.Game.Empires.IndexOf(this)] = null;
 			foreach (var x in OwnedSpaceObjects.OfType<SpaceVehicle>().ToArray())

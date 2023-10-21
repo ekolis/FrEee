@@ -341,7 +341,7 @@ namespace FrEee.Objects.Civilization
 				return;
 			if (!IsMemory && The.Mod != null)
 				this.UpdateEmpireMemories();
-			The.ReferrableRepository.UnassignID(this);
+			The.ReferrableRepository.Remove(this);
 			Orders.Clear();
 			IsDisposed = true;
 		}

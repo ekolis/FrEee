@@ -138,7 +138,7 @@ public class Game : IAfterDeserialize
 	/// Any referrable objects in the game, keyed by ID.
 	/// </summary>
 	[SerializationPriority(2)]
-	public ReferrableRepository ReferrableRepository { get; private set; } = new ReferrableRepository();
+	public ReferrableRepository<IReferrable> ReferrableRepository { get; private set; } = new();
 
 	/// <summary>
 	/// Any referrable objects in the game.
@@ -264,7 +264,7 @@ public class Game : IAfterDeserialize
 		if (assignIDs)
 			CleanGameState();
 		foreach (var kvp in ReferrableRepository.Where(kvp => kvp.Value.IsDisposed).ToArray())
-			ReferrableRepository.UnassignID(kvp.Key);
+			ReferrableRepository.Remove(kvp.Key);
 		Serializer.Serialize(this, stream);
 	}
 
@@ -279,7 +279,7 @@ public class Game : IAfterDeserialize
 		if (assignIDs)
 			CleanGameState();
 		foreach (var kvp in ReferrableRepository.Where(kvp => kvp.Value.ID < 0).ToArray())
-			ReferrableRepository.UnassignID(kvp.Key);
+			ReferrableRepository.Remove(kvp.Key);
 		string filename;
 		if (CurrentEmpire == null)
 			filename = Name + "_" + TurnNumber + ".gam";
@@ -369,7 +369,7 @@ public class Game : IAfterDeserialize
 	{
 		if (o is IReferrable r)
 		{
-			ReferrableRepository.AssignID(r);
+			ReferrableRepository.Add(r);
 
 			if (o is IFoggable obj)
 			{
@@ -479,7 +479,7 @@ public class Game : IAfterDeserialize
 		foreach (var kvp in ReferrableRepository.ToArray())
 		{
 			if (kvp.Value.IsDisposed)
-				ReferrableRepository.UnassignID(kvp.Key);
+				ReferrableRepository.Remove(kvp.Key);
 		}
 		parser.Property += (pname, o, val) =>
 		{
@@ -499,7 +499,7 @@ public class Game : IAfterDeserialize
 			if (o is IReferrable && canAssign)
 			{
 				var r = (IReferrable)o;
-				ReferrableRepository.AssignID(r);
+				ReferrableRepository.Add(r);
 			}
 			if (o is IEnumerable)
 			{
@@ -717,7 +717,7 @@ public class Game : IAfterDeserialize
 			foreach (var r in cmd.NewReferrables)
 			{
 				var clientid = r.ID;
-				var serverid = ReferrableRepository.AssignID(r);
+				var serverid = ReferrableRepository.Add(r);
 				if (idmap.ContainsKey(clientid))
 				{
 					if (idmap[clientid] != serverid)

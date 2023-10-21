@@ -87,7 +87,7 @@ namespace FrEee.Objects.Civilization.Diplomacy.Clauses
 		{
 			if (IsDisposed)
 				return;
-			The.ReferrableRepository.UnassignID(this);
+			The.ReferrableRepository.Remove(this);
 			IsInEffect = false;
 		}
 

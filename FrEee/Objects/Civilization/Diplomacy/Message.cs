@@ -105,7 +105,7 @@ namespace FrEee.Objects.Civilization.Diplomacy
 		{
 			if (IsDisposed)
 				return;
-			The.ReferrableRepository.UnassignID(this);
+			The.ReferrableRepository.Remove(this);
 			if (Owner != null)
 			{
 				// HACK - how could a diplomatic message have no owner?

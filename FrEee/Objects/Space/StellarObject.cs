@@ -281,7 +281,7 @@ namespace FrEee.Objects.Space
 			var sys = this.FindStarSystem();
 			if (sys != null)
 				sys.Remove(this);
-			The.ReferrableRepository.UnassignID(this);
+			The.ReferrableRepository.Remove(this);
 			if (!IsMemory)
 				this.UpdateEmpireMemories();
 		}

@@ -1,4 +1,4 @@
-﻿using FrEee.Interfaces;
+using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using System.Collections.Generic;
@@ -45,7 +45,7 @@ namespace FrEee.Objects.Commands
 			// HACK - why is the fleet beign disposed?!
 			Fleet.IsDisposed = false;
 			Fleet.ID = 0;
-			The.ReferrableRepository.AssignID(Fleet);
+			The.ReferrableRepository.Add(Fleet);
 		}
 
 		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)

@@ -712,7 +712,7 @@ namespace FrEee.Objects.Vehicles
 		{
 			if (IsDisposed)
 				return;
-			The.ReferrableRepository.UnassignID(this);
+			The.ReferrableRepository.Remove(this);
 			foreach (var emp in The.Game.Empires.Where(e => e != null))
 				emp.KnownDesigns.Remove(this);
 		}

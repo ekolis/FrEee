@@ -105,7 +105,7 @@ namespace FrEee.Objects.Civilization
 					AlteredQueuesOnDelete++;
 			}
 			IsDisposed = true;
-			The.ReferrableRepository.UnassignID(this);
+			The.ReferrableRepository.Remove(this);
 		}
 
 		public bool IsObsoleteMemory(Empire emp)

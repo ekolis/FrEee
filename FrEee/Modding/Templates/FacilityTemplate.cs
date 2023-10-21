@@ -259,7 +259,7 @@ namespace FrEee.Objects.Technology
 		{
 			if (IsDisposed)
 				return;
-			The.ReferrableRepository.UnassignID(this);
+			The.ReferrableRepository.Remove(this);
 			if (The.Mod != null)
 				The.Mod.FacilityTemplates.Remove(this);
 		}

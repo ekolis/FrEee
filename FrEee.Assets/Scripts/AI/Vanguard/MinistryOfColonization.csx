@@ -84,7 +84,7 @@ public class MinistryOfColonization
             //work out the priority. 
 
             CalculateScore(colonyPlan);
-            colonyPlan.AssignId(); 
+            colonyPlan.Add(); 
             PlanManager.CurrentPlans.ColonizationPlans.Add(colonyPlan); 
             
         }
@@ -219,7 +219,7 @@ public class MinistryOfColonization
                 Priority = plan.Priority, 
                 ConstructionQueue = plan.SourcePlanet?.ConstructionQueue
             };
-            buildPlan.AssignId();
+            buildPlan.Add();
             plan.ShipBuildPlanId = buildPlan.PlanId;
             buildPlan.RequestPlanId = plan.PlanId; 
             PlanManager.CurrentPlans.ShipBuildPlans.Add(buildPlan); 

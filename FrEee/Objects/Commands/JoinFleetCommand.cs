@@ -39,7 +39,7 @@ namespace FrEee.Objects.Commands
 					// HACK - why is the fleet beign disposed?!
 					value.IsDisposed = false;
 					value.ID = 0;
-					The.ReferrableRepository.AssignID(value);
+					The.ReferrableRepository.Add(value);
 				}
 				fleet = value;
 			}

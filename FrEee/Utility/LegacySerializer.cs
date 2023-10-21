@@ -385,7 +385,6 @@ namespace FrEee.Utility
 				throw new SerializationException("Expected integer, got \"" + sizeStr + "\" when parsing collection size.");
 			var coll = type.Instantiate();
 			context.Add(coll);
-			var adder = type.GetMethods().Single(m => m.Name == "Add" && m.GetParameters().Length == 2);
 			Type itemType;
 			if (type.GetGenericArguments().Count() == 2)
 				itemType = typeof(KeyValuePair<,>).MakeGenericType(type.GetGenericArguments());
@@ -396,15 +395,17 @@ namespace FrEee.Utility
 				// HACK - Resources inherits from a dictionary type
 				itemType = typeof(KeyValuePair<,>).MakeGenericType(type.BaseType.GetGenericArguments());
 			}
-			else if (type.Name == "ReferrableRepository")
+			else if (type.Name == "ReferrableRepository`1")
 			{
 				// HACK: ReferrableRepository is a dictionary
-				itemType = typeof(KeyValuePair<long, IReferrable>);
+				itemType = typeof(KeyValuePair<,>).MakeGenericType(typeof(long), type.GetGenericArguments()[0]);
 			}
 			else
 			{
 				throw new InvalidOperationException($"Invalid dictionary type {type}.");
 			}
+
+			var adder = type.GetMethods().Single(m => m.Name == "Add" && m.GetParameters().Select(q => q.ParameterType).SequenceEqual(itemType.GetGenericArguments()));
 
 			var collParm = Expression.Parameter(typeof(object), "coll");
 			var keyParm = Expression.Parameter(typeof(object), "key");
@@ -844,18 +845,18 @@ namespace FrEee.Utility
 				w.WriteLine("d" + list.Cast<object>().Count() + ":" + tabs);
 				isDict = true;
 			}
+			else if (type.Name == "ReferrableRepository`1")
+			{
+				// HACK - referral repositories are dictionaries
+				itemType = typeof(KeyValuePair<,>).MakeGenericType(typeof(long), type.GetGenericArguments()[0]);
+				w.WriteLine("d" + list.Cast<object>().Count() + ":" + tabs);
+				isDict = true;
+			}
 			else if (type.GetGenericArguments().Length == 1)
 			{
 				// HACK - assume it's a collection, no real way to test
 				itemType = type.GetGenericArguments()[0];
 				w.WriteLine("c" + list.Cast<object>().Count() + ":" + tabs);
-			}
-			else if (type.Name == "ReferrableRepository")
-			{
-				// HACK - referral repositories are dictionaries
-				itemType = typeof(KeyValuePair<long, IReferrable>);
-				w.WriteLine("d" + list.Cast<object>().Count() + ":" + tabs);
-				isDict = true;
 			}
 			else
 			{

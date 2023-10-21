@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Interfaces;
 using FrEee.Modding;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
@@ -35,7 +36,9 @@ public static class The
 	public static GameSetup Setup => Game.Setup;
 
 	// XXX: why is this null when loading a player GAM file? could it be related to the null colony containers?
-	public static ReferrableRepository ReferrableRepository => Game.ReferrableRepository;
+	public static ReferrableRepository<IReferrable> ReferrableRepository => Game.ReferrableRepository;
+
+	// XXX: Add more properties for sub-repositories so referrables can be referenced directly via them somehow
 
 	public static Galaxy Galaxy => Game.Galaxy;
 

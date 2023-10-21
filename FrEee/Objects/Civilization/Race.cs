@@ -225,7 +225,7 @@ namespace FrEee.Objects.Civilization
 		{
 			if (IsDisposed)
 				return;
-			The.ReferrableRepository.UnassignID(this);
+			The.ReferrableRepository.Remove(this);
 		}
 
 		public void Save(string filename)

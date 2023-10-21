@@ -196,7 +196,7 @@ namespace FrEee.Objects.Abilities
 				return;
 			if (Container is IAbilityContainer)
 				(Container as IAbilityContainer).Abilities.Remove(this);
-			The.Game.ReferrableRepository.UnassignID(this);
+			The.Game.ReferrableRepository.Remove(this);
 		}
 
 		public override string ToString()

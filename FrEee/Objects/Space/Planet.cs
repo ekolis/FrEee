@@ -685,7 +685,7 @@ namespace FrEee.Objects.Space
 			}
 			if (Colony != null)
 				Colony.Dispose();
-			The.ReferrableRepository.UnassignID(this);
+			The.ReferrableRepository.Remove(this);
 			if (!IsMemory)
 				this.UpdateEmpireMemories();
 			IsDisposed = true;

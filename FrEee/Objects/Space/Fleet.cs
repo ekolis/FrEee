@@ -697,7 +697,7 @@ namespace FrEee.Objects.Space
 			foreach (var v in Vehicles.ExceptSingle(null))
 				v.Container = null;
 			Vehicles.Clear();
-			The.ReferrableRepository.UnassignID(this);
+			The.ReferrableRepository.Remove(this);
 			Sector = null;
 			Orders.Clear();
 			if (!IsMemory)

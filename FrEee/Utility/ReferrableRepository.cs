@@ -15,24 +15,84 @@ namespace FrEee.Utility;
 /// A repository which stores some type of referrable object which can be accessed via an ID.
 /// </summary>
 /// <typeparam name="TValue">The type of object.</typeparam>
-public class ReferrableRepository
-	: IDictionary<long, IReferrable>
+public class ReferrableRepository<T>
+	: IReferrableRepository,
+	IDictionary<long, T>
+	where T : IReferrable
 {
-	public IReferrable this[long key] => Dictionary[key];
+	public Type ReferrableType => typeof(T);
+
+	public T this[long key] => Dictionary[key];
 
 	public IEnumerable<long> Keys => Dictionary.Keys;
-	public IEnumerable<IReferrable> Values => Dictionary.Values;
+	public IEnumerable<T> Values => Dictionary.Values;
 	public int Count => Dictionary.Count;
 
 	/// <summary>
-	/// The dictionary which stores the references.
+	/// The dictionary which stores the references to objects that are of type <see cref="T"/>.
 	/// </summary>
-	private IDictionary<long, IReferrable> Dictionary { get; set; } = new Dictionary<long, IReferrable>();
-	ICollection<long> IDictionary<long, IReferrable>.Keys => Dictionary.Keys;
-	ICollection<IReferrable> IDictionary<long, IReferrable>.Values => Dictionary.Values;
+	private IDictionary<long, T> Dictionary { get; set; } = new Dictionary<long, T>();
+
+	/// <summary>
+	/// Any sub-repositories storing concrete subtypes of type <see cref="T"/>.
+	/// </summary>
+	private ISet<IReferrableRepository> Subrepositories { get; set; } = new HashSet<IReferrableRepository>();
+
+	/// <summary>
+	/// Gets or creates a subrepository by the concrete object type stored.
+	/// </summary>
+	/// <typeparam name="T2">The concrete object type.</typeparam>
+	/// <returns>The subrepository (or this repository if <see cref="T2"/> is the same as <see cref="T"/>).</returns>
+	/// <exception cref="InvalidOperationException">if <see cref="T2"/> is an interface or abstract type.</exception>
+	public ReferrableRepository<T2> GetSubrepository<T2>() where T2 : T
+	{
+		if (typeof(T2) == typeof(T))
+		{
+			return (ReferrableRepository<T2>)(object)this;
+		}	
+		if (typeof(T2).IsInterface || typeof(T2).IsAbstract)
+		{
+			throw new InvalidOperationException($"Can't get concrete referrable repository of interface/abstract type {typeof(T2)}.");
+		}
+		var result = Subrepositories.OfType<ReferrableRepository<T2>>().SingleOrDefault();
+		if (result is null)
+		{
+			result = new ReferrableRepository<T2>();
+			Subrepositories.Add(result);
+		}
+		return result;
+	}
+
+	/// <summary>
+	/// Gets or creates a subrepository by the concrete object type stored.
+	/// </summary>
+	/// <param name="type">The concrete object type.</param>
+	/// <returns>The subrepository (or this repository if <see cref="T2"/> is the same as <see cref="T"/>).</returns>
+	/// <exception cref="InvalidOperationException">if <see cref="T2"/> is an interface or abstract type, or not a subtype of <see cref="T"/>.</exception>
+	public IReferrableRepository GetSubrepository(Type type)
+	{
+		if (type == GetType())
+		{
+			return this;
+		}
+		if (type.IsInterface || type.IsAbstract)
+		{
+			throw new InvalidOperationException($"Can't get concrete referrable repository of interface/abstract type {type}.");
+		}
+		var result = Subrepositories.SingleOrDefault(q => q.ReferrableType == type);
+		if (result is null)
+		{
+			result = (IReferrableRepository)typeof(ReferrableRepository<>).MakeGenericType(type).Instantiate();
+			Subrepositories.Add(result);
+		}
+		return result;
+	}
+
+	ICollection<long> IDictionary<long, T>.Keys => Dictionary.Keys;
+	ICollection<T> IDictionary<long, T>.Values => Dictionary.Values;
 	public bool IsReadOnly => Dictionary.IsReadOnly;
 
-	IReferrable IDictionary<long, IReferrable>.this[long key]
+	T IDictionary<long, T>.this[long key]
 	{
 		get => Dictionary[key];
 		set => Add(key, value);
@@ -45,7 +105,7 @@ public class ReferrableRepository
 	/// <param name="r">The object.</param>
 	/// <param name="id">The ID, or 0 to generate a new ID (unless the ID is already valid).</param>
 	/// <returns>The new ID.</returns>
-	public long AssignID(IReferrable r, long id = 0)
+	public long Add(T r, long id = 0)
 	{
 		if (r.ID < 0 || r.IsDisposed)
 		{
@@ -73,6 +133,10 @@ public class ReferrableRepository
 		}
 		r.ID = newid;
 		Dictionary.Add(newid, r);
+		if (r.GetType() != typeof(T))
+		{
+			GetSubrepository(r.GetType()).Add(r, id);
+		}
 
 		// clean up old IDs
 		if (oldid > 0 && Dictionary.ContainsKey(oldid) && oldid != newid)
@@ -85,39 +149,44 @@ public class ReferrableRepository
 	/// Unassigns an ID from a referrable, removing it from the repository.
 	/// </summary>
 	/// <param name="id"></param>
-	public void UnassignID(long id)
+	public bool Remove(long id)
 	{
 		if (ContainsKey(id))
 		{
 			var r = this[id];
 			r.ID = -1;
 			Dictionary.Remove(id);
+			GetSubrepository(r.GetType()).Remove(id);
+			return true;
 		}
+		return false;
 	}
 
 	/// <summary>
 	/// Unassigns an ID from a referrable, removing it from the repository.
 	/// </summary>
 	/// <param name="r"></param>
-	public void UnassignID(IReferrable r)
+	public bool Remove(T r)
 	{
 		if (r == null || r.ID < 0)
-			return; // nothing to do
+			return false; // nothing to do
 		if (ContainsKey(r.ID))
 		{
-			if (this[r.ID] == r)
+			if (ReferenceEquals(this[r.ID],  r))
 				Dictionary.Remove(r.ID);
 			else
 			{
-				var repoThinksTheIDIs = this.SingleOrDefault(kvp => kvp.Value == r).Key;
+				var repoThinksTheIDIs = this.SingleOrDefault(kvp => ReferenceEquals(kvp.Value, r)).Key;
 				Dictionary.Remove(repoThinksTheIDIs);
+				GetSubrepository(r.GetType()).Remove(repoThinksTheIDIs);
 			}
 		}
 		else if (Values.Contains(r))
 		{
 			try
 			{
-				Dictionary.Remove(this.Single(kvp => kvp.Value == r));
+				Dictionary.Remove(this.Single(kvp => ReferenceEquals(kvp.Value, r)));
+				GetSubrepository(r.GetType()).Remove(r);
 			}
 			catch (InvalidOperationException ex)
 			{
@@ -125,39 +194,40 @@ public class ReferrableRepository
 				Console.Error.WriteLine(ex);
 			}
 		}
+		return true;
 		//r.ID = -1;
 	}
 
 	/// <summary>
 	/// Finds referrable objects in the repository.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
+	/// <typeparam name="T2"></typeparam>
 	/// <param name="condition"></param>
 	/// <returns></returns>
-	public IEnumerable<T> Find<T>(Func<T, bool>? condition = null) where T : IReferrable
+	public IEnumerable<T2> Find<T2>(Func<T2, bool>? condition = null) where T2 : T
 	{
 		if (condition == null)
 			condition = t => true;
-		return this.OfType<T>().Where(condition);
+		return this.OfType<T2>().Where(condition);
 	}
 
-	public IReferrable? GetReferrable(long key)
+	public T? GetReferrable(long key)
 	{
 		if (!ContainsKey(key))
-			return null;
+			return default;
 		return this[key];
 	}
 
 	/// <summary>
 	/// Finds the real version of a fake referrable.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
+	/// <typeparam name="T2"></typeparam>
 	/// <param name="fakeobj">The fake referrable.</param>
 	/// <returns></returns>
-	public T? GetReferrable<T>(T fakeobj)
-		where T : IReferrable
+	public T2? GetReferrable<T2>(T2 fakeobj)
+		where T2 : T
 	{
-		return (T)GetReferrable(fakeobj.ID);
+		return (T2)GetReferrable(fakeobj.ID);
 	}
 
 	public bool ContainsKey(long key)
@@ -165,12 +235,12 @@ public class ReferrableRepository
 		return Dictionary.ContainsKey(key);
 	}
 
-	public IEnumerator<KeyValuePair<long, IReferrable>> GetEnumerator()
+	public IEnumerator<KeyValuePair<long, T>> GetEnumerator()
 	{
 		return Dictionary.GetEnumerator();
 	}
 
-	public bool TryGetValue(long key, [MaybeNullWhen(false)] out IReferrable value)
+	public bool TryGetValue(long key, [MaybeNullWhen(false)] out T value)
 	{
 		return Dictionary.TryGetValue(key, out value);
 	}
@@ -180,17 +250,25 @@ public class ReferrableRepository
 		return GetEnumerator();
 	}
 
-	public void Add(long key, IReferrable value) => AssignID(value, key);
+	public void Add(long key, T value) => Add(value, key);
 
-	public bool Remove(long key) => Dictionary.Remove(key);
-
-	public void Add(KeyValuePair<long, IReferrable> item) => Add(item.Key, item.Value);
+	public void Add(KeyValuePair<long, T> item) => Add(item.Key, item.Value);
 
 	public void Clear() => Dictionary.Clear();
 
-	public bool Contains(KeyValuePair<long, IReferrable> item) => Dictionary.Contains(item);
+	public bool Contains(KeyValuePair<long, T> item) => Dictionary.Contains(item);
 
-	public void CopyTo(KeyValuePair<long, IReferrable>[] array, int arrayIndex) => Dictionary.CopyTo(array, arrayIndex);
+	public void CopyTo(KeyValuePair<long, T>[] array, int arrayIndex) => Dictionary.CopyTo(array, arrayIndex);
 
-	public bool Remove(KeyValuePair<long, IReferrable> item) => Remove(item.Key);
+	public bool Remove(KeyValuePair<long, T> item) => Remove(item.Key);
+
+	long IReferrableRepository.Add(IReferrable r, long id)
+	{
+		return Add((T)r, id);
+	}
+
+	bool IReferrableRepository.Remove(IReferrable r)
+	{
+		return Remove((T)r);
+	}
 }

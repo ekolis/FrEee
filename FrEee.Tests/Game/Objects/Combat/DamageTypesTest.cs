@@ -28,7 +28,7 @@ namespace FrEee.Tests.Game.Objects.Combat
 			// create a galaxy for referencing things
 			new Galaxy();
 			foreach (var r in mod.Objects.OfType<IReferrable>())
-				The.ReferrableRepository.AssignID(r);
+				The.ReferrableRepository.Add(r);
 		}
 
 		[SetUp]

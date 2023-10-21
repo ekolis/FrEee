@@ -258,7 +258,7 @@ namespace FrEee.Objects.Space
 				return;
 			if (IsDisposed)
 				return;
-			The.ReferrableRepository.UnassignID(this);
+			The.ReferrableRepository.Remove(this);
 			if (!IsMemory)
 				this.UpdateEmpireMemories();
 		}

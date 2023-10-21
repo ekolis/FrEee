@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.LogMessages;
@@ -69,7 +69,7 @@ namespace FrEee.Objects.Orders
 				return;
 			foreach (var v in The.Game.Referrables.OfType<SpaceVehicle>())
 				v.Orders.Remove(this);
-			The.ReferrableRepository.UnassignID(this);
+			The.ReferrableRepository.Remove(this);
 		}
 
 		public void Execute(IOrderable ord)

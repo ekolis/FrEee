@@ -605,7 +605,7 @@ namespace FrEee.Objects.Vehicles
 			if (IsDisposed)
 				return;
 			IsDisposed = true;
-			The.ReferrableRepository.UnassignID(this);
+			The.ReferrableRepository.Remove(this);
 			if (!IsMemory)
 				this.UpdateEmpireMemories();
 			if (this is IUnit u)

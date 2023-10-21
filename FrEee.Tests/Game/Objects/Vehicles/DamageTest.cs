@@ -63,7 +63,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			var design = new Design<Ship>();
 			design.BaseName = "Punching Bag";
 			var hull = new Hull<Ship>();
-			The.Mod.AssignID(hull, new List<string>());
+			The.Mod.Add(hull, new List<string>());
 			design.Hull = hull;
 			design.Hull.ThrustPerMove = 1;
 			design.Owner = empire;

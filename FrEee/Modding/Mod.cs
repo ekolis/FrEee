@@ -301,7 +301,7 @@ namespace FrEee.Modding
 				{
 					foreach (var mo in loader.Key.Load(mod).ToArray())
 					{
-						mod.AssignID(mo, used);
+						mod.Add(mo, used);
 					}
 					if (status != null)
 						status.Progress += progressPerFile;
@@ -317,7 +317,7 @@ namespace FrEee.Modding
 			return mod;
 		}
 
-		public void AssignID(IModObject mo, ICollection<string> used)
+		public void Add(IModObject mo, ICollection<string> used)
 		{
 			if (mo.ModID != null)
 				return;
@@ -388,7 +388,7 @@ namespace FrEee.Modding
 			foreach (var mo in Objects)
 			{
 				if (mo.ModID == null)
-					AssignID(mo, used);
+					Add(mo, used);
 				var dupes = Objects.Where(q => q.ModID == mo.ModID); // with same mod ID
 				if (dupes.Count() > 1)
 				{

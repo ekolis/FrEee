@@ -1120,7 +1120,7 @@ namespace FrEee.Utility.Extensions
 		public static void ReassignID(this IReferrable r)
 		{
 			r.ID = 0;
-			The.ReferrableRepository.AssignID(r);
+			The.ReferrableRepository.Add(r);
 		}
 
 		public static TRef Refer<TRef, T>(this T t) where TRef : IReference<T>

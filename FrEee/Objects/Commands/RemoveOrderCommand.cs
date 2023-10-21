@@ -29,7 +29,7 @@ namespace FrEee.Objects.Commands
 			else if (Issuer == Executor.Owner)
 			{
 				Executor.RemoveOrder(Order);
-				The.ReferrableRepository.UnassignID(Order);
+				The.ReferrableRepository.Remove(Order);
 			}
 			else
 				Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Executor + " belonging to " + Executor.Owner + "!", The.Game.TurnNumber));

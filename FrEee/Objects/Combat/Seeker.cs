@@ -306,7 +306,7 @@ namespace FrEee.Objects.Combat
 			if (IsDisposed)
 				return;
 			Target = null;
-			The.ReferrableRepository.UnassignID(this);
+			The.ReferrableRepository.Remove(this);
 		}
 
 		public bool IsHostileTo(Empire emp)
