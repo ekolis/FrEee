@@ -20,6 +20,7 @@ using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Processes;
+using FrEee.Utility.Serialization;
 
 namespace FrEee;
 

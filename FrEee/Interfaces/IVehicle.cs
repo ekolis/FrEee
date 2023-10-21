@@ -1,6 +1,7 @@
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Utility;
+using FrEee.Utility.Serialization;
 using System.Collections.Generic;
 
 namespace FrEee.Interfaces

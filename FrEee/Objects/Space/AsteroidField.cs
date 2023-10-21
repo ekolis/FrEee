@@ -5,6 +5,7 @@ using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
+using FrEee.Utility.Serialization;
 
 namespace FrEee.Objects.Space
 {

@@ -4,7 +4,7 @@ using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 
-namespace FrEee.Utility
+namespace FrEee.Utility.Serialization
 {
 	// XXX: Just use this class as a temporary holder for links between IDs and objects; add a [SerializeAsGameID] attribute to replace all the duplicated properties
 	/// <summary>
@@ -128,7 +128,7 @@ namespace FrEee.Utility
 		public static implicit operator T?(GameReference<T>? r)
 		{
 			if (r == null)
-				return default(T);
+				return default;
 			return r.Value;
 		}
 

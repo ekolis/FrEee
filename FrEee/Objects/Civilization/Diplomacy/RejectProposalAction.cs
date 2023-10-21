@@ -2,6 +2,7 @@
 using FrEee.Objects.LogMessages;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Utility.Serialization;
 using System.Collections.Generic;
 
 namespace FrEee.Objects.Civilization.Diplomacy

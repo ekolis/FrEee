@@ -8,6 +8,7 @@ using FrEee.Utility.Extensions;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using FrEee.Utility.Serialization;
 
 namespace FrEee.Objects.Civilization.Diplomacy
 {

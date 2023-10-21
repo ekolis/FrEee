@@ -1,4 +1,5 @@
 using FrEee.Utility;
+using FrEee.Utility.Serialization;
 using System.Linq;
 
 namespace FrEee.Modding

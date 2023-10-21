@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using FrEee.Utility.Serialization;
 
 namespace FrEee.Objects.Technology
 {

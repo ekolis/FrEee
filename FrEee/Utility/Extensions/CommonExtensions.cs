@@ -21,6 +21,7 @@ using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
+using FrEee.Utility.Serialization;
 
 namespace FrEee.Utility.Extensions
 {

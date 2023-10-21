@@ -4,6 +4,7 @@ using FrEee.Objects.Space;
 using FrEee.Objects.Civilization;
 using FrEee.Utility;
 using System.Collections.Generic;
+using FrEee.Utility.Serialization;
 
 namespace FrEee.Objects.Civilization.Diplomacy.Clauses
 {

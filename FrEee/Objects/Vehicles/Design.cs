@@ -16,6 +16,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
+using FrEee.Utility.Serialization;
 
 namespace FrEee.Objects.Vehicles
 {

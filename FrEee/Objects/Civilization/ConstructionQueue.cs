@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Orders;
 using FrEee.Objects.Space;
@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using FrEee.Utility.Serialization;
 
 namespace FrEee.Objects.Civilization
 {

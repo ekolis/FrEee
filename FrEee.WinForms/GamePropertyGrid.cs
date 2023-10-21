@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using FrEee.Utility.Serialization;
 
 namespace FrEee.WinForms
 {

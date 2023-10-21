@@ -3,6 +3,7 @@ using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Utility.Serialization;
 using System;
 using System.Linq;
 

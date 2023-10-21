@@ -6,6 +6,7 @@ using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Utility.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;

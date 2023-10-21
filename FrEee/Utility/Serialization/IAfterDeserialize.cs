@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrEee.Utility
+namespace FrEee.Utility.Serialization
 {
 	/// <summary>
 	/// Something that performs an action after being deserialized.
