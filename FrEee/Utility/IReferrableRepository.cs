@@ -19,5 +19,7 @@ namespace FrEee.Utility
 		bool Remove(IReferrable r);
 
 		bool Remove(long id);
+
+		IReferrable this[long id] { get; }
 	}
 }

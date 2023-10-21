@@ -227,8 +227,33 @@ public class ReferrableRepository<T>
 	public T2? GetReferrable<T2>(long id)
 		where T2 : T
 	{
-		// TODO: check sub-repositories of derived types too
-		return GetSubrepository<T2>().GetReferrable(id);
+		if (typeof(T2).IsSealed)
+		{
+			return GetSubrepository<T2>().GetReferrable(id);
+		}
+		else
+		{
+			if (!typeof(T2).IsAbstract && !typeof(T2).IsInterface)
+			{
+				var r = GetSubrepository<T2>()[id];
+				if (r is not null)
+				{
+					return r;
+				}
+			}
+			foreach (var subrepo in Subrepositories)
+			{
+				if (typeof(T2) != subrepo.ReferrableType && typeof(T2).IsAssignableFrom(subrepo.ReferrableType))
+				{
+					var r = subrepo[id];
+					if (r is not null)
+					{
+						return (T2)r;
+					}
+				}
+			}
+			return default;
+		}
 	}
 
 	/// <summary>
@@ -284,4 +309,6 @@ public class ReferrableRepository<T>
 	{
 		return Remove((T)r);
 	}
+
+	IReferrable IReferrableRepository.this[long id] => this[id];
 }
