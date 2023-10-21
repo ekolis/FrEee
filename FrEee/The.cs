@@ -34,6 +34,7 @@ public static class The
 
 	public static GameSetup Setup => Game.Setup;
 
+	// XXX: why is this null when loading a player GAM file? could it be related to the null colony containers?
 	public static ReferrableRepository ReferrableRepository => Game.ReferrableRepository;
 
 	public static Galaxy Galaxy => Game.Galaxy;

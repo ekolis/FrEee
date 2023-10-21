@@ -212,6 +212,7 @@ public class TurnProcessor
 			status.Message = "Generating resources";
 
 		// resource generation 1: colony income
+		// XXX: why is the planet's colony's container null, it should be the planet!
 		Galaxy.FindSpaceObjects<Planet>().Where(x => !x.IsMemory).Select(p => p.Colony).ExceptSingle(null).SafeForeach(q => ProcessColonyIncome(q));
 
 		// resource generation 2: remote mining

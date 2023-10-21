@@ -99,7 +99,7 @@ public class Game : IAfterDeserialize
 	/// <summary>
 	/// Is this a single-player game?
 	/// </summary>
-	public bool IsSinglePlayer { get; set; } // TODO: actually let this be chaged mid-game?
+	public bool IsSinglePlayer { get; set; } // TODO: actually let this be changed mid-game?
 
 	/// <summary>
 	/// The empires participating in the game.
@@ -137,7 +137,7 @@ public class Game : IAfterDeserialize
 	/// <summary>
 	/// Any referrable objects in the game, keyed by ID.
 	/// </summary>
-		[SerializationPriority(2)]
+	[SerializationPriority(2)]
 	public ReferrableRepository ReferrableRepository { get; private set; } = new ReferrableRepository();
 
 	/// <summary>

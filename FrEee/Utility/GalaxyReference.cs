@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 namespace FrEee.Utility
 {
+	// XXX: change references to galaxy in here to game
 	/// <summary>
 	/// A lightweight reference to some object in the current galaxy.
 	/// Can be passed around on the network as a surrogate for said object.
