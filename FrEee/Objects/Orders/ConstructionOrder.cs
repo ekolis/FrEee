@@ -92,7 +92,7 @@ namespace FrEee.Objects.Orders
 				if (value is IModObject mo)
 					template = GetModReference<TTemplate>(mo.ReferViaMod().ID);
 				else if (value is IReferrable r)
-					template = new GalaxyReference<TTemplate>(r.ReferViaGalaxy().ID);
+					template = new GameReference<TTemplate>(r.ReferViaGalaxy().ID);
 				else if (value == null)
 					template = null;
 				else
@@ -118,7 +118,7 @@ namespace FrEee.Objects.Orders
 			set;
 		}
 
-		private GalaxyReference<Empire> owner { get; set; }
+		private GameReference<Empire> owner { get; set; }
 		private IReference<TTemplate> template { get; set; }
 
 		public bool CheckCompletion(IOrderable q)

@@ -69,7 +69,7 @@ namespace FrEee.Objects.Orders
 		[DoNotSerialize]
 		public LogMessage PathfindingError { get; private set; }
 
-		private GalaxyReference<Empire> owner { get; set; }
+		private GameReference<Empire> owner { get; set; }
 
 		public bool CheckCompletion(IOrderable v)
 		{

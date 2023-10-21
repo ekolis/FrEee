@@ -21,9 +21,9 @@ namespace FrEee.Objects.Combat.Grid
 		}
 		public bool IsHit { get; set; }
 
-		private GalaxyReference<ICombatant> attacker { get; set; }
+		private GameReference<ICombatant> attacker { get; set; }
 
-		private GalaxyReference<ICombatant> target { get; set; }
+		private GameReference<ICombatant> target { get; set; }
 
 		[DoNotSerialize]
 		public ICombatant Attacker

@@ -7,7 +7,7 @@ using FrEee.Utility.Extensions;
 
 namespace FrEee.Utility
 {
-	public class GalaxyReferenceList<T> : ReferenceList<GalaxyReference<T>, T>
+	public class GalaxyReferenceList<T> : ReferenceList<GameReference<T>, T>
 		where T : IReferrable
 	{
 	}

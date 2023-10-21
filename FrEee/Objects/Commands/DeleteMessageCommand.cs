@@ -19,7 +19,7 @@ namespace FrEee.Objects.Commands
 
 		public IMessage Message { get { return message.Value; } set { message = value.ReferViaGalaxy(); } }
 
-		private GalaxyReference<IMessage> message { get; set; }
+		private GameReference<IMessage> message { get; set; }
 
 		public override void Execute()
 		{

@@ -68,7 +68,7 @@ namespace FrEee.Objects.Combat
 			}
 		}
 
-		private GalaxyReference<IDamageableReferrable> target { get; set; }
+		private GameReference<IDamageableReferrable> target { get; set; }
 
 		private IDamageable _target { get; set; }
 	}

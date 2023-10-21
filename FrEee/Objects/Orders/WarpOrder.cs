@@ -63,8 +63,8 @@ namespace FrEee.Objects.Orders
 		[DoNotSerialize]
 		public WarpPoint WarpPoint { get { return warpPoint; } set { warpPoint = value; } }
 
-		private GalaxyReference<Empire> owner { get; set; }
-		private GalaxyReference<WarpPoint> warpPoint { get; set; }
+		private GameReference<Empire> owner { get; set; }
+		private GameReference<WarpPoint> warpPoint { get; set; }
 
 		public bool CheckCompletion(IOrderable v)
 		{

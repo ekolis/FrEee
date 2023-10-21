@@ -219,6 +219,19 @@ public class ReferrableRepository<T>
 	}
 
 	/// <summary>
+	/// Finds a referrable of a specific type.
+	/// </summary>
+	/// <typeparam name="T2">The referrable's type.</typeparam>
+	/// <param name="id">The referrable's ID.</param>
+	/// <returns></returns>
+	public T2? GetReferrable<T2>(long id)
+		where T2 : T
+	{
+		// TODO: check sub-repositories of derived types too
+		return GetSubrepository<T2>().GetReferrable(id);
+	}
+
+	/// <summary>
 	/// Finds the real version of a fake referrable.
 	/// </summary>
 	/// <typeparam name="T2"></typeparam>
@@ -227,7 +240,7 @@ public class ReferrableRepository<T>
 	public T2? GetReferrable<T2>(T2 fakeobj)
 		where T2 : T
 	{
-		return (T2)GetReferrable(fakeobj.ID);
+		return GetReferrable<T2>(fakeobj.ID);
 	}
 
 	public bool ContainsKey(long key)

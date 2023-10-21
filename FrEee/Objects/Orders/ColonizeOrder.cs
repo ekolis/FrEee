@@ -52,8 +52,8 @@ namespace FrEee.Objects.Orders
 		[DoNotSerialize]
 		public Planet Planet { get { return planet; } set { planet = value; } }
 
-		private GalaxyReference<Empire> owner { get; set; }
-		private GalaxyReference<Planet> planet { get; set; }
+		private GameReference<Empire> owner { get; set; }
+		private GameReference<Planet> planet { get; set; }
 
 		public bool CheckCompletion(IOrderable v)
 		{

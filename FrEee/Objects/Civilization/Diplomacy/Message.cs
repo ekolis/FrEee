@@ -87,9 +87,9 @@ namespace FrEee.Objects.Civilization.Diplomacy
 
 		public int TurnNumber { get; set; }
 
-		private GalaxyReference<Empire> owner { get; set; }
+		private GameReference<Empire> owner { get; set; }
 
-		private GalaxyReference<Empire> recipient { get; set; }
+		private GameReference<Empire> recipient { get; set; }
 
 		public Visibility CheckVisibility(Empire emp)
 		{

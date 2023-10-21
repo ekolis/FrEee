@@ -47,7 +47,7 @@ namespace FrEee.Objects.Orders
 		[DoNotSerialize]
 		public Empire Owner { get { return owner; } set { owner = value; } }
 
-		private GalaxyReference<Empire> owner { get; set; }
+		private GameReference<Empire> owner { get; set; }
 
 		public bool CheckCompletion(IOrderable executor)
 		{

@@ -17,7 +17,7 @@ namespace FrEee.Objects.Technology
 	{
 		public ComponentReference(long vehicleID, int componentIndex)
 		{
-			vehicle = new GalaxyReference<IVehicle>(vehicleID);
+			vehicle = new GameReference<IVehicle>(vehicleID);
 			ComponentIndex = ComponentIndex;
 		}
 
@@ -39,7 +39,7 @@ namespace FrEee.Objects.Technology
 
 		}
 
-		private GalaxyReference<IVehicle> vehicle { get; set; }
+		private GameReference<IVehicle> vehicle { get; set; }
 
 		[DoNotSerialize(false)]
 		public IVehicle Vehicle

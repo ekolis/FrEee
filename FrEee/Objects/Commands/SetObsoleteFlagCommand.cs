@@ -46,7 +46,7 @@ namespace FrEee.Objects.Commands
 			}
 		}
 
-		private GalaxyReference<IDesign> design { get; set; }
+		private GameReference<IDesign> design { get; set; }
 
 		public override void Execute()
 		{

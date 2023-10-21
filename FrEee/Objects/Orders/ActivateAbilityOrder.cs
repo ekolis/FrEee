@@ -73,10 +73,10 @@ namespace FrEee.Objects.Orders
 		[DoNotSerialize]
 		public IReferrable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
 
-		private GalaxyReference<Ability> ability { get; set; }
-		private GalaxyReference<Empire> owner { get; set; }
-		private GalaxyReference<IReferrableAbilityObject> source { get; set; }
-		private GalaxyReference<IReferrable> target { get; set; }
+		private GameReference<Ability> ability { get; set; }
+		private GameReference<Empire> owner { get; set; }
+		private GameReference<IReferrableAbilityObject> source { get; set; }
+		private GameReference<IReferrable> target { get; set; }
 
 		public bool CheckCompletion(IOrderable executor)
 		{

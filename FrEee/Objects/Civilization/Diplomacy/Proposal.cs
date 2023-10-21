@@ -91,7 +91,7 @@ namespace FrEee.Objects.Civilization.Diplomacy
 			set;
 		}
 
-		private GalaxyReference<Empire> recipient { get; set; }
+		private GameReference<Empire> recipient { get; set; }
 
 		public Visibility CheckVisibility(Empire emp)
 		{

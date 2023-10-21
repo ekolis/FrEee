@@ -23,6 +23,6 @@ namespace FrEee.Objects.Civilization.Diplomacy
 		[DoNotSerialize]
 		public Empire Target { get { return target; } set { target = value; } }
 
-		private GalaxyReference<Empire> target { get; set; }
+		private GameReference<Empire> target { get; set; }
 	}
 }

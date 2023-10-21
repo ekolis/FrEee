@@ -45,7 +45,7 @@ namespace FrEee.Objects.Commands
 			}
 		}
 
-		private GalaxyReference<Fleet> fleet { get; set; }
+		private GameReference<Fleet> fleet { get; set; }
 
 		public override void Execute()
 		{

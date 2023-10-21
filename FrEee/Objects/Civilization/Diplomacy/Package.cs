@@ -110,8 +110,8 @@ namespace FrEee.Objects.Civilization.Diplomacy
 		public ISet<Clause> TreatyClauses { get; private set; }
 		public GalaxyReferenceSet<IVehicle> Vehicles { get; private set; }
 
-		private GalaxyReference<Empire> owner { get; set; }
-		private GalaxyReference<Empire> recipient { get; set; }
+		private GameReference<Empire> owner { get; set; }
+		private GameReference<Empire> recipient { get; set; }
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{

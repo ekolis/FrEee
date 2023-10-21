@@ -45,6 +45,6 @@ namespace FrEee.Objects.Civilization
 			}
 		}
 
-		private GalaxyReference<ISpaceObject> spaceObject { get; set; }
+		private GameReference<ISpaceObject> spaceObject { get; set; }
 	}
 }

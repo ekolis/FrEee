@@ -44,9 +44,9 @@ namespace FrEee.Objects.Commands
 			}
 		}
 
-		protected GalaxyReference<T> executor { get; set; }
+		protected GameReference<T> executor { get; set; }
 
-		private GalaxyReference<Empire> issuer { get; set; }
+		private GameReference<Empire> issuer { get; set; }
 
 		public abstract void Execute();
 

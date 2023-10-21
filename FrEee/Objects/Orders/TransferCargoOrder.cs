@@ -59,8 +59,8 @@ namespace FrEee.Objects.Orders
 		/// </summary>
 		private bool IsLoadOrder { get; set; }
 
-		private GalaxyReference<Empire> owner { get; set; }
-		private GalaxyReference<ICargoTransferrer> target { get; set; }
+		private GameReference<Empire> owner { get; set; }
+		private GameReference<ICargoTransferrer> target { get; set; }
 
 		public bool CheckCompletion(IOrderable v)
 		{

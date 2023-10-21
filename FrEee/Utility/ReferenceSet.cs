@@ -9,7 +9,7 @@ using System.Linq;
 namespace FrEee.Utility
 {
 	[Serializable]
-	public class GalaxyReferenceSet<T> : ReferenceSet<GalaxyReference<T>, T>
+	public class GalaxyReferenceSet<T> : ReferenceSet<GameReference<T>, T>
 		where T : IReferrable
 	{
 		public GalaxyReferenceSet()

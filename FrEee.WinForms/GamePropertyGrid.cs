@@ -172,7 +172,7 @@ namespace FrEee.WinForms
 				var pnl = MakeDropdownPanel(objs, obj, newModObjectHandler);
 				ctl = pnl;
 			}
-			else if (TypeMatch<GalaxyReference<IReferrable>>(objectType))
+			else if (TypeMatch<GameReference<IReferrable>>(objectType))
 			{
 				var objs = The.Game.Referrables.Where(r => objectType.GetGenericArguments()[0].IsAssignableFrom(r.GetType())).ToList();
 				objs.Insert(0, null);

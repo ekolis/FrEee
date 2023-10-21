@@ -70,8 +70,8 @@ namespace FrEee.Objects.Civilization.Diplomacy.Clauses
 			set;
 		}
 
-		private GalaxyReference<Empire> giver { get; set; }
-		private GalaxyReference<Empire> receiver { get; set; }
+		private GameReference<Empire> giver { get; set; }
+		private GameReference<Empire> receiver { get; set; }
 
 		public Visibility CheckVisibility(Empire emp)
 		{

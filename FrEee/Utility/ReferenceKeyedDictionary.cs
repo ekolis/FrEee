@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace FrEee.Utility
 {
-	public class GalaxyReferenceKeyedDictionary<TKey, TValue> : ReferenceKeyedDictionary<long, GalaxyReference<TKey>, TKey, TValue>
+	public class GalaxyReferenceKeyedDictionary<TKey, TValue> : ReferenceKeyedDictionary<long, GameReference<TKey>, TKey, TValue>
 			where TKey : IReferrable
 	{
 		private SafeDictionary<long, TKey> dict = new SafeDictionary<long, TKey>();

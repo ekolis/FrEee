@@ -6,7 +6,7 @@ using System;
 
 namespace FrEee.Utility
 {
-	public class GalaxyProgress<T> : Progress<GalaxyReference<T>, T>
+	public class GalaxyProgress<T> : Progress<GameReference<T>, T>
 		where T: IReferrable
 	{
 		public GalaxyProgress(T item, long value, long maximum, long incrementalProgressBeforeDelay = 0, double? delay = 0, long extraIncrementalProgressAfterDelay = 0)

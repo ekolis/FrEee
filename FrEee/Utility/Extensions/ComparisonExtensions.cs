@@ -1,4 +1,4 @@
-﻿using FrEee.Objects.Space;
+using FrEee.Objects.Space;
 using FrEee.Modding.Interfaces;
 using System;
 using System.Globalization;
@@ -79,6 +79,7 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="o"></param>
 		/// <returns></returns>
+		[Obsolete("Use o is null instead.")]
 		public static bool IsNull(this object o)
 		{
 			return o == null;
