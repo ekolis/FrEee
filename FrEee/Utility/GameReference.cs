@@ -29,7 +29,7 @@ namespace FrEee.Utility
 			if (The.Game.ReferrableRepository.ContainsKey(id))
 				return new GameReference<T>(id);
 
-			return null; 
+			return null;
 		}
 
 		public GameReference()
@@ -54,7 +54,7 @@ namespace FrEee.Utility
 				if (!HasValue)
 				{
 					The.ReferrableRepository.Add(r, r.ID);
-					cache = null; // reset cache
+					cache = new(() => t);
 					if (!HasValue)
 						throw new ArgumentException("{0} does not exist in the current game so it cannot be referenced.".F(t));
 				}
@@ -71,7 +71,7 @@ namespace FrEee.Utility
 			if (The.Game == null)
 				throw new ReferenceException<int, T>("Can't create a reference to an IReferrable without a game.");
 			else if (!The.ReferrableRepository.ContainsKey(id))
-				throw new IndexOutOfRangeException($"The id of {id} is not currently a valid reference"); 
+				throw new IndexOutOfRangeException($"The id of {id} is not currently a valid reference");
 			else if (The.ReferrableRepository[id] is T)
 				ID = id;
 			else
@@ -101,11 +101,11 @@ namespace FrEee.Utility
 		/// Resolves the reference.
 		/// </summary>
 		/// <returns></returns>
-		public T Value
+		public T? Value
 		{
 			get
 			{
-				if (cache == null)
+				if (cache is null)
 					InitializeCache();
 				return cache.Value;
 			}
@@ -115,7 +115,7 @@ namespace FrEee.Utility
 		private T value { get; set; }
 
 		[NonSerialized]
-		private ClientSideCache<T> cache;
+		private ClientSideCache<T>? cache = null;
 
 		public static implicit operator GameReference<T>?(T? t)
 		{

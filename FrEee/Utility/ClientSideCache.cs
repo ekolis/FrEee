@@ -1,4 +1,4 @@
-﻿using FrEee.Objects.Civilization;
+using FrEee.Objects.Civilization;
 using System;
 
 namespace FrEee.Utility
@@ -13,7 +13,7 @@ namespace FrEee.Utility
 		public ClientSideCache(Func<T> compute)
 		{
 			this.compute = compute;
-			IsDirty = true;
+			Dirty();
 		}
 
 		public bool IsCacheEnabled
@@ -26,6 +26,8 @@ namespace FrEee.Utility
 
 		public bool IsDirty { get; private set; }
 
+		public void Dirty() => IsDirty = true;
+
 		public bool IsServerSideCacheEnabled
 		{
 			get
@@ -36,7 +38,9 @@ namespace FrEee.Utility
 			{
 				isServerSideCacheEnabled = value;
 				if (!isServerSideCacheEnabled)
-					IsDirty = true;
+				{
+					Dirty();
+				}
 			}
 		}
 
