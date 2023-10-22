@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrEee.Utility.Serialization.Stringifiers
+namespace FrEee.Serialization.Stringifiers
 {
 	[Export(typeof(IStringifier))]
 	public class StringLiteralFormulaStringifier : Stringifier<LiteralFormula<string>>

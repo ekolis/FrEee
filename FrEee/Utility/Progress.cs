@@ -2,7 +2,7 @@
 using FrEee.Interfaces;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
-using FrEee.Utility.Serialization;
+using FrEee.Serialization;
 using System;
 
 namespace FrEee.Utility

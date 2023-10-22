@@ -1,4 +1,7 @@
-﻿namespace FrEee.Utility.Serialization
+﻿using FrEee.Utility;
+
+
+namespace FrEee.Serialization
 {
 	/// <summary>
 	/// Used for abstract classes that want to define serialization data without requiring inherited classes use said data.

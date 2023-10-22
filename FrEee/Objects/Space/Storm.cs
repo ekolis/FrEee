@@ -2,8 +2,8 @@ using FrEee.Enumerations;
 using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
+using FrEee.Serialization;
 using FrEee.Utility;
-using FrEee.Utility.Serialization;
 using System;
 
 namespace FrEee.Objects.Space

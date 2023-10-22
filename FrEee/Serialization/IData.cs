@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace FrEee.Utility.Serialization
+namespace FrEee.Serialization
 {
 	/// <summary>
 	/// Either a data object, or a scalar.

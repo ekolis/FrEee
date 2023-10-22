@@ -8,8 +8,8 @@ using FrEee.Modding;
 using FrEee.Utility;
 using System.Collections.Generic;
 using System.Linq;
-using FrEee.Utility.Serialization;
 using FrEee.Extensions;
+using FrEee.Serialization;
 
 namespace FrEee.Objects.Orders
 {

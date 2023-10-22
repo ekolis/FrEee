@@ -1,7 +1,8 @@
 using FrEee.Extensions;
 using FrEee.Interfaces;
+using FrEee.Serialization;
 using FrEee.Utility;
-using FrEee.Utility.Serialization;
+
 using FrEee.WinForms.Interfaces;
 using FrEee.WinForms.Utility.Extensions;
 using System;

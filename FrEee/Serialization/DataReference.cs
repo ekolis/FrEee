@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
-namespace FrEee.Utility.Serialization
+namespace FrEee.Serialization
 {
 	[Serializable]
 	public class DataReference<T> : IDataReference, IReference<T>

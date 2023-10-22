@@ -5,7 +5,7 @@ using FrEee.Interfaces;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 
-namespace FrEee.Utility.Serialization
+namespace FrEee.Serialization
 {
 	public class GalaxyReferenceList<T> : ReferenceList<GameReference<T>, T>
 		where T : IReferrable

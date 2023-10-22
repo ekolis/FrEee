@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FrEee.Utility.Serialization
+namespace FrEee.Serialization
 {
 	public class JsonSerializer
 	{

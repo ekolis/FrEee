@@ -1,7 +1,7 @@
 using FrEee.Interfaces;
 using FrEee.Objects.Technology;
+using FrEee.Serialization;
 using FrEee.Utility;
-using FrEee.Utility.Serialization;
 using System;
 using System.Collections;
 using System.Collections.Generic;

@@ -2,8 +2,8 @@
 using FrEee.Objects.Technology;
 using FrEee.Objects.Combat;
 using FrEee.Utility;
-using FrEee.Utility.Serialization;
 using FrEee.Extensions;
+using FrEee.Serialization;
 
 namespace FrEee.Objects.Combat.Grid
 {

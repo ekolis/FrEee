@@ -2,8 +2,8 @@
 using FrEee.Interfaces;
 using FrEee.Objects.Orders;
 using FrEee.Objects.Space;
+using FrEee.Serialization;
 using FrEee.Utility;
-using FrEee.Utility.Serialization;
 using System.Collections.Generic;
 using System.Linq;
 

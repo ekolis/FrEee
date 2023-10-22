@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using FrEee.Utility;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrEee.Utility.Serialization
+namespace FrEee.Serialization
 {
 	public class JsonContractResolver : DefaultContractResolver
 	{

@@ -1,8 +1,8 @@
 ﻿using FrEee.Objects.Civilization;
 using FrEee.Extensions;
-using FrEee.Utility.Serialization;
 using System.Linq;
 using Tech = FrEee.Objects.Technology.Technology;
+using FrEee.Serialization;
 
 namespace FrEee.Objects.Commands
 {

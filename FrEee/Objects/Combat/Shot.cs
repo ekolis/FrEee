@@ -4,8 +4,8 @@ using FrEee.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
-using FrEee.Utility.Serialization;
 using FrEee.Extensions;
+using FrEee.Serialization;
 
 namespace FrEee.Objects.Combat
 {

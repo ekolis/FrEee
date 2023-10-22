@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrEee.Utility.Serialization.Stringifiers
+namespace FrEee.Serialization.Stringifiers
 {
 	public interface IStringifier
 	{

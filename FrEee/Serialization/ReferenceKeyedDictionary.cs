@@ -6,8 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Extensions;
+using FrEee.Utility;
 
-namespace FrEee.Utility.Serialization
+namespace FrEee.Serialization
 {
 	public class GalaxyReferenceKeyedDictionary<TKey, TValue> : ReferenceKeyedDictionary<long, GameReference<TKey>, TKey, TValue>
 			where TKey : IReferrable

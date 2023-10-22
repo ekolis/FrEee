@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using FrEee.Extensions;
 using FrEee.Interfaces;
+using FrEee.Serialization;
 using FrEee.Utility;
-using FrEee.Utility.Serialization;
 
 namespace FrEee.Objects.Technology
 {

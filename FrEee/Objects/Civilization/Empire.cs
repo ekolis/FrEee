@@ -19,8 +19,9 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Tech = FrEee.Objects.Technology.Technology;
-using FrEee.Utility.Serialization;
+
 using FrEee.Extensions;
+using FrEee.Serialization;
 
 namespace FrEee.Objects.Civilization
 {

@@ -1,7 +1,8 @@
 using FrEee.Extensions;
 using FrEee.Objects.Space;
+using FrEee.Serialization;
 using FrEee.Utility;
-using FrEee.Utility.Serialization;
+
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,5 @@
 ﻿using FrEee.Extensions;
+using FrEee.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace FrEee.Utility.Serialization
+namespace FrEee.Serialization
 {
 	/// <summary>
 	/// Prevents an property or class's value from being copied when the containing object is copied.
@@ -130,11 +131,11 @@ namespace FrEee.Utility.Serialization
 					var newprops = t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(f =>
 						type.IsGenericType && type.GetGenericTypeDefinition() == typeof(KeyValuePair<,>)
 						||
-						
+
 							// hopefully put "quicker to check" and "easier to fail" conditions up top
 							f.GetIndexParameters().Length == 0 // we don't support indexed properties
 							&& f.GetGetMethod(true) != null && f.GetSetMethod(true) != null
-						
+
 					);
 					foreach (var prop in newprops)
 						props.Add(prop, i);

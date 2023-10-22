@@ -1,4 +1,5 @@
 ﻿using FrEee.Modding;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrEee.Utility.Serialization.Stringifiers
+namespace FrEee.Serialization.Stringifiers
 {
 	[Export(typeof(IStringifier))]
 	public class ResourceQuantityStringifier : Stringifier<ResourceQuantity>

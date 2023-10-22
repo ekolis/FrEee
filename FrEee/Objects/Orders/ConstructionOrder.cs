@@ -11,8 +11,8 @@ using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
-using FrEee.Utility.Serialization;
 using FrEee.Extensions;
+using FrEee.Serialization;
 
 namespace FrEee.Objects.Orders
 {

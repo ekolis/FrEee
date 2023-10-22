@@ -1,8 +1,8 @@
 ﻿using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.LogMessages;
+using FrEee.Serialization;
 using FrEee.Utility;
-using FrEee.Utility.Serialization;
 using System.Collections.Generic;
 
 namespace FrEee.Objects.Civilization.Diplomacy

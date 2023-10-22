@@ -8,8 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tech = FrEee.Objects.Technology.Technology;
-using FrEee.Utility.Serialization;
 using FrEee.Extensions;
+using FrEee.Serialization;
 
 namespace FrEee.Objects.Civilization.Diplomacy
 {

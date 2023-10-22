@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using FrEee.Utility.Serialization;
+
 using FrEee.Extensions;
+using FrEee.Serialization;
 
 namespace FrEee.WinForms
 {

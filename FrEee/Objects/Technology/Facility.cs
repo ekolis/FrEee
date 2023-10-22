@@ -12,8 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using FrEee.Utility.Serialization;
 using FrEee.Extensions;
+using FrEee.Serialization;
 
 namespace FrEee.Objects.Technology
 {

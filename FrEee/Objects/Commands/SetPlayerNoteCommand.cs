@@ -1,8 +1,8 @@
 ﻿using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
+using FrEee.Serialization;
 using FrEee.Utility;
-using FrEee.Utility.Serialization;
 
 namespace FrEee.Objects.Commands
 {

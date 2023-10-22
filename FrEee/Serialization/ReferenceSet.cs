@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FrEee.Utility.Serialization
+namespace FrEee.Serialization
 {
 	[Serializable]
 	public class GalaxyReferenceSet<T> : ReferenceSet<GameReference<T>, T>

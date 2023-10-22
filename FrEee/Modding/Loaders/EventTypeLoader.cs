@@ -1,9 +1,9 @@
 ﻿using FrEee.Interfaces;
 using FrEee.Modding.Interfaces;
 using FrEee.Extensions;
-using FrEee.Utility.Serialization;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Serialization;
 
 namespace FrEee.Modding.Loaders
 {

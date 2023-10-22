@@ -1,9 +1,10 @@
 ﻿using FrEee.Extensions;
+using FrEee.Utility;
 using Newtonsoft.Json;
 using System;
 using System.Globalization;
 
-namespace FrEee.Utility.Serialization
+namespace FrEee.Serialization
 {
 	public static class DataScalar
 	{

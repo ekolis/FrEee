@@ -1,10 +1,11 @@
 using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Space;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 
-namespace FrEee.Utility.Serialization
+namespace FrEee.Serialization
 {
 	// XXX: Just use this class as a temporary holder for links between IDs and objects; add a [SerializeAsGameID] attribute to replace all the duplicated properties
 	/// <summary>

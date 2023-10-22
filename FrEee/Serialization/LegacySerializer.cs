@@ -1,7 +1,8 @@
 using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
-using FrEee.Utility.Serialization.Stringifiers;
+using FrEee.Serialization.Stringifiers;
+using FrEee.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace FrEee.Utility.Serialization
+namespace FrEee.Serialization
 {
 	internal static class LegacySerializer
 	{

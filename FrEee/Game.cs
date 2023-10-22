@@ -19,8 +19,9 @@ using FrEee.Setup;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Processes;
-using FrEee.Utility.Serialization;
+
 using FrEee.Extensions;
+using FrEee.Serialization;
 
 namespace FrEee;
 
