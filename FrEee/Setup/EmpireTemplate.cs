@@ -23,6 +23,7 @@ namespace FrEee.Setup
 		/// <summary>
 		/// The name of the AI used by this empire.
 		/// </summary>
+		// XXX: make this a mod referenced AI
 		public string AIName { get; set; }
 
 		/// <summary>
