@@ -1,5 +1,7 @@
 using FrEee.Extensions;
 using FrEee.Interfaces;
+using FrEee.Modding;
+using FrEee.Modding.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Serialization.Stringifiers;
 using FrEee.Utility;
@@ -732,6 +734,12 @@ namespace FrEee.Serialization
 				// temporarily until after deserialize actions run
 				o = null;
 			}
+			else if (fin == 'm')
+			{
+				// ID - need to find known mod object
+				var modID = r.ReadToEndOfLine(';', log);
+				o = DeserializeModReference(context, modID, type);
+			}
 			else if (fin == 'n')
 			{
 				// null object!
@@ -781,6 +789,17 @@ namespace FrEee.Serialization
 			var result = repo[id];
 			if (result is null)
 				throw new SerializationException("No known object of type " + type + " has a game ID of " + id + ".");
+
+			// found it!
+			return result;
+		}
+
+		private static object DeserializeModReference(ObjectGraphContext context, string modID, Type type)
+		{
+			// do we have it?
+			var result = new ModReference<IModObject>(modID).Value;
+			if (result is null)
+				throw new SerializationException("No known object of type " + type + " has a mod ID of " + modID + ".");
 
 			// found it!
 			return result;
@@ -947,6 +966,10 @@ namespace FrEee.Serialization
 						{
 							WriteGameReferenceProperty(w, o, prop.Name, (IReferrable)val, tabLevel + 1);
 						}
+						else if (prop.HasAttribute<ModReferenceAttribute>())
+						{
+							WriteModReferenceProperty(w, o, prop.Name, (IModObject)val, tabLevel + 1);
+						}
 						else
 						{
 							var ptype = prop.PropertyType;
@@ -973,6 +996,10 @@ namespace FrEee.Serialization
 					if (p.HasAttribute<GameReferenceAttribute>())
 					{
 						WriteGameReferenceProperty(w, o, p.Name, (IReferrable)context.GetObjectProperty(o, p), tabLevel + 1);
+					}
+					else if (p.HasAttribute<ModReferenceAttribute>())
+					{
+						WriteModReferenceProperty(w, o, p.Name, (IModObject)context.GetObjectProperty(o, p), tabLevel + 1);
 					}
 					else
 					{
@@ -1062,7 +1089,30 @@ namespace FrEee.Serialization
 			}
 			catch (Exception ex)
 			{
-				throw new SerializationException("Could not serialize reference property " + pname + " of " + o + ": " + ex.Message, ex);
+				throw new SerializationException("Could not serialize game reference property " + pname + " of " + o + ": " + ex.Message, ex);
+			}
+		}
+
+		private static void WriteModReferenceProperty(TextWriter w, object o, string pname, IModObject mo, int tabLevel)
+		{
+			var tabs = new string('\t', tabLevel);
+			var moreTabs = new string('\t', tabLevel + 1);
+
+			// serialize property name and ID
+			try
+			{
+				w.Write(tabs);
+				w.Write(pname);
+				w.Write(":\n");
+				w.Write(moreTabs); ;
+				w.Write(":m");
+				w.Write(mo.ModID);
+				w.Write(";");
+				w.Write("\n");
+			}
+			catch (Exception ex)
+			{
+				throw new SerializationException("Could not serialize mod reference property " + pname + " of " + o + ": " + ex.Message, ex);
 			}
 		}
 	}

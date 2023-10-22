@@ -165,7 +165,7 @@ namespace FrEee.WinForms.Forms
 			spnStartResearch.Value = setup.StartingResearch;
 			spnHomeworlds.Value = setup.HomeworldsPerEmpire;
 			var sizes = ddlHomeworldSize.Items.Cast<StellarObjectSize>();
-			ddlHomeworldSize.SelectedIndex = sizes.IndexOf(sizes.Single(q => q.ModID == setup.HomeworldSize.ModID));
+			ddlHomeworldSize.SelectedIndex = sizes.IndexOf(sizes.SingleOrDefault(q => q.ModID == setup.HomeworldSize?.ModID));
 			ddlEmpirePlacement.SelectedIndex = (int)setup.EmpirePlacement;
 			spnMaxDispersion.Value = setup.MaxHomeworldDispersion;
 			ddlScoreDisplay.SelectedIndex = (int)Enum.GetValues(typeof(ScoreDisplay)).Cast<ScoreDisplay>().IndexOf(setup.ScoreDisplay);

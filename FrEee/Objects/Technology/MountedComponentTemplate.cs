@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using FrEee.Extensions;
+using FrEee.Serialization;
 
 namespace FrEee.Objects.Technology
 {
@@ -96,8 +97,8 @@ namespace FrEee.Objects.Technology
 		/// <summary>
 		/// The component template used.
 		/// </summary>
-		[DoNotSerialize]
-		public ComponentTemplate ComponentTemplate { get { return componentTemplate; } set { componentTemplate = value; } }
+		[ModReference]
+		public ComponentTemplate ComponentTemplate { get; set; }
 
 		/// <summary>
 		/// The design which contains this mounted component template.
@@ -176,9 +177,9 @@ namespace FrEee.Objects.Technology
 		}
 
 		/// <summary>
-		/// Does this template have valid component and mount templates? (Or a null mount template)
+		/// Does this template have a component template?
 		/// </summary>
-		public bool IsValidInMod => componentTemplate.HasValue && (mount == null || mount.HasValue);
+		public bool IsValidInMod => ComponentTemplate is not null;
 
 		public MountedComponentTemplate LatestVersion
 		{
@@ -194,8 +195,8 @@ namespace FrEee.Objects.Technology
 		/// <summary>
 		/// The mount used.
 		/// </summary>
-		[DoNotSerialize]
-		public Mount? Mount { get { return mount; } set { mount = value; } }
+		[ModReference]
+		public Mount? Mount { get; set; }
 
 		/// <summary>
 		/// The name of the component, prefixed with the short name of the mount (if any).
@@ -332,9 +333,6 @@ namespace FrEee.Objects.Technology
 			}
 		}
 
-		private ModReference<ComponentTemplate> componentTemplate { get; set; }
-		private ModReference<Mount> mount { get; set; }
-
 		public static bool operator !=(MountedComponentTemplate t1, MountedComponentTemplate t2)
 		{
 			return !(t1 == t2);
@@ -346,7 +344,7 @@ namespace FrEee.Objects.Technology
 				return true;
 			if (t1.IsNull() || t2.IsNull())
 				return false;
-			return t1.Container == t2.Container && t1.ComponentTemplate == t2.ComponentTemplate && t1.mount == t2.mount;
+			return t1.Container == t2.Container && t1.ComponentTemplate == t2.ComponentTemplate && t1.Mount == t2.Mount;
 		}
 
 		public override bool Equals(object obj)

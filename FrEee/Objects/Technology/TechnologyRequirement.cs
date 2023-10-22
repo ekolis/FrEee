@@ -3,6 +3,7 @@ using FrEee.Objects.Civilization;
 using FrEee.Modding;
 using FrEee.Utility;
 using System;
+using FrEee.Serialization;
 
 namespace FrEee.Objects.Technology
 {
@@ -42,13 +43,12 @@ namespace FrEee.Objects.Technology
 		/// </summary>
 		public Formula<int> Level { get; set; }
 
-		private ModReference<Technology> technology { get; set; }
-
 		/// <summary>
 		/// The technology to be researched.
 		/// </summary>
-		[DoNotSerialize(false)]
-		public Technology Technology { get => technology; set => technology = value; }
+		[ModReference]
+		[DoNotCopy(false)]
+		public Technology Technology { get; set; }
 
 		/// <summary>
 		/// Is this technology requirement met by a particular empire?

@@ -5,6 +5,7 @@ using FrEee.Utility;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Extensions;
+using FrEee.Serialization;
 
 namespace FrEee.Objects.Technology
 {
@@ -61,24 +62,21 @@ namespace FrEee.Objects.Technology
 			}
 		}
 
-		[DoNotSerialize]
-		public FacilityTemplate New { get { return nu; } private set { nu = value; } }
+		[ModReference]
+		public FacilityTemplate New { get; set; }
 
 		public IEnumerable<FacilityUpgrade> NewerVersions
 		{
 			get { return The.Galaxy.FindSpaceObjects<IConstructor>().Select(o => o.ConstructionQueue).ExceptSingle(null).SelectMany(q => q.Orders).Select(o => o.Item).OfType<FacilityUpgrade>().Where(u => u.New.UpgradesTo(New)); }
 		}
 
-		[DoNotSerialize]
-		public FacilityTemplate Old { get { return old; } private set { old = value; } }
+		[ModReference]
+		public FacilityTemplate Old { get; set; }
 
 		public IEnumerable<FacilityUpgrade> OlderVersions
 		{
 			get { return The.Galaxy.FindSpaceObjects<IConstructor>().Select(o => o.ConstructionQueue).ExceptSingle(null).SelectMany(q => q.Orders).Select(o => o.Item).OfType<FacilityUpgrade>().Where(u => New.UpgradesTo(u.New)); }
 		}
-
-		private ModReference<FacilityTemplate> nu { get; set; }
-		private ModReference<FacilityTemplate> old { get; set; }
 
 		public static bool operator !=(FacilityUpgrade x, FacilityUpgrade y)
 		{
@@ -110,8 +108,6 @@ namespace FrEee.Objects.Technology
 			if (!done.Contains(this))
 			{
 				done.Add(this);
-				old.ReplaceClientIDs(idmap, done);
-				nu.ReplaceClientIDs(idmap, done);
 			}
 		}
 

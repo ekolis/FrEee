@@ -42,7 +42,7 @@ namespace FrEee.Objects.Space
 			get
 			{
 				var dict = base.Data;
-				dict[nameof(size)] = size;
+				dict[nameof(Size)] = Size;
 				dict[nameof(Surface)] = Surface;
 				dict[nameof(Atmosphere)] = Atmosphere;
 				dict[nameof(CombatTile)] = CombatTile;
@@ -52,7 +52,7 @@ namespace FrEee.Objects.Space
 			set
 			{
 				base.Data = value;
-				size = value[nameof(size)].Default<ModReference<StellarObjectSize>>();
+				Size = value[nameof(Size)].Default<StellarObjectSize>();
 				Surface = value[nameof(Surface)].Default<string>();
 				Atmosphere = value[nameof(Atmosphere)].Default<string>();
 				CombatTile = value[nameof(CombatTile)].Default<string>();
@@ -83,15 +83,13 @@ namespace FrEee.Objects.Space
 		/// <summary>
 		/// The PlanetSize.txt entry for this asteroid field's size.
 		/// </summary>
-		[DoNotSerialize]
-		public StellarObjectSize Size { get { return size; } set { size = value; } }
+		[ModReference]
+		public StellarObjectSize Size { get; set; }
 
 		/// <summary>
 		/// The surface composition (e.g. rock, ice, gas) of this asteroid field.
 		/// </summary>
 		public string Surface { get; set; }
-
-		private ModReference<StellarObjectSize> size { get; set; }
 
 		/// <summary>
 		/// Just copy the asteroid field's data.

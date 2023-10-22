@@ -219,8 +219,8 @@ namespace FrEee.Objects.Vehicles
 		/// <summary>
 		/// The hull used in this design.
 		/// </summary>
-		[DoNotSerialize]
-		public IHull<T> Hull { get { return hull == null ? null : hull.Value; } set { hull = new ModReference<IHull<T>>(value); } }
+		[ModReference]
+		public IHull<T> Hull { get; set; }
 
 		public int HullHitpoints
 		{
@@ -299,7 +299,10 @@ namespace FrEee.Objects.Vehicles
 		/// </summary>
 		public bool IsObsolete { get; set; }
 
-		public bool IsValidInMod => hull.HasValue && Components.All(q => q.IsValidInMod);
+		/// <summary>
+		/// Does this design have a hull and valid components?
+		/// </summary>
+		public bool IsValidInMod => Hull is not null && Components.All(q => q.IsValidInMod);
 
 		public int Iteration { get; set; }
 
@@ -660,8 +663,6 @@ namespace FrEee.Objects.Vehicles
 				}
 			}
 		}
-
-		private ModReference<IHull<T>> hull { get; set; }
 
 		public void AddComponent(ComponentTemplate ct, Mount m = null)
 		{

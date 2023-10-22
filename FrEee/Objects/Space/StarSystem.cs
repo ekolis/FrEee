@@ -13,6 +13,7 @@ using FrEee.Modding.Templates;
 using FrEee.Objects.LogMessages;
 using FrEee.Utility;
 using FrEee.Extensions;
+using FrEee.Serialization;
 
 namespace FrEee.Objects.Space
 {
@@ -223,10 +224,8 @@ namespace FrEee.Objects.Space
 		/// <summary>
 		/// Abilities for random warp points that appear in this system.
 		/// </summary>
-		[DoNotSerialize]
-		public RandomAbilityTemplate WarpPointAbilities { get { return warpPointAbilities; } set { warpPointAbilities = value; } }
-
-		private ModReference<RandomAbilityTemplate> warpPointAbilities { get; set; }
+		[ModReference]
+		public RandomAbilityTemplate WarpPointAbilities { get; set; }
 
 		public bool AreCoordsInBounds(int x, int y)
 		{

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 namespace FrEee.Serialization
 {
+	// TODO: make this a record or maybe a struct so that it's a value type and caches can be reused even when spamming multiple references to the same object
 	/// <summary>
 	/// A lightweight reference to some object in the current game.
 	/// Can be passed around on the network as a surrogate for said object.

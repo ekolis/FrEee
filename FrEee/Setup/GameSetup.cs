@@ -14,6 +14,7 @@ using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
 using FrEee.Extensions;
+using FrEee.Serialization;
 
 namespace FrEee.Setup
 {
@@ -77,18 +78,8 @@ namespace FrEee.Setup
 		/// <summary>
 		/// The galaxy template to use.
 		/// </summary>
-		[DoNotSerialize]
-		public GalaxyTemplate GalaxyTemplate
-		{
-			get { return The.Mod.GalaxyTemplates.FindByName(GalaxyTemplateName); }
-			set { GalaxyTemplateName = value.Name; }
-		}
-
-		public string GalaxyTemplateName
-		{
-			get;
-			private set;
-		}
+		[ModReference]
+		public GalaxyTemplate GalaxyTemplate { get; set; }
 
 		/// <summary>
 		/// The name of the game. Used in save file names.
@@ -99,6 +90,7 @@ namespace FrEee.Setup
 
 		public bool GenerateUniqueRuins { get; set; }
 
+		[ModReference]
 		public StellarObjectSize HomeworldSize { get; set; }
 
 		public int HomeworldsPerEmpire { get; set; }

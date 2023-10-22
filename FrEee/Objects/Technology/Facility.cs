@@ -289,8 +289,9 @@ namespace FrEee.Objects.Technology
 		/// The template for this facility.
 		/// Specifies the basic stats of the facility and its abilities.
 		/// </summary>
-		[DoNotSerialize]
-		public FacilityTemplate Template { get { return template; } private set { template = value; } }
+		[ModReference]
+		[SerializationPriority(1)]
+		public FacilityTemplate Template { get; set; }
 
 		IConstructionTemplate IConstructable.Template
 		{
@@ -315,9 +316,6 @@ namespace FrEee.Objects.Technology
 			}
 		}
 
-		[SerializationPriority(1)]
-		private ModReference<FacilityTemplate> template { get; set; }
-
 		public SafeDictionary<string, object> Data
 		{
 			get
@@ -328,12 +326,12 @@ namespace FrEee.Objects.Technology
 				if (Hitpoints != MaxHitpoints)
 					dict.Add(nameof(Hitpoints), Hitpoints);
 				dict.Add(nameof(ID), ID);
-				dict.Add(nameof(template), template);
+				dict.Add(nameof(Template), Template);
 				return dict;
 			}
 			set
 			{
-				template = (ModReference<FacilityTemplate>)value[nameof(template)]; // comes first because other properties depend on its data
+				Template = (FacilityTemplate)value[nameof(Template)]; // comes first because other properties depend on its data
 				ConstructionProgress = (ResourceQuantity)(value[nameof(ConstructionProgress)] ?? Cost);
 				Hitpoints = (int)(value[nameof(Hitpoints)] ?? MaxHitpoints);
 				ID = (long)value[nameof(ID)];

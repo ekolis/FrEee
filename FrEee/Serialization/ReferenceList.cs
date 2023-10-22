@@ -14,6 +14,7 @@ namespace FrEee.Serialization
 	{
 	}
 
+	[Obsolete("ModReference should now be limited to serialization.")]
 	public class ModReferenceList<T> : ReferenceList<ModReference<T>, T>
 		where T : IModObject
 	{

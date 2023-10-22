@@ -29,6 +29,7 @@ namespace FrEee.Serialization
 		}
 	}
 
+	[Obsolete("ModReference should now be limited to serialization.")]
 	public class ModReferenceKeyedDictionary<TKey, TValue> : ReferenceKeyedDictionary<string, ModReference<TKey>, TKey, TValue>
 			where TKey : IModObject
 	{

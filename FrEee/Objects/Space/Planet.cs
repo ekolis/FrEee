@@ -141,7 +141,7 @@ namespace FrEee.Objects.Space
 			get
 			{
 				var dict = base.Data;
-				dict[nameof(size)] = size;
+				dict[nameof(Size)] = Size;
 				dict[nameof(Surface)] = Surface;
 				dict[nameof(Atmosphere)] = Atmosphere;
 				dict[nameof(ConditionsAmount)] = ConditionsAmount;
@@ -153,7 +153,7 @@ namespace FrEee.Objects.Space
 			set
 			{
 				base.Data = value;
-				size = value[nameof(size)].Default<ModReference<StellarObjectSize>>();
+				Size = value[nameof(Size)].Default<StellarObjectSize>();
 				Surface = value[nameof(Surface)].Default<string>();
 				Atmosphere = value[nameof(Atmosphere)].Default<string>();
 				ConditionsAmount = value[nameof(ConditionsAmount)].Default<int>();
@@ -538,8 +538,8 @@ namespace FrEee.Objects.Space
 		/// <summary>
 		/// The PlanetSize.txt entry for this asteroid field's size.
 		/// </summary>
-		[DoNotSerialize]
-		public StellarObjectSize Size { get => size; set => size = value; }
+		[ModReference]
+		public StellarObjectSize Size { get; set; }
 
 		int ICombatant.Size => int.MaxValue;
 
@@ -594,8 +594,6 @@ namespace FrEee.Objects.Space
 		/// </summary>
 		[DoNotSerialize]
 		internal Planet MoonOf { get; set; }
-
-		private ModReference<StellarObjectSize> size { get; set; }
 
 		public void AddOrder(IOrder order)
 		{

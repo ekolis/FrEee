@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using FrEee.Extensions;
+using FrEee.Serialization;
 
 namespace FrEee.Setup
 {
@@ -37,14 +38,8 @@ namespace FrEee.Setup
 		/// <summary>
 		/// The empire's culture.
 		/// </summary>
-		[DoNotSerialize]
-		public Culture Culture
-		{
-			get { return The.Mod.Cultures.SingleOrDefault(c => c.Name == CultureName); }
-			set { CultureName = value == null ? null : value.Name; }
-		}
-
-		public string CultureName { get; set; }
+		[ModReference]
+		public Culture Culture { get; set; }
 
 		/// <summary>
 		/// The insignia of the empire.

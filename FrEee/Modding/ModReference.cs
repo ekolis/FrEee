@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace FrEee.Modding
 {
-	// XXX: Just use this class as a temporary holder for links between IDs and objects (if needed); add a [ModReference] attribute to replace all the duplicated properties
+	// TODO: make this a record or maybe a struct so that it's a value type and caches can be reused even when spamming multiple references to the same object
 	/// <summary>
 	/// A lightweight reference to some object in the current mod.
 	/// Can be passed around on the network as a surrogate for said object.

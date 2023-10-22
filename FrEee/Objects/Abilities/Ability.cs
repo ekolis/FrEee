@@ -58,7 +58,7 @@ namespace FrEee.Objects.Abilities
 			get
 			{
 				var dict = new SafeDictionary<string, object>();
-				dict[nameof(rule)] = rule;
+				dict[nameof(Rule)] = Rule;
 				dict[nameof(Description)] = Description;
 				dict[nameof(Values)] = Values;
 				dict[nameof(Container)] = Container;
@@ -70,7 +70,7 @@ namespace FrEee.Objects.Abilities
 
 			set
 			{
-				rule = value[nameof(rule)].Default<ModReference<AbilityRule>>();
+				Rule = value[nameof(Rule)].Default<AbilityRule>();
 				Description = value[nameof(Description)].Default<Formula<string>>();
 				Values = value[nameof(Values)].Default<IList<Formula<string>>>();
 				Container = value[nameof(Container)].Default<IAbilityObject>();
@@ -139,8 +139,9 @@ namespace FrEee.Objects.Abilities
 		/// <summary>
 		/// The ability rule which defines what ability this is.
 		/// </summary>
+		[ModReference]
 		[DoNotCopy]
-		public AbilityRule Rule { get { return rule; } set { rule = value; } }
+		public AbilityRule Rule { get; set; }
 
 		/// <summary>
 		/// Parameters from the mod meta templates.
@@ -186,8 +187,6 @@ namespace FrEee.Objects.Abilities
 				return dict;
 			}
 		}
-
-		private ModReference<AbilityRule> rule { get; set; }
 
 		public void Dispose()
 		{

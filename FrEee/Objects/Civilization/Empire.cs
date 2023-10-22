@@ -85,8 +85,8 @@ namespace FrEee.Objects.Civilization
 		/// <summary>
 		/// The AI which controls the behavior of empires of this race.
 		/// </summary>
-		[DoNotSerialize]
-		public AI<Empire, Galaxy> AI { get { return ai; } set { ai = value; } }
+		[ModReference]
+		public AI<Empire, Galaxy> AI { get; set; }
 
 		/// <summary>
 		/// Arbitrary data stored by the AI to maintain state between turns.
@@ -201,8 +201,8 @@ namespace FrEee.Objects.Civilization
 		/// <summary>
 		/// The empire's culture.
 		/// </summary>
-		[DoNotSerialize]
-		public Culture Culture { get { return culture; } set { culture = value; } }
+		[ModReference]
+		public Culture Culture { get; set; }
 
 		/// <summary>
 		/// Any empires that this empire has encountered.
@@ -747,8 +747,6 @@ namespace FrEee.Objects.Civilization
 		/// </summary>
 		public IList<Waypoint> Waypoints { get; private set; }
 
-		private ModReference<AI<Empire, Galaxy>> ai { get; set; }
-		private ModReference<Culture> culture { get; set; }
 		private ResourceQuantity colonyIncome;
 
 		private ResourceQuantity grossDomesticIncome;

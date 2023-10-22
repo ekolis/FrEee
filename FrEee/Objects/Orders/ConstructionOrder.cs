@@ -87,15 +87,12 @@ namespace FrEee.Objects.Orders
 		[DoNotSerialize]
 		public TTemplate? Template
 		{
-			get
-			{
-				return (ModTemplate?.Value as TTemplate) ?? (GameTemplate as TTemplate);
-			}
+			get => (ModTemplate as TTemplate) ?? (GameTemplate as TTemplate);
 			set
 			{
 				if (value is IModObject mo)
 				{
-					ModTemplate = mo.ReferViaMod();
+					ModTemplate = mo;
 					GameTemplate = null;
 				}
 				else if (value is IReferrable r)
@@ -115,19 +112,11 @@ namespace FrEee.Objects.Orders
 			}
 		}
 
-		private ModReference<IModObject>? ModTemplate { get; set; }
+		[ModReference]
+		private IModObject? ModTemplate { get; set; }
 
 		[GameReference]
 		private IReferrable? GameTemplate { get; set; }
-
-		private IReference<U> GetModReference<U>(string id)
-		{
-			// since T is not guaranteed to be a compile time IModObject implementation
-			var type = typeof(ModReference<>).MakeGenericType(typeof(U));
-			var r = (IReference<U>)Activator.CreateInstance(type);
-			r.SetPropertyValue("ID", id);
-			return r;
-		}
 
 		IConstructionTemplate IConstructionOrder.Template { get { return Template; } }
 

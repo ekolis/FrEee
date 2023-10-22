@@ -7,6 +7,7 @@ using System;
 
 namespace FrEee.Utility
 {
+	[Obsolete("GameReference should now be limited to serialization.")]
 	public class GameProgress<T> : Progress<GameReference<T>, T>
 		where T: IReferrable
 	{
@@ -16,6 +17,7 @@ namespace FrEee.Utility
 		}
 	}
 
+	[Obsolete("ModReference should now be limited to serialization.")]
 	public class ModProgress<T> : Progress<ModReference<T>, T>
 			where T : IModObject
 	{

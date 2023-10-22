@@ -10,6 +10,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using FrEee.Extensions;
+using FrEee.Serialization;
 
 namespace FrEee.Objects.Civilization
 {
@@ -49,8 +50,8 @@ namespace FrEee.Objects.Civilization
 		/// <summary>
 		/// The race's happiness model.
 		/// </summary>
-		[DoNotSerialize]
-		public HappinessModel HappinessModel { get { return happinessModel; } set { happinessModel = value; } }
+		[ModReference]
+		public HappinessModel HappinessModel { get; set; }
 
 		/// <summary>
 		/// The population icon.
@@ -199,8 +200,6 @@ namespace FrEee.Objects.Civilization
 				}
 			}
 		}
-
-		private ModReference<HappinessModel> happinessModel { get; set; }
 
 		public static Race Load(string filename)
 		{
