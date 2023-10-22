@@ -115,6 +115,7 @@ namespace FrEee.Utility
 		/// </summary>
 		public T Item { get { return item.Value; } set { item = value.Refer<TRef, T>(); } }
 
+		// XXX: get rid of reference here
 		private TRef item { get; set; }
 
 		public override string ToString()

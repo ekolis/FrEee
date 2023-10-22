@@ -8,6 +8,7 @@ using System.Linq;
 
 namespace FrEee.Serialization
 {
+	[Obsolete("GameReference should now be limited to serialization.")]
 	[Serializable]
 	public class GameReferenceSet<T> : ReferenceSet<GameReference<T>, T>
 		where T : IReferrable

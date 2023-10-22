@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Extensions;
@@ -7,6 +8,7 @@ using FrEee.Modding.Interfaces;
 
 namespace FrEee.Serialization
 {
+	[Obsolete("GameReference should now be limited to serialization.")]
 	public class GameReferenceList<T> : ReferenceList<GameReference<T>, T>
 		where T : IReferrable
 	{

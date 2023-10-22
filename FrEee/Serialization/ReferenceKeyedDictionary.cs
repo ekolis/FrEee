@@ -10,6 +10,7 @@ using FrEee.Utility;
 
 namespace FrEee.Serialization
 {
+	[Obsolete("GameReference should now be limited to serialization.")]
 	public class GameReferenceKeyedDictionary<TKey, TValue> : ReferenceKeyedDictionary<long, GameReference<TKey>, TKey, TValue>
 			where TKey : IReferrable
 	{
