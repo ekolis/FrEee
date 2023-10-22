@@ -1,4 +1,5 @@
-﻿using FrEee.Extensions;
+using FrEee.Extensions;
+using FrEee.Interfaces;
 using FrEee.Utility;
 using System;
 using System.Collections;
@@ -115,6 +116,11 @@ namespace FrEee.Serialization
 		private static SafeDictionary<Type, IDictionary<string, PropertyInfo>> KnownPropertiesExcludingDoNotSerialize { get; set; }
 
 		/// <summary>
+		/// Actions to be taken when done deserializing.
+		/// </summary>
+		public IList<Action> AfterDeserializeActions { get; } = new List<Action>();
+
+		/// <summary>
 		/// Adds the properties for a type.
 		/// </summary>
 		/// <param name="type"></param>
@@ -195,6 +201,11 @@ namespace FrEee.Serialization
 			var id = KnownObjects[type].Count - 1;
 			KnownIDs[type].Add(o, id);
 			AddProperties(type);
+			if (o is ReferrableRepository<IReferrable> rr)
+			{
+				// save our referrable repository for later so we can deserialize game references
+				ReferrableRepository = rr;
+			}
 			return id;
 		}
 
@@ -248,6 +259,8 @@ namespace FrEee.Serialization
 				throw new InvalidOperationException($"Could not set property {prop} on object {obj} of type {obj.GetType()}. Does the type actually have this property?", ex);
 			}
 		}
+
+		public ReferrableRepository<IReferrable> ReferrableRepository { get; set; }
 
 		private class ReferenceEqualityComparer : IEqualityComparer<object>
 		{

@@ -22,27 +22,34 @@ namespace FrEee.Serialization
 	{
 		private static IList<Task> propertySetterTasks = new List<Task>();
 
-		public static object Deserialize(Stream s, Type desiredType, ObjectGraphContext context = null, StringBuilder log = null)
-		{
-			var sr = new StreamReader(s);
-			var result = Deserialize(sr, desiredType, true, context, log);
-			sr.Close();
-			return result;
-		}
-
-		internal static T Deserialize<T>(Stream s, ObjectGraphContext context = null)
+		internal static T Deserialize<T>(Stream s, ObjectGraphContext? context = null)
 		{
 			var sr = new StreamReader(new BufferedStream(s));
 			var result = Deserialize<T>(sr, context);
 			return result;
 		}
 
-		internal static T Deserialize<T>(TextReader r, ObjectGraphContext context = null)
+		internal static T Deserialize<T>(TextReader r, ObjectGraphContext? context = null)
 		{
-			return (T)Deserialize(r, typeof(T), true, context);
+			// set up our serialization context if we haven't already
+			if (context == null)
+				context = new ObjectGraphContext();
+
+			// deserialize
+			var result = (T)Deserialize(r, typeof(T), true, context);
+
+			// perform and clear after deserialization actions
+			foreach (var action in context.AfterDeserializeActions)
+			{
+				action();
+			}
+			context.AfterDeserializeActions.Clear();
+
+			// done
+			return result;
 		}
 
-		internal static void Serialize<T>(T o, TextWriter w, ObjectGraphContext context = null, int tabLevel = 0)
+		internal static void Serialize<T>(T o, TextWriter w, ObjectGraphContext? context = null, int tabLevel = 0)
 		{
 			if (o == null)
 				Serialize(o, w, typeof(T), context, tabLevel);
@@ -55,8 +62,12 @@ namespace FrEee.Serialization
 			return SafeType.GetShortTypeName(t);
 		}
 
-		internal static void Serialize(object o, TextWriter w, Type desiredType, ObjectGraphContext context = null, int tabLevel = 0)
+		internal static void Serialize(object o, TextWriter w, Type desiredType, ObjectGraphContext? context = null, int tabLevel = 0)
 		{
+			// set up our serialization context if we haven't already
+			if (context == null)
+				context = new ObjectGraphContext();
+
 			var tabs = new string('\t', tabLevel);
 
 			// type checking!
@@ -64,10 +75,6 @@ namespace FrEee.Serialization
 				throw new SerializationException("Cannot serialize objects of type System.Type.");
 			if (o != null && !desiredType.IsAssignableFrom(o.GetType()))
 				throw new SerializationException("Attempting to serialize " + o.GetType() + " as " + desiredType + ".");
-
-			// set up our serialization context if we haven't already
-			if (context == null)
-				context = new ObjectGraphContext();
 
 			// write some tabs to improve readability
 			for (var i = 0; i < tabLevel; i++)
@@ -619,12 +626,8 @@ namespace FrEee.Serialization
 			{
 				o = DeserializeList(r, type, context, log);
 			}
-			else if (fin == 'g')
-			{
-				o = DeserializeGameReference(r, type, context, log);
-			}
 			else
-				throw new Exception("Unknown data tag " + fin + ", was expecting s/p/i/n/d/c/g.");
+				throw new Exception("Unknown data tag " + fin + ", was expecting s/p/i/n/d/c.");
 			if (!context.KnownObjects.ContainsKey(type) || !context.KnownObjects[type].Contains(o))
 				context.Add(o);
 			return o;
@@ -695,10 +698,10 @@ namespace FrEee.Serialization
 			return context.KnownObjects[type][id];
 		}
 
-		private static object DeserializeObject(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		private static object? DeserializeObject(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
 		{
 			// read property count or id number
-			object o;
+			object? o;
 			var fin = r.Read();
 			while (fin != 0 && char.IsWhiteSpace((char)fin))
 			{
@@ -716,7 +719,18 @@ namespace FrEee.Serialization
 			}
 			else if (fin == 'g')
 			{
-				o = DeserializeGameReference(r, type, context, log);
+				// ID - need to find known referrable object
+				var s = r.ReadToEndOfLine(';', log);
+				if (!long.TryParse(s, out var id))
+					throw new SerializationException("Expected long, got \"" + s + "\" when parsing game reference.");
+
+				context.AfterDeserializeActions.Add(() =>
+				{
+					o = DeserializeGameReference(context, id, type);
+				});
+
+				// temporarily until after deserialize actions run
+				o = null;
 			}
 			else if (fin == 'n')
 			{
@@ -760,15 +774,10 @@ namespace FrEee.Serialization
 			return o;
 		}
 
-		private static object DeserializeGameReference(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		private static object DeserializeGameReference(ObjectGraphContext context, long id, Type type)
 		{
-			// ID - need to find known referrable object
-			var s = r.ReadToEndOfLine(';', log);
-			if (!long.TryParse(s, out var id))
-				throw new SerializationException("Expected long, got \"" + s + "\" when parsing game reference.");
-
 			// do we have it?
-			var result = The.ReferrableRepository[id];
+			var result = context.ReferrableRepository[id];
 			if (result is null)
 				throw new SerializationException("No known object of type " + type + " has a game ID of " + id + ".");
 

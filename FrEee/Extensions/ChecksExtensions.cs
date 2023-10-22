@@ -129,12 +129,18 @@ namespace FrEee.Extensions
 		}
 
 		/// <summary>
-		/// Does this object's ID match what the galaxy says it is?
+		/// Does this object's ID match what the referrable repository says it is?
 		/// </summary>
 		/// <param name="r"></param>
 		/// <returns></returns>
 		public static bool HasValidID(this IReferrable r)
 		{
+			if (The.Game is null)
+			{
+				// there is no absolute source of truth right now, so just trust your instincts!
+				return true;
+			}
+
 			return The.ReferrableRepository.ContainsKey(r.ID) && The.ReferrableRepository[r.ID] == r;
 		}
 

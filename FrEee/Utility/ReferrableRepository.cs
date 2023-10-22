@@ -12,6 +12,7 @@ using FrEee.Interfaces;
 namespace FrEee.Utility;
 
 // XXX: Fix referrable repository so that it contains more than just star systems
+// XXX: Redact referrable repository
 
 /// <summary>
 /// A repository which stores some type of referrable object which can be accessed via an ID.
@@ -24,7 +25,20 @@ public class ReferrableRepository<T>
 {
 	public Type ReferrableType => typeof(T);
 
-	public T this[long key] => Dictionary[key];
+	public T this[long key]
+	{
+		get
+		{
+			try
+			{
+				return Dictionary[key];
+			}
+			catch (KeyNotFoundException ex)
+			{
+				throw new KeyNotFoundException($"No referrable object of type {typeof(T)} exists with ID={key}.", ex);
+			}
+		}
+	}
 
 	public IEnumerable<long> Keys => Dictionary.Keys;
 	public IEnumerable<T> Values => Dictionary.Values;
@@ -51,7 +65,7 @@ public class ReferrableRepository<T>
 		if (typeof(T2) == typeof(T))
 		{
 			return (ReferrableRepository<T2>)(object)this;
-		}	
+		}
 		if (typeof(T2).IsInterface || typeof(T2).IsAbstract)
 		{
 			throw new InvalidOperationException($"Can't get concrete referrable repository of interface/abstract type {typeof(T2)}.");
@@ -174,7 +188,7 @@ public class ReferrableRepository<T>
 			return false; // nothing to do
 		if (ContainsKey(r.ID))
 		{
-			if (ReferenceEquals(this[r.ID],  r))
+			if (ReferenceEquals(this[r.ID], r))
 				Dictionary.Remove(r.ID);
 			else
 			{
