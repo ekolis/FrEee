@@ -21,9 +21,7 @@ namespace FrEee.Objects.Civilization.Diplomacy
 		/// <summary>
 		/// The empire that is the target of this action.
 		/// </summary>
-		[DoNotSerialize]
-		public Empire Target { get { return target; } set { target = value; } }
-
-		private GameReference<Empire> target { get; set; }
+		[GameReference]
+		public Empire Target { get; set; }
 	}
 }

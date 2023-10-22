@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Orders;
 using FrEee.Objects.Space;
@@ -39,8 +39,8 @@ namespace FrEee.Objects.Civilization
 
 		public abstract string Name { get; }
 
-		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		[GameReference]
+		public Empire Owner { get; set; }
 
 		public abstract Sector Sector { get; set; }
 
@@ -58,7 +58,6 @@ namespace FrEee.Objects.Civilization
 		[DoNotSerialize]
 		internal int AlteredQueuesOnDelete { get; private set; }
 
-		private GameReference<Empire> owner { get; set; }
 
 		/// <summary>
 		/// Only the waypoint's owner can see it.

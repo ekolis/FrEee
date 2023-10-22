@@ -24,7 +24,7 @@ namespace FrEee.Objects.Space
 	{
 		public Fleet()
 		{
-			Vehicles = new GalaxyReferenceSet<IMobileSpaceObject>();
+			Vehicles = new GameReferenceSet<IMobileSpaceObject>();
 			Orders = new List<IOrder>();
 			Timestamp = The.TurnProcessor?.Timestamp ?? 0;
 		}
@@ -618,7 +618,7 @@ namespace FrEee.Objects.Space
 		/// The space objects in the fleet.
 		/// Fleets may contain other fleets, but may not contain themselves.
 		/// </summary>
-		public GalaxyReferenceSet<IMobileSpaceObject> Vehicles { get; private set; }
+		public GameReferenceSet<IMobileSpaceObject> Vehicles { get; private set; }
 
 		public IEnumerable<Component> Weapons
 		{

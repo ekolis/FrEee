@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
@@ -61,16 +61,14 @@ namespace FrEee.Objects.Orders
 		/// <summary>
 		/// The empire which issued the order.
 		/// </summary>
-		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		[GameReference]
+		public Empire Owner { get; set; }
 
 		/// <summary>
 		/// Any pathfinding error that we might have found.
 		/// </summary>
 		[DoNotSerialize]
 		public LogMessage PathfindingError { get; private set; }
-
-		private GameReference<Empire> owner { get; set; }
 
 		public bool CheckCompletion(IOrderable v)
 		{

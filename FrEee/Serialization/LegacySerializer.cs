@@ -619,8 +619,12 @@ namespace FrEee.Serialization
 			{
 				o = DeserializeList(r, type, context, log);
 			}
+			else if (fin == 'g')
+			{
+				o = DeserializeGameReference(r, type, context, log);
+			}
 			else
-				throw new Exception("Unknown data tag " + fin + ", was expecting s/p/i/n/d/c.");
+				throw new Exception("Unknown data tag " + fin + ", was expecting s/p/i/n/d/c/g.");
 			if (!context.KnownObjects.ContainsKey(type) || !context.KnownObjects[type].Contains(o))
 				context.Add(o);
 			return o;
@@ -652,10 +656,6 @@ namespace FrEee.Serialization
 					var prop = type.GetProperty(pname, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance) ?? props[pname]; // get concrete type property in case it has DoNotSerialize and the abstract type doesn't
 					if (prop != null)
 					{
-						if (prop.Name == "StarSystemNames")
-						{
-
-						}
 						var data = Deserialize(r, prop.PropertyType, false, context, log);
 						if (prop.HasAttribute<SerializationPriorityAttribute>())
 							prop.SetValue(o, data); // TODO - use cached reflection lambdas
@@ -714,6 +714,10 @@ namespace FrEee.Serialization
 			{
 				o = DeserializeObjectWithID(r, type, context, log);
 			}
+			else if (fin == 'g')
+			{
+				o = DeserializeGameReference(r, type, context, log);
+			}
 			else if (fin == 'n')
 			{
 				// null object!
@@ -723,7 +727,7 @@ namespace FrEee.Serialization
 				ReadSemicolon(r, type, log);
 			}
 			else
-				throw new SerializationException("Expected 'p'/'i'/'n', got '" + (char)fin + "' when parsing " + type + ".");
+				throw new SerializationException("Expected 'p'/'i'/'n'/'g', got '" + (char)fin + "' when parsing " + type + ".");
 			return o;
 		}
 
@@ -754,6 +758,22 @@ namespace FrEee.Serialization
 				o = o.Replace("\\\"", "\"").Replace("\\;", ";").Replace("\\\\", "\\");
 			}
 			return o;
+		}
+
+		private static object DeserializeGameReference(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		{
+			// ID - need to find known referrable object
+			var s = r.ReadToEndOfLine(';', log);
+			if (!long.TryParse(s, out var id))
+				throw new SerializationException("Expected long, got \"" + s + "\" when parsing game reference.");
+
+			// do we have it?
+			var result = The.ReferrableRepository[id];
+			if (result is null)
+				throw new SerializationException("No known object of type " + type + " has a game ID of " + id + ".");
+
+			// found it!
+			return result;
 		}
 
 		private static int GetSerializationPriority(PropertyInfo p)
@@ -899,22 +919,29 @@ namespace FrEee.Serialization
 
 		private static void WriteObject(object o, TextWriter w, ObjectGraphContext context, int tabLevel)
 		{
-			// serialize object type and field count
-			if (o is IDataObject)
+			// serialize object type and property count
+			if (o is IDataObject dobj)
 			{
 				// use data object code! :D
 				var type = o.GetType();
-				var data = (o as IDataObject).Data;
+				var data = dobj.Data;
 				w.WriteLine("p" + data.Count + ":");
 				foreach (var kvp in data)
 				{
 					var pname = kvp.Key;
 					var val = kvp.Value;
 					var prop = ObjectGraphContext.GetKnownProperties(type)[pname];
-					if (prop != null)
+					if (prop is not null)
 					{
-						var ptype = prop.PropertyType;
-						WriteProperty(w, o, ptype, pname, val, context, tabLevel);
+						if (prop.HasAttribute<GameReferenceAttribute>())
+						{
+							WriteGameReferenceProperty(w, o, prop.Name, (IReferrable)val, tabLevel + 1);
+						}
+						else
+						{
+							var ptype = prop.PropertyType;
+							WriteProperty(w, o, ptype, pname, val, context, tabLevel);
+						}
 					}
 					else
 					{
@@ -932,7 +959,16 @@ namespace FrEee.Serialization
 					!p.GetValue(o, null).SafeEquals(p.PropertyType.DefaultValue())); // property value is not null/default?
 				w.WriteLine("p" + props.Count() + ":");
 				foreach (var p in props.OrderBy(p => GetSerializationPriority(p)))
-					WriteProperty(w, o, p.PropertyType, p.Name, context.GetObjectProperty(o, p), context, tabLevel);
+				{
+					if (p.HasAttribute<GameReferenceAttribute>())
+					{
+						WriteGameReferenceProperty(w, o, p.Name, (IReferrable)context.GetObjectProperty(o, p), tabLevel + 1);
+					}
+					else
+					{
+						WriteProperty(w, o, p.PropertyType, p.Name, context.GetObjectProperty(o, p), context, tabLevel);
+					}
+				}
 			}
 
 			// write end object
@@ -995,6 +1031,29 @@ namespace FrEee.Serialization
 			if (stringifier == null)
 				throw new Exception("Can't find stringifier to deserialize " + o.GetType());
 			w.WriteLine("s:" + stringifier.Stringify(o) + ";");
+		}
+
+		private static void WriteGameReferenceProperty(TextWriter w, object o, string pname, IReferrable r, int tabLevel)
+		{
+			var tabs = new string('\t', tabLevel);
+			var moreTabs = new string('\t', tabLevel + 1);
+
+			// serialize property name and ID
+			try
+			{
+				w.Write(tabs);
+				w.Write(pname);
+				w.Write(":\n");
+				w.Write(moreTabs); ;
+				w.Write(":g");
+				w.Write(r.ID);
+				w.Write(";");
+				w.Write("\n");
+			}
+			catch (Exception ex)
+			{
+				throw new SerializationException("Could not serialize reference property " + pname + " of " + o + ": " + ex.Message, ex);
+			}
 		}
 	}
 }

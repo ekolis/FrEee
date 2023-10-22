@@ -1,4 +1,4 @@
-﻿using FrEee.Interfaces;
+using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Serialization;
 using FrEee.Utility;
@@ -22,20 +22,17 @@ namespace FrEee.Objects.Commands
 			Executor = target;
 		}
 
-		[DoNotSerialize]
-		public T Executor { get { return executor; } set { executor = value; } }
+		[GameReference]
+		public T Executor { get; set; }
 
-		IReferrable ICommand.Executor
-		{
-			get { return Executor; }
-		}
+		IReferrable ICommand.Executor => Executor;
 
-		public long ExecutorID { get { return executor.ID; } }
+		public long ExecutorID => Executor.ID;
 
 		public bool IsDisposed { get; set; }
 
-		[DoNotSerialize]
-		public Empire Issuer { get { return issuer; } set { issuer = value; } }
+		[GameReference]
+		public Empire Issuer { get; set; }
 
 		public virtual IEnumerable<IReferrable> NewReferrables
 		{
@@ -44,10 +41,6 @@ namespace FrEee.Objects.Commands
 				yield break;
 			}
 		}
-
-		protected GameReference<T> executor { get; set; }
-
-		private GameReference<Empire> issuer { get; set; }
 
 		public abstract void Execute();
 
@@ -58,8 +51,6 @@ namespace FrEee.Objects.Commands
 			if (!done.Contains(this))
 			{
 				done.Add(this);
-				issuer.ReplaceClientIDs(idmap, done);
-				executor.ReplaceClientIDs(idmap, done);
 				foreach (var r in NewReferrables.OfType<IPromotable>())
 					r.ReplaceClientIDs(idmap, done);
 			}

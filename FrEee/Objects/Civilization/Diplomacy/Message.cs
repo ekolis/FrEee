@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Commands;
 using FrEee.Objects.Space;
@@ -57,8 +57,8 @@ namespace FrEee.Objects.Civilization.Diplomacy
 		/// <summary>
 		/// The empire sending this message.
 		/// </summary>
-		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		[GameReference]
+		public Empire Owner { get; set; }
 
 		public Image Portrait
 		{
@@ -73,8 +73,8 @@ namespace FrEee.Objects.Civilization.Diplomacy
 		/// <summary>
 		/// The empire receiving the message.
 		/// </summary>
-		[DoNotSerialize]
-		public Empire Recipient { get { return recipient; } set { recipient = value; } }
+		[GameReference]
+		public Empire Recipient { get; set; }
 
 		/// <summary>
 		/// The text of the message.
@@ -87,10 +87,6 @@ namespace FrEee.Objects.Civilization.Diplomacy
 		}
 
 		public int TurnNumber { get; set; }
-
-		private GameReference<Empire> owner { get; set; }
-
-		private GameReference<Empire> recipient { get; set; }
 
 		public Visibility CheckVisibility(Empire emp)
 		{

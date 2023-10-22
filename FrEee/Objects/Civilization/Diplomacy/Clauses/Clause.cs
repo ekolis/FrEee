@@ -32,8 +32,8 @@ namespace FrEee.Objects.Civilization.Diplomacy.Clauses
 		/// <summary>
 		/// The empire that is offering something in this clause.
 		/// </summary>
-		[DoNotSerialize]
-		public Empire Giver { get { return giver; } set { giver = value; } }
+		[GameReference]
+		public Empire Giver { get; set; }
 
 		public long ID
 		{
@@ -62,17 +62,14 @@ namespace FrEee.Objects.Civilization.Diplomacy.Clauses
 		/// <summary>
 		/// The empire that is receiving a benefit from this clause.
 		/// </summary>
-		[DoNotSerialize]
-		public Empire Receiver { get { return receiver; } set { receiver = value; } }
+		[GameReference]
+		public Empire Receiver { get; set; }
 
 		public double Timestamp
 		{
 			get;
 			set;
 		}
-
-		private GameReference<Empire> giver { get; set; }
-		private GameReference<Empire> receiver { get; set; }
 
 		public Visibility CheckVisibility(Empire emp)
 		{

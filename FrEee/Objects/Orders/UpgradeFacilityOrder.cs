@@ -72,8 +72,8 @@ namespace FrEee.Objects.Orders
 		/// <summary>
 		/// The empire which issued the order.
 		/// </summary>
-		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		[GameReference]
+		public Empire Owner { get; set; }
 
 		IConstructionTemplate IConstructionOrder.Template { get { return Upgrade.New; } }
 
@@ -88,8 +88,6 @@ namespace FrEee.Objects.Orders
 			get;
 			set;
 		}
-
-		private GameReference<Empire> owner { get; set; }
 
 		public bool CheckCompletion(IOrderable queue)
 		{

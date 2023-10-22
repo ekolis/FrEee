@@ -1,4 +1,4 @@
-﻿using FrEee.Extensions;
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.LogMessages;
 using FrEee.Serialization;
@@ -27,10 +27,8 @@ namespace FrEee.Objects.Civilization.Diplomacy
 		/// <summary>
 		/// The proposal in question.
 		/// </summary>
-		[DoNotSerialize]
-		public Proposal Proposal { get { return proposal; } set { proposal = value; } }
-
-		private GameReference<Proposal> proposal { get; set; }
+		[GameReference]
+		public Proposal Proposal { get; set; }
 
 		public override void Execute()
 		{
@@ -48,7 +46,7 @@ namespace FrEee.Objects.Civilization.Diplomacy
 			if (!done.Contains(this))
 			{
 				done.Add(this);
-				proposal.ReplaceClientIDs(idmap, done);
+				Proposal.ReplaceClientIDs(idmap, done);
 			}
 		}
 	}

@@ -29,8 +29,8 @@ namespace FrEee.Objects.Orders
 		/// <summary>
 		/// What ability to activate?
 		/// </summary>
-		[DoNotSerialize]
-		public Ability Ability { get { return ability.Value; } set { ability = value.ReferViaGalaxy(); } }
+		[GameReference]
+		public Ability Ability { get; set; }
 
 		public bool ConsumesMovement
 		{
@@ -58,26 +58,21 @@ namespace FrEee.Objects.Orders
 		/// <summary>
 		/// The empire which issued the order.
 		/// </summary>
-		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		[GameReference]
+		public Empire Owner { get; set; }
 
 		/// <summary>
 		/// The source of the ability. Probably a component, facility, or hull.
 		/// TODO - fix this now that Component/Facility/Hull are no longer referrable
 		/// </summary>
-		[DoNotSerialize]
-		public IReferrableAbilityObject Source { get { return source.Value; } set { source = value.ReferViaGalaxy(); } }
+		[GameReference]
+		public IReferrableAbilityObject Source { get; set; }
 
 		/// <summary>
 		/// What are we activating the ability "against"? Like, what warp point are we destroying, or whatever? Or null if there's no relevant target
 		/// </summary>
-		[DoNotSerialize]
-		public IReferrable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
-
-		private GameReference<Ability> ability { get; set; }
-		private GameReference<Empire> owner { get; set; }
-		private GameReference<IReferrableAbilityObject> source { get; set; }
-		private GameReference<IReferrable> target { get; set; }
+		[GameReference]
+		public IReferrable Target { get; set; }
 
 		public bool CheckCompletion(IOrderable executor)
 		{

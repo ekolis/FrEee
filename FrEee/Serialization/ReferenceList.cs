@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using FrEee.Extensions;
 using FrEee.Interfaces;
@@ -7,7 +7,7 @@ using FrEee.Modding.Interfaces;
 
 namespace FrEee.Serialization
 {
-	public class GalaxyReferenceList<T> : ReferenceList<GameReference<T>, T>
+	public class GameReferenceList<T> : ReferenceList<GameReference<T>, T>
 		where T : IReferrable
 	{
 	}

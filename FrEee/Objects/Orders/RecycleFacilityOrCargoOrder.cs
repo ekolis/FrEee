@@ -1,4 +1,4 @@
-﻿using FrEee.Extensions;
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.LogMessages;
@@ -46,17 +46,14 @@ namespace FrEee.Objects.Orders
 		/// <summary>
 		/// The empire which issued the order.
 		/// </summary>
-		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		[GameReference]
+		public Empire Owner { get; set; }
 
 		/// <summary>
 		/// The facility or unit in cargo to recycle.
 		/// </summary>
-		[DoNotSerialize]
-		public IRecyclable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
-
-		private GameReference<Empire> owner { get; set; }
-		private GameReference<IRecyclable> target { get; set; }
+		[GameReference]
+		public IRecyclable Target { get; set; }
 
 		public bool CheckCompletion(IOrderable executor)
 		{

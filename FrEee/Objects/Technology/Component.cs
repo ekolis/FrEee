@@ -65,18 +65,19 @@ namespace FrEee.Objects.Technology
 			}
 		}
 
-		[DoNotSerialize]
+		[GameReference]
+		[DoNotCopy]
 		public IVehicle Container
 		{
 			get
 			{
 				if (container == null)
-					container = The.Galaxy.FindSpaceObjects<IVehicle>().SingleOrDefault(q => q.Components.Contains(this)).ReferViaGalaxy();
-				return container?.Value;
+					container = The.Galaxy.FindSpaceObjects<IVehicle>().SingleOrDefault(q => q.Components.Contains(this));
+				return container;
 			}
 			set
 			{
-				container = value.ReferViaGalaxy();
+				container = value;
 			}
 		}
 
@@ -298,8 +299,7 @@ namespace FrEee.Objects.Technology
 			}
 		}
 
-		[DoNotCopy]
-		private GameReference<IVehicle> container { get; set; }
+		private IVehicle container;
 
 		/// <summary>
 		/// If this is a weapon, returns true if this weapon can target an object at a particular range.

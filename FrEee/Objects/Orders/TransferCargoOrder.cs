@@ -1,4 +1,4 @@
-﻿using FrEee.Extensions;
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.LogMessages;
@@ -46,22 +46,19 @@ namespace FrEee.Objects.Orders
 		/// <summary>
 		/// The empire which issued the order.
 		/// </summary>
-		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		[GameReference]
+		public Empire Owner { get; set; }
 
 		/// <summary>
 		/// The cargo transferrer to which the cargo will be transferred, or null to launch/recover to/from space.
 		/// </summary>
-		[DoNotSerialize]
-		public ICargoTransferrer Target { get { return target?.Value; } set { target = value.ReferViaGalaxy(); } }
+		[GameReference]
+		public ICargoTransferrer Target { get; set; }
 
 		/// <summary>
 		/// True if this is a load order, false if it is a drop order.
 		/// </summary>
 		private bool IsLoadOrder { get; set; }
-
-		private GameReference<Empire> owner { get; set; }
-		private GameReference<ICargoTransferrer> target { get; set; }
 
 		public bool CheckCompletion(IOrderable v)
 		{
@@ -117,8 +114,6 @@ namespace FrEee.Objects.Orders
 			if (!done.Contains(this))
 			{
 				done.Add(this);
-				target?.ReplaceClientIDs(idmap, done);
-				owner.ReplaceClientIDs(idmap, done);
 			}
 		}
 

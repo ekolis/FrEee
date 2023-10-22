@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Modding;
@@ -46,13 +46,13 @@ namespace FrEee.Objects.Combat
 		[DoNotSerialize]
 		public IDamageable Target
 		{
-			get { return target?.Value ?? _target; }
+			get { return OurTarget ?? OurDamageableTarget; }
 			set
 			{
 				if (value is IDamageableReferrable dr)
-					target = dr.ReferViaGalaxy();
+					OurTarget = dr;
 				else
-					_target = value;
+					OurDamageableTarget = value;
 			}
 		}
 
@@ -69,8 +69,8 @@ namespace FrEee.Objects.Combat
 			}
 		}
 
-		private GameReference<IDamageableReferrable> target { get; set; }
+		private	IDamageableReferrable OurTarget { get; set; }
 
-		private IDamageable _target { get; set; }
+		private IDamageable OurDamageableTarget { get; set; }
 	}
 }

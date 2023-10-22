@@ -1131,7 +1131,7 @@ namespace FrEee.Extensions
 			return (TRef)typeof(TRef).Instantiate(t);
 		}
 
-		public static GameReference<T> ReferViaGalaxy<T>(this T t)
+		public static GameReference<T>? ReferViaGame<T>(this T t)
 			where T : IReferrable
 		{
 			if (t == null)

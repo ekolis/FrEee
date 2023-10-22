@@ -1,4 +1,4 @@
-﻿using FrEee.Extensions;
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Serialization;
@@ -17,9 +17,8 @@ namespace FrEee.Objects.Commands
 			Message = msg;
 		}
 
-		public IMessage Message { get { return message.Value; } set { message = value.ReferViaGalaxy(); } }
-
-		private GameReference<IMessage> message { get; set; }
+		[GameReference]
+		public IMessage Message { get; set; }
 
 		public override void Execute()
 		{

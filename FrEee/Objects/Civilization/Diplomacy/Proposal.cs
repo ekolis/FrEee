@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Commands;
 using FrEee.Objects.Space;
@@ -83,16 +83,14 @@ namespace FrEee.Objects.Civilization.Diplomacy
 		/// <summary>
 		/// The empire that the proposal is being sent to.
 		/// </summary>
-		[DoNotSerialize]
-		public Empire Recipient { get { return recipient; } set { recipient = value; } }
+		[GameReference]
+		public Empire Recipient { get; set; }
 
 		public double Timestamp
 		{
 			get;
 			set;
 		}
-
-		private GameReference<Empire> recipient { get; set; }
 
 		public Visibility CheckVisibility(Empire emp)
 		{
@@ -137,18 +135,6 @@ namespace FrEee.Objects.Civilization.Diplomacy
 		{
 			if (CheckVisibility(emp) < Visibility.Fogged)
 				Dispose();
-		}
-
-		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
-		{
-			if (done == null)
-				done = new HashSet<IPromotable>();
-			base.ReplaceClientIDs(idmap, done);
-			if (!done.Contains(this))
-			{
-				done.Add(this);
-				recipient.ReplaceClientIDs(idmap, done);
-			}
 		}
 
 		public override string ToString()

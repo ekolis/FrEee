@@ -42,10 +42,8 @@ namespace FrEee.Objects.Orders
 		/// <summary>
 		/// The empire which issued the order.
 		/// </summary>
-		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
-
-		private GameReference<Empire> owner { get; set; }
+		[GameReference]
+		public Empire Owner { get; set; }
 
 		public bool CheckCompletion(IOrderable v)
 		{

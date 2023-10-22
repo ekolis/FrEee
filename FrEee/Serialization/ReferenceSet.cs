@@ -1,4 +1,4 @@
-﻿using FrEee.Extensions;
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
@@ -9,15 +9,15 @@ using System.Linq;
 namespace FrEee.Serialization
 {
 	[Serializable]
-	public class GalaxyReferenceSet<T> : ReferenceSet<GameReference<T>, T>
+	public class GameReferenceSet<T> : ReferenceSet<GameReference<T>, T>
 		where T : IReferrable
 	{
-		public GalaxyReferenceSet()
+		public GameReferenceSet()
 			: base()
 		{
 		}
 
-		public GalaxyReferenceSet(IEnumerable<T> objs)
+		public GameReferenceSet(IEnumerable<T> objs)
 			: base(objs)
 		{
 		}

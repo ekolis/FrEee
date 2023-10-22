@@ -1,4 +1,4 @@
-﻿using FrEee.Extensions;
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Serialization;
 using FrEee.Utility;
@@ -13,13 +13,13 @@ namespace FrEee.Objects.Combat.Grid
 			Launcher = launcher;
 		}
 
-		private GameReference<ICombatant> launcher { get; set; }
+		private ICombatant OurLauncher { get; set; }
 
 		[DoNotSerialize]
 		public ICombatant Launcher
 		{
-			get => launcher?.Value ?? Battle?.StartCombatants?[launcher.ID];
-			set => launcher = value.ReferViaGalaxy();
+			get => OurLauncher ?? Battle?.StartCombatants?[OurLauncher.ID];
+			set => OurLauncher = value;
 		}
 
 	}

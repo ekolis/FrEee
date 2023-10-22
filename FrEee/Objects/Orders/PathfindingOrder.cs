@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
@@ -86,8 +86,8 @@ namespace FrEee.Objects.Orders
 		/// <summary>
 		/// The empire which issued the order.
 		/// </summary>
-		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		[GameReference]
+		public Empire Owner { get; set; }
 
 		/// <summary>
 		/// Any pathfinding error that we might have found.
@@ -98,16 +98,13 @@ namespace FrEee.Objects.Orders
 		/// <summary>
 		/// The target we are pursuing.
 		/// </summary>
-		[DoNotSerialize]
-		public ISpaceObject Target { get { return target?.Value; } set { target = value.ReferViaGalaxy(); } }
+		[GameReference]
+		public ISpaceObject Target { get; set; }
 
 		/// <summary>
 		/// A verb used to describe this order.
 		/// </summary>
 		public abstract string Verb { get; }
-
-		private GameReference<Empire> owner { get; set; }
-		private GameReference<ISpaceObject> target { get; set; }
 
 		public bool CheckCompletion(IOrderable v)
 		{

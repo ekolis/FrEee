@@ -1,4 +1,4 @@
-﻿using FrEee.Extensions;
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Serialization;
 using FrEee.Utility;
@@ -21,14 +21,13 @@ namespace FrEee.Objects.Combat.Grid
 			WasTargetDisarmed = wasTargetDisarmed;
 		}
 
-
-		private GameReference<ICombatant> target { get; set; }
+		private ICombatant OurTarget { get; set; }
 
 		[DoNotSerialize]
 		public ICombatant Target
 		{
-			get => target?.Value ?? Battle?.StartCombatants?[target.ID];
-			set => target = value.ReferViaGalaxy();
+			get => OurTarget ?? Battle?.StartCombatants?[OurTarget.ID];
+			set => OurTarget = value;
 		}
 
 		public int CombatantDamage { get; set; }

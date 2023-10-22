@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +18,7 @@ namespace FrEee.Objects.Technology
 	{
 		public ComponentReference(long vehicleID, int componentIndex)
 		{
-			vehicle = new GameReference<IVehicle>(vehicleID);
+			Vehicle = The.ReferrableRepository.GetReferrable<IVehicle>(vehicleID);
 			ComponentIndex = ComponentIndex;
 		}
 
@@ -31,7 +31,7 @@ namespace FrEee.Objects.Technology
 		/// <summary>
 		/// First value is the vehicle ID, second value is the index of the component on the vehicle's component list.
 		/// </summary>
-		public (long, int) ID => (vehicle.ID, ComponentIndex);
+		public (long, int) ID => (Vehicle.ID, ComponentIndex);
 		public bool HasValue => Value != null;
 		public Component Value => Vehicle?.Components?[ComponentIndex];
 
@@ -40,14 +40,9 @@ namespace FrEee.Objects.Technology
 
 		}
 
-		private GameReference<IVehicle> vehicle { get; set; }
-
-		[DoNotSerialize(false)]
-		public IVehicle Vehicle
-		{
-			get => vehicle.Value;
-			set => vehicle = value.ReferViaGalaxy();
-		}
+		[GameReference]
+		[DoNotCopy(false)]
+		public IVehicle Vehicle { get; set; }
 
 		public int ComponentIndex { get; set; }
 	}

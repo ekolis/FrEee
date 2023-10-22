@@ -93,7 +93,7 @@ namespace FrEee.Objects.Orders
 				if (value is IModObject mo)
 					template = GetModReference<TTemplate>(mo.ReferViaMod().ID);
 				else if (value is IReferrable r)
-					template = new GameReference<TTemplate>(r.ReferViaGalaxy().ID);
+					template = new GameReference<TTemplate>(r.ReferViaGame().ID);
 				else if (value == null)
 					template = null;
 				else

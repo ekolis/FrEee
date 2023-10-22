@@ -1,4 +1,4 @@
-﻿using FrEee.Interfaces;
+using FrEee.Interfaces;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Combat;
 using FrEee.Utility;
@@ -22,22 +22,22 @@ namespace FrEee.Objects.Combat.Grid
 		}
 		public bool IsHit { get; set; }
 
-		private GameReference<ICombatant> attacker { get; set; }
+		private ICombatant OurAttacker { get; set; }
 
-		private GameReference<ICombatant> target { get; set; }
+		private ICombatant OurTarget { get; set; }
 
 		[DoNotSerialize]
 		public ICombatant Attacker
 		{
-			get => attacker?.Value ?? Battle?.StartCombatants?[attacker.ID];
-			set => attacker = value.ReferViaGalaxy();
+			get => OurAttacker ?? Battle?.StartCombatants?[OurAttacker.ID];
+			set => OurAttacker = value;
 		}
 
 		[DoNotSerialize]
 		public ICombatant Target
 		{
-			get => target?.Value ?? Battle?.StartCombatants?[target.ID];
-			set => target = value.ReferViaGalaxy();
+			get => OurTarget ?? Battle?.StartCombatants?[OurTarget.ID];
+			set => OurTarget = value;
 		}
 
 		// TODO - make this some sort of reference?

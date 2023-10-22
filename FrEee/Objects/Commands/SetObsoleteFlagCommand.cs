@@ -25,8 +25,8 @@ namespace FrEee.Objects.Commands
 		/// <summary>
 		/// The design to set the flag on if it's already knwon by the server.
 		/// </summary>
-		[DoNotSerialize]
-		public IDesign Design { get { return design?.Value; } set { design = value.ReferViaGalaxy(); } }
+		[GameReference]
+		public IDesign Design { get; set; }
 
 		/// <summary>
 		/// The flag state to set.
@@ -47,8 +47,6 @@ namespace FrEee.Objects.Commands
 			}
 		}
 
-		private GameReference<IDesign> design { get; set; }
-
 		public override void Execute()
 		{
 			if (NewDesign != null)
@@ -68,8 +66,8 @@ namespace FrEee.Objects.Commands
 			{
 				done.Add(this);
 				base.ReplaceClientIDs(idmap, done);
-				if (design != null)
-					design.ReplaceClientIDs(idmap, done);
+				if (Design != null)
+					Design.ReplaceClientIDs(idmap, done);
 				if (NewDesign != null)
 					NewDesign.ReplaceClientIDs(idmap, done);
 			}

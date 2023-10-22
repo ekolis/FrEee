@@ -25,13 +25,13 @@ namespace FrEee.Objects.Combat.Grid
 		[DoNotCopy]
 		public IBattle Battle { get; set; }
 
-		private GameReference<ICombatant> combatant { get; set; }
+		private ICombatant OurCombatant { get; set; }
 
 		[DoNotSerialize]
 		public ICombatant Combatant
 		{
-			get => combatant?.Value ?? Battle?.StartCombatants?[combatant.ID];
-			set => combatant = value.ReferViaGalaxy();
+			get => OurCombatant ?? Battle?.StartCombatants?[OurCombatant.ID];
+			set => OurCombatant = value;
 		}
 
 		public IntVector2 EndPosition { get; set; }

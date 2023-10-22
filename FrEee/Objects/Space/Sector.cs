@@ -171,10 +171,8 @@ namespace FrEee.Objects.Space
 			}
 		}
 
-		[DoNotSerialize]
-		public StarSystem StarSystem { get { return starSystem; } set { starSystem = value; } }
-
-		private GameReference<StarSystem> starSystem { get; set; }
+		[GameReference]
+		public StarSystem StarSystem { get; set; }
 
 		public static bool operator !=(Sector s1, Sector s2)
 		{
@@ -187,7 +185,7 @@ namespace FrEee.Objects.Space
 				return true;
 			if (s1.IsNull() || s2.IsNull())
 				return false;
-			return s1.starSystem == s2.starSystem && s1.Coordinates == s2.Coordinates;
+			return s1.StarSystem == s2.StarSystem && s1.Coordinates == s2.Coordinates;
 		}
 
 		public long AddPopulation(Race race, long amount)
@@ -240,7 +238,7 @@ namespace FrEee.Objects.Space
 
 		public override int GetHashCode()
 		{
-			return HashCodeMasher.Mash(starSystem, Coordinates);
+			return HashCodeMasher.Mash(StarSystem, Coordinates);
 		}
 
 		/// <summary>
@@ -323,7 +321,6 @@ namespace FrEee.Objects.Space
 			if (!done.Contains(this))
 			{
 				done.Add(this);
-				starSystem.ReplaceClientIDs(idmap, done);
 			}
 		}
 

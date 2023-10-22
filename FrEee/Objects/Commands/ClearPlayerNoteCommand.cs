@@ -18,14 +18,12 @@ namespace FrEee.Objects.Commands
 			Target = target;
 		}
 
-		[DoNotSerialize]
-		public IReferrable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
-
-		private GameReference<IReferrable> target { get; set; }
+		[GameReference]
+		public IReferrable Target { get; set; }
 
 		public override void Execute()
 		{
-			Executor.PlayerNotes.Remove(target);
+			Executor.PlayerNotes.Remove(Target);
 		}
 	}
 }

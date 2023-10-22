@@ -55,17 +55,14 @@ namespace FrEee.Objects.Orders
 		/// <summary>
 		/// The empire which issued the order.
 		/// </summary>
-		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		[GameReference]
+		public Empire Owner { get; set; }
 
 		/// <summary>
 		/// The warp point we are using.
 		/// </summary>
-		[DoNotSerialize]
-		public WarpPoint WarpPoint { get { return warpPoint; } set { warpPoint = value; } }
-
-		private GameReference<Empire> owner { get; set; }
-		private GameReference<WarpPoint> warpPoint { get; set; }
+		[GameReference]
+		public WarpPoint WarpPoint { get; set; }
 
 		public bool CheckCompletion(IOrderable v)
 		{

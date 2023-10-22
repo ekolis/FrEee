@@ -1,4 +1,4 @@
-﻿using FrEee.Extensions;
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Space;
 using FrEee.Serialization;
@@ -35,8 +35,8 @@ namespace FrEee.Objects.Civilization
 			}
 		}
 
-		[DoNotSerialize]
-		public ISpaceObject SpaceObject { get { return spaceObject.Value; } set { spaceObject = value.ReferViaGalaxy(); } }
+		[GameReference]
+		public ISpaceObject SpaceObject { get; set; }
 
 		public override StarSystem StarSystem
 		{
@@ -45,7 +45,5 @@ namespace FrEee.Objects.Civilization
 				return SpaceObject.StarSystem;
 			}
 		}
-
-		private GameReference<ISpaceObject> spaceObject { get; set; }
 	}
 }

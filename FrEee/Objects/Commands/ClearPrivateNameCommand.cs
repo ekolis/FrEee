@@ -1,4 +1,4 @@
-﻿using FrEee.Extensions;
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Serialization;
@@ -20,14 +20,12 @@ namespace FrEee.Objects.Commands
 		/// <summary>
 		/// What are we clearing the name on?
 		/// </summary>
-		[DoNotSerialize]
-		public INameable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
-
-		private GameReference<INameable> target { get; set; }
+		[GameReference]
+		public INameable Target { get; set; }
 
 		public override void Execute()
 		{
-			Executor.PrivateNames.Remove(target);
+			Executor.PrivateNames.Remove(Target);
 		}
 	}
 }

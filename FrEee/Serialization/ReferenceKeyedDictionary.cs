@@ -10,7 +10,7 @@ using FrEee.Utility;
 
 namespace FrEee.Serialization
 {
-	public class GalaxyReferenceKeyedDictionary<TKey, TValue> : ReferenceKeyedDictionary<long, GameReference<TKey>, TKey, TValue>
+	public class GameReferenceKeyedDictionary<TKey, TValue> : ReferenceKeyedDictionary<long, GameReference<TKey>, TKey, TValue>
 			where TKey : IReferrable
 	{
 		private SafeDictionary<long, TKey> dict = new SafeDictionary<long, TKey>();

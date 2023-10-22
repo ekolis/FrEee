@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using FrEee.Interfaces;
 using FrEee.Objects.Technology;
 using FrEee.Modding;
@@ -23,10 +23,8 @@ namespace FrEee.Objects.Combat
 			DamageLeft = FullDamage;
 		}
 
-		public GameReference<ICombatant> attacker { get; set; }
-
-		[DoNotSerialize]
-		public ICombatant Attacker { get { return attacker == null ? null : attacker.Value; } set { attacker = value == null ? null : value.ReferViaGalaxy(); } }
+		[GameReference]
+		public ICombatant Attacker { get; set; }
 
 		public int DamageLeft { get; private set; }
 
@@ -46,13 +44,13 @@ namespace FrEee.Objects.Combat
 		[DoNotSerialize]
 		public IDamageable Defender
 		{
-			get { return target?.Value ?? _target; }
+			get { return OurTarget ?? OurDamageableTarget; }
 			set
 			{
 				if (value is IDamageableReferrable dr)
-					target = dr.ReferViaGalaxy();
+					OurTarget = dr;
 				else
-					_target = value;
+					OurDamageableTarget = value;
 			}
 		}
 
@@ -82,8 +80,8 @@ namespace FrEee.Objects.Combat
 
 		public IEnumerable<Hit> Hits { get; private set; }
 		public int Range { get; set; }
-		public GameReference<IDamageableReferrable> target { get; set; }
-		private IDamageable _target { get; set; }
+		public IDamageableReferrable OurTarget { get; set; }
+		private IDamageable OurDamageableTarget { get; set; }
 
 		public IDictionary<string, object> Variables
 		{

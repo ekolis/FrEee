@@ -406,8 +406,8 @@ namespace FrEee.Objects.Vehicles
 		/// <summary>
 		/// The empire which created this design.
 		/// </summary>
-		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		[GameReference]
+		public Empire Owner { get; set; }
 
 		public IEnumerable<Ability> ParentAbilities
 		{
@@ -662,11 +662,6 @@ namespace FrEee.Objects.Vehicles
 		}
 
 		private ModReference<IHull<T>> hull { get; set; }
-
-		/// <summary>
-		/// For serialization and client safety
-		/// </summary>
-		private GameReference<Empire> owner { get; set; }
 
 		public void AddComponent(ComponentTemplate ct, Mount m = null)
 		{

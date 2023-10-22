@@ -27,10 +27,8 @@ namespace FrEee.Objects.Civilization.Diplomacy
 		/// <summary>
 		/// The proposal in question.
 		/// </summary>
-		[DoNotSerialize]
-		public Proposal Proposal { get { return proposal; } set { proposal = value; } }
-
-		private GameReference<Proposal> proposal { get; set; }
+		[GameReference]
+		public Proposal Proposal { get; set; }
 
 		public override void Execute()
 		{
@@ -51,7 +49,7 @@ namespace FrEee.Objects.Civilization.Diplomacy
 			{
 				done.Add(this);
 				base.ReplaceClientIDs(idmap, done);
-				proposal.ReplaceClientIDs(idmap, done);
+				Proposal.ReplaceClientIDs(idmap, done);
 			}
 		}
 	}

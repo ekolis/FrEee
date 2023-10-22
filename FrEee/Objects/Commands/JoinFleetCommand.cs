@@ -1,4 +1,4 @@
-﻿using FrEee.Extensions;
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Space;
 using FrEee.Serialization;
@@ -37,7 +37,7 @@ namespace FrEee.Objects.Commands
 			{
 				if (!value.HasValidID())
 				{
-					// HACK - why is the fleet beign disposed?!
+					// HACK - why is the fleet being disposed?!
 					value.IsDisposed = false;
 					value.ID = 0;
 					The.ReferrableRepository.Add(value);
@@ -46,7 +46,7 @@ namespace FrEee.Objects.Commands
 			}
 		}
 
-		private GameReference<Fleet> fleet { get; set; }
+		private Fleet fleet { get; set; }
 
 		public override void Execute()
 		{

@@ -1,4 +1,4 @@
-﻿using FrEee.Extensions;
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Serialization;
 using FrEee.Utility;
@@ -21,20 +21,8 @@ namespace FrEee.Objects.Commands
 			Order = order;
 		}
 
-		[DoNotSerialize]
-		public virtual IOrder Order
-		{
-			get
-			{
-				return order.Value;
-			}
-			set
-			{
-				order = value.ReferViaGalaxy();
-			}
-		}
-
-		private GameReference<IOrder> order { get; set; }
+		[GameReference]
+		public virtual IOrder Order {  get; set; }
 
 		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
@@ -44,7 +32,7 @@ namespace FrEee.Objects.Commands
 			{
 				done.Add(this);
 				base.ReplaceClientIDs(idmap, done);
-				order.ReplaceClientIDs(idmap, done);
+				Order.ReplaceClientIDs(idmap, done);
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-﻿using FrEee.Extensions;
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Serialization;
@@ -20,14 +20,12 @@ namespace FrEee.Objects.Commands
 
 		public string Note { get; set; }
 
-		[DoNotSerialize]
-		public IReferrable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
-
-		private GameReference<IReferrable> target { get; set; }
+		[GameReference]
+		public IReferrable Target { get; set; }
 
 		public override void Execute()
 		{
-			Executor.PlayerNotes[target] = Note;
+			Executor.PlayerNotes[Target] = Note;
 		}
 	}
 }
