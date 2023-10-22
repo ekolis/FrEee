@@ -1,6 +1,6 @@
-﻿using FrEee.Objects.Civilization;
+﻿using FrEee.Extensions;
+using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
-using FrEee.Utility.Extensions;
 using FrEee.WinForms.DataGridView;
 using System;
 using System.Collections.Generic;

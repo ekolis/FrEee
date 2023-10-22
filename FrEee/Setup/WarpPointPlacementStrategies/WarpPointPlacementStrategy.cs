@@ -2,9 +2,9 @@ using FrEee.Interfaces;
 using FrEee.Objects.Abilities;
 using FrEee.Objects.Space;
 using FrEee.Modding;
-using FrEee.Utility.Extensions;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Extensions;
 
 namespace FrEee.Setup.WarpPointPlacementStrategies
 {

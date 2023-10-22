@@ -1,7 +1,7 @@
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Technology;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using FrEee.WinForms.Interfaces;
 using FrEee.WinForms.Utility.Extensions;
 using System.Linq;

@@ -2,9 +2,9 @@
 using FrEee.Objects.Events;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Extensions;
 
 namespace FrEee.Modding.Loaders
 {

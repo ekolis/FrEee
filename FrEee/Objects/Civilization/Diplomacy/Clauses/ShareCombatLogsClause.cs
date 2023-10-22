@@ -1,8 +1,8 @@
 ﻿using FrEee.Objects.Combat;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Civilization;
-using FrEee.Utility.Extensions;
 using System.Linq;
+using FrEee.Extensions;
 
 namespace FrEee.Objects.Civilization.Diplomacy.Clauses
 {

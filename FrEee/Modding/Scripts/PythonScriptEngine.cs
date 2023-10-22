@@ -1,7 +1,7 @@
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Space;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
 using System;
@@ -194,7 +194,7 @@ namespace FrEee.Modding
 			preCommands.Add("clr.AddReference('FrEee.Core')");
 			preCommands.Add("import FrEee");
 			preCommands.Add("import FrEee.Utility");
-			preCommands.Add("clr.ImportExtensions(FrEee.Utility.Extensions)");
+			preCommands.Add("clr.ImportExtensions(FrEee.Extensions)");
 			preCommands.Add("from FrEee import The");
 			preCommands.Add("from FrEee.Modding import Mod");
 			preCommands.Add("from FrEee.Objects.Space import Galaxy");
@@ -277,7 +277,7 @@ namespace FrEee.Modding
 			preCommands.Add("clr.AddReference('FrEee.Core')");
 			preCommands.Add("import FrEee");
 			preCommands.Add("import FrEee.Utility");
-			preCommands.Add("clr.ImportExtensions(FrEee.Utility.Extensions)");
+			preCommands.Add("clr.ImportExtensions(FrEee.Extensions)");
 			preCommands.Add("from FrEee import The");
 			preCommands.Add("from FrEee.Modding import Mod");
 			preCommands.Add("from FrEee.Objects.Space import Galaxy");

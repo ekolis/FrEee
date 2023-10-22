@@ -1,9 +1,9 @@
-﻿using FrEee.Interfaces;
+﻿using FrEee.Extensions;
+using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using FrEee.Utility.Serialization;
 using System.Collections.Generic;
 using System.Linq;

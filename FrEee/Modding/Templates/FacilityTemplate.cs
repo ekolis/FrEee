@@ -7,12 +7,12 @@ using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Objects.Technology;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using FrEee.Extensions;
 
 namespace FrEee.Objects.Technology
 {

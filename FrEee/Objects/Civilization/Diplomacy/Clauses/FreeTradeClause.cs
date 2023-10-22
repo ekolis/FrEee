@@ -1,7 +1,7 @@
-﻿using FrEee.Modding;
+﻿using FrEee.Extensions;
+using FrEee.Modding;
 using FrEee.Objects.Civilization;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using System;
 
 namespace FrEee.Objects.Civilization.Diplomacy.Clauses

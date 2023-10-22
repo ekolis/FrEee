@@ -6,7 +6,6 @@ using FrEee.Processes;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using FrEee.WinForms.Forms;
 using FrEee.WinForms.Utility;
 using FrEee.WinForms.Utility.Extensions;
@@ -21,6 +20,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using FrEee.Extensions;
 
 namespace FrEee.WinForms
 {

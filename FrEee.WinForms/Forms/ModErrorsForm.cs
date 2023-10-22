@@ -1,5 +1,5 @@
-﻿using FrEee.Modding;
-using FrEee.Utility.Extensions;
+﻿using FrEee.Extensions;
+using FrEee.Modding;
 using FrEee.WinForms.Interfaces;
 using FrEee.WinForms.Utility.Extensions;
 using System;

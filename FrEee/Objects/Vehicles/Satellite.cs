@@ -1,7 +1,7 @@
 ﻿using FrEee.Enumerations;
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
-using FrEee.Utility.Extensions;
 using System;
 
 namespace FrEee.Objects.Vehicles

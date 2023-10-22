@@ -4,11 +4,11 @@ using FrEee.Objects.Commands;
 using FrEee.Objects.Space;
 using FrEee.Objects.Civilization;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using FrEee.Utility.Serialization;
+using FrEee.Extensions;
 
 namespace FrEee.Objects.Civilization.Diplomacy
 {

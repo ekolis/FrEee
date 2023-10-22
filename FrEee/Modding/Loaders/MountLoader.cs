@@ -2,10 +2,10 @@
 using FrEee.Objects.Technology;
 using FrEee.Modding.Enumerations;
 using FrEee.Modding.Interfaces;
-using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Extensions;
 
 namespace FrEee.Modding.Loaders
 {

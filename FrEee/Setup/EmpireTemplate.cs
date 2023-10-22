@@ -2,11 +2,11 @@ using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Modding;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using FrEee.Extensions;
 
 namespace FrEee.Setup
 {

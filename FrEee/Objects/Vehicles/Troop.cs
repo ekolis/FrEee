@@ -4,10 +4,10 @@ using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Objects.LogMessages;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Extensions;
 
 namespace FrEee.Objects.Vehicles
 {

@@ -1,7 +1,7 @@
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Vehicles;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using FrEee.Utility.Serialization;
 using System.Collections.Generic;
 

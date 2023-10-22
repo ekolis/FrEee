@@ -5,13 +5,13 @@ using FrEee.Objects.Space;
 using FrEee.Modding.Interfaces;
 using FrEee.Modding.StellarObjectLocations;
 using FrEee.Modding.Templates;
-using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using Size = FrEee.Enumerations.StellarSize;
+using FrEee.Extensions;
 
 namespace FrEee.Modding.Loaders
 {

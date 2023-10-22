@@ -3,7 +3,7 @@ using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Modding.Templates;
 using FrEee.Interfaces;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using FrEee.Objects.Vehicles; 
 using System.Linq; 
 

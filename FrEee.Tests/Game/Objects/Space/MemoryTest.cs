@@ -3,9 +3,9 @@ using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
-using FrEee.Utility.Extensions;
 using NUnit.Framework;
 using System.Drawing;
+using FrEee.Extensions;
 
 namespace FrEee.Tests.Game.Objects.Space
 {

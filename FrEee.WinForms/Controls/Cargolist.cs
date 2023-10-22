@@ -3,12 +3,12 @@ using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Modding;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using FrEee.WinForms.Interfaces;
 using FrEee.WinForms.Utility.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using FrEee.Extensions;
 
 namespace FrEee.WinForms.Controls
 {

@@ -1,5 +1,5 @@
-﻿using FrEee.Modding.Interfaces;
-using FrEee.Utility.Extensions;
+﻿using FrEee.Extensions;
+using FrEee.Modding.Interfaces;
 using System.Collections.Generic;
 
 namespace FrEee.Modding

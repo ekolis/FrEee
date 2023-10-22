@@ -1,8 +1,8 @@
-﻿using FrEee.Modding;
+﻿using FrEee.Extensions;
+using FrEee.Modding;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.LogMessages;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using System.Linq;
 using Tech = FrEee.Objects.Technology.Technology;
 

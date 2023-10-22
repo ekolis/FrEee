@@ -2,8 +2,8 @@
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Modding;
-using FrEee.Utility.Extensions;
 using NUnit.Framework;
+using FrEee.Extensions;
 
 namespace FrEee.Tests.Game.Objects.Orders
 {

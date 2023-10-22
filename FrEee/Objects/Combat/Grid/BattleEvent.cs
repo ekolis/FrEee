@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Combat;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using FrEee.Utility.Serialization;
 
 namespace FrEee.Objects.Combat.Grid

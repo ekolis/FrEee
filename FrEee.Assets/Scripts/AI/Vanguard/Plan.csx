@@ -4,7 +4,7 @@ using FrEee.Objects.Space;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using FrEee.Objects.Orders;
 using FrEee.Objects.Vehicles;
 using System.Linq; 

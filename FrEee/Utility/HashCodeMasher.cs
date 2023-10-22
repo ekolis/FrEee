@@ -1,4 +1,4 @@
-﻿using FrEee.Utility.Extensions;
+﻿using FrEee.Extensions;
 using System.Collections;
 
 namespace FrEee.Utility

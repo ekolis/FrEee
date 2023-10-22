@@ -7,13 +7,13 @@ using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Objects.Civilization;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using FrEee.Utility.Serialization;
+using FrEee.Extensions;
 
 namespace FrEee.Objects.Space
 {

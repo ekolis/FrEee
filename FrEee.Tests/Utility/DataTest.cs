@@ -1,6 +1,6 @@
+using FrEee.Extensions;
 using FrEee.Objects.Space;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using FrEee.Utility.Serialization;
 using NUnit.Framework;
 using System;

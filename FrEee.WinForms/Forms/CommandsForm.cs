@@ -1,11 +1,5 @@
-﻿using FrEee.Interfaces;
+using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Combat;
-using FrEee.Objects.LogMessages;
-using FrEee.Objects.Space;
-using FrEee.Objects.Technology;
-using FrEee.Modding.Templates;
-using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;

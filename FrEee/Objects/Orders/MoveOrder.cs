@@ -1,11 +1,11 @@
 ﻿using FrEee.Enumerations;
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Combat;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using FrEee.Utility.Serialization;
 using System;
 using System.Collections.Generic;

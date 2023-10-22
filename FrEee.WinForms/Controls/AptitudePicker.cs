@@ -1,5 +1,5 @@
-﻿using FrEee.Objects.Civilization;
-using FrEee.Utility.Extensions;
+﻿using FrEee.Extensions;
+using FrEee.Objects.Civilization;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

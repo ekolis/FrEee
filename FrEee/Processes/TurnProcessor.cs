@@ -12,9 +12,9 @@ using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.VictoryConditions;
 using FrEee.Modding;
-using FrEee.Utility.Extensions;
 using FrEee.Utility;
 using FrEee.Enumerations;
+using FrEee.Extensions;
 
 namespace FrEee.Processes;
 

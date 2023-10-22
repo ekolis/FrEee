@@ -1,7 +1,7 @@
-﻿using FrEee.Interfaces;
+﻿using FrEee.Extensions;
+using FrEee.Interfaces;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
-using FrEee.Utility.Extensions;
 using FrEee.Utility.Serialization;
 using System;
 

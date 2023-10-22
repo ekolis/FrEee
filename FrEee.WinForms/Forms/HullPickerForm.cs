@@ -1,8 +1,8 @@
 ﻿using FrEee.Enumerations;
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using System;
 using System.Data;

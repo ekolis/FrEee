@@ -1,10 +1,10 @@
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Commands;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using FrEee.WinForms.Interfaces;
 using FrEee.WinForms.Utility.Extensions;
 using System;

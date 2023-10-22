@@ -1,6 +1,6 @@
+using FrEee.Extensions;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
-using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

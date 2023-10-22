@@ -1,5 +1,5 @@
+using FrEee.Extensions;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using System;
 using System.Drawing;
 using System.Windows.Forms;

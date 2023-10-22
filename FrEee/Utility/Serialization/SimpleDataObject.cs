@@ -1,7 +1,7 @@
-﻿using FrEee.Utility.Extensions;
+﻿using FrEee.Extensions;
 using Newtonsoft.Json;
 using System;
-using static FrEee.Utility.Extensions.CommonExtensions;
+using static FrEee.Extensions.CommonExtensions;
 
 namespace FrEee.Utility.Serialization
 {

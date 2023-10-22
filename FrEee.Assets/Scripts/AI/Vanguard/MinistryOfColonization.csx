@@ -8,7 +8,7 @@ using System.Linq;
 using System.Collections.Generic;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.Orders;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 
 /// <summary>
 /// Class devoted to the colonization of worlds. 

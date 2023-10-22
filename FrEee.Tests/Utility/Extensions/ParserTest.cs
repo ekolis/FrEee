@@ -1,5 +1,5 @@
-﻿using FrEee.Utility;
-using FrEee.Utility.Extensions;
+﻿using FrEee.Extensions;
+using FrEee.Utility;
 using NUnit.Framework;
 using System;
 

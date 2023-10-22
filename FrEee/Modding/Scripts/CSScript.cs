@@ -1,5 +1,5 @@
+using FrEee.Extensions;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;

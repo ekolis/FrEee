@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 
 namespace FrEee.WinForms.Controls
 {

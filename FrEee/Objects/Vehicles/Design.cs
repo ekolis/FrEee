@@ -9,7 +9,6 @@ using FrEee.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -17,6 +16,7 @@ using System.IO;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using FrEee.Utility.Serialization;
+using FrEee.Extensions;
 
 namespace FrEee.Objects.Vehicles
 {

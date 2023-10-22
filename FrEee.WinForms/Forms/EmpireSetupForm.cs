@@ -3,7 +3,6 @@ using FrEee.Objects.Space;
 using FrEee.Setup;
 using FrEee.Modding;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using System;
 using System.Data;
@@ -12,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using FrEee.Extensions;
 
 namespace FrEee.WinForms.Forms
 {

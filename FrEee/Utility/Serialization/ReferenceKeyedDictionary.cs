@@ -2,10 +2,10 @@ using FrEee.Interfaces;
 using FrEee.Objects.Space;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
-using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Extensions;
 
 namespace FrEee.Utility.Serialization
 {

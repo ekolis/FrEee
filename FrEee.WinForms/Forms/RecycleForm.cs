@@ -1,4 +1,5 @@
-﻿using FrEee.Interfaces;
+﻿using FrEee.Extensions;
+using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Commands;
 using FrEee.Objects.Orders;
@@ -6,7 +7,6 @@ using FrEee.Objects.Orders.RecycleBehaviors;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
-using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;

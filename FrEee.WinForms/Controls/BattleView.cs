@@ -1,10 +1,10 @@
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Combat;
 using FrEee.Objects.Combat.Grid;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using NAudio.MediaFoundation;
 using System;
 using System.Collections.Generic;

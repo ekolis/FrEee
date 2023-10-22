@@ -4,8 +4,8 @@ using FrEee.Objects.Commands;
 using FrEee.Objects.Space;
 using FrEee.Processes;
 using FrEee.Modding;
-using FrEee.Utility.Extensions;
 using NUnit.Framework;
+using FrEee.Extensions;
 
 namespace FrEee.Tests.Game.Objects.Technology
 {

@@ -3,7 +3,7 @@ using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using FrEee.WinForms.DataGridView;
 using FrEee.WinForms.Objects;
 using System;

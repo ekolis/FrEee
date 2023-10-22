@@ -5,11 +5,11 @@ using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using FrEee.Extensions;
 
 namespace FrEee.Tests.Utility
 {

@@ -4,12 +4,12 @@ using FrEee.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Objects.Space;
 using FrEee.Objects.Civilization;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tech = FrEee.Objects.Technology.Technology;
 using FrEee.Utility.Serialization;
+using FrEee.Extensions;
 
 namespace FrEee.Objects.Civilization.Diplomacy
 {

@@ -2,9 +2,9 @@
 using FrEee.Objects.Commands;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Diplomacy;
-using FrEee.Utility.Extensions;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Extensions;
 
 namespace FrEee.Objects.Civilization.Diplomacy.Clauses
 {

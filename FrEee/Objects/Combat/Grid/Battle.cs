@@ -8,12 +8,12 @@ using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Objects.Combat;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using static System.Math;
+using FrEee.Extensions;
 
 namespace FrEee.Objects.Combat.Grid
 {

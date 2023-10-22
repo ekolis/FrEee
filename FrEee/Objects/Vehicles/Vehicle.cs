@@ -11,7 +11,7 @@ using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 
 namespace FrEee.Objects.Vehicles
 {

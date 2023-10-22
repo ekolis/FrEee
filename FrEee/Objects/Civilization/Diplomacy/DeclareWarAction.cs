@@ -1,6 +1,6 @@
-﻿using FrEee.Objects.Civilization;
+﻿using FrEee.Extensions;
+using FrEee.Objects.Civilization;
 using FrEee.Objects.LogMessages;
-using FrEee.Utility.Extensions;
 
 namespace FrEee.Objects.Civilization.Diplomacy
 {

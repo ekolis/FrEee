@@ -3,10 +3,10 @@ using FrEee.Interfaces;
 using FrEee.Objects.Abilities;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
-using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using FrEee.Extensions;
 
 namespace FrEee.Objects.Civilization
 {

@@ -6,8 +6,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Extensions;
 using FrEee.Interfaces;
-using FrEee.Utility.Extensions;
 
 namespace FrEee.Utility;
 

@@ -3,7 +3,6 @@ using FrEee.Objects.Space;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using FrEee.WinForms.Controls;
 using FrEee.WinForms.Interfaces;
 using System;
@@ -13,6 +12,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Utility.Serialization;
+using FrEee.Extensions;
 
 namespace FrEee.WinForms
 {

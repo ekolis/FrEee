@@ -5,12 +5,12 @@ using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Extensions;
 
 namespace FrEee.Objects.Combat.Grid
 {

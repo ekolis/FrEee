@@ -1,5 +1,5 @@
 ﻿using FrEee.Objects.Civilization;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using FrEee.Utility.Serialization;
 using System.Linq;
 using Tech = FrEee.Objects.Technology.Technology;

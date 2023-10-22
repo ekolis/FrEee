@@ -2,7 +2,6 @@
 using FrEee.Objects.Technology;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using FrEee.WinForms.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -11,6 +10,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Component = FrEee.Objects.Technology.Component;
+using FrEee.Extensions;
 
 namespace FrEee.WinForms.Controls
 {

@@ -8,7 +8,6 @@ using FrEee.Objects.Vehicles;
 using FrEee.Setup;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
-using FrEee.Utility.Extensions;
 using Svg;
 using System;
 using System.Collections.Generic;
@@ -16,6 +15,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using FrEee.Extensions;
 
 namespace FrEee.Utility
 {

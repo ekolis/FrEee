@@ -3,7 +3,6 @@ using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 using FrEee.Modding;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using Microsoft.Scripting.Runtime;
 using System;
 using System.Collections.Generic;
@@ -12,6 +11,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Math;
+using FrEee.Extensions;
 
 namespace FrEee.Objects.Combat.Grid
 {

@@ -4,12 +4,12 @@ using FrEee.Objects.Abilities;
 using FrEee.Objects.Civilization;
 using FrEee.Modding;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using FrEee.Utility.Serialization;
+using FrEee.Extensions;
 
 namespace FrEee.Objects.Space
 {

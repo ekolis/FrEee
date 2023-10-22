@@ -2,8 +2,8 @@
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Technology;
 using FrEee.Modding.Enumerations;
-using FrEee.Utility.Extensions;
 using System.Collections.Generic;
+using FrEee.Extensions;
 
 namespace FrEee.Modding.Loaders
 {

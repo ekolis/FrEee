@@ -1,6 +1,6 @@
-﻿using FrEee.Interfaces;
+﻿using FrEee.Extensions;
+using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
-using FrEee.Utility.Extensions;
 using FrEee.Utility.Serialization;
 
 namespace FrEee.Objects.Commands

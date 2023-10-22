@@ -1,10 +1,10 @@
 using FrEee.Enumerations;
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Abilities;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Combat;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using Microsoft.Scripting.Utils;
 using System;
 using System.Collections;

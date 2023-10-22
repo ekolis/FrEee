@@ -1,5 +1,5 @@
-﻿using FrEee.Modding;
-using FrEee.Utility.Extensions;
+﻿using FrEee.Extensions;
+using FrEee.Modding;
 using NUnit.Framework;
 
 namespace FrEee.Tests.Modding.Loaders

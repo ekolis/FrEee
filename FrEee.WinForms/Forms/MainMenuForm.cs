@@ -3,7 +3,6 @@ using FrEee.Objects.Vehicles;
 using FrEee.Setup;
 using FrEee.Modding;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using FrEee.WinForms.Objects;
 using FrEee.WinForms.Utility;
 using FrEee.WinForms.Utility.Extensions;
@@ -17,6 +16,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
+using FrEee.Extensions;
 
 namespace FrEee.WinForms.Forms
 {

@@ -12,7 +12,6 @@ using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Modding.Loaders;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -21,6 +20,7 @@ using System.Linq;
 using System.Reflection;
 using Tech = FrEee.Objects.Technology.Technology;
 using FrEee.Utility.Serialization;
+using FrEee.Extensions;
 
 namespace FrEee.Objects.Civilization
 {

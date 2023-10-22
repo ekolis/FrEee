@@ -9,7 +9,7 @@ using System.Linq;
 using FrEee.Objects.Orders;
 using FrEee.Objects.Vehicles;
 using FrEee.Interfaces;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using FrEee.Objects.Commands;
 using FrEee.Objects.Technology;
 

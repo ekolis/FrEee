@@ -5,10 +5,10 @@ using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
-using FrEee.Utility.Extensions;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Extensions;
 
 namespace FrEee.Tests.Game.Objects.Vehicles
 {

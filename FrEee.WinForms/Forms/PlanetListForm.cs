@@ -1,10 +1,10 @@
+using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Orders;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
 using FrEee.WinForms.DataGridView;
 using FrEee.WinForms.Objects;
 using System;
