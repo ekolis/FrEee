@@ -22,7 +22,7 @@ namespace FrEee.Objects.Orders
 	[Serializable]
 	public class ConstructionOrder<T, TTemplate> : IConstructionOrder
 		where T : IConstructable
-		where TTemplate : ITemplate<T>, IReferrable, IConstructionTemplate
+		where TTemplate : class, ITemplate<T>, IReferrable, IConstructionTemplate
 	{
 		public ConstructionOrder()
 		{
@@ -78,28 +78,47 @@ namespace FrEee.Objects.Orders
 		/// <summary>
 		/// The empire which issued the order.
 		/// </summary>
-		[DoNotSerialize]
-		public Empire Owner { get { return owner; } set { owner = value; } }
+		[GameReference]
+		public Empire Owner { get; set; }
 
 		/// <summary>
 		/// The construction template.
 		/// </summary>
 		[DoNotSerialize]
-		public TTemplate Template
+		public TTemplate? Template
 		{
-			get { return template.Value; }
+			get
+			{
+				return (ModTemplate?.Value as TTemplate) ?? (GameTemplate as TTemplate);
+			}
 			set
 			{
 				if (value is IModObject mo)
-					template = GetModReference<TTemplate>(mo.ReferViaMod().ID);
+				{
+					ModTemplate = mo.ReferViaMod();
+					GameTemplate = null;
+				}
 				else if (value is IReferrable r)
-					template = new GameReference<TTemplate>(r.ReferViaGame().ID);
-				else if (value == null)
-					template = null;
+				{
+					ModTemplate = null;
+					GameTemplate = r;
+				}
+				else if (value is null)
+				{
+					ModTemplate = null;
+					GameTemplate = null;
+				}
 				else
-					throw new Exception($"{value} is not referrable in the galaxy or the mod.");
+				{
+					throw new Exception($"{value} is not referrable in the game or the mod.");
+				}
 			}
 		}
+
+		private ModReference<IModObject>? ModTemplate { get; set; }
+
+		[GameReference]
+		private IReferrable? GameTemplate { get; set; }
 
 		private IReference<U> GetModReference<U>(string id)
 		{
@@ -110,7 +129,7 @@ namespace FrEee.Objects.Orders
 			return r;
 		}
 
-		IConstructionTemplate IConstructionOrder.Template { get { return template.Value; } }
+		IConstructionTemplate IConstructionOrder.Template { get { return Template; } }
 
 		[DoNotSerialize]
 		private bool? isComplete
@@ -118,9 +137,6 @@ namespace FrEee.Objects.Orders
 			get;
 			set;
 		}
-
-		private GameReference<Empire> owner { get; set; }
-		private IReference<TTemplate> template { get; set; }
 
 		public bool CheckCompletion(IOrderable q)
 		{
@@ -219,7 +235,6 @@ namespace FrEee.Objects.Orders
 			if (!done.Contains(this))
 			{
 				done.Add(this);
-				template.ReplaceClientIDs(idmap, done);
 			}
 		}
 

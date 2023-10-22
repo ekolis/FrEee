@@ -777,7 +777,8 @@ namespace FrEee.Serialization
 		private static object DeserializeGameReference(ObjectGraphContext context, long id, Type type)
 		{
 			// do we have it?
-			var result = context.ReferrableRepository[id];
+			var repo = context.ReferrableRepository ?? The.ReferrableRepository;
+			var result = repo[id];
 			if (result is null)
 				throw new SerializationException("No known object of type " + type + " has a game ID of " + id + ".");
 
