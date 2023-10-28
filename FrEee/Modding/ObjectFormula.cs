@@ -167,6 +167,6 @@ namespace FrEee.Modding
 		/// <summary>
 		/// The external scripts required to execute this formula.
 		/// </summary>
-		public PythonScript[] ExternalScripts { get; set; }
+		public PythonScript[] ExternalScripts { get; set; } = new PythonScript[0];
 	}
 }

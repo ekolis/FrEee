@@ -38,10 +38,10 @@ namespace FrEee.Objects.Civilization
 			Commands = new List<ICommand>();
 			KnownDesigns = new HashSet<IDesign>();
 			Log = new List<LogMessage>();
-			ResearchedTechnologies = new ModReferenceKeyedDictionary<Tech, int>();
-			AccumulatedResearch = new ModReferenceKeyedDictionary<Tech, int>();
-			ResearchSpending = new ModReferenceKeyedDictionary<Tech, int>();
-			ResearchQueue = new ModReferenceList<Technology.Technology>();
+			ResearchedTechnologies = new SafeDictionary<Tech, int>();
+			AccumulatedResearch = new SafeDictionary<Tech, int>();
+			ResearchSpending = new SafeDictionary<Tech, int>();
+			ResearchQueue = new List<Technology.Technology>();
 			UniqueTechsFound = new List<string>();
 			Memory = new SafeDictionary<long, IFoggable>();
 			AINotes = new DynamicDictionary();
@@ -76,7 +76,7 @@ namespace FrEee.Objects.Civilization
 		/// <summary>
 		/// Accumulated research points.
 		/// </summary>
-		public ModReferenceKeyedDictionary<Tech, int> AccumulatedResearch
+		public IDictionary<Tech, int> AccumulatedResearch
 		{
 			get;
 			private set;
@@ -586,7 +586,7 @@ namespace FrEee.Objects.Civilization
 		/// <summary>
 		/// Technologies that have been researched by this empire and the levels they have been researched to.
 		/// </summary>
-		public ModReferenceKeyedDictionary<Tech, int> ResearchedTechnologies
+		public IDictionary<Tech, int> ResearchedTechnologies
 		{
 			get;
 			internal set;
@@ -619,7 +619,7 @@ namespace FrEee.Objects.Civilization
 		/// <summary>
 		/// Research spending as a percentage of budget.
 		/// </summary>
-		public ModReferenceKeyedDictionary<Tech, int> ResearchSpending
+		public IDictionary<Tech, int> ResearchSpending
 		{
 			get;
 			private set;

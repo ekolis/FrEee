@@ -1,8 +1,10 @@
-﻿using FrEee.Objects.Civilization;
+using FrEee.Objects.Civilization;
 using FrEee.Extensions;
 using System.Linq;
 using Tech = FrEee.Objects.Technology.Technology;
 using FrEee.Serialization;
+using FrEee.Utility;
+using System.Collections.Generic;
 
 namespace FrEee.Objects.Commands
 {
@@ -14,12 +16,12 @@ namespace FrEee.Objects.Commands
 		public ResearchCommand()
 			: base(Empire.Current)
 		{
-			Spending = new ModReferenceKeyedDictionary<Tech, int>();
-			Queue = new ModReferenceList<Tech>();
+			Spending = new SafeDictionary<Tech, int>();
+			Queue = new List<Tech>();
 		}
 
-		public ModReferenceList<Tech> Queue { get; private set; }
-		public ModReferenceKeyedDictionary<Tech, int> Spending { get; private set; }
+		public IList<Tech> Queue { get; private set; }
+		public IDictionary<Tech, int> Spending { get; private set; }
 
 		public override void Execute()
 		{

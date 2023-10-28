@@ -24,7 +24,7 @@ namespace FrEee.Objects.Space
 	{
 		public Fleet()
 		{
-			Vehicles = new GameReferenceSet<IMobileSpaceObject>();
+			Vehicles = new HashSet<IMobileSpaceObject>();
 			Orders = new List<IOrder>();
 			Timestamp = The.TurnProcessor?.Timestamp ?? 0;
 		}
@@ -618,7 +618,7 @@ namespace FrEee.Objects.Space
 		/// The space objects in the fleet.
 		/// Fleets may contain other fleets, but may not contain themselves.
 		/// </summary>
-		public GameReferenceSet<IMobileSpaceObject> Vehicles { get; private set; }
+		public ISet<IMobileSpaceObject> Vehicles { get; private set; }
 
 		public IEnumerable<Component> Weapons
 		{
@@ -800,7 +800,6 @@ namespace FrEee.Objects.Space
 			if (!done.Contains(this))
 			{
 				done.Add(this);
-				Vehicles.ReplaceClientIDs(idmap, done);
 			}
 		}
 

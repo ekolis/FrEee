@@ -16,11 +16,11 @@ namespace FrEee.Objects.Civilization
 	{
 		public CargoDelta()
 		{
-			RacePopulation = new GameReferenceKeyedDictionary<Race, long?>();
+			RacePopulation = new SafeDictionary<Race, long?>();
 			AllPopulation = false;
 			AnyPopulation = 0L;
-			Units = new GameReferenceSet<IUnit>();
-			UnitDesignTonnage = new GameReferenceKeyedDictionary<IDesign, int?>();
+			Units = new HashSet<IUnit>();
+			UnitDesignTonnage = new SafeDictionary<IDesign, int?>();
 			UnitRoleTonnage = new SafeDictionary<string, int?>();
 			UnitTypeTonnage = new SafeDictionary<VehicleTypes, int?>();
 		}
@@ -65,10 +65,10 @@ namespace FrEee.Objects.Civilization
 			}
 		}
 
-		public GameReferenceKeyedDictionary<Race, long?> RacePopulation { get; private set; }
-		public GameReferenceKeyedDictionary<IDesign, int?> UnitDesignTonnage { get; private set; }
+		public SafeDictionary<Race, long?> RacePopulation { get; private set; }
+		public SafeDictionary<IDesign, int?> UnitDesignTonnage { get; private set; }
 		public SafeDictionary<string, int?> UnitRoleTonnage { get; private set; }
-		public GameReferenceSet<IUnit> Units { get; private set; }
+		public ISet<IUnit> Units { get; private set; }
 		public SafeDictionary<VehicleTypes, int?> UnitTypeTonnage { get; private set; }
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
@@ -78,9 +78,7 @@ namespace FrEee.Objects.Civilization
 			if (!done.Contains(this))
 			{
 				done.Add(this);
-				RacePopulation.ReplaceClientIDs(idmap, done);
-				UnitDesignTonnage.ReplaceClientIDs(idmap, done);
-				Units.ReplaceClientIDs(idmap, done);
+				UnitDesignTonnage.Keys.SafeForeach(q => q.ReplaceClientIDs(idmap, done));
 			}
 		}
 

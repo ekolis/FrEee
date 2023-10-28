@@ -23,15 +23,15 @@ namespace FrEee.Objects.Civilization.Diplomacy
 			Owner = owner;
 			Recipient = recipient;
 			TreatyClauses = new HashSet<Clause>();
-			Planets = new GameReferenceSet<Planet>();
-			Vehicles = new GameReferenceSet<IVehicle>();
+			Planets = new HashSet<Planet>();
+			Vehicles = new HashSet<IVehicle>();
 			Resources = new ResourceQuantity();
-			Technology = new ModReferenceKeyedDictionary<Tech, int>();
-			StarCharts = new GameReferenceSet<StarSystem>();
-			CommunicationChannels = new GameReferenceSet<Empire>();
+			Technology = new Dictionary<Tech, int>();
+			StarCharts = new HashSet<StarSystem>();
+			CommunicationChannels = new HashSet<Empire>();
 		}
 
-		public GameReferenceSet<Empire> CommunicationChannels { get; private set; }
+		public ISet<Empire> CommunicationChannels { get; private set; }
 
 		/// <summary>
 		/// Errors due to the game settings restricting certain gifts/trades,
@@ -100,16 +100,16 @@ namespace FrEee.Objects.Civilization.Diplomacy
 		[GameReference]
 		public Empire Owner { get; set; }
 
-		public GameReferenceSet<Planet> Planets { get; private set; }
+		public ISet<Planet> Planets { get; private set; }
 
 		[GameReference]
 		public Empire Recipient { get; set; }
 
 		public ResourceQuantity Resources { get; private set; }
-		public GameReferenceSet<StarSystem> StarCharts { get; private set; }
-		public ModReferenceKeyedDictionary<Tech, int> Technology { get; private set; }
+		public ISet<StarSystem> StarCharts { get; private set; }
+		public IDictionary<Tech, int> Technology { get; private set; }
 		public ISet<Clause> TreatyClauses { get; private set; }
-		public GameReferenceSet<IVehicle> Vehicles { get; private set; }
+		public ISet<IVehicle> Vehicles { get; private set; }
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{

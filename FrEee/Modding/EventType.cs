@@ -1,4 +1,4 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Events;
 using FrEee.Modding.Interfaces;
@@ -50,7 +50,7 @@ namespace FrEee.Modding
 		/// <summary>
 		/// Script to select a target for the event.
 		/// </summary>
-		public ObjectFormula<GameReferenceSet<IReferrable>> TargetSelector { get; set; }
+		public ObjectFormula<ISet<IReferrable>> TargetSelector { get; set; }
 
 		/// <summary>
 		/// Parameters from the mod meta templates.

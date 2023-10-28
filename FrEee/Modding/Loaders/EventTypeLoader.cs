@@ -1,4 +1,4 @@
-﻿using FrEee.Interfaces;
+using FrEee.Interfaces;
 using FrEee.Modding.Interfaces;
 using FrEee.Extensions;
 using System.Collections.Generic;
@@ -31,7 +31,7 @@ namespace FrEee.Modding.Loaders
 				et.Name = rec.Get<string>("Name", et);
 				et.Imports = rec.GetScript("Import", et);
 				et.Parameters = rec.GetScript("Parameter", et);
-				et.TargetSelector = rec.GetReferenceEnumerable<GameReferenceSet<IReferrable>>(new string[] { "Target Selector" }, et);
+				et.TargetSelector = rec.GetObject<ISet<IReferrable>>(new string[] { "Target Selector" }, et);
 				et.TargetSelector.ExternalScripts = et.TargetSelector.ExternalScripts.Append(et.Imports).ToArray();
 				et.Action = rec.GetScript("Action", et);
 				et.Action.ExternalScripts = new PythonScript[] { et.Imports, et.Parameters }.ToHashSet();

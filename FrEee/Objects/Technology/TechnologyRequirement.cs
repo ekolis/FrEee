@@ -47,7 +47,7 @@ namespace FrEee.Objects.Technology
 		/// The technology to be researched.
 		/// </summary>
 		[ModReference]
-		[DoNotCopy(false)]
+		[DoNotCopy()]
 		public Technology Technology { get; set; }
 
 		/// <summary>
