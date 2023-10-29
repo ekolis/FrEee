@@ -2,7 +2,6 @@ using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
-using FrEee.Objects.Civilization;
 using FrEee.Serialization.Stringifiers;
 using FrEee.Utility;
 using System;
@@ -22,8 +21,6 @@ namespace FrEee.Serialization
 {
 	internal static class LegacySerializer
 	{
-		private static IList<Task> propertySetterTasks = new List<Task>();
-
 		internal static T Deserialize<T>(Stream s, ObjectGraphContext? context = null)
 		{
 			var sr = new StreamReader(new BufferedStream(s));
@@ -279,13 +276,6 @@ namespace FrEee.Serialization
 				o = DeserializeObject(r, type, context, log);
 			}
 
-			/*if (isRoot)
-			{
-				// wait for tasks to complete
-				Action<Task> awaitTask = async t => await t;
-				propertySetterTasks.RunTasks(awaitTask);
-			}*/
-
 			if (o is IAfterDeserialize doer)
 			{
 				doer.AfterDeserialize();
@@ -297,6 +287,7 @@ namespace FrEee.Serialization
 
 		private static Array DeserializeArray(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
 		{
+			// XXX: fix deserialization of referrables and mod objects that are in arrays, they should be deserialized as IDs
 			// arrays
 			Array o;
 			// read bounds or id number
@@ -524,6 +515,7 @@ namespace FrEee.Serialization
 
 		private static IEnumerable DeserializeCollection(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
 		{
+			// XXX: fix deserialization of referrables and mod objects that are in lists/dictionaries/sets, they should be deserialized as IDs
 			IEnumerable o = null;
 			// collections
 			// read size or id number
@@ -836,6 +828,7 @@ namespace FrEee.Serialization
 
 		private static void WriteArray(Array array, TextWriter w, ObjectGraphContext context, int tabLevel)
 		{
+			// XXX: fix serialization of referrables and mod objects that are in arrays, they should be serialized as IDs
 			var tabs = new string('\t', tabLevel);
 
 			// arrays get size and elements listed out
@@ -916,6 +909,7 @@ namespace FrEee.Serialization
 			}
 			foreach (var item in list)
 			{
+				// XXX: fix serialization of referrables and mod objects that are in lists/dictionaries/sets, they should be serialized as IDs
 				if (isDict)
 				{
 					var keyprop = ObjectGraphContext.GetKnownProperties(itemType)["Key"];

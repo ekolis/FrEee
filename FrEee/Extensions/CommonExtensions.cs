@@ -1886,64 +1886,6 @@ namespace FrEee.Extensions
 				LogUnitTransferFailedNoStorage(unit, src, dest, emp);
 		}
 
-		/*// based on http://cangencer.wordpress.com/2011/06/08/auto-ignore-non-existing-properties-with-automapper/
-		private static IMappingExpression<T, T> IgnoreReadOnlyAndNonSerializableProperties<T>(this IMappingExpression<T, T> expression)
-		{
-			var type = typeof(T);
-			var existingMaps = Mapper.GetAllTypeMaps().First(x => x.SourceType.IsAssignableFrom(type)
-				&& x.DestinationType.IsAssignableFrom(type));
-			foreach (var property in existingMaps.GetPropertyMaps().Where(pm =>
-				{
-					var prop = (PropertyInfo)pm.DestinationProperty.MemberInfo;
-					var realprop = prop.DeclaringType.GetProperty(prop.Name);
-					return realprop.GetSetMethod(true) == null || realprop.GetCustomAttributes(true).OfType<DoNotSerializeAttribute>().Any();
-				}))
-				expression.ForMember(property.DestinationProperty.Name, opt => opt.Ignore());
-			return expression;
-		}
-
-		private static IMappingExpression<T, T> IgnoreIDProperty<T>(this IMappingExpression<T, T> expression)
-			where T : IReferrable
-		{
-			var type = typeof(T);
-			var existingMaps = Mapper.GetAllTypeMaps().First(x => x.SourceType.Equals(type)
-				&& x.DestinationType.Equals(type));
-			foreach (var property in existingMaps.GetPropertyMaps().Where(pm => ((PropertyInfo)pm.DestinationProperty.MemberInfo).Name == "ID"))
-				expression.ForMember(property.DestinationProperty.Name, opt => opt.Ignore());
-			return expression;
-		}*/
-		/*/// <summary>
-		/// XXX don't use this function, it seems to skip some of the tasks
-		/// </summary>
-		/// <param name="ops">The ops.</param>
-		public static void RunTasks(this IEnumerable<Action> ops)
-		{
-			// http://stackoverflow.com/a/19193473/1159763
-			// for some reason we can't just say ops.SpawnTasksAsync().Wait() as this causes a hang
-			var runSync = Task.Factory.StartNew(new Func<Task>(async () =>
-			{
-				await ops.SpawnTasksAsync();
-			})).Unwrap();
-			runSync.Wait();
-		}
-
-		/// <summary>
-		/// XXX don't use this function, it seems to skip some of the tasks
-		/// </summary>
-		/// <typeparam name="TIn">The type of the in.</typeparam>
-		/// <param name="objs">The objs.</param>
-		/// <param name="op">The op.</param>
-		public static void RunTasks<TIn>(this IEnumerable<TIn> objs, Action<TIn> op)
-		{
-			// http://stackoverflow.com/a/19193473/1159763
-			// for some reason we can't just say objs.SpawnTasksAsync(op).Wait() as this causes a hang
-			var runSync = Task.Factory.StartNew(new Func<Task>(async () =>
-			{
-				await objs.SpawnTasksAsync(op);
-			})).Unwrap();
-			runSync.Wait();
-		}*/
-
 		public static void RecordLog<T>(this T t, string text, LogMessageType logMessageType) where T : IOwnable
 		{
 			t.Owner.RecordLog(t, text, logMessageType);

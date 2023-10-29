@@ -11,7 +11,6 @@ using FrEee.Interfaces;
 
 namespace FrEee.Utility;
 
-// XXX: Fix referrable repository so that it contains more than just star systems
 // XXX: Redact referrable repository
 
 /// <summary>

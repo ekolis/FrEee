@@ -35,11 +35,7 @@ public static class The
 
 	public static GameSetup Setup => Game.Setup;
 
-	// XXX: why is this null when loading a player GAM file? could it be related to the null colony containers?
 	public static ReferrableRepository<IReferrable> ReferrableRepository => Game.ReferrableRepository;
-
-	// XXX: Add more properties for sub-repositories so referrables can be referenced directly via them somehow
-	// XXX: wait do we only need referrables and references when serializing?! this simplifies so much!!!
 
 	public static Galaxy Galaxy => Game.Galaxy;
 
