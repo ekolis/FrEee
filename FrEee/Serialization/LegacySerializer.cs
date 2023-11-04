@@ -166,12 +166,6 @@ namespace FrEee.Serialization
 			if (context == null)
 				context = new ObjectGraphContext();
 
-			if (isRoot)
-			{
-				// clear out our tasks
-				propertySetterTasks = new List<Task>();
-			}
-
 			// find data type
 			var typename = r.ReadTo(':', log).Trim();
 			Type type;
