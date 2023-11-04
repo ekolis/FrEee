@@ -15,7 +15,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using FrEee.Extensions;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 
 namespace FrEee.Objects.Space
 {

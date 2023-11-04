@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 
 namespace FrEee.Modding
 {

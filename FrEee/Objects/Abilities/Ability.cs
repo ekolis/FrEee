@@ -3,12 +3,13 @@ using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Extensions;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 
 namespace FrEee.Objects.Abilities
 {

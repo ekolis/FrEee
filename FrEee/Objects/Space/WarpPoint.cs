@@ -2,7 +2,7 @@ using FrEee.Enumerations;
 using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 using FrEee.Utility;
 using System;
 using System.Linq;

@@ -3,7 +3,7 @@ using FrEee.Objects.Civilization;
 using FrEee.Modding;
 using FrEee.Utility;
 using System;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 
 namespace FrEee.Objects.Technology
 {

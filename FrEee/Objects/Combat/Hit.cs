@@ -3,7 +3,7 @@ using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 using FrEee.Utility;
 
 namespace FrEee.Objects.Combat

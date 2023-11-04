@@ -2,7 +2,7 @@ using FrEee.Objects.Civilization;
 using FrEee.Extensions;
 using System.Linq;
 using Tech = FrEee.Objects.Technology.Technology;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 using FrEee.Utility;
 using System.Collections.Generic;
 
@@ -20,7 +20,9 @@ namespace FrEee.Objects.Commands
 			Queue = new List<Tech>();
 		}
 
+		[ModReferenceEnumerable]
 		public IList<Tech> Queue { get; private set; }
+		[ModReferenceKeyedDictionary]
 		public IDictionary<Tech, int> Spending { get; private set; }
 
 		public override void Execute()

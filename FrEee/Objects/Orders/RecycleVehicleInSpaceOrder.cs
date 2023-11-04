@@ -3,7 +3,7 @@ using FrEee.Objects.Civilization;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 using FrEee.Utility;
 using System.Collections.Generic;
 using System.Linq;

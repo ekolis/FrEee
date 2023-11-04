@@ -1,7 +1,6 @@
 using FrEee.Extensions;
 using FrEee.Interfaces;
-using FrEee.Serialization;
-using FrEee.Utility;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 

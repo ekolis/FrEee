@@ -2,14 +2,14 @@ using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Objects.Space;
-using FrEee.Objects.Civilization;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tech = FrEee.Objects.Technology.Technology;
 using FrEee.Extensions;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 
 namespace FrEee.Objects.Civilization.Diplomacy
 {
@@ -31,6 +31,7 @@ namespace FrEee.Objects.Civilization.Diplomacy
 			CommunicationChannels = new HashSet<Empire>();
 		}
 
+		[GameReferenceEnumerable]
 		public ISet<Empire> CommunicationChannels { get; private set; }
 
 		/// <summary>
@@ -100,15 +101,19 @@ namespace FrEee.Objects.Civilization.Diplomacy
 		[GameReference]
 		public Empire Owner { get; set; }
 
-		public ISet<Planet> Planets { get; private set; }
-
 		[GameReference]
 		public Empire Recipient { get; set; }
 
+		[GameReferenceEnumerable]
+		public ISet<Planet> Planets { get; private set; }
 		public ResourceQuantity Resources { get; private set; }
+		[GameReferenceEnumerable]
 		public ISet<StarSystem> StarCharts { get; private set; }
+		[ModReferenceKeyedDictionary]
 		public IDictionary<Tech, int> Technology { get; private set; }
+		[GameReferenceEnumerable]
 		public ISet<Clause> TreatyClauses { get; private set; }
+		[GameReferenceEnumerable]
 		public ISet<IVehicle> Vehicles { get; private set; }
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)

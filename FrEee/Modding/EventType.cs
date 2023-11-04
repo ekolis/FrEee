@@ -3,7 +3,7 @@ using FrEee.Interfaces;
 using FrEee.Objects.Events;
 using FrEee.Modding.Interfaces;
 using System.Collections.Generic;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 
 namespace FrEee.Modding
 {

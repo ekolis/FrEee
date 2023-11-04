@@ -13,7 +13,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 using FrEee.Extensions;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 
 namespace FrEee.WinForms
 {

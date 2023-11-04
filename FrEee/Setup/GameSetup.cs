@@ -14,7 +14,7 @@ using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 
 namespace FrEee.Setup
 {

@@ -62,7 +62,7 @@ namespace FrEee.Modding
 			else if (The.Mod.Find<T>(id) is T)
 				ID = id;
 			else
-				throw new Exception("Object with ID " + id + " is not a " + typeof(T) + ".");
+				throw new Exception("Object with ID " + id + " does not exist or is not a " + typeof(T) + ".");
 		}
 
 		/// <summary>

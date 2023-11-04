@@ -13,7 +13,7 @@ using FrEee.Modding.Templates;
 using FrEee.Objects.LogMessages;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 
 namespace FrEee.Objects.Space
 {

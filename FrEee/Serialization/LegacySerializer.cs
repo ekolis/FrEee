@@ -2,8 +2,11 @@ using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
+using FrEee.Serialization;
+using FrEee.Serialization.Attributes;
 using FrEee.Serialization.Stringifiers;
 using FrEee.Utility;
+using Microsoft.Scripting.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -61,7 +64,7 @@ namespace FrEee.Serialization
 			return SafeType.GetShortTypeName(t);
 		}
 
-		internal static void Serialize(object o, TextWriter w, Type desiredType, ObjectGraphContext? context = null, int tabLevel = 0)
+		internal static void Serialize(object o, TextWriter w, Type desiredType, ObjectGraphContext? context = null, int tabLevel = 0, char? gameOrMod = null)
 		{
 			// set up our serialization context if we haven't already
 			if (context == null)
@@ -137,6 +140,12 @@ namespace FrEee.Serialization
 			if (type != desiredType)
 				w.Write(tabs);
 
+			// write game/mod reference indicator
+			if (gameOrMod != null)
+			{
+				w.Write(gameOrMod);
+			}
+
 			// serialize the object
 			if (StringifierLibrary.Instance.All?.Any(x => x.SupportedType.IsAssignableFrom(type)) ?? false)
 				WriteStringifiedObject(o, w);
@@ -160,7 +169,7 @@ namespace FrEee.Serialization
 				w.Flush();
 		}
 
-		private static object Deserialize(TextReader r, Type desiredType, bool isRoot, ObjectGraphContext context = null, StringBuilder log = null)
+		private static object Deserialize(TextReader r, Type desiredType, bool isRoot, ObjectGraphContext context = null, StringBuilder log = null, char? gameOrMod = null)
 		{
 			// set up our serialization context if we haven't already
 			if (context == null)
@@ -224,7 +233,7 @@ namespace FrEee.Serialization
 
 			if (StringifierLibrary.Instance.All?.Any(x => x.SupportedType.IsAssignableFrom(type)) ?? false)
 			{
-				o = DeserializeStringifiedObject(r, type, context, log);
+				o = DeserializeStringifiedObject(r, type, context, log, gameOrMod);
 			}
 			else if (type.IsPrimitive || type == typeof(decimal))
 			{
@@ -262,7 +271,7 @@ namespace FrEee.Serialization
 			else if (typeof(IEnumerable).IsAssignableFrom(type) && type.GetMethods().Where(m => m.Name == "Add" && m.GetParameters().Length == 1 || m.GetParameters().Length == 2).Any() && !typeof(IReferenceEnumerable).IsAssignableFrom(type))
 			{
 				// parse collections
-				o = DeserializeCollection(r, type, context, log);
+				o = DeserializeCollection(r, type, context, log, gameOrMod);
 			}
 			else
 			{
@@ -281,7 +290,7 @@ namespace FrEee.Serialization
 
 		private static Array DeserializeArray(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
 		{
-			// XXX: fix deserialization of referrables and mod objects that are in arrays, they should be deserialized as IDs
+			// XXX: fix deserialization of referrables and mod objects that are in arrays, they should be deserialized as IDs (do we actually have any?)
 			// arrays
 			Array o;
 			// read bounds or id number
@@ -371,7 +380,7 @@ namespace FrEee.Serialization
 			return o;
 		}
 
-		private static IEnumerable DeserializeDictionary(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		private static IEnumerable DeserializeDictionary(TextReader r, Type type, ObjectGraphContext context, StringBuilder log, char? gameOrMod)
 		{
 			IEnumerable o;
 			int size;
@@ -428,7 +437,24 @@ namespace FrEee.Serialization
 			{
 				var key = Deserialize(r, keyprop.PropertyType, false, context, log);
 				var val = Deserialize(r, valprop.PropertyType, false, context, log);
-				lambdaAdder.DynamicInvoke(coll, key, val);
+				if (gameOrMod == 'g')
+				{
+					context.AfterDeserializeActions.Add(() =>
+					{
+						lambdaAdder.DynamicInvoke(coll, The.ReferrableRepository[(int)key], val);
+					});
+				}
+				else if (gameOrMod == 'm')
+				{
+					context.AfterDeserializeActions.Add(() =>
+					{
+						lambdaAdder.DynamicInvoke(coll, The.Mod.Objects.Single(q => q.ModID == (string)key), val);
+					});
+				}
+				else
+				{
+					lambdaAdder.DynamicInvoke(coll, key, val);
+				}
 			}
 
 			o = (IEnumerable)coll;
@@ -439,7 +465,7 @@ namespace FrEee.Serialization
 			return o;
 		}
 
-		private static IEnumerable DeserializeList(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		private static IEnumerable DeserializeList(TextReader r, Type type, ObjectGraphContext context, StringBuilder log, char? gameOrMod)
 		{
 			IEnumerable o;
 			int size;
@@ -497,7 +523,24 @@ namespace FrEee.Serialization
 			for (var i = 0; i < size; i++)
 			{
 				var item = Deserialize(r, itemType, false, context, log);
-				lambdaAdder.DynamicInvoke(coll, item);
+				if (gameOrMod == 'g')
+				{
+					context.AfterDeserializeActions.Add(() =>
+					{
+						lambdaAdder.DynamicInvoke(coll, The.ReferrableRepository[(int)item]);
+					});
+				}
+				else if (gameOrMod == 'm')
+				{
+					context.AfterDeserializeActions.Add(() =>
+					{
+						lambdaAdder.DynamicInvoke(coll, The.Mod.Objects.Single(q => q.ModID == (string)item));
+					});
+				}
+				else
+				{
+					lambdaAdder.DynamicInvoke(coll, item);
+				}
 			}
 			o = (IEnumerable)coll;
 
@@ -507,7 +550,7 @@ namespace FrEee.Serialization
 			return o;
 		}
 
-		private static IEnumerable DeserializeCollection(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		private static IEnumerable DeserializeCollection(TextReader r, Type type, ObjectGraphContext context, StringBuilder log, char? gameOrMod)
 		{
 			// XXX: fix deserialization of referrables and mod objects that are in lists/dictionaries/sets, they should be deserialized as IDs
 			IEnumerable o = null;
@@ -524,15 +567,11 @@ namespace FrEee.Serialization
 				log.Append((char)fin);
 			if (fin == 'c')
 			{
-				o = DeserializeList(r, type, context, log);
-			}
-			else if (fin == 'c')
-			{
-				o = DeserializeList(r, type, context, log);
+				o = DeserializeList(r, type, context, log, gameOrMod);
 			}
 			else if (fin == 'd')
 			{
-				o = DeserializeDictionary(r, type, context, log);
+				o = DeserializeDictionary(r, type, context, log, gameOrMod);
 			}
 			else if (fin == 'i')
 			{
@@ -559,10 +598,11 @@ namespace FrEee.Serialization
 			}
 			else
 				throw new SerializationException("Expected 'c'/'d'/'i'/'n', got '" + (char)fin + "' when parsing " + type + ".");
+
 			return o;
 		}
 
-		private static object DeserializeStringifiedObject(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		private static object DeserializeStringifiedObject(TextReader r, Type type, ObjectGraphContext context, StringBuilder log, char? gameOrMod)
 		{
 			object o;
 			// read tag to see if it's actually a stringified object
@@ -608,11 +648,11 @@ namespace FrEee.Serialization
 			}
 			else if (fin == 'd')
 			{
-				o = DeserializeDictionary(r, type, context, log);
+				o = DeserializeDictionary(r, type, context, log, gameOrMod);
 			}
 			else if (fin == 'c')
 			{
-				o = DeserializeList(r, type, context, log);
+				o = DeserializeList(r, type, context, log, gameOrMod);
 			}
 			else
 				throw new Exception("Unknown data tag " + fin + ", was expecting s/p/i/n/d/c.");
@@ -723,7 +763,7 @@ namespace FrEee.Serialization
 			else if (fin == 'm')
 			{
 				// ID - need to find known mod object
-				var modID = r.ReadToEndOfLine(';', log);
+				var modID = r.ReadToEndOfLine(';', log).Trim('"').Replace("\\\\", "\\");
 				o = DeserializeModReference(context, modID, type);
 			}
 			else if (fin == 'n')
@@ -735,7 +775,7 @@ namespace FrEee.Serialization
 				ReadSemicolon(r, type, log);
 			}
 			else
-				throw new SerializationException("Expected 'p'/'i'/'n'/'g', got '" + (char)fin + "' when parsing " + type + ".");
+				throw new SerializationException("Expected 'p'/'i'/'n'/'g'/'m', got '" + (char)fin + "' when parsing " + type + ".");
 			return o;
 		}
 
@@ -854,7 +894,7 @@ namespace FrEee.Serialization
 			w.WriteLine(";");
 		}
 
-		private static void WriteCollection(IEnumerable list, TextWriter w, ObjectGraphContext context, int tabLevel)
+		private static void WriteCollection(IEnumerable list, TextWriter w, ObjectGraphContext context, int tabLevel, char? gameOrMod = null)
 		{
 			var tabs = new string('\t', tabLevel);
 
@@ -862,7 +902,7 @@ namespace FrEee.Serialization
 			Type itemType;
 			var type = list.GetType();
 			var isDict = false;
-			if (type.GetGenericArguments().Length == 2)
+			if (type.GetGenericArguments().Length == 2 && !type.Name.Contains("SelectEnumerableIterator"))
 			{
 				// HACK - assume it's a dictionary, no real way to test
 				itemType = typeof(KeyValuePair<,>).MakeGenericType(type.GetGenericArguments());
@@ -908,11 +948,11 @@ namespace FrEee.Serialization
 				{
 					var keyprop = ObjectGraphContext.GetKnownProperties(itemType)["Key"];
 					var valprop = ObjectGraphContext.GetKnownProperties(itemType)["Value"];
-					Serialize(context.GetObjectProperty(item, keyprop), w, keyprop.PropertyType, context, tabLevel + 1);
+					Serialize(context.GetObjectProperty(item, keyprop), w, keyprop.PropertyType, context, tabLevel + 1, gameOrMod);
 					Serialize(context.GetObjectProperty(item, valprop), w, valprop.PropertyType, context, tabLevel + 1);
 				}
 				else
-					Serialize(item, w, itemType, context, tabLevel + 1);
+					Serialize(item, w, itemType, context, tabLevel + 1, gameOrMod);
 			}
 
 			// write end object
@@ -950,19 +990,7 @@ namespace FrEee.Serialization
 					var prop = ObjectGraphContext.GetKnownProperties(type)[pname];
 					if (prop is not null)
 					{
-						if (prop.HasAttribute<GameReferenceAttribute>())
-						{
-							WriteGameReferenceProperty(w, o, prop.Name, (IReferrable)val, tabLevel + 1);
-						}
-						else if (prop.HasAttribute<ModReferenceAttribute>())
-						{
-							WriteModReferenceProperty(w, o, prop.Name, (IModObject)val, tabLevel + 1);
-						}
-						else
-						{
-							var ptype = prop.PropertyType;
-							WriteProperty(w, o, ptype, pname, val, context, tabLevel);
-						}
+						WriteAnyProperty(w, o, prop, val, context, tabLevel);
 					}
 					else
 					{
@@ -979,20 +1007,9 @@ namespace FrEee.Serialization
 					p.HasAttribute<ForceSerializationWhenDefaultValueAttribute>() || // force serialization of property even if value is null/default?
 					!p.GetValue(o, null).SafeEquals(p.PropertyType.DefaultValue())); // property value is not null/default?
 				w.WriteLine("p" + props.Count() + ":");
-				foreach (var p in props.OrderBy(p => GetSerializationPriority(p)))
+				foreach (var prop in props.OrderBy(p => GetSerializationPriority(p)))
 				{
-					if (p.HasAttribute<GameReferenceAttribute>())
-					{
-						WriteGameReferenceProperty(w, o, p.Name, (IReferrable)context.GetObjectProperty(o, p), tabLevel + 1);
-					}
-					else if (p.HasAttribute<ModReferenceAttribute>())
-					{
-						WriteModReferenceProperty(w, o, p.Name, (IModObject)context.GetObjectProperty(o, p), tabLevel + 1);
-					}
-					else
-					{
-						WriteProperty(w, o, p.PropertyType, p.Name, context.GetObjectProperty(o, p), context, tabLevel);
-					}
+					WriteAnyProperty(w, o, prop, context.GetObjectProperty(o, prop), context, tabLevel);
 				}
 			}
 
@@ -1017,17 +1034,10 @@ namespace FrEee.Serialization
 			var moreTabs = new string('\t', tabLevel + 1);
 
 			// serialize property name and value
-			try
-			{
-				w.Write(moreTabs);
-				w.Write(pname);
-				w.Write(":\n");
-				Serialize(val, w, ptype, context, tabLevel + 2);
-			}
-			catch (Exception ex)
-			{
-				throw new SerializationException("Could not serialize property " + pname + " of " + o + " because the property accessor threw an exception: " + ex.Message, ex);
-			}
+			w.Write(moreTabs);
+			w.Write(pname);
+			w.Write(":\n");
+			Serialize(val, w, ptype, context, tabLevel + 2);
 		}
 
 		private static void WriteString(string s, TextWriter w)
@@ -1069,7 +1079,7 @@ namespace FrEee.Serialization
 				w.Write(tabs);
 				w.Write(pname);
 				w.Write(":\n");
-				w.Write(moreTabs); ;
+				w.Write(moreTabs);
 				w.Write(":g");
 				w.Write(r.ID);
 				w.Write(";");
@@ -1092,15 +1102,80 @@ namespace FrEee.Serialization
 				w.Write(tabs);
 				w.Write(pname);
 				w.Write(":\n");
-				w.Write(moreTabs); ;
-				w.Write(":m");
+				w.Write(moreTabs);
+				w.Write(":m\"");
 				w.Write(mo.ModID);
-				w.Write(";");
+				w.Write("\";");
 				w.Write("\n");
 			}
 			catch (Exception ex)
 			{
 				throw new SerializationException("Could not serialize mod reference property " + pname + " of " + o + ": " + ex.Message, ex);
+			}
+		}
+
+		private static void WriteAnyProperty(TextWriter w, object o, PropertyInfo prop, object val, ObjectGraphContext context, int tabLevel)
+		{
+			var tabs = new string('\t', tabLevel);
+			var moreTabs = new string('\t', tabLevel + 1);
+
+			if (prop.HasAttribute<GameReferenceAttribute>())
+			{
+				WriteGameReferenceProperty(w, o, prop.Name, (IReferrable)val, tabLevel + 1);
+			}
+			else if (prop.HasAttribute<ModReferenceAttribute>())
+			{
+				WriteModReferenceProperty(w, o, prop.Name, (IModObject)val, tabLevel + 1);
+			}
+			else if (prop.HasAttribute<GameReferenceEnumerableAttribute>())
+			{
+				var items = (IEnumerable<IReferrable>)val;
+				w.Write(tabs);
+				w.Write(prop.Name);
+				w.Write(":\n");
+				w.Write(moreTabs);
+				w.Write(new SafeType(val?.GetType()) + ":");
+				WriteCollection(items.Select(q => q.ID), w, context, tabLevel, 'g');
+			}
+			else if (prop.HasAttribute<ModReferenceEnumerableAttribute>())
+			{
+				var items = (IEnumerable<IModObject>)val;
+				w.Write(tabs);
+				w.Write(prop.Name);
+				w.Write(":\n");
+				w.Write(moreTabs);
+				w.Write(new SafeType(val?.GetType()) + ":");
+				WriteCollection(items.Select(q => q.ModID), w, context, tabLevel, 'm');
+			}
+			else if (prop.HasAttribute<GameReferenceKeyedDictionaryAttribute>())
+			{
+				var items = ((IEnumerable)val).Cast<object>();
+				w.Write(tabs);
+				w.Write(prop.Name);
+				w.Write(":\n");
+				w.Write(moreTabs);
+				w.Write(new SafeType(val?.GetType()) + ":");
+				WriteCollection(items.ToDictionary(
+					q => ((IReferrable)q.GetPropertyValue("Key")).ID,
+					q => q.GetPropertyValue("Value")
+					), w, context, tabLevel, 'g');
+			}
+			else if (prop.HasAttribute<ModReferenceKeyedDictionaryAttribute>())
+			{
+				var items = ((IEnumerable)val).Cast<object>();
+				w.Write(tabs);
+				w.Write(prop.Name);
+				w.Write(":\n");
+				w.Write(moreTabs);
+				w.Write(new SafeType(val?.GetType()) + ":");
+				WriteCollection(items.ToDictionary(
+						q => ((IModObject)q.GetPropertyValue("Key")).ModID,
+					q => q.GetPropertyValue("Value")
+					), w, context, tabLevel, 'm');
+			}
+			else
+			{
+				WriteProperty(w, o, prop.PropertyType, prop.Name, val, context, tabLevel);
 			}
 		}
 	}

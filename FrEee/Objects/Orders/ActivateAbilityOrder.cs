@@ -4,12 +4,11 @@ using FrEee.Objects.Civilization;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
-using FrEee.Modding;
 using FrEee.Utility;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Extensions;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 
 namespace FrEee.Objects.Orders
 {

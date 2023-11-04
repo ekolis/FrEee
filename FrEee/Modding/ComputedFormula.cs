@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using FrEee.Extensions;
 using FrEee.Modding.Interfaces;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 using FrEee.Utility;
 
 

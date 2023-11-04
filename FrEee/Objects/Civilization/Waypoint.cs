@@ -2,7 +2,7 @@ using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Orders;
 using FrEee.Objects.Space;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 using FrEee.Utility;
 using System.Collections.Generic;
 using System.Linq;

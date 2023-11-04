@@ -3,7 +3,7 @@ using FrEee.Modding.Interfaces;
 using FrEee.Extensions;
 using System.Collections.Generic;
 using System.Linq;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 
 namespace FrEee.Modding.Loaders
 {

@@ -8,11 +8,11 @@ using FrEee.Interfaces;
 namespace FrEee.Serialization
 {
 	/// <summary>
-	/// Attribute which causes a property to be converted to its in-game ID when serializing.
-	/// The property type must implement <see cref="IReferrable"/>.
+	/// Attribute which causes a property to be converted to a dictionary mapping mod IDs to something when serializing.
+	/// The key type must implement <see cref="IModObject"/>.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-	public class GameReferenceAttribute : Attribute
+	public class ModReferenceKeyedDictionaryAttribute : Attribute
 	{
 	}
 }

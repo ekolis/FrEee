@@ -21,7 +21,7 @@ using FrEee.Utility;
 using FrEee.Processes;
 
 using FrEee.Extensions;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 
 namespace FrEee;
 
@@ -49,6 +49,7 @@ public class Game : IAfterDeserialize
 	/// <returns>The new game.</returns>
 	public static Game Start(Mod mod, GameSetup gameSetup, PRNG? dice = null, Status? status = null, double desiredProgress = 1.0)
 	{
+		The.Mod = mod;
 		The.Game = new(mod, gameSetup, dice);
 		The.Game.Initialize(status ?? new Status(), desiredProgress);
 		return The.Game;

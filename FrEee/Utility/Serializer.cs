@@ -1,4 +1,4 @@
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 using Newtonsoft.Json;
 using System;
 using System.IO;

@@ -13,7 +13,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using FrEee.Extensions;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 
 namespace FrEee.Objects.Space
 {
@@ -618,6 +618,7 @@ namespace FrEee.Objects.Space
 		/// The space objects in the fleet.
 		/// Fleets may contain other fleets, but may not contain themselves.
 		/// </summary>
+		[GameReferenceEnumerable]
 		public ISet<IMobileSpaceObject> Vehicles { get; private set; }
 
 		public IEnumerable<Component> Weapons

@@ -8,9 +8,8 @@ using FrEee.Objects.LogMessages;
 using FrEee.Objects.Orders;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
-using FrEee.Modding;
 using FrEee.Modding.Interfaces;
-using FrEee.Modding.Loaders;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;
@@ -21,7 +20,7 @@ using System.Reflection;
 using Tech = FrEee.Objects.Technology.Technology;
 
 using FrEee.Extensions;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 
 namespace FrEee.Objects.Civilization
 {
@@ -76,6 +75,7 @@ namespace FrEee.Objects.Civilization
 		/// <summary>
 		/// Accumulated research points.
 		/// </summary>
+		[GameReferenceKeyedDictionary]
 		public IDictionary<Tech, int> AccumulatedResearch
 		{
 			get;
@@ -583,9 +583,11 @@ namespace FrEee.Objects.Civilization
 			}
 		}
 
+		// XXX: why are my starting techs all zero?
 		/// <summary>
 		/// Technologies that have been researched by this empire and the levels they have been researched to.
 		/// </summary>
+		[ModReferenceKeyedDictionary]
 		public IDictionary<Tech, int> ResearchedTechnologies
 		{
 			get;
@@ -610,7 +612,8 @@ namespace FrEee.Objects.Civilization
 		/// <summary>
 		/// Queue for unallocated research spending.
 		/// </summary>
-		public IList<Technology.Technology> ResearchQueue
+		[ModReferenceEnumerable]
+		public IList<Tech> ResearchQueue
 		{
 			get;
 			private set;
@@ -619,6 +622,7 @@ namespace FrEee.Objects.Civilization
 		/// <summary>
 		/// Research spending as a percentage of budget.
 		/// </summary>
+		[ModReferenceKeyedDictionary]
 		public IDictionary<Tech, int> ResearchSpending
 		{
 			get;

@@ -1,5 +1,5 @@
 using FrEee.Objects.Civilization;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 using FrEee.Utility;
 
 

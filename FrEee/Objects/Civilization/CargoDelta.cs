@@ -2,7 +2,7 @@ using FrEee.Enumerations;
 using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Modding;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;
@@ -65,9 +65,12 @@ namespace FrEee.Objects.Civilization
 			}
 		}
 
+		[GameReferenceKeyedDictionary]
 		public SafeDictionary<Race, long?> RacePopulation { get; private set; }
+		[GameReferenceKeyedDictionary]
 		public SafeDictionary<IDesign, int?> UnitDesignTonnage { get; private set; }
 		public SafeDictionary<string, int?> UnitRoleTonnage { get; private set; }
+		[GameReferenceEnumerable]
 		public ISet<IUnit> Units { get; private set; }
 		public SafeDictionary<VehicleTypes, int?> UnitTypeTonnage { get; private set; }
 

@@ -2,7 +2,6 @@ using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Abilities;
 using FrEee.Objects.Space;
-using FrEee.Modding;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using FrEee.Extensions;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 
 namespace FrEee.Objects.Civilization
 {

@@ -1,10 +1,7 @@
 using FrEee.Enumerations;
 using FrEee.Interfaces;
-using FrEee.Objects.Space;
-using FrEee.Objects.Civilization;
-using FrEee.Utility;
 using System.Collections.Generic;
-using FrEee.Serialization;
+using FrEee.Serialization; using FrEee.Serialization.Attributes;
 
 namespace FrEee.Objects.Civilization.Diplomacy.Clauses
 {
