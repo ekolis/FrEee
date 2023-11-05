@@ -444,13 +444,6 @@ namespace FrEee.Serialization
 						lambdaAdder.DynamicInvoke(coll, The.ReferrableRepository[(int)key], val);
 					});
 				}
-				else if (gameOrMod == 'm')
-				{
-					context.AfterDeserializeActions.Add(() =>
-					{
-						lambdaAdder.DynamicInvoke(coll, The.Mod.Objects.Single(q => q.ModID == (string)key), val);
-					});
-				}
 				else
 				{
 					lambdaAdder.DynamicInvoke(coll, key, val);
@@ -596,8 +589,18 @@ namespace FrEee.Serialization
 				// clean up
 				ReadSemicolon(r, type, log);
 			}
+			else if (fin == 'g')
+			{
+				// game object (referrable)
+				o = DeserializeCollection(r, type, context, log, 'g');
+			}
+			else if (fin == 'm')
+			{
+				// mod object
+				o = DeserializeCollection(r, type, context, log, 'm');
+			}
 			else
-				throw new SerializationException("Expected 'c'/'d'/'i'/'n', got '" + (char)fin + "' when parsing " + type + ".");
+				throw new SerializationException("Expected 'c'/'d'/'i'/'n'/'g'/'m', got '" + (char)fin + "' when parsing " + type + ".");
 
 			return o;
 		}
@@ -1135,6 +1138,7 @@ namespace FrEee.Serialization
 				w.Write(":\n");
 				w.Write(moreTabs);
 				w.Write(new SafeType(val?.GetType()) + ":");
+				w.Write("g");
 				WriteCollection(items.Select(q => q.ID), w, context, tabLevel, 'g');
 			}
 			else if (prop.HasAttribute<ModReferenceEnumerableAttribute>())
@@ -1145,6 +1149,7 @@ namespace FrEee.Serialization
 				w.Write(":\n");
 				w.Write(moreTabs);
 				w.Write(new SafeType(val?.GetType()) + ":");
+				w.Write("m");
 				WriteCollection(items.Select(q => q.ModID), w, context, tabLevel, 'm');
 			}
 			else if (prop.HasAttribute<GameReferenceKeyedDictionaryAttribute>())
@@ -1155,6 +1160,7 @@ namespace FrEee.Serialization
 				w.Write(":\n");
 				w.Write(moreTabs);
 				w.Write(new SafeType(val?.GetType()) + ":");
+				w.Write("g");
 				WriteCollection(items.ToDictionary(
 					q => ((IReferrable)q.GetPropertyValue("Key")).ID,
 					q => q.GetPropertyValue("Value")
@@ -1168,6 +1174,7 @@ namespace FrEee.Serialization
 				w.Write(":\n");
 				w.Write(moreTabs);
 				w.Write(new SafeType(val?.GetType()) + ":");
+				w.Write("m");
 				WriteCollection(items.ToDictionary(
 						q => ((IModObject)q.GetPropertyValue("Key")).ModID,
 					q => q.GetPropertyValue("Value")
