@@ -15,7 +15,7 @@ p31:
 				Color:
 					:255,255,0,85;
 				Culture:
-					:mCulture Neutral;
+					:m"Culture Neutral";
 				InsigniaName:
 					:"Q";
 				IsPlayerEmpire:
@@ -31,39 +31,39 @@ p31:
 						Aptitudes:
 							FrEee.Utility.SafeDictionary`2[[System.String, System.Private.CoreLib],[System.Int32, System.Private.CoreLib]], FrEee.Core:
 							d15:							
-								:"Farming Aptitude";
-								:100;
-								:"Environmental Resistance";
-								:100;
-								:"Mining Aptitude";
-								:100;
-								:"Maintenance Aptitude";
-								:100;
-								:"Defensiveness";
-								:100;
-								:"Reproduction";
-								:100;
-								:"Political Savvy";
+								:"Construction Aptitude";
 								:100;
 								:"Aggressiveness";
 								:100;
 								:"Cunning";
 								:100;
-								:"Happiness";
-								:100;
 								:"Repair Aptitude";
 								:100;
-								:"Intelligence";
+								:"Reproduction";
+								:100;
+								:"Environmental Resistance";
 								:100;
 								:"Refining Aptitude";
 								:100;
 								:"Physical Strength";
 								:100;
-								:"Construction Aptitude";
+								:"Farming Aptitude";
+								:100;
+								:"Happiness";
+								:100;
+								:"Defensiveness";
+								:100;
+								:"Intelligence";
+								:100;
+								:"Maintenance Aptitude";
+								:100;
+								:"Political Savvy";
+								:100;
+								:"Mining Aptitude";
 								:100;
 							;
 						HappinessModel:
-							:mHappinessModel Peaceful;
+							:m"HappinessModel Peaceful";
 						Name:
 							:"Q";
 						NativeAtmosphere:
@@ -88,7 +88,7 @@ p31:
 	GalaxySize:
 		:s:40, 30;
 	GalaxyTemplate:
-		:mGalaxyTemplate Mid-Life;
+		:m"GalaxyTemplate Mid-Life";
 	GameName:
 		:"Quickstart";
 	GenerateRandomRuins:
@@ -96,7 +96,7 @@ p31:
 	GenerateUniqueRuins:
 		:True;
 	HomeworldSize:
-		:mStellarObjectSize Huge;
+		:m"StellarObjectSize Huge";
 	HomeworldsPerEmpire:
 		:1;
 	HomeworldValue:
