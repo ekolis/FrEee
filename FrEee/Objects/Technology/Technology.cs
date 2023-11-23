@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using FrEee.Extensions;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace FrEee.Objects.Technology
 {
@@ -368,5 +369,19 @@ namespace FrEee.Objects.Technology
 		{
 			return Name;
 		}
+
+		public override int GetHashCode()
+		{
+			return ModID.GetHashCode();
+		}
+
+		public override bool Equals(object? obj)
+		{
+			return obj is Technology x && GetHashCode() == x.GetHashCode();
+		}
+
+		public static bool operator ==(Technology x, Technology y) => x.SafeEquals(y);
+
+		public static bool operator !=(Technology x, Technology y) => !(x == y);
 	}
 }
