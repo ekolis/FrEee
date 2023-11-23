@@ -20,4 +20,7 @@
 	<ItemGroup>
 	  <Folder Include="Savegame\" />
 	</ItemGroup>
+	<PropertyGroup>
+		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+	</PropertyGroup>
 </Project>
