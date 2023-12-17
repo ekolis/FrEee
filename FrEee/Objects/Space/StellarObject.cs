@@ -213,6 +213,8 @@ namespace FrEee.Objects.Space
 			}
 		}
 
+		// TODO: maybe refactor this to not be so calculatey and just store some data and keep it in sync?
+		// honestly a relational database would be nice about now...
 		[DoNotCopy(false)]
 		public virtual Sector Sector
 		{
@@ -280,7 +282,7 @@ namespace FrEee.Objects.Space
 		{
 			if (IsDisposed)
 				return;
-			var sys = this.FindStarSystem();
+			var sys = StarSystem;
 			if (sys != null)
 				sys.Remove(this);
 			The.ReferrableRepository.Remove(this);

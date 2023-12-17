@@ -4,6 +4,7 @@ using FrEee.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
@@ -53,6 +54,7 @@ namespace FrEee.Serialization
 			KnownIDs = new SafeDictionary<Type, IDictionary<object, int>>();
 			objectStack = new Stack<object>();
 			propertyStack = new Stack<string>();
+			objectHistory = new Queue<object>();
 			ObjectQueue = new Queue<object>();
 		}
 
@@ -104,6 +106,9 @@ namespace FrEee.Serialization
 		internal Stack<object> objectStack;
 
 		internal Stack<string> propertyStack;
+
+		[NonSerialized]
+		internal Queue<object> objectHistory;
 
 		/// <summary>
 		/// Known properties for each object type.
@@ -299,11 +304,13 @@ namespace FrEee.Serialization
 				context = new ObjectGraphContext();
 
 			// fire up the queue
+			Debug.WriteLine("Starting object graph parser.");
 			context.ObjectQueue.Enqueue(o);
 			while (context.ObjectQueue.Any())
 			{
 				o = context.ObjectQueue.Dequeue();
 				context.objectStack.Push(o);
+				Debug.WriteLine($"Parsing object: {o?.GetType()?.ToString() ?? "<null>"}: {o ?? "<null>"}.");
 
 				// deal with nulls
 				if (o == null)
@@ -366,7 +373,7 @@ namespace FrEee.Serialization
 				// done parsing object
 				if (EndObject != null)
 					EndObject(o);
-				context.objectStack.Pop();
+				context.objectHistory.Enqueue(context.objectStack.Pop());
 			}
 
 			return context.KnownObjects;

@@ -21,6 +21,8 @@ namespace FrEee.Objects.Space
 		}
 
 		public T Item { get; set; }
+
+		// TODO: get rid of this System.Drawing garbage in the core assembly, maybe use IntVector2
 		public Point Location { get; set; }
 
 		public static bool operator !=(ObjectLocation<T> l1, ObjectLocation<T> l2)

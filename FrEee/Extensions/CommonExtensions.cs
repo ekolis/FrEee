@@ -485,13 +485,22 @@ namespace FrEee.Extensions
 		/// </summary>
 		/// <param name="sobj"></param>
 		/// <returns></returns>
-		public static Sector FindSector(this ISpaceObject sobj)
+		public static Sector? FindSector(this ISpaceObject sobj)
 		{
-			var sys = sobj.FindStarSystem();
-			if (sys == null)
+			if (sobj.ID <= 0)
+			{
+				// not a real space object
 				return null;
+			}
+
+			var sys = sobj.FindStarSystem();
+			if (sys is null)
+			{
+				return null;
+			}
 			// TODO - this might be kind of slow; might want a reverse memory lookup
-			return new Sector(sys, sys.SpaceObjectLocations.Single(l => l.Item == sobj).Location);
+			// object might be a memory or other duplicate, compare based on ID only
+			return new Sector(sys, sys.SpaceObjectLocations.Single(l => l.Item.ID == sobj.ID).Location);
 		}
 
 		/// <summary>
@@ -503,7 +512,8 @@ namespace FrEee.Extensions
 		public static StarSystem? FindStarSystem(this ISpaceObject sobj, Galaxy? galaxy = null)
 		{
 			galaxy ??= The.Galaxy;
-			var loc = galaxy.StarSystemLocations.SingleOrDefault(l => l.Item.Contains(sobj));
+			// object might be a memory or other duplicate, compare based on ID only
+			var loc = galaxy.StarSystemLocations.SingleOrDefault(l => l.Item.SpaceObjects.Any(q => q.ID == sobj.ID));
 			/*if (loc == null)
 			{
 				// search memories too

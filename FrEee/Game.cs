@@ -412,8 +412,10 @@ public class Game : IAfterDeserialize
 	{
 		var fs = new FileStream(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory, filename), FileMode.Open);
 		var game = Serializer.Deserialize<Game>(fs);
-		if (game.ModPath == null)
-			game.Mod = Mod.Load(null); // skipped in deserialization because it is null but the mod needs to be loaded!
+		if (game.Mod is null && The.Mod is not null && game.ModPath != The.Mod.RootPath)
+		{
+			game.Mod = The.Mod; // default to the globally loaded mod if no mod is loaded
+		}
 		if (game.CurrentEmpire != null)
 		{
 			// load library of designs, strategies, etc.
@@ -662,6 +664,7 @@ public class Game : IAfterDeserialize
 			if (File.Exists(plrfile))
 			{
 				var fs = new FileStream(plrfile, FileMode.Open);
+				/// XXX: crash here, trying to reference a design that was just created this turn and thus doesn't exist on the server - might have to stream commands one by one? wait, what happened to promotables? can we use that?
 				var cmds = DeserializeCommands(fs);
 				LoadCommands(emp, cmds);
 				fs.Close(); fs.Dispose();

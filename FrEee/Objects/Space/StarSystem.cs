@@ -248,6 +248,7 @@ namespace FrEee.Objects.Space
 
 		public bool Contains(ISpaceObject sobj)
 		{
+			// what why do we have duplicate objects?! oh it only happens with unexplored systems?
 			return SpaceObjectLocations.Any(l => l.Item == sobj);
 		}
 
@@ -255,11 +256,12 @@ namespace FrEee.Objects.Space
 		{
 			if (IsDisposed)
 				return;
-			if (IsDisposed)
-				return;
+			foreach (var sobj in SpaceObjects.Where(q => !q.IsMemory).ToArray())
+			{
+				sobj.Dispose();
+			}
 			The.ReferrableRepository.Remove(this);
-			if (!IsMemory)
-				this.UpdateEmpireMemories();
+			IsDisposed = true;
 		}
 
 		/// <summary>
@@ -341,7 +343,7 @@ namespace FrEee.Objects.Space
 
 		public void Place(ISpaceObject sobj, Point coords)
 		{
-			var sys = sobj.FindStarSystem();
+			var sys = sobj.StarSystem;
 			if (sys != null)
 			{
 				sys.Remove(sobj);
@@ -360,9 +362,9 @@ namespace FrEee.Objects.Space
 		}
 
 		/// <summary>
-		/// Removes any space objects, etc. that the current empire cannot see.
+		/// Removes any space objects, etc. that the specified empire cannot see.
 		/// </summary>
-		/// <param name="galaxy">The galaxy, for context.</param>
+		/// <param name="emp">The empire to redact for.</param>
 		public void Redact(Empire emp)
 		{
 			// hide explored-by empires

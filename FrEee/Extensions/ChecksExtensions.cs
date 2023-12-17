@@ -103,23 +103,57 @@ namespace FrEee.Extensions
 		/// <returns></returns>
 		public static bool HasAttribute(this MemberInfo mi, Type attributeType, bool checkInterfaces = true)
 		{
+			// first populate/check the attribute cache
 			if (attributeCache[mi] == null)
 				attributeCache[mi] = Attribute.GetCustomAttributes(mi).ToArray();
 			if (attributeCache[mi].Where(a => attributeType.IsAssignableFrom(a.GetType())).Any())
 				return true;
-			var dt = mi is Type ? mi as Type : mi.DeclaringType;
+
 			if (checkInterfaces)
 			{
+				// find the declaring type of the member
+				var dt = mi is Type ? mi as Type : mi.DeclaringType;
+
+				// find any interfaces that the declaring type implements
 				if (interfaceCache[dt] == null)
 					interfaceCache[dt] = dt.GetInterfaces();
 				foreach (var i in interfaceCache[dt])
 				{
+					// populate/check member cache for info about this interface's members
 					if (memberCache[i] == null)
 						memberCache[i] = i.GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).ToArray(); // TODO - refactor into method
-					if (memberCache[i].Any(m => m.Name == mi.Name && m.MemberType == mi.MemberType && m.HasAttribute(attributeType, false))) // no need to check interfaces of interfaces, they're already listed by GetInterfaces
+					if (memberCache[i].Any(m =>
+						{
+							if (m == mi)
+							{
+								// we haven't found the attribute yet, it must not exist
+								return false;
+							}
+							else
+							{
+								if (
+									m.Name == mi.Name
+									&& m.MemberType == mi.MemberType
+									&& m.DeclaringType != mi.DeclaringType
+									)
+								{
+									if (m.HasAttribute(attributeType, false))
+									{
+										return true;
+									}
+								}
+							}
+							return false;
+						}
+					)) // no need to check interfaces of interfaces, they're already listed by GetInterfaces
+					{
 						return true;
+					}
 				}
 			}
+
+			// attribute cache didn't tell us the attribute exists,
+			// and we either didn't need to check the interfaces or they didn't have the attribute either
 			return false;
 		}
 

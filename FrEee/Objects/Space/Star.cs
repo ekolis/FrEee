@@ -16,6 +16,10 @@ namespace FrEee.Objects.Space
 	{
 		// TODO - do stars in SE4 have a size property?
 
+		public Star() 
+		{ 
+		}
+
 		public override AbilityTargets AbilityTarget
 		{
 			get { return AbilityTargets.Star; }
