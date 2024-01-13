@@ -2,7 +2,6 @@ using FrEee.Extensions;
 using FrEee.Interfaces;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
-using FrEee.Serialization;
 using FrEee.Serialization.Attributes;
 using FrEee.Serialization.Stringifiers;
 using FrEee.Utility;
@@ -18,7 +17,6 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace FrEee.Serialization
 {
@@ -281,7 +279,7 @@ namespace FrEee.Serialization
 
 			if (o is IAfterDeserialize doer)
 			{
-				doer.AfterDeserialize();
+				doer.AfterDeserialize(context);
 			}
 
 			// return our new object

@@ -11,6 +11,6 @@ namespace FrEee.Serialization
 	/// </summary>
 	public interface IAfterDeserialize
 	{
-		void AfterDeserialize();
+		void AfterDeserialize(ObjectGraphContext context);
 	}
 }

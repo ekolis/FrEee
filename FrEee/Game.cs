@@ -35,7 +35,7 @@ public class Game : IAfterDeserialize
 		Mod = mod;
 		Setup = setup;
 		Dice = dice ?? new PRNG(DateTime.Now.Millisecond + 1000 * DateTime.Now.Second + 60000 * DateTime.Now.Minute);
-		AfterDeserialize();
+		AfterDeserialize(null);
 	}
 
 	/// <summary>
@@ -664,7 +664,7 @@ public class Game : IAfterDeserialize
 			if (File.Exists(plrfile))
 			{
 				var fs = new FileStream(plrfile, FileMode.Open);
-				/// XXX: crash here, trying to reference a design that was just created this turn and thus doesn't exist on the server - might have to stream commands one by one? wait, what happened to promotables? can we use that?
+				/// XXX: crash here, trying to reference a design that was just created this turn and thus doesn't exist on the server - might have to stream commands one by one? wait, what happened to promotables? can we use that? no, that requires the commands to be loaded... maybe we need a new type of reference, a command or promotable reference? or if we could just put it in the referrable repository before the next command is loaded... maybe a lambda passed into the serializer to do something after each object is deserialized? oh we already have IAfterDeserialize! just check every CreateDesignCommand and create the design at that point? but then it would also be created normally, hmm...
 				var cmds = DeserializeCommands(fs);
 				LoadCommands(emp, cmds);
 				fs.Close(); fs.Dispose();
@@ -745,7 +745,7 @@ public class Game : IAfterDeserialize
 		return Name + " - " + CurrentEmpire.Name + " - " + CurrentEmpire.LeaderName + " - " + Stardate;
 	}
 
-	public void AfterDeserialize()
+	public void AfterDeserialize(ObjectGraphContext context)
 	{
 		TurnProcessor = new(this);
 		AbilityManager = new();

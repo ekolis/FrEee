@@ -310,7 +310,6 @@ namespace FrEee.Serialization
 			{
 				o = context.ObjectQueue.Dequeue();
 				context.objectStack.Push(o);
-				Debug.WriteLine($"Parsing object: {o?.GetType()?.ToString() ?? "<null>"}: {o ?? "<null>"}.");
 
 				// deal with nulls
 				if (o == null)
