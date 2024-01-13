@@ -62,6 +62,7 @@ namespace FrEee.Objects.Commands
 			// or some other sort of protocol that doesn't immediately instantiate live objects?
 			// could this be the root cause of all those previous incompatibilities with various
 			// serializers like the JSON serializer? that we need the intermediate state?
+			// or can we time the loading of different things to make it work as is?
 			context.AfterDeserializeActions.Add(Execute);
 		}
 	}

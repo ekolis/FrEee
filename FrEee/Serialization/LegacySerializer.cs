@@ -18,6 +18,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 
+// XXX: let's just bisect and find the last time the game worked, if it ever did... that will take forever though! I need unit tests! or start over on the refactor? replace the serializer? it has everything to do with the game references needing to be two steps now that they're just objects with attributes and no actual data storage... or maybe if I defined explicit instantiate and populate phases for the deserializer, where instantiate creates blank objects, and populate links them all up and populates their properties? then when serializing I'd need to enumerate all objects and save them off first, then save the data separately... this could almost be a relational database? one section per object type?
 namespace FrEee.Serialization
 {
 	internal static class LegacySerializer
