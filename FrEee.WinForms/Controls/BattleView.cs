@@ -4,7 +4,7 @@ using FrEee.Objects.Combat.Grid;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using NAudio.MediaFoundation;
 using System;
 using System.Collections.Generic;

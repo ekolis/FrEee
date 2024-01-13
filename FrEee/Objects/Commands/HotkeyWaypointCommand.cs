@@ -2,7 +2,7 @@
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Orders;
 using FrEee.Objects.Space;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using System;
 
 namespace FrEee.Objects.Commands

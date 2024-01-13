@@ -3,7 +3,7 @@ using System.Linq;
 using FrEee.Interfaces;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 
 namespace FrEee.Utility
 {

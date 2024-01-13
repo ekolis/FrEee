@@ -1,7 +1,7 @@
 ﻿using FrEee.Setup.StarSystemPlacementStrategies;
 using FrEee.Modding.Interfaces;
 using FrEee.Modding.Templates;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 

@@ -3,7 +3,7 @@ using FrEee.Interfaces;
 using FrEee.Objects.Abilities;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

@@ -1,5 +1,5 @@
 ﻿using FrEee.Objects.Space;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using System;
 
 namespace FrEee.Setup.WarpPointPlacementStrategies

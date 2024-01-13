@@ -1,6 +1,6 @@
 using FrEee.Objects.Space;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using FrEee.WinForms.Objects.GalaxyViewModes;
 using System;
 using System.Drawing;

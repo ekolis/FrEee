@@ -1,7 +1,7 @@
 ﻿using FrEee.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using FrEee.WinForms.Interfaces;
 using System;
 using System.Windows.Forms;

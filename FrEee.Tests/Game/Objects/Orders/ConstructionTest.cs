@@ -2,7 +2,7 @@
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Modding;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using NUnit.Framework;
 
 namespace FrEee.Tests.Objects.Orders

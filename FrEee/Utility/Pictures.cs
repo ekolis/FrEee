@@ -8,7 +8,7 @@ using FrEee.Objects.Vehicles;
 using FrEee.Setup;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using Svg;
 using System;
 using System.Collections.Generic;

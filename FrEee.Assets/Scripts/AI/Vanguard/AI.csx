@@ -13,7 +13,7 @@ using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using System;
 using System.Linq;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 
 
 //Note, at present, classes within scripts cannot be stored in the AI Notes as classes. 

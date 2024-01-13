@@ -1,5 +1,5 @@
 ﻿using FrEee.Interfaces;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 
 namespace FrEee.Objects.Commands
 {

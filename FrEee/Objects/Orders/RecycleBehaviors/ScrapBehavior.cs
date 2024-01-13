@@ -2,7 +2,7 @@
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 

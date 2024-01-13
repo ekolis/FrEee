@@ -13,7 +13,7 @@ using FrEee.Modding.Interfaces;
 using FrEee.Modding.Loaders;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 
 namespace FrEee.Modding;
 

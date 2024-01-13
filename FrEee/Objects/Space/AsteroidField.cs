@@ -3,7 +3,7 @@ using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Modding;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using System;
 
 namespace FrEee.Objects.Space

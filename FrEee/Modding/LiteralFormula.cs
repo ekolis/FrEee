@@ -1,5 +1,5 @@
 ﻿using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

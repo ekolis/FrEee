@@ -7,7 +7,7 @@ using FrEee.Objects.Space;
 using FrEee.Setup;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 
 namespace FrEee.Modding.Templates;
 

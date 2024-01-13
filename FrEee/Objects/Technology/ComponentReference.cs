@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FrEee.Interfaces;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 
 namespace FrEee.Objects.Technology
 {

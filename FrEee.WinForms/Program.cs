@@ -6,7 +6,7 @@ using FrEee.Processes;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using FrEee.WinForms.Forms;
 using FrEee.WinForms.Utility;
 using FrEee.WinForms.Utility.Extensions;

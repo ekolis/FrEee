@@ -4,7 +4,7 @@ using FrEee.Objects.Combat;
 using FrEee.Objects.Combat.Grid;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using FrEee.WinForms.Controls;
 using FrEee.WinForms.Interfaces;
 using FrEee.WinForms.Objects;

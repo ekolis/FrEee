@@ -2158,21 +2158,21 @@
       <FileName>Utility\Status.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Utility.Extensions.CommonExtensions" Collapsed="true">
+  <Class Name="FrEee.Extensions.CommonExtensions" Collapsed="true">
     <Position X="68.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>i9OiRZ0iqHWSCpP+IezR8nFp0jpC03EIG1yzfTca+Yw=</HashCode>
       <FileName>Utility\Extensions\CommonExtensions.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Utility.Extensions.Parser" Collapsed="true">
+  <Class Name="FrEee.Extensions.Parser" Collapsed="true">
     <Position X="54.75" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABAAAAAAAAAEAAAAAAAAAgAAAAAAAABAAAAAAAAEAA=</HashCode>
       <FileName>Utility\Extensions\Parser.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Utility.Extensions.TaskFactoryExtensions" Collapsed="true">
+  <Class Name="FrEee.Extensions.TaskFactoryExtensions" Collapsed="true">
     <Position X="53" Y="10.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAABAA=</HashCode>
@@ -2774,7 +2774,7 @@
       <FileName>Modding\Enumerations\RequirementType.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="FrEee.Utility.Extensions.IDCopyBehavior" Collapsed="true">
+  <Enum Name="FrEee.Extensions.IDCopyBehavior" Collapsed="true">
     <Position X="63.5" Y="14" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAACCAAAAAAAAAAAA=</HashCode>

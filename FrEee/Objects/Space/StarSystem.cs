@@ -11,7 +11,7 @@ using FrEee.Objects.Civilization;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 
 namespace FrEee.Objects.Space
 {

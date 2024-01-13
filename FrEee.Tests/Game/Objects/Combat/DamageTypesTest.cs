@@ -3,7 +3,7 @@ using FrEee.Objects.Combat;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using NUnit.Framework;
 using System;
 using System.Linq;

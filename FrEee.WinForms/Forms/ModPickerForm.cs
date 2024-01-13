@@ -1,7 +1,7 @@
 ﻿using FrEee.Modding;
 using FrEee.Modding.Loaders;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;

@@ -1,7 +1,7 @@
 ﻿using FrEee.Interfaces;
 using FrEee.Objects.Space;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using System;
 
 namespace FrEee.Objects.Civilization

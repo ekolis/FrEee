@@ -7,7 +7,7 @@ using FrEee.Objects.Combat.Grid;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;

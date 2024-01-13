@@ -2,7 +2,7 @@
 using FrEee.Objects.Technology;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using FrEee.WinForms.Interfaces;
 using System;
 using System.Collections.Generic;

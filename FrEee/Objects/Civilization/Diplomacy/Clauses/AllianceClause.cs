@@ -1,6 +1,6 @@
 ﻿using FrEee.Enumerations;
 using FrEee.Objects.Commands;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 

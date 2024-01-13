@@ -9,7 +9,7 @@ using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Processes;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using FrEee.WinForms.Controls;
 using FrEee.WinForms.Interfaces;
 using FrEee.WinForms.Objects;

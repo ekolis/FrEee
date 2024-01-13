@@ -1,8 +1,8 @@
-﻿using FrEee.Enumerations;
+using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using System;
 
 namespace FrEee.Objects.Vehicles
@@ -22,7 +22,7 @@ namespace FrEee.Objects.Vehicles
 
 		ICargoContainer IContainable<ICargoContainer>.Container
 		{
-			get { return Utility.Extensions.CommonExtensions.FindContainer(this); }
+			get { return CommonExtensions.FindContainer(this); }
 		}
 
 		public override bool ParticipatesInGroundCombat
@@ -56,7 +56,7 @@ namespace FrEee.Objects.Vehicles
 
 		public override void Place(ISpaceObject target)
 		{
-			Utility.Extensions.CommonExtensions.Place(this, target);
+			CommonExtensions.Place(this, target);
 		}
 
 		// HACK - until we end our game and this can be purged
