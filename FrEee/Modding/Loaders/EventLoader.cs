@@ -1,5 +1,5 @@
-﻿using FrEee.Game.Enumerations;
-using FrEee.Game.Objects.Events;
+﻿using FrEee.Enumerations;
+using FrEee.Objects.Events;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;

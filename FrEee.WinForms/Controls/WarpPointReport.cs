@@ -1,4 +1,4 @@
-using FrEee.Game.Objects.Space;
+using FrEee.Objects.Space;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Interfaces;
 using System;

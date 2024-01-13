@@ -1,10 +1,10 @@
-using FrEee.Game.Enumerations;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Technology;
-using FrEee.Game.Objects.Vehicles;
-using FrEee.Game.Objects.VictoryConditions;
-using FrEee.Game.Setup;
-using FrEee.Game.Setup.WarpPointPlacementStrategies;
+using FrEee.Enumerations;
+using FrEee.Objects.Space;
+using FrEee.Objects.Technology;
+using FrEee.Objects.Vehicles;
+using FrEee.Objects.VictoryConditions;
+using FrEee.Setup;
+using FrEee.Setup.WarpPointPlacementStrategies;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility;

@@ -1,13 +1,13 @@
-using FrEee.Game.Enumerations;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Commands;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Processes;
+using FrEee.Enumerations;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Commands;
+using FrEee.Objects.Space;
+using FrEee.Processes;
 using FrEee.Modding;
 using FrEee.Utility.Extensions;
 using NUnit.Framework;
 
-namespace FrEee.Tests.Game.Objects.Technology
+namespace FrEee.Tests.Objects.Technology
 {
 	public class TechnologyTest
 	{

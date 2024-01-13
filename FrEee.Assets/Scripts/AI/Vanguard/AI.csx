@@ -9,8 +9,8 @@
 #load "Plan.csx"
 
 #r "../../../bin/Debug/FrEee.Core.dll"
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
 using System;
 using System.Linq;
 using FrEee.Utility.Extensions;

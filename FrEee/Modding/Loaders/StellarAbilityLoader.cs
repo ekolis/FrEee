@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Objects.Abilities;
+﻿using FrEee.Objects.Abilities;
 using FrEee.Modding.Interfaces;
 using FrEee.Modding.Templates;
 using System;

@@ -1,6 +1,6 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
+﻿using FrEee.Interfaces;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
 using FrEee.Utility.Extensions;
 using System.Drawing;
 using System.Linq;

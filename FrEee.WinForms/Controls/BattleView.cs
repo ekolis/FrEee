@@ -1,8 +1,8 @@
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Combat;
-using FrEee.Game.Objects.Combat.Grid;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Vehicles;
+using FrEee.Interfaces;
+using FrEee.Objects.Combat;
+using FrEee.Objects.Combat.Grid;
+using FrEee.Objects.Space;
+using FrEee.Objects.Vehicles;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using NAudio.MediaFoundation;

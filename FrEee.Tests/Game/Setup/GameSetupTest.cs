@@ -1,5 +1,5 @@
-﻿using FrEee.Game.Objects.Space;
-using FrEee.Game.Setup;
+﻿using FrEee.Objects.Space;
+using FrEee.Setup;
 using FrEee.Modding;
 using NUnit.Framework;
 

@@ -1,8 +1,8 @@
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Orders;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Vehicles;
+using FrEee.Interfaces;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Orders;
+using FrEee.Objects.Space;
+using FrEee.Objects.Vehicles;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.DataGridView;

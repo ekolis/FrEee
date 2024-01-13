@@ -1,7 +1,7 @@
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Technology;
+using FrEee.Interfaces;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
+using FrEee.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
@@ -32,7 +32,7 @@ namespace FrEee.WinForms.Forms
 		{
 			InitializeComponent();
 			ShowComponentDetails(null);
-			Design = FrEee.Game.Objects.Vehicles.Design.Create(hull);
+			Design = FrEee.Objects.Vehicles.Design.Create(hull);
 
 			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
 			catch { }
@@ -285,7 +285,7 @@ namespace FrEee.WinForms.Forms
 					// Changing vehicle types requires starting over, so warn the user
 					if (MessageBox.Show("Changing the vehicle type requires starting over with your design. Abandon your old design?", "FrEee", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 					{
-						var d = FrEee.Game.Objects.Vehicles.Design.Create(form.Hull.VehicleType);
+						var d = FrEee.Objects.Vehicles.Design.Create(form.Hull.VehicleType);
 						d.TurnNumber = Galaxy.Current.TurnNumber;
 						d.Owner = Empire.Current;
 						d.Hull = form.Hull;
@@ -301,7 +301,7 @@ namespace FrEee.WinForms.Forms
 				}
 				else
 				{
-					var d = FrEee.Game.Objects.Vehicles.Design.Create(form.Hull.VehicleType);
+					var d = FrEee.Objects.Vehicles.Design.Create(form.Hull.VehicleType);
 					d.TurnNumber = Galaxy.Current.TurnNumber;
 					d.Owner = Empire.Current;
 					d.Hull = form.Hull;

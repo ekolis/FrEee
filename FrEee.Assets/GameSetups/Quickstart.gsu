@@ -1,4 +1,4 @@
-FrEee.Game.Setup.GameSetup, FrEee.Core:
+FrEee.Setup.GameSetup, FrEee.Core:
 p32:
 	AllowedTrades:
 		:All;
@@ -7,7 +7,7 @@ p32:
 	EmpirePoints:
 		:2000;
 	EmpireTemplates:
-		System.Collections.Generic.List`1[[FrEee.Game.Setup.EmpireTemplate, FrEee.Core]], System.Private.CoreLib:
+		System.Collections.Generic.List`1[[FrEee.Setup.EmpireTemplate, FrEee.Core]], System.Private.CoreLib:
 		c1:		
 			:p10:
 				AIName:
@@ -175,14 +175,14 @@ p32:
 	StartingResources:
 		:20000;
 	VictoryConditions:
-		System.Collections.Generic.List`1[[FrEee.Game.Interfaces.IVictoryCondition, FrEee.Core]], System.Private.CoreLib:
+		System.Collections.Generic.List`1[[FrEee.Interfaces.IVictoryCondition, FrEee.Core]], System.Private.CoreLib:
 		c1:		
-			FrEee.Game.Objects.VictoryConditions.TotalEliminationVictoryCondition, FrEee.Core:
+			FrEee.Objects.VictoryConditions.TotalEliminationVictoryCondition, FrEee.Core:
 			p0:
 			;
 		;
 	WarpPointPlacementStrategy:
-		FrEee.Game.Setup.WarpPointPlacementStrategies.EdgeAlignedWarpPointPlacementStrategy, FrEee.Core:
+		FrEee.Setup.WarpPointPlacementStrategies.EdgeAlignedWarpPointPlacementStrategy, FrEee.Core:
 		p2:
 			Description:
 				:"Places warp points along the edge of the system, aligned with the star systems they lead to.";

@@ -1,6 +1,6 @@
-﻿using FrEee.Game.Enumerations;
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Events;
+﻿using FrEee.Enumerations;
+using FrEee.Interfaces;
+using FrEee.Objects.Events;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using System.Collections.Generic;

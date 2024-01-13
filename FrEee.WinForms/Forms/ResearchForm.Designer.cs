@@ -159,7 +159,7 @@
 			// technologyBindingSource
 			// 
 			this.technologyBindingSource.AllowNew = false;
-			this.technologyBindingSource.DataSource = typeof(FrEee.Game.Objects.Technology.Technology);
+			this.technologyBindingSource.DataSource = typeof(FrEee.Objects.Technology.Technology);
 			// 
 			// ddlGroup
 			// 

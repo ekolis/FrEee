@@ -1,5 +1,5 @@
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
+using FrEee.Interfaces;
+using FrEee.Objects.Civilization;
 using FrEee.Utility.Extensions;
 using FrEee.Utility.Stringifiers;
 using System;
@@ -628,7 +628,7 @@ namespace FrEee.Utility
 			for (int i = 0; i < count; i++)
 			{
 				var pname = r.ReadTo(':', log).Trim();
-				if (type == typeof(Game.Objects.Civilization.Empire) && pname == "StoredResources")
+				if (type == typeof(Objects.Civilization.Empire) && pname == "StoredResources")
 				{
 
 				}

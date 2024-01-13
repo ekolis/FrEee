@@ -1,13 +1,13 @@
 ﻿#r "../../../bin/Debug/FrEee.Core.dll"
 #load "Plan.csx"
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
 using FrEee.Utility;
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using FrEee.Game.Objects.Vehicles;
-using FrEee.Game.Objects.Orders;
+using FrEee.Objects.Vehicles;
+using FrEee.Objects.Orders;
 using FrEee.Utility.Extensions;
 
 /// <summary>

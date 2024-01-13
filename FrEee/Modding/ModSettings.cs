@@ -1,5 +1,5 @@
-﻿using FrEee.Game.Enumerations;
-using FrEee.Game.Objects.Civilization;
+﻿using FrEee.Enumerations;
+using FrEee.Objects.Civilization;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;

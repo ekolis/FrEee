@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Interfaces;
+﻿using FrEee.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Interfaces;

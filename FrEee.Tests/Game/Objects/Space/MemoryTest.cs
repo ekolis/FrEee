@@ -1,13 +1,13 @@
-﻿using FrEee.Game.Enumerations;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
-using FrEee.Game.Objects.Vehicles;
+﻿using FrEee.Enumerations;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
+using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility.Extensions;
 using NUnit.Framework;
 using System.Drawing;
 
-namespace FrEee.Tests.Game.Objects.Space
+namespace FrEee.Tests.Objects.Space
 {
 	/// <summary>
 	/// Tests memory sight / fog of war.

@@ -160,7 +160,7 @@
 			// cultureBindingSource
 			// 
 			this.cultureBindingSource.AllowNew = false;
-			this.cultureBindingSource.DataSource = typeof(FrEee.Game.Objects.Civilization.Culture);
+			this.cultureBindingSource.DataSource = typeof(FrEee.Objects.Civilization.Culture);
 			// 
 			// btnClose
 			// 

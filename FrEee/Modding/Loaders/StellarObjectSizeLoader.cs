@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Enumerations;
+﻿using FrEee.Enumerations;
 using FrEee.Modding.Interfaces;
 using System.Collections.Generic;
 
