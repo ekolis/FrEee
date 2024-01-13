@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
 using System;
 
 namespace FrEee.Utility

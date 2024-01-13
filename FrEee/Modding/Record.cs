@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Interfaces;
+﻿using FrEee.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

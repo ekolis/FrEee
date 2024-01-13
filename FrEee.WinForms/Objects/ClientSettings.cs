@@ -1,6 +1,6 @@
-using FrEee.Game.Objects.Civilization;
-using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Objects.Civilization;
+using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Extensions;
 using FrEee.WinForms.DataGridView;
 using System;
 using System.Collections.Generic;

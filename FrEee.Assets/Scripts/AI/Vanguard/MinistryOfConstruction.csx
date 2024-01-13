@@ -1,16 +1,16 @@
 ﻿#r "../../../bin/Debug/FrEee.Core.dll"
 #load "Plan.csx"
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
-using FrEee.Utility; 
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
+using FrEee.Utility; using FrEee.Serialization; 
 using System;
 using System.Linq;
-using FrEee.Game.Objects.Orders;
-using FrEee.Game.Objects.Vehicles;
-using FrEee.Game.Interfaces;
-using FrEee.Utility.Extensions;
-using FrEee.Game.Objects.Commands;
-using FrEee.Game.Objects.LogMessages; 
+using FrEee.Objects.Orders;
+using FrEee.Objects.Vehicles;
+using FrEee.Interfaces;
+using FrEee.Extensions;
+using FrEee.Objects.Commands;
+using FrEee.Objects.LogMessages; 
 
 
 /// <summary>
@@ -30,7 +30,7 @@ public class MinistryOfConstruction
     public void HandleNewlyConstructedShips(Empire empire, Galaxy galaxy)
     {
         
-        var completedShips = empire.Log.Where(x => x.LogMessageType == FrEee.Game.Objects.LogMessages.LogMessageType.ConstructionComplete
+        var completedShips = empire.Log.Where(x => x.LogMessageType == FrEee.Objects.LogMessages.LogMessageType.ConstructionComplete
             && x.TurnNumber == Galaxy.Current.TurnNumber); 
         foreach(var shiplog in completedShips)
         {

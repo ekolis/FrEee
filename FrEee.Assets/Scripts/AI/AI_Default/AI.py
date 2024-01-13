@@ -8,8 +8,8 @@ from System.Collections.Generic import List;
 clr.ImportExtensions(System.Linq);
 import FrEee;
 import FrEee.Utility;
-from FrEee.Game.Objects.Commands import *;
-clr.ImportExtensions(FrEee.Utility.Extensions);
+from FrEee.Objects.Commands import *;
+clr.ImportExtensions(FrEee.Extensions);
 from System import Console;
 
 # alias the domain and context variables to avoid confusion

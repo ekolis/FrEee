@@ -1,8 +1,8 @@
-﻿using FrEee.Game.Enumerations;
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Utility;
-using FrEee.Utility.Extensions;
+﻿using FrEee.Enumerations;
+using FrEee.Interfaces;
+using FrEee.Objects.Civilization;
+using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using System;
 using System.Data;

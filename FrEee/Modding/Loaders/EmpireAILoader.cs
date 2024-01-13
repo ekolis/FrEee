@@ -1,8 +1,8 @@
-using FrEee.Game.Objects.AI;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
+using FrEee.Objects.AI;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
 using FrEee.Modding.Interfaces;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Serialization;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;

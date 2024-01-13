@@ -1,10 +1,10 @@
 #r "../../../bin/Debug/FrEee.Core.dll"
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
 using FrEee.Modding.Templates;
-using FrEee.Game.Interfaces;
-using FrEee.Utility.Extensions;
-using FrEee.Game.Objects.Vehicles; 
+using FrEee.Interfaces;
+using FrEee.Extensions;
+using FrEee.Objects.Vehicles; 
 using System.Linq; 
 
 /// <summary>
@@ -65,7 +65,7 @@ public class MinistryOfShipDesign
 
         var engine = GetLatestEngine(); 
 
-        var hulls = Empire.UnlockedItems.OfType<IHull>().Where(x => x.VehicleType == FrEee.Game.Enumerations.VehicleTypes.Ship && !x.IsObsolete);
+        var hulls = Empire.UnlockedItems.OfType<IHull>().Where(x => x.VehicleType == FrEee.Enumerations.VehicleTypes.Ship && !x.IsObsolete);
 
         var chosenhull = (from hull in hulls
                          where hull.Size > (lifeSupport.Size * hull.MinLifeSupport)

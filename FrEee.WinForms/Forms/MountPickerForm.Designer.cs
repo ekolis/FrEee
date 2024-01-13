@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Interfaces;
+﻿using FrEee.Interfaces;
 namespace FrEee.WinForms.Forms
 {
 	partial class MountPickerForm
@@ -99,7 +99,7 @@ namespace FrEee.WinForms.Forms
 			// mountBindingSource
 			// 
 			this.mountBindingSource.AllowNew = false;
-			this.mountBindingSource.DataSource = typeof(FrEee.Game.Objects.Technology.Mount);
+			this.mountBindingSource.DataSource = typeof(FrEee.Objects.Technology.Mount);
 			// 
 			// btnOk
 			// 

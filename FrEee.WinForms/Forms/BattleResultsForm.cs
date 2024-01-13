@@ -1,9 +1,9 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Combat;
-using FrEee.Game.Objects.Space;
-using FrEee.Utility;
-using FrEee.Utility.Extensions;
+﻿using FrEee.Interfaces;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Combat;
+using FrEee.Objects.Space;
+using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Extensions;
 using FrEee.WinForms.DataGridView;
 using FrEee.WinForms.Interfaces;
 using FrEee.WinForms.Utility.Extensions;
@@ -144,9 +144,9 @@ namespace FrEee.WinForms.Forms
 		private void btnReplay_Click(object sender, EventArgs e)
 		{
 			Form form;
-			//if (Battle is FrEee.Game.Objects.Combat.Simple.Battle b)
+			//if (Battle is FrEee.Objects.Combat.Simple.Battle b)
 			//	form = new LogForm(MainGameForm.Instance, b.Log);
-			if (Battle is FrEee.Game.Objects.Combat.Grid.Battle b2)
+			if (Battle is FrEee.Objects.Combat.Grid.Battle b2)
 				form = new BattleReplayForm(b2);
 			else
 				throw new Exception($"Unknown battle type {Battle.GetType()}!");

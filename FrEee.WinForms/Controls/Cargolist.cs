@@ -1,9 +1,9 @@
-﻿using FrEee.Game.Enumerations;
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
+using FrEee.Enumerations;
+using FrEee.Interfaces;
+using FrEee.Objects.Civilization;
 using FrEee.Modding;
 using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using FrEee.WinForms.Interfaces;
 using FrEee.WinForms.Utility.Extensions;
 using System.Collections.Generic;

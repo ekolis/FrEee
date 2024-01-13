@@ -1,7 +1,7 @@
-﻿using FrEee.Game.Interfaces;
+﻿using FrEee.Interfaces;
 using FrEee.Modding.Interfaces;
-using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Serialization;
+using FrEee.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 

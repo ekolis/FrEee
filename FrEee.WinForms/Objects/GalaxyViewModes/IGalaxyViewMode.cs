@@ -1,5 +1,5 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Space;
+﻿using FrEee.Interfaces;
+using FrEee.Objects.Space;
 using System.Drawing;
 
 namespace FrEee.WinForms.Objects.GalaxyViewModes

@@ -1,8 +1,8 @@
-﻿using FrEee.Game.Objects.Combat;
-using FrEee.Game.Objects.Technology;
+﻿using FrEee.Objects.Combat;
+using FrEee.Objects.Technology;
 using FrEee.Modding.Templates;
-using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Extensions;
 using FrEee.WinForms.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using Component = FrEee.Game.Objects.Technology.Component;
+using Component = FrEee.Objects.Technology.Component;
 
 namespace FrEee.WinForms.Controls
 {

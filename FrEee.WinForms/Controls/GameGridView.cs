@@ -1,4 +1,4 @@
-﻿using FrEee.Utility.Extensions;
+﻿using FrEee.Extensions;
 using FrEee.WinForms.DataGridView;
 using System;
 using System.Collections.Generic;

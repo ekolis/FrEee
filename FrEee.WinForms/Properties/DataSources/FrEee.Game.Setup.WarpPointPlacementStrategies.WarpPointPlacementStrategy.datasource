@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="WarpPointPlacementStrategy" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>FrEee.Game.Setup.WarpPointPlacementStrategies.WarpPointPlacementStrategy, FrEee, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
+   <TypeInfo>FrEee.Setup.WarpPointPlacementStrategies.WarpPointPlacementStrategy, FrEee, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
 </GenericObjectDataSource>

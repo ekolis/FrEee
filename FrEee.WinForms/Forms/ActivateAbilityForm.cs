@@ -1,10 +1,10 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Abilities;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Commands;
-using FrEee.Game.Objects.Orders;
-using FrEee.Game.Objects.Space;
-using FrEee.Utility.Extensions;
+﻿using FrEee.Interfaces;
+using FrEee.Objects.Abilities;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Commands;
+using FrEee.Objects.Orders;
+using FrEee.Objects.Space;
+using FrEee.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;

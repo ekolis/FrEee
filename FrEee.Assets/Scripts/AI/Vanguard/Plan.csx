@@ -1,12 +1,12 @@
 ﻿#r "../../../bin/Debug/FrEee.Core.dll"
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
-using FrEee.Utility;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
+using FrEee.Utility; using FrEee.Serialization;
 using System;
 using System.Collections.Generic;
-using FrEee.Utility.Extensions;
-using FrEee.Game.Objects.Orders;
-using FrEee.Game.Objects.Vehicles;
+using FrEee.Extensions;
+using FrEee.Objects.Orders;
+using FrEee.Objects.Vehicles;
 using System.Linq; 
 
 public static class PlanManager

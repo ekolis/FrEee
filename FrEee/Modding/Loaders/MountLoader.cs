@@ -1,8 +1,8 @@
-﻿using FrEee.Game.Enumerations;
-using FrEee.Game.Objects.Technology;
+﻿using FrEee.Enumerations;
+using FrEee.Objects.Technology;
 using FrEee.Modding.Enumerations;
 using FrEee.Modding.Interfaces;
-using FrEee.Utility.Extensions;
+using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

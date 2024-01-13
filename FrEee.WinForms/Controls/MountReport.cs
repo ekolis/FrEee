@@ -1,7 +1,7 @@
-﻿using FrEee.Game.Objects.Technology;
+﻿using FrEee.Objects.Technology;
 using FrEee.Modding;
-using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Extensions;
 using FrEee.WinForms.Interfaces;
 using FrEee.WinForms.Utility.Extensions;
 using System;

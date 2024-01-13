@@ -1,5 +1,5 @@
-﻿using FrEee.Utility;
-using FrEee.Utility.Extensions;
+﻿using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Extensions;
 using NUnit.Framework;
 using System;
 

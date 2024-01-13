@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Objects.Space;
+﻿using FrEee.Objects.Space;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

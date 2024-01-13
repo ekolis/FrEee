@@ -1,4 +1,4 @@
-using FrEee.Game.Objects.Civilization;
+using FrEee.Objects.Civilization;
 using FrEee.WinForms.Objects;
 using System;
 using System.IO;

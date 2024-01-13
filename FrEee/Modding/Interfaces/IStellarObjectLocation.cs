@@ -1,6 +1,6 @@
-﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Space;
-using FrEee.Utility;
+﻿using FrEee.Interfaces;
+using FrEee.Objects.Space;
+using FrEee.Utility; using FrEee.Serialization;
 using System.Drawing;
 
 namespace FrEee.Modding.Interfaces

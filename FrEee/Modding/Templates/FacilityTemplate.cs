@@ -1,19 +1,19 @@
-using FrEee.Game.Enumerations;
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Abilities;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
+using FrEee.Enumerations;
+using FrEee.Interfaces;
+using FrEee.Objects.Abilities;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Space;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
-using FrEee.Utility;
-using FrEee.Utility.Extensions;
+using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 
-namespace FrEee.Game.Objects.Technology
+namespace FrEee.Objects.Technology
 {
 	/// <summary>
 	/// A template for a facility.

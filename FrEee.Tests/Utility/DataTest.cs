@@ -1,6 +1,6 @@
-﻿using FrEee.Game.Objects.Space;
-using FrEee.Utility;
-using FrEee.Utility.Extensions;
+﻿using FrEee.Objects.Space;
+using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Extensions;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

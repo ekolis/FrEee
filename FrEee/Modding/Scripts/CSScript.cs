@@ -1,5 +1,5 @@
-﻿using FrEee.Utility;
-using FrEee.Utility.Extensions;
+﻿using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
@@ -65,8 +65,8 @@ namespace FrEee.Modding
 			//The script can suggest additional usings and will work fine, as long as they are either system, or in CSScript.Assembly. 
 			//The source file resolver is where it looks for additional scripts, loaded by putting #load <filename> in the script file. 
 			//By defauly, the resolver looks in the same directory as the script. 
-			var options = ScriptOptions.Default.AddImports("System", "System.Linq", "FrEee", "FrEee.Game.Objects.AI",
-				"FrEee.Game.Objects.Civilization", "FrEee.Game.Objects.Space", "FrEee.Utility", "FrEee.Game.Objects.Commands",
+			var options = ScriptOptions.Default.AddImports("System", "System.Linq", "FrEee", "FrEee.Objects.AI",
+				"FrEee.Objects.Civilization", "FrEee.Objects.Space", "FrEee.Utility", "FrEee.Objects.Commands",
 				"FrEee.Modding.Templates", "FrEee.Modding")
 				.WithReferences(typeof(CSScript).Assembly).
 				WithSourceResolver(new SourceFileResolver(ImmutableArray<string>.Empty, Directory));
