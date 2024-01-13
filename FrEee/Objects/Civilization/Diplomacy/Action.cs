@@ -1,5 +1,5 @@
 ﻿using FrEee.Objects.Commands;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Serialization;
 
 namespace FrEee.Objects.Civilization.Diplomacy
 {

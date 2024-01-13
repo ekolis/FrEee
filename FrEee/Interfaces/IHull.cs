@@ -1,7 +1,7 @@
 ﻿using FrEee.Enumerations;
 using FrEee.Objects.Technology;
 using FrEee.Modding.Interfaces;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Serialization;
 using System.Collections.Generic;
 using System.Drawing;
 

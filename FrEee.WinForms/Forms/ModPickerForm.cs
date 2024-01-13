@@ -1,6 +1,6 @@
 ﻿using FrEee.Modding;
 using FrEee.Modding.Loaders;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Serialization;
 using FrEee.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using System;

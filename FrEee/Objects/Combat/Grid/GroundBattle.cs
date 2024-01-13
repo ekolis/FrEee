@@ -4,7 +4,7 @@ using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Serialization;
 using FrEee.Extensions;
 using System;
 using System.Collections.Generic;

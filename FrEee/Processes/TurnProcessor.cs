@@ -14,7 +14,7 @@ using FrEee.Objects.Vehicles;
 using FrEee.Objects.VictoryConditions;
 using FrEee.Modding;
 using FrEee.Extensions;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Serialization;
 using FrEee.Enumerations;
 
 namespace FrEee.Processes

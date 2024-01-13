@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Interfaces;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Serialization;
 using FrEee.Extensions;
 
 namespace FrEee.Objects.Combat.Grid

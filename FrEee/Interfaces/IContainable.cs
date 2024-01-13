@@ -1,4 +1,4 @@
-﻿using FrEee.Utility;
+using FrEee.Serialization;
 
 namespace FrEee.Interfaces
 {

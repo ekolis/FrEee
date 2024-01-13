@@ -1,5 +1,5 @@
 using FrEee.Objects.Space;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Serialization;
 using FrEee.WinForms.Controls;
 
 namespace FrEee.WinForms.Forms

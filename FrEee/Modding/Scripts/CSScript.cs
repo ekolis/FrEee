@@ -1,4 +1,4 @@
-﻿using FrEee.Utility;
+﻿using FrEee.Utility; using FrEee.Serialization;
 using FrEee.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Scripting;

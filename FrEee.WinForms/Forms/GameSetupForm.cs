@@ -7,7 +7,7 @@ using FrEee.Setup;
 using FrEee.Setup.WarpPointPlacementStrategies;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Serialization;
 using FrEee.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using System;

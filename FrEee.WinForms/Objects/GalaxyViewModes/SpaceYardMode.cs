@@ -1,7 +1,7 @@
 ﻿using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Serialization;
 using FrEee.Extensions;
 using System.Drawing;
 using System.Linq;

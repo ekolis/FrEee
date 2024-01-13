@@ -12,6 +12,7 @@ using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Modding.Loaders;
 using FrEee.Utility;
+using FrEee.Serialization;
 using FrEee.Extensions;
 using System;
 using System.Collections.Generic;

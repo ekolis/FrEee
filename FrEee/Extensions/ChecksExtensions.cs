@@ -12,7 +12,7 @@ using System.Drawing;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Serialization;
 
 namespace FrEee.Extensions
 {

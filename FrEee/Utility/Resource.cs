@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using FrEee.Serialization;
 
 namespace FrEee.Utility
 {

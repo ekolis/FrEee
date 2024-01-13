@@ -2,7 +2,7 @@
 using FrEee.Interfaces;
 using FrEee.Objects.Events;
 using FrEee.Modding.Interfaces;
-using FrEee.Utility;
+using FrEee.Serialization;
 using System.Collections.Generic;
 
 namespace FrEee.Modding

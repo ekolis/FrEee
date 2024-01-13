@@ -8,7 +8,7 @@ using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Processes;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Serialization;
 using FrEee.Extensions;
 using FrEee.WinForms.Controls;
 using FrEee.WinForms.Interfaces;

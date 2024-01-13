@@ -5,7 +5,7 @@ using FrEee.Objects.Vehicles;
 using FrEee.Processes;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Serialization;
 using FrEee.Extensions;
 using FrEee.WinForms.Forms;
 using FrEee.WinForms.Utility;

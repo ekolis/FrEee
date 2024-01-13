@@ -1,7 +1,7 @@
 ﻿using FrEee.Interfaces;
 using FrEee.Objects.Space;
 using FrEee.Modding;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Serialization;
 using FrEee.Extensions;
 using System.Collections.Generic;
 using System.Linq;

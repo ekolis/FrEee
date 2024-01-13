@@ -1,5 +1,5 @@
 ﻿using FrEee.Modding;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Serialization;
 using FrEee.Extensions;
 using System.Linq;
 using Tech = FrEee.Objects.Technology.Technology;

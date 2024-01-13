@@ -1,4 +1,4 @@
-﻿using FrEee.Utility;
+﻿using FrEee.Utility; using FrEee.Serialization;
 using FrEee.WinForms.Forms;
 using System;
 using System.Collections.Generic;

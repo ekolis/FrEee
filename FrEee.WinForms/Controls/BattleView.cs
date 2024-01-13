@@ -3,7 +3,7 @@ using FrEee.Objects.Combat;
 using FrEee.Objects.Combat.Grid;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Serialization;
 using FrEee.Extensions;
 using NAudio.MediaFoundation;
 using System;

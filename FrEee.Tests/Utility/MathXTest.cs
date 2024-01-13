@@ -1,4 +1,4 @@
-﻿using FrEee.Utility;
+﻿using FrEee.Utility; using FrEee.Serialization;
 using NUnit.Framework;
 
 namespace FrEee.Tests.Utility

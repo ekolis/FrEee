@@ -1,6 +1,6 @@
 ﻿using FrEee.Objects.Combat;
 using FrEee.Modding;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Serialization;
 
 namespace FrEee.Interfaces
 {

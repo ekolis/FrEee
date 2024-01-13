@@ -2,7 +2,7 @@
 using FrEee.Objects.Civilization;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Technology;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Serialization;
 using System.Collections.Generic;
 
 namespace FrEee.Objects.Combat

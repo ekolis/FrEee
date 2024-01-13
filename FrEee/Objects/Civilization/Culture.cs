@@ -1,6 +1,6 @@
 using FrEee.Interfaces;
 using FrEee.Modding.Interfaces;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Serialization;
 using System;
 using System.Collections.Generic;
 
