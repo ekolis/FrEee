@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<Description>Unit tests for FrEee</Description>
 	</PropertyGroup>
 	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
@@ -17,4 +17,10 @@
 		<PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Savegame\" />
+	</ItemGroup>
+	<PropertyGroup>
+		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+	</PropertyGroup>
 </Project>

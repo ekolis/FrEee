@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net7.0</TargetFrameworks>
+		<TargetFrameworks>net8.0</TargetFrameworks>
 		<OutputType>Library</OutputType>
 		<AssemblyName>FrEee.Core</AssemblyName>
 		<ProjectGuid>eca7a08b-992a-43ec-8d98-2ae887897343</ProjectGuid>
@@ -22,4 +22,20 @@
 		<Compile Remove="Game\Objects\Combat\Simple\Battle.cs" />
 		<Compile Remove="Game\Objects\Commands\EditStrategyCommand.cs" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="Properties\Settings.Designer.cs">
+	    <DesignTimeSharedInput>True</DesignTimeSharedInput>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>Settings.settings</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="Properties\Settings.settings">
+	    <Generator>SettingsSingleFileGenerator</Generator>
+	    <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+	  </None>
+	</ItemGroup>
+	<PropertyGroup>
+		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+	</PropertyGroup>
 </Project>
