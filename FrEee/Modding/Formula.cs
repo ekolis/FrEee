@@ -174,19 +174,19 @@ public abstract class Formula<T> : IFormula<T>, IComparable<T>, IComparable<Form
 			return new ComputedFormula<string>(string.Format("({0}) + str({1})", f1.Text, f2.Text), f1.Context, false);
 	}
 
-	public int CompareTo(object obj)
+	public int CompareTo(object? obj)
 	{
 		if (obj is IFormula)
 			return Value.CompareTo(((IFormula)obj).Value);
 		return Value.CompareTo(obj);
 	}
 
-	public int CompareTo(T other)
+	public int CompareTo(T? other)
 	{
 		return Value.CompareTo(other);
 	}
 
-	public int CompareTo(Formula<T> other)
+	public int CompareTo(Formula<T>? other)
 	{
 		return Value.CompareTo(other.Value);
 	}

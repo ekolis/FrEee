@@ -101,17 +101,17 @@ public class ComputedFormula<T> : Formula<T>, IEquatable<ComputedFormula<T>>
 		return new LiteralFormula<T>(Value.ToStringInvariant());
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		var x = obj as ComputedFormula<T>;
-		if (x == null)
+		if (x is null)
 			return false;
 		return Equals(x);
 	}
 
-	public bool Equals(ComputedFormula<T> other)
+	public bool Equals(ComputedFormula<T>? other)
 	{
-		return IsDynamic == other.IsDynamic && Text == other.Text && Context == other.Context;
+		return other is not null && IsDynamic == other.IsDynamic && Text == other.Text && Context == other.Context;
 	}
 
 	public override T Evaluate(object host, IDictionary<string, object> variables = null)

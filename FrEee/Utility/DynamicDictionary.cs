@@ -141,14 +141,14 @@ public class DynamicDictionary : DynamicObject, IDictionary<object, object>
 		return true;
 	}
 
-	public override bool TrySetIndex(SetIndexBinder binder, object[] indexes, object value)
+	public override bool TrySetIndex(SetIndexBinder binder, object[] indexes, object? value)
 	{
 		var key = string.Join(",", indexes.Select(o => o.ToString()).ToArray());
 		dict[key] = value;
 		return true;
 	}
 
-	public override bool TrySetMember(SetMemberBinder binder, object value)
+	public override bool TrySetMember(SetMemberBinder binder, object? value)
 	{
 		dict[binder.Name] = value;
 		return true;

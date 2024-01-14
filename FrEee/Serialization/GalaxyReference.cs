@@ -150,7 +150,7 @@ public class GalaxyReference<T> : IReference<long, T>, IPromotable
 		return r1.ID == r2.ID;
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		// TODO - upgrade equals to use "as" operator
 		if (obj is GalaxyReference<T>)

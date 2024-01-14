@@ -21,6 +21,9 @@ public static class EnumerableExtensions
 		return src.Except(new T[] { badguy });
 	}
 
+	public static IEnumerable<T> ExceptNull<T>(this IEnumerable<T?> src)
+		=> src.Where(q => q is not null).Cast<T>();
+
 	/// <summary>
 	/// Flattens groupings into a single sequence.
 	/// </summary>

@@ -160,7 +160,7 @@ public partial class BattleResultsForm : GameForm, IBindable<IBattle>
 		public string HullName { get; set; }
 		public int HullSize { get; set; }
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			var ci = obj as CombatantInfo;
 			if (ci == null)

@@ -41,7 +41,7 @@ public class PRNG
 		return r1.Seed == r2.Seed && r1.Iteration == r2.Iteration;
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		// TODO - upgrade equals to use "as" operator
 		if (obj is PRNG)

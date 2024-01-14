@@ -229,7 +229,7 @@ public class Resource : INamed, IPictorial
 		return r1.Name == r2.Name && r1.Color == r2.Color && r1.IsGlobal == r2.IsGlobal && r1.IsLocal == r2.IsLocal && r1.PictureName == r2.PictureName;
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		var r = obj as Resource;
 		if (ReferenceEquals(r, null))

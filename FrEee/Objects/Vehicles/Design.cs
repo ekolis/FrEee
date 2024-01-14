@@ -739,7 +739,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 			emp.KnownDesigns.Remove(this);
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		if (obj is Design<T> d)
 		{

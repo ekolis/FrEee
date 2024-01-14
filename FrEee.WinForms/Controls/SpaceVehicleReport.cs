@@ -382,7 +382,7 @@ public partial class SpaceVehicleReport : UserControl, IBindable<SpaceVehicle>
 			return g1.Template == g2.Template && g1.Hitpoints == g2.Hitpoints;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			var x = obj as ComponentGroup;
 			if (x == null)

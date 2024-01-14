@@ -211,7 +211,7 @@ public class ResourceQuantity : SafeDictionary<Resource, int>, IComparable<Resou
 		return this.Sum(kvp => kvp.Value).CompareTo(obj.ToString().ToInt());
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		if (obj is ResourceQuantity rq)
 			return this == rq;

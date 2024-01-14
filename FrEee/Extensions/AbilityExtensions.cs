@@ -25,15 +25,15 @@ public static class AbilityExtensions
 	/// </summary>
 	/// <param name="obj"></param>
 	/// <returns></returns>
-	public static IEnumerable<Ability> Abilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+	public static IEnumerable<Ability> Abilities(this IAbilityObject obj, Func<IAbilityObject, bool>? sourceFilter = null)
 	{
 		if (obj == null)
 			return Enumerable.Empty<Ability>();
 
-		if (sourceFilter == null && Galaxy.Current != null && Galaxy.Current.IsAbilityCacheEnabled)
+		if (sourceFilter is null && Galaxy.Current is not null && Galaxy.Current.IsAbilityCacheEnabled)
 		{
 			// use the ability cache
-			if (Galaxy.Current.AbilityCache[obj] == null)
+			if (Galaxy.Current.AbilityCache[obj] is null)
 				Galaxy.Current.AbilityCache[obj] = obj.UnstackedAbilities(true, sourceFilter).Stack(obj).ToArray();
 			return Galaxy.Current.AbilityCache[obj];
 		}
@@ -41,7 +41,7 @@ public static class AbilityExtensions
 		return obj.UnstackedAbilities(true, sourceFilter).Stack(obj);
 	}
 
-	public static ILookup<Ability, Ability> AbilityTree(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+	public static ILookup<Ability, Ability> AbilityTree(this IAbilityObject obj, Func<IAbilityObject, bool>? sourceFilter = null)
 	{
 		return obj.UnstackedAbilities(true, sourceFilter).StackToTree(obj);
 	}

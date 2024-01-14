@@ -349,7 +349,7 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityOb
 		return t1.Container == t2.Container && t1.ComponentTemplate == t2.ComponentTemplate && t1.mount == t2.mount;
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		// TODO - upgrade equals to use "as" operator
 		if (obj is MountedComponentTemplate)

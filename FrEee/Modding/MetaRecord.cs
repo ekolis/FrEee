@@ -25,7 +25,7 @@ public class MetaRecord : Record, ITemplate<IEnumerable<Record>>
 
 	public string Filename { get; set; }
 
-	public IEnumerable<MetaRecordParameter> Parameters
+	public new IEnumerable<MetaRecordParameter> Parameters
 	{
 		get
 		{

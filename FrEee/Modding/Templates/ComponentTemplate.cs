@@ -318,7 +318,7 @@ public class ComponentTemplate : IModObject, IResearchable, IAbilityContainer, I
 		return Name;
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		return obj is ComponentTemplate t && t == this;
 	}

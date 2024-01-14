@@ -41,7 +41,7 @@ public class ObjectLocation<T>
 		return l1.Item.Equals(l2.Item) && l1.Location.Equals(l2.Location);
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		return this == obj as ObjectLocation<T>;
 	}

@@ -162,11 +162,10 @@ import " + ModuleName + @";
 		return s1.ModuleName == s2.ModuleName && s1.Text == s2.Text && s1.ExternalScripts.SafeSequenceEqual(s2.ExternalScripts);
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
-		if (obj is PythonScript)
+		if (obj is PythonScript s)
 		{
-			var s = (PythonScript)obj;
 			return s == this;
 		}
 		return false;

@@ -166,7 +166,7 @@ public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnab
 			if (Empire.Current == null)
 				result = result.Where(x => !x.IsMemory);
 
-			return result.ToArray();
+			return result.ExceptNull().ToArray();
 		}
 	}
 
@@ -224,11 +224,10 @@ public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnab
 		throw new NotImplementedException();
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
-		// TODO - upgrade equals to use "as" operator
-		if (obj is Sector)
-			return this == (Sector)obj;
+		if (obj is Sector s)
+			return this == s;
 		return false;
 	}
 
