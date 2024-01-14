@@ -8,29 +8,27 @@ using FrEee.Objects.Combat.Grid;
 using FrEee.Objects.Commands;
 using FrEee.Objects.Events;
 using FrEee.Objects.LogMessages;
-using FrEee.Objects.Vehicles;
-using FrEee.Objects.VictoryConditions;
 using FrEee.Setup;
 using FrEee.Setup.WarpPointPlacementStrategies;
 using FrEee.Modding;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
+using FrEee.Serialization;
 using FrEee.Extensions;
 using Microsoft.Scripting.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 
 namespace FrEee.Objects.Space;
 
-    /// <summary>
-    /// Prevents IDs from being assigned to objects when calling AssignIDs.
-    /// TODO - move to utility namespace?
-    /// </summary>
-    public class DoNotAssignIDAttribute : Attribute
+/// <summary>
+/// Prevents IDs from being assigned to objects when calling AssignIDs.
+/// TODO - move to utility namespace?
+/// </summary>
+public class DoNotAssignIDAttribute : Attribute
     {
         public DoNotAssignIDAttribute(bool recurse = true)
         {

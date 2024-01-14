@@ -2,7 +2,7 @@
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Modding;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
 using FrEee.Extensions;
 using System.Collections.Generic;
 using System.Drawing;

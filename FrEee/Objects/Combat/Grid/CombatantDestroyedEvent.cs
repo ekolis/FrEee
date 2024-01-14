@@ -1,6 +1,5 @@
 ﻿using FrEee.Interfaces;
-using FrEee.Utility; using FrEee.Serialization;
-
+using FrEee.Utility;
 namespace FrEee.Objects.Combat.Grid;
 
 public class CombatantDestroyedEvent : BattleEvent

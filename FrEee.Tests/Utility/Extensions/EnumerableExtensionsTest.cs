@@ -1,6 +1,5 @@
 ﻿using FrEee.Extensions;
 using NUnit.Framework;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace FrEee.Tests.Utility.Extensions;

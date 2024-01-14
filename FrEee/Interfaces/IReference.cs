@@ -29,25 +29,13 @@ public interface IReference<out TID, out TValue> : IReference<TValue>
 [Serializable]
 public class ReferenceException<TID, TValue> : Exception, ISerializable
 {
-	public ReferenceException(string message, TID id = default(TID))
+	public ReferenceException(string message, TID id = default)
 		: base(message)
 	{
 		ID = id;
 	}
 
-	protected ReferenceException(SerializationInfo info, StreamingContext ctx)
-				: base(info, ctx)
-	{
-		ID = (TID)info.GetValue("ID", typeof(TID));
-	}
-
 	public TID ID { get; private set; }
 
 	public Type Type { get { return typeof(TValue); } }
-
-	void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
-	{
-		base.GetObjectData(info, context);
-		info.AddValue("ID", ID);
-	}
 }

@@ -43,13 +43,10 @@ public partial class GamePanel : Panel
 	// http://support.microsoft.com/kb/953934
 	protected override void OnSizeChanged(EventArgs e)
 	{
-		if (this.Handle != null)
+		this.BeginInvoke((MethodInvoker)delegate
 		{
-			this.BeginInvoke((MethodInvoker)delegate
-			{
-				base.OnSizeChanged(e);
-			});
-		}
+			base.OnSizeChanged(e);
+		});
 	}
 
 	private void GamePanel_SizeChanged(object sender, EventArgs e)

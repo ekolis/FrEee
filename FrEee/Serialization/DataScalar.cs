@@ -1,5 +1,5 @@
 using FrEee.Extensions;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
 using Newtonsoft.Json;
 using System;
 using System.Globalization;

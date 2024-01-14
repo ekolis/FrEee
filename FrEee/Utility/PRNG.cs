@@ -1,5 +1,4 @@
-﻿using FrEee.Extensions;
-using System;
+﻿using System;
 
 namespace FrEee.Utility;
 

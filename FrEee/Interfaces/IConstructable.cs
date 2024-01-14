@@ -1,6 +1,5 @@
 ﻿using FrEee.Objects.Civilization;
-using FrEee.Utility; using FrEee.Serialization;
-
+using FrEee.Utility;
 namespace FrEee.Interfaces;
 
 /// <summary>

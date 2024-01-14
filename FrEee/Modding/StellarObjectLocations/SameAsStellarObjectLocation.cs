@@ -2,7 +2,7 @@
 using FrEee.Objects.Space;
 using FrEee.Modding.Interfaces;
 using FrEee.Modding.Templates;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
 using System;
 using System.Drawing;
 

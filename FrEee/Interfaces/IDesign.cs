@@ -2,7 +2,7 @@ using FrEee.Enumerations;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Technology;
 using FrEee.Modding.Templates;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
 using System.Collections.Generic;
 
 namespace FrEee.Interfaces;

@@ -1,7 +1,7 @@
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Modding;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Serialization;
 using System;
 
 namespace FrEee.Objects.Technology;

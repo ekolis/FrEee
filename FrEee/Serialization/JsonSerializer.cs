@@ -17,7 +17,7 @@ public class JsonSerializer
 			MissingMemberHandling = MissingMemberHandling.Ignore,
 			ObjectCreationHandling = ObjectCreationHandling.Auto,
 			TypeNameHandling = TypeNameHandling.All,
-			TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple,
+			TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
 			ContractResolver = new JsonContractResolver()
 		};
 	}
@@ -93,7 +93,7 @@ public class JsonSerializer
 			MissingMemberHandling = MissingMemberHandling.Ignore,
 			ObjectCreationHandling = ObjectCreationHandling.Auto,
 			TypeNameHandling = TypeNameHandling.None,
-			TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple, 
+			TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
 			ContractResolver = new JsonContractResolver()
 		};
 

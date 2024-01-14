@@ -4,7 +4,7 @@ using FrEee.Objects.Abilities;
 using FrEee.Objects.Space;
 using FrEee.Modding.Interfaces;
 using FrEee.Modding.StellarObjectLocations;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

@@ -1,7 +1,5 @@
-﻿using FrEee.Interfaces;
-using FrEee.Objects.Civilization;
-using FrEee.Utility; using FrEee.Serialization;
-using FrEee.Extensions;
+﻿using FrEee.Objects.Civilization;
+using FrEee.Utility;
 using System.Collections.Generic;
 
 namespace FrEee.Objects.Commands;

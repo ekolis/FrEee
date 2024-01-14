@@ -4,11 +4,11 @@ using FrEee.Objects.Orders;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
+using FrEee.Serialization;
 using FrEee.Extensions;
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace FrEee.Tests.Utility;

@@ -6,14 +6,14 @@ using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
+using FrEee.Serialization;
 using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using static System.Math;
-using FrEee.Serialization;
 
 namespace FrEee.Objects.Combat.Grid;
 

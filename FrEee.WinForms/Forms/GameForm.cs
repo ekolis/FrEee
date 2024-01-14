@@ -1,17 +1,6 @@
-﻿using FrEee.Interfaces;
-using FrEee.Objects.Abilities;
-using FrEee.Objects.Civilization;
-using FrEee.Objects.Commands;
-using FrEee.Objects.Orders;
-using FrEee.Objects.Space;
-using FrEee.Extensions;
-using FrEee.WinForms.Objects;
-using FrEee.WinForms.Utility.Extensions;
+﻿using FrEee.WinForms.Objects;
 using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms;
