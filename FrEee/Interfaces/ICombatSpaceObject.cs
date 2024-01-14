@@ -1,9 +1,8 @@
-﻿namespace FrEee.Interfaces
+﻿namespace FrEee.Interfaces;
+
+/// <summary>
+/// A space object that can participate in combat.
+/// </summary>
+public interface ICombatSpaceObject : ICombatant, ISpaceObject
 {
-	/// <summary>
-	/// A space object that can participate in combat.
-	/// </summary>
-	public interface ICombatSpaceObject : ICombatant, ISpaceObject
-	{
-	}
 }

@@ -24,8 +24,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace FrEee.Objects.Space
-{
+namespace FrEee.Objects.Space;
+
     /// <summary>
     /// Prevents IDs from being assigned to objects when calling AssignIDs.
     /// TODO - move to utility namespace?
@@ -68,10 +68,10 @@ namespace FrEee.Objects.Space
             Battles = new HashSet<IBattle>();
             ScriptNotes = new DynamicDictionary();
             /*if (Mod.Current != null)
-			{
-				foreach (var q in Mod.Current.Objects.OfType<IReferrable>())
-					AssignID(q);
-			}*/
+		{
+			foreach (var q in Mod.Current.Objects.OfType<IReferrable>())
+				AssignID(q);
+		}*/
         }
 
         /// <summary>
@@ -541,7 +541,7 @@ namespace FrEee.Objects.Space
             }
             fs.Close();
             fs.Dispose();
-			Current.PopulatePropertyValues();
+		Current.PopulatePropertyValues();
         }
 
         /// <summary>
@@ -589,39 +589,39 @@ namespace FrEee.Objects.Space
                 Library.Load();
             }
 
-			Current.PopulatePropertyValues();
-		}
+		Current.PopulatePropertyValues();
+	}
 
-		/// <summary>
-		/// Populates property values specified by <see cref="PopulateAttribute{T}"/>.
-		/// </summary>
-		private void PopulatePropertyValues()
+	/// <summary>
+	/// Populates property values specified by <see cref="PopulateAttribute{T}"/>.
+	/// </summary>
+	private void PopulatePropertyValues()
+	{
+		// TODO: cache list of properties to populate when deserializing?
+		// enumerate all referrables
+		foreach (var referrable in Referrables)
 		{
-			// TODO: cache list of properties to populate when deserializing?
-			// enumerate all referrables
-			foreach (var referrable in Referrables)
+			// find referrable's properties
+			var props = referrable.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+			foreach (var prop in props)
 			{
-				// find referrable's properties
-				var props = referrable.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-				foreach (var prop in props)
+				// search property's attributes for PopulateAttribute<T>
+				foreach (var att in prop.GetCustomAttributes())
 				{
-					// search property's attributes for PopulateAttribute<T>
-					foreach (var att in prop.GetCustomAttributes())
+					if (att.GetType().IsGenericType && att.GetType().GetGenericTypeDefinition() == typeof(PopulateAttribute<>))
 					{
-						if (att.GetType().IsGenericType && att.GetType().GetGenericTypeDefinition() == typeof(PopulateAttribute<>))
-						{
-							// found PopulateAttribute<T>
-							// create populator
-							var populatorType = att.GetType().GetGenericArguments()[0];
-							var populator = (IPopulator)populatorType.Instantiate();
+						// found PopulateAttribute<T>
+						// create populator
+						var populatorType = att.GetType().GetGenericArguments()[0];
+						var populator = (IPopulator)populatorType.Instantiate();
 
-							// get value from populator and save it into the referrable's property
-							prop.SetValue(referrable, populator.Populate(referrable));
-						}
+						// get value from populator and save it into the referrable's property
+						prop.SetValue(referrable, populator.Populate(referrable));
 					}
 				}
 			}
 		}
+	}
 
         /// <summary>
         /// Saves all empires' tech levels in the other empires for uniqueness calculations.
@@ -1298,10 +1298,9 @@ namespace FrEee.Objects.Space
 
         // TODO - replace all those duplicate properties with a reference to the game setup
         /*
-		/// <summary>
-		/// The game setup used to create this galaxy.
-		/// </summary>
-		public GameSetup GameSetup { get; set; }
-		*/
+	/// <summary>
+	/// The game setup used to create this galaxy.
+	/// </summary>
+	public GameSetup GameSetup { get; set; }
+	*/
     }
-}

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FrEee.WinForms.Properties {
+namespace FrEee.WinForms.Properties; 
     using System;
     
     
@@ -108,4 +108,3 @@ namespace FrEee.WinForms.Properties {
             }
         }
     }
-}

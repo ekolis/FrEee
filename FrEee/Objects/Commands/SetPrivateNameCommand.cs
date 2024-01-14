@@ -3,35 +3,34 @@ using FrEee.Objects.Civilization;
 using FrEee.Utility; using FrEee.Serialization;
 using FrEee.Extensions;
 
-namespace FrEee.Objects.Commands
+namespace FrEee.Objects.Commands;
+
+/// <summary>
+/// Sets the private name for an object.
+/// </summary>
+public class SetPrivateNameCommand : Command<Empire>
 {
-	/// <summary>
-	/// Sets the private name for an object.
-	/// </summary>
-	public class SetPrivateNameCommand : Command<Empire>
+	public SetPrivateNameCommand(Empire empire, INameable target, string name)
+		: base(empire)
 	{
-		public SetPrivateNameCommand(Empire empire, INameable target, string name)
-			: base(empire)
-		{
-			Target = target;
-		}
+		Target = target;
+	}
 
-		/// <summary>
-		/// The name to set.
-		/// </summary>
-		public string Name { get; set; }
+	/// <summary>
+	/// The name to set.
+	/// </summary>
+	public string Name { get; set; }
 
-		/// <summary>
-		/// What are we clearing the name on?
-		/// </summary>
-		[DoNotSerialize]
-		public INameable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
+	/// <summary>
+	/// What are we clearing the name on?
+	/// </summary>
+	[DoNotSerialize]
+	public INameable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
 
-		private GalaxyReference<INameable> target { get; set; }
+	private GalaxyReference<INameable> target { get; set; }
 
-		public override void Execute()
-		{
-			Executor.PrivateNames[target] = Name;
-		}
+	public override void Execute()
+	{
+		Executor.PrivateNames[target] = Name;
 	}
 }

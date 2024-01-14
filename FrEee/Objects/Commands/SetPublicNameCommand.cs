@@ -1,26 +1,25 @@
 ﻿using FrEee.Interfaces;
 
-namespace FrEee.Objects.Commands
+namespace FrEee.Objects.Commands;
+
+/// <summary>
+/// Sets the name of an object.
+/// </summary>
+public class SetPublicNameCommand : Command<INameable>
 {
-	/// <summary>
-	/// Sets the name of an object.
-	/// </summary>
-	public class SetPublicNameCommand : Command<INameable>
+	public SetPublicNameCommand(INameable target, string name)
+		: base(target)
 	{
-		public SetPublicNameCommand(INameable target, string name)
-			: base(target)
-		{
-			Name = name;
-		}
+		Name = name;
+	}
 
-		/// <summary>
-		/// The name to set.
-		/// </summary>
-		public string Name { get; set; }
+	/// <summary>
+	/// The name to set.
+	/// </summary>
+	public string Name { get; set; }
 
-		public override void Execute()
-		{
-			Executor.Name = Name;
-		}
+	public override void Execute()
+	{
+		Executor.Name = Name;
 	}
 }

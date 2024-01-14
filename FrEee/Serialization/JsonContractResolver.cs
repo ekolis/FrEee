@@ -7,8 +7,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrEee.Serialization
-{
+namespace FrEee.Serialization;
+
     public class JsonContractResolver : DefaultContractResolver
     {
 
@@ -24,4 +24,3 @@ namespace FrEee.Serialization
         }
 
     }
-}

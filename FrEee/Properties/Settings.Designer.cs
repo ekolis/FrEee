@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FrEee.Properties {
+namespace FrEee.Properties; 
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -23,4 +23,3 @@ namespace FrEee.Properties {
             }
         }
     }
-}

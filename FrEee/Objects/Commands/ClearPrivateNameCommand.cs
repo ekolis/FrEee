@@ -3,30 +3,29 @@ using FrEee.Objects.Civilization;
 using FrEee.Utility; using FrEee.Serialization;
 using FrEee.Extensions;
 
-namespace FrEee.Objects.Commands
+namespace FrEee.Objects.Commands;
+
+/// <summary>
+/// Clears the private name for an object.
+/// </summary>
+public class ClearPrivateNameCommand : Command<Empire>
 {
-	/// <summary>
-	/// Clears the private name for an object.
-	/// </summary>
-	public class ClearPrivateNameCommand : Command<Empire>
+	public ClearPrivateNameCommand(Empire empire, INameable target)
+		: base(empire)
 	{
-		public ClearPrivateNameCommand(Empire empire, INameable target)
-			: base(empire)
-		{
-			Target = target;
-		}
+		Target = target;
+	}
 
-		/// <summary>
-		/// What are we clearing the name on?
-		/// </summary>
-		[DoNotSerialize]
-		public INameable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
+	/// <summary>
+	/// What are we clearing the name on?
+	/// </summary>
+	[DoNotSerialize]
+	public INameable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
 
-		private GalaxyReference<INameable> target { get; set; }
+	private GalaxyReference<INameable> target { get; set; }
 
-		public override void Execute()
-		{
-			Executor.PrivateNames.Remove(target);
-		}
+	public override void Execute()
+	{
+		Executor.PrivateNames.Remove(target);
 	}
 }

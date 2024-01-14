@@ -1,20 +1,19 @@
 ﻿using FrEee.Enumerations;
 
-namespace FrEee.Interfaces
+namespace FrEee.Interfaces;
+
+/// <summary>
+/// Something which can be specifically target by weapons.
+/// </summary>
+public interface ITargetable : IDamageableReferrable, ITransferrable
 {
 	/// <summary>
-	/// Something which can be specifically target by weapons.
+	/// Evasion rating of this combatant.
 	/// </summary>
-	public interface ITargetable : IDamageableReferrable, ITransferrable
-	{
-		/// <summary>
-		/// Evasion rating of this combatant.
-		/// </summary>
-		int Evasion { get; }
+	int Evasion { get; }
 
-		/// <summary>
-		/// What type of object is this for weapon targeting purposes?
-		/// </summary>
-		WeaponTargets WeaponTargetType { get; }
-	}
+	/// <summary>
+	/// What type of object is this for weapon targeting purposes?
+	/// </summary>
+	WeaponTargets WeaponTargetType { get; }
 }

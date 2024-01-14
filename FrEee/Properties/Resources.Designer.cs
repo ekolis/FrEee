@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FrEee.Properties {
+namespace FrEee.Properties; 
     using System;
     
     
@@ -60,4 +60,3 @@ namespace FrEee.Properties {
             }
         }
     }
-}

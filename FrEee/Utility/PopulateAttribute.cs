@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrEee.Utility
+namespace FrEee.Utility;
+
+public class PopulateAttribute<T>
+	: Attribute
+	where T : IPopulator
 {
-	public class PopulateAttribute<T>
-		: Attribute
-		where T : IPopulator
-	{
-	}
 }

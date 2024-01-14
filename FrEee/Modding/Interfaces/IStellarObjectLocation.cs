@@ -3,26 +3,25 @@ using FrEee.Objects.Space;
 using FrEee.Utility; using FrEee.Serialization;
 using System.Drawing;
 
-namespace FrEee.Modding.Interfaces
+namespace FrEee.Modding.Interfaces;
+
+/// <summary>
+/// A location that may specify either a specific sector's coordinates, or a group of sectors, from which one is chosen randomly.
+/// </summary>
+public interface IStellarObjectLocation
 {
 	/// <summary>
-	/// A location that may specify either a specific sector's coordinates, or a group of sectors, from which one is chosen randomly.
+	/// The last coordinates chosen.
+	/// Used for "Same As" locations.
 	/// </summary>
-	public interface IStellarObjectLocation
-	{
-		/// <summary>
-		/// The last coordinates chosen.
-		/// Used for "Same As" locations.
-		/// </summary>
-		Point? LastResult { get; }
+	Point? LastResult { get; }
 
-		ITemplate<StellarObject> StellarObjectTemplate { get; set; }
+	ITemplate<StellarObject> StellarObjectTemplate { get; set; }
 
-		/// <summary>
-		/// Chooses a sector.
-		/// </summary>
-		/// <param name="radius">The star system.</param>
-		/// <returns></returns>
-		Point Resolve(StarSystem sys, PRNG dice);
-	}
+	/// <summary>
+	/// Chooses a sector.
+	/// </summary>
+	/// <param name="radius">The star system.</param>
+	/// <returns></returns>
+	Point Resolve(StarSystem sys, PRNG dice);
 }

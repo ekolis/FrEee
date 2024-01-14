@@ -6,20 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrEee.Serialization.Stringifiers
-{
-	[Export(typeof(IStringifier))]
-	public class SizeStringifier : Stringifier<Size>
-	{
-		public override Size Destringify(string s)
-		{
-			var split = s.Split(',').Select(x => x.Trim()).ToArray();
-			return new Size(int.Parse(split[0]), int.Parse(split[1]));
-		}
+namespace FrEee.Serialization.Stringifiers;
 
-		public override string Stringify(Size t)
-		{
-			return $"{t.Width}, {t.Height}";
-		}
+[Export(typeof(IStringifier))]
+public class SizeStringifier : Stringifier<Size>
+{
+	public override Size Destringify(string s)
+	{
+		var split = s.Split(',').Select(x => x.Trim()).ToArray();
+		return new Size(int.Parse(split[0]), int.Parse(split[1]));
+	}
+
+	public override string Stringify(Size t)
+	{
+		return $"{t.Width}, {t.Height}";
 	}
 }

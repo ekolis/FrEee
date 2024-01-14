@@ -1,13 +1,12 @@
-﻿namespace FrEee.WinForms.DataGridView
+﻿namespace FrEee.WinForms.DataGridView;
+
+/// <summary>
+/// Formatting for a cell value.
+/// </summary>
+public enum Format
 {
-	/// <summary>
-	/// Formatting for a cell value.
-	/// </summary>
-	public enum Format
-	{
-		Raw,
-		Units,
-		UnitsBForBillions,
-		Kilotons
-	}
+	Raw,
+	Units,
+	UnitsBForBillions,
+	Kilotons
 }

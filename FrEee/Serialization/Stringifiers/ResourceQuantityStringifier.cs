@@ -8,19 +8,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrEee.Serialization.Stringifiers
-{
-	[Export(typeof(IStringifier))]
-	public class ResourceQuantityStringifier : Stringifier<ResourceQuantity>
-	{
-		public override ResourceQuantity Destringify(string s)
-		{
-			return ResourceQuantity.Parse(s);
-		}
+namespace FrEee.Serialization.Stringifiers;
 
-		public override string Stringify(ResourceQuantity t)
-		{
-			return t.ToString();
-		}
+[Export(typeof(IStringifier))]
+public class ResourceQuantityStringifier : Stringifier<ResourceQuantity>
+{
+	public override ResourceQuantity Destringify(string s)
+	{
+		return ResourceQuantity.Parse(s);
+	}
+
+	public override string Stringify(ResourceQuantity t)
+	{
+		return t.ToString();
 	}
 }

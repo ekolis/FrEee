@@ -1,9 +1,8 @@
-﻿namespace FrEee.Enumerations
+﻿namespace FrEee.Enumerations;
+
+public enum StartingTechnologyLevel
 {
-	public enum StartingTechnologyLevel
-	{
-		Low,
-		Medium,
-		High
-	}
+	Low,
+	Medium,
+	High
 }

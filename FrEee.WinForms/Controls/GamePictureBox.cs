@@ -2,31 +2,30 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms.Controls
-{
-	public partial class GamePictureBox : PictureBox
-	{
-		public GamePictureBox()
-		{
-			InitializeComponent();
-			SizeMode = PictureBoxSizeMode.Zoom;
-		}
+namespace FrEee.WinForms.Controls;
 
-		/// <summary>
-		/// Shows a full-size version of the picture in its own window.
-		/// </summary>
-		/// <param name="text">The title for the form.</param>
-		public void ShowFullSize(string text)
+public partial class GamePictureBox : PictureBox
+{
+	public GamePictureBox()
+	{
+		InitializeComponent();
+		SizeMode = PictureBoxSizeMode.Zoom;
+	}
+
+	/// <summary>
+	/// Shows a full-size version of the picture in its own window.
+	/// </summary>
+	/// <param name="text">The title for the form.</param>
+	public void ShowFullSize(string text)
+	{
+		if (Image != null)
 		{
-			if (Image != null)
-			{
-				var pic = new PictureBox();
-				pic.Image = Image;
-				pic.Size = Image.Size;
-				pic.BackColor = Color.Black;
-				pic.SizeMode = PictureBoxSizeMode.Zoom;
-				this.FindForm().ShowChildForm(pic.CreatePopupForm());
-			}
+			var pic = new PictureBox();
+			pic.Image = Image;
+			pic.Size = Image.Size;
+			pic.BackColor = Color.Black;
+			pic.SizeMode = PictureBoxSizeMode.Zoom;
+			this.FindForm().ShowChildForm(pic.CreatePopupForm());
 		}
 	}
 }

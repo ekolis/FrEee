@@ -4,74 +4,73 @@ using FrEee.Objects.Space;
 using System;
 using System.Collections.Generic;
 
-namespace FrEee.Objects.Commands
+namespace FrEee.Objects.Commands;
+
+/// <summary>
+/// Adds an order to the end of the queue.
+/// </summary>
+/// <typeparam name="T"></typeparam>
+[Serializable]
+public class AddOrderCommand : OrderCommand
 {
-	/// <summary>
-	/// Adds an order to the end of the queue.
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	[Serializable]
-	public class AddOrderCommand : OrderCommand
+	public AddOrderCommand(IOrderable target, IOrder order)
+		: base(target, order)
 	{
-		public AddOrderCommand(IOrderable target, IOrder order)
-			: base(target, order)
-		{
-		}
+	}
 
-		public override IEnumerable<IReferrable> NewReferrables
+	public override IEnumerable<IReferrable> NewReferrables
+	{
+		get
 		{
-			get
-			{
-				yield return Order;
-			}
+			yield return Order;
 		}
+	}
 
-		public override IOrder Order
+	public override IOrder Order
+	{
+		get
 		{
-			get
-			{
-				return NewOrder;
-			}
-			set
-			{
-				base.Order = value;
-				NewOrder = value;
-			}
+			return NewOrder;
 		}
-
-		private IOrder NewOrder
+		set
 		{
-			get;
-			set;
+			base.Order = value;
+			NewOrder = value;
 		}
+	}
 
-		public override void Execute()
+	private IOrder NewOrder
+	{
+		get;
+		set;
+	}
+
+	public override void Execute()
+	{
+		if (Executor == null)
+			Issuer.Log.Add(new GenericLogMessage("Attempted to add an order to nonexistent object with ID=" + executor.ID + ". This is probably a game bug."));
+		else if (Issuer == Executor.Owner)
 		{
-			if (Executor == null)
-				Issuer.Log.Add(new GenericLogMessage("Attempted to add an order to nonexistent object with ID=" + executor.ID + ". This is probably a game bug."));
-			else if (Issuer == Executor.Owner)
-			{
-				if (Order is IConstructionOrder && ((IConstructionOrder)Order).Item != null)
-					Issuer.Log.Add(new GenericLogMessage("You cannot add a construction order with a prefabricated construction item!"));
-				else if (Order == null)
-					Issuer.Log.Add(new GenericLogMessage("Attempted to add a null order to " + Executor + ". This is probably a game bug."));
-				else
-					Executor.AddOrder(Order);
-			}
+			if (Order is IConstructionOrder && ((IConstructionOrder)Order).Item != null)
+				Issuer.Log.Add(new GenericLogMessage("You cannot add a construction order with a prefabricated construction item!"));
+			else if (Order == null)
+				Issuer.Log.Add(new GenericLogMessage("Attempted to add a null order to " + Executor + ". This is probably a game bug."));
 			else
-				Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Executor + " belonging to " + Executor.Owner + "!", Galaxy.Current.TurnNumber));
+				Executor.AddOrder(Order);
 		}
+		else
+			Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Executor + " belonging to " + Executor.Owner + "!", Galaxy.Current.TurnNumber));
+	}
 
-		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	{
+		if (done == null)
+			done = new HashSet<IPromotable>();
+		if (!done.Contains(this))
 		{
-			if (done == null)
-				done = new HashSet<IPromotable>();
-			if (!done.Contains(this))
-			{
-				done.Add(this);
-				base.ReplaceClientIDs(idmap, done);
-				NewOrder.ReplaceClientIDs(idmap, done);
-			}
+			done.Add(this);
+			base.ReplaceClientIDs(idmap, done);
+			NewOrder.ReplaceClientIDs(idmap, done);
 		}
 	}
 }

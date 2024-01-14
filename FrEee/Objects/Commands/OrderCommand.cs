@@ -4,47 +4,46 @@ using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 
-namespace FrEee.Objects.Commands
+namespace FrEee.Objects.Commands;
+
+/// <summary>
+/// A command to manipulate an object's order queue.
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <typeparam name="TOrder"></typeparam>
+[Serializable]
+public abstract class OrderCommand : Command<IOrderable>, IOrderCommand
 {
-	/// <summary>
-	/// A command to manipulate an object's order queue.
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	/// <typeparam name="TOrder"></typeparam>
-	[Serializable]
-	public abstract class OrderCommand : Command<IOrderable>, IOrderCommand
+	protected OrderCommand(IOrderable target, IOrder order)
+		: base(target)
 	{
-		protected OrderCommand(IOrderable target, IOrder order)
-			: base(target)
+		Order = order;
+	}
+
+	[DoNotSerialize]
+	public virtual IOrder Order
+	{
+		get
 		{
-			Order = order;
+			return order.Value;
 		}
-
-		[DoNotSerialize]
-		public virtual IOrder Order
+		set
 		{
-			get
-			{
-				return order.Value;
-			}
-			set
-			{
-				order = value.ReferViaGalaxy();
-			}
+			order = value.ReferViaGalaxy();
 		}
+	}
 
-		private GalaxyReference<IOrder> order { get; set; }
+	private GalaxyReference<IOrder> order { get; set; }
 
-		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	{
+		if (done == null)
+			done = new HashSet<IPromotable>();
+		if (!done.Contains(this))
 		{
-			if (done == null)
-				done = new HashSet<IPromotable>();
-			if (!done.Contains(this))
-			{
-				done.Add(this);
-				base.ReplaceClientIDs(idmap, done);
-				order.ReplaceClientIDs(idmap, done);
-			}
+			done.Add(this);
+			base.ReplaceClientIDs(idmap, done);
+			order.ReplaceClientIDs(idmap, done);
 		}
 	}
 }

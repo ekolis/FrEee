@@ -6,8 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrEee.Objects.AI
-{
+namespace FrEee.Objects.AI;
+
     [Serializable]
     public class PythonAI<TDomain, TContext> : AI<TDomain, TContext>
     {
@@ -27,4 +27,3 @@ namespace FrEee.Objects.AI
             
         }
     }
-}

@@ -1,12 +1,11 @@
-﻿namespace FrEee.WinForms.DataGridView
+﻿namespace FrEee.WinForms.DataGridView;
+
+/// <summary>
+/// Sorting rules.
+/// </summary>
+public enum Sort
 {
-	/// <summary>
-	/// Sorting rules.
-	/// </summary>
-	public enum Sort
-	{
-		None,
-		Ascending,
-		Descending
-	}
+	None,
+	Ascending,
+	Descending
 }

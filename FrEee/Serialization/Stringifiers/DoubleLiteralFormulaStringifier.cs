@@ -7,19 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrEee.Serialization.Stringifiers
-{
-	[Export(typeof(IStringifier))]
-	public class DoubleLiteralFormulaStringifier : Stringifier<LiteralFormula<double>>
-	{
-		public override LiteralFormula<double> Destringify(string s)
-		{
-			return new LiteralFormula<double>(s);
-		}
+namespace FrEee.Serialization.Stringifiers;
 
-		public override string Stringify(LiteralFormula<double> t)
-		{
-			return t.Text;
-		}
+[Export(typeof(IStringifier))]
+public class DoubleLiteralFormulaStringifier : Stringifier<LiteralFormula<double>>
+{
+	public override LiteralFormula<double> Destringify(string s)
+	{
+		return new LiteralFormula<double>(s);
+	}
+
+	public override string Stringify(LiteralFormula<double> t)
+	{
+		return t.Text;
 	}
 }

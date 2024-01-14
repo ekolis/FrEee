@@ -2,35 +2,34 @@
 using FrEee.Extensions;
 using System.Linq;
 
-namespace FrEee.Setup.WarpPointPlacementStrategies
+namespace FrEee.Setup.WarpPointPlacementStrategies;
+
+/// <summary>
+/// Places warp points at the location of stars. If there are no stars, warp points will be placed randomly. Exploration is easy, but so is setting up chokepoints.
+/// </summary>
+public class StarWarpPointPlacementStrategy : WarpPointPlacementStrategy
 {
-	/// <summary>
-	/// Places warp points at the location of stars. If there are no stars, warp points will be placed randomly. Exploration is easy, but so is setting up chokepoints.
-	/// </summary>
-	public class StarWarpPointPlacementStrategy : WarpPointPlacementStrategy
+	static StarWarpPointPlacementStrategy()
 	{
-		static StarWarpPointPlacementStrategy()
-		{
-			Instance = new StarWarpPointPlacementStrategy();
-		}
+		Instance = new StarWarpPointPlacementStrategy();
+	}
 
-		private StarWarpPointPlacementStrategy()
-			: base("Star", "Places warp points at the location of stars. If there are no stars, warp points will be placed randomly. Exploration is easy, but so is setting up chokepoints.")
-		{
-		}
+	private StarWarpPointPlacementStrategy()
+		: base("Star", "Places warp points at the location of stars. If there are no stars, warp points will be placed randomly. Exploration is easy, but so is setting up chokepoints.")
+	{
+	}
 
-		public static StarWarpPointPlacementStrategy Instance { get; private set; }
+	public static StarWarpPointPlacementStrategy Instance { get; private set; }
 
-		public override Sector GetWarpPointSector(ObjectLocation<StarSystem> here, ObjectLocation<StarSystem> there)
+	public override Sector GetWarpPointSector(ObjectLocation<StarSystem> here, ObjectLocation<StarSystem> there)
+	{
+		var stars = here.Item.FindSpaceObjects<Star>();
+		if (stars.Any())
 		{
-			var stars = here.Item.FindSpaceObjects<Star>();
-			if (stars.Any())
-			{
-				var star = stars.PickRandom();
-				return star.Sector;
-			}
-			else
-				return RandomWarpPointPlacementStrategy.Instance.GetWarpPointSector(here, there);
+			var star = stars.PickRandom();
+			return star.Sector;
 		}
+		else
+			return RandomWarpPointPlacementStrategy.Instance.GetWarpPointSector(here, there);
 	}
 }

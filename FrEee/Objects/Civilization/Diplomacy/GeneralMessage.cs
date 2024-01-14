@@ -1,37 +1,36 @@
 ﻿using FrEee.Interfaces;
 using System.Collections.Generic;
 
-namespace FrEee.Objects.Civilization.Diplomacy
+namespace FrEee.Objects.Civilization.Diplomacy;
+
+/// <summary>
+/// A general message with no parameters. Just text.
+/// </summary>
+public class GeneralMessage : Message
 {
-	/// <summary>
-	/// A general message with no parameters. Just text.
-	/// </summary>
-	public class GeneralMessage : Message
+	public GeneralMessage(Empire recipient)
+		: base(recipient)
 	{
-		public GeneralMessage(Empire recipient)
-			: base(recipient)
-		{
-		}
+	}
 
-		public override IEnumerable<string> IconPaths
+	public override IEnumerable<string> IconPaths
+	{
+		get
 		{
-			get
-			{
-				return Owner.IconPaths;
-			}
+			return Owner.IconPaths;
 		}
+	}
 
-		public override IEnumerable<string> PortraitPaths
+	public override IEnumerable<string> PortraitPaths
+	{
+		get
 		{
-			get
-			{
-				return Owner.PortraitPaths;
-			}
+			return Owner.PortraitPaths;
 		}
+	}
 
-		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done)
-		{
-			// nothing to do
-		}
+	public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done)
+	{
+		// nothing to do
 	}
 }

@@ -5,146 +5,145 @@ using FrEee.Modding.Templates;
 using FrEee.Utility; using FrEee.Serialization;
 using System.Collections.Generic;
 
-namespace FrEee.Interfaces
+namespace FrEee.Interfaces;
+
+/// <summary>
+/// A vehicle design.
+/// </summary>
+public interface IDesign : INamed, IPictorial, IOwnableAbilityObject, IConstructionTemplate, IPromotable, IFoggable, IUpgradeable<IDesign>, ICleanable
 {
+	int Accuracy { get; }
+
+	int ArmorHitpoints { get; }
+
 	/// <summary>
-	/// A vehicle design.
+	/// The base name of the design, without the iteration number.
 	/// </summary>
-	public interface IDesign : INamed, IPictorial, IOwnableAbilityObject, IConstructionTemplate, IPromotable, IFoggable, IUpgradeable<IDesign>, ICleanable
-	{
-		int Accuracy { get; }
+	string BaseName { get; set; }
 
-		int ArmorHitpoints { get; }
+	int CargoCapacity { get; }
 
-		/// <summary>
-		/// The base name of the design, without the iteration number.
-		/// </summary>
-		string BaseName { get; set; }
+	int CargoStorage { get; }
 
-		int CargoCapacity { get; }
+	/// <summary>
+	/// The movement speed of the design in combat.
+	/// </summary>
+	double CombatSpeed { get; }
 
-		int CargoStorage { get; }
+	/// <summary>
+	/// The vehicle's components.
+	/// </summary>
+	IList<MountedComponentTemplate> Components { get; }
 
-		/// <summary>
-		/// The movement speed of the design in combat.
-		/// </summary>
-		double CombatSpeed { get; }
+	int Evasion { get; }
 
-		/// <summary>
-		/// The vehicle's components.
-		/// </summary>
-		IList<MountedComponentTemplate> Components { get; }
+	/// <summary>
+	/// The vehicle's hull.
+	/// </summary>
+	IHull Hull { get; set; }
 
-		int Evasion { get; }
+	int HullHitpoints { get; }
 
-		/// <summary>
-		/// The vehicle's hull.
-		/// </summary>
-		IHull Hull { get; set; }
+	/// <summary>
+	/// Is this a newly created design on the client side that needs to be sent to the server?
+	/// </summary>
+	bool IsNew { get; set; }
 
-		int HullHitpoints { get; }
+	/// <summary>
+	/// Is this design obsolete?
+	/// Note that foreign designs will never be obsoleted, since you don't know when their owner obsoleted them.
+	/// </summary>
+	new bool IsObsolete { get; set; }
 
-		/// <summary>
-		/// Is this a newly created design on the client side that needs to be sent to the server?
-		/// </summary>
-		bool IsNew { get; set; }
+	/// <summary>
+	/// Is this design valid in the current mod? Or is it using techs from other mods?
+	/// </summary>
+	bool IsValidInMod { get; }
 
-		/// <summary>
-		/// Is this design obsolete?
-		/// Note that foreign designs will never be obsoleted, since you don't know when their owner obsoleted them.
-		/// </summary>
-		new bool IsObsolete { get; set; }
+	int Iteration { get; set; }
 
-		/// <summary>
-		/// Is this design valid in the current mod? Or is it using techs from other mods?
-		/// </summary>
-		bool IsValidInMod { get; }
+	ResourceQuantity MaintenanceCost { get; }
 
-		int Iteration { get; set; }
+	/// <summary>
+	/// The name of the design.
+	/// </summary>
+	new string Name { get; }
 
-		ResourceQuantity MaintenanceCost { get; }
+	/// <summary>
+	/// The empire which created this design.
+	/// </summary>
+	new Empire Owner { get; set; }
 
-		/// <summary>
-		/// The name of the design.
-		/// </summary>
-		new string Name { get; }
+	/// <summary>
+	/// The ship's role (design type in SE4).
+	/// </summary>
+	string Role { get; set; }
 
-		/// <summary>
-		/// The empire which created this design.
-		/// </summary>
-		new Empire Owner { get; set; }
+	int ShieldHitpoints { get; }
 
-		/// <summary>
-		/// The ship's role (design type in SE4).
-		/// </summary>
-		string Role { get; set; }
+	int ShieldRegeneration { get; }
 
-		int ShieldHitpoints { get; }
+	/// <summary>
+	/// Unused space on the design.
+	/// </summary>
+	int SpaceFree { get; }
 
-		int ShieldRegeneration { get; }
+	/// <summary>
+	/// The movement speed of the design, in sectors per turn.
+	/// </summary>
+	int StrategicSpeed { get; }
 
-		/// <summary>
-		/// Unused space on the design.
-		/// </summary>
-		int SpaceFree { get; }
+	int SupplyStorage { get; }
 
-		/// <summary>
-		/// The movement speed of the design, in sectors per turn.
-		/// </summary>
-		int StrategicSpeed { get; }
+	/// <summary>
+	/// Supply used for each sector of movement.
+	/// </summary>
+	int SupplyUsagePerSector { get; }
 
-		int SupplyStorage { get; }
+	/// <summary>
+	/// The turn this design was created (for our designs) or discovered (for alien designs).
+	/// </summary>
+	int TurnNumber { get; set; }
 
-		/// <summary>
-		/// Supply used for each sector of movement.
-		/// </summary>
-		int SupplyUsagePerSector { get; }
+	int VehiclesBuilt { get; set; }
 
-		/// <summary>
-		/// The turn this design was created (for our designs) or discovered (for alien designs).
-		/// </summary>
-		int TurnNumber { get; set; }
+	/// <summary>
+	/// The vehicle type.
+	/// </summary>
+	VehicleTypes VehicleType { get; }
 
-		int VehiclesBuilt { get; set; }
+	/// <summary>
+	/// The name of the vehicle type.
+	/// </summary>
+	string VehicleTypeName { get; }
 
-		/// <summary>
-		/// The vehicle type.
-		/// </summary>
-		VehicleTypes VehicleType { get; }
+	/// <summary>
+	/// Warnings that need to be resolved before the design can be saved.
+	/// </summary>
+	IEnumerable<string> Warnings { get; }
 
-		/// <summary>
-		/// The name of the vehicle type.
-		/// </summary>
-		string VehicleTypeName { get; }
+	void AddComponent(ComponentTemplate ct, Mount m = null);
 
-		/// <summary>
-		/// Warnings that need to be resolved before the design can be saved.
-		/// </summary>
-		IEnumerable<string> Warnings { get; }
+	/// <summary>
+	/// Creates an order to build this design.
+	/// </summary>
+	/// <returns></returns>
+	IConstructionOrder CreateConstructionOrder(ConstructionQueue queue);
 
-		void AddComponent(ComponentTemplate ct, Mount m = null);
+	/// <summary>
+	/// Creates a command to create this design on the server.
+	/// </summary>
+	/// <returns></returns>
+	ICreateDesignCommand CreateCreationCommand();
 
-		/// <summary>
-		/// Creates an order to build this design.
-		/// </summary>
-		/// <returns></returns>
-		IConstructionOrder CreateConstructionOrder(ConstructionQueue queue);
+	IVehicle Instantiate();
 
-		/// <summary>
-		/// Creates a command to create this design on the server.
-		/// </summary>
-		/// <returns></returns>
-		ICreateDesignCommand CreateCreationCommand();
+	IDesign Upgrade();
+}
 
-		IVehicle Instantiate();
+public interface IDesign<out T> : IDesign, IPictorial, IReferrable, IUpgradeable<IDesign<T>> where T : IVehicle
+{
+	new T Instantiate();
 
-		IDesign Upgrade();
-	}
-
-	public interface IDesign<out T> : IDesign, IPictorial, IReferrable, IUpgradeable<IDesign<T>> where T : IVehicle
-	{
-		new T Instantiate();
-
-		new IDesign<T> Upgrade();
-	}
+	new IDesign<T> Upgrade();
 }

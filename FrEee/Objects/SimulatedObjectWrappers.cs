@@ -4,67 +4,66 @@ using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 
-namespace FrEee.Objects
+namespace FrEee.Objects;
+
+public class SimulatedEmpire : IDisposable
 {
-	public class SimulatedEmpire : IDisposable
+	public SimulatedEmpire(Empire emp)
 	{
-		public SimulatedEmpire(Empire emp)
-		{
-			Empire = emp.CopyAndAssignNewID();
-			SpaceObjects = new HashSet<SimulatedSpaceObject>();
-			Troops = new HashSet<SimulatedUnit>();
-		}
-
-		public Empire Empire { get; private set; }
-
-		public ISet<SimulatedSpaceObject> SpaceObjects { get; private set; }
-
-		public ISet<SimulatedUnit> Troops { get; private set; }
-
-		public void Dispose()
-		{
-			Empire.Dispose();
-			foreach (var sobj in SpaceObjects)
-				sobj.Dispose();
-		}
+		Empire = emp.CopyAndAssignNewID();
+		SpaceObjects = new HashSet<SimulatedSpaceObject>();
+		Troops = new HashSet<SimulatedUnit>();
 	}
 
-	public class SimulatedSpaceObject : IDisposable
+	public Empire Empire { get; private set; }
+
+	public ISet<SimulatedSpaceObject> SpaceObjects { get; private set; }
+
+	public ISet<SimulatedUnit> Troops { get; private set; }
+
+	public void Dispose()
 	{
-		public SimulatedSpaceObject(ICombatSpaceObject sobj)
-		{
-			SpaceObject = sobj;
-			Units = new HashSet<SimulatedUnit>();
-		}
+		Empire.Dispose();
+		foreach (var sobj in SpaceObjects)
+			sobj.Dispose();
+	}
+}
 
-		public ICombatSpaceObject SpaceObject { get; private set; }
-
-		public ISet<SimulatedUnit> Units { get; private set; }
-
-		// TODO - population in cargo?
-
-		// TODO - enemy troops in cargo? or can those go under Units?
-
-		public void Dispose()
-		{
-			SpaceObject.Dispose();
-			foreach (var u in Units)
-				u.Dispose();
-		}
+public class SimulatedSpaceObject : IDisposable
+{
+	public SimulatedSpaceObject(ICombatSpaceObject sobj)
+	{
+		SpaceObject = sobj;
+		Units = new HashSet<SimulatedUnit>();
 	}
 
-	public class SimulatedUnit : IDisposable
+	public ICombatSpaceObject SpaceObject { get; private set; }
+
+	public ISet<SimulatedUnit> Units { get; private set; }
+
+	// TODO - population in cargo?
+
+	// TODO - enemy troops in cargo? or can those go under Units?
+
+	public void Dispose()
 	{
-		public SimulatedUnit(IUnit u)
-		{
-			Unit = u;
-		}
+		SpaceObject.Dispose();
+		foreach (var u in Units)
+			u.Dispose();
+	}
+}
 
-		public IUnit Unit { get; private set; }
+public class SimulatedUnit : IDisposable
+{
+	public SimulatedUnit(IUnit u)
+	{
+		Unit = u;
+	}
 
-		public void Dispose()
-		{
-			Unit.Dispose();
-		}
+	public IUnit Unit { get; private set; }
+
+	public void Dispose()
+	{
+		Unit.Dispose();
 	}
 }

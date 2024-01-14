@@ -1,10 +1,9 @@
-﻿namespace FrEee.Interfaces
+﻿namespace FrEee.Interfaces;
+
+/// <summary>
+/// For classes that need extra processing after being copied or whatnot.
+/// </summary>
+public interface ICleanable
 {
-	/// <summary>
-	/// For classes that need extra processing after being copied or whatnot.
-	/// </summary>
-	public interface ICleanable
-	{
-		void Clean();
-	}
+	void Clean();
 }

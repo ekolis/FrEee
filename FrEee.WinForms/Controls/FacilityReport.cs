@@ -6,96 +6,95 @@ using FrEee.WinForms.Interfaces;
 using System;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms.Controls
+namespace FrEee.WinForms.Controls;
+
+public partial class FacilityReport : UserControl, IBindable<Facility>, IBindable<FacilityTemplate>, IBindable<FacilityUpgrade>
 {
-	public partial class FacilityReport : UserControl, IBindable<Facility>, IBindable<FacilityTemplate>, IBindable<FacilityUpgrade>
+	public FacilityReport()
 	{
-		public FacilityReport()
+		InitializeComponent();
+	}
+
+	public FacilityReport(Facility f)
+	{
+		InitializeComponent();
+		Bind(f);
+	}
+
+	public FacilityReport(FacilityTemplate ft)
+	{
+		InitializeComponent();
+		Bind(ft);
+	}
+
+	public FacilityReport(FacilityUpgrade fu)
+	{
+		InitializeComponent();
+		Bind(fu);
+	}
+
+	public Facility Facility
+	{
+		get
 		{
-			InitializeComponent();
+			return facility;
 		}
-
-		public FacilityReport(Facility f)
+		set
 		{
-			InitializeComponent();
-			Bind(f);
+			facility = value;
+			Bind();
 		}
+	}
 
-		public FacilityReport(FacilityTemplate ft)
+	private Facility facility;
+
+	private bool isUpgrading = false;
+
+	public void Bind(Facility data)
+	{
+		isUpgrading = false;
+		Facility = data;
+	}
+
+	public void Bind()
+	{
+		SuspendLayout();
+		if (Facility == null)
+			Visible = false;
+		else
 		{
-			InitializeComponent();
-			Bind(ft);
+			Visible = true;
+			picPortrait.Image = Facility.Portrait;
+			txtName.Text = Facility.Name;
+			txtDescription.Text = Facility.Template.Description;
+			double ratio = 1d;
+			if (isUpgrading)
+				ratio = (double)Mod.Current.Settings.UpgradeFacilityPercentCost / 100d;
+			resMin.Amount = (int)(Facility.Template.Cost[Resource.Minerals] * ratio);
+			resOrg.Amount = (int)(Facility.Template.Cost[Resource.Organics] * ratio);
+			resRad.Amount = (int)(Facility.Template.Cost[Resource.Radioactives] * ratio);
+			abilityTree.IntrinsicAbilities = Facility.Abilities;
+			abilityTree.Abilities = Facility.Abilities.StackToTree(Facility);
 		}
+		ResumeLayout();
+	}
 
-		public FacilityReport(FacilityUpgrade fu)
-		{
-			InitializeComponent();
-			Bind(fu);
-		}
+	public void Bind(FacilityTemplate data)
+	{
+		isUpgrading = false;
+		Bind(new Facility(data));
+	}
 
-		public Facility Facility
-		{
-			get
-			{
-				return facility;
-			}
-			set
-			{
-				facility = value;
-				Bind();
-			}
-		}
+	public void Bind(FacilityUpgrade data)
+	{
+		isUpgrading = true;
+		Bind(data.New);
+		txtName.Text = "Upgrade to " + txtName.Text;
+	}
 
-		private Facility facility;
-
-		private bool isUpgrading = false;
-
-		public void Bind(Facility data)
-		{
-			isUpgrading = false;
-			Facility = data;
-		}
-
-		public void Bind()
-		{
-			SuspendLayout();
-			if (Facility == null)
-				Visible = false;
-			else
-			{
-				Visible = true;
-				picPortrait.Image = Facility.Portrait;
-				txtName.Text = Facility.Name;
-				txtDescription.Text = Facility.Template.Description;
-				double ratio = 1d;
-				if (isUpgrading)
-					ratio = (double)Mod.Current.Settings.UpgradeFacilityPercentCost / 100d;
-				resMin.Amount = (int)(Facility.Template.Cost[Resource.Minerals] * ratio);
-				resOrg.Amount = (int)(Facility.Template.Cost[Resource.Organics] * ratio);
-				resRad.Amount = (int)(Facility.Template.Cost[Resource.Radioactives] * ratio);
-				abilityTree.IntrinsicAbilities = Facility.Abilities;
-				abilityTree.Abilities = Facility.Abilities.StackToTree(Facility);
-			}
-			ResumeLayout();
-		}
-
-		public void Bind(FacilityTemplate data)
-		{
-			isUpgrading = false;
-			Bind(new Facility(data));
-		}
-
-		public void Bind(FacilityUpgrade data)
-		{
-			isUpgrading = true;
-			Bind(data.New);
-			txtName.Text = "Upgrade to " + txtName.Text;
-		}
-
-		private void picPortrait_Click(object sender, EventArgs e)
-		{
-			if (Facility != null)
-				picPortrait.ShowFullSize(Facility.Name);
-		}
+	private void picPortrait_Click(object sender, EventArgs e)
+	{
+		if (Facility != null)
+			picPortrait.ShowFullSize(Facility.Name);
 	}
 }

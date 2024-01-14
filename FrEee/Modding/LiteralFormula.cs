@@ -4,128 +4,127 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace FrEee.Modding
+namespace FrEee.Modding;
+
+/// <summary>
+/// A simple formula which is just a literal value. Does not require a script.
+/// </summary>
+/// <typeparam name="T"></typeparam>
+public class LiteralFormula<T> : Formula<T>, IEquatable<LiteralFormula<T>>
+	where T : IConvertible, IComparable
 {
-	/// <summary>
-	/// A simple formula which is just a literal value. Does not require a script.
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	public class LiteralFormula<T> : Formula<T>, IEquatable<LiteralFormula<T>>
-		where T : IConvertible, IComparable
+	public LiteralFormula(string text)
+				: base(text)
 	{
-		public LiteralFormula(string text)
-					: base(text)
-		{
-		}
+	}
 
-		/// <summary>
-		/// For serialization.
-		/// </summary>
-		private LiteralFormula()
-			: base()
-		{
-		}
+	/// <summary>
+	/// For serialization.
+	/// </summary>
+	private LiteralFormula()
+		: base()
+	{
+	}
 
-		[DoNotSerialize(false)]
-		public override object Context
+	[DoNotSerialize(false)]
+	public override object Context
+	{
+		get
 		{
-			get
-			{
-				return null;
-			}
-			set
-			{
-				// do nothing
-			}
+			return null;
 		}
+		set
+		{
+			// do nothing
+		}
+	}
 
-		public override bool IsDynamic
+	public override bool IsDynamic
+	{
+		get
 		{
-			get
-			{
-				return false;
-			}
+			return false;
 		}
+	}
 
-		public override bool IsLiteral
+	public override bool IsLiteral
+	{
+		get
 		{
-			get
-			{
-				return true;
-			}
+			return true;
 		}
+	}
 
-		public override T Value
+	public override T Value
+	{
+		get
 		{
-			get
-			{
-				if (value == null)
-					value = new Lazy<T>(ComputeValue); // HACK - why is it not being set when we load?
-				return value.Value;
-			}
+			if (value == null)
+				value = new Lazy<T>(ComputeValue); // HACK - why is it not being set when we load?
+			return value.Value;
 		}
+	}
 
-		public static implicit operator LiteralFormula<T>(T obj)
-		{
-			return new LiteralFormula<T>(obj.ToString(CultureInfo.InvariantCulture));
-		}
+	public static implicit operator LiteralFormula<T>(T obj)
+	{
+		return new LiteralFormula<T>(obj.ToString(CultureInfo.InvariantCulture));
+	}
 
-		public static implicit operator T(LiteralFormula<T> f)
-		{
-			return f.Value;
-		}
+	public static implicit operator T(LiteralFormula<T> f)
+	{
+		return f.Value;
+	}
 
-		public static bool operator !=(LiteralFormula<T> f1, Formula<T> f2)
-		{
-			return !(f1 == f2);
-		}
+	public static bool operator !=(LiteralFormula<T> f1, Formula<T> f2)
+	{
+		return !(f1 == f2);
+	}
 
-		public static bool operator ==(LiteralFormula<T> f1, Formula<T> f2)
-		{
-			if (f1.IsNull() && f2.IsNull())
-				return true;
-			if (f1.IsNull() || f2.IsNull())
-				return false;
-			return f1.Value.SafeEquals(f2.Value);
-		}
+	public static bool operator ==(LiteralFormula<T> f1, Formula<T> f2)
+	{
+		if (f1.IsNull() && f2.IsNull())
+			return true;
+		if (f1.IsNull() || f2.IsNull())
+			return false;
+		return f1.Value.SafeEquals(f2.Value);
+	}
 
-		public override bool Equals(object obj)
-		{
-			var x = obj as LiteralFormula<T>;
-			if (ReferenceEquals(x, null))
-				return false;
-			return Equals(x);
-		}
+	public override bool Equals(object obj)
+	{
+		var x = obj as LiteralFormula<T>;
+		if (ReferenceEquals(x, null))
+			return false;
+		return Equals(x);
+	}
 
-		public bool Equals(LiteralFormula<T> other)
-		{
-			return Text == other.Text;
-		}
+	public bool Equals(LiteralFormula<T> other)
+	{
+		return Text == other.Text;
+	}
 
-		public override T Evaluate(object host, IDictionary<string, object> variables = null)
-		{
-			// no need to call a script
-			return Value;
-		}
+	public override T Evaluate(object host, IDictionary<string, object> variables = null)
+	{
+		// no need to call a script
+		return Value;
+	}
 
-		public override int GetHashCode()
-		{
-			return HashCodeMasher.Mash(Text);
-		}
+	public override int GetHashCode()
+	{
+		return HashCodeMasher.Mash(Text);
+	}
 
-		public override Formula<string> ToStringFormula(CultureInfo c = null)
-		{
-			return new LiteralFormula<string>(Value.ToString(c ?? CultureInfo.InvariantCulture));
-		}
+	public override Formula<string> ToStringFormula(CultureInfo c = null)
+	{
+		return new LiteralFormula<string>(Value.ToString(c ?? CultureInfo.InvariantCulture));
+	}
 
-		protected override T ComputeValue()
-		{
-			if (typeof(T) == typeof(string))
-				return (T)(object)Text;
-			else if (typeof(T).IsEnum)
-				return Text.ParseEnum<T>();
-			else
-				return (T)Convert.ChangeType(Text, typeof(T), CultureInfo.InvariantCulture);
-		}
+	protected override T ComputeValue()
+	{
+		if (typeof(T) == typeof(string))
+			return (T)(object)Text;
+		else if (typeof(T).IsEnum)
+			return Text.ParseEnum<T>();
+		else
+			return (T)Convert.ChangeType(Text, typeof(T), CultureInfo.InvariantCulture);
 	}
 }

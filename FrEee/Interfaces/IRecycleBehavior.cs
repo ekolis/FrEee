@@ -1,17 +1,16 @@
 ﻿using FrEee.Objects.LogMessages;
 using System.Collections.Generic;
 
-namespace FrEee.Interfaces
+namespace FrEee.Interfaces;
+
+/// <summary>
+/// A type of recycle behavior (scrap, analyze, etc.)
+/// </summary>
+public interface IRecycleBehavior
 {
-	/// <summary>
-	/// A type of recycle behavior (scrap, analyze, etc.)
-	/// </summary>
-	public interface IRecycleBehavior
-	{
-		string Verb { get; }
+	string Verb { get; }
 
-		void Execute(IRecyclable target, bool didRecycle = false);
+	void Execute(IRecyclable target, bool didRecycle = false);
 
-		IEnumerable<LogMessage> GetErrors(IMobileSpaceObject executor, IRecyclable target);
-	}
+	IEnumerable<LogMessage> GetErrors(IMobileSpaceObject executor, IRecyclable target);
 }

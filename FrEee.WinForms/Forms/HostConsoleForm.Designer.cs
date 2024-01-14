@@ -1,33 +1,33 @@
-﻿namespace FrEee.WinForms.Forms
+﻿namespace FrEee.WinForms.Forms;
+
+partial class HostConsoleForm
 {
-	partial class HostConsoleForm
+	/// <summary>
+	/// Required designer variable.
+	/// </summary>
+	private System.ComponentModel.IContainer components = null;
+
+	/// <summary>
+	/// Clean up any resources being used.
+	/// </summary>
+	/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+	protected override void Dispose(bool disposing)
 	{
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
-
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
+		if (disposing && (components != null))
 		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
+			components.Dispose();
 		}
+		base.Dispose(disposing);
+	}
 
-		#region Windows Form Designer generated code
+	#region Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+	/// <summary>
+	/// Required method for Designer support - do not modify
+	/// the contents of this method with the code editor.
+	/// </summary>
+	private void InitializeComponent()
+	{
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gridEmpires = new System.Windows.Forms.DataGridView();
@@ -228,22 +228,21 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
+	}
 
-		#endregion
+	#endregion
 
-		private System.Windows.Forms.DataGridView gridEmpires;
-		private System.Windows.Forms.BindingSource empireStatusBindingSource;
-		private System.Windows.Forms.DataGridViewImageColumn Insignia;
-		private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn plrUploadStatusDataGridViewTextBoxColumn;
-		private Controls.GameButton btnClose;
-		private Controls.GameButton btnProcess;
-		private Controls.GameButton btnToggleAI;
-		private Controls.GameButton btnPlayerView;
-		private Controls.GameButton btnEdit;
-		private System.Windows.Forms.CheckBox autoProcess;
-		private System.Windows.Forms.Label timer;
+	private System.Windows.Forms.DataGridView gridEmpires;
+	private System.Windows.Forms.BindingSource empireStatusBindingSource;
+	private System.Windows.Forms.DataGridViewImageColumn Insignia;
+	private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+	private System.Windows.Forms.DataGridViewTextBoxColumn plrUploadStatusDataGridViewTextBoxColumn;
+	private Controls.GameButton btnClose;
+	private Controls.GameButton btnProcess;
+	private Controls.GameButton btnToggleAI;
+	private Controls.GameButton btnPlayerView;
+	private Controls.GameButton btnEdit;
+	private System.Windows.Forms.CheckBox autoProcess;
+	private System.Windows.Forms.Label timer;
         private System.Windows.Forms.Timer autoProcessTimer;
     }
-}

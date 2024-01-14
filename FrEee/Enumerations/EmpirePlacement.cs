@@ -1,15 +1,14 @@
 ﻿using FrEee.Utility; using FrEee.Serialization;
 
-namespace FrEee.Enumerations
+namespace FrEee.Enumerations;
+
+public enum EmpirePlacement
 {
-	public enum EmpirePlacement
-	{
-		[CanonicalName("Can Start In Same System")]
-		CanStartInSameSystem,
+	[CanonicalName("Can Start In Same System")]
+	CanStartInSameSystem,
 
-		[CanonicalName("Different Systems")]
-		DifferentSystems,
+	[CanonicalName("Different Systems")]
+	DifferentSystems,
 
-		Equidistant
-	}
+	Equidistant
 }

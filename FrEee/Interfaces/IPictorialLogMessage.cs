@@ -1,7 +1,6 @@
-﻿namespace FrEee.Interfaces
+﻿namespace FrEee.Interfaces;
+
+public interface IPictorialLogMessage<out T>
 {
-	public interface IPictorialLogMessage<out T>
-	{
-		T Context { get; }
-	}
+	T Context { get; }
 }

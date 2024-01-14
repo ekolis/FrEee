@@ -2,54 +2,53 @@
 using FrEee.WinForms.Interfaces;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms.Controls
+namespace FrEee.WinForms.Controls;
+
+public partial class EmpireReport : UserControl, IBindable<Empire>
 {
-	public partial class EmpireReport : UserControl, IBindable<Empire>
+	public EmpireReport()
 	{
-		public EmpireReport()
-		{
-			InitializeComponent();
-		}
+		InitializeComponent();
+	}
 
-		public Empire Empire
+	public Empire Empire
+	{
+		get
 		{
-			get
-			{
-				return empire;
-			}
-			set
-			{
-				empire = value;
-				Bind();
-			}
+			return empire;
 		}
-
-		private Empire empire;
-
-		public void Bind(Empire data)
+		set
 		{
-			Empire = data;
+			empire = value;
+			Bind();
 		}
+	}
 
-		public void Bind()
+	private Empire empire;
+
+	public void Bind(Empire data)
+	{
+		Empire = data;
+	}
+
+	public void Bind()
+	{
+		SuspendLayout();
+		if (Empire == null)
+			gameTabControl1.Visible = false;
+		else
 		{
-			SuspendLayout();
-			if (Empire == null)
-				gameTabControl1.Visible = false;
-			else
-			{
-				gameTabControl1.Visible = true;
-				picPortrait.Image = Empire.Portrait;
-				picInsignia.Image = Empire.Icon;
-				txtName.Text = Empire.Name;
-				txtLeader.Text = Empire.LeaderName;
-				txtPortrait.Text = Empire.LeaderPortraitName;
-				txtShipset.Text = Empire.ShipsetPath;
-				txtCulture.Text = Empire.Culture.Name;
-				// TODO - race report
-				// TODO - known technology
-			}
-			ResumeLayout();
+			gameTabControl1.Visible = true;
+			picPortrait.Image = Empire.Portrait;
+			picInsignia.Image = Empire.Icon;
+			txtName.Text = Empire.Name;
+			txtLeader.Text = Empire.LeaderName;
+			txtPortrait.Text = Empire.LeaderPortraitName;
+			txtShipset.Text = Empire.ShipsetPath;
+			txtCulture.Text = Empire.Culture.Name;
+			// TODO - race report
+			// TODO - known technology
 		}
+		ResumeLayout();
 	}
 }

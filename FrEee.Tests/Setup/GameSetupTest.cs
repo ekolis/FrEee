@@ -3,17 +3,16 @@ using FrEee.Setup;
 using FrEee.Modding;
 using NUnit.Framework;
 
-namespace FrEee.Tests.Setup
+namespace FrEee.Tests.Setup;
+
+public class GameSetupTest
 {
-	public class GameSetupTest
+	[Test]
+	[Ignore("quickstart needs to be rebuilt in new version")]
+	public void Quickstart()
 	{
-		[Test]
-		[Ignore("quickstart needs to be rebuilt in new version")]
-		public void Quickstart()
-		{
-			var setup = GameSetup.Load(@"..\..\..\..\FrEee\GameSetups\quickstart.gsu");
-			Mod.Current = Mod.Load(null);
-			Galaxy.Initialize(setup, null);
-		}
+		var setup = GameSetup.Load(@"..\..\..\..\FrEee\GameSetups\quickstart.gsu");
+		Mod.Current = Mod.Load(null);
+		Galaxy.Initialize(setup, null);
 	}
 }

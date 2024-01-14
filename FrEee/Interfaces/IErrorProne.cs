@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace FrEee.Interfaces
+namespace FrEee.Interfaces;
+
+public interface IErrorProne
 {
-	public interface IErrorProne
-	{
-		IEnumerable<string> Errors { get; }
-	}
+	IEnumerable<string> Errors { get; }
 }

@@ -6,20 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrEee.Serialization.Stringifiers
-{
-	[Export(typeof(IStringifier))]
-	public class PointStringifier : Stringifier<Point>
-	{
-		public override Point Destringify(string s)
-		{
-			var split = s.Split(',').Select(x => x.Trim()).ToArray();
-			return new Point(int.Parse(split[0]), int.Parse(split[1]));
-		}
+namespace FrEee.Serialization.Stringifiers;
 
-		public override string Stringify(Point t)
-		{
-			return $"{t.X}, {t.Y}";
-		}
+[Export(typeof(IStringifier))]
+public class PointStringifier : Stringifier<Point>
+{
+	public override Point Destringify(string s)
+	{
+		var split = s.Split(',').Select(x => x.Trim()).ToArray();
+		return new Point(int.Parse(split[0]), int.Parse(split[1]));
+	}
+
+	public override string Stringify(Point t)
+	{
+		return $"{t.X}, {t.Y}";
 	}
 }

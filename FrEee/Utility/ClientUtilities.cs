@@ -1,23 +1,22 @@
 ﻿using System;
 using System.IO;
 
-namespace FrEee.Utility
+namespace FrEee.Utility;
+
+public static class ClientUtilities
 {
-	public static class ClientUtilities
+	/// <summary>
+	/// The path to FrEee's user roaming application data folder.
+	/// </summary>
+	public static string ApplicationDataPath
 	{
-		/// <summary>
-		/// The path to FrEee's user roaming application data folder.
-		/// </summary>
-		public static string ApplicationDataPath
+		get
 		{
-			get
-			{
-				return Path.Combine
-					(
-						Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-						"FrEee"
-					);
-			}
+			return Path.Combine
+				(
+					Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+					"FrEee"
+				);
 		}
 	}
 }

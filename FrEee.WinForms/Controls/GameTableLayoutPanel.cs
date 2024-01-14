@@ -1,13 +1,12 @@
 using System.Windows.Forms;
 
-namespace FrEee.WinForms.Controls
+namespace FrEee.WinForms.Controls;
+
+public partial class GameTableLayoutPanel : TableLayoutPanel
 {
-	public partial class GameTableLayoutPanel : TableLayoutPanel
+	public GameTableLayoutPanel()
 	{
-		public GameTableLayoutPanel()
-		{
-			InitializeComponent();
-			DoubleBuffered = true;
-		}
+		InitializeComponent();
+		DoubleBuffered = true;
 	}
 }

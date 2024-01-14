@@ -6,45 +6,44 @@ using FrEee.Utility; using FrEee.Serialization;
 using System;
 using System.Linq;
 
-namespace FrEee.Objects.Vehicles
+namespace FrEee.Objects.Vehicles;
+
+[Serializable]
+public class Base : MajorSpaceVehicle
 {
-	[Serializable]
-	public class Base : MajorSpaceVehicle
+	public override AbilityTargets AbilityTarget
 	{
-		public override AbilityTargets AbilityTarget
-		{
-			get { return AbilityTargets.Base; }
-		}
+		get { return AbilityTargets.Base; }
+	}
 
-		public override bool CanWarp
-		{
-			get { return false; }
-		}
+	public override bool CanWarp
+	{
+		get { return false; }
+	}
 
-		/// <summary>
-		/// Bases have infinite supplies.
-		/// </summary>
-		public override bool HasInfiniteSupplies
+	/// <summary>
+	/// Bases have infinite supplies.
+	/// </summary>
+	public override bool HasInfiniteSupplies
+	{
+		get
 		{
-			get
-			{
-				return true;
-			}
+			return true;
 		}
+	}
 
-		public override bool ParticipatesInGroundCombat
-		{
-			get { return false; }
-		}
+	public override bool ParticipatesInGroundCombat
+	{
+		get { return false; }
+	}
 
-		public override IMobileSpaceObject RecycleContainer
-		{
-			get { return this; }
-		}
+	public override IMobileSpaceObject RecycleContainer
+	{
+		get { return this; }
+	}
 
-		public override bool RequiresSpaceYardQueue
-		{
-			get { return true; }
-		}
+	public override bool RequiresSpaceYardQueue
+	{
+		get { return true; }
 	}
 }

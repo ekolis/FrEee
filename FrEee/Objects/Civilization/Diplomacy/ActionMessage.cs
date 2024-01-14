@@ -2,44 +2,43 @@
 using System;
 using System.Collections.Generic;
 
-namespace FrEee.Objects.Civilization.Diplomacy
+namespace FrEee.Objects.Civilization.Diplomacy;
+
+/// <summary>
+/// A message specifying some unilateral action.
+/// </summary>
+public class ActionMessage : Message
 {
-	/// <summary>
-	/// A message specifying some unilateral action.
-	/// </summary>
-	public class ActionMessage : Message
+	public ActionMessage(Empire recipient)
+		: base(recipient)
 	{
-		public ActionMessage(Empire recipient)
-			: base(recipient)
-		{
-			if (Recipient == Owner)
-				throw new Exception("You can't perform a diplomatic action on yourself!");
-		}
+		if (Recipient == Owner)
+			throw new Exception("You can't perform a diplomatic action on yourself!");
+	}
 
-		/// <summary>
-		/// The action in question.
-		/// </summary>
-		public Action Action { get; set; }
+	/// <summary>
+	/// The action in question.
+	/// </summary>
+	public Action Action { get; set; }
 
-		public override IEnumerable<string> IconPaths
+	public override IEnumerable<string> IconPaths
+	{
+		get
 		{
-			get
-			{
-				return Owner.IconPaths;
-			}
+			return Owner.IconPaths;
 		}
+	}
 
-		public override IEnumerable<string> PortraitPaths
+	public override IEnumerable<string> PortraitPaths
+	{
+		get
 		{
-			get
-			{
-				return Owner.PortraitPaths;
-			}
+			return Owner.PortraitPaths;
 		}
+	}
 
-		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
-		{
-			Action.ReplaceClientIDs(idmap);
-		}
+	public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	{
+		Action.ReplaceClientIDs(idmap);
 	}
 }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FrEee.WinForms.Properties {
+namespace FrEee.WinForms.Properties; 
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -23,4 +23,3 @@ namespace FrEee.WinForms.Properties {
             }
         }
     }
-}

@@ -5,16 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrEee.Interfaces
+namespace FrEee.Interfaces;
+
+/// <summary>
+/// Something which has a construction queue.
+/// </summary>
+public interface IConstructor : ISpaceObject, IOwnable
 {
 	/// <summary>
-	/// Something which has a construction queue.
+	/// This object's construction queue, if any.
 	/// </summary>
-	public interface IConstructor : ISpaceObject, IOwnable
-	{
-		/// <summary>
-		/// This object's construction queue, if any.
-		/// </summary>
-		ConstructionQueue ConstructionQueue { get; }
-	}
+	ConstructionQueue ConstructionQueue { get; }
 }

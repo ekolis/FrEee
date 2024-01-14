@@ -9,8 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrEee.Objects.AI
-{
+namespace FrEee.Objects.AI;
+
     [Serializable]
     public class CSAI<TDomain, TContext> : AI<TDomain, TContext> where TDomain : Empire where TContext : Galaxy
     {
@@ -65,4 +65,3 @@ namespace FrEee.Objects.AI
 
         public SafeDictionary<string, ICollection<string>> EnabledMinisters;
     }
-}

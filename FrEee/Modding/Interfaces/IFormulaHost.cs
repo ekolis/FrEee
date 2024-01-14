@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace FrEee.Modding.Interfaces
+namespace FrEee.Modding.Interfaces;
+
+public interface IFormulaHost
 {
-	public interface IFormulaHost
-	{
-		IDictionary<string, object> Variables { get; }
-	}
+	IDictionary<string, object> Variables { get; }
 }

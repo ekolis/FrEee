@@ -5,30 +5,29 @@ using FrEee.Extensions;
 using System.Drawing;
 using System.Linq;
 
-namespace FrEee.WinForms.Objects.GalaxyViewModes
+namespace FrEee.WinForms.Objects.GalaxyViewModes;
+
+/// <summary>
+/// Displays repair rates in each resource.
+/// </summary>
+public class RepairMode : ArgbMode
 {
-	/// <summary>
-	/// Displays repair rates in each resource.
-	/// </summary>
-	public class RepairMode : ArgbMode
+	public override string Name
 	{
-		public override string Name
-		{
-			get { return "Repair"; }
-		}
+		get { return "Repair"; }
+	}
 
-		protected override Color GetColor(StarSystem sys)
-		{
-			var max = Galaxy.Current.StarSystemLocations.Max(l => GetRepair(l.Item));
-			if (max == 0)
-				return Color.Black;
-			var sat = Weight(GetRepair(sys), max);
-			return Color.FromArgb(sat, sat, sat);
-		}
+	protected override Color GetColor(StarSystem sys)
+	{
+		var max = Galaxy.Current.StarSystemLocations.Max(l => GetRepair(l.Item));
+		if (max == 0)
+			return Color.Black;
+		var sat = Weight(GetRepair(sys), max);
+		return Color.FromArgb(sat, sat, sat);
+	}
 
-		private int GetRepair(StarSystem sys)
-		{
-			return sys.FindSpaceObjects<ISpaceObject>().OwnedBy(Empire.Current).Sum(x => x.GetAbilityValue("Component Repair").ToInt());
-		}
+	private int GetRepair(StarSystem sys)
+	{
+		return sys.FindSpaceObjects<ISpaceObject>().OwnedBy(Empire.Current).Sum(x => x.GetAbilityValue("Component Repair").ToInt());
 	}
 }
