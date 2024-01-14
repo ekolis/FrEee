@@ -404,12 +404,12 @@ public class PythonScriptEngine : MarshalByRefObject
 			return c1.Equals(c2);
 		}
 
-		public bool Equals(CompiledCodeWithVariables other)
+		public bool Equals(CompiledCodeWithVariables? other)
 		{
 			return Code == other.Code && Variables.Keys.Count == other.Variables.Keys.Count && Variables.All(kvp => kvp.Value.SafeEquals(other.Variables[kvp.Key]));
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			if (obj is CompiledCodeWithVariables c)
 				return this.Equals(c);
@@ -442,14 +442,14 @@ public class PythonScriptEngine : MarshalByRefObject
 
 		public static bool operator ==(ScriptCode sc1, ScriptCode sc2)
 		{
-			if (sc1.IsNull() && sc2.IsNull())
+			if (sc1 is null && sc2 is null)
 				return true;
-			if (sc1.IsNull() || sc2.IsNull())
+			if (sc1 is null || sc2 is null)
 				return false;
 			return sc1.ModuleName == sc2.ModuleName && sc1.Code == sc2.Code && sc1.ExternalScripts.SequenceEqual(sc2.ExternalScripts);
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			return obj as ScriptCode == this;
 		}

@@ -1,6 +1,5 @@
 ﻿using System;
-using FrEee.Utility; using FrEee.Serialization;
-
+using FrEee.Utility;
 namespace FrEee.Enumerations;
 
 /// <summary>

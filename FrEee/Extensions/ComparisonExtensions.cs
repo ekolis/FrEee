@@ -74,17 +74,6 @@ public static class ComparisonExtensions
 	}
 
 	/// <summary>
-	/// Tests if an object is null.
-	/// Useful for writing == operators that don't infinitely recurse.
-	/// </summary>
-	/// <param name="o"></param>
-	/// <returns></returns>
-	public static bool IsNull(this object o)
-	{
-		return o == null;
-	}
-
-	/// <summary>
 	/// Gets a description of an object's timestamp as a memory age.
 	/// </summary>
 	/// <param name="timestamp">The timestamp.</param>

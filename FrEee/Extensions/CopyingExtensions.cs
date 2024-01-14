@@ -1,11 +1,10 @@
 using FrEee.Interfaces;
 using FrEee.Objects.Technology;
 using FrEee.Serialization;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 

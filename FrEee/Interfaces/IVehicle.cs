@@ -1,6 +1,6 @@
 using FrEee.Objects.Technology;
 using FrEee.Serialization;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
 using System.Collections.Generic;
 
 namespace FrEee.Interfaces;

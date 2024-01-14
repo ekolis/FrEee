@@ -3,8 +3,7 @@ using FrEee.Objects.Space;
 using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
-using FrEee.Utility; using FrEee.Serialization;
-
+using FrEee.Utility;
 namespace FrEee.Serialization;
 
 /// <summary>
@@ -143,14 +142,14 @@ public class GalaxyReference<T> : IReference<long, T>, IPromotable
 
 	public static bool operator ==(GalaxyReference<T> r1, GalaxyReference<T> r2)
 	{
-		if (r1.IsNull() && r2.IsNull())
+		if (r1 is null && r2 is null)
 			return true;
-		if (r1.IsNull() || r2.IsNull())
+		if (r1 is null || r2 is null)
 			return false;
 		return r1.ID == r2.ID;
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		// TODO - upgrade equals to use "as" operator
 		if (obj is GalaxyReference<T>)

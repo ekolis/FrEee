@@ -12,8 +12,7 @@ using System.Drawing;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
-using FrEee.Utility; using FrEee.Serialization;
-
+using FrEee.Utility;
 namespace FrEee.Extensions;
 
 public static class ChecksExtensions
@@ -289,6 +288,7 @@ public static class ChecksExtensions
 	/// <param name="key">The key.</param>
 	/// <returns></returns>
 	public static bool TestContainsKey<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key)
+		where TKey: notnull
 	{
 		var hash = EqualityComparer<TKey>.Default.GetHashCode(key);
 		return dict.Any(

@@ -82,14 +82,14 @@ public class LiteralFormula<T> : Formula<T>, IEquatable<LiteralFormula<T>>
 
 	public static bool operator ==(LiteralFormula<T> f1, Formula<T> f2)
 	{
-		if (f1.IsNull() && f2.IsNull())
+		if (f1 is null && f2 is null)
 			return true;
-		if (f1.IsNull() || f2.IsNull())
+		if (f1 is null || f2 is null)
 			return false;
 		return f1.Value.SafeEquals(f2.Value);
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		var x = obj as LiteralFormula<T>;
 		if (ReferenceEquals(x, null))
@@ -97,7 +97,7 @@ public class LiteralFormula<T> : Formula<T>, IEquatable<LiteralFormula<T>>
 		return Equals(x);
 	}
 
-	public bool Equals(LiteralFormula<T> other)
+	public bool Equals(LiteralFormula<T>? other)
 	{
 		return Text == other.Text;
 	}

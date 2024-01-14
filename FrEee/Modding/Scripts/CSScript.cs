@@ -1,23 +1,18 @@
-﻿using FrEee.Utility; using FrEee.Serialization;
-using FrEee.Extensions;
+﻿using FrEee.Utility;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FrEee.Modding;
 
 [Serializable]
 public class CSScript : IScript
-    {
-        public string ModuleName { get; set; }
-        public string Text { get; set; }
+	{
+		public string ModuleName { get; set; }
+		public string Text { get; set; }
 
 	/// <summary>
 	/// The directory that this script is found in. 
@@ -82,14 +77,14 @@ public class CSScript : IScript
 
 	public static bool operator ==(CSScript s1, CSScript s2)
 	{
-		if (s1.IsNull() && s2.IsNull())
+		if (s1 is null && s2 is null)
 			return true;
-		if (s1.IsNull() || s2.IsNull())
+		if (s1 is null || s2 is null)
 			return false;
 		return s1.ModuleName == s2.ModuleName && s1.Text == s2.Text;// && s1.ExternalScripts.SafeSequenceEqual(s2.ExternalScripts);
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		if (obj is CSScript)
 		{

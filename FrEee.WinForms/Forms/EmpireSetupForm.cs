@@ -2,7 +2,7 @@
 using FrEee.Objects.Space;
 using FrEee.Setup;
 using FrEee.Modding;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
 using FrEee.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using System;

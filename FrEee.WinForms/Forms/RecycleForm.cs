@@ -70,7 +70,14 @@ public partial class RecycleForm : GameForm
 	{
 		get
 		{
-			return treeVehicles.GetAllNodes().Where(n => n.Tag is SpaceVehicle && n.Checked).Select(n => n.Tag as SpaceVehicle).Where(v => !(v is IUnit && ((IUnit)v).Container != null));
+			return treeVehicles.GetAllNodes()
+				.Where(n =>
+					n.Tag is SpaceVehicle && n.Checked)
+				.Select(n =>
+					n.Tag as SpaceVehicle)
+				.Where(v =>
+					!(v is IUnit && ((IUnit)v).Container != null))
+				.ExceptNull();
 		}
 	}
 

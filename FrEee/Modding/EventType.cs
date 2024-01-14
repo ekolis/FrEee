@@ -1,6 +1,4 @@
-﻿using FrEee.Enumerations;
-using FrEee.Interfaces;
-using FrEee.Objects.Events;
+﻿using FrEee.Interfaces;
 using FrEee.Modding.Interfaces;
 using FrEee.Serialization;
 using System.Collections.Generic;

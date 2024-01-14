@@ -1,5 +1,5 @@
 using FrEee.Objects.Space;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
 using FrEee.Extensions;
 using FrEee.WinForms.Objects.GalaxyViewModes;
 using System;
@@ -27,7 +27,7 @@ public partial class GalaxyView : Control
 	/// <summary>
 	/// An image to display as the background for this galaxy view.
 	/// </summary>
-	public override Image BackgroundImage
+	public override Image? BackgroundImage
 	{
 		get
 		{
@@ -78,7 +78,7 @@ public partial class GalaxyView : Control
 		}
 	}
 
-	private Image backgroundImage;
+	private Image? backgroundImage;
 
 	private IGalaxyViewMode mode = GalaxyViewModes.All.First();
 

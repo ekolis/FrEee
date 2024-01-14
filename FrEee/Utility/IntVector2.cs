@@ -1,6 +1,5 @@
 ﻿using FrEee.Extensions;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -143,16 +142,16 @@ public class IntVector2 : Vector2<int>, IEquatable<IntVector2>
 		return (dest - this).LengthManhattan;
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		if (obj is IntVector2 v)
-			return this.Equals(v);
+			return Equals(v);
 		return false;
 	}
 
-	public bool Equals(IntVector2 other)
+	public bool Equals(IntVector2? other)
 	{
-		return X == other.X && Y == other.Y;
+		return other is not null && X == other.X && Y == other.Y;
 	}
 
 	public override int GetHashCode()

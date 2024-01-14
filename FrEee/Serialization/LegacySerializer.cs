@@ -1,5 +1,4 @@
 using FrEee.Interfaces;
-using FrEee.Objects.Civilization;
 using FrEee.Extensions;
 using FrEee.Serialization.Stringifiers;
 using System;
@@ -14,8 +13,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using FrEee.Utility; using FrEee.Serialization;
-
+using FrEee.Utility;
 namespace FrEee.Serialization;
 
 internal static class LegacySerializer
@@ -185,7 +183,7 @@ internal static class LegacySerializer
 
 					type = new SafeType(typename).Type;
 				}
-				catch (Exception ex)
+				catch
 				{
 					try
 					{

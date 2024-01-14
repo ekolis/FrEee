@@ -1,6 +1,6 @@
 ﻿using FrEee.Modding.Interfaces;
-using FrEee.Utility; using FrEee.Serialization;
-using FrEee.Extensions;
+using FrEee.Utility;
+using FrEee.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -87,7 +87,7 @@ public class ObjectFormula<T> : IFormula<T>
 		return f.Value;
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		var x = obj as ObjectFormula<T>;
 		if (x == null)
@@ -147,17 +147,17 @@ public class ObjectFormula<T> : IFormula<T>
 		return Evaluate(Context, null);
 	}
 
-	public int CompareTo(object obj)
+	public int CompareTo(object? obj)
 	{
 		throw new NotSupportedException();
 	}
 
-	public int CompareTo(T other)
+	public int CompareTo(T ?other)
 	{
 		throw new NotSupportedException();
 	}
 
-	public int CompareTo(ObjectFormula<T> other)
+	public int CompareTo(ObjectFormula<T>? other)
 	{
 		throw new NotSupportedException();
 	}

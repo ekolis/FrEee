@@ -90,7 +90,7 @@ public class FacilityUpgrade : IUpgradeable<FacilityUpgrade>, IPromotable, IName
 		return x.SafeEquals(y);
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		var fu = obj as FacilityUpgrade;
 		if (fu == null)

@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FrEee.Utility; using FrEee.Serialization;
-
+using FrEee.Utility;
 namespace FrEee.Extensions;
 
 /// <summary>
@@ -20,6 +19,9 @@ public static class EnumerableExtensions
 	{
 		return src.Except(new T[] { badguy });
 	}
+
+	public static IEnumerable<T> ExceptNull<T>(this IEnumerable<T?> src)
+		=> src.Where(q => q is not null).Cast<T>();
 
 	/// <summary>
 	/// Flattens groupings into a single sequence.

@@ -2,7 +2,7 @@
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Combat;
 using FrEee.Objects.Space;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
 using FrEee.Extensions;
 using FrEee.WinForms.DataGridView;
 using FrEee.WinForms.Interfaces;
@@ -160,7 +160,7 @@ public partial class BattleResultsForm : GameForm, IBindable<IBattle>
 		public string HullName { get; set; }
 		public int HullSize { get; set; }
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			var ci = obj as CombatantInfo;
 			if (ci == null)

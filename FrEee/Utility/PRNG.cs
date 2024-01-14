@@ -1,5 +1,4 @@
-﻿using FrEee.Extensions;
-using System;
+﻿using System;
 
 namespace FrEee.Utility;
 
@@ -34,14 +33,14 @@ public class PRNG
 
 	public static bool operator ==(PRNG r1, PRNG r2)
 	{
-		if (r1.IsNull() && r2.IsNull())
+		if (r1 is null && r2 is null)
 			return true;
-		if (r1.IsNull() || r2.IsNull())
+		if (r1 is null || r2 is null)
 			return false;
 		return r1.Seed == r2.Seed && r1.Iteration == r2.Iteration;
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		// TODO - upgrade equals to use "as" operator
 		if (obj is PRNG)

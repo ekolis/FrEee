@@ -1,5 +1,4 @@
 ﻿using FrEee.Interfaces;
-using FrEee.Objects.Civilization;
 using FrEee.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Extensions;

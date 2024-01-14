@@ -126,9 +126,9 @@ public class ResourceQuantity : SafeDictionary<Resource, int>, IComparable<Resou
 
 	public static bool operator ==(ResourceQuantity r1, ResourceQuantity r2)
 	{
-		if (r1.IsNull() && r2.IsNull())
+		if (r1 is null && r2 is null)
 			return true;
-		if (r1.IsNull() || r2.IsNull())
+		if (r1 is null || r2 is null)
 			return false;
 		foreach (var key in r1.Keys.Union(r2.Keys))
 		{
@@ -211,7 +211,7 @@ public class ResourceQuantity : SafeDictionary<Resource, int>, IComparable<Resou
 		return this.Sum(kvp => kvp.Value).CompareTo(obj.ToString().ToInt());
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		if (obj is ResourceQuantity rq)
 			return this == rq;

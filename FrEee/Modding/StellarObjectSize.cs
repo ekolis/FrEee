@@ -84,7 +84,7 @@ public class StellarObjectSize : IModObject, IComparable<StellarObjectSize>, ICo
 	/// </summary>
 	public IDictionary<string, object> TemplateParameters { get; set; }
 
-	public int CompareTo(object obj)
+	public int CompareTo(object? obj)
 	{
 		if (obj is StellarSize)
 			return StellarSize.CompareTo(obj);
@@ -93,7 +93,7 @@ public class StellarObjectSize : IModObject, IComparable<StellarObjectSize>, ICo
 		return StellarSize.CompareTo(obj);
 	}
 
-	public int CompareTo(StellarObjectSize obj)
+	public int CompareTo(StellarObjectSize? obj)
 	{
 		return StellarSize.CompareTo(obj.StellarSize);
 	}

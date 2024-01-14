@@ -1,5 +1,4 @@
-﻿using FrEee.Utility; using FrEee.Serialization;
-
+﻿using FrEee.Utility;
 namespace FrEee.Enumerations;
 
 public enum AllowedTrades

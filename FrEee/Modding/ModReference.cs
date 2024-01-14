@@ -1,6 +1,6 @@
 using FrEee.Interfaces;
 using FrEee.Modding.Interfaces;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
 using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
@@ -114,7 +114,7 @@ public class ModReference<T> : IReference<string, T> where T : IModObject
 		return r.Value;
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		var mref = obj as ModReference<T>;
 		if (mref == null)

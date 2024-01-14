@@ -1,14 +1,11 @@
 ﻿using FrEee.Modding;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FrEee.Objects.AI;
 
-    [Serializable]
+[Serializable]
     public class PythonAI<TDomain, TContext> : AI<TDomain, TContext>
     {
         public PythonAI(string name, PythonScript script, SafeDictionary<string, ICollection<string>> ministerNames) : base(name, script, ministerNames)

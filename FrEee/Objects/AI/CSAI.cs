@@ -1,17 +1,14 @@
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Modding;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
 using Microsoft.CodeAnalysis.Scripting;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FrEee.Objects.AI;
 
-    [Serializable]
+[Serializable]
     public class CSAI<TDomain, TContext> : AI<TDomain, TContext> where TDomain : Empire where TContext : Galaxy
     {
         public CSAI(string name, CSScript script, SafeDictionary<string, ICollection<string>> ministerNames) 

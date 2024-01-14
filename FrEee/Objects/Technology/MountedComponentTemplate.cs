@@ -342,14 +342,14 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityOb
 
 	public static bool operator ==(MountedComponentTemplate t1, MountedComponentTemplate t2)
 	{
-		if (t1.IsNull() && t2.IsNull())
+		if (t1 is null && t2 is null)
 			return true;
-		if (t1.IsNull() || t2.IsNull())
+		if (t1 is null || t2 is null)
 			return false;
 		return t1.Container == t2.Container && t1.ComponentTemplate == t2.ComponentTemplate && t1.mount == t2.mount;
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		// TODO - upgrade equals to use "as" operator
 		if (obj is MountedComponentTemplate)

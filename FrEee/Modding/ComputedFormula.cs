@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using FrEee.Modding.Interfaces;
-using FrEee.Utility; using FrEee.Serialization;
-using FrEee.Extensions;
+using FrEee.Utility;
 using FrEee.Serialization;
+using FrEee.Extensions;
 
 namespace FrEee.Modding;
 
@@ -85,9 +85,9 @@ public class ComputedFormula<T> : Formula<T>, IEquatable<ComputedFormula<T>>
 
 	public static bool operator ==(ComputedFormula<T> f1, ComputedFormula<T> f2)
 	{
-		if (f1.IsNull() && f2.IsNull())
+		if (f1 is null && f2 is null)
 			return true;
-		if (f1.IsNull() || f2.IsNull())
+		if (f1 is null || f2 is null)
 			return false;
 		return f1.Value.SafeEquals(f2.Value);
 	}
@@ -101,17 +101,17 @@ public class ComputedFormula<T> : Formula<T>, IEquatable<ComputedFormula<T>>
 		return new LiteralFormula<T>(Value.ToStringInvariant());
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		var x = obj as ComputedFormula<T>;
-		if (x == null)
+		if (x is null)
 			return false;
 		return Equals(x);
 	}
 
-	public bool Equals(ComputedFormula<T> other)
+	public bool Equals(ComputedFormula<T>? other)
 	{
-		return IsDynamic == other.IsDynamic && Text == other.Text && Context == other.Context;
+		return other is not null && IsDynamic == other.IsDynamic && Text == other.Text && Context == other.Context;
 	}
 
 	public override T Evaluate(object host, IDictionary<string, object> variables = null)

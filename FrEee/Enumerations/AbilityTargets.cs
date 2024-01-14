@@ -1,4 +1,4 @@
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
 using System;
 
 namespace FrEee.Enumerations;

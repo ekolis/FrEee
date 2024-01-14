@@ -21,7 +21,7 @@ using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
 using FrEee.Serialization;
 
 namespace FrEee.Extensions;
@@ -254,11 +254,11 @@ public static class CommonExtensions
 	/// <param name="value"></param>
 	/// <param name=""></param>
 	/// <returns></returns>
-	public static T Default<T>(this object value, T def = default(T), bool throwIfWrongType = false)
+	public static T Default<T>(this object value, T def = default, bool throwIfWrongType = false)
 	{
 		if (throwIfWrongType && !(value is T))
 			throw new InvalidCastException($"Cannot convert {value} to type {typeof(T)}.");
-		return value == null || !(value is T) ? def : (T)value;
+		return value is null or not T ? def : (T)value;
 	}
 
 	/// <summary>

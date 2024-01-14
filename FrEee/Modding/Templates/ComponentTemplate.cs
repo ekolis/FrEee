@@ -2,10 +2,10 @@ using FrEee.Enumerations;
 using FrEee.Interfaces;
 using FrEee.Objects.Abilities;
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Modding.Interfaces;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
+using FrEee.Serialization;
 using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
@@ -318,7 +318,7 @@ public class ComponentTemplate : IModObject, IResearchable, IAbilityContainer, I
 		return Name;
 	}
 
-	public override bool Equals(object obj)
+	public override bool Equals(object? obj)
 	{
 		return obj is ComponentTemplate t && t == this;
 	}

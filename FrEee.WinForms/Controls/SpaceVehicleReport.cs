@@ -1,10 +1,9 @@
 using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Commands;
-using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
 using FrEee.Extensions;
 using FrEee.WinForms.Interfaces;
 using FrEee.WinForms.Utility.Extensions;
@@ -375,14 +374,14 @@ public partial class SpaceVehicleReport : UserControl, IBindable<SpaceVehicle>
 
 		public static bool operator ==(ComponentGroup g1, ComponentGroup g2)
 		{
-			if (g1.IsNull() && g2.IsNull())
+			if (g1 is null && g2 is null)
 				return true;
-			if (g1.IsNull() || g2.IsNull())
+			if (g1 is null || g2 is null)
 				return false;
 			return g1.Template == g2.Template && g1.Hitpoints == g2.Hitpoints;
 		}
 
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			var x = obj as ComponentGroup;
 			if (x == null)

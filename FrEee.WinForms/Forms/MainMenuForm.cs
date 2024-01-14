@@ -2,7 +2,7 @@ using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Setup;
 using FrEee.Modding;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
 using FrEee.Extensions;
 using FrEee.WinForms.Objects;
 using FrEee.WinForms.Utility;
