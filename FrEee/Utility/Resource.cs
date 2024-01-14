@@ -222,9 +222,9 @@ public class Resource : INamed, IPictorial
 
 	public static bool operator ==(Resource r1, Resource r2)
 	{
-		if (r1.IsNull() && r2.IsNull())
+		if (r1 is null && r2 is null)
 			return true;
-		if (r1.IsNull() || r2.IsNull())
+		if (r1 is null || r2 is null)
 			return false;
 		return r1.Name == r2.Name && r1.Color == r2.Color && r1.IsGlobal == r2.IsGlobal && r1.IsLocal == r2.IsLocal && r1.PictureName == r2.PictureName;
 	}

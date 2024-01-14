@@ -442,9 +442,9 @@ public class PythonScriptEngine : MarshalByRefObject
 
 		public static bool operator ==(ScriptCode sc1, ScriptCode sc2)
 		{
-			if (sc1.IsNull() && sc2.IsNull())
+			if (sc1 is null && sc2 is null)
 				return true;
-			if (sc1.IsNull() || sc2.IsNull())
+			if (sc1 is null || sc2 is null)
 				return false;
 			return sc1.ModuleName == sc2.ModuleName && sc1.Code == sc2.Code && sc1.ExternalScripts.SequenceEqual(sc2.ExternalScripts);
 		}

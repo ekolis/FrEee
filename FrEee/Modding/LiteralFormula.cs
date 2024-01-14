@@ -82,9 +82,9 @@ public class LiteralFormula<T> : Formula<T>, IEquatable<LiteralFormula<T>>
 
 	public static bool operator ==(LiteralFormula<T> f1, Formula<T> f2)
 	{
-		if (f1.IsNull() && f2.IsNull())
+		if (f1 is null && f2 is null)
 			return true;
-		if (f1.IsNull() || f2.IsNull())
+		if (f1 is null || f2 is null)
 			return false;
 		return f1.Value.SafeEquals(f2.Value);
 	}

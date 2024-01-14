@@ -85,9 +85,9 @@ public class ComputedFormula<T> : Formula<T>, IEquatable<ComputedFormula<T>>
 
 	public static bool operator ==(ComputedFormula<T> f1, ComputedFormula<T> f2)
 	{
-		if (f1.IsNull() && f2.IsNull())
+		if (f1 is null && f2 is null)
 			return true;
-		if (f1.IsNull() || f2.IsNull())
+		if (f1 is null || f2 is null)
 			return false;
 		return f1.Value.SafeEquals(f2.Value);
 	}

@@ -182,9 +182,9 @@ public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnab
 
 	public static bool operator ==(Sector s1, Sector s2)
 	{
-		if (s1.IsNull() && s2.IsNull())
+		if (s1 is null && s2 is null)
 			return true;
-		if (s1.IsNull() || s2.IsNull())
+		if (s1 is null || s2 is null)
 			return false;
 		return s1.starSystem == s2.starSystem && s1.Coordinates == s2.Coordinates;
 	}

@@ -155,9 +155,9 @@ import " + ModuleName + @";
 
 	public static bool operator ==(PythonScript s1, PythonScript s2)
 	{
-		if (s1.IsNull() && s2.IsNull())
+		if (s1 is null && s2 is null)
 			return true;
-		if (s1.IsNull() || s2.IsNull())
+		if (s1 is null || s2 is null)
 			return false;
 		return s1.ModuleName == s2.ModuleName && s1.Text == s2.Text && s1.ExternalScripts.SafeSequenceEqual(s2.ExternalScripts);
 	}

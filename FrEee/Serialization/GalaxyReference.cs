@@ -143,9 +143,9 @@ public class GalaxyReference<T> : IReference<long, T>, IPromotable
 
 	public static bool operator ==(GalaxyReference<T> r1, GalaxyReference<T> r2)
 	{
-		if (r1.IsNull() && r2.IsNull())
+		if (r1 is null && r2 is null)
 			return true;
-		if (r1.IsNull() || r2.IsNull())
+		if (r1 is null || r2 is null)
 			return false;
 		return r1.ID == r2.ID;
 	}

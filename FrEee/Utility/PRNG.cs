@@ -34,9 +34,9 @@ public class PRNG
 
 	public static bool operator ==(PRNG r1, PRNG r2)
 	{
-		if (r1.IsNull() && r2.IsNull())
+		if (r1 is null && r2 is null)
 			return true;
-		if (r1.IsNull() || r2.IsNull())
+		if (r1 is null || r2 is null)
 			return false;
 		return r1.Seed == r2.Seed && r1.Iteration == r2.Iteration;
 	}

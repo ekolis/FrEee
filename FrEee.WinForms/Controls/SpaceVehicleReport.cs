@@ -375,9 +375,9 @@ public partial class SpaceVehicleReport : UserControl, IBindable<SpaceVehicle>
 
 		public static bool operator ==(ComponentGroup g1, ComponentGroup g2)
 		{
-			if (g1.IsNull() && g2.IsNull())
+			if (g1 is null && g2 is null)
 				return true;
-			if (g1.IsNull() || g2.IsNull())
+			if (g1 is null || g2 is null)
 				return false;
 			return g1.Template == g2.Template && g1.Hitpoints == g2.Hitpoints;
 		}

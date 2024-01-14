@@ -82,9 +82,9 @@ public class CSScript : IScript
 
 	public static bool operator ==(CSScript s1, CSScript s2)
 	{
-		if (s1.IsNull() && s2.IsNull())
+		if (s1 is null && s2 is null)
 			return true;
-		if (s1.IsNull() || s2.IsNull())
+		if (s1 is null || s2 is null)
 			return false;
 		return s1.ModuleName == s2.ModuleName && s1.Text == s2.Text;// && s1.ExternalScripts.SafeSequenceEqual(s2.ExternalScripts);
 	}
