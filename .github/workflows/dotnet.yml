@@ -40,11 +40,11 @@ jobs:
         stringToTruncate: ${{github.sha}}
         maxLength: 10
     - name: List files
-      run: ls -s .\FrEee.WinForms\bin\Release\net6.0-windows
+      run: ls -s .\FrEee.WinForms\bin\Release\net6.0-windows7.0
     - name: Prepare files for zipping
       run: |
         cd FrEee.WinForms/bin/Release
-        ren net8.0-windows FrEee
+        ren net8.0-windows7.0 FrEee
       shell: cmd
     - name: Zip assets
       uses: papeloto/action-zip@v1
