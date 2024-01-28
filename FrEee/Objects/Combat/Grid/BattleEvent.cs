@@ -7,7 +7,7 @@ namespace FrEee.Objects.Combat.Grid;
 
 public abstract class BattleEvent : IBattleEvent
 {
-	protected BattleEvent(IBattle battle, ICombatant combatant, IntVector2 startPosition, IntVector2 endPosition)
+	protected BattleEvent(IBattle battle, ICombatant combatant, Vector2<int> startPosition, Vector2<int> endPosition)
 	{
 		Battle = battle;
 		Combatant = combatant;
@@ -27,7 +27,7 @@ public abstract class BattleEvent : IBattleEvent
 		set => combatant = value.ReferViaGalaxy();
 	}
 
-	public IntVector2 EndPosition { get; set; }
+	public Vector2<int> EndPosition { get; set; }
 
-	public IntVector2 StartPosition { get; set; }
+	public Vector2<int> StartPosition { get; set; }
 }

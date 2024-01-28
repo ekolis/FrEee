@@ -40,7 +40,7 @@ public class SpaceBattle : Battle
 		Dice = new PRNG((int)(moduloID / Galaxy.Current.Timestamp * 10));
 	}
 
-	public override void PlaceCombatants(SafeDictionary<ICombatant, IntVector2> locations)
+	public override void PlaceCombatants(SafeDictionary<ICombatant, Vector2<int>> locations)
 	{
 		if (Sector.SpaceObjects.OfType<WarpPoint>().Any())
 		{
@@ -69,7 +69,7 @@ public class SpaceBattle : Battle
 		}
 	}
 
-	private void PlaceCombatant(SafeDictionary<ICombatant, IntVector2> locations, double x, double y, ICombatant comb)
+	private void PlaceCombatant(SafeDictionary<ICombatant, Vector2<int>> locations, double x, double y, ICombatant comb)
 	{
 		// scramble all tile-filling combatants in rings around the largest
 		if (comb.FillsCombatTile)
@@ -77,13 +77,13 @@ public class SpaceBattle : Battle
 			for (int r = 0; ; r++)
 			{
 				bool done = false;
-				var tiles = IntVector2.AtRadius(r);
+				var tiles = Vector2Utility.AtRadius(r);
 				foreach (var tile in tiles.Shuffle(Dice))
 				{
 					var atHere = locations.Where(q => q.Key.FillsCombatTile && q.Value == tile);
 					if (!atHere.Any())
 					{
-						locations.Add(comb, new IntVector2((int)x + tile.X, (int)y + tile.Y));
+						locations.Add(comb, new Vector2<int>((int)x + tile.X, (int)y + tile.Y));
 						done = true;
 						break;
 					}
@@ -93,7 +93,7 @@ public class SpaceBattle : Battle
 			}
 		}
 		else // put non-filling combatants in the center
-			locations.Add(comb, new IntVector2((int)x, (int)y));
+			locations.Add(comb, new Vector2<int>((int)x, (int)y));
 	}
 
 	/// <summary>

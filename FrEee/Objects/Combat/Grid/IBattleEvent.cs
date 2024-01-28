@@ -6,6 +6,6 @@ public interface IBattleEvent
 {
 	IBattle Battle { get; }
 	ICombatant Combatant { get; }
-	IntVector2 EndPosition { get; }
-	IntVector2 StartPosition { get; }
+	Vector2<int> EndPosition { get; }
+	Vector2<int> StartPosition { get; }
 }
