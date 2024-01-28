@@ -43,10 +43,17 @@ public partial class GamePanel : Panel
 	// http://support.microsoft.com/kb/953934
 	protected override void OnSizeChanged(EventArgs e)
 	{
-		this.BeginInvoke((MethodInvoker)delegate
+		try
 		{
-			base.OnSizeChanged(e);
-		});
+			this.BeginInvoke((MethodInvoker)delegate
+			{
+				base.OnSizeChanged(e);
+			});
+		}
+		catch
+		{
+			// UI must not be set up yet
+		}
 	}
 
 	private void GamePanel_SizeChanged(object sender, EventArgs e)
