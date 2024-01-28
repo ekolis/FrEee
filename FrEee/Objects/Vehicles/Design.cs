@@ -761,6 +761,11 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 		return false;
 	}
 
+	public override int GetHashCode()
+	{
+		return HashCodeMasher.Mash(BaseName, Hull, HashCodeMasher.MashList(Components));
+	}
+
 	/// <summary>
 	/// A design is unlocked if its hull and all used mounts/components are unlocked.
 	/// </summary>

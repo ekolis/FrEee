@@ -39,9 +39,9 @@ public static class ConversionExtensions
 	/// <typeparam name="T"></typeparam>
 	/// <param name="o"></param>
 	/// <returns></returns>
-	public static T CastTo<T>(this object o, T defaultValue = default(T))
+	public static T? CastTo<T>(this object o, T? defaultValue = default)
 	{
-		return (T)((o ?? defaultValue) ?? default(T));
+		return (T?)((o ?? defaultValue) ?? default);
 	}
 
 	/// <summary>

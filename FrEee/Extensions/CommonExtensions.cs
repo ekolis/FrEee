@@ -254,7 +254,7 @@ public static class CommonExtensions
 	/// <param name="value"></param>
 	/// <param name=""></param>
 	/// <returns></returns>
-	public static T Default<T>(this object value, T def = default, bool throwIfWrongType = false)
+	public static T? Default<T>(this object value, T? def = default, bool throwIfWrongType = false)
 	{
 		if (throwIfWrongType && !(value is T))
 			throw new InvalidCastException($"Cannot convert {value} to type {typeof(T)}.");
@@ -701,7 +701,7 @@ public static class CommonExtensions
 		if (type.Name == "Battle")
 			return typeof(SpaceBattle).Instantiate(); // HACK - old savegame compatibility
 		if (type.GetConstructors().Where(c => c.GetParameters().Length == (args == null ? 0 : args.Length)).Any())
-			return Activator.CreateInstance(type, args);
+			return Activator.CreateInstance(type, args) ?? throw new NullReferenceException($"Couldn't create instance of type {type}.");
 		else
 			return FormatterServices.GetSafeUninitializedObject(type);
 	}
@@ -903,11 +903,10 @@ public static class CommonExtensions
 	/// <typeparam name="T"></typeparam>
 	/// <param name="o"></param>
 	/// <returns></returns>
-	public static T Parse<T>(this string s)
+	public static T Parse<T>(this string s, IFormatProvider provider = null)
+		where T : IParsable<T>
 	{
-		var parser = typeof(T).GetMethod("Parse", BindingFlags.Static);
-		var expr = Expression.Call(parser);
-		return (T)expr.Method.Invoke(null, new object[] { s });
+		return T.Parse(s, provider);
 	}
 
 	/// <summary>
@@ -1054,10 +1053,14 @@ public static class CommonExtensions
 	public static string ReadToEndOfLine(this TextReader r, char c, StringBuilder log)
 	{
 		var sb = new StringBuilder();
-		string data = "";
+		string? data = "";
 		do
 		{
 			data = r.ReadLine();
+			if (data is null)
+			{
+				throw new Exception($"Found end of text when looking for character '{c}'.");
+			}
 			log?.Append(data);
 			sb.Append(data);
 			if (data.EndsWith(c.ToString()))

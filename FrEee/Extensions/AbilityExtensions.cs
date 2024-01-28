@@ -159,8 +159,8 @@ public static class AbilityExtensions
 	/// <returns>true if successful or unnecessary, otherwise false</returns>
 	public static bool BurnSupplies(this Ability a)
 	{
-		if (a.Container is Component)
-			return (a.Container as Component).BurnSupplies();
+		if (a.Container is Component comp)
+			return comp.BurnSupplies();
 		else
 			return true; // other ability containers don't use supplies
 	}
@@ -261,9 +261,9 @@ public static class AbilityExtensions
 		var rule = clause.AbilityRule;
 		if (rule.CanTarget(obj.AbilityTarget))
 		{
-			if (rule.CanTarget(AbilityTargets.Sector) && obj is ILocated)
+			if (rule.CanTarget(AbilityTargets.Sector) && obj is ILocated locObj)
 			{
-				var sector = ((ILocated)obj).Sector;
+				var sector = locObj.Sector;
 				foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
 				{
 					foreach (var abil in sector.EmpireAbilities(emp))
@@ -307,7 +307,7 @@ public static class AbilityExtensions
 	/// <param name="index"></param>
 	/// <param name="filter"></param>
 	/// <returns></returns>
-	public static string GetEmpireAbilityValue(this ICommonAbilityObject obj, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
+	public static string? GetEmpireAbilityValue(this ICommonAbilityObject obj, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 	{
 		if (obj == null)
 			return null;

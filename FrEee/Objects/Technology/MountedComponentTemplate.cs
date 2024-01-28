@@ -405,9 +405,9 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityOb
 	/// </summary>
 	public class SimpleEqualityComparer : IEqualityComparer<MountedComponentTemplate>
 	{
-		public bool Equals(MountedComponentTemplate x, MountedComponentTemplate y)
+		public bool Equals(MountedComponentTemplate? x, MountedComponentTemplate? y)
 		{
-			return x.ComponentTemplate == y.ComponentTemplate && x.Mount == y.Mount;
+			return x?.ComponentTemplate == y?.ComponentTemplate && x?.Mount == y?.Mount;
 		}
 
 		public int GetHashCode(MountedComponentTemplate obj)
