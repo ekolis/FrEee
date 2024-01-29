@@ -4,7 +4,7 @@ namespace FrEee.Objects.Combat.Grid;
 
 public class CombatantMovesEvent : BattleEvent
 {
-	public CombatantMovesEvent(Battle battle, ICombatant combatant, IntVector2 here, IntVector2 there)
+	public CombatantMovesEvent(Battle battle, ICombatant combatant, Vector2<int> here, Vector2<int> there)
 		: base(battle, combatant, here, there)
 	{
 	}

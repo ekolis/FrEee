@@ -53,11 +53,11 @@ public class GroundBattle : Battle
 		Dice = new PRNG((int)(moduloID / Galaxy.Current.Timestamp * 10));
 	}
 
-	public override void PlaceCombatants(SafeDictionary<ICombatant, IntVector2> locations)
+	public override void PlaceCombatants(SafeDictionary<ICombatant, Vector2<int>> locations)
 	{
 		// in ground combat, for now everyone is right on top of each other
 		foreach (var c in Combatants)
-			locations.Add(c, new IntVector2());
+			locations.Add(c, new Vector2<int>());
 	}
 
 	public override int MaxRounds => Mod.Current.Settings.GroundCombatTurns;

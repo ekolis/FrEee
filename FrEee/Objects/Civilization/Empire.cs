@@ -835,14 +835,14 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 			return Visibility.Unknown;
 	}
 
-	public int CompareTo(Empire other)
+	public int CompareTo(Empire? other)
 	{
-		return Name.CompareTo(other.Name);
+		return Name.CompareTo(other?.Name);
 	}
 
-	public int CompareTo(object obj)
+	public int CompareTo(object? obj)
 	{
-		return Name.CompareTo(obj.ToString());
+		return Name.CompareTo(obj?.ToString());
 	}
 
 	/// <summary>

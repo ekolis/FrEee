@@ -10,7 +10,7 @@ namespace FrEee.Objects.Combat.Grid;
 /// <seealso cref="FrEee.Objects.Combat.Grid.IBattleEvent" />
 public class CombatantsCollideEvent : BattleEvent
 {
-	public CombatantsCollideEvent(Battle battle, ICombatant combatant, ICombatant target, IntVector2 location, int combatantDamage, int targetDamage, bool wasCombatantDisarmed, bool wasTargetDisarmed)
+	public CombatantsCollideEvent(Battle battle, ICombatant combatant, ICombatant target, Vector2<int> location, int combatantDamage, int targetDamage, bool wasCombatantDisarmed, bool wasTargetDisarmed)
 		: base(battle, combatant, location, location)
 	{
 		Target = target;

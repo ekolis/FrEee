@@ -330,7 +330,7 @@ public class ComponentTemplate : IModObject, IResearchable, IAbilityContainer, I
 		return ModID.GetHashCode();
 	}
 
-	public static bool operator ==(ComponentTemplate t1, ComponentTemplate t2)
+	public static bool operator ==(ComponentTemplate? t1, ComponentTemplate? t2)
 	{
 		if (t1 is null && t2 is null)
 			return true;

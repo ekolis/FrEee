@@ -51,12 +51,12 @@ public partial class BattleView : Control
 		}
 	}
 
-	public IntVector2 ClickLocation { get; private set; }
+	public Vector2<int> ClickLocation { get; private set; }
 
 	/// <summary>
 	/// The combat sector which is focused.
 	/// </summary>
-	public IntVector2 FocusedLocation
+	public Vector2<int> FocusedLocation
 	{
 		get => focusedLocation;
 		set
@@ -138,8 +138,8 @@ public partial class BattleView : Control
 	private Battle battle;
 	private List<Boom> booms = new List<Boom>();
 	private bool combatPhase = false;
-	private IntVector2 focusedLocation;
-	private SafeDictionary<ICombatant, IntVector2> locations = new SafeDictionary<ICombatant, IntVector2>();
+	private Vector2<int> focusedLocation;
+	private SafeDictionary<ICombatant, Vector2<int>> locations = [];
 	private List<Pewpew> pewpews = new List<Pewpew>();
 
 	/// <summary>
@@ -201,7 +201,7 @@ public partial class BattleView : Control
 					var drawx = drawPoint.X;
 					var drawy = drawPoint.Y;
 
-					var pos = new IntVector2(x, y);
+					var pos = new Vector2<int>(x, y);
 
 					// draw image, owner flag, and name of largest space object (if any)
 					var here = Battle.Combatants.Where(q => locations.Any(w => (w.Key == q || w.Key == Battle.StartCombatants[q.ID]) && w.Value == pos));
@@ -331,13 +331,13 @@ public partial class BattleView : Control
 		Invalidate();
 	}
 
-	private IntVector2 GetClickPoint(int x, int y)
+	private Vector2<int> GetClickPoint(int x, int y)
 	{
 		if (AutoZoom)
 		{
 			var clickx = (x - SectorBorderSize) / (SectorDrawSize + SectorBorderSize) + Battle.UpperLeft[round].X;
 			var clicky = (y - SectorBorderSize) / (SectorDrawSize + SectorBorderSize) + Battle.UpperLeft[round].Y;
-			return new IntVector2(clickx, clicky);
+			return new Vector2<int>(clickx, clicky);
 		}
 		else
 		{
@@ -345,7 +345,7 @@ public partial class BattleView : Control
 				FocusedLocation = (Battle.LowerRight[round] - Battle.UpperLeft[round]) / 2;
 			var clickx = (x - Width / 2 - SectorBorderSize) / (SectorDrawSize + SectorBorderSize) + FocusedLocation.X;
 			var clicky = (y - Height / 2 - SectorBorderSize) / (SectorDrawSize + SectorBorderSize) + FocusedLocation.Y;
-			return new IntVector2(clickx, clicky);
+			return new Vector2<int>(clickx, clicky);
 		}
 	}
 
@@ -463,28 +463,28 @@ public partial class BattleView : Control
 
 	private class Boom
 	{
-		public Boom(IntVector2 pos, float size)
+		public Boom(Vector2<int> pos, float size)
 		{
 			Position = pos;
 			Size = size;
 		}
 
-		public IntVector2 Position { get; set; }
+		public Vector2<int> Position { get; set; }
 		public float Size { get; set; }
 	}
 
 	private class Pewpew
 	{
-		public Pewpew(IntVector2 start, IntVector2 end, bool isHit = true)
+		public Pewpew(Vector2<int> start, Vector2<int> end, bool isHit = true)
 		{
 			Start = start;
 			End = end;
 			IsHit = isHit;
 		}
 
-		public IntVector2 End { get; set; }
+		public Vector2<int> End { get; set; }
 		public bool IsHit { get; set; }
-		public IntVector2 Start { get; set; }
+		public Vector2<int> Start { get; set; }
 	}
 
 	private HashSet<ICombatant> unarmedCombatants { get; } = new HashSet<ICombatant>();

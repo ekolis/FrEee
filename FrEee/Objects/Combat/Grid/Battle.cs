@@ -128,7 +128,7 @@ public abstract class Battle : IBattle, IDisposable
 
 	public IList<LogMessage> Log { get; private set; }
 
-	public IList<IntVector2> LowerRight { get; private set; } = new List<IntVector2>();
+	public IList<Vector2<int>> LowerRight { get; private set; } = new List<Vector2<int>>();
 
 	public abstract int MaxRounds { get; }
 
@@ -162,7 +162,7 @@ public abstract class Battle : IBattle, IDisposable
 
 	public double Timestamp { get; private set; }
 
-	public IList<IntVector2> UpperLeft { get; private set; } = new List<IntVector2>();
+	public IList<Vector2<int>> UpperLeft { get; private set; } = new List<Vector2<int>>();
 
 	public int GetDiameter(int round)
 	{
@@ -175,7 +175,7 @@ public abstract class Battle : IBattle, IDisposable
 		StartCombatants = combatants.Select(c => new { ID = c.ID, Copy = c.CopyAndAssignNewID() }).ToDictionary(q => q.ID, q => q.Copy);
 	}
 
-	public abstract void PlaceCombatants(SafeDictionary<ICombatant, IntVector2> locations);
+	public abstract void PlaceCombatants(SafeDictionary<ICombatant, Vector2<int>> locations);
 
 	/// <summary>
 	/// Resolves the battle.
@@ -189,7 +189,7 @@ public abstract class Battle : IBattle, IDisposable
 		Current.Add(this);
 
 		var reloads = new SafeDictionary<Component, double>();
-		var locations = new SafeDictionary<ICombatant, IntVector2>();
+		var locations = new SafeDictionary<ICombatant, Vector2<int>>();
 
 		PlaceCombatants(locations);
 
@@ -250,7 +250,7 @@ public abstract class Battle : IBattle, IDisposable
 						continue;
 					}
 					s.DistanceTraveled += Math.Min(GetCombatSpeedThisRound(c), locations[s].DistanceToEightWay(locations[s.Target]));
-					locations[s] = IntVector2.InterpolateEightWay(locations[s], locations[s.Target], GetCombatSpeedThisRound(c));
+					locations[s] = Vector2<int>.InterpolateEightWay(locations[s], locations[s.Target], GetCombatSpeedThisRound(c));
 					if (s.DistanceTraveled > s.WeaponInfo.MaxRange)
 					{
 						s.Hitpoints = 0;
@@ -338,16 +338,16 @@ public abstract class Battle : IBattle, IDisposable
 									maxdmgrange = 0;
 							}
 							var targetPos = locations[bestTarget];
-							var tiles = new HashSet<IntVector2>();
+							var tiles = new HashSet<Vector2<int>>();
 							for (var x = targetPos.X - maxdmgrange; x <= targetPos.X + maxdmgrange; x++)
 							{
-								tiles.Add(new IntVector2(x, targetPos.Y - maxdmgrange));
-								tiles.Add(new IntVector2(x, targetPos.Y + maxdmgrange));
+								tiles.Add(new Vector2<int>(x, targetPos.Y - maxdmgrange));
+								tiles.Add(new Vector2<int>(x, targetPos.Y + maxdmgrange));
 							}
 							for (var y = targetPos.Y - maxdmgrange; y <= targetPos.Y + maxdmgrange; y++)
 							{
-								tiles.Add(new IntVector2(targetPos.X - maxdmgrange, y));
-								tiles.Add(new IntVector2(targetPos.X + maxdmgrange, y));
+								tiles.Add(new Vector2<int>(targetPos.X - maxdmgrange, y));
+								tiles.Add(new Vector2<int>(targetPos.X + maxdmgrange, y));
 							}
 							if (c.FillsCombatTile)
 							{
@@ -360,7 +360,7 @@ public abstract class Battle : IBattle, IDisposable
 							if (tiles.Any())
 							{
 								var closest = tiles.WithMin(t => t.DistanceToEightWay(locations[c])).First();
-								locations[c] = IntVector2.InterpolateEightWay(locations[c], closest, GetCombatSpeedThisRound(c), vec => locations.Values.Contains(vec));
+								locations[c] = Vector2<int>.InterpolateEightWay(locations[c], closest, GetCombatSpeedThisRound(c), vec => locations.Values.Contains(vec));
 								var newdist = locations[c].DistanceToEightWay(locations[bestTarget]);
 								if (DistancesToTargets.ContainsKey(c) && newdist >= DistancesToTargets[c] && combatSpeeds[c] <= combatSpeeds[bestTarget] && !c.Weapons.Any(w => w.Template.WeaponMaxRange >= newdist))
 								{
@@ -430,7 +430,7 @@ public abstract class Battle : IBattle, IDisposable
 						var w = info.Item2.Weapons.ElementAt(ix);
 						var wc = StartCombatants[info.Item2.ID].Weapons.ElementAt(ix);
 					}
-					locations[info.Launchee] = new IntVector2(locations[info.Launcher]);
+					locations[info.Launchee] = new Vector2<int>(locations[info.Launcher]);
 					Events.Last().Add(new CombatantLaunchedEvent(this, info.Launcher, info.Launchee, locations[info.Launchee]));
 				}
 			}
@@ -588,7 +588,7 @@ public abstract class Battle : IBattle, IDisposable
 		return Name;
 	}
 
-	private void CheckSeekerDetonation(Seeker s, SafeDictionary<ICombatant, IntVector2> locations)
+	private void CheckSeekerDetonation(Seeker s, SafeDictionary<ICombatant, Vector2<int>> locations)
 	{
 		if (locations[s] == locations[s.Target])
 		{
@@ -611,7 +611,7 @@ public abstract class Battle : IBattle, IDisposable
 		}
 	}
 
-	private void TryFireWeapon(ICombatant c, Component w, SafeDictionary<Component, double> reloads, SafeDictionary<ICombatant, IntVector2> locations, SafeDictionary<ICombatant, HashSet<ICombatant>> multiplex)
+	private void TryFireWeapon(ICombatant c, Component w, SafeDictionary<Component, double> reloads, SafeDictionary<ICombatant, Vector2<int>> locations, SafeDictionary<ICombatant, HashSet<ICombatant>> multiplex)
 	{
 		// find suitable targets in range
 		ICombatant target;
@@ -676,7 +676,7 @@ public abstract class Battle : IBattle, IDisposable
 					Galaxy.Current.AssignID(seeker);
 					Combatants.Add(seeker);
 					StartCombatants[seeker.ID] = seeker.Copy();
-					locations[seeker] = new IntVector2(locations[c]);
+					locations[seeker] = new Vector2<int>(locations[c]);
 					Events.Last().Add(new CombatantLaunchedEvent(this, c, seeker, locations[seeker]));
 				}
 				else
@@ -731,16 +731,16 @@ public abstract class Battle : IBattle, IDisposable
 		}
 	}
 
-	private void UpdateBounds(int round, IEnumerable<IntVector2> positions)
+	private void UpdateBounds(int round, IEnumerable<Vector2<int>> positions)
 	{
 		while (UpperLeft.Count() <= round)
-			UpperLeft.Add(new IntVector2());
+			UpperLeft.Add(new Vector2<int>());
 		while (LowerRight.Count() <= round)
-			LowerRight.Add(new IntVector2());
-		UpperLeft[round].X = positions.MinOrDefault(q => q.X);
-		LowerRight[round].X = positions.MaxOrDefault(q => q.X);
-		UpperLeft[round].Y = positions.MinOrDefault(q => q.Y);
-		LowerRight[round].Y = positions.MaxOrDefault(q => q.Y);
+			LowerRight.Add(new Vector2<int>());
+		UpperLeft[round] = UpperLeft[round] with { X = positions.MinOrDefault(q => q.X) };
+		LowerRight[round] = LowerRight[round] with { X = positions.MaxOrDefault(q => q.X) };
+		UpperLeft[round] = UpperLeft[round] with { Y = positions.MinOrDefault(q => q.Y) };
+		LowerRight[round] = LowerRight[round] with { Y = positions.MaxOrDefault(q => q.Y) };
 	}
 
 	public void Dispose()

@@ -6,7 +6,7 @@ namespace FrEee.Objects.Combat.Grid;
 
 public class CombatantLaunchedEvent : BattleEvent
 {
-	public CombatantLaunchedEvent(Battle battle, ICombatant launcher, ICombatant combatant, IntVector2 position)
+	public CombatantLaunchedEvent(Battle battle, ICombatant launcher, ICombatant combatant, Vector2<int> position)
 		: base(battle, combatant, position, position)
 	{
 		Launcher = launcher;

@@ -131,7 +131,7 @@ public class GalaxyTemplate : ITemplate<Galaxy>, IModObject
 			sys.Name = unusedNames.PickRandom(dice);
 			unusedNames.Remove(sys.Name);
 			NameStellarObjects(sys);
-			gal.StarSystemLocations.Add(new ObjectLocation<StarSystem> { Location = p.Value, Item = sys });
+			gal.StarSystemLocations.Add(new(sys, p.Value));
 			if (status != null)
 				status.Progress += progressPerStarSystem;
 		}

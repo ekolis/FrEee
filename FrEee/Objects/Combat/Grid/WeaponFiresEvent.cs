@@ -7,7 +7,7 @@ namespace FrEee.Objects.Combat.Grid;
 
 public class WeaponFiresEvent : BattleEvent
 {
-	public WeaponFiresEvent(Battle battle, ICombatant attacker, IntVector2 here, ICombatant target, IntVector2 there, Component weapon, Hit hit, bool wasTargetDisarmed)
+	public WeaponFiresEvent(Battle battle, ICombatant attacker, Vector2<int> here, ICombatant target, Vector2<int> there, Component weapon, Hit hit, bool wasTargetDisarmed)
 		: base(battle, attacker, here, there)
 	{
 		Attacker = attacker;
