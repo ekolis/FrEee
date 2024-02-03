@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FrEee.WebHost.WeatherForecast
@@ -19,6 +20,7 @@ namespace FrEee.WebHost.WeatherForecast
 		}
 
 		[HttpGet]
+		//[Authorize]
 		public IEnumerable<WeatherForecast> Get()
 		{
 			return Enumerable.Range(1, 5).Select(index => new WeatherForecast
@@ -28,6 +30,11 @@ namespace FrEee.WebHost.WeatherForecast
 				Summary = Summaries[Random.Shared.Next(Summaries.Length)]
 			})
 			.ToArray();
+		}
+
+		public IEnumerable<WeatherForecast> Fred()
+		{
+			return Get();
 		}
 	}
 }
