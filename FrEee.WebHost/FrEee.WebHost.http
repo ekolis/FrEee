@@ -1,0 +1,6 @@
+@FrEee.WebHost_HostAddress = http://localhost:5166
+
+GET {{FrEee.WebHost_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

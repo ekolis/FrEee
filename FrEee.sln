@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29911.98
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrEee", "FrEee\FrEee.csproj", "{ECA7A08B-992A-43EC-8D98-2AE887897343}"
 EndProject
@@ -17,6 +17,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrEee.WinForms", "FrEee.WinForms\FrEee.WinForms.csproj", "{61615A88-CFD2-474E-BE6D-6D0A46AA6E5C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrEee.Assets", "FrEee.Assets\FrEee.Assets.csproj", "{C045C843-5B6B-4F8C-ADB6-98BE77375C6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrEee.WebHost", "FrEee.WebHost\FrEee.WebHost.csproj", "{F1857929-9A32-42ED-9749-99CDCD43938A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -76,6 +78,18 @@ Global
 		{C045C843-5B6B-4F8C-ADB6-98BE77375C6D}.Release|x64.Build.0 = Release|Any CPU
 		{C045C843-5B6B-4F8C-ADB6-98BE77375C6D}.Release|x86.ActiveCfg = Release|Any CPU
 		{C045C843-5B6B-4F8C-ADB6-98BE77375C6D}.Release|x86.Build.0 = Release|Any CPU
+		{F1857929-9A32-42ED-9749-99CDCD43938A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1857929-9A32-42ED-9749-99CDCD43938A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1857929-9A32-42ED-9749-99CDCD43938A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F1857929-9A32-42ED-9749-99CDCD43938A}.Debug|x64.Build.0 = Debug|Any CPU
+		{F1857929-9A32-42ED-9749-99CDCD43938A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F1857929-9A32-42ED-9749-99CDCD43938A}.Debug|x86.Build.0 = Debug|Any CPU
+		{F1857929-9A32-42ED-9749-99CDCD43938A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1857929-9A32-42ED-9749-99CDCD43938A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1857929-9A32-42ED-9749-99CDCD43938A}.Release|x64.ActiveCfg = Release|Any CPU
+		{F1857929-9A32-42ED-9749-99CDCD43938A}.Release|x64.Build.0 = Release|Any CPU
+		{F1857929-9A32-42ED-9749-99CDCD43938A}.Release|x86.ActiveCfg = Release|Any CPU
+		{F1857929-9A32-42ED-9749-99CDCD43938A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
