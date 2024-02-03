@@ -359,7 +359,8 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityOb
 
 	public override int GetHashCode()
 	{
-		return HashCodeMasher.Mash(Container, ComponentTemplate, Mount);
+		// can't mash the container itself because that would cause a circular dependency on this template
+		return HashCodeMasher.Mash(Container?.ID, ComponentTemplate, Mount);
 	}
 
 	/// <summary>
