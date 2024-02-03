@@ -8,7 +8,7 @@ namespace FrEee.Utility;
 /// </summary>
 public static class HashCodeMasher
 {
-	public static int Mash(params object[] objs)
+	public static int Mash(params object?[] objs)
 	{
 		return MashList(objs);
 	}
