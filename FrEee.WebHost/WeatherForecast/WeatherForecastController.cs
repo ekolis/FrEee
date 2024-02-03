@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace FrEee.WebHost.Controllers
+namespace FrEee.WebHost.WeatherForecast
 {
-	[ApiController]
+    [ApiController]
 	[Route("[controller]")]
 	public class WeatherForecastController : ControllerBase
 	{
