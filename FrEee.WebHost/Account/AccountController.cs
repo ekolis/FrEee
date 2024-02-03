@@ -15,10 +15,10 @@ namespace FrEee.WebHost.Authentication
 		}
 
 		[HttpPost]
-		public User Login(string username, string password)
+		public User? Login([FromBody] User user)
 		{
 			// TODO: validate username and password
-			return new User(username, password);
+			return user;
 		}
 	}
 }
