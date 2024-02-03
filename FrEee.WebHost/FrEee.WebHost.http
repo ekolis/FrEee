@@ -1,16 +1,25 @@
 @FrEee.WebHost_HostAddress = http://localhost:5124
-
-GET {{FrEee.WebHost_HostAddress}}/weatherforecast/
-Accept: application/json
+@username = bloodninja
+@password = hunter2
+@token = spijBQaTYnsPDZBwXNJmnDmW1Vg7CxlzSgwndK+22cMfih7ig9YSF7ZaTHU6l+TXAxgnl8qJmq/341WlPzum8g==
 
 ###
 
+// get the tokenm, remember to save it above
 POST {{FrEee.WebHost_HostAddress}}/account/login
 Content-Type: application/json
 Accept: application/json
 Accept-Language: en-US,en;q=0.5
 
 {
-    "username": "bloodninja",
-    "password": "hunter2"
+    "username": "{{username}}",
+    "password": "{{password}}"
 }
+
+###
+
+// actually call the API
+// this doesn't actually work, have to do it in Postman
+GET {{FrEee.WebHost_HostAddress}}/weatherforecast/
+Accept: application/json
+Authorization: Bearer {{token}}

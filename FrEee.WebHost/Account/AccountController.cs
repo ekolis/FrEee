@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FrEee.WebHost.Authentication
+namespace FrEee.WebHost.Account
 {
     [ApiController]
 	[Route("[controller]/[action]")]
@@ -15,10 +15,22 @@ namespace FrEee.WebHost.Authentication
 		}
 
 		[HttpPost]
-		public User? Login([FromBody] User user)
+		public AccountToken? Login([FromBody] User user)
 		{
-			// TODO: validate username and password
-			return user;
+			var token = user.AccountToken;
+			if (token.IsAuthenticated)
+			{
+				Thread.CurrentPrincipal = user;
+				if (HttpContext != null)
+				{
+					HttpContext.User = new ClaimsPrincipal(user);
+				}
+				return token;
+			}
+			else
+			{
+				return null;
+			}
 		}
 	}
 }
