@@ -615,35 +615,39 @@ public class GameSetup
 				IsHomeworld = true,
 			};
 			hw.AddPopulation(emp.PrimaryRace, hw.Size.MaxPopulation);
-			if (sy != null && hw.Colony.Facilities.Count < hw.MaxFacilities)
-				hw.Colony.Facilities.Add(sy.Instantiate());
-			if (sp != null && hw.Colony.Facilities.Count < hw.MaxFacilities && (!emp.HasAbility("No Spaceports") || sp.Abilities.Count > 1))
-				// natural merchants get spaceports only if spaceports have more than one ability
-				// of course, if the other abilities are *penalties*... oh well, they can scrap them!
-				hw.Colony.Facilities.Add(sp.Instantiate());
-			if (rd != null && hw.Colony.Facilities.Count < hw.MaxFacilities)
-				hw.Colony.Facilities.Add(rd.Instantiate());
+
+			// function to create a facility if possible
+			void TryCreateFacility(FacilityTemplate? template)
+			{
+				if (template is not null && hw.Colony.Facilities.Count < hw.MaxFacilities)
+				{
+					var facility = template.Instantiate();
+					hw.Colony.Facilities.Add(facility);
+					facility.ConstructionProgress = facility.Cost;
+				}
+			}
+
+			// create basic facilities, one each
+			TryCreateFacility(sy);
+			TryCreateFacility(sp);
+			TryCreateFacility(rd);
+			TryCreateFacility(rad);
+			TryCreateFacility(org);
+
+			// fill remaining space with half mineral miners and half research facilities
 			var lastCount = 0;
 			while (hw.Colony.Facilities.Count < hw.MaxFacilities && hw.Colony.Facilities.Count > lastCount)
 			{
 				lastCount = hw.Colony.Facilities.Count;
 
-				if (min != null && hw.Colony.Facilities.Count < hw.MaxFacilities)
-					hw.Colony.Facilities.Add(min.Instantiate());
-				if (org != null && hw.Colony.Facilities.Count < hw.MaxFacilities)
-					hw.Colony.Facilities.Add(org.Instantiate());
-				if (rad != null && hw.Colony.Facilities.Count < hw.MaxFacilities)
-					hw.Colony.Facilities.Add(rad.Instantiate());
+				TryCreateFacility(min);
 
 				// no research facilities needed at max tech!
 				if (StartingTechnologyLevel != StartingTechnologyLevel.High)
 				{
-					if (res != null && hw.Colony.Facilities.Count < hw.MaxFacilities)
-						hw.Colony.Facilities.Add(res.Instantiate());
+					TryCreateFacility(res);
 				}
 			}
-			foreach (var f in hw.Colony.Facilities)
-				f.ConstructionProgress = f.Cost;
 		}
 
 		// mark home systems explored
