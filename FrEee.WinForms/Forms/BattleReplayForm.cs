@@ -12,19 +12,20 @@ using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using FrEee.WinForms.ViewModels;
 
 namespace FrEee.WinForms.Forms;
 
-public partial class BattleReplayForm : GameForm, IBindable<Battle>
+public partial class BattleReplayForm : GameForm, IBindable<BattleReplayFormViewModel>
 {
 	public BattleReplayForm(Battle b)
 	{
 		InitializeComponent();
-		Bind(b);
+		Bind(new BattleReplayFormViewModel(b));
 		reportPanel.Controls.Add(CreateLogListBox());
 	}
 
-	public Battle Battle { get; private set; }
+	public BattleReplayFormViewModel ViewModel { get; private set; }
 
 	public ICombatant SelectedCombatant
 	{
@@ -48,17 +49,17 @@ public partial class BattleReplayForm : GameForm, IBindable<Battle>
 
 	private ICombatant selectedCombatant;
 
-	public void Bind(Battle data)
+	public void Bind(BattleReplayFormViewModel data)
 	{
-		Battle = data;
+		ViewModel = data;
 		Bind();
 	}
 
 	public void Bind()
 	{
-		battleView.Battle = Battle;
-		minimap.Battle = Battle;
-		Text = Battle.NameFor(Empire.Current);
+		battleView.Battle = ViewModel.Battle;
+		minimap.Battle = ViewModel.Battle;
+		Text = ViewModel.NameFor(Empire.Current);
 	}
 
 	private void battleView_MouseDown(object sender, MouseEventArgs e)
@@ -104,9 +105,9 @@ public partial class BattleReplayForm : GameForm, IBindable<Battle>
 		logListBox.Dock = DockStyle.Fill;
 		logListBox.HorizontalScrollbar = true;
 		reportPanel.Controls.Add(logListBox);
-		foreach (var roundEvents in Battle.Events)
+		foreach (var roundEvents in ViewModel.Events)
 		{
-			logListBox.Items.Add($"Begin round {Battle.Events.IndexOf(roundEvents) + 1}!");
+			logListBox.Items.Add($"Begin round {ViewModel.Events.IndexOf(roundEvents) + 1}!");
 			foreach (var e in roundEvents)
 			{
 				if (e is CombatantAppearsEvent cae)
@@ -166,7 +167,7 @@ public partial class BattleReplayForm : GameForm, IBindable<Battle>
 	private void BattleReplayForm_Load(object sender, EventArgs e)
 	{
 		MusicMood mood;
-		switch (Battle.ResultFor(Empire.Current))
+		switch (ViewModel.ResultFor(Empire.Current))
 		{
 			case "victory":
 				mood = MusicMood.Upbeat;
