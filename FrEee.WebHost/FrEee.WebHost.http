@@ -5,7 +5,7 @@
 
 ###
 
-// get the tokenm, remember to save it above
+// get the token, remember to save it above
 POST {{FrEee.WebHost_HostAddress}}/account/login
 Content-Type: application/json
 Accept: application/json

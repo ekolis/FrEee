@@ -20,6 +20,7 @@ namespace FrEee.WebHost.Account
 			var token = user.AccountToken;
 			if (token.IsAuthenticated)
 			{
+				// log in the user
 				Thread.CurrentPrincipal = user;
 				if (HttpContext != null)
 				{
@@ -29,7 +30,18 @@ namespace FrEee.WebHost.Account
 			}
 			else
 			{
+				// discard the token, it's invalid
 				return null;
+			}
+		}
+
+		[HttpPost]
+		public void Logout()
+		{
+			Thread.CurrentPrincipal = null;
+			if (HttpContext != null)
+			{
+				HttpContext.User = null;
 			}
 		}
 	}
