@@ -745,15 +745,15 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 		{
 			if (d.BaseName != BaseName)
 				return false;
-			if (d.Hull != Hull)
+			if (d.Hull.ModID != Hull.ModID)
 				return false;
 			if (d.Components.Count != Components.Count)
 				return false;
 			for (var i = 0; i < Components.Count; i++)
 			{
-				if (d.Components[i].ComponentTemplate != Components[i].ComponentTemplate)
+				if (d.Components[i].ComponentTemplate.ModID != Components[i].ComponentTemplate.ModID)
 					return false;
-				if (d.Components[i].Mount != Components[i].Mount)
+				if (d.Components[i].Mount?.ModID != Components[i].Mount?.ModID)
 					return false;
 			}
 			return true;
