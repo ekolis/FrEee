@@ -629,7 +629,10 @@ public class GameSetup
 
 			// create basic facilities, one each
 			TryCreateFacility(sy);
-			TryCreateFacility(sp);
+			if (!emp.PrimaryRace.HasAbility("No Spaceports"))
+			{
+				TryCreateFacility(sp);
+			}
 			TryCreateFacility(rd);
 			TryCreateFacility(rad);
 			TryCreateFacility(org);
