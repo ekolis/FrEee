@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using FrEee.WinForms.ViewModels;
 
 namespace FrEee.WinForms.Forms;
 
@@ -20,7 +21,7 @@ public partial class ActivateAbilityForm : GameForm
 	{
 		InitializeComponent();
 
-		this.sobj = sobj;
+		viewModel = new ActivateAbilityFormViewModel(sobj);
 
 		var abils = sobj.ActivatableAbilities().Select(kvp => new
 		{
@@ -33,7 +34,7 @@ public partial class ActivateAbilityForm : GameForm
 		gridAbilities.DataSource = abils;
 	}
 
-	private IMobileSpaceObject sobj;
+	private ActivateAbilityFormViewModel viewModel;
 
 	private void btnCancel_Click(object sender, EventArgs e)
 	{
@@ -53,7 +54,7 @@ public partial class ActivateAbilityForm : GameForm
 			// TODO - "Space Object Destroyed On Use" ability
 			if (sel.IsDestroyedOnUse)
 			{
-				IAbilityObject toBeDestroyed = sel.Source is IHull ? sobj : sel.Source;
+				IAbilityObject toBeDestroyed = sel.Source is IHull ? viewModel : sel.Source;
 				result = MessageBox.Show("Activate this ability of " + sel.Source + "?\n" + sel.Ability + "\n" + toBeDestroyed + " will be destroyed!", "Confirm Activation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 			}
 			else
@@ -86,25 +87,25 @@ public partial class ActivateAbilityForm : GameForm
 				{
 					// find systems in range
 					needsTarget = true;
-					targets = Galaxy.Current.StarSystemLocations.Where(l => sobj.StarSystem != l.Item && sobj.StarSystem.Coordinates.EightWayDistance(l.Location) <= abil.Value1.ToInt()).Select(l => l.Item);
+					targets = Galaxy.Current.StarSystemLocations.Where(l => viewModel.StarSystem != l.Item && viewModel.StarSystem.Coordinates.EightWayDistance(l.Location) <= abil.Value1.ToInt()).Select(l => l.Item);
 					targetType = "star systems within {0} light-years".F(abil.Value1);
 				}
 				else if (abil.Rule.Matches("Close Warp Point"))
 				{
 					// find warp points in sector
 					needsTarget = true;
-					targets = sobj.Sector.SpaceObjects.OfType<WarpPoint>();
+					targets = viewModel.SpaceObjectsInSector.OfType<WarpPoint>();
 					targetType = "warp points";
 				}
 				else if (abil.Rule.Matches("Create Planet"))
 				{
 					// find asteroids in sector, and make sure there's at least one star
 					needsTarget = true;
-					targets = sobj.Sector.SpaceObjects.OfType<AsteroidField>();
+					targets = viewModel.SpaceObjectsInSector.OfType<AsteroidField>();
 					targetType = "asteroid fields";
 					customCheck = () =>
 					{
-						if (!sobj.StarSystem.FindSpaceObjects<Star>().Any())
+						if (!viewModel.StarSystem.FindSpaceObjects<Star>().Any())
 							return "We can't create a planet in a system without a star.";
 						return null;
 					};
@@ -113,7 +114,7 @@ public partial class ActivateAbilityForm : GameForm
 				{
 					// find planets in sector that are small enough to destroy
 					needsTarget = true;
-					targets = sobj.Sector.SpaceObjects.OfType<Planet>().Where(p => (int)p.StellarSize <= abil.Value1.ToInt());
+					targets = viewModel.SpaceObjectsInSector.OfType<Planet>().Where(p => (int)p.StellarSize <= abil.Value1.ToInt());
 					targetType = "planets not exceeding size {0}".F(abil.Value1);
 				}
 				else if (abil.Rule.Matches("Create Star"))
@@ -134,7 +135,7 @@ public partial class ActivateAbilityForm : GameForm
 				{
 					// find stars in sector
 					needsTarget = true;
-					targets = sobj.Sector.SpaceObjects.OfType<Star>();
+					targets = viewModel.SpaceObjectsInSector.OfType<Star>();
 					targetType = "stars";
 				}
 				else if (abil.Rule.Matches("Create Storm"))
@@ -145,7 +146,7 @@ public partial class ActivateAbilityForm : GameForm
 				{
 					// find storms in sector
 					needsTarget = true;
-					targets = sobj.Sector.SpaceObjects.OfType<Storm>();
+					targets = viewModel.SpaceObjectsInSector.OfType<Storm>();
 					targetType = "storms";
 				}
 				else if (abil.Rule.Matches("Create Nebula"))
@@ -154,7 +155,7 @@ public partial class ActivateAbilityForm : GameForm
 					needsTarget = false;
 					customCheck = () =>
 					{
-						if (!sobj.Sector.SpaceObjects.OfType<Star>().Any())
+						if (!viewModel.SpaceObjectsInSector.OfType<Star>().Any())
 							return "Creating a nebula requires a star in the sector.";
 						return null;
 					};
@@ -178,7 +179,7 @@ public partial class ActivateAbilityForm : GameForm
 					needsTarget = false;
 					customCheck = () =>
 						{
-							if (!sobj.Sector.SpaceObjects.OfType<Star>().Any())
+							if (!viewModel.SpaceObjectsInSector.OfType<Star>().Any())
 								return "Creating a black hole requires a star in the sector.";
 							return null;
 						};
@@ -200,35 +201,35 @@ public partial class ActivateAbilityForm : GameForm
 				{
 					// find stars in sector
 					needsTarget = true;
-					targets = sobj.Sector.SpaceObjects.OfType<Star>();
+					targets = viewModel.SpaceObjectsInSector.OfType<Star>();
 					targetType = "stars";
 				}
 				else if (abil.Rule.Matches("Create Constructed Planet From Planet"))
 				{
 					// find planets in sector
 					needsTarget = true;
-					targets = sobj.Sector.SpaceObjects.OfType<Planet>();
+					targets = viewModel.SpaceObjectsInSector.OfType<Planet>();
 					targetType = "planets";
 				}
 				else if (abil.Rule.Matches("Create Constructed Planet From Storm"))
 				{
 					// find storms in sector
 					needsTarget = true;
-					targets = sobj.Sector.SpaceObjects.OfType<Storm>();
+					targets = viewModel.SpaceObjectsInSector.OfType<Storm>();
 					targetType = "storms";
 				}
 				else if (abil.Rule.Matches("Create Constructed Planet From Warp Point"))
 				{
 					// find warp points in sector
 					needsTarget = true;
-					targets = sobj.Sector.SpaceObjects.OfType<WarpPoint>();
+					targets = viewModel.SpaceObjectsInSector.OfType<WarpPoint>();
 					targetType = "warp points";
 				}
 				else if (abil.Rule.Matches("Create Constructed Planet From Asteroids"))
 				{
 					// find asteroids in sector
 					needsTarget = true;
-					targets = sobj.Sector.SpaceObjects.OfType<AsteroidField>();
+					targets = viewModel.SpaceObjectsInSector.OfType<AsteroidField>();
 				}
 				else if (abil.Rule.Matches("Create Constructed Planet From Space"))
 				{
@@ -271,7 +272,7 @@ public partial class ActivateAbilityForm : GameForm
 
 				// issue command
 				var order = new ActivateAbilityOrder(sel.Source, sel.Ability, target);
-				var cmd = new AddOrderCommand(sobj, order);
+				var cmd = new AddOrderCommand(viewModel.Orderable, order);
 				cmd.Execute();
 				Empire.Current.Commands.Add(cmd);
 				Close();
