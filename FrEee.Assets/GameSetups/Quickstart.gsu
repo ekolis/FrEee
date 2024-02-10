@@ -1,5 +1,5 @@
 FrEee.Setup.GameSetup, FrEee.Core:
-p30:
+p31:
 	AllowedTrades:
 		:All;
 	EmpirePlacement:
@@ -13,19 +13,19 @@ p30:
 				AIName:
 					:"AI_Default";
 				Color:
-					:255,170,0,170;
+					:255,85,85,0;
 				CultureName:
-					:"Neutral";
+					:"Warriors";
 				InsigniaName:
-					:"Fractalian";
+					:"XiChung";
 				IsPlayerEmpire:
 					:True;
 				LeaderName:
-					:"fefe";
+					:"Queen Zebu";
 				LeaderPortraitName:
-					:"Fractalian";
+					:"XiChung";
 				Name:
-					:"Fefe Empie";
+					:"Xi'Chung Hive";
 				PrimaryRace:
 					:p7:
 						Aptitudes:
@@ -41,23 +41,23 @@ p30:
 								:100;
 								:"Environmental Resistance";
 								:100;
-								:"Maintenance Aptitude";
+								:"Defensiveness";
 								:100;
 								:"Construction Aptitude";
 								:100;
-								:"Defensiveness";
-								:100;
-								:"Farming Aptitude";
+								:"Maintenance Aptitude";
 								:100;
 								:"Happiness";
+								:100;
+								:"Farming Aptitude";
 								:100;
 								:"Political Savvy";
 								:100;
 								:"Repair Aptitude";
 								:100;
-								:"Aggressiveness";
-								:100;
 								:"Intelligence";
+								:100;
+								:"Aggressiveness";
 								:100;
 								:"Physical Strength";
 								:100;
@@ -68,20 +68,22 @@ p30:
 									:"HappinessModel Peaceful";
 							;
 						Name:
-							:"fefe";
+							:"Xi'Chung";
 						NativeAtmosphere:
-							:"Methane";
+							:"Hydrogen";
 						NativeSurface:
 							:"Ice";
 						PopulationIconName:
-							:"Fractalian";
+							:"XiChung";
 						TraitNames:
 							System.Collections.Generic.List`1[[System.String, System.Private.CoreLib]], System.Private.CoreLib:
-							c0:							
+							c2:							
+								:"Propulsion Experts";
+								:"Advanced Storage Techniques";
 							;
 					;
 				ShipsetName:
-					:"Fractalian";
+					:"XiChung";
 			;
 		;
 	ForbiddenTechnologyNames:
@@ -98,6 +100,31 @@ p30:
 		:True;
 	GenerateUniqueRuins:
 		:True;
+	HomeworldSize:
+		:p11:
+			ConstructionAbilityID:
+				:"0";
+			MaxCargo:
+				:8000;
+			MaxCargoDomed:
+				:800;
+			MaxFacilities:
+				:20;
+			MaxFacilitiesDomed:
+				:4;
+			MaxPopulation:
+				:4000000000;
+			MaxPopulationDomed:
+				:400000000;
+			ModID:
+				:"StellarObjectSize Large";
+			Name:
+				:"Large";
+			StellarObjectType:
+				:"Planet";
+			StellarSize:
+				:Large;
+		;
 	HomeworldsPerEmpire:
 		:1;
 	HomeworldValue:
@@ -130,7 +157,7 @@ p30:
 	ResourceStorage:
 		:50000;
 	Seed:
-		:2101922;
+		:3238972;
 	StandardMiningModel:
 		:p2:
 			ValueBonus:

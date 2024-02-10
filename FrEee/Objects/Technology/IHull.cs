@@ -1,5 +1,4 @@
-﻿using FrEee.Enumerations;
-using FrEee.Modding.Interfaces;
+﻿using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using System.Collections.Generic;
 using System.Drawing;

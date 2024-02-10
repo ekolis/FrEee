@@ -1,5 +1,4 @@
-﻿using FrEee.Enumerations;
-using FrEee.Objects.Abilities;
+﻿using FrEee.Objects.Abilities;
 using FrEee.Extensions;
 
 namespace FrEee.Objects.Civilization.Diplomacy.Clauses;

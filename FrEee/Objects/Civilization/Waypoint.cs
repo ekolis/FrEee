@@ -1,5 +1,4 @@
-﻿using FrEee.Enumerations;
-using FrEee.Objects.Civilization.Orders;
+﻿using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
 using FrEee.Serialization;

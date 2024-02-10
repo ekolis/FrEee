@@ -8,8 +8,11 @@
 	</PropertyGroup>
 	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
 	<ItemGroup>
+	  <Compile Remove="Enumerations\**" />
 	  <Compile Remove="Objects\Combat\Combat2\**" />
+	  <EmbeddedResource Remove="Enumerations\**" />
 	  <EmbeddedResource Remove="Objects\Combat\Combat2\**" />
+	  <None Remove="Enumerations\**" />
 	  <None Remove="Objects\Combat\Combat2\**" />
 	</ItemGroup>
 	<ItemGroup>

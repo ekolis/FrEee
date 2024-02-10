@@ -12,7 +12,6 @@ using FrEee.Objects.VictoryConditions;
 using FrEee.Modding;
 using FrEee.Extensions;
 using FrEee.Utility;
-using FrEee.Enumerations;
 using FrEee.Objects.Commands;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;

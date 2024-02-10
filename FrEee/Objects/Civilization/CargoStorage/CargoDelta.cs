@@ -1,4 +1,3 @@
-using FrEee.Enumerations;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Serialization;

@@ -1,5 +1,4 @@
-﻿using FrEee.Enumerations;
-using FrEee.Objects.LogMessages;
+﻿using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Utility;

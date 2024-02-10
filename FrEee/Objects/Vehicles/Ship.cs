@@ -1,4 +1,5 @@
-using FrEee.Enumerations;
+using FrEee.Objects.Abilities;
+using FrEee.Objects.Combat;
 using System;
 
 namespace FrEee.Objects.Vehicles;

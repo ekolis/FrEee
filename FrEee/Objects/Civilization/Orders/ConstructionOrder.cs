@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FrEee.Enumerations;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;

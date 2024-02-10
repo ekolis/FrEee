@@ -1,4 +1,3 @@
-using FrEee.Enumerations;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Commands;
 using FrEee.Objects.Technology;

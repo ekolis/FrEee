@@ -1,5 +1,4 @@
-﻿using FrEee.Enumerations;
-using FrEee.Objects.Commands;
+﻿using FrEee.Objects.Commands;
 using FrEee.Serialization;
 using FrEee.Extensions;
 using System.Collections.Generic;

@@ -1,4 +1,3 @@
-using FrEee.Enumerations;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Commands;
 using FrEee.Processes;
@@ -6,6 +5,7 @@ using FrEee.Modding;
 using FrEee.Extensions;
 using NUnit.Framework;
 using FrEee.Objects.GameState;
+using FrEee.Objects.Technology;
 
 namespace FrEee.Tests.Objects.Technology;
 

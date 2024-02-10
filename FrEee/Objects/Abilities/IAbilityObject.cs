@@ -1,4 +1,3 @@
-using FrEee.Enumerations;
 using FrEee.Serialization;
 using System.Collections.Generic;
 

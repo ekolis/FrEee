@@ -1,6 +1,4 @@
-﻿using FrEee.Enumerations;
-
-using FrEee.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Modding;
 using FrEee.Extensions;
@@ -10,6 +8,7 @@ using System.Linq;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
+using FrEee.Objects.Combat;
 
 namespace FrEee.Objects.Vehicles;
 

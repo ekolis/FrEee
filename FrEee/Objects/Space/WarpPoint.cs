@@ -1,4 +1,3 @@
-using FrEee.Enumerations;
 using FrEee.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Serialization;
@@ -6,6 +5,7 @@ using FrEee.Extensions;
 using System;
 using System.Linq;
 using FrEee.Objects.GameState;
+using FrEee.Objects.Abilities;
 
 namespace FrEee.Objects.Space;
 

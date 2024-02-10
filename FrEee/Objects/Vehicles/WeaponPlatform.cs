@@ -1,6 +1,4 @@
-﻿using FrEee.Enumerations;
-
-using FrEee.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Serialization;
 using FrEee.Extensions;
@@ -9,6 +7,7 @@ using System.Collections.Generic;
 using FrEee.Objects.Abilities;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
+using FrEee.Objects.Combat;
 
 namespace FrEee.Objects.Vehicles;
 
@@ -70,10 +69,10 @@ public class WeaponPlatform : Vehicle, IUnit
 		get { return Container?.StarSystem; }
 	}
 
-	public override Enumerations.WeaponTargets WeaponTargetType
+	public override WeaponTargets WeaponTargetType
 	{
 		// weapon platforms cannot be targeted in space combat
-		get { return Enumerations.WeaponTargets.Invalid; }
+		get { return WeaponTargets.Invalid; }
 	}
 
 	public override Visibility CheckVisibility(Empire emp)

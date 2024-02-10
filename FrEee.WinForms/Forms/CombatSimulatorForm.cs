@@ -1,5 +1,4 @@
-﻿using FrEee.Enumerations;
-using FrEee.Objects;
+﻿using FrEee.Objects;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Combat;
 using FrEee.Objects.Combat.Grid;

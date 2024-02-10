@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using FrEee.Enumerations;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
@@ -15,6 +14,7 @@ using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;
 using FrEee.Objects.GameState;
+using FrEee.Objects.Civilization.Diplomacy;
 
 namespace FrEee.Setup;
 

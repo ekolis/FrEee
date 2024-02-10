@@ -1,4 +1,3 @@
-using FrEee.Enumerations;
 using FrEee.Objects.Abilities;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Commands;
@@ -16,6 +15,7 @@ using FrEee.Objects.Civilization.Orders;
 using FrEee.Serialization;
 using FrEee.Objects.Technology;
 using FrEee.Objects.GameState;
+using FrEee.Objects.Combat;
 namespace FrEee.Extensions;
 
 public static class ChecksExtensions

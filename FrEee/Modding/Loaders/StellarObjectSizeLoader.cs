@@ -1,5 +1,5 @@
-﻿using FrEee.Enumerations;
-using FrEee.Modding.Interfaces;
+﻿using FrEee.Modding.Interfaces;
+using FrEee.Objects.Space;
 using System.Collections.Generic;
 
 namespace FrEee.Modding.Loaders;

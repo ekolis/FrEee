@@ -1,4 +1,3 @@
-using FrEee.Enumerations;
 using FrEee.Objects.Abilities;
 using FrEee.Objects.AI;
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
@@ -22,6 +21,8 @@ using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
+using FrEee.Objects.Civilization.Diplomacy;
+using FrEee.Setup;
 
 namespace FrEee.Objects.Civilization;
 

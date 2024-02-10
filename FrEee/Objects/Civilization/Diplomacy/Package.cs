@@ -1,5 +1,4 @@
-﻿using FrEee.Enumerations;
-using FrEee.Objects.Civilization.Diplomacy.Clauses;
+﻿using FrEee.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Objects.Space;
 using FrEee.Utility;
 using FrEee.Serialization;

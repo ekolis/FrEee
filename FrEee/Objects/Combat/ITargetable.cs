@@ -1,5 +1,4 @@
-﻿using FrEee.Enumerations;
-using FrEee.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
 
 namespace FrEee.Objects.Combat;
 

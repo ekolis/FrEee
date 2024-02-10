@@ -1,5 +1,4 @@
-﻿using FrEee.Enumerations;
-using FrEee.Objects.Events;
+﻿using FrEee.Objects.Events;
 using FrEee.Modding.Interfaces;
 using FrEee.Extensions;
 using System.Collections.Generic;

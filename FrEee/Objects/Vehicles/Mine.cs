@@ -1,7 +1,8 @@
-using FrEee.Enumerations;
 using FrEee.Extensions;
+using FrEee.Objects.Abilities;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.CargoStorage;
+using FrEee.Objects.Combat;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
 using System;
@@ -41,10 +42,10 @@ public class Mine : SpaceVehicle, IUnit
 		get { return false; }
 	}
 
-	public override Enumerations.WeaponTargets WeaponTargetType
+	public override WeaponTargets WeaponTargetType
 	{
 		// mines cannot be targeted in space combat
-		get { return Enumerations.WeaponTargets.Invalid; }
+		get { return WeaponTargets.Invalid; }
 	}
 
 	/// <summary>

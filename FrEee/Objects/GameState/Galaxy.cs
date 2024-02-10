@@ -1,4 +1,3 @@
-using FrEee.Enumerations;
 using FrEee.Objects.Abilities;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
@@ -25,6 +24,8 @@ using FrEee.Objects.Vehicles;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.VictoryConditions;
 using FrEee.Objects.Space;
+using FrEee.Objects.Civilization.Diplomacy;
+using FrEee.Objects.Technology;
 
 namespace FrEee.Objects.GameState;
 

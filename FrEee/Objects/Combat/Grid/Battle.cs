@@ -1,4 +1,3 @@
-using FrEee.Enumerations;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
