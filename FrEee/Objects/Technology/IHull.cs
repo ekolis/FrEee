@@ -1,10 +1,10 @@
-﻿using FrEee.Modding.Interfaces;
-using FrEee.Utility;
+﻿using FrEee.Utility;
 using System.Collections.Generic;
 using System.Drawing;
 using FrEee.Objects.Abilities;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
+using FrEee.Modding;
 
 namespace FrEee.Objects.Technology;
 

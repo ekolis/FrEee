@@ -1,5 +1,4 @@
 ﻿using FrEee.Objects.Events;
-using FrEee.Modding.Interfaces;
 using FrEee.Extensions;
 using System.Collections.Generic;
 using System.Linq;

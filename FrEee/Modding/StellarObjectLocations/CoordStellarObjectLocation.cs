@@ -1,5 +1,4 @@
 ﻿using FrEee.Objects.Space;
-using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using System;
 using System.Drawing;

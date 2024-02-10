@@ -1,6 +1,5 @@
 using FrEee.Objects.Civilization;
 using FrEee.Modding;
-using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;

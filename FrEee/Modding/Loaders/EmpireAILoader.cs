@@ -1,6 +1,5 @@
 using FrEee.Objects.AI;
 using FrEee.Objects.Civilization;
-using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using System.Collections.Generic;
 using System.IO;

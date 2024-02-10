@@ -1,7 +1,6 @@
 ﻿using FrEee.Objects.Abilities;
 using FrEee.Objects.Civilization;
 using FrEee.Modding;
-using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Extensions;
 using System.Collections.Generic;

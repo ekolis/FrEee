@@ -1,5 +1,4 @@
 ﻿using FrEee.Modding;
-using FrEee.Modding.Interfaces;
 using System.Collections.Generic;
 
 namespace FrEee.Objects.Civilization;

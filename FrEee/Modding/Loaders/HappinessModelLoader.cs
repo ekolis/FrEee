@@ -1,5 +1,4 @@
 ﻿using FrEee.Objects.Civilization;
-using FrEee.Modding.Interfaces;
 using System.Collections.Generic;
 
 namespace FrEee.Modding.Loaders;

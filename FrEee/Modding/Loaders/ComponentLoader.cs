@@ -1,7 +1,5 @@
 ﻿using FrEee.Objects.Combat;
 using FrEee.Objects.Technology;
-using FrEee.Modding.Enumerations;
-using FrEee.Modding.Interfaces;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
 using FrEee.Extensions;

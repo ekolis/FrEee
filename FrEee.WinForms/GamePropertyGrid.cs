@@ -1,5 +1,4 @@
 ﻿using FrEee.Modding;
-using FrEee.Modding.Interfaces;
 using FrEee.Serialization;
 using FrEee.Extensions;
 using FrEee.WinForms.Controls;

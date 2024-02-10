@@ -8,7 +8,6 @@ using FrEee.Objects.AI;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
-using FrEee.Modding.Interfaces;
 using FrEee.Modding.Loaders;
 using FrEee.Modding.Templates;
 using FrEee.Utility;

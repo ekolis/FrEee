@@ -2,7 +2,6 @@ using FrEee.Objects.Abilities;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Commands;
 using FrEee.Objects.Space;
-using FrEee.Modding.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,6 +15,7 @@ using FrEee.Serialization;
 using FrEee.Objects.Technology;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Combat;
+using FrEee.Modding;
 namespace FrEee.Extensions;
 
 public static class ChecksExtensions

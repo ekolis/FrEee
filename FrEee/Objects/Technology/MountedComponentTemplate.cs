@@ -3,7 +3,6 @@ using FrEee.Objects.Civilization;
 using FrEee.Objects.Combat;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
-using FrEee.Modding.Interfaces;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
 using FrEee.Serialization;
