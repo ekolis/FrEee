@@ -7,7 +7,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using FrEee.Objects.Vehicles;
-using FrEee.Objects.Orders;
+using FrEee.Objects.Civilization.Orders;
 using FrEee.Extensions;
 
 /// <summary>

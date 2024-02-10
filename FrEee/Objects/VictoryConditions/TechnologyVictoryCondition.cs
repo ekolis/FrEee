@@ -1,5 +1,4 @@
-﻿using FrEee.Interfaces;
-using FrEee.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
 using FrEee.Modding;
 using System.Collections.Generic;
 using System.Linq;

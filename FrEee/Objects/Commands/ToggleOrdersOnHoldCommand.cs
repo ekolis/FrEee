@@ -1,4 +1,4 @@
-﻿using FrEee.Interfaces;
+﻿using FrEee.Objects.Civilization;
 
 namespace FrEee.Objects.Commands;
 

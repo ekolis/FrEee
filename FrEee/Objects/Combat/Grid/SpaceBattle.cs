@@ -1,5 +1,4 @@
-﻿using FrEee.Interfaces;
-using FrEee.Objects.Space;
+﻿using FrEee.Objects.Space;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Extensions;
@@ -7,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using static System.Math;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Objects.Combat.Grid;
 

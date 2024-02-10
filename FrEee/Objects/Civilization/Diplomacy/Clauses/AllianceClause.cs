@@ -3,6 +3,8 @@ using FrEee.Objects.Commands;
 using FrEee.Extensions;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Objects.Civilization.Diplomacy.Messages;
+using FrEee.Objects.Civilization.Diplomacy.Actions;
 
 namespace FrEee.Objects.Civilization.Diplomacy.Clauses;
 

@@ -1,9 +1,9 @@
-﻿using FrEee.Interfaces;
-using FrEee.Objects.Space;
+﻿using FrEee.Objects.Space;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using System;
 using System.Drawing;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Modding.StellarObjectLocations;
 

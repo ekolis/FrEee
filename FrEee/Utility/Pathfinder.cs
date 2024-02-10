@@ -1,5 +1,5 @@
 ﻿using FrEee.Enumerations;
-using FrEee.Interfaces;
+
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Extensions;
@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using FrEee.Objects.Combat;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Utility;
 

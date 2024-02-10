@@ -1,5 +1,4 @@
 ﻿using FrEee.Enumerations;
-using FrEee.Interfaces;
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Objects.Space;
 using FrEee.Utility;
@@ -9,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tech = FrEee.Objects.Technology.Technology;
+using FrEee.Objects.Vehicles;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Objects.Civilization.Diplomacy;
 

@@ -1,6 +1,5 @@
-using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Orders;
+using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Utility;
@@ -14,6 +13,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using FrEee.Objects.GameState;
+using FrEee.Objects.Civilization.CargoStorage;
 
 namespace FrEee.WinForms.Forms;
 

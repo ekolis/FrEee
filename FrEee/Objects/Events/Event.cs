@@ -1,5 +1,4 @@
-﻿using FrEee.Interfaces;
-using FrEee.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Modding;
 using FrEee.Utility;
@@ -9,6 +8,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using FrEee.Serialization;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Objects.Events;
 

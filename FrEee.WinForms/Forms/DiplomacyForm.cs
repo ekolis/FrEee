@@ -1,5 +1,4 @@
 ﻿using FrEee.Enumerations;
-using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Diplomacy;
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
@@ -17,6 +16,8 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using FrEee.Objects.Civilization.Diplomacy.Messages;
+using FrEee.Objects.Civilization.Diplomacy.Actions;
 
 namespace FrEee.WinForms.Forms;
 

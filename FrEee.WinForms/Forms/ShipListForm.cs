@@ -1,4 +1,4 @@
-using FrEee.Interfaces;
+
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using FrEee.Objects.GameState;
 
 namespace FrEee.WinForms.Forms;
 

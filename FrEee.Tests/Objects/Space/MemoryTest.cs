@@ -6,6 +6,7 @@ using FrEee.Modding;
 using FrEee.Extensions;
 using NUnit.Framework;
 using System.Drawing;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Tests.Objects.Space;
 

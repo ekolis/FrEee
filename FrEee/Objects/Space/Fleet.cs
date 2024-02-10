@@ -1,5 +1,4 @@
 using FrEee.Enumerations;
-using FrEee.Interfaces;
 using FrEee.Objects.Abilities;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Combat;
@@ -14,6 +13,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using FrEee.Objects.Civilization.CargoStorage;
+using FrEee.Objects.Civilization.Construction;
+using FrEee.Objects.Civilization.Orders;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Objects.Space;
 

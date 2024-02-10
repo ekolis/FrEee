@@ -1,9 +1,10 @@
-﻿using FrEee.Interfaces;
+﻿
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Orders;
 using FrEee.Objects.Space;
 using FrEee.Extensions;
 using System;
+using FrEee.Objects.Civilization.Orders;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Objects.Commands;
 

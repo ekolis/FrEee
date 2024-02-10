@@ -1,8 +1,8 @@
-using FrEee.Interfaces;
 using FrEee.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Serialization;
 

@@ -1,6 +1,6 @@
 ﻿using FrEee.Enumerations;
-using FrEee.Interfaces;
-using FrEee.Objects.Orders;
+using FrEee.Objects.Civilization.Orders;
+using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
 using FrEee.Serialization;
 using System.Collections.Generic;

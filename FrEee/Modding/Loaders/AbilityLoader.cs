@@ -1,5 +1,4 @@
-﻿using FrEee.Interfaces;
-using FrEee.Objects.Abilities;
+﻿using FrEee.Objects.Abilities;
 using System.Collections.Generic;
 using System.Linq;
 

@@ -1,9 +1,6 @@
 using FrEee.Enumerations;
-using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Civilization.Diplomacy;
 using FrEee.Objects.Commands;
-using FrEee.Objects.Orders;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
@@ -24,6 +21,12 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using FrEee.Objects.Combat;
+using FrEee.Objects.Civilization.Construction;
+using FrEee.Objects.Civilization.Diplomacy.Messages;
+using FrEee.Objects.Civilization.Orders;
+using FrEee.Objects.GameState;
+using FrEee.Objects.Civilization.CargoStorage;
 
 namespace FrEee.WinForms.Forms;
 

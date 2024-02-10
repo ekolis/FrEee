@@ -7,6 +7,7 @@ using FrEee.Modding.Templates;
 using FrEee.Extensions;
 using NUnit.Framework;
 using System.Drawing;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Tests.Objects.Vehicles;
 

@@ -1,12 +1,13 @@
-using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Modding;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
+using FrEee.Serialization;
 using FrEee.Extensions;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Setup;
 

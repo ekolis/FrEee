@@ -1,5 +1,4 @@
 ﻿using FrEee.Enumerations;
-using FrEee.Interfaces;
 using FrEee.Objects.Abilities;
 using FrEee.Objects.Civilization;
 using FrEee.Modding;
@@ -9,6 +8,7 @@ using FrEee.Extensions;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Objects.Technology;
 

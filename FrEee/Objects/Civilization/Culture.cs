@@ -1,5 +1,5 @@
-using FrEee.Interfaces;
 using FrEee.Modding.Interfaces;
+using FrEee.Objects.GameState;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;

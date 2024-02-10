@@ -1,5 +1,4 @@
 ﻿using FrEee.Enumerations;
-using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Serialization;
@@ -7,6 +6,9 @@ using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Objects.Abilities;
+using FrEee.Objects.GameState;
+using FrEee.Objects.Civilization.CargoStorage;
 
 namespace FrEee.Objects.Vehicles;
 
@@ -97,16 +99,15 @@ public class Troop : Vehicle, IUnit
 
 	public override void Place(ISpaceObject target)
 	{
-		if (target is ICargoContainer)
+		if (target is ICargoContainer cc1)
 		{
-			var cc = (ICargoContainer)target;
-			if (cc.AddUnit(this))
+			if (cc1.AddUnit(this))
 				return;
 		}
 		// cargo was full? then try other space objects
-		foreach (var cc in target.Sector.SpaceObjects.Where(sobj => sobj.Owner == target.Owner).OfType<ICargoContainer>())
+		foreach (var cc2 in target.Sector.SpaceObjects.Where(sobj => sobj.Owner == target.Owner).OfType<ICargoContainer>())
 		{
-			if (cc.AddUnit(this))
+			if (cc2.AddUnit(this))
 				return;
 		}
 		target.Owner.Log.Add(this.CreateLogMessage(this + " could not be placed in cargo at " + target + " because there is not enough cargo space available.", LogMessages.LogMessageType.Generic));

@@ -1,8 +1,8 @@
 ﻿using FrEee.Objects.Civilization;
-using FrEee.Objects.Space;
 using FrEee.Modding;
 using System;
 using System.Drawing;
+using FrEee.Objects.GameState;
 
 namespace FrEee.WinForms.Forms;
 
@@ -18,7 +18,7 @@ public partial class DebugForm : GameForm
 			rtbOutput.AppendText("Imported Mod.\n");
 			rtbOutput.AppendText("Mod.Current is currently: " + OrNil(Mod.Current) + "\n");
 
-			PythonScriptEngine.EvaluateExpression<object>("from FrEee.Objects.Space import Galaxy");
+			PythonScriptEngine.EvaluateExpression<object>("from FrEee.Objects.GameState import Galaxy");
 			rtbOutput.AppendText("Imported Galaxy.\n");
 			rtbOutput.AppendText("Galaxy.Current is currently: " + OrNil(Galaxy.Current) + "\n");
 

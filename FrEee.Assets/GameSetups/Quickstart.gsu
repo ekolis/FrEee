@@ -1,5 +1,5 @@
 FrEee.Setup.GameSetup, FrEee.Core:
-p32:
+p30:
 	AllowedTrades:
 		:All;
 	EmpirePlacement:
@@ -11,78 +11,77 @@ p32:
 		c1:		
 			:p10:
 				AIName:
-					:"";
+					:"AI_Default";
 				Color:
-					:255,85,170,255;
+					:255,170,0,170;
 				CultureName:
-					:"Scientists";
+					:"Neutral";
 				InsigniaName:
-					:"Eee";
+					:"Fractalian";
 				IsPlayerEmpire:
 					:True;
 				LeaderName:
-					:"Emperor Aeiou";
+					:"fefe";
 				LeaderPortraitName:
-					:"Eee";
+					:"Fractalian";
 				Name:
-					:"Eee Consortium";
+					:"Fefe Empie";
 				PrimaryRace:
 					:p7:
 						Aptitudes:
 							FrEee.Utility.SafeDictionary`2[[System.String, System.Private.CoreLib],[System.Int32, System.Private.CoreLib]], FrEee.Core:
 							d15:							
-								:"Physical Strength";
-								:50;
-								:"Intelligence";
-								:135;
+								:"Reproduction";
+								:100;
+								:"Refining Aptitude";
+								:100;
+								:"Mining Aptitude";
+								:100;
 								:"Cunning";
-								:50;
+								:100;
 								:"Environmental Resistance";
 								:100;
-								:"Reproduction";
-								:110;
-								:"Happiness";
-								:120;
-								:"Aggressiveness";
+								:"Maintenance Aptitude";
+								:100;
+								:"Construction Aptitude";
 								:100;
 								:"Defensiveness";
-								:103;
-								:"Political Savvy";
-								:50;
-								:"Mining Aptitude";
-								:110;
+								:100;
 								:"Farming Aptitude";
-								:80;
-								:"Refining Aptitude";
-								:110;
-								:"Construction Aptitude";
+								:100;
+								:"Happiness";
+								:100;
+								:"Political Savvy";
 								:100;
 								:"Repair Aptitude";
 								:100;
-								:"Maintenance Aptitude";
+								:"Aggressiveness";
+								:100;
+								:"Intelligence";
+								:100;
+								:"Physical Strength";
 								:100;
 							;
 						happinessModel:
 							:p1:
 								ID:
-									:"Peaceful";
+									:"HappinessModel Peaceful";
 							;
 						Name:
-							:"Eee";
+							:"fefe";
 						NativeAtmosphere:
-							:"Oxygen";
+							:"Methane";
 						NativeSurface:
-							:"Gas Giant";
+							:"Ice";
 						PopulationIconName:
-							:"Eee";
+							:"Fractalian";
 						TraitNames:
 							System.Collections.Generic.List`1[[System.String, System.Private.CoreLib]], System.Private.CoreLib:
-							c1:							
-								:"Temporal Knowledge";
+							c0:							
 							;
 					;
 				ShipsetName:
-					:"Eee";
+					:"Fractalian";
 			;
 		;
 	ForbiddenTechnologyNames:
@@ -99,31 +98,6 @@ p32:
 		:True;
 	GenerateUniqueRuins:
 		:True;
-	HomeworldSize:
-		:p11:
-			ConstructionAbilityID:
-				:"0";
-			MaxCargo:
-				:16000;
-			MaxCargoDomed:
-				:1000;
-			MaxFacilities:
-				:25;
-			MaxFacilitiesDomed:
-				:5;
-			MaxPopulation:
-				:8000000000;
-			MaxPopulationDomed:
-				:500000000;
-			ModID:
-				:"StellarObjectSize Huge";
-			Name:
-				:"Huge";
-			StellarObjectType:
-				:"Planet";
-			StellarSize:
-				:Huge;
-		;
 	HomeworldsPerEmpire:
 		:1;
 	HomeworldValue:
@@ -144,8 +118,6 @@ p32:
 		:150;
 	MinSpawnedAsteroidValue:
 		:50;
-	RandomAIs:
-		:5;
 	RemoteMiningModel:
 		:p3:
 			ValueBonus:
@@ -158,7 +130,7 @@ p32:
 	ResourceStorage:
 		:50000;
 	Seed:
-		:796844;
+		:2101922;
 	StandardMiningModel:
 		:p2:
 			ValueBonus:
@@ -175,7 +147,7 @@ p32:
 	StartingResources:
 		:20000;
 	VictoryConditions:
-		System.Collections.Generic.List`1[[FrEee.Interfaces.IVictoryCondition, FrEee.Core]], System.Private.CoreLib:
+		System.Collections.Generic.List`1[[FrEee.Objects.VictoryConditions.IVictoryCondition, FrEee.Core]], System.Private.CoreLib:
 		c1:		
 			FrEee.Objects.VictoryConditions.TotalEliminationVictoryCondition, FrEee.Core:
 			p0:

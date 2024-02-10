@@ -1,6 +1,5 @@
 ﻿using FrEee.Objects.Abilities;
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Orders;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
@@ -10,6 +9,7 @@ using FrEee.Extensions;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Objects.Civilization.Orders;
 
 namespace FrEee.Tests.Utility;
 

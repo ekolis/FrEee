@@ -1,4 +1,4 @@
-﻿using FrEee.Interfaces;
+﻿using FrEee.Objects.Space;
 using FrEee.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;

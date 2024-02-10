@@ -1,4 +1,4 @@
-﻿using FrEee.Interfaces;
+﻿using FrEee.Objects.GameState;
 using System.Collections.Generic;
 
 namespace FrEee.Modding.Interfaces;

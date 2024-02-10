@@ -1,11 +1,11 @@
 using FrEee.Enumerations;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Commands;
-using FrEee.Objects.Space;
 using FrEee.Processes;
 using FrEee.Modding;
 using FrEee.Extensions;
 using NUnit.Framework;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Tests.Objects.Technology;
 

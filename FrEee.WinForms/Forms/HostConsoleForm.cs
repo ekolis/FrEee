@@ -1,5 +1,4 @@
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Processes;
 using FrEee.Utility;
@@ -12,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using FrEee.Objects.GameState;
 
 namespace FrEee.WinForms.Forms;
 

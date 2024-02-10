@@ -1,8 +1,8 @@
 ﻿using FrEee.Objects.Combat;
-using FrEee.Objects.Space;
 using FrEee.Modding;
 using NUnit.Framework;
 using System.Linq;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Tests.Objects.Technology;
 

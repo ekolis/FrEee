@@ -1,7 +1,7 @@
-﻿using FrEee.Objects.Space;
-using FrEee.Modding.Interfaces;
+﻿using FrEee.Modding.Interfaces;
 using System;
 using System.Globalization;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Extensions;
 

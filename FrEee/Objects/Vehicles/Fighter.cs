@@ -1,9 +1,11 @@
 using FrEee.Enumerations;
-using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Serialization;
 using FrEee.Extensions;
 using System;
+using FrEee.Objects.Civilization.CargoStorage;
+using FrEee.Objects.Space;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Objects.Vehicles;
 

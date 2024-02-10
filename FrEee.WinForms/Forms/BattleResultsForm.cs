@@ -1,5 +1,4 @@
-﻿using FrEee.Interfaces;
-using FrEee.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Combat;
 using FrEee.Objects.Space;
 using FrEee.Utility;
@@ -12,6 +11,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using FrEee.Objects.Vehicles;
 
 namespace FrEee.WinForms.Forms;
 

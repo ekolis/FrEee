@@ -1,10 +1,10 @@
-﻿using FrEee.Interfaces;
-using FrEee.Utility;
+﻿using FrEee.Utility;
 using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Objects.Combat;
 

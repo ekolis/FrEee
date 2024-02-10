@@ -1,6 +1,5 @@
 ﻿using FrEee.Enumerations;
-using FrEee.Interfaces;
-using FrEee.Objects.Space;
+using FrEee.Objects.GameState;
 using FrEee.Serialization;
 using System.Collections.Generic;
 

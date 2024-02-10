@@ -19,6 +19,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using FrEee.Objects.GameState;
 
 namespace FrEee.WinForms.Forms;
 

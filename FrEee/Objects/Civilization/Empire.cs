@@ -1,11 +1,9 @@
 using FrEee.Enumerations;
-using FrEee.Interfaces;
 using FrEee.Objects.Abilities;
 using FrEee.Objects.AI;
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Objects.Commands;
 using FrEee.Objects.LogMessages;
-using FrEee.Objects.Orders;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
@@ -20,6 +18,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Tech = FrEee.Objects.Technology.Technology;
+using FrEee.Objects.Civilization.Construction;
+using FrEee.Objects.Civilization.Diplomacy.Messages;
+using FrEee.Objects.Civilization.Orders;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Objects.Civilization;
 

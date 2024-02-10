@@ -1,4 +1,6 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿using FrEee.Objects.Civilization.Construction;
+
+namespace FrEee.WinForms.Forms;
 
 partial class ConstructionQueueListForm
 {
@@ -226,7 +228,7 @@ partial class ConstructionQueueListForm
 		// constructionQueueBindingSource
 		// 
 		this.constructionQueueBindingSource.AllowNew = false;
-		this.constructionQueueBindingSource.DataSource = typeof(FrEee.Objects.Civilization.ConstructionQueue);
+		this.constructionQueueBindingSource.DataSource = typeof(ConstructionQueue);
 		// 
 		// dataGridViewTextBoxColumn1
 		// 

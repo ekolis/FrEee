@@ -1,5 +1,4 @@
 ﻿using FrEee.Enumerations;
-using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Extensions;
@@ -9,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using FrEee.Objects.Technology;
 
 namespace FrEee.WinForms.Forms;
 
