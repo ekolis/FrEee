@@ -1,6 +1,6 @@
 using System.Linq;
-using FrEee.Interfaces;
-using FrEee.Objects.Space;
+using FrEee.Objects.GameState;
+using FrEee.Objects.Vehicles;
 using FrEee.Utility;
 namespace FrEee.Objects.Technology;
 

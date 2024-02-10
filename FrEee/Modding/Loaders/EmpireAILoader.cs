@@ -1,11 +1,10 @@
 using FrEee.Objects.AI;
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Space;
-using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Modding.Loaders;
 

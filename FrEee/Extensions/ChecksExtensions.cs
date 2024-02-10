@@ -1,10 +1,7 @@
-using FrEee.Enumerations;
-using FrEee.Interfaces;
 using FrEee.Objects.Abilities;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Commands;
 using FrEee.Objects.Space;
-using FrEee.Modding.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +10,12 @@ using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using FrEee.Utility;
+using FrEee.Objects.Civilization.Orders;
+using FrEee.Serialization;
+using FrEee.Objects.Technology;
+using FrEee.Objects.GameState;
+using FrEee.Objects.Combat;
+using FrEee.Modding;
 namespace FrEee.Extensions;
 
 public static class ChecksExtensions
@@ -257,11 +260,6 @@ public static class ChecksExtensions
 		if (obj.Owner != Empire.Current)
 			throw new Exception("Cannot issue orders to another empire's objects.");
 		Empire.Current.IssueOrder(obj, order);
-	}
-
-	public static bool IsValid(this IErrorProne obj)
-	{
-		return !obj.Errors.Any();
 	}
 
 	public static bool IsWarhead(this WeaponTypes wt)

@@ -1,7 +1,8 @@
-﻿using FrEee.Interfaces;
-using FrEee.Serialization;
+﻿using FrEee.Serialization;
 using FrEee.Extensions;
 using System.Collections.Generic;
+using FrEee.Objects.Vehicles;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Objects.Commands;
 

@@ -1,5 +1,5 @@
-﻿using FrEee.Enumerations;
-using FrEee.Interfaces;
+﻿using FrEee.Objects.Abilities;
+using FrEee.Objects.Space;
 using System;
 
 namespace FrEee.Objects.Vehicles;

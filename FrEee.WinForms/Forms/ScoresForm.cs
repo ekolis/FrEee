@@ -1,10 +1,10 @@
-﻿using FrEee.Objects.Space;
-using FrEee.Extensions;
+﻿using FrEee.Extensions;
 using FrEee.WinForms.DataGridView;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using FrEee.Objects.GameState;
 
 namespace FrEee.WinForms.Forms;
 

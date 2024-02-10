@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using FrEee.Enumerations;
-using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
@@ -12,8 +10,11 @@ using FrEee.Objects.VictoryConditions;
 using FrEee.Setup.WarpPointPlacementStrategies;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
+using FrEee.Serialization;
 using FrEee.Extensions;
+using FrEee.Objects.GameState;
+using FrEee.Objects.Civilization.Diplomacy;
 
 namespace FrEee.Setup;
 
@@ -611,7 +612,7 @@ public class GameSetup
 			hw.Colony = new Colony
 			{
 				Owner = emp,
-				ConstructionQueue = new ConstructionQueue(hw),
+				ConstructionQueue = new(hw),
 				IsHomeworld = true,
 			};
 			hw.AddPopulation(emp.PrimaryRace, hw.Size.MaxPopulation);

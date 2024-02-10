@@ -1,12 +1,10 @@
-﻿using FrEee.Enumerations;
-using FrEee.Interfaces;
-using FrEee.Objects.Abilities;
+﻿using FrEee.Objects.Abilities;
 using FrEee.Modding;
-using FrEee.Modding.Interfaces;
 using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Objects.Civilization;
 

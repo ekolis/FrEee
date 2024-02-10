@@ -1,12 +1,10 @@
-﻿using FrEee.Enumerations;
-using FrEee.Interfaces;
-using FrEee.Objects.Space;
-using FrEee.Modding.Interfaces;
+﻿using FrEee.Objects.Space;
 using FrEee.Utility;
 using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Modding.Templates;
 

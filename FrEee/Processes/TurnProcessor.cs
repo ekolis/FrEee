@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FrEee.Interfaces;
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Combat.Grid;
@@ -13,7 +12,11 @@ using FrEee.Objects.VictoryConditions;
 using FrEee.Modding;
 using FrEee.Extensions;
 using FrEee.Utility;
-using FrEee.Enumerations;
+using FrEee.Objects.Commands;
+using FrEee.Objects.Civilization.Construction;
+using FrEee.Objects.Civilization.Orders;
+using FrEee.Objects.Civilization.CargoStorage;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Processes;
 

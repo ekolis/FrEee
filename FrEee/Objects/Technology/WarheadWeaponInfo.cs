@@ -1,18 +1,19 @@
 ﻿using System;
+using FrEee.Objects.Combat;
 
 namespace FrEee.Objects.Technology;
 
 [Serializable]
 public class WarheadWeaponInfo : WeaponInfo
 {
-	public override Enumerations.WeaponTypes WeaponType
+	public override WeaponTypes WeaponType
 	{
 		get
 		{
 			if (IsPointDefense)
-				return Enumerations.WeaponTypes.WarheadPointDefense;
+				return WeaponTypes.WarheadPointDefense;
 			else
-				return Enumerations.WeaponTypes.Warhead;
+				return WeaponTypes.Warhead;
 		}
 	}
 }

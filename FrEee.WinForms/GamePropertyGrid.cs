@@ -1,7 +1,4 @@
-﻿using FrEee.Interfaces;
-using FrEee.Objects.Space;
-using FrEee.Modding;
-using FrEee.Modding.Interfaces;
+﻿using FrEee.Modding;
 using FrEee.Serialization;
 using FrEee.Extensions;
 using FrEee.WinForms.Controls;
@@ -12,6 +9,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using FrEee.Objects.GameState;
 
 namespace FrEee.WinForms;
 

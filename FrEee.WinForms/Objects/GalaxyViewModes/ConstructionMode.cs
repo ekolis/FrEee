@@ -1,10 +1,11 @@
-﻿using FrEee.Interfaces;
-using FrEee.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Utility;
 using FrEee.Extensions;
 using System.Drawing;
 using System.Linq;
+using FrEee.Objects.Civilization.Construction;
+using FrEee.Objects.GameState;
 
 namespace FrEee.WinForms.Objects.GalaxyViewModes;
 

@@ -1,4 +1,3 @@
-using FrEee.Enumerations;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
@@ -19,6 +18,8 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using FrEee.Objects.GameState;
+using FrEee.Objects.Civilization.Diplomacy;
 
 namespace FrEee.WinForms.Forms;
 

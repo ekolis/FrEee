@@ -1,14 +1,12 @@
-﻿using FrEee.Enumerations;
-using FrEee.Objects.Combat;
+﻿using FrEee.Objects.Combat;
 using FrEee.Objects.Technology;
-using FrEee.Modding.Enumerations;
-using FrEee.Modding.Interfaces;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
 using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Objects.Vehicles;
 
 namespace FrEee.Modding.Loaders;
 

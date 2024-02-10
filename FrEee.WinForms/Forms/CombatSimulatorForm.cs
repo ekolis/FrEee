@@ -1,6 +1,4 @@
-﻿using FrEee.Enumerations;
-using FrEee.Interfaces;
-using FrEee.Objects;
+﻿using FrEee.Objects;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Combat;
 using FrEee.Objects.Combat.Grid;
@@ -15,6 +13,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using FrEee.Objects.GameState;
 
 namespace FrEee.WinForms.Forms;
 

@@ -1,5 +1,4 @@
-﻿using FrEee.Interfaces;
-using FrEee.Serialization;
+﻿using FrEee.Serialization;
 using FrEee.Extensions;
 using FrEee.WinForms.Interfaces;
 using FrEee.WinForms.Utility.Extensions;
@@ -8,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using FrEee.Objects.GameState;
 
 namespace FrEee.WinForms.Forms;
 

@@ -1,7 +1,5 @@
-﻿using FrEee.Interfaces;
-using FrEee.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Commands;
-using FrEee.Objects.Space;
 using FrEee.Utility;
 using FrEee.Extensions;
 using FrEee.WinForms.Utility.Extensions;
@@ -11,6 +9,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using FrEee.Objects.Civilization.Diplomacy.Messages;
+using FrEee.Objects.GameState;
 
 namespace FrEee.WinForms.Forms;
 

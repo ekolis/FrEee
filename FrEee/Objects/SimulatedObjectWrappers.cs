@@ -1,8 +1,9 @@
-﻿using FrEee.Interfaces;
-using FrEee.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
 using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
+using FrEee.Objects.Combat;
+using FrEee.Objects.Vehicles;
 
 namespace FrEee.Objects;
 

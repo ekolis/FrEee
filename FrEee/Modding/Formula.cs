@@ -1,4 +1,3 @@
-using FrEee.Modding.Interfaces;
 using FrEee.Extensions;
 using System;
 using System.Collections.Generic;

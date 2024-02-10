@@ -1,4 +1,5 @@
 ﻿using FrEee.Modding;
+using FrEee.Objects.Combat;
 using System;
 
 namespace FrEee.Objects.Technology;
@@ -11,14 +12,14 @@ public class DirectFireWeaponInfo : WeaponInfo
 	/// </summary>
 	public Formula<int> AccuracyModifier { get; set; }
 
-	public override Enumerations.WeaponTypes WeaponType
+	public override WeaponTypes WeaponType
 	{
 		get
 		{
 			if (IsPointDefense)
-				return Enumerations.WeaponTypes.DirectFirePointDefense;
+				return WeaponTypes.DirectFirePointDefense;
 			else
-				return Enumerations.WeaponTypes.DirectFire;
+				return WeaponTypes.DirectFire;
 		}
 	}
 }

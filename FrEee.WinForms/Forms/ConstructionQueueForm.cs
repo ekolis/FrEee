@@ -1,7 +1,5 @@
-﻿using FrEee.Interfaces;
-using FrEee.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Commands;
-using FrEee.Objects.Orders;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Modding;
@@ -15,6 +13,11 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using FrEee.Objects.Civilization.Construction;
+using FrEee.Objects.Vehicles;
+using FrEee.Objects.Civilization.Orders;
+using FrEee.Objects.GameState;
+using FrEee.Objects.Civilization.CargoStorage;
 
 namespace FrEee.WinForms.Forms;
 

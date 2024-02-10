@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;

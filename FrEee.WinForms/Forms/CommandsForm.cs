@@ -1,5 +1,5 @@
-﻿using FrEee.Interfaces;
-using FrEee.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
+using FrEee.Objects.GameState;
 using FrEee.WinForms.Utility.Extensions;
 using System;
 using System.Drawing;

@@ -1,4 +1,3 @@
-using FrEee.Interfaces;
 using FrEee.Objects.Combat;
 using FrEee.Objects.Combat.Grid;
 using FrEee.Objects.Space;

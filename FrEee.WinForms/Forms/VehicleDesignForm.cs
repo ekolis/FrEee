@@ -1,6 +1,4 @@
-using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
@@ -14,6 +12,8 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using FrEee.Objects.Vehicles;
+using FrEee.Objects.GameState;
 
 namespace FrEee.WinForms.Forms;
 

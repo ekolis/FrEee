@@ -1,6 +1,4 @@
-﻿using FrEee.Enumerations;
-using FrEee.Objects.Abilities;
-using FrEee.Modding.Interfaces;
+﻿using FrEee.Objects.Abilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

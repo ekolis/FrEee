@@ -9,6 +9,7 @@ using FrEee.Extensions;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Tests.Objects.Vehicles;
 
