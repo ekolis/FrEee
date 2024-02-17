@@ -11,10 +11,12 @@
 		<PackageReference Include="IronPython" Version="3.4.1" />
 		<PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.3" />
 		<PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.3" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.WindowsForms" Version="8.0.7" />
 		<PackageReference Include="NAudio" Version="2.2.1" />
 		<PackageReference Include="NAudio.Vorbis" Version="1.5.0" />
 		<PackageReference Include="System.ComponentModel.Composition" Version="8.0.0" />
 		<ProjectReference Include="..\FrEee.Assets\FrEee.Assets.csproj" />
+		<ProjectReference Include="..\FrEee.UI.Blazor\FrEee.UI.Blazor.csproj" />
 		<ProjectReference Include="..\FrEee\FrEee.csproj" />
 	</ItemGroup>
 	<ItemGroup>

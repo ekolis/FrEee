@@ -20,6 +20,9 @@ using System.Threading;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.Diplomacy;
+using Microsoft.AspNetCore.Components.WebView.WindowsForms;
+using Microsoft.Extensions.DependencyInjection;
+using FrEee.UI.Blazor;
 
 namespace FrEee.WinForms.Forms;
 
@@ -89,7 +92,13 @@ public partial class GameSetupForm : GameForm
 		ddlTechUniqueness.SelectedIndex = 2; // zero, normal cost 
 
 		try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); } catch { }
-	}
+
+        var services = new ServiceCollection();
+        services.AddWindowsFormsBlazorWebView();
+        blazorWebView1.HostPage = "wwwroot\\index.html";
+        blazorWebView1.Services = services.BuildServiceProvider();
+        blazorWebView1.RootComponents.Add<Component1>("#app");
+    }
 
 	public bool IsBusy
 	{
