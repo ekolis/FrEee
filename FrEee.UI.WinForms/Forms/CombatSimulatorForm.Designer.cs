@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class CombatSimulatorForm
 {
@@ -29,26 +29,26 @@ partial class CombatSimulatorForm
 	private void InitializeComponent()
 	{
 		this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-		this.gamePanel6 = new FrEee.WinForms.Controls.GamePanel();
-		this.designReport = new FrEee.WinForms.Controls.DesignReport();
+		this.gamePanel6 = new FrEee.UI.WinForms.Controls.GamePanel();
+		this.designReport = new FrEee.UI.WinForms.Controls.DesignReport();
 		this.panel6 = new System.Windows.Forms.Panel();
-		this.btnRemoveCargo = new FrEee.WinForms.Controls.GameButton();
-		this.btnAddUnit = new FrEee.WinForms.Controls.GameButton();
-		this.btnDuplicateCargo = new FrEee.WinForms.Controls.GameButton();
-		this.gamePanel5 = new FrEee.WinForms.Controls.GamePanel();
+		this.btnRemoveCargo = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnAddUnit = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnDuplicateCargo = new FrEee.UI.WinForms.Controls.GameButton();
+		this.gamePanel5 = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.lstCargo = new System.Windows.Forms.ListView();
 		this.panel5 = new System.Windows.Forms.Panel();
-		this.btnRemoveSpaceObject = new FrEee.WinForms.Controls.GameButton();
-		this.btnAddPlanet = new FrEee.WinForms.Controls.GameButton();
-		this.btnAddVehicle = new FrEee.WinForms.Controls.GameButton();
-		this.btnDuplicateSpaceObject = new FrEee.WinForms.Controls.GameButton();
-		this.gamePanel4 = new FrEee.WinForms.Controls.GamePanel();
+		this.btnRemoveSpaceObject = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnAddPlanet = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnAddVehicle = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnDuplicateSpaceObject = new FrEee.UI.WinForms.Controls.GameButton();
+		this.gamePanel4 = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.lstSpaceObjects = new System.Windows.Forms.ListView();
 		this.panel2 = new System.Windows.Forms.Panel();
 		this.chkHideObsolete = new System.Windows.Forms.CheckBox();
 		this.chkForeign = new System.Windows.Forms.CheckBox();
 		this.ddlVehicleType = new System.Windows.Forms.ComboBox();
-		this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
+		this.gamePanel1 = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.lstDesigns = new System.Windows.Forms.ListView();
 		this.colDesign = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 		this.colTotalCost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -56,15 +56,15 @@ partial class CombatSimulatorForm
 		this.label1 = new System.Windows.Forms.Label();
 		this.panel1 = new System.Windows.Forms.Panel();
 		this.lblQuantityUnit = new System.Windows.Forms.Label();
-		this.btnCancel = new FrEee.WinForms.Controls.GameButton();
-		this.btnOK = new FrEee.WinForms.Controls.GameButton();
+		this.btnCancel = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnOK = new FrEee.UI.WinForms.Controls.GameButton();
 		this.panel3 = new System.Windows.Forms.Panel();
 		this.panel4 = new System.Windows.Forms.Panel();
-		this.btnDuplicateEmpire = new FrEee.WinForms.Controls.GameButton();
-		this.btnRemoveEmpire = new FrEee.WinForms.Controls.GameButton();
-		this.gamePanel3 = new FrEee.WinForms.Controls.GamePanel();
+		this.btnDuplicateEmpire = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnRemoveEmpire = new FrEee.UI.WinForms.Controls.GameButton();
+		this.gamePanel3 = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.lstEmpires = new System.Windows.Forms.ListView();
-		this.gamePanel2 = new FrEee.WinForms.Controls.GamePanel();
+		this.gamePanel2 = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.tableLayoutPanel1.SuspendLayout();
 		this.gamePanel6.SuspendLayout();
 		this.panel6.SuspendLayout();

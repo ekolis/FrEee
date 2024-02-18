@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Linq;
 using FrEee.Objects.GameState;
 
-namespace FrEee.WinForms.Objects.GalaxyViewModes;
+namespace FrEee.UI.WinForms.Objects.GalaxyViewModes;
 
 /// <summary>
 /// Displays repair rates in each resource.

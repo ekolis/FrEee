@@ -1,8 +1,8 @@
-﻿using FrEee.WinForms.Utility.Extensions;
+﻿using FrEee.UI.WinForms.Utility.Extensions;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms.Controls;
+namespace FrEee.UI.WinForms.Controls;
 
 public partial class GamePictureBox : PictureBox
 {

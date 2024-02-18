@@ -2,15 +2,15 @@ using FrEee.Objects.Civilization;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.WinForms.Interfaces;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Interfaces;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Vehicles;
 
-namespace FrEee.WinForms.Controls;
+namespace FrEee.UI.WinForms.Controls;
 
 public partial class CargoList : UserControl, IBindable<ICargoContainer>, IBindable<CargoDelta>
 {

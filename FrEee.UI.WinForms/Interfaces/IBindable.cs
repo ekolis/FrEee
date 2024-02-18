@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Interfaces;
+﻿namespace FrEee.UI.WinForms.Interfaces;
 
 /// <summary>
 /// Something which can be bound to data.

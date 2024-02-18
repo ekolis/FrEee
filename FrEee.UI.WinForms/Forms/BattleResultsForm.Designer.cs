@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class BattleResultsForm
 {
@@ -28,10 +28,10 @@ partial class BattleResultsForm
 	/// </summary>
 	private void InitializeComponent()
 	{
-		this.grid = new FrEee.WinForms.Controls.GameGridView();
-		this.btnReplay = new FrEee.WinForms.Controls.GameButton();
-		this.btnClose = new FrEee.WinForms.Controls.GameButton();
-		this.btnGoTo = new FrEee.WinForms.Controls.GameButton();
+		this.grid = new FrEee.UI.WinForms.Controls.GameGridView();
+		this.btnReplay = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnClose = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnGoTo = new FrEee.UI.WinForms.Controls.GameButton();
 		this.SuspendLayout();
 		// 
 		// grid

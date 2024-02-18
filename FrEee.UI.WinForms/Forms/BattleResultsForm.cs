@@ -3,9 +3,9 @@ using FrEee.Objects.Combat;
 using FrEee.Objects.Space;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.WinForms.DataGridView;
-using FrEee.WinForms.Interfaces;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.DataGridView;
+using FrEee.UI.WinForms.Interfaces;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -13,7 +13,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.Vehicles;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class BattleResultsForm : GameForm, IBindable<IBattle>
 {
@@ -25,7 +25,7 @@ public partial class BattleResultsForm : GameForm, IBindable<IBattle>
 
 		try
 		{
-			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
+			this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon);
 		}
 		catch { }
 

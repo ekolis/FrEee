@@ -8,7 +8,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
 
-namespace FrEee.WinForms.Controls;
+namespace FrEee.UI.WinForms.Controls;
 
 /// <summary>
 /// Displays a map of a star system.

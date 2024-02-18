@@ -4,7 +4,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms.DataGridView;
+namespace FrEee.UI.WinForms.DataGridView;
 
 public class DataGridViewProgressCell : DataGridViewCell
 {

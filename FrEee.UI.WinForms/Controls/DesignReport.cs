@@ -1,13 +1,13 @@
 using FrEee.Objects.Technology;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.WinForms.Interfaces;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Interfaces;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.Vehicles;
 
-namespace FrEee.WinForms.Controls;
+namespace FrEee.UI.WinForms.Controls;
 
 /// <summary>
 /// Displays a report on a vehicle design.

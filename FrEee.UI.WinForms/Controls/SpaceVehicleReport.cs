@@ -4,8 +4,8 @@ using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.WinForms.Interfaces;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Interfaces;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -14,7 +14,7 @@ using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Civilization.CargoStorage;
 
-namespace FrEee.WinForms.Controls;
+namespace FrEee.UI.WinForms.Controls;
 
 /// <summary>
 /// A report on a space vehicle.

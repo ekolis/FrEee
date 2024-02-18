@@ -4,7 +4,7 @@ using FrEee.Setup;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.Data;
 using System.Drawing;
@@ -13,7 +13,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class EmpireSetupForm : GameForm
 {
@@ -22,7 +22,7 @@ public partial class EmpireSetupForm : GameForm
 		InitializeComponent();
 		BindChoices();
 
-		try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+		try { this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); }
 		catch { }
 	}
 

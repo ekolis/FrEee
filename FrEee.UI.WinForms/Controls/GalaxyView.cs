@@ -1,14 +1,14 @@
 using FrEee.Objects.Space;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.WinForms.Objects.GalaxyViewModes;
+using FrEee.UI.WinForms.Objects.GalaxyViewModes;
 using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
 
-namespace FrEee.WinForms.Controls;
+namespace FrEee.UI.WinForms.Controls;
 
 /// <summary>
 /// Displays a galaxy map.

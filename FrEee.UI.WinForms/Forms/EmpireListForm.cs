@@ -2,7 +2,7 @@
 using FrEee.Objects.Commands;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.Data;
 using System.Diagnostics;
@@ -12,14 +12,14 @@ using System.Windows.Forms;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.GameState;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class EmpireListForm : GameForm
 {
 	public EmpireListForm()
 	{
 		InitializeComponent();
-		try { base.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+		try { base.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); }
 		catch { }
 		BindEmpires();
 	}

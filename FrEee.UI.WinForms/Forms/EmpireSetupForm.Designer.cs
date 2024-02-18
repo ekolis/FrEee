@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class EmpireSetupForm
 {
@@ -29,17 +29,17 @@ partial class EmpireSetupForm
 	private void InitializeComponent()
 	{
 		this.txtPointsAvailable = new System.Windows.Forms.Label();
-		this.btnSaveRace = new FrEee.WinForms.Controls.GameButton();
-		this.btnLoadRace = new FrEee.WinForms.Controls.GameButton();
-		this.btnCancel = new FrEee.WinForms.Controls.GameButton();
-		this.btnOK = new FrEee.WinForms.Controls.GameButton();
+		this.btnSaveRace = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnLoadRace = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnCancel = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnOK = new FrEee.UI.WinForms.Controls.GameButton();
 		this.tabGeneral = new System.Windows.Forms.TabPage();
 		this.label2 = new System.Windows.Forms.Label();
-		this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
+		this.gamePanel1 = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.txtRaceHappiness = new System.Windows.Forms.Label();
 		this.ddlRaceHappiness = new System.Windows.Forms.ComboBox();
 		this.label19 = new System.Windows.Forms.Label();
-		this.picRacePopulationIcon = new FrEee.WinForms.Controls.GamePictureBox();
+		this.picRacePopulationIcon = new FrEee.UI.WinForms.Controls.GamePictureBox();
 		this.label18 = new System.Windows.Forms.Label();
 		this.ddlRacePopulationIcon = new System.Windows.Forms.ComboBox();
 		this.ddlRaceNativeAtmosphere = new System.Windows.Forms.ComboBox();
@@ -50,20 +50,20 @@ partial class EmpireSetupForm
 		this.label15 = new System.Windows.Forms.Label();
 		this.chkAIsCanUse = new System.Windows.Forms.CheckBox();
 		this.label23 = new System.Windows.Forms.Label();
-		this.btnCompareCultures = new FrEee.WinForms.Controls.GameButton();
+		this.btnCompareCultures = new FrEee.UI.WinForms.Controls.GameButton();
 		this.txtCulture = new System.Windows.Forms.Label();
 		this.label22 = new System.Windows.Forms.Label();
 		this.ddlCulture = new System.Windows.Forms.ComboBox();
 		this.ddlAI = new System.Windows.Forms.ComboBox();
-		this.picShipset = new FrEee.WinForms.Controls.GamePictureBox();
+		this.picShipset = new FrEee.UI.WinForms.Controls.GamePictureBox();
 		this.ddlShipset = new System.Windows.Forms.ComboBox();
-		this.picInsignia = new FrEee.WinForms.Controls.GamePictureBox();
+		this.picInsignia = new FrEee.UI.WinForms.Controls.GamePictureBox();
 		this.ddlInsignia = new System.Windows.Forms.ComboBox();
-		this.picColor = new FrEee.WinForms.Controls.GamePictureBox();
+		this.picColor = new FrEee.UI.WinForms.Controls.GamePictureBox();
 		this.spnColorBlue = new System.Windows.Forms.NumericUpDown();
 		this.spnColorGreen = new System.Windows.Forms.NumericUpDown();
 		this.spnColorRed = new System.Windows.Forms.NumericUpDown();
-		this.picLeaderPortrait = new FrEee.WinForms.Controls.GamePictureBox();
+		this.picLeaderPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
 		this.ddlLeaderPortrait = new System.Windows.Forms.ComboBox();
 		this.txtLeaderName = new System.Windows.Forms.TextBox();
 		this.txtName = new System.Windows.Forms.TextBox();
@@ -75,10 +75,10 @@ partial class EmpireSetupForm
 		this.label1 = new System.Windows.Forms.Label();
 		this.label32 = new System.Windows.Forms.Label();
 		this.tabAptitudes = new System.Windows.Forms.TabPage();
-		this.aptitudePicker = new FrEee.WinForms.Controls.AptitudePicker();
+		this.aptitudePicker = new FrEee.UI.WinForms.Controls.AptitudePicker();
 		this.tabTraits = new System.Windows.Forms.TabPage();
-		this.raceTraitPicker = new FrEee.WinForms.Controls.TraitPicker();
-		this.tabs = new FrEee.WinForms.Controls.GameTabControl();
+		this.raceTraitPicker = new FrEee.UI.WinForms.Controls.TraitPicker();
+		this.tabs = new FrEee.UI.WinForms.Controls.GameTabControl();
 		this.label8 = new System.Windows.Forms.Label();
 		this.ddlDesignNames = new System.Windows.Forms.ComboBox();
 		this.tabGeneral.SuspendLayout();
@@ -680,7 +680,7 @@ partial class EmpireSetupForm
 		this.aptitudePicker.Size = new System.Drawing.Size(513, 636);
 		this.aptitudePicker.TabIndex = 0;
 		this.aptitudePicker.Values = null;
-		this.aptitudePicker.AptitudeValueChanged += new FrEee.WinForms.Controls.AptitudePicker.AptitudeValueChangedDelegate(this.aptitudePicker_AptitudeValueChanged);
+		this.aptitudePicker.AptitudeValueChanged += new FrEee.UI.WinForms.Controls.AptitudePicker.AptitudeValueChangedDelegate(this.aptitudePicker_AptitudeValueChanged);
 		// 
 		// tabTraits
 		// 
@@ -703,7 +703,7 @@ partial class EmpireSetupForm
 		this.raceTraitPicker.Size = new System.Drawing.Size(519, 722);
 		this.raceTraitPicker.TabIndex = 0;
 		this.raceTraitPicker.Traits = null;
-		this.raceTraitPicker.TraitToggled += new FrEee.WinForms.Controls.TraitPicker.TraitToggledDelegate(this.raceTraitPicker_TraitToggled);
+		this.raceTraitPicker.TraitToggled += new FrEee.UI.WinForms.Controls.TraitPicker.TraitToggledDelegate(this.raceTraitPicker_TraitToggled);
 		// 
 		// tabs
 		// 

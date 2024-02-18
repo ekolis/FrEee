@@ -3,7 +3,7 @@ using FrEee.Objects.Vehicles;
 using FrEee.Processes;
 using FrEee.Utility;
 using FrEee.Serialization;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.Data;
 using System.Drawing;
@@ -13,7 +13,7 @@ using System.Threading;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 /// <summary>
 /// Form which allows the game host to perform various operations on a game,
@@ -25,7 +25,7 @@ public partial class HostConsoleForm : GameForm
 	{
 		InitializeComponent();
 
-		try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+		try { this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); }
 		catch { }
 
 		Bind();

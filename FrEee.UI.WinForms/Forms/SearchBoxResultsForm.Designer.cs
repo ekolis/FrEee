@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class SearchBoxResultsForm
 {
@@ -28,7 +28,7 @@ partial class SearchBoxResultsForm
 	/// </summary>
 	private void InitializeComponent()
 	{
-		this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
+		this.gamePanel1 = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.listView = new System.Windows.Forms.ListView();
 		gamePanel1.Controls.Add(listView);
 		this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));

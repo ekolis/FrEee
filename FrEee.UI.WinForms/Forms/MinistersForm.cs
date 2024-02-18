@@ -7,14 +7,14 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class MinistersForm : GameForm
 {
 	public MinistersForm()
 	{
 		InitializeComponent();
-		try { base.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+		try { base.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); }
 		catch { }
 	}
 

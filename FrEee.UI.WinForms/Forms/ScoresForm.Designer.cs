@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class ScoresForm
 {
@@ -28,8 +28,8 @@ partial class ScoresForm
 	/// </summary>
 	private void InitializeComponent()
 	{
-		this.graph = new FrEee.WinForms.Controls.LineGraph();
-		this.grid = new FrEee.WinForms.Controls.GameGridView();
+		this.graph = new FrEee.UI.WinForms.Controls.LineGraph();
+		this.grid = new FrEee.UI.WinForms.Controls.GameGridView();
 		this.SuspendLayout();
 		// 
 		// graph

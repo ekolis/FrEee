@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Controls;
+﻿namespace FrEee.UI.WinForms.Controls;
 
 partial class MountReport
 {
@@ -55,11 +55,11 @@ partial class MountReport
 		this.label1 = new System.Windows.Forms.Label();
 		this.txtComponentFamily = new System.Windows.Forms.Label();
 		this.label4 = new System.Windows.Forms.Label();
-		this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
+		this.gamePanel1 = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.lstAbilities = new System.Windows.Forms.ListView();
 		this.colAbility = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 		this.colModifier = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-		this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
 		this.gamePanel1.SuspendLayout();
 		((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 		this.SuspendLayout();

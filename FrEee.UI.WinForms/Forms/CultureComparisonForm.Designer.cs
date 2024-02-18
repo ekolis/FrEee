@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class CultureComparisonForm
 {
@@ -42,7 +42,7 @@ partial class CultureComparisonForm
 		this.constructionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 		this.repairDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 		this.cultureBindingSource = new System.Windows.Forms.BindingSource(this.components);
-		this.btnClose = new FrEee.WinForms.Controls.GameButton();
+		this.btnClose = new FrEee.UI.WinForms.Controls.GameButton();
 		((System.ComponentModel.ISupportInitialize)(this.gridCultures)).BeginInit();
 		((System.ComponentModel.ISupportInitialize)(this.cultureBindingSource)).BeginInit();
 		this.SuspendLayout();

@@ -4,7 +4,7 @@ using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Extensions;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,7 +15,7 @@ using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Orders.RecycleBehaviors;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 /// <summary>
 /// Form where the player can choose recycling actions such as scrapping and mothballing.
@@ -24,7 +24,7 @@ public partial class RecycleForm : GameForm
 {
 	public RecycleForm(Sector sector)
 	{
-		try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+		try { this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); }
 		catch { }
 
 		InitializeComponent();

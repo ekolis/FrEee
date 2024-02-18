@@ -1,5 +1,5 @@
 ﻿
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 partial class MountPickerForm
 {
@@ -35,8 +35,8 @@ partial class MountPickerForm
 		this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 		this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 		this.mountBindingSource = new System.Windows.Forms.BindingSource(this.components);
-		this.btnOk = new FrEee.WinForms.Controls.GameButton();
-		this.btnCancel = new FrEee.WinForms.Controls.GameButton();
+		this.btnOk = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnCancel = new FrEee.UI.WinForms.Controls.GameButton();
 		((System.ComponentModel.ISupportInitialize)(this.gridMounts)).BeginInit();
 		((System.ComponentModel.ISupportInitialize)(this.mountBindingSource)).BeginInit();
 		this.SuspendLayout();

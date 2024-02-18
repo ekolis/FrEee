@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class GenericPickerForm
 {
@@ -28,8 +28,8 @@ partial class GenericPickerForm
 	/// </summary>
 	private void InitializeComponent()
 	{
-		this.btnCancel = new FrEee.WinForms.Controls.GameButton();
-		this.btnOk = new FrEee.WinForms.Controls.GameButton();
+		this.btnCancel = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnOk = new FrEee.UI.WinForms.Controls.GameButton();
 		this.lstObjects = new System.Windows.Forms.ListView();
 		this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 		this.SuspendLayout();

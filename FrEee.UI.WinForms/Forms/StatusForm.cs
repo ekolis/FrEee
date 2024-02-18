@@ -4,7 +4,7 @@ using System;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class StatusForm : GameForm
 {

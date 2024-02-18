@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Controls;
+﻿namespace FrEee.UI.WinForms.Controls;
 
 partial class LineGraph
 {

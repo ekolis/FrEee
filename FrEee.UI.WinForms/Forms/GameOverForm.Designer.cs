@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class GameOverForm
 {
@@ -28,9 +28,9 @@ partial class GameOverForm
 	/// </summary>
 	private void InitializeComponent()
 	{
-		this.btnOk = new FrEee.WinForms.Controls.GameButton();
+		this.btnOk = new FrEee.UI.WinForms.Controls.GameButton();
 		this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-		this.pic = new FrEee.WinForms.Controls.GamePictureBox();
+		this.pic = new FrEee.UI.WinForms.Controls.GamePictureBox();
 		((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
 		this.SuspendLayout();
 		// 

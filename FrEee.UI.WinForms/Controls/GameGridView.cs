@@ -1,5 +1,5 @@
 ﻿using FrEee.Extensions;
-using FrEee.WinForms.DataGridView;
+using FrEee.UI.WinForms.DataGridView;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms.Controls;
+namespace FrEee.UI.WinForms.Controls;
 
 public partial class GameGridView : UserControl
 {

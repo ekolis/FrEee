@@ -3,9 +3,9 @@ using FrEee.Setup;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.WinForms.Objects;
-using FrEee.WinForms.Utility;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Objects;
+using FrEee.UI.WinForms.Utility;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,7 +18,7 @@ using System.Threading;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class MainMenuForm : GameForm
 {
@@ -33,7 +33,7 @@ public partial class MainMenuForm : GameForm
 	{
 		InitializeComponent();
 		pictureBox1.Image = Properties.Resources.Splash;
-		try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+		try { this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); }
 		catch { }
 	}
 

@@ -1,8 +1,8 @@
 ﻿using FrEee.Modding;
 using FrEee.Serialization;
 using FrEee.Extensions;
-using FrEee.WinForms.Controls;
-using FrEee.WinForms.Interfaces;
+using FrEee.UI.WinForms.Controls;
+using FrEee.UI.WinForms.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
 
-namespace FrEee.WinForms;
+namespace FrEee.UI.WinForms;
 
 /// <summary>
 /// Displays a grid of properties for an object.

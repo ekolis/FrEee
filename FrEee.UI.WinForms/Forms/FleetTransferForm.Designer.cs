@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class FleetTransferForm
 {
@@ -32,16 +32,16 @@ partial class FleetTransferForm
 		this.treeFleets = new System.Windows.Forms.TreeView();
 		this.panel1 = new System.Windows.Forms.Panel();
 		this.lblQuantityUnit = new System.Windows.Forms.Label();
-		this.btnCancel = new FrEee.WinForms.Controls.GameButton();
-		this.btnOK = new FrEee.WinForms.Controls.GameButton();
-		this.btnAdd = new FrEee.WinForms.Controls.GameButton();
-		this.btnRemove = new FrEee.WinForms.Controls.GameButton();
+		this.btnCancel = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnOK = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnAdd = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnRemove = new FrEee.UI.WinForms.Controls.GameButton();
 		this.label1 = new System.Windows.Forms.Label();
 		this.treeVehicles = new System.Windows.Forms.TreeView();
 		this.panel2 = new System.Windows.Forms.Panel();
 		this.txtFleetName = new System.Windows.Forms.TextBox();
-		this.btnDisband = new FrEee.WinForms.Controls.GameButton();
-		this.btnCreate = new FrEee.WinForms.Controls.GameButton();
+		this.btnDisband = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnCreate = new FrEee.UI.WinForms.Controls.GameButton();
 		this.label2 = new System.Windows.Forms.Label();
 		this.tableLayoutPanel1.SuspendLayout();
 		this.panel1.SuspendLayout();

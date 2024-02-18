@@ -1,11 +1,11 @@
 using FrEee.Objects.Civilization;
-using FrEee.WinForms.Objects;
+using FrEee.UI.WinForms.Objects;
 using System;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class OptionsForm : GameForm
 {
@@ -162,9 +162,9 @@ public partial class OptionsForm : GameForm
 		this.sldEffects = new System.Windows.Forms.TrackBar();
 		this.label1 = new System.Windows.Forms.Label();
 		this.sldMusic = new System.Windows.Forms.TrackBar();
-		this.btnCancel = new FrEee.WinForms.Controls.GameButton();
-		this.btnSave = new FrEee.WinForms.Controls.GameButton();
-		this.btnSE4 = new FrEee.WinForms.Controls.GameButton();
+		this.btnCancel = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnSave = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnSE4 = new FrEee.UI.WinForms.Controls.GameButton();
 		this.grpPlayerInfo = new System.Windows.Forms.GroupBox();
 		this.txtWebsite = new System.Windows.Forms.TextBox();
 		this.label10 = new System.Windows.Forms.Label();

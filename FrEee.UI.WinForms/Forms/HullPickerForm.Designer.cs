@@ -1,5 +1,5 @@
 ﻿
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 partial class HullPickerForm
 {
@@ -39,8 +39,8 @@ partial class HullPickerForm
 		this.colOrg = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 		this.colRad = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 		this.colDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-		this.btnCancel = new FrEee.WinForms.Controls.GameButton();
-		this.btnOk = new FrEee.WinForms.Controls.GameButton();
+		this.btnCancel = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnOk = new FrEee.UI.WinForms.Controls.GameButton();
 		this.SuspendLayout();
 		// 
 		// ddlVehicleType

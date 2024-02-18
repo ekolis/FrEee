@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Controls;
+﻿namespace FrEee.UI.WinForms.Controls;
 
 partial class ComponentReport
 {
@@ -57,13 +57,13 @@ partial class ComponentReport
 		this.pnlAccuracy = new System.Windows.Forms.Panel();
 		this.txtAccuracy = new System.Windows.Forms.Label();
 		this.label16 = new System.Windows.Forms.Label();
-		this.resRad = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.resOrg = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.resMin = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.abilityTree = new FrEee.WinForms.Controls.AbilityTreeView();
-		this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
+		this.resRad = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resOrg = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resMin = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.abilityTree = new FrEee.UI.WinForms.Controls.AbilityTreeView();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
 		this.pnlDamage = new System.Windows.Forms.Panel();
-		this.damageGraph = new FrEee.WinForms.Controls.LineGraph();
+		this.damageGraph = new FrEee.UI.WinForms.Controls.LineGraph();
 		this.label11 = new System.Windows.Forms.Label();
 		this.table.SuspendLayout();
 		this.pnlWeapon.SuspendLayout();

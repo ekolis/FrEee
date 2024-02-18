@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Extensions;
 
-namespace FrEee.WinForms.Controls;
+namespace FrEee.UI.WinForms.Controls;
 
 public partial class LineGraph : Control
 {

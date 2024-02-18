@@ -1,4 +1,4 @@
-namespace FrEee.WinForms.Controls;
+namespace FrEee.UI.WinForms.Controls;
 
 partial class PlanetReport
 {
@@ -36,17 +36,17 @@ partial class PlanetReport
 		System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("1000M Eee (Jubilant: 0)");
 		System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("10x \"Buster\" class Weapon Platform");
 		System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("500x \"Guard\" class Troop");
-		this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
+		this.gameTabControl1 = new FrEee.UI.WinForms.Controls.GameTabControl();
 		this.pageDetail = new System.Windows.Forms.TabPage();
 		this.txtAge = new System.Windows.Forms.Label();
-		this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
-		this.pnlColony = new FrEee.WinForms.Controls.GamePanel();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
+		this.pnlColony = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.txtConstructionTime = new System.Windows.Forms.Label();
 		this.lblConstructionTime = new System.Windows.Forms.Label();
 		this.txtConstructionItem = new System.Windows.Forms.Label();
 		this.lblConstructionItem = new System.Windows.Forms.Label();
-		this.resIntel = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.resResearch = new FrEee.WinForms.Controls.ResourceDisplay();
+		this.resIntel = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resResearch = new FrEee.UI.WinForms.Controls.ResourceDisplay();
 		this.label1 = new System.Windows.Forms.Label();
 		this.txtMood = new System.Windows.Forms.Label();
 		this.lblMood = new System.Windows.Forms.Label();
@@ -54,9 +54,9 @@ partial class PlanetReport
 		this.lblPopulation = new System.Windows.Forms.Label();
 		this.txtColonyType = new System.Windows.Forms.Label();
 		this.lblColonyType = new System.Windows.Forms.Label();
-		this.resIncomeMinerals = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.resIncomeOrganics = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.resIncomeRadioactives = new FrEee.WinForms.Controls.ResourceDisplay();
+		this.resIncomeMinerals = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resIncomeOrganics = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resIncomeRadioactives = new FrEee.UI.WinForms.Controls.ResourceDisplay();
 		this.lblIncome = new System.Windows.Forms.Label();
 		this.txtDescription = new System.Windows.Forms.Label();
 		this.txtValueRadioactives = new System.Windows.Forms.Label();
@@ -82,13 +82,13 @@ partial class PlanetReport
 		this.pageOrders = new System.Windows.Forms.TabPage();
 		this.chkOnHold = new System.Windows.Forms.CheckBox();
 		this.chkRepeat = new System.Windows.Forms.CheckBox();
-		this.btnOrdersClear = new FrEee.WinForms.Controls.GameButton();
-		this.btnOrderDelete = new FrEee.WinForms.Controls.GameButton();
-		this.btnOrderDown = new FrEee.WinForms.Controls.GameButton();
-		this.btnOrderUp = new FrEee.WinForms.Controls.GameButton();
+		this.btnOrdersClear = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnOrderDelete = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnOrderDown = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnOrderUp = new FrEee.UI.WinForms.Controls.GameButton();
 		this.lstOrdersDetail = new System.Windows.Forms.ListBox();
 		this.pageAbility = new System.Windows.Forms.TabPage();
-		this.abilityTreeView = new FrEee.WinForms.Controls.AbilityTreeView();
+		this.abilityTreeView = new FrEee.UI.WinForms.Controls.AbilityTreeView();
 		this.gameTabControl1.SuspendLayout();
 		this.pageDetail.SuspendLayout();
 		((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();

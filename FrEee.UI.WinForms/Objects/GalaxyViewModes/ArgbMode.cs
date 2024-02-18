@@ -1,9 +1,9 @@
 ﻿using FrEee.Objects.Space;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System.Drawing;
 using System.Linq;
 
-namespace FrEee.WinForms.Objects.GalaxyViewModes;
+namespace FrEee.UI.WinForms.Objects.GalaxyViewModes;
 
 /// <summary>
 /// A galaxy view mode that uses ARGB values to indicate up to four data values at once.

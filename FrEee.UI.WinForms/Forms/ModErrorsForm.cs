@@ -1,14 +1,14 @@
 ﻿using FrEee.Modding;
 using FrEee.Extensions;
-using FrEee.WinForms.Interfaces;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Interfaces;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 /// <summary>
 /// Displays errors when loading a mod.
@@ -19,7 +19,7 @@ public partial class ModErrorsForm : GameForm, IBindable<IEnumerable<DataParsing
 	{
 		InitializeComponent();
 		Bind(Mod.Errors);
-		try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+		try { this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); }
 		catch { }
 	}
 

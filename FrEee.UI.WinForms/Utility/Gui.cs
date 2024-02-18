@@ -1,8 +1,8 @@
 using System.Windows.Forms;
-using FrEee.WinForms.Forms;
-using FrEee.WinForms.Objects;
+using FrEee.UI.WinForms.Forms;
+using FrEee.UI.WinForms.Objects;
 
-namespace FrEee.WinForms.Utility;
+namespace FrEee.UI.WinForms.Utility;
 
 /// <summary>
 /// Non-extension utility methods for manipulating the GUI.

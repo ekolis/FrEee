@@ -2,7 +2,7 @@
 using FrEee.Objects.Space;
 using System.Drawing;
 
-namespace FrEee.WinForms.Objects.GalaxyViewModes;
+namespace FrEee.UI.WinForms.Objects.GalaxyViewModes;
 
 /// <summary>
 /// A display mode for a galaxy map.

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace FrEee.WinForms.Objects.GalaxyViewModes;
+namespace FrEee.UI.WinForms.Objects.GalaxyViewModes;
 
 /// <summary>
 /// Displays the relative prevalence of explored and unexplored warp points (explored = blue, unexplored = red).

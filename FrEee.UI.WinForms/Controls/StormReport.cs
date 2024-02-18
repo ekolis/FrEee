@@ -1,10 +1,10 @@
 using FrEee.Objects.Space;
 using FrEee.Extensions;
-using FrEee.WinForms.Interfaces;
+using FrEee.UI.WinForms.Interfaces;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms.Controls;
+namespace FrEee.UI.WinForms.Controls;
 
 public partial class StormReport : UserControl, IBindable<Storm>
 {

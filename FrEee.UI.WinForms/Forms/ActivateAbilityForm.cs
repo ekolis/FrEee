@@ -3,7 +3,7 @@ using FrEee.Objects.Civilization;
 using FrEee.Objects.Commands;
 using FrEee.Objects.Space;
 using FrEee.Extensions;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,7 +14,7 @@ using FrEee.Serialization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.Orders;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class ActivateAbilityForm : GameForm
 {

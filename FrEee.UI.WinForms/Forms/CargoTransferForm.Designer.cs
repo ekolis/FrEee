@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
     partial class CargoTransferForm
     {
@@ -29,20 +29,20 @@
         private void InitializeComponent()
         {
 		this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-		this.btnLoad = new FrEee.WinForms.Controls.GameButton();
-		this.clDrop = new FrEee.WinForms.Controls.CargoList();
-		this.clLoad = new FrEee.WinForms.Controls.CargoList();
-		this.clTo = new FrEee.WinForms.Controls.CargoList();
+		this.btnLoad = new FrEee.UI.WinForms.Controls.GameButton();
+		this.clDrop = new FrEee.UI.WinForms.Controls.CargoList();
+		this.clLoad = new FrEee.UI.WinForms.Controls.CargoList();
+		this.clTo = new FrEee.UI.WinForms.Controls.CargoList();
 		this.label2 = new System.Windows.Forms.Label();
 		this.label1 = new System.Windows.Forms.Label();
 		this.txtFromContainer = new System.Windows.Forms.Label();
 		this.ddlToContainer = new System.Windows.Forms.ComboBox();
-		this.clFrom = new FrEee.WinForms.Controls.CargoList();
+		this.clFrom = new FrEee.UI.WinForms.Controls.CargoList();
 		this.panel1 = new System.Windows.Forms.Panel();
 		this.lblQuantityUnit = new System.Windows.Forms.Label();
-		this.btnCancel = new FrEee.WinForms.Controls.GameButton();
-		this.btnOK = new FrEee.WinForms.Controls.GameButton();
-		this.btnDrop = new FrEee.WinForms.Controls.GameButton();
+		this.btnCancel = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnOK = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnDrop = new FrEee.UI.WinForms.Controls.GameButton();
 		this.chkAll = new System.Windows.Forms.CheckBox();
 		this.txtQuantity = new System.Windows.Forms.TextBox();
 		this.tableLayoutPanel1.SuspendLayout();

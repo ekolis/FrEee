@@ -2,7 +2,7 @@
 using FrEee.Modding.Loaders;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,7 +13,7 @@ using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class ModPickerForm : GameForm
 {
@@ -49,7 +49,7 @@ public partial class ModPickerForm : GameForm
 			lstMods.AddItemWithImage(null, info.Name, info, img);
 		}
 
-		try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); } catch { }
+		try { this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); } catch { }
 	}
 
 	public string ModPath { get; private set; }

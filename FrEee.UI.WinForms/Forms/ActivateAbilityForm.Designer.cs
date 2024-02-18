@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class ActivateAbilityForm
 {
@@ -29,8 +29,8 @@ partial class ActivateAbilityForm
 	private void InitializeComponent()
 	{
 		System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-		this.btnOK = new FrEee.WinForms.Controls.GameButton();
-		this.btnCancel = new FrEee.WinForms.Controls.GameButton();
+		this.btnOK = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnCancel = new FrEee.UI.WinForms.Controls.GameButton();
 		this.gridAbilities = new System.Windows.Forms.DataGridView();
 		this.colAbility = new System.Windows.Forms.DataGridViewTextBoxColumn();
 		this.colSource = new System.Windows.Forms.DataGridViewTextBoxColumn();

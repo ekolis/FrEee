@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace FrEee.WinForms.Objects.GalaxyViewModes;
+namespace FrEee.UI.WinForms.Objects.GalaxyViewModes;
 
 /// <summary>
 /// Displays the relative concentrations of friendly, allied, neutral, and enemy forces (by tonnage) using pie charts.

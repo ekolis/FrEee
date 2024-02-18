@@ -1,6 +1,6 @@
 ﻿using FrEee.Objects.Civilization.Construction;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 partial class ConstructionQueueListForm
 {
@@ -50,10 +50,10 @@ partial class ConstructionQueueListForm
 		this.constructionQueueBindingSource = new System.Windows.Forms.BindingSource(this.components);
 		this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 		this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-		this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
-		this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
-		this.gamePanel2 = new FrEee.WinForms.Controls.GamePanel();
-		this.starSystemView = new FrEee.WinForms.Controls.StarSystemView();
+		this.gamePanel1 = new FrEee.UI.WinForms.Controls.GamePanel();
+		this.galaxyView = new FrEee.UI.WinForms.Controls.GalaxyView();
+		this.gamePanel2 = new FrEee.UI.WinForms.Controls.GamePanel();
+		this.starSystemView = new FrEee.UI.WinForms.Controls.StarSystemView();
 		((System.ComponentModel.ISupportInitialize)(this.gridQueues)).BeginInit();
 		((System.ComponentModel.ISupportInitialize)(this.constructionQueueBindingSource)).BeginInit();
 		this.gamePanel1.SuspendLayout();

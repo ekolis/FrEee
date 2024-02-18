@@ -1,4 +1,4 @@
-namespace FrEee.WinForms.Controls;
+namespace FrEee.UI.WinForms.Controls;
 
 partial class DesignReport
 {
@@ -31,9 +31,9 @@ partial class DesignReport
 		System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
 		System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
 		System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
-		this.tabs = new FrEee.WinForms.Controls.GameTabControl();
+		this.tabs = new FrEee.UI.WinForms.Controls.GameTabControl();
 		this.tabPage1 = new System.Windows.Forms.TabPage();
-		this.pnlStats = new FrEee.WinForms.Controls.GamePanel();
+		this.pnlStats = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.txtEvasion = new System.Windows.Forms.Label();
 		this.label18 = new System.Windows.Forms.Label();
 		this.txtAccuracy = new System.Windows.Forms.Label();
@@ -50,15 +50,15 @@ partial class DesignReport
 		this.txtSupplyStorage = new System.Windows.Forms.Label();
 		this.label17 = new System.Windows.Forms.Label();
 		this.label12 = new System.Windows.Forms.Label();
-		this.resCostRad = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.resCostOrg = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.resCostMin = new FrEee.WinForms.Controls.ResourceDisplay();
+		this.resCostRad = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resCostOrg = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resCostMin = new FrEee.UI.WinForms.Controls.ResourceDisplay();
 		this.label10 = new System.Windows.Forms.Label();
 		this.txtDate = new System.Windows.Forms.Label();
 		this.lblDate = new System.Windows.Forms.Label();
 		this.txtStrategy = new System.Windows.Forms.Label();
 		this.label2 = new System.Windows.Forms.Label();
-		this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
 		this.txtRole = new System.Windows.Forms.Label();
 		this.lblRole = new System.Windows.Forms.Label();
 		this.txtHull = new System.Windows.Forms.Label();
@@ -67,9 +67,9 @@ partial class DesignReport
 		this.txtName = new System.Windows.Forms.Label();
 		this.tabPage2 = new System.Windows.Forms.TabPage();
 		this.lstComponents = new System.Windows.Forms.ListView();
-		this.resMaintRad = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.resMaintOrg = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.resMaintMin = new FrEee.WinForms.Controls.ResourceDisplay();
+		this.resMaintRad = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resMaintOrg = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resMaintMin = new FrEee.UI.WinForms.Controls.ResourceDisplay();
 		this.tabs.SuspendLayout();
 		this.tabPage1.SuspendLayout();
 		this.pnlStats.SuspendLayout();

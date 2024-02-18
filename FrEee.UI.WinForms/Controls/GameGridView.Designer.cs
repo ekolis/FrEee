@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Controls;
+﻿namespace FrEee.UI.WinForms.Controls;
 
 partial class GameGridView
 {
@@ -38,12 +38,12 @@ partial class GameGridView
 		this.atLeastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 		this.atMostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 		this.clearAllFiltersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-		this.pnlConfigsBorder = new FrEee.WinForms.Controls.GamePanel();
+		this.pnlConfigsBorder = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.pnlConfigs = new System.Windows.Forms.FlowLayoutPanel();
-		this.pnlConfigEdit = new FrEee.WinForms.Controls.GamePanel();
-		this.btnReset = new FrEee.WinForms.Controls.GameButton();
-		this.btnColumns = new FrEee.WinForms.Controls.GameButton();
-		this.btnDeleteConfig = new FrEee.WinForms.Controls.GameButton();
+		this.pnlConfigEdit = new FrEee.UI.WinForms.Controls.GamePanel();
+		this.btnReset = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnColumns = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnDeleteConfig = new FrEee.UI.WinForms.Controls.GameButton();
 		this.label17 = new System.Windows.Forms.Label();
 		this.txtConfigName = new System.Windows.Forms.TextBox();
 		((System.ComponentModel.ISupportInitialize)(this.gridData)).BeginInit();

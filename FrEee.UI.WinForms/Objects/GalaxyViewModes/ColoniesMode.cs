@@ -7,7 +7,7 @@ using System.Drawing;
 using System.Linq;
 using FrEee.Objects.GameState;
 
-namespace FrEee.WinForms.Objects.GalaxyViewModes;
+namespace FrEee.UI.WinForms.Objects.GalaxyViewModes;
 
 /// <summary>
 /// Displays the relative concentrations of friendly, allied, neutral, and enemy colonies (by max breathable facility slots) using pie charts.

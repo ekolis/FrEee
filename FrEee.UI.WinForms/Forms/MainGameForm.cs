@@ -26,6 +26,8 @@ using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
+using FrEee.UI;
+using FrEee.UI.Screens;
 
 namespace FrEee.WinForms.Forms;
 
@@ -48,7 +50,10 @@ public partial class MainGameForm : GameForm
 			ddlGalaxyViewMode.Items.Add(mode);
 		ddlGalaxyViewMode.SelectedIndex = 0;
 		Instance = this;
-	}
+
+		ScreenController.Instance.Push(new FormScreen<MainGameForm>(this));
+        FormClosed += (sender, e) => ScreenController.Instance.Pop();
+    }
 
 	public static MainGameForm Instance { get; private set; }
 

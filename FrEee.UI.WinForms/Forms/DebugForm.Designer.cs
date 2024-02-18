@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class DebugForm
 {
@@ -30,7 +30,7 @@ partial class DebugForm
 	{
 		this.txtCommand = new System.Windows.Forms.TextBox();
 		this.rtbOutput = new System.Windows.Forms.RichTextBox();
-		this.btnSubmit = new FrEee.WinForms.Controls.GameButton();
+		this.btnSubmit = new FrEee.UI.WinForms.Controls.GameButton();
 		this.SuspendLayout();
 		// 
 		// txtCommand

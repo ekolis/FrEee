@@ -1,7 +1,7 @@
 ﻿using FrEee.Serialization;
 using FrEee.Extensions;
-using FrEee.WinForms.Interfaces;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Interfaces;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,14 +9,14 @@ using System.Drawing;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class EditorForm : GameForm, IBindable<object>
 {
 	public EditorForm(object root, Func<bool> save, Func<bool> cancel)
 	{
 		InitializeComponent();
-		try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+		try { this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); }
 		catch { }
 		Bind(root);
 		this.save = save;

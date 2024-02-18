@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class ResearchForm
 {
@@ -34,8 +34,8 @@ partial class ResearchForm
 		this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
 		this.colLevel = new System.Windows.Forms.DataGridViewTextBoxColumn();
 		this.colNextLevelCost = new System.Windows.Forms.DataGridViewTextBoxColumn();
-		this.colProgress = new FrEee.WinForms.DataGridView.DataGridViewProgressColumn();
-		this.colSpending = new FrEee.WinForms.DataGridView.DataGridViewProgressColumn();
+		this.colProgress = new FrEee.UI.WinForms.DataGridView.DataGridViewProgressColumn();
+		this.colSpending = new FrEee.UI.WinForms.DataGridView.DataGridViewProgressColumn();
 		this.technologyBindingSource = new System.Windows.Forms.BindingSource(this.components);
 		this.ddlGroup = new System.Windows.Forms.ComboBox();
 		this.lblPoints = new System.Windows.Forms.Label();
@@ -43,24 +43,24 @@ partial class ResearchForm
 		this.lblSpending = new System.Windows.Forms.Label();
 		this.sldSpending = new System.Windows.Forms.TrackBar();
 		this.lblResults = new System.Windows.Forms.Label();
-		this.btnDown = new FrEee.WinForms.Controls.GameButton();
-		this.btnBottom = new FrEee.WinForms.Controls.GameButton();
-		this.btnUp = new FrEee.WinForms.Controls.GameButton();
-		this.btnTop = new FrEee.WinForms.Controls.GameButton();
-		this.gamePanel2 = new FrEee.WinForms.Controls.GamePanel();
+		this.btnDown = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnBottom = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnUp = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnTop = new FrEee.UI.WinForms.Controls.GameButton();
+		this.gamePanel2 = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.lstQueue = new System.Windows.Forms.ListBox();
-		this.btnAddToQueue = new FrEee.WinForms.Controls.GameButton();
-		this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
+		this.btnAddToQueue = new FrEee.UI.WinForms.Controls.GameButton();
+		this.gamePanel1 = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.lstResults = new System.Windows.Forms.ListView();
-		this.dataGridViewProgressColumn1 = new FrEee.WinForms.DataGridView.DataGridViewProgressColumn();
-		this.btnCancel = new FrEee.WinForms.Controls.GameButton();
-		this.resRes = new FrEee.WinForms.Controls.ResourceDisplay();
+		this.dataGridViewProgressColumn1 = new FrEee.UI.WinForms.DataGridView.DataGridViewProgressColumn();
+		this.btnCancel = new FrEee.UI.WinForms.Controls.GameButton();
+		this.resRes = new FrEee.UI.WinForms.Controls.ResourceDisplay();
 		this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-		this.btnClear = new FrEee.WinForms.Controls.GameButton();
-		this.btnDelete = new FrEee.WinForms.Controls.GameButton();
+		this.btnClear = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnDelete = new FrEee.UI.WinForms.Controls.GameButton();
 		this.txtTechDiscription = new System.Windows.Forms.Label();
-		this.btnTree = new FrEee.WinForms.Controls.GameButton();
-		this.btnSave = new FrEee.WinForms.Controls.GameButton();
+		this.btnTree = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnSave = new FrEee.UI.WinForms.Controls.GameButton();
 		((System.ComponentModel.ISupportInitialize)(this.gridTechs)).BeginInit();
 		((System.ComponentModel.ISupportInitialize)(this.technologyBindingSource)).BeginInit();
 		((System.ComponentModel.ISupportInitialize)(this.sldSpending)).BeginInit();
@@ -141,7 +141,7 @@ partial class ResearchForm
 		this.colProgress.HeaderText = "Progress";
 		this.colProgress.MinimumWidth = 100;
 		this.colProgress.Name = "colProgress";
-		this.colProgress.ProgressDisplayMode = FrEee.WinForms.DataGridView.ProgressDisplayMode.Eta;
+		this.colProgress.ProgressDisplayMode = FrEee.UI.WinForms.DataGridView.ProgressDisplayMode.Eta;
 		this.colProgress.ReadOnly = true;
 		this.colProgress.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
 		// 
@@ -152,7 +152,7 @@ partial class ResearchForm
 		this.colSpending.HeaderText = "Spending";
 		this.colSpending.MinimumWidth = 100;
 		this.colSpending.Name = "colSpending";
-		this.colSpending.ProgressDisplayMode = FrEee.WinForms.DataGridView.ProgressDisplayMode.Percentage;
+		this.colSpending.ProgressDisplayMode = FrEee.UI.WinForms.DataGridView.ProgressDisplayMode.Percentage;
 		this.colSpending.ReadOnly = true;
 		this.colSpending.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
 		// 

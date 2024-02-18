@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.DataGridView;
+﻿namespace FrEee.UI.WinForms.DataGridView;
 
 /// <summary>
 /// Type of filter to use for a column.

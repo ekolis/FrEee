@@ -4,8 +4,8 @@ using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.WinForms.DataGridView;
-using FrEee.WinForms.Objects;
+using FrEee.UI.WinForms.DataGridView;
+using FrEee.UI.WinForms.Objects;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -16,14 +16,14 @@ using System.Windows.Forms;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class PlanetListForm : GameForm
 {
 	public PlanetListForm()
 	{
 		InitializeComponent();
-		try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+		try { this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); }
 		catch { }
 		grid.AppendMenuItems = contextMenu.Items.Cast<ToolStripMenuItem>().ToArray();
 		contextMenu.Items.Clear();

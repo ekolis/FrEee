@@ -1,7 +1,7 @@
 ﻿using FrEee.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.Data;
 using System.Drawing;
@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class HullPickerForm : GameForm
 {
@@ -28,7 +28,7 @@ public partial class HullPickerForm : GameForm
 		ddlVehicleType.Items.Add(new { Name = "Weapon Platforms", VehicleType = VehicleTypes.WeaponPlatform });
 		ddlVehicleType.SelectedItem = ddlVehicleType.Items[0];
 
-		try { base.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); } catch { }
+		try { base.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); } catch { }
 	}
 
 	/// <summary>

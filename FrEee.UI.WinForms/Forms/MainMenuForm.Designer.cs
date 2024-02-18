@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
     partial class MainMenuForm
     {
@@ -32,15 +32,15 @@
 		this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 		this.pictureBox1 = new System.Windows.Forms.PictureBox();
 		this.tblButtonPanel = new System.Windows.Forms.TableLayoutPanel();
-		this.btnQuit = new FrEee.WinForms.Controls.GameButton();
-		this.btnScenario = new FrEee.WinForms.Controls.GameButton();
-		this.btnNew = new FrEee.WinForms.Controls.GameButton();
-		this.btnCredits = new FrEee.WinForms.Controls.GameButton();
-		this.btnMods = new FrEee.WinForms.Controls.GameButton();
-		this.btnQuickStart = new FrEee.WinForms.Controls.GameButton();
-		this.btnLoad = new FrEee.WinForms.Controls.GameButton();
-		this.btnResume = new FrEee.WinForms.Controls.GameButton();
-		this.btnOptions = new FrEee.WinForms.Controls.GameButton();
+		this.btnQuit = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnScenario = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnNew = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnCredits = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnMods = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnQuickStart = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnLoad = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnResume = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnOptions = new FrEee.UI.WinForms.Controls.GameButton();
 		this.tableLayoutPanel1.SuspendLayout();
 		((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 		this.tblButtonPanel.SuspendLayout();

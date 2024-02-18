@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FrEee.WinForms.Objects.GalaxyViewModes;
+namespace FrEee.UI.WinForms.Objects.GalaxyViewModes;
 
 public static class GalaxyViewModes
 {

@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms;
+﻿namespace FrEee.UI.WinForms;
 
 partial class GamePropertyGrid
 {
@@ -28,7 +28,7 @@ partial class GamePropertyGrid
 	/// </summary>
 	private void InitializeComponent()
 	{
-		this.table = new FrEee.WinForms.Controls.GameTableLayoutPanel();
+		this.table = new FrEee.UI.WinForms.Controls.GameTableLayoutPanel();
 		this.SuspendLayout();
 		// 
 		// table

@@ -3,7 +3,7 @@ using FrEee.Objects.Technology;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.WinForms.Interfaces;
+using FrEee.UI.WinForms.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Component = FrEee.Objects.Technology.Component;
 
-namespace FrEee.WinForms.Controls;
+namespace FrEee.UI.WinForms.Controls;
 
 public partial class ComponentReport : UserControl, IBindable<Component>, IBindable<MountedComponentTemplate>, IBindable<ComponentTemplate>
 {

@@ -4,8 +4,8 @@ using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.WinForms.DataGridView;
-using FrEee.WinForms.Objects;
+using FrEee.UI.WinForms.DataGridView;
+using FrEee.UI.WinForms.Objects;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -15,14 +15,14 @@ using System.Reflection;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class ShipListForm : GameForm
 {
 	public ShipListForm()
 	{
 		InitializeComponent();
-		try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); } catch { }
+		try { this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); } catch { }
 	}
 
 	private IEnumerable<IMobileSpaceObject> sobjs;

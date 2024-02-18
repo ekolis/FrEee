@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace FrEee.WinForms.Objects;
+namespace FrEee.UI.WinForms.Objects;
 
 /// <summary>
 /// Music support for the game.

@@ -8,7 +8,7 @@ using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -24,7 +24,7 @@ using Microsoft.AspNetCore.Components.WebView.WindowsForms;
 using Microsoft.Extensions.DependencyInjection;
 using FrEee.UI.Blazor;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class GameSetupForm : GameForm
 {
@@ -91,7 +91,7 @@ public partial class GameSetupForm : GameForm
 		ddlTechUniqueness.Items.Add(new { Name = "Very Hard (+2)", Value = 2 });
 		ddlTechUniqueness.SelectedIndex = 2; // zero, normal cost 
 
-		try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); } catch { }
+		try { this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); } catch { }
 
         var services = new ServiceCollection();
         services.AddWindowsFormsBlazorWebView();

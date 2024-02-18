@@ -1,8 +1,8 @@
 using FrEee.Objects.Space;
 using FrEee.Utility; using FrEee.Serialization;
-using FrEee.WinForms.Controls;
+using FrEee.UI.WinForms.Controls;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 partial class PlanetListForm
 {
@@ -33,20 +33,20 @@ partial class PlanetListForm
 	private void InitializeComponent()
 	{
 		this.components = new System.ComponentModel.Container();
-		FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode presenceMode1 = new FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode();
+		FrEee.UI.WinForms.Objects.GalaxyViewModes.PresenceMode presenceMode1 = new FrEee.UI.WinForms.Objects.GalaxyViewModes.PresenceMode();
 		this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-		this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
-		this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
+		this.galaxyView = new FrEee.UI.WinForms.Controls.GalaxyView();
+		this.pnlHeader = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.txtPopulation = new System.Windows.Forms.Label();
-		this.resStorageRad = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.resStorageOrg = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.resStorageMin = new FrEee.WinForms.Controls.ResourceDisplay();
+		this.resStorageRad = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resStorageOrg = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resStorageMin = new FrEee.UI.WinForms.Controls.ResourceDisplay();
 		this.label16 = new System.Windows.Forms.Label();
-		this.resInt = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.resRes = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.resRad = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.resOrg = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.resMin = new FrEee.WinForms.Controls.ResourceDisplay();
+		this.resInt = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resRes = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resRad = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resOrg = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resMin = new FrEee.UI.WinForms.Controls.ResourceDisplay();
 		this.label15 = new System.Windows.Forms.Label();
 		this.label13 = new System.Windows.Forms.Label();
 		this.txtUs = new System.Windows.Forms.Label();
@@ -75,7 +75,7 @@ partial class PlanetListForm
 		this.label3 = new System.Windows.Forms.Label();
 		this.label2 = new System.Windows.Forms.Label();
 		this.label1 = new System.Windows.Forms.Label();
-		this.grid = new FrEee.WinForms.Controls.GameGridView();
+		this.grid = new FrEee.UI.WinForms.Controls.GameGridView();
 		this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 		this.colonizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 		this.tableLayoutPanel1.SuspendLayout();

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FrEee.WinForms.DataGridView;
+namespace FrEee.UI.WinForms.DataGridView;
 
 /// <summary>
 /// Configuration for a grid view.

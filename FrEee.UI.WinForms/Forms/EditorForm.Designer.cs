@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class EditorForm
 {
@@ -29,9 +29,9 @@ partial class EditorForm
 	private void InitializeComponent()
 	{
 		this.tree = new System.Windows.Forms.TreeView();
-		this.btnCancel = new FrEee.WinForms.Controls.GameButton();
-		this.btnSave = new FrEee.WinForms.Controls.GameButton();
-		this.propertyGrid = new FrEee.WinForms.GamePropertyGrid();
+		this.btnCancel = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnSave = new FrEee.UI.WinForms.Controls.GameButton();
+		this.propertyGrid = new FrEee.UI.WinForms.GamePropertyGrid();
 		this.SuspendLayout();
 		// 
 		// tree

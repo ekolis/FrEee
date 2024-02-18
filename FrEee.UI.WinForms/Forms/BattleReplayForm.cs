@@ -4,15 +4,15 @@ using FrEee.Objects.Combat.Grid;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Extensions;
-using FrEee.WinForms.Controls;
-using FrEee.WinForms.Interfaces;
-using FrEee.WinForms.Objects;
+using FrEee.UI.WinForms.Controls;
+using FrEee.UI.WinForms.Interfaces;
+using FrEee.UI.WinForms.Objects;
 using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class BattleReplayForm : GameForm, IBindable<Battle>
 {

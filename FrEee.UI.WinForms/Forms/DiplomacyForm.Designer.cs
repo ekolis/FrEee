@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class DiplomacyForm
 {
@@ -45,12 +45,12 @@ partial class DiplomacyForm
 		this.lblQuantityLevel = new System.Windows.Forms.Label();
 		this.txtQuantityLevel = new System.Windows.Forms.TextBox();
 		this.ddlAlliance = new System.Windows.Forms.ComboBox();
-		this.btnReturn = new FrEee.WinForms.Controls.GameButton();
-		this.btnRequest = new FrEee.WinForms.Controls.GameButton();
-		this.btnGive = new FrEee.WinForms.Controls.GameButton();
-		this.btnCancel = new FrEee.WinForms.Controls.GameButton();
-		this.btnSend = new FrEee.WinForms.Controls.GameButton();
-		this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
+		this.btnReturn = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnRequest = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnGive = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnCancel = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnSend = new FrEee.UI.WinForms.Controls.GameButton();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
 		this.pnlQuantityLevel.SuspendLayout();
 		((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 		this.SuspendLayout();

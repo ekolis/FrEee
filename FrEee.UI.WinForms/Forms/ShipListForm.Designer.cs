@@ -1,8 +1,8 @@
 using FrEee.Objects.Space;
 using FrEee.Utility; using FrEee.Serialization;
-using FrEee.WinForms.Controls;
+using FrEee.UI.WinForms.Controls;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 partial class ShipListForm
 {
@@ -32,18 +32,18 @@ partial class ShipListForm
 	/// </summary>
 	private void InitializeComponent()
 	{
-		FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode presenceMode1 = new FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode();
+		FrEee.UI.WinForms.Objects.GalaxyViewModes.PresenceMode presenceMode1 = new FrEee.UI.WinForms.Objects.GalaxyViewModes.PresenceMode();
 		this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-		this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
-		this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
+		this.galaxyView = new FrEee.UI.WinForms.Controls.GalaxyView();
+		this.pnlHeader = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.txtAlienShips = new System.Windows.Forms.Label();
 		this.label9 = new System.Windows.Forms.Label();
 		this.txtAllyShips = new System.Windows.Forms.Label();
 		this.label7 = new System.Windows.Forms.Label();
 		this.txtFleets = new System.Windows.Forms.Label();
-		this.resMaintenanceRad = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.resMaintenanceOrg = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.resMaintenanaceMin = new FrEee.WinForms.Controls.ResourceDisplay();
+		this.resMaintenanceRad = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resMaintenanceOrg = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resMaintenanaceMin = new FrEee.UI.WinForms.Controls.ResourceDisplay();
 		this.label16 = new System.Windows.Forms.Label();
 		this.txtShipsOutsideFleets = new System.Windows.Forms.Label();
 		this.label12 = new System.Windows.Forms.Label();
@@ -56,7 +56,7 @@ partial class ShipListForm
 		this.label4 = new System.Windows.Forms.Label();
 		this.label3 = new System.Windows.Forms.Label();
 		this.label1 = new System.Windows.Forms.Label();
-		this.grid = new FrEee.WinForms.Controls.GameGridView();
+		this.grid = new FrEee.UI.WinForms.Controls.GameGridView();
 		this.tableLayoutPanel1.SuspendLayout();
 		this.pnlHeader.SuspendLayout();
 		this.SuspendLayout();

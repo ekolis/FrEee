@@ -1,6 +1,6 @@
-using FrEee.WinForms.Controls;
+using FrEee.UI.WinForms.Controls;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 partial class MainGameForm
 {
@@ -31,64 +31,64 @@ partial class MainGameForm
 	private void InitializeComponent()
 	{
 		this.components = new System.ComponentModel.Container();
-		FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode presenceMode1 = new FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode();
+		FrEee.UI.WinForms.Objects.GalaxyViewModes.PresenceMode presenceMode1 = new FrEee.UI.WinForms.Objects.GalaxyViewModes.PresenceMode();
 		this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-		this.btnWaypoint = new FrEee.WinForms.Controls.GameButton();
-		this.btnMovementLog = new FrEee.WinForms.Controls.GameButton();
-		this.btnDecloak = new FrEee.WinForms.Controls.GameButton();
-		this.btnCloak = new FrEee.WinForms.Controls.GameButton();
-		this.btnActivate = new FrEee.WinForms.Controls.GameButton();
-		this.btnToggleMinister = new FrEee.WinForms.Controls.GameButton();
-		this.btnRename = new FrEee.WinForms.Controls.GameButton();
-		this.btnRecycle = new FrEee.WinForms.Controls.GameButton();
-		this.btnRepeatOrders = new FrEee.WinForms.Controls.GameButton();
-		this.btnNextIdle = new FrEee.WinForms.Controls.GameButton();
-		this.btnRepair = new FrEee.WinForms.Controls.GameButton();
-		this.btnPrevIdle = new FrEee.WinForms.Controls.GameButton();
-		this.btnResupply = new FrEee.WinForms.Controls.GameButton();
-		this.btnSentry = new FrEee.WinForms.Controls.GameButton();
-		this.btnClearOrders = new FrEee.WinForms.Controls.GameButton();
-		this.btnFleetTransfer = new FrEee.WinForms.Controls.GameButton();
-		this.btnTransferCargo = new FrEee.WinForms.Controls.GameButton();
-		this.btnConstructionQueue = new FrEee.WinForms.Controls.GameButton();
-		this.btnColonize = new FrEee.WinForms.Controls.GameButton();
-		this.btnEvade = new FrEee.WinForms.Controls.GameButton();
-		this.btnWarp = new FrEee.WinForms.Controls.GameButton();
-		this.btnPursue = new FrEee.WinForms.Controls.GameButton();
-		this.btnMove = new FrEee.WinForms.Controls.GameButton();
-		this.btnEndTurn = new FrEee.WinForms.Controls.GameButton();
-		this.btnLog = new FrEee.WinForms.Controls.GameButton();
-		this.btnQueues = new FrEee.WinForms.Controls.GameButton();
-		this.btnShips = new FrEee.WinForms.Controls.GameButton();
-		this.btnEmpires = new FrEee.WinForms.Controls.GameButton();
-		this.btnPlanets = new FrEee.WinForms.Controls.GameButton();
-		this.btnDesigns = new FrEee.WinForms.Controls.GameButton();
-		this.btnMenu = new FrEee.WinForms.Controls.GameButton();
-		this.progResearch = new FrEee.WinForms.Controls.GameProgressBar();
-		this.btnCommands = new FrEee.WinForms.Controls.GameButton();
-		this.pnlLayout = new FrEee.WinForms.Controls.GamePanel();
+		this.btnWaypoint = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnMovementLog = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnDecloak = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnCloak = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnActivate = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnToggleMinister = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnRename = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnRecycle = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnRepeatOrders = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnNextIdle = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnRepair = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnPrevIdle = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnResupply = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnSentry = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnClearOrders = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnFleetTransfer = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnTransferCargo = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnConstructionQueue = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnColonize = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnEvade = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnWarp = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnPursue = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnMove = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnEndTurn = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnLog = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnQueues = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnShips = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnEmpires = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnPlanets = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnDesigns = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnMenu = new FrEee.UI.WinForms.Controls.GameButton();
+		this.progResearch = new FrEee.UI.WinForms.Controls.GameProgressBar();
+		this.btnCommands = new FrEee.UI.WinForms.Controls.GameButton();
+		this.pnlLayout = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.pnlLeft = new System.Windows.Forms.Panel();
-		this.pnlSystemMap = new FrEee.WinForms.Controls.GamePanel();
-		this.starSystemView = new FrEee.WinForms.Controls.StarSystemView();
-		this.pnlSearch = new FrEee.WinForms.Controls.GamePanel();
-		this.searchBox = new FrEee.WinForms.Controls.SearchBox();
-		this.pnlSystemTabs = new FrEee.WinForms.Controls.GamePanel();
+		this.pnlSystemMap = new FrEee.UI.WinForms.Controls.GamePanel();
+		this.starSystemView = new FrEee.UI.WinForms.Controls.StarSystemView();
+		this.pnlSearch = new FrEee.UI.WinForms.Controls.GamePanel();
+		this.searchBox = new FrEee.UI.WinForms.Controls.SearchBox();
+		this.pnlSystemTabs = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.pnlTabs = new System.Windows.Forms.FlowLayoutPanel();
-		this.btnNewTab = new FrEee.WinForms.Controls.GameButton();
-		this.pnlSubCommands = new FrEee.WinForms.Controls.GamePanel();
-		this.pnlMainCommands = new FrEee.WinForms.Controls.GamePanel();
-		this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
-		this.resInt = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.resRes = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.resRad = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.resOrg = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.resMin = new FrEee.WinForms.Controls.ResourceDisplay();
+		this.btnNewTab = new FrEee.UI.WinForms.Controls.GameButton();
+		this.pnlSubCommands = new FrEee.UI.WinForms.Controls.GamePanel();
+		this.pnlMainCommands = new FrEee.UI.WinForms.Controls.GamePanel();
+		this.pnlHeader = new FrEee.UI.WinForms.Controls.GamePanel();
+		this.resInt = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resRes = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resRad = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resOrg = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resMin = new FrEee.UI.WinForms.Controls.ResourceDisplay();
 		this.picEmpireFlag = new System.Windows.Forms.PictureBox();
 		this.pnlRight = new System.Windows.Forms.Panel();
 		this.ddlGalaxyViewMode = new System.Windows.Forms.ComboBox();
-		this.pnlGalaxyMap = new FrEee.WinForms.Controls.GamePanel();
-		this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
-		this.pnlDetailReport = new FrEee.WinForms.Controls.GamePanel();
+		this.pnlGalaxyMap = new FrEee.UI.WinForms.Controls.GamePanel();
+		this.galaxyView = new FrEee.UI.WinForms.Controls.GalaxyView();
+		this.pnlDetailReport = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.pnlLayout.SuspendLayout();
 		this.pnlLeft.SuspendLayout();
 		this.pnlSystemMap.SuspendLayout();
@@ -536,7 +536,7 @@ partial class MainGameForm
 		this.progResearch.Maximum = ((long)(500000));
 		this.progResearch.Name = "progResearch";
 		this.progResearch.Padding = new System.Windows.Forms.Padding(5);
-		this.progResearch.ProgressDisplayType = FrEee.WinForms.Controls.ProgressDisplayType.Numeric;
+		this.progResearch.ProgressDisplayType = FrEee.UI.WinForms.Controls.ProgressDisplayType.Numeric;
 		this.progResearch.RightText = "0.2 years";
 		this.progResearch.Size = new System.Drawing.Size(411, 38);
 		this.progResearch.TabIndex = 11;
@@ -622,8 +622,8 @@ partial class MainGameForm
 		this.starSystemView.Size = new System.Drawing.Size(704, 634);
 		this.starSystemView.StarSystem = null;
 		this.starSystemView.TabIndex = 0;
-		this.starSystemView.SectorClicked += new FrEee.WinForms.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorClicked);
-		this.starSystemView.SectorSelected += new FrEee.WinForms.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorSelected);
+		this.starSystemView.SectorClicked += new FrEee.UI.WinForms.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorClicked);
+		this.starSystemView.SectorSelected += new FrEee.UI.WinForms.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorSelected);
 		// 
 		// pnlSearch
 		// 
@@ -652,7 +652,7 @@ partial class MainGameForm
 		this.searchBox.StarSystem = null;
 		this.searchBox.TabIndex = 0;
 		this.searchBox.TabStop = false;
-		this.searchBox.ObjectSelected += new FrEee.WinForms.Controls.SearchBox.ObjectSelectedDelegate(this.searchBox_ObjectSelected);
+		this.searchBox.ObjectSelected += new FrEee.UI.WinForms.Controls.SearchBox.ObjectSelectedDelegate(this.searchBox_ObjectSelected);
 		// 
 		// pnlSystemTabs
 		// 
@@ -906,8 +906,8 @@ partial class MainGameForm
 		this.galaxyView.Size = new System.Drawing.Size(403, 249);
 		this.galaxyView.TabIndex = 0;
 		this.galaxyView.Text = "galaxyView1";
-		this.galaxyView.StarSystemClicked += new FrEee.WinForms.Controls.GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemClicked);
-		this.galaxyView.StarSystemSelected += new FrEee.WinForms.Controls.GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemSelected);
+		this.galaxyView.StarSystemClicked += new FrEee.UI.WinForms.Controls.GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemClicked);
+		this.galaxyView.StarSystemSelected += new FrEee.UI.WinForms.Controls.GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemSelected);
 		// 
 		// pnlDetailReport
 		// 

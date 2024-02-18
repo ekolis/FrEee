@@ -1,10 +1,10 @@
 ﻿using FrEee.Utility;
-using FrEee.WinForms.Objects;
+using FrEee.UI.WinForms.Objects;
 using System;
 using System.IO;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class GameOverForm : GameForm
 {

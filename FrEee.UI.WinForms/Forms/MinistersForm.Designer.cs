@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class MinistersForm
 {
@@ -28,10 +28,10 @@ partial class MinistersForm
 	/// </summary>
 	private void InitializeComponent()
 	{
-		this.btnClose = new FrEee.WinForms.Controls.GameButton();
+		this.btnClose = new FrEee.UI.WinForms.Controls.GameButton();
 		this.lstMinisters = new System.Windows.Forms.CheckedListBox();
-		this.btnDisableAll = new FrEee.WinForms.Controls.GameButton();
-		this.btnEnableAll = new FrEee.WinForms.Controls.GameButton();
+		this.btnDisableAll = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnEnableAll = new FrEee.UI.WinForms.Controls.GameButton();
 		this.SuspendLayout();
 		// 
 		// btnClose

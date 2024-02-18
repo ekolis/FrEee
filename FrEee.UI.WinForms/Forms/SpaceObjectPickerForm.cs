@@ -1,11 +1,11 @@
 ﻿using FrEee.Objects.Space;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class SpaceObjectPickerForm : GameForm
 {
@@ -18,7 +18,7 @@ public partial class SpaceObjectPickerForm : GameForm
 			lstSpaceObjects.AddItemWithImage(null, sobj.Name, sobj, sobj.Icon);
 		lstSpaceObjects.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 
-		try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); } catch { }
+		try { this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); } catch { }
 	}
 
 	public ISpaceObject SelectedSpaceObject { get; private set; }

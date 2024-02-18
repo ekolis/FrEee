@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class StatusForm
 {
@@ -29,7 +29,7 @@ partial class StatusForm
 	private void InitializeComponent()
 	{
 		this.components = new System.ComponentModel.Container();
-		this.progressBar = new FrEee.WinForms.Controls.GameProgressBar();
+		this.progressBar = new FrEee.UI.WinForms.Controls.GameProgressBar();
 		this.timer1 = new System.Windows.Forms.Timer(this.components);
 		this.SuspendLayout();
 		// 

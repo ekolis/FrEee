@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class ModErrorsForm
 {
@@ -28,19 +28,19 @@ partial class ModErrorsForm
 	/// </summary>
 	private void InitializeComponent()
 	{
-		this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
+		this.gamePanel1 = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.lstFiles = new System.Windows.Forms.ListView();
 		this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-		this.gamePanel2 = new FrEee.WinForms.Controls.GamePanel();
+		this.gamePanel2 = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.lstErrors = new System.Windows.Forms.ListView();
 		this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-		this.pnlDetails = new FrEee.WinForms.Controls.GamePanel();
+		this.pnlDetails = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.lblField = new System.Windows.Forms.Label();
 		this.label3 = new System.Windows.Forms.Label();
 		this.lblRecord = new System.Windows.Forms.Label();
 		this.label1 = new System.Windows.Forms.Label();
-		this.btnOK = new FrEee.WinForms.Controls.GameButton();
-		this.btnCancel = new FrEee.WinForms.Controls.GameButton();
+		this.btnOK = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnCancel = new FrEee.UI.WinForms.Controls.GameButton();
 		this.lblNoErrors = new System.Windows.Forms.Label();
 		this.lblMessage = new System.Windows.Forms.Label();
 		this.gamePanel1.SuspendLayout();

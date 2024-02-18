@@ -5,8 +5,8 @@ using FrEee.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.WinForms.Controls;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Controls;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,7 +19,7 @@ using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class ConstructionQueueForm : GameForm
 {
@@ -29,7 +29,7 @@ public partial class ConstructionQueueForm : GameForm
 
 		ConstructionQueue = queue;
 
-		try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+		try { this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); }
 		catch { }
 
 

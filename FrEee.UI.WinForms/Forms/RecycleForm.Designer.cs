@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class RecycleForm
 {
@@ -30,13 +30,13 @@ partial class RecycleForm
 	{
 		this.treeVehicles = new System.Windows.Forms.TreeView();
 		this.label1 = new System.Windows.Forms.Label();
-		this.btnScrap = new FrEee.WinForms.Controls.GameButton();
-		this.btnMothball = new FrEee.WinForms.Controls.GameButton();
-		this.btnUnmothball = new FrEee.WinForms.Controls.GameButton();
-		this.btnRefit = new FrEee.WinForms.Controls.GameButton();
-		this.btnAnalyze = new FrEee.WinForms.Controls.GameButton();
-		this.btnOK = new FrEee.WinForms.Controls.GameButton();
-		this.btnCancel = new FrEee.WinForms.Controls.GameButton();
+		this.btnScrap = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnMothball = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnUnmothball = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnRefit = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnAnalyze = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnOK = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnCancel = new FrEee.UI.WinForms.Controls.GameButton();
 		this.SuspendLayout();
 		// 
 		// treeVehicles

@@ -3,9 +3,9 @@ using FrEee.Objects.Vehicles;
 using FrEee.Processes;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.WinForms.Forms;
-using FrEee.WinForms.Utility;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Forms;
+using FrEee.UI.WinForms.Utility;
+using FrEee.UI.WinForms.Utility.Extensions;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
@@ -19,7 +19,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
 
-namespace FrEee.WinForms;
+namespace FrEee.UI.WinForms;
 
 internal static class Program
 {

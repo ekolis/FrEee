@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class ModPickerForm
 {
@@ -28,7 +28,7 @@ partial class ModPickerForm
 	/// </summary>
 	private void InitializeComponent()
 	{
-		this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
+		this.gamePanel1 = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.lstMods = new System.Windows.Forms.ListView();
 		this.txtName = new System.Windows.Forms.Label();
 		this.label1 = new System.Windows.Forms.Label();
@@ -41,11 +41,11 @@ partial class ModPickerForm
 		this.txtEmail = new System.Windows.Forms.Label();
 		this.txtWebsite = new System.Windows.Forms.Label();
 		this.txtDescription = new System.Windows.Forms.Label();
-		this.btnLoad = new FrEee.WinForms.Controls.GameButton();
-		this.btnCancel = new FrEee.WinForms.Controls.GameButton();
+		this.btnLoad = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnCancel = new FrEee.UI.WinForms.Controls.GameButton();
 		this.txtFolder = new System.Windows.Forms.Label();
 		this.label7 = new System.Windows.Forms.Label();
-		this.btnEdit = new FrEee.WinForms.Controls.GameButton();
+		this.btnEdit = new FrEee.UI.WinForms.Controls.GameButton();
 		this.gamePanel1.SuspendLayout();
 		this.SuspendLayout();
 		// 

@@ -1,12 +1,15 @@
-﻿using FrEee.Utility;
-using FrEee.WinForms.Forms;
+﻿using FrEee.UI;
+using FrEee.UI.Screens;
+using FrEee.Utility;
+using FrEee.UI.WinForms.Forms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Screen = System.Windows.Forms.Screen;
 
-namespace FrEee.WinForms.Utility.Extensions;
+namespace FrEee.UI.WinForms.Utility.Extensions;
 
 /// <summary>
 /// Extension methods for GUIs.
@@ -247,7 +250,8 @@ public static class GuiExtensions
 	/// Shows a form as a dialog in the center of its parent form with a wait cursor while the form loads.
 	/// </summary>
 	/// <param name="parent"></param>
-	public static DialogResult ShowChildForm(this Form parent, Form form)
+	public static DialogResult ShowChildForm<TForm>(this Form parent, TForm form)
+		where TForm : Form
 	{
 		parent.BeginInvoke(new Action(() => parent.Cursor = Cursors.WaitCursor));
 		if (form.StartPosition != FormStartPosition.CenterScreen)
@@ -257,6 +261,10 @@ public static class GuiExtensions
 		form.KeyDown += childForm_KeyDown_forDebugConsole;
 		var result = form.ShowDialog();
 		parent.BeginInvoke(new Action(() => parent.Cursor = Cursors.Default));
+
+		ScreenController.Instance.Push(new FormScreen<TForm>(form));
+		form.FormClosed += (sender, e) => ScreenController.Instance.Pop();
+
 		return result;
 	}
 

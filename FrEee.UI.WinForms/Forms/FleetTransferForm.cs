@@ -5,8 +5,8 @@ using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.WinForms.Controls;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Controls;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,7 +14,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class FleetTransferForm : GameForm
 {
@@ -22,7 +22,7 @@ public partial class FleetTransferForm : GameForm
 	{
 		InitializeComponent();
 
-		try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+		try { this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); }
 		catch { }
 
 		this.sector = sector;

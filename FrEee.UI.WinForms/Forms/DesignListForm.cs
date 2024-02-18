@@ -3,7 +3,7 @@ using FrEee.Objects.Commands;
 using FrEee.Objects.Technology;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,7 +14,7 @@ using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class DesignListForm : GameForm
 {
@@ -24,7 +24,7 @@ public partial class DesignListForm : GameForm
 		BindVehicleTypeList();
 		BindDesignList();
 
-		try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); } catch { }
+		try { this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); } catch { }
 	}
 
 	private void BindDesignList()

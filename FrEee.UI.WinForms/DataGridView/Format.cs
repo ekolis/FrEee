@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.DataGridView;
+﻿namespace FrEee.UI.WinForms.DataGridView;
 
 /// <summary>
 /// Formatting for a cell value.

@@ -1,14 +1,14 @@
 using FrEee.Objects.Civilization;
 using FrEee.Utility; using FrEee.Serialization;
 using FrEee.Extensions;
-using FrEee.WinForms.DataGridView;
+using FrEee.UI.WinForms.DataGridView;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms.Objects;
+namespace FrEee.UI.WinForms.Objects;
 
 /// <summary>
 /// Client settings that don't need to be persisted to the server.

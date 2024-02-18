@@ -1,7 +1,7 @@
 ﻿using FrEee.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.Drawing;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using FrEee.Objects.Civilization.Construction;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class ConstructionQueueListForm : GameForm
 {
@@ -18,7 +18,7 @@ public partial class ConstructionQueueListForm : GameForm
 	{
 		InitializeComponent();
 
-		try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); } catch { }
+		try { this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); } catch { }
 
 		RateMinerals.DefaultCellStyle.ForeColor = Resource.Minerals.Color;
 		RateOrganics.DefaultCellStyle.ForeColor = Resource.Organics.Color;

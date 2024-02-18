@@ -1,7 +1,7 @@
 ﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Extensions;
-using FrEee.WinForms.Controls;
+using FrEee.UI.WinForms.Controls;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Orders;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class CargoTransferForm : GameForm
 {
@@ -19,7 +19,7 @@ public partial class CargoTransferForm : GameForm
 	{
 		InitializeComponent();
 
-		try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+		try { this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); }
 		catch { }
 
 		clFrom.CargoContainer = fromContainer;

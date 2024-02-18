@@ -1,13 +1,13 @@
 ﻿using FrEee.Objects.Space;
 using FrEee.Extensions;
-using FrEee.WinForms.Forms;
+using FrEee.UI.WinForms.Forms;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms.Controls;
+namespace FrEee.UI.WinForms.Controls;
 
 public partial class SearchBox : UserControl
 {

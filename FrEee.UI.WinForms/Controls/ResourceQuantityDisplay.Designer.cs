@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Controls;
+﻿namespace FrEee.UI.WinForms.Controls;
 
 partial class ResourceQuantityDisplay
 {
@@ -28,9 +28,9 @@ partial class ResourceQuantityDisplay
 	/// </summary>
 	private void InitializeComponent()
 	{
-		this.min = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.org = new FrEee.WinForms.Controls.ResourceDisplay();
-		this.rad = new FrEee.WinForms.Controls.ResourceDisplay();
+		this.min = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.org = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.rad = new FrEee.UI.WinForms.Controls.ResourceDisplay();
 		this.SuspendLayout();
 		// 
 		// min

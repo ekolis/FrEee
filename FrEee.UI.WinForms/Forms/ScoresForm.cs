@@ -1,12 +1,12 @@
 ﻿using FrEee.Extensions;
-using FrEee.WinForms.DataGridView;
+using FrEee.UI.WinForms.DataGridView;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class ScoresForm : GameForm
 {

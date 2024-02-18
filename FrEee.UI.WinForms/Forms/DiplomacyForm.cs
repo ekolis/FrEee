@@ -8,7 +8,7 @@ using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,14 +19,14 @@ using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Civilization.Diplomacy.Actions;
 using FrEee.Objects.Abilities;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class DiplomacyForm : GameForm
 {
 	public DiplomacyForm(Empire targetEmpire)
 	{
 		InitializeComponent();
-		try { base.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+		try { base.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); }
 		catch { }
 		TargetEmpire = targetEmpire;
 		picPortrait.Image = TargetEmpire.Portrait;
@@ -50,7 +50,7 @@ public partial class DiplomacyForm : GameForm
 	public DiplomacyForm(IMessage inReplyTo)
 	{
 		InitializeComponent();
-		try { base.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+		try { base.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); }
 		catch { }
 		TargetEmpire = inReplyTo.Owner;
 		picPortrait.Image = TargetEmpire?.Portrait;

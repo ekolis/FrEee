@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class DesignListForm
 {
@@ -31,23 +31,23 @@ partial class DesignListForm
 		this.ddlVehicleType = new System.Windows.Forms.ComboBox();
 		this.chkForeign = new System.Windows.Forms.CheckBox();
 		this.chkHideObsolete = new System.Windows.Forms.CheckBox();
-		this.btnClose = new FrEee.WinForms.Controls.GameButton();
-		this.btnGroundSimulator = new FrEee.WinForms.Controls.GameButton();
-		this.btnSpaceSimulator = new FrEee.WinForms.Controls.GameButton();
-		this.btnObsolete = new FrEee.WinForms.Controls.GameButton();
-		this.btnUpgrade = new FrEee.WinForms.Controls.GameButton();
-		this.btnEdit = new FrEee.WinForms.Controls.GameButton();
-		this.btnCopy = new FrEee.WinForms.Controls.GameButton();
-		this.btnCreate = new FrEee.WinForms.Controls.GameButton();
-		this.gamePanel2 = new FrEee.WinForms.Controls.GamePanel();
-		this.designReport = new FrEee.WinForms.Controls.DesignReport();
-		this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
+		this.btnClose = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnGroundSimulator = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnSpaceSimulator = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnObsolete = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnUpgrade = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnEdit = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnCopy = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnCreate = new FrEee.UI.WinForms.Controls.GameButton();
+		this.gamePanel2 = new FrEee.UI.WinForms.Controls.GamePanel();
+		this.designReport = new FrEee.UI.WinForms.Controls.DesignReport();
+		this.gamePanel1 = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.lstDesigns = new System.Windows.Forms.ListView();
 		this.colDesign = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 		this.colTotalCost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-		this.btnStrategy = new FrEee.WinForms.Controls.GameButton();
-		this.btnDelete = new FrEee.WinForms.Controls.GameButton();
-		this.btnExportAll = new FrEee.WinForms.Controls.GameButton();
+		this.btnStrategy = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnDelete = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnExportAll = new FrEee.UI.WinForms.Controls.GameButton();
 		this.gamePanel2.SuspendLayout();
 		this.gamePanel1.SuspendLayout();
 		this.SuspendLayout();

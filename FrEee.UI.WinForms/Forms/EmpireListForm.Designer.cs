@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class EmpireListForm
 {
@@ -29,11 +29,11 @@ partial class EmpireListForm
 	private void InitializeComponent()
 	{
 		this.components = new System.ComponentModel.Container();
-		this.tabs = new FrEee.WinForms.Controls.GameTabControl();
+		this.tabs = new FrEee.UI.WinForms.Controls.GameTabControl();
 		this.tabDiplomacy = new System.Windows.Forms.TabPage();
-		this.btnDelete = new FrEee.WinForms.Controls.GameButton();
-		this.btnCompose = new FrEee.WinForms.Controls.GameButton();
-		this.btnReply = new FrEee.WinForms.Controls.GameButton();
+		this.btnDelete = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnCompose = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnReply = new FrEee.UI.WinForms.Controls.GameButton();
 		this.lstMessages = new System.Windows.Forms.ListView();
 		this.colPortrait = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 		this.colFrom = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -43,30 +43,30 @@ partial class EmpireListForm
 		this.txtTreaty = new System.Windows.Forms.Label();
 		this.label1 = new System.Windows.Forms.Label();
 		this.tabIntel = new System.Windows.Forms.TabPage();
-		this.btnBottom = new FrEee.WinForms.Controls.GameButton();
-		this.btnTop = new FrEee.WinForms.Controls.GameButton();
-		this.btnDown = new FrEee.WinForms.Controls.GameButton();
-		this.btnUp = new FrEee.WinForms.Controls.GameButton();
-		this.btnDelIntel = new FrEee.WinForms.Controls.GameButton();
-		this.btnAdd = new FrEee.WinForms.Controls.GameButton();
+		this.btnBottom = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnTop = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnDown = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnUp = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnDelIntel = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnAdd = new FrEee.UI.WinForms.Controls.GameButton();
 		this.lstIntel = new System.Windows.Forms.ListView();
 		this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-		this.report = new FrEee.WinForms.Controls.EmpireReport();
+		this.report = new FrEee.UI.WinForms.Controls.EmpireReport();
 		this.tabBudget = new System.Windows.Forms.TabPage();
-		this.rqdSpoiledDeficit = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqdSpoiledDeficit = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
 		this.label14 = new System.Windows.Forms.Label();
 		this.lblBudgetWarning = new System.Windows.Forms.Label();
-		this.rqdStorage = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
-		this.rqdStored = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
-		this.rqdNet = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
-		this.rqdTributesOut = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
-		this.rqdMaintenance = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
-		this.rqdConstruction = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
-		this.rqExpenses = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
-		this.rqdTributesIn = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
-		this.rqdTrade = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
-		this.rqdExtraction = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
-		this.rqdIncome = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqdStorage = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqdStored = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqdNet = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqdTributesOut = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqdMaintenance = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqdConstruction = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqExpenses = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqdTributesIn = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqdTrade = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqdExtraction = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqdIncome = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
 		this.label12 = new System.Windows.Forms.Label();
 		this.label11 = new System.Windows.Forms.Label();
 		this.label10 = new System.Windows.Forms.Label();
@@ -93,13 +93,13 @@ partial class EmpireListForm
 		this.label19 = new System.Windows.Forms.Label();
 		this.label20 = new System.Windows.Forms.Label();
 		this.label21 = new System.Windows.Forms.Label();
-		this.btnClose = new FrEee.WinForms.Controls.GameButton();
-		this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
+		this.btnClose = new FrEee.UI.WinForms.Controls.GameButton();
+		this.gamePanel1 = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.lstEmpires = new System.Windows.Forms.ListView();
-		this.btnMinisters = new FrEee.WinForms.Controls.GameButton();
-		this.btnAvoidSystems = new FrEee.WinForms.Controls.GameButton();
-		this.btnWaypoints = new FrEee.WinForms.Controls.GameButton();
-		this.btnScores = new FrEee.WinForms.Controls.GameButton();
+		this.btnMinisters = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnAvoidSystems = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnWaypoints = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnScores = new FrEee.UI.WinForms.Controls.GameButton();
 		this.toolTip = new System.Windows.Forms.ToolTip(this.components);
 		this.tabs.SuspendLayout();
 		this.tabDiplomacy.SuspendLayout();

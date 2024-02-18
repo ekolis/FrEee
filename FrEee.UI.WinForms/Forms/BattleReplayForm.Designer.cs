@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class BattleReplayForm
 {
@@ -31,13 +31,13 @@ partial class BattleReplayForm
 		this.components = new System.ComponentModel.Container();
 		this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 		this.timer = new System.Windows.Forms.Timer(this.components);
-		this.reportPanel = new FrEee.WinForms.Controls.GamePanel();
-		this.battleView = new FrEee.WinForms.Controls.BattleView();
-		this.btnForward = new FrEee.WinForms.Controls.GameButton();
-		this.btnPause = new FrEee.WinForms.Controls.GameButton();
-		this.btnBack = new FrEee.WinForms.Controls.GameButton();
-		this.minimap = new FrEee.WinForms.Controls.BattleView();
-		this.btnClose = new FrEee.WinForms.Controls.GameButton();
+		this.reportPanel = new FrEee.UI.WinForms.Controls.GamePanel();
+		this.battleView = new FrEee.UI.WinForms.Controls.BattleView();
+		this.btnForward = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnPause = new FrEee.UI.WinForms.Controls.GameButton();
+		this.btnBack = new FrEee.UI.WinForms.Controls.GameButton();
+		this.minimap = new FrEee.UI.WinForms.Controls.BattleView();
+		this.btnClose = new FrEee.UI.WinForms.Controls.GameButton();
 		this.SuspendLayout();
 		// 
 		// timer

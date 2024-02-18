@@ -4,7 +4,7 @@ using FrEee.Extensions;
 using System.Drawing;
 using System.Linq;
 
-namespace FrEee.WinForms.Objects.GalaxyViewModes;
+namespace FrEee.UI.WinForms.Objects.GalaxyViewModes;
 
 /// <summary>
 /// Displays resupply depots in blue and systems lacking space ports (but also containing non-merchants population) in red.

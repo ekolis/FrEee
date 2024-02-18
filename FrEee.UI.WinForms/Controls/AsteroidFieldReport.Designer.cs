@@ -1,4 +1,4 @@
-namespace FrEee.WinForms.Controls;
+namespace FrEee.UI.WinForms.Controls;
 
 partial class AsteroidFieldReport
 {
@@ -28,13 +28,13 @@ partial class AsteroidFieldReport
 	/// </summary>
 	private void InitializeComponent()
 	{
-		this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
+		this.gameTabControl1 = new FrEee.UI.WinForms.Controls.GameTabControl();
 		this.pageDetail = new System.Windows.Forms.TabPage();
 		this.txtAge = new System.Windows.Forms.Label();
 		this.txtValueRadioactives = new System.Windows.Forms.Label();
 		this.txtValueOrganics = new System.Windows.Forms.Label();
 		this.txtValueMinerals = new System.Windows.Forms.Label();
-		this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
 		this.txtDescription = new System.Windows.Forms.Label();
 		this.lblValue = new System.Windows.Forms.Label();
 		this.txtConditions = new System.Windows.Forms.Label();
@@ -44,7 +44,7 @@ partial class AsteroidFieldReport
 		this.txtSizeSurface = new System.Windows.Forms.Label();
 		this.txtName = new System.Windows.Forms.Label();
 		this.pageAbility = new System.Windows.Forms.TabPage();
-		this.abilityTreeView = new FrEee.WinForms.Controls.AbilityTreeView();
+		this.abilityTreeView = new FrEee.UI.WinForms.Controls.AbilityTreeView();
 		this.gameTabControl1.SuspendLayout();
 		this.pageDetail.SuspendLayout();
 		((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();

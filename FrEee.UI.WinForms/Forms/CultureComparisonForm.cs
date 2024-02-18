@@ -3,14 +3,14 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class CultureComparisonForm : GameForm
 {
 	public CultureComparisonForm()
 	{
 		InitializeComponent();
-		try { base.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+		try { base.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); }
 		catch { }
 		foreach (DataGridViewColumn col in gridCultures.Columns)
 		{

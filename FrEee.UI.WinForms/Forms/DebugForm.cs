@@ -4,7 +4,7 @@ using System;
 using System.Drawing;
 using FrEee.Objects.GameState;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class DebugForm : GameForm
 {

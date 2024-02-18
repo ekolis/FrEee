@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms.DataGridView;
+namespace FrEee.UI.WinForms.DataGridView;
 
 /// <summary>
 /// Data grid view column which shows progress.

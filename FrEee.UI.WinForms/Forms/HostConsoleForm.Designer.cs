@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms.Forms;
+﻿namespace FrEee.UI.WinForms.Forms;
 
 partial class HostConsoleForm
 {
@@ -35,11 +35,11 @@ partial class HostConsoleForm
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.plrUploadStatusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.empireStatusBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.btnClose = new FrEee.WinForms.Controls.GameButton();
-            this.btnProcess = new FrEee.WinForms.Controls.GameButton();
-            this.btnToggleAI = new FrEee.WinForms.Controls.GameButton();
-            this.btnPlayerView = new FrEee.WinForms.Controls.GameButton();
-            this.btnEdit = new FrEee.WinForms.Controls.GameButton();
+            this.btnClose = new FrEee.UI.WinForms.Controls.GameButton();
+            this.btnProcess = new FrEee.UI.WinForms.Controls.GameButton();
+            this.btnToggleAI = new FrEee.UI.WinForms.Controls.GameButton();
+            this.btnPlayerView = new FrEee.UI.WinForms.Controls.GameButton();
+            this.btnEdit = new FrEee.UI.WinForms.Controls.GameButton();
             this.autoProcess = new System.Windows.Forms.CheckBox();
             this.timer = new System.Windows.Forms.Label();
             this.autoProcessTimer = new System.Windows.Forms.Timer(this.components);

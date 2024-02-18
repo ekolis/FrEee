@@ -4,7 +4,7 @@ using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Modding.Templates;
 using FrEee.Extensions;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,7 +15,7 @@ using FrEee.Objects.Vehicles;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.GameState;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class LogForm : GameForm
 {
@@ -30,7 +30,7 @@ public partial class LogForm : GameForm
 		this.mainGameForm = mainGameForm;
 		messages = log.OrderByDescending(m => m.TurnNumber).ToArray();
 
-		try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); } catch { }
+		try { this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); } catch { }
 
 		ShowInTaskbar = !mainGameForm.HasLogBeenShown;
 	}
