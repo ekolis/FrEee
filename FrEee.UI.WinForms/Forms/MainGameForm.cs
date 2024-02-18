@@ -6,12 +6,12 @@ using FrEee.Objects.Vehicles;
 using FrEee.Processes;
 using FrEee.Utility;
 using FrEee.Extensions;
-using FrEee.WinForms.Controls;
-using FrEee.WinForms.Interfaces;
-using FrEee.WinForms.Objects;
-using FrEee.WinForms.Objects.GalaxyViewModes;
-using FrEee.WinForms.Utility;
-using FrEee.WinForms.Utility.Extensions;
+using FrEee.UI.WinForms.Controls;
+using FrEee.UI.WinForms.Interfaces;
+using FrEee.UI.WinForms.Objects;
+using FrEee.UI.WinForms.Objects.GalaxyViewModes;
+using FrEee.UI.WinForms.Utility;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -26,10 +26,8 @@ using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
-using FrEee.UI;
-using FrEee.UI.Screens;
 
-namespace FrEee.WinForms.Forms;
+namespace FrEee.UI.WinForms.Forms;
 
 public partial class MainGameForm : GameForm
 {
@@ -50,9 +48,6 @@ public partial class MainGameForm : GameForm
 			ddlGalaxyViewMode.Items.Add(mode);
 		ddlGalaxyViewMode.SelectedIndex = 0;
 		Instance = this;
-
-		ScreenController.Instance.Push(new FormScreen<MainGameForm>(this));
-        FormClosed += (sender, e) => ScreenController.Instance.Pop();
     }
 
 	public static MainGameForm Instance { get; private set; }
@@ -1021,7 +1016,7 @@ public partial class MainGameForm : GameForm
 
 	private void GameForm_Load(object sender, EventArgs e)
 	{
-		try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+		try { this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); }
 		catch { }
 		this.Enabled = false;
 

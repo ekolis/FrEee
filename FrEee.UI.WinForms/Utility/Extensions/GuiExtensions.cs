@@ -1,13 +1,10 @@
-﻿using FrEee.UI;
-using FrEee.UI.Screens;
-using FrEee.Utility;
+﻿using FrEee.Utility;
 using FrEee.UI.WinForms.Forms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using Screen = System.Windows.Forms.Screen;
 
 namespace FrEee.UI.WinForms.Utility.Extensions;
 
@@ -261,9 +258,6 @@ public static class GuiExtensions
 		form.KeyDown += childForm_KeyDown_forDebugConsole;
 		var result = form.ShowDialog();
 		parent.BeginInvoke(new Action(() => parent.Cursor = Cursors.Default));
-
-		ScreenController.Instance.Push(new FormScreen<TForm>(form));
-		form.FormClosed += (sender, e) => ScreenController.Instance.Pop();
 
 		return result;
 	}

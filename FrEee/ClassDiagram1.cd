@@ -2781,7 +2781,7 @@
       <FileName>Utility\Extensions\CommonExtensions.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="FrEee.WinForms.DataGridView.ProgressDisplayMode" Collapsed="true">
+  <Enum Name="FrEee.UI.WinForms.DataGridView.ProgressDisplayMode" Collapsed="true">
     <Position X="68.75" Y="14" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAACAAAAAAAAAAAAAgACAAAAAAAAAAAAAA=</HashCode>
