@@ -1,0 +1,52 @@
+﻿@using System.Drawing
+
+@code {
+	[Parameter]
+	public long Maximum { get; set; }
+
+	[Parameter]
+	public long Value { get; set; }
+
+	[Parameter]
+	public long Increment { get; set; }
+
+	[Parameter]
+	public Color BarColor { get; set; }
+
+	[Parameter]
+	public string LeftText { get; set; }
+
+	[Parameter]
+	public string CenterText { get; set; }
+
+	[Parameter]
+	public string RightText { get; set; }
+
+	[Parameter]
+	public Action OnClick { get; set; }
+
+	public Color IncrementColor1 => Color.FromArgb(BarColor.A / 2, BarColor);
+
+	public Color IncrementColor2 => Color.FromArgb(BarColor.A / 4, BarColor);
+
+	public Color IncrementColor3 => Color.FromArgb(BarColor.A / 8, BarColor);
+}
+
+
+<div @onclick="OnClick">
+	<div class="fill" style="display: flex; flex-direction: row">
+		<div style="width: @(100 * Value / Math.Max(1, Maximum))%; height: 100%; padding: 0; background-color: #@BarColor.ToRgba()"/>
+		<div style="width: @(100 * Increment / Math.Max(1, Maximum))%; height: 100%; padding: 0; background-color: #@IncrementColor1.ToRgba()" />
+		<div style="width: @(100 * Increment / Math.Max(1, Maximum))%; height: 100%; padding: 0; background-color: #@IncrementColor2.ToRgba()" />
+		<div style="width: @(100 * Increment / Math.Max(1, Maximum))%; height: 100%; padding: 0; background-color: #@IncrementColor3.ToRgba()" />
+	</div>
+	<div class="fill overlay" style="text-align: left; vertical-align: center">
+		@LeftText
+	</div>
+	<div class="fill overlay" style="text-align: center; vertical-align: center">
+		@CenterText
+	</div>
+	<div class="fill overlay" style="text-align: right; vertical-align: center">
+		@RightText
+	</div>
+</div>

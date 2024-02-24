@@ -3,6 +3,12 @@ using FrEee.Extensions;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using FrEee.UI.Blazor;
+using Microsoft.AspNetCore.Components.WebView.WindowsForms;
+using Microsoft.Extensions.DependencyInjection;
+using BlazorProgressBar = FrEee.UI.Blazor.Views.ProgressBar;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FrEee.UI.WinForms.Controls;
 
@@ -12,7 +18,33 @@ public partial class GameProgressBar : UserControl
 	{
 		InitializeComponent();
 		this.SizeChanged += GameProgressBar_SizeChanged;
-		Padding = new Padding(5, 5, 5, 5);
+
+		// set up Blazor
+		var services = new ServiceCollection();
+		services.AddWindowsFormsBlazorWebView();
+		blazorView.HostPage = "wwwroot\\index.html";
+		blazorView.Services = services.BuildServiceProvider();
+		InvalidateBlazor();
+	}
+
+	private void InvalidateBlazor()
+	{
+		if (blazorView.RootComponents.Any())
+		{
+			blazorView.RootComponents.Remove("#app");
+		}
+		blazorView.RootComponents.Add<BlazorProgressBar>("#app", new Dictionary<string, object?>
+		{
+			[nameof(BlazorProgressBar.Value)] = Value,
+			[nameof(BlazorProgressBar.Increment)] = IncrementalProgress,
+			[nameof(BlazorProgressBar.Maximum)] = Maximum,
+			[nameof(BlazorProgressBar.BarColor)] = BarColor,
+			[nameof(BlazorProgressBar.LeftText)] = LeftText,
+			[nameof(BlazorProgressBar.CenterText)] = CenterText,
+			[nameof(BlazorProgressBar.RightText)] = RightText,
+			[nameof(BlazorProgressBar.OnClick)] = () => OnClick(new EventArgs())
+		});
+		Invalidate();
 	}
 
 	public Color BarColor
@@ -21,7 +53,7 @@ public partial class GameProgressBar : UserControl
 		set
 		{
 			barColor = value;
-			Invalidate();
+			InvalidateBlazor();
 		}
 	}
 
@@ -34,7 +66,7 @@ public partial class GameProgressBar : UserControl
 		set
 		{
 			borderColor = value;
-			Invalidate();
+			InvalidateBlazor();
 		}
 	}
 
@@ -44,7 +76,7 @@ public partial class GameProgressBar : UserControl
 		set
 		{
 			incrementalProgress = value;
-			Invalidate();
+			InvalidateBlazor();
 		}
 	}
 
@@ -56,7 +88,7 @@ public partial class GameProgressBar : UserControl
 		set
 		{
 			maximum = value;
-			Invalidate();
+			InvalidateBlazor();
 		}
 	}
 
@@ -80,7 +112,7 @@ public partial class GameProgressBar : UserControl
 		set
 		{
 			displayType = value;
-			Invalidate();
+			InvalidateBlazor();
 		}
 	}
 
@@ -92,7 +124,7 @@ public partial class GameProgressBar : UserControl
 		set
 		{
 			this.value = value;
-			Invalidate();
+			InvalidateBlazor();
 		}
 	}
 
@@ -110,58 +142,29 @@ public partial class GameProgressBar : UserControl
 
 	private long value = 0;
 
-	protected override void OnPaint(PaintEventArgs e)
-	{
-		string centerText;
-		switch (ProgressDisplayType)
-		{
-			case ProgressDisplayType.None:
-				centerText = "";
-				break;
-
-			case ProgressDisplayType.Percentage:
-				centerText = Math.Round(((double)Value / (double)Maximum * 100)) + "%";
-				break;
-
-			case ProgressDisplayType.Numeric:
-				centerText = Value.ToUnitString(true) + " / " + Maximum.ToUnitString(true);
-				break;
-
-			case ProgressDisplayType.Both:
-				centerText = Math.Round(((double)Value / (double)Maximum * 100)) + "% (" + Value.ToUnitString(true) + " / " + Maximum.ToUnitString(true) + ")";
-				break;
-
-			default:
-				centerText = "";
-				break;
-		}
-		base.OnPaint(e);
-		e.Graphics.Clear(BackColor);
-		if (Maximum != 0)
-		{
-			e.Graphics.FillRectangle(new SolidBrush(BarColor), 0, 0, Value * Width / Maximum, Height);
-			e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(128, BarColor)), Value * Width / Maximum, 0, IncrementalProgress * Width / Maximum, Height);
-		}
-		if (BorderStyle == BorderStyle.FixedSingle)
-			ControlPaint.DrawBorder(e.Graphics, ClientRectangle, BorderColor, ButtonBorderStyle.Solid);
-		Brush brush;
-		if (BarColor.R + BarColor.G + BarColor.B > 128 * 3 && BackColor.R + BackColor.G + BackColor.B > 128 * 3)
-			brush = new SolidBrush(Color.Black);
-		else
-			brush = new SolidBrush(Color.White);
-		var rect = new Rectangle(0, 0, Width, Height);
-		rect.X += Padding.Left;
-		rect.Y += Padding.Top;
-		rect.Width -= Padding.Left + Padding.Right;
-		rect.Height -= Padding.Top + Padding.Bottom;
-		e.Graphics.DrawString(LeftText, Font, brush, rect, new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
-		e.Graphics.DrawString(RightText, Font, brush, rect, new StringFormat { Alignment = StringAlignment.Far, LineAlignment = StringAlignment.Center });
-		e.Graphics.DrawString(centerText, Font, brush, rect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
-	}
-
 	private void GameProgressBar_SizeChanged(object sender, EventArgs e)
 	{
 		Invalidate();
+	}
+
+	private string CenterText
+	{
+		get
+		{
+			switch (ProgressDisplayType)
+			{
+				case ProgressDisplayType.None:
+					return "";
+				case ProgressDisplayType.Percentage:
+					return Math.Round(((double)Value / (double)Maximum * 100)) + "%";
+				case ProgressDisplayType.Numeric:
+					return Value.ToUnitString(true) + " / " + Maximum.ToUnitString(true);
+				case ProgressDisplayType.Both:
+					return Math.Round(((double)Value / (double)Maximum * 100)) + "% (" + Value.ToUnitString(true) + " / " + Maximum.ToUnitString(true) + ")";
+				default:
+					return "";
+			}
+		}
 	}
 }
 

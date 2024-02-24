@@ -48,7 +48,7 @@ public partial class MainGameForm : GameForm
 			ddlGalaxyViewMode.Items.Add(mode);
 		ddlGalaxyViewMode.SelectedIndex = 0;
 		Instance = this;
-    }
+	}
 
 	public static MainGameForm Instance { get; private set; }
 

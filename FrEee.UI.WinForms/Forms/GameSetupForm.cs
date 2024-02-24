@@ -92,12 +92,6 @@ public partial class GameSetupForm : GameForm
 		ddlTechUniqueness.SelectedIndex = 2; // zero, normal cost 
 
 		try { this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); } catch { }
-
-        var services = new ServiceCollection();
-        services.AddWindowsFormsBlazorWebView();
-        blazorWebView1.HostPage = "wwwroot\\index.html";
-        blazorWebView1.Services = services.BuildServiceProvider();
-        blazorWebView1.RootComponents.Add<Component1>("#app");
     }
 
 	public bool IsBusy

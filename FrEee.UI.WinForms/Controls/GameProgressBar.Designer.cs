@@ -28,22 +28,35 @@ partial class GameProgressBar
 	/// </summary>
 	private void InitializeComponent()
 	{
-		this.SuspendLayout();
+		blazorView = new Microsoft.AspNetCore.Components.WebView.WindowsForms.BlazorWebView();
+		SuspendLayout();
+		// 
+		// blazorView
+		// 
+		blazorView.Dock = System.Windows.Forms.DockStyle.Fill;
+		blazorView.Location = new System.Drawing.Point(0, 0);
+		blazorView.Margin = new System.Windows.Forms.Padding(0);
+		blazorView.Name = "blazorView";
+		blazorView.Size = new System.Drawing.Size(429, 37);
+		blazorView.StartPath = "/";
+		blazorView.TabIndex = 0;
+		blazorView.Text = "blazorWebView1";
 		// 
 		// GameProgressBar
 		// 
-		this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-		this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-		this.BackColor = System.Drawing.Color.Black;
-		this.ForeColor = System.Drawing.Color.White;
-		this.Margin = new System.Windows.Forms.Padding(0);
-		this.Name = "GameProgressBar";
-		this.Size = new System.Drawing.Size(368, 32);
-		this.ResumeLayout(false);
-
+		AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+		AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+		BackColor = System.Drawing.Color.Black;
+		Controls.Add(blazorView);
+		ForeColor = System.Drawing.Color.White;
+		Margin = new System.Windows.Forms.Padding(0);
+		Name = "GameProgressBar";
+		Size = new System.Drawing.Size(429, 37);
+		ResumeLayout(false);
 	}
 
 	#endregion
 
 
+	private Microsoft.AspNetCore.Components.WebView.WindowsForms.BlazorWebView blazorView;
 }
