@@ -29,6 +29,7 @@ public partial class GameProgressBar : UserControl
 
 	private void InvalidateBlazor()
 	{
+		// TODO: find a way to refresh the UI without recreating it from scratch, that causes crashes when done too much
 		if (blazorView.RootComponents.Any())
 		{
 			blazorView.RootComponents.Remove("#app");

@@ -10,9 +10,13 @@
 	margin: 0px;
 }
 
+@font-face {
+	font-family: "Kwajong";
+	src: url("../fonts/Kwajong.otf")
+}
+
 h1, h2, h3 {
-	/* TODO: use the new font that CW found */
-	font-family: Consolas, 'Courier New', Courier, monospace
+	font-family: Kwajong, Consolas, 'Courier New', Courier, monospace
 }
 
 	h1:focus {
