@@ -117,7 +117,7 @@ public partial class GameProgressBar : UserControl
 		}
 	}
 
-	public string RightText { get { return rightText; } set { rightText = value; Invalidate(); } }
+	public string RightText { get { return rightText; } set { rightText = value; InvalidateBlazor(); } }
 
 	public long Value
 	{
