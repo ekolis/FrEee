@@ -67,6 +67,9 @@ a, .btn-link {
 	height: 100%;
 	top: 0;
 	left: 0;
+	bottom: 0;
+	right: 0;
+	margin: 0px
 }
 
 .overlay {
