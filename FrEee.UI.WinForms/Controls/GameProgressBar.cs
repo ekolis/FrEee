@@ -42,6 +42,7 @@ public partial class GameProgressBar : UserControl
 
 	private ProgressBarViewModel vm;
 
+	// TODO: make these properties just wrap the view model, no need for private fields
 	public Color BarColor
 	{
 		get { return barColor; }
@@ -98,6 +99,7 @@ public partial class GameProgressBar : UserControl
 		}
 	}
 
+	// TODO: put this in the view model
 	public ProgressDisplayType ProgressDisplayType
 	{
 		get { return displayType; }
@@ -138,6 +140,7 @@ public partial class GameProgressBar : UserControl
 		Invalidate();
 	}
 
+	// TODO: put this in the view model
 	private string CenterText
 	{
 		get
