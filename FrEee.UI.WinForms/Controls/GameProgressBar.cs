@@ -20,19 +20,12 @@ public partial class GameProgressBar : UserControl
 		InitializeComponent();
 		this.SizeChanged += GameProgressBar_SizeChanged;
 
+		// set up view model
+		vm.CenterText = CenterText;
+		vm.OnClick = () => OnClick(new EventArgs());
+
 		// set up Blazor
 		var services = new ServiceCollection();
-		vm = new ProgressBarViewModel
-		{
-			Value = Value,
-			Increment = IncrementalProgress,
-			Maximum = Maximum,
-			BarColor = BarColor,
-			LeftText = LeftText,
-			CenterText = CenterText,
-			RightText = RightText,
-			OnClick = () => OnClick(new EventArgs())
-		};
 		services.AddSingleton(vm);
 		services.AddWindowsFormsBlazorWebView();
 		blazorView.HostPage = "wwwroot\\index.html";
@@ -40,18 +33,15 @@ public partial class GameProgressBar : UserControl
 		blazorView.RootComponents.Add<BlazorProgressBar>("#app");
 	}
 
-	private ProgressBarViewModel vm;
+	private ProgressBarViewModel vm = new ProgressBarViewModel();
 
-	// TODO: make these properties just wrap the view model, no need for private fields
 	public Color BarColor
 	{
-		get { return barColor; }
-		set
-		{
-			vm.BarColor = barColor = value;
-		}
+		get => vm.BarColor;
+		set => vm.BarColor = value;
 	}
 
+	// TODO: put this in the view model
 	/// <summary>
 	/// Color of the border for BorderStyle.FixedSingle mode.
 	/// </summary>
@@ -67,22 +57,20 @@ public partial class GameProgressBar : UserControl
 
 	public long IncrementalProgress
 	{
-		get { return incrementalProgress; }
-		set
-		{
-			vm.Increment = incrementalProgress = value;
-		}
+		get => vm.Increment;
+		set => vm.Increment = value;
 	}
 
-	public string LeftText { get { return leftText; } set { vm.LeftText = leftText = value; } }
+	public string LeftText
+	{
+		get => vm.LeftText;
+		set => vm.LeftText = value;
+	}
 
 	public long Maximum
 	{
-		get { return maximum; }
-		set
-		{
-			vm.Maximum = maximum = value;
-		}
+		get => vm.Maximum;
+		set => vm.Maximum = value;
 	}
 
 	public Progress Progress
@@ -110,30 +98,21 @@ public partial class GameProgressBar : UserControl
 		}
 	}
 
-	public string RightText { get { return rightText; } set { vm.RightText = rightText = value; } }
+	public string RightText
+	{
+		get => vm.RightText;
+		set => vm.RightText = value;
+	}
 
 	public long Value
 	{
-		get { return value; }
-		set
-		{
-			vm.Value = this.value = value;
-		}
+		get => vm.Value;
+		set => vm.Value = value;
 	}
-
-	private Color barColor = Color.Blue;
 
 	private Color borderColor;
 
 	private ProgressDisplayType displayType = ProgressDisplayType.Percentage;
-
-	private long incrementalProgress = 0;
-
-	private string leftText, rightText;
-
-	private long maximum = 100;
-
-	private long value = 0;
 
 	private void GameProgressBar_SizeChanged(object sender, EventArgs e)
 	{
