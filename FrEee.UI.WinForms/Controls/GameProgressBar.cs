@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using BlazorProgressBar = FrEee.UI.Blazor.Views.ProgressBar;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.UI.Blazor.Views;
 
 namespace FrEee.UI.WinForms.Controls;
 
@@ -21,40 +22,32 @@ public partial class GameProgressBar : UserControl
 
 		// set up Blazor
 		var services = new ServiceCollection();
+		vm = new ProgressBarViewModel
+		{
+			Value = Value,
+			Increment = IncrementalProgress,
+			Maximum = Maximum,
+			BarColor = BarColor,
+			LeftText = LeftText,
+			CenterText = CenterText,
+			RightText = RightText,
+			OnClick = () => OnClick(new EventArgs())
+		};
+		services.AddSingleton(vm);
 		services.AddWindowsFormsBlazorWebView();
 		blazorView.HostPage = "wwwroot\\index.html";
 		blazorView.Services = services.BuildServiceProvider();
-		InvalidateBlazor();
+		blazorView.RootComponents.Add<BlazorProgressBar>("#app");
 	}
 
-	private void InvalidateBlazor()
-	{
-		// TODO: find a way to refresh the UI without recreating it from scratch, that causes crashes when done too much
-		if (blazorView.RootComponents.Any())
-		{
-			blazorView.RootComponents.Remove("#app");
-		}
-		blazorView.RootComponents.Add<BlazorProgressBar>("#app", new Dictionary<string, object?>
-		{
-			[nameof(BlazorProgressBar.Value)] = Value,
-			[nameof(BlazorProgressBar.Increment)] = IncrementalProgress,
-			[nameof(BlazorProgressBar.Maximum)] = Maximum,
-			[nameof(BlazorProgressBar.BarColor)] = BarColor,
-			[nameof(BlazorProgressBar.LeftText)] = LeftText,
-			[nameof(BlazorProgressBar.CenterText)] = CenterText,
-			[nameof(BlazorProgressBar.RightText)] = RightText,
-			[nameof(BlazorProgressBar.OnClick)] = () => OnClick(new EventArgs())
-		});
-		Invalidate();
-	}
+	private ProgressBarViewModel vm;
 
 	public Color BarColor
 	{
 		get { return barColor; }
 		set
 		{
-			barColor = value;
-			InvalidateBlazor();
+			vm.BarColor = barColor = value;
 		}
 	}
 
@@ -67,7 +60,7 @@ public partial class GameProgressBar : UserControl
 		set
 		{
 			borderColor = value;
-			InvalidateBlazor();
+			Invalidate();
 		}
 	}
 
@@ -76,20 +69,18 @@ public partial class GameProgressBar : UserControl
 		get { return incrementalProgress; }
 		set
 		{
-			incrementalProgress = value;
-			InvalidateBlazor();
+			vm.Increment = incrementalProgress = value;
 		}
 	}
 
-	public string LeftText { get { return leftText; } set { leftText = value; Invalidate(); } }
+	public string LeftText { get { return leftText; } set { vm.LeftText = leftText = value; } }
 
 	public long Maximum
 	{
 		get { return maximum; }
 		set
 		{
-			maximum = value;
-			InvalidateBlazor();
+			vm.Maximum = maximum = value;
 		}
 	}
 
@@ -113,19 +104,18 @@ public partial class GameProgressBar : UserControl
 		set
 		{
 			displayType = value;
-			InvalidateBlazor();
+			Invalidate();
 		}
 	}
 
-	public string RightText { get { return rightText; } set { rightText = value; InvalidateBlazor(); } }
+	public string RightText { get { return rightText; } set { vm.RightText = rightText = value; } }
 
 	public long Value
 	{
 		get { return value; }
 		set
 		{
-			this.value = value;
-			InvalidateBlazor();
+			vm.Value = this.value = value;
 		}
 	}
 
