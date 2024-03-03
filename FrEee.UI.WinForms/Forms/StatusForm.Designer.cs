@@ -37,7 +37,6 @@ partial class StatusForm
 		// 
 		this.progressBar.BackColor = System.Drawing.Color.Black;
 		this.progressBar.BarColor = System.Drawing.Color.Blue;
-		this.progressBar.BorderColor = System.Drawing.Color.Empty;
 		this.progressBar.Dock = System.Windows.Forms.DockStyle.Fill;
 		this.progressBar.ForeColor = System.Drawing.Color.White;
 		this.progressBar.IncrementalProgress = 0;

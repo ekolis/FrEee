@@ -2,7 +2,6 @@
 
 @inject ProgressBarViewModel vm
 
-
 <div @onclick="vm.OnClick">
 	<div class="fill" style="display: flex; flex-direction: row">
 		<div style="width: @(100 * vm.Value / Math.Max(1, vm.Maximum))%; height: 100%; padding: 0; background-color: #@vm.BarColor.ToRgba()" />

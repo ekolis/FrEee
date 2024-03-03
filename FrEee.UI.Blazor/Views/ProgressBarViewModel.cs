@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Extensions;
+using FrEee.Utility;
 using Microsoft.AspNetCore.Components;
 
 namespace FrEee.UI.Blazor.Views
@@ -20,9 +22,27 @@ namespace FrEee.UI.Blazor.Views
 
         public string LeftText { get; set; } = "";
 
-        public string CenterText { get; set; } = "";
+		public string CenterText
+		{
+			get
+			{
+				switch (ProgressDisplayType)
+				{
+					case ProgressDisplayType.None:
+						return "";
+					case ProgressDisplayType.Percentage:
+						return Math.Round(((double)Value / (double)Maximum * 100)) + "%";
+					case ProgressDisplayType.Numeric:
+						return Value.ToUnitString(true) + " / " + Maximum.ToUnitString(true);
+					case ProgressDisplayType.Both:
+						return Math.Round(((double)Value / (double)Maximum * 100)) + "% (" + Value.ToUnitString(true) + " / " + Maximum.ToUnitString(true) + ")";
+					default:
+						return "";
+				}
+			}
+		}
 
-        public string RightText { get; set; } = "";
+		public string RightText { get; set; } = "";
 
         public Action OnClick { get; set; } = () => { };
 
@@ -31,5 +51,21 @@ namespace FrEee.UI.Blazor.Views
         public Color IncrementColor2 => Color.FromArgb(BarColor.A / 4, BarColor);
 
         public Color IncrementColor3 => Color.FromArgb(BarColor.A / 8, BarColor);
-    }
+
+		public Progress Progress
+		{
+			get
+			{
+				return new Progress(Value, Maximum, Increment);
+			}
+			set
+			{
+				Value = value.Value;
+				Maximum = value.Maximum;
+				Increment = value.IncrementalProgressBeforeDelay;
+			}
+		}
+
+		public ProgressDisplayType ProgressDisplayType { get; set; } = ProgressDisplayType.Percentage;
+	}
 }

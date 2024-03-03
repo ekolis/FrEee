@@ -21,131 +21,69 @@ public partial class GameProgressBar : UserControl
 		this.SizeChanged += GameProgressBar_SizeChanged;
 
 		// set up view model
-		vm.CenterText = CenterText;
-		vm.OnClick = () => OnClick(new EventArgs());
+		ViewModel.OnClick = () => OnClick(new EventArgs());
 
 		// set up Blazor
 		var services = new ServiceCollection();
-		services.AddSingleton(vm);
+		services.AddSingleton(ViewModel);
 		services.AddWindowsFormsBlazorWebView();
 		blazorView.HostPage = "wwwroot\\index.html";
 		blazorView.Services = services.BuildServiceProvider();
 		blazorView.RootComponents.Add<BlazorProgressBar>("#app");
 	}
 
-	private ProgressBarViewModel vm = new ProgressBarViewModel();
+	public ProgressBarViewModel ViewModel { get; } = new();
 
 	public Color BarColor
 	{
-		get => vm.BarColor;
-		set => vm.BarColor = value;
-	}
-
-	// TODO: put this in the view model
-	/// <summary>
-	/// Color of the border for BorderStyle.FixedSingle mode.
-	/// </summary>
-	public Color BorderColor
-	{
-		get { return borderColor; }
-		set
-		{
-			borderColor = value;
-			Invalidate();
-		}
+		get => ViewModel.BarColor;
+		set => ViewModel.BarColor = value;
 	}
 
 	public long IncrementalProgress
 	{
-		get => vm.Increment;
-		set => vm.Increment = value;
+		get => ViewModel.Increment;
+		set => ViewModel.Increment = value;
 	}
 
 	public string LeftText
 	{
-		get => vm.LeftText;
-		set => vm.LeftText = value;
+		get => ViewModel.LeftText;
+		set => ViewModel.LeftText = value;
 	}
 
 	public long Maximum
 	{
-		get => vm.Maximum;
-		set => vm.Maximum = value;
+		get => ViewModel.Maximum;
+		set => ViewModel.Maximum = value;
 	}
 
 	public Progress Progress
 	{
-		get
-		{
-			return new Progress(Value, Maximum, IncrementalProgress);
-		}
-		set
-		{
-			Value = value.Value;
-			Maximum = value.Maximum;
-			IncrementalProgress = value.IncrementalProgressBeforeDelay;
-		}
+		get => ViewModel.Progress;
+		set => ViewModel.Progress = value;
 	}
 
-	// TODO: put this in the view model
 	public ProgressDisplayType ProgressDisplayType
 	{
-		get { return displayType; }
-		set
-		{
-			displayType = value;
-			Invalidate();
-		}
+		get => ViewModel.ProgressDisplayType;
+		set => ViewModel.ProgressDisplayType = value;
 	}
 
 	public string RightText
 	{
-		get => vm.RightText;
-		set => vm.RightText = value;
+		get => ViewModel.RightText;
+		set => ViewModel.RightText = value;
 	}
 
 	public long Value
 	{
-		get => vm.Value;
-		set => vm.Value = value;
+		get => ViewModel.Value;
+		set => ViewModel.Value = value;
 	}
-
-	private Color borderColor;
-
-	private ProgressDisplayType displayType = ProgressDisplayType.Percentage;
 
 	private void GameProgressBar_SizeChanged(object sender, EventArgs e)
 	{
 		Invalidate();
 	}
-
-	// TODO: put this in the view model
-	private string CenterText
-	{
-		get
-		{
-			switch (ProgressDisplayType)
-			{
-				case ProgressDisplayType.None:
-					return "";
-				case ProgressDisplayType.Percentage:
-					return Math.Round(((double)Value / (double)Maximum * 100)) + "%";
-				case ProgressDisplayType.Numeric:
-					return Value.ToUnitString(true) + " / " + Maximum.ToUnitString(true);
-				case ProgressDisplayType.Both:
-					return Math.Round(((double)Value / (double)Maximum * 100)) + "% (" + Value.ToUnitString(true) + " / " + Maximum.ToUnitString(true) + ")";
-				default:
-					return "";
-			}
-		}
-	}
-}
-
-[Flags]
-public enum ProgressDisplayType
-{
-	None = 0,
-	Percentage = 1,
-	Numeric = 2,
-	Both = 3,
 }

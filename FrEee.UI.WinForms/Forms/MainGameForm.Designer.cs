@@ -526,7 +526,6 @@ partial class MainGameForm
             | System.Windows.Forms.AnchorStyles.Right)));
 		this.progResearch.BackColor = System.Drawing.Color.Black;
 		this.progResearch.BarColor = System.Drawing.Color.Magenta;
-		this.progResearch.BorderColor = System.Drawing.Color.CornflowerBlue;
 		this.progResearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 		this.progResearch.ForeColor = System.Drawing.Color.White;
 		this.progResearch.IncrementalProgress = ((long)(0));
@@ -536,7 +535,7 @@ partial class MainGameForm
 		this.progResearch.Maximum = ((long)(500000));
 		this.progResearch.Name = "progResearch";
 		this.progResearch.Padding = new System.Windows.Forms.Padding(5);
-		this.progResearch.ProgressDisplayType = FrEee.UI.WinForms.Controls.ProgressDisplayType.Numeric;
+		this.progResearch.ProgressDisplayType = FrEee.UI.Blazor.Views.ProgressDisplayType.Numeric;
 		this.progResearch.RightText = "0.2 years";
 		this.progResearch.Size = new System.Drawing.Size(411, 38);
 		this.progResearch.TabIndex = 11;

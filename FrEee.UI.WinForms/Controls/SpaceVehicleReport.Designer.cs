@@ -570,7 +570,6 @@ partial class SpaceVehicleReport
 		// 
 		this.progSupplies.BackColor = System.Drawing.Color.Black;
 		this.progSupplies.BarColor = System.Drawing.Color.Blue;
-		this.progSupplies.BorderColor = System.Drawing.Color.CornflowerBlue;
 		this.progSupplies.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 		this.progSupplies.Dock = System.Windows.Forms.DockStyle.Fill;
 		this.progSupplies.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -582,7 +581,7 @@ partial class SpaceVehicleReport
 		this.progSupplies.Maximum = ((long)(3000));
 		this.progSupplies.Name = "progSupplies";
 		this.progSupplies.Padding = new System.Windows.Forms.Padding(5);
-		this.progSupplies.ProgressDisplayType = FrEee.UI.WinForms.Controls.ProgressDisplayType.Numeric;
+		this.progSupplies.ProgressDisplayType = FrEee.UI.Blazor.Views.ProgressDisplayType.Numeric;
 		this.progSupplies.RightText = "";
 		this.progSupplies.Size = new System.Drawing.Size(134, 19);
 		this.progSupplies.TabIndex = 18;
@@ -603,7 +602,6 @@ partial class SpaceVehicleReport
 		// 
 		this.progAmmunition.BackColor = System.Drawing.Color.Black;
 		this.progAmmunition.BarColor = System.Drawing.Color.Blue;
-		this.progAmmunition.BorderColor = System.Drawing.Color.CornflowerBlue;
 		this.progAmmunition.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 		this.progAmmunition.Dock = System.Windows.Forms.DockStyle.Fill;
 		this.progAmmunition.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -615,7 +613,7 @@ partial class SpaceVehicleReport
 		this.progAmmunition.Maximum = ((long)(500));
 		this.progAmmunition.Name = "progAmmunition";
 		this.progAmmunition.Padding = new System.Windows.Forms.Padding(5);
-		this.progAmmunition.ProgressDisplayType = FrEee.UI.WinForms.Controls.ProgressDisplayType.Numeric;
+		this.progAmmunition.ProgressDisplayType = FrEee.UI.Blazor.Views.ProgressDisplayType.Numeric;
 		this.progAmmunition.RightText = "";
 		this.progAmmunition.Size = new System.Drawing.Size(134, 19);
 		this.progAmmunition.TabIndex = 20;
@@ -636,7 +634,6 @@ partial class SpaceVehicleReport
 		// 
 		this.progFuel.BackColor = System.Drawing.Color.Black;
 		this.progFuel.BarColor = System.Drawing.Color.Blue;
-		this.progFuel.BorderColor = System.Drawing.Color.CornflowerBlue;
 		this.progFuel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 		this.progFuel.Dock = System.Windows.Forms.DockStyle.Fill;
 		this.progFuel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -648,7 +645,7 @@ partial class SpaceVehicleReport
 		this.progFuel.Maximum = ((long)(2000));
 		this.progFuel.Name = "progFuel";
 		this.progFuel.Padding = new System.Windows.Forms.Padding(5);
-		this.progFuel.ProgressDisplayType = FrEee.UI.WinForms.Controls.ProgressDisplayType.Numeric;
+		this.progFuel.ProgressDisplayType = FrEee.UI.Blazor.Views.ProgressDisplayType.Numeric;
 		this.progFuel.RightText = "";
 		this.progFuel.Size = new System.Drawing.Size(134, 19);
 		this.progFuel.TabIndex = 22;
@@ -685,7 +682,6 @@ partial class SpaceVehicleReport
 		// 
 		this.progHull.BackColor = System.Drawing.Color.Black;
 		this.progHull.BarColor = System.Drawing.Color.Blue;
-		this.progHull.BorderColor = System.Drawing.Color.CornflowerBlue;
 		this.progHull.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 		this.progHull.Dock = System.Windows.Forms.DockStyle.Fill;
 		this.progHull.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -697,7 +693,7 @@ partial class SpaceVehicleReport
 		this.progHull.Maximum = ((long)(200));
 		this.progHull.Name = "progHull";
 		this.progHull.Padding = new System.Windows.Forms.Padding(5);
-		this.progHull.ProgressDisplayType = FrEee.UI.WinForms.Controls.ProgressDisplayType.Numeric;
+		this.progHull.ProgressDisplayType = FrEee.UI.Blazor.Views.ProgressDisplayType.Numeric;
 		this.progHull.RightText = "";
 		this.progHull.Size = new System.Drawing.Size(135, 19);
 		this.progHull.TabIndex = 30;
@@ -707,7 +703,6 @@ partial class SpaceVehicleReport
 		// 
 		this.progArmor.BackColor = System.Drawing.Color.Black;
 		this.progArmor.BarColor = System.Drawing.Color.Blue;
-		this.progArmor.BorderColor = System.Drawing.Color.CornflowerBlue;
 		this.progArmor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 		this.progArmor.Dock = System.Windows.Forms.DockStyle.Fill;
 		this.progArmor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -719,7 +714,7 @@ partial class SpaceVehicleReport
 		this.progArmor.Maximum = ((long)(300));
 		this.progArmor.Name = "progArmor";
 		this.progArmor.Padding = new System.Windows.Forms.Padding(5);
-		this.progArmor.ProgressDisplayType = FrEee.UI.WinForms.Controls.ProgressDisplayType.Numeric;
+		this.progArmor.ProgressDisplayType = FrEee.UI.Blazor.Views.ProgressDisplayType.Numeric;
 		this.progArmor.RightText = "";
 		this.progArmor.Size = new System.Drawing.Size(135, 19);
 		this.progArmor.TabIndex = 29;
@@ -740,7 +735,6 @@ partial class SpaceVehicleReport
 		// 
 		this.progShields.BackColor = System.Drawing.Color.Black;
 		this.progShields.BarColor = System.Drawing.Color.Blue;
-		this.progShields.BorderColor = System.Drawing.Color.CornflowerBlue;
 		this.progShields.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 		this.progShields.Dock = System.Windows.Forms.DockStyle.Fill;
 		this.progShields.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -752,7 +746,7 @@ partial class SpaceVehicleReport
 		this.progShields.Maximum = ((long)(200));
 		this.progShields.Name = "progShields";
 		this.progShields.Padding = new System.Windows.Forms.Padding(5);
-		this.progShields.ProgressDisplayType = FrEee.UI.WinForms.Controls.ProgressDisplayType.Numeric;
+		this.progShields.ProgressDisplayType = FrEee.UI.Blazor.Views.ProgressDisplayType.Numeric;
 		this.progShields.RightText = "";
 		this.progShields.Size = new System.Drawing.Size(135, 19);
 		this.progShields.TabIndex = 24;
@@ -784,7 +778,6 @@ partial class SpaceVehicleReport
 		// 
 		this.progMovement.BackColor = System.Drawing.Color.Black;
 		this.progMovement.BarColor = System.Drawing.Color.Blue;
-		this.progMovement.BorderColor = System.Drawing.Color.CornflowerBlue;
 		this.progMovement.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 		this.progMovement.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 		this.progMovement.ForeColor = System.Drawing.Color.White;
@@ -795,7 +788,7 @@ partial class SpaceVehicleReport
 		this.progMovement.Maximum = ((long)(6));
 		this.progMovement.Name = "progMovement";
 		this.progMovement.Padding = new System.Windows.Forms.Padding(5);
-		this.progMovement.ProgressDisplayType = FrEee.UI.WinForms.Controls.ProgressDisplayType.Numeric;
+		this.progMovement.ProgressDisplayType = FrEee.UI.Blazor.Views.ProgressDisplayType.Numeric;
 		this.progMovement.RightText = "";
 		this.progMovement.Size = new System.Drawing.Size(103, 19);
 		this.progMovement.TabIndex = 98;
