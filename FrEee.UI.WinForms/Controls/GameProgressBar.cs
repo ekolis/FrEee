@@ -10,6 +10,8 @@ using BlazorProgressBar = FrEee.UI.Blazor.Views.ProgressBar;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.UI.Blazor.Views;
+using System.Threading.Tasks;
+using FrEee.UI.WinForms.Forms;
 
 namespace FrEee.UI.WinForms.Controls;
 
@@ -21,7 +23,14 @@ public partial class GameProgressBar : UserControl
 		this.SizeChanged += GameProgressBar_SizeChanged;
 
 		// set up view model
-		ViewModel.OnClick = () => OnClick(new EventArgs());
+		ViewModel.OnClick = () =>
+		{
+			// HACK: https://github.com/MicrosoftEdge/WebView2Feedback/issues/3028#issuecomment-1461207168
+			Task.Delay(0).ContinueWith(_ => MainGameForm.Instance.Invoke(() =>
+			{
+				OnClick(new EventArgs());
+			}));
+		};
 
 		// set up Blazor
 		var services = new ServiceCollection();
