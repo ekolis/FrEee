@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,11 @@ using Microsoft.AspNetCore.Components;
 
 namespace FrEee.UI.Blazor.Views
 {
-    public class ProgressBarViewModel
+    public class ProgressBarViewModel : INotifyPropertyChanged
     {
-        public long Maximum { get; set; } = 0;
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		public long Maximum { get; set; } = 0;
 
         public long Value { get; set; } = 0;
 

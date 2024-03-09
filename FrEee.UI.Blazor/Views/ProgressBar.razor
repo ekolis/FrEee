@@ -1,6 +1,29 @@
 ﻿@using System.Drawing
+@using System.ComponentModel
 
 @inject ProgressBarViewModel vm
+
+@code {
+	/// <summary>
+	/// When the view model's properties change, update the UI.
+	/// </summary>
+	/// <param name="sender"></param>
+	/// <param name="e"></param>
+	private void ViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+	{
+		StateHasChanged();
+	}
+
+	protected override void OnInitialized()
+	{
+		vm.PropertyChanged += ViewModelPropertyChanged;
+	}
+
+	public void Dispose()
+	{
+		vm.PropertyChanged -= ViewModelPropertyChanged;
+	}
+}
 
 <div @onclick="vm.OnClick">
 	<div class="fill" style="display: flex; flex-direction: row">
