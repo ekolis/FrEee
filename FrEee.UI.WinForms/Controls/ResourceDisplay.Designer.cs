@@ -28,7 +28,19 @@ partial class ResourceDisplay
 	/// </summary>
 	private void InitializeComponent()
 	{
+		blazorView = new Microsoft.AspNetCore.Components.WebView.WindowsForms.BlazorWebView();
 		this.SuspendLayout();
+		// 
+		// blazorView
+		// 
+		blazorView.Dock = System.Windows.Forms.DockStyle.Fill;
+		blazorView.Location = new System.Drawing.Point(0, 0);
+		blazorView.Margin = new System.Windows.Forms.Padding(0);
+		blazorView.Name = "blazorView";
+		blazorView.Size = new System.Drawing.Size(429, 37);
+		blazorView.StartPath = "/";
+		blazorView.TabIndex = 0;
+		blazorView.Text = "blazorWebView1";
 		// 
 		// ResourceDisplay
 		// 
@@ -39,12 +51,11 @@ partial class ResourceDisplay
 		this.Margin = new System.Windows.Forms.Padding(0);
 		this.Name = "ResourceDisplay";
 		this.Size = new System.Drawing.Size(128, 20);
-		this.Paint += new System.Windows.Forms.PaintEventHandler(this.ResourceDisplay_Paint);
-		this.ResumeLayout(false);
+		this.ResumeLayout();
 
 	}
 
 	#endregion
 
-
+	private Microsoft.AspNetCore.Components.WebView.WindowsForms.BlazorWebView blazorView;
 }

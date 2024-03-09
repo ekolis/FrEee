@@ -1,5 +1,6 @@
 using FrEee.Objects.Civilization;
 using FrEee.UI.WinForms.Objects;
+using FrEee.UI.WinForms.Utility.Extensions;
 using System;
 using System.IO;
 using System.Reflection;
@@ -40,6 +41,7 @@ public partial class OptionsForm : GameForm
 	private Label label10;
 	private GroupBox groupBox2;
 	private CheckBox chkQuitToMainMenu;
+	private Button btnBlazorTest;
 	private TrackBar sldMusic;
 
 	private void btnCancel_Click(object sender, EventArgs e)
@@ -155,358 +157,369 @@ public partial class OptionsForm : GameForm
 
 	private void InitializeComponent()
 	{
-		this.sldMaster = new System.Windows.Forms.TrackBar();
-		this.label7 = new System.Windows.Forms.Label();
-		this.groupBox1 = new System.Windows.Forms.GroupBox();
-		this.label2 = new System.Windows.Forms.Label();
-		this.sldEffects = new System.Windows.Forms.TrackBar();
-		this.label1 = new System.Windows.Forms.Label();
-		this.sldMusic = new System.Windows.Forms.TrackBar();
-		this.btnCancel = new FrEee.UI.WinForms.Controls.GameButton();
-		this.btnSave = new FrEee.UI.WinForms.Controls.GameButton();
-		this.btnSE4 = new FrEee.UI.WinForms.Controls.GameButton();
-		this.grpPlayerInfo = new System.Windows.Forms.GroupBox();
-		this.txtWebsite = new System.Windows.Forms.TextBox();
-		this.label10 = new System.Windows.Forms.Label();
-		this.txtNotes = new System.Windows.Forms.TextBox();
-		this.txtDiscord = new System.Windows.Forms.TextBox();
-		this.txtIrc = new System.Windows.Forms.TextBox();
-		this.txtEmail = new System.Windows.Forms.TextBox();
-		this.txtPbw = new System.Windows.Forms.TextBox();
-		this.txtName = new System.Windows.Forms.TextBox();
-		this.label9 = new System.Windows.Forms.Label();
-		this.label8 = new System.Windows.Forms.Label();
-		this.label6 = new System.Windows.Forms.Label();
-		this.label5 = new System.Windows.Forms.Label();
-		this.label4 = new System.Windows.Forms.Label();
-		this.label3 = new System.Windows.Forms.Label();
-		this.groupBox2 = new System.Windows.Forms.GroupBox();
-		this.chkQuitToMainMenu = new System.Windows.Forms.CheckBox();
-		((System.ComponentModel.ISupportInitialize)(this.sldMaster)).BeginInit();
-		this.groupBox1.SuspendLayout();
-		((System.ComponentModel.ISupportInitialize)(this.sldEffects)).BeginInit();
-		((System.ComponentModel.ISupportInitialize)(this.sldMusic)).BeginInit();
-		this.grpPlayerInfo.SuspendLayout();
-		this.groupBox2.SuspendLayout();
-		this.SuspendLayout();
+		sldMaster = new TrackBar();
+		label7 = new Label();
+		groupBox1 = new GroupBox();
+		label2 = new Label();
+		sldEffects = new TrackBar();
+		label1 = new Label();
+		sldMusic = new TrackBar();
+		btnCancel = new Controls.GameButton();
+		btnSave = new Controls.GameButton();
+		btnSE4 = new Controls.GameButton();
+		grpPlayerInfo = new GroupBox();
+		txtWebsite = new TextBox();
+		label10 = new Label();
+		txtNotes = new TextBox();
+		txtDiscord = new TextBox();
+		txtIrc = new TextBox();
+		txtEmail = new TextBox();
+		txtPbw = new TextBox();
+		txtName = new TextBox();
+		label9 = new Label();
+		label8 = new Label();
+		label6 = new Label();
+		label5 = new Label();
+		label4 = new Label();
+		label3 = new Label();
+		groupBox2 = new GroupBox();
+		chkQuitToMainMenu = new CheckBox();
+		btnBlazorTest = new Button();
+		((System.ComponentModel.ISupportInitialize)sldMaster).BeginInit();
+		groupBox1.SuspendLayout();
+		((System.ComponentModel.ISupportInitialize)sldEffects).BeginInit();
+		((System.ComponentModel.ISupportInitialize)sldMusic).BeginInit();
+		grpPlayerInfo.SuspendLayout();
+		groupBox2.SuspendLayout();
+		SuspendLayout();
 		// 
 		// sldMaster
 		// 
-		this.sldMaster.LargeChange = 10;
-		this.sldMaster.Location = new System.Drawing.Point(140, 19);
-		this.sldMaster.Maximum = 100;
-		this.sldMaster.Name = "sldMaster";
-		this.sldMaster.Size = new System.Drawing.Size(213, 80);
-		this.sldMaster.TabIndex = 0;
-		this.sldMaster.TickFrequency = 10;
+		sldMaster.LargeChange = 10;
+		sldMaster.Location = new System.Drawing.Point(140, 19);
+		sldMaster.Maximum = 100;
+		sldMaster.Name = "sldMaster";
+		sldMaster.Size = new System.Drawing.Size(213, 45);
+		sldMaster.TabIndex = 0;
+		sldMaster.TickFrequency = 10;
 		// 
 		// label7
 		// 
-		this.label7.AutoSize = true;
-		this.label7.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label7.Location = new System.Drawing.Point(6, 19);
-		this.label7.Margin = new System.Windows.Forms.Padding(3);
-		this.label7.Name = "label7";
-		this.label7.Size = new System.Drawing.Size(77, 30);
-		this.label7.TabIndex = 17;
-		this.label7.Text = "Master";
+		label7.AutoSize = true;
+		label7.ForeColor = System.Drawing.Color.CornflowerBlue;
+		label7.Location = new System.Drawing.Point(6, 19);
+		label7.Margin = new Padding(3);
+		label7.Name = "label7";
+		label7.Size = new System.Drawing.Size(43, 15);
+		label7.TabIndex = 17;
+		label7.Text = "Master";
 		// 
 		// groupBox1
 		// 
-		this.groupBox1.Controls.Add(this.label2);
-		this.groupBox1.Controls.Add(this.sldEffects);
-		this.groupBox1.Controls.Add(this.label1);
-		this.groupBox1.Controls.Add(this.sldMusic);
-		this.groupBox1.Controls.Add(this.label7);
-		this.groupBox1.Controls.Add(this.sldMaster);
-		this.groupBox1.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.groupBox1.Location = new System.Drawing.Point(12, 319);
-		this.groupBox1.Name = "groupBox1";
-		this.groupBox1.Size = new System.Drawing.Size(359, 176);
-		this.groupBox1.TabIndex = 2;
-		this.groupBox1.TabStop = false;
-		this.groupBox1.Text = "Volume";
+		groupBox1.Controls.Add(label2);
+		groupBox1.Controls.Add(sldEffects);
+		groupBox1.Controls.Add(label1);
+		groupBox1.Controls.Add(sldMusic);
+		groupBox1.Controls.Add(label7);
+		groupBox1.Controls.Add(sldMaster);
+		groupBox1.ForeColor = System.Drawing.Color.CornflowerBlue;
+		groupBox1.Location = new System.Drawing.Point(12, 319);
+		groupBox1.Name = "groupBox1";
+		groupBox1.Size = new System.Drawing.Size(359, 176);
+		groupBox1.TabIndex = 2;
+		groupBox1.TabStop = false;
+		groupBox1.Text = "Volume";
 		// 
 		// label2
 		// 
-		this.label2.AutoSize = true;
-		this.label2.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label2.Location = new System.Drawing.Point(6, 121);
-		this.label2.Margin = new System.Windows.Forms.Padding(3);
-		this.label2.Name = "label2";
-		this.label2.Size = new System.Drawing.Size(75, 30);
-		this.label2.TabIndex = 21;
-		this.label2.Text = "Effects";
+		label2.AutoSize = true;
+		label2.ForeColor = System.Drawing.Color.CornflowerBlue;
+		label2.Location = new System.Drawing.Point(6, 121);
+		label2.Margin = new Padding(3);
+		label2.Name = "label2";
+		label2.Size = new System.Drawing.Size(42, 15);
+		label2.TabIndex = 21;
+		label2.Text = "Effects";
 		// 
 		// sldEffects
 		// 
-		this.sldEffects.Enabled = false;
-		this.sldEffects.LargeChange = 10;
-		this.sldEffects.Location = new System.Drawing.Point(140, 121);
-		this.sldEffects.Maximum = 100;
-		this.sldEffects.Name = "sldEffects";
-		this.sldEffects.Size = new System.Drawing.Size(213, 80);
-		this.sldEffects.TabIndex = 2;
-		this.sldEffects.TickFrequency = 10;
+		sldEffects.Enabled = false;
+		sldEffects.LargeChange = 10;
+		sldEffects.Location = new System.Drawing.Point(140, 121);
+		sldEffects.Maximum = 100;
+		sldEffects.Name = "sldEffects";
+		sldEffects.Size = new System.Drawing.Size(213, 45);
+		sldEffects.TabIndex = 2;
+		sldEffects.TickFrequency = 10;
 		// 
 		// label1
 		// 
-		this.label1.AutoSize = true;
-		this.label1.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label1.Location = new System.Drawing.Point(6, 70);
-		this.label1.Margin = new System.Windows.Forms.Padding(3);
-		this.label1.Name = "label1";
-		this.label1.Size = new System.Drawing.Size(68, 30);
-		this.label1.TabIndex = 19;
-		this.label1.Text = "Music";
+		label1.AutoSize = true;
+		label1.ForeColor = System.Drawing.Color.CornflowerBlue;
+		label1.Location = new System.Drawing.Point(6, 70);
+		label1.Margin = new Padding(3);
+		label1.Name = "label1";
+		label1.Size = new System.Drawing.Size(39, 15);
+		label1.TabIndex = 19;
+		label1.Text = "Music";
 		// 
 		// sldMusic
 		// 
-		this.sldMusic.LargeChange = 10;
-		this.sldMusic.Location = new System.Drawing.Point(140, 70);
-		this.sldMusic.Maximum = 100;
-		this.sldMusic.Name = "sldMusic";
-		this.sldMusic.Size = new System.Drawing.Size(213, 80);
-		this.sldMusic.TabIndex = 1;
-		this.sldMusic.TickFrequency = 10;
+		sldMusic.LargeChange = 10;
+		sldMusic.Location = new System.Drawing.Point(140, 70);
+		sldMusic.Maximum = 100;
+		sldMusic.Name = "sldMusic";
+		sldMusic.Size = new System.Drawing.Size(213, 45);
+		sldMusic.TabIndex = 1;
+		sldMusic.TickFrequency = 10;
 		// 
 		// btnCancel
 		// 
-		this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-		this.btnCancel.BackColor = System.Drawing.Color.Black;
-		this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.btnCancel.Location = new System.Drawing.Point(295, 585);
-		this.btnCancel.Name = "btnCancel";
-		this.btnCancel.Size = new System.Drawing.Size(75, 23);
-		this.btnCancel.TabIndex = 5;
-		this.btnCancel.Text = "Cancel";
-		this.btnCancel.UseVisualStyleBackColor = false;
-		this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+		btnCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+		btnCancel.BackColor = System.Drawing.Color.Black;
+		btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
+		btnCancel.Location = new System.Drawing.Point(295, 585);
+		btnCancel.Name = "btnCancel";
+		btnCancel.Size = new System.Drawing.Size(75, 23);
+		btnCancel.TabIndex = 5;
+		btnCancel.Text = "Cancel";
+		btnCancel.UseVisualStyleBackColor = false;
+		btnCancel.Click += btnCancel_Click;
 		// 
 		// btnSave
 		// 
-		this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-		this.btnSave.BackColor = System.Drawing.Color.Black;
-		this.btnSave.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.btnSave.Location = new System.Drawing.Point(214, 585);
-		this.btnSave.Name = "btnSave";
-		this.btnSave.Size = new System.Drawing.Size(75, 23);
-		this.btnSave.TabIndex = 4;
-		this.btnSave.Text = "Save";
-		this.btnSave.UseVisualStyleBackColor = false;
-		this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+		btnSave.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+		btnSave.BackColor = System.Drawing.Color.Black;
+		btnSave.ForeColor = System.Drawing.Color.CornflowerBlue;
+		btnSave.Location = new System.Drawing.Point(214, 585);
+		btnSave.Name = "btnSave";
+		btnSave.Size = new System.Drawing.Size(75, 23);
+		btnSave.TabIndex = 4;
+		btnSave.Text = "Save";
+		btnSave.UseVisualStyleBackColor = false;
+		btnSave.Click += btnSave_Click;
 		// 
 		// btnSE4
 		// 
-		this.btnSE4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-		this.btnSE4.BackColor = System.Drawing.Color.Black;
-		this.btnSE4.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.btnSE4.Location = new System.Drawing.Point(12, 578);
-		this.btnSE4.Name = "btnSE4";
-		this.btnSE4.Size = new System.Drawing.Size(104, 30);
-		this.btnSE4.TabIndex = 3;
-		this.btnSE4.Text = "Copy SE4 Assets";
-		this.btnSE4.UseVisualStyleBackColor = false;
-		this.btnSE4.Click += new System.EventHandler(this.btnSE4_Click);
+		btnSE4.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+		btnSE4.BackColor = System.Drawing.Color.Black;
+		btnSE4.ForeColor = System.Drawing.Color.CornflowerBlue;
+		btnSE4.Location = new System.Drawing.Point(12, 578);
+		btnSE4.Name = "btnSE4";
+		btnSE4.Size = new System.Drawing.Size(104, 30);
+		btnSE4.TabIndex = 3;
+		btnSE4.Text = "Copy SE4 Assets";
+		btnSE4.UseVisualStyleBackColor = false;
+		btnSE4.Click += btnSE4_Click;
 		// 
 		// grpPlayerInfo
 		// 
-		this.grpPlayerInfo.Controls.Add(this.txtWebsite);
-		this.grpPlayerInfo.Controls.Add(this.label10);
-		this.grpPlayerInfo.Controls.Add(this.txtNotes);
-		this.grpPlayerInfo.Controls.Add(this.txtDiscord);
-		this.grpPlayerInfo.Controls.Add(this.txtIrc);
-		this.grpPlayerInfo.Controls.Add(this.txtEmail);
-		this.grpPlayerInfo.Controls.Add(this.txtPbw);
-		this.grpPlayerInfo.Controls.Add(this.txtName);
-		this.grpPlayerInfo.Controls.Add(this.label9);
-		this.grpPlayerInfo.Controls.Add(this.label8);
-		this.grpPlayerInfo.Controls.Add(this.label6);
-		this.grpPlayerInfo.Controls.Add(this.label5);
-		this.grpPlayerInfo.Controls.Add(this.label4);
-		this.grpPlayerInfo.Controls.Add(this.label3);
-		this.grpPlayerInfo.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.grpPlayerInfo.Location = new System.Drawing.Point(12, 12);
-		this.grpPlayerInfo.Name = "grpPlayerInfo";
-		this.grpPlayerInfo.Size = new System.Drawing.Size(359, 301);
-		this.grpPlayerInfo.TabIndex = 1;
-		this.grpPlayerInfo.TabStop = false;
-		this.grpPlayerInfo.Text = "Player Info";
+		grpPlayerInfo.Controls.Add(btnBlazorTest);
+		grpPlayerInfo.Controls.Add(txtWebsite);
+		grpPlayerInfo.Controls.Add(label10);
+		grpPlayerInfo.Controls.Add(txtNotes);
+		grpPlayerInfo.Controls.Add(txtDiscord);
+		grpPlayerInfo.Controls.Add(txtIrc);
+		grpPlayerInfo.Controls.Add(txtEmail);
+		grpPlayerInfo.Controls.Add(txtPbw);
+		grpPlayerInfo.Controls.Add(txtName);
+		grpPlayerInfo.Controls.Add(label9);
+		grpPlayerInfo.Controls.Add(label8);
+		grpPlayerInfo.Controls.Add(label6);
+		grpPlayerInfo.Controls.Add(label5);
+		grpPlayerInfo.Controls.Add(label4);
+		grpPlayerInfo.Controls.Add(label3);
+		grpPlayerInfo.ForeColor = System.Drawing.Color.CornflowerBlue;
+		grpPlayerInfo.Location = new System.Drawing.Point(12, 12);
+		grpPlayerInfo.Name = "grpPlayerInfo";
+		grpPlayerInfo.Size = new System.Drawing.Size(359, 301);
+		grpPlayerInfo.TabIndex = 1;
+		grpPlayerInfo.TabStop = false;
+		grpPlayerInfo.Text = "Player Info";
 		// 
 		// txtWebsite
 		// 
-		this.txtWebsite.Location = new System.Drawing.Point(57, 146);
-		this.txtWebsite.Name = "txtWebsite";
-		this.txtWebsite.Size = new System.Drawing.Size(190, 35);
-		this.txtWebsite.TabIndex = 5;
+		txtWebsite.Location = new System.Drawing.Point(57, 146);
+		txtWebsite.Name = "txtWebsite";
+		txtWebsite.Size = new System.Drawing.Size(190, 23);
+		txtWebsite.TabIndex = 5;
 		// 
 		// label10
 		// 
-		this.label10.AutoSize = true;
-		this.label10.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label10.Location = new System.Drawing.Point(7, 149);
-		this.label10.Margin = new System.Windows.Forms.Padding(3);
-		this.label10.Name = "label10";
-		this.label10.Size = new System.Drawing.Size(87, 30);
-		this.label10.TabIndex = 30;
-		this.label10.Text = "Website";
+		label10.AutoSize = true;
+		label10.ForeColor = System.Drawing.Color.CornflowerBlue;
+		label10.Location = new System.Drawing.Point(7, 149);
+		label10.Margin = new Padding(3);
+		label10.Name = "label10";
+		label10.Size = new System.Drawing.Size(49, 15);
+		label10.TabIndex = 30;
+		label10.Text = "Website";
 		// 
 		// txtNotes
 		// 
-		this.txtNotes.Location = new System.Drawing.Point(57, 174);
-		this.txtNotes.Multiline = true;
-		this.txtNotes.Name = "txtNotes";
-		this.txtNotes.Size = new System.Drawing.Size(296, 98);
-		this.txtNotes.TabIndex = 6;
+		txtNotes.Location = new System.Drawing.Point(57, 174);
+		txtNotes.Multiline = true;
+		txtNotes.Name = "txtNotes";
+		txtNotes.Size = new System.Drawing.Size(296, 98);
+		txtNotes.TabIndex = 6;
 		// 
 		// txtDiscord
 		// 
-		this.txtDiscord.Location = new System.Drawing.Point(57, 120);
-		this.txtDiscord.Name = "txtDiscord";
-		this.txtDiscord.Size = new System.Drawing.Size(190, 35);
-		this.txtDiscord.TabIndex = 4;
+		txtDiscord.Location = new System.Drawing.Point(57, 120);
+		txtDiscord.Name = "txtDiscord";
+		txtDiscord.Size = new System.Drawing.Size(190, 23);
+		txtDiscord.TabIndex = 4;
 		// 
 		// txtIrc
 		// 
-		this.txtIrc.Location = new System.Drawing.Point(57, 94);
-		this.txtIrc.Name = "txtIrc";
-		this.txtIrc.Size = new System.Drawing.Size(190, 35);
-		this.txtIrc.TabIndex = 3;
+		txtIrc.Location = new System.Drawing.Point(57, 94);
+		txtIrc.Name = "txtIrc";
+		txtIrc.Size = new System.Drawing.Size(190, 23);
+		txtIrc.TabIndex = 3;
 		// 
 		// txtEmail
 		// 
-		this.txtEmail.Location = new System.Drawing.Point(57, 68);
-		this.txtEmail.Name = "txtEmail";
-		this.txtEmail.Size = new System.Drawing.Size(190, 35);
-		this.txtEmail.TabIndex = 2;
+		txtEmail.Location = new System.Drawing.Point(57, 68);
+		txtEmail.Name = "txtEmail";
+		txtEmail.Size = new System.Drawing.Size(190, 23);
+		txtEmail.TabIndex = 2;
 		// 
 		// txtPbw
 		// 
-		this.txtPbw.Location = new System.Drawing.Point(57, 42);
-		this.txtPbw.Name = "txtPbw";
-		this.txtPbw.Size = new System.Drawing.Size(190, 35);
-		this.txtPbw.TabIndex = 1;
+		txtPbw.Location = new System.Drawing.Point(57, 42);
+		txtPbw.Name = "txtPbw";
+		txtPbw.Size = new System.Drawing.Size(190, 23);
+		txtPbw.TabIndex = 1;
 		// 
 		// txtName
 		// 
-		this.txtName.Location = new System.Drawing.Point(57, 16);
-		this.txtName.Name = "txtName";
-		this.txtName.Size = new System.Drawing.Size(190, 35);
-		this.txtName.TabIndex = 0;
+		txtName.Location = new System.Drawing.Point(57, 16);
+		txtName.Name = "txtName";
+		txtName.Size = new System.Drawing.Size(190, 23);
+		txtName.TabIndex = 0;
 		// 
 		// label9
 		// 
-		this.label9.AutoSize = true;
-		this.label9.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label9.Location = new System.Drawing.Point(7, 174);
-		this.label9.Margin = new System.Windows.Forms.Padding(3);
-		this.label9.Name = "label9";
-		this.label9.Size = new System.Drawing.Size(68, 30);
-		this.label9.TabIndex = 23;
-		this.label9.Text = "Notes";
+		label9.AutoSize = true;
+		label9.ForeColor = System.Drawing.Color.CornflowerBlue;
+		label9.Location = new System.Drawing.Point(7, 174);
+		label9.Margin = new Padding(3);
+		label9.Name = "label9";
+		label9.Size = new System.Drawing.Size(38, 15);
+		label9.TabIndex = 23;
+		label9.Text = "Notes";
 		// 
 		// label8
 		// 
-		this.label8.AutoSize = true;
-		this.label8.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label8.Location = new System.Drawing.Point(6, 123);
-		this.label8.Margin = new System.Windows.Forms.Padding(3);
-		this.label8.Name = "label8";
-		this.label8.Size = new System.Drawing.Size(83, 30);
-		this.label8.TabIndex = 22;
-		this.label8.Text = "Discord";
+		label8.AutoSize = true;
+		label8.ForeColor = System.Drawing.Color.CornflowerBlue;
+		label8.Location = new System.Drawing.Point(6, 123);
+		label8.Margin = new Padding(3);
+		label8.Name = "label8";
+		label8.Size = new System.Drawing.Size(47, 15);
+		label8.TabIndex = 22;
+		label8.Text = "Discord";
 		// 
 		// label6
 		// 
-		this.label6.AutoSize = true;
-		this.label6.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label6.Location = new System.Drawing.Point(7, 97);
-		this.label6.Margin = new System.Windows.Forms.Padding(3);
-		this.label6.Name = "label6";
-		this.label6.Size = new System.Drawing.Size(45, 30);
-		this.label6.TabIndex = 21;
-		this.label6.Text = "IRC";
+		label6.AutoSize = true;
+		label6.ForeColor = System.Drawing.Color.CornflowerBlue;
+		label6.Location = new System.Drawing.Point(7, 97);
+		label6.Margin = new Padding(3);
+		label6.Name = "label6";
+		label6.Size = new System.Drawing.Size(25, 15);
+		label6.TabIndex = 21;
+		label6.Text = "IRC";
 		// 
 		// label5
 		// 
-		this.label5.AutoSize = true;
-		this.label5.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label5.Location = new System.Drawing.Point(6, 71);
-		this.label5.Margin = new System.Windows.Forms.Padding(3);
-		this.label5.Name = "label5";
-		this.label5.Size = new System.Drawing.Size(63, 30);
-		this.label5.TabIndex = 20;
-		this.label5.Text = "Email";
+		label5.AutoSize = true;
+		label5.ForeColor = System.Drawing.Color.CornflowerBlue;
+		label5.Location = new System.Drawing.Point(6, 71);
+		label5.Margin = new Padding(3);
+		label5.Name = "label5";
+		label5.Size = new System.Drawing.Size(36, 15);
+		label5.TabIndex = 20;
+		label5.Text = "Email";
 		// 
 		// label4
 		// 
-		this.label4.AutoSize = true;
-		this.label4.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label4.Location = new System.Drawing.Point(7, 45);
-		this.label4.Margin = new System.Windows.Forms.Padding(3);
-		this.label4.Name = "label4";
-		this.label4.Size = new System.Drawing.Size(57, 30);
-		this.label4.TabIndex = 19;
-		this.label4.Text = "PBW";
+		label4.AutoSize = true;
+		label4.ForeColor = System.Drawing.Color.CornflowerBlue;
+		label4.Location = new System.Drawing.Point(7, 45);
+		label4.Margin = new Padding(3);
+		label4.Name = "label4";
+		label4.Size = new System.Drawing.Size(32, 15);
+		label4.TabIndex = 19;
+		label4.Text = "PBW";
 		// 
 		// label3
 		// 
-		this.label3.AutoSize = true;
-		this.label3.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label3.Location = new System.Drawing.Point(7, 19);
-		this.label3.Margin = new System.Windows.Forms.Padding(3);
-		this.label3.Name = "label3";
-		this.label3.Size = new System.Drawing.Size(69, 30);
-		this.label3.TabIndex = 18;
-		this.label3.Text = "Name";
+		label3.AutoSize = true;
+		label3.ForeColor = System.Drawing.Color.CornflowerBlue;
+		label3.Location = new System.Drawing.Point(7, 19);
+		label3.Margin = new Padding(3);
+		label3.Name = "label3";
+		label3.Size = new System.Drawing.Size(39, 15);
+		label3.TabIndex = 18;
+		label3.Text = "Name";
 		// 
 		// groupBox2
 		// 
-		this.groupBox2.Controls.Add(this.chkQuitToMainMenu);
-		this.groupBox2.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.groupBox2.Location = new System.Drawing.Point(12, 501);
-		this.groupBox2.Name = "groupBox2";
-		this.groupBox2.Size = new System.Drawing.Size(359, 57);
-		this.groupBox2.TabIndex = 22;
-		this.groupBox2.TabStop = false;
-		this.groupBox2.Text = "UI";
-		this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+		groupBox2.Controls.Add(chkQuitToMainMenu);
+		groupBox2.ForeColor = System.Drawing.Color.CornflowerBlue;
+		groupBox2.Location = new System.Drawing.Point(12, 501);
+		groupBox2.Name = "groupBox2";
+		groupBox2.Size = new System.Drawing.Size(359, 57);
+		groupBox2.TabIndex = 22;
+		groupBox2.TabStop = false;
+		groupBox2.Text = "UI";
+		groupBox2.Enter += groupBox2_Enter;
 		// 
 		// chkQuitToMainMenu
 		// 
-		this.chkQuitToMainMenu.AutoSize = true;
-		this.chkQuitToMainMenu.Location = new System.Drawing.Point(15, 24);
-		this.chkQuitToMainMenu.Name = "chkQuitToMainMenu";
-		this.chkQuitToMainMenu.Size = new System.Drawing.Size(217, 34);
-		this.chkQuitToMainMenu.TabIndex = 0;
-		this.chkQuitToMainMenu.Text = "Quit to Main Menu";
-		this.chkQuitToMainMenu.UseVisualStyleBackColor = true;
+		chkQuitToMainMenu.AutoSize = true;
+		chkQuitToMainMenu.Location = new System.Drawing.Point(15, 24);
+		chkQuitToMainMenu.Name = "chkQuitToMainMenu";
+		chkQuitToMainMenu.Size = new System.Drawing.Size(127, 19);
+		chkQuitToMainMenu.TabIndex = 0;
+		chkQuitToMainMenu.Text = "Quit to Main Menu";
+		chkQuitToMainMenu.UseVisualStyleBackColor = true;
+		// 
+		// btnBlazorTest
+		// 
+		btnBlazorTest.Location = new System.Drawing.Point(268, 67);
+		btnBlazorTest.Name = "btnBlazorTest";
+		btnBlazorTest.Size = new System.Drawing.Size(75, 23);
+		btnBlazorTest.TabIndex = 31;
+		btnBlazorTest.Text = "blazor test";
+		btnBlazorTest.UseVisualStyleBackColor = true;
+		btnBlazorTest.Click += btnBlazorTest_Click;
 		// 
 		// OptionsForm
 		// 
-		this.BackColor = System.Drawing.Color.Black;
-		this.ClientSize = new System.Drawing.Size(382, 620);
-		this.Controls.Add(this.groupBox2);
-		this.Controls.Add(this.grpPlayerInfo);
-		this.Controls.Add(this.btnSE4);
-		this.Controls.Add(this.btnCancel);
-		this.Controls.Add(this.btnSave);
-		this.Controls.Add(this.groupBox1);
-		this.MaximizeBox = false;
-		this.Name = "OptionsForm";
-		this.Text = "Options";
-		this.Load += new System.EventHandler(this.OptionsForm_Load);
-		((System.ComponentModel.ISupportInitialize)(this.sldMaster)).EndInit();
-		this.groupBox1.ResumeLayout(false);
-		this.groupBox1.PerformLayout();
-		((System.ComponentModel.ISupportInitialize)(this.sldEffects)).EndInit();
-		((System.ComponentModel.ISupportInitialize)(this.sldMusic)).EndInit();
-		this.grpPlayerInfo.ResumeLayout(false);
-		this.grpPlayerInfo.PerformLayout();
-		this.groupBox2.ResumeLayout(false);
-		this.groupBox2.PerformLayout();
-		this.ResumeLayout(false);
-
+		BackColor = System.Drawing.Color.Black;
+		ClientSize = new System.Drawing.Size(382, 620);
+		Controls.Add(groupBox2);
+		Controls.Add(grpPlayerInfo);
+		Controls.Add(btnSE4);
+		Controls.Add(btnCancel);
+		Controls.Add(btnSave);
+		Controls.Add(groupBox1);
+		MaximizeBox = false;
+		Name = "OptionsForm";
+		Text = "Options";
+		Load += OptionsForm_Load;
+		((System.ComponentModel.ISupportInitialize)sldMaster).EndInit();
+		groupBox1.ResumeLayout(false);
+		groupBox1.PerformLayout();
+		((System.ComponentModel.ISupportInitialize)sldEffects).EndInit();
+		((System.ComponentModel.ISupportInitialize)sldMusic).EndInit();
+		grpPlayerInfo.ResumeLayout(false);
+		grpPlayerInfo.PerformLayout();
+		groupBox2.ResumeLayout(false);
+		groupBox2.PerformLayout();
+		ResumeLayout(false);
 	}
 
 	private void OptionsForm_Load(object sender, EventArgs e)
@@ -527,5 +540,10 @@ public partial class OptionsForm : GameForm
 	private void groupBox2_Enter(object sender, EventArgs e)
 	{
 
+	}
+
+	private void btnBlazorTest_Click(object sender, EventArgs e)
+	{
+		this.ShowChildForm(new BlazorTestForm());
 	}
 }

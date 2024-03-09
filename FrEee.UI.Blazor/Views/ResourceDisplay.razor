@@ -1,0 +1,31 @@
+﻿@using System.Drawing
+@using System.ComponentModel
+
+@inject ResourceDisplayViewModel vm
+
+@code {
+	/// <summary>
+	/// When the view model's properties change, update the UI.
+	/// </summary>
+	/// <param name="sender"></param>
+	/// <param name="e"></param>
+	private void ViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+	{
+		StateHasChanged();
+	}
+
+	protected override void OnInitialized()
+	{
+		vm.PropertyChanged += ViewModelPropertyChanged;
+	}
+
+	public void Dispose()
+	{
+		vm.PropertyChanged -= ViewModelPropertyChanged;
+	}
+}
+
+<div class="fill" style="display: flex; flex-direction: row; text-align: right;">
+	<span style="color: @vm.Color.ToRgba()">@vm.Text</span>
+	<img src="@vm.IconSource" />
+</div>

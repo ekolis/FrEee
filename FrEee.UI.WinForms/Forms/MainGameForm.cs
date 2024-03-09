@@ -1322,17 +1322,28 @@ public partial class MainGameForm : GameForm
 	private void SetUpResourceDisplay()
 	{
 		var income = Empire.Current.NetIncomeLessConstruction;
+
+		resMin.Resource = Resource.Minerals;
 		resMin.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Minerals];
 		resMin.Change = income[Resource.Minerals];
+
+		resOrg.Resource = Resource.Organics;
 		resOrg.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Organics];
 		resOrg.Change = income[Resource.Organics];
+
+		resRad.Resource = Resource.Radioactives;
 		resRad.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Radioactives];
 		resRad.Change = income[Resource.Radioactives];
+
+		resRes.Resource = Resource.Research;
 		resRes.Amount = income[Resource.Research];
+
 		if (Empire.Current.BonusResearch != 0)
 			resRes.Change = Empire.Current.BonusResearch;
 		else
 			resRes.Change = null;
+
+		resInt.Resource = Resource.Intelligence;
 		resInt.Amount = income[Resource.Intelligence];
 	}
 
