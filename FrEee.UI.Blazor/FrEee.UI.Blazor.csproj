@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FrEee.Assets\FrEee.Assets.csproj" />
-    <ProjectReference Include="..\FrEee.UI\FrEee.UI.csproj" />
     <ProjectReference Include="..\FrEee\FrEee.csproj" />
   </ItemGroup>
 
