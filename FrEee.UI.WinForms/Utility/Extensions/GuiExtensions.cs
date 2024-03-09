@@ -251,8 +251,11 @@ public static class GuiExtensions
 		where TForm : Form
 	{
 		parent.BeginInvoke(new Action(() => parent.Cursor = Cursors.WaitCursor));
+
+		// TODO: why is this inconsistent?
 		if (form.StartPosition != FormStartPosition.CenterScreen)
 			form.StartPosition = FormStartPosition.CenterParent;
+
 		form.KeyPreview = true;
 		form.KeyDown += escapeKeyHandler;
 		form.KeyDown += childForm_KeyDown_forDebugConsole;
