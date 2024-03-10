@@ -24,6 +24,8 @@ public partial class ResourceDisplay : UserControl
 		blazorView.HostPage = "wwwroot\\index.html";
 		blazorView.Services = services.BuildServiceProvider();
 		blazorView.RootComponents.Add<BlazorResourceDisplay>("#app");
+		blazorView.Padding = new(0);
+		blazorView.Margin = new(0);
 	}
 
 	public ResourceDisplayViewModel ViewModel { get; } = new();

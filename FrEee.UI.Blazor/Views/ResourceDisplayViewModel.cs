@@ -12,8 +12,8 @@ using Microsoft.AspNetCore.Components;
 
 namespace FrEee.UI.Blazor.Views
 {
-    public class ResourceDisplayViewModel : INotifyPropertyChanged
-    {
+	public class ResourceDisplayViewModel : INotifyPropertyChanged
+	{
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		public int Amount { get; set; } = 0;
@@ -72,12 +72,17 @@ namespace FrEee.UI.Blazor.Views
 			}
 		}
 
-		public string? IconSource => Resource?.IconPaths.FirstOrDefault(it => File.Exists(it));
+		// TODO: generalize IconSource, rewrite Pictures class, allow other images besides PNG
+		public string? IconSource => Resource?.IconPaths
+			.Select(it => Path.Combine("Pictures", it + ".png"))
+			.FirstOrDefault(File.Exists);
 
 		public string? Name
 		{
 			get => Resource?.Name;
 			set => Resource = Resource.Find(value ?? "");
 		}
+
+		public string? Abbreviation => Name?.Substring(0, 3);
 	}
 }

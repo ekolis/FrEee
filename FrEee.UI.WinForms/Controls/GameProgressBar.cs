@@ -38,6 +38,8 @@ public partial class GameProgressBar : UserControl
 		blazorView.HostPage = "wwwroot\\index.html";
 		blazorView.Services = services.BuildServiceProvider();
 		blazorView.RootComponents.Add<BlazorProgressBar>("#app");
+		blazorView.Padding = new(0);
+		blazorView.Margin = new(0);
 	}
 
 	public ProgressBarViewModel ViewModel { get; } = new();
