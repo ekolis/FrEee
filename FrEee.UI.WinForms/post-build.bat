@@ -12,8 +12,3 @@ ren "%%~fG" "%%~nxG.temp"
 findstr /V "../../../bin/Debug/FrEee.Core.dll" "%%G.temp" > "%%~fG"
 del "%%G.temp"
 )
-
-
-REM creating a junction to Pictures under wwwroot so Blazor can find our pictures
-cd bin/Debug/net8.0-windows7.0
-mklink /j wwwroot\Pictures Pictures

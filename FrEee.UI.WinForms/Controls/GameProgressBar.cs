@@ -35,7 +35,7 @@ public partial class GameProgressBar : UserControl
 		var services = new ServiceCollection();
 		services.AddSingleton(ViewModel);
 		services.AddWindowsFormsBlazorWebView();
-		blazorView.HostPage = "wwwroot\\index.html";
+		blazorView.HostPage = "index.html";
 		blazorView.Services = services.BuildServiceProvider();
 		blazorView.RootComponents.Add<BlazorProgressBar>("#app");
 		blazorView.Padding = new(0);
