@@ -3,7 +3,7 @@
 
 @code {
 	[Parameter]
-	public ResourceDisplayViewModel VM { get; set; } = new();
+	public ResourceQuantityDisplayViewModel VM { get; set; } = new();
 
 	/// <summary>
 	/// When the view model's properties change, update the UI.
@@ -26,9 +26,11 @@
 	}
 }
 
-<div class="fill" style="display: flex; flex-direction: row; width: 150px; height: 24px; vertical-align: middle">
-	<div style="height: 24px; width: 24px; margin: auto; text-align: left">
-		<img src="@VM.IconSource" class="fill"/>
-	</div>
-	<span class="fill" style="color: #@VM.Color.ToRgba(); margin: 0px 3px">@VM.Text</span>
+<div class="fill" style="display: flex; flex-direction: row">
+	@foreach (var resourceVM in VM.ResourceViewModels)
+	{
+		<div style="width: 200px">
+			<ResourceDisplay VM="resourceVM"/>
+		</div>
+	}
 </div>

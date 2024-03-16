@@ -8,6 +8,7 @@ using FrEee.UI.Blazor.Views;
 using Microsoft.Extensions.DependencyInjection;
 using BlazorResourceDisplay = FrEee.UI.Blazor.Views.ResourceDisplay;
 using Microsoft.AspNetCore.Components.WebView.WindowsForms;
+using System.Collections.Generic;
 
 namespace FrEee.UI.WinForms.Controls;
 
@@ -19,43 +20,42 @@ public partial class ResourceDisplay : UserControl
 
 		// set up Blazor
 		var services = new ServiceCollection();
-		services.AddSingleton(ViewModel);
 		services.AddWindowsFormsBlazorWebView();
 		blazorView.HostPage = "index.html";
 		blazorView.Services = services.BuildServiceProvider();
-		blazorView.RootComponents.Add<BlazorResourceDisplay>("#app");
+		var parameters = new Dictionary<string, object?> { ["VM"] = VM };
+		blazorView.RootComponents.Add<BlazorResourceDisplay>("#app", parameters);
 		blazorView.Padding = new(0);
 		blazorView.Margin = new(0);
 	}
 
-	public ResourceDisplayViewModel ViewModel { get; } = new();
+	private ResourceDisplayViewModel VM { get; } = new();
+
+	#region viewmodel property wrappers for winforms
 
 	public int Amount
 	{
-		get => ViewModel.Amount;
-		set => ViewModel.Amount = value;
+		get => VM.Amount;
+		set => VM.Amount = value;
 	}
 
 	public int? Change
 	{
-		get => ViewModel.Change;
-		set => ViewModel.Change = value;
+		get => VM.Change;
+		set => VM.Change = value;
 	}
 
 	[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 	public Resource? Resource
 	{
-		get => ViewModel.Resource;
-		set => ViewModel.Resource = value;
+		get => VM.Resource;
+		set => VM.Resource = value;
 	}
-
-	public Color ResourceColor => ViewModel.Color;
-
-	public Image? ResourceIcon => ViewModel.Icon;
 
 	public string? ResourceName
 	{
-		get => ViewModel.Name;
-		set => ViewModel.Name = value;
+		get => VM.Name;
+		set => VM.Name = value;
 	}
+	#endregion
 }
