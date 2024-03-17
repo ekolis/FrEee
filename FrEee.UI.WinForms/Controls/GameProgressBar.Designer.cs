@@ -44,8 +44,6 @@ partial class GameProgressBar
 		// 
 		// GameProgressBar
 		// 
-		AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-		AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 		BackColor = System.Drawing.Color.Black;
 		Controls.Add(blazorView);
 		ForeColor = System.Drawing.Color.White;

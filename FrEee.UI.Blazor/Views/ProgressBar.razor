@@ -1,9 +1,10 @@
 ﻿@using System.Drawing
 @using System.ComponentModel
 
-@inject ProgressBarViewModel vm
-
 @code {
+	[Parameter]
+	public ProgressBarViewModel VM { get; set; } = new();
+
 	/// <summary>
 	/// When the view model's properties change, update the UI.
 	/// </summary>
@@ -16,31 +17,31 @@
 
 	protected override void OnInitialized()
 	{
-		vm.PropertyChanged += ViewModelPropertyChanged;
+		VM.PropertyChanged += ViewModelPropertyChanged;
 	}
 
 	public void Dispose()
 	{
-		vm.PropertyChanged -= ViewModelPropertyChanged;
+		VM.PropertyChanged -= ViewModelPropertyChanged;
 	}
 }
 
-<div @onclick="vm.OnClick">
-	<div class="fill" style="display: flex; flex-direction: row">
-		<div style="width: @(100 * vm.Value / Math.Max(1, vm.Maximum))%; height: 100%; padding: 0; background-color: #@vm.BarColor.ToRgba()" />
-		<div style="width: @(100 * vm.Increment / Math.Max(1, vm.Maximum))%; height: 100%; padding: 0; background-color: #@vm.IncrementColor1.ToRgba()" />
-		<div style="width: @(100 * vm.Increment / Math.Max(1, vm.Maximum))%; height: 100%; padding: 0; background-color: #@vm.IncrementColor2.ToRgba()" />
-		<div style="width: @(100 * vm.Increment / Math.Max(1, vm.Maximum))%; height: 100%; padding: 0; background-color: #@vm.IncrementColor3.ToRgba()" />
+<div @onclick="VM.OnClick" class="fill" style="display: grid; height: 36px; overflow: hidden">
+	<div class="fill" style="display: flex; flex-direction: row; grid-area: 1/1/1/1;">
+		<div style="width: @(100 * VM.Value / Math.Max(1, VM.Maximum))%; height: 100%; padding: 0; background-color: #@VM.BarColor.ToRgba()" />
+		<div style="width: @(100 * VM.Increment / Math.Max(1, VM.Maximum))%; height: 100%; padding: 0; background-color: #@VM.IncrementColor1.ToRgba()" />
+		<div style="width: @(100 * VM.Increment / Math.Max(1, VM.Maximum))%; height: 100%; padding: 0; background-color: #@VM.IncrementColor2.ToRgba()" />
+		<div style="width: @(100 * VM.Increment / Math.Max(1, VM.Maximum))%; height: 100%; padding: 0; background-color: #@VM.IncrementColor3.ToRgba()" />
 	</div>
-	<div class="fill overlay" style="display: flex; flex-direction: row; justify-content: space-between">
+	<div class="fill overlay" style="display: flex; flex-direction: row; justify-content: space-between; grid-area: 1/1/1/1; margin: 5px">
 		<span style="width: 33%; text-align: left">
-			@vm.LeftText
+			@VM.LeftText
 		</span>
 		<span style="width: 33%; text-align: center">
-			@vm.CenterText
+			@VM.CenterText
 		</span>
 		<span style="width: 33%; text-align: right">
-			@vm.RightText
+			@VM.RightText
 		</span>
 	</div>
 </div>

@@ -12,21 +12,11 @@ using System.Collections.Generic;
 
 namespace FrEee.UI.WinForms.Controls;
 
-public partial class ResourceDisplay : UserControl
+public partial class ResourceDisplay : BlazorControl<BlazorResourceDisplay, ResourceDisplayViewModel>
 {
 	public ResourceDisplay()
 	{
 		InitializeComponent();
-
-		// set up Blazor
-		var services = new ServiceCollection();
-		services.AddWindowsFormsBlazorWebView();
-		blazorView.HostPage = "index.html";
-		blazorView.Services = services.BuildServiceProvider();
-		var parameters = new Dictionary<string, object?> { ["VM"] = VM };
-		blazorView.RootComponents.Add<BlazorResourceDisplay>("#app", parameters);
-		blazorView.Padding = new(0);
-		blazorView.Margin = new(0);
 	}
 
 	private ResourceDisplayViewModel VM { get; } = new();

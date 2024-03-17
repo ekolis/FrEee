@@ -9,24 +9,12 @@ using FrEee.UI.Blazor.Views;
 
 namespace FrEee.UI.WinForms.Controls;
 
-public partial class ResourceQuantityDisplay : UserControl
+public partial class ResourceQuantityDisplay : BlazorControl<BlazorResourceQuantityDisplay, ResourceQuantityDisplayViewModel>
 {
 	public ResourceQuantityDisplay()
 	{
 		InitializeComponent();
-
-		// set up Blazor
-		var services = new ServiceCollection();
-		services.AddWindowsFormsBlazorWebView();
-		blazorView.HostPage = "index.html";
-		blazorView.Services = services.BuildServiceProvider();
-		var parameters = new Dictionary<string, object?> { ["VM"] = VM };
-		blazorView.RootComponents.Add<BlazorResourceQuantityDisplay>("#app", parameters);
-		blazorView.Padding = new(0);
-		blazorView.Margin = new(0);
 	}
-
-	private ResourceQuantityDisplayViewModel VM { get; } = new();
 
 	public ResourceQuantity ResourceQuantity
 	{

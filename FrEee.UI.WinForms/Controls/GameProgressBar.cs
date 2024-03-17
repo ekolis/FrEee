@@ -14,7 +14,7 @@ using FrEee.UI.WinForms.Forms;
 
 namespace FrEee.UI.WinForms.Controls;
 
-public partial class GameProgressBar : UserControl
+public partial class GameProgressBar : BlazorControl<BlazorProgressBar, ProgressBarViewModel>
 {
 	public GameProgressBar()
 	{
@@ -22,7 +22,7 @@ public partial class GameProgressBar : UserControl
 		this.SizeChanged += GameProgressBar_SizeChanged;
 
 		// set up view model
-		ViewModel.OnClick = () =>
+		VM.OnClick = () =>
 		{
 			// HACK: https://github.com/MicrosoftEdge/WebView2Feedback/issues/3028#issuecomment-1461207168
 			Task.Delay(0).ContinueWith(_ => MainGameForm.Instance.Invoke(() =>
@@ -30,66 +30,54 @@ public partial class GameProgressBar : UserControl
 				OnClick(new EventArgs());
 			}));
 		};
-
-		// set up Blazor
-		var services = new ServiceCollection();
-		services.AddSingleton(ViewModel);
-		services.AddWindowsFormsBlazorWebView();
-		blazorView.HostPage = "index.html";
-		blazorView.Services = services.BuildServiceProvider();
-		blazorView.RootComponents.Add<BlazorProgressBar>("#app");
-		blazorView.Padding = new(0);
-		blazorView.Margin = new(0);
 	}
-
-	public ProgressBarViewModel ViewModel { get; } = new();
 
 	public Color BarColor
 	{
-		get => ViewModel.BarColor;
-		set => ViewModel.BarColor = value;
+		get => VM.BarColor;
+		set => VM.BarColor = value;
 	}
 
 	public long IncrementalProgress
 	{
-		get => ViewModel.Increment;
-		set => ViewModel.Increment = value;
+		get => VM.Increment;
+		set => VM.Increment = value;
 	}
 
 	public string LeftText
 	{
-		get => ViewModel.LeftText;
-		set => ViewModel.LeftText = value;
+		get => VM.LeftText;
+		set => VM.LeftText = value;
 	}
 
 	public long Maximum
 	{
-		get => ViewModel.Maximum;
-		set => ViewModel.Maximum = value;
+		get => VM.Maximum;
+		set => VM.Maximum = value;
 	}
 
 	public Progress Progress
 	{
-		get => ViewModel.Progress;
-		set => ViewModel.Progress = value;
+		get => VM.Progress;
+		set => VM.Progress = value;
 	}
 
 	public ProgressDisplayType ProgressDisplayType
 	{
-		get => ViewModel.ProgressDisplayType;
-		set => ViewModel.ProgressDisplayType = value;
+		get => VM.ProgressDisplayType;
+		set => VM.ProgressDisplayType = value;
 	}
 
 	public string RightText
 	{
-		get => ViewModel.RightText;
-		set => ViewModel.RightText = value;
+		get => VM.RightText;
+		set => VM.RightText = value;
 	}
 
 	public long Value
 	{
-		get => ViewModel.Value;
-		set => ViewModel.Value = value;
+		get => VM.Value;
+		set => VM.Value = value;
 	}
 
 	private void GameProgressBar_SizeChanged(object sender, EventArgs e)

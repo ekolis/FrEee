@@ -570,7 +570,6 @@ partial class SpaceVehicleReport
 		// 
 		this.progSupplies.BackColor = System.Drawing.Color.Black;
 		this.progSupplies.BarColor = System.Drawing.Color.Blue;
-		this.progSupplies.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 		this.progSupplies.Dock = System.Windows.Forms.DockStyle.Fill;
 		this.progSupplies.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 		this.progSupplies.ForeColor = System.Drawing.Color.White;
@@ -602,7 +601,6 @@ partial class SpaceVehicleReport
 		// 
 		this.progAmmunition.BackColor = System.Drawing.Color.Black;
 		this.progAmmunition.BarColor = System.Drawing.Color.Blue;
-		this.progAmmunition.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 		this.progAmmunition.Dock = System.Windows.Forms.DockStyle.Fill;
 		this.progAmmunition.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 		this.progAmmunition.ForeColor = System.Drawing.Color.White;
@@ -634,7 +632,6 @@ partial class SpaceVehicleReport
 		// 
 		this.progFuel.BackColor = System.Drawing.Color.Black;
 		this.progFuel.BarColor = System.Drawing.Color.Blue;
-		this.progFuel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 		this.progFuel.Dock = System.Windows.Forms.DockStyle.Fill;
 		this.progFuel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 		this.progFuel.ForeColor = System.Drawing.Color.White;
@@ -682,7 +679,6 @@ partial class SpaceVehicleReport
 		// 
 		this.progHull.BackColor = System.Drawing.Color.Black;
 		this.progHull.BarColor = System.Drawing.Color.Blue;
-		this.progHull.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 		this.progHull.Dock = System.Windows.Forms.DockStyle.Fill;
 		this.progHull.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 		this.progHull.ForeColor = System.Drawing.Color.White;
@@ -703,7 +699,6 @@ partial class SpaceVehicleReport
 		// 
 		this.progArmor.BackColor = System.Drawing.Color.Black;
 		this.progArmor.BarColor = System.Drawing.Color.Blue;
-		this.progArmor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 		this.progArmor.Dock = System.Windows.Forms.DockStyle.Fill;
 		this.progArmor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 		this.progArmor.ForeColor = System.Drawing.Color.White;
@@ -735,7 +730,6 @@ partial class SpaceVehicleReport
 		// 
 		this.progShields.BackColor = System.Drawing.Color.Black;
 		this.progShields.BarColor = System.Drawing.Color.Blue;
-		this.progShields.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 		this.progShields.Dock = System.Windows.Forms.DockStyle.Fill;
 		this.progShields.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 		this.progShields.ForeColor = System.Drawing.Color.White;
@@ -778,7 +772,6 @@ partial class SpaceVehicleReport
 		// 
 		this.progMovement.BackColor = System.Drawing.Color.Black;
 		this.progMovement.BarColor = System.Drawing.Color.Blue;
-		this.progMovement.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 		this.progMovement.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 		this.progMovement.ForeColor = System.Drawing.Color.White;
 		this.progMovement.IncrementalProgress = ((long)(0));

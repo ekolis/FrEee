@@ -526,7 +526,6 @@ partial class MainGameForm
             | System.Windows.Forms.AnchorStyles.Right)));
 		this.progResearch.BackColor = System.Drawing.Color.Black;
 		this.progResearch.BarColor = System.Drawing.Color.Magenta;
-		this.progResearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 		this.progResearch.ForeColor = System.Drawing.Color.White;
 		this.progResearch.IncrementalProgress = ((long)(0));
 		this.progResearch.LeftText = "Ice Planet Colonization";
