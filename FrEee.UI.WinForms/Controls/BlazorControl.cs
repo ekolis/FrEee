@@ -19,14 +19,15 @@ namespace FrEee.UI.WinForms.Controls
 	{
 		public BlazorControl(TViewModel? viewModel = null)
 		{
-			if (viewModel is null) viewModel = new TViewModel();
+			// create view model if it's not already created
+			viewModel ??= new();
 
 			// set up control
 			SuspendLayout();
 			BackColor = Color.Black;
 			ForeColor = Color.White;
 			Margin = new(0);
-			Name = "GameProgressBar";
+			Name = "BlazorControl";
 
 			// set up Blazor
 			try
