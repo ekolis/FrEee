@@ -50,7 +50,7 @@ namespace FrEee.UI.WinForms.Controls
 			{
 				// Blazor could not be loaded, display a dummy label
 				VM = new();
-				Controls.Add(new Label { Text = Name, Dock = DockStyle.Fill });
+				Controls.Add(new Label { Text = "Blazor " + BlazorComponentType.Name, Dock = DockStyle.Fill });
 			}
 
 			ResumeLayout(false);
