@@ -421,7 +421,7 @@ partial class EmpireListForm
 		this.rqdSpoiledDeficit.ForeColor = System.Drawing.Color.White;
 		this.rqdSpoiledDeficit.Location = new System.Drawing.Point(177, 360);
 		this.rqdSpoiledDeficit.Name = "rqdSpoiledDeficit";
-		this.rqdSpoiledDeficit.ResourceQuantity = null;
+		this.rqdSpoiledDeficit.Amounts = null;
 		this.rqdSpoiledDeficit.Size = new System.Drawing.Size(413, 24);
 		this.rqdSpoiledDeficit.TabIndex = 26;
 		// 
@@ -453,7 +453,7 @@ partial class EmpireListForm
 		this.rqdStorage.ForeColor = System.Drawing.Color.White;
 		this.rqdStorage.Location = new System.Drawing.Point(177, 330);
 		this.rqdStorage.Name = "rqdStorage";
-		this.rqdStorage.ResourceQuantity = null;
+		this.rqdStorage.Amounts = null;
 		this.rqdStorage.Size = new System.Drawing.Size(413, 24);
 		this.rqdStorage.TabIndex = 23;
 		// 
@@ -464,7 +464,7 @@ partial class EmpireListForm
 		this.rqdStored.ForeColor = System.Drawing.Color.White;
 		this.rqdStored.Location = new System.Drawing.Point(177, 300);
 		this.rqdStored.Name = "rqdStored";
-		this.rqdStored.ResourceQuantity = null;
+		this.rqdStored.Amounts = null;
 		this.rqdStored.Size = new System.Drawing.Size(413, 24);
 		this.rqdStored.TabIndex = 22;
 		// 
@@ -475,7 +475,7 @@ partial class EmpireListForm
 		this.rqdNet.ForeColor = System.Drawing.Color.White;
 		this.rqdNet.Location = new System.Drawing.Point(177, 270);
 		this.rqdNet.Name = "rqdNet";
-		this.rqdNet.ResourceQuantity = null;
+		this.rqdNet.Amounts = null;
 		this.rqdNet.Size = new System.Drawing.Size(413, 24);
 		this.rqdNet.TabIndex = 21;
 		// 
@@ -486,7 +486,7 @@ partial class EmpireListForm
 		this.rqdTributesOut.ForeColor = System.Drawing.Color.White;
 		this.rqdTributesOut.Location = new System.Drawing.Point(177, 228);
 		this.rqdTributesOut.Name = "rqdTributesOut";
-		this.rqdTributesOut.ResourceQuantity = null;
+		this.rqdTributesOut.Amounts = null;
 		this.rqdTributesOut.Size = new System.Drawing.Size(413, 24);
 		this.rqdTributesOut.TabIndex = 20;
 		// 
@@ -497,7 +497,7 @@ partial class EmpireListForm
 		this.rqdMaintenance.ForeColor = System.Drawing.Color.White;
 		this.rqdMaintenance.Location = new System.Drawing.Point(177, 198);
 		this.rqdMaintenance.Name = "rqdMaintenance";
-		this.rqdMaintenance.ResourceQuantity = null;
+		this.rqdMaintenance.Amounts = null;
 		this.rqdMaintenance.Size = new System.Drawing.Size(413, 24);
 		this.rqdMaintenance.TabIndex = 19;
 		// 
@@ -508,7 +508,7 @@ partial class EmpireListForm
 		this.rqdConstruction.ForeColor = System.Drawing.Color.White;
 		this.rqdConstruction.Location = new System.Drawing.Point(177, 168);
 		this.rqdConstruction.Name = "rqdConstruction";
-		this.rqdConstruction.ResourceQuantity = null;
+		this.rqdConstruction.Amounts = null;
 		this.rqdConstruction.Size = new System.Drawing.Size(413, 24);
 		this.rqdConstruction.TabIndex = 18;
 		// 
@@ -519,7 +519,7 @@ partial class EmpireListForm
 		this.rqExpenses.ForeColor = System.Drawing.Color.White;
 		this.rqExpenses.Location = new System.Drawing.Point(177, 138);
 		this.rqExpenses.Name = "rqExpenses";
-		this.rqExpenses.ResourceQuantity = null;
+		this.rqExpenses.Amounts = null;
 		this.rqExpenses.Size = new System.Drawing.Size(413, 24);
 		this.rqExpenses.TabIndex = 17;
 		// 
@@ -530,7 +530,7 @@ partial class EmpireListForm
 		this.rqdTributesIn.ForeColor = System.Drawing.Color.White;
 		this.rqdTributesIn.Location = new System.Drawing.Point(177, 93);
 		this.rqdTributesIn.Name = "rqdTributesIn";
-		this.rqdTributesIn.ResourceQuantity = null;
+		this.rqdTributesIn.Amounts = null;
 		this.rqdTributesIn.Size = new System.Drawing.Size(413, 24);
 		this.rqdTributesIn.TabIndex = 16;
 		// 
@@ -541,7 +541,7 @@ partial class EmpireListForm
 		this.rqdTrade.ForeColor = System.Drawing.Color.White;
 		this.rqdTrade.Location = new System.Drawing.Point(177, 63);
 		this.rqdTrade.Name = "rqdTrade";
-		this.rqdTrade.ResourceQuantity = null;
+		this.rqdTrade.Amounts = null;
 		this.rqdTrade.Size = new System.Drawing.Size(413, 24);
 		this.rqdTrade.TabIndex = 15;
 		// 
@@ -552,7 +552,7 @@ partial class EmpireListForm
 		this.rqdExtraction.ForeColor = System.Drawing.Color.White;
 		this.rqdExtraction.Location = new System.Drawing.Point(177, 33);
 		this.rqdExtraction.Name = "rqdExtraction";
-		this.rqdExtraction.ResourceQuantity = null;
+		this.rqdExtraction.Amounts = null;
 		this.rqdExtraction.Size = new System.Drawing.Size(413, 24);
 		this.rqdExtraction.TabIndex = 14;
 		// 
@@ -563,7 +563,7 @@ partial class EmpireListForm
 		this.rqdIncome.ForeColor = System.Drawing.Color.White;
 		this.rqdIncome.Location = new System.Drawing.Point(177, 3);
 		this.rqdIncome.Name = "rqdIncome";
-		this.rqdIncome.ResourceQuantity = null;
+		this.rqdIncome.Amounts = null;
 		this.rqdIncome.Size = new System.Drawing.Size(413, 24);
 		this.rqdIncome.TabIndex = 12;
 		// 

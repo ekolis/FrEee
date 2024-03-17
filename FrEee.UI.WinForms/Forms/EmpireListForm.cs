@@ -105,15 +105,15 @@ public partial class EmpireListForm : GameForm
 
 			// budget
 			if (emp == Empire.Current)
-				rqdConstruction.ResourceQuantity = emp.ConstructionSpending;
+				rqdConstruction.Amounts = emp.ConstructionSpending;
 			else
 				// assume other empires' construction queues are running at full capacity
-				rqdConstruction.ResourceQuantity = emp.ConstructionQueues.Sum(rq => rq.Rate);
-			rqdExtraction.ResourceQuantity = emp.ColonyIncome + emp.RemoteMiningIncome + emp.RawResourceIncome;
-			rqdIncome.ResourceQuantity = emp.GrossDomesticIncome;
-			rqdMaintenance.ResourceQuantity = emp.Maintenance;
-			rqdNet.ResourceQuantity = emp.NetIncomeLessConstruction;
-			rqdStorage.ResourceQuantity = emp.ResourceStorage;
+				rqdConstruction.Amounts = emp.ConstructionQueues.Sum(rq => rq.Rate);
+			rqdExtraction.Amounts = emp.ColonyIncome + emp.RemoteMiningIncome + emp.RawResourceIncome;
+			rqdIncome.Amounts = emp.GrossDomesticIncome;
+			rqdMaintenance.Amounts = emp.Maintenance;
+			rqdNet.Amounts = emp.NetIncomeLessConstruction;
+			rqdStorage.Amounts = emp.ResourceStorage;
 			var spoilageOrDeficit = new ResourceQuantity();
 			var newResources = emp.StoredResources + emp.NetIncomeLessConstruction;
 			foreach (var r in Resource.All)
@@ -125,12 +125,12 @@ public partial class EmpireListForm : GameForm
 				else
 					spoilageOrDeficit[r] = 0;
 			}
-			rqdSpoiledDeficit.ResourceQuantity = spoilageOrDeficit;
-			rqdStored.ResourceQuantity = emp.StoredResources;
-			rqdTrade.ResourceQuantity = emp.TradeIncome;
-			rqdTributesIn.ResourceQuantity = new ResourceQuantity(); // TODO - show tributes
-			rqdTributesOut.ResourceQuantity = new ResourceQuantity(); // TODO - show tributes
-			rqExpenses.ResourceQuantity = rqdConstruction.ResourceQuantity + rqdMaintenance.ResourceQuantity + rqdTributesOut.ResourceQuantity;
+			rqdSpoiledDeficit.Amounts = spoilageOrDeficit;
+			rqdStored.Amounts = emp.StoredResources;
+			rqdTrade.Amounts = emp.TradeIncome;
+			rqdTributesIn.Amounts = new ResourceQuantity(); // TODO - show tributes
+			rqdTributesOut.Amounts = new ResourceQuantity(); // TODO - show tributes
+			rqExpenses.Amounts = rqdConstruction.Amounts + rqdMaintenance.Amounts + rqdTributesOut.Amounts;
 			lblBudgetWarning.Visible = emp != Empire.Current;
 
 			// message log

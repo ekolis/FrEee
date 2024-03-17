@@ -22,10 +22,22 @@ public partial class ResourceQuantityDisplay : BlazorControl
 	protected override ResourceQuantityDisplayViewModel VM { get; } = new();
 
 	#region viewmodel property wrappers for winforms
-	public ResourceQuantity ResourceQuantity
+	public ResourceQuantity Amounts
 	{
 		get => VM.Amounts;
 		set => VM.Amounts = value;
+	}
+
+	public ResourceQuantity Changes
+	{
+		get => VM.Changes;
+		set => VM.Changes = value;
+	}
+
+	public IEnumerable<Resource> ResourcesToShow
+	{
+		get => VM.ResourcesToShow;
+		set => VM.ResourcesToShow = value;
 	}
 	#endregion
 }
