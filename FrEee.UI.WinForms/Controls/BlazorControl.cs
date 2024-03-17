@@ -13,8 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace FrEee.UI.WinForms.Controls
 {
-	public partial class BlazorControl<TBlazorComponent> : Control
-		where TBlazorComponent : ComponentBase
+	public partial class BlazorControl : Control
 	{
 		public BlazorControl()
 		{
@@ -45,7 +44,7 @@ namespace FrEee.UI.WinForms.Controls
 					Text = "blazorWebView1",
 					AutoScroll = false
 				};
-				blazorView.RootComponents.Add<TBlazorComponent>("#app", parameters);
+				blazorView.RootComponents.Add(new RootComponent("#app", BlazorComponentType, parameters));
 				Controls.Add(blazorView);
 			}
 			catch
@@ -57,6 +56,11 @@ namespace FrEee.UI.WinForms.Controls
 
 			ResumeLayout(false);
 		}
+
+		/// <summary>
+		/// The type of Blazor component to display. Should be overridden.
+		/// </summary>
+		protected virtual Type BlazorComponentType { get; } = typeof(ComponentBase);
 
 		/// <summary>
 		/// The view model for this Blazor control. Should be overridden.

@@ -6,15 +6,18 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using BlazorResourceQuantityDisplay = FrEee.UI.Blazor.Views.ResourceQuantityDisplay;
 using FrEee.UI.Blazor.Views;
+using System;
 
 namespace FrEee.UI.WinForms.Controls;
 
-public partial class ResourceQuantityDisplay : BlazorControl<BlazorResourceQuantityDisplay>
+public partial class ResourceQuantityDisplay : BlazorControl
 {
 	public ResourceQuantityDisplay()
 	{
 		InitializeComponent();
 	}
+
+	protected override Type BlazorComponentType { get; } = typeof(BlazorResourceQuantityDisplay);
 
 	protected override ResourceQuantityDisplayViewModel VM { get; } = new();
 

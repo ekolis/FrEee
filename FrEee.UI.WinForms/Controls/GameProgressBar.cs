@@ -14,7 +14,7 @@ using FrEee.UI.WinForms.Forms;
 
 namespace FrEee.UI.WinForms.Controls;
 
-public partial class GameProgressBar : BlazorControl<BlazorProgressBar>
+public partial class GameProgressBar : BlazorControl
 {
 	public GameProgressBar()
 	{
@@ -35,6 +35,8 @@ public partial class GameProgressBar : BlazorControl<BlazorProgressBar>
 	{
 		Invalidate();
 	}
+
+	protected override Type BlazorComponentType { get; } = typeof(BlazorProgressBar);
 
 	protected override ProgressBarViewModel VM { get; } = new();
 
