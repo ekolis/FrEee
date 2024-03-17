@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Microsoft.AspNetCore.Components.WebView.WindowsForms;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FrEee.UI.WinForms.Utility.Extensions;
 
@@ -297,5 +299,16 @@ public static class GuiExtensions
 			var form = (sender as Control).FindForm();
 			form.Close();
 		}
+	}
+
+	/// <summary>
+	/// Initializes the services required to run a Blazor web view.
+	/// </summary>
+	/// <param name="blazorView">The Blazor web view.</param>
+	public static void InitializeServices(this BlazorWebView blazorView)
+	{
+		var services = new ServiceCollection();
+		services.AddWindowsFormsBlazorWebView();
+		blazorView.Services = services.BuildServiceProvider();
 	}
 }

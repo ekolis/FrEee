@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FrEee.UI.WinForms.Utility.Extensions;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebView.WindowsForms;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,13 +28,10 @@ namespace FrEee.UI.WinForms.Controls
 			// set up Blazor
 			try
 			{
-				var services = new ServiceCollection();
-				services.AddWindowsFormsBlazorWebView();
 				var parameters = new Dictionary<string, object?> { ["VM"] = VM };
 				var blazorView = new BlazorWebView
 				{
 					HostPage = "index.html",
-					Services = services.BuildServiceProvider(),
 					Padding = new(0),
 					Margin = new(0),
 					Dock = DockStyle.Fill,
@@ -44,6 +42,7 @@ namespace FrEee.UI.WinForms.Controls
 					Text = "blazorWebView1",
 					AutoScroll = false
 				};
+				blazorView.InitializeServices(); // the code in this method can't go here directly because it crashes th eWinForms designer
 				blazorView.RootComponents.Add(new RootComponent("#app", BlazorComponentType, parameters));
 				Controls.Add(blazorView);
 			}
@@ -51,7 +50,7 @@ namespace FrEee.UI.WinForms.Controls
 			{
 				// Blazor could not be loaded, display a dummy label
 				VM = new();
-				Controls.Add(new Label { Text = "Blazor Control"});
+				Controls.Add(new Label { Text = Name, Dock = DockStyle.Fill });
 			}
 
 			ResumeLayout(false);
@@ -66,5 +65,11 @@ namespace FrEee.UI.WinForms.Controls
 		/// The view model for this Blazor control. Should be overridden.
 		/// </summary>
 		protected virtual object VM { get; } = new();
+
+		/// <summary>
+		/// Initializes services for this Blazor control's web view. Should be overridden.
+		/// </summary>
+		/// <param name="blazorView">The web view.</param>
+		protected virtual void InitializeServices(BlazorWebView blazorView) { }
 	}
 }
