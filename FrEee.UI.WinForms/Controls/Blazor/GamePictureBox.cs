@@ -53,7 +53,7 @@ public partial class GamePictureBox : BlazorControl, ISupportInitialize
 			pic.Size = Image.Size;
 			pic.BackColor = Color.Black;
 			pic.SizeMode = PictureBoxSizeMode.Zoom;
-			this.FindForm().ShowChildForm(pic.CreatePopupForm());
+			this.FindForm().ShowChildForm(pic.CreatePopupForm(text));
 		}
 	}
 
