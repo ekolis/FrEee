@@ -1,3 +1,5 @@
+using FrEee.UI.WinForms.Controls.Blazor;
+
 namespace FrEee.UI.WinForms.Controls;
 
 partial class FleetReport
@@ -35,11 +37,11 @@ partial class FleetReport
 		this.txtAge = new System.Windows.Forms.Label();
 		this.txtCargoSpaceFree = new System.Windows.Forms.Label();
 		this.label1 = new System.Windows.Forms.Label();
-		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
-		this.resMaintMin = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
+		this.resMaintMin = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
 		this.lblComponents = new System.Windows.Forms.Label();
-		this.resMaintOrg = new FrEee.UI.WinForms.Controls.ResourceDisplay();
-		this.resMaintRad = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resMaintOrg = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
+		this.resMaintRad = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
 		this.lblIncome = new System.Windows.Forms.Label();
 		this.txtExperience = new System.Windows.Forms.Label();
 		this.lblExperience = new System.Windows.Forms.Label();

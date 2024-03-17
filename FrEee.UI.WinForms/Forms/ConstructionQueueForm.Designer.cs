@@ -62,9 +62,9 @@ partial class ConstructionQueueForm
 		this.label4 = new System.Windows.Forms.Label();
 		this.label3 = new System.Windows.Forms.Label();
 		this.txtName = new System.Windows.Forms.Label();
-		this.resCostRad = new FrEee.UI.WinForms.Controls.ResourceDisplay();
-		this.resCostOrg = new FrEee.UI.WinForms.Controls.ResourceDisplay();
-		this.resCostMin = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resCostRad = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
+		this.resCostOrg = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
+		this.resCostMin = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
 		this.label2 = new System.Windows.Forms.Label();
 		this.gameTabControl1 = new FrEee.UI.WinForms.Controls.GameTabControl();
 		this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -79,9 +79,9 @@ partial class ConstructionQueueForm
 		this.lstUpgrades = new System.Windows.Forms.ListView();
 		this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 		this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-		this.resRadioactivesRate = new FrEee.UI.WinForms.Controls.ResourceDisplay();
-		this.resOrganicsRate = new FrEee.UI.WinForms.Controls.ResourceDisplay();
-		this.resMineralsRate = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resRadioactivesRate = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
+		this.resOrganicsRate = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
+		this.resMineralsRate = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
 		this.btnDelete = new FrEee.UI.WinForms.Controls.GameButton();
 		this.txtCargoStorageFree = new System.Windows.Forms.Label();
 		this.txtFacilitySlotsFree = new System.Windows.Forms.Label();
@@ -849,9 +849,9 @@ partial class ConstructionQueueForm
 	#endregion
 
 	private System.Windows.Forms.Label label1;
-	private Controls.ResourceDisplay resMineralsRate;
-	private Controls.ResourceDisplay resOrganicsRate;
-	private Controls.ResourceDisplay resRadioactivesRate;
+	private FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay resMineralsRate;
+	private FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay resOrganicsRate;
+	private FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay resRadioactivesRate;
 	private Controls.GamePanel gamePanel1;
 	private Controls.GamePanel gamePanel2;
 	private System.Windows.Forms.ListView lstQueue;
@@ -869,9 +869,9 @@ partial class ConstructionQueueForm
 	private Controls.GameButton btnCancel;
 	private System.Windows.Forms.ColumnHeader ETA;
 	private System.Windows.Forms.Label txtName;
-	private Controls.ResourceDisplay resCostRad;
-	private Controls.ResourceDisplay resCostOrg;
-	private Controls.ResourceDisplay resCostMin;
+	private FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay resCostRad;
+	private FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay resCostOrg;
+	private FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay resCostMin;
 	private System.Windows.Forms.Label label2;
 	private System.Windows.Forms.ColumnHeader columnHeader1;
 	private System.Windows.Forms.ColumnHeader columnHeader2;

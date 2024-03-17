@@ -1,4 +1,6 @@
-﻿namespace FrEee.UI.WinForms.Controls;
+﻿using FrEee.UI.WinForms.Controls.Blazor;
+
+namespace FrEee.UI.WinForms.Controls;
 
 partial class EmpireReport
 {
@@ -38,9 +40,9 @@ partial class EmpireReport
 		this.label2 = new System.Windows.Forms.Label();
 		this.txtCulture = new System.Windows.Forms.Label();
 		this.label4 = new System.Windows.Forms.Label();
-		this.picInsignia = new FrEee.UI.WinForms.Controls.GamePictureBox();
+		this.picInsignia = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
 		this.txtName = new System.Windows.Forms.Label();
-		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
 		this.tabPage2 = new System.Windows.Forms.TabPage();
 		this.tabPage3 = new System.Windows.Forms.TabPage();
 		this.gameTabControl1.SuspendLayout();

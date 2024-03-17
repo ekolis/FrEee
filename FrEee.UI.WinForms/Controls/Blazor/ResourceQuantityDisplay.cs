@@ -7,8 +7,9 @@ using System.Collections.Generic;
 using BlazorResourceQuantityDisplay = FrEee.UI.Blazor.Views.ResourceQuantityDisplay;
 using FrEee.UI.Blazor.Views;
 using System;
+using FrEee.UI.WinForms.Controls;
 
-namespace FrEee.UI.WinForms.Controls;
+namespace FrEee.UI.WinForms.Controls.Blazor;
 
 public partial class ResourceQuantityDisplay : BlazorControl
 {

@@ -1,8 +1,9 @@
 ﻿using FrEee.UI.WinForms.Utility.Extensions;
 using System.Drawing;
 using System.Windows.Forms;
+using FrEee.UI.WinForms.Controls;
 
-namespace FrEee.UI.WinForms.Controls;
+namespace FrEee.UI.WinForms.Controls.Blazor;
 
 public partial class GamePictureBox : PictureBox
 {

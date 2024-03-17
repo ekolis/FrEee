@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrEee.UI.WinForms.Controls;
+using FrEee.UI.WinForms.Controls.Blazor;
 
 namespace FrEee.UI.WinForms.Forms
 {

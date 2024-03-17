@@ -9,8 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using BlazorResourceDisplay = FrEee.UI.Blazor.Views.ResourceDisplay;
 using Microsoft.AspNetCore.Components.WebView.WindowsForms;
 using System.Collections.Generic;
+using FrEee.UI.WinForms.Controls;
 
-namespace FrEee.UI.WinForms.Controls;
+namespace FrEee.UI.WinForms.Controls.Blazor;
 
 public partial class ResourceDisplay : BlazorControl
 {

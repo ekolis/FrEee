@@ -54,7 +54,7 @@ partial class ResearchForm
 		this.lstResults = new System.Windows.Forms.ListView();
 		this.dataGridViewProgressColumn1 = new FrEee.UI.WinForms.DataGridView.DataGridViewProgressColumn();
 		this.btnCancel = new FrEee.UI.WinForms.Controls.GameButton();
-		this.resRes = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resRes = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
 		this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 		this.btnClear = new FrEee.UI.WinForms.Controls.GameButton();
 		this.btnDelete = new FrEee.UI.WinForms.Controls.GameButton();
@@ -581,7 +581,7 @@ partial class ResearchForm
 	private Controls.GameButton btnUp;
         private Controls.GameButton btnTop;
 	private Controls.GameButton btnCancel;
-	private Controls.ResourceDisplay resRes;
+	private FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay resRes;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private Controls.GameButton btnClear;
         private Controls.GameButton btnDelete;

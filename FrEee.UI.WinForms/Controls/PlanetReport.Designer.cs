@@ -1,3 +1,5 @@
+using FrEee.UI.WinForms.Controls.Blazor;
+
 namespace FrEee.UI.WinForms.Controls;
 
 partial class PlanetReport
@@ -39,14 +41,14 @@ partial class PlanetReport
 		this.gameTabControl1 = new FrEee.UI.WinForms.Controls.GameTabControl();
 		this.pageDetail = new System.Windows.Forms.TabPage();
 		this.txtAge = new System.Windows.Forms.Label();
-		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
 		this.pnlColony = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.txtConstructionTime = new System.Windows.Forms.Label();
 		this.lblConstructionTime = new System.Windows.Forms.Label();
 		this.txtConstructionItem = new System.Windows.Forms.Label();
 		this.lblConstructionItem = new System.Windows.Forms.Label();
-		this.resIntel = new FrEee.UI.WinForms.Controls.ResourceDisplay();
-		this.resResearch = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resIntel = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
+		this.resResearch = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
 		this.label1 = new System.Windows.Forms.Label();
 		this.txtMood = new System.Windows.Forms.Label();
 		this.lblMood = new System.Windows.Forms.Label();
@@ -54,9 +56,9 @@ partial class PlanetReport
 		this.lblPopulation = new System.Windows.Forms.Label();
 		this.txtColonyType = new System.Windows.Forms.Label();
 		this.lblColonyType = new System.Windows.Forms.Label();
-		this.resIncomeMinerals = new FrEee.UI.WinForms.Controls.ResourceDisplay();
-		this.resIncomeOrganics = new FrEee.UI.WinForms.Controls.ResourceDisplay();
-		this.resIncomeRadioactives = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resIncomeMinerals = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
+		this.resIncomeOrganics = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
+		this.resIncomeRadioactives = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
 		this.lblIncome = new System.Windows.Forms.Label();
 		this.txtDescription = new System.Windows.Forms.Label();
 		this.txtValueRadioactives = new System.Windows.Forms.Label();

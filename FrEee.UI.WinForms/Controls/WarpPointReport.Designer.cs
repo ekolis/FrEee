@@ -1,3 +1,5 @@
+using FrEee.UI.WinForms.Controls.Blazor;
+
 namespace FrEee.UI.WinForms.Controls;
 
 partial class WarpPointReport
@@ -29,7 +31,7 @@ partial class WarpPointReport
 	private void InitializeComponent()
 	{
 		this.abilityTreeView = new FrEee.UI.WinForms.Controls.AbilityTreeView();
-		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
 		this.txtDescription = new System.Windows.Forms.Label();
 		this.txtSize = new System.Windows.Forms.Label();
 		this.txtName = new System.Windows.Forms.Label();
