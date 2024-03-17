@@ -65,11 +65,5 @@ namespace FrEee.UI.WinForms.Controls
 		/// The view model for this Blazor control. Should be overridden.
 		/// </summary>
 		protected virtual object VM { get; } = new();
-
-		/// <summary>
-		/// Initializes services for this Blazor control's web view. Should be overridden.
-		/// </summary>
-		/// <param name="blazorView">The web view.</param>
-		protected virtual void InitializeServices(BlazorWebView blazorView) { }
 	}
 }
