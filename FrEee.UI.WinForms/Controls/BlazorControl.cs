@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebView.WindowsForms;
 using Microsoft.Extensions.DependencyInjection;
-using static IronPython.Modules._ast;
 
 namespace FrEee.UI.WinForms.Controls
 {

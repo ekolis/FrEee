@@ -6,9 +6,6 @@ using FrEee.Extensions;
 using FrEee.UI.WinForms.Forms;
 using FrEee.UI.WinForms.Utility;
 using FrEee.UI.WinForms.Utility.Extensions;
-using Microsoft.AppCenter;
-using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -60,10 +57,6 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 	[STAThread]
 	private static int Main(string[] args)
 	{
-		// enable Microsoft App Center integration
-		AppCenter.Start("f433569d-4dcf-416c-9c6e-e6c11f284cd5",
-			   typeof(Analytics), typeof(Crashes));
-
 		// log exceptions online
 		Application.ThreadException += (sender, e) =>
 		{
