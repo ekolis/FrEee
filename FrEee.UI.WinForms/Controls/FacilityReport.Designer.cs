@@ -1,4 +1,5 @@
 ﻿using FrEee.UI.WinForms.Controls.Blazor;
+using FrEee.UI.WinForms.Controls;
 
 namespace FrEee.UI.WinForms.Controls;
 
@@ -36,7 +37,7 @@ partial class FacilityReport
 		this.label2 = new System.Windows.Forms.Label();
 		this.txtDescription = new System.Windows.Forms.Label();
 		this.txtName = new System.Windows.Forms.Label();
-		this.picPortrait = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
 		this.abilityTree = new FrEee.UI.WinForms.Controls.AbilityTreeView();
 		((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 		this.SuspendLayout();

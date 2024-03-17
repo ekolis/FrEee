@@ -1,4 +1,5 @@
 using FrEee.UI.WinForms.Controls.Blazor;
+using FrEee.UI.WinForms.Controls;
 
 namespace FrEee.UI.WinForms.Controls;
 
@@ -60,7 +61,7 @@ partial class DesignReport
 		this.lblDate = new System.Windows.Forms.Label();
 		this.txtStrategy = new System.Windows.Forms.Label();
 		this.label2 = new System.Windows.Forms.Label();
-		this.picPortrait = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
 		this.txtRole = new System.Windows.Forms.Label();
 		this.lblRole = new System.Windows.Forms.Label();
 		this.txtHull = new System.Windows.Forms.Label();

@@ -1,4 +1,5 @@
 using FrEee.UI.WinForms.Controls.Blazor;
+using FrEee.UI.WinForms.Controls;
 
 namespace FrEee.UI.WinForms.Controls;
 
@@ -37,7 +38,7 @@ partial class FleetReport
 		this.txtAge = new System.Windows.Forms.Label();
 		this.txtCargoSpaceFree = new System.Windows.Forms.Label();
 		this.label1 = new System.Windows.Forms.Label();
-		this.picPortrait = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
 		this.resMaintMin = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
 		this.lblComponents = new System.Windows.Forms.Label();
 		this.resMaintOrg = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
@@ -53,19 +54,19 @@ partial class FleetReport
 		this.pnlStats = new System.Windows.Forms.TableLayoutPanel();
 		this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 		this.lblSupplies = new System.Windows.Forms.Label();
-		this.progSupplies = new FrEee.UI.WinForms.Controls.GameProgressBar();
+		this.progSupplies = new FrEee.UI.WinForms.Controls.Blazor.GameProgressBar();
 		this.lblAmmunition = new System.Windows.Forms.Label();
-		this.progAmmunition = new FrEee.UI.WinForms.Controls.GameProgressBar();
+		this.progAmmunition = new FrEee.UI.WinForms.Controls.Blazor.GameProgressBar();
 		this.label3 = new System.Windows.Forms.Label();
-		this.progFuel = new FrEee.UI.WinForms.Controls.GameProgressBar();
+		this.progFuel = new FrEee.UI.WinForms.Controls.Blazor.GameProgressBar();
 		this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-		this.progHull = new FrEee.UI.WinForms.Controls.GameProgressBar();
-		this.progArmor = new FrEee.UI.WinForms.Controls.GameProgressBar();
+		this.progHull = new FrEee.UI.WinForms.Controls.Blazor.GameProgressBar();
+		this.progArmor = new FrEee.UI.WinForms.Controls.Blazor.GameProgressBar();
 		this.lblShields = new System.Windows.Forms.Label();
-		this.progShields = new FrEee.UI.WinForms.Controls.GameProgressBar();
+		this.progShields = new FrEee.UI.WinForms.Controls.Blazor.GameProgressBar();
 		this.lblArmor = new System.Windows.Forms.Label();
 		this.lblHull = new System.Windows.Forms.Label();
-		this.progMovement = new FrEee.UI.WinForms.Controls.GameProgressBar();
+		this.progMovement = new FrEee.UI.WinForms.Controls.Blazor.GameProgressBar();
 		this.lblMovement = new System.Windows.Forms.Label();
 		this.txtHullSize = new System.Windows.Forms.Label();
 		this.lblHullSize = new System.Windows.Forms.Label();
