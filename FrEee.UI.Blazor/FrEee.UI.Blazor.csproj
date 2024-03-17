@@ -21,6 +21,12 @@
     <ProjectReference Include="..\FrEee\FrEee.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\ImageDisplay.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+
 	<PropertyGroup>
 		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
 	</PropertyGroup>

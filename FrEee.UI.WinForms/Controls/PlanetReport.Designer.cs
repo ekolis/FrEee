@@ -42,7 +42,7 @@ partial class PlanetReport
 		this.gameTabControl1 = new FrEee.UI.WinForms.Controls.GameTabControl();
 		this.pageDetail = new System.Windows.Forms.TabPage();
 		this.txtAge = new System.Windows.Forms.Label();
-		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
 		this.pnlColony = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.txtConstructionTime = new System.Windows.Forms.Label();
 		this.lblConstructionTime = new System.Windows.Forms.Label();

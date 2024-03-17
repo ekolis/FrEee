@@ -30,7 +30,7 @@ partial class GameOverForm
 	{
 		this.btnOk = new FrEee.UI.WinForms.Controls.GameButton();
 		this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-		this.pic = new FrEee.UI.WinForms.Controls.GamePictureBox();
+		this.pic = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
 		((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
 		this.SuspendLayout();
 		// 
@@ -76,5 +76,5 @@ partial class GameOverForm
 	#endregion
 	private Controls.GameButton btnOk;
 	private System.Windows.Forms.ColumnHeader columnHeader1;
-	private FrEee.UI.WinForms.Controls.GamePictureBox pic;
+	private FrEee.UI.WinForms.Controls.Blazor.GamePictureBox pic;
 }

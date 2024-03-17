@@ -74,7 +74,8 @@ a, .btn-link {
 	bottom: 0;
 	right: 0;
 	margin: 0px;
-	overflow: clip;
+	padding: 0px;
+	overflow: hidden;
 }
 
 .overlay {

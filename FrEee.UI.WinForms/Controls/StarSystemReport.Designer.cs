@@ -32,7 +32,7 @@ partial class StarSystemReport
 	private void InitializeComponent()
 	{
 		this.abilityTreeView = new FrEee.UI.WinForms.Controls.AbilityTreeView();
-		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
 		this.txtDescription = new System.Windows.Forms.Label();
 		this.txtName = new System.Windows.Forms.Label();
 		this.label1 = new System.Windows.Forms.Label();

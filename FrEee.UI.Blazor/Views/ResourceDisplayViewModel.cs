@@ -84,5 +84,7 @@ namespace FrEee.UI.Blazor.Views
 		}
 
 		public string? Abbreviation => Name?.Substring(0, 3);
+
+		public ImageDisplayViewModel IconVM => new() { Image = Icon };
 	}
 }

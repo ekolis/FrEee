@@ -65,5 +65,10 @@ namespace FrEee.UI.WinForms.Controls
 		/// The view model for this Blazor control. Should be overridden.
 		/// </summary>
 		protected virtual object VM { get; } = new();
+
+		private void InitializeComponent()
+		{
+
+		}
 	}
 }

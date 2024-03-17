@@ -3,7 +3,7 @@
 
 @code {
 	[Parameter]
-	public ResourceDisplayViewModel VM { get; set; } = new();
+	public ImageDisplayViewModel VM { get; set; } = new();
 
 	/// <summary>
 	/// When the view model's properties change, update the UI.
@@ -26,9 +26,4 @@
 	}
 }
 
-<div class="fill" style="display: flex; flex-direction: row; width: 150px; height: 24px; vertical-align: middle; overflow: hidden">
-	<div style="height: 24px; width: 24px; margin: auto; text-align: left">
-		<ImageDisplay VM="VM.IconVM" />
-	</div>
-	<span class="fill" style="color: #@VM.Color.ToRgba(); margin: 0px 3px">@VM.Text</span>
-</div>
+<img src="@VM.ImageSource" class="fill" @onclick="VM.OnClick" />

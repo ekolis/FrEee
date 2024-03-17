@@ -77,7 +77,7 @@ partial class VehicleDesignForm
 		this.resDetailMin = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
 		this.txtDetailSize = new System.Windows.Forms.Label();
 		this.txtDetailName = new System.Windows.Forms.Label();
-		this.picDetailIcon = new FrEee.UI.WinForms.Controls.GamePictureBox();
+		this.picDetailIcon = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
 		this.gamePanel3 = new FrEee.UI.WinForms.Controls.GamePanel();
 		this.lstWarnings = new System.Windows.Forms.ListBox();
 		this.gamePanel2 = new FrEee.UI.WinForms.Controls.GamePanel();
@@ -86,7 +86,7 @@ partial class VehicleDesignForm
 		this.lstComponentsAvailable = new System.Windows.Forms.ListView();
 		this.btnHull = new FrEee.UI.WinForms.Controls.GameButton();
 		this.txtIteration = new System.Windows.Forms.Label();
-		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
 		this.btnMountInfo = new FrEee.UI.WinForms.Controls.GameButton();
 		this.ddlMount = new System.Windows.Forms.ComboBox();
 		this.btnHelp = new FrEee.UI.WinForms.Controls.GameButton();
@@ -891,7 +891,7 @@ partial class VehicleDesignForm
 	private System.Windows.Forms.Label label7;
 	private Controls.GamePanel gamePanel4;
 	private System.Windows.Forms.Label label8;
-	private FrEee.UI.WinForms.Controls.GamePictureBox picDetailIcon;
+	private FrEee.UI.WinForms.Controls.Blazor.GamePictureBox picDetailIcon;
 	private System.Windows.Forms.Label txtDetailName;
 	private System.Windows.Forms.Label txtDetailSize;
 	private FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay resDetailRad;
@@ -927,7 +927,7 @@ partial class VehicleDesignForm
 	private Controls.GameButton btnWeaponsReport;
 	private System.Windows.Forms.CheckBox chkFilterByMount;
 	private System.Windows.Forms.Label txtIteration;
-	private FrEee.UI.WinForms.Controls.GamePictureBox picPortrait;
+	private FrEee.UI.WinForms.Controls.Blazor.GamePictureBox picPortrait;
 	private Controls.GameButton btnMountInfo;
 	private System.Windows.Forms.ComboBox ddlMount;
 	private Controls.GameButton btnHelp;
