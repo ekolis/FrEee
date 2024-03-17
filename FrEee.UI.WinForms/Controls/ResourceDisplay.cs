@@ -12,14 +12,14 @@ using System.Collections.Generic;
 
 namespace FrEee.UI.WinForms.Controls;
 
-public partial class ResourceDisplay : BlazorControl<BlazorResourceDisplay, ResourceDisplayViewModel>
+public partial class ResourceDisplay : BlazorControl<BlazorResourceDisplay>
 {
 	public ResourceDisplay()
 	{
 		InitializeComponent();
 	}
 
-	private ResourceDisplayViewModel VM { get; } = new();
+	protected override ResourceDisplayViewModel VM { get; } = new();
 
 	#region viewmodel property wrappers for winforms
 

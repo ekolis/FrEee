@@ -13,15 +13,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace FrEee.UI.WinForms.Controls
 {
-	public partial class BlazorControl<TBlazorComponent, TViewModel> : Control
+	public partial class BlazorControl<TBlazorComponent> : Control
 		where TBlazorComponent : ComponentBase
-		where TViewModel: class, new()
 	{
-		public BlazorControl(TViewModel? viewModel = null)
+		public BlazorControl()
 		{
-			// create view model if it's not already created
-			viewModel ??= new();
-
 			// set up control
 			SuspendLayout();
 			BackColor = Color.Black;
@@ -32,7 +28,6 @@ namespace FrEee.UI.WinForms.Controls
 			// set up Blazor
 			try
 			{
-				VM = viewModel;
 				var services = new ServiceCollection();
 				services.AddWindowsFormsBlazorWebView();
 				var parameters = new Dictionary<string, object?> { ["VM"] = VM };
@@ -63,6 +58,9 @@ namespace FrEee.UI.WinForms.Controls
 			ResumeLayout(false);
 		}
 
-		public TViewModel VM { get; }
+		/// <summary>
+		/// The view model for this Blazor control. Should be overridden.
+		/// </summary>
+		protected virtual object VM { get; } = new();
 	}
 }

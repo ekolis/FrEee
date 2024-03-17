@@ -14,7 +14,7 @@ using FrEee.UI.WinForms.Forms;
 
 namespace FrEee.UI.WinForms.Controls;
 
-public partial class GameProgressBar : BlazorControl<BlazorProgressBar, ProgressBarViewModel>
+public partial class GameProgressBar : BlazorControl<BlazorProgressBar>
 {
 	public GameProgressBar()
 	{
@@ -31,7 +31,14 @@ public partial class GameProgressBar : BlazorControl<BlazorProgressBar, Progress
 			}));
 		};
 	}
+	private void GameProgressBar_SizeChanged(object sender, EventArgs e)
+	{
+		Invalidate();
+	}
 
+	protected override ProgressBarViewModel VM { get; } = new();
+
+	#region viewmodel property wrappers for winforms
 	public Color BarColor
 	{
 		get => VM.BarColor;
@@ -79,9 +86,6 @@ public partial class GameProgressBar : BlazorControl<BlazorProgressBar, Progress
 		get => VM.Value;
 		set => VM.Value = value;
 	}
+	#endregion
 
-	private void GameProgressBar_SizeChanged(object sender, EventArgs e)
-	{
-		Invalidate();
-	}
 }

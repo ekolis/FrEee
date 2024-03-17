@@ -9,16 +9,20 @@ using FrEee.UI.Blazor.Views;
 
 namespace FrEee.UI.WinForms.Controls;
 
-public partial class ResourceQuantityDisplay : BlazorControl<BlazorResourceQuantityDisplay, ResourceQuantityDisplayViewModel>
+public partial class ResourceQuantityDisplay : BlazorControl<BlazorResourceQuantityDisplay>
 {
 	public ResourceQuantityDisplay()
 	{
 		InitializeComponent();
 	}
 
+	protected override ResourceQuantityDisplayViewModel VM { get; } = new();
+
+	#region viewmodel property wrappers for winforms
 	public ResourceQuantity ResourceQuantity
 	{
 		get => VM.Amounts;
 		set => VM.Amounts = value;
 	}
+	#endregion
 }
