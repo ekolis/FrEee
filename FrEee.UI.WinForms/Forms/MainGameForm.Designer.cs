@@ -831,7 +831,7 @@ partial class MainGameForm
 		galaxyView.BackColor = System.Drawing.Color.Black;
 		galaxyView.Dock = System.Windows.Forms.DockStyle.Fill;
 		galaxyView.Location = new System.Drawing.Point(3, 3);
-		galaxyView.Mode = presenceMode1;
+		//galaxyView.Mode = presenceMode1;
 		galaxyView.Name = "galaxyView";
 		galaxyView.SelectedStarSystem = null;
 		galaxyView.Size = new System.Drawing.Size(403, 249);

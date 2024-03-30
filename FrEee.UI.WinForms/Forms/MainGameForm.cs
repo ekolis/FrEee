@@ -26,6 +26,7 @@ using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
+using FrEee.UI.Blazor.Views.GalaxyMapModes;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -657,7 +658,8 @@ public partial class MainGameForm : GameForm
 
 	private void ddlGalaxyViewMode_SelectedIndexChanged(object sender, EventArgs e)
 	{
-		galaxyView.Mode = ddlGalaxyViewMode.SelectedItem as IGalaxyViewMode;
+		// TODO: switch galaxy *map* mode
+		//galaxyView.Mode = ddlGalaxyViewMode.SelectedItem as IGalaxyMapMode;
 	}
 
 	private MusicMood FindMusicMood()

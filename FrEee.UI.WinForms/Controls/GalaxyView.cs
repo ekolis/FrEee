@@ -7,64 +7,74 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
+using FrEee.UI.Blazor.Views;
+using System.Threading.Tasks;
+using FrEee.UI.WinForms.Forms;
+using FrEee.UI.Blazor.Views.GalaxyMapModes;
 
 namespace FrEee.UI.WinForms.Controls;
 
 /// <summary>
 /// Displays a galaxy map.
 /// </summary>
-public partial class GalaxyView : Control
+public partial class GalaxyView : BlazorControl
 {
 	public GalaxyView()
 	{
 		InitializeComponent();
+
+		// set up view model
+		VM.StarSystemClicked += starSystem =>
+		{
+			// HACK: https://github.com/MicrosoftEdge/WebView2Feedback/issues/3028#issuecomment-1461207168
+			Task.Delay(0).ContinueWith(_ => MainGameForm.Instance.Invoke(() =>
+			{
+				StarSystemClicked?.Invoke(this, starSystem);
+			}));
+		};
+		VM.BackgroundClicked += () =>
+		{
+			// HACK: https://github.com/MicrosoftEdge/WebView2Feedback/issues/3028#issuecomment-1461207168
+			Task.Delay(0).ContinueWith(_ => MainGameForm.Instance.Invoke(() =>
+			{
+				BackgroundClicked?.Invoke(this);
+			}));
+		};
+
 		BackColor = Color.Black;
 		this.SizeChanged += GalaxyView_SizeChanged;
-		this.MouseDown += GalaxyView_MouseDown;
 		this.MouseMove += GalaxyView_MouseMove;
 		DoubleBuffered = true;
 	}
 
+	protected override Type BlazorComponentType { get; } = typeof(GalaxyMap);
+
+	protected override GalaxyMapViewModel VM { get; } = new();
+
+	#region viewmodel property wrappers for winforms
 	/// <summary>
 	/// An image to display as the background for this galaxy view.
 	/// </summary>
 	public override Image? BackgroundImage
 	{
-		get
-		{
-			return backgroundImage;
-		}
-		set
-		{
-			backgroundImage = value;
-			Invalidate();
-		}
+		get => VM.BackgroundImage;
+		set => VM.BackgroundImage = value;
 	}
 
-	public IGalaxyViewMode Mode
+	public IGalaxyMapMode Mode
 	{
-		get
-		{
-			return mode;
-		}
-		set
-		{
-			mode = value;
-			Invalidate();
-		}
+		get => VM.Mode;
+		set => VM.Mode = value;
 	}
 
-	public StarSystem SelectedStarSystem
+	public StarSystem? SelectedStarSystem
 	{
-		get { return selectedStarSystem; }
-		set
-		{
-			selectedStarSystem = value;
-			if (StarSystemSelected != null)
-				StarSystemSelected(this, value);
-			Invalidate();
-		}
+		get => VM.SelectedStarSystem;
+		set => VM.SelectedStarSystem = value;
 	}
+
+	public void ComputeWarpPointConnectivity() => VM.ComputeWarpPointConnectivity();
+	#endregion
 
 	/// <summary>
 	/// The size at which each star system will be drawn, in pixels.
@@ -73,33 +83,9 @@ public partial class GalaxyView : Control
 	{
 		get
 		{
-			if (Galaxy.Current == null)
+			if (!VM.StarSystemLocations.Any())
 				return 0;
-			return (int)Math.Min((float)Width / (float)Galaxy.Current.UsedWidth, (float)Height / Galaxy.Current.UsedHeight);
-		}
-	}
-
-	private Image? backgroundImage;
-
-	private IGalaxyViewMode mode = GalaxyViewModes.All.First();
-
-	private StarSystem selectedStarSystem;
-
-	private ConnectivityGraph<ObjectLocation<StarSystem>> warpGraph;
-
-	public void ComputeWarpPointConnectivity()
-	{
-		warpGraph = new ConnectivityGraph<ObjectLocation<StarSystem>>(Galaxy.Current.StarSystemLocations);
-
-		foreach (var ssl in warpGraph)
-		{
-			foreach (var wp in ssl.Item.FindSpaceObjects<WarpPoint>())
-			{
-				if (wp.TargetStarSystemLocation == null)
-					continue; // can't make connection if we don't know where warp point ends!
-
-				warpGraph.Connect(ssl, wp.TargetStarSystemLocation);
-			}
+			return (int)Math.Min((float)Width / (float)VM.Width, (float)Height / VM.Height);
 		}
 	}
 
@@ -108,22 +94,23 @@ public partial class GalaxyView : Control
 	/// </summary>
 	/// <param name="p">The screen coordinates.</param>
 	/// <returns></returns>
-	public StarSystem GetStarSystemAtPoint(Point p)
+	public StarSystem? GetStarSystemAtPoint(Point p)
 	{
-		if (Galaxy.Current == null)
-			return null; // no such sector
 		var drawsize = StarSystemDrawSize;
-		var avgx = (Galaxy.Current.StarSystemLocations.Min(l => l.Location.X) + Galaxy.Current.StarSystemLocations.Max(l => l.Location.X)) / 2f;
-		var avgy = (Galaxy.Current.StarSystemLocations.Min(l => l.Location.Y) + Galaxy.Current.StarSystemLocations.Max(l => l.Location.Y)) / 2f;
-		var x = (int)Math.Round(((float)p.X - Width / 2f) / drawsize + avgx);
-		var y = (int)Math.Round(((float)p.Y - Height / 2f) / drawsize + avgy);
-		var p2 = new Point(x, y);
-		var ssloc = Galaxy.Current.StarSystemLocations.FirstOrDefault(ssl => ssl.Location == p2);
-		if (ssloc == null)
+		if (drawsize == 0)
+		{
 			return null;
-		return ssloc.Item;
+		}
+		var midx = (VM.StarSystemLocations.Min(l => l.Location.X) + VM.StarSystemLocations.Max(l => l.Location.X)) / 2f;
+		var midy = (VM.StarSystemLocations.Min(l => l.Location.Y) + VM.StarSystemLocations.Max(l => l.Location.Y)) / 2f;
+		var x = (int)Math.Round(((float)p.X - Width / 2f) / drawsize + midx);
+		var y = (int)Math.Round(((float)p.Y - Height / 2f) / drawsize + midy);
+		var p2 = new Point(x, y);
+		var ssloc = VM.StarSystemLocations.FirstOrDefault(ssl => ssl.Location == p2);
+		return ssloc?.Item;
 	}
 
+	/*
 	protected override void OnPaint(PaintEventArgs pe)
 	{
 		base.OnPaint(pe);
@@ -191,15 +178,15 @@ public partial class GalaxyView : Control
 			pe.Graphics.DrawImage(backgroundImage, x, y, w, h);
 		}
 
-		if (Galaxy.Current != null)
+		if (VM.Galaxy != null)
 		{
 			var drawsize = StarSystemDrawSize;
 			var whitePen = new Pen(Color.White);
 
 			// draw star systems
-			var avgx = (Galaxy.Current.StarSystemLocations.Min(l => l.Location.X) + Galaxy.Current.StarSystemLocations.Max(l => l.Location.X)) / 2f;
-			var avgy = (Galaxy.Current.StarSystemLocations.Min(l => l.Location.Y) + Galaxy.Current.StarSystemLocations.Max(l => l.Location.Y)) / 2f;
-			foreach (var ssl in Galaxy.Current.StarSystemLocations)
+			var avgx = (VM.Galaxy.StarSystemLocations.Min(l => l.Location.X) + VM.Galaxy.StarSystemLocations.Max(l => l.Location.X)) / 2f;
+			var avgy = (VM.Galaxy.StarSystemLocations.Min(l => l.Location.Y) + VM.Galaxy.StarSystemLocations.Max(l => l.Location.Y)) / 2f;
+			foreach (var ssl in VM.Galaxy.StarSystemLocations)
 			{
 				// where will we draw the star system?
 				var x = ssl.Location.X;// - minx;
@@ -277,15 +264,11 @@ public partial class GalaxyView : Control
 			}
 		}
 	}
+	*/
 
-	private void GalaxyView_MouseDown(object sender, MouseEventArgs e)
+	private void GalaxyView_MouseMove(object? sender, MouseEventArgs e)
 	{
-		if (StarSystemClicked != null)
-			StarSystemClicked(this, GetStarSystemAtPoint(e.Location));
-	}
-
-	private void GalaxyView_MouseMove(object sender, MouseEventArgs e)
-	{
+		// TODO: translate tooltips to Blazor
 		var sys = GetStarSystemAtPoint(e.Location);
 		if (sys == null)
 			toolTip.SetToolTip(this, null);
@@ -293,7 +276,7 @@ public partial class GalaxyView : Control
 			toolTip.SetToolTip(this, sys.Name);
 	}
 
-	private void GalaxyView_SizeChanged(object sender, EventArgs e)
+	private void GalaxyView_SizeChanged(object? sender, EventArgs e)
 	{
 		Invalidate();
 	}
@@ -307,6 +290,11 @@ public partial class GalaxyView : Control
 	/// Occurs when the selected star system changes.
 	/// </summary>
 	public event StarSystemSelectionDelegate StarSystemSelected;
+
+	/// <summary>
+	/// The background has been clicked.
+	/// </summary>
+	public event Action<GalaxyView> BackgroundClicked;
 
 	/// <summary>
 	/// Delegate for events related to star system selection.

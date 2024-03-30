@@ -1,0 +1,57 @@
+﻿@using System.Drawing
+@using System.ComponentModel
+@using System.Numerics
+@using FrEee.Extensions
+
+@code {
+	[Parameter]
+	public GalaxyMapViewModel VM { get; set; } = new();
+
+	/// <summary>
+	/// When the view model's properties change, update the UI.
+	/// </summary>
+	/// <param name="sender"></param>
+	/// <param name="e"></param>
+	private void ViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+	{
+		StateHasChanged();
+	}
+
+	protected override void OnInitialized()
+	{
+		VM.PropertyChanged += ViewModelPropertyChanged;
+	}
+
+	public void Dispose()
+	{
+		VM.PropertyChanged -= ViewModelPropertyChanged;
+	}
+}
+
+<div @onclick="VM.BackgroundClicked">
+	<div class="fill">
+		<ImageDisplay VM="@VM.BackgroundImageVM" />
+	</div>
+	<!-- TODO: warp lines -->
+	<div class="fill overlay" style="aspect-ratio: @(VM.AspectRatio); display: grid">
+		@for (var x = VM.MinX; x <= VM.MaxX; x++)
+		{
+			for (var y = VM.MinY; y <= VM.MaxY; y++)
+			{
+				var sysloc = VM.StarSystemLocations.SingleOrDefault(q => q.Location.X == x && q.Location.Y == y);
+				if (sysloc is not null)
+				{
+					// system pie
+					<div style="grid-row: @(y - VM.MinY); grid-column: @(x - VM.MinX)">
+						<PieChart T="int" VM="@(VM.GetStarSystemViewModel(x, y))" />
+					</div>
+				}
+				else
+				{
+					// placeholder
+					<div style="grid-row: @(y - VM.MinY); grid-column: @(x - VM.MinX)" />
+				}
+			}	
+		}
+	</div>
+</div>

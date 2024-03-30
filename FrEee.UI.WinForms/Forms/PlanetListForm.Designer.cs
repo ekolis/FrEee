@@ -111,7 +111,7 @@ partial class PlanetListForm
 		this.galaxyView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
 		this.galaxyView.Dock = System.Windows.Forms.DockStyle.Left;
 		this.galaxyView.Location = new System.Drawing.Point(403, 3);
-		this.galaxyView.Mode = presenceMode1;
+		//this.galaxyView.Mode = presenceMode1;
 		this.galaxyView.Name = "galaxyView";
 		this.galaxyView.SelectedStarSystem = null;
 		this.galaxyView.Size = new System.Drawing.Size(226, 194);

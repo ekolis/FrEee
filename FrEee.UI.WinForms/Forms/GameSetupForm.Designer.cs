@@ -379,7 +379,7 @@ partial class GameSetupForm
         galaxyView.BackColor = System.Drawing.Color.Black;
         galaxyView.Location = new System.Drawing.Point(16, 381);
         galaxyView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-        galaxyView.Mode = presenceMode1;
+//        galaxyView.Mode = presenceMode1;
         galaxyView.Name = "galaxyView";
         galaxyView.SelectedStarSystem = null;
         galaxyView.Size = new System.Drawing.Size(612, 235);
