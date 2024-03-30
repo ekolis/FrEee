@@ -59,11 +59,6 @@ namespace FrEee.UI.Blazor.Views
 		}
 
 		/// <summary>
-		/// How big to display the pie chart, in pixels.
-		/// </summary>
-		public int Size { get; set; } = 32;
-
-		/// <summary>
 		/// Action to take when an entry is clicked.
 		/// </summary>
 		public Action<Entry> OnClickEntry { get; set; } = (Entry entry) => { };

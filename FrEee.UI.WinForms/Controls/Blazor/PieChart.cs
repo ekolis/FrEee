@@ -40,11 +40,4 @@ public partial class PieChart : BlazorControl
 		set => VM.Entries = value;
 	}
     #endregion
-
-    protected override void OnResize(EventArgs e)
-    {
-		// zoom fill
-		VM.Size = Math.Min(Width, Height);
-    }
-
 }
