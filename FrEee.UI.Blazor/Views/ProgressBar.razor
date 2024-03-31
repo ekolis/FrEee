@@ -26,7 +26,7 @@
 	}
 }
 
-<div @onclick="VM.OnClick" class="fill" style="display: grid; height: 36px; overflow: hidden">
+<div @onclick="VM.OnClick" style="display: grid; height: 36px; overflow: hidden">
 	<div class="fill" style="display: flex; flex-direction: row; grid-area: 1/1/1/1;">
 		<div style="width: @(100 * VM.Value / Math.Max(1, VM.Maximum))%; height: 100%; padding: 0; background-color: #@VM.BarColor.ToRgba()" />
 		<div style="width: @(100 * VM.Increment / Math.Max(1, VM.Maximum))%; height: 100%; padding: 0; background-color: #@VM.IncrementColor1.ToRgba()" />
