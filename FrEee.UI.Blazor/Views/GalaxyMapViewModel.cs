@@ -115,24 +115,6 @@ namespace FrEee.UI.Blazor.Views
 			}
 		}
 
-		public PieChartViewModel<int>? GetStarSystemViewModel(StarSystem? starSystem)
-		{
-			/*if (starSystem is null)
-			{
-				return null;
-			}*/
-			return Mode.GetStarSystemViewModel(starSystem);
-			// TODO: use map modes to get view model
-			/*
-			var entry = new PieChartViewModel<int>.Entry(starSystem.Name, Color.Blue, 1);
-			return new PieChartViewModel<int>
-			{
-				Entries = new HashSet<PieChartViewModel<int>.Entry> { entry },
-				OnClickEntry = entry => StarSystemClicked?.Invoke(starSystem),
-			};
-			*/
-		}
-
 		public double Scale { get; set; } = 100d;
 
 		public double ScaledWidth => Width * Scale;
