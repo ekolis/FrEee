@@ -22,7 +22,7 @@ namespace FrEee.UI.Blazor.Views
 		/// <summary>
 		/// The pie chart data entries.
 		/// </summary>
-		public ISet<Entry> Entries { get; set; } = new HashSet<Entry>();
+		public IEnumerable<Entry> Entries { get; set; } = new HashSet<Entry>();
 
 		public IEnumerable<(Entry Entry, T PreviousSum)> SortedEntries
 		{

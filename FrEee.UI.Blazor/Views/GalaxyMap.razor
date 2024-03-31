@@ -43,7 +43,7 @@
 				{
 					// system pie
 					<div style="grid-row: @(y - VM.MinY); grid-column: @(x - VM.MinX)">
-						<PieChart T="int" VM="@(VM.GetStarSystemViewModel(x, y))" />
+						<PieChart T="int" VM="@(VM.Mode.GetStarSystemViewModel(sysloc.Item))" />
 					</div>
 				}
 				else

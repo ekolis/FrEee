@@ -57,7 +57,7 @@ namespace FrEee.UI.Blazor.Views
 		/// <summary>
 		/// The render mode for the map. Controls how star systems are displayed.
 		/// </summary>
-		public IGalaxyMapMode Mode { get; set; } // TODO: specify default galaxy map mode
+		public IGalaxyMapMode Mode { get; set; } = GalaxyMapModeLibrary.Instance.All.OfType<PresenceMode>().Single();
 
 		private StarSystem? selectedStarSystem;
 
@@ -119,22 +119,22 @@ namespace FrEee.UI.Blazor.Views
 			}
 		}
 
-		public PieChartViewModel<int> GetStarSystemViewModel(int x, int y)
+		public PieChartViewModel<int>? GetStarSystemViewModel(StarSystem? starSystem)
 		{
-			var starSystem = StarSystemLocations
-				.SingleOrDefault(q => q.Location.X == x && q.Location.Y == y)
-				?.Item;
-			if (starSystem == null)
+			/*if (starSystem is null)
 			{
 				return null;
-			}
+			}*/
+			return Mode.GetStarSystemViewModel(starSystem);
 			// TODO: use map modes to get view model
+			/*
 			var entry = new PieChartViewModel<int>.Entry(starSystem.Name, Color.Blue, 1);
 			return new PieChartViewModel<int>
 			{
 				Entries = new HashSet<PieChartViewModel<int>.Entry> { entry },
 				OnClickEntry = entry => StarSystemClicked?.Invoke(starSystem),
 			};
+			*/
 		}
 	}
 }

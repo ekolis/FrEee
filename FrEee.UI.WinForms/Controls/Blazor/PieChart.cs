@@ -34,7 +34,7 @@ public partial class PieChart : BlazorControl
 	protected override PieChartViewModel<int> VM { get; } = new();
 
 	#region viewmodel property wrappers for winforms
-	public ISet<PieChartViewModel<int>.Entry> Entries
+	public IEnumerable<PieChartViewModel<int>.Entry> Entries
 	{
 		get => VM.Entries;
 		set => VM.Entries = value;
