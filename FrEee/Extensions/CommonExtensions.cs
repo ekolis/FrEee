@@ -519,9 +519,9 @@ public static class CommonExtensions
 	/// <returns></returns>
 	public static IEnumerable<Point> GetAllPoints(this Rectangle r)
 	{
-		for (var x = r.Left; x <= r.Right; x++)
+		for (var x = r.Left; x < r.Right; x++)
 		{
-			for (var y = r.Top; y <= r.Bottom; y++)
+			for (var y = r.Top; y < r.Bottom; y++)
 				yield return new Point(x, y);
 		}
 	}
