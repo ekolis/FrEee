@@ -32,6 +32,9 @@ namespace FrEee.UI.Blazor.Views
 			}
 		}
 
+		public double AspectRatio =>
+			(double)Image.Width / (double)Image.Height;
+
 		public Action OnClick { get; set; } = () => { };
 	}
 }
