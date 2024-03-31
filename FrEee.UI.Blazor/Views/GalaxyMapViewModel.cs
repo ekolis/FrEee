@@ -57,7 +57,7 @@ namespace FrEee.UI.Blazor.Views
 		/// <summary>
 		/// The render mode for the map. Controls how star systems are displayed.
 		/// </summary>
-		public IGalaxyMapMode Mode { get; set; } = GalaxyMapModeLibrary.Instance.All.OfType<PresenceMode>().Single();
+		public IGalaxyMapMode Mode { get; set; } = GalaxyMapModeLibrary.Find<PresenceMode>();
 
 		private StarSystem? selectedStarSystem;
 

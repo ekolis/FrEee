@@ -8,7 +8,7 @@ public class GalaxyMapModeLibrary
 {
 	private CompositionContainer container;
 
-	public static GalaxyMapModeLibrary Instance { get; private set; } = new GalaxyMapModeLibrary();
+	private static GalaxyMapModeLibrary Instance { get; set; } = new GalaxyMapModeLibrary();
 
 	private GalaxyMapModeLibrary()
 	{
@@ -19,5 +19,18 @@ public class GalaxyMapModeLibrary
 	}
 
 	[ImportMany(typeof(IGalaxyMapMode))]
-	public IEnumerable<IGalaxyMapMode> All { get; private set; }
+	public IEnumerable<IGalaxyMapMode> AllOfThem { get; private set; }
+
+	public static IEnumerable<IGalaxyMapMode> All => Instance.AllOfThem;
+
+	public static IGalaxyMapMode? Find<T>(string name = "")
+		where T : IGalaxyMapMode
+	{
+		var results = All.OfType<T>();
+		if (!string.IsNullOrWhiteSpace(name))
+		{
+			results = results.Where(q => q.Name.Contains(name));
+		}
+		return results.FirstOrDefault();
+	}
 }

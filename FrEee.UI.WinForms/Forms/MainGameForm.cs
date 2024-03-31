@@ -45,7 +45,7 @@ public partial class MainGameForm : GameForm
 		QuitOnClose = quitOnClose;
 		SetMouseDownHandler(this, GameForm_MouseDown);
 		RemoveMouseDownHandler(searchBox, GameForm_MouseDown);
-		foreach (var mode in GalaxyViewModes.All)
+		foreach (var mode in GalaxyMapModeLibrary.All)
 			ddlGalaxyViewMode.Items.Add(mode);
 		ddlGalaxyViewMode.SelectedIndex = 0;
 		Instance = this;
@@ -659,7 +659,7 @@ public partial class MainGameForm : GameForm
 	private void ddlGalaxyViewMode_SelectedIndexChanged(object sender, EventArgs e)
 	{
 		// TODO: switch galaxy *map* mode
-		//galaxyView.Mode = ddlGalaxyViewMode.SelectedItem as IGalaxyMapMode;
+		galaxyView.Mode = (IGalaxyMapMode)ddlGalaxyViewMode.SelectedItem;
 	}
 
 	private MusicMood FindMusicMood()
