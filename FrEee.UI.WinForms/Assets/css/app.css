@@ -78,6 +78,20 @@ a, .btn-link {
 	overflow: hidden;
 }
 
+/* Element will fill its container, regardless of any other content, but can maintain an aspect ratio if specified. */
+.zoom {
+	position: absolute;
+	max-width: 100%;
+	max-height: 100%;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+
 .overlay {
 	z-index: 999
 }

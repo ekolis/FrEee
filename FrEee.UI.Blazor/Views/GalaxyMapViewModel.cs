@@ -88,7 +88,7 @@ namespace FrEee.UI.Blazor.Views
 		/// </summary>
 		public int Height => Galaxy?.UsedHeight ?? 0;
 
-		public double AspectRatio => (double)Height / Width;
+		public double AspectRatio => (double)Width / Height;
 
 		/// <summary>
 		/// Graph linking any star systems that are connected by warp points.

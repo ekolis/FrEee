@@ -32,7 +32,7 @@
 	private ElementReference normal_canvas;
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
-		var size = VM.Scale;
+		var size = VM.Scale + 1;
 		var xoffset = VM.Width / 2d;
 		var yoffset = VM.Height / 2d;
 
@@ -65,26 +65,28 @@
 	<div class="fill">
 		<ImageDisplay VM="@VM.BackgroundImageVM" />
 	</div>
-	<div class="fill overlay" style="aspect-ratio: @(VM.AspectRatio)">
+	<div class="zoom overlay" style="aspect-ratio: @(VM.AspectRatio)">
 		<Canvas @ref="helper_canvas" class="fill" width="@VM.ScaledWidth" height="@VM.ScaledHeight"/>
 	</div>
-	<div class="fill overlay2" style="aspect-ratio: @(VM.AspectRatio); display: grid">
+	<div class="zoom overlay2" style="aspect-ratio: @(VM.AspectRatio); display: grid">
 		@for (var x = VM.MinX; x <= VM.MaxX; x++)
 		{
 			for (var y = VM.MinY; y <= VM.MaxY; y++)
 			{
 				var sysloc = VM.StarSystemLocations.SingleOrDefault(q => q.Location.X == x && q.Location.Y == y);
+				var row = y - VM.MinY;
+				var col = x - VM.MinX;
 				if (sysloc is not null)
 				{
 					// system pie
-					<div style="grid-row: @(y - VM.MinY); grid-column: @(x - VM.MinX)">
+					<div style="grid-row: @row; grid-column: @col; width: 1fr; height: 1fr; aspect-ratio: 1; border: 1px solid gray">
 						<PieChart T="int" VM="@(VM.Mode.GetStarSystemViewModel(sysloc.Item))" />
 					</div>
 				}
 				else
 				{
 					// placeholder
-					<div style="grid-row: @(y - VM.MinY); grid-column: @(x - VM.MinX)" />
+					<div style="grid-row: @row; grid-column: @col; width: 1fr; height: 1fr; aspect-ratio: 1; border: 1px dotted #00ff0044" />
 				}
 			}
 		}
