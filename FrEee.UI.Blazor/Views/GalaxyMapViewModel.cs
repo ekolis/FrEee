@@ -45,7 +45,7 @@ namespace FrEee.UI.Blazor.Views
 		/// <summary>
 		/// Any star systems in the galaxy, along with their locations.
 		/// </summary>
-		public IEnumerable<ObjectLocation<StarSystem>> StarSystemLocations => Galaxy.StarSystemLocations;
+		public IEnumerable<ObjectLocation<StarSystem>> StarSystemLocations => Galaxy?.StarSystemLocations ?? Enumerable.Empty<ObjectLocation<StarSystem>>();
 
 		/// <summary>
 		/// The image to display as the background of the map.
@@ -74,23 +74,23 @@ namespace FrEee.UI.Blazor.Views
 			}
 		}
 
-		public int MinX => Galaxy.MinX;
+		public int MinX => Galaxy?.MinX ?? 0;
 
-		public int MaxX => Galaxy.MaxX;
+		public int MaxX => Galaxy?.MaxX ?? 0;
 
-		public int MinY => Galaxy.MinY;
+		public int MinY => Galaxy?.MinY ?? 0;
 
-		public int MaxY => Galaxy.MaxY;
+		public int MaxY => Galaxy?.MaxY ?? 0;
 
 		/// <summary>
 		/// The number of star systems which can be lined up horizontally on the map.
 		/// </summary>
-		public int Width => Galaxy.UsedWidth;
+		public int Width => Galaxy?.UsedWidth ?? 0;
 
 		/// <summary>
 		/// The number of star systems which can be lined up vertically on the map.
 		/// </summary>
-		public int Height => Galaxy.UsedHeight;
+		public int Height => Galaxy?.UsedHeight ?? 0;
 
 		public double AspectRatio => (double)Height / Width;
 

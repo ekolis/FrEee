@@ -2,6 +2,7 @@
 @using System.ComponentModel
 @using System.Numerics
 @using FrEee.Extensions
+@using Excubo.Blazor.Canvas
 
 @code {
 	[Parameter]
@@ -26,14 +27,40 @@
 	{
 		VM.PropertyChanged -= ViewModelPropertyChanged;
 	}
+
+	private Canvas helper_canvas;
+	private ElementReference normal_canvas;
+	protected override async Task OnAfterRenderAsync(bool first_render)
+	{
+		if (first_render)
+		{
+			var size = 10;
+			var xoffset = 0;
+			var yoffset = 0;
+
+			await using (var ctx = await helper_canvas.GetContext2DAsync())
+			{
+				await ctx.StrokeStyleAsync("white");
+				foreach (var connections in VM.WarpGraph.Connections)
+				{
+					var src = connections.Key;
+					foreach (var dest in connections.Value)
+					{
+						await ctx.MoveToAsync(src.Location.X * size + xoffset, src.Location.Y * size + yoffset);
+						await ctx.LineToAsync(dest.Location.X * size + xoffset, dest.Location.Y * size + yoffset);
+					}
+				}
+			}
+		}
+	}
 }
 
 <div @onclick="VM.BackgroundClicked">
 	<div class="fill">
 		<ImageDisplay VM="@VM.BackgroundImageVM" />
 	</div>
-	<!-- TODO: warp lines -->
 	<div class="fill overlay" style="aspect-ratio: @(VM.AspectRatio); display: grid">
+		<Canvas @ref="helper_canvas" class="fill" />
 		@for (var x = VM.MinX; x <= VM.MaxX; x++)
 		{
 			for (var y = VM.MinY; y <= VM.MaxY; y++)

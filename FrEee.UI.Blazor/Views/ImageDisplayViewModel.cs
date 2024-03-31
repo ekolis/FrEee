@@ -23,6 +23,11 @@ namespace FrEee.UI.Blazor.Views
 		{
 			get
 			{
+				if (Image is null)
+				{
+					return null;
+				}
+
 				// TODO: cache image source until image changes
 				ImageConverter converter = new();
 				var bytes = (byte[])converter.ConvertTo(Image, typeof(byte[]));
@@ -33,7 +38,7 @@ namespace FrEee.UI.Blazor.Views
 		}
 
 		public double AspectRatio =>
-			(double)Image.Width / (double)Image.Height;
+			Image == null ? 1 : ((double)Image.Width / (double)Image.Height);
 
 		public Action OnClick { get; set; } = () => { };
 	}
