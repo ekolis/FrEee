@@ -30,28 +30,34 @@
 
 	private Canvas helper_canvas;
 	private ElementReference normal_canvas;
-	protected override async Task OnAfterRenderAsync(bool first_render)
+	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
-		if (first_render)
-		{
-			var size = 10;
-			var xoffset = 0;
-			var yoffset = 0;
+		var size = VM.Scale;
+		var xoffset = VM.Width / 2d;
+		var yoffset = VM.Height / 2d;
 
-			await using (var ctx = await helper_canvas.GetContext2DAsync())
+		await using (var ctx = await helper_canvas.GetContext2DAsync())
+		{
+			await ctx.ClearRectAsync(0, 0, VM.Width, VM.Height);
+			await ctx.SetTransformAsync(size, 0, 0, size, xoffset * size, yoffset * size);
+			await ctx.RestoreAsync();
+			await ctx.SaveAsync();
+			await ctx.StrokeStyleAsync("white");
+			await ctx.LineWidthAsync(0.1);
+			foreach (var connections in VM.WarpGraph.Connections)
 			{
-				await ctx.StrokeStyleAsync("white");
-				foreach (var connections in VM.WarpGraph.Connections)
+				var src = connections.Key;
+				foreach (var dest in connections.Value)
 				{
-					var src = connections.Key;
-					foreach (var dest in connections.Value)
-					{
-						await ctx.MoveToAsync(src.Location.X * size + xoffset, src.Location.Y * size + yoffset);
-						await ctx.LineToAsync(dest.Location.X * size + xoffset, dest.Location.Y * size + yoffset);
-					}
+					// TODO: display one way warps differently (arrows, incomplete lines, gradients?)
+					await ctx.MoveToAsync(src.Location.X, src.Location.Y);
+					await ctx.LineToAsync(dest.Location.X, dest.Location.Y);
+					await ctx.StrokeAsync();
 				}
 			}
 		}
+
+		await base.OnAfterRenderAsync(firstRender);
 	}
 }
 
@@ -59,8 +65,10 @@
 	<div class="fill">
 		<ImageDisplay VM="@VM.BackgroundImageVM" />
 	</div>
-	<div class="fill overlay" style="aspect-ratio: @(VM.AspectRatio); display: grid">
-		<Canvas @ref="helper_canvas" class="fill" />
+	<div class="fill overlay" style="aspect-ratio: @(VM.AspectRatio)">
+		<Canvas @ref="helper_canvas" class="fill" width="@VM.ScaledWidth" height="@VM.ScaledHeight"/>
+	</div>
+	<div class="fill overlay2" style="aspect-ratio: @(VM.AspectRatio); display: grid">
 		@for (var x = VM.MinX; x <= VM.MaxX; x++)
 		{
 			for (var y = VM.MinY; y <= VM.MaxY; y++)
@@ -78,7 +86,7 @@
 					// placeholder
 					<div style="grid-row: @(y - VM.MinY); grid-column: @(x - VM.MinX)" />
 				}
-			}	
+			}
 		}
 	</div>
 </div>

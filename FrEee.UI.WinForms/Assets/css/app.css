@@ -81,3 +81,8 @@ a, .btn-link {
 .overlay {
 	z-index: 999
 }
+
+
+.overlay2 {
+	z-index: 9999
+}

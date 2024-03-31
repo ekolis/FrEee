@@ -7,14 +7,10 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using FrEee.Extensions;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
-using FrEee.Properties;
 using FrEee.UI.Blazor.Views.GalaxyMapModes;
 using FrEee.Utility;
-using Microsoft.AspNetCore.Components;
-using static IronPython.Modules._ast;
 
 namespace FrEee.UI.Blazor.Views
 {
@@ -136,5 +132,11 @@ namespace FrEee.UI.Blazor.Views
 			};
 			*/
 		}
+
+		public double Scale { get; set; } = 100d;
+
+		public double ScaledWidth => Width * Scale;
+
+		public double ScaledHeight => Height * Scale;
 	}
 }
