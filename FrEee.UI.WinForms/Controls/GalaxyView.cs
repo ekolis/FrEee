@@ -33,15 +33,7 @@ public partial class GalaxyView : BlazorControl
 				StarSystemSelected?.Invoke(this, starSystem);
 			}));
 		};
-		VM.BackgroundClicked = () =>
-		{
-			// HACK: https://github.com/MicrosoftEdge/WebView2Feedback/issues/3028#issuecomment-1461207168
-			Task.Delay(0).ContinueWith(_ => MainGameForm.Instance.Invoke(() =>
-			{
-				BackgroundClicked?.Invoke(this);
-			}));
-		};
-
+		
 		BackColor = Color.Black;
 		this.SizeChanged += GalaxyView_SizeChanged;
 		this.MouseMove += GalaxyView_MouseMove;

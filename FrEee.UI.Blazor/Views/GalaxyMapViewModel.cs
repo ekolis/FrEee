@@ -24,11 +24,6 @@ namespace FrEee.UI.Blazor.Views
 		public Action<StarSystem> StarSystemClicked { get; set; } = starSystem => { };
 
 		/// <summary>
-		/// The background has been clicked.
-		/// </summary>
-		public Action BackgroundClicked { get; set; } = () => { };
-
-		/// <summary>
 		/// A star system has been selected or deselected.
 		/// </summary>
 		public Action<StarSystem?> StarSystemSelected { get; set; } = starSystem => { };
