@@ -19,12 +19,12 @@ public partial class PieChart : BlazorControl
 		InitializeComponent();
 
 		// set up view model
-		VM.OnClickEntry = (PieChartViewModel<int>.Entry entry) =>
+		VM.OnClick = () =>
 		{
 			// HACK: https://github.com/MicrosoftEdge/WebView2Feedback/issues/3028#issuecomment-1461207168
 			Task.Delay(0).ContinueWith(_ => MainGameForm.Instance.Invoke(() =>
 			{
-				MessageBox.Show($"You clicked {entry.Text} which is equal to {entry.Value}.");
+				MessageBox.Show($"You clicked the pie chart!");
 			}));
 		};
 	}

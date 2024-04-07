@@ -59,9 +59,9 @@ namespace FrEee.UI.Blazor.Views
 		}
 
 		/// <summary>
-		/// Action to take when an entry is clicked.
+		/// Action to take when the pie chart is clicked.
 		/// </summary>
-		public Action<Entry> OnClickEntry { get; set; } = (Entry entry) => { };
+		public Action OnClick { get; set; } = () => { };
 
 		/// <summary>
 		/// An entry in the pie chart data.

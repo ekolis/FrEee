@@ -30,6 +30,7 @@ public partial class GalaxyView : BlazorControl
 			Task.Delay(0).ContinueWith(_ => MainGameForm.Instance.Invoke(() =>
 			{
 				StarSystemClicked?.Invoke(this, starSystem);
+				StarSystemSelected?.Invoke(this, starSystem);
 			}));
 		};
 		VM.BackgroundClicked = () =>

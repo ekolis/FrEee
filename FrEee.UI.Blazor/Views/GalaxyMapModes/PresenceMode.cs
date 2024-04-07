@@ -26,7 +26,7 @@ namespace FrEee.UI.Blazor.Views.GalaxyMapModes
 					// weight all empires equally
 					Entries = owners.Select(empire =>
 						new PieChartViewModel<int>.Entry(empire.Name, empire.Color, 1)),
-					OnClickEntry = entry => starSystemClicked(starSystem)
+					OnClick = () => starSystemClicked(starSystem)
 				};
 			}
 			else
@@ -35,7 +35,7 @@ namespace FrEee.UI.Blazor.Views.GalaxyMapModes
 				{
 					// put a dummy "no one" empire so something is rendered
 					Entries = [new PieChartViewModel<int>.Entry("(no one)", Color.Black, 1)],
-					OnClickEntry = entry => starSystemClicked(starSystem)
+					OnClick = () => starSystemClicked(starSystem)
 				};
 			}
 		}
