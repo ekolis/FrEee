@@ -24,7 +24,7 @@ public partial class GalaxyView : BlazorControl
 		InitializeComponent();
 
 		// set up view model
-		VM.StarSystemClicked += starSystem =>
+		VM.StarSystemClicked = starSystem =>
 		{
 			// HACK: https://github.com/MicrosoftEdge/WebView2Feedback/issues/3028#issuecomment-1461207168
 			Task.Delay(0).ContinueWith(_ => MainGameForm.Instance.Invoke(() =>
@@ -32,7 +32,7 @@ public partial class GalaxyView : BlazorControl
 				StarSystemClicked?.Invoke(this, starSystem);
 			}));
 		};
-		VM.BackgroundClicked += () =>
+		VM.BackgroundClicked = () =>
 		{
 			// HACK: https://github.com/MicrosoftEdge/WebView2Feedback/issues/3028#issuecomment-1461207168
 			Task.Delay(0).ContinueWith(_ => MainGameForm.Instance.Invoke(() =>

@@ -16,7 +16,7 @@ namespace FrEee.UI.Blazor.Views.GalaxyMapModes
 	{
 		public string Name => "Presence";
 
-		public PieChartViewModel<int> GetStarSystemViewModel(StarSystem starSystem)
+		public PieChartViewModel<int> GetStarSystemViewModel(StarSystem starSystem, Action<StarSystem> starSystemClicked)
 		{
 			var owners = FindOwners(starSystem);
 			if (owners.Any())
@@ -26,6 +26,7 @@ namespace FrEee.UI.Blazor.Views.GalaxyMapModes
 					// weight all empires equally
 					Entries = owners.Select(empire =>
 						new PieChartViewModel<int>.Entry(empire.Name, empire.Color, 1)),
+					OnClickEntry = entry => starSystemClicked(starSystem)
 				};
 			}
 			else
@@ -33,7 +34,8 @@ namespace FrEee.UI.Blazor.Views.GalaxyMapModes
 				return new()
 				{
 					// put a dummy "no one" empire so something is rendered
-					Entries = [new PieChartViewModel<int>.Entry("(no one)", Color.Black, 1)]
+					Entries = [new PieChartViewModel<int>.Entry("(no one)", Color.Black, 1)],
+					OnClickEntry = entry => starSystemClicked(starSystem)
 				};
 			}
 		}

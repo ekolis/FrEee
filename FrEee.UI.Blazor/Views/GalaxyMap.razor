@@ -79,8 +79,14 @@
 				if (sysloc is not null)
 				{
 					// system pie
-					<div style="grid-row: @row; grid-column: @col; width: 1fr; height: 1fr; aspect-ratio: 1; border: 1px solid gray">
-						<PieChart T="int" VM="@(VM.Mode.GetStarSystemViewModel(sysloc.Item))" />
+					string border = "1px solid black";
+					if (sysloc.Item == VM.SelectedStarSystem)
+					{
+						// making the border thicker breaks the layout for some reason
+						border = "1px solid white";
+					}
+					<div style="grid-row: @row; grid-column: @col; width: 1fr; height: 1fr; aspect-ratio: 1; border: @border">
+						<PieChart T="int" VM="@(VM.Mode.GetStarSystemViewModel(sysloc.Item, VM.StarSystemClicked))" />
 					</div>
 				}
 				else
