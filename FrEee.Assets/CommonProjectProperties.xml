@@ -3,7 +3,7 @@
 		<PackageProjectUrl>http://edkolis.com/freee</PackageProjectUrl>
 		<Product>FrEee</Product>
 		<Version>0.0.9</Version>
-		<Copyright>Copyright © 2013-2022</Copyright>
+		<Copyright>Copyright © 2013-2024</Copyright>
 		<ApplicationIcon>FrEee.ico</ApplicationIcon>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
