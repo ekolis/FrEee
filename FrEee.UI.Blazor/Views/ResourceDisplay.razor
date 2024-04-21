@@ -26,9 +26,9 @@
 	}
 }
 
-<div style="display: flex; flex-direction: row; width: 150px; height: 24px; vertical-align: middle; overflow: hidden">
-	<div style="max-height: 100%; aspect-ratio: 1; margin: auto; text-align: left">
+<div style="display: flex; flex-direction: row; justify-content: space-evenly; width: 100%; height: 24px; vertical-align: middle; overflow: hidden">
+	<div style="max-height: 100%; aspect-ratio: 1; margin: auto 0px 0px 0px; text-align: left">
 		<ImageDisplay VM="VM.IconVM" />
 	</div>
-	<span style="color: #@VM.Color.ToRgba(); margin: 0px 3px">@VM.Text</span>
+	<span style="color: #@VM.Color.ToRgba(); margin: 0px 3px; text-align: right">@VM.Text</span>
 </div>
