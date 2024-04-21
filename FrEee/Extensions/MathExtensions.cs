@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Formats.Asn1;
 using System.Linq;
+using System.Numerics;
 using FrEee.Utility;
 namespace FrEee.Extensions;
 
@@ -107,4 +109,12 @@ public static class MathExtensions
 		result /= total;
 		return result;
 	}
+
+	public static TNumber Sum<TSource, TNumber>(this IEnumerable<TSource> list, Func<TSource, TNumber> selector)
+		where TNumber : IAdditionOperators<TNumber, TNumber, TNumber>
+		=> list.Select(selector).Sum();
+
+	public static T Sum<T>(this IEnumerable<T> list)
+		where T : IAdditionOperators<T, T, T>
+		=> list.Aggregate((a, b) => a + b);
 }

@@ -1,0 +1,29 @@
+﻿@using System.Drawing
+@using System.ComponentModel
+
+@code {
+	[Parameter]
+	public ImageDisplayViewModel VM { get; set; } = new();
+
+	/// <summary>
+	/// When the view model's properties change, update the UI.
+	/// </summary>
+	/// <param name="sender"></param>
+	/// <param name="e"></param>
+	private void ViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+	{
+		StateHasChanged();
+	}
+
+	protected override void OnInitialized()
+	{
+		VM.PropertyChanged += ViewModelPropertyChanged;
+	}
+
+	public void Dispose()
+	{
+		VM.PropertyChanged -= ViewModelPropertyChanged;
+	}
+}
+
+<img src="@VM.ImageSource" @onclick="VM.OnClick" style="overflow: hidden; aspect-ratio: @(VM.AspectRatio); width: 100%; max-width: 100%; max-height: 100%"/>
