@@ -46,7 +46,4 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-	<PropertyGroup>
-		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
-	</PropertyGroup>
 </Project>

@@ -42,7 +42,4 @@
 	    <LastGenOutput>Settings.Designer.cs</LastGenOutput>
 	  </None>
 	</ItemGroup>
-	<PropertyGroup>
-		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
-	</PropertyGroup>
 </Project>

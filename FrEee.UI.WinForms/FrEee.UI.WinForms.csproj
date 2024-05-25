@@ -5,6 +5,7 @@
 		<UseWindowsForms>true</UseWindowsForms>
 		<Description>Windows Forms GUI for FrEee</Description>
 		<StartupObject>FrEee.UI.WinForms.Program</StartupObject>
+		<ApplicationIcon>FrEee.ico</ApplicationIcon>
 	</PropertyGroup>
 	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
 	<ItemGroup>
@@ -62,7 +63,6 @@
 	  <Exec Command="post-build.bat" />
 	</Target>
 	<PropertyGroup>
-		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
 		<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
 	</PropertyGroup>
 </Project>

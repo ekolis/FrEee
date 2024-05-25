@@ -6,6 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
+
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
@@ -27,9 +29,4 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
   </ItemGroup>
-
-	<PropertyGroup>
-		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
-	</PropertyGroup>
-
 </Project>
