@@ -64,17 +64,24 @@ public class GalaxyReference<T> : IReference<long, T>, IPromotable
 		}
 	}
 
-	public GalaxyReference(long id)
+	public GalaxyReference(long id, bool lazyLoad = true)
 		: this()
 	{
-		if (Galaxy.Current == null)
-			throw new ReferenceException<int, T>("Can't create a reference to an IReferrable without a galaxy.");
-		else if (!Galaxy.Current.referrables.ContainsKey(id))
-			throw new IndexOutOfRangeException($"The id of {id} is not currently a valid reference"); 
-		else if (Galaxy.Current.referrables[id] is T)
+		if (lazyLoad)
+		{
 			ID = id;
+		}
 		else
-			throw new Exception("Object with ID " + id + " is not a " + typeof(T) + ".");
+		{
+			if (Galaxy.Current == null)
+				throw new ReferenceException<int, T>("Can't create a reference to an IReferrable without a galaxy.");
+			else if (!Galaxy.Current.referrables.ContainsKey(id))
+				throw new IndexOutOfRangeException($"The id of {id} is not currently a valid reference");
+			else if (Galaxy.Current.referrables[id] is T)
+				ID = id;
+			else
+				throw new Exception("Object with ID " + id + " is not a " + typeof(T) + ".");
+		}
 	}
 
 	private void InitializeCache()

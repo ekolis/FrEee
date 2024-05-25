@@ -53,15 +53,22 @@ public class ModReference<T> : IReference<string, T> where T : IModObject
 			throw new ArgumentException("{0} does not exist in the current mod so it cannot be referenced.".F(t));
 	}
 
-	public ModReference(string id)
+	public ModReference(string id, bool lazyLoad = true)
 		: this()
 	{
-		if (Mod.Current == null)
-			throw new ReferenceException<int, T>("Can't create a reference to an IModObject without a mod.");
-		else if (Mod.Current.Find<T>(id) is T)
+		if (lazyLoad)
+		{
 			ID = id;
+		}
 		else
-			throw new Exception("Object with ID " + id + " is not a " + typeof(T) + ".");
+		{
+			if (Mod.Current == null)
+				throw new ReferenceException<int, T>("Can't create a reference to an IModObject without a mod.");
+			else if (Mod.Current.Find<T>(id) is T)
+				ID = id;
+			else
+				throw new Exception("Object with ID " + id + " is not a " + typeof(T) + ".");
+		}
 	}
 
 	/// <summary>

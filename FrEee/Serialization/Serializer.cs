@@ -10,6 +10,7 @@ namespace FrEee.Serialization;
 /// </summary>
 public static class Serializer
 {
+	private const bool EnableDbSerializer = true;
 	private const bool EnableJsonSerializer = false;
 
 	public static bool IsDeserializing { get; private set; }
@@ -39,15 +40,28 @@ public static class Serializer
 	{
 		try
 		{
-			// TODO - enable JSON serializer
+			object result;
+
 			IsDeserializing = true;
-			var result = LegacySerializer.Deserialize<object>(str);
+			if (EnableDbSerializer)
+			{
+				result = new DbSerializer().DeserializePartial<object>(new StreamReader(str).ReadToEnd(), new ObjectGraphContext());
+			}
+			else if (EnableJsonSerializer)
+			{
+				// TODO - enable JSON serializer
+				result = null;
+			}
+			else
+			{ 
+				result = LegacySerializer.Deserialize<object>(str);
+			}
 			IsDeserializing = false;
 			return result;
 		}
 		catch (JsonException ex)
 		{
-			Console.Error.WriteLine("Could not deserialize using JSON serializer. Attempting to use legacy serializer. Error dump follows:");
+			Console.Error.WriteLine("Could not deserialize using DB/JSON serializer. Attempting to use legacy serializer. Error dump follows:");
 			Console.Error.WriteLine(ex);
 			try
 			{
@@ -70,7 +84,11 @@ public static class Serializer
 
 	public static object DeserializeFromString(string s)
 	{
-		if (EnableJsonSerializer)
+		if (EnableDbSerializer)
+		{
+			return new DbSerializer().DeserializePartial<object>(s, new ObjectGraphContext());
+		}
+		else if (EnableJsonSerializer)
 		{
 			// warning disabled because code waits for the TODO - enable JSON serializer
 #pragma warning disable CS0162 // Unreachable code detected
@@ -90,7 +108,12 @@ public static class Serializer
 
 	public static void Serialize(object o, TextWriter w)
 	{
-		if (EnableJsonSerializer)
+		if (EnableDbSerializer)
+		{
+			var str = new DbSerializer().SerializePartial(o);
+			w.Write(str);
+		}
+		else if (EnableJsonSerializer)
 		{
 			// TODO - enable JSON serializer
 			throw new Exception("JSON serializer isn't configured");
@@ -108,7 +131,15 @@ public static class Serializer
 
 	public static string SerializeToString(object o)
 	{
-		if (EnableJsonSerializer)
+		if (EnableDbSerializer)
+		{
+			// warning disabled because code waits for the TODO - enable JSON serializer
+#pragma warning disable CS0162 // Unreachable code detected
+			var dbs = new DbSerializer();
+			return dbs.SerializePartial(o);
+#pragma warning restore CS0162 // Unreachable code detected
+		}
+		else if (EnableJsonSerializer)
 		{
 			// warning disabled because code waits for the TODO - enable JSON serializer
 #pragma warning disable CS0162 // Unreachable code detected
