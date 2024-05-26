@@ -37,6 +37,7 @@ public class SerializerTest
 	}
 
 	[Test]
+	[Ignore("Point is no longer a magic type")]
 	public void MagicTypes()
 	{
 		var p = new System.Drawing.Point(6, 9);
@@ -139,6 +140,7 @@ public class SerializerTest
 	}
 
 	[Test]
+	[Ignore("Script type no longer in existence")]
 	public void LegacyLookUpArrays()
 	{
 		var tname = "FrEee.Modding.Script[], FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null";

@@ -46,8 +46,8 @@ namespace FrEee.Serialization
 					}
 					else
 					{
-						// save serialized string of property value
-						dict.Add(kvp.Key, SerializePartial(kvp.Value));
+						// save serialized property value
+						dict.Add(kvp.Key, kvp.Value);
 					}
 				}
 
