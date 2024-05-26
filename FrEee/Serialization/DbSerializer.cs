@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Extensions;
+using FrEee.Modding;
 using FrEee.Utility;
 using static IronPython.Modules._ast;
 
@@ -18,6 +19,7 @@ namespace FrEee.Serialization
 		private const string TypeMarker = "$type";
 		private const string ValueMarker = "$value";
 		private const string ReferrableMarker = "!";
+		private const string ModObjectMarker = "@";
 
 		/// <summary>
 		/// Serializes an object, but doesn't serialize referenced <see cref="IReferrable"/>s; just serializes their IDs.
@@ -30,13 +32,17 @@ namespace FrEee.Serialization
 			{
 				var dict = new Dictionary<string, object>();
 				var context = new ObjectGraphContext();
-				dict.Add(TypeMarker, root.GetType().Name);
 				foreach (var kvp in root.GetData(context))
 				{
 					if (kvp.Value is IReferrable subreferrable)
 					{
 						// save ID of referrable
 						dict.Add(ReferrableMarker + kvp.Key, subreferrable.ID.ToString());
+					}
+					else if (kvp.Value is IModObject modObject)
+					{
+						// save ID of mod object
+						dict.Add(ModObjectMarker + kvp.Key, modObject.ModID);
 					}
 					else
 					{
@@ -52,10 +58,7 @@ namespace FrEee.Serialization
 			{
 				// use the JSON serializer for now to do simple object serialization
 				// ASSUMPTION: non-referrable objects don't have references to referrables
-				var dict = new Dictionary<string, object>();
-				dict.Add(TypeMarker, root.GetType().Name);
-				dict.Add(ValueMarker, root);
-				return JsonSerializer.SerializeObject(dict);
+				return JsonSerializer.SerializeObject(root);
 			}
 		}
 
@@ -68,32 +71,46 @@ namespace FrEee.Serialization
 		/// <returns>The deserialized object.</returns>
 		public T DeserializePartial<T>(string str, ObjectGraphContext context)
 		{
-			var dict = JsonSerializer.DeserializeObject<IDictionary<string, object>>(str);
-			if (dict.ContainsKey(ValueMarker))
+			var obj = JsonSerializer.DeserializeObject<object>(str);
+			if (obj is IDictionary<string, object> dict)
 			{
-				// not a referrable, just return the object
-				return (T)dict[ValueMarker];
+				if (dict.Keys.Any(k => k.StartsWith(ModObjectMarker)))
+				{
+					// load mod object
+					var key = dict.Keys.First(k => k.StartsWith(ModObjectMarker));
+					return (T)Modding.Mod.Current.Find<IModObject>((string)dict[key]);
+				}
+				if (dict.Keys.Any(k => k.StartsWith(ReferrableMarker)))
+				{
+					// it's a referrable, build it from properties
+					var type = new SafeType((string)dict[TypeMarker]);
+					var referrable = type.Type.Instantiate();
+					foreach (var kvp in dict.Where(q => char.IsLetter(q.Key.ElementAtOrDefault(0))))
+					{
+						if (kvp.Key.StartsWith(ReferrableMarker))
+						{
+							var key = kvp.Key.Substring(1);
+							// TODO: look up other referrable later
+						}
+						else
+						{
+							var propertyValue = DeserializePartial<object>((string)kvp.Value, context);
+							referrable.SetPropertyValue(kvp.Key, propertyValue);
+						}
+					}
+					context.Add(referrable);
+					return (T)referrable;
+				}
+				else
+				{
+					// just a plain old dictionary
+					return (T)obj;
+				}
 			}
 			else
 			{
-				// it's a referrable, build it from properties
-				var type = new SafeType((string)dict[TypeMarker]);
-				var referrable = type.Type.Instantiate();
-				foreach (var kvp in dict.Where(q => char.IsLetter(q.Key.ElementAtOrDefault(0))))
-				{
-					if (kvp.Key.StartsWith(ReferrableMarker))
-					{
-						var key = kvp.Key.Substring(1);
-						// TODO: look up other referrable later
-					}
-					else
-					{
-						var propertyValue = DeserializePartial<object>((string)kvp.Value, context);
-						referrable.SetPropertyValue(kvp.Key, propertyValue);
-					}
-				}
-				context.Add(referrable);
-				return (T)referrable;
+				// just a plain old object
+				return (T)obj;
 			}
 		}
 	}

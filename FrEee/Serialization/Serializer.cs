@@ -31,9 +31,10 @@ public static class Serializer
 		return t;
 	}
 
-	public static T Deserialize<T>(Stream str)
+	public static T Deserialize<T>(Stream stream)
 	{
-		return (T)Deserialize(str);
+		var data = new StreamReader(stream).ReadToEnd();
+		return DeserializeFromString<T>(data);
 	}
 
 	public static object Deserialize(Stream str)

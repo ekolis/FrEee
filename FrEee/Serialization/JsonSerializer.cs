@@ -16,15 +16,17 @@ public class JsonSerializer
 			Formatting = Formatting.Indented,
 			MissingMemberHandling = MissingMemberHandling.Ignore,
 			ObjectCreationHandling = ObjectCreationHandling.Auto,
-			TypeNameHandling = TypeNameHandling.All,
+			TypeNameHandling = TypeNameHandling.Objects | TypeNameHandling.Arrays,
 			TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
-			ContractResolver = new JsonContractResolver()
+			ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+			PreserveReferencesHandling = PreserveReferencesHandling.Objects,
+			ContractResolver = new CustomContractResolver()
 		};
 	}
 
-	public object DeserializeFromString(string s)
+	public object? DeserializeFromString(string s)
 	{
-		var list = JsonConvert.DeserializeObject<List<object>>(s);
+		var list = DeserializeObject<List<object>>(s);
 		if (list.Count == 0)
 			return null;
 		var first = list[0];
@@ -85,18 +87,6 @@ public class JsonSerializer
 		return JsonConvert.SerializeObject(kos);
 	}
 
-
-	static JsonSerializerSettings SimpleConverterSettings =  new JsonSerializerSettings
-		{
-			ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
-			Formatting = Formatting.Indented,
-			MissingMemberHandling = MissingMemberHandling.Ignore,
-			ObjectCreationHandling = ObjectCreationHandling.Auto,
-			TypeNameHandling = TypeNameHandling.None,
-			TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
-			ContractResolver = new JsonContractResolver()
-		};
-
 	/// <summary>
 	/// Simple Json serializer access. Use this for Script Json serialization. 
 	/// </summary>
@@ -104,7 +94,7 @@ public class JsonSerializer
 	/// <returns></returns>
 	public static string SerializeObject(object obj)
 	{
-		return JsonConvert.SerializeObject(obj,SimpleConverterSettings); 
+		return JsonConvert.SerializeObject(obj); 
 	}
 	/// <summary>
 	/// Simple json deserializer access. Use this for Script Json serialization. 
@@ -114,6 +104,6 @@ public class JsonSerializer
 	/// <returns></returns>
 	public static T DeserializeObject<T>(string json)
 	{
-		return JsonConvert.DeserializeObject<T>(json, SimpleConverterSettings); 
+		return JsonConvert.DeserializeObject<T>(json); 
 	}
 }
