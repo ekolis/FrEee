@@ -10,6 +10,8 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.Civilization.Orders;
+using FrEee.Data.Models;
+using System;
 
 namespace FrEee.Tests.Utility;
 
@@ -206,6 +208,21 @@ public class SerializerTest
 		Assert.AreEqual(spy.NotSecretCode, spy2.NotSecretCode);
 	}
 
+	[Test]
+	public void DataModels()
+	{
+		var fred = new Dog("Fred", "beagle");
+		var serdata = Serializer.SerializeToString(fred);
+		var fred2 = Serializer.DeserializeFromString<Dog>(serdata);
+
+		// make sure we actually use the data model
+		Assert.IsTrue(serdata.Contains("Fred:beagle"));
+
+		// make sure serialization is correct
+		Assert.AreEqual(fred.Name, fred2.Name);
+		Assert.AreEqual(fred.Breed, fred2.Breed);
+	}
+
 	private class Car
 	{
 		public Car(Company manufacturer, string model, int year)
@@ -265,5 +282,33 @@ public class SerializerTest
 		public int NotSecretCode => SecretCode;
 
 		public void SetSecretCode(int code) => SecretCode = code;
+	}
+
+	private class Dog(string name, string breed)
+		: IUsesDataModel<Dog, DogData>
+	{
+		public string Name { get; set; } = name;
+
+		public string Breed { get; set; } = breed;
+		public Type DomainObjectType { get; } = typeof(Dog);
+		public Type DataModelType { get; } = typeof(DogData);
+
+		public static Dog FromDataModel(DogData model)
+		{
+			var strs = model.Data.Split(":");
+			return new Dog(strs[0], strs[1]);
+		}
+
+		public DogData ToDataModel()
+			=> new DogData($"{Name}:{Breed}");
+
+		object IUsesDataModel.ToDataModel()
+			=> ToDataModel();
+	}
+
+	private class DogData(string data)
+		: IDataModel
+	{
+		public string Data { get; set; } = data;
 	}
 }

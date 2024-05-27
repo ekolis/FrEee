@@ -10,7 +10,7 @@ namespace FrEee.Serialization;
 /// </summary>
 public static class Serializer
 {
-	private const bool EnableDbSerializer = true;
+	private const bool EnableDbSerializer = false;
 	private const bool EnableJsonSerializer = false;
 
 	public static bool IsDeserializing { get; private set; }

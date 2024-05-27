@@ -30,6 +30,9 @@
 		<Compile Remove="Objects\Commands\EditStrategyCommand.cs" />
 	</ItemGroup>
 	<ItemGroup>
+	  <ProjectReference Include="..\FrEee.Data\FrEee.Data.csproj" />
+	</ItemGroup>
+	<ItemGroup>
 	  <Compile Update="Properties\Settings.Designer.cs">
 	    <DesignTimeSharedInput>True</DesignTimeSharedInput>
 	    <AutoGen>True</AutoGen>

@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using FrEee.Utility;
+using FrEee.Data.Models;
 namespace FrEee.Serialization;
 
 internal static class LegacySerializer
@@ -131,6 +132,8 @@ internal static class LegacySerializer
 		// serialize the object
 		if (StringifierLibrary.Instance.All?.Any(x => x.SupportedType.IsAssignableFrom(type)) ?? false)
 			WriteStringifiedObject(o, w);
+		else if (o is IUsesDataModel udm)
+			WriteObject(udm.ToDataModel(), w, context, tabLevel);
 		else if (type.IsPrimitive || typeof(Enum).IsAssignableFrom(type) || type.Name == "Nullable`1" || type == typeof(decimal))
 			WritePrimitiveOrEnum(o, w);
 		else if (type == typeof(string))
@@ -244,6 +247,13 @@ internal static class LegacySerializer
 			if (!byte.TryParse(argb[0], out a) || !byte.TryParse(argb[1], out rv) || !byte.TryParse(argb[2], out g) || !byte.TryParse(argb[3], out b))
 				throw new SerializationException("Could not parse one of the ARGB values in \"" + argb + "\".");
 			o = Color.FromArgb(a, rv, g, b);
+		}
+		else if (type.IsAssignableTo(typeof(IUsesDataModel)))
+		{
+			var udmType = type.GetInterface("IUsesDataModel`2");
+			var model = DeserializeObject(r, udmType.GetGenericArguments()[1], context, log);
+			var fromDataModel = type.GetMethod("FromDataModel", BindingFlags.Static | BindingFlags.Public);
+			o = fromDataModel.Invoke(null, [model]);
 		}
 		else if (typeof(Enum).IsAssignableFrom(type))
 		{
