@@ -7,6 +7,8 @@ using System.IO;
 using System.Linq;
 using FrEee.Serialization;
 using FrEee.Objects.GameState;
+using System.Diagnostics.CodeAnalysis;
+using System.Security.Cryptography;
 
 namespace FrEee.Utility;
 
@@ -15,7 +17,7 @@ namespace FrEee.Utility;
 /// </summary>
 [Serializable]
 [DoNotCopy]
-public class Resource : INamed, IPictorial
+public class Resource : INamed, IPictorial, IParsable<Resource>
 {
 	static Resource()
 	{
@@ -245,5 +247,14 @@ public class Resource : INamed, IPictorial
 	public override string ToString()
 	{
 		return Name;
+	}
+
+	public static Resource Parse(string s, IFormatProvider? provider)
+		=> All.Single(q => q.Name == s);
+
+	public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out Resource result)
+	{
+		result = All.SingleOrDefault(q => q.Name == s);
+		return result is not null;
 	}
 }

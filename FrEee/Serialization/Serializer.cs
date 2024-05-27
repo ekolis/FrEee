@@ -80,21 +80,16 @@ public static class Serializer
 
 	public static T DeserializeFromString<T>(string s)
 	{
-		return (T)DeserializeFromString(s);
-	}
-
-	public static object DeserializeFromString(string s)
-	{
 		if (EnableDbSerializer)
 		{
-			return new DbSerializer().DeserializePartial<object>(s, new ObjectGraphContext());
+			return new DbSerializer().DeserializePartial<T>(s, new ObjectGraphContext());
 		}
 		else if (EnableJsonSerializer)
 		{
 			// warning disabled because code waits for the TODO - enable JSON serializer
 #pragma warning disable CS0162 // Unreachable code detected
 			var js = new JsonSerializer();
-			return js.DeserializeFromString(s);
+			return (T)js.DeserializeFromString(s);
 #pragma warning restore CS0162 // Unreachable code detected
 		}
 		else
@@ -103,9 +98,12 @@ public static class Serializer
 			var sr = new StringReader(s);
 			var result = LegacySerializer.Deserialize<object>(sr);
 			IsDeserializing = false;
-			return result;
+			return (T)result;
 		}
 	}
+
+	public static object DeserializeFromString(string s) =>
+		DeserializeFromString<object>(s);
 
 	public static void Serialize(object o, TextWriter w)
 	{

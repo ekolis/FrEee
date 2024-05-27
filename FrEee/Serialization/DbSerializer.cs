@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Extensions;
@@ -71,46 +72,61 @@ namespace FrEee.Serialization
 		/// <returns>The deserialized object.</returns>
 		public T DeserializePartial<T>(string str, ObjectGraphContext context)
 		{
-			var obj = JsonSerializer.DeserializeObject<object>(str);
-			if (obj is IDictionary<string, object> dict)
+			if (typeof(T).GetInterfaces().Any(c => c.IsGenericType && c.GetGenericTypeDefinition() == typeof(IParsable<>)))
 			{
-				if (dict.Keys.Any(k => k.StartsWith(ModObjectMarker)))
-				{
-					// load mod object
-					var key = dict.Keys.First(k => k.StartsWith(ModObjectMarker));
-					return (T)Modding.Mod.Current.Find<IModObject>((string)dict[key]);
-				}
-				if (dict.Keys.Any(k => k.StartsWith(ReferrableMarker)))
-				{
-					// it's a referrable, build it from properties
-					var type = new SafeType((string)dict[TypeMarker]);
-					var referrable = type.Type.Instantiate();
-					foreach (var kvp in dict.Where(q => char.IsLetter(q.Key.ElementAtOrDefault(0))))
-					{
-						if (kvp.Key.StartsWith(ReferrableMarker))
-						{
-							var key = kvp.Key.Substring(1);
-							// TODO: look up other referrable later
-						}
-						else
-						{
-							var propertyValue = DeserializePartial<object>((string)kvp.Value, context);
-							referrable.SetPropertyValue(kvp.Key, propertyValue);
-						}
-					}
-					context.Add(referrable);
-					return (T)referrable;
-				}
-				else
-				{
-					// just a plain old dictionary
-					return (T)obj;
-				}
+				// parse it
+				var parse = typeof(T).GetMethods(BindingFlags.Static | BindingFlags.Public)
+					.First(c =>
+						c.Name == "Parse"
+						&& c.GetParameters().Length == 2
+						&& c.GetParameters()[0].ParameterType == typeof(string)
+						&& c.GetParameters()[1].ParameterType == typeof(IFormatProvider)
+					);
+				return (T)parse.Invoke(null, [str, null]);
 			}
 			else
 			{
-				// just a plain old object
-				return (T)obj;
+				var obj = JsonSerializer.DeserializeObject<object>(str);
+				if (obj is IDictionary<string, object> dict)
+				{
+					if (dict.Keys.Any(k => k.StartsWith(ModObjectMarker)))
+					{
+						// load mod object
+						var key = dict.Keys.First(k => k.StartsWith(ModObjectMarker));
+						return (T)Modding.Mod.Current.Find<IModObject>((string)dict[key]);
+					}
+					else if (dict.Keys.Any(k => k.StartsWith(ReferrableMarker)))
+					{
+						// it's a referrable, build it from properties
+						var type = new SafeType((string)dict[TypeMarker]);
+						var referrable = type.Type.Instantiate();
+						foreach (var kvp in dict.Where(q => char.IsLetter(q.Key.ElementAtOrDefault(0))))
+						{
+							if (kvp.Key.StartsWith(ReferrableMarker))
+							{
+								var key = kvp.Key.Substring(1);
+								// TODO: look up other referrable later
+							}
+							else
+							{
+								var propertyValue = DeserializePartial<object>((string)kvp.Value, context);
+								referrable.SetPropertyValue(kvp.Key, propertyValue);
+							}
+						}
+						context.Add(referrable);
+						return (T)referrable;
+					}
+					else
+					{
+						// just a plain old dictionary
+						return (T)obj;
+					}
+				}
+				else
+				{
+					// just a plain old object
+					return (T)obj;
+				}
 			}
 		}
 	}
