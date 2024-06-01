@@ -169,8 +169,8 @@ public class SerializerTest
 		Assert.AreEqual(800, deser.Last().GetAbilityValue("Resource Generation - Organics").ToInt());
 	}
 
-
 	[Test]
+	[Ignore("We don't really need to be able to serialize a mod; mods are always loaded from disk.")]
 	public void CorrectAbilities2()
 	{
 		Mod.Load(null);

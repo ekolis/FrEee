@@ -1,158 +1,189 @@
-{
-  "$type": "GameSetup",
-  "$value": {
-    "AllowedTrades": 2,
-    "AllSystemsExplored": false,
-    "CanColonizeOnlyBreathable": false,
-    "CanColonizeOnlyHomeworldSurface": false,
-    "EmpirePlacement": 2,
-    "EmpirePoints": 2000,
-    "EmpireTemplates": [
-      {
-        "AIName": "AI_Default",
-        "AIsCanUse": false,
-        "Color": "0, 170, 255",
-        "CultureName": "Neutral",
-        "Insignia": "System.Drawing.Bitmap",
-        "InsigniaName": "Frozo",
-        "IsMinorEmpire": false,
-        "IsPlayerEmpire": true,
-        "LeaderName": "Frozo",
-        "LeaderPortraitName": "Frozo",
-        "Name": "Frozo",
-        "PointsSpent": 0,
-        "PrimaryRace": {
-          "Abilities": [],
-          "AbilityTarget": 2,
-          "Aptitudes": {
-            "Reproduction": 100,
-            "Refining Aptitude": 100,
-            "Mining Aptitude": 100,
-            "Cunning": 100,
-            "Environmental Resistance": 100,
-            "Maintenance Aptitude": 100,
-            "Construction Aptitude": 100,
-            "Defensiveness": 100,
-            "Farming Aptitude": 100,
-            "Happiness": 100,
-            "Political Savvy": 100,
-            "Repair Aptitude": 100,
-            "Aggressiveness": 100,
-            "Intelligence": 100,
-            "Physical Strength": 100
-          },
-          "Children": [],
-          "Icon": "System.Drawing.Bitmap",
-          "Icon32": "System.Drawing.Bitmap",
-          "IconPaths": [
-            "Pictures\\Races\\Frozo\\Pop_Portrait",
-            "Pictures\\Races\\Frozo\\Frozo_Pop_Portrait",
-            "Pictures\\Races\\Frozo\\Race_Portrait",
-            "Pictures\\Races\\Frozo\\Frozo_Race_Portrait"
-          ],
-          "ID": 0,
-          "IncomePercentages": {
-            "Radioactives": 100,
-            "Organics": 100,
-            "Supply": 100,
-            "Research": 100,
-            "Intelligence": 100,
-            "Minerals": 100
-          },
-          "IntrinsicAbilities": [],
-          "IsDisposed": false,
-          "Name": "Frozo",
-          "NativeAtmosphere": "Oxygen",
-          "NativeSurface": "Ice",
-          "Owner": null,
-          "Parents": [],
-          "PopulationIconName": "Frozo",
-          "Portrait": "System.Drawing.Bitmap",
-          "PortraitPaths": [
-            "Pictures\\Races\\Frozo\\Pop_Portrait",
-            "Pictures\\Races\\Frozo\\Frozo_Pop_Portrait",
-            "Pictures\\Races\\Frozo\\Race_Portrait",
-            "Pictures\\Races\\Frozo\\Frozo_Race_Portrait"
-          ],
-          "TraitNames": [],
-          "Traits": [],
-          "UnstackedAbilities": [],
-          "Warnings": [],
-          "PointsSpent": 0
-        },
-        "ShipsetName": "Frozo",
-        "DesignNamesFile": null
-      }
-    ],
-    "EventFrequency": 0.0,
-    "MaximumEventSeverity": 0,
-    "ForbiddenTechnologyNames": [],
-    "GalaxySize": "40, 30",
-    "GalaxyTemplateName": "Mid-Life",
-    "GameName": "",
-    "GenerateRandomRuins": true,
-    "GenerateUniqueRuins": true,
-    "HomeworldSize": null,
-    "HomeworldsPerEmpire": 1,
-    "HomeworldValue": 120,
-    "IsAnalysisAllowed": true,
-    "IsHumansVsAI": false,
-    "IsIntelligenceAllowed": true,
-    "IsSinglePlayer": true,
-    "IsSurrenderAllowed": true,
-    "MaxHomeworldDispersion": 1,
-    "MaxPlanetValue": 250,
-    "MaxSpawnedAsteroidValue": 300,
-    "MaxSpawnedPlanetValue": 150,
-    "MinAsteroidValue": 0,
-    "MinorEmpires": 0,
-    "MinPlanetValue": 0,
-    "MinSpawnedAsteroidValue": 50,
-    "MinSpawnedPlanetValue": 0,
-    "OmniscientView": false,
-    "RandomAIs": 0,
-    "RemoteMiningModel": {
-      "BonusAffectsDepletion": false,
-      "LimitRateToValue": false,
-      "Rate": 0.0,
-      "RatePercentage": 0.0,
-      "ValueBonus": 0.01,
-      "ValueDepletionPerResource": 0.0,
-      "ValueDepletionPerTurn": 1,
-      "ValuePercentageBonus": 1.0
-    },
-    "ResearchPointsPerUnspentEmpirePoint": 0.0,
-    "ResourceStorage": 50000,
-    "ScoreDisplay": 0,
-    "Seed": 2657269,
-    "StandardMiningModel": {
-      "BonusAffectsDepletion": false,
-      "LimitRateToValue": false,
-      "Rate": 0.0,
-      "RatePercentage": 0.0,
-      "ValueBonus": 0.01,
-      "ValueDepletionPerResource": 0.0,
-      "ValueDepletionPerTurn": 0,
-      "ValuePercentageBonus": 1.0
-    },
-    "StarSystemCount": 30,
-    "StarSystemGroups": 1,
-    "StartingResearch": 20000,
-    "StartingResources": 20000,
-    "StartingTechnologyLevel": 0,
-    "TechnologyCost": 0,
-    "TechnologyUniqueness": 0,
-    "VictoryConditions": [
-      {}
-    ],
-    "VictoryDelay": 0,
-    "Warnings": [
-      "You must specify a name for the game.",
-      "You must specify a homeworld size."
-    ],
-    "WarpPointPlacementStrategy": {
-      "Description": "Places warp points along the edge of the system, aligned with the star systems they lead to.",
-      "Name": "Edge Aligned"
-    }
-  }
-}
+FrEee.Setup.GameSetup, FrEee.Core:
+p31:
+	AllowedTrades:
+		:All;
+	EmpirePlacement:
+		:Equidistant;
+	EmpirePoints:
+		:2000;
+	EmpireTemplates:
+		System.Collections.Generic.List`1[[FrEee.Setup.EmpireTemplate, FrEee.Core]], System.Private.CoreLib:
+		c1:		
+			:p10:
+				AIName:
+					:"AI_Default";
+				Color:
+					:255,0,255,255;
+				CultureName:
+					:"Neutral";
+				InsigniaName:
+					:"Frozo";
+				IsPlayerEmpire:
+					:True;
+				LeaderName:
+					:"fefe";
+				LeaderPortraitName:
+					:"Frozo";
+				Name:
+					:"fefe";
+				PrimaryRace:
+					:p7:
+						Aptitudes:
+							FrEee.Utility.SafeDictionary`2[[System.String, System.Private.CoreLib],[System.Int32, System.Private.CoreLib]], FrEee.Core:
+							d15:							
+								:"Reproduction";
+								:100;
+								:"Refining Aptitude";
+								:100;
+								:"Mining Aptitude";
+								:100;
+								:"Cunning";
+								:100;
+								:"Environmental Resistance";
+								:100;
+								:"Maintenance Aptitude";
+								:100;
+								:"Construction Aptitude";
+								:100;
+								:"Defensiveness";
+								:100;
+								:"Farming Aptitude";
+								:100;
+								:"Happiness";
+								:100;
+								:"Political Savvy";
+								:100;
+								:"Repair Aptitude";
+								:100;
+								:"Aggressiveness";
+								:100;
+								:"Intelligence";
+								:100;
+								:"Physical Strength";
+								:100;
+							;
+						happinessModel:
+							:p1:
+								ID:
+									:"HappinessModel Peaceful";
+							;
+						Name:
+							:"fefe";
+						NativeAtmosphere:
+							:"Oxygen";
+						NativeSurface:
+							:"Ice";
+						PopulationIconName:
+							:"Frozo";
+						TraitNames:
+							System.Collections.Generic.List`1[[System.String, System.Private.CoreLib]], System.Private.CoreLib:
+							c0:							
+							;
+					;
+				ShipsetName:
+					:"Frozo";
+			;
+		;
+	ForbiddenTechnologyNames:
+		System.Collections.Generic.List`1[[System.String, System.Private.CoreLib]], System.Private.CoreLib:
+		c0:		
+		;
+	GalaxySize:
+		:s:40, 30;
+	GalaxyTemplateName:
+		:"Mid-Life";
+	GameName:
+		:"Quickstart";
+	GenerateRandomRuins:
+		:True;
+	GenerateUniqueRuins:
+		:True;
+	HomeworldSize:
+		:p11:
+			ConstructionAbilityID:
+				:"0";
+			MaxCargo:
+				:8000;
+			MaxCargoDomed:
+				:800;
+			MaxFacilities:
+				:20;
+			MaxFacilitiesDomed:
+				:4;
+			MaxPopulation:
+				:4000000000;
+			MaxPopulationDomed:
+				:400000000;
+			ModID:
+				:"StellarObjectSize Large";
+			Name:
+				:"Large";
+			StellarObjectType:
+				:"Planet";
+			StellarSize:
+				:Large;
+		;
+	HomeworldsPerEmpire:
+		:1;
+	HomeworldValue:
+		:120;
+	IsAnalysisAllowed:
+		:True;
+	IsIntelligenceAllowed:
+		:True;
+	IsSurrenderAllowed:
+		:True;
+	MaxHomeworldDispersion:
+		:1;
+	MaxPlanetValue:
+		:250;
+	MaxSpawnedAsteroidValue:
+		:300;
+	MaxSpawnedPlanetValue:
+		:150;
+	MinSpawnedAsteroidValue:
+		:50;
+	RemoteMiningModel:
+		:p3:
+			ValueBonus:
+				:0.01;
+			ValueDepletionPerTurn:
+				:1;
+			ValuePercentageBonus:
+				:1;
+		;
+	ResourceStorage:
+		:50000;
+	Seed:
+		:704151;
+	StandardMiningModel:
+		:p2:
+			ValueBonus:
+				:0.01;
+			ValuePercentageBonus:
+				:1;
+		;
+	StarSystemCount:
+		:30;
+	StarSystemGroups:
+		:1;
+	StartingResearch:
+		:20000;
+	StartingResources:
+		:20000;
+	VictoryConditions:
+		System.Collections.Generic.List`1[[FrEee.Objects.VictoryConditions.IVictoryCondition, FrEee.Core]], System.Private.CoreLib:
+		c1:		
+			FrEee.Objects.VictoryConditions.TotalEliminationVictoryCondition, FrEee.Core:
+			p0:
+			;
+		;
+	WarpPointPlacementStrategy:
+		FrEee.Setup.WarpPointPlacementStrategies.EdgeAlignedWarpPointPlacementStrategy, FrEee.Core:
+		p2:
+			Description:
+				:"Places warp points along the edge of the system, aligned with the star systems they lead to.";
+			Name:
+				:"Edge Aligned";
+		;
+;
