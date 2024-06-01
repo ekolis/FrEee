@@ -1,5 +1,3 @@
-using FrEee.Enumerations;
-using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Combat;
 using FrEee.Objects.Space;

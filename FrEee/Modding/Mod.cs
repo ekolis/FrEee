@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using FrEee.Interfaces;
 using FrEee.Objects.Abilities;
 using FrEee.Objects.AI;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
-using FrEee.Modding.Interfaces;
 using FrEee.Modding.Loaders;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
 using FrEee.Extensions;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Modding;
 

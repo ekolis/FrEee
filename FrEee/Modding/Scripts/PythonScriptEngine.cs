@@ -1,6 +1,5 @@
-﻿using FrEee.Interfaces;
-using FrEee.Objects.Space;
-using FrEee.Utility; using FrEee.Serialization;
+﻿using FrEee.Utility;
+using FrEee.Serialization;
 using FrEee.Extensions;
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
@@ -9,6 +8,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Modding;
 
@@ -196,7 +196,7 @@ public class PythonScriptEngine : MarshalByRefObject
 		preCommands.Add("import FrEee.Utility");
 		preCommands.Add("clr.ImportExtensions(FrEee.Extensions)");
 		preCommands.Add("from FrEee.Modding import Mod");
-		preCommands.Add("from FrEee.Objects.Space import Galaxy");
+		preCommands.Add("from FrEee.Objects.GameState import Galaxy");
 		preCommands.Add("from FrEee.Objects.Civilization import Empire");
 		/*if (variables != null)
 			UpdateScope(variables);
@@ -278,7 +278,7 @@ public class PythonScriptEngine : MarshalByRefObject
 		preCommands.Add("import FrEee.Utility");
 		preCommands.Add("clr.ImportExtensions(FrEee.Extensions)");
 		preCommands.Add("from FrEee.Modding import Mod");
-		preCommands.Add("from FrEee.Objects.Space import Galaxy");
+		preCommands.Add("from FrEee.Objects.GameState import Galaxy");
 		preCommands.Add("from FrEee.Objects.Civilization import Empire");
 		var code =
 			string.Join("\n", preCommands.ToArray()) + "\n" +

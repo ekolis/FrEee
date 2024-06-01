@@ -1,4 +1,5 @@
 ﻿using FrEee.Modding;
+using FrEee.Objects.Combat;
 using System;
 
 namespace FrEee.Objects.Technology;
@@ -16,14 +17,14 @@ public class SeekingWeaponInfo : WeaponInfo
 	/// </summary>
 	public Formula<int> SeekerSpeed { get; set; }
 
-	public override Enumerations.WeaponTypes WeaponType
+	public override WeaponTypes WeaponType
 	{
 		get
 		{
 			if (IsPointDefense)
-				return Enumerations.WeaponTypes.SeekingPointDefense;
+				return WeaponTypes.SeekingPointDefense;
 			else
-				return Enumerations.WeaponTypes.Seeking;
+				return WeaponTypes.Seeking;
 		}
 	}
 }

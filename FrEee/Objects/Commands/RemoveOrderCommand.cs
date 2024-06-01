@@ -1,8 +1,9 @@
-﻿using FrEee.Interfaces;
-using FrEee.Objects.LogMessages;
-using FrEee.Objects.Space;
+﻿using FrEee.Objects.LogMessages;
 using FrEee.Extensions;
 using System;
+using FrEee.Objects.Civilization.Orders;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Objects.Commands;
 

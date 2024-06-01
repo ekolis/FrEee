@@ -1,11 +1,11 @@
-﻿using FrEee.Enumerations;
-using FrEee.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Extensions;
 using NUnit.Framework;
 using System.Drawing;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Tests.Objects.Space;
 

@@ -1,10 +1,9 @@
-﻿using FrEee.Interfaces;
-using FrEee.Modding;
-using FrEee.Modding.Interfaces;
+﻿using FrEee.Modding;
 using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Serialization;
 

@@ -8,6 +8,14 @@
 	</PropertyGroup>
 	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
 	<ItemGroup>
+	  <Compile Remove="Enumerations\**" />
+	  <Compile Remove="Objects\Combat\Combat2\**" />
+	  <EmbeddedResource Remove="Enumerations\**" />
+	  <EmbeddedResource Remove="Objects\Combat\Combat2\**" />
+	  <None Remove="Enumerations\**" />
+	  <None Remove="Objects\Combat\Combat2\**" />
+	</ItemGroup>
+	<ItemGroup>
 		<PackageReference Include="IronPython" Version="3.4.1" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.8.0" />
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
@@ -18,8 +26,6 @@
 		<PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<Compile Remove="Objects\Combat2\*.cs" />
-		<Compile Remove="Objects\Combat2\Tactics\*.cs" />
 		<Compile Remove="Objects\Combat\Simple\Battle.cs" />
 		<Compile Remove="Objects\Commands\EditStrategyCommand.cs" />
 	</ItemGroup>

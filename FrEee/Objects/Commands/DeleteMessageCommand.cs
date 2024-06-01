@@ -1,7 +1,7 @@
-﻿using FrEee.Interfaces;
-using FrEee.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
 using FrEee.Serialization;
 using FrEee.Extensions;
+using FrEee.Objects.Civilization.Diplomacy.Messages;
 
 namespace FrEee.Objects.Commands;
 

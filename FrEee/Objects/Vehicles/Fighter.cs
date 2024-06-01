@@ -1,9 +1,12 @@
-using FrEee.Enumerations;
-using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Serialization;
 using FrEee.Extensions;
 using System;
+using FrEee.Objects.Civilization.CargoStorage;
+using FrEee.Objects.Space;
+using FrEee.Objects.GameState;
+using FrEee.Objects.Abilities;
+using FrEee.Objects.Combat;
 
 namespace FrEee.Objects.Vehicles;
 
@@ -40,9 +43,9 @@ public class Fighter : SpaceVehicle, IUnit
 		get { return false; }
 	}
 
-	public override Enumerations.WeaponTargets WeaponTargetType
+	public override WeaponTargets WeaponTargetType
 	{
-		get { return Enumerations.WeaponTargets.Fighter; }
+		get { return WeaponTargets.Fighter; }
 	}
 
 	public override Visibility CheckVisibility(Empire emp)

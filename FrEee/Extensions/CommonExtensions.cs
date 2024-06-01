@@ -9,8 +9,6 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
-using FrEee.Enumerations;
-using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Combat;
 using FrEee.Objects.Combat.Grid;
@@ -20,9 +18,11 @@ using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
-using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Serialization;
+using FrEee.Objects.Civilization.CargoStorage;
+using FrEee.Objects.Civilization.Orders;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Extensions;
 
@@ -519,9 +519,9 @@ public static class CommonExtensions
 	/// <returns></returns>
 	public static IEnumerable<Point> GetAllPoints(this Rectangle r)
 	{
-		for (var x = r.Left; x <= r.Right; x++)
+		for (var x = r.Left; x < r.Right; x++)
 		{
-			for (var y = r.Top; y <= r.Bottom; y++)
+			for (var y = r.Top; y < r.Bottom; y++)
 				yield return new Point(x, y);
 		}
 	}

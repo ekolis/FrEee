@@ -1,5 +1,4 @@
-﻿using FrEee.Interfaces;
-using FrEee.Utility;
+﻿using FrEee.Utility;
 using System;
 
 namespace FrEee.Objects.Combat.Grid;

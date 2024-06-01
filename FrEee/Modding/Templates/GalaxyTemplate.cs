@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using FrEee.Interfaces;
 using FrEee.Objects.Space;
 using FrEee.Setup;
-using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Extensions;
+using FrEee.Setup.StarSystemPlacementStrategies;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Modding.Templates;
 

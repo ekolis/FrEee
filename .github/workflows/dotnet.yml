@@ -40,16 +40,16 @@ jobs:
         stringToTruncate: ${{github.sha}}
         maxLength: 10
     - name: List files
-      run: ls -s .\FrEee.WinForms\bin\Release\net6.0-windows7.0
+      run: ls -s .\FrEee.UI.WinForms\bin\Release\net6.0-windows7.0
     - name: Prepare files for zipping
       run: |
-        cd FrEee.WinForms/bin/Release
+        cd FrEee.UI.WinForms/bin/Release
         ren net8.0-windows7.0 FrEee
       shell: cmd
     - name: Zip assets
       uses: papeloto/action-zip@v1
       with:
-        files: ./FrEee.WinForms/bin/Release
+        files: ./FrEee.UI.WinForms/bin/Release
         dest: FrEee-binary-${{steps.createReleaseTag.outputs.string}}.zip
     - name: Release
       uses: softprops/action-gh-release@v1
@@ -61,4 +61,3 @@ jobs:
         name: Auto-Build Release ${{steps.createReleaseTag.outputs.string}}
         fail_on_unmatched_files: true
         token: ${{ secrets.GITHUB_TOKEN }}
-    

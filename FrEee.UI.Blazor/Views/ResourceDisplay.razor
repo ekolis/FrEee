@@ -1,0 +1,34 @@
+﻿@using System.Drawing
+@using System.ComponentModel
+
+@code {
+	[Parameter]
+	public ResourceDisplayViewModel VM { get; set; } = new();
+
+	/// <summary>
+	/// When the view model's properties change, update the UI.
+	/// </summary>
+	/// <param name="sender"></param>
+	/// <param name="e"></param>
+	private void ViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+	{
+		StateHasChanged();
+	}
+
+	protected override void OnInitialized()
+	{
+		VM.PropertyChanged += ViewModelPropertyChanged;
+	}
+
+	public void Dispose()
+	{
+		VM.PropertyChanged -= ViewModelPropertyChanged;
+	}
+}
+
+<div style="display: flex; flex-direction: row; justify-content: space-evenly; width: 100%; height: 24px; vertical-align: middle; overflow: hidden">
+	<div style="max-height: 100%; aspect-ratio: 1; margin: auto 0px 0px 0px; text-align: left">
+		<ImageDisplay VM="VM.IconVM" />
+	</div>
+	<span style="color: #@VM.Color.ToRgba(); margin: 0px 3px; text-align: right; line-height: 24px; vertical-align: middle">@VM.Text</span>
+</div>

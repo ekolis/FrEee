@@ -1,5 +1,4 @@
-﻿using FrEee.Enumerations;
-using FrEee.Objects.Combat;
+﻿using FrEee.Objects.Combat;
 using FrEee.Modding;
 using System;
 

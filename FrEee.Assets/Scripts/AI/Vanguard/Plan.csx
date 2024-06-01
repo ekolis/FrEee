@@ -5,7 +5,7 @@ using FrEee.Utility; using FrEee.Serialization;
 using System;
 using System.Collections.Generic;
 using FrEee.Extensions;
-using FrEee.Objects.Orders;
+using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Vehicles;
 using System.Linq; 
 

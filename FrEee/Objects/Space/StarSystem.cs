@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using FrEee.Enumerations;
-using FrEee.Interfaces;
 using FrEee.Objects.Abilities;
 using FrEee.Objects.Civilization;
 using FrEee.Modding;
@@ -12,6 +10,7 @@ using FrEee.Modding.Templates;
 using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Objects.Space;
 

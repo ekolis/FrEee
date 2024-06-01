@@ -4,6 +4,7 @@ using FrEee.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Extensions;
 using NUnit.Framework;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Tests.Objects.Orders;
 
@@ -44,7 +45,7 @@ public class ConstructionTest
 		colony = new Colony();
 		colony.Facilities.Add(new Facility(sy));
 		colony.Population.Add(race, (long)1e9); // 1 billion population;
-		colony.ConstructionQueue = new ConstructionQueue(planet);
+		colony.ConstructionQueue = new(planet);
 		planet.Colony = colony;
 	}
 

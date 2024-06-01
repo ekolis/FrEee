@@ -1,0 +1,102 @@
+﻿html, body {
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: small;
+	background-color: black;
+	color: white;
+}
+
+* {
+	padding: 0px;
+	margin: 0px;
+}
+
+@font-face {
+	font-family: "Kwajong";
+	src: url("../fonts/Kwajong.otf")
+}
+
+h1, h2, h3 {
+	font-family: Kwajong, Consolas, 'Courier New', Courier, monospace
+}
+
+	h1:focus {
+		outline: none;
+	}
+
+a, .btn-link {
+	color: #0071c1;
+}
+
+.btn-primary {
+	color: #fff;
+	background-color: #1b6ec2;
+	border-color: #1861ac;
+}
+
+.valid.modified:not([type=checkbox]) {
+	outline: 1px solid #26b050;
+}
+
+.invalid {
+	outline: 1px solid red;
+}
+
+.validation-message {
+	color: red;
+}
+
+#blazor-error-ui {
+	background: lightyellow;
+	bottom: 0;
+	box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+	display: none;
+	left: 0;
+	padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+	position: fixed;
+	width: 100%;
+	z-index: 1000;
+}
+
+#blazor-error-ui .dismiss {
+	cursor: pointer;
+	position: absolute;
+	right: 0.75rem;
+	top: 0.5rem;
+}
+
+/* Element will fill its container, regardless of any other content */
+.fill {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+
+/* Element will fill its container, regardless of any other content, but can maintain an aspect ratio if specified. */
+.zoom {
+	position: absolute;
+	max-width: 100%;
+	max-height: 100%;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+
+.overlay {
+	z-index: 999
+}
+
+
+.overlay2 {
+	z-index: 9999
+}

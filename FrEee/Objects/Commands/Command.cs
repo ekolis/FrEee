@@ -1,5 +1,5 @@
-﻿using FrEee.Interfaces;
-using FrEee.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
+using FrEee.Objects.GameState;
 using FrEee.Serialization;
 using System;
 using System.Collections.Generic;

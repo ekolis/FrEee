@@ -1,6 +1,4 @@
 using FrEee.Objects.Technology;
-using FrEee.Modding.Enumerations;
-using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;

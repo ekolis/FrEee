@@ -1,4 +1,4 @@
-﻿using FrEee.Modding.Interfaces;
+﻿using FrEee.Modding;
 
 namespace FrEee.Objects.Events;
 

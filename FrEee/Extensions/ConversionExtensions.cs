@@ -1,4 +1,4 @@
-using FrEee.Modding.Interfaces;
+using FrEee.Modding;
 using FrEee.Utility;
 using System;
 using System.Drawing;

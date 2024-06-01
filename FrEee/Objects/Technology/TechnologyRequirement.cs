@@ -1,8 +1,8 @@
-using FrEee.Interfaces;
 using FrEee.Objects.Civilization;
 using FrEee.Modding;
 using FrEee.Serialization;
 using System;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Objects.Technology;
 

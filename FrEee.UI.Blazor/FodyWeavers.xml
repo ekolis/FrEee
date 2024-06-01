@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Installs weavers in the Fody plugin-->
+<Weavers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="FodyWeavers.xsd">
+	<!-- Automatically implements INotifyPropertyChanged change notifications for properties in classes that implement the interface -->
+  <PropertyChanged />
+</Weavers>

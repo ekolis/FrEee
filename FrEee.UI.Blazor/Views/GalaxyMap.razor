@@ -1,0 +1,100 @@
+﻿@using System.Drawing
+@using System.ComponentModel
+@using System.Numerics
+@using FrEee.Extensions
+@using Excubo.Blazor.Canvas
+
+@code {
+	[Parameter]
+	public GalaxyMapViewModel VM { get; set; } = new();
+
+	/// <summary>
+	/// When the view model's properties change, update the UI.
+	/// </summary>
+	/// <param name="sender"></param>
+	/// <param name="e"></param>
+	private void ViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+	{
+		StateHasChanged();
+	}
+
+	protected override void OnInitialized()
+	{
+		VM.PropertyChanged += ViewModelPropertyChanged;
+	}
+
+	public void Dispose()
+	{
+		VM.PropertyChanged -= ViewModelPropertyChanged;
+	}
+
+	private Canvas helper_canvas;
+	private ElementReference normal_canvas;
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		var size = VM.Scale + 1;
+		var xoffset = VM.Width / 2d;
+		var yoffset = VM.Height / 2d;
+
+		await using (var ctx = await helper_canvas.GetContext2DAsync())
+		{
+			await ctx.ClearRectAsync(0, 0, VM.Width, VM.Height);
+			await ctx.SetTransformAsync(size, 0, 0, size, (xoffset + 0.5) * size, (yoffset + 0.5) * size);
+			await ctx.RestoreAsync();
+			await ctx.SaveAsync();
+			await ctx.StrokeStyleAsync("white");
+			await ctx.LineWidthAsync(0.1);
+			foreach (var connections in VM.WarpGraph.Connections)
+			{
+				var src = connections.Key;
+				foreach (var dest in connections.Value)
+				{
+					// TODO: display one way warps differently (arrows, incomplete lines, gradients?)
+					await ctx.MoveToAsync(src.Location.X, src.Location.Y);
+					await ctx.LineToAsync(dest.Location.X, dest.Location.Y);
+					await ctx.StrokeAsync();
+				}
+			}
+		}
+
+		await base.OnAfterRenderAsync(firstRender);
+	}
+}
+
+<div>
+	<div class="fill">
+		<ImageDisplay VM="@VM.BackgroundImageVM" />
+	</div>
+	<div class="zoom overlay" style="aspect-ratio: @(VM.AspectRatio)">
+		<Canvas @ref="helper_canvas" class="zoom" width="@VM.ScaledWidth" height="@VM.ScaledHeight"/>
+	</div>
+	<div class="zoom overlay2" style="aspect-ratio: @(VM.AspectRatio); display: grid">
+		@for (var x = VM.MinX; x <= VM.MaxX; x++)
+		{
+			for (var y = VM.MinY; y <= VM.MaxY; y++)
+			{
+				var sysloc = VM.StarSystemLocations.SingleOrDefault(q => q.Location.X == x && q.Location.Y == y);
+				var row = y - VM.MinY + 1;
+				var col = x - VM.MinX + 1;
+				if (sysloc is not null)
+				{
+					// system pie
+					string border = "1px solid black";
+					if (sysloc.Item == VM.SelectedStarSystem)
+					{
+						// making the border thicker breaks the layout for some reason
+						border = "1px solid white";
+					}
+					<div style="grid-row: @row; grid-column: @col; width: 1fr; height: 1fr; aspect-ratio: 1; border: @border">
+						<PieChart T="int" VM="@(VM.Mode.GetStarSystemViewModel(sysloc.Item, VM.StarSystemClicked))" />
+					</div>
+				}
+				else
+				{
+					// placeholder
+					<div style="grid-row: @row; grid-column: @col; width: 1fr; height: 1fr; aspect-ratio: 1; border: 1px dotted #00ff0044" />
+				}
+			}
+		}
+	</div>
+</div>

@@ -1,12 +1,12 @@
-﻿using FrEee.Interfaces;
-using FrEee.Objects.Combat;
-using FrEee.Objects.Space;
+﻿using FrEee.Objects.Combat;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Extensions;
 using NUnit.Framework;
 using System;
 using System.Linq;
+using FrEee.Serialization;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Tests.Objects.Combat;
 

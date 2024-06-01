@@ -1,7 +1,5 @@
-﻿using FrEee.Interfaces;
-using FrEee.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Technology;
-using FrEee.Modding.Enumerations;
 using FrEee.Extensions;
 using System.Collections.Generic;
 

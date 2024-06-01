@@ -6,9 +6,9 @@ using FrEee.Utility; using FrEee.Serialization;
 using System;
 using System.Collections.Generic; 
 using System.Linq;
-using FrEee.Objects.Orders;
+using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Vehicles;
-using FrEee.Interfaces;
+
 using FrEee.Extensions;
 using FrEee.Objects.Commands;
 using FrEee.Objects.Technology;
