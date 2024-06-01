@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace FrEee.Data.Entities.References
 {
-    public class Identifier<TID, TEntity>
-        : IIdentifier<TID, TEntity>
-        where TEntity : IEntity<TID, TEntity>
-    {
-        public TID ID { get; }
-    }
+	public record Identifier<TIDValue>(TIDValue Value)
+	   : IIdentifier<TIDValue>
+		where TIDValue : IEquatable<TIDValue>
+	{
+	}
 }

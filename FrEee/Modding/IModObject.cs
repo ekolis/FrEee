@@ -1,4 +1,5 @@
-﻿using FrEee.Objects.GameState;
+﻿using FrEee.Data.Entities;
+using FrEee.Objects.GameState;
 using System.Collections.Generic;
 
 namespace FrEee.Modding;

@@ -33,5 +33,5 @@ public class PlayerCommandsContext(
 	}
 
 
-	public DbSet<PlayerCommand> GameObjects { get; set; }
+	public DbSet<IGameObject> GameObjects { get; set; }
 }

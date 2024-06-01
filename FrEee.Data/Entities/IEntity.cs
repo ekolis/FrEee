@@ -7,9 +7,22 @@ using FrEee.Data.Entities.References;
 
 namespace FrEee.Data.Entities
 {
-	public interface IEntity<out TID, out TEntity>
-		where TEntity: IEntity<TID, TEntity>
+	/// <summary>
+	/// A general purpose entity.
+	/// </summary>
+	public interface IEntity
 	{
-		IIdentifier<TID, TEntity> ID { get; }
+		// TODO: ECS stuff is cool!
+	}
+
+	/// <summary>
+	/// An entity which can be identified by an ID.
+	/// </summary>
+	/// <typeparam name="TIDValue">The type of ID value.</typeparam>
+	public interface IEntity<out TIDValue>
+		: IEntity
+		where TIDValue : IEquatable<TIDValue>
+	{
+		IIdentifier<TIDValue> ID { get; }
 	}
 }
