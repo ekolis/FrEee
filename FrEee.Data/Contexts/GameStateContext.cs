@@ -47,5 +47,5 @@ public class GameStateContext(
 		)}");
 	}
 
-	public DbSet<GameObject> GameObjects { get; set; }
+	public DbSet<IGameObject> GameObjects { get; set; }
 }
