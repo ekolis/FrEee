@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace FrEee.Data.Entities.References
 {
-	public class GameIdentifier<TEntity>
-		: Identifier<long, TEntity>
-		where TEntity: IGameObject<TEntity>
+	public class ModIdentifier<TEntity>
+		: Identifier<string, TEntity>
+		where TEntity: IModObject<TEntity>
 	{
 	}
 }
