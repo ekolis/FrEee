@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Data.Entities;
+using FrEee.Data.Entities.Identification;
 
-namespace FrEee.Data.Entities.References
+namespace FrEee.Data.Entities.Identification
 {
     /// <summary>
     /// An identifier for an <see cref="IGameObject"/>.

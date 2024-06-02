@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Data.Entities.Identification;
 
-namespace FrEee.Data.Entities.References
+namespace FrEee.Data.Entities.Identification
 {
 	public record Identifier<TIDValue>(TIDValue Value)
 	   : IIdentifier<TIDValue>

@@ -10,4 +10,5 @@ namespace FrEee.Data.Entities;
 public interface IGameObject
 	: IEntity<long>
 {
+	// could GameObject and ModObject be abilities???
 }
