@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+		<OutputType>Library</OutputType>
+		<AssemblyName>FrEee.Ecs</AssemblyName>
+		<Description>FrEee's Entity Component Systeem architecture.'</Description>
+  </PropertyGroup>
+	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
+   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+	<PropertyGroup>
+		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+	</PropertyGroup>
+</Project>
