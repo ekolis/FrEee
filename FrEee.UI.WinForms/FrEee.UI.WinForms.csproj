@@ -17,7 +17,7 @@
 		<PackageReference Include="System.ComponentModel.Composition" Version="8.0.0" />
 		<ProjectReference Include="..\FrEee.Assets\FrEee.Assets.csproj" />
 		<ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
-		<ProjectReference Include="..\FrEee.Core\FrEee.Core.csproj" />
+		<ProjectReference Include="..\FrEee.Core\FrEee.Core.Domain.csproj" />
 		<ProjectReference Include="..\FrEee.UI.Blazor\FrEee.UI.Blazor.csproj" />
 		<ProjectReference Include="..\FrEee\FrEee.Core.csproj" />
 	</ItemGroup>

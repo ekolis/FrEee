@@ -13,7 +13,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\FrEee.Assets\FrEee.Assets.csproj" />
 		<ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
-		<ProjectReference Include="..\FrEee.Core\FrEee.Core.csproj" />
+		<ProjectReference Include="..\FrEee.Core\FrEee.Core.Domain.csproj" />
 		<ProjectReference Include="..\FrEee\FrEee.Core.csproj" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
 		<PackageReference Include="NUnit" Version="3.14.0" />
