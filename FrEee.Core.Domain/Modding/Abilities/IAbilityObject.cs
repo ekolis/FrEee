@@ -1,4 +1,4 @@
-using FrEee.Serialization;
+using FrEee.Objects.GameState;
 using System.Collections.Generic;
 
 namespace FrEee.Modding.Abilities;

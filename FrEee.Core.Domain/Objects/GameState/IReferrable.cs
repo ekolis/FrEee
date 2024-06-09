@@ -1,7 +1,7 @@
 ﻿using System;
 using FrEee.Objects.Civilization;
 
-namespace FrEee.Serialization;
+namespace FrEee.Objects.GameState;
 
 /// <summary>
 /// Something that can be referred to from the client side using an ID.

@@ -24,7 +24,6 @@ using FrEee.Objects.Civilization.Diplomacy;
 using FrEee.Objects.Technology;
 using FrEee.Extensions;
 using FrEee.Utility;
-using FrEee.Serialization;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 using FrEee.Processes.Setup;

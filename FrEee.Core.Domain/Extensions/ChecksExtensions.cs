@@ -10,7 +10,6 @@ using System.Linq;
 using System.Reflection;
 using FrEee.Utility;
 using FrEee.Objects.Civilization.Orders;
-using FrEee.Serialization;
 using FrEee.Objects.Technology;
 using FrEee.Objects.GameState;
 using FrEee.Modding;

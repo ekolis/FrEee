@@ -12,7 +12,6 @@ using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Extensions;
 using FrEee.Utility;
-using FrEee.Serialization;
 using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Civilization;

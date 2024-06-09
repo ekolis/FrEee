@@ -3,7 +3,6 @@ using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.LogMessages;
-using FrEee.Serialization;
 using System;
 using System.Collections.Generic;
 

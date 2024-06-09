@@ -1,5 +1,4 @@
 ﻿using FrEee.Objects.GameState;
-using FrEee.Serialization;
 
 namespace FrEee.Objects.Civilization;
 

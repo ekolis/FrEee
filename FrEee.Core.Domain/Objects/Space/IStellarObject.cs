@@ -1,6 +1,6 @@
 ﻿using FrEee.Modding;
 using FrEee.Modding.Abilities;
-using FrEee.Serialization;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Objects.Space;
 

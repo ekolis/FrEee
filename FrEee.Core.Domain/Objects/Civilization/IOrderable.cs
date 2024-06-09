@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using FrEee.Objects.Civilization.Orders;
-using FrEee.Serialization;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Objects.Civilization;
 

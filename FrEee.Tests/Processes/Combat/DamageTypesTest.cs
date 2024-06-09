@@ -7,7 +7,6 @@ using System;
 using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
-using FrEee.Serialization;
 
 namespace FrEee.Tests.Processes.Combat;
 

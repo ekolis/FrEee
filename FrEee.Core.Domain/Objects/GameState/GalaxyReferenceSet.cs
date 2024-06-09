@@ -7,7 +7,7 @@ using FrEee.Serialization;
 
 namespace FrEee.Objects.GameState
 {
-	[Serializable]
+    [Serializable]
 	public class GalaxyReferenceSet<T>
 		: ReferenceSet<GalaxyReference<T>, T>
 		where T : IReferrable

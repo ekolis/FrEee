@@ -8,7 +8,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using FrEee.Serialization;
 using FrEee.Objects.GameState;
 using FrEee.Extensions;
 using FrEee.Utility;
