@@ -93,7 +93,7 @@ public class TurnProcessor
 		if (RandomHelper.PerMilleChance(galaxy.EventFrequency * galaxy.Empires.Where(e => !e.IsDefeated).Count(), dice))
 		{
 			// trigger a new event
-			var templates = Mod.Current.EventTemplates.Where(t => t.Severity <= galaxy.MaximumEventSeverity);
+			var templates = Mod.Current.EventTemplates.Where(t => t.Severity <= galaxy.GameSetup.MaximumEventSeverity);
 			if (templates.Any())
 			{
 				var template = templates.PickRandom(dice);
@@ -241,7 +241,7 @@ public class TurnProcessor
 					if (amount > 0 && adjustedValue[mined][r] == 0)
 					{
 						// resource was mined here, but hasn't been adjusted yet
-						adjustedValue[mined][r] = galaxy.RemoteMiningModel.GetDecay(kvp.Value[r], mined.ResourceValue[r]);
+						adjustedValue[mined][r] = galaxy.GameSetup.RemoteMiningModel.GetDecay(kvp.Value[r], mined.ResourceValue[r]);
 						mined.ResourceValue[r] -= adjustedValue[mined][r];
 					}
 				}
@@ -645,9 +645,9 @@ public class TurnProcessor
 		}
 
 		// check for victory/defeat
-		foreach (var vc in galaxy.VictoryConditions)
+		foreach (var vc in galaxy.GameSetup.VictoryConditions)
 		{
-			if (vc is TotalEliminationVictoryCondition || galaxy.TurnNumber > galaxy.VictoryDelay)
+			if (vc is TotalEliminationVictoryCondition || galaxy.TurnNumber > galaxy.GameSetup.VictoryDelay)
 			{
 				// find winners
 				var winners = new List<Empire>();
@@ -746,7 +746,7 @@ public class TurnProcessor
 		incomeWithoutValue += income[Resource.Intelligence] * Resource.Research;
 		foreach (var kvp in incomeWithoutValue)
 		{
-			p.ResourceValue[kvp.Key] -= galaxy.StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
+			p.ResourceValue[kvp.Key] -= galaxy.GameSetup.StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
 		}
 	}
 
@@ -807,18 +807,18 @@ public class TurnProcessor
 	{
 		foreach (var r in Resource.All.Where(r => r.HasValue))
 		{
-			bool wasFull = p.ResourceValue[r] == galaxy.MaxPlanetValue;
-			bool wasEmpty = p.ResourceValue[r] == galaxy.MinPlanetValue;
+			bool wasFull = p.ResourceValue[r] == galaxy.GameSetup.MaxPlanetValue;
+			bool wasEmpty = p.ResourceValue[r] == galaxy.GameSetup.MinPlanetValue;
 			var modifier =
 				p.GetAbilityValue("Planet - Change {0} Value".F(r.Name)).ToInt()
 				+ p.GetAbilityValue("Sector - Change {0} Value".F(r.Name)).ToInt()
 				+ p.GetAbilityValue("System - Change {0} Value".F(r.Name)).ToInt()
 				+ p.GetAbilityValue("Empire - Change {0} Value".F(r.Name)).ToInt();
 			p.ResourceValue[r] += modifier;
-			p.ResourceValue[r] = p.ResourceValue[r].LimitToRange(galaxy.MinPlanetValue, galaxy.MaxPlanetValue);
-			if (!wasFull && p.ResourceValue[r] == galaxy.MaxPlanetValue && p.Owner != null)
+			p.ResourceValue[r] = p.ResourceValue[r].LimitToRange(galaxy.GameSetup.MinPlanetValue, galaxy.GameSetup.MaxPlanetValue);
+			if (!wasFull && p.ResourceValue[r] == galaxy.GameSetup.MaxPlanetValue && p.Owner != null)
 				p.Owner.RecordLog(p, "{0}'s {1} have been completely replenished. Its value is at the absolute maximum.".F(p, r), LogMessageType.Generic);
-			if (!wasEmpty && p.ResourceValue[r] == galaxy.MinPlanetValue && p.Owner != null)
+			if (!wasEmpty && p.ResourceValue[r] == galaxy.GameSetup.MinPlanetValue && p.Owner != null)
 				p.Owner.RecordLog(p, "{0} has been stripped dry of {1}. Its value is at the bare minimum.".F(p, r), LogMessageType.Generic);
 		}
 	}

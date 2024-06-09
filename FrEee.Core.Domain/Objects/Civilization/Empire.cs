@@ -120,7 +120,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 		get
 		{
 			if (allSystemsExploredFromStart is null)
-				allSystemsExploredFromStart = Galaxy.Current.AllSystemsExploredFromStart || this.HasAbility("Galaxy Seen");
+				allSystemsExploredFromStart = Galaxy.Current.GameSetup.AllSystemsExplored || this.HasAbility("Galaxy Seen");
 			return allSystemsExploredFromStart.Value;
 		}
 	}
@@ -867,7 +867,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	{
 		// can we see it?
 		// TODO - rankings too, not just scores
-		var disp = Galaxy.Current.ScoreDisplay;
+		var disp = Galaxy.Current.GameSetup.ScoreDisplay;
 		bool showit = false;
 		if (viewer == null)
 			showit = true; // host can see everyone's scores

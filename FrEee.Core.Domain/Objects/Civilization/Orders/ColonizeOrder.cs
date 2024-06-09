@@ -214,12 +214,12 @@ public class ColonizeOrder : IOrder
                 // no such colony module
                 yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because it lacks a " + Planet.Surface + " colony module.", LogMessageType.Warning);
             }
-            if (Galaxy.Current.CanColonizeOnlyBreathable && Planet.Atmosphere != sobj.Owner.PrimaryRace.NativeAtmosphere)
+            if (Galaxy.Current.GameSetup.CanColonizeOnlyBreathable && Planet.Atmosphere != sobj.Owner.PrimaryRace.NativeAtmosphere)
             {
                 // can only colonize breathable atmosphere (due to game setup option)
                 yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because we can only colonize " + sobj.Owner.PrimaryRace.NativeAtmosphere + " planets.", LogMessageType.Warning);
             }
-            if (Galaxy.Current.CanColonizeOnlyHomeworldSurface && Planet.Surface != sobj.Owner.PrimaryRace.NativeSurface)
+            if (Galaxy.Current.GameSetup.CanColonizeOnlyHomeworldSurface && Planet.Surface != sobj.Owner.PrimaryRace.NativeSurface)
             {
                 // can only colonize breathable atmosphere (due to game setup option)
                 yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because we can only colonize " + sobj.Owner.PrimaryRace.NativeSurface + " planets.", LogMessageType.Warning);

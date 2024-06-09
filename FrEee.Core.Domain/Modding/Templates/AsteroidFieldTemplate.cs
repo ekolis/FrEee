@@ -85,9 +85,9 @@ public class AsteroidFieldTemplate : ITemplate<AsteroidField>, IModObject
 		if (abil != null)
 			asteroids.IntrinsicAbilities.Add(abil);
 
-		asteroids.ResourceValue[Resource.Minerals] = RandomHelper.Range(Galaxy.Current.MinSpawnedAsteroidValue, Galaxy.Current.MaxSpawnedAsteroidValue);
-		asteroids.ResourceValue[Resource.Organics] = RandomHelper.Range(Galaxy.Current.MinSpawnedAsteroidValue, Galaxy.Current.MaxSpawnedAsteroidValue);
-		asteroids.ResourceValue[Resource.Radioactives] = RandomHelper.Range(Galaxy.Current.MinSpawnedAsteroidValue, Galaxy.Current.MaxSpawnedAsteroidValue);
+		asteroids.ResourceValue[Resource.Minerals] = RandomHelper.Range(Galaxy.Current.GameSetup.MinSpawnedAsteroidValue, Galaxy.Current.GameSetup.MaxSpawnedAsteroidValue);
+		asteroids.ResourceValue[Resource.Organics] = RandomHelper.Range(Galaxy.Current.GameSetup.MinSpawnedAsteroidValue, Galaxy.Current.GameSetup.MaxSpawnedAsteroidValue);
+		asteroids.ResourceValue[Resource.Radioactives] = RandomHelper.Range(Galaxy.Current.GameSetup.MinSpawnedAsteroidValue, Galaxy.Current.GameSetup.MaxSpawnedAsteroidValue);
 
 		return asteroids;
 	}

@@ -1515,9 +1515,9 @@ public partial class MainGameForm : GameForm
 				if (sector != null)
 				{
 					var suitablePlanets = sector.SpaceObjects.OfType<Planet>().Where(p => p.Colony == null && v.Abilities().Any(a => a.Rule.Matches("Colonize Planet - " + p.Surface)));
-					if (Galaxy.Current.CanColonizeOnlyBreathable)
+					if (Galaxy.Current.GameSetup.CanColonizeOnlyBreathable)
 						suitablePlanets = suitablePlanets.Where(p => p.Atmosphere == Empire.Current.PrimaryRace.NativeAtmosphere);
-					if (Galaxy.Current.CanColonizeOnlyHomeworldSurface)
+					if (Galaxy.Current.GameSetup.CanColonizeOnlyHomeworldSurface)
 						suitablePlanets = suitablePlanets.Where(p => p.Surface == Empire.Current.PrimaryRace.NativeSurface);
 					if (suitablePlanets.Any())
 					{

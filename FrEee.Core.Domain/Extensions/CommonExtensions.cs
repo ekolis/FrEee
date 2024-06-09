@@ -1193,7 +1193,7 @@ public static class CommonExtensions
 			var amount = abil.Value1.ToInt();
 
 			if (resource.HasValue)
-				amount = Galaxy.Current.StandardMiningModel.GetRate(amount, o.ResourceValue[resource], pcts[resource] / 100d);
+				amount = Galaxy.Current.GameSetup.StandardMiningModel.GetRate(amount, o.ResourceValue[resource], pcts[resource] / 100d);
 
 			income.Add(resource, amount);
 		}

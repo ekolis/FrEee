@@ -91,9 +91,9 @@ public class PlanetTemplate : ITemplate<Planet>, IModObject
 		if (abil != null)
 			planet.IntrinsicAbilities.Add(abil);
 
-		planet.ResourceValue[Resource.Minerals] = RandomHelper.Range(Galaxy.Current.MinSpawnedPlanetValue, Galaxy.Current.MaxSpawnedPlanetValue);
-		planet.ResourceValue[Resource.Organics] = RandomHelper.Range(Galaxy.Current.MinSpawnedPlanetValue, Galaxy.Current.MaxSpawnedPlanetValue);
-		planet.ResourceValue[Resource.Radioactives] = RandomHelper.Range(Galaxy.Current.MinSpawnedPlanetValue, Galaxy.Current.MaxSpawnedPlanetValue);
+		planet.ResourceValue[Resource.Minerals] = RandomHelper.Range(Galaxy.Current.GameSetup.MinSpawnedPlanetValue, Galaxy.Current.GameSetup.MaxSpawnedPlanetValue);
+		planet.ResourceValue[Resource.Organics] = RandomHelper.Range(Galaxy.Current.GameSetup.MinSpawnedPlanetValue, Galaxy.Current.GameSetup.MaxSpawnedPlanetValue);
+		planet.ResourceValue[Resource.Radioactives] = RandomHelper.Range(Galaxy.Current.GameSetup.MinSpawnedPlanetValue, Galaxy.Current.GameSetup.MaxSpawnedPlanetValue);
 
 		planet.ConditionsAmount = RandomHelper.Range(Mod.Current.Settings.MinRandomPlanetConditions, Mod.Current.Settings.MaxRandomPlanetConditions);
 

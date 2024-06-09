@@ -307,18 +307,18 @@ public class Technology : IModObject, IResearchable
 
 	public int GetBaseLevelCost(int level)
 	{
-		if (Galaxy.Current.TechnologyCost == TechnologyCost.Low)
+		if (Galaxy.Current.GameSetup.TechnologyCost == TechnologyCost.Low)
 			return LevelCost * level;
-		else if (Galaxy.Current.TechnologyCost == TechnologyCost.Medium)
+		else if (Galaxy.Current.GameSetup.TechnologyCost == TechnologyCost.Medium)
 		{
 			if (Math.Abs(level) == 1)
 				return LevelCost * level;
 			else
 				return LevelCost * level * level / 2;
 		}
-		else if (Galaxy.Current.TechnologyCost == TechnologyCost.High)
+		else if (Galaxy.Current.GameSetup.TechnologyCost == TechnologyCost.High)
 			return LevelCost * level * level;
-		throw new Exception("Invalid technology cost for galaxy: " + Galaxy.Current.TechnologyCost);
+		throw new Exception("Invalid technology cost for galaxy: " + Galaxy.Current.GameSetup.TechnologyCost);
 	}
 
 	/// <summary>
@@ -338,10 +338,10 @@ public class Technology : IModObject, IResearchable
 	public int GetLevelCost(int level, Empire emp)
 	{
 		var baseCost = GetBaseLevelCost(level);
-		if (Galaxy.Current.TechnologyUniqueness == 0)
+		if (Galaxy.Current.GameSetup.TechnologyUniqueness == 0)
 			return baseCost;
 		var playerRatio = emp.OtherPlayersTechLevels[this]?.Count(x => x >= level) ?? 0;
-		var uniquenessFactor = Math.Pow(2, Galaxy.Current.TechnologyUniqueness * playerRatio);
+		var uniquenessFactor = Math.Pow(2, Galaxy.Current.GameSetup.TechnologyUniqueness * playerRatio);
 		return (int)(GetBaseLevelCost(level) * uniquenessFactor);
 	}
 

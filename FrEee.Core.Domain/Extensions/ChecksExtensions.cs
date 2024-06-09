@@ -280,7 +280,7 @@ public static class ChecksExtensions
 		var seers = sys.FindSpaceObjects<ISpaceObject>(s => s.Owner == emp && !s.IsMemory);
 		if (!seers.Any() || sobj.IsHiddenFrom(emp))
 		{
-			if (Galaxy.Current.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
+			if (Galaxy.Current.GameSetup.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
 				return Visibility.Visible;
 			if (emp.AllSystemsExploredFromStart)
 				return Visibility.Fogged;
@@ -355,7 +355,7 @@ public static class ChecksExtensions
 		var seers = sys.FindSpaceObjects<ISpaceObject>(s => s.Owner == emp && !s.IsMemory);
 		if (!seers.Any() || sobj.IsHiddenFrom(emp))
 		{
-			if (Galaxy.Current.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
+			if (Galaxy.Current.GameSetup.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
 				return Visibility.Visible >= desiredVisibility;
 			if (emp.AllSystemsExploredFromStart)
 				return Visibility.Fogged >= desiredVisibility;

@@ -100,17 +100,7 @@ public class GalaxyTemplate : ITemplate<Galaxy>, IModObject
 	public Galaxy Instantiate(Status status, double desiredProgress, PRNG dice)
 	{
 		var gal = new Galaxy();
-		gal.Width = GameSetup.GalaxySize.Width;
-		gal.Height = GameSetup.GalaxySize.Height;
-		gal.MinPlanetValue = GameSetup.MinPlanetValue;
-		gal.MinSpawnedPlanetValue = GameSetup.MinSpawnedPlanetValue;
-		gal.MaxSpawnedPlanetValue = GameSetup.MaxSpawnedPlanetValue;
-		gal.MaxPlanetValue = GameSetup.MaxPlanetValue;
-		gal.MinAsteroidValue = GameSetup.MinAsteroidValue;
-		gal.MinSpawnedAsteroidValue = GameSetup.MinSpawnedAsteroidValue;
-		gal.MaxSpawnedAsteroidValue = GameSetup.MaxSpawnedAsteroidValue;
-		gal.EventFrequency = GameSetup.EventFrequency;
-		gal.MaximumEventSeverity = GameSetup.MaximumEventSeverity;
+		gal.GameSetup = GameSetup;
 		var bounds = new Rectangle(-GameSetup.GalaxySize.Width / 2, -GameSetup.GalaxySize.Height / 2, GameSetup.GalaxySize.Width, GameSetup.GalaxySize.Height);
 
 		var unusedNames = new List<string>(Mod.Current.StarSystemNames);
