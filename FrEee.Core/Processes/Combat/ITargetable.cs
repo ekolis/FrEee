@@ -1,6 +1,6 @@
 ﻿using FrEee.Objects.Civilization;
 
-namespace FrEee.Objects.Combat;
+namespace FrEee.Processes.Combat;
 
 /// <summary>
 /// Something which can be specifically target by weapons.

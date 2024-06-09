@@ -1,6 +1,6 @@
-﻿using FrEee.Objects.Combat;
-using FrEee.Modding;
+﻿using FrEee.Modding;
 using System;
+using FrEee.Processes.Combat;
 
 namespace FrEee.Objects.Technology;
 

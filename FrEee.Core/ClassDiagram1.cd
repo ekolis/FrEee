@@ -292,14 +292,14 @@
       <FileName>Game\Objects\Civilization\Diplomacy\Clauses\TributeClause.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat.BeamWeaponDisplayEffect" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat.BeamWeaponDisplayEffect" Collapsed="true">
     <Position X="8.25" Y="32" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABAAAAAAAAAAAAAAIACAASAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat\BeamWeaponDisplayEffect.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat.Hit" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="FrEee.Processes.Combat.Hit" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="67" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAIAAAACAIAAAIAAAAAAQAAAAAAAA=</HashCode>
@@ -307,21 +307,21 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="FrEee.Objects.Combat.ProjectileWeaponDisplayEffect" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat.ProjectileWeaponDisplayEffect" Collapsed="true">
     <Position X="10.5" Y="32" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABAAAAAAAAAAAAAAIACAASAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat\ProjectileWeaponDisplayEffect.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat.SeekerWeaponDisplayEffect" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat.SeekerWeaponDisplayEffect" Collapsed="true">
     <Position X="12.75" Y="32" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABAAAAAAAAAAAAAAIACAASAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat\SeekerWeaponDisplayEffect.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat.Shot" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="FrEee.Processes.Combat.Shot" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="53" Y="9.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgABAAEAAAABCAAEIAAABAAgSAAAIAgAAAQAAAAAAAA=</HashCode>
@@ -329,7 +329,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="FrEee.Objects.Combat.WeaponDisplayEffect" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat.WeaponDisplayEffect" Collapsed="true">
     <Position X="10.5" Y="30.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABBAEAAAAAAAAAAAAIACAASAAAAAAAAAAAAAEAEAAAA=</HashCode>
@@ -337,7 +337,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="FrEee.Objects.Combat2.Battle_Space" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="FrEee.Processes.Combat2.Battle_Space" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="65.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>TAoJCAiUCDKAo0AJSgLC4DQMGCBDiQBgYIQQkIUQACo=</HashCode>
@@ -345,98 +345,98 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="FrEee.Objects.Combat2.CombatEmpire" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.CombatEmpire" Collapsed="true">
     <Position X="58.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABAAAAEQAAAAAAAIAAAAAAgIAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\combatObjects.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.CombatFleet" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.CombatFleet" Collapsed="true">
     <Position X="60" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAACCAAA=</HashCode>
       <FileName>Game\Objects\Combat2\combatObjects.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.CombatNode" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.CombatNode" Collapsed="true">
     <Position X="3.5" Y="30.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAAAAAAIgAAAAAAAAAAgAAAAAACBAAAAAAAAAEA=</HashCode>
       <FileName>Game\Objects\Combat2\combatObjects.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.CombatObject" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.CombatObject" Collapsed="true">
     <Position X="3.5" Y="32" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EggAAgASQIQBIAAAHAAyAAAAAAGEJAAAQgAAiEABKQA=</HashCode>
       <FileName>Game\Objects\Combat2\combatObjects.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.CombatWaypoint" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.CombatWaypoint" Collapsed="true">
     <Position X="65.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAEA=</HashCode>
       <FileName>Game\Objects\Combat2\combatObjects.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.CombatPlanet" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.CombatPlanet" Collapsed="true">
     <Position X="3.5" Y="35" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAQAQAAAAAAAAAAAAAAAAAAAAgAAAAEAAAgAA=</HashCode>
       <FileName>Game\Objects\Combat2\CombatPlanet.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.CombatReplayLog" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.CombatReplayLog" Collapsed="true">
     <Position X="61.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAgAQAAAAAAAAAAAAAgABAAAQAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\CombatReplayLog.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.CombatEvent" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.CombatEvent" Collapsed="true">
     <Position X="4.5" Y="20.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
       <FileName>Game\Objects\Combat2\CombatReplayLog.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.CombatLocationEvent" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.CombatLocationEvent" Collapsed="true">
     <Position X="3.5" Y="22" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\CombatReplayLog.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.CombatFireOnTargetEvent" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.CombatFireOnTargetEvent" Collapsed="true">
     <Position X="1.25" Y="23.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\CombatReplayLog.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.CombatTakeFireEvent" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.CombatTakeFireEvent" Collapsed="true">
     <Position X="3.5" Y="23.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAAAAACAAAABAA=</HashCode>
       <FileName>Game\Objects\Combat2\CombatReplayLog.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.CombatDestructionEvent" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.CombatDestructionEvent" Collapsed="true">
     <Position X="5.75" Y="23.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\CombatReplayLog.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.CombatEndBattleEvent" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.CombatEndBattleEvent" Collapsed="true">
     <Position X="8" Y="22" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\CombatReplayLog.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.CombatSeeker" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.CombatSeeker" Collapsed="true">
     <Position X="1.25" Y="33.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAgECYQLQBAAMSCAAQQBAACCSAgAAAIgAAhEBRJAA=</HashCode>
@@ -444,7 +444,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="FrEee.Objects.Combat2.CombatShot" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="FrEee.Processes.Combat2.CombatShot" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="63.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABAAACAAAAACAAAIAAAACAACAAAAAgAAAQAAAAAAAA=</HashCode>
@@ -452,189 +452,189 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="FrEee.Objects.Combat2.CombatVehicle" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.CombatVehicle" Collapsed="true">
     <Position X="5.75" Y="35" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gACAAAAAQAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
       <FileName>Game\Objects\Combat2\CombatVehicle.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.CombatWeapon" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.CombatWeapon" Collapsed="true">
     <Position X="67" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAiIAEAAAAAABAAIAIAICAECAAAAAIAACAIAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\CombatWeapon.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.CombatControlledObject" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.CombatControlledObject" Collapsed="true">
     <Position X="4.5" Y="33.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAAAAAAAAIABAAAAAAAAAAAAAAAEAAAAAAAQAAAAgBA=</HashCode>
       <FileName>Game\Objects\Combat2\ControlledCombatObject.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StrategyBaseBlock" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StrategyBaseBlock" Collapsed="true">
     <Position X="27" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAECIQQIAAAEAAAAQCmEAkABAAgAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StrategyWayPoint" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StrategyWayPoint" Collapsed="true">
     <Position X="3.25" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StrategyLocdata" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StrategyLocdata" Collapsed="true">
     <Position X="7.75" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StrategyVeldata" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StrategyVeldata" Collapsed="true">
     <Position X="12.25" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StrategyMassdata" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StrategyMassdata" Collapsed="true">
     <Position X="14.5" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StrategyComObj" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StrategyComObj" Collapsed="true">
     <Position X="16.75" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StrategyThisObj" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StrategyThisObj" Collapsed="true">
     <Position X="19" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StrategyThisEnemys" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StrategyThisEnemys" Collapsed="true">
     <Position X="21.25" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StrategyThisEmpireObj" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StrategyThisEmpireObj" Collapsed="true">
     <Position X="23.5" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.Strategyfleet" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.Strategyfleet" Collapsed="true">
     <Position X="25.75" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StrategyRange" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StrategyRange" Collapsed="true">
     <Position X="28" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StrategyClosest" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StrategyClosest" Collapsed="true">
     <Position X="30.25" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StrategyWeapons" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StrategyWeapons" Collapsed="true">
     <Position X="32.5" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.Strategyinput_fix16" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.Strategyinput_fix16" Collapsed="true">
     <Position X="34.75" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.Strategyinput_Types" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.Strategyinput_Types" Collapsed="true">
     <Position X="37" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StrategyFilter_shieldhitpoints" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StrategyFilter_shieldhitpoints" Collapsed="true">
     <Position X="39.25" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StrategyFilter_HullSize" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StrategyFilter_HullSize" Collapsed="true">
     <Position X="41.5" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StrategyWeaponMaxRange" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StrategyWeaponMaxRange" Collapsed="true">
     <Position X="43.75" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StrategyFormate" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StrategyFormate" Collapsed="true">
     <Position X="46" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StrategyVelAngle" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StrategyVelAngle" Collapsed="true">
     <Position X="48.25" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StrategyHeading" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StrategyHeading" Collapsed="true">
     <Position X="50.5" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StrategyAdd_Compass" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StrategyAdd_Compass" Collapsed="true">
     <Position X="5.5" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StrategyAdd_angletocompass" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StrategyAdd_angletocompass" Collapsed="true">
     <Position X="10" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StrategyObject" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StrategyObject" Collapsed="true">
     <Position X="32" Y="35.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAgSEMCAAgAAACAICABQARAAAgAAAIAAAAAAEBAg=</HashCode>
@@ -642,21 +642,21 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="FrEee.Objects.Combat2.StragegyObject_Default" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.StragegyObject_Default" Collapsed="true">
     <Position X="32" Y="37" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\StrategyObject.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.Tactics.Tactic" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.Tactics.Tactic" Collapsed="true">
     <Position X="29" Y="37" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAgAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\Tactics\Tactic.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.Tactics.TacticBlock" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.Tactics.TacticBlock" Collapsed="true">
     <Position X="29" Y="35.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>BAACgACAACAAgQBACAAGQBQAEAAAgAAAIIAAAAAEAAg=</HashCode>
@@ -664,7 +664,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="FrEee.Objects.Combat2.Tactics.TacticInput" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.Tactics.TacticInput" Collapsed="true">
     <Position X="25.25" Y="35.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABkAACAICAAgQAACAACABAAAAAAgAAAIQAgAAAEAAg=</HashCode>
@@ -672,21 +672,21 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="FrEee.Objects.Combat2.Tactics.TacticFormulaInput" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.Tactics.TacticFormulaInput" Collapsed="true">
     <Position X="24" Y="37" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\Tactics\TacticNode.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.Tactics.TacticObjectInput" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.Tactics.TacticObjectInput" Collapsed="true">
     <Position X="26.25" Y="37" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\Tactics\TacticNode.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.Tactics.TacticOutput" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.Tactics.TacticOutput" Collapsed="true">
     <Position X="29.5" Y="29.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAFAACAACAAgQAACAACABAAAAAAgAAAIQAgAAAEAAg=</HashCode>
@@ -694,21 +694,21 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="FrEee.Objects.Combat2.Tactics.TacticFormulaOutput" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.Tactics.TacticFormulaOutput" Collapsed="true">
     <Position X="27.25" Y="31" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAgAAAAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\Tactics\TacticNode.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.Tactics.TacticPropertyOutput" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.Tactics.TacticPropertyOutput" Collapsed="true">
     <Position X="29.5" Y="31" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAQAAAAgAABAAAA=</HashCode>
       <FileName>Game\Objects\Combat2\Tactics\TacticNode.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Objects.Combat2.Tactics.TacticConnectionOutput" Collapsed="true">
+  <Class Name="FrEee.Processes.Combat2.Tactics.TacticConnectionOutput" Collapsed="true">
     <Position X="31.75" Y="31" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAIAAAAAAAAhAAAAAAA=</HashCode>
@@ -2606,7 +2606,7 @@
       <FileName>Game\Interfaces\IVictoryCondition.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="FrEee.Objects.Combat2.Tactics.ITacticNode" Collapsed="true">
+  <Interface Name="FrEee.Processes.Combat2.Tactics.ITacticNode" Collapsed="true">
     <Position X="29" Y="18" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAgAAAAAAA=</HashCode>

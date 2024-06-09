@@ -1,8 +1,7 @@
 using FrEee.Objects.Abilities;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
-using FrEee.Objects.Combat;
-using FrEee.Objects.Combat.Grid;
+using FrEee.Processes.Combat.Grid;
 using FrEee.Objects.Commands;
 using FrEee.Objects.Events;
 using FrEee.Objects.LogMessages;
@@ -29,6 +28,7 @@ using FrEee.Objects.Technology;
 using FrEee.Extensions;
 using FrEee.Utility;
 using FrEee.Serialization;
+using FrEee.Processes.Combat;
 
 namespace FrEee.Objects.GameState;
 

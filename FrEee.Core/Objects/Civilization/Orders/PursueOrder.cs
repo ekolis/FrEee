@@ -1,6 +1,5 @@
-﻿
-using FrEee.Objects.Combat;
-using FrEee.Objects.Space;
+﻿using FrEee.Objects.Space;
+using FrEee.Processes.Combat;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;

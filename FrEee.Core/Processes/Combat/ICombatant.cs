@@ -4,7 +4,7 @@ using FrEee.Objects.Technology;
 using System;
 using System.Collections.Generic;
 
-namespace FrEee.Objects.Combat;
+namespace FrEee.Processes.Combat;
 
 /// <summary>
 /// An object that can fire weapons and/or targeted by weapons.

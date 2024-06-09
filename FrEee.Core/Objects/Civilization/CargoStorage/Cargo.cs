@@ -1,5 +1,4 @@
-﻿using FrEee.Objects.Combat;
-using FrEee.Modding;
+﻿using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;
@@ -10,6 +9,7 @@ using FrEee.Objects.Vehicles;
 using FrEee.Extensions;
 using FrEee.Utility;
 using FrEee.Serialization;
+using FrEee.Processes.Combat;
 
 namespace FrEee.Objects.Civilization.CargoStorage;
 

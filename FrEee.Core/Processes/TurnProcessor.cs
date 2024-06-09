@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Combat.Grid;
-using FrEee.Objects.Combat;
+using FrEee.Processes.Combat.Grid;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
@@ -19,6 +18,8 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
 using FrEee.Extensions;
 using FrEee.Utility;
+using FrEee.Processes.Combat;
+using FrEee.Processes.Combat.Grid;
 
 namespace FrEee.Processes;
 

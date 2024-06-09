@@ -1,6 +1,6 @@
 ﻿using FrEee.Objects.Space;
 
-namespace FrEee.Objects.Combat;
+namespace FrEee.Processes.Combat;
 
 /// <summary>
 /// A space object that can participate in combat.

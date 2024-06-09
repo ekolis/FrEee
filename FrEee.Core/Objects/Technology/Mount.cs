@@ -8,7 +8,7 @@ using System.Drawing;
 using System.IO;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Vehicles;
-using FrEee.Objects.Combat;
+using FrEee.Processes.Combat;
 
 namespace FrEee.Objects.Technology;
 

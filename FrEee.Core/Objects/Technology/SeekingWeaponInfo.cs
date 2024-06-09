@@ -1,5 +1,5 @@
 ﻿using FrEee.Modding;
-using FrEee.Objects.Combat;
+using FrEee.Processes.Combat;
 using System;
 
 namespace FrEee.Objects.Technology;

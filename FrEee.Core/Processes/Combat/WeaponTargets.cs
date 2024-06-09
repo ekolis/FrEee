@@ -2,7 +2,7 @@
 using System;
 using FrEee.Utility;
 
-namespace FrEee.Objects.Combat;
+namespace FrEee.Processes.Combat;
 
 /// <summary>
 /// Used to limit what a weapon can fire at.

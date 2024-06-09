@@ -1,5 +1,4 @@
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Combat;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
@@ -15,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using FrEee.Extensions;
+using FrEee.Processes.Combat;
 
 namespace FrEee.Utility;
 

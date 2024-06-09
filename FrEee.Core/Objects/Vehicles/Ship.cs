@@ -1,5 +1,5 @@
 using FrEee.Objects.Abilities;
-using FrEee.Objects.Combat;
+using FrEee.Processes.Combat;
 using System;
 
 namespace FrEee.Objects.Vehicles;

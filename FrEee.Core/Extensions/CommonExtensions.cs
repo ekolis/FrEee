@@ -10,8 +10,8 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Combat;
-using FrEee.Objects.Combat.Grid;
+using FrEee.Processes.Combat;
+using FrEee.Processes.Combat.Grid;
 using FrEee.Objects.Commands;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
@@ -26,6 +26,7 @@ using FrEee.Objects.GameState;
 using FrEee.Extensions;
 using FrEee.Serialization;
 using FrEee.Utility;
+using FrEee.Processes.Combat;
 
 namespace FrEee.Extensions;
 

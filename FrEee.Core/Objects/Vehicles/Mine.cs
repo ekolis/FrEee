@@ -2,9 +2,9 @@ using FrEee.Extensions;
 using FrEee.Objects.Abilities;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.CargoStorage;
-using FrEee.Objects.Combat;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
+using FrEee.Processes.Combat;
 using System;
 
 namespace FrEee.Objects.Vehicles;

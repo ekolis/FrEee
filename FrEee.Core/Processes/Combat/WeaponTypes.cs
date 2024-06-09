@@ -1,7 +1,7 @@
 ﻿using System;
 using FrEee.Utility;
 using FrEee.Utility;
-namespace FrEee.Objects.Combat;
+namespace FrEee.Processes.Combat;
 
 /// <summary>
 /// Types of weapons.
