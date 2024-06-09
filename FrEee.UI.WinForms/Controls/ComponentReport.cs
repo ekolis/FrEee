@@ -11,6 +11,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Component = FrEee.Objects.Technology.Component;
+using FrEee.Extensions;
 
 namespace FrEee.UI.WinForms.Controls;
 

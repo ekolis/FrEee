@@ -4,6 +4,7 @@ using System;
 using System.Drawing;
 using System.Linq;
 using FrEee.Objects.GameState;
+using FrEee.Utility;
 
 namespace FrEee.Setup.StarSystemPlacementStrategies;
 

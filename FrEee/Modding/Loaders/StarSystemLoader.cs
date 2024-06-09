@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using Size = FrEee.Objects.Space.StellarSize;
 using FrEee.Objects.GameState;
+using FrEee.Extensions;
 
 namespace FrEee.Modding.Loaders;
 

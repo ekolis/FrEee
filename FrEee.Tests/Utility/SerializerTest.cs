@@ -10,6 +10,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.Civilization.Orders;
+using FrEee.Utility;
 
 namespace FrEee.Tests.Utility;
 

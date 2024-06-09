@@ -26,6 +26,9 @@ using FrEee.Objects.VictoryConditions;
 using FrEee.Objects.Space;
 using FrEee.Objects.Civilization.Diplomacy;
 using FrEee.Objects.Technology;
+using FrEee.Extensions;
+using FrEee.Utility;
+using FrEee.Serialization;
 
 namespace FrEee.Objects.GameState;
 

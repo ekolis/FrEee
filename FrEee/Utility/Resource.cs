@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using FrEee.Serialization;
 using FrEee.Objects.GameState;
+using FrEee.Utility;
 
 namespace FrEee.Utility;
 

@@ -3,6 +3,7 @@ using FrEee.Utility;
 using System;
 using System.Drawing;
 using FrEee.Objects.GameState;
+using FrEee.Utility;
 
 namespace FrEee.Modding.StellarObjectLocations;
 

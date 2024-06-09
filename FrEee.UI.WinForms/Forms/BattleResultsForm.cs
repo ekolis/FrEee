@@ -12,6 +12,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.Vehicles;
+using FrEee.Utility;
 
 namespace FrEee.UI.WinForms.Forms;
 

@@ -3,6 +3,7 @@ using FrEee.Extensions;
 using System.Collections.Generic;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
+using FrEee.Serialization;
 
 namespace FrEee.Objects.Commands;
 

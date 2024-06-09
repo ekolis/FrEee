@@ -7,6 +7,8 @@ using FrEee.Objects.Technology;
 using FrEee.Serialization;
 using FrEee.Utility;
 using System.Collections.Generic;
+using FrEee.Utility;
+using FrEee.Serialization;
 
 namespace FrEee.Objects.Vehicles;
 

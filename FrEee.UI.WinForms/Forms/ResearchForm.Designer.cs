@@ -141,7 +141,7 @@ partial class ResearchForm
 		this.colProgress.HeaderText = "Progress";
 		this.colProgress.MinimumWidth = 100;
 		this.colProgress.Name = "colProgress";
-		this.colProgress.ProgressDisplayMode = FrEee.UI.WinForms.DataGridView.ProgressDisplayMode.Eta;
+		this.colProgress.ProgressDisplayMode = FrEee.Utility.ProgressDisplayMode.Eta;
 		this.colProgress.ReadOnly = true;
 		this.colProgress.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
 		// 
@@ -152,7 +152,7 @@ partial class ResearchForm
 		this.colSpending.HeaderText = "Spending";
 		this.colSpending.MinimumWidth = 100;
 		this.colSpending.Name = "colSpending";
-		this.colSpending.ProgressDisplayMode = FrEee.UI.WinForms.DataGridView.ProgressDisplayMode.Percentage;
+		this.colSpending.ProgressDisplayMode = FrEee.Utility.ProgressDisplayMode.Percentage;
 		this.colSpending.ReadOnly = true;
 		this.colSpending.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
 		// 

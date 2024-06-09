@@ -3,6 +3,7 @@ using FrEee.Serialization;
 using FrEee.Extensions;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
+using FrEee.Serialization;
 
 namespace FrEee.Objects.Technology;
 

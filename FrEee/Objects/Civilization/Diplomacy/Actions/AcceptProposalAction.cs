@@ -2,6 +2,7 @@
 using FrEee.Extensions;
 using System.Collections.Generic;
 using FrEee.Objects.GameState;
+using FrEee.Serialization;
 
 namespace FrEee.Objects.Civilization.Diplomacy.Actions;
 

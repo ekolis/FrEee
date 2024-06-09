@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.GameState;
+using FrEee.Extensions;
 
 namespace FrEee.UI.WinForms.Forms;
 

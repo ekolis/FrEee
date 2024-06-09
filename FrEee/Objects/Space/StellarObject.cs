@@ -10,6 +10,8 @@ using System.Drawing;
 using System.IO;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
+using FrEee.Serialization;
+using FrEee.Utility;
 
 namespace FrEee.Objects.Space;
 

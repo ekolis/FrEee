@@ -9,6 +9,7 @@ using System.Linq;
 using Tech = FrEee.Objects.Technology.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
+using FrEee.Serialization;
 
 namespace FrEee.Objects.Civilization.Diplomacy;
 

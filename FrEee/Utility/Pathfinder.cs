@@ -7,6 +7,8 @@ using System.Drawing;
 using System.Linq;
 using FrEee.Objects.Combat;
 using FrEee.Objects.GameState;
+using FrEee.Extensions;
+using FrEee.Utility;
 
 namespace FrEee.Utility;
 
@@ -59,7 +61,7 @@ public static class Pathfinder
 				success = true;
 
 			// step 7: check possible moves
-			var moves = GetPossibleMoves(node.Location, me == null ? true : me.CanWarp, me == null ? null : me.Owner);
+			var moves = GetPossibleMoves(node.Location, me is null ? true : me.CanWarp, me == null ? null : me.Owner);
 
 			// step 7a: remove blocked points (aka calculate cost)
 			if (avoidEnemies)

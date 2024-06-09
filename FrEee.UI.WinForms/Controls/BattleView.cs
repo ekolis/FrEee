@@ -10,6 +10,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using FrEee.Extensions;
+using FrEee.Utility;
 
 namespace FrEee.UI.WinForms.Controls;
 

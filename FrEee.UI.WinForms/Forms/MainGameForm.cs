@@ -27,6 +27,8 @@ using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.UI.Blazor.Views.GalaxyMapModes;
+using FrEee.Extensions;
+using FrEee.Utility;
 
 namespace FrEee.UI.WinForms.Forms;
 

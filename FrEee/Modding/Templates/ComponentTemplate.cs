@@ -12,6 +12,8 @@ using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.Combat;
+using FrEee.Extensions;
+using FrEee.Serialization;
 
 namespace FrEee.Modding.Templates;
 

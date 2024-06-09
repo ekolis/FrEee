@@ -8,6 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using FrEee.Objects.GameState;
+using FrEee.Serialization;
 
 namespace FrEee.Setup;
 

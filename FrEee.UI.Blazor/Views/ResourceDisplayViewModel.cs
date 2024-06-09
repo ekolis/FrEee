@@ -9,6 +9,7 @@ using FrEee.Extensions;
 using FrEee.Properties;
 using FrEee.Utility;
 using Microsoft.AspNetCore.Components;
+using FrEee.Extensions;
 
 namespace FrEee.UI.Blazor.Views
 {

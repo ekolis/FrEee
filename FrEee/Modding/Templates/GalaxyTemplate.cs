@@ -8,6 +8,8 @@ using FrEee.Utility;
 using FrEee.Extensions;
 using FrEee.Setup.StarSystemPlacementStrategies;
 using FrEee.Objects.GameState;
+using FrEee.Extensions;
+using FrEee.Utility;
 
 namespace FrEee.Modding.Templates;
 

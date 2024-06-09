@@ -23,6 +23,8 @@ using FrEee.Objects.Civilization.Diplomacy;
 using Microsoft.AspNetCore.Components.WebView.WindowsForms;
 using Microsoft.Extensions.DependencyInjection;
 using FrEee.UI.Blazor;
+using FrEee.Extensions;
+using FrEee.Utility;
 
 namespace FrEee.UI.WinForms.Forms;
 

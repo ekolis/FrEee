@@ -7,6 +7,7 @@ using FrEee.Objects.Space;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Abilities;
 using FrEee.Objects.Combat;
+using FrEee.Serialization;
 
 namespace FrEee.Objects.Vehicles;
 

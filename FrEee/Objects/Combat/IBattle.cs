@@ -4,6 +4,7 @@ using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 using FrEee.Utility;
 using System.Collections.Generic;
+using FrEee.Utility;
 
 namespace FrEee.Objects.Combat;
 

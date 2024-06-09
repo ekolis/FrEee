@@ -23,6 +23,9 @@ using FrEee.Serialization;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
+using FrEee.Extensions;
+using FrEee.Serialization;
+using FrEee.Utility;
 
 namespace FrEee.Extensions;
 
@@ -644,15 +647,6 @@ public static class CommonExtensions
 		return prop.GetValue(o, new object[0]);
 	}
 
-	/// <summary>
-	/// Returns an object's hash code, or 0 for null.
-	/// </summary>
-	/// <param name="o"></param>
-	public static int GetSafeHashCode(this object o)
-	{
-		return o == null ? 0 : o.GetHashCode();
-	}
-
 	public static Type GetVehicleType(this VehicleTypes vt)
 	{
 		switch (vt)
@@ -694,21 +688,6 @@ public static class CommonExtensions
 	public static ResourceQuantity GrossIncome(this IIncomeProducer o)
 	{
 		return o.StandardIncome() + o.RemoteMiningIncome() + o.RawResourceIncome();
-	}
-
-	public static object Instantiate(this Type type, params object[] args)
-	{
-		if (type.Name == "Battle")
-			return typeof(SpaceBattle).Instantiate(); // HACK - old savegame compatibility
-		if (type.GetConstructors().Where(c => c.GetParameters().Length == (args == null ? 0 : args.Length)).Any())
-			return Activator.CreateInstance(type, args) ?? throw new NullReferenceException($"Couldn't create instance of type {type}.");
-		else
-			return FormatterServices.GetSafeUninitializedObject(type);
-	}
-
-	public static T Instantiate<T>(params object[] args)
-	{
-		return (T)typeof(T).Instantiate(args);
 	}
 
 	public static bool IsUnlocked(this IUnlockable u)
@@ -1301,31 +1280,6 @@ public static class CommonExtensions
 	{
 		if (d != null)
 			d.Dispose();
-	}
-
-	/// <summary>
-	/// Equals method that doesn't throw an exception when objects are null.
-	/// Null is not equal to anything else, except other nulls.
-	/// </summary>
-	/// <param name="o1"></param>
-	/// <param name="o2"></param>
-	/// <returns></returns>
-	public static bool SafeEquals(this object o1, object o2)
-	{
-		if (o1 == null && o2 == null)
-			return true;
-		if (o1 == null || o2 == null)
-			return false;
-		return o1.Equals(o2);
-	}
-
-	public static bool SafeSequenceEqual<T>(this IEnumerable<T> e1, IEnumerable<T> e2)
-	{
-		if (e1.SafeEquals(null) && e2.SafeEquals(null))
-			return true;
-		if (e1.SafeEquals(null) || e2.SafeEquals(null))
-			return false;
-		return e1.SequenceEqual(e2);
 	}
 
 	public static void SetData(this object o, SafeDictionary<string, object> dict, ObjectGraphContext context)

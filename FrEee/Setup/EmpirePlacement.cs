@@ -1,4 +1,5 @@
 ﻿using FrEee.Utility;
+using FrEee.Utility;
 namespace FrEee.Setup;
 
 public enum EmpirePlacement

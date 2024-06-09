@@ -3,6 +3,8 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using FrEee.Objects.GameState;
+using FrEee.Extensions;
+using FrEee.Serialization;
 
 namespace FrEee.Serialization;
 

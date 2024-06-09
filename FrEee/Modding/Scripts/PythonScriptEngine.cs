@@ -9,6 +9,8 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 using FrEee.Objects.GameState;
+using FrEee.Extensions;
+using FrEee.Utility;
 
 namespace FrEee.Modding;
 
@@ -192,6 +194,7 @@ public class PythonScriptEngine : MarshalByRefObject
 		preCommands.Add("import System");
 		preCommands.Add("clr.ImportExtensions(System.Linq)");
 		preCommands.Add("clr.AddReference('FrEee.Core')");
+		preCommands.Add("clr.AddReference('FrEee.Core.Utility')");
 		preCommands.Add("import FrEee");
 		preCommands.Add("import FrEee.Utility");
 		preCommands.Add("clr.ImportExtensions(FrEee.Extensions)");
@@ -274,6 +277,7 @@ public class PythonScriptEngine : MarshalByRefObject
 		preCommands.Add("import System");
 		preCommands.Add("clr.ImportExtensions(System.Linq)");
 		preCommands.Add("clr.AddReference('FrEee.Core')");
+		preCommands.Add("clr.AddReference('FrEee.Core.Utility')");
 		preCommands.Add("import FrEee");
 		preCommands.Add("import FrEee.Utility");
 		preCommands.Add("clr.ImportExtensions(FrEee.Extensions)");

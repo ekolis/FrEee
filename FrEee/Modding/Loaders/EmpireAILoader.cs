@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using FrEee.Objects.GameState;
+using FrEee.Utility;
 
 namespace FrEee.Modding.Loaders;
 

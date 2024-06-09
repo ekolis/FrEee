@@ -1,5 +1,6 @@
 ﻿using FrEee.Modding;
 using System.ComponentModel.Composition;
+using FrEee.Serialization.Stringifiers;
 
 namespace FrEee.Serialization.Stringifiers;
 

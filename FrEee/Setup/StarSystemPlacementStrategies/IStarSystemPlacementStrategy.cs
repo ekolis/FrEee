@@ -1,6 +1,7 @@
 ﻿using FrEee.Objects.GameState;
 using FrEee.Utility;
 using System.Drawing;
+using FrEee.Utility;
 
 namespace FrEee.Setup.StarSystemPlacementStrategies;
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Serialization;
 using FrEee.Objects.GameState;
+using FrEee.Extensions;
 
 namespace FrEee.Modding;
 
