@@ -3,8 +3,8 @@ using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;
 using FrEee.Utility;
-using FrEee.Serialization;
 using FrEee.Processes.Combat;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Processes.Combat.Grid;
 

@@ -2,7 +2,7 @@
 using FrEee.Serialization;
 using FrEee.Extensions;
 using System;
-using FrEee.Serialization;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Objects.Civilization;
 

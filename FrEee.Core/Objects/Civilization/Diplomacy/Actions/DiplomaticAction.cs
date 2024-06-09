@@ -1,5 +1,5 @@
 ﻿using FrEee.Objects.Commands;
-using FrEee.Serialization;
+using FrEee.Objects.GameState;
 using FrEee.Serialization;
 
 namespace FrEee.Objects.Civilization.Diplomacy.Actions;

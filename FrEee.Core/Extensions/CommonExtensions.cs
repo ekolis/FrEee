@@ -24,7 +24,6 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Extensions;
-using FrEee.Serialization;
 using FrEee.Utility;
 using FrEee.Processes.Combat;
 using System.Numerics;

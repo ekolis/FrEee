@@ -4,25 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
-using FrEee.Serialization;
 using FrEee.Extensions;
 
 namespace FrEee.Serialization;
-
-[Serializable]
-public class GalaxyReferenceSet<T> : ReferenceSet<GalaxyReference<T>, T>
-	where T : IReferrable
-{
-	public GalaxyReferenceSet()
-		: base()
-	{
-	}
-
-	public GalaxyReferenceSet(IEnumerable<T> objs)
-		: base(objs)
-	{
-	}
-}
 
 [Serializable]
 public class ModReferenceSet<T> : ReferenceSet<ModReference<T>, T>

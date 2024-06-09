@@ -1,7 +1,6 @@
 ﻿using FrEee.Objects.GameState;
 using FrEee.Serialization;
 using System.Collections.Generic;
-using FrEee.Serialization;
 
 namespace FrEee.Objects.Civilization.Diplomacy.Clauses;
 

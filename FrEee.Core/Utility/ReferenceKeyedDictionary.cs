@@ -6,46 +6,9 @@ using System.Linq;
 using FrEee.Utility;
 using FrEee.Objects.GameState;
 using FrEee.Extensions;
-using FrEee.Serialization;
 using FrEee.Utility;
 
 namespace FrEee.Serialization;
-
-public class GalaxyReferenceKeyedDictionary<TKey, TValue> : ReferenceKeyedDictionary<long, GalaxyReference<TKey>, TKey, TValue>
-		where TKey : IReferrable
-{
-	private SafeDictionary<long, TKey> dict = new SafeDictionary<long, TKey>();
-
-	protected override long ExtractID(TKey key)
-	{
-		return key.ID;
-	}
-
-	protected override TKey LookUp(long id)
-	{
-		if (!dict.ContainsKey(id))
-			dict[id] = (TKey)Galaxy.Current.GetReferrable(id);
-		return dict[id];
-	}
-}
-
-public class ModReferenceKeyedDictionary<TKey, TValue> : ReferenceKeyedDictionary<string, ModReference<TKey>, TKey, TValue>
-		where TKey : IModObject
-{
-	private SafeDictionary<string, TKey> dict = new SafeDictionary<string, TKey>();
-
-	protected override string ExtractID(TKey key)
-	{
-		return key.ModID;
-	}
-
-	protected override TKey LookUp(string id)
-	{
-		if (!dict.ContainsKey(id))
-			dict[id] = Mod.Current.Find<TKey>(id);
-		return dict[id];
-	}
-}
 
 /// <summary>
 /// A safe dictionary keyed with transparent references.

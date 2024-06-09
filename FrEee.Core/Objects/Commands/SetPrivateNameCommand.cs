@@ -1,7 +1,7 @@
 ﻿using FrEee.Objects.Civilization;
 using FrEee.Serialization;
 using FrEee.Extensions;
-using FrEee.Serialization;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Objects.Commands;
 

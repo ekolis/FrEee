@@ -13,7 +13,6 @@ using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
 using FrEee.Extensions;
 using FrEee.Utility;
-using FrEee.Serialization;
 
 namespace FrEee.Objects.Space;
 

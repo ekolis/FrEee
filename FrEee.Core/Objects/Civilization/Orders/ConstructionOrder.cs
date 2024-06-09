@@ -10,7 +10,6 @@ using FrEee.Serialization;
 using FrEee.Extensions;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
-using FrEee.Serialization;
 
 namespace FrEee.Objects.Civilization.Orders;
 

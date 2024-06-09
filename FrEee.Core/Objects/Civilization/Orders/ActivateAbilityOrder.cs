@@ -10,7 +10,6 @@ using System.Linq;
 using FrEee.Objects.Technology;
 using FrEee.Objects.GameState;
 using FrEee.Extensions;
-using FrEee.Serialization;
 using FrEee.Processes.Combat;
 
 namespace FrEee.Objects.Civilization.Orders;

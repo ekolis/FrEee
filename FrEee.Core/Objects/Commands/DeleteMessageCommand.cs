@@ -1,7 +1,7 @@
 ﻿using FrEee.Objects.Civilization;
-using FrEee.Serialization;
 using FrEee.Extensions;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Objects.Commands;
 

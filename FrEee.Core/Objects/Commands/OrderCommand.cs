@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
-using FrEee.Serialization;
 
 namespace FrEee.Objects.Commands;
 

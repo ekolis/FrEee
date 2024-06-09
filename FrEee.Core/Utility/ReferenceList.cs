@@ -3,20 +3,9 @@ using System.Linq;
 using FrEee.Modding;
 using FrEee.Extensions;
 using FrEee.Objects.GameState;
-using FrEee.Serialization;
 using FrEee.Extensions;
 
 namespace FrEee.Serialization;
-
-public class GalaxyReferenceList<T> : ReferenceList<GalaxyReference<T>, T>
-	where T : IReferrable
-{
-}
-
-public class ModReferenceList<T> : ReferenceList<ModReference<T>, T>
-	where T : IModObject
-{
-}
 
 public class ReferenceList<TRef, T> : IList<T>, IReferenceEnumerable, IPromotable
 			where TRef : IReference<T>

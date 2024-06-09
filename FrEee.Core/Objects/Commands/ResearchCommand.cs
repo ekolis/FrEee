@@ -3,6 +3,7 @@ using FrEee.Serialization;
 using FrEee.Extensions;
 using System.Linq;
 using Tech = FrEee.Objects.Technology.Technology;
+using FrEee.Modding;
 
 namespace FrEee.Objects.Commands;
 

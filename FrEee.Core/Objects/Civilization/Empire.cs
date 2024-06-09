@@ -23,7 +23,6 @@ using FrEee.Objects.Civilization.Diplomacy;
 using FrEee.Setup;
 using FrEee.Extensions;
 using FrEee.Utility;
-using FrEee.Serialization;
 using FrEee.Processes.AI;
 
 namespace FrEee.Objects.Civilization;
@@ -44,7 +43,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 		ResearchedTechnologies = new ModReferenceKeyedDictionary<Tech, int>();
 		AccumulatedResearch = new ModReferenceKeyedDictionary<Tech, int>();
 		ResearchSpending = new ModReferenceKeyedDictionary<Tech, int>();
-		ResearchQueue = new ModReferenceList<Technology.Technology>();
+		ResearchQueue = new ModReferenceList<Tech>();
 		UniqueTechsFound = new List<string>();
 		Memory = new SafeDictionary<long, IFoggable>();
 		AINotes = new DynamicDictionary();
