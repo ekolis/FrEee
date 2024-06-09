@@ -1,4 +1,4 @@
-using FrEee.Objects.AI;
+using FrEee.Processes.AI;
 using FrEee.Objects.Civilization;
 using FrEee.Utility;
 using System.Collections.Generic;

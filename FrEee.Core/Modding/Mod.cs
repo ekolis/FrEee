@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using FrEee.Objects.Abilities;
-using FrEee.Objects.AI;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
@@ -15,6 +14,7 @@ using FrEee.Extensions;
 using FrEee.Objects.GameState;
 using FrEee.Extensions;
 using FrEee.Utility;
+using FrEee.Processes.AI;
 
 namespace FrEee.Modding;
 

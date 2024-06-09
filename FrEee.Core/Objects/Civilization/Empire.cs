@@ -1,5 +1,4 @@
 using FrEee.Objects.Abilities;
-using FrEee.Objects.AI;
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Objects.Commands;
 using FrEee.Objects.LogMessages;
@@ -25,6 +24,7 @@ using FrEee.Setup;
 using FrEee.Extensions;
 using FrEee.Utility;
 using FrEee.Serialization;
+using FrEee.Processes.AI;
 
 namespace FrEee.Objects.Civilization;
 
