@@ -4,8 +4,6 @@ using FrEee.Processes.Combat.Grid;
 using FrEee.Objects.Commands;
 using FrEee.Objects.Events;
 using FrEee.Objects.LogMessages;
-using FrEee.Setup;
-using FrEee.Setup.WarpPointPlacementStrategies;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Serialization;
@@ -29,6 +27,8 @@ using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
+using FrEee.Processes.Setup;
+using FrEee.Processes.Setup.WarpPointPlacementStrategies;
 
 namespace FrEee.Objects.GameState;
 

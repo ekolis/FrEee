@@ -1,4 +1,4 @@
-﻿using FrEee.Setup.StarSystemPlacementStrategies;
+﻿using FrEee.Processes.Setup.StarSystemPlacementStrategies;
 using FrEee.Modding.Templates;
 using FrEee.Extensions;
 using System;

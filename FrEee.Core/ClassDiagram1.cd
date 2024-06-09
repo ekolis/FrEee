@@ -1351,7 +1351,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="FrEee.Setup.EmpireTemplate" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="FrEee.Processes.Setup.EmpireTemplate" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="60" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACAAgIgAAAIAAAAAAARAAUQAQQAAAAAEASAAgAABAAU=</HashCode>
@@ -1359,14 +1359,14 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="FrEee.Setup.GameSetup" Collapsed="true">
+  <Class Name="FrEee.Processes.Setup.GameSetup" Collapsed="true">
     <Position X="60" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QMAIkNSAYgAMkIEWGAQIAAgAQUHQEAYEgBAiGEEAiIQ=</HashCode>
       <FileName>Game\Setup\GameSetup.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Setup.StarSystemPlacementStrategies.ClusteredStarSystemPlacementStrategy" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="FrEee.Processes.Setup.StarSystemPlacementStrategies.ClusteredStarSystemPlacementStrategy" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="53" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -1374,7 +1374,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="FrEee.Setup.StarSystemPlacementStrategies.DiffuseStarSystemPlacementStrategy" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="FrEee.Processes.Setup.StarSystemPlacementStrategies.DiffuseStarSystemPlacementStrategy" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="70.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -1382,7 +1382,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="FrEee.Setup.StarSystemPlacementStrategies.GridStarSystemPlacementStrategy" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="FrEee.Processes.Setup.StarSystemPlacementStrategies.GridStarSystemPlacementStrategy" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="61.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -1390,7 +1390,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="FrEee.Setup.StarSystemPlacementStrategies.RandomStarSystemPlacementStrategy" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="FrEee.Processes.Setup.StarSystemPlacementStrategies.RandomStarSystemPlacementStrategy" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="54.75" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -1398,7 +1398,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="FrEee.Setup.StarSystemPlacementStrategies.SpiralStarSystemPlacementStrategy" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="FrEee.Processes.Setup.StarSystemPlacementStrategies.SpiralStarSystemPlacementStrategy" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="60" Y="9.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -1406,49 +1406,49 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="FrEee.Setup.WarpPointPlacementStrategies.CenterWarpPointPlacementStrategy" Collapsed="true">
+  <Class Name="FrEee.Processes.Setup.WarpPointPlacementStrategies.CenterWarpPointPlacementStrategy" Collapsed="true">
     <Position X="1.5" Y="14" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>Game\Setup\WarpPointPlacementStrategies\CenterWarpPointPlacementStrategy.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Setup.WarpPointPlacementStrategies.EdgeAlignedWarpPointPlacementStrategy" Collapsed="true">
+  <Class Name="FrEee.Processes.Setup.WarpPointPlacementStrategies.EdgeAlignedWarpPointPlacementStrategy" Collapsed="true">
     <Position X="3.75" Y="14" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>Game\Setup\WarpPointPlacementStrategies\EdgeAlignedWarpPointPlacementStrategy.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Setup.WarpPointPlacementStrategies.PlanetWarpPointPlacementStrategy" Collapsed="true">
+  <Class Name="FrEee.Processes.Setup.WarpPointPlacementStrategies.PlanetWarpPointPlacementStrategy" Collapsed="true">
     <Position X="6" Y="14" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>Game\Setup\WarpPointPlacementStrategies\PlanetWarpPointPlacementStrategy.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Setup.WarpPointPlacementStrategies.RandomAlignedWarpPointPlacementStrategy" Collapsed="true">
+  <Class Name="FrEee.Processes.Setup.WarpPointPlacementStrategies.RandomAlignedWarpPointPlacementStrategy" Collapsed="true">
     <Position X="8.25" Y="14" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>Game\Setup\WarpPointPlacementStrategies\RandomAlignedWarpPointPlacementStrategy.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Setup.WarpPointPlacementStrategies.RandomWarpPointPlacementStrategy" Collapsed="true">
+  <Class Name="FrEee.Processes.Setup.WarpPointPlacementStrategies.RandomWarpPointPlacementStrategy" Collapsed="true">
     <Position X="10.5" Y="14" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>Game\Setup\WarpPointPlacementStrategies\RandomWarpPointPlacementStrategy.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Setup.WarpPointPlacementStrategies.StarWarpPointPlacementStrategy" Collapsed="true">
+  <Class Name="FrEee.Processes.Setup.WarpPointPlacementStrategies.StarWarpPointPlacementStrategy" Collapsed="true">
     <Position X="12.75" Y="14" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>Game\Setup\WarpPointPlacementStrategies\StarWarpPointPlacementStrategy.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FrEee.Setup.WarpPointPlacementStrategies.WarpPointPlacementStrategy" Collapsed="true">
+  <Class Name="FrEee.Processes.Setup.WarpPointPlacementStrategies.WarpPointPlacementStrategy" Collapsed="true">
     <Position X="7" Y="12.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAQAAAAAAAgAAAAAAAAAAQAAAAEAAAAAIAAAACAAAA=</HashCode>
