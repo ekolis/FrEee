@@ -556,21 +556,6 @@ public static class CommonExtensions
 	}
 
 	/// <summary>
-	/// Gets the canonical name for a property, class, etc.
-	/// This is taken from the [CanonicalName] attribute if present, otherwise the name of the item itself.
-	/// </summary>
-	/// <param name="m"></param>
-	/// <returns></returns>
-	public static string GetCanonicalName(this MemberInfo m)
-	{
-		// TODO - use most derived class's attribute?
-		var name = m.GetAttributes<CanonicalNameAttribute>().Select(a => a.Name).SingleOrDefault();
-		if (name == null)
-			return m.Name;
-		return name;
-	}
-
-	/// <summary>
 	/// Gets a property value from an object using reflection.
 	/// If the property does not exist or the property value is not IComparable, returns an empty string.
 	/// </summary>
@@ -579,7 +564,7 @@ public static class CommonExtensions
 	/// <returns></returns>
 	public static IComparable GetComparablePropertyValue(this object o, string propertyName)
 	{
-		var pval = GetPropertyValue(o, propertyName);
+		var pval = o.GetPropertyValue(propertyName);
 		if (pval == null || !(pval is IComparable))
 			return "";
 		return (IComparable)pval;
@@ -619,33 +604,6 @@ public static class CommonExtensions
 			for (var y = r.Top + 1; y < r.Bottom; y++)
 				yield return new Point(x, y);
 		}
-	}
-
-	/// <summary>
-	/// Gets all names for a property, class, etc. including custom names and the actual item name.
-	/// </summary>
-	/// <param name="m"></param>
-	/// <returns></returns>
-	public static IEnumerable<string> GetNames(this MemberInfo m)
-	{
-		return m.GetAttributes<NameAttribute>().Select(a => a.Name).UnionSingle(m.Name);
-	}
-
-	/// <summary>
-	/// Gets a property value from an object using reflection.
-	/// If the property does not exist, returns null.
-	/// </summary>
-	/// <param name="o"></param>
-	/// <param name="propertyName"></param>
-	/// <returns></returns>
-	public static object GetPropertyValue(this object o, string propertyName)
-	{
-		if (o == null)
-			return null;
-		var prop = o.GetType().GetProperty(propertyName);
-		if (prop == null)
-			return null;
-		return prop.GetValue(o, new object[0]);
 	}
 
 	public static Type GetVehicleType(this VehicleTypes vt)

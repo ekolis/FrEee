@@ -21,40 +21,6 @@ namespace FrEee.Extensions;
 
 public static class ChecksExtensions
 {
-	private static SafeDictionary<MemberInfo, IEnumerable<Attribute>> attributeCache = new SafeDictionary<MemberInfo, IEnumerable<Attribute>>();
-
-	private static SafeDictionary<Type, IEnumerable<Type>> interfaceCache = new SafeDictionary<Type, IEnumerable<Type>>();
-
-	private static SafeDictionary<Type, IEnumerable<MemberInfo>> memberCache = new SafeDictionary<Type, IEnumerable<MemberInfo>>();
-
-	/// <summary>
-	/// Checks for attributes in a class or its interfaces.
-	/// </summary>
-	/// <param name="mi"></param>
-	/// <param name="attributeType"></param>
-	/// <returns></returns>
-	public static IEnumerable<T> GetAttributes<T>(this MemberInfo mi) where T : Attribute
-	{
-		if (attributeCache[mi] == null)
-			attributeCache[mi] = Attribute.GetCustomAttributes(mi).ToArray();
-		var atts = attributeCache[mi].OfType<T>();
-		foreach (var att in atts)
-			yield return att;
-		if (interfaceCache[mi.DeclaringType] == null)
-			interfaceCache[mi.DeclaringType] = mi.DeclaringType.GetInterfaces();
-		foreach (var i in interfaceCache[mi.DeclaringType])
-		{
-			if (memberCache[i] == null)
-				memberCache[i] = i.GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).ToArray(); // TODO - refactor into method
-			var mi2 = memberCache[i].SingleOrDefault(x => x.MemberType == mi.MemberType && x.Name == mi.Name);
-			if (mi2 != null)
-			{
-				foreach (var att2 in mi2.GetAttributes<T>())
-					yield return att2;
-			}
-		}
-	}
-
 	/// <summary>
 	/// Determines if an object has a specified ability.
 	/// </summary>
@@ -85,50 +51,6 @@ public static class ChecksExtensions
 		else
 			abils = obj.EmpireAbilities(emp);
 		return abils.Any(abil => abil.Rule != null && abil.Rule.Matches(abilityName));
-	}
-
-	/// <summary>
-	/// Checks for attributes in a class or its interfaces.
-	/// </summary>
-	/// <param name="mi"></param>
-	/// <param name="attributeType"></param>
-	/// <returns></returns>
-	public static bool HasAttribute<T>(this MemberInfo mi)
-	{
-		return mi.HasAttribute(typeof(T));
-	}
-
-	/// <summary>
-	/// Checks for attributes in a class or its interfaces.
-	/// </summary>
-	/// <param name="mi"></param>
-	/// <param name="attributeType"></param>
-	/// <returns></returns>
-	public static bool HasAttribute(this MemberInfo mi, Type attributeType, bool checkInterfaces = true)
-	{
-		if (attributeCache[mi] == null)
-			attributeCache[mi] = Attribute.GetCustomAttributes(mi).ToArray();
-		if (attributeCache[mi].Where(a => attributeType.IsAssignableFrom(a.GetType())).Any())
-			return true;
-		var dt = mi is Type ? mi as Type : mi.DeclaringType;
-		if (checkInterfaces)
-		{
-			if (interfaceCache[dt] == null)
-				interfaceCache[dt] = dt.GetInterfaces();
-			foreach (var i in interfaceCache[dt])
-			{
-				if (memberCache[i] == null)
-					memberCache[i] = i.GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).ToArray(); // TODO - refactor into method
-				if (memberCache[i].Any(m => m.Name == mi.Name && m.MemberType == mi.MemberType && m.HasAttribute(attributeType, false))) // no need to check interfaces of interfaces, they're already listed by GetInterfaces
-					return true;
-			}
-		}
-		return false;
-	}
-
-	public static bool HasProperty(this ExpandoObject obj, string propertyName)
-	{
-		return obj.GetType().GetProperty(propertyName) != null;
 	}
 
 	/// <summary>
