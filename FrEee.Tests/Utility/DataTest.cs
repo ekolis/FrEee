@@ -3,6 +3,8 @@ using FrEee.Serialization;
 using FrEee.Extensions;
 using NUnit.Framework;
 using System.Collections.Generic;
+using FrEee.Serialization;
+using FrEee.Utility;
 
 namespace FrEee.Tests.Utility;
 

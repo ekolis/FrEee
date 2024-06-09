@@ -1,4 +1,4 @@
-﻿using FrEee.Objects.Abilities;
+﻿using FrEee.Modding.Abilities;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;

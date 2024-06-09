@@ -1,5 +1,4 @@
-﻿using FrEee.Objects.Abilities;
-using FrEee.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
@@ -10,6 +9,8 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.Civilization.Orders;
+using FrEee.Utility;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Tests.Utility;
 
@@ -95,7 +96,7 @@ public class SerializerTest
 	public void NestedDictionaries()
 	{
 		var s = SafeType.GetShortTypeName(typeof(IDictionary<AbilityRule, IDictionary<int, Formula<int>>>));
-		Assert.AreEqual("System.Collections.Generic.IDictionary`2[[FrEee.Objects.Abilities.AbilityRule, FrEee.Core],[System.Collections.Generic.IDictionary`2[[System.Int32, System.Private.CoreLib],[FrEee.Modding.Formula`1[[System.Int32, System.Private.CoreLib]], FrEee.Core]], System.Private.CoreLib]], System.Private.CoreLib", s);
+		Assert.AreEqual("System.Collections.Generic.IDictionary`2[[FrEee.Modding.Abilities.AbilityRule, FrEee.Core],[System.Collections.Generic.IDictionary`2[[System.Int32, System.Private.CoreLib],[FrEee.Modding.Formula`1[[System.Int32, System.Private.CoreLib]], FrEee.Core]], System.Private.CoreLib]], System.Private.CoreLib", s);
 	}
 
 	[Test]
@@ -112,12 +113,12 @@ public class SerializerTest
 			Assert.AreEqual(typeof(ConstructionOrder<Ship, Design<Ship>>), st.Type);
 		}
 		{
-			var tname = "System.Collections.Generic.Dictionary`2[[FrEee.Objects.Abilities.AbilityRule, FrEee.Core],[FrEee.Modding.Formula`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib";
+			var tname = "System.Collections.Generic.Dictionary`2[[FrEee.Modding.Abilities.AbilityRule, FrEee.Core],[FrEee.Modding.Formula`1[[System.Int32, System.Private.CoreLib]], System.Private.CoreLib";
 			var st = new SafeType(tname);
 			Assert.AreEqual(typeof(Dictionary<AbilityRule, Formula<int>>), st.Type);
 		}
 		{
-			var tname = "System.Collections.Generic.IDictionary`2[[FrEee.Objects.Abilities.AbilityRule, FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null],[System.Collections.Generic.IDictionary`2[[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[FrEee.Modding.Formula`1[[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]";
+			var tname = "System.Collections.Generic.IDictionary`2[[FrEee.Modding.Abilities.AbilityRule, FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null],[System.Collections.Generic.IDictionary`2[[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[FrEee.Modding.Formula`1[[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]";
 			var st = new SafeType(tname);
 			Assert.AreEqual(typeof(IDictionary<AbilityRule, IDictionary<int, Formula<int>>>), st.Type);
 		}
@@ -127,7 +128,7 @@ public class SerializerTest
 	public void LegacyLookUpComplexType()
 	{
 		{
-			var tname = "System.Collections.Generic.List`1[[FrEee.Objects.Abilities.AbilityRule, FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089";
+			var tname = "System.Collections.Generic.List`1[[FrEee.Modding.Abilities.AbilityRule, FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089";
 			var st = new SafeType(tname);
 			Assert.AreEqual(typeof(List<AbilityRule>), st.Type);
 		}

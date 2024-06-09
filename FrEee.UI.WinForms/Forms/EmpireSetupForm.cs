@@ -1,6 +1,5 @@
 ﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
-using FrEee.Setup;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Extensions;
@@ -12,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using FrEee.Processes.Setup;
 
 namespace FrEee.UI.WinForms.Forms;
 

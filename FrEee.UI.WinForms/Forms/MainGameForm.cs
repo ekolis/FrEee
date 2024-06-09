@@ -20,13 +20,15 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
-using FrEee.Objects.Combat;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.UI.Blazor.Views.GalaxyMapModes;
+using FrEee.Extensions;
+using FrEee.Utility;
+using FrEee.Processes.Combat;
 
 namespace FrEee.UI.WinForms.Forms;
 

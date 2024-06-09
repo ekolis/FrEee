@@ -1,5 +1,6 @@
 ﻿using FrEee.Utility;
 using NUnit.Framework;
+using FrEee.Utility;
 
 namespace FrEee.Tests.Utility;
 

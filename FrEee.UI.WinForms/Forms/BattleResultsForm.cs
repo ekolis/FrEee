@@ -1,5 +1,4 @@
 ﻿using FrEee.Objects.Civilization;
-using FrEee.Objects.Combat;
 using FrEee.Objects.Space;
 using FrEee.Utility;
 using FrEee.Extensions;
@@ -12,6 +11,9 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.Vehicles;
+using FrEee.Utility;
+using FrEee.Processes.Combat;
+using FrEee.Processes.Combat.Grid;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -144,9 +146,9 @@ public partial class BattleResultsForm : GameForm, IBindable<IBattle>
 	private void btnReplay_Click(object sender, EventArgs e)
 	{
 		Form form;
-		//if (Battle is FrEee.Objects.Combat.Simple.Battle b)
+		//if (Battle is FrEee.Processes.Combat.Simple.Battle b)
 		//	form = new LogForm(MainGameForm.Instance, b.Log);
-		if (Battle is FrEee.Objects.Combat.Grid.Battle b2)
+		if (Battle is Battle b2)
 			form = new BattleReplayForm(b2);
 		else
 			throw new Exception($"Unknown battle type {Battle.GetType()}!");

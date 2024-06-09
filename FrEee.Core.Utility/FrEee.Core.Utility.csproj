@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+		<OutputType>Library</OutputType>
+		<AssemblyName>FrEee.Core.Utility</AssemblyName>
+		<Description>Utility code for FrEee. This is low level utility code that doesn't need to know about any game objects.</Description>
+  </PropertyGroup>
+
+	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
+
+	<PropertyGroup>
+		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+		<RootNamespace>FrEee</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	  <PackageReference Include="System.ComponentModel.Composition" Version="8.0.0" />
+	</ItemGroup>
+</Project>

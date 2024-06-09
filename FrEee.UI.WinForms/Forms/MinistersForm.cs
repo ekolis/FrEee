@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using FrEee.Utility;
 
 namespace FrEee.UI.WinForms.Forms;
 

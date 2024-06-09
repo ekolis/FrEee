@@ -1,7 +1,7 @@
-﻿using FrEee.Setup;
-using FrEee.Modding;
+﻿using FrEee.Modding;
 using NUnit.Framework;
 using FrEee.Objects.GameState;
+using FrEee.Processes.Setup;
 
 namespace FrEee.Tests.Setup;
 

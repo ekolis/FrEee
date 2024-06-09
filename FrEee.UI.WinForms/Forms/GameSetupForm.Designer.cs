@@ -1,4 +1,6 @@
-﻿namespace FrEee.UI.WinForms.Forms;
+﻿using FrEee.Processes.Setup.WarpPointPlacementStrategies;
+
+namespace FrEee.UI.WinForms.Forms;
 
 partial class GameSetupForm
 {
@@ -577,7 +579,7 @@ partial class GameSetupForm
         // 
         // warpPointPlacementStrategyBindingSource
         // 
-        warpPointPlacementStrategyBindingSource.DataSource = typeof(Setup.WarpPointPlacementStrategies.WarpPointPlacementStrategy);
+        warpPointPlacementStrategyBindingSource.DataSource = typeof(WarpPointPlacementStrategy);
         // 
         // label3
         // 

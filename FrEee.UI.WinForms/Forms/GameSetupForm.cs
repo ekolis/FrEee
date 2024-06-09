@@ -2,8 +2,6 @@ using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.VictoryConditions;
-using FrEee.Setup;
-using FrEee.Setup.WarpPointPlacementStrategies;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
@@ -23,6 +21,10 @@ using FrEee.Objects.Civilization.Diplomacy;
 using Microsoft.AspNetCore.Components.WebView.WindowsForms;
 using Microsoft.Extensions.DependencyInjection;
 using FrEee.UI.Blazor;
+using FrEee.Extensions;
+using FrEee.Utility;
+using FrEee.Processes.Setup;
+using FrEee.Processes.Setup.WarpPointPlacementStrategies;
 
 namespace FrEee.UI.WinForms.Forms;
 
