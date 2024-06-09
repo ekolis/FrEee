@@ -20,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrEee.UI.WinForms", "FrEee.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrEee.Core.Utility", "FrEee.Core.Utility\FrEee.Core.Utility.csproj", "{84246F9D-DD31-4E8B-BA70-1006FA551083}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrEee.Core.Domain", "FrEee.Core\FrEee.Core.Domain.csproj", "{ECA7A08B-992A-43EC-8D98-2AE887897343}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrEee.Core.Domain", "FrEee.Core.Domain\FrEee.Core.Domain.csproj", "{ECA7A08B-992A-43EC-8D98-2AE887897343}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

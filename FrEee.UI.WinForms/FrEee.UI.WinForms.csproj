@@ -16,6 +16,7 @@
 		<PackageReference Include="NAudio.Vorbis" Version="1.5.0" />
 		<PackageReference Include="System.ComponentModel.Composition" Version="8.0.0" />
 		<ProjectReference Include="..\FrEee.Assets\FrEee.Assets.csproj" />
+		<ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
 		<ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
 		<ProjectReference Include="..\FrEee.Core\FrEee.Core.Domain.csproj" />
 		<ProjectReference Include="..\FrEee.UI.Blazor\FrEee.UI.Blazor.csproj" />
