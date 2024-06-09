@@ -27,6 +27,7 @@ using FrEee.Extensions;
 using FrEee.Serialization;
 using FrEee.Utility;
 using FrEee.Processes.Combat;
+using System.Numerics;
 
 namespace FrEee.Extensions;
 
@@ -34,24 +35,11 @@ public static class CommonExtensions
 {
 	private static SafeDictionary<Type, object> defaultValueCache = new SafeDictionary<Type, object>();
 
-	private static List<Type> mappedTypes = new List<Type>();
-
-	/// <summary>
-	/// Casts an object to a type. Returns null if the type is wrong.
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	/// <param name="o"></param>
-	/// <returns></returns>
-	public static T As<T>(this object o, bool throwExceptionIfWrongType = false)
-		where T : class
-	{
-		return o as T;
-	}
-
 	/// <summary>
 	/// Builds a delegate to wrap a MethodInfo.
 	/// http://stackoverflow.com/questions/13041674/create-func-or-action-for-any-method-using-reflection-in-c
 	/// </summary>
+	/// <remarks>Don't delete this method even though it's unused; it's called by reflection.</remarks>
 	/// <typeparam name="T"></typeparam>
 	/// <param name="method"></param>
 	/// <param name="missingParamValues"></param>
@@ -98,6 +86,7 @@ public static class CommonExtensions
 		}
 	}
 
+	/// <remarks>Don't delete this method even though it's unused; it's called by reflection.</remarks>
 	public static Delegate BuildDelegate(this MethodInfo method, params object[] missingParamValues)
 	{
 		var parms = method.GetParameters();
@@ -531,31 +520,6 @@ public static class CommonExtensions
 	}
 
 	/// <summary>
-	/// Gets the points on the border of a rectangle.
-	/// </summary>
-	/// <param name="r"></param>
-	/// <returns></returns>
-	public static IEnumerable<Point> GetBorderPoints(this Rectangle r)
-	{
-		for (var x = r.Left; x <= r.Right; x++)
-		{
-			if (x == r.Left || x == r.Right)
-			{
-				// get left and right sides
-				for (var y = r.Top; y <= r.Bottom; y++)
-					yield return new Point(x, y);
-			}
-			else
-			{
-				// just get top and bottom
-				yield return new Point(x, r.Top);
-				if (r.Top != r.Bottom)
-					yield return new Point(x, r.Bottom);
-			}
-		}
-	}
-
-	/// <summary>
 	/// Gets a property value from an object using reflection.
 	/// If the property does not exist or the property value is not IComparable, returns an empty string.
 	/// </summary>
@@ -593,53 +557,6 @@ public static class CommonExtensions
 	}
 
 	/// <summary>
-	/// Gets points in the interior of a rectangle.
-	/// </summary>
-	/// <param name="r"></param>
-	/// <returns></returns>
-	public static IEnumerable<Point> GetInteriorPoints(this Rectangle r)
-	{
-		for (var x = r.Left + 1; x < r.Right; x++)
-		{
-			for (var y = r.Top + 1; y < r.Bottom; y++)
-				yield return new Point(x, y);
-		}
-	}
-
-	public static Type GetVehicleType(this VehicleTypes vt)
-	{
-		switch (vt)
-		{
-			case VehicleTypes.Ship:
-				return typeof(Ship);
-
-			case VehicleTypes.Base:
-				return typeof(Base);
-
-			case VehicleTypes.Fighter:
-				return typeof(Fighter);
-
-			case VehicleTypes.Troop:
-				return typeof(Troop);
-
-			case VehicleTypes.Mine:
-				return typeof(Mine);
-
-			case VehicleTypes.Satellite:
-				return typeof(Satellite);
-
-			case VehicleTypes.Drone:
-				return typeof(Drone);
-
-			case VehicleTypes.WeaponPlatform:
-				return typeof(WeaponPlatform);
-
-			default:
-				throw new Exception("No type is available for vehicle type " + vt);
-		}
-	}
-
-	/// <summary>
 	/// All income provided by an object.
 	/// </summary>
 	/// <param name="o"></param>
@@ -662,26 +579,8 @@ public static class CommonExtensions
 	/// <param name="min"></param>
 	/// <param name="max"></param>
 	/// <returns></returns>
-	public static int LimitToRange(this int value, int min, int max)
-	{
-		if (min > max)
-			throw new ArgumentOutOfRangeException("Min is {0} and can't be larger than max which is {1}!".F(min, max));
-		if (value > max)
-			value = max;
-		if (value < min)
-			value = min;
-		return value;
-	}
-
-	/// <summary>
-	/// Limits a value to a range.
-	/// Throws an exception if min is bigger than max.
-	/// </summary>
-	/// <param name="value"></param>
-	/// <param name="min"></param>
-	/// <param name="max"></param>
-	/// <returns></returns>
-	public static double LimitToRange(this double value, double min, double max)
+	public static T LimitToRange<T>(this T value, T min, T max)
+		where T : INumber<T>
 	{
 		if (min > max)
 			throw new ArgumentOutOfRangeException("Min is {0} and can't be larger than max which is {1}!".F(min, max));
@@ -720,6 +619,7 @@ public static class CommonExtensions
 	/// <summary>
 	/// Logs an error in the AI of the given empire to disk. 
 	/// </summary>
+	/// <remarks>Don't delete this method even though it's unused; it's called by AI scripts.</remarks>
 	/// <param name="empire"></param>
 	/// <param name="error"></param>
 	public static void LogAIMessage(this Empire empire, string message)
@@ -794,18 +694,6 @@ public static class CommonExtensions
 		return Galaxy.Current.Empires.ExceptSingle(null).SingleOrDefault(x => x.Memory.Values.Contains(f));
 	}
 
-	public static ILookup<TKey, TValue> MyLookup<TKey, TEnumerable, TValue>(this IEnumerable<KeyValuePair<TKey, TEnumerable>> dict)
-		where TEnumerable : IEnumerable<TValue>
-	{
-		var list = new List<KeyValuePair<TKey, TValue>>();
-		foreach (var kvp in dict)
-		{
-			foreach (var item in kvp.Value)
-				list.Add(new KeyValuePair<TKey, TValue>(kvp.Key, item));
-		}
-		return list.ToLookup(kvp => kvp.Key, kvp => kvp.Value);
-	}
-
 	/// <summary>
 	/// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
 	/// </summary>
@@ -833,18 +721,6 @@ public static class CommonExtensions
 			return deficit;
 		}
 		return 0;
-	}
-
-	/// <summary>
-	/// Parses a string using the type's static Parse method.
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	/// <param name="o"></param>
-	/// <returns></returns>
-	public static T Parse<T>(this string s, IFormatProvider provider = null)
-		where T : IParsable<T>
-	{
-		return T.Parse(s, provider);
 	}
 
 	/// <summary>
@@ -891,18 +767,6 @@ public static class CommonExtensions
 			}
 		}
 		unit.Owner.Log.Add(unit.CreateLogMessage(unit + " was lost due to insufficient cargo space at " + target + ".", LogMessageType.Warning));
-	}
-
-	/// <summary>
-	/// Raises an event, but doesn't do anything if the event handler is null.
-	/// </summary>
-	/// <typeparam name="TArgs"></typeparam>
-	/// <param name="sender"></param>
-	/// <param name="args"></param>
-	public static void Raise<TArgs>(this EventHandler<TArgs> evt, object sender, TArgs e) where TArgs : EventArgs
-	{
-		if (evt != null)
-			evt(sender, e);
 	}
 
 	/// <summary>
@@ -1005,53 +869,6 @@ public static class CommonExtensions
 				break;
 		} while (true);
 		return sb.ToString().Substring(0, Math.Max(0, sb.Length - 1)); // trim off the semicolon
-	}
-
-	/// <summary>
-	/// Generates new IDs for this object (unless skipRoot is true) and all subordinate objects.
-	/// TODO - take into account DoNotAssignIDAttribute
-	/// </summary>
-	/// <param name="obj"></param>
-	public static void ReassignAllIDs(this IReferrable obj, bool skipRoot = false)
-	{
-		var parser = new ObjectGraphParser();
-		var canCopy = new System.Collections.Generic.Stack<bool>(); // stack of bools indicating which objects in the current hierarchy path we can copy
-		canCopy.Push(true);
-		parser.Property += (pname, o, val) =>
-		{
-			var prop = o.GetType().FindProperty(pname);
-			var shouldRecurse = !prop.CanCopyFully();
-			if (shouldRecurse)
-				canCopy.Push(shouldRecurse);
-			return shouldRecurse;
-		};
-		parser.Item += (o) =>
-		{
-			// can always serialize collection items
-			canCopy.Push(true);
-		};
-		parser.StartObject += (o) =>
-		{
-			var doit = canCopy.All(b => b) && (!skipRoot || o != obj);
-			if (doit && o is IReferrable)
-			{
-				var r = (IReferrable)o;
-				r.ReassignID();
-			}
-		};
-		parser.EndObject += (o) =>
-		{
-			canCopy.Pop();
-		};
-		parser.Null += (o) =>
-		{
-			canCopy.Pop();
-		};
-		parser.KnownObject += (o) =>
-		{
-			canCopy.Pop();
-		};
-		parser.Parse(obj);
 	}
 
 	/// <summary>
@@ -1474,17 +1291,6 @@ public static class CommonExtensions
 	}
 
 	/// <summary>
-	/// Multiplies an integer by a scale factor and rounds it.
-	/// </summary>
-	/// <param name="i"></param>
-	/// <param name="d"></param>
-	/// <returns></returns>
-	public static int TimesAndRound(this int i, double d)
-	{
-		return (int)Math.Round(i * d);
-	}
-
-	/// <summary>
 	/// Transfers items from this cargo container to another cargo container.
 	/// </summary>
 	public static void TransferCargo(this ICargoContainer src, CargoDelta delta, ICargoContainer dest, Empire emp, bool overrideFreeSpace = false)
@@ -1798,64 +1604,6 @@ public static class CommonExtensions
 		else
 			LogUnitTransferFailedNoStorage(unit, src, dest, emp);
 	}
-
-	/*// based on http://cangencer.wordpress.com/2011/06/08/auto-ignore-non-existing-properties-with-automapper/
-	private static IMappingExpression<T, T> IgnoreReadOnlyAndNonSerializableProperties<T>(this IMappingExpression<T, T> expression)
-	{
-		var type = typeof(T);
-		var existingMaps = Mapper.GetAllTypeMaps().First(x => x.SourceType.IsAssignableFrom(type)
-			&& x.DestinationType.IsAssignableFrom(type));
-		foreach (var property in existingMaps.GetPropertyMaps().Where(pm =>
-			{
-				var prop = (PropertyInfo)pm.DestinationProperty.MemberInfo;
-				var realprop = prop.DeclaringType.GetProperty(prop.Name);
-				return realprop.GetSetMethod(true) == null || realprop.GetCustomAttributes(true).OfType<DoNotSerializeAttribute>().Any();
-			}))
-			expression.ForMember(property.DestinationProperty.Name, opt => opt.Ignore());
-		return expression;
-	}
-
-	private static IMappingExpression<T, T> IgnoreIDProperty<T>(this IMappingExpression<T, T> expression)
-		where T : IReferrable
-	{
-		var type = typeof(T);
-		var existingMaps = Mapper.GetAllTypeMaps().First(x => x.SourceType.Equals(type)
-			&& x.DestinationType.Equals(type));
-		foreach (var property in existingMaps.GetPropertyMaps().Where(pm => ((PropertyInfo)pm.DestinationProperty.MemberInfo).Name == "ID"))
-			expression.ForMember(property.DestinationProperty.Name, opt => opt.Ignore());
-		return expression;
-	}*/
-	/*/// <summary>
-	/// XXX don't use this function, it seems to skip some of the tasks
-	/// </summary>
-	/// <param name="ops">The ops.</param>
-	public static void RunTasks(this IEnumerable<Action> ops)
-	{
-		// http://stackoverflow.com/a/19193473/1159763
-		// for some reason we can't just say ops.SpawnTasksAsync().Wait() as this causes a hang
-		var runSync = Task.Factory.StartNew(new Func<Task>(async () =>
-		{
-			await ops.SpawnTasksAsync();
-		})).Unwrap();
-		runSync.Wait();
-	}
-
-	/// <summary>
-	/// XXX don't use this function, it seems to skip some of the tasks
-	/// </summary>
-	/// <typeparam name="TIn">The type of the in.</typeparam>
-	/// <param name="objs">The objs.</param>
-	/// <param name="op">The op.</param>
-	public static void RunTasks<TIn>(this IEnumerable<TIn> objs, Action<TIn> op)
-	{
-		// http://stackoverflow.com/a/19193473/1159763
-		// for some reason we can't just say objs.SpawnTasksAsync(op).Wait() as this causes a hang
-		var runSync = Task.Factory.StartNew(new Func<Task>(async () =>
-		{
-			await objs.SpawnTasksAsync(op);
-		})).Unwrap();
-		runSync.Wait();
-	}*/
 
 	public static void RecordLog<T>(this T t, string text, LogMessageType logMessageType) where T : IOwnable
 	{
