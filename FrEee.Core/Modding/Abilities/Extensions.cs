@@ -16,7 +16,7 @@ namespace FrEee.Extensions;
 /// <summary>
 /// Extensions relating to abilities.
 /// </summary>
-public static class AbilityExtensions
+public static class Extensions
 {
 	/// <summary>
 	/// All abilities belonging to an object.
