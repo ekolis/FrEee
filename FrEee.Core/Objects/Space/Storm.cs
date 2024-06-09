@@ -4,9 +4,9 @@ using FrEee.Serialization;
 using FrEee.Extensions;
 using System;
 using FrEee.Objects.GameState;
-using FrEee.Objects.Abilities;
 using FrEee.Serialization;
 using FrEee.Utility;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Space;
 

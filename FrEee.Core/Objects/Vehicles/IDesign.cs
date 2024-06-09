@@ -3,11 +3,11 @@ using FrEee.Objects.Technology;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
 using System.Collections.Generic;
-using FrEee.Objects.Abilities;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Commands;
 using FrEee.Serialization;
 using FrEee.Objects.GameState;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Vehicles;
 

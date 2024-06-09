@@ -1,4 +1,3 @@
-using FrEee.Objects.Abilities;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Objects.Space;
@@ -10,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Extensions;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Extensions;
 

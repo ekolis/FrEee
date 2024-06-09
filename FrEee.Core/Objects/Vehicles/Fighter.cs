@@ -5,9 +5,9 @@ using System;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Space;
 using FrEee.Objects.GameState;
-using FrEee.Objects.Abilities;
 using FrEee.Serialization;
 using FrEee.Processes.Combat;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Vehicles;
 

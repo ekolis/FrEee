@@ -1,5 +1,4 @@
-﻿using FrEee.Objects.Abilities;
-using FrEee.Objects.LogMessages;
+﻿using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
@@ -11,6 +10,7 @@ using FrEee.Objects.Technology;
 using FrEee.Objects.GameState;
 using FrEee.Extensions;
 using FrEee.Processes.Combat;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Civilization.Orders;
 

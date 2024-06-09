@@ -1,5 +1,4 @@
-﻿using FrEee.Objects.Abilities;
-using FrEee.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Modding;
 using FrEee.Utility;
@@ -16,6 +15,7 @@ using FrEee.Extensions;
 using FrEee.Serialization;
 using FrEee.Utility;
 using FrEee.Processes.Combat;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Technology;
 

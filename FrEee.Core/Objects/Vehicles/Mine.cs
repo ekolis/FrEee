@@ -1,5 +1,5 @@
 using FrEee.Extensions;
-using FrEee.Objects.Abilities;
+using FrEee.Modding.Abilities;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;

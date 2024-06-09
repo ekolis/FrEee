@@ -1,11 +1,11 @@
-﻿using FrEee.Objects.Abilities;
-using FrEee.Objects.Space;
+﻿using FrEee.Objects.Space;
 using FrEee.Modding;
 using FrEee.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Extensions;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Setup.WarpPointPlacementStrategies;
 

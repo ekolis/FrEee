@@ -1,5 +1,4 @@
-﻿using FrEee.Objects.Abilities;
-using FrEee.Objects.Space;
+﻿using FrEee.Objects.Space;
 using FrEee.Modding.StellarObjectLocations;
 using FrEee.Modding.Templates;
 using FrEee.Extensions;
@@ -11,6 +10,7 @@ using System.Linq;
 using Size = FrEee.Objects.Space.StellarSize;
 using FrEee.Objects.GameState;
 using FrEee.Extensions;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Modding.Loaders;
 

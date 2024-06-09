@@ -1,4 +1,4 @@
-using FrEee.Objects.Abilities;
+using FrEee.Modding.Abilities;
 using FrEee.Objects.GameState;
 using FrEee.Serialization;
 using FrEee.Utility;

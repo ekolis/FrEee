@@ -15,7 +15,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="FrEee.Objects.Abilities.Ability" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="FrEee.Modding.Abilities.Ability" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="53" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAQESAAGAggAAEAAAAABAAAAAAAAAAAAAgAAAAAAA=</HashCode>
@@ -23,7 +23,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="FrEee.Objects.Abilities.AbilityRule" Collapsed="true" BaseTypeListCollapsed="true">
+  <Class Name="FrEee.Modding.Abilities.AbilityRule" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="56.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABCAQAAAACAiAAAEgAEAAAQIgAAAAEAAAAABAAAAAAE=</HashCode>

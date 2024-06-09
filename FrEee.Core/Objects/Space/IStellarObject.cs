@@ -1,5 +1,5 @@
 ﻿using FrEee.Modding;
-using FrEee.Objects.Abilities;
+using FrEee.Modding.Abilities;
 using FrEee.Serialization;
 
 namespace FrEee.Objects.Space;

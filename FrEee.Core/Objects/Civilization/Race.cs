@@ -1,4 +1,3 @@
-using FrEee.Objects.Abilities;
 using FrEee.Objects.Space;
 using FrEee.Modding;
 using FrEee.Utility;
@@ -12,6 +11,7 @@ using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Utility;
 using FrEee.Serialization;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Civilization;
 

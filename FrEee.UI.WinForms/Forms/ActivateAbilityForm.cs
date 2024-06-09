@@ -1,5 +1,4 @@
-﻿using FrEee.Objects.Abilities;
-using FrEee.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Commands;
 using FrEee.Objects.Space;
 using FrEee.Extensions;
@@ -14,6 +13,7 @@ using FrEee.Serialization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Extensions;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.UI.WinForms.Forms;
 

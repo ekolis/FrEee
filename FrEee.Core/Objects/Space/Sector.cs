@@ -1,4 +1,3 @@
-using FrEee.Objects.Abilities;
 using FrEee.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Serialization;
@@ -13,6 +12,7 @@ using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
 using FrEee.Extensions;
 using FrEee.Utility;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Space;
 

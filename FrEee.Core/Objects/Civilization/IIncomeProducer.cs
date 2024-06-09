@@ -1,4 +1,4 @@
-﻿using FrEee.Objects.Abilities;
+﻿using FrEee.Modding.Abilities;
 using FrEee.Objects.Space;
 using FrEee.Utility;
 namespace FrEee.Objects.Civilization;

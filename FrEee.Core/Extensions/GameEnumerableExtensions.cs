@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using FrEee.Objects.Abilities;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Utility;
@@ -10,6 +9,7 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
 using FrEee.Modding;
 using FrEee.Extensions;
+using FrEee.Modding.Abilities;
 namespace FrEee.Extensions;
 
 /// <summary>

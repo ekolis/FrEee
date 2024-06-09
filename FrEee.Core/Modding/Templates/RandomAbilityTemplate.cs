@@ -1,10 +1,10 @@
-﻿using FrEee.Objects.Abilities;
-using FrEee.Utility;
+﻿using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Utility;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Modding.Templates;
 

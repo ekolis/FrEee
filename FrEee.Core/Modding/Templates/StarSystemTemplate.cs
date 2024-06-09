@@ -1,5 +1,4 @@
-﻿using FrEee.Objects.Abilities;
-using FrEee.Objects.Space;
+﻿using FrEee.Objects.Space;
 using FrEee.Modding.StellarObjectLocations;
 using FrEee.Utility;
 using System;
@@ -8,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Utility;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Modding.Templates;
 
