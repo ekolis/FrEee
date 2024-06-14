@@ -119,7 +119,7 @@ public class TechnologyTest
 	public void TestInit()
 	{
 		new Galaxy();
-		Galaxy.Current.TechnologyCost = TechnologyCost.Low;
+		Galaxy.Current.GameSetup.TechnologyCost = TechnologyCost.Low;
 		emp = new Empire();
 		Galaxy.Current.Empires.Add(emp);
 	}

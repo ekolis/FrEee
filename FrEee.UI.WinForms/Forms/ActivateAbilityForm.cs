@@ -9,7 +9,6 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.Technology;
-using FrEee.Serialization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Extensions;
