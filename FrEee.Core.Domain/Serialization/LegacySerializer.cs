@@ -13,10 +13,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using FrEee.Utility;
-using FrEee.Extensions;
-using FrEee.Serialization;
-using FrEee.Serialization.Stringifiers;
-using FrEee.Utility;
+using FrEee.Ecs;
+
 namespace FrEee.Serialization;
 
 internal static class LegacySerializer
@@ -444,6 +442,11 @@ internal static class LegacySerializer
 		{
 			itemType = typeof(KeyValuePair<object, object>);
 		}
+		else if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Repository<,>))
+		{
+			// HACK: repositories can be treated as IEnumerable<TEntity>, they are not dictionaries
+			itemType = type.GetGenericArguments()[0];
+		}
 		else if (type.GetGenericArguments().Length == 2)
 		{
 			// HACK - assume it's a dictionary, no real way to test
@@ -814,9 +817,15 @@ internal static class LegacySerializer
 		Type itemType;
 		var type = list.GetType();
 		bool isDict = false;
-		if (type.GetGenericArguments().Length == 2)
+		if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Repository<,>))
 		{
-			// HACK - assume it's a dictionary, no real way to test
+			// HACK: repositories can be treated as IEnumerable<TEntity>, they are not dictionaries
+			itemType = type.GetGenericArguments()[0];
+			w.WriteLine("c" + list.Cast<object>().Count() + ":" + tabs);
+		}
+		else if (type.GetGenericArguments().Length == 2)
+		{
+			// HACK - assume it's a dictionary
 			itemType = typeof(KeyValuePair<,>).MakeGenericType(type.GetGenericArguments());
 			w.WriteLine("d" + list.Cast<object>().Count() + ":" + tabs);
 			isDict = true;

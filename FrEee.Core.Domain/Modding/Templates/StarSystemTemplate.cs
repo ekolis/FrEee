@@ -152,6 +152,7 @@ public class StarSystemTemplate : ITemplate<StarSystem>, IModObject, IEntity
 
 			// create object
 			var sobj = loc.StellarObjectTemplate.Instantiate();
+			Galaxy.Current.AssignID(sobj);
 
 			// place object
 			sys.Place(sobj, pos);

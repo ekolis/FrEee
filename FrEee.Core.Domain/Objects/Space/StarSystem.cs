@@ -197,7 +197,7 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 		}
 	}
 
-	public Repository<ISpaceObject, Ability> SpaceObjects { get; } = new();
+	public Repository<ISpaceObject, Ability> SpaceObjects { get; private set; } = new();
 
 	public double Timestamp { get; set; }
 
