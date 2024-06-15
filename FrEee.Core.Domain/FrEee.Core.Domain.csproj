@@ -24,6 +24,7 @@
 		<PackageReference Include="System.ComponentModel.Composition" Version="8.0.0" />
 		<PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
 		<PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+		<ProjectReference Include="..\FrEee.Core.Ecs\FrEee.Core.Ecs.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Remove="Processes\Combat\Simple\Battle.cs" />
