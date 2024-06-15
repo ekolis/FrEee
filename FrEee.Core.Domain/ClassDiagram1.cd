@@ -1,0 +1,2792 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FrEee.FrEeeConstants" Collapsed="true">
+    <Position X="53" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAIAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>FrEeeConstants.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Interfaces.ReferenceException&lt;TID, TValue&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="60" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAACAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IReference.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.Abilities.Ability" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="53" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQESAAGAggAAEAAAAABAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Abilities\Ability.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.Abilities.AbilityRule" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="56.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABCAQAAAACAiAAAEgAEAAAQIgAAAAEAAAAABAAAAAAE=</HashCode>
+      <FileName>Game\Objects\Abilities\AbilityRule.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.AI.AI&lt;TDomain, TContext&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="60" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAEgAQAAAQAAAAAAAAAAAAAAAAgAEA=</HashCode>
+      <FileName>Game\Objects\AI\AI.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Aptitude" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="61.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CQAEMAICBAAAAAAAAAAAIBQBACAAGEAAAIAiBAAIACA=</HashCode>
+      <FileName>Game\Objects\Civilization\Aptitude.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Cargo" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="67" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAIBAAgAMYSAAQQAQACCQAgAAAMgAAgAAUBAA=</HashCode>
+      <FileName>Game\Objects\Civilization\Cargo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.CargoDelta" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="68.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAgAAAAAAAEAABAAgFAAgAAAAAAEAAAAAAEAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\CargoDelta.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Colony" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="56.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAASAACAAgAAICAAGQBABAEAAwCABJACAAAAAAAg=</HashCode>
+      <FileName>Game\Objects\Civilization\Colony.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.ConstructionQueue" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="56.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>SAUAACSgAKgAgAAECAAGABQCMCIAjACAIQQBACGAAAw=</HashCode>
+      <FileName>Game\Objects\Civilization\ConstructionQueue.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Culture" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="60" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAACggAABFgAAAAAQAACAAAJIAJAAAAAAAACA=</HashCode>
+      <FileName>Game\Objects\Civilization\Culture.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Empire" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="54.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>SQBAogCBACIBxAw8CkDXatQjCYhAgFM+J6yDlGFEAYw=</HashCode>
+      <FileName>Game\Objects\Civilization\Empire.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.EmpireStatus" Collapsed="true">
+    <Position X="58.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAgAAAAAABAAAQAAAAAAAAAAQAAAAAIAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\EmpireStatus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.HappinessModel" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="63.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AKgMAgMgAiAoAIA0ogAAFMQKghQABABBCIAIEMIIAgQ=</HashCode>
+      <FileName>Game\Objects\Civilization\HappinessModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Race" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="70.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgABgYCAACgAgAEEgAAEQBQBACAAoAEABAAAEAMAAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\Race.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.SectorWaypoint" Collapsed="true">
+    <Position X="35" Y="28" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAAQAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\SectorWaypoint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.SpaceObjectWaypoint" Collapsed="true">
+    <Position X="37.25" Y="28" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAEAACAAAAAAAAAAAAAQAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\SpaceObjectWaypoint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Trait" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="61.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQCAACAwAAAEgAAEQBQBAAAAAAAAJAAAEAEAAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\Trait.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Waypoint" Collapsed="true">
+    <Position X="36.25" Y="26.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACACCAAgAAECAACABQCAAAAgQAAIAAAAAAEAAg=</HashCode>
+      <FileName>Game\Objects\Civilization\Waypoint.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Diplomacy.AcceptProposalAction" Collapsed="true">
+    <Position X="34.75" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAEgAAQAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\Diplomacy\AcceptProposalAction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Diplomacy.Action" Collapsed="true">
+    <Position X="35.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAIAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\Diplomacy\Action.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Diplomacy.ActionMessage" Collapsed="true">
+    <Position X="18.5" Y="32" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAQ=</HashCode>
+      <FileName>Game\Objects\Civilization\Diplomacy\ActionMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Diplomacy.BreakTreatyAction" Collapsed="true">
+    <Position X="37" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\Diplomacy\BreakTreatyAction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Diplomacy.DeclareWarAction" Collapsed="true">
+    <Position X="39.25" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\Diplomacy\DeclareWarAction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Diplomacy.GeneralMessage" Collapsed="true">
+    <Position X="20.75" Y="32" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\Diplomacy\GeneralMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Diplomacy.Message" Collapsed="true">
+    <Position X="18.5" Y="30.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAACAAgAAACIACABAAAAgAkAAAIAAAGAEEAAg=</HashCode>
+      <FileName>Game\Objects\Civilization\Diplomacy\Message.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Diplomacy.Package" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="53" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQBAAACAIAAAgQAEAIgAAQAAABAAgAAAAAQAgAAEAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\Diplomacy\Package.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Diplomacy.Proposal" Collapsed="true">
+    <Position X="7.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAACAggAQECIACAAAAAAABiAAAIAAAJEAEAAg=</HashCode>
+      <FileName>Game\Objects\Civilization\Diplomacy\Proposal.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Diplomacy.ProposalMessage" Collapsed="true">
+    <Position X="16.25" Y="32" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\Diplomacy\ProposalMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Diplomacy.RejectProposalAction" Collapsed="true">
+    <Position X="32.5" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAEgAAQAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\Diplomacy\RejectProposalAction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Diplomacy.Clauses.AllianceClause" Collapsed="true">
+    <Position X="1.75" Y="29" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAIAAQAAAAAAAAAAABAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\Diplomacy\Clauses\AllianceClause.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Diplomacy.Clauses.Clause" Collapsed="true">
+    <Position X="9.5" Y="27.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAACIEgAAECAACABAAABAEgAAgpAAAIAAEAAg=</HashCode>
+      <FileName>Game\Objects\Civilization\Diplomacy\Clauses\Clause.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Diplomacy.Clauses.CooperativeResearchClause" Collapsed="true">
+    <Position X="4" Y="29" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAABAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\Diplomacy\Clauses\CooperativeResearchClause.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Diplomacy.Clauses.FreeTradeClause" Collapsed="true">
+    <Position X="6.25" Y="29" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAIAAAAAAAAAgACAABAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\Diplomacy\Clauses\FreeTradeClause.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Diplomacy.Clauses.ShareAbilityClause" Collapsed="true">
+    <Position X="8.5" Y="29" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAEAAAAAEAAABAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\Diplomacy\Clauses\ShareAbilityClause.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Diplomacy.Clauses.ShareCombatLogsClause" Collapsed="true">
+    <Position X="10.75" Y="29" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAABAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\Diplomacy\Clauses\ShareCombatLogsClause.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Diplomacy.Clauses.ShareDesignsClause" Collapsed="true">
+    <Position X="13" Y="29" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAABAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\Diplomacy\Clauses\ShareDesignsClause.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Diplomacy.Clauses.ShareVisionClause" Collapsed="true">
+    <Position X="15.25" Y="29" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAABAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\Diplomacy\Clauses\ShareVisionClause.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Civilization.Diplomacy.Clauses.TributeClause" Collapsed="true">
+    <Position X="17.5" Y="29" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAIAAAAAAAAAAAAABBAAAAAAgAgAgAAAAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\Diplomacy\Clauses\TributeClause.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat.BeamWeaponDisplayEffect" Collapsed="true">
+    <Position X="8.25" Y="32" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAIACAASAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat\BeamWeaponDisplayEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat.Hit" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="67" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAACAIAAAIAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat\Hit.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Processes.Combat.ProjectileWeaponDisplayEffect" Collapsed="true">
+    <Position X="10.5" Y="32" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAIACAASAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat\ProjectileWeaponDisplayEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat.SeekerWeaponDisplayEffect" Collapsed="true">
+    <Position X="12.75" Y="32" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAIACAASAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat\SeekerWeaponDisplayEffect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat.Shot" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="53" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgABAAEAAAABCAAEIAAABAAgSAAAIAgAAAQAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat\Shot.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Processes.Combat.WeaponDisplayEffect" Collapsed="true">
+    <Position X="10.5" Y="30.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABBAEAAAAAAAAAAAAIACAASAAAAAAAAAAAAAEAEAAAA=</HashCode>
+      <FileName>Game\Objects\Combat\WeaponDisplayEffect.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.Battle_Space" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="65.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>TAoJCAiUCDKAo0AJSgLC4DQMGCBDiQBgYIQQkIUQACo=</HashCode>
+      <FileName>Game\Objects\Combat2\Battle_Space.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.CombatEmpire" Collapsed="true">
+    <Position X="58.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAEQAAAAAAAIAAAAAAgIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\combatObjects.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.CombatFleet" Collapsed="true">
+    <Position X="60" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAACCAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\combatObjects.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.CombatNode" Collapsed="true">
+    <Position X="3.5" Y="30.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAIgAAAAAAAAAAgAAAAAACBAAAAAAAAAEA=</HashCode>
+      <FileName>Game\Objects\Combat2\combatObjects.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.CombatObject" Collapsed="true">
+    <Position X="3.5" Y="32" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EggAAgASQIQBIAAAHAAyAAAAAAGEJAAAQgAAiEABKQA=</HashCode>
+      <FileName>Game\Objects\Combat2\combatObjects.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.CombatWaypoint" Collapsed="true">
+    <Position X="65.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAEA=</HashCode>
+      <FileName>Game\Objects\Combat2\combatObjects.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.CombatPlanet" Collapsed="true">
+    <Position X="3.5" Y="35" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAQAAAAAAAAAAAAAAAAAAAAgAAAAEAAAgAA=</HashCode>
+      <FileName>Game\Objects\Combat2\CombatPlanet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.CombatReplayLog" Collapsed="true">
+    <Position X="61.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAQAAAAAAAAAAAAAgABAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\CombatReplayLog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.CombatEvent" Collapsed="true">
+    <Position X="4.5" Y="20.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Game\Objects\Combat2\CombatReplayLog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.CombatLocationEvent" Collapsed="true">
+    <Position X="3.5" Y="22" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\CombatReplayLog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.CombatFireOnTargetEvent" Collapsed="true">
+    <Position X="1.25" Y="23.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\CombatReplayLog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.CombatTakeFireEvent" Collapsed="true">
+    <Position X="3.5" Y="23.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAAAAACAAAABAA=</HashCode>
+      <FileName>Game\Objects\Combat2\CombatReplayLog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.CombatDestructionEvent" Collapsed="true">
+    <Position X="5.75" Y="23.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\CombatReplayLog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.CombatEndBattleEvent" Collapsed="true">
+    <Position X="8" Y="22" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\CombatReplayLog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.CombatSeeker" Collapsed="true">
+    <Position X="1.25" Y="33.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgECYQLQBAAMSCAAQQBAACCSAgAAAIgAAhEBRJAA=</HashCode>
+      <FileName>Game\Objects\Combat2\CombatSeeker.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.CombatShot" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="63.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAACAAAAACAAAIAAAACAACAAAAAgAAAQAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\CombatShot.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.CombatVehicle" Collapsed="true">
+    <Position X="5.75" Y="35" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gACAAAAAQAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Game\Objects\Combat2\CombatVehicle.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.CombatWeapon" Collapsed="true">
+    <Position X="67" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAiIAEAAAAAABAAIAIAICAECAAAAAIAACAIAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\CombatWeapon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.CombatControlledObject" Collapsed="true">
+    <Position X="4.5" Y="33.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAIABAAAAAAAAAAAAAAAEAAAAAAAQAAAAgBA=</HashCode>
+      <FileName>Game\Objects\Combat2\ControlledCombatObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StrategyBaseBlock" Collapsed="true">
+    <Position X="27" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAECIQQIAAAEAAAAQCmEAkABAAgAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StrategyWayPoint" Collapsed="true">
+    <Position X="3.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StrategyLocdata" Collapsed="true">
+    <Position X="7.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StrategyVeldata" Collapsed="true">
+    <Position X="12.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StrategyMassdata" Collapsed="true">
+    <Position X="14.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StrategyComObj" Collapsed="true">
+    <Position X="16.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StrategyThisObj" Collapsed="true">
+    <Position X="19" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StrategyThisEnemys" Collapsed="true">
+    <Position X="21.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StrategyThisEmpireObj" Collapsed="true">
+    <Position X="23.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.Strategyfleet" Collapsed="true">
+    <Position X="25.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StrategyRange" Collapsed="true">
+    <Position X="28" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StrategyClosest" Collapsed="true">
+    <Position X="30.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StrategyWeapons" Collapsed="true">
+    <Position X="32.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.Strategyinput_fix16" Collapsed="true">
+    <Position X="34.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.Strategyinput_Types" Collapsed="true">
+    <Position X="37" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StrategyFilter_shieldhitpoints" Collapsed="true">
+    <Position X="39.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StrategyFilter_HullSize" Collapsed="true">
+    <Position X="41.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StrategyWeaponMaxRange" Collapsed="true">
+    <Position X="43.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StrategyFormate" Collapsed="true">
+    <Position X="46" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StrategyVelAngle" Collapsed="true">
+    <Position X="48.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StrategyHeading" Collapsed="true">
+    <Position X="50.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StrategyAdd_Compass" Collapsed="true">
+    <Position X="5.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StrategyAdd_angletocompass" Collapsed="true">
+    <Position X="10" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StrategyObject" Collapsed="true">
+    <Position X="32" Y="35.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgSEMCAAgAAACAICABQARAAAgAAAIAAAAAAEBAg=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.StragegyObject_Default" Collapsed="true">
+    <Position X="32" Y="37" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\StrategyObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.Tactics.Tactic" Collapsed="true">
+    <Position X="29" Y="37" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\Tactics\Tactic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.Tactics.TacticBlock" Collapsed="true">
+    <Position X="29" Y="35.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAACgACAACAAgQBACAAGQBQAEAAAgAAAIIAAAAAEAAg=</HashCode>
+      <FileName>Game\Objects\Combat2\Tactics\TacticBlock.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.Tactics.TacticInput" Collapsed="true">
+    <Position X="25.25" Y="35.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABkAACAICAAgQAACAACABAAAAAAgAAAIQAgAAAEAAg=</HashCode>
+      <FileName>Game\Objects\Combat2\Tactics\TacticNode.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.Tactics.TacticFormulaInput" Collapsed="true">
+    <Position X="24" Y="37" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\Tactics\TacticNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.Tactics.TacticObjectInput" Collapsed="true">
+    <Position X="26.25" Y="37" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\Tactics\TacticNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.Tactics.TacticOutput" Collapsed="true">
+    <Position X="29.5" Y="29.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAFAACAACAAgQAACAACABAAAAAAgAAAIQAgAAAEAAg=</HashCode>
+      <FileName>Game\Objects\Combat2\Tactics\TacticNode.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.Tactics.TacticFormulaOutput" Collapsed="true">
+    <Position X="27.25" Y="31" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\Tactics\TacticNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.Tactics.TacticPropertyOutput" Collapsed="true">
+    <Position X="29.5" Y="31" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAQAAAAgAABAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\Tactics\TacticNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Combat2.Tactics.TacticConnectionOutput" Collapsed="true">
+    <Position X="31.75" Y="31" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAIAAAAAAAAhAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\Tactics\TacticNode.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Commands.AddOrderCommand&lt;T&gt;" Collapsed="true">
+    <Position X="23.5" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAQAAAAAAAAEAIAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Game\Objects\Commands\AddOrderCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Commands.Command&lt;T&gt;" Collapsed="true">
+    <Position X="25.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAQAAAAAQAAAAEABAEAAAAAAAAAAAAAAAFAAA=</HashCode>
+      <FileName>Game\Objects\Commands\Command.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Commands.CreateDesignCommand&lt;T&gt;" Collapsed="true">
+    <Position X="41.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACIQAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Commands\CreateDesignCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Commands.CreateFleetCommand" Collapsed="true">
+    <Position X="43.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAQAAAAAAAAEAAAAAAAAAAAAAAAGAAA=</HashCode>
+      <FileName>Game\Objects\Commands\CreateFleetCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Commands.CreateWaypointCommand" Collapsed="true">
+    <Position X="46" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAgAEAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Commands\CreateWaypointCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Commands.DeleteMessageCommand" Collapsed="true">
+    <Position X="48.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAIAAAACA=</HashCode>
+      <FileName>Game\Objects\Commands\DeleteMessageCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Commands.DeleteWaypointCommand" Collapsed="true">
+    <Position X="3.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Commands\DeleteWaypointCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Commands.DisbandFleetCommand" Collapsed="true">
+    <Position X="5.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Commands\DisbandFleetCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Commands.EditStrategyCommand" Collapsed="true">
+    <Position X="10" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAEAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Game\Objects\Commands\EditStrategyCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Commands.HotkeyWaypointCommand" Collapsed="true">
+    <Position X="12.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAQAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Commands\HotkeyWaypointCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Commands.JoinFleetCommand" Collapsed="true">
+    <Position X="14.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAEAAAAAAAAIAAAAGAAA=</HashCode>
+      <FileName>Game\Objects\Commands\JoinFleetCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Commands.LeaveFleetCommand" Collapsed="true">
+    <Position X="16.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Commands\LeaveFleetCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Commands.OrderCommand&lt;T&gt;" Collapsed="true">
+    <Position X="21.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Game\Objects\Commands\OrderCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Commands.RearrangeOrdersCommand&lt;T&gt;" Collapsed="true">
+    <Position X="19" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Game\Objects\Commands\RearrangeOrdersCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Commands.RemoveOrderCommand&lt;T&gt;" Collapsed="true">
+    <Position X="21.25" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Commands\RemoveOrderCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Commands.ResearchCommand" Collapsed="true">
+    <Position X="25.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEQQAABAEAACQAAAAAAQACAAAAAAAAI=</HashCode>
+      <FileName>Game\Objects\Commands\ResearchCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Commands.SendMessageCommand" Collapsed="true">
+    <Position X="28" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAEAAAAAAAAAAAAIAAEAAA=</HashCode>
+      <FileName>Game\Objects\Commands\SendMessageCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Commands.SetObsoleteFlagCommand" Collapsed="true">
+    <Position X="30.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAACAQAAAgAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Game\Objects\Commands\SetObsoleteFlagCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.LogMessages.GenericLogMessage" Collapsed="true">
+    <Position X="34" Y="34" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\LogMessages\GenericLogMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.LogMessages.LogMessage" Collapsed="true">
+    <Position X="35.25" Y="32.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAACAAAAAA=</HashCode>
+      <FileName>Game\Objects\LogMessages\LogMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.LogMessages.PictorialLogMessage&lt;T&gt;" Collapsed="true">
+    <Position X="36.25" Y="34" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\LogMessages\PictorialLogMessage.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Orders.ActivateAbilityOrder" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="58.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAACAEiAAggYBIAIAADAAAAAAAAAAAAAAgAAEAAA=</HashCode>
+      <FileName>Game\Objects\Orders\ActivateAbilityOrder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Orders.ColonizeOrder" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="54.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAACAECAAgAQFAAAAABAAAAAAggAAAAIAgAAEAAA=</HashCode>
+      <FileName>Game\Objects\Orders\ColonizeOrder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Orders.ConstructionOrder&lt;T, TTemplate&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="54.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAACAEGAAiARBAAAAABAEAAEAgAAAAAAAgAEEAAA=</HashCode>
+      <FileName>Game\Objects\Orders\ConstructionOrder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Orders.EvadeOrder&lt;T&gt;" Collapsed="true">
+    <Position X="21.25" Y="35" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Orders\EvadeOrder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Orders.MoveOrder&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="67" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAACAGCAIgAYFAAAAABAAABAAgAAEAAAAoAAEAAA=</HashCode>
+      <FileName>Game\Objects\Orders\MoveOrder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Orders.PathfindingOrder&lt;T&gt;" Collapsed="true">
+    <Position X="20.25" Y="33.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AYAAAACQGCAIgAYFIAQAADBAABAAgAAEAAAAoAAEAAA=</HashCode>
+      <FileName>Game\Objects\Orders\PathfindingOrder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Orders.PursueOrder&lt;T&gt;" Collapsed="true">
+    <Position X="19" Y="35" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Orders\PursueOrder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Orders.RecycleFacilityOrCargoOrder" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="56.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAACAECAAgAQFKAAAADAAAAAAAAAAAAAAgAAEAAA=</HashCode>
+      <FileName>Game\Objects\Orders\RecycleFacilityOrCargoOrder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Orders.RecycleVehicleInSpaceOrder" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="58.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAACAECAAgAQFCAAAABAAAAAAAAAAAAAAgAAEAAA=</HashCode>
+      <FileName>Game\Objects\Orders\RecycleVehicleInSpaceOrder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Orders.SentryOrder" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="65.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAACAECAAgAQFAAAAABAAAAAAgAAAAAAAgAAEAAA=</HashCode>
+      <FileName>Game\Objects\Orders\SentryOrder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Orders.TransferCargoOrder" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="63.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAACAECAAgAQFIAAAEDABAAAAAAAAAAAAgAAEAAA=</HashCode>
+      <FileName>Game\Objects\Orders\TransferCargoOrder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Orders.UpgradeFacilityOrder" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="65.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAACAECAAmAQBAACAABAgAAEAoAAAAACAgAEEAAA=</HashCode>
+      <FileName>Game\Objects\Orders\UpgradeFacilityOrder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Orders.WarpOrder&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="67" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAACAGCAAgAYFAAAIABAACAAAgAAEAAAAoAAEAAA=</HashCode>
+      <FileName>Game\Objects\Orders\WarpOrder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Orders.WaypointOrder&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="68.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AYAAAACAGCAIgAYFIAAAADAAABAAgAAEAAAAoAAEAAA=</HashCode>
+      <FileName>Game\Objects\Orders\WaypointOrder.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Orders.RecycleBehaviors.ScrapBehavior" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="54.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAQBAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Orders\RecycleBehaviors\ScrapBehavior.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.SimulatedEmpire" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="54.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Game\Objects\SimulatedObjectWrappers.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.SimulatedSpaceObject" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="56.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\SimulatedObjectWrappers.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.SimulatedUnit" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="58.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\SimulatedObjectWrappers.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Space.AsteroidField" Collapsed="true">
+    <Position X="8" Y="17" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACEAAAAgACAAAQAAAAFAAAAACBAAAAAAAACQAA=</HashCode>
+      <FileName>Game\Objects\Space\AsteroidField.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Space.Fleet" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="68.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>GCmAgkSgCDCCgAMcCABe4dSJGWQApSQBN4CRlCEUhBw=</HashCode>
+      <FileName>Game\Objects\Space\Fleet.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Space.Galaxy" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="54.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>8AAQjJQxBRpxFaAtGDSOQGZZxQTQEAItBBAGDkEMjIg=</HashCode>
+      <FileName>Game\Objects\Space\Galaxy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Space.DoNotAssignIDAttribute" Collapsed="true">
+    <Position X="72.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Space\Galaxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Space.ObjectLocation&lt;T&gt;" Collapsed="true">
+    <Position X="72.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEgAIAAAAEAAAAAIAAAAAAAAAAAiA=</HashCode>
+      <FileName>Game\Objects\Space\ObjectLocation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Space.Planet" Collapsed="true">
+    <Position X="10.25" Y="17" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAGEgkSsqDSAgSMQiAVc4YCNGWSBhCTBIwCRhaESxBw=</HashCode>
+      <FileName>Game\Objects\Space\Planet.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Space.Sector" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="63.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAECAAAAAAAAEgABEZASBKQAAgYQBBEEAEAEkhiQ=</HashCode>
+      <FileName>Game\Objects\Space\Sector.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Space.Star" Collapsed="true">
+    <Position X="1.25" Y="17" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAQAEQAAAABAAAAAAAAAAAAgAAAAIA=</HashCode>
+      <FileName>Game\Objects\Space\Star.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Space.StarSystem" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="61.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABBIAUCABTAggABECAIGVDQDIAgAgAAAJEgBEAEwBAg=</HashCode>
+      <FileName>Game\Objects\Space\StarSystem.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Space.StellarObject" Collapsed="true">
+    <Position X="5.75" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAgAiACCAggIIUiAAGQJQBAACAhQAAJAGAEAEAAAw=</HashCode>
+      <FileName>Game\Objects\Space\StellarObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Space.Storm" Collapsed="true">
+    <Position X="3.5" Y="17" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAACAAAQAAAABAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Space\Storm.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Space.WarpPoint" Collapsed="true">
+    <Position X="5.75" Y="17" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAACAAAAAQAACABAAACAAAAAAAAAAAACAg=</HashCode>
+      <FileName>Game\Objects\Space\WarpPoint.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Technology.Component" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="70.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAA0SAAHAAgAMUCAAUQBQJCCQAgAUAJgQEkAEQBAA=</HashCode>
+      <FileName>Game\Objects\Technology\Component.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Technology.DirectFireWeaponInfo" Collapsed="true">
+    <Position X="27.25" Y="28" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Technology\DirectFireWeaponInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Technology.Facility" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="61.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAA0SAAHABgAMUCQAUQBQBCCRAgAUAJkQEkAEQJAA=</HashCode>
+      <FileName>Game\Objects\Technology\Facility.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Technology.FacilityUpgrade" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="65.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAACAAAAAAAAAAAAAAAAQAAAIEAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Technology\FacilityUpgrade.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Technology.Hull&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="68.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAwiAACBggIAEiAgmQBQJEgAIgIQCpEAEEAGCAAg=</HashCode>
+      <FileName>Game\Objects\Technology\Hull.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Technology.Mount" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="63.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQgiAACBhqBAEyAAiBBREAABAgIQAIAQEEAECAgg=</HashCode>
+      <FileName>Game\Objects\Technology\Mount.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Technology.MountedComponentTemplate" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="65.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAwQAAAAAgAAEwAQEVBQBAAAQEYUQVAQEEBEEAiA=</HashCode>
+      <FileName>Game\Objects\Technology\MountedComponentTemplate.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Technology.SeekingWeaponInfo" Collapsed="true">
+    <Position X="29.5" Y="28" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAEAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Technology\SeekingWeaponInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Technology.Technology" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="54.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>RAJQAECAADBhgQAUiAICABQAAABUgAAAIAAAEAGAAAg=</HashCode>
+      <FileName>Game\Objects\Technology\Technology.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Technology.TechnologyRequirement" Collapsed="true">
+    <Position X="3.5" Y="26" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAEAAAAAAgAABAAgAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Technology\TechnologyRequirement.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Technology.WarheadWeaponInfo" Collapsed="true">
+    <Position X="31.75" Y="28" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Technology\WarheadWeaponInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Technology.WeaponInfo" Collapsed="true">
+    <Position X="29.5" Y="26.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAACAAAgIAAAAAIAAAAAgAAAAAEAABgQAAGAAhAA=</HashCode>
+      <FileName>Game\Objects\Technology\WeaponInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Technology.FacilityTemplate" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="63.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAA0iAACAggAAEiAQGQhQBAAACgQQAJAAEkAEABAg=</HashCode>
+      <FileName>Modding\Templates\FacilityTemplate.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Vehicles.Base" Collapsed="true">
+    <Position X="39" Y="25.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAABAAAAAAAAAAABAAAAAAAAAEAAhAAAAAw=</HashCode>
+      <FileName>Game\Objects\Vehicles\Base.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Vehicles.Design" Collapsed="true">
+    <Position X="67" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Vehicles\Design.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Vehicles.Design&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="68.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAQhwCAADAAgIcEGBQOahQBSAkAkQcApAANlRGGEAg=</HashCode>
+      <FileName>Game\Objects\Vehicles\Design.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.Vehicles.Drone" Collapsed="true">
+    <Position X="27.75" Y="25.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAABAAAAAAAAAAABAAAAgAAAAEAAhAAAAAw=</HashCode>
+      <FileName>Game\Objects\Vehicles\Drone.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Vehicles.Fighter" Collapsed="true">
+    <Position X="30" Y="25.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAABAAAAAAAAAAABAAAAgAAAAEAAhAAAAAw=</HashCode>
+      <FileName>Game\Objects\Vehicles\Fighter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Vehicles.Mine" Collapsed="true">
+    <Position X="32.25" Y="25.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAABAAAAAAAAAAABAAAAgAAAAEAAhAAAAAw=</HashCode>
+      <FileName>Game\Objects\Vehicles\Mine.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Vehicles.Satellite" Collapsed="true">
+    <Position X="34.5" Y="25.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAABAAAAAAAAAAABAAAAgAAAAEAAhAAAAAw=</HashCode>
+      <FileName>Game\Objects\Vehicles\Satellite.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Vehicles.Ship" Collapsed="true">
+    <Position X="36.75" Y="25.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAABAAAAAAAAAEAAhAAAAAw=</HashCode>
+      <FileName>Game\Objects\Vehicles\Ship.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Objects.Vehicles.SpaceVehicle" Collapsed="true">
+    <Position X="33.25" Y="24" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAkAgAQgCCAAAgIACABF4YCBGQAAhQQBEQiRgCAAgAw=</HashCode>
+      <FileName>Game\Objects\Vehicles\SpaceVehicle.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Vehicles.Troop" Collapsed="true">
+    <Position X="41.25" Y="24" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQACAABAAAACAAAAAABAAAAgQAAAEAAhAAAAAg=</HashCode>
+      <FileName>Game\Objects\Vehicles\Troop.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Vehicles.Vehicle" Collapsed="true">
+    <Position X="35.5" Y="22.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FKCAgkCACnADiIMcCgAeQBQJCGRAgSQAJkAMlAEQJBg=</HashCode>
+      <FileName>Game\Objects\Vehicles\Vehicle.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.Vehicles.WeaponPlatform" Collapsed="true">
+    <Position X="43.5" Y="24" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQACAABAAAACAAAAAABAAAAgQAAAEAAhAAAAAg=</HashCode>
+      <FileName>Game\Objects\Vehicles\WeaponPlatform.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Objects.VictoryConditions.MajorEmpireEliminationVictoryCondition" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="70.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAABAAAAAACAAAAA=</HashCode>
+      <FileName>Game\Objects\VictoryConditions\MajorEmpireEliminationVictoryCondition.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.VictoryConditions.PeaceVictoryCondition" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="60" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAABAAEAAACAAAAA=</HashCode>
+      <FileName>Game\Objects\VictoryConditions\PeaceVictoryCondition.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.VictoryConditions.ScorePercentageVictoryCondition" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="72.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAgAAABAAAAAACAAAAA=</HashCode>
+      <FileName>Game\Objects\VictoryConditions\ScorePercentageVictoryCondition.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.VictoryConditions.ScoreVictoryCondition" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="53" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAEAAAAAAAAAAABAAAAAACAAAAA=</HashCode>
+      <FileName>Game\Objects\VictoryConditions\ScoreVictoryCondition.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.VictoryConditions.SurvivalVictoryCondition" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="72.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAABAAEAAACAAAAA=</HashCode>
+      <FileName>Game\Objects\VictoryConditions\SurvivalVictoryCondition.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.VictoryConditions.TechnologyVictoryCondition" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="56.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAgAAABAAAAAACAAAAA=</HashCode>
+      <FileName>Game\Objects\VictoryConditions\TechnologyVictoryCondition.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Objects.VictoryConditions.TotalEliminationVictoryCondition" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="60" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAABAAAAAACAAAAA=</HashCode>
+      <FileName>Game\Objects\VictoryConditions\TotalEliminationVictoryCondition.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Processes.Setup.EmpireTemplate" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="60" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAgIgAAAIAAAAAAARAAUQAQQAAAAAEASAAgAABAAU=</HashCode>
+      <FileName>Game\Setup\EmpireTemplate.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Processes.Setup.GameSetup" Collapsed="true">
+    <Position X="60" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QMAIkNSAYgAMkIEWGAQIAAgAQUHQEAYEgBAiGEEAiIQ=</HashCode>
+      <FileName>Game\Setup\GameSetup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Setup.StarSystemPlacementStrategies.ClusteredStarSystemPlacementStrategy" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="53" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Setup\StarSystemPlacementStrategies\ClusteredStarSystemPlacementStrategy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Processes.Setup.StarSystemPlacementStrategies.DiffuseStarSystemPlacementStrategy" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="70.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Setup\StarSystemPlacementStrategies\DiffuseStarSystemPlacementStrategy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Processes.Setup.StarSystemPlacementStrategies.GridStarSystemPlacementStrategy" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="61.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Setup\StarSystemPlacementStrategies\GridStarSystemPlacementStrategy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Processes.Setup.StarSystemPlacementStrategies.RandomStarSystemPlacementStrategy" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="54.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Setup\StarSystemPlacementStrategies\RandomStarSystemPlacementStrategy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Processes.Setup.StarSystemPlacementStrategies.SpiralStarSystemPlacementStrategy" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="60" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Setup\StarSystemPlacementStrategies\SpiralStarSystemPlacementStrategy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Processes.Setup.WarpPointPlacementStrategies.CenterWarpPointPlacementStrategy" Collapsed="true">
+    <Position X="1.5" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Game\Setup\WarpPointPlacementStrategies\CenterWarpPointPlacementStrategy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Setup.WarpPointPlacementStrategies.EdgeAlignedWarpPointPlacementStrategy" Collapsed="true">
+    <Position X="3.75" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Game\Setup\WarpPointPlacementStrategies\EdgeAlignedWarpPointPlacementStrategy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Setup.WarpPointPlacementStrategies.PlanetWarpPointPlacementStrategy" Collapsed="true">
+    <Position X="6" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Game\Setup\WarpPointPlacementStrategies\PlanetWarpPointPlacementStrategy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Setup.WarpPointPlacementStrategies.RandomAlignedWarpPointPlacementStrategy" Collapsed="true">
+    <Position X="8.25" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Game\Setup\WarpPointPlacementStrategies\RandomAlignedWarpPointPlacementStrategy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Setup.WarpPointPlacementStrategies.RandomWarpPointPlacementStrategy" Collapsed="true">
+    <Position X="10.5" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Game\Setup\WarpPointPlacementStrategies\RandomWarpPointPlacementStrategy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Setup.WarpPointPlacementStrategies.StarWarpPointPlacementStrategy" Collapsed="true">
+    <Position X="12.75" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Game\Setup\WarpPointPlacementStrategies\StarWarpPointPlacementStrategy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Processes.Setup.WarpPointPlacementStrategies.WarpPointPlacementStrategy" Collapsed="true">
+    <Position X="7" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAgAAAAAAAAAAQAAAAEAAAAAIAAAACAAAA=</HashCode>
+      <FileName>Game\Setup\WarpPointPlacementStrategies\WarpPointPlacementStrategy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.DamageType" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="61.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAkIBAgABgAABEiAAAIAQIAACKAAAACAgAARBAABA=</HashCode>
+      <FileName>Modding\DamageType.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.DataFile" Collapsed="true">
+    <Position X="63.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAgAAAAAAAAAAEAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\DataFile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.DataParsingException" Collapsed="true">
+    <Position X="65.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAhAA=</HashCode>
+      <FileName>Modding\DataParsingException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.EmpireTraitRequirement" Collapsed="true">
+    <Position X="5.75" Y="26" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAEAAAAAAQAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Modding\EmpireTraitRequirement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Field" Collapsed="true">
+    <Position X="67" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAIAAAABAAAEQAAAAAQEAAAAANAAAAAgFAAQAAA=</HashCode>
+      <FileName>Modding\Field.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Formula&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="70.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgQAAAQE4AUAAgAAAAAgAIAAAAEgOAIAQmA=</HashCode>
+      <FileName>Modding\Formula.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.FormulaContext" Collapsed="true">
+    <Position X="72.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAQAAAAAAAAAgAAAQAAAAAAAA=</HashCode>
+      <FileName>Modding\FormulaContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.MetaRecord" Collapsed="true">
+    <Position X="1" Y="36" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAQAAAAAQAgAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Modding\MetaRecord.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Modding.MetaRecordParameter" Collapsed="true">
+    <Position X="72.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAACAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\MetaRecordParameter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Mod" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="54.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAgQABESEAAQEExgCQAMgAAAAIQAEgsCAAAEoAAgI=</HashCode>
+      <FileName>Modding\Mod.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.ModInfo" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="56.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAgAAACAggAAAgAAAAAQAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Modding\ModInfo.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.ModReference&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="60" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAgAAEgAAAAAAABAAAAIAAAAAgIAAAAiA=</HashCode>
+      <FileName>Modding\ModReference.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.ModSettings" Collapsed="true">
+    <Position X="61.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QQEisCCgAIAQniiAvhCiMIoJWGIUgFQLCBqMCAGOkAE=</HashCode>
+      <FileName>Modding\ModSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.PopulationModifier" Collapsed="true">
+    <Position X="65.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAQAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\PopulationModifier.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Record" Collapsed="true">
+    <Position X="1" Y="34.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAABEAQAAACAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Modding\Record.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Requirement&lt;T&gt;" Collapsed="true">
+    <Position X="3.5" Y="24.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAEAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Modding\Requirement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.ResourceFormula" Collapsed="true">
+    <Position X="24" Y="34" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAgAAAAAAYAUAAgAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Modding\ResourceFormula.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Script" Collapsed="true">
+    <Position X="56.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgQgAAAACAAAAAGgAAAAAAAAAAAAIECAAAACAAAAiA=</HashCode>
+      <FileName>Modding\Script.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.ScriptEngine" Collapsed="true">
+    <Position X="58.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACCABAAAAAI4AAIQAgGAAIAAAAAQAAABAAAAQAAEA=</HashCode>
+      <FileName>Modding\ScriptEngine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.ScriptException" Collapsed="true">
+    <Position X="60" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAACA=</HashCode>
+      <FileName>Modding\ScriptEngine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.ScriptRequirement&lt;T&gt;" Collapsed="true">
+    <Position X="1.25" Y="26" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEAAAAAABAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Modding\ScriptRequirement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.StellarObjectSize" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="68.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAACCAAAIQEwAAAQBQAAAABAAAIAAQAAAAAAAA=</HashCode>
+      <FileName>Modding\StellarObjectSize.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.AbilityLoader" Collapsed="true">
+    <Position X="54.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Loaders\AbilityLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.AbilityRuleLoader" Collapsed="true">
+    <Position X="2.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Loaders\AbilityRuleLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.ComponentLoader" Collapsed="true">
+    <Position X="7" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAQAAAAAAAIAAAAAAAAAAAAAABABAAAAA=</HashCode>
+      <FileName>Modding\Loaders\ComponentLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.CultureLoader" Collapsed="true">
+    <Position X="11.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Loaders\CultureLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.DamageTypeLoader" Collapsed="true">
+    <Position X="13.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Loaders\DamageTypeLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.DataFileLoader" Collapsed="true">
+    <Position X="19.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAABAAAI=</HashCode>
+      <FileName>Modding\Loaders\DataFileLoader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.EmpireAILoader" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="56.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAI=</HashCode>
+      <FileName>Modding\Loaders\EmpireAILoader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.FacilityLoader" Collapsed="true">
+    <Position X="18.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Loaders\FacilityLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.GalaxyLoader" Collapsed="true">
+    <Position X="20.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Loaders\GalaxyLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.HappinessModelLoader" Collapsed="true">
+    <Position X="22.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Loaders\HappinessModelLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.HullLoader" Collapsed="true">
+    <Position X="25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Loaders\HullLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.ModInfoLoader" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="58.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAI=</HashCode>
+      <FileName>Modding\Loaders\ModInfoLoader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.ModSettingsLoader" Collapsed="true">
+    <Position X="27.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Loaders\ModSettingsLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.MountLoader" Collapsed="true">
+    <Position X="29.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Loaders\MountLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.PopulationModifierLoader" Collapsed="true">
+    <Position X="67" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Loaders\PopulationModifierLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.RequirementLoader" Collapsed="true">
+    <Position X="61.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Loaders\RequirementLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.ScriptLoader" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="61.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAI=</HashCode>
+      <FileName>Modding\Loaders\ScriptLoader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.StarSystemLoader" Collapsed="true">
+    <Position X="31.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Loaders\StarSystemLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.StellarAbilityLoader" Collapsed="true">
+    <Position X="34" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Loaders\StellarAbilityLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.StellarObjectLoader" Collapsed="true">
+    <Position X="36.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Loaders\StellarObjectLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.StellarObjectSizeLoader" Collapsed="true">
+    <Position X="4.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Loaders\StellarObjectSizeLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.TechnologyLoader" Collapsed="true">
+    <Position X="9.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Loaders\TechnologyLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.TextLoader" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="58.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAABAAAI=</HashCode>
+      <FileName>Modding\Loaders\TextLoader.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.Loaders.TraitLoader" Collapsed="true">
+    <Position X="16" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Loaders\TraitLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Modding.StellarObjectLocations.CircleRadiusStellarObjectLocation" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="70.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAACIAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\StellarObjectLocations\CircleRadiusStellarObjectLocation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.StellarObjectLocations.CoordStellarObjectLocation" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="58.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACIAAAAAAAAAAAAIAAAAgAIAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\StellarObjectLocations\CoordStellarObjectLocation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.StellarObjectLocations.RingStellarObjectLocation" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="67" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAACIAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\StellarObjectLocations\RingStellarObjectLocation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.StellarObjectLocations.SameAsStellarObjectLocation" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="70.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACIAAAAAAAAAAAAAAAAAgAAABAIAAAAAAA=</HashCode>
+      <FileName>Modding\StellarObjectLocations\SameAsStellarObjectLocation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.Templates.AsteroidFieldTemplate" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="63.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAACAAAIAAgAQAAAQEAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Modding\Templates\AsteroidFieldTemplate.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.Templates.ComponentTemplate" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="72.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ggIAA0iAACAggAAEiAQHRBQBEAAAgAQIJAAEEBECBAg=</HashCode>
+      <FileName>Modding\Templates\ComponentTemplate.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.Templates.GalaxyTemplate" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="58.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAKACAgAAAAiAwACAQIABAAAAAAAAAAEAgAAQA=</HashCode>
+      <FileName>Modding\Templates\GalaxyTemplate.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.Templates.PlanetTemplate" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="63.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAACAAAIAAwAQAAAQEAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Modding\Templates\PlanetTemplate.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.Templates.RandomAbilityTemplate" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="72.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAgAQAAAQAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Modding\Templates\RandomAbilityTemplate.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.Templates.StarSystemTemplate" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="63.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAFIAQAAACAgAAAAgAQEQAQBAAgAAAAABAgAAAAgAAA=</HashCode>
+      <FileName>Modding\Templates\StarSystemTemplate.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.Templates.StarTemplate" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="65.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAACAAAIAQgEQAAAQAAAAAAAAAAAAAgAAAAIA=</HashCode>
+      <FileName>Modding\Templates\StarTemplate.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Modding.Templates.StormTemplate" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="70.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAACAAgAAAgAQAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Templates\StormTemplate.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Properties.Resources" Collapsed="true">
+    <Position X="65.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Properties.Settings" Collapsed="true">
+    <Position X="72.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.ClientSafeAttribute" Collapsed="true">
+    <Position X="72.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\ClientSafeAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.ConnectivityGraph&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="53" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AD4AAFBAACBARBDQAGjABIQAIBAAACAAIwAIASBYKAA=</HashCode>
+      <FileName>Utility\ConnectivityGraph.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Utility.DynamicDictionary" Collapsed="true">
+    <Position X="53" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABCAAAAAAAAAAAABEAABIAACAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\DynamicDictionary.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.GalaxyReference&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="56.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAEiAAAAAAABAAAAKAAAAAgIAAEAiA=</HashCode>
+      <FileName>Utility\GalaxyReference.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Utility.HashCodeMasher" Collapsed="true">
+    <Position X="65.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQgAAAAAA=</HashCode>
+      <FileName>Utility\HashCodeMasher.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.MiningModel" Collapsed="true">
+    <Position X="53" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>wCAAAAAAAAAAAAAQQAABAAAABAgAAAAAAIAAAAAEAAA=</HashCode>
+      <FileName>Utility\MiningModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.NameAttribute" Collapsed="true">
+    <Position X="21" Y="27.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\NameAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.CanonicalNameAttribute" Collapsed="true">
+    <Position X="21" Y="29.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\NameAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.ObjectGraphParser" Collapsed="true">
+    <Position X="70.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgABAAAEAAEAAQAAAAAAAEEAAAABAAAgYAIQAAAAA=</HashCode>
+      <FileName>Utility\ObjectGraphParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.ObjectGraphContext" Collapsed="true">
+    <Position X="68.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gIIkQAAAAgAQAAABAQAAgEEgAAAAAAAAAgAAAEAAAAA=</HashCode>
+      <FileName>Utility\ObjectGraphParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.DoNotCopyAttribute" Collapsed="true">
+    <Position X="1" Y="18.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\ObjectGraphParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.Pathfinder" Collapsed="true">
+    <Position X="56.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIKAAAAAAEAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Utility\Pathfinder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.PathfinderNode&lt;T&gt;" Collapsed="true">
+    <Position X="58.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAEAAIABBAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\Pathfinder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.Pictures" Collapsed="true">
+    <Position X="61.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABABgIAAAAgCAAARACAAIAAAAAAAAgAAAIEEEAgAAAE=</HashCode>
+      <FileName>Utility\Pictures.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.PRNG" Collapsed="true">
+    <Position X="68.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAACAQEgEAAAAAAAAAAAIAAAAAAACAAAiA=</HashCode>
+      <FileName>Utility\PRNG.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.Progress" Collapsed="true">
+    <Position X="13" Y="24.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gBAAAAAAAAAAAAAEAAAAAAQAAAAICAAAAAggAAAAAAA=</HashCode>
+      <FileName>Utility\Progress.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.Progress&lt;T&gt;" Collapsed="true">
+    <Position X="13" Y="26" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\Progress.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.RandomHelper" Collapsed="true">
+    <Position X="53" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAACAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\RandomHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.ReferenceKeyedDictionary&lt;TRef, TKey, TValue&gt;" Collapsed="true">
+    <Position X="15.25" Y="33.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CCICAAAAABAEABAQCAAABAQAAAAAAAAAAAAgAABUIAA=</HashCode>
+      <FileName>Utility\ReferenceKeyedDictionary.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Utility.GalaxyReferenceKeyedDictionary&lt;TKey, TValue&gt;" Collapsed="true">
+    <Position X="14" Y="35" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\ReferenceKeyedDictionary.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.ModReferenceKeyedDictionary&lt;TKey, TValue&gt;" Collapsed="true">
+    <Position X="16.25" Y="35" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\ReferenceKeyedDictionary.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.ReferenceList&lt;TRef, T&gt;" Collapsed="true">
+    <Position X="10.25" Y="33.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AGIAAkAAABAAABAQCAAABAQAAAAAAAAACAAAAABUIAA=</HashCode>
+      <FileName>Utility\ReferenceList.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Utility.GalaxyReferenceList&lt;T&gt;" Collapsed="true">
+    <Position X="9" Y="35" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\ReferenceList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.ModReferenceList&lt;T&gt;" Collapsed="true">
+    <Position X="11.25" Y="35" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\ReferenceList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.ReferenceSet&lt;TRef, T&gt;" Collapsed="true">
+    <Position X="30.25" Y="32.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACoAABBAADBARBBQAAQABAQAIAAAACAAAgAAAABUIAA=</HashCode>
+      <FileName>Utility\ReferenceSet.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Utility.GalaxyReferenceSet&lt;T&gt;" Collapsed="true">
+    <Position X="29" Y="34" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\ReferenceSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.ModReferenceSet&lt;T&gt;" Collapsed="true">
+    <Position X="31.25" Y="34" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\ReferenceSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.Resource" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="63.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAggAAQAAQAEoAAAAAQEBCAIAIAABIAAkAWABiA=</HashCode>
+      <FileName>Utility\Resource.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Utility.ResourceQuantity" Collapsed="true">
+    <Position X="26.25" Y="34" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIgAAAAABAAAAQE8AWAAgAAAAAAAIAAAAAAAAAAByA=</HashCode>
+      <FileName>Utility\ResourceQuantity.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Utility.SafeDictionary&lt;TKey, TValue&gt;" Collapsed="true">
+    <Position X="25.25" Y="32.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CCICIAAAAAAEABAQCAAABAQAAAAAAAAAAAAgQABQIAA=</HashCode>
+      <FileName>Utility\SafeDictionary.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FrEee.Utility.SafeType" Collapsed="true">
+    <Position X="68.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAQIAAEAAAAIBQAAAAAAIAA=</HashCode>
+      <FileName>Utility\SafeType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.SequenceEqualityComparer&lt;T&gt;" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="67" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\SequenceEqualityComparer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FrEee.Utility.Serializer" Collapsed="true">
+    <Position X="70.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQIAAAAAAAAAAAgAiAAoAACACBIAAIgAAAgAAACAAA=</HashCode>
+      <FileName>Utility\Serializer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.DoNotSerializeAttribute" Collapsed="true">
+    <Position X="1" Y="20.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\Serializer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.SerializationPriorityAttribute" Collapsed="true">
+    <Position X="68.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\Serializer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Utility.Status" Collapsed="true">
+    <Position X="67" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAAAAAAAAAEAAAIBAIACAACA=</HashCode>
+      <FileName>Utility\Status.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Extensions.CommonExtensions" Collapsed="true">
+    <Position X="68.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>i9OiRZ0iqHWSCpP+IezR8nFp0jpC03EIG1yzfTca+Yw=</HashCode>
+      <FileName>Utility\Extensions\CommonExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Extensions.Parser" Collapsed="true">
+    <Position X="54.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAEAAAAAAAAAgAAAAAAAABAAAAAAAAEAA=</HashCode>
+      <FileName>Utility\Extensions\Parser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FrEee.Extensions.TaskFactoryExtensions" Collapsed="true">
+    <Position X="53" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAABAA=</HashCode>
+      <FileName>Utility\Extensions\TaskFactoryExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="FrEee.Modding.Templates.AbilityChance" Collapsed="true">
+    <Position X="53" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Templates\RandomAbilityTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="FrEee.Modding.Interfaces.IModObject" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Interfaces\IModObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IAbilityObject" Collapsed="true">
+    <Position X="17.75" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEQAABAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IAbilityObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IAbilityContainer" Collapsed="true">
+    <Position X="17.75" Y="18.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IAbilityObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.ICargoContainer" Collapsed="true">
+    <Position X="22.5" Y="21.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAIACACQAAAAQBAAAAAAAAgAQ=</HashCode>
+      <FileName>Game\Interfaces\ICargoContainer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.ICargoTransferrer" Collapsed="true">
+    <Position X="22.5" Y="23" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\ICargoTransferrer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.ICombatant" Collapsed="true">
+    <Position X="20" Y="23.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQAAAIAAAIAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Game\Interfaces\ICombatant.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.ICombatSpaceObject" Collapsed="true">
+    <Position X="17.25" Y="25.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\ICombatSpaceObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.ICommand" Collapsed="true">
+    <Position X="42.25" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAQAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\ICommand.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.ICommand&lt;T&gt;" Collapsed="true">
+    <Position X="42.25" Y="18" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\ICommand.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.ICommonAbilityObject" Collapsed="true">
+    <Position X="35.75" Y="18.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Game\Interfaces\ICommonAbilityObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IConstructable" Collapsed="true">
+    <Position X="14.75" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAEAAAAAAAAAEABAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IConstructable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IConstructionOrder" Collapsed="true">
+    <Position X="12.25" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAABAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IConstructionOrder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IConstructionTemplate" Collapsed="true">
+    <Position X="23.25" Y="18.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAhAAAAAAAQAAAAAAgAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IConstructionTemplate.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IContainable&lt;TContainer&gt;" Collapsed="true">
+    <Position X="24" Y="25.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IContainable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.ICreateDesignCommand" Collapsed="true">
+    <Position X="41.25" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\ICreateDesignCommand.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IDamageable" Collapsed="true">
+    <Position X="32" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAABAAAAMQCAAQQAAACCQAgAAAIgAAgAAQBAA=</HashCode>
+      <FileName>Game\Interfaces\IDamageable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IDesign" Collapsed="true">
+    <Position X="17" Y="22.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAhgCAABAAgIcAEBQIKAQBCAkAEAAAAAAJBBACEAA=</HashCode>
+      <FileName>Game\Interfaces\IDesign.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IDesign&lt;T&gt;" Collapsed="true">
+    <Position X="20" Y="25.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IDesign.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IErrorProne" Collapsed="true">
+    <Position X="29" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IErrorProne.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IFoggable" Collapsed="true">
+    <Position X="33.5" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAACAAAAAAAAgAAAIAAAAAAAAAg=</HashCode>
+      <FileName>Game\Interfaces\IFoggable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IHull" Collapsed="true">
+    <Position X="17" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAgAAABggIAAAAggABQIEAAIAIACgEAAEACCAAA=</HashCode>
+      <FileName>Game\Interfaces\IHull.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IHull&lt;T&gt;" Collapsed="true">
+    <Position X="20" Y="21.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IHull.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IIncomeProducer" Collapsed="true">
+    <Position X="36.25" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAEAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IIncomeProducer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.ILocated" Collapsed="true">
+    <Position X="10" Y="19.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\ILocated.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IMessage" Collapsed="true">
+    <Position X="33.5" Y="20" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAgAEAAAAAAACAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IMessage.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IMineableSpaceObject" Collapsed="true">
+    <Position X="14" Y="23" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IMineableSpaceObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IMobileSpaceObject" Collapsed="true">
+    <Position X="24" Y="27" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAgAACAAAgAAAAAAEgQABEAAAAAAAAAAQgAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IMobileSpaceObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IMobileSpaceObject&lt;T&gt;" Collapsed="true">
+    <Position X="24" Y="28.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IMobileSpaceObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IMovementOrder" Collapsed="true">
+    <Position X="21" Y="18.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAIAAAAAAAAAAAAAAAAEAAAAIAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IMovementOrder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IMovementOrder&lt;T&gt;" Collapsed="true">
+    <Position X="19.25" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IMovementOrder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.INamed" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\INamed.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IOrder" Collapsed="true">
+    <Position X="23.25" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IOrder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IOrder&lt;T&gt;" Collapsed="true">
+    <Position X="13.5" Y="18.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAQBAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IOrder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IOrderable" Collapsed="true">
+    <Position X="31.25" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAgAAAAAAAAAAAAAAAAAAAABAAAAQAAACAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IOrderable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IOrderCommand&lt;T&gt;" Collapsed="true">
+    <Position X="43.5" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IOrderCommand.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IOwnable" Collapsed="true">
+    <Position X="24.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IOwnable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.ITransferrable" Collapsed="true">
+    <Position X="29" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IOwnable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IOwnableAbilityObject" Collapsed="true">
+    <Position X="26.5" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IOwnableAbilityObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IPathfindingOrder" Collapsed="true">
+    <Position X="20.5" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AYAAAACQAAAIAAAAAAQAACBAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IPathfindingOrder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IPictorial" Collapsed="true">
+    <Position X="38.5" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAEAAAA=</HashCode>
+      <FileName>Game\Interfaces\IPictorial.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IPictorialLogMessage&lt;T&gt;" Collapsed="true">
+    <Position X="56.5" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IPictorialLogMessage.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IPlanetOrder" Collapsed="true">
+    <Position X="14.5" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IPlanetOrder.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IPromotable" Collapsed="true">
+    <Position X="17.25" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Game\Interfaces\IPromotable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IRecyclable" Collapsed="true">
+    <Position X="20.25" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAABAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Game\Interfaces\IRecyclable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IRecycleBehavior" Collapsed="true">
+    <Position X="58.25" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAQBAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IRecycleBehavior.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IReference&lt;TValue&gt;" Collapsed="true">
+    <Position X="35" Y="35.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IReference.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IReference&lt;TID, TValue&gt;" Collapsed="true">
+    <Position X="35" Y="37" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IReference.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IReferenceEnumerable" Collapsed="true">
+    <Position X="60" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IReferenceEnumerable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IReferrable" Collapsed="true">
+    <Position X="23.25" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IReferrable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IResearchable" Collapsed="true">
+    <Position X="33.5" Y="18" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IResearchable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.ISpaceObject" Collapsed="true">
+    <Position X="14" Y="21" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAgAAAAAAAAAIAAAAAAIQAAAAABAAAAACAAAAAAAQ=</HashCode>
+      <FileName>Game\Interfaces\ISpaceObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IStarSystemPlacementStrategy" Collapsed="true">
+    <Position X="61.75" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IStarSystemPlacementStrategy.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IStellarObject" Collapsed="true">
+    <Position X="11" Y="23" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAgAIAAgAAAAAQAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IStellarObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.ITargetable" Collapsed="true">
+    <Position X="26" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\ITargetable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.ITemplate&lt;T&gt;" Collapsed="true">
+    <Position X="65.25" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\ITemplate.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IUnit" Collapsed="true">
+    <Position X="26.5" Y="21.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IUnit.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IUnlockable" Collapsed="true">
+    <Position X="38.5" Y="16.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IUnlockable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IUpgradeable&lt;T&gt;" Collapsed="true">
+    <Position X="29" Y="20.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IUpgradeable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IVehicle" Collapsed="true">
+    <Position X="26.5" Y="19.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IVehicle.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Interfaces.IVictoryCondition" Collapsed="true">
+    <Position X="67" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAABAAAAAACAAAAA=</HashCode>
+      <FileName>Game\Interfaces\IVictoryCondition.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Processes.Combat2.Tactics.ITacticNode" Collapsed="true">
+    <Position X="29" Y="18" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAgAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Combat2\Tactics\TacticNode.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Modding.Interfaces.IFormula" Collapsed="true">
+    <Position X="29" Y="21.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAgAAAAAAAgCAAAAAA=</HashCode>
+      <FileName>Modding\Interfaces\IFormula.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Modding.Interfaces.IFormula&lt;T&gt;" Collapsed="true">
+    <Position X="29" Y="23.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Modding\Interfaces\IFormula.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Modding.Interfaces.IFormulaHost" Collapsed="true">
+    <Position X="53" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Modding\Interfaces\IFormulaHost.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Modding.Interfaces.IStellarObjectLocation" Collapsed="true">
+    <Position X="63.5" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACIAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Interfaces\IStellarObjectLocation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FrEee.Modding.Loaders.ILoader" Collapsed="true">
+    <Position X="54.75" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAI=</HashCode>
+      <FileName>Modding\Loaders\ILoader.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="FrEee.Enumerations.AbilityTargets" Collapsed="true">
+    <Position X="53" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAIKAEAAGAAAAIABoAAIAAAABBDAAYEAgIJAAAGKQMA=</HashCode>
+      <FileName>Game\Enumerations\AbilityTargets.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FrEee.Enumerations.AbilityValueRule" Collapsed="true">
+    <Position X="54.75" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAEAAAQAAAAAAAAAAAAAAAAEAAAEAAAAAAAEAAAA=</HashCode>
+      <FileName>Game\Enumerations\AbilityValueRule.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FrEee.Enumerations.AllianceLevel" Collapsed="true">
+    <Position X="56.5" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAABAQAAAAAAAAAAAAAAAAABAEAAAA=</HashCode>
+      <FileName>Game\Enumerations\AllianceLevel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FrEee.Enumerations.AllowedTrades" Collapsed="true">
+    <Position X="58.25" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAIAAAAEAAAA=</HashCode>
+      <FileName>Game\Enumerations\AllowedTrades.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FrEee.Enumerations.EmpirePlacement" Collapsed="true">
+    <Position X="60" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAABAAEAA=</HashCode>
+      <FileName>Game\Enumerations\EmpirePlacement.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FrEee.Enumerations.Mood" Collapsed="true">
+    <Position X="65.25" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAIAAAAAAAAAAAAAAAQAAgAAAAAAAAAAABCg=</HashCode>
+      <FileName>Game\Enumerations\Mood.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FrEee.Enumerations.ScoreDisplay" Collapsed="true">
+    <Position X="72.25" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAABAAAAgAAAAIEAAAAAAAA=</HashCode>
+      <FileName>Game\Enumerations\ScoreDisplay.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FrEee.Enumerations.SharingPriority" Collapsed="true">
+    <Position X="53" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAgAAAAAAAAAAAEEAAA=</HashCode>
+      <FileName>Game\Enumerations\SharingPriority.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FrEee.Enumerations.StartingTechnologyLevel" Collapsed="true">
+    <Position X="54.75" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAgAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Game\Enumerations\StartingTechnologyLevel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FrEee.Enumerations.StellarSize" Collapsed="true">
+    <Position X="56.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAABAEAAA=</HashCode>
+      <FileName>Game\Enumerations\StellarSize.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FrEee.Enumerations.TechnologyCost" Collapsed="true">
+    <Position X="58.25" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAgAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Game\Enumerations\TechnologyCost.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FrEee.Enumerations.VehicleTypes" Collapsed="true">
+    <Position X="60" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAICAAAAEAAAAAAAAAAAAAAAABDAAIAAAIAAAAEAQIA=</HashCode>
+      <FileName>Game\Enumerations\VehicleTypes.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FrEee.Enumerations.Visibility" Collapsed="true">
+    <Position X="61.75" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAIAAAAIACAABA=</HashCode>
+      <FileName>Game\Enumerations\Visibility.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FrEee.Enumerations.WeaponTargets" Collapsed="true">
+    <Position X="63.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAEAAAAAAAAAAAAAAAAADAAIAAAIIAAAEAQAA=</HashCode>
+      <FileName>Game\Enumerations\WeaponTargets.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FrEee.Enumerations.WeaponTypes" Collapsed="true">
+    <Position X="65.25" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAoAAAAAAAAABAACACAAAAAAAIAAAAEAICA=</HashCode>
+      <FileName>Game\Enumerations\WeaponTypes.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FrEee.Objects.Civilization.PlrUploadStatus" Collapsed="true">
+    <Position X="67" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAQAAAAAAAAAAAAAAAAAQAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Game\Objects\Civilization\EmpireStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FrEee.Modding.Enumerations.FormulaType" Collapsed="true">
+    <Position X="61.75" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAABAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Enumerations\FormulaType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FrEee.Modding.Enumerations.RequirementType" Collapsed="true">
+    <Position X="70.5" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAEAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modding\Enumerations\RequirementType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FrEee.Extensions.IDCopyBehavior" Collapsed="true">
+    <Position X="63.5" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAACCAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\Extensions\CommonExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FrEee.UI.WinForms.DataGridView.ProgressDisplayMode" Collapsed="true">
+    <Position X="68.75" Y="14" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAAAAAAgACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Utility\ProgressDisplayMode.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

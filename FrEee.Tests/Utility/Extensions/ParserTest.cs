@@ -2,6 +2,8 @@
 using FrEee.Extensions;
 using NUnit.Framework;
 using System;
+using FrEee.Extensions;
+using FrEee.Utility;
 
 namespace FrEee.Tests.Utility.Extensions;
 

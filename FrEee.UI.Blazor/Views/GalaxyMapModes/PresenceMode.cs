@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using FrEee.Extensions;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
+using FrEee.Extensions;
 
 namespace FrEee.UI.Blazor.Views.GalaxyMapModes
 {

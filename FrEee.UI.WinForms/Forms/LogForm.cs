@@ -1,5 +1,4 @@
-﻿using FrEee.Objects.Combat;
-using FrEee.Objects.LogMessages;
+﻿using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Modding.Templates;
@@ -14,6 +13,8 @@ using System.Windows.Forms;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.GameState;
+using FrEee.Extensions;
+using FrEee.Processes.Combat;
 
 namespace FrEee.UI.WinForms.Forms;
 

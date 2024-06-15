@@ -1,4 +1,4 @@
-﻿using FrEee.Objects.Combat;
+﻿using FrEee.Processes.Combat;
 using FrEee.Modding;
 using NUnit.Framework;
 using System.Linq;

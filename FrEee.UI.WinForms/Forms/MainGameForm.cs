@@ -20,13 +20,15 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
-using FrEee.Objects.Combat;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.UI.Blazor.Views.GalaxyMapModes;
+using FrEee.Extensions;
+using FrEee.Utility;
+using FrEee.Processes.Combat;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -1513,9 +1515,9 @@ public partial class MainGameForm : GameForm
 				if (sector != null)
 				{
 					var suitablePlanets = sector.SpaceObjects.OfType<Planet>().Where(p => p.Colony == null && v.Abilities().Any(a => a.Rule.Matches("Colonize Planet - " + p.Surface)));
-					if (Galaxy.Current.CanColonizeOnlyBreathable)
+					if (Galaxy.Current.GameSetup.CanColonizeOnlyBreathable)
 						suitablePlanets = suitablePlanets.Where(p => p.Atmosphere == Empire.Current.PrimaryRace.NativeAtmosphere);
-					if (Galaxy.Current.CanColonizeOnlyHomeworldSurface)
+					if (Galaxy.Current.GameSetup.CanColonizeOnlyHomeworldSurface)
 						suitablePlanets = suitablePlanets.Where(p => p.Surface == Empire.Current.PrimaryRace.NativeSurface);
 					if (suitablePlanets.Any())
 					{

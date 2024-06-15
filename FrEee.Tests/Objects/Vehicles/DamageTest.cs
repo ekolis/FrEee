@@ -1,4 +1,4 @@
-﻿using FrEee.Objects.Abilities;
+﻿using FrEee.Modding.Abilities;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
@@ -10,6 +10,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
+using FrEee.Extensions;
 
 namespace FrEee.Tests.Objects.Vehicles;
 

@@ -1,5 +1,4 @@
 using FrEee.Objects.Vehicles;
-using FrEee.Setup;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Extensions;
@@ -17,6 +16,9 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
+using FrEee.Extensions;
+using FrEee.Utility;
+using FrEee.Processes.Setup;
 
 namespace FrEee.UI.WinForms.Forms;
 

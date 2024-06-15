@@ -12,6 +12,7 @@ using FrEee.UI.Blazor.Views;
 using System.Threading.Tasks;
 using FrEee.UI.WinForms.Forms;
 using FrEee.UI.WinForms.Controls;
+using FrEee.Utility;
 
 namespace FrEee.UI.WinForms.Controls.Blazor;
 

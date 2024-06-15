@@ -12,6 +12,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
+using FrEee.Utility;
 
 namespace FrEee.UI.WinForms.Forms;
 

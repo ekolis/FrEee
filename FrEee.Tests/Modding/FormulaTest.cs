@@ -1,5 +1,5 @@
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Combat;
+using FrEee.Processes.Combat;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;

@@ -1,4 +1,4 @@
-﻿using FrEee.Objects.Combat;
+﻿using FrEee.Processes.Combat;
 using FrEee.Objects.Technology;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
@@ -11,6 +11,8 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Component = FrEee.Objects.Technology.Component;
+using FrEee.Extensions;
+using FrEee.Processes.Combat;
 
 namespace FrEee.UI.WinForms.Controls;
 

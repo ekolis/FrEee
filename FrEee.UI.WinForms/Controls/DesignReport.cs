@@ -6,6 +6,7 @@ using FrEee.UI.WinForms.Utility.Extensions;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.Vehicles;
+using FrEee.Extensions;
 
 namespace FrEee.UI.WinForms.Controls;
 

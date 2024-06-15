@@ -1,0 +1,47 @@
+﻿using FrEee.Extensions;
+using FrEee.Modding.Abilities;
+
+namespace FrEee.Objects.Civilization.Diplomacy.Clauses;
+
+/// <summary>
+/// Allows empires to share usage of abilities that can affect other objects, such as resupply.
+/// </summary>
+public class ShareAbilityClause : Clause
+{
+	public ShareAbilityClause(Empire giver, Empire receiver, AbilityRule rule, SharingPriority priority)
+		: base(giver, receiver)
+	{
+		AbilityRule = rule;
+		Priority = priority;
+	}
+
+	/// <summary>
+	/// The type of ability being shared.
+	/// </summary>
+	public AbilityRule AbilityRule { get; set; }
+
+	public override string BriefDescription
+	{
+		get { return "Share Ability (" + AbilityRule.Name + ") - " + Priority + " Priority"; }
+	}
+
+	public override string FullDescription
+	{
+		get
+		{
+			return Giver.WeOrName() + " will share the " + AbilityRule.Name + " ability with " + Receiver.UsOrName() + " at " + Priority.ToString().ToLower() + " priority.";
+		}
+	}
+
+	/// <summary>
+	/// The priority of sharing with this empire.
+	/// </summary>
+	public SharingPriority Priority { get; set; }
+
+	/// <summary>
+	/// Doesn't do anything; this clause just affects ability scopes.
+	/// </summary>
+	public override void PerformAction()
+	{
+	}
+}

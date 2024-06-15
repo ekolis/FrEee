@@ -3,6 +3,8 @@ using FrEee.Extensions;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using FrEee.Extensions;
+using FrEee.Utility;
 
 namespace FrEee.UI.WinForms.DataGridView;
 
