@@ -12,7 +12,7 @@ using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
 using FrEee.Extensions;
 using FrEee.Utility;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Space;
 
@@ -42,9 +42,9 @@ public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnab
 	}
 
 	public IEnumerable<IUnit> AllUnits
-	{
-		get { return StarSystem.SpaceObjectLocations.Where(l => l.Location == Coordinates).Select(l => l.Item).OfType<IUnit>().ToList(); }
-	}
+		=> StarSystem.SpaceObjects
+			.Where(l => l.Coordinates == Coordinates)
+			.OfType<IUnit>();
 
 	public Cargo Cargo
 	{
@@ -164,7 +164,10 @@ public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnab
 		{
 			if (StarSystem == null)
 				return Enumerable.Empty<ISpaceObject>();
-			var result = StarSystem.SpaceObjectLocations.Where(l => l.Location == Coordinates).Select(l => l.Item).ExceptSingle(null).Where(sobj => !(sobj is IContainable<Fleet>) || ((IContainable<Fleet>)sobj).Container == null);
+			var result = StarSystem.SpaceObjects
+				.Where(sobj =>
+					sobj.Coordinates == Coordinates
+					&& (!(sobj is IContainable<Fleet>) || ((IContainable<Fleet>)sobj).Container == null));
 
 			// on the server we don't want to count memories as physical space objects
 			if (Empire.Current == null)
@@ -235,9 +238,9 @@ public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnab
 		return false;
 	}
 
-	public IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp)
+	public IEnumerable<IEntity> GetContainedAbilityObjects(Empire emp)
 	{
-		return SpaceObjects.Where(sobj => sobj?.Owner == emp).OfType<IAbilityObject>();
+		return SpaceObjects.Where(sobj => sobj?.Owner == emp).OfType<IEntity>();
 	}
 
 	public override int GetHashCode()

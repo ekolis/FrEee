@@ -7,7 +7,8 @@ using System.Drawing;
 using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Utility;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
+using System.Collections.Immutable;
 
 namespace FrEee.Modding.Templates;
 
@@ -16,7 +17,7 @@ namespace FrEee.Modding.Templates;
 /// Maps to a record in SystemTypes.txt.
 /// </summary>
 [Serializable]
-public class StarSystemTemplate : ITemplate<StarSystem>, IModObject, IAbilityContainer
+public class StarSystemTemplate : ITemplate<StarSystem>, IModObject, IEntity
 {
 	/// <summary>
 	/// Creates an empty star system template.
@@ -28,10 +29,7 @@ public class StarSystemTemplate : ITemplate<StarSystem>, IModObject, IAbilityCon
 		StellarObjectLocations = new List<IStellarObjectLocation>();
 	}
 
-	/// <summary>
-	/// Any special abilities to be possessed by star systems generated from this template.
-	/// </summary>
-	public IList<Ability> Abilities { get; private set; }
+	public IEnumerable<Ability> Abilities { get; set; }
 
 	public AbilityTargets AbilityTarget
 	{
@@ -133,8 +131,7 @@ public class StarSystemTemplate : ITemplate<StarSystem>, IModObject, IAbilityCon
 		sys.BackgroundImagePath = BackgroundImagePath;
 		sys.EmpiresCanStartIn = EmpiresCanStartIn;
 		sys.NonTiledCenterCombatImage = NonTiledCenterCombatImage;
-		foreach (var abil in Abilities)
-			sys.Abilities.Add(abil);
+		sys.Abilities = Abilities.ToImmutableList();
 		sys.WarpPointAbilities = WarpPointAbilities; // warp points will be generated later in galaxy generation
 
 		var planets = new Dictionary<IStellarObjectLocation, Planet>();

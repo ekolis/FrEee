@@ -13,11 +13,10 @@ using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
-using FrEee.Extensions;
 using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Processes.Combat;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Vehicles;
 
@@ -34,6 +33,8 @@ public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IF
 	}
 
 	public abstract AbilityTargets AbilityTarget { get; }
+
+	public IEnumerable<Ability> Abilities { get; set; }
 
 	public int Accuracy
 	{
@@ -71,7 +72,7 @@ public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IF
 		{
 			if (Design == null)
 				return Components;
-			return Components.Cast<IAbilityObject>().Append(Design.Hull);
+			return Components.Cast<IEntity>().Append(Design.Hull);
 		}
 	}
 

@@ -1,10 +1,10 @@
-﻿using FrEee.Modding;
-using FrEee.Modding.Abilities;
+﻿using FrEee.Ecs;
+using FrEee.Modding;
 using FrEee.Objects.GameState;
 
 namespace FrEee.Objects.Space;
 
-public interface IStellarObject : ISpaceObject, IReferrable, IModObject, IAbilityContainer
+public interface IStellarObject : ISpaceObject, IReferrable, IModObject, IEntity
 {
     /// <summary>
     /// A description of this stellar object.

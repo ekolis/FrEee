@@ -15,7 +15,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
-using FrEee.Extensions;
+using FrEee.Ecs;
 
 namespace FrEee.UI.WinForms.Forms;
 

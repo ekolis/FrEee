@@ -14,7 +14,7 @@ using FrEee.Objects.GameState;
 using FrEee.Extensions;
 using FrEee.Utility;
 using FrEee.Processes.AI;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 
 namespace FrEee.Modding;
 

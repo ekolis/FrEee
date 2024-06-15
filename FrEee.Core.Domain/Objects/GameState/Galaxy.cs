@@ -25,9 +25,9 @@ using FrEee.Objects.Technology;
 using FrEee.Extensions;
 using FrEee.Utility;
 using FrEee.Processes.Combat;
-using FrEee.Modding.Abilities;
 using FrEee.Processes.Setup;
 using FrEee.Processes.Setup.WarpPointPlacementStrategies;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.GameState;
 
@@ -699,10 +699,10 @@ public class Galaxy : ICommonAbilityObject
 				StarSystemLocations.Remove(l);
 			else
 			{
-				foreach (var l2 in l.Item.SpaceObjectLocations.ToArray())
+				foreach (var sobj in l.Item.SpaceObjects.ToArray())
 				{
-					if (l2.Item == null || l2.Item.IsDisposed)
-						l.Item.SpaceObjectLocations.Remove(l2);
+					if (sobj is null || sobj.IsDisposed)
+						l.Item.Remove(sobj);
 				}
 			}
 		}
@@ -783,7 +783,7 @@ public class Galaxy : ICommonAbilityObject
 		return StarSystemLocations.SelectMany(l => l.Item.FindSpaceObjects(criteria));
 	}
 
-	public IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp)
+	public IEnumerable<IEntity> GetContainedAbilityObjects(Empire emp)
 	{
 		return StarSystemLocations.Select(ssl => ssl.Item).Concat(StarSystemLocations.SelectMany(ssl => ssl.Item.GetContainedAbilityObjects(emp)));
 	}

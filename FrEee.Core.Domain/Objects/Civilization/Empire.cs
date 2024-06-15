@@ -19,11 +19,10 @@ using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.Diplomacy;
-using FrEee.Extensions;
 using FrEee.Utility;
 using FrEee.Processes.AI;
-using FrEee.Modding.Abilities;
 using FrEee.Processes.Setup;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Civilization;
 
@@ -31,7 +30,7 @@ namespace FrEee.Objects.Civilization;
 /// An empire attempting to rule the galaxy.
 /// </summary>
 [Serializable]
-public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable<Empire>, IComparable, IFormulaHost, IReferrable
+public class Empire : INamed, IFoggable, IEntity, IPictorial, IComparable<Empire>, IComparable, IFormulaHost, IReferrable
 {
 	public Empire()
 	{
@@ -58,6 +57,8 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 		Scores = new SafeDictionary<int, int?>();
 		EnabledMinisters = new SafeDictionary<string, ICollection<string>>(); 
 	}
+
+	public IEnumerable<Ability> Abilities { get; set; } = new HashSet<Ability>();
 
 	/// <summary>
 	/// The current empire being controlled by the player.
@@ -146,7 +147,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	{
 		get
 		{
-			return OwnedSpaceObjects.Cast<IAbilityObject>().Append(PrimaryRace);
+			return OwnedSpaceObjects.Cast<IEntity>().Append(PrimaryRace);
 		}
 	}
 
@@ -798,7 +799,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	/// <returns></returns>
 	public bool CanColonize(Planet planet)
 	{
-		return UnlockedItems.OfType<IAbilityObject>().Any(c => c.HasAbility(planet.ColonizationAbilityName));
+		return UnlockedItems.OfType<IEntity>().Any(c => c.HasAbility(planet.ColonizationAbilityName));
 	}
 
 	public bool CanScan(IFoggable o)

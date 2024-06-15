@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
 using FrEee.Utility;
 using FrEee.Processes.Combat;
+using FrEee.Ecs;
 
 namespace FrEee.Utility;
 
@@ -289,7 +289,7 @@ public static class Pathfinder
 		if (findWarpIn) // find a warp point leading into the system
 			return Galaxy.Current.FindSpaceObjects<WarpPoint>().Where(wp => wp.Target != null && wp.Target.StarSystem == sector.StarSystem && wp.HasVisibility(emp, Visibility.Fogged)).Select(wp => wp.Target).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault(); // use HasVisibility instead of CheckVisibility, it's faster when all we want is visible/invisible and don't care about scanning
 		else // find a warp point leading out of the system
-			return sector.StarSystem.FindSpaceObjects<WarpPoint>().Select(wp => new Sector(sector.StarSystem, wp.FindCoordinates())).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault();
+			return sector.StarSystem.FindSpaceObjects<WarpPoint>().Select(wp => new Sector(sector.StarSystem, wp.Coordinates)).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault();
 	}
 
 	public static IEnumerable<Sector> GetPossibleMoves(Sector s, bool canWarp, Empire emp)

@@ -1,7 +1,7 @@
 ﻿using FrEee.Objects.Civilization;
 using System.Collections.Generic;
 
-namespace FrEee.Modding.Abilities;
+namespace FrEee.Ecs;
 
 /// <summary>
 /// An object that can contain different abilities for different empires.
@@ -13,5 +13,5 @@ public interface ICommonAbilityObject : IAbilityObject
     /// </summary>
     /// <param name="emp"></param>
     /// <returns></returns>
-    IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp);
+    IEnumerable<IEntity> GetContainedAbilityObjects(Empire emp);
 }

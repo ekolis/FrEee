@@ -9,7 +9,7 @@ using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Serialization;
 using FrEee.Processes.Combat;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Vehicles;
 
@@ -34,14 +34,14 @@ public class Troop : Vehicle, IUnit
 
 	public override int MaxTargets => int.MaxValue;
 
-	public override IEnumerable<IAbilityObject> Parents
+	public override IEnumerable<IEntity> Parents
 	{
 		get
 		{
 			if (Owner != null)
 				yield return Owner;
-			if (Container != null && Container is IAbilityObject)
-				yield return (IAbilityObject)Container;
+			if (Container != null && Container is IEntity)
+				yield return (IEntity)Container;
 		}
 	}
 

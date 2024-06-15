@@ -13,7 +13,7 @@ using FrEee.Objects.Vehicles;
 using FrEee.Extensions;
 using FrEee.Serialization;
 using FrEee.Processes.Combat;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 
 namespace FrEee.Modding.Templates;
 
@@ -21,7 +21,7 @@ namespace FrEee.Modding.Templates;
 /// A template for a vehicle component.
 /// </summary>
 [Serializable]
-public class ComponentTemplate : IModObject, IResearchable, IAbilityContainer, ITemplate<Component>, IUpgradeable<ComponentTemplate>
+public class ComponentTemplate : IModObject, IResearchable, IEntity, ITemplate<Component>, IUpgradeable<ComponentTemplate>
 {
 	public ComponentTemplate()
 	{
@@ -30,10 +30,7 @@ public class ComponentTemplate : IModObject, IResearchable, IAbilityContainer, I
 		Cost = new ResourceFormula(this);
 	}
 
-	/// <summary>
-	/// Abilities possessed by this component.
-	/// </summary>
-	public IList<Ability> Abilities { get; private set; }
+	public IEnumerable<Ability> Abilities { get; set; }
 
 	public AbilityTargets AbilityTarget
 	{

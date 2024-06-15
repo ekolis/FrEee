@@ -3,6 +3,7 @@ using FrEee.Extensions;
 using FrEee.UI.WinForms.Interfaces;
 using System.Drawing;
 using System.Windows.Forms;
+using FrEee.Ecs;
 
 namespace FrEee.UI.WinForms.Controls;
 

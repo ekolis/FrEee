@@ -9,8 +9,8 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
 using FrEee.Utility;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Events;
 

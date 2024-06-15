@@ -15,7 +15,7 @@ using FrEee.Extensions;
 using FrEee.Serialization;
 using FrEee.Utility;
 using FrEee.Processes.Combat;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Technology;
 

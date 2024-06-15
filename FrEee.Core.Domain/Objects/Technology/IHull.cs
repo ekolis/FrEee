@@ -4,11 +4,11 @@ using System.Drawing;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
 using FrEee.Modding;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Technology;
 
-public interface IHull : IModObject, IResearchable, IAbilityContainer, IPictorial, IUpgradeable<IHull>
+public interface IHull : IModObject, IResearchable, IEntity, IPictorial, IUpgradeable<IHull>
 {
     /// <summary>
     /// Can this hull use components with the Ship Auxiliary Control ability?

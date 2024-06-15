@@ -6,7 +6,7 @@ using System;
 using FrEee.Objects.GameState;
 using FrEee.Serialization;
 using FrEee.Utility;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Space;
 

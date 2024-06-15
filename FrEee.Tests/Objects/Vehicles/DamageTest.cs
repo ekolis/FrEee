@@ -1,5 +1,4 @@
-﻿using FrEee.Modding.Abilities;
-using FrEee.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
@@ -10,7 +9,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
+using FrEee.Ecs;
 
 namespace FrEee.Tests.Objects.Vehicles;
 
@@ -53,11 +52,14 @@ public class DamageTest
 		// initialize engine template
 		engineTemplate = new ComponentTemplate();
 		engineTemplate.Name = "Gotta-Go-Fast Engine";
-		engineTemplate.Abilities.Add(new Ability(engineTemplate, Mod.Current.AbilityRules.FindByName("Standard Ship Movement"), "Lets the ship go fast.", "1"));
-		engineTemplate.Abilities.Add(new Ability(engineTemplate, Mod.Current.AbilityRules.FindByName("Movement Bonus"), "Lets the ship go REALLY fast.", "1"));
-		engineTemplate.Abilities.Add(new Ability(engineTemplate, Mod.Current.AbilityRules.FindByName("Extra Movement Generation"), "Lets the ship go REALLY REALLY fast.", "1"));
-		engineTemplate.Abilities.Add(new Ability(engineTemplate, Mod.Current.AbilityRules.FindByName("Vehicle Speed"), "Lets the ship go REALLY FREAKIN' UNGODLY LUDICROUSLY fast.", "1"));
-		engineTemplate.Abilities.Add(new Ability(engineTemplate, Mod.Current.AbilityRules.FindByName("Quantum Reactor"), "Infinite supplies! Wheeee!"));
+		engineTemplate.Abilities =
+		[
+			new Ability(engineTemplate, Mod.Current.AbilityRules.FindByName("Standard Ship Movement"), "Lets the ship go fast.", "1"),
+			new Ability(engineTemplate, Mod.Current.AbilityRules.FindByName("Movement Bonus"), "Lets the ship go REALLY fast.", "1"),
+			new Ability(engineTemplate, Mod.Current.AbilityRules.FindByName("Extra Movement Generation"), "Lets the ship go REALLY REALLY fast.", "1"),
+			new Ability(engineTemplate, Mod.Current.AbilityRules.FindByName("Vehicle Speed"), "Lets the ship go REALLY FREAKIN' UNGODLY LUDICROUSLY fast.", "1"),
+			new Ability(engineTemplate, Mod.Current.AbilityRules.FindByName("Quantum Reactor"), "Infinite supplies! Wheeee!")
+		];
 		engineTemplate.SupplyUsage = 0;
 		engineTemplate.Durability = 10;
 

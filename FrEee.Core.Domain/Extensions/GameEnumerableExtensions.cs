@@ -8,8 +8,7 @@ using FrEee.Utility;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
 using FrEee.Modding;
-using FrEee.Extensions;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 namespace FrEee.Extensions;
 
 /// <summary>
@@ -270,12 +269,12 @@ public static class GameEnumerableExtensions
 		return abilities.StackToTree(stackTo).Select(g => g.Key);
 	}
 
-	public static IEnumerable<Ability> StackAbilities(this IEnumerable<IAbilityObject> objs, IAbilityObject stackTo)
+	public static IEnumerable<Ability> StackAbilities(this IEnumerable<IEntity> objs, IAbilityObject stackTo)
 	{
 		return objs.SelectMany(obj => obj.Abilities()).Stack(stackTo);
 	}
 
-	public static ILookup<Ability, Ability> StackAbilitiesToTree(this IEnumerable<IAbilityObject> objs, IAbilityObject stackTo)
+	public static ILookup<Ability, Ability> StackAbilitiesToTree(this IEnumerable<IEntity> objs, IAbilityObject stackTo)
 	{
 		return objs.SelectMany(obj => obj.Abilities()).StackToTree(stackTo);
 	}

@@ -11,7 +11,8 @@ using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Serialization;
 using FrEee.Utility;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
+using System.Linq;
 
 namespace FrEee.Objects.Space;
 
@@ -27,21 +28,11 @@ public abstract class StellarObject : IStellarObject, IAbstractDataObject
 		StoredResources = new ResourceQuantity();
 	}
 
-	// TODO - rename to IntrinsicAbilities in IAbilityContainer and remove DoNotSerialize
-	[DoNotSerialize]
-	public IList<Ability> Abilities
-	{
-		get
-		{
-			return IntrinsicAbilities;
-		}
-		set
-		{
-			IntrinsicAbilities = value;
-		}
-	}
-
 	public abstract AbilityTargets AbilityTarget { get; }
+
+	public Point Coordinates { get; set; }
+
+	public IEnumerable<Ability> Abilities { get; set; }
 
 	public virtual bool CanBeInFleet
 	{
@@ -138,10 +129,7 @@ public abstract class StellarObject : IStellarObject, IAbstractDataObject
 	/// </summary>
 	public IList<Ability> IntrinsicAbilities { get; private set; }
 
-	IEnumerable<Ability> IAbilityObject.IntrinsicAbilities
-	{
-		get { return IntrinsicAbilities; }
-	}
+	IEnumerable<Ability> IAbilityObject.IntrinsicAbilities => IntrinsicAbilities;
 
 	public bool IsDisposed { get; set; }
 

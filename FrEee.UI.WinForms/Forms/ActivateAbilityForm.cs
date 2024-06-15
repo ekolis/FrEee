@@ -11,8 +11,7 @@ using System.Windows.Forms;
 using FrEee.Objects.Technology;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.Orders;
-using FrEee.Extensions;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -55,7 +54,7 @@ public partial class ActivateAbilityForm : GameForm
 			// TODO - "Space Object Destroyed On Use" ability
 			if (sel.IsDestroyedOnUse)
 			{
-				IAbilityObject toBeDestroyed = sel.Source is IHull ? sobj : sel.Source;
+				IEntity toBeDestroyed = sel.Source is IHull ? sobj : sel.Source;
 				result = MessageBox.Show("Activate this ability of " + sel.Source + "?\n" + sel.Ability + "\n" + toBeDestroyed + " will be destroyed!", "Confirm Activation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 			}
 			else
@@ -67,7 +66,7 @@ public partial class ActivateAbilityForm : GameForm
 				IReferrable target = null;
 				string targetType = "targets";
 				var abil = sel.Ability as Ability;
-				var src = sel.Source as IAbilityObject;
+				var src = sel.Source as IEntity;
 
 				Func<string> customCheck = () => null; // custom check for space objects being able to do stuff
 													   // TODO - move custom check functions into a utility class for use on the server side too

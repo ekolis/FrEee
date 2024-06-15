@@ -8,6 +8,7 @@ using FrEee.Extensions;
 using NUnit.Framework;
 using System.Drawing;
 using FrEee.Objects.GameState;
+using FrEee.Ecs;
 
 namespace FrEee.Tests.Objects.Vehicles;
 

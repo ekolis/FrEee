@@ -7,7 +7,7 @@ using NUnit.Framework;
 using System.Drawing;
 using FrEee.Objects.Technology;
 using FrEee.Objects.GameState;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 
 namespace FrEee.Tests.Objects.Abilities;
 
@@ -77,11 +77,11 @@ public class AbilityTest
 		{
 			Name = "Ion Engine"
 		};
-		engineTemplate.Abilities.Add(new Ability(
+		engineTemplate.Abilities = [new Ability(
 			engineTemplate,
 			AbilityRule.Find("Standard Ship Movement"),
 			null,
-			1));
+			1)];
 
 		// add some engines
 		int numEngines = 6;

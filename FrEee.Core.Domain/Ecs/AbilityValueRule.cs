@@ -1,6 +1,6 @@
 ﻿using FrEee.Utility;
 using FrEee.Utility;
-namespace FrEee.Modding.Abilities;
+namespace FrEee.Ecs;
 
 /// <summary>
 /// Rules for grouping and stacking ability values within a group of similar abilities.

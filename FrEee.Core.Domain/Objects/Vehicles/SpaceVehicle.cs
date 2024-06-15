@@ -9,10 +9,10 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
 using FrEee.Utility;
 using FrEee.Serialization;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
+using System.Drawing;
 
 namespace FrEee.Objects.Vehicles;
 
@@ -28,6 +28,8 @@ public abstract class SpaceVehicle : Vehicle, IMobileSpaceObject<SpaceVehicle>
 		Orders = new List<IOrder>();
 		StoredResources = new ResourceQuantity();
 	}
+
+	public Point Coordinates { get; set; }
 
 	/// <summary>
 	/// Are this object's orders on hold?

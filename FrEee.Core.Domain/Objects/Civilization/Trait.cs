@@ -4,7 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using FrEee.Objects.GameState;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
+using System.Linq;
 
 namespace FrEee.Objects.Civilization;
 
@@ -12,7 +13,7 @@ namespace FrEee.Objects.Civilization;
 /// A trait that grants abilities to an empire or race.
 /// </summary>
 [Serializable]
-public class Trait : IModObject, IAbilityObject, IUnlockable
+public class Trait : IModObject, IEntity, IUnlockable
 {
 	public Trait()
 	{
@@ -21,10 +22,7 @@ public class Trait : IModObject, IAbilityObject, IUnlockable
 		RestrictedTraits = new List<Trait>();
 	}
 
-	/// <summary>
-	/// Abilities granted by this trait.
-	/// </summary>
-	public IList<Ability> Abilities { get; private set; }
+	public IEnumerable<Ability> Abilities { get; set; }
 
 	public AbilityTargets AbilityTarget
 	{

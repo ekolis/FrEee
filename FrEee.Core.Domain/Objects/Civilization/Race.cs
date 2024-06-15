@@ -10,7 +10,7 @@ using System.IO;
 using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Utility;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Civilization;
 
@@ -18,7 +18,7 @@ namespace FrEee.Objects.Civilization;
 /// A race of beings.
 /// </summary>
 [Serializable]
-public class Race : INamed, IAbilityObject, IPictorial, IReferrable
+public class Race : INamed, IEntity, IPictorial, IReferrable
 {
 	public Race()
 	{
@@ -26,10 +26,7 @@ public class Race : INamed, IAbilityObject, IPictorial, IReferrable
 		Aptitudes = new SafeDictionary<string, int>();
 	}
 
-	public IEnumerable<Ability> Abilities
-	{
-		get { return Traits.SelectMany(t => t.Abilities); }
-	}
+	public IEnumerable<Ability> Abilities { get; set; }
 
 	public AbilityTargets AbilityTarget
 	{

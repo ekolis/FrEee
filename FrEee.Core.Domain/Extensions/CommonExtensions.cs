@@ -23,10 +23,10 @@ using FrEee.Serialization;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
 using FrEee.Utility;
 using FrEee.Processes.Combat;
 using System.Numerics;
+using FrEee.Ecs;
 
 namespace FrEee.Extensions;
 
@@ -405,16 +405,6 @@ public static class CommonExtensions
 		return containers.Single();
 	}
 
-	/// <summary>
-	/// Finds the coordinates of a space object within its star system.
-	/// </summary>
-	/// <param name="sobj"></param>
-	/// <returns></returns>
-	public static Point FindCoordinates(this ISpaceObject sobj)
-	{
-		return sobj.FindStarSystem().FindCoordinates(sobj);
-	}
-
 	public static T FindMemory<T>(this T f, Empire emp) where T : IFoggable, IReferrable
 	{
 		if (f == null)
@@ -480,9 +470,10 @@ public static class CommonExtensions
 	{
 		var sys = sobj.FindStarSystem();
 		if (sys == null)
+		{
 			return null;
-		// TODO - this might be kind of slow; might want a reverse memory lookup
-		return new Sector(sys, sys.SpaceObjectLocations.Single(l => l.Item == sobj).Location);
+		}
+		return new Sector(sys, sobj.Coordinates);
 	}
 
 	/// <summary>

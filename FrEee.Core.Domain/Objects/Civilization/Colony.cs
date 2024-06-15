@@ -12,7 +12,7 @@ using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Extensions;
 using FrEee.Utility;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Civilization;
 
@@ -28,6 +28,8 @@ public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>, II
 		Population = new SafeDictionary<Race, long>();
 		Cargo = new Cargo();
 	}
+
+	public ISet<IAbility> Abilities { get; set; } = new HashSet<IAbility>();
 
 	public AbilityTargets AbilityTarget
 	{
@@ -58,7 +60,7 @@ public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>, II
 	{
 		get
 		{
-			return Facilities.Cast<IAbilityObject>().Concat(Cargo.Units.Cast<IAbilityObject>());
+			return Facilities.Cast<IEntity>().Concat(Cargo.Units.Cast<IEntity>());
 		}
 	}
 

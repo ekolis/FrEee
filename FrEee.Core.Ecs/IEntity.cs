@@ -8,19 +8,27 @@ using Microsoft.VisualBasic;
 namespace FrEee.Ecs
 {
 	/// <summary>
-	/// An entity in the ECS. Can contain <see cref="Ability"/>s.
+	/// An entity in the ECS. Can contain <see cref="IAbility"/>s.
 	/// </summary>
-	public interface IEntity
+	public interface IEntity<TAbility>
+		where TAbility : IAbility
 	{
 		/// <summary>
 		/// The abilities of the entity.
 		/// </summary>
-		ISet<IAbility> Abilities { get; }
+		IEnumerable<TAbility> Abilities { get; set; }
 
 		/// <summary>
-		/// Performs an interaction on this entity.
+		/// Performs an <see cref="IInteraction"> on this entity.
+		/// By default this uses the intrinsic ability sort order.
 		/// </summary>
 		/// <param name="interaction"></param>
-		void Interact(IInteraction interaction);
+		void Interact(IInteraction interaction)
+		{
+			foreach (var ability in Abilities)
+			{
+				ability.Interact(interaction);
+			}
+		}
 	}
 }

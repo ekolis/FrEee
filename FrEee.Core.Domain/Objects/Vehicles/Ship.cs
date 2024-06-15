@@ -1,4 +1,4 @@
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 using FrEee.Processes.Combat;
 using System;
 

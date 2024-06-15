@@ -31,7 +31,8 @@ public abstract class MajorSpaceVehicle : SpaceVehicle, ICargoTransferrer, ICons
 			throw new Exception("Can't place newly constructed vehicle near " + target + " because the target is not in any known sector.");
 		var sys = search.First().StarSystem;
 		var coords = search.First().Sector.Coordinates;
-		sys.SpaceObjectLocations.Add(new ObjectLocation<ISpaceObject>(this, coords));
+		sys.SpaceObjects.Add((this));
+		Coordinates = coords;
 	}
 
 	public long AddPopulation(Race race, long amount)

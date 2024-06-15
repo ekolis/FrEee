@@ -10,7 +10,7 @@ using System.Drawing;
 using System.IO;
 using FrEee.Objects.GameState;
 using FrEee.Serialization;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Technology;
 
@@ -29,7 +29,7 @@ public class Hull<T> : IHull<T> where T : IVehicle
 		Cost = new ResourceQuantity();
 	}
 
-	public IList<Ability> Abilities { get; private set; }
+	public IEnumerable<Ability> Abilities { get; set; }
 
 	public AbilityTargets AbilityTarget
 	{

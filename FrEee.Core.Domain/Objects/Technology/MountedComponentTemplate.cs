@@ -13,7 +13,7 @@ using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Utility;
 using FrEee.Serialization;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Technology;
 
@@ -21,7 +21,7 @@ namespace FrEee.Objects.Technology;
 /// A combination of component template and mount.
 /// </summary>
 [Serializable]
-public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityObject, IPromotable, IContainable<IDesign>, IFormulaHost, IUpgradeable<MountedComponentTemplate>, IPictorial
+public class MountedComponentTemplate : ITemplate<Component>, INamed, IEntity, IPromotable, IContainable<IDesign>, IFormulaHost, IUpgradeable<MountedComponentTemplate>, IPictorial
 {
 	public MountedComponentTemplate(IDesign container, ComponentTemplate ct, Mount mount = null)
 	{
@@ -37,6 +37,10 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityOb
 			if (abilities == null)
 				abilities = ComponentTemplate.Abilities.Select(a => ComputeAbility(a)).ToArray();
 			return abilities;
+		}
+		set
+		{
+			// can't set mounted component templpate's abilities - set abilities of component template or mount instead
 		}
 	}
 

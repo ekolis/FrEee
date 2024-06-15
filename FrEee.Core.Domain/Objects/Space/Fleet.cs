@@ -14,11 +14,10 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
 using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Processes.Combat;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Space;
 
@@ -33,6 +32,10 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 		Orders = new List<IOrder>();
 		Timestamp = Galaxy.Current?.Timestamp ?? 0;
 	}
+
+	public Point Coordinates { get; set; }
+
+	public IEnumerable<Ability> Abilities { get; set; }
 
 	public AbilityTargets AbilityTarget
 	{
@@ -120,7 +123,7 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 
 	public IEnumerable<IAbilityObject> Children
 	{
-		get { return Vehicles; }
+		get { return Vehicles.Cast<IEntity>(); }
 	}
 
 	/// <summary>

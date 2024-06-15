@@ -11,7 +11,7 @@ using System.Linq;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Serialization;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Technology;
 
@@ -19,7 +19,7 @@ namespace FrEee.Objects.Technology;
 /// A template for a facility.
 /// </summary>
 [Serializable]
-public class FacilityTemplate : IModObject, IResearchable, IAbilityContainer, ITemplate<Facility>, IConstructionTemplate, IUpgradeable<FacilityTemplate>
+public class FacilityTemplate : IModObject, IResearchable, IEntity, ITemplate<Facility>, IConstructionTemplate, IUpgradeable<FacilityTemplate>
 {
 	public FacilityTemplate()
 	{
@@ -28,10 +28,7 @@ public class FacilityTemplate : IModObject, IResearchable, IAbilityContainer, IT
 		Cost = new ResourceFormula(this);
 	}
 
-	/// <summary>
-	/// Abilities possessed by this facility.
-	/// </summary>
-	public IList<Ability> Abilities { get; private set; }
+	public IEnumerable<Ability> Abilities { get; set; }
 
 	public AbilityTargets AbilityTarget
 	{

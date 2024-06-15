@@ -15,9 +15,8 @@ using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
 using FrEee.Utility;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Vehicles;
 
@@ -178,7 +177,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 
 	public IEnumerable<IAbilityObject> Children
 	{
-		get { return new IAbilityObject[] { Hull }.Concat(Components); }
+		get { return new IEntity[] { Hull }.Concat(Components); }
 	}
 
 	public double CombatSpeed

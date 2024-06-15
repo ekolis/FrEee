@@ -7,7 +7,7 @@ using System.Globalization;
 using System.Linq;
 using FrEee.Utility;
 
-namespace FrEee.Modding.Abilities;
+namespace FrEee.Ecs;
 
 /// <summary>
 /// A rule for grouping and stacking abilities.

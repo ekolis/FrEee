@@ -1,5 +1,5 @@
-﻿using FrEee.Extensions;
-using FrEee.Modding.Abilities;
+﻿using FrEee.Ecs;
+using FrEee.Extensions;
 
 namespace FrEee.Objects.Civilization.Diplomacy.Clauses;
 

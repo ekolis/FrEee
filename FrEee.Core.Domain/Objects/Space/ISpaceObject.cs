@@ -1,9 +1,10 @@
-using FrEee.Modding.Abilities;
+using System.Drawing;
+using FrEee.Ecs;
 using FrEee.Objects.GameState;
 using FrEee.Utility;
 namespace FrEee.Objects.Space;
 
-public interface ISpaceObject : IOwnableAbilityObject, IPictorial, IReferrable, IFoggable, INamed, ILocated
+public interface ISpaceObject : IEntity, IOwnableAbilityObject, IPictorial, IReferrable, IFoggable, INamed, ILocated
 {
     /// <summary>
     /// Can this space object be placed in a fleet?
@@ -51,4 +52,9 @@ public interface ISpaceObject : IOwnableAbilityObject, IPictorial, IReferrable, 
     /// Supply storage capacity.
     /// </summary>
     int SupplyStorage { get; }
+
+    /// <summary>
+    /// The coordinates of this space object within its <see cref="StarSystem"/>.
+    /// </summary>
+    Point Coordinates { get; set; }
 }

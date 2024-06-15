@@ -13,7 +13,8 @@ using FrEee.Objects.GameState;
 using FrEee.Extensions;
 using FrEee.Utility;
 using FrEee.Processes.Combat;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
+using System.Collections.Immutable;
 
 namespace FrEee.Objects.Technology;
 
@@ -22,7 +23,7 @@ namespace FrEee.Objects.Technology;
 /// TODO - should Component implement IOwnable like Facility does?
 /// </summary>
 [Serializable]
-public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IContainable<IVehicle>, IFormulaHost, IUpgradeable<Component>
+public class Component : IEntity, INamed, IPictorial, IDamageable, IContainable<IVehicle>, IFormulaHost, IUpgradeable<Component>
 {
 	public Component(IVehicle container, MountedComponentTemplate template)
 	{
@@ -36,9 +37,13 @@ public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IConta
 		get
 		{
 			if (IsDestroyed)
-				return Enumerable.Empty<Ability>();
+				return Enumerable.Empty<Ability>().ToImmutableHashSet();
 			else
-				return Template.Abilities;
+				return Template.Abilities.ToImmutableHashSet();
+		}
+		set
+		{
+			// can't set abilities of component - set the template's or mount's abilities
 		}
 	}
 

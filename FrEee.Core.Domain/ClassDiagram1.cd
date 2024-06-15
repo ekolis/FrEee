@@ -2200,7 +2200,7 @@
       <FileName>Game\Interfaces\IAbilityObject.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="FrEee.Interfaces.IAbilityContainer" Collapsed="true">
+  <Interface Name="FrEee.Interfaces.IAbilityObject" Collapsed="true">
     <Position X="17.75" Y="18.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>

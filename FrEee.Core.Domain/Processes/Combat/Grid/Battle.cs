@@ -14,6 +14,7 @@ using System.Linq;
 using static System.Math;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
+using FrEee.Ecs;
 
 namespace FrEee.Processes.Combat.Grid;
 

@@ -15,7 +15,7 @@ using FrEee.Objects.GameState;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Processes.Combat;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 namespace FrEee.Extensions;
 
 public static class ChecksExtensions

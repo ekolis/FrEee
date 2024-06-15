@@ -1,6 +1,7 @@
-﻿using FrEee.Modding.Abilities;
+﻿using FrEee.Ecs;
 using FrEee.Objects.Civilization;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 
 namespace FrEee.Modding.Loaders;
@@ -32,6 +33,7 @@ public class TraitLoader : DataFileLoader
 			t.Description = rec.Get<string>("Description", t, ref index);
 			t.Cost = rec.Get<int>("Cost", t, ref index);
 
+			var abilities = new List<Ability>();
 			for (int count = 1; ; count++)
 			{
 				var f = rec.FindField(new string[] { "Trait Type", "Trait Type " + count }, ref index, false, index + 1);
@@ -46,10 +48,11 @@ public class TraitLoader : DataFileLoader
 						break;
 					abil.Values.Add(vf.Value);
 				}
-				t.Abilities.Add(abil);
+				abilities.Add(abil);
 			}
+			t.Abilities = [.. abilities];
 
-			if (t.Abilities.Count == 0)
+			if (!t.Abilities.Any())
 				Mod.Errors.Add(new DataParsingException("Trait \"" + t.Name + "\" does not have any abilities.", Mod.CurrentFileName, rec));
 
 			yield return t;

@@ -4,6 +4,7 @@ using FrEee.Extensions;
 using System.Drawing;
 using System.Linq;
 using FrEee.Objects.GameState;
+using FrEee.Ecs;
 
 namespace FrEee.UI.WinForms.Objects.GalaxyViewModes;
 

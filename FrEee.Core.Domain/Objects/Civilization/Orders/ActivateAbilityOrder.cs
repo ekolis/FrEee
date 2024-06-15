@@ -8,9 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.Technology;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
 using FrEee.Processes.Combat;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Civilization.Orders;
 
@@ -19,7 +18,7 @@ namespace FrEee.Objects.Civilization.Orders;
 /// </summary>
 public class ActivateAbilityOrder : IOrder
 {
-    public ActivateAbilityOrder(IReferrableAbilityObject source, Ability ability, IReferrable target)
+    public ActivateAbilityOrder(IReferrableEntity source, Ability ability, IReferrable target)
     {
         Owner = Empire.Current;
         Source = source;
@@ -67,7 +66,7 @@ public class ActivateAbilityOrder : IOrder
     /// TODO - fix this now that Component/Facility/Hull are no longer referrable
     /// </summary>
     [DoNotSerialize]
-    public IReferrableAbilityObject Source { get { return source.Value; } set { source = value.ReferViaGalaxy(); } }
+    public IReferrableEntity Source { get { return source.Value; } set { source = value.ReferViaGalaxy(); } }
 
     /// <summary>
     /// What are we activating the ability "against"? Like, what warp point are we destroying, or whatever? Or null if there's no relevant target
@@ -77,7 +76,7 @@ public class ActivateAbilityOrder : IOrder
 
     private GalaxyReference<Ability> ability { get; set; }
     private GalaxyReference<Empire> owner { get; set; }
-    private GalaxyReference<IReferrableAbilityObject> source { get; set; }
+    private GalaxyReference<IReferrableEntity> source { get; set; }
     private GalaxyReference<IReferrable> target { get; set; }
 
     public bool CheckCompletion(IOrderable executor)

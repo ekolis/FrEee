@@ -7,7 +7,8 @@ using NUnit.Framework;
 using System.Drawing;
 using FrEee.Objects.Technology;
 using FrEee.Objects.GameState;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
+using System.Linq;
 
 namespace FrEee.Tests.Objects.Vehicles;
 
@@ -143,7 +144,7 @@ public class CloakingTest
 	public void NebulaCantSee()
 	{
 		AddSensorAbility(destroyer.Hull, "Foobar", 1);
-		sys.Abilities.Add(new Ability(sys, Mod.Current.AbilityRules.FindByName("System - Sight Obscuration"), null, 999));
+		sys.Abilities = [new Ability(sys, Mod.Current.AbilityRules.FindByName("System - Sight Obscuration"), null, 999)];
 		Assert.IsTrue(submarine.IsHiddenFrom(seekers), "Submarine should be hidden.");
 	}
 
@@ -186,7 +187,7 @@ public class CloakingTest
 	{
 		AddSensorAbility(destroyer.Hull, "Foobar", 1);
 		var storm = new Storm();
-		storm.Abilities.Add(new Ability(sys, Mod.Current.AbilityRules.FindByName("Sector - Sight Obscuration"), null, 999));
+		storm.Abilities = [new Ability(sys, Mod.Current.AbilityRules.FindByName("Sector - Sight Obscuration"), null, 999)];
 		sys.Place(storm, new Point());
 		Assert.IsTrue(submarine.IsHiddenFrom(seekers), "Submarine should be hidden.");
 	}
@@ -198,16 +199,16 @@ public class CloakingTest
 	private void AddCloakAbility(IHull hull, string sightType, int level)
 	{
 		var a = new Ability(hull);
-		hull.Abilities.Add(a);
+		hull.Abilities = hull.Abilities.Append(a);
 		a.Rule = Mod.Current.AbilityRules.FindByName("Cloak Level");
 		a.Values.Add(sightType);
 		a.Values.Add(level.ToString());
 	}
 
-	private void AddObscurationAbility(IAbilityContainer obj, int level)
+	private void AddObscurationAbility(IEntity obj, int level)
 	{
 		var a = new Ability(obj);
-		obj.Abilities.Add(a);
+		obj.Abilities = obj.Abilities.Append(a);
 		a.Rule = Mod.Current.AbilityRules.FindByName("Sector - Sight Obscuration");
 		a.Values.Add(level.ToString());
 	}
@@ -215,7 +216,7 @@ public class CloakingTest
 	private void AddSensorAbility(IHull hull, string sightType, int level)
 	{
 		var a = new Ability(hull);
-		hull.Abilities.Add(a);
+		hull.Abilities = hull.Abilities.Append(a);
 		a.Rule = Mod.Current.AbilityRules.FindByName("Sensor Level");
 		a.Values.Add(sightType);
 		a.Values.Add(level.ToString());

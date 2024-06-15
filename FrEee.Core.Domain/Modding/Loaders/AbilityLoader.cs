@@ -1,4 +1,4 @@
-﻿using FrEee.Modding.Abilities;
+﻿using FrEee.Ecs;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,7 +10,7 @@ public static class AbilityLoader
 	/// Loads abilities from a record.
 	/// </summary>
 	/// <param name="rec"></param>
-	public static IEnumerable<Ability> Load(string filename, Record rec, IAbilityContainer obj)
+	public static IEnumerable<Ability> Load(string filename, Record rec, IEntity obj)
 	{
 		int count = 0;
 		int index = -1;

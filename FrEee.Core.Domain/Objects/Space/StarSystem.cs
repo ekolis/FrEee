@@ -11,7 +11,7 @@ using FrEee.Serialization;
 using FrEee.Extensions;
 using FrEee.Objects.GameState;
 using FrEee.Utility;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Space;
 
@@ -20,7 +20,7 @@ namespace FrEee.Objects.Space;
 /// Is always square and always has an odd number of sectors across.
 /// </summary>
 [Serializable]
-public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObject, IAbilityContainer
+public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObject, IEntity
 {
 	/// <summary>
 	/// Creates a star system.
@@ -29,22 +29,20 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 	public StarSystem(int radius)
 	{
 		Radius = radius;
-		Abilities = new List<Ability>();
-		SpaceObjectLocations = new HashSet<ObjectLocation<ISpaceObject>>();
 		ExploredByEmpires = new HashSet<Empire>();
 	}
 
 	/// <summary>
 	/// Any special abilities possessed by this star system.
 	/// </summary>
-	public IList<Ability> Abilities { get; private set; }
+	public IEnumerable<Ability> Abilities { get; set; }
 
 	public AbilityTargets AbilityTarget
 	{
 		get { return AbilityTargets.StarSystem; }
 	}
 
-	public Image BackgroundImage
+	public Image? BackgroundImage
 	{
 		get
 		{
@@ -64,21 +62,10 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 	public string BackgroundImagePath { get; set; }
 
 	public IEnumerable<IAbilityObject> Children
-	{
-		get
-		{
-			foreach (var l in SpaceObjectLocations)
-				yield return l.Item;
-		}
-	}
+		=> SpaceObjects.Entities.Cast<IEntity>();
 
 	public Point Coordinates
-	{
-		get
-		{
-			return Location.Location;
-		}
-	}
+		=> Location.Location;
 
 	/// <summary>
 	/// The description of this star system.
@@ -210,12 +197,7 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 		}
 	}
 
-	/// <summary>
-	/// The space objects contained in this star system.
-	/// </summary>
-	public ICollection<ObjectLocation<ISpaceObject>> SpaceObjectLocations { get; private set; }
-
-	public IEnumerable<ISpaceObject> SpaceObjects { get { return FindSpaceObjects<ISpaceObject>(); } }
+	public Repository<ISpaceObject, Ability> SpaceObjects { get; } = new();
 
 	public double Timestamp { get; set; }
 
@@ -246,17 +228,15 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 		return Visibility.Unknown;
 	}
 
-	public bool Contains(ISpaceObject sobj)
-	{
-		return SpaceObjectLocations.Any(l => l.Item == sobj);
-	}
+	public bool Contains(ISpaceObject sobj) =>
+		SpaceObjects.Contains(sobj);
 
 	public void Dispose()
 	{
 		if (IsDisposed)
+		{
 			return;
-		if (IsDisposed)
-			return;
+		}
 		Galaxy.Current.UnassignID(this);
 		if (!IsMemory)
 			this.UpdateEmpireMemories();
@@ -272,20 +252,8 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 	/// <returns></returns>
 	public bool DoesSectorHaveAbility(Point coords, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 	{
-		var sobjs = FindSpaceObjects<ISpaceObject>().Where(o => o.Owner == emp && o.FindCoordinates() == coords);
+		var sobjs = FindSpaceObjects<ISpaceObject>().Where(o => o.Owner == emp && o.Coordinates == coords);
 		return sobjs.SelectMany(o => o.UnstackedAbilities(true)).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Any();
-	}
-
-	public Point FindCoordinates(ISpaceObject sobj)
-	{
-		try
-		{
-			return SpaceObjectLocations.Single(l => l.Item == sobj).Location;
-		}
-		catch (Exception ex)
-		{
-			throw new Exception("Can't find coordinates of " + sobj + " in " + this + ".", ex);
-		}
 	}
 
 	/// <summary>
@@ -296,12 +264,12 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 	/// <returns>The matching space objects.</returns>
 	public IEnumerable<T> FindSpaceObjects<T>(Func<T, bool> criteria = null)
 	{
-		return SpaceObjectLocations.Select(l => l.Item).OfType<T>().Where(l => criteria == null || criteria(l));
+		return SpaceObjects.OfType<T>().Where(l => criteria == null || criteria(l));
 	}
 
-	public IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp)
+	public IEnumerable<IEntity> GetContainedAbilityObjects(Empire emp)
 	{
-		return SpaceObjectLocations.Select(l => l.Item).Where(sobj => sobj?.Owner == emp).OfType<IAbilityObject>();
+		return SpaceObjects.Where(sobj => sobj?.Owner == emp).OfType<IEntity>();
 	}
 
 	public Sector GetSector(int x, int y)
@@ -350,7 +318,8 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 		else
 			sobj.Sector = new Sector(this, coords);
 
-		SpaceObjectLocations.Add(new ObjectLocation<ISpaceObject>(sobj, coords));
+		SpaceObjects.Add(sobj);
+		sobj.Coordinates = coords;
 
 		MarkAsExploredBy(sobj.Owner);
 
@@ -375,17 +344,13 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 			BackgroundImagePath = null;
 			Name = "(Unexplored)";
 			Description = "An unexplored star system. Who knows what lies in wait here?";
-			Abilities.Clear();
+			Abilities = [];
 		}
 	}
 
 	public void Remove(ISpaceObject sobj)
 	{
-		foreach (var l in SpaceObjectLocations.ToArray())
-		{
-			if (l.Item == sobj)
-				SpaceObjectLocations.Remove(l);
-		}
+		SpaceObjects.Remove(sobj);
 	}
 
 	public override string ToString()

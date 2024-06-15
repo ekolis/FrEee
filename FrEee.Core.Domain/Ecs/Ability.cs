@@ -9,13 +9,13 @@ using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Utility;
 
-namespace FrEee.Modding.Abilities;
+namespace FrEee.Ecs;
 
 /// <summary>
 /// A special ability of some game object, or just a tag used by the AI or by modders.
 /// </summary>
 [Serializable]
-public class Ability : IContainable<IAbilityObject>, IReferrable, IModObject, IDataObject, IFormulaHost
+public class Ability : IAbility, IContainable<IAbilityObject>, IReferrable, IModObject, IDataObject, IFormulaHost
 {
     public Ability(IAbilityObject container)
     {
@@ -49,6 +49,8 @@ public class Ability : IContainable<IAbilityObject>, IReferrable, IModObject, ID
         }
     }
 
+    public virtual void Interact(IInteraction interaction) { }
+
     [DoNotCopy]
     public IAbilityObject Container { get; private set; }
 
@@ -72,7 +74,7 @@ public class Ability : IContainable<IAbilityObject>, IReferrable, IModObject, ID
             rule = value[nameof(rule)].Default<ModReference<AbilityRule>>();
             Description = value[nameof(Description)].Default<Formula<string>>();
             Values = value[nameof(Values)].Default<IList<Formula<string>>>();
-            Container = value[nameof(Container)].Default<IAbilityObject>();
+            Container = value[nameof(Container)].Default<IEntity>();
             ID = value[nameof(ID)].Default<long>();
             IsDisposed = value[nameof(IsDisposed)].Default<bool>();
             ModID = value[nameof(ModID)].Default<string>();
@@ -192,8 +194,8 @@ public class Ability : IContainable<IAbilityObject>, IReferrable, IModObject, ID
     {
         if (IsDisposed)
             return;
-        if (Container is IAbilityContainer)
-            (Container as IAbilityContainer).Abilities.Remove(this);
+        //if (Container is IEntity)
+          //  (Container as IEntity).Abilities.Remove(this);
         Galaxy.Current.UnassignID(this);
     }
 

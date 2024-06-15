@@ -8,7 +8,7 @@ using System.IO;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Vehicles;
 using FrEee.Processes.Combat;
-using FrEee.Modding.Abilities;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Technology;
 
