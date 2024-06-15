@@ -199,7 +199,7 @@ public class CloakingTest
 	private void AddCloakAbility(IHull hull, string sightType, int level)
 	{
 		var a = new Ability(hull);
-		hull.Abilities = hull.Abilities.Append(a);
+		hull.Abilities = hull.Abilities.Append(a).ToList();
 		a.Rule = Mod.Current.AbilityRules.FindByName("Cloak Level");
 		a.Values.Add(sightType);
 		a.Values.Add(level.ToString());
@@ -208,7 +208,7 @@ public class CloakingTest
 	private void AddObscurationAbility(IEntity obj, int level)
 	{
 		var a = new Ability(obj);
-		obj.Abilities = obj.Abilities.Append(a);
+		obj.Abilities = obj.Abilities.Append(a).ToList();
 		a.Rule = Mod.Current.AbilityRules.FindByName("Sector - Sight Obscuration");
 		a.Values.Add(level.ToString());
 	}
@@ -216,7 +216,7 @@ public class CloakingTest
 	private void AddSensorAbility(IHull hull, string sightType, int level)
 	{
 		var a = new Ability(hull);
-		hull.Abilities = hull.Abilities.Append(a);
+		hull.Abilities = hull.Abilities.Append(a).ToList();
 		a.Rule = Mod.Current.AbilityRules.FindByName("Sensor Level");
 		a.Values.Add(sightType);
 		a.Values.Add(level.ToString());

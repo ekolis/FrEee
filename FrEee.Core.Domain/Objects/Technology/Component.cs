@@ -14,7 +14,7 @@ using FrEee.Extensions;
 using FrEee.Utility;
 using FrEee.Processes.Combat;
 using FrEee.Ecs;
-using System.Collections.Immutable;
+
 
 namespace FrEee.Objects.Technology;
 
@@ -37,9 +37,9 @@ public class Component : IEntity, INamed, IPictorial, IDamageable, IContainable<
 		get
 		{
 			if (IsDestroyed)
-				return Enumerable.Empty<Ability>().ToImmutableHashSet();
+				return new List<Ability>();
 			else
-				return Template.Abilities.ToImmutableHashSet();
+				return Template.Abilities;
 		}
 		set
 		{

@@ -4,9 +4,10 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 using System;
-using System.Collections.Immutable;
+
 using System.IO;
 using FrEee.Utility;
+using System.Collections.Immutable;
 
 namespace FrEee.Modding;
 

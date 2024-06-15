@@ -9,7 +9,7 @@ using FrEee.Objects.Vehicles;
 using FrEee.Utility;
 using FrEee.Processes.Combat;
 using FrEee.Ecs;
-using System.Collections.Immutable;
+
 
 namespace FrEee.Modding.Loaders;
 
@@ -87,7 +87,7 @@ public class ComponentLoader : DataFileLoader
 
 			// TODO - build and use requirements
 
-			c.Abilities = AbilityLoader.Load(Filename, rec, c).ToImmutableList();
+			c.Abilities = AbilityLoader.Load(Filename, rec, c).ToList();
 
 			var wfield = rec.FindField("Weapon Type", ref index, false, 0, true);
 			if (wfield != null)

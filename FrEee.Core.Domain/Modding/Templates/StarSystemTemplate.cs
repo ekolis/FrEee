@@ -8,7 +8,7 @@ using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Utility;
 using FrEee.Ecs;
-using System.Collections.Immutable;
+
 
 namespace FrEee.Modding.Templates;
 
@@ -131,7 +131,7 @@ public class StarSystemTemplate : ITemplate<StarSystem>, IModObject, IEntity
 		sys.BackgroundImagePath = BackgroundImagePath;
 		sys.EmpiresCanStartIn = EmpiresCanStartIn;
 		sys.NonTiledCenterCombatImage = NonTiledCenterCombatImage;
-		sys.Abilities = Abilities.ToImmutableList();
+		sys.Abilities = Abilities.ToList();
 		sys.WarpPointAbilities = WarpPointAbilities; // warp points will be generated later in galaxy generation
 
 		var planets = new Dictionary<IStellarObjectLocation, Planet>();

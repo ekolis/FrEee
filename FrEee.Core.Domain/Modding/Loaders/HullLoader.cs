@@ -2,7 +2,7 @@
 using FrEee.Objects.Vehicles;
 using FrEee.Utility;
 using System.Collections.Generic;
-using System.Collections.Immutable;
+
 using System.Linq;
 
 namespace FrEee.Modding.Loaders;
@@ -91,7 +91,7 @@ public class HullLoader : DataFileLoader
 
 			// TODO - build and use requirements
 
-			hull.Abilities = AbilityLoader.Load(Filename, rec, hull).ToImmutableList();
+			hull.Abilities = AbilityLoader.Load(Filename, rec, hull).ToList();
 
 			hull.NeedsBridge = rec.Get<bool>("Requirement Must Have Bridge", hull);
 			hull.CanUseAuxiliaryControl = rec.Get<bool>("Requirement Can Have Aux Con", hull);

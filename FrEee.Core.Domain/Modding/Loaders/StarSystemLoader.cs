@@ -11,7 +11,7 @@ using Size = FrEee.Objects.Space.StellarSize;
 using FrEee.Objects.GameState;
 using FrEee.Extensions;
 using FrEee.Ecs;
-using System.Collections.Immutable;
+
 
 namespace FrEee.Modding.Loaders;
 
@@ -56,7 +56,7 @@ public class StarSystemLoader : DataFileLoader
 			rec.TryFindFieldValue("Non-Tiled Center Pic", out temp, ref index, Mod.Errors, 0, true);
 			sst.NonTiledCenterCombatImage = bool.Parse(temp);
 
-			sst.Abilities = AbilityLoader.Load(Filename, rec, sst).ToImmutableList();
+			sst.Abilities = AbilityLoader.Load(Filename, rec, sst).ToList();
 
 			sst.WarpPointAbilities = Mod.Current.StellarAbilityTemplates.FindByName(rec.Get<string>("WP Stellar Abil Type", sst));
 

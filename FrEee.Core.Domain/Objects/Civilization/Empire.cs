@@ -58,7 +58,7 @@ public class Empire : INamed, IFoggable, IEntity, IPictorial, IComparable<Empire
 		EnabledMinisters = new SafeDictionary<string, ICollection<string>>(); 
 	}
 
-	public IEnumerable<Ability> Abilities { get; set; } = new HashSet<Ability>();
+	public IEnumerable<Ability> Abilities { get; set; } = new List<Ability>();
 
 	/// <summary>
 	/// The current empire being controlled by the player.

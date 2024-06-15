@@ -3,7 +3,7 @@ using FrEee.Objects.Technology;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
+
 using System.Linq;
 
 namespace FrEee.Modding.Loaders;
@@ -51,7 +51,7 @@ public class FacilityLoader : DataFileLoader
 
 			// TODO - build and use requirements
 
-			f.Abilities = AbilityLoader.Load(Filename, rec, f).ToImmutableList();
+			f.Abilities = AbilityLoader.Load(Filename, rec, f).ToList();
 
 			yield return f;
 		}
