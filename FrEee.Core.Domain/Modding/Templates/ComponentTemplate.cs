@@ -14,6 +14,7 @@ using FrEee.Extensions;
 using FrEee.Serialization;
 using FrEee.Processes.Combat;
 using FrEee.Ecs;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Modding.Templates;
 

@@ -11,6 +11,7 @@ using FrEee.Objects.GameState;
 using FrEee.Extensions;
 using FrEee.Ecs;
 using System.Collections.Immutable;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Ecs;
 

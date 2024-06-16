@@ -11,6 +11,7 @@ using System.Linq;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Utility;
 using FrEee.Ecs;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Tests.Utility;
 

@@ -9,6 +9,7 @@ using FrEee.Objects.Technology;
 using FrEee.Objects.GameState;
 using FrEee.Ecs;
 using System.Linq;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Tests.Objects.Vehicles;
 

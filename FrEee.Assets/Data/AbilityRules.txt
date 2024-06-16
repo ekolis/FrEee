@@ -3,6 +3,7 @@
 =======================================================================================
 
 Name := Warp Point - Turbulence
+Type := WarpDamageAbility
 Targets := WarpPoint
 Description := Inflicts [%Amount1%] normal damage to vehicles traversing this warp point.
 Value 1 Rule := Add

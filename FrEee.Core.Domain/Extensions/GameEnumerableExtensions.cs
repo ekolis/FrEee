@@ -9,6 +9,7 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
 using FrEee.Modding;
 using FrEee.Ecs;
+using FrEee.Ecs.Abilities;
 namespace FrEee.Extensions;
 
 /// <summary>

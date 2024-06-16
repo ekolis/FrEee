@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Extensions;
-using FrEee.Ecs;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Processes.Setup.WarpPointPlacementStrategies;
 

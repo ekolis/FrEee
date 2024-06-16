@@ -28,6 +28,7 @@ using FrEee.Processes.Combat;
 using FrEee.Processes.Setup;
 using FrEee.Processes.Setup.WarpPointPlacementStrategies;
 using FrEee.Ecs;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Objects.GameState;
 

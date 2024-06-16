@@ -13,6 +13,7 @@ using FrEee.Serialization;
 using FrEee.Utility;
 using FrEee.Ecs;
 using System.Linq;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Objects.Space;
 

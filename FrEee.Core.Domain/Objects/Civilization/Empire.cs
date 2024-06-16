@@ -23,6 +23,7 @@ using FrEee.Utility;
 using FrEee.Processes.AI;
 using FrEee.Processes.Setup;
 using FrEee.Ecs;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Objects.Civilization;
 

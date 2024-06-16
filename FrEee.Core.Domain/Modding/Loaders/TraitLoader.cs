@@ -1,4 +1,4 @@
-﻿using FrEee.Ecs;
+﻿using FrEee.Ecs.Abilities;
 using FrEee.Objects.Civilization;
 using System.Collections.Generic;
 

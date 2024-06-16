@@ -30,6 +30,7 @@ public class AbilityRuleLoader : DataFileLoader
 
 			r.ModID = rec.Get<string>("ID", r);
 			r.Name = rec.Get<string>("Name", r, false);
+			r.AbilityTypeName = rec.Get<String>("Type", r, true) ?? "Ability";
 			r.Aliases = rec.GetMany<string>("Alias", r).Select(f => f.Value).ToList();
 			r.Targets = rec.Get<AbilityTargets>("Targets", r) ?? AbilityTargets.All;
 			r.Description = rec.Get<string>("Description", r);

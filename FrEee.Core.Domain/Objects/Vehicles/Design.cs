@@ -17,6 +17,7 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
 using FrEee.Utility;
 using FrEee.Ecs;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Objects.Vehicles;
 

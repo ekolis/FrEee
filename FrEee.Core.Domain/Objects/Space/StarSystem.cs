@@ -12,6 +12,7 @@ using FrEee.Extensions;
 using FrEee.Objects.GameState;
 using FrEee.Utility;
 using FrEee.Ecs;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Objects.Space;
 

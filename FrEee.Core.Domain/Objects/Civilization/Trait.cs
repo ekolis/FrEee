@@ -6,6 +6,7 @@ using System.Drawing;
 using FrEee.Objects.GameState;
 using FrEee.Ecs;
 using System.Linq;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Objects.Civilization;
 

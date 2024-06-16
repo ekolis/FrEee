@@ -16,6 +16,7 @@ using FrEee.Serialization;
 using FrEee.Utility;
 using FrEee.Processes.Combat;
 using FrEee.Ecs;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Objects.Technology;
 

@@ -18,6 +18,7 @@ using FrEee.Objects.GameState;
 using FrEee.Utility;
 using FrEee.Processes.Combat;
 using FrEee.Ecs;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Objects.Space;
 

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using FrEee.Utility;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Ecs;
 
@@ -287,5 +288,15 @@ public class AbilityRule : IModObject
             }
         }
         return results.ToLookup(kvp => kvp.Value, kvp => kvp.Key);
+    }
+
+    public string AbilityTypeName { get; set; } = "Ability";
+
+    // TODO: moddable ability types?
+    public Type AbilityType => new SafeType($"FrEee.Ecs.Abilities.{AbilityTypeName}").Type;
+
+    public Ability CreateAbility(IAbilityObject container, params string[] values)
+    {
+        return (Ability)AbilityType.Instantiate(container, this, Description, values);
     }
 }

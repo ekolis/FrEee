@@ -9,7 +9,7 @@ using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Utility;
 
-namespace FrEee.Ecs;
+namespace FrEee.Ecs.Abilities;
 
 /// <summary>
 /// A special ability of some game object, or just a tag used by the AI or by modders.
@@ -195,7 +195,7 @@ public class Ability : IAbility, IContainable<IAbilityObject>, IReferrable, IMod
         if (IsDisposed)
             return;
         //if (Container is IEntity)
-          //  (Container as IEntity).Abilities.Remove(this);
+        //  (Container as IEntity).Abilities.Remove(this);
         Galaxy.Current.UnassignID(this);
     }
 

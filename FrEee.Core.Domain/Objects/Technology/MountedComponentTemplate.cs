@@ -14,6 +14,7 @@ using FrEee.Objects.GameState;
 using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Ecs;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Objects.Technology;
 

@@ -8,6 +8,7 @@ using System.Drawing;
 using FrEee.Objects.Technology;
 using FrEee.Objects.GameState;
 using FrEee.Ecs;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Tests.Objects.Abilities;
 

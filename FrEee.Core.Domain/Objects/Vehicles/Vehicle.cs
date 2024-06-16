@@ -17,6 +17,7 @@ using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Processes.Combat;
 using FrEee.Ecs;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Objects.Vehicles;
 
