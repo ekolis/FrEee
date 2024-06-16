@@ -91,6 +91,8 @@ public abstract class StellarObject : IStellarObject, IAbstractDataObject
 			Timestamp = value[nameof(Timestamp)].Default<double>();
 			ModID = value[nameof(ModID)].Default<string>();
 			StoredResources = value[nameof(StoredResources)].Default(new ResourceQuantity());
+			Coordinates = value[nameof(Coordinates)].Default(new Point());
+			Abilities = value[nameof(Abilities)].Default(new List<Ability>());
 		}
 	}
 
