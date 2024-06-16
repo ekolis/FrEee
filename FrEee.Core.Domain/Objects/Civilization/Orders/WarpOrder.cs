@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Ecs;
+using FrEee.Ecs.Interactions;
 
 namespace FrEee.Objects.Civilization.Orders;
 
@@ -113,18 +114,12 @@ public class WarpOrder : IOrder
                 here.Remove(sobj);
 
                 // warp point turbulence damage?
-                if (WarpPoint.HasAbility("Warp Point - Turbulence"))
+                var interaction = new WarpInteraction(sobj, WarpPoint, Destination);
+                sobj.Interact(interaction);
+                if (sobj.IsDestroyed)
                 {
-                    var dmg = WarpPoint.GetAbilityValue("Warp Point - Turbulence").ToInt();
-                    sobj.TakeNormalDamage(dmg);
-                    if (sobj.IsDestroyed)
-                    {
-                        sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " was destroyed by turbulence when traversing " + WarpPoint + ".", LogMessageType.Generic));
-                        IsComplete = true;
-                        return;
-                    }
-                    else
-                        sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " took " + dmg + " points of damage from turbulence when traversing " + WarpPoint + ".", LogMessageType.Generic));
+                    IsComplete = true;
+                    return;
                 }
 
                 sobj.Sector = WarpPoint.Target;
