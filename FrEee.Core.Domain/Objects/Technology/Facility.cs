@@ -23,7 +23,7 @@ namespace FrEee.Objects.Technology;
 /// A large immobile installation on a colony.
 /// </summary>
 [Serializable]
-public class Facility : IOwnableAbilityObject, IConstructable, IDamageable, IDisposable, IContainable<Planet>, IFormulaHost, IRecyclable, IUpgradeable<Facility>, IDataObject
+public class Facility : IEntity, IOwnableAbilityObject, IConstructable, IDamageable, IDisposable, IContainable<Planet>, IFormulaHost, IRecyclable, IUpgradeable<Facility>, IDataObject
 {
 	public Facility(FacilityTemplate template)
 	{
@@ -32,9 +32,14 @@ public class Facility : IOwnableAbilityObject, IConstructable, IDamageable, IDis
 		Hitpoints = MaxHitpoints;
 	}
 
+	[DoNotSerialize]
 	public IEnumerable<Ability> Abilities
 	{
 		get { return Template.Abilities; }
+		set
+		{
+			// can't set facility abilities, set template's abilities instead
+		}
 	}
 
 	public AbilityTargets AbilityTarget
