@@ -575,7 +575,9 @@ public class GameSetup
             if (hw.Surface != emp.PrimaryRace.NativeSurface || hw.Atmosphere != emp.PrimaryRace.NativeAtmosphere || hw.Size != HomeworldSize)
             {
                 var replacementHomeworld = MakeHomeworld(emp, hw.Name, dice);
+                var coordinates = hw.Coordinates;
                 replacementHomeworld.CopyTo(hw);
+                hw.Coordinates = coordinates;
             }
             hw.ResourceValue[Resource.Minerals] = hw.ResourceValue[Resource.Organics] = hw.ResourceValue[Resource.Radioactives] = HomeworldValue;
             hw.Colony = new Colony
