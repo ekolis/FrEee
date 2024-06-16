@@ -32,6 +32,7 @@ public class Component : IEntity, INamed, IPictorial, IDamageable, IContainable<
 		Hitpoints = template.Durability;
 	}
 
+	[DoNotSerialize]
 	public IEnumerable<Ability> Abilities
 	{
 		get

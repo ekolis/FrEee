@@ -30,6 +30,7 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IEntity, I
 		Mount = mount;
 	}
 
+	[DoNotSerialize]
 	public IEnumerable<Ability> Abilities
 	{
 		get
