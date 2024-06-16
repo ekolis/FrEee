@@ -10,6 +10,7 @@ using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 using FrEee.Processes.Combat;
 using FrEee.Utility;
+using Microsoft.Scripting.Utils;
 
 namespace FrEee.Ecs.Abilities
 {
@@ -17,8 +18,11 @@ namespace FrEee.Ecs.Abilities
 	/// Damages vehicles that warp through a warp point.
 	/// </summary>
 	public class WarpDamageAbility(IAbilityObject container, AbilityRule rule, string? description, params string[] values)
+		// TODO: don't hardcode ability rule names
 		: Ability(container, AbilityRule.Find("Warp Point - Turbulence"), description, values)
 	{
+		public const string StatName = "Warp Damage";
+
 		public WarpDamageAbility(IAbilityObject container, AbilityRule rule, int damage)
 			 : this(container, rule, null, damage.ToString())
 		{
@@ -42,11 +46,13 @@ namespace FrEee.Ecs.Abilities
 					sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " took " + Damage + " points of damage from turbulence when traversing " + warp.WarpPoint + ".", LogMessageType.Generic));
 				}
 			}
-			if (interaction is GetStatsInteraction getStats)
+			if (interaction is GetStatNamesInteraction getStatNames)
 			{
-				getStats.AddValue("Warp Damage", Damage);
-				// TODO: load stacking rule from mod somehow
-				getStats.SetStackingRule("Warp Damage", new AdditionStackingRule());
+				getStatNames.StatNames.Add(StatName);
+			}
+			if (interaction is GetStatValueInteraction getStatValue && getStatValue.Stat.Name == StatName)
+			{
+				getStatValue.Stat.Values.Add(Damage);
 			}
 		}
 	}

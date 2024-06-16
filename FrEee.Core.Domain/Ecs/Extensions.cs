@@ -12,6 +12,8 @@ using FrEee.Extensions;
 using FrEee.Ecs;
 using System.Collections.Immutable;
 using FrEee.Ecs.Abilities;
+using FrEee.Ecs.Interactions;
+using FrEee.Ecs.Stats;
 
 namespace FrEee.Ecs;
 
@@ -350,6 +352,20 @@ public static class Extensions
             Galaxy.Current.CommonAbilityCache[Tuple.Create(obj, emp)] = abils.ToArray();
 
         return result;
+    }
+
+	public static IEnumerable<string> GetStatNames(this IEntity obj)
+	{
+		var interaction = new GetStatNamesInteraction(new HashSet<string>());
+		obj.Interact(interaction);
+        return interaction.StatNames;
+	}
+
+	public static decimal GetStatValue(this IEntity obj, StatType statType)
+    {
+        var interaction = new GetStatValueInteraction(new Stat(statType, []));
+        obj.Interact(interaction);
+        return interaction.Stat.Value;
     }
 
     /// <summary>
