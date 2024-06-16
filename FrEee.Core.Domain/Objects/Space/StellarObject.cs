@@ -73,6 +73,8 @@ public abstract class StellarObject : IStellarObject, IAbstractDataObject
 			dict[nameof(Timestamp)] = Timestamp;
 			dict[nameof(ModID)] = ModID;
 			dict[nameof(StoredResources)] = StoredResources;
+			dict[nameof(Coordinates)] = Coordinates;
+			dict[nameof(Abilities)] = Abilities;
 			return dict;
 		}
 		set
