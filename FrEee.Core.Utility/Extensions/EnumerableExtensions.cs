@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 using FrEee.Extensions;
 using FrEee.Utility;
@@ -71,6 +72,14 @@ public static class EnumerableExtensions
 	public static TProp MinOrDefault<TItem, TProp>(this IEnumerable<TItem> stuff, Func<TItem, TProp> selector)
 	{
 		return stuff.Select(selector).MinOrDefault();
+	}
+
+	public static T AverageOrDefault<T>(this IEnumerable<T> stuff)
+		where T : INumber<T>
+	{
+		if (!stuff.Any())
+			return default;
+		return stuff.Sum() / stuff.Sum(it => T.One);
 	}
 
 	/// <summary>

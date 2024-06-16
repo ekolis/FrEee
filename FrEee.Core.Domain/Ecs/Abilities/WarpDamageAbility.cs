@@ -9,6 +9,7 @@ using FrEee.Modding;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 using FrEee.Processes.Combat;
+using FrEee.Utility;
 
 namespace FrEee.Ecs.Abilities
 {
@@ -40,6 +41,12 @@ namespace FrEee.Ecs.Abilities
 				{
 					sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " took " + Damage + " points of damage from turbulence when traversing " + warp.WarpPoint + ".", LogMessageType.Generic));
 				}
+			}
+			if (interaction is GetStatsInteraction getStats)
+			{
+				getStats.AddValue("Warp Damage", Damage);
+				// TODO: load stacking rule from mod somehow
+				getStats.SetStackingRule("Warp Damage", new AdditionStackingRule());
 			}
 		}
 	}
