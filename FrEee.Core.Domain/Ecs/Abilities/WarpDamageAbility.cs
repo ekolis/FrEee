@@ -16,7 +16,7 @@ namespace FrEee.Ecs.Abilities
     /// Damages vehicles that warp through a warp point.
     /// </summary>
     public class WarpDamageAbility(IAbilityObject container, int damage)
-        : Ability(container)
+        : Ability(container, AbilityRule.Find("Warp Point - Turbulence"), null, damage)
     {
         public int Damage { get; private set; } = damage;
 
