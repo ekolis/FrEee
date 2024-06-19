@@ -74,7 +74,6 @@ public static class AbilityLoader
 			if (abil.Rule.AbilityType != typeof(Ability))
 			{
 				// it's an ECS ability, create that type instead
-				// TODO: create an ability factory/builder
 				abil = AbilityFactory.Build(abil.Rule.AbilityType, obj, abil.Rule, abil.Description, abil.Values.ToArray());
 			}
 
