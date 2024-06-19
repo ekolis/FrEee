@@ -435,6 +435,7 @@ Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Space Yard
+Type := SpaceYardAbility
 Targets := Vehicle, Planet, Component, Facility
 Description := Can construct with [%Amount2%] [%Amount1%] per turn.
 Value 1 Rule := Group

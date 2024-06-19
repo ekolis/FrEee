@@ -45,6 +45,9 @@ public static class ConversionExtensions
 		return (T?)((o ?? defaultValue) ?? default);
 	}
 
+	public static T ConvertTo<T>(this object o) =>
+		(T)Convert.ChangeType(o, typeof(T));
+
 	/// <summary>
 	/// Parses a string as a boolean. Returns false if it could not be parsed.
 	/// </summary>

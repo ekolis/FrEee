@@ -96,6 +96,11 @@ public class Resource : INamed, IPictorial
 	public bool IsLocal { get; set; }
 
 	/// <summary>
+	/// A number to identify the resource if a name is not available.
+	/// </summary>
+	public int Number { get; set; }
+
+	/// <summary>
 	/// The name of the resource.
 	/// </summary>
 	public string Name
@@ -128,6 +133,7 @@ public class Resource : INamed, IPictorial
 	public static readonly Resource Intelligence = new Resource
 	{
 		Name = "Intelligence",
+		Number = 5,
 		Color = Color.FromArgb(255, 255, 255),
 		IsGlobal = false,
 		IsLocal = false,
@@ -140,6 +146,7 @@ public class Resource : INamed, IPictorial
 	public static readonly Resource Minerals = new Resource
 	{
 		Name = "Minerals",
+		Number = 1,
 		Color = Color.FromArgb(128, 128, 255),
 		IsGlobal = true,
 		IsLocal = false,
@@ -152,6 +159,7 @@ public class Resource : INamed, IPictorial
 	public static readonly Resource Organics = new Resource
 	{
 		Name = "Organics",
+		Number = 2,
 		Color = Color.FromArgb(0, 192, 0),
 		IsGlobal = true,
 		IsLocal = false,
@@ -164,6 +172,7 @@ public class Resource : INamed, IPictorial
 	public static readonly Resource Radioactives = new Resource
 	{
 		Name = "Radioactives",
+		Number = 3,
 		Color = Color.FromArgb(192, 0, 0),
 		IsGlobal = true,
 		IsLocal = false,
@@ -176,6 +185,7 @@ public class Resource : INamed, IPictorial
 	public static readonly Resource Research = new Resource
 	{
 		Name = "Research",
+		Number = 4,
 		Color = Color.FromArgb(192, 0, 192),
 		IsGlobal = false,
 		IsLocal = false,
@@ -188,6 +198,7 @@ public class Resource : INamed, IPictorial
 	public static readonly Resource Supply = new Resource
 	{
 		Name = "Supply",
+		Number = 6,
 		Color = Color.FromArgb(255, 255, 0),
 		IsGlobal = false,
 		IsLocal = true,
@@ -201,7 +212,7 @@ public class Resource : INamed, IPictorial
 
 	public static Resource Find(string name)
 	{
-		return All.SingleOrDefault(r => r.Name == name);
+		return All.SingleOrDefault(r => r.Name == name || r.Number.ToString() == name);
 	}
 
 	public static bool operator !=(Resource r1, Resource r2)

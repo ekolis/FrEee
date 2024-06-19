@@ -14,6 +14,8 @@ using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Serialization;
 using FrEee.Ecs;
+using FrEee.Ecs.Stats;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Objects.Civilization.Construction;
 
@@ -215,7 +217,7 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
     /// <summary>
     /// Is this a space yard queue?
     /// </summary>
-    public bool IsSpaceYardQueue { get { return Container.HasAbility("Space Yard"); } }
+    public bool IsSpaceYardQueue { get { return Container.HasSpaceYard(); } }
 
     public string Name
     {
@@ -558,13 +560,12 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 
     private ResourceQuantity ComputeSYAbilityRate()
     {
-        if (Container.HasAbility("Space Yard"))
+        if (Container.HasSpaceYard())
         {
             var rate = new ResourceQuantity();
             // TODO - moddable resources?
             for (int i = 1; i <= 3; i++)
             {
-                var amount = Container.GetAbilityValue("Space Yard", 2, true, true, a => a.Value1 == i.ToString()).ToInt();
                 Resource res = null;
                 if (i == 1)
                     res = Resource.Minerals;
@@ -572,7 +573,8 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
                     res = Resource.Organics;
                 else if (i == 3)
                     res = Resource.Radioactives;
-                rate[res] = amount;
+                var amount = Container.GetStatValue(StatType.SpaceYardRate(res));
+				rate[res] = (int)Math.Round(amount ?? 0);
             }
             return rate;
         }

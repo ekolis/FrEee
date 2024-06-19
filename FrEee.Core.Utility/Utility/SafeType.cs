@@ -100,10 +100,19 @@ public class SafeType
 			{
 				var regex = new Regex(@"(.*?), (.*)");
 				var match = regex.Match(Name);
-				var tname = match.Groups[1].Captures[0].Value.Trim(); // type name
-				var aname = match.Groups[2].Captures[0].Value.Trim().Trim('[', ']'); // assembly name
-				var t = FindType(FindAssembly(aname), tname);
-				return t;
+				if (match != null && match.Captures.Any())
+				{
+					var tname = match.Groups[1].Captures[0].Value.Trim(); // type name
+					var aname = match.Groups[2].Captures[0].Value.Trim().Trim('[', ']'); // assembly name
+					var t = FindType(FindAssembly(aname), tname);
+					return t;
+				}
+				else
+				{
+					// just a raw namespace/type name, no assembly stuff
+					// search for matching types
+					return FindType(Name);
+				}
 			}
 		}
 		set

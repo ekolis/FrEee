@@ -18,6 +18,8 @@ using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Processes.Setup.WarpPointPlacementStrategies;
 using FrEee.Ecs;
+using FrEee.Ecs.Stats;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Processes.Setup;
 
@@ -472,7 +474,7 @@ public class GameSetup
 
         // find facilities to place on homeworlds
         var facils = emp.UnlockedItems.OfType<FacilityTemplate>();
-        var sy = facils.LastOrDefault(facil => facil.HasAbility("Space Yard"));
+        var sy = facils.LastOrDefault(facil => facil.HasSpaceYard());
         var sp = facils.LastOrDefault(facil => facil.HasAbility("Spaceport"));
         var rd = facils.LastOrDefault(facil => facil.HasAbility("Supply Generation"));
         var min = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Minerals").ToInt()).LastOrDefault();
@@ -486,9 +488,9 @@ public class GameSetup
         if (sy != null)
         {
             // TODO - define mappings between SY ability numbers and resource names in a mod file
-            rate.Add(Resource.Minerals, sy.GetAbilityValue("Space Yard", 2, true, true, a => a.Value1 == "1").ToInt());
-            rate.Add(Resource.Organics, sy.GetAbilityValue("Space Yard", 2, true, true, a => a.Value1 == "2").ToInt());
-            rate.Add(Resource.Radioactives, sy.GetAbilityValue("Space Yard", 2, true, true, a => a.Value1 == "3").ToInt());
+            rate.Add(Resource.Minerals, sy.GetStatValue<int>(StatType.SpaceYardRateMinerals));
+            rate.Add(Resource.Organics, sy.GetStatValue<int>(StatType.SpaceYardRateOrganics));
+            rate.Add(Resource.Radioactives, sy.GetStatValue<int>(StatType.SpaceYardRateRadioactives));
         }
 
         // build connectivity graph for computing warp distance

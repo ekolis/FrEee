@@ -218,8 +218,6 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 
 	public bool HasColony => Colony != null;
 
-	public bool HasSpaceYard => this.HasAbility("Space Yard");
-
 	public int HitChance => 1;
 
 	[DoNotSerialize]

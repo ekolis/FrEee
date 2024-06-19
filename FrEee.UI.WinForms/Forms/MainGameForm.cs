@@ -29,6 +29,7 @@ using FrEee.UI.Blazor.Views.GalaxyMapModes;
 using FrEee.Utility;
 using FrEee.Processes.Combat;
 using FrEee.Ecs;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -114,7 +115,7 @@ public partial class MainGameForm : GameForm
 
 				// fleet transfer and recycle buttons are special, they can be selected even with no space object selected
 				btnFleetTransfer.Visible = IsFleetTransferOperationValid;
-				btnRecycle.Visible = starSystemView.SelectedSector != null && starSystemView.SelectedSector.SpaceObjects.Any(sobj => sobj.Owner == Empire.Current && (sobj is Planet || sobj.HasAbility("Space Yard")));
+				btnRecycle.Visible = starSystemView.SelectedSector != null && starSystemView.SelectedSector.SpaceObjects.Any(sobj => sobj.Owner == Empire.Current && (sobj is Planet || sobj.HasSpaceYard()));
 			}
 			else
 			{
@@ -131,7 +132,7 @@ public partial class MainGameForm : GameForm
 				btnSentry.Visible = value is IMobileSpaceObject;
 				btnConstructionQueue.Visible = value is IConstructor c && c.ConstructionQueue != null;
 				btnTransferCargo.Visible = value != null && (value is ICargoContainer && ((ICargoContainer)value).CargoStorage > 0 || value.SupplyStorage > 0 || value.HasInfiniteSupplies);
-				btnRecycle.Visible = starSystemView.SelectedSector.SpaceObjects.Any(sobj => sobj.Owner == Empire.Current && (sobj is Planet || sobj.HasAbility("Space Yard")));
+				btnRecycle.Visible = starSystemView.SelectedSector.SpaceObjects.Any(sobj => sobj.Owner == Empire.Current && (sobj is Planet || sobj.HasSpaceYard()));
 				btnActivate.Visible = value.ActivatableAbilities().Any();
 				btnFleetTransfer.Visible = IsFleetTransferOperationValid;
 				btnClearOrders.Visible = value is IMobileSpaceObject || value is Planet;

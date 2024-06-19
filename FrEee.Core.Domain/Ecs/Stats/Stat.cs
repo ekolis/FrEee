@@ -12,6 +12,8 @@ namespace FrEee.Ecs.Stats
     public record Stat
     (
         StatType StatType,
+        // TODO: make this a dictionary mapping either entities or abilities to their contributions to the stat value?
+        // or groupings of string stacking keys with lists of decimal values?
         IList<decimal> Values
     )
     {
@@ -19,6 +21,19 @@ namespace FrEee.Ecs.Stats
 
         public IStackingRule StackingRule => StatType.StackingRule;
 
-        public decimal Value => StackingRule.Stack(Values);
+        public decimal? Value
+        {
+            get
+            {
+                if (Values.Any())
+                {
+					return StackingRule.Stack(Values);
+				}
+                else
+                {
+                    return null;
+                }
+            }
+        }
     }
 }

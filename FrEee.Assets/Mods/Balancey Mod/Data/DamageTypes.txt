@@ -306,8 +306,8 @@ Component Damage := 0
 Component Piercing := 100
 Population Damage := 0
 Conditions Damage := 0
-Facility Damage := ==100 if target.HasAbility("Spaceport") or target.HasAbility("Supply Generation") target.HasAbility("Space Yard") else 0
-Facility Piercing := ==0 if target.HasAbility("Spaceport") or target.HasAbility("Supply Generation") target.HasAbility("Space Yard") else 100
+Facility Damage := ==100 if target.HasAbility("Spaceport") or target.HasAbility("Supply Generation") target.HasSpaceYard() else 0
+Facility Piercing := ==0 if target.HasAbility("Spaceport") or target.HasAbility("Supply Generation") target.HasSpaceYard() else 100
 Plague Level := 0
 Target Push := 0
 Target Teleport := 0

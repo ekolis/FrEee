@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
 using FrEee.Ecs;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.UI.WinForms.Controls;
 
@@ -243,7 +244,7 @@ public partial class StarSystemView : Control
 					// TODO - make ability text moddable via AbilityRules.txt
 					var abilText = "";
 					var sobjs = sector.SpaceObjects.Where(sobj => sobj.Owner == Empire.Current);
-					if (sobjs.Any(o => o.HasAbility("Space Yard")))
+					if (sobjs.Any(o => o.HasSpaceYard()))
 						abilText += "Sy";
 					if (sobjs.Any(o => o.HasAbility("Component Repair")))
 						abilText += "Rp";

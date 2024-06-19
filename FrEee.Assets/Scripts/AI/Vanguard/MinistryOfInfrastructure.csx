@@ -93,7 +93,7 @@ public class MinistryOfInfrastructure
             return option;
         //spaceyard. Make sure every system has at least one. 
         //TODO; mod might make more than one facility be a space yard... make sure to select the right one. 
-        option = AvailableFacilities.FirstOrDefault(x => x.HasAbility("Space Yard"));
+        option = AvailableFacilities.FirstOrDefault(x => x.HasSpaceYard());
         if (option != null && !HasStarSystemFacility(starSystem, "Space Yard"))
             return option;
         //warp point opening. Lets not let the player drop a fleet into the capital system. 
@@ -231,6 +231,7 @@ public class MinistryOfInfrastructure
     /// <param name="starSystem"></param>
     /// <param name="facilityAbilityName"></param>
     /// <returns></returns>
+    // TODO: adjust for ECS abilities/stats
     bool HasStarSystemFacility(StarSystem starSystem, string facilityAbilityName)
     {
         var colonies = starSystem.SpaceObjects.OfType<Planet>().Where(x => x.Owner == Empire); 

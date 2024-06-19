@@ -9,6 +9,7 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Objects.Vehicles;
 
@@ -145,7 +146,7 @@ public abstract class MajorSpaceVehicle : SpaceVehicle, ICargoTransferrer, ICons
 		get
 		{
 			// only vehicles with a space yard that are not under construction have a construction queue
-			if (this.HasAbility("Space Yard") && Sector != null)
+			if (this.HasSpaceYard() && Sector != null)
 				return constructionQueue;
 			else
 				return null;

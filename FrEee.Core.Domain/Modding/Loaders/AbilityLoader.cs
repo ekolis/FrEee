@@ -1,6 +1,8 @@
 ﻿using FrEee.Ecs;
 using FrEee.Ecs.Abilities;
+using FrEee.Extensions;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 namespace FrEee.Modding.Loaders;
@@ -19,7 +21,7 @@ public static class AbilityLoader
 		{
 			count++;
 
-			var abil = new Ability(obj);
+			Ability abil = new Ability(obj);
 
 			var nfield = rec.FindField(new string[]
 					{
@@ -67,6 +69,13 @@ public static class AbilityLoader
 					var val = vfield.CreateFormula<string>(abil);
 					abil.Values.Add(val);
 				}
+			}
+
+			if (abil.Rule.AbilityType != typeof(Ability))
+			{
+				// it's an ECS ability, create that type instead
+				// TODO: create an ability factory/builder
+				abil = AbilityFactory.Build(abil.Rule.AbilityType, obj, abil.Rule, abil.Description, abil.Values.ToArray());
 			}
 
 			yield return abil;

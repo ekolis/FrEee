@@ -35,10 +35,11 @@ public class AbilityRule : IModObject
     /// </summary>
     public Formula<string> Description { get; set; }
 
-    /// <summary>
-    /// The rules for stacking abilities after grouping.
-    /// </summary>
-    public IList<AbilityValueRule> GroupRules { get; set; }
+	/// <summary>
+	/// The rules for stacking abilities after grouping.
+	/// </summary>
+	// TODO: do we still need this with the ECS?
+	public IList<AbilityValueRule> GroupRules { get; set; }
 
     public bool IsActivatable
     {
@@ -99,10 +100,11 @@ public class AbilityRule : IModObject
     /// </summary>
     public IDictionary<string, object> TemplateParameters { get; set; }
 
-    /// <summary>
-    /// The rules for grouping and stacking abilities.
-    /// </summary>
-    public IList<AbilityValueRule> ValueRules { get; set; }
+	/// <summary>
+	/// The rules for grouping and stacking abilities.
+	/// </summary>
+	// TODO: do we still need this with the ECS?
+	public IList<AbilityValueRule> ValueRules { get; set; }
 
     /// <summary>
     /// Finds an ability rule in the current mod.
