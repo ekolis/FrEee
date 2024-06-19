@@ -1,5 +1,6 @@
 ﻿using FrEee.Ecs;
 using FrEee.Ecs.Abilities;
+using FrEee.Ecs.Abilities.Utility;
 using FrEee.Extensions;
 using System.Collections.Generic;
 using System.ComponentModel;

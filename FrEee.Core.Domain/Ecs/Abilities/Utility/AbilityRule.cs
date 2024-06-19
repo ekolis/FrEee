@@ -6,9 +6,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using FrEee.Utility;
-using FrEee.Ecs.Abilities;
 
-namespace FrEee.Ecs;
+namespace FrEee.Ecs.Abilities.Utility;
 
 /// <summary>
 /// A rule for grouping and stacking abilities.
@@ -35,11 +34,11 @@ public class AbilityRule : IModObject
     /// </summary>
     public Formula<string> Description { get; set; }
 
-	/// <summary>
-	/// The rules for stacking abilities after grouping.
-	/// </summary>
-	// TODO: do we still need this with the ECS?
-	public IList<AbilityValueRule> GroupRules { get; set; }
+    /// <summary>
+    /// The rules for stacking abilities after grouping.
+    /// </summary>
+    // TODO: do we still need this with the ECS?
+    public IList<AbilityValueRule> GroupRules { get; set; }
 
     public bool IsActivatable
     {
@@ -100,11 +99,11 @@ public class AbilityRule : IModObject
     /// </summary>
     public IDictionary<string, object> TemplateParameters { get; set; }
 
-	/// <summary>
-	/// The rules for grouping and stacking abilities.
-	/// </summary>
-	// TODO: do we still need this with the ECS?
-	public IList<AbilityValueRule> ValueRules { get; set; }
+    /// <summary>
+    /// The rules for grouping and stacking abilities.
+    /// </summary>
+    // TODO: do we still need this with the ECS?
+    public IList<AbilityValueRule> ValueRules { get; set; }
 
     /// <summary>
     /// Finds an ability rule in the current mod.

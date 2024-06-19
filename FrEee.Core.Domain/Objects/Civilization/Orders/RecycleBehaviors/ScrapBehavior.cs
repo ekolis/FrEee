@@ -5,7 +5,7 @@ using FrEee.Objects.Vehicles;
 using FrEee.Extensions;
 using System.Collections.Generic;
 using System.Linq;
-using FrEee.Ecs.Abilities;
+using FrEee.Ecs.Abilities.Utility;
 
 namespace FrEee.Objects.Civilization.Orders.RecycleBehaviors;
 

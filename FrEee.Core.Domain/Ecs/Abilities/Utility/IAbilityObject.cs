@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FrEee.Ecs.Abilities;
 
-namespace FrEee.Ecs;
+namespace FrEee.Ecs.Abilities.Utility;
 
 /// <summary>
 /// Something which can have abilities but is not necessarily an <see cref="IEntity{TAbility}"/>.

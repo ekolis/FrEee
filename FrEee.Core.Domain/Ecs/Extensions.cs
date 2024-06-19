@@ -15,6 +15,7 @@ using FrEee.Ecs.Abilities;
 using FrEee.Ecs.Interactions;
 using FrEee.Ecs.Stats;
 using System.Numerics;
+using FrEee.Ecs.Abilities.Utility;
 
 namespace FrEee.Ecs;
 

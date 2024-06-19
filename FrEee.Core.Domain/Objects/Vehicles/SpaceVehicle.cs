@@ -13,6 +13,7 @@ using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Ecs;
 using System.Drawing;
+using FrEee.Ecs.Abilities.Utility;
 
 namespace FrEee.Objects.Vehicles;
 

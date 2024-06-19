@@ -12,6 +12,7 @@ using FrEee.Objects.Civilization.Orders;
 using FrEee.Utility;
 using FrEee.Ecs;
 using FrEee.Ecs.Abilities;
+using FrEee.Ecs.Abilities.Utility;
 
 namespace FrEee.Tests.Utility;
 

@@ -29,7 +29,7 @@ using FrEee.UI.Blazor.Views.GalaxyMapModes;
 using FrEee.Utility;
 using FrEee.Processes.Combat;
 using FrEee.Ecs;
-using FrEee.Ecs.Abilities;
+using FrEee.Ecs.Abilities.Utility;
 
 namespace FrEee.UI.WinForms.Forms;
 

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using FrEee.Utility;
 using FrEee.Processes.Combat;
 using FrEee.Objects.GameState;
-using FrEee.Ecs;
+using FrEee.Ecs.Abilities.Utility;
 
 namespace FrEee.Objects.Vehicles;
 

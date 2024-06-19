@@ -1,4 +1,4 @@
-﻿using FrEee.Ecs;
+﻿using FrEee.Ecs.Abilities.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;

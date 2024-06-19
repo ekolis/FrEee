@@ -12,6 +12,7 @@ using FrEee.Objects.GameState;
 using FrEee.Utility;
 using FrEee.Ecs;
 using FrEee.Ecs.Abilities;
+using FrEee.Ecs.Abilities.Utility;
 
 namespace FrEee.Objects.Civilization;
 

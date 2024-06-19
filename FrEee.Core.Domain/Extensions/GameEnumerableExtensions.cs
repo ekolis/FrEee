@@ -10,6 +10,7 @@ using FrEee.Objects.GameState;
 using FrEee.Modding;
 using FrEee.Ecs;
 using FrEee.Ecs.Abilities;
+using FrEee.Ecs.Abilities.Utility;
 namespace FrEee.Extensions;
 
 /// <summary>

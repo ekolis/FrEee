@@ -16,6 +16,7 @@ using FrEee.Serialization;
 using FrEee.Ecs;
 using FrEee.Ecs.Stats;
 using FrEee.Ecs.Abilities;
+using FrEee.Ecs.Abilities.Utility;
 
 namespace FrEee.Objects.Civilization.Construction;
 

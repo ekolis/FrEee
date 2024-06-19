@@ -1,5 +1,6 @@
 using System.Drawing;
 using FrEee.Ecs;
+using FrEee.Ecs.Abilities.Utility;
 using FrEee.Objects.GameState;
 using FrEee.Utility;
 namespace FrEee.Objects.Space;

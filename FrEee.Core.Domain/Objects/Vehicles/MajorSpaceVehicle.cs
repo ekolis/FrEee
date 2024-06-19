@@ -9,7 +9,7 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
-using FrEee.Ecs.Abilities;
+using FrEee.Ecs.Abilities.Utility;
 
 namespace FrEee.Objects.Vehicles;
 

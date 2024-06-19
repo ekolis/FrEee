@@ -13,6 +13,7 @@ using FrEee.Objects.GameState;
 using FrEee.Serialization;
 using FrEee.Ecs;
 using FrEee.Ecs.Abilities;
+using FrEee.Ecs.Abilities.Utility;
 
 namespace FrEee.Objects.Technology;
 

@@ -1,6 +1,6 @@
 ﻿using FrEee.Objects.Civilization;
 
-namespace FrEee.Ecs;
+namespace FrEee.Ecs.Abilities.Utility;
 
 /// <summary>
 /// Something which can have abilities and be owned.

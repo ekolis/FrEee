@@ -2,7 +2,7 @@ using FrEee.Utility;
 using System;
 using FrEee.Utility;
 
-namespace FrEee.Ecs;
+namespace FrEee.Ecs.Abilities.Utility;
 
 /// <summary>
 /// Specifies what object types abilities can stack to.

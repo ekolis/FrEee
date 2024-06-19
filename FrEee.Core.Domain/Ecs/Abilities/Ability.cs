@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Utility;
+using FrEee.Ecs.Abilities.Utility;
 
 namespace FrEee.Ecs.Abilities;
 

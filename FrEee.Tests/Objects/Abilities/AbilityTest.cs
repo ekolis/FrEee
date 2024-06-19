@@ -9,6 +9,7 @@ using FrEee.Objects.Technology;
 using FrEee.Objects.GameState;
 using FrEee.Ecs;
 using FrEee.Ecs.Abilities;
+using FrEee.Ecs.Abilities.Utility;
 
 namespace FrEee.Tests.Objects.Abilities;
 

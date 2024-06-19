@@ -7,9 +7,9 @@ using System;
 using FrEee.Objects.GameState;
 using FrEee.Serialization;
 using FrEee.Utility;
-using FrEee.Ecs;
 using System.Collections.Generic;
 using FrEee.Ecs.Abilities;
+using FrEee.Ecs.Abilities.Utility;
 
 namespace FrEee.Objects.Space;
 

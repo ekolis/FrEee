@@ -18,7 +18,7 @@ using System.Windows.Forms;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Civilization.Diplomacy.Actions;
 using FrEee.Extensions;
-using FrEee.Ecs;
+using FrEee.Ecs.Abilities.Utility;
 
 namespace FrEee.UI.WinForms.Forms;
 

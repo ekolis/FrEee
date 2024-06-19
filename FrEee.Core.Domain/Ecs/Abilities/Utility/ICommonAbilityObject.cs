@@ -1,7 +1,7 @@
 ﻿using FrEee.Objects.Civilization;
 using System.Collections.Generic;
 
-namespace FrEee.Ecs;
+namespace FrEee.Ecs.Abilities.Utility;
 
 /// <summary>
 /// An object that can contain different abilities for different empires.

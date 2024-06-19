@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Ecs.Abilities.Utility;
 using FrEee.Modding;
 using FrEee.Objects.Technology;
 using FrEee.Utility;
 
 namespace FrEee.Ecs.Abilities
 {
-	/// <summary>
-	/// Allows an entity to hold facilities.
-	/// </summary>
-	class HoldFacilitiesAbility
+    /// <summary>
+    /// Allows an entity to hold facilities.
+    /// </summary>
+    class HoldFacilitiesAbility
 		: Ability
 	{
 		public HoldFacilitiesAbility

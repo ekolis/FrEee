@@ -1,4 +1,4 @@
-﻿using FrEee.Ecs;
+﻿using FrEee.Ecs.Abilities.Utility;
 using FrEee.Objects.Space;
 using System;
 

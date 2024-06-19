@@ -1,4 +1,4 @@
-﻿using FrEee.Ecs;
+﻿using FrEee.Ecs.Abilities.Utility;
 using FrEee.Extensions;
 
 namespace FrEee.Objects.Civilization.Diplomacy.Clauses;

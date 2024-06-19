@@ -9,6 +9,7 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Serialization;
 using FrEee.Processes.Combat;
 using FrEee.Ecs;
+using FrEee.Ecs.Abilities.Utility;
 
 namespace FrEee.Objects.Vehicles;
 

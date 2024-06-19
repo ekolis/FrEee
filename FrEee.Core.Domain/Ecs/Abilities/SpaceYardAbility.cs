@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Ecs.Abilities.Utility;
 using FrEee.Ecs.Interactions;
 using FrEee.Extensions;
 using FrEee.Modding;
@@ -15,10 +16,10 @@ using Microsoft.Scripting.Utils;
 
 namespace FrEee.Ecs.Abilities
 {
-	/// <summary>
-	/// Allows an entity to construct ships, bases, and units.
-	/// </summary>
-	public class SpaceYardAbility
+    /// <summary>
+    /// Allows an entity to construct ships, bases, and units.
+    /// </summary>
+    public class SpaceYardAbility
 		: Ability
 	{
 		public SpaceYardAbility

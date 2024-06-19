@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Ecs.Abilities.Utility;
 using FrEee.Ecs.Interactions;
 using FrEee.Extensions;
 using FrEee.Modding;
@@ -14,10 +15,10 @@ using Microsoft.Scripting.Utils;
 
 namespace FrEee.Ecs.Abilities
 {
-	/// <summary>
-	/// Damages vehicles that warp through a warp point.
-	/// </summary>
-	public class WarpDamageAbility(IAbilityObject container, AbilityRule rule, Formula<string>? description, params IFormula[] values)
+    /// <summary>
+    /// Damages vehicles that warp through a warp point.
+    /// </summary>
+    public class WarpDamageAbility(IAbilityObject container, AbilityRule rule, Formula<string>? description, params IFormula[] values)
 		// TODO: don't hardcode ability rule names
 		: Ability(container, rule, description, values)
 	{

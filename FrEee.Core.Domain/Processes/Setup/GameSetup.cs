@@ -20,6 +20,7 @@ using FrEee.Processes.Setup.WarpPointPlacementStrategies;
 using FrEee.Ecs;
 using FrEee.Ecs.Stats;
 using FrEee.Ecs.Abilities;
+using FrEee.Ecs.Abilities.Utility;
 
 namespace FrEee.Processes.Setup;
 

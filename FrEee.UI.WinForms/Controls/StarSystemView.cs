@@ -8,7 +8,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
 using FrEee.Ecs;
-using FrEee.Ecs.Abilities;
+using FrEee.Ecs.Abilities.Utility;
 
 namespace FrEee.UI.WinForms.Controls;
 
