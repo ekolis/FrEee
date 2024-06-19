@@ -214,4 +214,9 @@ public abstract class Formula<T> : IFormula<T>, IComparable<T>, IComparable<Form
 	public abstract Formula<string> ToStringFormula(CultureInfo c = null);
 
 	protected abstract T ComputeValue();
+
+	public abstract Formula<T1> ToFormula<T1>()
+		where T1 : IComparable, IConvertible;
+
+	IFormula<T1> IFormula.ToFormula<T1>() => ToFormula<T1>();
 }

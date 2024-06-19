@@ -167,4 +167,9 @@ public class ComputedFormula<T> : Formula<T>, IEquatable<ComputedFormula<T>>
 	{
 		return Evaluate(Context, null);
 	}
+
+	public override Formula<T1> ToFormula<T1>()
+	{
+		return new ComputedFormula<T1>(Text, Context, IsDynamic);
+	}
 }

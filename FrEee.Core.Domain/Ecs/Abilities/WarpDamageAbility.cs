@@ -17,19 +17,19 @@ namespace FrEee.Ecs.Abilities
 	/// <summary>
 	/// Damages vehicles that warp through a warp point.
 	/// </summary>
-	public class WarpDamageAbility(IAbilityObject container, AbilityRule rule, Formula<string>? description, params Formula<string>[] values)
+	public class WarpDamageAbility(IAbilityObject container, AbilityRule rule, Formula<string>? description, params IFormula[] values)
 		// TODO: don't hardcode ability rule names
-		: Ability(container, AbilityRule.Find("Warp Point - Turbulence"), description, values)
+		: Ability(container, rule, description, values)
 	{
 		public const string StatName = "Warp Damage";
 
-		public WarpDamageAbility(IAbilityObject container, AbilityRule rule, int damage)
-			 : this(container, rule, null, damage.ToString())
+		public WarpDamageAbility(IAbilityObject container, AbilityRule rule, Formula<int> damage)
+			 : this(container, rule, null, damage.ToStringFormula())
 		{
 			Damage = damage;
 		}
 
-		public int Damage { get; private set; }
+		public Formula<int> Damage { get; private set; }
 
 		public override void Interact(IInteraction interaction)
 		{

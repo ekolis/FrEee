@@ -162,6 +162,12 @@ public class ObjectFormula<T> : IFormula<T>
 		throw new NotSupportedException();
 	}
 
+	public IFormula<T1> ToFormula<T1>()
+		where T1 : IComparable, IConvertible
+	{
+		return new ObjectFormula<T1>(Text, Context, IsDynamic);
+	}
+
 	/// <summary>
 	/// The external scripts required to execute this formula.
 	/// </summary>

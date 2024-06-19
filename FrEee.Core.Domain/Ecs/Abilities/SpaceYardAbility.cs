@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,24 +18,38 @@ namespace FrEee.Ecs.Abilities
 	/// <summary>
 	/// Allows an entity to construct ships, bases, and units.
 	/// </summary>
-	public class SpaceYardAbility(IAbilityObject container, AbilityRule rule, Formula<string>? description, params Formula<string>[] values)
-		// TODO: don't hardcode ability rule names
-		: Ability(container, AbilityRule.Find("Space Yard"), description, values)
+	public class SpaceYardAbility
+		: Ability
 	{
+		public SpaceYardAbility
+		(
+			IAbilityObject container,
+			AbilityRule rule,
+			Formula<string>? description,
+			params IFormula[] values
+		) : base(container, rule, description, values)
+		{
+			ResourceFormula = values[0].ToStringFormula();
+			RateFormula = (Formula<int>)values[1].ToFormula<int>();
+		}
+
+		public SpaceYardAbility(IAbilityObject container, AbilityRule rule, Formula<string> resource, Formula<int> rate)
+			 : this(container, rule, null, resource, rate)
+		{
+			ResourceFormula = resource;
+			RateFormula = rate;
+		}
+
 		public string GetStatName(Resource resource) =>
 			$"Space Yard Rate {resource.Name}";
 
-		public SpaceYardAbility(IAbilityObject container, AbilityRule rule, Resource resource, int rate)
-			 : this(container, rule, null, resource.Number.ToString(), rate.ToString())
-		{
-			Resource = resource;
-			Rate = rate;
-		}
+		public Formula<string> ResourceFormula { get; private set; }
 
-		// TODO: resource and rate should be formulas
-		public Resource Resource { get; private set; } = Resource.Find(values[0]);
+		public Formula<int> RateFormula { get; private set; }
 
-		public Formula<int> Rate { get; private set; } = values[1].ToInt();
+		public Resource Resource => Resource.Find(ResourceFormula);
+
+		public int Rate => RateFormula;
 
 		public override void Interact(IInteraction interaction)
 		{

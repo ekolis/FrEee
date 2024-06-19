@@ -130,4 +130,8 @@ public class LiteralFormula<T> : Formula<T>, IEquatable<LiteralFormula<T>>
 		else
 			return (T)Convert.ChangeType(Text, typeof(T), CultureInfo.InvariantCulture);
 	}
+	public override Formula<T1> ToFormula<T1>()
+	{
+		return new LiteralFormula<T1>(Text);
+	}
 }

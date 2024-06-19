@@ -19,6 +19,9 @@ public interface IFormula : IComparable
     object Evaluate(object host, IDictionary<string, object> variables = null);
 
     Formula<string> ToStringFormula(CultureInfo c = null);
+
+    IFormula<T> ToFormula<T>()
+		where T : IComparable, IConvertible;
 }
 
 public interface IFormula<out T> : IFormula
