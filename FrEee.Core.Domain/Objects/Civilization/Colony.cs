@@ -25,7 +25,11 @@ public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>, II
 {
 	public Colony()
 	{
-		Facilities = new List<Facility>();
+		Abilities.Add(new HoldFacilitiesAbility(
+			this,
+			null,
+			"Holds up to {{self.Container.MaxFacilities}} facilities.",
+			new ComputedFormula<int>("self.Container.MaxFacilities", this, true)));
 		Population = new SafeDictionary<Race, long>();
 		Cargo = new Cargo();
 	}
@@ -85,7 +89,7 @@ public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>, II
 	/// <summary>
 	/// The facilities on this colony.
 	/// </summary>
-	public ICollection<Facility> Facilities { get; set; }
+	public ICollection<Facility> Facilities => Abilities.OfType<HoldFacilitiesAbility>().Single().Facilities;
 
 	public long ID
 	{

@@ -886,7 +886,12 @@ public class Empire : INamed, IFoggable, IEntity, IPictorial, IComparable<Empire
 		// TODO - moddable score weightings
 		int score = 0;
 		score += Galaxy.Current.Referrables.OfType<IVehicle>().OwnedBy(this).Sum(v => v.Cost.Sum(kvp => kvp.Value)); // vehicle cost
-		score += ColonizedPlanets.SelectMany(p => p.Colony.Facilities).Sum(f => f.Cost.Sum(kvp => kvp.Value)); // facility cost
+		score += ColonizedPlanets
+			// facility cost
+			.SelectMany(p => p.Colony.Facilities)
+			.ExceptNull()
+			.Sum(f => f.Cost.Sum(kvp => kvp.Value)
+		);
 		foreach (var kvp in ResearchedTechnologies)
 		{
 			// researched tech cost
