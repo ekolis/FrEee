@@ -51,5 +51,13 @@ namespace FrEee.Ecs.Abilities
 				Facilities = (IList<Facility>)value["Facilities"];
 			}
 		}
+
+		public override void Interact(IInteraction interaction)
+		{
+			foreach (var facility in Facilities)
+			{
+				facility.Interact(interaction);
+			}
+		}
 	}
 }

@@ -17,15 +17,18 @@ namespace FrEee.Ecs
 		/// The abilities of the entity.
 		/// </summary>
 		IEnumerable<TAbility> Abilities { get; set; }
+	}
 
+	public static class EntityExtensions
+	{
 		/// <summary>
-		/// Performs an <see cref="IInteraction"> on this entity.
-		/// By default this uses the intrinsic ability sort order.
+		/// Performs an <see cref="IInteraction"> on this entity via its abilities.
 		/// </summary>
 		/// <param name="interaction"></param>
-		void Interact(IInteraction interaction)
+		public static void Interact<TAbility>(this IEntity<TAbility> entity, IInteraction interaction)
+			where TAbility : IAbility
 		{
-			foreach (var ability in Abilities)
+			foreach (var ability in entity.Abilities)
 			{
 				ability.Interact(interaction);
 			}
