@@ -13,13 +13,13 @@ Description := Holds up to [%Amount1%] facilities.
 Name := Facility
 Type := FacilityAbility
 Description := Can be installed as a facility.
+Spatial Scope := Entity
 
 Name := Warp Point - Turbulence
 Type := WarpDamageAbility
 Targets := WarpPoint
 Description := Inflicts [%Amount1%] normal damage to vehicles traversing this warp point.
-Value 1 Rule := Add
-Value 2 Rule := Add
+Ownership Scope := All
 
 Name := Star - Unstable
 Targets := Star
