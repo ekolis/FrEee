@@ -21,8 +21,6 @@
     <ProjectReference Include="..\FrEee.Assets\FrEee.Assets.csproj" />
     <ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
     <ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
-    <ProjectReference Include="..\FrEee.Core\FrEee.Core.Domain.csproj" />
-    <ProjectReference Include="..\FrEee\FrEee.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
