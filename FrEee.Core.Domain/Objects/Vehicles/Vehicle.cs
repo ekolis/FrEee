@@ -68,7 +68,7 @@ public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IF
 		get { return new Progress(ArmorHitpoints, MaxArmorHitpoints); }
 	}
 
-	public IEnumerable<IAbilityObject> Children
+	public IEnumerable<IEntity> Children
 	{
 		get
 		{
@@ -422,7 +422,7 @@ public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IF
 	/// </summary>
 	public Empire Owner { get; set; }
 
-	public virtual IEnumerable<IAbilityObject> Parents
+	public virtual IEnumerable<IEntity> Parents
 	{
 		get { yield return Owner; }
 	}

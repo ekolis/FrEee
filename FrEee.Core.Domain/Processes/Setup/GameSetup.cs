@@ -594,10 +594,11 @@ public class GameSetup
             // function to create a facility if possible
             void TryCreateFacility(FacilityTemplate? template)
             {
-                if (template is not null && hw.Colony.Facilities.Count < hw.MaxFacilities)
+                if (template is not null && hw.Colony.Facilities.Count() < hw.MaxFacilities)
                 {
                     var facility = template.Instantiate();
-                    hw.Colony.Facilities.Add(facility);
+                    var facilityAbility = facility.GetAbility<FacilityAbility>();
+                    hw.Colony.FacilityAbilities.Add(facilityAbility);
                     facility.ConstructionProgress = facility.Cost;
                 }
             }
@@ -614,9 +615,9 @@ public class GameSetup
 
             // fill remaining space with half mineral miners and half research facilities
             var lastCount = 0;
-            while (hw.Colony.Facilities.Count < hw.MaxFacilities && hw.Colony.Facilities.Count > lastCount)
+            while (hw.Colony.Facilities.Count() < hw.MaxFacilities && hw.Colony.Facilities.Count() > lastCount)
             {
-                lastCount = hw.Colony.Facilities.Count;
+                lastCount = hw.Colony.Facilities.Count();
 
                 TryCreateFacility(min);
 

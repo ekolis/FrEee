@@ -22,7 +22,7 @@ namespace FrEee.Objects.Space;
 /// Is always square and always has an odd number of sectors across.
 /// </summary>
 [Serializable]
-public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObject, IEntity
+public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonEntity, IEntity
 {
 	/// <summary>
 	/// Creates a star system.
@@ -63,7 +63,7 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 	/// </summary>
 	public string BackgroundImagePath { get; set; }
 
-	public IEnumerable<IAbilityObject> Children
+	public IEnumerable<IEntity> Children
 		=> SpaceObjects.Entities.Cast<IEntity>();
 
 	public Point Coordinates
@@ -159,7 +159,7 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 		get { return null; }
 	}
 
-	public IEnumerable<IAbilityObject> Parents
+	public IEnumerable<IEntity> Parents
 	{
 		get
 		{
@@ -269,7 +269,7 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 		return SpaceObjects.OfType<T>().Where(l => criteria == null || criteria(l));
 	}
 
-	public IEnumerable<IEntity> GetContainedAbilityObjects(Empire emp)
+	public IEnumerable<IEntity> GetContainedEntities(Empire emp)
 	{
 		return SpaceObjects.Where(sobj => sobj?.Owner == emp).OfType<IEntity>();
 	}

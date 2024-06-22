@@ -25,6 +25,7 @@ using FrEee.Processes.Setup;
 using FrEee.Ecs;
 using FrEee.Ecs.Abilities;
 using FrEee.Ecs.Abilities.Utility;
+using FrEee.Objects.Technology;
 
 namespace FrEee.Objects.Civilization;
 
@@ -145,7 +146,7 @@ public class Empire : INamed, IFoggable, IEntity, IPictorial, IComparable<Empire
 	/// </summary>
 	public int BonusResearch { get; set; }
 
-	public IEnumerable<IAbilityObject> Children
+	public IEnumerable<IEntity> Children
 	{
 		get
 		{
@@ -444,7 +445,7 @@ public class Empire : INamed, IFoggable, IEntity, IPictorial, IComparable<Empire
 		get { return null; }
 	}
 
-	public IEnumerable<IAbilityObject> Parents
+	public IEnumerable<IEntity> Parents
 	{
 		get
 		{
@@ -891,6 +892,7 @@ public class Empire : INamed, IFoggable, IEntity, IPictorial, IComparable<Empire
 			// facility cost
 			.SelectMany(p => p.Colony.Facilities)
 			.ExceptNull()
+			.Cast<Facility>() // TODO: flesh out FacilityAbility so any entity can be a facility, not just a Facility object
 			.Sum(f => f.Cost.Sum(kvp => kvp.Value)
 		);
 		foreach (var kvp in ResearchedTechnologies)

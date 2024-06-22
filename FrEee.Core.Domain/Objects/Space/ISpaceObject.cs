@@ -5,7 +5,7 @@ using FrEee.Objects.GameState;
 using FrEee.Utility;
 namespace FrEee.Objects.Space;
 
-public interface ISpaceObject : IEntity, IOwnableAbilityObject, IPictorial, IReferrable, IFoggable, INamed, ILocated
+public interface ISpaceObject : IEntity, IOwnableEntity, IPictorial, IReferrable, IFoggable, INamed, ILocated
 {
     /// <summary>
     /// Can this space object be placed in a fleet?

@@ -28,10 +28,10 @@ public static class ChecksExtensions
 	/// <param name="obj"></param>
 	/// <param name="abilityName"></param>
 	/// <returns></returns>
-	public static bool HasAbility(this IAbilityObject obj, string abilityName, bool includeShared = true)
+	public static bool HasAbility(this IEntity obj, string abilityName, bool includeShared = true)
 	{
 		IEnumerable<Ability> abils;
-		if (includeShared && obj is IOwnableAbilityObject)
+		if (includeShared && obj is IOwnableEntity)
 			abils = obj.UnstackedAbilities(true).Union(obj.SharedAbilities());
 		else
 			abils = obj.UnstackedAbilities(true);
@@ -44,7 +44,7 @@ public static class ChecksExtensions
 	/// <param name="obj"></param>
 	/// <param name="abilityName"></param>
 	/// <returns></returns>
-	public static bool HasAbility(this ICommonAbilityObject obj, string abilityName, Empire emp, bool includeShared = true)
+	public static bool HasAbility(this ICommonEntity obj, string abilityName, Empire emp, bool includeShared = true)
 	{
 		IEnumerable<Ability> abils;
 		if (includeShared)

@@ -31,7 +31,7 @@ public class Trait : IModObject, IEntity, IUnlockable
 		get { return AbilityTargets.Trait; }
 	}
 
-	public IEnumerable<IAbilityObject> Children
+	public IEnumerable<IEntity> Children
 	{
 		get { yield break; }
 	}
@@ -82,7 +82,7 @@ public class Trait : IModObject, IEntity, IUnlockable
 		get { return Name; }
 	}
 
-	public IEnumerable<IAbilityObject> Parents
+	public IEnumerable<IEntity> Parents
 	{
 		get
 		{

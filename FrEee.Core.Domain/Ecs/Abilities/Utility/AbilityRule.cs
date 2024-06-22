@@ -135,7 +135,7 @@ public class AbilityRule : IModObject
     /// </summary>
     /// <param name="abilities"></param>
     /// <returns></returns>
-    public ILookup<Ability, Ability> GroupAndStack(IEnumerable<Ability> abilities, IAbilityObject stackingTo)
+    public ILookup<Ability, Ability> GroupAndStack(IEnumerable<Ability> abilities, IEntity stackingTo)
     {
         var ours = abilities.Where(a => a.Rule == this).ToArray();
 
@@ -217,7 +217,7 @@ public class AbilityRule : IModObject
         return Name;
     }
 
-    private ILookup<Ability, Ability> Stack(IEnumerable<Ability> abilities, IAbilityObject stackingTo, bool groupStacking)
+    private ILookup<Ability, Ability> Stack(IEnumerable<Ability> abilities, IEntity stackingTo, bool groupStacking)
     {
         if (abilities.Count() <= 1)
             return abilities.ToLookup(a => a, a => a);
@@ -296,7 +296,7 @@ public class AbilityRule : IModObject
     // TODO: moddable ability types?
     public Type AbilityType => new SafeType($"FrEee.Ecs.Abilities.{AbilityTypeName}").Type;
 
-    public Ability CreateAbility(IAbilityObject container, params string[] values)
+    public Ability CreateAbility(IEntity container, params string[] values)
     {
         return (Ability)AbilityType.Instantiate(container, this, Description, values);
     }

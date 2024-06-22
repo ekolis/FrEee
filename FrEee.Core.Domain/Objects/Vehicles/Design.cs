@@ -140,6 +140,10 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 	public IEnumerable<Ability> Abilities
 	{
 		get { return Hull.Abilities.Concat(Components.SelectMany(c => c.UnstackedAbilities)).Stack(this); }
+		set
+		{
+			// can't set design abilities, they're derived from hull/components
+		}
 	}
 
 	public AbilityTargets AbilityTarget
@@ -177,7 +181,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 		get { throw new NotImplementedException(); }
 	}
 
-	public IEnumerable<IAbilityObject> Children
+	public IEnumerable<IEntity> Children
 	{
 		get { return new IEntity[] { Hull }.Concat(Components); }
 	}
@@ -439,7 +443,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 		get { throw new NotImplementedException(); }
 	}
 
-	public IEnumerable<IAbilityObject> Parents
+	public IEnumerable<IEntity> Parents
 	{
 		get
 		{

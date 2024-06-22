@@ -39,7 +39,7 @@ public class ComponentTemplate : IModObject, IResearchable, IEntity, ITemplate<C
 		get { return AbilityTargets.Component; }
 	}
 
-	public IEnumerable<IAbilityObject> Children
+	public IEnumerable<IEntity> Children
 	{
 		get { yield break; }
 	}
@@ -178,7 +178,7 @@ public class ComponentTemplate : IModObject, IResearchable, IEntity, ITemplate<C
 	/// </summary>
 	public Empire Owner { get { return null; } }
 
-	public IEnumerable<IAbilityObject> Parents
+	public IEnumerable<IEntity> Parents
 	{
 		get
 		{

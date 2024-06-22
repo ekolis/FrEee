@@ -106,7 +106,7 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 	/// </summary>
 	public int CargoStorage => MaxCargo + this.GetAbilityValue("Cargo Storage").ToInt();
 
-	public override IEnumerable<IAbilityObject> Children
+	public override IEnumerable<IEntity> Children
 	{
 		get
 		{
@@ -196,7 +196,7 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 		{
 			var facils = 0;
 			if (Colony != null)
-				facils = Colony.Facilities.Count;
+				facils = Colony.Facilities.Count();
 			return new Progress(facils, MaxFacilities);
 		}
 	}
@@ -228,7 +228,8 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 		{
 			if (Colony == null)
 				return 0;
-			return Cargo.Hitpoints + Colony.Facilities.Sum(f => f.Hitpoints) + (int)AllPopulation.Sum(kvp => kvp.Value * Mod.Current.Settings.PopulationHitpoints);
+			// TODO: flesh out FacilityAbility so any entity can be a facility, not just a Facility object
+			return Cargo.Hitpoints + Colony.Facilities.Cast<Facility>().Sum(f => f.Hitpoints) + (int)AllPopulation.Sum(kvp => kvp.Value * Mod.Current.Settings.PopulationHitpoints);
 		}
 		set
 		{
@@ -238,7 +239,8 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 
 	public int HullHitpoints
 	{
-		get { return Colony == null ? 0 : (Colony.Facilities.Sum(f => f.Hitpoints) + (int)(Colony.Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints) + Cargo.HullHitpoints); }
+		// TODO: flesh out FacilityAbility so any entity can be a facility, not just a Facility object
+		get { return Colony == null ? 0 : (Colony.Facilities.Cast<Facility>().Sum(f => f.Hitpoints) + (int)(Colony.Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints) + Cargo.HullHitpoints); }
 	}
 
 	public override Image Icon
@@ -253,7 +255,7 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 
 	public int IntelligenceIncome => this.GrossIncome()[Resource.Intelligence];
 
-	IEnumerable<Ability> IAbilityObject.IntrinsicAbilities => IntrinsicAbilities;
+	IEnumerable<Ability> IEntity.IntrinsicAbilities => IntrinsicAbilities;
 
 	public bool IsAlive => Colony != null;
 
@@ -287,13 +289,15 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 		{
 			if (Colony == null)
 				return 0;
-			return Cargo.MaxHitpoints + Colony.Facilities.Sum(f => f.MaxHitpoints);
+			// TODO: flesh out FacilityAbility so any entity can be a facility, not just a Facility object
+			return Cargo.MaxHitpoints + Colony.Facilities.Cast<Facility>().Sum(f => f.MaxHitpoints);
 		}
 	}
 
 	public int MaxHullHitpoints
 	{
-		get { return Colony == null ? 0 : (Colony.Facilities.Sum(f => f.MaxHitpoints) + (int)(Colony.Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints) + Cargo.MaxHullHitpoints); }
+		// TODO: flesh out FacilityAbility so any entity can be a facility, not just a Facility object
+		get { return Colony == null ? 0 : (Colony.Facilities.Cast<Facility>().Sum(f => f.MaxHitpoints) + (int)(Colony.Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints) + Cargo.MaxHullHitpoints); }
 	}
 
 	public int MaxNormalShields
@@ -404,7 +408,7 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 		}
 	}
 
-	public override IEnumerable<IAbilityObject> Parents
+	public override IEnumerable<IEntity> Parents
 	{
 		get
 		{
@@ -937,7 +941,8 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 		// TODO - per-race population HP?
 		var popHP = (int)Math.Ceiling(Colony.Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints);
 		var cargoHP = Colony.Cargo.MaxHitpoints;
-		var facilHP = Colony.Facilities.Sum(f => f.MaxHitpoints);
+		// TODO: flesh out FacilityAbility so any entity can be a facility, not just a Facility object
+		var facilHP = Colony.Facilities.Cast<Facility>().Sum(f => f.MaxHitpoints);
 		var order = new int[] { 0, 1, 2 }.Shuffle(dice);
 		foreach (var num in order)
 		{
@@ -1000,9 +1005,10 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 			var facil = Colony.Facilities.Where(f =>
 			{
 				// skip facilities that are completely pierced by this hit
-				var hit2 = new Hit(hit.Shot, f, damage);
+				// TODO: flesh out FacilityAbility so any entity can be a facility, not just a Facility object
+				var hit2 = new Hit(hit.Shot, (Facility)f, damage);
 				return hit2.Shot.DamageType.ComponentPiercing.Evaluate(hit2) < 100;
-			}).ToDictionary(f => f, f => f.HitChance).PickWeighted(dice);
+			}).Cast<Facility>().ToDictionary(f => f, f => f.HitChance).PickWeighted(dice);
 			if (facil == null)
 				break; // no more facilities to hit
 			var facilhit = new Hit(hit.Shot, facil, damage);

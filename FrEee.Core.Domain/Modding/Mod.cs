@@ -52,9 +52,6 @@ public class Mod : IDisposable
 		EmpireAIs = new List<AI<Empire, Galaxy>>();
 		EventTypes = new List<EventType>();
 		EventTemplates = new List<EventTemplate>();
-
-		// for redacted colonies
-		FacilityTemplates.Add(FacilityTemplate.Unknown);
 	}
 
 	private object locker = new object();

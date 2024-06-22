@@ -54,7 +54,7 @@ public class DoNotAssignIDAttribute : Attribute
 /// A galaxy in which the game is played.
 /// </summary>
 [Serializable]
-public class Galaxy : ICommonAbilityObject
+public class Galaxy : ICommonEntity
 {
 	public Galaxy()
 	{
@@ -66,9 +66,9 @@ public class Galaxy : ICommonAbilityObject
 		Name = "Unnamed";
 		TurnNumber = 1;
 		referrables = new Dictionary<long, IReferrable>();
-		AbilityCache = new SafeDictionary<IAbilityObject, IEnumerable<Ability>>();
-		CommonAbilityCache = new SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>>();
-		SharedAbilityCache = new SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>>();
+		AbilityCache = new SafeDictionary<IEntity, IEnumerable<Ability>>();
+		CommonAbilityCache = new SafeDictionary<Tuple<ICommonEntity, Empire>, IEnumerable<Ability>>();
+		SharedAbilityCache = new SafeDictionary<Tuple<IOwnableEntity, Empire>, IEnumerable<Ability>>();
 		GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
 		ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
 		Battles = new HashSet<IBattle>();
@@ -95,7 +95,7 @@ public class Galaxy : ICommonAbilityObject
 	/// </summary>
 	public ICollection<IBattle> Battles { get; private set; }
 
-	public IEnumerable<IAbilityObject> Children
+	public IEnumerable<IEntity> Children
 	{
 		get { return StarSystemLocations.Select(l => l.Item); }
 	}
@@ -152,6 +152,15 @@ public class Galaxy : ICommonAbilityObject
 	{
 		// TODO - galaxy wide abilities?
 		get { yield break; }
+	}
+
+	public IEnumerable<Ability> Abilities
+	{
+		get => IntrinsicAbilities;
+		set
+		{
+			// galaxy can't have intrinsic abilities right now
+		}
 	}
 
 	/// <summary>
@@ -219,7 +228,7 @@ public class Galaxy : ICommonAbilityObject
 	/// </summary>
 	public double NextTickSize { get; internal set; }
 
-	public IEnumerable<IAbilityObject> Parents
+	public IEnumerable<IEntity> Parents
 	{
 		get
 		{
@@ -315,13 +324,13 @@ public class Galaxy : ICommonAbilityObject
 	/// Cache of abilities belonging to game objects.
 	/// </summary>
 	[DoNotSerialize]
-	internal SafeDictionary<IAbilityObject, IEnumerable<Ability>> AbilityCache { get; private set; }
+	internal SafeDictionary<IEntity, IEnumerable<Ability>> AbilityCache { get; private set; }
 
 	/// <summary>
 	/// Cache of abilities belonging to common game objects that can have different abilities for each empire.
 	/// </summary>
 	[DoNotSerialize]
-	internal SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>> CommonAbilityCache { get; private set; }
+	internal SafeDictionary<Tuple<ICommonEntity, Empire>, IEnumerable<Ability>> CommonAbilityCache { get; private set; }
 
 	/// <summary>
 	/// Cache of treaty clauses given by empires.
@@ -347,7 +356,7 @@ public class Galaxy : ICommonAbilityObject
 	/// Cache of abilities that are shared to empires from other objects due to treaties.
 	/// </summary>
 	[DoNotSerialize]
-	internal SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>> SharedAbilityCache { get; private set; }
+	internal SafeDictionary<Tuple<IOwnableEntity, Empire>, IEnumerable<Ability>> SharedAbilityCache { get; private set; }
 
 	/// <summary>
 	/// Serialized string value of the galaxy at the beginning of the turn.
@@ -785,9 +794,9 @@ public class Galaxy : ICommonAbilityObject
 		return StarSystemLocations.SelectMany(l => l.Item.FindSpaceObjects(criteria));
 	}
 
-	public IEnumerable<IEntity> GetContainedAbilityObjects(Empire emp)
+	public IEnumerable<IEntity> GetContainedEntities(Empire emp)
 	{
-		return StarSystemLocations.Select(ssl => ssl.Item).Concat(StarSystemLocations.SelectMany(ssl => ssl.Item.GetContainedAbilityObjects(emp)));
+		return StarSystemLocations.Select(ssl => ssl.Item).Concat(StarSystemLocations.SelectMany(ssl => ssl.Item.GetContainedEntities(emp)));
 	}
 
 	public string GetEmpireCommandsSavePath(Empire emp)

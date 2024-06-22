@@ -10,16 +10,30 @@ namespace FrEee.Ecs;
 /// <summary>
 /// An entity which can have abilities.
 /// </summary>
-public interface IEntity : IEntity<Ability>, IAbilityObject
+public interface IEntity
+	: IEntity<Ability>
 {
-    /// <summary>
-    /// Abilities possessed intrinsically by this object.
-    /// </summary>
-    [Obsolete("Use Abilities.")]
-    IEnumerable<Ability> IntrinsicAbilities => Abilities;    
-}
+	/// <summary>
+	/// The type of ability target that this entity represents.
+	/// </summary>
+	[Obsolete("Ability targets will be irrelevant once all game objects are converted to IEntity.")]
+	AbilityTargets AbilityTarget { get; }
 
-/// <summary>
-/// A referrable entity which can have abilities.
-/// </summary>
-public interface IReferrableEntity : IReferrable, IEntity { }
+	/// <summary>
+	/// Child entities that can pass up abilities to this object.
+	/// </summary>
+	[Obsolete("Abilities should not be inherited directly between entities. Entities should instead be linked using linking ability pairs, such as HoldFacilitiesAbility and FacilityAbility.")]
+	IEnumerable<IEntity> Children { get; }
+
+	/// <summary>
+	/// Parent entities from which this object can inherit abilities.
+	/// </summary>
+	[Obsolete("Abilities should not be inherited directly between entities. Entities should instead be linked using linking ability pairs, such as HoldFacilitiesAbility and FacilityAbility.")]
+	IEnumerable<IEntity> Parents { get; }
+
+	/// <summary>
+	/// Any abilities belonging intrinsically to this entity.
+	/// </summary>
+	// TODO: rename to Abilities?
+	IEnumerable<Ability> IntrinsicAbilities { get; }
+}

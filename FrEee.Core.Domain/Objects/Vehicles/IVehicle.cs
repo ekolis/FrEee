@@ -9,13 +9,14 @@ using FrEee.Utility;
 using FrEee.Processes.Combat;
 using FrEee.Objects.GameState;
 using FrEee.Ecs.Abilities.Utility;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Vehicles;
 
 /// <summary>
 /// A space or ground vehicle.
 /// </summary>
-public interface IVehicle : IConstructable, IOwnableAbilityObject, IReferrable, IDamageable, ICombatant, IRecyclable, IIncomeProducer, IUpgradeable<IVehicle>, INameable
+public interface IVehicle : IConstructable, IOwnableEntity, IReferrable, IDamageable, ICombatant, IRecyclable, IIncomeProducer, IUpgradeable<IVehicle>, INameable
 {
     [DoNotSerialize(false)]
     new IList<Component> Components { get; }

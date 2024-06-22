@@ -10,15 +10,17 @@ using FrEee.Utility;
 
 namespace FrEee.Ecs.Abilities
 {
+	// TODO: make this a HoldPartsAbility so it can be reused for components (just have a string for the type of part)
+
     /// <summary>
-    /// Allows an entity to hold facilities.
+    /// Holds entities that have a <see cref="FacilityAbility"/>.
     /// </summary>
     class HoldFacilitiesAbility
 		: Ability
 	{
 		public HoldFacilitiesAbility
 		(
-			IAbilityObject container,
+			IEntity container,
 			AbilityRule rule,
 			Formula<string>? description,
 			params IFormula[] values
@@ -29,7 +31,7 @@ namespace FrEee.Ecs.Abilities
 
 		public HoldFacilitiesAbility
 		(
-			IAbilityObject container,
+			IEntity container,
 			AbilityRule rule,
 			IFormula<int> capacity
 		) : this(container, rule, null, capacity)
@@ -41,29 +43,34 @@ namespace FrEee.Ecs.Abilities
 		public IFormula<int> Capacity { get; private set; }
 
 		/// <summary>
-		/// The currently held facilities.
+		/// The currently held facilities (abilities).
 		/// </summary>
-		public IList<Facility> Facilities { get; private set; } = new List<Facility>();
+		public IList<FacilityAbility> FacilityAbilities { get; private set; } = new List<FacilityAbility>();
+
+		/// <summary>
+		/// The currently held facilities (entities).
+		/// </summary>
+		public IEnumerable<IEntity> Facilities => FacilityAbilities.Select(q => q.Container);
 
 		public override SafeDictionary<string, object> Data
 		{
 			get
 			{
 				var data = base.Data;
-				data["Facilities"] = Facilities;
+				data["FacilityAbilities"] = FacilityAbilities;
 				return data;
 			}
 			set
 			{
 				base.Data = value;
 				Capacity = Value1.ToFormula<int>();
-				Facilities = (IList<Facility>)value["Facilities"];
+				FacilityAbilities = (IList<FacilityAbility>)value["FacilityAbilities"];
 			}
 		}
 
 		public override void Interact(IInteraction interaction)
 		{
-			foreach (var facility in Facilities)
+			foreach (var facility in FacilityAbilities)
 			{
 				facility.Interact(interaction);
 			}

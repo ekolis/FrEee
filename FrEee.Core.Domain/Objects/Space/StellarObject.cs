@@ -48,7 +48,7 @@ public abstract class StellarObject : IStellarObject, IAbstractDataObject
 	/// </summary>
 	public virtual bool CanWarp { get { return false; } }
 
-	public virtual IEnumerable<IAbilityObject> Children
+	public virtual IEnumerable<IEntity> Children
 	{
 		get { yield break; }
 	}
@@ -135,7 +135,7 @@ public abstract class StellarObject : IStellarObject, IAbstractDataObject
 	/// </summary>
 	public IList<Ability> IntrinsicAbilities { get; private set; }
 
-	IEnumerable<Ability> IAbilityObject.IntrinsicAbilities => IntrinsicAbilities;
+	IEnumerable<Ability> IEntity.IntrinsicAbilities => IntrinsicAbilities;
 
 	public bool IsDisposed { get; set; }
 
@@ -177,7 +177,7 @@ public abstract class StellarObject : IStellarObject, IAbstractDataObject
 		}
 	}
 
-	public virtual IEnumerable<IAbilityObject> Parents
+	public virtual IEnumerable<IEntity> Parents
 	{
 		get
 		{

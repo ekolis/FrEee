@@ -20,6 +20,7 @@ using FrEee.Utility;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Combat.Grid;
 using FrEee.Ecs;
+using FrEee.Objects.Technology;
 
 namespace FrEee.Processes;
 
@@ -548,7 +549,8 @@ public class TurnProcessor
 
 		// repair facilities
 		// planets with no population won't repair facilities
-		galaxy.FindSpaceObjects<Planet>().Select(p => p.Colony).Where(c => c != null && c.Population.Any(q => q.Value > 0)).SelectMany(c => c.Facilities).SafeForeach(f => f.Repair());
+		// TODO: flesh out FacilityAbility so any entity can be a facility, not just a Facility object
+		galaxy.FindSpaceObjects<Planet>().Select(p => p.Colony).Where(c => c != null && c.Population.Any(q => q.Value > 0)).SelectMany(c => c.Facilities).Cast<Facility>().SafeForeach(f => f.Repair());
 
 		// repair units
 		// planets with no population won't repair units

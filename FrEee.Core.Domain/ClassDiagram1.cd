@@ -2193,18 +2193,18 @@
       <FileName>Modding\Interfaces\IModObject.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="FrEee.Interfaces.IAbilityObject" Collapsed="true">
+  <Interface Name="FrEee.Interfaces.IEntity" Collapsed="true">
     <Position X="17.75" Y="16.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAEQAABAAAAAAAABAAAAAAAAAA=</HashCode>
-      <FileName>Game\Interfaces\IAbilityObject.cs</FileName>
+      <FileName>Game\Interfaces\IEntity.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="FrEee.Interfaces.IAbilityObject" Collapsed="true">
+  <Interface Name="FrEee.Interfaces.IEntity" Collapsed="true">
     <Position X="17.75" Y="18.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Game\Interfaces\IAbilityObject.cs</FileName>
+      <FileName>Game\Interfaces\IEntity.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="FrEee.Interfaces.ICargoContainer" Collapsed="true">

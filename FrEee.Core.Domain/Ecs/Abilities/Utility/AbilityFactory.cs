@@ -9,10 +9,10 @@ namespace FrEee.Ecs.Abilities.Utility
 {
     public static class AbilityFactory
     {
-        public static Ability Build(Type abilityType, IAbilityObject container, AbilityRule rule, Formula<string>? description, params Formula<string>[] values)
+        public static Ability Build(Type abilityType, IEntity container, AbilityRule rule, Formula<string>? description, params Formula<string>[] values)
         {
             var constructor = abilityType.GetConstructor([
-                typeof(IAbilityObject),
+                typeof(IEntity),
                 typeof(AbilityRule),
                 typeof(Formula<string>),
                 typeof(Formula<string>[])

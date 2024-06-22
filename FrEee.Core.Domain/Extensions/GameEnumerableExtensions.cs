@@ -266,17 +266,17 @@ public static class GameEnumerableExtensions
 		return list.BelongingTo(emp);
 	}
 
-	public static IEnumerable<Ability> Stack(this IEnumerable<Ability> abilities, IAbilityObject stackTo)
+	public static IEnumerable<Ability> Stack(this IEnumerable<Ability> abilities, IEntity stackTo)
 	{
 		return abilities.StackToTree(stackTo).Select(g => g.Key);
 	}
 
-	public static IEnumerable<Ability> StackAbilities(this IEnumerable<IEntity> objs, IAbilityObject stackTo)
+	public static IEnumerable<Ability> StackAbilities(this IEnumerable<IEntity> objs, IEntity stackTo)
 	{
 		return objs.SelectMany(obj => obj.Abilities()).Stack(stackTo);
 	}
 
-	public static ILookup<Ability, Ability> StackAbilitiesToTree(this IEnumerable<IEntity> objs, IAbilityObject stackTo)
+	public static ILookup<Ability, Ability> StackAbilitiesToTree(this IEnumerable<IEntity> objs, IEntity stackTo)
 	{
 		return objs.SelectMany(obj => obj.Abilities()).StackToTree(stackTo);
 	}
@@ -289,7 +289,7 @@ public static class GameEnumerableExtensions
 	/// <param name="abilities"></param>
 	/// <param name="stackTo">The object which should own the stacked abilities.</param>
 	/// <returns></returns>
-	public static ILookup<Ability, Ability> StackToTree(this IEnumerable<Ability> abilities, IAbilityObject stackTo)
+	public static ILookup<Ability, Ability> StackToTree(this IEnumerable<Ability> abilities, IEntity stackTo)
 	{
 		// create result list
 		var stacked = new List<Tuple<Ability, Ability>>();

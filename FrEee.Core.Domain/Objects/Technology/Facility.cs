@@ -25,24 +25,19 @@ namespace FrEee.Objects.Technology;
 /// A large immobile installation on a colony.
 /// </summary>
 [Serializable]
-public class Facility : IEntity, IOwnableAbilityObject, IConstructable, IDamageable, IDisposable, IContainable<Planet>, IFormulaHost, IRecyclable, IUpgradeable<Facility>, IDataObject
+[Obsolete("Use an IEntity wih a FacilityAbility.")]
+public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, IDisposable, IContainable<Planet>, IFormulaHost, IRecyclable, IUpgradeable<Facility>, IDataObject
 {
 	public Facility(FacilityTemplate template)
 	{
 		Template = template;
 		ConstructionProgress = new ResourceQuantity();
 		Hitpoints = MaxHitpoints;
+		Abilities = template.Abilities.Select(q => q.Copy()).ToList();
+		this.GetAbility<FacilityAbility>().Container = this;
 	}
 
-	[DoNotSerialize]
-	public IEnumerable<Ability> Abilities
-	{
-		get { return Template.Abilities; }
-		set
-		{
-			// can't set facility abilities, set template's abilities instead
-		}
-	}
+	public IEnumerable<Ability> Abilities { get; set; }
 
 	public AbilityTargets AbilityTarget
 	{
@@ -57,7 +52,7 @@ public class Facility : IEntity, IOwnableAbilityObject, IConstructable, IDamagea
 		get { return 0; }
 	}
 
-	public IEnumerable<IAbilityObject> Children
+	public IEnumerable<IEntity> Children
 	{
 		get { yield break; }
 	}
@@ -126,7 +121,7 @@ public class Facility : IEntity, IOwnableAbilityObject, IConstructable, IDamagea
 
 	public IEnumerable<Ability> IntrinsicAbilities
 	{
-		get { return Abilities; }
+		get { return Abilities ?? Enumerable.Empty<Ability>(); }
 	}
 
 	public bool IsDestroyed
@@ -201,7 +196,7 @@ public class Facility : IEntity, IOwnableAbilityObject, IConstructable, IDamagea
 
 	public IEnumerable<Facility> NewerVersions
 	{
-		get { return Galaxy.Current.FindSpaceObjects<Planet>().Where(p => p.HasColony).SelectMany(p => p.Colony.Facilities).Where(f => Template.UpgradesTo(f.Template)); }
+		get { return Galaxy.Current.FindSpaceObjects<Planet>().Where(p => p.HasColony).SelectMany(p => p.Colony.Facilities).Cast<Facility>().Where(f => Template.UpgradesTo(f.Template)); }
 	}
 
 	/// <summary>
@@ -222,7 +217,8 @@ public class Facility : IEntity, IOwnableAbilityObject, IConstructable, IDamagea
 
 	public IEnumerable<Facility> OlderVersions
 	{
-		get { return Galaxy.Current.FindSpaceObjects<Planet>().Where(p => p.HasColony).SelectMany(p => p.Colony.Facilities).Where(f => f.Template.UpgradesTo(Template)); }
+		// TODO: flesh out FacilityAbility so any entity can be a facility, not just a Facility object
+		get { return Galaxy.Current.FindSpaceObjects<Planet>().Where(p => p.HasColony).SelectMany(p => p.Colony.Facilities).Cast<Facility>().Where(f => f.Template.UpgradesTo(Template)); }
 	}
 
 	[DoNotSerialize(false)]
@@ -240,7 +236,7 @@ public class Facility : IEntity, IOwnableAbilityObject, IConstructable, IDamagea
 		}
 	}
 
-	public IEnumerable<IAbilityObject> Parents
+	public IEnumerable<IEntity> Parents
 	{
 		get
 		{
@@ -338,6 +334,7 @@ public class Facility : IEntity, IOwnableAbilityObject, IConstructable, IDamagea
 				dict.Add(nameof(Hitpoints), Hitpoints);
 			dict.Add(nameof(ID), ID);
 			dict.Add(nameof(template), template);
+			dict.Add(nameof(Abilities), Abilities);
 			return dict;
 		}
 		set
@@ -346,6 +343,7 @@ public class Facility : IEntity, IOwnableAbilityObject, IConstructable, IDamagea
 			ConstructionProgress = (ResourceQuantity)(value[nameof(ConstructionProgress)] ?? Cost);
 			Hitpoints = (int)(value[nameof(Hitpoints)] ?? MaxHitpoints);
 			ID = (long)value[nameof(ID)];
+			Abilities = (IEnumerable<Ability>)value[nameof(Abilities)];
 		}
 	}
 
@@ -356,7 +354,7 @@ public class Facility : IEntity, IOwnableAbilityObject, IConstructable, IDamagea
 		if (Container != null)
 		{
 			var col = Container.Colony;
-			col.Facilities.Remove(this);
+			col.FacilityAbilities.Remove(this.GetAbility<FacilityAbility>());
 			col.UpdateEmpireMemories();
 		}
 	}
@@ -372,10 +370,10 @@ public class Facility : IEntity, IOwnableAbilityObject, IConstructable, IDamagea
 			var planet = (Planet)sobj;
 			if (planet.Colony == null)
 				throw new ArgumentException("Facilities can only be placed on colonized planets.");
-			if (planet.Colony.Facilities.Count >= planet.MaxFacilities)
+			if (planet.Colony.Facilities.Count() >= planet.MaxFacilities)
 				planet.Colony.Owner.Log.Add(planet.CreateLogMessage(this + " cannot be constructed at " + planet + " because there is no more space available for facilities there.", LogMessages.LogMessageType.Warning));
 			else
-				planet.Colony.Facilities.Add(this);
+				planet.Colony.FacilityAbilities.Add(this.GetAbility<FacilityAbility>());
 		}
 		else
 			throw new ArgumentException("Facilities can only be placed on colonized planets.");

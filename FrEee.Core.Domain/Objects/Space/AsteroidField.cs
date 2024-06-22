@@ -10,6 +10,7 @@ using FrEee.Utility;
 using System.Collections.Generic;
 using FrEee.Ecs.Abilities;
 using FrEee.Ecs.Abilities.Utility;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Space;
 
@@ -29,7 +30,7 @@ public class AsteroidField : StellarObject, ITemplate<AsteroidField>, IMineableS
 		get { return AbilityTargets.AsteroidField; }
 	}
 
-	IEnumerable<Ability> IAbilityObject.IntrinsicAbilities => IntrinsicAbilities;
+	IEnumerable<Ability> IEntity.IntrinsicAbilities => IntrinsicAbilities;
 
 	/// <summary>
 	/// The atmospheric composition (e.g. methane, oxygen, carbon dioxide) of this asteroid field.

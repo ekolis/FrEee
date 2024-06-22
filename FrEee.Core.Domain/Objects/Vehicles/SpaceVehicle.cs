@@ -141,7 +141,7 @@ public abstract class SpaceVehicle : Vehicle, IMobileSpaceObject<SpaceVehicle>
 	IEnumerable<IOrder> IOrderable.Orders
 		=> Orders;
 
-	public override IEnumerable<IAbilityObject> Parents
+	public override IEnumerable<IEntity> Parents
 	{
 		get
 		{

@@ -295,7 +295,8 @@ public partial class ConstructionQueueForm : GameForm
 		lstUpgrades.Items.Clear();
 		if (ConstructionQueue.Colony != null)
 		{
-			foreach (var g in ConstructionQueue.Colony.Facilities.GroupBy(f => f.Template).OrderBy(g => g.Key.Group).ThenBy(g => g.Key.Name)) // TODO - roman numeral sorting
+			// TODO: flesh out FacilityAbility so any entity can be a facility, not just a Facility object
+			foreach (var g in ConstructionQueue.Colony.Facilities.Cast<Facility>().GroupBy(f => f.Template).OrderBy(g => g.Key.Group).ThenBy(g => g.Key.Name)) // TODO - roman numeral sorting
 			{
 				var oldf = g.Key;
 
@@ -528,7 +529,8 @@ public partial class ConstructionQueueForm : GameForm
 
 	private int CountPresentFacilities(IEnumerable<Colony> colonies, string facilityFamily)
 	{
-		return colonies.Sum(c => c.Facilities.Where(f => f.Template.Family == facilityFamily).Count());
+		// TODO: flesh out FacilityAbility so any entity can be a facility, not just a Facility object
+		return colonies.Sum(c => c.Facilities.Cast<Facility>().Where(f => f.Template.Family == facilityFamily).Count());
 	}
 
 	private int CountPresentVehicles(IEnumerable<ISpaceObject> sobjs, string designBaseName)
@@ -555,7 +557,8 @@ public partial class ConstructionQueueForm : GameForm
 
 	private int CountUpgradeableFacilities(IEnumerable<Colony> colonies, string facilityFamily)
 	{
-		return colonies.Sum(c => c.Facilities.Where(f => f.Template.Family == facilityFamily && f.IsObsolescent).Count());
+		// TODO: flesh out FacilityAbility so any entity can be a facility, not just a Facility object
+		return colonies.Sum(c => c.Facilities.Cast<Facility>().Where(f => f.Template.Family == facilityFamily && f.IsObsolescent).Count());
 	}
 
 	private void lstFacilities_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)

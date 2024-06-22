@@ -4,13 +4,15 @@
 
 Name := Ownable
 Type := OwnableAbility
-Targets := All
 Description := Owned by {host.Owner or "no one"}.
 
 Name := Hold Facilities
 Type := HoldFacilitiesAbility
-Targets := All
 Description := Holds up to [%Amount1%] facilities.
+
+Name := Facility
+Type := FacilityAbility
+Description := Can be installed as a facility.
 
 Name := Warp Point - Turbulence
 Type := WarpDamageAbility

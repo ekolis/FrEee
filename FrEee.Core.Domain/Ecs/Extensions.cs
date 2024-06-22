@@ -30,7 +30,7 @@ public static class Extensions
 	/// </summary>
 	/// <param name="obj"></param>
 	/// <returns></returns>
-	public static IEnumerable<Ability> Abilities(this IAbilityObject obj, Func<IAbilityObject, bool>? sourceFilter = null)
+	public static IEnumerable<Ability> Abilities(this IEntity obj, Func<IEntity, bool>? sourceFilter = null)
 	{
 		if (obj == null)
 			return Enumerable.Empty<Ability>();
@@ -46,7 +46,7 @@ public static class Extensions
 		return obj.UnstackedAbilities(true, sourceFilter).Stack(obj);
 	}
 
-	public static ILookup<Ability, Ability> AbilityTree(this IAbilityObject obj, Func<IAbilityObject, bool>? sourceFilter = null)
+	public static ILookup<Ability, Ability> AbilityTree(this IEntity obj, Func<IEntity, bool>? sourceFilter = null)
 	{
 		return obj.UnstackedAbilities(true, sourceFilter).StackToTree(obj);
 	}
@@ -56,9 +56,9 @@ public static class Extensions
 	/// </summary>
 	/// <param name="obj"></param>
 	/// <returns></returns>
-	public static IDictionary<Ability, IAbilityObject> ActivatableAbilities(this Vehicle v)
+	public static IDictionary<Ability, IEntity> ActivatableAbilities(this Vehicle v)
 	{
-		var dict = new Dictionary<Ability, IAbilityObject>();
+		var dict = new Dictionary<Ability, IEntity>();
 		foreach (var a in v.Hull.Abilities)
 		{
 			if (a.Rule.IsActivatable)
@@ -80,12 +80,13 @@ public static class Extensions
 	/// </summary>
 	/// <param name="obj"></param>
 	/// <returns></returns>
-	public static IDictionary<Ability, IAbilityObject> ActivatableAbilities(this Planet p)
+	public static IDictionary<Ability, IEntity> ActivatableAbilities(this Planet p)
 	{
-		var dict = new Dictionary<Ability, IAbilityObject>();
+		var dict = new Dictionary<Ability, IEntity>();
 		if (p.Colony == null)
 			return dict;
-		foreach (var f in p.Colony.Facilities.Where(f => !f.IsDestroyed))
+		// TODO: flesh out FacilityAbility so any entity can be a facility, not just a Facility object
+		foreach (var f in p.Colony.Facilities.Cast<Facility>().Where(f => !f.IsDestroyed))
 		{
 			foreach (var a in f.Abilities)
 			{
@@ -101,14 +102,14 @@ public static class Extensions
 	/// </summary>
 	/// <param name="obj"></param>
 	/// <returns></returns>
-	public static IDictionary<Ability, IAbilityObject> ActivatableAbilities(this IAbilityObject o)
+	public static IDictionary<Ability, IEntity> ActivatableAbilities(this IEntity o)
 	{
 		if (o is Vehicle)
 			return ((Vehicle)o).ActivatableAbilities();
 		if (o is Planet)
 			return ((Planet)o).ActivatableAbilities();
 
-		var dict = new Dictionary<Ability, IAbilityObject>();
+		var dict = new Dictionary<Ability, IEntity>();
 		foreach (var a in o.Abilities())
 		{
 			if (a.Rule.IsActivatable)
@@ -124,7 +125,7 @@ public static class Extensions
 	/// <param name="includeShared"></param>
 	/// <returns></returns>
 	[Obsolete("Use ECS entity repository abilities, once they're added.")]
-	public static IEnumerable<Ability> AncestorAbilities(this IAbilityObject obj, Func<IAbilityObject, bool>? sourceFilter = null)
+	public static IEnumerable<Ability> AncestorAbilities(this IEntity obj, Func<IEntity, bool>? sourceFilter = null)
 	{
 		var abils = new List<Ability>();
 		foreach (var p in obj.Ancestors(sourceFilter).ExceptSingle(null))
@@ -133,7 +134,7 @@ public static class Extensions
 	}
 
 	[Obsolete("Use ECS entity repository abilities, once they're added.")]
-	public static IEnumerable<IAbilityObject> Ancestors(this IAbilityObject obj, Func<IAbilityObject, bool>? sourceFilter = null)
+	public static IEnumerable<IEntity> Ancestors(this IEntity obj, Func<IEntity, bool>? sourceFilter = null)
 	{
 		if (obj == null)
 			yield break;
@@ -163,7 +164,7 @@ public static class Extensions
 	}
 
 	[Obsolete("Use ECS abilities instead.")]
-	public static void ClearAbilityCache(this IAbilityObject o)
+	public static void ClearAbilityCache(this IEntity o)
 	{
 		Galaxy.Current.AbilityCache.Remove(o);
 	}
@@ -175,7 +176,7 @@ public static class Extensions
 	/// <param name="includeShared"></param>
 	/// <returns></returns>
 	[Obsolete("Use ECS entity repository abilities, once they're added.")]
-	public static IEnumerable<Ability> DescendantAbilities(this IAbilityObject obj, Func<IAbilityObject, bool>? sourceFilter = null)
+	public static IEnumerable<Ability> DescendantAbilities(this IEntity obj, Func<IEntity, bool>? sourceFilter = null)
 	{
 		var abils = new List<Ability>();
 		foreach (var c in obj.Descendants(sourceFilter))
@@ -184,10 +185,10 @@ public static class Extensions
 	}
 
 	[Obsolete("Use ECS entity repository abilities, once they're added.")]
-	public static IEnumerable<IAbilityObject> Descendants(this IAbilityObject obj, Func<IAbilityObject, bool>? sourceFilter = null)
+	public static IEnumerable<IEntity> Descendants(this IEntity obj, Func<IEntity, bool>? sourceFilter = null)
 	{
 		// we can't use a HashSet here because e.g. ships can have multiples of the same engine template installed
-		List<IAbilityObject> result = new();
+		List<IEntity> result = new();
 		if (obj != null)
 		{
 			foreach (var c in obj.Children)
@@ -204,14 +205,14 @@ public static class Extensions
 	}
 
 	[Obsolete("Use ECS scoped abilities instead, once they're added.")]
-	public static IEnumerable<Ability> EmpireAbilities(this ICommonAbilityObject obj, Empire emp, Func<IEntity, bool> sourceFilter = null)
+	public static IEnumerable<Ability> EmpireAbilities(this ICommonEntity obj, Empire emp, Func<IEntity, bool> sourceFilter = null)
 	{
 		if (obj == null)
 			return Enumerable.Empty<Ability>();
 
 		if (sourceFilter == null)
 		{
-			var subobjs = obj.GetContainedAbilityObjects(emp);
+			var subobjs = obj.GetContainedEntities(emp);
 			Func<IEnumerable<Ability>> getabils = () =>
 				subobjs.SelectMany(o => o.Abilities()).Where(a => a.Rule.CanTarget(obj.AbilityTarget));
 			if (Galaxy.Current.IsAbilityCacheEnabled)
@@ -225,7 +226,7 @@ public static class Extensions
 				return getabils();
 		}
 		else
-			return obj.GetContainedAbilityObjects(emp).Where(o => sourceFilter(o)).SelectMany(o => o.Abilities()).Where(a => a.Rule.CanTarget(obj.AbilityTarget));
+			return obj.GetContainedEntities(emp).Where(o => sourceFilter(o)).SelectMany(o => o.Abilities()).Where(a => a.Rule.CanTarget(obj.AbilityTarget));
 	}
 
 	/// <summary>
@@ -235,17 +236,17 @@ public static class Extensions
 	/// <param name="sourceFilter"></param>
 	/// <returns></returns>
 	[Obsolete("Use ECS scoped abilities instead, once they're added.")]
-	public static IEnumerable<Ability> EmpireCommonAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+	public static IEnumerable<Ability> EmpireCommonAbilities(this IEntity obj, Func<IEntity, bool> sourceFilter = null)
 	{
 		// Unowned objects cannot empire common abilities.
-		var ownable = obj as IOwnableAbilityObject;
+		var ownable = obj as IOwnableEntity;
 		if (ownable == null || ownable.Owner == null)
 			yield break;
 
 		// Where are these abilities coming from?
 		// Right now they can only come from ancestors, since sectors and star systems are the only common ability objects.
 		// TODO - Would it make sense for them to come from descendants? What kind of common ability object could be used as a descendant of an owned object?
-		var ancestors = obj.Ancestors(sourceFilter).OfType<ICommonAbilityObject>();
+		var ancestors = obj.Ancestors(sourceFilter).OfType<ICommonEntity>();
 
 		// What abilities do we have?
 		foreach (var ancestor in ancestors)
@@ -256,7 +257,7 @@ public static class Extensions
 	}
 
 	[Obsolete("Use ECS scoped abilities instead, once they're added.")]
-	private static IEnumerable<Ability> FindSharedAbilities(this IOwnableAbilityObject obj, ShareAbilityClause clause)
+	private static IEnumerable<Ability> FindSharedAbilities(this IOwnableEntity obj, ShareAbilityClause clause)
 	{
 		if (obj == null)
 			yield break;
@@ -311,7 +312,7 @@ public static class Extensions
 	/// <param name="filter"></param>
 	/// <returns></returns>
 	[Obsolete("Use ECS scoped abilities instead, once they're added.")]
-	public static string? GetEmpireAbilityValue(this ICommonAbilityObject obj, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
+	public static string? GetEmpireAbilityValue(this ICommonEntity obj, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 	{
 		if (obj == null)
 			return null;
@@ -330,7 +331,7 @@ public static class Extensions
 		}
 
 		IEnumerable<Ability> abils;
-		var subabils = obj.GetContainedAbilityObjects(emp).SelectMany(o => o.UnstackedAbilities(true).Where(a => a.Rule.Name == name));
+		var subabils = obj.GetContainedEntities(emp).SelectMany(o => o.UnstackedAbilities(true).Where(a => a.Rule.Name == name));
 		if (obj is IEntity)
 			abils = ((IEntity)obj).Abilities().Where(a => a.Rule != null && a.Rule.Name == name).Concat(subabils).Stack(obj);
 		else
@@ -360,7 +361,7 @@ public static class Extensions
 	/// <param name="filter">A filter for the abilities. For instance, you might want to filter by the ability grouping rule's value.</param>
 	/// <returns>The ability value.</returns>
 	[Obsolete("Use ECS abilities instead.")]
-	public static string GetAbilityValue(this IAbilityObject obj, string name, int index = 1, bool includeShared = true, bool includeEmpireCommon = true, Func<Ability, bool> filter = null)
+	public static string GetAbilityValue(this IEntity obj, string name, int index = 1, bool includeShared = true, bool includeEmpireCommon = true, Func<Ability, bool> filter = null)
 	{
 		if (obj == null)
 			return null;
@@ -379,7 +380,7 @@ public static class Extensions
 	}
 
 	[Obsolete("Use ECS abilities instead.")]
-	public static string GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name, IEntity stackTo, int index = 1, bool includeShared = true, bool includeEmpireCommon = true, Func<Ability, bool> filter = null)
+	public static string GetAbilityValue(this IEnumerable<IEntity> objs, string name, IEntity stackTo, int index = 1, bool includeShared = true, bool includeEmpireCommon = true, Func<Ability, bool> filter = null)
 	{
 		var tuples = objs.Squash(o => o.Abilities());
 		if (includeShared)
@@ -397,10 +398,10 @@ public static class Extensions
 	/// </summary>
 	/// <param name="obj"></param>
 	/// <returns></returns>
-	public static IEnumerable<Ability> SharedAbilities(this IAbilityObject obj, Func<IEntity, bool>? sourceFilter = null)
+	public static IEnumerable<Ability> SharedAbilities(this IEntity obj, Func<IEntity, bool>? sourceFilter = null)
 	{
 		// Unowned objects cannot have abilities shared to them.
-		var ownable = obj as IOwnableAbilityObject;
+		var ownable = obj as IOwnableEntity;
 		if (ownable == null || ownable.Owner == null)
 			yield break;
 
@@ -425,7 +426,7 @@ public static class Extensions
 	/// </summary>
 	/// <param name="obj"></param>
 	/// <returns></returns>
-	public static IEnumerable<Ability> SharedAbilities(this ICommonAbilityObject obj, Empire empire, Func<IEntity, bool> sourceFilter = null)
+	public static IEnumerable<Ability> SharedAbilities(this ICommonEntity obj, Empire empire, Func<IEntity, bool> sourceFilter = null)
 	{
 		if (obj == null)
 			yield break;
@@ -482,7 +483,7 @@ public static class Extensions
 	/// <param name="obj"></param>
 	/// <param name="includeShared"></param>
 	/// <returns></returns>
-	public static IEnumerable<Ability> UnstackedAbilities(this IAbilityObject obj, bool includeShared, Func<IAbilityObject, bool>? sourceFilter = null)
+	public static IEnumerable<Ability> UnstackedAbilities(this IEntity obj, bool includeShared, Func<IEntity, bool>? sourceFilter = null)
 	{
 		if (obj == null)
 			return Enumerable.Empty<Ability>();
@@ -511,6 +512,7 @@ public static class Extensions
 	/// <param name="entity"></param>
 	/// <returns></returns>
 	public static bool HasAbility<T>(this IEntity entity)
+		where T : IAbility
 		=> entity.Abilities.OfType<T>().Any();
 
 	/// <summary>
@@ -521,6 +523,7 @@ public static class Extensions
 	/// <param name="entity"></param>
 	/// <returns></returns>
 	public static T GetAbility<T>(this IEntity entity)
+		where T : IAbility
 		=> entity.GetAbilities<T>().Single();
 
 	/// <summary>
@@ -532,6 +535,7 @@ public static class Extensions
 	/// <param name="entity"></param>
 	/// <returns></returns>
 	public static T? GetAbilityOrNull<T>(this IEntity entity)
+		where T : IAbility
 		=> entity.GetAbilities<T>().SingleOrDefault();
 
 	/// <summary>
@@ -541,6 +545,7 @@ public static class Extensions
 	/// <param name="entity"></param>
 	/// <returns></returns>
 	public static IEnumerable<T> GetAbilities<T>(this IEntity entity)
+		where T : IAbility
 		=> entity.Abilities.OfType<T>();
 	#endregion
 

@@ -95,7 +95,7 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IEntity, I
 		get { return AbilityTargets.Component; }
 	}
 
-	public IEnumerable<IAbilityObject> Children
+	public IEnumerable<IEntity> Children
 	{
 		get { yield return ComponentTemplate; }
 	}
@@ -227,7 +227,7 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IEntity, I
 		get { return Galaxy.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Select(c => c.Template).Where(mct => LatestVersion == mct).Distinct(); }
 	}
 
-	public IEnumerable<IAbilityObject> Parents
+	public IEnumerable<IEntity> Parents
 	{
 		get
 		{

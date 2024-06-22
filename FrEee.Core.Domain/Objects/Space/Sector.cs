@@ -22,7 +22,7 @@ namespace FrEee.Objects.Space;
 /// A sector in a star system.
 /// </summary>
 [Serializable]
-public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnable
+public class Sector : IPromotable, ICargoContainer, ICommonEntity, IOwnable
 {
 	public Sector(StarSystem starSystem, Point coordinates)
 	{
@@ -33,6 +33,15 @@ public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnab
 	public AbilityTargets AbilityTarget
 	{
 		get { return AbilityTargets.Sector; }
+	}
+
+	public IEnumerable<Ability> Abilities
+	{
+		get => IntrinsicAbilities;
+		set
+		{
+			// galaxy can't have intrinsic abilities right now
+		}
 	}
 
 	/// <summary>
@@ -65,7 +74,7 @@ public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnab
 		get { return int.MaxValue; }
 	}
 
-	public IEnumerable<IAbilityObject> Children
+	public IEnumerable<IEntity> Children
 	{
 		get { return SpaceObjects; }
 	}
@@ -124,7 +133,7 @@ public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnab
 		}
 	}
 
-	public IEnumerable<IAbilityObject> Parents
+	public IEnumerable<IEntity> Parents
 	{
 		get
 		{
@@ -240,7 +249,7 @@ public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnab
 		return false;
 	}
 
-	public IEnumerable<IEntity> GetContainedAbilityObjects(Empire emp)
+	public IEnumerable<IEntity> GetContainedEntities(Empire emp)
 	{
 		return SpaceObjects.Where(sobj => sobj?.Owner == emp).OfType<IEntity>();
 	}

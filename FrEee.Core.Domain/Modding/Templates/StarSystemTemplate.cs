@@ -43,7 +43,7 @@ public class StarSystemTemplate : ITemplate<StarSystem>, IModObject, IEntity
 	/// </summary>
 	public string BackgroundImagePath { get; set; }
 
-	public IEnumerable<IAbilityObject> Children
+	public IEnumerable<IEntity> Children
 	{
 		// TODO - include stellar object templates here
 		get { yield break; }
@@ -90,7 +90,7 @@ public class StarSystemTemplate : ITemplate<StarSystem>, IModObject, IEntity
 	/// </summary>
 	public bool NonTiledCenterCombatImage { get; set; }
 
-	public IEnumerable<IAbilityObject> Parents
+	public IEnumerable<IEntity> Parents
 	{
 		get
 		{

@@ -54,10 +54,10 @@ public partial class StarSystemReport : UserControl, IBindable<StarSystem>
 
 			var planets = StarSystem.FindSpaceObjects<Planet>();
 			var colonies = planets.Select(p => p.Colony).Where(c => c != null);
-			txtOurFacilities.Text = colonies.Where(c => c.Owner == Empire.Current).Sum(c => c.Facilities.Count).ToString();
-			txtAllyFacilities.Text = colonies.Where(c => Empire.Current.IsAllyOf(c.Owner, StarSystem)).Sum(c => c.Facilities.Count).ToString();
-			txtNeutralFacilities.Text = colonies.Where(c => Empire.Current.IsNeutralTo(c.Owner, StarSystem)).Sum(c => c.Facilities.Count).ToString();
-			txtEnemyFacilities.Text = colonies.Where(c => Empire.Current.IsEnemyOf(c.Owner, StarSystem)).Sum(c => c.Facilities.Count).ToString();
+			txtOurFacilities.Text = colonies.Where(c => c.Owner == Empire.Current).Sum(c => c.Facilities.Count()).ToString();
+			txtAllyFacilities.Text = colonies.Where(c => Empire.Current.IsAllyOf(c.Owner, StarSystem)).Sum(c => c.Facilities.Count()).ToString();
+			txtNeutralFacilities.Text = colonies.Where(c => Empire.Current.IsNeutralTo(c.Owner, StarSystem)).Sum(c => c.Facilities.Count()).ToString();
+			txtEnemyFacilities.Text = colonies.Where(c => Empire.Current.IsEnemyOf(c.Owner, StarSystem)).Sum(c => c.Facilities.Count()).ToString();
 
 			var vehicles = StarSystem.FindSpaceObjects<SpaceVehicle>();
 			txtOurVehicles.Text = vehicles.Where(v => v.Owner == Empire.Current).Sum(v => v.Design.Hull.Size).Kilotons();

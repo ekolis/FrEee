@@ -117,7 +117,7 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
             if (Colony == null)
                 return 0;
             // TODO - storage racial trait
-            return ((Planet)Container).MaxFacilities - Colony.Facilities.Count - Orders.OfType<ConstructionOrder<Facility, FacilityTemplate>>().Count();
+            return ((Planet)Container).MaxFacilities - Colony.Facilities.Count() - Orders.OfType<ConstructionOrder<Facility, FacilityTemplate>>().Count();
         }
     }
 

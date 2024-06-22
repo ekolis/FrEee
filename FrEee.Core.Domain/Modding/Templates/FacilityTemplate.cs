@@ -25,9 +25,20 @@ public class FacilityTemplate : IModObject, IResearchable, IEntity, ITemplate<Fa
 {
 	public FacilityTemplate()
 	{
+		UnlockRequirements = new List<Requirement<Empire>>();
+		Cost = new ResourceFormula(this);
+		Abilities = [new FacilityAbility(
+			this,
+			new LiteralFormula<int>(1))];
+	}
+
+	private FacilityTemplate(string name)
+	{
+		Name = name;
 		Abilities = new List<Ability>();
 		UnlockRequirements = new List<Requirement<Empire>>();
 		Cost = new ResourceFormula(this);
+		Abilities = [new FacilityAbility(this, null, "Is an unknown facility.", new LiteralFormula<int>(1))];
 	}
 
 	public IEnumerable<Ability> Abilities { get; set; }
@@ -37,7 +48,7 @@ public class FacilityTemplate : IModObject, IResearchable, IEntity, ITemplate<Fa
 		get { return AbilityTargets.Facility; }
 	}
 
-	public IEnumerable<IAbilityObject> Children
+	public IEnumerable<IEntity> Children
 	{
 		get { yield break; }
 	}
@@ -169,7 +180,7 @@ public class FacilityTemplate : IModObject, IResearchable, IEntity, ITemplate<Fa
 		get { return null; }
 	}
 
-	public IEnumerable<IAbilityObject> Parents
+	public IEnumerable<IEntity> Parents
 	{
 		get
 		{
@@ -241,7 +252,19 @@ public class FacilityTemplate : IModObject, IResearchable, IEntity, ITemplate<Fa
 	/// </summary>
 	public IList<Requirement<Empire>> UnlockRequirements { get; private set; }
 
-	public static readonly FacilityTemplate Unknown = new FacilityTemplate { Name = "Unknown", ModID = "*UNKNOWN*" };
+	private static FacilityTemplate? unknown;
+
+	public static FacilityTemplate Unknown
+	{
+		get
+		{
+			if (unknown is null)
+			{
+				unknown = new FacilityTemplate("Unknown");
+			}
+			return unknown;
+		}
+	}
 
 	/// <summary>
 	/// Mod objects are fully known to everyone.

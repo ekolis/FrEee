@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
+using FrEee.Ecs;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Objects.Civilization.Orders;
 
@@ -152,8 +154,9 @@ public class UpgradeFacilityOrder : IConstructionOrder
                 if (CheckCompletion(queue))
                 {
                     var planet = (Planet)queue.Container;
-                    planet.Colony.Facilities.Where(f => f.Template.ModID == Upgrade.Old.ModID).First().Dispose(); // HACK - why are we getting duplicate facility templates?
-                    planet.Colony.Facilities.Add(NewFacility);
+                    // TODO: flesh out FacilityAbility so we don't need to cast to Facility
+                    planet.Colony.Facilities.Cast<Facility>().Where(f => f.Template.ModID == Upgrade.Old.ModID).First().Dispose(); // HACK - why are we getting duplicate facility templates?
+                    planet.Colony.FacilityAbilities.Add(NewFacility.GetAbility<FacilityAbility>());
                 }
             }
         }
@@ -174,7 +177,8 @@ public class UpgradeFacilityOrder : IConstructionOrder
             // validate that there is a facility to upgrade
             var planet = (Planet)queue.Container;
             var colony = planet.Colony;
-            if (!colony.Facilities.Any(f => f.Template.ModID == Upgrade.Old.ModID)) // HACK - why are we getting duplicate facility templates?
+            // TODO: flesh out FacilityAbility so any entity can be a facility
+            if (!colony.Facilities.Cast<Facility>().Any(f => f.Template.ModID == Upgrade.Old.ModID)) // HACK - why are we getting duplicate facility templates?
                 yield return planet.CreateLogMessage("There are no " + Upgrade.Old + "s on " + planet + " to upgrade.", LogMessageType.Error);
         }
         else

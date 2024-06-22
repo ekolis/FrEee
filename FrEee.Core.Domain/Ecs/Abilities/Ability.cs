@@ -16,15 +16,15 @@ namespace FrEee.Ecs.Abilities;
 /// A special ability of some game object, or just a tag used by the AI or by modders.
 /// </summary>
 [Serializable]
-public class Ability : IAbility, IContainable<IAbilityObject>, IReferrable, IModObject, IDataObject, IFormulaHost
+public class Ability : IAbility, IContainable<IEntity>, IReferrable, IModObject, IDataObject, IFormulaHost
 {
-    public Ability(IAbilityObject container)
+    public Ability(IEntity container)
     {
         Container = container;
         Values = new List<Formula<string>>();
     }
 
-    public Ability(IAbilityObject container, AbilityRule rule, Formula<string>? description = null, params object[] values)
+    public Ability(IEntity container, AbilityRule rule, Formula<string>? description = null, params object[] values)
     {
         Container = container;
         Rule = rule;
@@ -53,7 +53,7 @@ public class Ability : IAbility, IContainable<IAbilityObject>, IReferrable, IMod
     public virtual void Interact(IInteraction interaction) { }
 
     [DoNotCopy]
-    public IAbilityObject Container { get; private set; }
+    public IEntity Container { get; internal set; }
 
     public virtual SafeDictionary<string, object> Data
     {

@@ -51,7 +51,7 @@ public class FacilityLoader : DataFileLoader
 
 			// TODO - build and use requirements
 
-			f.Abilities = AbilityLoader.Load(Filename, rec, f).ToList();
+			f.Abilities = f.Abilities.Concat(AbilityLoader.Load(Filename, rec, f)).ToList();
 
 			yield return f;
 		}

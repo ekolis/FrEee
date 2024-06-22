@@ -172,9 +172,10 @@ public partial class PlanetReport : UserControl, IBindable<Planet>
 			lstFacilitiesDetail.Initialize(32, 32);
 			if (Planet.Colony != null)
 			{
-				txtFacilitySlotsFree.Text = string.Format("{0} / {1} slots free", Planet.MaxFacilities - Planet.Colony.Facilities.Count, Planet.MaxFacilities);
+				txtFacilitySlotsFree.Text = string.Format("{0} / {1} slots free", Planet.MaxFacilities - Planet.Colony.Facilities.Count(), Planet.MaxFacilities);
 
-				foreach (var fg in Planet.Colony.Facilities.GroupBy(f => f.Template))
+				// TODO: flesh out FacilityAbility so any entity can be a facility, not just a Facility object
+				foreach (var fg in Planet.Colony.Facilities.Cast<Facility>().GroupBy(f => f.Template))
 					lstFacilitiesDetail.AddItemWithImage(fg.Key.Group, fg.Count() + "x " + fg.Key.Name.Value, fg.Key, fg.Key.Icon);
 			}
 			else

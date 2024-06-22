@@ -7,13 +7,14 @@ using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Commands;
 using FrEee.Objects.GameState;
 using FrEee.Ecs.Abilities.Utility;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Vehicles;
 
 /// <summary>
 /// A vehicle design.
 /// </summary>
-public interface IDesign : INamed, IPictorial, IOwnableAbilityObject, IConstructionTemplate, IPromotable, IFoggable, IUpgradeable<IDesign>, ICleanable
+public interface IDesign : INamed, IPictorial, IOwnableEntity, IConstructionTemplate, IPromotable, IFoggable, IUpgradeable<IDesign>, ICleanable
 {
     int Accuracy { get; }
 

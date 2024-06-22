@@ -41,7 +41,7 @@ public class Race : INamed, IEntity, IPictorial, IReferrable
 	// TODO - convert to NamedDictionary
 	public IDictionary<string, int> Aptitudes { get; private set; }
 
-	public IEnumerable<IAbilityObject> Children
+	public IEnumerable<IEntity> Children
 	{
 		get { return Traits; }
 	}
@@ -126,7 +126,7 @@ public class Race : INamed, IEntity, IPictorial, IReferrable
 		get { return null; }
 	}
 
-	public IEnumerable<IAbilityObject> Parents
+	public IEnumerable<IEntity> Parents
 	{
 		get
 		{

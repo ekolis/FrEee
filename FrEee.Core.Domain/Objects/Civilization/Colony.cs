@@ -22,7 +22,7 @@ namespace FrEee.Objects.Civilization;
 /// A colony on a planet.
 /// </summary>
 [Serializable]
-public class Colony : IEntity, IOwnableAbilityObject, IFoggable, IContainable<Planet>, IIncomeProducer, IReferrable
+public class Colony : IEntity, IOwnableEntity, IFoggable, IContainable<Planet>, IIncomeProducer, IReferrable
 {
 	public Colony()
 	{
@@ -73,11 +73,11 @@ public class Colony : IEntity, IOwnableAbilityObject, IFoggable, IContainable<Pl
 	/// </summary>
 	public Cargo Cargo { get; set; }
 
-	public IEnumerable<IAbilityObject> Children
+	public IEnumerable<IEntity> Children
 	{
 		get
 		{
-			return Facilities.Cast<IEntity>().Concat(Cargo.Units.Cast<IEntity>());
+			return Facilities.Concat(Cargo.Units.Cast<IEntity>());
 		}
 	}
 
@@ -101,7 +101,12 @@ public class Colony : IEntity, IOwnableAbilityObject, IFoggable, IContainable<Pl
 	/// <summary>
 	/// The facilities on this colony.
 	/// </summary>
-	public ICollection<Facility> Facilities => Abilities.OfType<HoldFacilitiesAbility>().Single().Facilities;
+	public IList<FacilityAbility> FacilityAbilities => Abilities.OfType<HoldFacilitiesAbility>().Single().FacilityAbilities;
+
+	/// <summary>
+	/// The facilities on this colony.
+	/// </summary>
+	public IEnumerable<IEntity> Facilities => Abilities.OfType<HoldFacilitiesAbility>().Single().Facilities;
 
 	public long ID
 	{
@@ -157,7 +162,7 @@ public class Colony : IEntity, IOwnableAbilityObject, IFoggable, IContainable<Pl
 		set => this.SetOwner(value);
 	}
 
-	public IEnumerable<IAbilityObject> Parents
+	public IEnumerable<IEntity> Parents
 	{
 		get
 		{
@@ -260,10 +265,11 @@ public class Colony : IEntity, IOwnableAbilityObject, IFoggable, IContainable<Pl
 		if (visibility < Visibility.Scanned)
 		{
 			var unknownFacilityTemplate = FacilityTemplate.Unknown;
-			var facilCount = Facilities.Count;
-			Facilities.Clear();
+			var facilCount = FacilityAbilities.Count();
+			var facilityHolder = this.GetAbility<HoldFacilitiesAbility>();
+			facilityHolder.FacilityAbilities.Clear();
 			for (int i = 0; i < facilCount; i++)
-				Facilities.Add(new Facility(unknownFacilityTemplate));
+				facilityHolder.FacilityAbilities.Add(new FacilityAbility(this, new LiteralFormula<int>(1)));
 			Anger.Clear();
 			AngerDeltas.Clear();
 		}

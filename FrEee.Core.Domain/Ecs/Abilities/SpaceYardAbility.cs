@@ -24,7 +24,7 @@ namespace FrEee.Ecs.Abilities
 	{
 		public SpaceYardAbility
 		(
-			IAbilityObject container,
+			IEntity container,
 			AbilityRule rule,
 			Formula<string>? description,
 			params IFormula[] values
@@ -34,7 +34,7 @@ namespace FrEee.Ecs.Abilities
 			RateFormula = (Formula<int>)values[1].ToFormula<int>();
 		}
 
-		public SpaceYardAbility(IAbilityObject container, AbilityRule rule, Formula<string> resource, Formula<int> rate)
+		public SpaceYardAbility(IEntity container, AbilityRule rule, Formula<string> resource, Formula<int> rate)
 			 : this(container, rule, null, resource, rate)
 		{
 			ResourceFormula = resource;

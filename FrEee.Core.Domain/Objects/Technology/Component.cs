@@ -63,7 +63,7 @@ public class Component : IEntity, INamed, IPictorial, IDamageable, IContainable<
 		}
 	}
 
-	public IEnumerable<IAbilityObject> Children
+	public IEnumerable<IEntity> Children
 	{
 		get
 		{
@@ -237,7 +237,7 @@ public class Component : IEntity, INamed, IPictorial, IDamageable, IContainable<
 		get { return Container == null ? null : Container.Owner; }
 	}
 
-	public IEnumerable<IAbilityObject> Parents
+	public IEnumerable<IEntity> Parents
 	{
 		get
 		{

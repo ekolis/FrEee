@@ -12,6 +12,7 @@ using FrEee.Objects.GameState;
 using FrEee.Serialization;
 using FrEee.Ecs.Abilities;
 using FrEee.Ecs.Abilities.Utility;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Technology;
 
@@ -61,7 +62,7 @@ public class Hull<T> : IHull<T> where T : IVehicle
 	/// </summary>
 	public bool CanUseAuxiliaryControl { get; set; }
 
-	public IEnumerable<IAbilityObject> Children
+	public IEnumerable<IEntity> Children
 	{
 		get { yield break; }
 	}
@@ -221,7 +222,7 @@ public class Hull<T> : IHull<T> where T : IVehicle
 		get { return null; }
 	}
 
-	public IEnumerable<IAbilityObject> Parents
+	public IEnumerable<IEntity> Parents
 	{
 		get
 		{

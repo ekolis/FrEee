@@ -1,4 +1,5 @@
-﻿using FrEee.Ecs.Abilities.Utility;
+﻿using FrEee.Ecs;
+using FrEee.Ecs.Abilities.Utility;
 using FrEee.Objects.Space;
 using FrEee.Utility;
 namespace FrEee.Objects.Civilization;
@@ -6,7 +7,7 @@ namespace FrEee.Objects.Civilization;
 /// <summary>
 /// Something which can produce income for an empire.
 /// </summary>
-public interface IIncomeProducer : IOwnableAbilityObject, ILocated
+public interface IIncomeProducer : IOwnableEntity, ILocated
 {
     /// <summary>
     /// Ratio of income from this object that occurs even without a spaceport.
