@@ -50,18 +50,5 @@ namespace FrEee.Ecs.Abilities.Utility
         {
             obj.Abilities = obj.Abilities.Append(ability).ToImmutableList();
         }
-
-        /// <summary>
-        /// Determines if an entity has a space yard.
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        public static bool HasSpaceYard(this IEntity entity)
-        {
-            return
-                entity.HasStat(StatType.SpaceYardRateMinerals)
-                || entity.HasStat(StatType.SpaceYardRateOrganics)
-                || entity.HasStat(StatType.SpaceYardRateRadioactives);
-        }
     }
 }

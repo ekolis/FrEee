@@ -9,7 +9,7 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
-using FrEee.Ecs.Abilities.Utility;
+using FrEee.Ecs;
 
 namespace FrEee.Objects.Vehicles;
 
@@ -18,7 +18,6 @@ namespace FrEee.Objects.Vehicles;
 /// </summary>
 public abstract class MajorSpaceVehicle : SpaceVehicle, ICargoTransferrer, IConstructor
 {
-
 	protected MajorSpaceVehicle() : base()
 	{
 		Cargo = new Cargo();

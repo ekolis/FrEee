@@ -2,6 +2,16 @@
 *BEGIN*
 =======================================================================================
 
+Name := Ownable
+Type := OwnableAbility
+Targets := All
+Description := Owned by {host.Owner or "no one"}.
+
+Name := Hold Facilities
+Type := HoldFacilitiesAbility
+Targets := All
+Description := Holds up to [%Amount1%] facilities.
+
 Name := Warp Point - Turbulence
 Type := WarpDamageAbility
 Targets := WarpPoint

@@ -22,20 +22,31 @@ namespace FrEee.Objects.Civilization;
 /// A colony on a planet.
 /// </summary>
 [Serializable]
-public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>, IIncomeProducer, IReferrable
+public class Colony : IEntity, IOwnableAbilityObject, IFoggable, IContainable<Planet>, IIncomeProducer, IReferrable
 {
 	public Colony()
 	{
+		// temporary object type based abilities until I can ECSify everything
 		Abilities.Add(new HoldFacilitiesAbility(
 			this,
-			null,
-			"Holds up to {{self.Container.MaxFacilities}} facilities.",
+			AbilityRule.Find("Hold Facilities"),
 			new ComputedFormula<int>("self.Container.MaxFacilities", this, true)));
+		Abilities.Add(new OwnableAbility(
+			this,
+			AbilityRule.Find("Ownable"),
+			(Empire?)null));
+
 		Population = new SafeDictionary<Race, long>();
 		Cargo = new Cargo();
 	}
 
-	public ISet<IAbility> Abilities { get; set; } = new HashSet<IAbility>();
+	public ISet<Ability> Abilities { get; set; } = new HashSet<Ability>();
+
+	IEnumerable<Ability> IEntity<Ability>.Abilities
+	{
+		get => Abilities;
+		set => Abilities = value.ToHashSet();
+	}
 
 	public AbilityTargets AbilityTarget
 	{
@@ -140,7 +151,11 @@ public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>, II
 	/// <summary>
 	/// The empire which owns this colony.
 	/// </summary>
-	public Empire Owner { get; set; }
+	public Empire Owner
+	{
+		get => this.GetOwner();
+		set => this.SetOwner(value);
+	}
 
 	public IEnumerable<IAbilityObject> Parents
 	{
@@ -207,13 +222,13 @@ public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>, II
 
 	public Visibility CheckVisibility(Empire emp)
 	{
-            // should be visible, assuming the planet is visible - we don't have colony cloaking at the moment...
-            if (emp == Owner)
-                return Visibility.Owned;
-            else if (Container == null)
-                return Visibility.Unknown; // HACK - why would a colony not be on a planet?!
-            else
-                return Container.CheckVisibility(emp);
+		// should be visible, assuming the planet is visible - we don't have colony cloaking at the moment...
+		if (emp == Owner)
+			return Visibility.Owned;
+		else if (Container == null)
+			return Visibility.Unknown; // HACK - why would a colony not be on a planet?!
+		else
+			return Container.CheckVisibility(emp);
 	}
 
 	public void Dispose()

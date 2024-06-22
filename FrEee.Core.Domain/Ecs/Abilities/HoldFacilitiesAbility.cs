@@ -27,6 +27,14 @@ namespace FrEee.Ecs.Abilities
 			Capacity = values[0].ToFormula<int>();
 		}
 
+		public HoldFacilitiesAbility
+		(
+			IAbilityObject container,
+			AbilityRule rule,
+			IFormula<int> capacity
+		) : this(container, rule, null, capacity)
+		{ }
+
 		/// <summary>
 		/// The maximum number of facilities which can be held.
 		/// </summary>

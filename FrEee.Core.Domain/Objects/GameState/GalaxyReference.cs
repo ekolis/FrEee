@@ -14,7 +14,7 @@ namespace FrEee.Objects.GameState;
 /// </summary>
 /// <typeparam name="T"></typeparam>
 [Serializable]
-public class GalaxyReference<T> : IReference<long, T>, IPromotable
+public class GalaxyReference<T> : IReference<long, T>, IEquatable<GalaxyReference<T>>
     where T : IReferrable
 {
 
@@ -40,9 +40,8 @@ public class GalaxyReference<T> : IReference<long, T>, IPromotable
     public GalaxyReference(T t)
         : this()
     {
-        if (t is IReferrable)
+        if (t is IReferrable r)
         {
-            var r = (IReferrable)t;
             if (Galaxy.Current == null)
                 throw new ReferenceException<int, T>("Can't create a reference to an IReferrable without a galaxy.");
             else if (t == null)
@@ -121,21 +120,31 @@ public class GalaxyReference<T> : IReference<long, T>, IPromotable
     [NonSerialized]
     private ClientSideCache<T> cache;
 
-    public static implicit operator GalaxyReference<T>(T t)
+    public static implicit operator GalaxyReference<T>?(T? t)
     {
-        if (t == null)
+        if (t is null)
+        {
             return null;
-        return new GalaxyReference<T>(t);
+        }
+        else
+        {
+            return new GalaxyReference<T>(t);
+        }
     }
 
-    public static implicit operator T(GalaxyReference<T> r)
+    public static implicit operator T?(GalaxyReference<T>? r)
     {
-        if (r == null)
+        if (r is null)
+        {
             return default;
-        return r.Value;
+        }
+        else
+        {
+            return r.Value;
+        }
     }
 
-    public static bool operator !=(GalaxyReference<T> r1, GalaxyReference<T> r2)
+	public static bool operator !=(GalaxyReference<T> r1, GalaxyReference<T> r2)
     {
         return !(r1 == r2);
     }
@@ -152,8 +161,8 @@ public class GalaxyReference<T> : IReference<long, T>, IPromotable
     public override bool Equals(object? obj)
     {
         // TODO - upgrade equals to use "as" operator
-        if (obj is GalaxyReference<T>)
-            return this == (GalaxyReference<T>)obj;
+        if (obj is GalaxyReference<T> r)
+            return this == r;
         return false;
     }
 
@@ -180,4 +189,9 @@ public class GalaxyReference<T> : IReference<long, T>, IPromotable
     {
         return "ID=" + ID + ", Value=" + Value;
     }
+
+	public bool Equals(GalaxyReference<T>? other)
+	{
+        return ID == other?.ID;
+	}
 }

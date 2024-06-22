@@ -890,16 +890,17 @@ internal static class LegacySerializer
 	private static void WriteObject(object o, TextWriter w, ObjectGraphContext context, int tabLevel)
 	{
 		// serialize object type and field count
-		if (o is IDataObject)
+		if (o is IDataObject dobj)
 		{
 			// use data object code! :D
 			var type = o.GetType();
-			var data = (o as IDataObject).Data;
+			var data = dobj.Data;
 			w.WriteLine("p" + data.Count + ":");
 			foreach (var kvp in data)
 			{
 				var pname = kvp.Key;
 				var val = kvp.Value;
+				// TODO: don't require property names to match data keys exactly, maybe store types in the data
 				var prop = ObjectGraphContext.GetKnownProperties(type)[pname];
 				if (prop != null)
 				{
