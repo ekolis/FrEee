@@ -50,7 +50,7 @@ namespace FrEee.Ecs.Abilities
 		/// <summary>
 		/// The currently held abilities.
 		/// </summary>
-		// TODO: validate that held abilities have the right category
+		// TODO: validate that held abilities have the right category and fit within the specified size
 		public IList<HoldableAbility> HeldAbilities { get; private set; } = new List<HoldableAbility>();
 
 		/// <summary>
