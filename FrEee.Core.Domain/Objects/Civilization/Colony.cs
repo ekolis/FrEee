@@ -271,8 +271,10 @@ public class Colony : IEntity, IOwnableEntity, IFoggable, IContainable<Planet>, 
 			facilityHolder.HeldAbilities.Clear();
 			for (int i = 0; i < facilCount; i++)
 			{
-				var facility = new Facility(unknownFacilityTemplate);
-				facilityHolder.HeldAbilities.Add(facility.GetAbility<FacilityAbility>());
+				var facility = new Entity();
+				var facilityAbiity = new FacilityAbility(facility, this, unknownFacilityTemplate);
+				facility.AddAbility(facilityAbiity);
+				facilityHolder.HeldAbilities.Add(facilityAbiity);
 			}
 			Anger.Clear();
 			AngerDeltas.Clear();
