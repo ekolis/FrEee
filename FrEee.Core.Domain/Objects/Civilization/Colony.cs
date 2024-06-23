@@ -27,7 +27,7 @@ public class Colony : IEntity, IOwnableEntity, IFoggable, IContainable<Planet>, 
 	public Colony()
 	{
 		// temporary object type based abilities until I can ECSify everything
-		Abilities.Add(new HolderAbility(
+		Abilities.Add(new HolderAbility<FacilityAbility>(
 			entity: this,
 			rule: AbilityRule.Find("Hold Facilities"),
 			heldScope: new LiteralFormula<string>("Facility"),
@@ -102,12 +102,12 @@ public class Colony : IEntity, IOwnableEntity, IFoggable, IContainable<Planet>, 
 	/// <summary>
 	/// The facilities on this colony.
 	/// </summary>
-	public IList<SemanticScopeAbility> FacilityAbilities => Abilities.OfType<HolderAbility>().Single().HeldAbilities;
+	public IList<FacilityAbility> FacilityAbilities => Abilities.OfType<HolderAbility<FacilityAbility>>().Single().HeldAbilities;
 
 	/// <summary>
 	/// The facilities on this colony.
 	/// </summary>
-	public IEnumerable<IEntity> Facilities => Abilities.OfType<HolderAbility>().Single().HeldEntities;
+	public IEnumerable<IEntity> Facilities => Abilities.OfType<HolderAbility<FacilityAbility>>().Single().HeldEntities;
 
 	public long ID
 	{
@@ -267,10 +267,13 @@ public class Colony : IEntity, IOwnableEntity, IFoggable, IContainable<Planet>, 
 		{
 			var unknownFacilityTemplate = FacilityTemplate.Unknown;
 			var facilCount = FacilityAbilities.Count();
-			var facilityHolder = this.GetAbility<HolderAbility>();
+			var facilityHolder = this.GetAbility<HolderAbility<FacilityAbility>>();
 			facilityHolder.HeldAbilities.Clear();
 			for (int i = 0; i < facilCount; i++)
-				facilityHolder.HeldAbilities.Add(new SemanticScopeAbility(this, new LiteralFormula<string>("Facility"), new LiteralFormula<int>(1)));
+			{
+				var facility = new Facility(unknownFacilityTemplate);
+				facilityHolder.HeldAbilities.Add(facility.GetAbility<FacilityAbility>());
+			}
 			Anger.Clear();
 			AngerDeltas.Clear();
 		}

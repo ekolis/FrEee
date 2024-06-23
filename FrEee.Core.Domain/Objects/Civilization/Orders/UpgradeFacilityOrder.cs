@@ -155,8 +155,8 @@ public class UpgradeFacilityOrder : IConstructionOrder
                 {
                     var planet = (Planet)queue.Entity;
                     // TODO: flesh out FacilityAbility so we don't need to cast to Facility
-                    planet.Colony.Facilities.Cast<Facility>().Where(f => f.Template.ModID == Upgrade.Old.ModID).First().Dispose(); // HACK - why are we getting duplicate facility templates?
-                    planet.Colony.FacilityAbilities.Add(NewFacility.GetAbility<SemanticScopeAbility>());
+                    planet.Colony.FacilityAbilities.Where(f => f.Template.ModID == Upgrade.Old.ModID).First().Dispose(); // HACK - why are we getting duplicate facility templates?
+                    planet.Colony.FacilityAbilities.Add(NewFacility.GetAbility<FacilityAbility>());
                 }
             }
         }
@@ -178,7 +178,7 @@ public class UpgradeFacilityOrder : IConstructionOrder
             var planet = (Planet)queue.Entity;
             var colony = planet.Colony;
             // TODO: flesh out FacilityAbility so any entity can be a facility
-            if (!colony.Facilities.Cast<Facility>().Any(f => f.Template.ModID == Upgrade.Old.ModID)) // HACK - why are we getting duplicate facility templates?
+            if (!colony.FacilityAbilities.Any(f => f.Template.ModID == Upgrade.Old.ModID)) // HACK - why are we getting duplicate facility templates?
                 yield return planet.CreateLogMessage("There are no " + Upgrade.Old + "s on " + planet + " to upgrade.", LogMessageType.Error);
         }
         else

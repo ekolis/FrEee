@@ -890,9 +890,8 @@ public class Empire : INamed, IFoggable, IEntity, IPictorial, IComparable<Empire
 		score += Galaxy.Current.Referrables.OfType<IVehicle>().OwnedBy(this).Sum(v => v.Cost.Sum(kvp => kvp.Value)); // vehicle cost
 		score += ColonizedPlanets
 			// facility cost
-			.SelectMany(p => p.Colony.Facilities)
+			.SelectMany(p => p.Colony.FacilityAbilities)
 			.ExceptNull()
-			.Cast<Facility>() // TODO: flesh out FacilityAbility so any entity can be a facility, not just a Facility object
 			.Sum(f => f.Cost.Sum(kvp => kvp.Value)
 		);
 		foreach (var kvp in ResearchedTechnologies)

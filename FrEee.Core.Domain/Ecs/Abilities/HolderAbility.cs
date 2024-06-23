@@ -13,12 +13,13 @@ namespace FrEee.Ecs.Abilities
     /// <summary>
     /// Holds entities that have a <see cref="SemanticScopeAbility"/> with the appopriate scope.
     /// </summary>
-    class HolderAbility(
+    class HolderAbility<THeldAbility>(
 		IEntity entity,
 		AbilityRule rule,
 		Formula<string>? description,
 		params IFormula[] values
 	) : Ability(entity, rule, description, values)
+		where THeldAbility : SemanticScopeAbility
 	{
 		public HolderAbility
 		(
@@ -43,7 +44,7 @@ namespace FrEee.Ecs.Abilities
 		/// The currently held abilities.
 		/// </summary>
 		// TODO: validate that held abilities have the right scope and fit within the specified capacity
-		public IList<SemanticScopeAbility> HeldAbilities { get; private set; } = new List<SemanticScopeAbility>();
+		public IList<THeldAbility> HeldAbilities { get; private set; } = new List<THeldAbility>();
 
 		/// <summary>
 		/// The currently held entities.
@@ -62,7 +63,7 @@ namespace FrEee.Ecs.Abilities
 			{
 				base.Data = value;
 				Capacity = Value1.ToFormula<int>();
-				HeldAbilities = (IList<SemanticScopeAbility>)value["HeldAbilities"];
+				HeldAbilities = (IList<THeldAbility>)value["HeldAbilities"];
 			}
 		}
 

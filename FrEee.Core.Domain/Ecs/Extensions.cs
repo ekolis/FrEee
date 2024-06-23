@@ -85,13 +85,12 @@ public static class Extensions
 		var dict = new Dictionary<Ability, IEntity>();
 		if (p.Colony == null)
 			return dict;
-		// TODO: flesh out FacilityAbility so any entity can be a facility, not just a Facility object
-		foreach (var f in p.Colony.Facilities.Cast<Facility>().Where(f => !f.IsDestroyed))
+		foreach (var f in p.Colony.FacilityAbilities.Where(f => !f.IsDestroyed))
 		{
-			foreach (var a in f.Abilities)
+			foreach (var a in f.Entity.Abilities())
 			{
 				if (a.Rule.IsActivatable)
-					dict.Add(a, f);
+					dict.Add(a, f.Entity);
 			}
 		}
 		return dict;

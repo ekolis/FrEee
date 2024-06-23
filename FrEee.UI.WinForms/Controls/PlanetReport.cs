@@ -174,8 +174,7 @@ public partial class PlanetReport : UserControl, IBindable<Planet>
 			{
 				txtFacilitySlotsFree.Text = string.Format("{0} / {1} slots free", Planet.MaxFacilities - Planet.Colony.Facilities.Count(), Planet.MaxFacilities);
 
-				// TODO: flesh out FacilityAbility so any entity can be a facility, not just a Facility object
-				foreach (var fg in Planet.Colony.Facilities.Cast<Facility>().GroupBy(f => f.Template))
+				foreach (var fg in Planet.Colony.FacilityAbilities.GroupBy(f => f.Template))
 					lstFacilitiesDetail.AddItemWithImage(fg.Key.Group, fg.Count() + "x " + fg.Key.Name.Value, fg.Key, fg.Key.Icon);
 			}
 			else

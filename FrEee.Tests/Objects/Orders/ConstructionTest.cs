@@ -45,7 +45,7 @@ public class ConstructionTest
 		// initialize colony
 		planet = new Planet();
 		colony = new Colony();
-		colony.FacilityAbilities.Add(new Facility(sy).GetAbility<SemanticScopeAbility>());
+		colony.FacilityAbilities.Add(new Facility(sy).GetAbility<FacilityAbility>());
 		colony.Population.Add(race, (long)1e9); // 1 billion population
 		colony.ConstructionQueue = new(planet);
 		planet.Colony = colony;

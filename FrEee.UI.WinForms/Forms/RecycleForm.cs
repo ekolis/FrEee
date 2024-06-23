@@ -103,7 +103,7 @@ public partial class RecycleForm : GameForm
 			// planets with our colonies
 			var pnode = treeVehicles.AddItemWithImage(p.Name, p, p.Icon);
 			// TODO: flesh out FacilityAbility so any entity can be a facility, not just a Facility object
-			foreach (var ft in p.Colony.Facilities.Cast<Facility>().GroupBy(f => f.Template))
+			foreach (var ft in p.Colony.FacilityAbilities.GroupBy(f => f.Template))
 			{
 				// facility templates
 				var ftnode = pnode.AddItemWithImage(ft.Count() + "x " + ft.Key.Name, ft.Key, ft.Key.Icon);

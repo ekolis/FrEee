@@ -597,7 +597,7 @@ public class GameSetup
                 if (template is not null && hw.Colony.Facilities.Count() < hw.MaxFacilities)
                 {
                     var facility = template.Instantiate();
-                    var facilityAbility = facility.GetAbility<SemanticScopeAbility>();
+                    var facilityAbility = facility.GetAbility<FacilityAbility>();
                     hw.Colony.FacilityAbilities.Add(facilityAbility);
                     facility.ConstructionProgress = facility.Cost;
                 }
