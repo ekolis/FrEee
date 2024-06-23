@@ -714,13 +714,13 @@ public partial class MainGameForm : GameForm
 	{
 		var todos = new List<string>();
 
-		var ships = Empire.Current.OwnedSpaceObjects.OfType<SpaceVehicle>().Where(v => v.Container == null && v.StrategicSpeed > 0 && !v.Orders.Any()).Count();
+		var ships = Empire.Current.OwnedSpaceObjects.OfType<SpaceVehicle>().Where(v => v.Entity == null && v.StrategicSpeed > 0 && !v.Orders.Any()).Count();
 		if (ships == 1)
 			todos.Add("1 idle ship");
 		else if (ships > 1)
 			todos.Add(ships + " idle ships");
 
-		var fleets = Empire.Current.OwnedSpaceObjects.OfType<Fleet>().Where(f => f.Container == null && f.StrategicSpeed > 0 && !f.Orders.Any()).Count();
+		var fleets = Empire.Current.OwnedSpaceObjects.OfType<Fleet>().Where(f => f.Entity == null && f.StrategicSpeed > 0 && !f.Orders.Any()).Count();
 		if (fleets == 1)
 			todos.Add("1 idle fleet");
 		else if (fleets > 1)

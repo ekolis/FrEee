@@ -61,15 +61,15 @@ public class JoinFleetCommand : Command<IMobileSpaceObject>
 		else
 		{
 			// remove from old fleet
-			if (Executor.Container != null)
-				Executor.Container.Vehicles.Remove(Executor);
+			if (Executor.Entity != null)
+				Executor.Entity.Vehicles.Remove(Executor);
 
 			if (Fleet.Sector == null)
 				Fleet.Sector = Executor.Sector;
 
 			// add to new fleet
 			Fleet.Vehicles.Add(Executor);
-			Executor.Container = Fleet;
+			Executor.Entity = Fleet;
 		}
 	}
 

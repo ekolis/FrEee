@@ -138,7 +138,7 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 
 	public override ConstructionQueue ConstructionQueue => Colony?.ConstructionQueue;
 
-	public Fleet Container { get; set; }
+	public Fleet Entity { get; set; }
 
 	public override SafeDictionary<string, object> Data
 	{

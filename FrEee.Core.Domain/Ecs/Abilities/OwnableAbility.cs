@@ -21,11 +21,11 @@ namespace FrEee.Ecs.Abilities
     /// <summary>
     /// Marks an entity as being owned by some empire.
     /// </summary>
-    public class OwnableAbility(IEntity container, AbilityRule rule, Formula<string>? description, params IFormula[] values)
-		: Ability(container, rule, description, values)
+    public class OwnableAbility(IEntity entity, AbilityRule rule, Formula<string>? description, params IFormula[] values)
+		: Ability(entity, rule, description, values)
 	{
-		public OwnableAbility(IEntity container, AbilityRule rule, Empire? owner)
-			 : this(container, rule, null, [])
+		public OwnableAbility(IEntity entity, AbilityRule rule, Empire? owner)
+			 : this(entity, rule, null, [])
 		{
 			Owner = owner;
 		}

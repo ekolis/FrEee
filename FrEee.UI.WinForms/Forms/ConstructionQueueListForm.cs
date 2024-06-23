@@ -86,11 +86,11 @@ public partial class ConstructionQueueListForm : GameForm
 		{
 			var row = gridQueues.Rows[e.RowIndex];
 			var queue = (ConstructionQueue)row.DataBoundItem;
-			var sys = queue.Container.StarSystem;
+			var sys = queue.Entity.StarSystem;
 			galaxyView.SelectedStarSystem = sys;
 			starSystemView.StarSystem = sys;
-			starSystemView.SelectedSpaceObject = queue.Container;
-			starSystemView.SelectedSector = queue.Container.Sector;
+			starSystemView.SelectedSpaceObject = queue.Entity;
+			starSystemView.SelectedSector = queue.Entity.Sector;
 		}
 	}
 

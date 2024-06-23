@@ -882,7 +882,7 @@ public class Galaxy : ICommonEntity
 	/// </summary>
 	public void MoveShips()
 	{
-		var vlist = FindSpaceObjects<IMobileSpaceObject>().Where(sobj => sobj.Container == null && !sobj.IsMemory).Shuffle();
+		var vlist = FindSpaceObjects<IMobileSpaceObject>().Where(sobj => sobj.Entity == null && !sobj.IsMemory).Shuffle();
 		foreach (var v in vlist)
 		{
 			// mark system explored if not already

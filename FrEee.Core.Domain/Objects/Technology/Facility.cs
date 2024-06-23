@@ -34,7 +34,7 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 		ConstructionProgress = new ResourceQuantity();
 		Hitpoints = MaxHitpoints;
 		Abilities = template.Abilities.Select(q => q.Copy()).ToList();
-		this.GetAbility<SemanticScopeAbility>().Container = this;
+		this.GetAbility<SemanticScopeAbility>().Entity = this;
 	}
 
 	public IEnumerable<Ability> Abilities { get; set; }
@@ -67,7 +67,7 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 	/// Finds the planet which contains this facility.
 	/// </summary>
 	/// <returns></returns>
-	public Planet Container
+	public Planet Entity
 	{
 		get
 		{
@@ -226,13 +226,13 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 	{
 		get
 		{
-			return Container?.Owner;
+			return Entity?.Owner;
 		}
 		set
 		{
 			// HACK - transfer ownership of entire colony since facilities can only belong to colony owner anyway
-			if (Container != null && Container.Colony != null)
-				Container.Colony.Owner = value;
+			if (Entity != null && Entity.Colony != null)
+				Entity.Colony.Owner = value;
 		}
 	}
 
@@ -240,8 +240,8 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 	{
 		get
 		{
-			if (Container != null)
-				yield return Container;
+			if (Entity != null)
+				yield return Entity;
 		}
 	}
 
@@ -277,7 +277,7 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 
 	public IMobileSpaceObject RecycleContainer
 	{
-		get { return Container; }
+		get { return Entity; }
 	}
 
 	public ResourceQuantity ScrapValue
@@ -313,8 +313,8 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 		{
 			return new Dictionary<string, object>
 			{
-				{"colony", Container.Colony},
-				{"planet", Container},
+				{"colony", Entity.Colony},
+				{"planet", Entity},
 				{"empire", Owner}
 			};
 		}
@@ -351,9 +351,9 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 	{
 		if (IsDisposed)
 			return;
-		if (Container != null)
+		if (Entity != null)
 		{
-			var col = Container.Colony;
+			var col = Entity.Colony;
 			col.FacilityAbilities.Remove(this.GetAbility<SemanticScopeAbility>());
 			col.UpdateEmpireMemories();
 		}

@@ -22,7 +22,7 @@ public class Satellite : SpaceVehicle, IUnit
 		get { return false; }
 	}
 
-	ICargoContainer IContainable<ICargoContainer>.Container
+	ICargoContainer IContainable<ICargoContainer>.Entity
 	{
 		get { return CommonExtensions.FindContainer(this); }
 	}
@@ -34,7 +34,7 @@ public class Satellite : SpaceVehicle, IUnit
 
 	public override IMobileSpaceObject RecycleContainer
 	{
-		get { return (this as IUnit).Container as IMobileSpaceObject; }
+		get { return (this as IUnit).Entity as IMobileSpaceObject; }
 	}
 
 	public override bool RequiresSpaceYardQueue
@@ -50,7 +50,7 @@ public class Satellite : SpaceVehicle, IUnit
 	public override Visibility CheckVisibility(Empire emp)
 	{
 		var vis = base.CheckVisibility(emp);
-		var sobj = Container as ISpaceObject;
+		var sobj = Entity as ISpaceObject;
 		if (vis < Visibility.Scanned && sobj != null && sobj.HasVisibility(emp, Visibility.Scanned))
 			vis = Visibility.Scanned;
 		return vis;

@@ -720,7 +720,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 	{
 		// make sure this design's components actually belong to this design!
 		foreach (var mct in Components)
-			mct.Container = this;
+			mct.Entity = this;
 	}
 
 	public IConstructionOrder CreateConstructionOrder(ConstructionQueue queue)
@@ -802,7 +802,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 		{
 			var c = mct.Instantiate();
 			t.Components.Add(c);
-			c.Container = t;
+			c.Entity = t;
 		}
 		VehiclesBuilt++;
 		t.Name = Name + " " + VehiclesBuilt;

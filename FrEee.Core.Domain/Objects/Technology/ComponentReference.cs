@@ -20,7 +20,7 @@ public class ComponentReference : IReference<(long, int), Component>
 
 	public ComponentReference(Component c)
 	{
-		Vehicle = c.Container;
+		Vehicle = c.Entity;
 		ComponentIndex = Vehicle.Components.IndexOf(c);
 	}
 

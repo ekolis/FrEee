@@ -15,18 +15,18 @@ namespace FrEee.Ecs.Abilities
 	/// Defines the scope of an entity within the game universe.
 	/// </summary>
 	public class SemanticScopeAbility(
-		IEntity container,
+		IEntity entity,
 		AbilityRule rule,
 		Formula<string>? description,
 		params IFormula[] values
-	) : Ability(container, rule, description, values)
+	) : Ability(entity, rule, description, values)
 	{
 		public SemanticScopeAbility
 		(
-			IEntity container,
+			IEntity entity,
 			IFormula<string> scope,
 			IFormula<int> size
-		) : this(container, AbilityRule.Find(scope.Value), null, scope, size)
+		) : this(entity, AbilityRule.Find(scope.Value), null, scope, size)
 		{ }
 
 		public string SizeStatName => $"{Scope} Size";

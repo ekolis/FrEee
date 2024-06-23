@@ -60,7 +60,7 @@ public partial class RecycleForm : GameForm
 	{
 		get
 		{
-			return treeVehicles.GetAllNodes().Where(n => n.Tag is IUnit && n.Checked).Select(n => n.Tag as IUnit).Where(u => u.Container != null);
+			return treeVehicles.GetAllNodes().Where(n => n.Tag is IUnit && n.Checked).Select(n => n.Tag as IUnit).Where(u => u.Entity != null);
 		}
 	}
 
@@ -77,7 +77,7 @@ public partial class RecycleForm : GameForm
 				.Select(n =>
 					n.Tag as SpaceVehicle)
 				.Where(v =>
-					!(v is IUnit && ((IUnit)v).Container != null))
+					!(v is IUnit && ((IUnit)v).Entity != null))
 				.ExceptNull();
 		}
 	}
@@ -247,11 +247,11 @@ public partial class RecycleForm : GameForm
 	private void btnScrap_Click(object sender, EventArgs e)
 	{
 		foreach (var f in SelectedFacilities)
-			AddCommand(new AddOrderCommand(f.Container, new RecycleFacilityOrCargoOrder(new ScrapBehavior(), f)));
+			AddCommand(new AddOrderCommand(f.Entity, new RecycleFacilityOrCargoOrder(new ScrapBehavior(), f)));
 		foreach (var v in SelectedVehiclesInSpace)
 			AddCommand(new AddOrderCommand(v, new RecycleVehicleInSpaceOrder(new ScrapBehavior())));
 		foreach (var u in SelectedUnitsInCargo)
-			AddCommand(new AddOrderCommand((IMobileSpaceObject)u.Container, new RecycleFacilityOrCargoOrder(new ScrapBehavior(), u)));
+			AddCommand(new AddOrderCommand((IMobileSpaceObject)u.Entity, new RecycleFacilityOrCargoOrder(new ScrapBehavior(), u)));
 		Bind();
 	}
 

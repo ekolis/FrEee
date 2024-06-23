@@ -157,7 +157,7 @@ public static class Extensions
 	/// <returns>true if successful or unnecessary, otherwise false</returns>
 	public static bool BurnSupplies(this Ability a)
 	{
-		if (a.Container is Component comp)
+		if (a.Entity is Component comp)
 			return comp.BurnSupplies();
 		else
 			return true; // other ability containers don't use supplies

@@ -12,7 +12,7 @@ namespace FrEee.Objects.Space;
 /// </summary>
 public interface IMobileSpaceObject : ICombatSpaceObject, IOrderable, IContainable<Fleet>, IDamageableReferrable
 {
-	new Fleet Container { get; set; }
+	new Fleet Entity { get; set; }
 
 	/// <summary>
 	/// The Dijkstra map used for pathfinding.

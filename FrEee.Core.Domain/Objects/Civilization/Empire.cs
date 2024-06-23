@@ -196,7 +196,7 @@ public class Empire : INamed, IFoggable, IEntity, IPictorial, IComparable<Empire
 	{
 		get
 		{
-			return Galaxy.Current.Referrables.OfType<ConstructionQueue>().Where(q => q.Owner == this && q.Container.Sector != null && q.Rate.Any(kvp => kvp.Value > 0));
+			return Galaxy.Current.Referrables.OfType<ConstructionQueue>().Where(q => q.Owner == this && q.Entity.Sector != null && q.Rate.Any(kvp => kvp.Value > 0));
 		}
 	}
 

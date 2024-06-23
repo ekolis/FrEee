@@ -86,7 +86,7 @@ public partial class SpaceVehicleReport : UserControl, IBindable<SpaceVehicle>
 			// orders and stuff
 			txtOrder.Text = vehicle.Orders.Any() ? vehicle.Orders.First().ToString() : "None";
 			txtExperience.Text = "None"; // TODO - crew XP
-			txtFleet.Text = vehicle.Container == null ? "None" : vehicle.Container.Name;
+			txtFleet.Text = vehicle.Entity == null ? "None" : vehicle.Entity.Name;
 
 			// income
 			// TODO - research and intel income

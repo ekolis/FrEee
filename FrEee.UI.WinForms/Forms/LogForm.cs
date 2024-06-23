@@ -91,7 +91,7 @@ public partial class LogForm : GameForm
 				{
 					// go to the planet
 					var facility = (Facility)context;
-					var container = facility.Container;
+					var container = facility.Entity;
 					mainGameForm.SelectSpaceObject(container);
 					Close();
 				}

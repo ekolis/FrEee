@@ -23,7 +23,7 @@ public class WeaponPlatform : Vehicle, IUnit
 
 	public override double CombatSpeed => 0;
 
-	public ICargoContainer Container
+	public ICargoContainer Entity
 	{
 		get { return CommonExtensions.FindContainer(this); }
 	}
@@ -36,8 +36,8 @@ public class WeaponPlatform : Vehicle, IUnit
 		{
 			if (Owner != null)
 				yield return Owner;
-			if (Container != null && Container is IEntity)
-				yield return (IEntity)Container;
+			if (Entity != null && Entity is IEntity)
+				yield return (IEntity)Entity;
 		}
 	}
 
@@ -48,7 +48,7 @@ public class WeaponPlatform : Vehicle, IUnit
 
 	public override IMobileSpaceObject RecycleContainer
 	{
-		get { return (this as IUnit).Container as IMobileSpaceObject; }
+		get { return (this as IUnit).Entity as IMobileSpaceObject; }
 	}
 
 	public override bool RequiresSpaceYardQueue
@@ -59,7 +59,7 @@ public class WeaponPlatform : Vehicle, IUnit
 	[DoNotSerialize]
 	public override Sector Sector
 	{
-		get { return Container == null ? null : Container.Sector; }
+		get { return Entity == null ? null : Entity.Sector; }
 		set
 		{
 			//throw new NotSupportedException("Cannot set the sector of a weapon platform.");
@@ -68,7 +68,7 @@ public class WeaponPlatform : Vehicle, IUnit
 
 	public override StarSystem StarSystem
 	{
-		get { return Container?.StarSystem; }
+		get { return Entity?.StarSystem; }
 	}
 
 	public override WeaponTargets WeaponTargetType
@@ -81,7 +81,7 @@ public class WeaponPlatform : Vehicle, IUnit
 	{
 		if (Owner == emp)
 			return Visibility.Owned;
-		var sobj = Container as ISpaceObject;
+		var sobj = Entity as ISpaceObject;
 		if (sobj != null && sobj.HasVisibility(emp, Visibility.Scanned))
 			return Visibility.Scanned;
 		return Visibility.Unknown;
@@ -89,9 +89,9 @@ public class WeaponPlatform : Vehicle, IUnit
 
 	public override bool IsObsoleteMemory(Empire emp)
 	{
-		if (Container == null)
+		if (Entity == null)
 			return this.MemoryOwner() == emp && Timestamp < Galaxy.Current.Timestamp - 1;
-		return Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+		return Entity.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
 	}
 
 	public override void Place(ISpaceObject target)

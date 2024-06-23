@@ -131,8 +131,8 @@ public static class CommonExtensions
 	/// <returns>true if successful or unnecessary, otherwise false</returns>
 	public static bool BurnSupplies(this Component comp)
 	{
-		if (comp.Container is IMobileSpaceObject)
-			return (comp.Container as IMobileSpaceObject).BurnSupplies(comp.Template.SupplyUsage);
+		if (comp.Entity is IMobileSpaceObject)
+			return (comp.Entity as IMobileSpaceObject).BurnSupplies(comp.Template.SupplyUsage);
 		else
 			return true; // other component containers don't use supplies
 	}

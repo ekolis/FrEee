@@ -20,14 +20,14 @@ namespace FrEee.Ecs.Abilities
     /// Allows an entity to construct ships, bases, and units.
     /// </summary>
     public class SpaceYardAbility(
-		IEntity container,
+		IEntity entity,
 		AbilityRule rule,
 		Formula<string>? description,
 		params IFormula[] values
-	) : Ability(container, rule, description, values)
+	) : Ability(entity, rule, description, values)
 	{
-		public SpaceYardAbility(IEntity container, AbilityRule rule, Formula<string> resource, Formula<int> rate)
-			 : this(container, rule, null, resource, rate)
+		public SpaceYardAbility(IEntity entity, AbilityRule rule, Formula<string> resource, Formula<int> rate)
+			 : this(entity, rule, null, resource, rate)
 		{
 			ResourceFormula = resource;
 			RateFormula = rate;

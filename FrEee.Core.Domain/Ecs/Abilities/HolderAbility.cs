@@ -14,19 +14,19 @@ namespace FrEee.Ecs.Abilities
     /// Holds entities that have a <see cref="SemanticScopeAbility"/> with the appopriate category.
     /// </summary>
     class HolderAbility(
-		IEntity container,
+		IEntity entity,
 		AbilityRule rule,
 		Formula<string>? description,
 		params IFormula[] values
-	) : Ability(container, rule, description, values)
+	) : Ability(entity, rule, description, values)
 	{
 		public HolderAbility
 		(
-			IEntity container,
+			IEntity entity,
 			AbilityRule rule,
 			IFormula<string> heldScope,
 			IFormula<int> capacity
-		) : this(container, rule, null, heldScope, capacity)
+		) : this(entity, rule, null, heldScope, capacity)
 		{ }
 
 		/// <summary>
@@ -48,7 +48,7 @@ namespace FrEee.Ecs.Abilities
 		/// <summary>
 		/// The currently held entities.
 		/// </summary>
-		public IEnumerable<IEntity> HeldEntities => HeldAbilities.Select(q => q.Container);
+		public IEnumerable<IEntity> HeldEntities => HeldAbilities.Select(q => q.Entity);
 
 		public override SafeDictionary<string, object> Data
 		{

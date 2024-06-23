@@ -16,7 +16,7 @@ public class TechnologyRequirement : Requirement<Empire>, IContainable<IResearch
 	public TechnologyRequirement(IResearchable container, Technology tech, Formula<int> level)
 		: base("Requires level " + level + " " + tech + ".")
 	{
-		Container = container;
+		Entity = container;
 		Technology = tech;
 		Level = level;
 	}
@@ -24,7 +24,7 @@ public class TechnologyRequirement : Requirement<Empire>, IContainable<IResearch
 	/// <summary>
 	/// What researchable object "owns" this technology requirement.
 	/// </summary>
-	public IResearchable Container
+	public IResearchable Entity
 	{
 		get;
 		private set;

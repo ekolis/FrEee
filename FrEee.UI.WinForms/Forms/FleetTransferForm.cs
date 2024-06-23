@@ -227,7 +227,7 @@ public partial class FleetTransferForm : GameForm
 
 	private void btnRemove_Click(object sender, EventArgs e)
 	{
-		if (SelectedFleetSpaceObject is Fleet && SelectedFleetSpaceObject.Container == null)
+		if (SelectedFleetSpaceObject is Fleet && SelectedFleetSpaceObject.Entity == null)
 			DisbandFleet(SelectedFleetSpaceObject as Fleet);
 		else
 			RemoveFromFleet(SelectedFleetSpaceObject);
@@ -300,7 +300,7 @@ public partial class FleetTransferForm : GameForm
 				newCommands.Remove(cmd);
 				foreach (var c in newCommands.OfType<JoinFleetCommand>().Where(c => c.Fleet == fleet))
 					newCommands.Remove(c);
-				foreach (var c in newCommands.OfType<LeaveFleetCommand>().Where(c => c.Executor.Container == fleet))
+				foreach (var c in newCommands.OfType<LeaveFleetCommand>().Where(c => c.Executor.Entity == fleet))
 					newCommands.Remove(c);
 			}
 
@@ -402,7 +402,7 @@ public partial class FleetTransferForm : GameForm
 	{
 		if (vehicle == null)
 			return;
-		if (vehicle.Container == null)
+		if (vehicle.Entity == null)
 			return;
 
 		var cmd = new LeaveFleetCommand(vehicle);
@@ -469,7 +469,7 @@ public partial class FleetTransferForm : GameForm
 		{
 			// if it's a root fleet, disband it, otherwise remove it
 			var f = e.Node.Tag as Fleet;
-			if (f.Container == null)
+			if (f.Entity == null)
 				DisbandFleet(f);
 			else
 				RemoveFromFleet(f);
