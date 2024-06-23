@@ -17,6 +17,51 @@ Category := Facility
 Spatial Scope := Entity
 Description := Can be held as a facility.
 
+Name := Hold Colonies
+Type := HolderAbility
+Category := Colony
+Capacity := 1
+Description := Holds up to one colony.
+
+Name := Colony
+Type := HoldableAbility
+Category := Colony
+Spatial Scope := Entity
+Description := Is a colony.
+
+Name := Hold Space Objects
+Type := HolderAbility
+Category := Space Object
+Capacity := 999999999
+Description := Holds an unlimited number of space objects.
+
+Name := Space Object
+Type := HoldableAbility
+Category := Space Object
+Description := Can exist in a sector of space.
+
+Name := Hold Sectors
+Type := HolderAbility
+Category := Sector
+Capacity := 999999999
+Description := Holds an unlimited number of sectors.
+
+Name := Sector
+Type := HoldableAbility
+Category := Sector
+Description := Is a sector of a star system.
+
+Name := Hold Star Systems
+Type := HolderAbility
+Category := Star System
+Capacity := 999999999
+Description := Holds an unlimited number of star systems.
+
+Name := Star System
+Type := HoldableAbility
+Category := Star System
+Description := Is a star system in the galaxy.
+
 Name := Warp Point - Turbulence
 Type := WarpDamageAbility
 Targets := WarpPoint

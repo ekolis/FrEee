@@ -30,7 +30,7 @@ public class Colony : IEntity, IOwnableEntity, IFoggable, IContainable<Planet>, 
 		Abilities.Add(new HolderAbility(
 			container: this,
 			rule: AbilityRule.Find("Hold Facilities"),
-			category: new LiteralFormula<string>("Facility"),
+			heldScope: new LiteralFormula<string>("Facility"),
 			capacity: new ComputedFormula<int>("self.Container.MaxFacilities", this, true)));
 		Abilities.Add(new OwnableAbility(
 			this,
@@ -102,7 +102,7 @@ public class Colony : IEntity, IOwnableEntity, IFoggable, IContainable<Planet>, 
 	/// <summary>
 	/// The facilities on this colony.
 	/// </summary>
-	public IList<HoldableAbility> FacilityAbilities => Abilities.OfType<HolderAbility>().Single().HeldAbilities;
+	public IList<SemanticScopeAbility> FacilityAbilities => Abilities.OfType<HolderAbility>().Single().HeldAbilities;
 
 	/// <summary>
 	/// The facilities on this colony.
@@ -270,7 +270,7 @@ public class Colony : IEntity, IOwnableEntity, IFoggable, IContainable<Planet>, 
 			var facilityHolder = this.GetAbility<HolderAbility>();
 			facilityHolder.HeldAbilities.Clear();
 			for (int i = 0; i < facilCount; i++)
-				facilityHolder.HeldAbilities.Add(new HoldableAbility(this, new LiteralFormula<string>("Facility"), new LiteralFormula<int>(1)));
+				facilityHolder.HeldAbilities.Add(new SemanticScopeAbility(this, new LiteralFormula<string>("Facility"), new LiteralFormula<int>(1)));
 			Anger.Clear();
 			AngerDeltas.Clear();
 		}

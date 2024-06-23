@@ -19,21 +19,13 @@ namespace FrEee.Ecs.Abilities
     /// <summary>
     /// Allows an entity to construct ships, bases, and units.
     /// </summary>
-    public class SpaceYardAbility
-		: Ability
+    public class SpaceYardAbility(
+		IEntity container,
+		AbilityRule rule,
+		Formula<string>? description,
+		params IFormula[] values
+	) : Ability(container, rule, description, values)
 	{
-		public SpaceYardAbility
-		(
-			IEntity container,
-			AbilityRule rule,
-			Formula<string>? description,
-			params IFormula[] values
-		) : base(container, rule, description, values)
-		{
-			ResourceFormula = values[0].ToStringFormula();
-			RateFormula = (Formula<int>)values[1].ToFormula<int>();
-		}
-
 		public SpaceYardAbility(IEntity container, AbilityRule rule, Formula<string> resource, Formula<int> rate)
 			 : this(container, rule, null, resource, rate)
 		{
@@ -44,9 +36,9 @@ namespace FrEee.Ecs.Abilities
 		public string GetStatName(Resource resource) =>
 			$"Space Yard Rate {resource.Name}";
 
-		public Formula<string> ResourceFormula { get; private set; }
+		public Formula<string> ResourceFormula { get; private set; } = values[0].ToStringFormula();
 
-		public Formula<int> RateFormula { get; private set; }
+		public Formula<int> RateFormula { get; private set; } = (Formula<int>)values[1].ToFormula<int>();
 
 		public Resource Resource => Resource.Find(ResourceFormula);
 

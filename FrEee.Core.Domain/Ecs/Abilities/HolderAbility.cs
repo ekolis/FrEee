@@ -11,47 +11,39 @@ using FrEee.Utility;
 namespace FrEee.Ecs.Abilities
 {
     /// <summary>
-    /// Holds entities that have a <see cref="HoldableAbility"/> with the appopriate category.
+    /// Holds entities that have a <see cref="SemanticScopeAbility"/> with the appopriate category.
     /// </summary>
-    class HolderAbility
-		: Ability
+    class HolderAbility(
+		IEntity container,
+		AbilityRule rule,
+		Formula<string>? description,
+		params IFormula[] values
+	) : Ability(container, rule, description, values)
 	{
 		public HolderAbility
 		(
 			IEntity container,
 			AbilityRule rule,
-			Formula<string>? description,
-			params IFormula[] values
-		) : base(container, rule, description, values)
-		{
-			Category = values[0].ToFormula<string>();
-			Capacity = values[1].ToFormula<int>();
-		}
-
-		public HolderAbility
-		(
-			IEntity container,
-			AbilityRule rule,
-			IFormula<string> category,
+			IFormula<string> heldScope,
 			IFormula<int> capacity
-		) : this(container, rule, null, category, capacity)
+		) : this(container, rule, null, heldScope, capacity)
 		{ }
 
 		/// <summary>
-		/// Category describing what can be held.
+		/// Scope describing what can be held.
 		/// </summary>
-		public IFormula<string> Category { get; private set; }
+		public IFormula<string> HeldScope { get; private set; } = values[0].ToFormula<string>();
 
 		/// <summary>
-		/// The maximum number or size capacity of items which can be held.
+		/// The maximum capacity in number or size of items which can be held.
 		/// </summary>
-		public IFormula<int> Capacity { get; private set; }
+		public IFormula<int> Capacity { get; private set; } = values[1].ToFormula<int>();
 
 		/// <summary>
 		/// The currently held abilities.
 		/// </summary>
-		// TODO: validate that held abilities have the right category and fit within the specified size
-		public IList<HoldableAbility> HeldAbilities { get; private set; } = new List<HoldableAbility>();
+		// TODO: validate that held abilities have the right scope and fit within the specified capacity
+		public IList<SemanticScopeAbility> HeldAbilities { get; private set; } = new List<SemanticScopeAbility>();
 
 		/// <summary>
 		/// The currently held entities.
@@ -70,7 +62,7 @@ namespace FrEee.Ecs.Abilities
 			{
 				base.Data = value;
 				Capacity = Value1.ToFormula<int>();
-				HeldAbilities = (IList<HoldableAbility>)value["HeldAbilities"];
+				HeldAbilities = (IList<SemanticScopeAbility>)value["HeldAbilities"];
 			}
 		}
 
