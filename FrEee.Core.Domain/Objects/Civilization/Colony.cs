@@ -27,10 +27,11 @@ public class Colony : IEntity, IOwnableEntity, IFoggable, IContainable<Planet>, 
 	public Colony()
 	{
 		// temporary object type based abilities until I can ECSify everything
-		Abilities.Add(new HoldFacilitiesAbility(
-			this,
-			AbilityRule.Find("Hold Facilities"),
-			new ComputedFormula<int>("self.Container.MaxFacilities", this, true)));
+		Abilities.Add(new HolderAbility(
+			container: this,
+			rule: AbilityRule.Find("Hold Facilities"),
+			category: new LiteralFormula<string>("Facility"),
+			capacity: new ComputedFormula<int>("self.Container.MaxFacilities", this, true)));
 		Abilities.Add(new OwnableAbility(
 			this,
 			AbilityRule.Find("Ownable"),
@@ -101,12 +102,12 @@ public class Colony : IEntity, IOwnableEntity, IFoggable, IContainable<Planet>, 
 	/// <summary>
 	/// The facilities on this colony.
 	/// </summary>
-	public IList<FacilityAbility> FacilityAbilities => Abilities.OfType<HoldFacilitiesAbility>().Single().FacilityAbilities;
+	public IList<HoldableAbility> FacilityAbilities => Abilities.OfType<HolderAbility>().Single().HeldAbilities;
 
 	/// <summary>
 	/// The facilities on this colony.
 	/// </summary>
-	public IEnumerable<IEntity> Facilities => Abilities.OfType<HoldFacilitiesAbility>().Single().Facilities;
+	public IEnumerable<IEntity> Facilities => Abilities.OfType<HolderAbility>().Single().HeldEntities;
 
 	public long ID
 	{
@@ -266,10 +267,10 @@ public class Colony : IEntity, IOwnableEntity, IFoggable, IContainable<Planet>, 
 		{
 			var unknownFacilityTemplate = FacilityTemplate.Unknown;
 			var facilCount = FacilityAbilities.Count();
-			var facilityHolder = this.GetAbility<HoldFacilitiesAbility>();
-			facilityHolder.FacilityAbilities.Clear();
+			var facilityHolder = this.GetAbility<HolderAbility>();
+			facilityHolder.HeldAbilities.Clear();
 			for (int i = 0; i < facilCount; i++)
-				facilityHolder.FacilityAbilities.Add(new FacilityAbility(this, new LiteralFormula<int>(1)));
+				facilityHolder.HeldAbilities.Add(new HoldableAbility(this, new LiteralFormula<string>("Facility"), new LiteralFormula<int>(1)));
 			Anger.Clear();
 			AngerDeltas.Clear();
 		}

@@ -61,6 +61,7 @@ public class AbilityRuleLoader : DataFileLoader
 				else
 					r.GroupRules.Add(f.CreateFormula<AbilityValueRule>(r));
 			}
+			// TODO: load values by property name too! e.g. Caegory for HoldEntities/Held abilities
 
 			yield return r;
 		}

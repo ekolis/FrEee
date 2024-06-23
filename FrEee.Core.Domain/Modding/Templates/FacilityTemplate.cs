@@ -27,8 +27,9 @@ public class FacilityTemplate : IModObject, IResearchable, IEntity, ITemplate<Fa
 	{
 		UnlockRequirements = new List<Requirement<Empire>>();
 		Cost = new ResourceFormula(this);
-		Abilities = [new FacilityAbility(
+		Abilities = [new HoldableAbility(
 			this,
+			 new LiteralFormula<string>("Facility"),
 			new LiteralFormula<int>(1))];
 	}
 
@@ -38,7 +39,12 @@ public class FacilityTemplate : IModObject, IResearchable, IEntity, ITemplate<Fa
 		Abilities = new List<Ability>();
 		UnlockRequirements = new List<Requirement<Empire>>();
 		Cost = new ResourceFormula(this);
-		Abilities = [new FacilityAbility(this, null, "Is an unknown facility.", new LiteralFormula<int>(1))];
+		Abilities = [new HoldableAbility(
+			this,
+			null,
+			"Is an unknown facility.",
+			new LiteralFormula<string>("Facility"),
+			new LiteralFormula<int>(1))];
 	}
 
 	public IEnumerable<Ability> Abilities { get; set; }

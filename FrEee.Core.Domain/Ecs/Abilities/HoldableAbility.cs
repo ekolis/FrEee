@@ -11,16 +11,13 @@ using FrEee.Utility;
 
 namespace FrEee.Ecs.Abilities
 {
-	// TODO: make this a PartAbility so it can be reused for components (just have a string for the type of part)
-
 	/// <summary>
-	/// Allows an entity to be held by a <see cref="HoldFacilitiesAbility"/>.
+	/// Allows an entity to be held by a <see cref="HolderAbility"/> with the appropriate category.
 	/// </summary>
-	public class FacilityAbility
-		// TODO: should inherit from a BuildableAbility
+	public class HoldableAbility
 		: Ability
 	{
-		public FacilityAbility
+		public HoldableAbility
 		(
 			IEntity container,
 			AbilityRule rule,
@@ -28,20 +25,27 @@ namespace FrEee.Ecs.Abilities
 			params IFormula[] values
 		) : base(container, rule, description, values)
 		{
-			Size = values[0].ToFormula<int>();
+			Category = values[0].ToFormula<string>();
+			Size = values[1].ToFormula<int>();
 		}
 
-		public FacilityAbility
+		public HoldableAbility
 		(
 			IEntity container,
+			IFormula<string> category,
 			IFormula<int> size
-		) : this(container, AbilityRule.Find("Facility"), null, size)
+		) : this(container, AbilityRule.Find(category.Value), null, category, size)
 		{ }
 
-		public const string SizeStatName = "Facility Size";
+		public string SizeStatName => $"{Category} Size";
 
 		/// <summary>
-		/// The number of slots or amount of space consumed by this facility.
+		/// Category describing what the entity is considered to be when held.
+		/// </summary>
+		public IFormula<string> Category { get; private set; }
+
+		/// <summary>
+		/// The number of slots or amount of space consumed by this holdable.
 		/// </summary>
 		public IFormula<int> Size { get; private set; }
 

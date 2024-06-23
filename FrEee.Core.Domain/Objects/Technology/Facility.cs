@@ -34,7 +34,7 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 		ConstructionProgress = new ResourceQuantity();
 		Hitpoints = MaxHitpoints;
 		Abilities = template.Abilities.Select(q => q.Copy()).ToList();
-		this.GetAbility<FacilityAbility>().Container = this;
+		this.GetAbility<HoldableAbility>().Container = this;
 	}
 
 	public IEnumerable<Ability> Abilities { get; set; }
@@ -354,7 +354,7 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 		if (Container != null)
 		{
 			var col = Container.Colony;
-			col.FacilityAbilities.Remove(this.GetAbility<FacilityAbility>());
+			col.FacilityAbilities.Remove(this.GetAbility<HoldableAbility>());
 			col.UpdateEmpireMemories();
 		}
 	}
@@ -373,7 +373,7 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 			if (planet.Colony.Facilities.Count() >= planet.MaxFacilities)
 				planet.Colony.Owner.Log.Add(planet.CreateLogMessage(this + " cannot be constructed at " + planet + " because there is no more space available for facilities there.", LogMessages.LogMessageType.Warning));
 			else
-				planet.Colony.FacilityAbilities.Add(this.GetAbility<FacilityAbility>());
+				planet.Colony.FacilityAbilities.Add(this.GetAbility<HoldableAbility>());
 		}
 		else
 			throw new ArgumentException("Facilities can only be placed on colonized planets.");

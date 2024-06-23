@@ -156,7 +156,7 @@ public class UpgradeFacilityOrder : IConstructionOrder
                     var planet = (Planet)queue.Container;
                     // TODO: flesh out FacilityAbility so we don't need to cast to Facility
                     planet.Colony.Facilities.Cast<Facility>().Where(f => f.Template.ModID == Upgrade.Old.ModID).First().Dispose(); // HACK - why are we getting duplicate facility templates?
-                    planet.Colony.FacilityAbilities.Add(NewFacility.GetAbility<FacilityAbility>());
+                    planet.Colony.FacilityAbilities.Add(NewFacility.GetAbility<HoldableAbility>());
                 }
             }
         }
