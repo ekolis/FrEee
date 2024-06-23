@@ -38,5 +38,7 @@ namespace FrEee.Ecs.Stats
 			3 => SpaceYardRateRadioactives,
 			_ => throw new ArgumentException($"Can't get space yard rate for resource number {resourceNumber}. Must be between 1 and 3.")
 		};
+
+		public static StatType FacilitySize { get; } = new("Facility Size", new AdditionStackingRule());
 	}
 }

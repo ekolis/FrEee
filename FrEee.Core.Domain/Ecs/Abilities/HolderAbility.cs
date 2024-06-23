@@ -11,7 +11,7 @@ using FrEee.Utility;
 namespace FrEee.Ecs.Abilities
 {
     /// <summary>
-    /// Holds entities that have a <see cref="SemanticScopeAbility"/> with the appopriate category.
+    /// Holds entities that have a <see cref="SemanticScopeAbility"/> with the appopriate scope.
     /// </summary>
     class HolderAbility(
 		IEntity entity,

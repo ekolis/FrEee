@@ -13,33 +13,49 @@ using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 using FrEee.Ecs;
-using FrEee.Ecs.Abilities;
 using FrEee.Ecs.Abilities.Utility;
+using FrEee.Objects.Technology;
+using FrEee.Ecs.Stats;
 
-namespace FrEee.Objects.Technology;
+namespace FrEee.Ecs.Abilities;
 
 /// <summary>
-/// A large immobile installation on a colony.
+/// Marks an entity with <see cref="SemanticScope.Facility"/>
+/// and provides any required data for the entity to be a facility
+/// on a colony.
 /// </summary>
-[Serializable]
-[Obsolete("Use an IEntity wih a FacilityAbility.")]
-public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, IDisposable, IContainable<Planet>, IFormulaHost, IRecyclable, IUpgradeable<Facility>, IDataObject
+public class FacilityAbility(
+	IEntity entity,
+	AbilityRule rule,
+	Formula<string>? description,
+	params IFormula[] values
+) : SemanticScopeAbility(entity, rule, description, values),
+	IConstructable, IDamageable, IDisposable, IFormulaHost, IRecyclable, IUpgradeable<FacilityAbility>, IDataObject
 {
-	public Facility(FacilityTemplate template)
+	public FacilityAbility(
+		IEntity entity,
+		IEntity colony,
+		FacilityTemplate template
+	) : this(
+		entity,
+		AbilityRule.Find(SemanticScope.Facility),
+		null,
+		new LiteralFormula<string>(SemanticScope.Facility),
+		new LiteralFormula<int>(1) // TODO: variable size facility templates
+	)
 	{
+		Colony = colony;
 		Template = template;
 		ConstructionProgress = new ResourceQuantity();
 		Hitpoints = MaxHitpoints;
-		Abilities = template.Abilities.Select(q => q.Copy()).ToList();
-		this.GetAbility<SemanticScopeAbility>().Entity = this;
 	}
 
-	public IEnumerable<Ability> Abilities { get; set; }
-
-	public AbilityTargets AbilityTarget
+	public override void Interact(IInteraction interaction)
 	{
-		get { return AbilityTargets.Facility; }
+		Template.Interact(interaction);
 	}
+
+	public IEntity Colony { get; private set; }
 
 	/// <summary>
 	/// TODO - "armor" facilities that are hit before other facilities on a planet?
@@ -49,28 +65,7 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 		get { return 0; }
 	}
 
-	public IEnumerable<IEntity> Children
-	{
-		get { yield break; }
-	}
-
-	public ResourceQuantity ConstructionProgress
-	{
-		get;
-		set;
-	}
-
-	/// <summary>
-	/// Finds the planet which contains this facility.
-	/// </summary>
-	/// <returns></returns>
-	public Planet Entity
-	{
-		get
-		{
-			return Galaxy.Current.FindSpaceObjects<Planet>().SingleOrDefault(p => p.Colony != null && p.Colony.Facilities.Contains(this));
-		}
-	}
+	public ResourceQuantity ConstructionProgress { get; set; }
 
 	public ResourceQuantity Cost
 	{
@@ -110,17 +105,6 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 		}
 	}
 
-	public long ID
-	{
-		get;
-		set;
-	}
-
-	public IEnumerable<Ability> IntrinsicAbilities
-	{
-		get { return Abilities ?? Enumerable.Empty<Ability>(); }
-	}
-
 	public bool IsDestroyed
 	{
 		get { return Hitpoints <= 0; }
@@ -144,12 +128,12 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 		get { return this.IsObsolescent; }
 	}
 
-	public Facility LatestVersion
+	public FacilityAbility LatestVersion
 	{
 		get
 		{
 			if (IsObsolescent)
-				return Template.Instantiate();
+				return Template.Instantiate().GetAbility<FacilityAbility>();
 			else
 				return this;
 		}
@@ -191,10 +175,11 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 
 	public string Name { get { return Template.Name.Evaluate(this); } }
 
-	public IEnumerable<Facility> NewerVersions
-	{
-		get { return Galaxy.Current.FindSpaceObjects<Planet>().Where(p => p.HasColony).SelectMany(p => p.Colony.Facilities).Cast<Facility>().Where(f => Template.UpgradesTo(f.Template)); }
-	}
+	public IEnumerable<FacilityAbility> NewerVersions
+		=> Galaxy.Current.Find<FacilityAbility>().Where(q => Template.UpgradesTo(q.Template));
+
+	public IEnumerable<FacilityAbility> OlderVersions
+		=> Galaxy.Current.Find<FacilityAbility>().Where(q => q.Template.UpgradesTo(Template));
 
 	/// <summary>
 	/// Facilities do not have shields, though they may provide them to colonies.
@@ -212,33 +197,16 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 		}
 	}
 
-	public IEnumerable<Facility> OlderVersions
-	{
-		// TODO: flesh out FacilityAbility so any entity can be a facility, not just a Facility object
-		get { return Galaxy.Current.FindSpaceObjects<Planet>().Where(p => p.HasColony).SelectMany(p => p.Colony.Facilities).Cast<Facility>().Where(f => f.Template.UpgradesTo(Template)); }
-	}
-
 	[DoNotSerialize(false)]
 	public Empire Owner
 	{
 		get
 		{
-			return Entity?.Owner;
+			return Colony.GetOwner();
 		}
 		set
 		{
-			// HACK - transfer ownership of entire colony since facilities can only belong to colony owner anyway
-			if (Entity != null && Entity.Colony != null)
-				Entity.Colony.Owner = value;
-		}
-	}
-
-	public IEnumerable<IEntity> Parents
-	{
-		get
-		{
-			if (Entity != null)
-				yield return Entity;
+			Colony.SetOwner(value);
 		}
 	}
 
@@ -274,7 +242,7 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 
 	public IMobileSpaceObject RecycleContainer
 	{
-		get { return Entity; }
+		get { return Entity.Ancestors().OfType<IMobileSpaceObject>().First(); }
 	}
 
 	public ResourceQuantity ScrapValue
@@ -299,19 +267,15 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 		get { return Template; }
 	}
 
-	public IEnumerable<Ability> UnstackedAbilities
-	{
-		get { return Abilities; }
-	}
-
 	public IDictionary<string, object> Variables
 	{
 		get
 		{
 			return new Dictionary<string, object>
 			{
-				{"colony", Entity.Colony},
-				{"planet", Entity},
+				{"colony", Colony},
+				// TODO: check colony's world entity
+				{"planet", Colony.Parents.OfType<Planet>().First()},
 				{"empire", Owner}
 			};
 		}
@@ -331,7 +295,6 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 				dict.Add(nameof(Hitpoints), Hitpoints);
 			dict.Add(nameof(ID), ID);
 			dict.Add(nameof(template), template);
-			dict.Add(nameof(Abilities), Abilities);
 			return dict;
 		}
 		set
@@ -340,7 +303,6 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 			ConstructionProgress = (ResourceQuantity)(value[nameof(ConstructionProgress)] ?? Cost);
 			Hitpoints = (int)(value[nameof(Hitpoints)] ?? MaxHitpoints);
 			ID = (long)value[nameof(ID)];
-			Abilities = (IEnumerable<Ability>)value[nameof(Abilities)];
 		}
 	}
 
@@ -350,8 +312,8 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 			return;
 		if (Entity != null)
 		{
-			var col = Entity.Colony;
-			col.FacilityAbilities.Remove(this.GetAbility<SemanticScopeAbility>());
+			var col = Entity.Ancestors().OfType<Colony>().First();
+			col.FacilityAbilities.Remove(this);
 			col.UpdateEmpireMemories();
 		}
 	}
@@ -362,15 +324,16 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 	/// <param name="sobj">Must be a colonized planet.</param>
 	public void Place(ISpaceObject sobj)
 	{
+		// TODO: allow colony to be placed on any entity with the World semantic scope
 		if (sobj is Planet)
 		{
 			var planet = (Planet)sobj;
 			if (planet.Colony == null)
 				throw new ArgumentException("Facilities can only be placed on colonized planets.");
-			if (planet.Colony.Facilities.Count() >= planet.MaxFacilities)
-				planet.Colony.Owner.Log.Add(planet.CreateLogMessage(this + " cannot be constructed at " + planet + " because there is no more space available for facilities there.", LogMessages.LogMessageType.Warning));
+			if (planet.Colony.Facilities.Sum(q => q.GetStatValue<int>(StatType.FacilitySize)) >= planet.MaxFacilities)
+				planet.Colony.Owner.Log.Add(planet.CreateLogMessage(this + " cannot be constructed at " + planet + " because there is no more space available for facilities there.", Objects.LogMessages.LogMessageType.Warning));
 			else
-				planet.Colony.FacilityAbilities.Add(this.GetAbility<SemanticScopeAbility>());
+				planet.Colony.FacilityAbilities.Add(this);
 		}
 		else
 			throw new ArgumentException("Facilities can only be placed on colonized planets.");

@@ -12,10 +12,9 @@ Category := Facility
 Description := Holds up to [%Amount1%] facilities.
 
 Name := Facility
-Type := HoldableAbility
-Category := Facility
+Type := FacilityAbility
 Spatial Scope := Entity
-Description := Can be held as a facility.
+Description := Is a facility, which can be built on a colony.
 
 Name := Hold Colonies
 Type := HolderAbility
