@@ -10,6 +10,7 @@ using FrEee.Objects.GameState;
 using FrEee.Ecs;
 using System.Linq;
 using FrEee.Ecs.Abilities;
+using System.Collections.Generic;
 
 namespace FrEee.Tests.Objects.Vehicles;
 
@@ -188,7 +189,10 @@ public class CloakingTest
 	{
 		AddSensorAbility(destroyer.Hull, "Foobar", 1);
 		var storm = new Storm();
-		storm.Abilities = [new Ability(sys, Mod.Current.AbilityRules.FindByName("Sector - Sight Obscuration"), null, 999)];
+		storm.Abilities = new HashSet<Ability>
+		{
+			new Ability(sys, Mod.Current.AbilityRules.FindByName("Sector - Sight Obscuration"), null, 999) 
+		};
 		sys.Place(storm, new Point());
 		Assert.IsTrue(submarine.IsHiddenFrom(seekers), "Submarine should be hidden.");
 	}

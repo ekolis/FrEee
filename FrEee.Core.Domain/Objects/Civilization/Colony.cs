@@ -10,8 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
 using FrEee.Ecs;
 using FrEee.Ecs.Abilities;
 using FrEee.Ecs.Abilities.Utility;
@@ -27,6 +25,7 @@ public class Colony : IEntity, IOwnableEntity, IFoggable, IContainable<Planet>, 
 	public Colony()
 	{
 		// temporary object type based abilities until I can ECSify everything
+		Abilities.Add(new ColonyAbility(this));
 		Abilities.Add(new HolderAbility<FacilityAbility>(
 			entity: this,
 			rule: AbilityRule.Find("Hold Facilities"),

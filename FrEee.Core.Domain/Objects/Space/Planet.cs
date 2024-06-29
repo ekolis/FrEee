@@ -15,7 +15,6 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
-using FrEee.Utility;
 using FrEee.Processes.Combat;
 using FrEee.Ecs;
 using FrEee.Ecs.Abilities;
@@ -33,6 +32,13 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 	{
 		ResourceValue = new ResourceQuantity();
 		Orders = new List<IOrder>();
+		Abilities.Add(new HolderAbility<ColonyAbility>(
+			this,
+			AbilityRule.Find("Hold Colonies"),
+			heldScope: new LiteralFormula<string>(SemanticScope.Colony),
+			// TODO: colony capacity for planets not just 1? colony sizes like in SE2 #318? multiple colonies #319?
+			capacity: new LiteralFormula<int>(1)
+		));
 	}
 
 	public override AbilityTargets AbilityTarget => AbilityTargets.Planet;
@@ -132,7 +138,20 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 	/// <summary>
 	/// The colony on this planet, if any.
 	/// </summary>
-	public Colony Colony { get; set; }
+	public Colony? Colony
+	{
+		get => (Colony?)this.GetAbility<HolderAbility<ColonyAbility>>().HeldEntities.SingleOrDefault();
+		set
+		{
+			var abil = this.GetAbility<HolderAbility<ColonyAbility>>();
+			abil.HeldAbilities.Clear();
+			if (value != null)
+			{
+				abil.HeldAbilities.Add(value.GetAbility<ColonyAbility>());
+			}
+		}
+	}
+
 
 	public double CombatSpeed => 0;
 
@@ -720,13 +739,13 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 			var brush = new SolidBrush(Colony.Owner.Color);
 			var pop = Colony.Population.Sum(kvp => kvp.Value);
 			rect.Width = (int)(5 / scaleFactor);
-			rect.X += (int)(1 /scaleFactor);
+			rect.X += (int)(1 / scaleFactor);
 			rect.Y += (int)(2 / scaleFactor);
 			rect.Height -= (int)(3 / scaleFactor);
 			rect.X += (int)(1 / scaleFactor);
 			if (pop > 0)
 				g.FillRectangle(brush, rect);
-			rect.X += (int)(6 /scaleFactor);
+			rect.X += (int)(6 / scaleFactor);
 			if (pop > MaxPopulation / 3)
 				g.FillRectangle(brush, rect);
 			rect.X += (int)(6 / scaleFactor);

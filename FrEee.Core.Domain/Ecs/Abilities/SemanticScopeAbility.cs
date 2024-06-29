@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FrEee.Ecs.Abilities.Utility;
 using FrEee.Ecs.Interactions;
+using FrEee.Ecs.Stats;
 using FrEee.Modding;
 using FrEee.Objects.Technology;
 using FrEee.Utility;
@@ -52,7 +53,7 @@ namespace FrEee.Ecs.Abilities
 			}
 			if (interaction is GetStatValueInteraction getStatValue && getStatValue.Stat.Name == SizeStatName)
 			{
-				getStatValue.Stat.Values.Add(Size.Value);
+				getStatValue.Stat.Modifiers.Add(new Modifier(Entity, Operation.Add, Size.Value));
 			}
 		}
 	}

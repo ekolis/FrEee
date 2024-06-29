@@ -14,23 +14,27 @@ namespace FrEee.Ecs.Stats
     /// <param name="StackingRule">Rule for stacking stat values.</param>
     public record StatType
     (
-        string Name,
-        IStackingRule StackingRule
+        string Name
     )
     {
-        // TODO: make stacking rules moddable
-        public static StatType WarpDamage { get; } = new("Warp Damage", new AdditionStackingRule());
+        public static StatType WarpDamage { get; } = new("Warp Damage");
 
-        public static StatType SpaceYardRateMinerals { get; } = new("Space Yard Rate Minerals", new MaximumStackingRule());
-		public static StatType SpaceYardRateOrganics { get; } = new("Space Yard Rate Radioactives", new MaximumStackingRule());
-		public static StatType SpaceYardRateRadioactives { get; } = new("Space Yard Rate Radioactives", new MaximumStackingRule());
-        public static StatType SpaceYardRate(Resource resource) => resource.Name switch
-        {
-            "Minerals" => SpaceYardRateMinerals,
-			"Organics" => SpaceYardRateOrganics,
-			"Radioactives" => SpaceYardRateRadioactives,
-            _ => throw new ArgumentException($"Can't get space yard rate for resource {resource.Name}. Must be Minerals, Organics, or Radioactives.")
+		public static StatType ColonyResourceExtractionMinerals { get; } = new("Colony Resource Extraction Minerals");
+		public static StatType ColonyResourceExtractionOrganics { get; } = new("Colony Resource Extraction Radioactives");
+		public static StatType ColonyResourceExtractionRadioactives { get; } = new("Colony Resource Extraction Radioactives");
+		public static StatType ColonyResourceExtraction(Resource resource) => ColonyResourceExtraction(resource.Number);
+		public static StatType ColonyResourceExtraction(int resourceNumber) => resourceNumber switch
+		{
+			1 => ColonyResourceExtractionMinerals,
+			2 => ColonyResourceExtractionOrganics,
+			3 => ColonyResourceExtractionRadioactives,
+			_ => throw new ArgumentException($"Can't get colony resource extraction for resource number {resourceNumber}. Must be between 1 and 3.")
 		};
+
+		public static StatType SpaceYardRateMinerals { get; } = new("Space Yard Rate Minerals");
+		public static StatType SpaceYardRateOrganics { get; } = new("Space Yard Rate Radioactives");
+		public static StatType SpaceYardRateRadioactives { get; } = new("Space Yard Rate Radioactives");
+		public static StatType SpaceYardRate(Resource resource) => SpaceYardRate(resource.Number);
 		public static StatType SpaceYardRate(int resourceNumber) => resourceNumber switch
 		{
 			1 => SpaceYardRateMinerals,
@@ -39,6 +43,6 @@ namespace FrEee.Ecs.Stats
 			_ => throw new ArgumentException($"Can't get space yard rate for resource number {resourceNumber}. Must be between 1 and 3.")
 		};
 
-		public static StatType FacilitySize { get; } = new("Facility Size", new AdditionStackingRule());
+		public static StatType FacilitySize { get; } = new("Facility Size");
 	}
 }

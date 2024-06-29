@@ -19,27 +19,27 @@ using Microsoft.Scripting.Utils;
 namespace FrEee.Ecs.Abilities
 {
     /// <summary>
-    /// Allows an entity to construct ships, bases, and units.
+    /// Allows a colony to produce resources based on its value, population, and happiness.
     /// </summary>
-    public class SpaceYardAbility(
+    public class ColonyResourceExtractionAbility(
 		IEntity entity,
 		AbilityRule rule,
 		Formula<string>? description,
 		params IFormula[] values
 	) : ResourceRateAbility(entity, rule, description, values)
 	{
-		public SpaceYardAbility(IEntity entity, AbilityRule rule, Formula<string> resource, Formula<int> rate)
+		public ColonyResourceExtractionAbility(IEntity entity, AbilityRule rule, Formula<string> resource, Formula<int> rate)
 			 : this(entity, rule, null, resource, rate)
 		{
 		}
 
 		public override StatType GetStatType(Resource resource) =>
-			StatType.SpaceYardRate(resource);
+			StatType.ColonyResourceExtraction(resource);
 
 		public override void Interact(IInteraction interaction)
 		{
 			base.Interact(interaction);
-			// TODO: build interaction
+			// TODO: extract resources interaction
 		}
 	}
 }

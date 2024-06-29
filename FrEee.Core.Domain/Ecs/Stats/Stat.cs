@@ -12,22 +12,27 @@ namespace FrEee.Ecs.Stats
     public record Stat
     (
         StatType StatType,
-        // TODO: make this a dictionary mapping either entities or abilities to their contributions to the stat value?
-        // or groupings of string stacking keys with lists of decimal values?
-        IList<decimal> Values
+        IList<Modifier> Modifiers
     )
     {
         public string Name => StatType.Name;
-
-        public IStackingRule StackingRule => StatType.StackingRule;
 
         public decimal? Value
         {
             get
             {
-                if (Values.Any())
+                if (Modifiers.Any())
                 {
-					return StackingRule.Stack(Values);
+                    var result = 0m;
+					for (var priority = Operation.All.Min(it => it.Priority); priority <= Operation.All.Min(it => it.Priority); priority++)
+                    {
+                        foreach (var operation in Operation.All.Where(it => it.Priority == priority))
+                        {
+                            var modifiers = Modifiers.Where(it => it.Operation == operation);
+                            result = operation.Aggregate(result, modifiers.Select(it => it.Value));
+                        }
+                    }
+                    return result;
 				}
                 else
                 {

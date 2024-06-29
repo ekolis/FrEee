@@ -34,7 +34,13 @@ public abstract class StellarObject : IStellarObject, IAbstractDataObject
 
 	public Point Coordinates { get; set; }
 
-	public IEnumerable<Ability> Abilities { get; set; }
+	public ISet<Ability> Abilities { get; set; } = new HashSet<Ability>();
+
+	IEnumerable<Ability> IEntity<Ability>.Abilities
+	{
+		get => Abilities;
+		set => Abilities = value.ToHashSet();
+	}
 
 	public virtual bool CanBeInFleet
 	{
@@ -94,7 +100,7 @@ public abstract class StellarObject : IStellarObject, IAbstractDataObject
 			ModID = value[nameof(ModID)].Default<string>();
 			StoredResources = value[nameof(StoredResources)].Default(new ResourceQuantity());
 			Coordinates = value[nameof(Coordinates)].Default(new Point());
-			Abilities = value[nameof(Abilities)].Default(new List<Ability>());
+			Abilities = value[nameof(Abilities)].Default(new HashSet<Ability>());
 		}
 	}
 

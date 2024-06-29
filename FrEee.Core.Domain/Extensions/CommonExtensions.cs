@@ -27,6 +27,9 @@ using FrEee.Utility;
 using FrEee.Processes.Combat;
 using System.Numerics;
 using FrEee.Ecs;
+using FrEee.Ecs.Interactions;
+using FrEee.Ecs.Stats;
+using static IronPython.Modules.PythonIterTools;
 
 namespace FrEee.Extensions;
 
@@ -1178,15 +1181,15 @@ public static class CommonExtensions
 			ratio = o.MerchantsRatio;
 		var prefix = "Resource Generation - ";
 		var pcts = o.StandardIncomePercentages;
-		foreach (var abil in o.Abilities().Where(abil => abil.Rule.Name.StartsWith(prefix)))
+		// TODO: moddable construction resources
+		foreach (var resource in new[] { Resource.Minerals, Resource.Organics, Resource.Radioactives })
 		{
-			var resource = Resource.Find(abil.Rule.Name.Substring(prefix.Length));
-			var amount = abil.Value1.ToInt();
-
-			if (resource.HasValue)
-				amount = Galaxy.Current.GameSetup.StandardMiningModel.GetRate(amount, o.ResourceValue[resource], pcts[resource] / 100d);
-
-			income.Add(resource, amount);
+			var getStat = new GetStatValueInteraction(new Stat(StatType.ColonyResourceExtraction(resource), []));
+			o.Interact(getStat);
+			var amount = (int?)getStat.Stat.Value ?? 0;
+			// TODO: take into account population modifiers if we're not doing that already elsewhere
+			amount = Galaxy.Current.GameSetup.StandardMiningModel.GetRate(amount, o.ResourceValue[resource], pcts[resource] / 100d);
+			income += amount * resource;
 		}
 		prefix = "Point Generation - ";
 		foreach (var abil in o.Abilities().Where(abil => abil.Rule.Name.StartsWith(prefix)))

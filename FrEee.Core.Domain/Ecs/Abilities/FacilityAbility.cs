@@ -12,7 +12,6 @@ using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
-using FrEee.Ecs;
 using FrEee.Ecs.Abilities.Utility;
 using FrEee.Objects.Technology;
 using FrEee.Ecs.Stats;
@@ -284,25 +283,28 @@ public class FacilityAbility(
 	[SerializationPriority(1)]
 	private ModReference<FacilityTemplate> template { get; set; }
 
-	public SafeDictionary<string, object> Data
+	public override SafeDictionary<string, object> Data
 	{
 		get
 		{
-			var dict = new SafeDictionary<string, object>();
+			var dict = base.Data;
 			if (ConstructionProgress != Cost)
 				dict.Add(nameof(ConstructionProgress), ConstructionProgress);
 			if (Hitpoints != MaxHitpoints)
 				dict.Add(nameof(Hitpoints), Hitpoints);
 			dict.Add(nameof(ID), ID);
 			dict.Add(nameof(template), template);
+			dict.Add(nameof(Colony), Colony);
 			return dict;
 		}
 		set
 		{
+			base.Data = value;
 			template = (ModReference<FacilityTemplate>)value[nameof(template)]; // comes first because other properties depend on its data
 			ConstructionProgress = (ResourceQuantity)(value[nameof(ConstructionProgress)] ?? Cost);
 			Hitpoints = (int)(value[nameof(Hitpoints)] ?? MaxHitpoints);
 			ID = (long)value[nameof(ID)];
+			Colony = (Colony)value[nameof(Colony)];
 		}
 	}
 

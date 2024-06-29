@@ -13,6 +13,7 @@ namespace FrEee.Ecs.Abilities
     /// <summary>
     /// Holds entities that have a <see cref="SemanticScopeAbility"/> with the appopriate scope.
     /// </summary>
+	// TODO: make HolderAbility inherit from SemanticScopeAbility so we don't need both "is colony" and "holds facilities" abilities - or would that be too limiting?
     class HolderAbility<THeldAbility>(
 		IEntity entity,
 		AbilityRule rule,
@@ -69,9 +70,10 @@ namespace FrEee.Ecs.Abilities
 
 		public override void Interact(IInteraction interaction)
 		{
-			foreach (var held in HeldAbilities)
+			foreach (var heldAbility in HeldAbilities)
 			{
-				held.Interact(interaction);
+				// need to interact with the held entity, not just the ability, to get all its abilities
+				heldAbility.Entity.Interact(interaction);
 			}
 		}
 	}

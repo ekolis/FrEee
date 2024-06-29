@@ -18,25 +18,26 @@ namespace FrEee.Ecs.Abilities
     /// <summary>
     /// Damages vehicles that warp through a warp point.
     /// </summary>
+	
     public class WarpDamageAbility(
 		IEntity entity,
 		AbilityRule rule,
 		Formula<string>? description,
 		params IFormula[] values
-	) : Ability(entity, rule, description, values)
+	) : StatModifierAbility(entity, rule, description, values)
 	{
-		public const string StatName = "Warp Damage";
-
 		public WarpDamageAbility(IEntity entity, AbilityRule rule, Formula<int> damage)
 			 : this(entity, rule, null, damage.ToStringFormula())
 		{
-			Damage = damage;
+			StatName = "Warp Damage";
 		}
 
 		public Formula<int> Damage { get; private set; }
 
 		public override void Interact(IInteraction interaction)
 		{
+			base.Interact(interaction);
+
 			if (interaction is WarpInteraction warp)
 			{
 				var sobj = warp.WarpingVehicle;
@@ -49,14 +50,6 @@ namespace FrEee.Ecs.Abilities
 				{
 					sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " took " + Damage + " points of damage from turbulence when traversing " + warp.WarpPoint + ".", LogMessageType.Generic));
 				}
-			}
-			if (interaction is GetStatNamesInteraction getStatNames)
-			{
-				getStatNames.StatNames.Add(StatName);
-			}
-			if (interaction is GetStatValueInteraction getStatValue && getStatValue.Stat.Name == StatName)
-			{
-				getStatValue.Stat.Values.Add(Damage);
 			}
 		}
 	}
