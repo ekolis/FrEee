@@ -2,19 +2,17 @@
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
-using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.Civilization.Orders;
-using FrEee.Utility;
 using FrEee.Ecs;
-using FrEee.Ecs.Abilities;
 using FrEee.Ecs.Abilities.Utility;
+using FrEee.Ecs.Abilities;
 
-namespace FrEee.Tests.Utility;
+namespace FrEee.Utility;
 
 public class SerializerTest
 {

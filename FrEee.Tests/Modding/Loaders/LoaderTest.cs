@@ -1,7 +1,6 @@
-﻿using FrEee.Modding;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace FrEee.Tests.Modding.Loaders;
+namespace FrEee.Modding.Loaders;
 
 /// <summary>
 /// Tests mod loaders.

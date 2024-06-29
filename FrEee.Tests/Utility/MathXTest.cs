@@ -1,8 +1,6 @@
-﻿using FrEee.Utility;
-using NUnit.Framework;
-using FrEee.Utility;
+﻿using NUnit.Framework;
 
-namespace FrEee.Tests.Utility;
+namespace FrEee.Utility;
 
 /// <summary>
 /// Tests math.

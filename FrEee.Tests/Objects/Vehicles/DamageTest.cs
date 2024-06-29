@@ -1,18 +1,16 @@
-﻿using FrEee.Objects.Civilization;
-using FrEee.Objects.Space;
-using FrEee.Objects.Technology;
-using FrEee.Objects.Vehicles;
-using FrEee.Modding;
-using FrEee.Modding.Templates;
-using FrEee.Extensions;
-using NUnit.Framework;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using FrEee.Objects.GameState;
 using FrEee.Ecs;
 using FrEee.Ecs.Abilities;
+using FrEee.Extensions;
+using FrEee.Modding;
+using FrEee.Modding.Templates;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.GameState;
+using FrEee.Objects.Technology;
+using NUnit.Framework;
 
-namespace FrEee.Tests.Objects.Vehicles;
+namespace FrEee.Objects.Vehicles;
 
 /// <summary>
 /// Tests damage to vehicles.

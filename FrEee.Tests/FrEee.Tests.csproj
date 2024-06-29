@@ -24,5 +24,6 @@
 	</ItemGroup>
 	<PropertyGroup>
 		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+		<RootNamespace>FrEee</RootNamespace>
 	</PropertyGroup>
 </Project>

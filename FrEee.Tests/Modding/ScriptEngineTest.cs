@@ -1,8 +1,7 @@
-﻿using FrEee.Modding;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
-using System.Collections.Generic;
 
-namespace FrEee.Tests.Modding;
+namespace FrEee.Modding;
 
 //[System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
 public class ScriptEngineTest

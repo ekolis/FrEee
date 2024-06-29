@@ -1,8 +1,6 @@
-﻿using FrEee.Utility;
-using NUnit.Framework;
-using FrEee.Utility;
+﻿using NUnit.Framework;
 
-namespace FrEee.Tests.Utility;
+namespace FrEee.Utility;
 
 /// <summary>
 /// Tries to test the random number generator. As much as a RNG is testable...

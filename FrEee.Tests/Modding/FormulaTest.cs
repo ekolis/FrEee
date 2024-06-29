@@ -2,14 +2,13 @@ using FrEee.Objects.Civilization;
 using FrEee.Processes.Combat;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
-using FrEee.Modding;
 using FrEee.Modding.Templates;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
 
-namespace FrEee.Tests.Modding;
+namespace FrEee.Modding;
 
 /// <summary>
 /// Tests data file formulas.

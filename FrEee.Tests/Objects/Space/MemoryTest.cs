@@ -1,13 +1,12 @@
-﻿using FrEee.Objects.Civilization;
-using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
-using FrEee.Modding;
+﻿using System.Drawing;
 using FrEee.Extensions;
-using NUnit.Framework;
-using System.Drawing;
+using FrEee.Modding;
+using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
+using FrEee.Objects.Vehicles;
+using NUnit.Framework;
 
-namespace FrEee.Tests.Objects.Space;
+namespace FrEee.Objects.Space;
 
 /// <summary>
 /// Tests memory sight / fog of war.

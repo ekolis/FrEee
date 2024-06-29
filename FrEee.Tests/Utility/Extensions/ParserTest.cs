@@ -1,11 +1,8 @@
-﻿using FrEee.Utility;
+﻿using System;
 using FrEee.Extensions;
 using NUnit.Framework;
-using System;
-using FrEee.Extensions;
-using FrEee.Utility;
 
-namespace FrEee.Tests.Utility.Extensions;
+namespace FrEee.Utility.Extensions;
 
 /// <summary>
 /// Tests parsing capabilities.
