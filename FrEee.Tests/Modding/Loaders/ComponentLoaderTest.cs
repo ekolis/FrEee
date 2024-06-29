@@ -1,8 +1,7 @@
-﻿using FrEee.Modding;
-using FrEee.Extensions;
+﻿using FrEee.Extensions;
 using NUnit.Framework;
 
-namespace FrEee.Tests.Modding.Loaders;
+namespace FrEee.Modding.Loaders;
 
 /// <summary>
 /// Summary description for ComponentLoaderTest

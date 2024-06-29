@@ -1,12 +1,9 @@
-﻿using FrEee.Utility;
-using FrEee.Serialization;
+﻿using System.Collections.Generic;
 using FrEee.Extensions;
-using NUnit.Framework;
-using System.Collections.Generic;
 using FrEee.Serialization;
-using FrEee.Utility;
+using NUnit.Framework;
 
-namespace FrEee.Tests.Utility;
+namespace FrEee.Utility;
 
 /// <summary>
 /// Tests data operations.

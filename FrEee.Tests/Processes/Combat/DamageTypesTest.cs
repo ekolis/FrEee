@@ -1,14 +1,12 @@
-﻿using FrEee.Processes.Combat;
-using FrEee.Objects.Vehicles;
-using FrEee.Modding;
-using FrEee.Extensions;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Linq;
+using FrEee.Extensions;
+using FrEee.Modding;
 using FrEee.Objects.GameState;
-using FrEee.Processes.Combat;
+using FrEee.Objects.Vehicles;
+using NUnit.Framework;
 
-namespace FrEee.Tests.Processes.Combat;
+namespace FrEee.Processes.Combat;
 
 public class DamageTypesTest
 {

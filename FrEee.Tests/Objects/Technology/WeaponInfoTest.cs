@@ -1,10 +1,10 @@
-﻿using FrEee.Processes.Combat;
+﻿using System.Linq;
 using FrEee.Modding;
-using NUnit.Framework;
-using System.Linq;
 using FrEee.Objects.GameState;
+using FrEee.Processes.Combat;
+using NUnit.Framework;
 
-namespace FrEee.Tests.Objects.Technology;
+namespace FrEee.Objects.Technology;
 
 /// <summary>
 /// Tests weapon info.

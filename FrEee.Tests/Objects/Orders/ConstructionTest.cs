@@ -1,12 +1,12 @@
-﻿using FrEee.Objects.Civilization;
+﻿using FrEee.Extensions;
+using FrEee.Modding;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
-using FrEee.Modding;
-using FrEee.Extensions;
 using NUnit.Framework;
-using FrEee.Objects.GameState;
 
-namespace FrEee.Tests.Objects.Orders;
+namespace FrEee.Objects.Orders;
 
 /// <summary>
 /// Tests construction queue capabilities.

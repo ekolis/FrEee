@@ -1,9 +1,8 @@
-﻿using FrEee.Extensions;
-using NUnit.Framework;
-using System.Linq;
+﻿using System.Linq;
 using FrEee.Extensions;
+using NUnit.Framework;
 
-namespace FrEee.Tests.Utility.Extensions;
+namespace FrEee.Utility.Extensions;
 
 /// <summary>
 /// Tests extension methods.

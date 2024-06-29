@@ -1,6 +1,4 @@
-﻿using FrEee.Modding;
-
-namespace FrEee.Tests.Modding;
+﻿namespace FrEee.Modding;
 
 /// <summary>
 /// The stock FrEee mod.

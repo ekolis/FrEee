@@ -1,8 +1,7 @@
-﻿using FrEee.Modding.Templates;
+﻿using System.Drawing;
 using NUnit.Framework;
-using System.Drawing;
 
-namespace FrEee.Tests.Modding;
+namespace FrEee.Modding.Templates;
 
 /// <summary>
 /// Tests galaxy templates.

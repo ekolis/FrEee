@@ -1,15 +1,15 @@
-using FrEee.Objects.Civilization;
-using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
-using FrEee.Modding.Templates;
-using FrEee.Extensions;
-using NUnit.Framework;
 using System.Drawing;
-using FrEee.Objects.Technology;
-using FrEee.Objects.GameState;
+using FrEee.Extensions;
 using FrEee.Modding.Abilities;
+using FrEee.Modding.Templates;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.GameState;
+using FrEee.Objects.Space;
+using FrEee.Objects.Technology;
+using FrEee.Objects.Vehicles;
+using NUnit.Framework;
 
-namespace FrEee.Tests.Objects.Abilities;
+namespace FrEee.Objects.Abilities;
 
 /// <summary>
 /// Tests abilities and ability rules.

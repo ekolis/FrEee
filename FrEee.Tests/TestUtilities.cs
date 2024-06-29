@@ -4,7 +4,7 @@ using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Objects.GameState;
 
-namespace FrEee.Tests;
+namespace FrEee;
 
 public static class TestUtilities
 {

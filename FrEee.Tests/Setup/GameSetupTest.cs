@@ -1,9 +1,9 @@
 ﻿using FrEee.Modding;
-using NUnit.Framework;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Setup;
+using NUnit.Framework;
 
-namespace FrEee.Tests.Setup;
+namespace FrEee.Setup;
 
 public class GameSetupTest
 {
