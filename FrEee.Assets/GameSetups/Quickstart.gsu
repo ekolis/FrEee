@@ -29,7 +29,7 @@ p31:
 				PrimaryRace:
 					:p7:
 						Aptitudes:
-							FrEee.Utility.SafeDictionary`2[[System.String, System.Private.CoreLib],[System.Int32, System.Private.CoreLib]], FrEee.Core:
+							FrEee.Utility.SafeDictionary`2[[System.String, System.Private.CoreLib],[System.Int32, System.Private.CoreLib]], FrEee.Core.Utility:
 							d15:							
 								:"Reproduction";
 								:100;
@@ -41,23 +41,23 @@ p31:
 								:100;
 								:"Environmental Resistance";
 								:100;
-								:"Defensiveness";
+								:"Maintenance Aptitude";
 								:100;
 								:"Construction Aptitude";
 								:100;
-								:"Maintenance Aptitude";
-								:100;
-								:"Happiness";
+								:"Defensiveness";
 								:100;
 								:"Farming Aptitude";
+								:100;
+								:"Happiness";
 								:100;
 								:"Political Savvy";
 								:100;
 								:"Repair Aptitude";
 								:100;
-								:"Intelligence";
-								:100;
 								:"Aggressiveness";
+								:100;
+								:"Intelligence";
 								:100;
 								:"Physical Strength";
 								:100;
