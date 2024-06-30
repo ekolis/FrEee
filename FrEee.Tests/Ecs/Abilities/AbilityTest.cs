@@ -41,8 +41,6 @@ public class AbilityTest
         emp = TestUtilities.CreateEmpire();
         design = TestUtilities.CreateDesign<Ship>(emp);
         hull = design.CreateHull();
-        // TODO: why is the hull not showing up as a mod reference?
-        Mod.Current.AssignID(hull, []);
         ship = TestUtilities.CreateVehicle(design, emp);
     }
 

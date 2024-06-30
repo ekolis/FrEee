@@ -27,6 +27,7 @@ public static class TestUtilities
 			ModID = name,
 			ThrustPerMove = 1
 		};
+		Mod.Current.AssignID(hull, []);
 		Mod.Current.Hulls.Add(hull);
 		return hull;
 	}
