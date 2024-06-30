@@ -9,7 +9,7 @@ Description := Owned by {host.Owner or "no one"}.
 Name := Hold Facilities
 Type := HolderAbility
 Category := Facility
-Description := Holds up to [%Amount1%] facilities.
+Description := Holds up to [%Amount2%] facilities.
 
 Name := Facility
 Type := FacilityAbility
