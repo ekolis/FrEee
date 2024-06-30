@@ -37,7 +37,7 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonEntity, IEn
 	/// <summary>
 	/// Any special abilities possessed by this star system.
 	/// </summary>
-	public IEnumerable<Ability> Abilities { get; set; }
+	public IEnumerable<Ability> Abilities { get; set; } = Enumerable.Empty<Ability>();
 
 	public AbilityTargets AbilityTarget
 	{
