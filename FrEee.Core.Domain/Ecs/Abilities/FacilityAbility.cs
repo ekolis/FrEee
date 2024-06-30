@@ -49,11 +49,6 @@ public class FacilityAbility(
 		Hitpoints = MaxHitpoints;
 	}
 
-	public override void Interact(IInteraction interaction)
-	{
-		Template.Interact(interaction);
-	}
-
 	public IEntity Colony { get; private set; }
 
 	/// <summary>

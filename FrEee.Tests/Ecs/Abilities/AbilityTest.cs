@@ -1,5 +1,8 @@
 using System.Drawing;
+using System.Linq;
 using FrEee.Ecs.Abilities.Utility;
+using FrEee.Ecs.Interactions;
+using FrEee.Ecs.Stats;
 using FrEee.Extensions;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
@@ -97,5 +100,27 @@ public class AbilityTest
 
         // test thrust
         Assert.AreEqual(numEngines, design.StrategicSpeed);
+    }
+
+    [Test]
+    public void ColonyInheritsAbilitiesFromFacilities()
+    {
+        FacilityTemplate facilityTemplate = new()
+        {
+            Name = "Soylent Green Facility"
+        };
+        facilityTemplate.Abilities = facilityTemplate.Abilities.Append(new ColonyResourceExtractionAbility(
+            facilityTemplate,
+            AbilityRule.Find("Resource Generation - Organics"),
+            Resource.Organics.Name.ToLiteralFormula(),
+            666.ToLiteralFormula()
+		));
+        Colony colony = new();
+        for (var i = 0; i < 10; i++)
+        {
+            Facility facility = new(facilityTemplate);
+            colony.FacilityAbilities.Add(facility.GetAbility<FacilityAbility>());
+        }
+        Assert.AreEqual(6660, colony.GetStatValue<int>(StatType.ColonyResourceExtractionOrganics));
     }
 }

@@ -27,10 +27,6 @@ public class FacilityTemplate : IModObject, IResearchable, IEntity, ITemplate<Fa
 	{
 		UnlockRequirements = new List<Requirement<Empire>>();
 		Cost = new ResourceFormula(this);
-		Abilities = [new SemanticScopeAbility(
-			this,
-			 new LiteralFormula<string>("Facility"),
-			new LiteralFormula<int>(1))];
 	}
 
 	private FacilityTemplate(string name)
@@ -39,15 +35,9 @@ public class FacilityTemplate : IModObject, IResearchable, IEntity, ITemplate<Fa
 		Abilities = new List<Ability>();
 		UnlockRequirements = new List<Requirement<Empire>>();
 		Cost = new ResourceFormula(this);
-		Abilities = [new SemanticScopeAbility(
-			this,
-			null,
-			"Is an unknown facility.",
-			new LiteralFormula<string>("Facility"),
-			new LiteralFormula<int>(1))];
 	}
 
-	public IEnumerable<Ability> Abilities { get; set; }
+	public IEnumerable<Ability> Abilities { get; set; } = [];
 
 	public AbilityTargets AbilityTarget
 	{
