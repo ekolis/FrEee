@@ -1,12 +1,14 @@
 using System.Drawing;
 using FrEee.Ecs.Abilities.Utility;
 using FrEee.Extensions;
+using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
+using FrEee.Utility;
 using NUnit.Framework;
 
 namespace FrEee.Ecs.Abilities;
@@ -25,6 +27,9 @@ public class AbilityTest
     [SetUp]
     public void SetUp()
     {
+        // set up reflection stuff
+        SafeType.RegisterAssembly(typeof(Ability).Assembly);
+
         // create galaxy
         TestUtilities.CreateGalaxyWithMod();
 
@@ -36,6 +41,8 @@ public class AbilityTest
         emp = TestUtilities.CreateEmpire();
         design = TestUtilities.CreateDesign<Ship>(emp);
         hull = design.CreateHull();
+        // TODO: why is the hull not showing up as a mod reference?
+        Mod.Current.AssignID(hull, []);
         ship = TestUtilities.CreateVehicle(design, emp);
     }
 

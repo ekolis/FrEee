@@ -286,7 +286,7 @@ public class SafeType
 		return more;
 	}
 
-	private static void RegisterAssembly(Assembly a)
+	public static void RegisterAssembly(Assembly a)
 	{
 		if (a != null)
 			ReferencedAssemblies[a.GetName().Name] = a;
