@@ -28,15 +28,18 @@ public class FormulaTest
 		armor.Name = armor.ModID = "Armor";
 		armor.Size = 10;
 		armor.Durability = new ComputedFormula<int>("self.Size * 3", armor, true);
+		Mod.Current.AssignID(armor, []);
 		Mod.Current.ComponentTemplates.Add(armor);
 		var mount = new Mount();
 		mount.ModID = mount.Name = "Scale Mount";
 		mount.DurabilityPercent = 200;
 		mount.SizePercent = new ComputedFormula<int>("design.Hull.Size", mount, true);
+		Mod.Current.AssignID(mount, []);
 		Mod.Current.Mounts.Add(mount);
 		var hull = new Hull<Ship>();
 		hull.ModID = hull.Name = "Generic Hull";
 		hull.Size = 150;
+		Mod.Current.AssignID(hull, []);
 		Mod.Current.Hulls.Add(hull);
 
 		var design = new Design<Ship>();
