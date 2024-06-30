@@ -35,7 +35,7 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 		Abilities.Add(new HolderAbility<ColonyAbility>(
 			this,
 			AbilityRule.Find("Hold Colonies"),
-			heldScope: new LiteralFormula<string>(SemanticScope.Colony),
+			heldScope: new LiteralFormula<string>(SemanticScope.Colony.Name),
 			// TODO: colony capacity for planets not just 1? colony sizes like in SE2 #318? multiple colonies #319?
 			capacity: new LiteralFormula<int>(1)
 		));

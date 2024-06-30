@@ -37,3 +37,24 @@ public interface IEntity
 	// TODO: rename to Abilities?
 	IEnumerable<Ability> IntrinsicAbilities { get; }
 }
+
+public static class EntityExtensions
+{
+	/// <summary>
+	/// Performs an <see cref="IInteraction"> on this entity via its abilities.
+	/// </summary>
+	/// <param name="interaction"></param>
+	public static void Interact(this IEntity entity, IInteraction interaction)
+	{
+		foreach (var ability in entity.Abilities)
+		{
+			if (entity.GetSemanticScopes().Contains(ability.Rule.SemanticScope))
+			{
+				// if the held entity is has the same scope as the ability,
+				// the ability is not inherited past that entity
+				continue;
+			}
+			ability.Interact(interaction);
+		}
+	}
+}

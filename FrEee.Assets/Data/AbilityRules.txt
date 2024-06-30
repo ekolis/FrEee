@@ -13,7 +13,7 @@ Description := Holds up to [%Amount2%] facilities.
 
 Name := Facility
 Type := FacilityAbility
-Spatial Scope := Entity
+Semantic Scope := Entity
 Description := Is a facility, which can be built on a colony.
 
 Name := Hold Colonies
@@ -25,7 +25,7 @@ Description := Holds up to one colony.
 Name := Colony
 Type := HoldableAbility
 Category := Colony
-Spatial Scope := Entity
+Semantic Scope := Entity
 Description := Is a colony.
 
 Name := Hold Space Objects

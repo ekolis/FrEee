@@ -34,6 +34,8 @@ public class AbilityRuleLoader : DataFileLoader
 			r.Aliases = rec.GetMany<string>("Alias", r).Select(f => f.Value).ToList();
 			r.Targets = rec.Get<AbilityTargets>("Targets", r) ?? AbilityTargets.All;
 			r.Description = rec.Get<string>("Description", r);
+			r.SemanticScope = new SemanticScope(rec.Get<string>("Semantic Scope", r) ?? "Space Object");
+			r.OwnershipScope = rec.Get<OwnershipScopes>("Ownership Scope", r) ?? OwnershipScopes.Self;
 			for (int i = 1; i <= 2; i++)
 			{
 				var f = rec.FindField("Value " + i + " Rule", ref index, false, 0, true);

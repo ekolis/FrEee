@@ -37,7 +37,9 @@ namespace FrEee.Ecs.Abilities
 		/// An entity can have multiple scopes, perhaps corresponding to formerly inherited object types.
 		/// For instance, Space Object, Vehicle, and Unit for a fighter.
 		/// </summary>
-		public IFormula<string> Scope { get; private set; } = values[0].ToFormula<string>();
+		public IFormula<string> ScopeFormula => Value1;
+
+		public SemanticScope Scope => new(ScopeFormula.Value);
 
 		/// <summary>
 		/// The number of slots or amount of space consumed by this entity

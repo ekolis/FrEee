@@ -34,9 +34,9 @@ public class ColonyAbility(
 		IEntity entity
 	) : this(
 		entity,
-		AbilityRule.Find(SemanticScope.Colony),
+		AbilityRule.Find(SemanticScope.Colony.Name),
 		null,
-		new LiteralFormula<string>(SemanticScope.Colony),
+		new LiteralFormula<string>(SemanticScope.Colony.Name),
 		1.ToLiteralFormula()
 	// TODO: maybe limit number/size of colonies on a planet rather than just having one?
 	)

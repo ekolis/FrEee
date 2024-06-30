@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Ecs.Abilities.Utility;
@@ -72,8 +73,8 @@ namespace FrEee.Ecs.Abilities
 		{
 			foreach (var heldAbility in HeldAbilities)
 			{
-				// need to interact with the held entity, not just the ability, to get all its abilities
-				heldAbility.Entity.Interact(interaction);
+				// TODO: implement ownership scopes for abilities
+				heldAbility.Entity.Interact(interaction);				
 			}
 		}
 	}

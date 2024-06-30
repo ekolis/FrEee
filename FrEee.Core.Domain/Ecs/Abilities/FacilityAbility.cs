@@ -37,9 +37,9 @@ public class FacilityAbility(
 		FacilityTemplate template
 	) : this(
 		entity,
-		AbilityRule.Find(SemanticScope.Facility),
+		AbilityRule.Find(SemanticScope.Facility.Name),
 		null,
-		new LiteralFormula<string>(SemanticScope.Facility),
+		new LiteralFormula<string>(SemanticScope.Facility.Name),
 		new LiteralFormula<int>(1) // TODO: variable size facility templates
 	)
 	{

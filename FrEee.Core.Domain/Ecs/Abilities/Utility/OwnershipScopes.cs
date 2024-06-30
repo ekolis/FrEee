@@ -21,7 +21,7 @@ namespace FrEee.Ecs.Abilities.Utility
 		Default = Self,
 		Friends = Self | Allies,
 		Hostiles = Neutral | Enemies,
-		Owned = Friends | Hostiles,
-		All = Owned | Unowned,
+		Anyone = Friends | Hostiles,
+		All = Anyone | Unowned,
 	}
 }

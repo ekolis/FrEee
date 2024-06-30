@@ -123,4 +123,28 @@ public class AbilityTest
         }
         Assert.AreEqual(6660, colony.GetStatValue<int>(StatType.ColonyResourceExtractionOrganics));
     }
+
+	[Test]
+	public void ColonyDoesNottInheritEntityScopedAbilitiesFromFacilities()
+	{
+		FacilityTemplate facilityTemplate = new()
+		{
+			Name = "Soylent RED Facility"
+		};
+        var abilRule = AbilityRule.Find("Resource Generation - Radioactives");
+        abilRule.SemanticScope = SemanticScope.Entity;
+		facilityTemplate.Abilities = facilityTemplate.Abilities.Append(new ColonyResourceExtractionAbility(
+			facilityTemplate,
+			abilRule,
+			Resource.Organics.Name.ToLiteralFormula(),
+			666.ToLiteralFormula()
+		));
+		Colony colony = new();
+		for (var i = 0; i < 10; i++)
+		{
+			Facility facility = new(facilityTemplate);
+			colony.FacilityAbilities.Add(facility.GetAbility<FacilityAbility>());
+		}
+		Assert.AreEqual(0, colony.GetStatValue<int>(StatType.ColonyResourceExtractionRadioactives));
+	}
 }

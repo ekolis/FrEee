@@ -296,6 +296,18 @@ public class AbilityRule : IModObject
     // TODO: moddable ability types?
     public Type AbilityType => new SafeType($"FrEee.Ecs.Abilities.{AbilityTypeName}").Type;
 
+    /// <summary>
+    /// The scope at which this ability applies to entities.
+    /// It will be passed up the entity hierarchy until an entity with this scope is found,
+    /// then passed back down to all entities within that scope.
+    /// </summary>
+    public SemanticScope SemanticScope { get; set; }
+
+    /// <summary>
+    /// Whose entities does this ability rule apply to, relative to the owner of the entity to which the ability belongs?
+    /// </summary>
+    public OwnershipScopes OwnershipScope { get; set; }
+
     public Ability CreateAbility(IEntity container, params string[] values)
     {
         return (Ability)AbilityType.Instantiate(container, this, Description, values);

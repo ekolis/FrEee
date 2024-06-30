@@ -18,20 +18,4 @@ namespace FrEee.Ecs
 		/// </summary>
 		IEnumerable<TAbility> Abilities { get; set; }
 	}
-
-	public static class EntityExtensions
-	{
-		/// <summary>
-		/// Performs an <see cref="IInteraction"> on this entity via its abilities.
-		/// </summary>
-		/// <param name="interaction"></param>
-		public static void Interact<TAbility>(this IEntity<TAbility> entity, IInteraction interaction)
-			where TAbility : IAbility
-		{
-			foreach (var ability in entity.Abilities)
-			{
-				ability.Interact(interaction);
-			}
-		}
-	}
 }

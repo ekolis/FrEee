@@ -569,6 +569,9 @@ public static class Extensions
 	/// <returns></returns>
 	public static bool IsOwnable(this IEntity entity) =>
 		entity.HasAbility<OwnableAbility>();
+
+	public static IEnumerable<SemanticScope> GetSemanticScopes(this IEntity entity) =>
+		entity.GetAbilities<SemanticScopeAbility>().Select(q => q.Scope).Distinct().Append(SemanticScope.Entity);
 	#endregion
 
 	#region Get/set ability values
