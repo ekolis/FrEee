@@ -23,10 +23,9 @@ Capacity := 1
 Description := Holds up to one colony.
 
 Name := Colony
-Type := HoldableAbility
-Category := Colony
+Type := ColonyAbility
 Semantic Scope := Entity
-Description := Is a colony.
+Description := Is a colony, which can be established on a world.
 
 Name := Hold Space Objects
 Type := HolderAbility
