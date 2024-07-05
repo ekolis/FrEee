@@ -45,6 +45,7 @@ namespace FrEee.Ecs.Abilities
 
 		public override void Interact(IInteraction interaction)
 		{
+			base.Interact(interaction);
 			if (interaction is GetStatNamesInteraction getStatNames)
 			{
 				getStatNames.StatNames.Add(GetStatType(Resource).Name);

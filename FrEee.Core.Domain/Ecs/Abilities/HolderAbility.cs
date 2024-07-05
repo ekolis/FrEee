@@ -71,6 +71,7 @@ namespace FrEee.Ecs.Abilities
 
 		public override void Interact(IInteraction interaction)
 		{
+			base.Interact(interaction);
 			foreach (var heldAbility in HeldAbilities)
 			{
 				// TODO: implement ownership scopes for abilities
