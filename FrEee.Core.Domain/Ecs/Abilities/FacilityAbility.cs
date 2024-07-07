@@ -23,32 +23,36 @@ namespace FrEee.Ecs.Abilities;
 /// and provides any required data for the entity to be a facility
 /// on a colony.
 /// </summary>
-public class FacilityAbility(
-	IEntity entity,
-	AbilityRule rule,
-	Formula<string>? description,
-	params IFormula[] values
-) : SemanticScopeAbility(entity, rule, description, values),
+public class FacilityAbility : SemanticScopeAbility,
 	IConstructable, IDamageable, IDisposable, IFormulaHost, IRecyclable, IUpgradeable<FacilityAbility>, IDataObject
 {
 	public FacilityAbility(
 		IEntity entity,
 		IEntity colony,
 		FacilityTemplate template
-	) : this(
+	) : base(
 		entity,
 		AbilityRule.Find(SemanticScope.Facility.Name),
-		null,
-		new LiteralFormula<string>(SemanticScope.Facility.Name),
+		scope: new LiteralFormula<string>(SemanticScope.Facility.Name),
 		new LiteralFormula<int>(1) // TODO: variable size facility templates
 	)
 	{
 		Colony = colony;
 		Template = template;
-		ConstructionProgress = new ResourceQuantity();
+		ConstructionProgress = [];
 		Hitpoints = MaxHitpoints;
 	}
+	
+	public FacilityAbility(
+		IEntity entity,
+		AbilityRule rule,
+		Formula<string>? description,
+		IFormula[] values
+	) : this(entity, colony: null, template: null)
+	{
+	}
 
+	
 	public IEntity Colony { get; private set; }
 
 	/// <summary>

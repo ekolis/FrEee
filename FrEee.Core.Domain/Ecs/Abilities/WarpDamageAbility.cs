@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FrEee.Ecs.Abilities.Utility;
 using FrEee.Ecs.Interactions;
+using FrEee.Ecs.Stats;
 using FrEee.Extensions;
 using FrEee.Modding;
 using FrEee.Objects.LogMessages;
@@ -19,15 +20,19 @@ namespace FrEee.Ecs.Abilities
     /// Damages vehicles that warp through a warp point.
     /// </summary>
 	
-    public class WarpDamageAbility(
-		IEntity entity,
-		AbilityRule rule,
-		Formula<string>? description,
-		params IFormula[] values
-	) : StatModifierAbility(entity, rule, description, values)
+    public class WarpDamageAbility : StatModifierAbility
 	{
-		public WarpDamageAbility(IEntity entity, AbilityRule rule, Formula<int> damage)
-			 : this(entity, rule, null, damage.ToStringFormula())
+		public WarpDamageAbility(
+			IEntity entity,
+			AbilityRule rule,
+			Formula<string>? description,
+			IFormula[] values
+		) : this(entity, rule, damage: values[0].ToFormula<int>())
+		{
+		}
+
+		public WarpDamageAbility(IEntity entity, AbilityRule rule, IFormula<int> damage)
+			 : base(entity, rule, statName: StatType.WarpDamage.Name, damage.ToFormula<decimal>())
 		{
 			StatName = "Warp Damage";
 		}

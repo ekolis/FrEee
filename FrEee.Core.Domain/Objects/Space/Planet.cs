@@ -32,12 +32,10 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 	{
 		ResourceValue = new ResourceQuantity();
 		Orders = new List<IOrder>();
-		Abilities.Add(new HolderAbility<ColonyAbility>(
+		Abilities.Add(new WorldAbility(
 			this,
-			AbilityRule.Find("Hold Colonies"),
-			heldScope: new LiteralFormula<string>(SemanticScope.Colony.Name),
-			// TODO: colony capacity for planets not just 1? colony sizes like in SE2 #318? multiple colonies #319?
-			capacity: new LiteralFormula<int>(1)
+			// TODO: what does colony capacity mean?
+			new LiteralFormula<int>(1)
 		));
 	}
 
@@ -140,11 +138,18 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 	/// </summary>
 	public Colony? Colony
 	{
-		get => (Colony?)this.GetAbility<HolderAbility<ColonyAbility>>().HeldEntities.SingleOrDefault();
+		get => (Colony?)this.GetAbility<WorldAbility>().HeldEntities.SingleOrDefault();
 		set
 		{
-			var abil = this.GetAbility<HolderAbility<ColonyAbility>>();
-			abil.HeldAbilities.Clear();
+			var abil = this.GetAbility<WorldAbility>();
+			if (abil.HeldAbilities is null)
+			{
+				abil.HeldAbilities = [];
+			}
+			else
+			{
+				abil.HeldAbilities.Clear();
+			}
 			if (value != null)
 			{
 				abil.HeldAbilities.Add(value.GetAbility<ColonyAbility>());

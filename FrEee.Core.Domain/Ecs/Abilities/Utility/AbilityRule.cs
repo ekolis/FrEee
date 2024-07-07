@@ -246,7 +246,7 @@ public class AbilityRule : IModObject
                         oldval = results[abil].Values.Count > i ? results[abil].Values[i].Value.ToDouble() : null;
                     }
                     else
-                        results[abil] = new Ability(stackingTo, abil.Rule);
+                        results[abil] = new Ability(stackingTo, abil.Rule, null, []);
                 }
                 double incoming = abil.Values.Count > i ? abil.Values[i].Value.ToDouble() : 0;
                 double newval = oldval ?? 0;

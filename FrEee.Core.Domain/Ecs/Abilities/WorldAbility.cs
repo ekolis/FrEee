@@ -20,23 +20,23 @@ using FrEee.Ecs.Stats;
 namespace FrEee.Ecs.Abilities;
 
 /// <summary>
-/// Marks an entity with <see cref="SemanticScope.Colony"/>
-/// and provides any required data for the entity to be a colony.
+/// Marks an entity with <see cref="SemanticScope.World"/>
+/// and provides any required data for the entity to be a world.
 /// </summary>
-public class ColonyAbility(
+public class WorldAbility(
 	IEntity entity,
-	IFormula<int> facilityCapacity
-) : HolderAbility<FacilityAbility>(
+	IFormula<int> colonyCapacity
+) : HolderAbility<ColonyAbility>(
 	entity,
-	AbilityRule.Find(SemanticScope.Colony.Name),
-	scope: new LiteralFormula<string>(SemanticScope.Colony.Name),
-	// TODO: maybe limit number/size of colonies on a planet rather than just having one?
+	AbilityRule.Find(SemanticScope.World.Name),
+	scope: new LiteralFormula<string>(SemanticScope.World.Name),
+	// TODO: what does world size mean? worlds don't take up space
 	1.ToLiteralFormula(),
-	new LiteralFormula<string>(SemanticScope.Facility.Name),
-	facilityCapacity
+	new LiteralFormula<string>(SemanticScope.Colony.Name),
+	colonyCapacity
 )
 {
-	public ColonyAbility
+	public WorldAbility
 	(
 		IEntity entity,
 		AbilityRule rule,

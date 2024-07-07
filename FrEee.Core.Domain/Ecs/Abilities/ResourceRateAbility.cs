@@ -24,24 +24,28 @@ namespace FrEee.Ecs.Abilities
 	public abstract class ResourceRateAbility(
 		IEntity entity,
 		AbilityRule rule,
-		Formula<string>? description,
-		params IFormula[] values
-	) : Ability(entity, rule, description, values)
+		IFormula<string> resource,
+		IFormula<int> rate
+	) : Ability(entity, rule, null, [])
 	{
-		public ResourceRateAbility(IEntity entity, AbilityRule rule, Formula<string> resource, Formula<int> rate)
-			 : this(entity, rule, null, resource, rate)
+		public ResourceRateAbility(
+			IEntity entity,
+			AbilityRule rule,
+			Formula<string>? description,
+			IFormula[] values
+		) : this(entity, rule, values[0].ToStringFormula(), values[1].ToFormula<int>())
 		{
 		}
 
 		public abstract StatType GetStatType(Resource resource);
 
-		public Formula<string> ResourceFormula => Values[0].ToStringFormula();
+		public IFormula<string> ResourceFormula => resource;
 
-		public Formula<int> RateFormula => (Formula<int>)Values[1].ToFormula<int>();
+		public IFormula<int> RateFormula => rate;
 
-		public Resource Resource => Resource.Find(ResourceFormula);
+		public Resource Resource => Resource.Find(ResourceFormula.Value);
 
-		public int Rate => RateFormula;
+		public int Rate => RateFormula.Value;
 
 		public override void Interact(IInteraction interaction)
 		{

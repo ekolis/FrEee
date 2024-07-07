@@ -23,17 +23,20 @@ namespace FrEee.Ecs.Abilities
     public class StatModifierAbility(
 		IEntity entity,
 		AbilityRule rule,
-		Formula<string>? description,
-		params IFormula[] values
-	) : Ability(entity, rule, description, values)
+		string statName,
+		IFormula<decimal> modifier
+	) : Ability(entity, rule, null, values: [modifier])
 	{
-		public StatModifierAbility(IEntity entity, AbilityRule rule, string statName, IFormula<decimal> modifier)
-			 : this(entity, rule, null, values: modifier)
+		public StatModifierAbility(
+			IEntity entity,
+			AbilityRule rule,
+			Formula<string>? description,
+			IFormula[] values
+		) : this(entity, rule, statName: null, modifier: values[0].ToFormula<decimal>())
 		{
-			StatName = statName;
 		}
 
-		public string StatName { get; protected init; }
+		public string StatName { get; protected set; } = statName;
 
 		public IFormula<decimal> Modifier => Value1.ToFormula<decimal>();
 
@@ -48,6 +51,21 @@ namespace FrEee.Ecs.Abilities
 			{
 				// TODO: support other operations
 				getStatValue.Stat.Modifiers.Add(new Modifier(Entity, Operation.Add, Modifier.Value));
+			}
+		}
+
+		public override SafeDictionary<string, object> Data
+		{
+			get
+			{
+				var data = base.Data;
+				data[nameof(StatName)] = StatName;
+				return data;
+			}
+			set
+			{
+				base.Data = value;
+				StatName = (string)value[nameof(StatName)];
 			}
 		}
 	}

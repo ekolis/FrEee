@@ -308,7 +308,7 @@ public static class GameEnumerableExtensions
 			foreach (var lgroup in lookup)
 			{
 				// create a merged ability with a generated description (since ability values are stacked when merged)
-				var mergedAbility = new Ability(stackTo, lgroup.Key.Rule, description: null, values: lgroup.Key.Values);
+				var mergedAbility = new Ability(stackTo, lgroup.Key.Rule, description: null, values: lgroup.Key.Values.ToArray());
 
 				foreach (var abil in group)
 				{

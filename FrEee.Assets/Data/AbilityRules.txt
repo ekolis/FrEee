@@ -6,26 +6,21 @@ Name := Ownable
 Type := OwnableAbility
 Description := Owned by {host.Owner or "no one"}.
 
-Name := Hold Facilities
-Type := HolderAbility
-Category := Facility
-Description := Holds up to [%Amount2%] facilities.
+Name := World
+Type := WorldAbility
+Semantic Scope := Entity
+Capacity := 1
+Description := Is a world, which can hold up to one colony.
+
+Name := Colony
+Type := ColonyAbility
+Semantic Scope := Entity
+Description := Is a colony, which can be established on a world. Holds up to {self.FacilityCapacity} facilities.
 
 Name := Facility
 Type := FacilityAbility
 Semantic Scope := Entity
 Description := Is a facility, which can be built on a colony.
-
-Name := Hold Colonies
-Type := HolderAbility
-Category := Colony
-Capacity := 1
-Description := Holds up to one colony.
-
-Name := Colony
-Type := ColonyAbility
-Semantic Scope := Entity
-Description := Is a colony, which can be established on a world.
 
 Name := Hold Space Objects
 Type := HolderAbility

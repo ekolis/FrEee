@@ -25,12 +25,8 @@ public class Colony : IEntity, IOwnableEntity, IFoggable, IContainable<Planet>, 
 	public Colony()
 	{
 		// temporary object type based abilities until I can ECSify everything
-		Abilities.Add(new ColonyAbility(this));
-		Abilities.Add(new HolderAbility<FacilityAbility>(
-			entity: this,
-			rule: AbilityRule.Find("Hold Facilities"),
-			heldScope: new LiteralFormula<string>("Facility"),
-			capacity: new ComputedFormula<int>("self.Container.MaxFacilities", this, true)));
+		Abilities.Add(new ColonyAbility(this,
+			new ComputedFormula<int>("self.Container.MaxFacilities", this, true)));
 		Abilities.Add(new OwnableAbility(
 			this,
 			AbilityRule.Find("Ownable"),

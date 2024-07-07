@@ -25,6 +25,7 @@ namespace FrEee.Ecs.Abilities
 		public SemanticScopeAbility
 		(
 			IEntity entity,
+			AbilityRule rule,
 			IFormula<string> scope,
 			IFormula<int> size
 		) : this(entity, AbilityRule.Find(scope.Value), null, scope, size)

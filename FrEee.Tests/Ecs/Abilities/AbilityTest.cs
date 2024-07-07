@@ -89,7 +89,7 @@ public class AbilityTest
             engineTemplate,
             AbilityRule.Find("Standard Ship Movement"),
             null,
-            1)];
+            [1])];
 
         // add some engines
         int numEngines = 6;

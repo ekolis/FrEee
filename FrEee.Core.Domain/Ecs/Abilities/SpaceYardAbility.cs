@@ -24,12 +24,16 @@ namespace FrEee.Ecs.Abilities
     public class SpaceYardAbility(
 		IEntity entity,
 		AbilityRule rule,
-		Formula<string>? description,
-		params IFormula[] values
-	) : ResourceRateAbility(entity, rule, description, values)
+		IFormula<string> resource,
+		IFormula<int> rate
+	) : ResourceRateAbility(entity, rule, resource, rate)
 	{
-		public SpaceYardAbility(IEntity entity, AbilityRule rule, Formula<string> resource, Formula<int> rate)
-			 : this(entity, rule, null, resource, rate)
+		public SpaceYardAbility(
+			IEntity entity,
+			AbilityRule rule,
+			Formula<string>? description,
+			IFormula[] values
+		) : this(entity, rule, resource: values[0].ToStringFormula(), values[1].ToFormula<int>())
 		{
 		}
 

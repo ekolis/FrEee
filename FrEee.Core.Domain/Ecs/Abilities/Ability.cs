@@ -24,7 +24,7 @@ public class Ability : IAbility, IContainable<IEntity>, IReferrable, IModObject,
         Values = new List<Formula<string>>();
     }
 
-    public Ability(IEntity entity, AbilityRule rule, Formula<string>? description = null, params object[] values)
+    public Ability(IEntity entity, AbilityRule rule, Formula<string>? description, object[] values)
     {
         Entity = entity;
         Rule = rule;
