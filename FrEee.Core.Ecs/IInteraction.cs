@@ -12,5 +12,9 @@ namespace FrEee.Ecs
 	/// </summary>
 	public interface IInteraction
 	{
+		/// <summary>
+		/// Executes the interaction. Should be called after passing it to the Interact methods of any appropriate entities/abilities.
+		/// </summary>
+		void Execute();
 	}
 }

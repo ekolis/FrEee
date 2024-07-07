@@ -11,6 +11,11 @@ public interface ICommonEntity
     : IEntity
 {
     /// <summary>
+    /// All entities contained within this common entity.
+    /// </summary>
+    IEnumerable<IEntity> Entities { get; }
+
+    /// <summary>
     /// Finds any child ability objects owned by an empire.
     /// </summary>
     /// <param name="emp"></param>

@@ -12,5 +12,11 @@ namespace FrEee.Ecs.Interactions
 		IMobileSpaceObject WarpingVehicle,
 		WarpPoint WarpPoint,
 		Sector Destination
-	) : IInteraction;
+	) : IInteraction
+	{
+		public void Execute()
+		{
+			// TODO: warp interaction execute, see WarpDamageAbility
+		}
+	}
 }

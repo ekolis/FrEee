@@ -794,6 +794,14 @@ public class Galaxy : ICommonEntity
 		return StarSystemLocations.SelectMany(l => l.Item.FindSpaceObjects(criteria));
 	}
 
+	public IEnumerable<T> FindAbilities<T>()
+		where T : IAbility =>
+		Entities.Select(q => q.GetAbilityOrNull<T>()).ExceptNull();
+
+	// TODO: include empires, designs, etc as entities?
+	public IEnumerable<IEntity> Entities =>
+		StarSystemLocations.Select(q => q.Item).Concat(StarSystemLocations.SelectMany(q => q.Item.Entities));
+
 	public IEnumerable<IEntity> GetContainedEntities(Empire emp)
 	{
 		return StarSystemLocations.Select(ssl => ssl.Item).Concat(StarSystemLocations.SelectMany(ssl => ssl.Item.GetContainedEntities(emp)));

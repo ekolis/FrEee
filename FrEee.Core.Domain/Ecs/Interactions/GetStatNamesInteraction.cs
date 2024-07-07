@@ -7,8 +7,15 @@ using FrEee.Utility;
 
 namespace FrEee.Ecs.Interactions
 {
+	[Obsolete("Stats should be gotten within actual abilities that do their actual actions on Execute method call.")]
 	public record GetStatNamesInteraction
 	(
 		ISet<string> StatNames
-	) : IInteraction;
+	) : IInteraction
+	{
+		public void Execute()
+		{
+			// nothing to do
+		}
+	}
 }

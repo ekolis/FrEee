@@ -21,6 +21,7 @@ using FrEee.Processes.Combat;
 using FrEee.Processes.Combat.Grid;
 using FrEee.Ecs;
 using FrEee.Objects.Technology;
+using FrEee.Ecs.Abilities;
 
 namespace FrEee.Processes;
 
@@ -211,7 +212,13 @@ public class TurnProcessor
 		if (status != null)
 			status.Message = "Generating resources";
 
-		// resource generation 1: colony income
+		// resource generation
+		foreach (var colonyAbility in galaxy.FindAbilities<ColonyAbility>())
+		{
+
+		}
+
+		/*// resource generation 1: colony income
 		galaxy.FindSpaceObjects<Planet>().Where(x => !x.IsMemory).Select(p => p.Colony).ExceptSingle(null).SafeForeach(q => ProcessColonyIncome(galaxy, q));
 
 		// resource generation 2: remote mining
@@ -254,7 +261,7 @@ public class TurnProcessor
 
 		// resource generation 3: raw resource generation
 		foreach (var emp in galaxy.Empires)
-			emp.StoredResources += emp.RawResourceIncome;
+			emp.StoredResources += emp.RawResourceIncome;*/
 
 		if (status != null)
 			status.Progress += progressPerOperation;

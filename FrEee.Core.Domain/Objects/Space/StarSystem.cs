@@ -269,6 +269,9 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonEntity, IEn
 		return SpaceObjects.OfType<T>().Where(l => criteria == null || criteria(l));
 	}
 
+	public IEnumerable<IEntity> Entities =>
+		Sectors.Select(q => q).Concat(Sectors.SelectMany(q => q.Entities));
+
 	public IEnumerable<IEntity> GetContainedEntities(Empire emp)
 	{
 		return SpaceObjects.Where(sobj => sobj?.Owner == emp).OfType<IEntity>();

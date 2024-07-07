@@ -45,15 +45,19 @@ namespace FrEee.Ecs.Abilities
 
 			if (interaction is WarpInteraction warp)
 			{
+				// TODO: move this to WarpInteraction.Execute and have the WarpInteraction just get the damage amount here
 				var sobj = warp.WarpingVehicle;
-				sobj.TakeNormalDamage(Damage);
-				if (sobj.IsDestroyed)
+				if (sobj is not null)
 				{
-					sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " was destroyed by turbulence when traversing " + warp.WarpPoint + ".", LogMessageType.Generic));
-				}
-				else
-				{
-					sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " took " + Damage + " points of damage from turbulence when traversing " + warp.WarpPoint + ".", LogMessageType.Generic));
+					sobj.TakeNormalDamage(Damage);
+					if (sobj.IsDestroyed)
+					{
+						sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " was destroyed by turbulence when traversing " + warp.WarpPoint + ".", LogMessageType.Generic));
+					}
+					else
+					{
+						sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " took " + Damage + " points of damage from turbulence when traversing " + warp.WarpPoint + ".", LogMessageType.Generic));
+					}
 				}
 			}
 		}

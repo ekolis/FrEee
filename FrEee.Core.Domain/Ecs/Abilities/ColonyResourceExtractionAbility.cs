@@ -43,7 +43,11 @@ namespace FrEee.Ecs.Abilities
 		public override void Interact(IInteraction interaction)
 		{
 			base.Interact(interaction);
-			// TODO: extract resources interaction, get stats interactions
+			
+			if (interaction is ProduceResourcesInteraction produceResources)
+			{
+				produceResources.ColonyResources[Entity] = Rate * Resource;
+			}
 		}
 	}
 }
