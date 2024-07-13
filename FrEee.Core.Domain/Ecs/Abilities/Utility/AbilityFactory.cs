@@ -21,7 +21,7 @@ namespace FrEee.Ecs.Abilities.Utility
                     container,
                     rule,
                     description,
-                    values
+                    rule.PrefixValues.Concat(values).ToArray()
                 ]);
             return ability;
         }

@@ -119,18 +119,18 @@ Value 2 Rule := Add
 
 Name := Resource Generation - Minerals
 Type := ColonyResourceExtractionAbility
-Resource := Minerals
-Description := Mines [%Amount1%] minerals at a colony each turn (modified by colony value, population, and happiness).
+Prefix Value := Minerals
+Description := Mines [%Amount2%] minerals at a colony each turn (modified by colony value, population, and happiness).
 
 Name := Resource Generation - Organics
 Type := ColonyResourceExtractionAbility
-Resource := Organics
-Description := Farms [%Amount1%] organics at a colony each turn (modified by colony value, population, and happiness).
+Prefix Value := Organics
+Description := Farms [%Amount2%] organics at a colony each turn (modified by colony value, population, and happiness).
 
 Name := Resource Generation - Radioactives
 Type := ColonyResourceExtractionAbility
-Resource := Radioactives
-Description := Extracts [%Amount1%] radioactives at a colony each turn (modified by colony value, population, and happiness).
+Prefix Value := Radioactives
+Description := Extracts [%Amount2%] radioactives at a colony each turn (modified by colony value, population, and happiness).
 
 Name := Point Generation - Research
 Targets := Vehicle, Planet, Component, Facility

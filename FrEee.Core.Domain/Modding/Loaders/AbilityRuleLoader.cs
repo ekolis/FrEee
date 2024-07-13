@@ -62,7 +62,19 @@ public class AbilityRuleLoader : DataFileLoader
 					r.GroupRules.Add(AbilityValueRule.None);
 				else
 					r.GroupRules.Add(f.CreateFormula<AbilityValueRule>(r));
+				j++;
 			}
+			int k = 1;
+			while (true)
+			{
+				var f = rec.FindField("Prefix Value", ref index, false, index + 1, true);
+				if (f == null)
+					break;
+				else
+					r.PrefixValues.Add(f.CreateFormula<string>(r));
+				k++;
+			}
+
 			// TODO: load values by property name too! e.g. Caegory for HoldEntities/Held abilities
 
 			yield return r;

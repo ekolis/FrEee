@@ -100,6 +100,11 @@ public class AbilityRule : IModObject
     public IDictionary<string, object> TemplateParameters { get; set; }
 
     /// <summary>
+    /// Any ability values to prefix the ability's value list with.
+    /// </summary>
+    public IList<IFormula<string>> PrefixValues { get; set; } = new List<IFormula<string>>();
+
+    /// <summary>
     /// The rules for grouping and stacking abilities.
     /// </summary>
     // TODO: do we still need this with the ECS?
