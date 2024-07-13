@@ -46,7 +46,10 @@ namespace FrEee.Ecs.Abilities
 			
 			if (interaction is ProduceResourcesInteraction produceResources)
 			{
-				produceResources.ColonyResources[Entity] = Rate * Resource;
+				produceResources.ColonyResources.TryGetValue(Entity, out var resources);
+				resources ??= new();
+				resources += Rate * Resource;
+				produceResources.ColonyResources[Entity] = resources;
 			}
 		}
 	}

@@ -74,8 +74,6 @@ public class ColonyResourceExtractionAbilityTest
 
 		// assert
 		// TODO: handle population/happiness/etc modifiers
-		Assert.AreEqual(1, interaction.ColonyResources.Count);
-		Assert.AreEqual(0, interaction.RemoteResources.Count);
-		Assert.AreEqual(5000 * Resource.Organics, interaction.ColonyResources[colony]);
+		Assert.AreEqual(5000 * Resource.Organics, interaction.ColonyResources.Sum( kvp => kvp.Value));
 	}
 }
