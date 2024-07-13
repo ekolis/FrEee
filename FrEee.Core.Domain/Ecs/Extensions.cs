@@ -593,4 +593,18 @@ public static class Extensions
 	public static void SetOwner(this IEntity entity, Empire? owner) =>
 		entity.GetAbility<OwnableAbility>().Owner = owner;
 	#endregion
+
+	#region Semantic scope
+	/// <summary>
+	/// Determines if an entity has a particular semantic scope.
+	/// </summary>
+	/// <param name="entity"></param>
+	/// <param name="scope"></param>
+	/// <returns></returns>
+	public static bool HasSemanticScope(this IEntity entity, SemanticScope scope)
+	{
+		var abils = entity.GetAbilities<SemanticScopeAbility>();
+		return abils.Any(q => q.Scope == scope);
+	}
+	#endregion
 }
