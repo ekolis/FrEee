@@ -14,7 +14,7 @@ Description := Is a world, which can hold up to one colony.
 
 Name := Colony
 Type := ColonyAbility
-Semantic Scope := Entity
+Semantic Scope := World
 Description := Is a colony, which can be established on a world. Holds up to {self.FacilityCapacity} facilities.
 
 Name := Facility
@@ -118,18 +118,18 @@ Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Resource Generation - Minerals
-Type := StatModifierAbility
-Stat := Colony Resource Extraction Minerals
+Type := ColonyResourceExtractionAbility
+Resource := Minerals
 Description := Mines [%Amount1%] minerals at a colony each turn (modified by colony value, population, and happiness).
 
 Name := Resource Generation - Organics
-Type := StatModifierAbility
-Stat := Colony Resource Extraction Organics
+Type := ColonyResourceExtractionAbility
+Resource := Organics
 Description := Farms [%Amount1%] organics at a colony each turn (modified by colony value, population, and happiness).
 
 Name := Resource Generation - Radioactives
-Type := StatModifierAbility
-Stat := Colony Resource Extraction Radioactives
+Type := ColonyResourceExtractionAbility
+Resource := Radioactives
 Description := Extracts [%Amount1%] radioactives at a colony each turn (modified by colony value, population, and happiness).
 
 Name := Point Generation - Research

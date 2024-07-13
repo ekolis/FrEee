@@ -22,6 +22,7 @@ using FrEee.Processes.Combat.Grid;
 using FrEee.Ecs;
 using FrEee.Objects.Technology;
 using FrEee.Ecs.Abilities;
+using FrEee.Ecs.Interactions;
 
 namespace FrEee.Processes;
 
@@ -213,10 +214,16 @@ public class TurnProcessor
 			status.Message = "Generating resources";
 
 		// resource generation
+		var resourceProduction = new ProduceResourcesInteraction(
+			new Dictionary<IEntity, ResourceQuantity>(),
+			new Dictionary<IEntity, (IEntity, ResourceQuantity)>()
+		);
 		foreach (var colonyAbility in galaxy.FindAbilities<ColonyAbility>())
 		{
-
+			var colony = colonyAbility.Entity;
+			colony.Interact(resourceProduction);
 		}
+		resourceProduction.Execute();
 
 		/*// resource generation 1: colony income
 		galaxy.FindSpaceObjects<Planet>().Where(x => !x.IsMemory).Select(p => p.Colony).ExceptSingle(null).SafeForeach(q => ProcessColonyIncome(galaxy, q));

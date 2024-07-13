@@ -390,4 +390,21 @@ public abstract class SpaceVehicle : Vehicle, IMobileSpaceObject<SpaceVehicle>
 	{
 		TimeToNextMove += timeElapsed;
 	}
+
+	public IEnumerable<IEntity> Entities
+	{
+		get
+		{
+			yield return Hull;
+			foreach (var component in Components)
+			{
+				yield return component;
+				yield return component.Template;
+				yield return component.Template.ComponentTemplate;
+				// TODO: include mounts once they are entities
+				//yield return component.Template.Mount;
+			}
+			// TODO: get entities in cargo
+		}
+	}
 }

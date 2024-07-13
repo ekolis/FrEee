@@ -249,8 +249,16 @@ public class Sector : IPromotable, ICargoContainer, ICommonEntity, IOwnable
 		return false;
 	}
 
-	public IEnumerable<IEntity> Entities =>
-		SpaceObjects.OfType<IEntity>(); // TODO: make sure all space objects are entities
+	public IEnumerable<IEntity> Entities
+	{
+		get
+		{
+			// TODO: make sure all space objects are entities
+			var spaceObjects = SpaceObjects.OfType<IEntity>();
+			return spaceObjects.Concat(SpaceObjects.SelectMany(q => q.Entities));
+		}
+	}
+		
 
 	public IEnumerable<IEntity> GetContainedEntities(Empire emp)
 	{

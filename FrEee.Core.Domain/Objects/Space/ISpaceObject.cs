@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using FrEee.Ecs;
 using FrEee.Ecs.Abilities.Utility;
@@ -58,4 +60,9 @@ public interface ISpaceObject : IEntity, IOwnableEntity, IPictorial, IReferrable
     /// The coordinates of this space object within its <see cref="StarSystem"/>.
     /// </summary>
     Point Coordinates { get; set; }
+
+    /// <summary>
+    /// Any entities contained within this space object (not the space object itself).
+    /// </summary>
+    IEnumerable<IEntity> Entities { get; }
 }

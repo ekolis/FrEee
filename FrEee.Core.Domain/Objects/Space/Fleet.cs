@@ -928,4 +928,8 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 	public IEnumerable<Component> Components => Vehicles.SelectMany(q => q.Components);
 
 	public bool FillsCombatTile => Vehicles.Any(q => q.FillsCombatTile);
+
+	public IEnumerable<IEntity> Entities =>
+		// TODO: make sure all vehicles and components are entities
+		Vehicles.OfType<IEntity>().Concat(Vehicles.SelectMany(q => q.Entities));
 }

@@ -306,6 +306,24 @@ public abstract class StellarObject : IStellarObject, IAbstractDataObject
 		return StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
 	}
 
+	public IEnumerable<IEntity> Entities
+	{
+		get
+		{
+			// TODO: get colony as entity, don't require it be attached to a planet
+			var colony = (this as Planet)?.Colony;
+			if (colony != null)
+			{
+				yield return colony;
+				foreach (var facility in colony.Facilities)
+				{
+					yield return facility;
+				}
+				// TODO: get entities in cargo
+			}
+		}
+	}
+
 	/// <summary>
 	/// Removes any data from this stellar object that the specified empire should not see.
 	/// Disposes of the stellar object if it is invisible to the empire.

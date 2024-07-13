@@ -26,7 +26,7 @@ namespace FrEee.Ecs.Abilities
 		AbilityRule rule,
 		IFormula<string> resource,
 		IFormula<int> rate
-	) : Ability(entity, rule, null, [])
+	) : Ability(entity, rule, null, [resource, rate])
 	{
 		public ResourceRateAbility(
 			IEntity entity,
@@ -39,9 +39,9 @@ namespace FrEee.Ecs.Abilities
 
 		public abstract StatType GetStatType(Resource resource);
 
-		public IFormula<string> ResourceFormula => resource;
+		public IFormula<string> ResourceFormula => Value1;
 
-		public IFormula<int> RateFormula => rate;
+		public IFormula<int> RateFormula => Value2.ToFormula<int>();
 
 		public Resource Resource => Resource.Find(ResourceFormula.Value);
 
