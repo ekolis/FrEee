@@ -16,6 +16,7 @@ using FrEee.Ecs.Interactions;
 using FrEee.Ecs.Stats;
 using System.Numerics;
 using FrEee.Ecs.Abilities.Utility;
+using FrEee.Utility;
 
 namespace FrEee.Ecs;
 
@@ -592,6 +593,13 @@ public static class Extensions
 	/// <param name="owner"></param>
 	public static void SetOwner(this IEntity entity, Empire? owner) =>
 		entity.GetAbility<OwnableAbility>().Owner = owner;
+
+	public static ResourceQuantity GetColonyResourceExtraction(this IEntity entity)
+	{
+		var extractResources = new ProduceResourcesInteraction();
+		entity.Interact(extractResources);
+		return extractResources.ColonyResources.Sum(q => q.Value);
+	}
 	#endregion
 
 	#region Semantic scope

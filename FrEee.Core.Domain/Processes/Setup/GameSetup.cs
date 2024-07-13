@@ -478,9 +478,9 @@ public class GameSetup
         var sy = facils.LastOrDefault(facil => facil.HasSpaceYard());
         var sp = facils.LastOrDefault(facil => facil.HasAbility("Spaceport"));
         var rd = facils.LastOrDefault(facil => facil.HasAbility("Supply Generation"));
-        var min = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Minerals").ToInt()).LastOrDefault();
-        var org = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Organics").ToInt()).LastOrDefault();
-        var rad = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Radioactives").ToInt()).LastOrDefault();
+        var min = facils.WithMax(facil => facil.GetColonyResourceExtraction()[Resource.Minerals]).LastOrDefault();
+        var org = facils.WithMax(facil => facil.GetColonyResourceExtraction()[Resource.Organics]).LastOrDefault();
+		var rad = facils.WithMax(facil => facil.GetColonyResourceExtraction()[Resource.Radioactives]).LastOrDefault();
         var res = facils.WithMax(facil => facil.GetAbilityValue("Point Generation - Research").ToInt()).LastOrDefault();
         // TODO - game setup option for intel facilities on homeworlds? HomeworldStartingFacilities.txt ala se5?
 
