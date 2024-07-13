@@ -21,6 +21,8 @@ namespace FrEee.Ecs.Interactions
 		IDictionary<IEntity, (IEntity, ResourceQuantity)> RemoteResources
 	) : IInteraction
 	{
+		public ProduceResourcesInteraction() : this(new Dictionary<IEntity, ResourceQuantity>(), new Dictionary<IEntity, (IEntity, ResourceQuantity)>()) { }
+
 		public void Execute()
 		{
 			foreach (var (colony, resources) in ColonyResources)

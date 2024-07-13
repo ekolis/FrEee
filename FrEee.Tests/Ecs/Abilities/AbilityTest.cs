@@ -121,6 +121,7 @@ public class AbilityTest
             Facility facility = new(facilityTemplate);
             colony.FacilityAbilities.Add(facility.GetAbility<FacilityAbility>());
         }
+        // TODO: resource generation abilities are not stats anymore, fix this
         Assert.AreEqual(6660, colony.GetStatValue<int>(StatType.ColonyResourceExtractionOrganics));
     }
 
@@ -145,6 +146,7 @@ public class AbilityTest
 			Facility facility = new(facilityTemplate);
 			colony.FacilityAbilities.Add(facility.GetAbility<FacilityAbility>());
 		}
+		// TODO: resource generation abilities are not stats anymore, fix this
 		Assert.AreEqual(0, colony.GetStatValue<int>(StatType.ColonyResourceExtractionRadioactives));
 	}
 }
