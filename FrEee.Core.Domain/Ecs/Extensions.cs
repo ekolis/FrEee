@@ -596,9 +596,9 @@ public static class Extensions
 
 	public static ResourceQuantity GetColonyResourceExtraction(this IEntity entity)
 	{
-		var extractResources = new ProduceResourcesInteraction();
+		var extractResources = new ExtractResourcesFromColoniesInteraction(entity.GetOwner());
 		entity.Interact(extractResources);
-		return extractResources.ColonyResources.Sum(q => q.Value);
+		return extractResources.Resources.Sum(q => q.Value);
 	}
 	#endregion
 

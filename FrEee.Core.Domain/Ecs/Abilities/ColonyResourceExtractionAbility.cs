@@ -44,12 +44,12 @@ namespace FrEee.Ecs.Abilities
 		{
 			base.Interact(interaction);
 			
-			if (interaction is ProduceResourcesInteraction produceResources)
+			if (interaction is ExtractResourcesFromColoniesInteraction produceResources)
 			{
-				produceResources.ColonyResources.TryGetValue(Container, out var resources);
+				produceResources.Resources.TryGetValue(Container, out var resources);
 				resources ??= new();
 				resources += Rate * Resource;
-				produceResources.ColonyResources[Container] = resources;
+				produceResources.Resources[Container] = resources;
 			}
 		}
 	}

@@ -259,12 +259,25 @@ public class Empire : INamed, IFoggable, IEntity, IPictorial, IComparable<Empire
 			// shouldn't change except at turn processing...
 			if (grossDomesticIncome == null || Empire.Current == null)
 			{
-				var produceIncome = new ProduceResourcesInteraction();
+				var fromColonies = new ExtractResourcesFromColoniesInteraction(this);
 				foreach (var spaceObject in OwnedSpaceObjects)
 				{
-					spaceObject.Interact(produceIncome);
+					spaceObject.Interact(fromColonies);
 				}
-				grossDomesticIncome = produceIncome.TotalResources;
+
+				var fromRemoteExtraction = new ExtractResourcesRemotelyInteraction(this);
+				foreach (var spaceObject in
+					Galaxy.Current.FindSpaceObjects<IMineableSpaceObject>()
+					.Where(q => q.Owner is null))
+				{
+					spaceObject.Interact(fromRemoteExtraction);
+				}
+
+				// TODO: raw resource production
+
+				grossDomesticIncome =
+					fromColonies.Resources.Values.Sum()
+					+ fromRemoteExtraction.Resources.Values.Sum(q => q.Item2);
 
 				if (this != Empire.Current)
 				{

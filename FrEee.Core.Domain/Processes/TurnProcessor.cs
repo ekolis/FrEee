@@ -214,16 +214,25 @@ public class TurnProcessor
 			status.Message = "Generating resources";
 
 		// resource generation
-		var resourceProduction = new ProduceResourcesInteraction(
-			new Dictionary<IEntity, ResourceQuantity>(),
-			new Dictionary<IEntity, (IEntity, ResourceQuantity)>()
-		);
-		foreach (var colonyAbility in galaxy.FindAbilities<ColonyAbility>())
+		foreach (var empire in galaxy.Empires)
 		{
-			var colony = colonyAbility.Container;
-			colony.Interact(resourceProduction);
+			var fromColonies = new ExtractResourcesFromColoniesInteraction(empire);
+			foreach (var colonyAbility in galaxy.FindAbilities<ColonyAbility>())
+			{
+				var colony = colonyAbility.Container;
+				colony.Interact(fromColonies);
+			}
+			fromColonies.Execute();
+
+			var fromRemoteExtraction = new ExtractResourcesRemotelyInteraction(empire);
+			foreach (var spaceObject in
+				galaxy.FindSpaceObjects<IMineableSpaceObject>()
+				.Where(q => q.Owner is null))
+			{
+				spaceObject.Interact(fromRemoteExtraction);
+			}
+			fromRemoteExtraction.Execute();
 		}
-		resourceProduction.Execute();
 
 		/*// resource generation 1: colony income
 		galaxy.FindSpaceObjects<Planet>().Where(x => !x.IsMemory).Select(p => p.Colony).ExceptSingle(null).SafeForeach(q => ProcessColonyIncome(galaxy, q));

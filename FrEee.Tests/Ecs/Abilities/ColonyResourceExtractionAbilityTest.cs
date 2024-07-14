@@ -67,7 +67,7 @@ public class ColonyResourceExtractionAbilityTest
 			Facility facility = new(facilityTemplate);
 			colony.FacilityAbilities.Add(facility.GetAbility<FacilityAbility>());
 		}
-		ProduceResourcesInteraction interaction = new();
+		ExtractResourcesFromColoniesInteraction interaction = new();
 
 		// act
 		colony.Interact(interaction);
