@@ -18,18 +18,25 @@ namespace FrEee.Ecs.Abilities
 	public class SemanticScopeAbility(
 		IEntity entity,
 		AbilityRule rule,
-		Formula<string>? description,
-		params IFormula[] values
-	) : Ability(entity, rule, description, values)
+		IFormula<string> scope,
+		IFormula<int> size
+	) : Ability(entity, rule, null, [scope, size])
 	{
-		public SemanticScopeAbility
-		(
+		public SemanticScopeAbility(
 			IEntity entity,
 			AbilityRule rule,
-			IFormula<string> scope,
-			IFormula<int> size
-		) : this(entity, AbilityRule.Find(scope.Value), null, scope, size)
-		{ }
+			Formula<string>? description,
+			params IFormula[] values
+		) : this
+		(
+			entity,
+			rule,
+			values[0].ToFormula<string>(),
+			values[1].ToFormula<int>()
+		)
+		{
+			Size = values[1].ToFormula<int>();
+		}
 
 		public string SizeStatName => $"{Scope} Size";
 
@@ -46,7 +53,7 @@ namespace FrEee.Ecs.Abilities
 		/// The number of slots or amount of space consumed by this entity
 		/// when it is held by another entity via <see cref="HolderAbility"/>.
 		/// </summary>
-		public IFormula<int> Size { get; private set; } = values[1].ToFormula<int>();
+		public IFormula<int> Size { get; private set; }
 
 		public override void Interact(IInteraction interaction)
 		{
