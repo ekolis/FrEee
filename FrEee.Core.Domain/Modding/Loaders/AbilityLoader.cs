@@ -50,8 +50,6 @@ public static class AbilityLoader
 				else
 					abil.Rule = rules.Single();
 
-				abil.Description = rec.Get<string>(new string[] { "Ability " + count + " Descr", "Ability Descr" }, obj);
-
 				int valnum = 0;
 				int idx = -1;
 				while (true)

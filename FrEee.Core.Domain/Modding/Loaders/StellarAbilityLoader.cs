@@ -68,12 +68,6 @@ public class StellarAbilityLoader : DataFileLoader
 				ac.Ability.Rule = Mod.Current.FindAbilityRule(temp);
 			start++;
 
-			if (!rec.TryFindFieldValue(new string[] { "Ability " + count + " Descr", "Ability Descr" }, out temp, ref start, null, start))
-				ac.Ability.Description = ""; // no description for this ability
-			else
-				ac.Ability.Description = temp;
-			start++;
-
 			if (!rec.TryFindFieldValue(new string[] { "Ability " + count + " Val 1", "Ability " + count + " Val", "Ability Val 1", "Ability Val" }, out temp, ref start, null, start))
 				continue; // leave default values
 			else

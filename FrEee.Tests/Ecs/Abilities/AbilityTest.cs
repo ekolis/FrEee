@@ -86,10 +86,9 @@ public class AbilityTest
             Name = "Ion Engine"
         };
         engineTemplate.Abilities = [new Ability(
-            engineTemplate,
-            AbilityRule.Find("Standard Ship Movement"),
-            null,
-            [1])];
+			engineTemplate,
+			AbilityRule.Find("Standard Ship Movement"),
+			[1])];
 
         // add some engines
         int numEngines = 6;

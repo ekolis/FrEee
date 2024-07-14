@@ -20,7 +20,7 @@ namespace FrEee.Ecs.Abilities
 		AbilityRule rule,
 		IFormula<string> scope,
 		IFormula<int> size
-	) : Ability(entity, rule, null, [scope, size])
+	) : Ability(entity, rule, [scope, size])
 	{
 		public SemanticScopeAbility(
 			IEntity entity,

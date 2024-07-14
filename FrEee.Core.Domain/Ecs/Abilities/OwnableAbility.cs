@@ -24,7 +24,7 @@ namespace FrEee.Ecs.Abilities
     public class OwnableAbility : Ability
 	{
 		public OwnableAbility(IEntity entity, AbilityRule rule, Empire? owner)
-			 : base(entity, rule, null, [])
+			 : base(entity, rule, [])
 		{
 			Owner = owner;
 		}

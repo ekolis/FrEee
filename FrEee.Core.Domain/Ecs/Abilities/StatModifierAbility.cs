@@ -25,7 +25,7 @@ namespace FrEee.Ecs.Abilities
 		AbilityRule rule,
 		string statName,
 		IFormula<decimal> modifier
-	) : Ability(entity, rule, null, values: [modifier])
+	) : Ability(entity, rule, values: [modifier])
 	{
 		public StatModifierAbility(
 			IEntity entity,

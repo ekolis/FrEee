@@ -24,11 +24,10 @@ public class Ability : IAbility, IContainable<IEntity>, IReferrable, IModObject,
         Values = new List<Formula<string>>();
     }
 
-    public Ability(IEntity entity, AbilityRule rule, Formula<string>? description, object[] values)
-    {
+    public Ability(IEntity entity, AbilityRule rule, object[] values)
+	{
         Container = entity;
         Rule = rule;
-        Description = description;
         Values = new List<Formula<string>>();
         foreach (var val in values)
         {
@@ -61,7 +60,6 @@ public class Ability : IAbility, IContainable<IEntity>, IReferrable, IModObject,
         {
             var dict = new SafeDictionary<string, object>();
             dict[nameof(rule)] = rule;
-            dict[nameof(Description)] = Description;
             dict[nameof(Values)] = Values;
             dict[nameof(Container)] = Container;
             dict[nameof(ID)] = ID;
@@ -73,7 +71,6 @@ public class Ability : IAbility, IContainable<IEntity>, IReferrable, IModObject,
         set
         {
             rule = value[nameof(rule)].Default<ModReference<AbilityRule>>();
-            Description = value[nameof(Description)].Default<Formula<string>>();
             Values = value[nameof(Values)].Default<IList<Formula<string>>>();
             Container = value[nameof(Container)].Default<IEntity>();
             ID = value[nameof(ID)].Default<long>();
@@ -86,7 +83,7 @@ public class Ability : IAbility, IContainable<IEntity>, IReferrable, IModObject,
     /// A description of the ability's effects.
     /// Can use, e.g. [%Amount1%] to specify the amount in the Value 1 field.
     /// </summary>
-    public Formula<string>? Description { get; set; }
+    public Formula<string>? Description => Rule.Description;
 
     /// <summary>
     /// Key for ability groups.

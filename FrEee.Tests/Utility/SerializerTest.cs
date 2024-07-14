@@ -157,10 +157,10 @@ public class SerializerTest
 		Mod.Load(null);
 		var ft1 = new FacilityTemplate();
 		ft1.Name = "Mineral Miner Test";
-		ft1.Abilities = [new Ability(ft1, Mod.Current.AbilityRules.FindByName("Resource Generation - Minerals"), null, [800])];
+		ft1.Abilities = [new Ability(ft1, Mod.Current.AbilityRules.FindByName("Resource Generation - Minerals"), [800])];
 		var ft2 = new FacilityTemplate();
 		ft2.Name = "Organics Farm Test";
-		ft2.Abilities = [new Ability(ft1, Mod.Current.AbilityRules.FindByName("Resource Generation - Organics"), null, [800])];
+		ft2.Abilities = [new Ability(ft1, Mod.Current.AbilityRules.FindByName("Resource Generation - Organics"), [800])];
 		var fts = new List<FacilityTemplate> { ft1, ft2 };
 		var serdata = Serializer.SerializeToString(fts);
 		var deser = Serializer.Deserialize<List<FacilityTemplate>>(serdata);

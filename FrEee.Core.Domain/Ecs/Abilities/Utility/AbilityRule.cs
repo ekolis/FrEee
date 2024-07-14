@@ -251,7 +251,7 @@ public class AbilityRule : IModObject
                         oldval = results[abil].Values.Count > i ? results[abil].Values[i].Value.ToDouble() : null;
                     }
                     else
-                        results[abil] = new Ability(stackingTo, abil.Rule, null, []);
+                        results[abil] = new Ability(stackingTo, abil.Rule, []);
                 }
                 double incoming = abil.Values.Count > i ? abil.Values[i].Value.ToDouble() : 0;
                 double newval = oldval ?? 0;
@@ -283,14 +283,6 @@ public class AbilityRule : IModObject
                         results[abil].Values.Add(null);
                     results[abil].Values.Add(newval.ToString(CultureInfo.InvariantCulture));
                 }
-            }
-        }
-        foreach (var kvp in results)
-        {
-            if (results.Values.Where(a => a == kvp.Value).Count() == 1)
-            {
-                // ability is "stacked" alone, just use the original ability description
-                results[kvp.Key].Description = kvp.Key.Description;
             }
         }
         return results.ToLookup(kvp => kvp.Value, kvp => kvp.Key);

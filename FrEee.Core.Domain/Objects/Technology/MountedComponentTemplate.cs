@@ -63,7 +63,6 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IEntity, I
 		{
 			Rule = a.Rule,
 			Values = new List<Formula<string>>(a.Values),
-			Description = description,
 		};
 		if (Mount != null)
 		{
@@ -72,7 +71,6 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IEntity, I
 				foreach (var p in Mount.AbilityPercentages[a.Rule])
 				{
 					result.Values[p.Key] = (double.Parse(result.Values[p.Key].Evaluate(this)) * p.Value / 100).ToString();
-					a.Description = null; // values have been modified, need to use generic description
 				}
 			}
 			if (Mount.AbilityModifiers.ContainsKey(a.Rule))
@@ -80,7 +78,6 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IEntity, I
 				foreach (var m in Mount.AbilityModifiers[a.Rule])
 				{
 					result.Values[m.Key] = (double.Parse(result.Values[m.Key].Evaluate(this)) + m.Value).ToString();
-					a.Description = null; // values have been modified, need to use generic description
 				}
 			}
 		}

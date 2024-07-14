@@ -36,7 +36,7 @@ namespace FrEee.Ecs.Abilities.Utility
         /// <returns></returns>
         public static Ability AddAbility(this IEntity obj, AbilityRule rule, params object[] vals)
         {
-            var a = new Ability(obj, rule, null, vals);
+            var a = new Ability(obj, rule, vals);
             obj.AddAbility(a);
             return a;
         }

@@ -145,7 +145,7 @@ public class CloakingTest
 	public void NebulaCantSee()
 	{
 		AddSensorAbility(destroyer.Hull, "Foobar", 1);
-		sys.Abilities = [new Ability(sys, Mod.Current.AbilityRules.FindByName("System - Sight Obscuration"), null, [999])];
+		sys.Abilities = [new Ability(sys, Mod.Current.AbilityRules.FindByName("System - Sight Obscuration"), [999])];
 		Assert.IsTrue(submarine.IsHiddenFrom(seekers), "Submarine should be hidden.");
 	}
 
@@ -190,7 +190,7 @@ public class CloakingTest
 		var storm = new Storm();
 		storm.Abilities = new HashSet<Ability>
 		{
-			new Ability(sys, Mod.Current.AbilityRules.FindByName("Sector - Sight Obscuration"), null, [999]) 
+			new Ability(sys, Mod.Current.AbilityRules.FindByName("Sector - Sight Obscuration"), [999])
 		};
 		sys.Place(storm, new Point());
 		Assert.IsTrue(submarine.IsHiddenFrom(seekers), "Submarine should be hidden.");

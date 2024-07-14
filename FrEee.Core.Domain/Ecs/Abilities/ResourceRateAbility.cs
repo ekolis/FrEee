@@ -26,7 +26,7 @@ namespace FrEee.Ecs.Abilities
 		AbilityRule rule,
 		IFormula<string> resource,
 		IFormula<int> rate
-	) : Ability(entity, rule, null, [resource, rate])
+	) : Ability(entity, rule, [resource, rate])
 	{
 		public ResourceRateAbility(
 			IEntity entity,
