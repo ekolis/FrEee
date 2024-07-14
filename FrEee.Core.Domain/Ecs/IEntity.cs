@@ -48,17 +48,6 @@ public static class EntityExtensions
 	{
 		foreach (var ability in entity.Abilities)
 		{
-			// TODO: we need to make sure we don't move past that semantic scope,
-			// not stop before we get to it
-			// e.g. a world contains a colony and the ability is scoped at the world level
-			// so we want to say that the world has the ability and can interact with it
-			// but the container of the world (e.g. sector) can't
-			if (entity.GetSemanticScopes().Contains(ability.Rule.SemanticScope))
-			{
-				// if the held entity is has the same scope as the ability,
-				// the ability is not inherited past that entity
-				continue;
-			}
 			ability.Interact(interaction);
 		}
 	}

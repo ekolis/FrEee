@@ -84,6 +84,7 @@ public class HolderAbility<THeldAbility>(
 		base.Interact(interaction);
 		foreach (var heldAbility in HeldAbilities)
 		{
+			// TODO: figure out how to properly implement semantic scope for abilities
 			// TODO: implement ownership scopes for abilities
 			heldAbility.Container.Interact(interaction);
 		}
