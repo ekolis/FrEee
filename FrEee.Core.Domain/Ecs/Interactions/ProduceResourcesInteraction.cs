@@ -27,6 +27,9 @@ namespace FrEee.Ecs.Interactions
 		{
 			foreach (var (colony, resources) in ColonyResources)
 			{
+				// TODO: resources need to be associated with ownable objects
+				// such as facilities or colonies, not facility templates which are unowned
+				// or else add an empire to the dictionary...
 				var owner = colony?.GetOwner();
 				if (owner is not null)
 				{
