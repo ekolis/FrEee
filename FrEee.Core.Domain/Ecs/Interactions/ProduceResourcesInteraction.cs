@@ -23,6 +23,11 @@ namespace FrEee.Ecs.Interactions
 	{
 		public ProduceResourcesInteraction() : this(new Dictionary<IEntity, ResourceQuantity>(), new Dictionary<IEntity, (IEntity, ResourceQuantity)>()) { }
 
+		// TODO: raw resource income
+		public ResourceQuantity TotalResources =>
+			ColonyResources.Sum(q => q.Value)
+			+ RemoteResources.Sum(q => q.Value.Item2);
+
 		public void Execute()
 		{
 			foreach (var (colony, resources) in ColonyResources)

@@ -26,6 +26,7 @@ using FrEee.Ecs;
 using FrEee.Ecs.Abilities;
 using FrEee.Ecs.Abilities.Utility;
 using FrEee.Objects.Technology;
+using FrEee.Ecs.Interactions;
 
 namespace FrEee.Objects.Civilization;
 
@@ -258,7 +259,12 @@ public class Empire : INamed, IFoggable, IEntity, IPictorial, IComparable<Empire
 			// shouldn't change except at turn processing...
 			if (grossDomesticIncome == null || Empire.Current == null)
 			{
-				grossDomesticIncome = ColonyIncome + RemoteMiningIncome + RawResourceIncome;
+				var produceIncome = new ProduceResourcesInteraction();
+				foreach (var spaceObject in OwnedSpaceObjects)
+				{
+					spaceObject.Interact(produceIncome);
+				}
+				grossDomesticIncome = produceIncome.TotalResources;
 
 				if (this != Empire.Current)
 				{
