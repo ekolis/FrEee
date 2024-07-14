@@ -61,19 +61,22 @@ public class ColonyResourceExtractionAbilityTest
 			Resource.Organics.Name.ToLiteralFormula(),
 			500.ToLiteralFormula()
 		));
-		Colony colony = new();
+		Colony colony = new()
+		{
+			Owner = new() { Name = "Frozzbodinian Empire" }
+		};
 		for (var i = 0; i < 10; i++)
 		{
 			Facility facility = new(facilityTemplate);
 			colony.FacilityAbilities.Add(facility.GetAbility<FacilityAbility>());
 		}
-		ExtractResourcesFromColoniesInteraction interaction = new();
+		ExtractResourcesFromColoniesInteraction interaction = new(colony.Owner);
 
 		// act
 		colony.Interact(interaction);
 
 		// assert
 		// TODO: handle population/happiness/etc modifiers
-		Assert.AreEqual(5000 * Resource.Organics, interaction.ColonyResources.Sum( kvp => kvp.Value));
+		Assert.AreEqual(5000 * Resource.Organics, interaction.Resources.Sum( kvp => kvp.Value));
 	}
 }
