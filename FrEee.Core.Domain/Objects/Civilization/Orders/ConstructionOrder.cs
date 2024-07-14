@@ -182,11 +182,11 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
                 if (spending.IsEmpty)
                 {
                     if (!queue.IsConstructionDelayed) // don't spam messages!
-                        Owner.Log.Add(queue.Entity.CreateLogMessage("Construction of " + Template + " at " + queue.Entity + " was paused due to lack of resources.", LogMessageType.Generic));
+                        Owner.Log.Add(queue.Container.CreateLogMessage("Construction of " + Template + " at " + queue.Container + " was paused due to lack of resources.", LogMessageType.Generic));
                 }
                 else
                 {
-                    Owner.Log.Add(queue.Entity.CreateLogMessage("Construction of " + Template + " at " + queue.Entity + " was slowed due to lack of resources.", LogMessageType.Generic));
+                    Owner.Log.Add(queue.Container.CreateLogMessage("Construction of " + Template + " at " + queue.Container + " was slowed due to lack of resources.", LogMessageType.Generic));
                 }
                 queue.IsConstructionDelayed = true;
             }
@@ -202,11 +202,11 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
 
         // do we have a valid template?
         if (Template == null)
-            yield return Owner.CreateLogMessage($"{queue.Entity} cannot build a nonexistent template; skipping it. Probably a bug...", LogMessageType.Error);
+            yield return Owner.CreateLogMessage($"{queue.Container} cannot build a nonexistent template; skipping it. Probably a bug...", LogMessageType.Error);
 
         // validate that what's being built is unlocked
         if (!queue.Owner.HasUnlocked(Template))
-            yield return Template.CreateLogMessage(Template + " cannot be built at " + queue.Entity + " because we have not yet researched it.", LogMessageType.Warning);
+            yield return Template.CreateLogMessage(Template + " cannot be built at " + queue.Container + " because we have not yet researched it.", LogMessageType.Warning);
     }
 
     public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)

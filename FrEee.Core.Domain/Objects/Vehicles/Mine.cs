@@ -22,7 +22,7 @@ public class Mine : SpaceVehicle, IUnit
 		get { return false; }
 	}
 
-	ICargoContainer IContainable<ICargoContainer>.Entity
+	ICargoContainer IContainable<ICargoContainer>.Container
 	{
 		get { return CommonExtensions.FindContainer(this); }
 	}
@@ -34,7 +34,7 @@ public class Mine : SpaceVehicle, IUnit
 
 	public override IMobileSpaceObject RecycleContainer
 	{
-		get { return (this as IUnit).Entity as IMobileSpaceObject; }
+		get { return (this as IUnit).Container as IMobileSpaceObject; }
 	}
 
 	public override bool RequiresSpaceYardQueue

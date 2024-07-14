@@ -61,8 +61,8 @@ public class Package : IOwnable, IPromotable
 				yield return "The " + Owner + " does not own " + p + ".";
 			foreach (var v in Vehicles.Where(v => v.Owner != Owner))
 				yield return "The " + Owner + " does not own " + v + ".";
-			foreach (var u in Vehicles.OfType<IUnit>().Where(u => u.Entity is ISpaceObject))
-				yield return u + " cannot be traded because it is in the cargo of " + u.Entity + ".";
+			foreach (var u in Vehicles.OfType<IUnit>().Where(u => u.Container is ISpaceObject))
+				yield return u + " cannot be traded because it is in the cargo of " + u.Container + ".";
 			if (Resources.Any(kvp => kvp.Value < 0))
 				yield return "You cannot transfer a negative quantity of resources.";
 			if (Resources.Any(kvp => Owner.StoredResources[kvp.Key] < kvp.Value))

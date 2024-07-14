@@ -40,7 +40,7 @@ public partial class ConstructionQueueForm : GameForm
 
 		wasOnHold = chkOnHold.Checked = queue.AreOrdersOnHold;
 		wasRepeat = chkRepeat.Checked = queue.AreRepeatOrdersEnabled;
-		lblSpaceportWarning.Visible = queue.IsColonyQueue && !queue.Colony.Entity.StarSystem.HasAbility("Spaceport") && queue.Colony.MerchantsRatio < 1;
+		lblSpaceportWarning.Visible = queue.IsColonyQueue && !queue.Colony.Container.StarSystem.HasAbility("Spaceport") && queue.Colony.MerchantsRatio < 1;
 	}
 
 	public ConstructionQueue ConstructionQueue { get; private set; }
@@ -511,7 +511,7 @@ public partial class ConstructionQueueForm : GameForm
 
 	private void ConstructionQueueForm_Load(object sender, EventArgs e)
 	{
-		Text = ConstructionQueue.Entity.Name + " Construction Queue";
+		Text = ConstructionQueue.Container.Name + " Construction Queue";
 		resMineralsRate.Amount = ConstructionQueue.Rate[Resource.Minerals];
 		resOrganicsRate.Amount = ConstructionQueue.Rate[Resource.Organics];
 		resRadioactivesRate.Amount = ConstructionQueue.Rate[Resource.Radioactives];
@@ -568,7 +568,7 @@ public partial class ConstructionQueueForm : GameForm
 		resCostMin.Amount = facil.Cost[Resource.Minerals];
 		resCostOrg.Amount = facil.Cost[Resource.Organics];
 		resCostRad.Amount = facil.Cost[Resource.Radioactives];
-		var p = ConstructionQueue.Entity as Planet;
+		var p = ConstructionQueue.Container as Planet;
 		if (p != null)
 		{
 			int present, queued;
@@ -711,19 +711,19 @@ public partial class ConstructionQueueForm : GameForm
 
 		int present, queued;
 		IEnumerable<IConstructor> sobjs;
-		var emp = ConstructionQueue.Entity.Owner;
+		var emp = ConstructionQueue.Container.Owner;
 
-		sobjs = new IConstructor[] { ConstructionQueue.Entity };
+		sobjs = new IConstructor[] { ConstructionQueue.Container };
 		present = CountPresentVehicles(sobjs, d.BaseName);
 		queued = CountQueuedVehicles(sobjs, d.BaseName);
 		lblPresentLocal.Text = MakePresentQueuedString(present, queued);
 
-		sobjs = ConstructionQueue.Entity.Sector.SpaceObjects.OfType<IConstructor>().OwnedBy(emp); ;
+		sobjs = ConstructionQueue.Container.Sector.SpaceObjects.OfType<IConstructor>().OwnedBy(emp); ;
 		present = CountPresentVehicles(sobjs, d.BaseName);
 		queued = CountQueuedVehicles(sobjs, d.BaseName);
 		lblPresentSector.Text = MakePresentQueuedString(present, queued);
 
-		sobjs = ConstructionQueue.Entity.StarSystem.SpaceObjects.OfType<IConstructor>().OwnedBy(emp);
+		sobjs = ConstructionQueue.Container.StarSystem.SpaceObjects.OfType<IConstructor>().OwnedBy(emp);
 		present = CountPresentVehicles(sobjs, d.BaseName);
 		queued = CountQueuedVehicles(sobjs, d.BaseName);
 		lblPresentSystem.Text = MakePresentQueuedString(present, queued);
@@ -788,7 +788,7 @@ public partial class ConstructionQueueForm : GameForm
 		resCostMin.Amount = fu.Cost[Resource.Minerals];
 		resCostOrg.Amount = fu.Cost[Resource.Organics];
 		resCostRad.Amount = fu.Cost[Resource.Radioactives];
-		var p = ConstructionQueue.Entity as Planet;
+		var p = ConstructionQueue.Container as Planet;
 		if (p != null)
 		{
 			int present, queued;

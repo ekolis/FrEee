@@ -18,7 +18,7 @@ public class DisbandFleetCommand : Command<Fleet>
 		foreach (var v in Executor.Vehicles.ToArray())
 		{
 			Executor.Vehicles.Remove(v);
-			v.Entity = null;
+			v.Container = null;
 			Executor.Sector.Place(v);
 		}
 		Executor.Dispose();

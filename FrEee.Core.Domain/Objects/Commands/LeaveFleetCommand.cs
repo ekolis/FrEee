@@ -16,14 +16,14 @@ public class LeaveFleetCommand : Command<IMobileSpaceObject>
 	public override void Execute()
 	{
 		// validation
-		if (Executor.Entity == null)
+		if (Executor.Container == null)
 			Issuer.Log.Add(Executor.CreateLogMessage(Executor + " cannot leave its fleet because it is not currently in a fleet.", LogMessages.LogMessageType.Error));
 		else
 		{
 			// remove from fleet
-			var f = Executor.Entity;
+			var f = Executor.Container;
 			f.Vehicles.Remove(Executor);
-			Executor.Entity = null;
+			Executor.Container = null;
 			f.Sector.Place(Executor);
 		}
 	}

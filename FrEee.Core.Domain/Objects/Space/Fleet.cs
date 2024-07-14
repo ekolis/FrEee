@@ -168,7 +168,7 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 		}
 	}
 
-	public Fleet Entity
+	public Fleet Container
 	{
 		get; set;
 	}
@@ -281,7 +281,7 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 	{
 		get
 		{
-			return StrategicSpeed > 0 && !Orders.Any() && Entity == null || ConstructionQueues.Any(q => q.Eta < 1);
+			return StrategicSpeed > 0 && !Orders.Any() && Container == null || ConstructionQueues.Any(q => q.Eta < 1);
 		}
 	}
 
@@ -411,8 +411,8 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 	{
 		get
 		{
-			if (Entity != null)
-				yield return Entity;
+			if (Container != null)
+				yield return Container;
 			else
 			{
 				if (Sector != null)
@@ -483,8 +483,8 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 	{
 		get
 		{
-			if (Entity != null)
-				return Entity.Sector;
+			if (Container != null)
+				return Container.Sector;
 			if (sector == null)
 				sector = this.FindSector();
 			return sector;
@@ -706,7 +706,7 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 			return;
 		IsDisposed = true;
 		foreach (var v in Vehicles.ExceptSingle(null))
-			v.Entity = null;
+			v.Container = null;
 		Vehicles.Clear();
 		Galaxy.Current.UnassignID(this);
 		Sector = null;

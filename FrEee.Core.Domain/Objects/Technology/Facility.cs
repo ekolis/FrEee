@@ -66,7 +66,7 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 	/// Finds the planet which contains this facility.
 	/// </summary>
 	/// <returns></returns>
-	public Planet Entity
+	public Planet Container
 	{
 		get
 		{
@@ -225,13 +225,13 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 	{
 		get
 		{
-			return Entity?.Owner;
+			return Container?.Owner;
 		}
 		set
 		{
 			// HACK - transfer ownership of entire colony since facilities can only belong to colony owner anyway
-			if (Entity != null && Entity.Colony != null)
-				Entity.Colony.Owner = value;
+			if (Container != null && Container.Colony != null)
+				Container.Colony.Owner = value;
 		}
 	}
 
@@ -239,8 +239,8 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 	{
 		get
 		{
-			if (Entity != null)
-				yield return Entity;
+			if (Container != null)
+				yield return Container;
 		}
 	}
 
@@ -276,7 +276,7 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 
 	public IMobileSpaceObject RecycleContainer
 	{
-		get { return Entity; }
+		get { return Container; }
 	}
 
 	public ResourceQuantity ScrapValue
@@ -312,8 +312,8 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 		{
 			return new Dictionary<string, object>
 			{
-				{"colony", Entity.Colony},
-				{"planet", Entity},
+				{"colony", Container.Colony},
+				{"planet", Container},
 				{"empire", Owner}
 			};
 		}
@@ -350,9 +350,9 @@ public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, ID
 	{
 		if (IsDisposed)
 			return;
-		if (Entity != null)
+		if (Container != null)
 		{
-			var col = Entity.Colony;
+			var col = Container.Colony;
 			col.FacilityAbilities.Remove(this.GetAbility<FacilityAbility>());
 			col.UpdateEmpireMemories();
 		}

@@ -618,7 +618,7 @@ public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IF
 		if (!IsMemory)
 			this.UpdateEmpireMemories();
 		if (this is IUnit u)
-			u.Entity?.RemoveUnit(u);
+			u.Container?.RemoveUnit(u);
 	}
 
 	public bool IsHostileTo(Empire emp)

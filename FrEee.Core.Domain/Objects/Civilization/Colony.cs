@@ -86,7 +86,7 @@ public class Colony : IEntity, IOwnableEntity, IFoggable, IContainable<Planet>, 
 		set;
 	}
 
-	public Planet Entity
+	public Planet Container
 	{
 		get
 		{
@@ -162,7 +162,7 @@ public class Colony : IEntity, IOwnableEntity, IFoggable, IContainable<Planet>, 
 	{
 		get
 		{
-			yield return Entity;
+			yield return Container;
 		}
 	}
 
@@ -178,11 +178,11 @@ public class Colony : IEntity, IOwnableEntity, IFoggable, IContainable<Planet>, 
 
 	public ResourceQuantity ResourceValue
 	{
-		get { return Entity.ResourceValue; }
+		get { return Container.ResourceValue; }
 	}
 
 	[DoNotSerialize(false)]
-	public Sector Sector { get => Entity.Sector; set => throw new NotSupportedException("Can't set the sector of a colony."); }
+	public Sector Sector { get => Container.Sector; set => throw new NotSupportedException("Can't set the sector of a colony."); }
 
 	public ResourceQuantity StandardIncomePercentages
 	{
@@ -209,7 +209,7 @@ public class Colony : IEntity, IOwnableEntity, IFoggable, IContainable<Planet>, 
 		}
 	}
 
-	public StarSystem StarSystem => Entity?.StarSystem;
+	public StarSystem StarSystem => Container?.StarSystem;
 
 	public double Timestamp { get; set; }
 
@@ -226,18 +226,18 @@ public class Colony : IEntity, IOwnableEntity, IFoggable, IContainable<Planet>, 
 		// should be visible, assuming the planet is visible - we don't have colony cloaking at the moment...
 		if (emp == Owner)
 			return Visibility.Owned;
-		else if (Entity == null)
+		else if (Container == null)
 			return Visibility.Unknown; // HACK - why would a colony not be on a planet?!
 		else
-			return Entity.CheckVisibility(emp);
+			return Container.CheckVisibility(emp);
 	}
 
 	public void Dispose()
 	{
 		if (IsDisposed)
 			return;
-		if (Entity != null)
-			Entity.Colony = null;
+		if (Container != null)
+			Container.Colony = null;
 		ConstructionQueue.SafeDispose();
 		Galaxy.Current.UnassignID(this);
 		if (!IsMemory)
@@ -247,7 +247,7 @@ public class Colony : IEntity, IOwnableEntity, IFoggable, IContainable<Planet>, 
 
 	public bool IsObsoleteMemory(Empire emp)
 	{
-		return Entity == null || Entity.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+		return Container == null || Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
 	}
 
 	public void Redact(Empire emp)

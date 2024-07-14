@@ -67,7 +67,7 @@ public abstract class SpaceVehicle : Vehicle, IMobileSpaceObject<SpaceVehicle>
 
 	public override double CombatSpeed => Mod.Current.Settings.CombatSpeedPercentPerStrategicSpeed.PercentOf(StrategicSpeed) + this.GetAbilityValue("Combat Movement").ToInt();
 
-	public Fleet Entity
+	public Fleet Container
 	{
 		get; set;
 	}
@@ -120,7 +120,7 @@ public abstract class SpaceVehicle : Vehicle, IMobileSpaceObject<SpaceVehicle>
 	{
 		get
 		{
-			return StrategicSpeed > 0 && !Orders.Any() && Entity == null;
+			return StrategicSpeed > 0 && !Orders.Any() && Container == null;
 		}
 	}
 
@@ -145,8 +145,8 @@ public abstract class SpaceVehicle : Vehicle, IMobileSpaceObject<SpaceVehicle>
 	{
 		get
 		{
-			if (Entity != null)
-				yield return Entity;
+			if (Container != null)
+				yield return Container;
 			else
 			{
 				if (Sector != null)
@@ -169,8 +169,8 @@ public abstract class SpaceVehicle : Vehicle, IMobileSpaceObject<SpaceVehicle>
 	{
 		get
 		{
-			if (Entity != null)
-				return Entity.Sector;
+			if (Container != null)
+				return Container.Sector;
 			if (sector == null)
 				sector = this.FindSector();
 			return sector;

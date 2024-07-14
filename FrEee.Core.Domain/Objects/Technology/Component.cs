@@ -29,7 +29,7 @@ public class Component : IEntity, INamed, IPictorial, IDamageable, IContainable<
 {
 	public Component(IVehicle container, MountedComponentTemplate template)
 	{
-		Entity = container;
+		Container = container;
 		Template = template;
 		Hitpoints = template.Durability;
 	}
@@ -74,7 +74,7 @@ public class Component : IEntity, INamed, IPictorial, IDamageable, IContainable<
 	}
 
 	[DoNotSerialize]
-	public IVehicle Entity
+	public IVehicle Container
 	{
 		get
 		{
@@ -234,15 +234,15 @@ public class Component : IEntity, INamed, IPictorial, IDamageable, IContainable<
 
 	public Empire Owner
 	{
-		get { return Entity == null ? null : Entity.Owner; }
+		get { return Container == null ? null : Container.Owner; }
 	}
 
 	public IEnumerable<IEntity> Parents
 	{
 		get
 		{
-			if (Entity != null)
-				yield return Entity;
+			if (Container != null)
+				yield return Container;
 		}
 	}
 
@@ -299,9 +299,9 @@ public class Component : IEntity, INamed, IPictorial, IDamageable, IContainable<
 			{
 				{"component", Template.ComponentTemplate},
 				{"mount", Template.Mount},
-				{"vehicle", Entity},
-				{"design", Entity.Design},
-				{"empire", Entity.Owner}
+				{"vehicle", Container},
+				{"design", Container.Design},
+				{"empire", Container.Owner}
 			};
 		}
 	}
@@ -367,7 +367,7 @@ public class Component : IEntity, INamed, IPictorial, IDamageable, IContainable<
 		{
 			// if component is destroyed on use, it can only be repaired at a friendly colony
 			// SE4 said a friendly spaceyard, but that's still exploitable by using mobile SY ships
-			if (!Entity.Sector.SpaceObjects.OfType<Planet>().Any(p => p.Owner == Owner))
+			if (!Container.Sector.SpaceObjects.OfType<Planet>().Any(p => p.Owner == Owner))
 				return amount;
 		}
 

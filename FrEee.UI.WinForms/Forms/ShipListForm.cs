@@ -66,14 +66,14 @@ public partial class ShipListForm : GameForm
 			return;
 
 		// show ship/unit/fleet counts
-		sobjs = Galaxy.Current.FindSpaceObjects<IMobileSpaceObject>().Where(o => !(o is Planet) && (!(o is IUnit && ((IUnit)o).Entity == null)));
+		sobjs = Galaxy.Current.FindSpaceObjects<IMobileSpaceObject>().Where(o => !(o is Planet) && (!(o is IUnit && ((IUnit)o).Container == null)));
 		var ours = sobjs.Where(o => o.Owner == Empire.Current);
 		var ourShips = ours.OfType<SpaceVehicle>();
 		txtShips.Text = ourShips.Count().ToString();
-		txtShipsOutsideFleets.Text = ourShips.Where(s => s.Entity == null).Count().ToString();
+		txtShipsOutsideFleets.Text = ourShips.Where(s => s.Container == null).Count().ToString();
 		var ourFleets = ours.OfType<Fleet>();
 		txtFleets.Text = ourFleets.Count().ToString();
-		txtFleetsOutsideFleets.Text = ourFleets.Where(f => f.Entity == null).Count().ToString();
+		txtFleetsOutsideFleets.Text = ourFleets.Where(f => f.Container == null).Count().ToString();
 		var alienShips = sobjs.OfType<SpaceVehicle>();
 		txtAlienShips.Text = alienShips.Count().ToString();
 		txtAllyShips.Text = alienShips.Where(s => s.Owner.IsAllyOf(Empire.Current, null)).Count().ToString();
@@ -85,7 +85,7 @@ public partial class ShipListForm : GameForm
 		resMaintenanceRad.Amount = ourShips.Sum(s => s.MaintenanceCost[Resource.Radioactives]);
 
 		// show ship/fleet/unit data
-		grid.Data = sobjs.Where(o => o.Entity == null).ToArray();
+		grid.Data = sobjs.Where(o => o.Container == null).ToArray();
 		grid.CreateDefaultGridConfig = ClientSettings.CreateDefaultShipListConfig;
 		grid.LoadCurrentGridConfig = () => ClientSettings.Instance.CurrentShipListConfig;
 		grid.LoadGridConfigs = () => ClientSettings.Instance.ShipListConfigs;

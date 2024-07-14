@@ -47,7 +47,7 @@ public class FormulaTest
 		var mct = new MountedComponentTemplate(design, armor, mount);
 		design.Hull = hull;
 		design.Components.Add(mct);
-		mct.Entity = design;
+		mct.Container = design;
 		design.Owner = emp;
 		Assert.AreEqual(30, armor.Durability.Value); // 10 * 3
 		Assert.AreEqual(mct.Durability, 60); // 30 * 200%

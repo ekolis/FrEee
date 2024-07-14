@@ -88,10 +88,10 @@ public static class Extensions
 			return dict;
 		foreach (var f in p.Colony.FacilityAbilities.Where(f => !f.IsDestroyed))
 		{
-			foreach (var a in f.Entity.Abilities())
+			foreach (var a in f.Container.Abilities())
 			{
 				if (a.Rule.IsActivatable)
-					dict.Add(a, f.Entity);
+					dict.Add(a, f.Container);
 			}
 		}
 		return dict;
@@ -157,7 +157,7 @@ public static class Extensions
 	/// <returns>true if successful or unnecessary, otherwise false</returns>
 	public static bool BurnSupplies(this Ability a)
 	{
-		if (a.Entity is Component comp)
+		if (a.Container is Component comp)
 			return comp.BurnSupplies();
 		else
 			return true; // other ability containers don't use supplies

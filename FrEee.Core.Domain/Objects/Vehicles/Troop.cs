@@ -25,7 +25,7 @@ public class Troop : Vehicle, IUnit
 	public override double CombatSpeed => 0;
 
 	// TODO - make me an actual property, not searching the galaxy (check other unit types too)
-	public ICargoContainer Entity
+	public ICargoContainer Container
 	{
 		get
 		{
@@ -41,8 +41,8 @@ public class Troop : Vehicle, IUnit
 		{
 			if (Owner != null)
 				yield return Owner;
-			if (Entity != null && Entity is IEntity)
-				yield return (IEntity)Entity;
+			if (Container != null && Container is IEntity)
+				yield return (IEntity)Container;
 		}
 	}
 
@@ -56,7 +56,7 @@ public class Troop : Vehicle, IUnit
 
 	public override IMobileSpaceObject RecycleContainer
 	{
-		get { return (this as IUnit).Entity as IMobileSpaceObject; }
+		get { return (this as IUnit).Container as IMobileSpaceObject; }
 	}
 
 	public override bool RequiresSpaceYardQueue
@@ -67,7 +67,7 @@ public class Troop : Vehicle, IUnit
 	[DoNotSerialize]
 	public override Sector Sector
 	{
-		get { return Entity == null ? null : Entity.Sector; }
+		get { return Container == null ? null : Container.Sector; }
 		set
 		{
 			//throw new NotSupportedException("Cannot set the sector of a troop.");
@@ -76,7 +76,7 @@ public class Troop : Vehicle, IUnit
 
 	public override StarSystem StarSystem
 	{
-		get { return Entity?.StarSystem; }
+		get { return Container?.StarSystem; }
 	}
 
 	public override WeaponTargets WeaponTargetType
@@ -88,7 +88,7 @@ public class Troop : Vehicle, IUnit
 	{
 		if (Owner == emp)
 			return Visibility.Owned;
-		var sobj = Entity as ISpaceObject;
+		var sobj = Container as ISpaceObject;
 		if (sobj != null && sobj.HasVisibility(emp, Visibility.Scanned))
 			return Visibility.Scanned;
 		return Visibility.Unknown;
@@ -96,7 +96,7 @@ public class Troop : Vehicle, IUnit
 
 	public override bool IsObsoleteMemory(Empire emp)
 	{
-		return Entity.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+		return Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
 	}
 
 	public override void Place(ISpaceObject target)

@@ -240,7 +240,7 @@ public class FacilityAbility : SemanticScopeAbility,
 
 	public IMobileSpaceObject RecycleContainer
 	{
-		get { return Entity.Ancestors().OfType<IMobileSpaceObject>().First(); }
+		get { return Container.Ancestors().OfType<IMobileSpaceObject>().First(); }
 	}
 
 	public ResourceQuantity ScrapValue
@@ -311,9 +311,9 @@ public class FacilityAbility : SemanticScopeAbility,
 	{
 		if (IsDisposed)
 			return;
-		if (Entity != null)
+		if (Container != null)
 		{
-			var col = Entity.Ancestors().OfType<Colony>().First();
+			var col = Container.Ancestors().OfType<Colony>().First();
 			col.FacilityAbilities.Remove(this);
 			col.UpdateEmpireMemories();
 		}

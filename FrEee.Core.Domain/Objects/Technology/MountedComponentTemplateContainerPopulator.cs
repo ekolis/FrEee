@@ -6,7 +6,7 @@ using FrEee.Utility;
 namespace FrEee.Objects.Technology;
 
 /// <summary>
-/// Populates the <see cref="MountedComponentTemplate.Entity"/> property.
+/// Populates the <see cref="MountedComponentTemplate.Container"/> property.
 /// </summary>
 public class MountedComponentTemplateContainerPopulator
 	: IPopulator

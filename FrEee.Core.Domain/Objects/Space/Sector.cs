@@ -178,7 +178,7 @@ public class Sector : IPromotable, ICargoContainer, ICommonEntity, IOwnable
 			var result = StarSystem.SpaceObjects
 				.Where(sobj =>
 					sobj.Coordinates == Coordinates
-					&& (!(sobj is IContainable<Fleet>) || ((IContainable<Fleet>)sobj).Entity == null));
+					&& (!(sobj is IContainable<Fleet>) || ((IContainable<Fleet>)sobj).Container == null));
 
 			// on the server we don't want to count memories as physical space objects
 			if (Empire.Current == null)
@@ -290,8 +290,8 @@ public class Sector : IPromotable, ICargoContainer, ICommonEntity, IOwnable
 			if (sobj is IMobileSpaceObject)
 			{
 				var v = (IMobileSpaceObject)sobj;
-				if (v.Entity != null)
-					v.Entity.Vehicles.Remove(v);
+				if (v.Container != null)
+					v.Container.Vehicles.Remove(v);
 			}
 		}
 
@@ -299,7 +299,7 @@ public class Sector : IPromotable, ICargoContainer, ICommonEntity, IOwnable
 		if (sobj is IUnit)
 		{
 			var u = (IUnit)sobj;
-			u.Entity?.RemoveUnit(u);
+			u.Container?.RemoveUnit(u);
 		}
 
 		// place in space if it's actually in space
@@ -312,16 +312,16 @@ public class Sector : IPromotable, ICargoContainer, ICommonEntity, IOwnable
 		// remove from fleet if necessary
 		if (sobj is IMobileSpaceObject v)
 		{
-			if (v.Entity != null)
-				v.Entity.Vehicles.Remove(v);
+			if (v.Container != null)
+				v.Container.Vehicles.Remove(v);
 		}
 
 		// remove from cargo
 		if (sobj is IUnit)
 		{
 			var u = (IUnit)sobj;
-			if (!u.Entity.Equals(this))
-				u.Entity.RemoveUnit(u);
+			if (!u.Container.Equals(this))
+				u.Container.RemoveUnit(u);
 		}
 
 		if (SpaceObjects.Contains(sobj))

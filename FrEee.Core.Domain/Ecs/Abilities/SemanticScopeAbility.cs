@@ -57,7 +57,7 @@ namespace FrEee.Ecs.Abilities
 			}
 			if (interaction is GetStatValueInteraction getStatValue && getStatValue.Stat.Name == SizeStatName)
 			{
-				getStatValue.Stat.Modifiers.Add(new Modifier(Entity, Operation.Add, Size.Value));
+				getStatValue.Stat.Modifiers.Add(new Modifier(Container, Operation.Add, Size.Value));
 			}
 		}
 	}

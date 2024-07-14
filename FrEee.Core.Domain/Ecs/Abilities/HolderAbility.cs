@@ -61,7 +61,7 @@ public class HolderAbility<THeldAbility>(
 	/// <summary>
 	/// The currently held entities.
 	/// </summary>
-	public IEnumerable<IEntity> HeldEntities => HeldAbilities?.Select(q => q.Entity) ?? [];
+	public IEnumerable<IEntity> HeldEntities => HeldAbilities?.Select(q => q.Container) ?? [];
 
 	public override SafeDictionary<string, object> Data
 	{
@@ -85,7 +85,7 @@ public class HolderAbility<THeldAbility>(
 		foreach (var heldAbility in HeldAbilities)
 		{
 			// TODO: implement ownership scopes for abilities
-			heldAbility.Entity.Interact(interaction);
+			heldAbility.Container.Interact(interaction);
 		}
 	}
 }

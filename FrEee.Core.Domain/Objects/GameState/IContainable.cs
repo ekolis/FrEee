@@ -12,5 +12,5 @@ public interface IContainable<out TContainer>
     /// The container of this object.
     /// </summary>
     [DoNotCopy]
-    TContainer Entity { get; }
+    TContainer Container { get; }
 }

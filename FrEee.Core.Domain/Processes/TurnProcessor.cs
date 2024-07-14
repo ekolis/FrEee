@@ -220,7 +220,7 @@ public class TurnProcessor
 		);
 		foreach (var colonyAbility in galaxy.FindAbilities<ColonyAbility>())
 		{
-			var colony = colonyAbility.Entity;
+			var colony = colonyAbility.Container;
 			colony.Interact(resourceProduction);
 		}
 		resourceProduction.Execute();
@@ -389,7 +389,7 @@ public class TurnProcessor
 		// construction queues
 		if (status != null)
 			status.Message = "Constructing objects";
-		galaxy.Referrables.OfType<ConstructionQueue>().Where(q => !q.IsMemory && q.Entity.Sector != null).SafeForeach(q => q.ExecuteOrders());
+		galaxy.Referrables.OfType<ConstructionQueue>().Where(q => !q.IsMemory && q.Container.Sector != null).SafeForeach(q => q.ExecuteOrders());
 		if (status != null)
 			status.Progress += progressPerOperation;
 
@@ -554,9 +554,9 @@ public class TurnProcessor
 
 					// TODO - display reason for growing happy/unhappy
 					if (delta >= 100)
-						c.Owner.RecordLog(c.Entity, $"The {race} population of {c.Entity} is growing very unhappy.", LogMessageType.Generic);
+						c.Owner.RecordLog(c.Container, $"The {race} population of {c.Container} is growing very unhappy.", LogMessageType.Generic);
 					else if (delta <= -100)
-						c.Owner.RecordLog(c.Entity, $"The {race} population of {c.Entity} is growing very happy.", LogMessageType.Generic);
+						c.Owner.RecordLog(c.Container, $"The {race} population of {c.Container} is growing very happy.", LogMessageType.Generic);
 				}
 			}
 		});
@@ -737,7 +737,7 @@ public class TurnProcessor
 	/// <param name="p"></param>
 	private static void ProcessColonyIncome(Galaxy galaxy, Colony c)
 	{
-		var p = c.Entity;
+		var p = c.Container;
 		var sys = p.StarSystem;
 		var income = p.GrossIncome();
 

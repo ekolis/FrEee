@@ -144,7 +144,7 @@ public class UpgradeFacilityOrder : IConstructionOrder
                 if (spending < queue.Owner.StoredResources)
                 {
                     spending = ResourceQuantity.Min(spending, queue.Owner.StoredResources);
-                    queue.Entity.CreateLogMessage("Construction of " + Upgrade.New + " at " + queue.Entity + " was delayed due to lack of resources.", LogMessageType.Generic);
+                    queue.Container.CreateLogMessage("Construction of " + Upgrade.New + " at " + queue.Container + " was delayed due to lack of resources.", LogMessageType.Generic);
                 }
                 queue.Owner.StoredResources -= spending;
                 queue.UnspentRate -= spending;
@@ -153,7 +153,7 @@ public class UpgradeFacilityOrder : IConstructionOrder
                 // if we're done, delete the old facility and replace it with this one
                 if (CheckCompletion(queue))
                 {
-                    var planet = (Planet)queue.Entity;
+                    var planet = (Planet)queue.Container;
                     // TODO: flesh out FacilityAbility so we don't need to cast to Facility
                     planet.Colony.FacilityAbilities.Where(f => f.Template.ModID == Upgrade.Old.ModID).First().Dispose(); // HACK - why are we getting duplicate facility templates?
                     planet.Colony.FacilityAbilities.Add(NewFacility.GetAbility<FacilityAbility>());
@@ -168,14 +168,14 @@ public class UpgradeFacilityOrder : IConstructionOrder
         {
             // validate that new facility is unlocked
             if (!queue.Owner.HasUnlocked(Upgrade.New))
-                yield return Upgrade.Old.CreateLogMessage(Upgrade.Old + " on " + queue.Entity + " could not be upgraded to a " + Upgrade.New + " because we have not yet researched the " + Upgrade.New + ".", LogMessageType.Error);
+                yield return Upgrade.Old.CreateLogMessage(Upgrade.Old + " on " + queue.Container + " could not be upgraded to a " + Upgrade.New + " because we have not yet researched the " + Upgrade.New + ".", LogMessageType.Error);
 
             // validate that new and old facilities are in the same family
             if (Upgrade.New.Family.Value != Upgrade.Old.Family.Value)
-                yield return Upgrade.Old.CreateLogMessage(Upgrade.Old + " on " + queue.Entity + " could not be upgraded to a " + Upgrade.New + " because facilities cannot be upgraded to facilities of a different family.", LogMessageType.Error);
+                yield return Upgrade.Old.CreateLogMessage(Upgrade.Old + " on " + queue.Container + " could not be upgraded to a " + Upgrade.New + " because facilities cannot be upgraded to facilities of a different family.", LogMessageType.Error);
 
             // validate that there is a facility to upgrade
-            var planet = (Planet)queue.Entity;
+            var planet = (Planet)queue.Container;
             var colony = planet.Colony;
             // TODO: flesh out FacilityAbility so any entity can be a facility
             if (!colony.FacilityAbilities.Any(f => f.Template.ModID == Upgrade.Old.ModID)) // HACK - why are we getting duplicate facility templates?

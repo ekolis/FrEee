@@ -57,7 +57,7 @@ namespace FrEee.Ecs.Abilities
 			if (interaction is GetStatValueInteraction getStatValue && getStatValue.Stat.StatType == GetStatType(Resource))
 			{
 				// TODO: support other operations
-				getStatValue.Stat.Modifiers.Add(new Modifier(Entity, Operation.Add, Rate));
+				getStatValue.Stat.Modifiers.Add(new Modifier(Container, Operation.Add, Rate));
 			}
 		}
 	}

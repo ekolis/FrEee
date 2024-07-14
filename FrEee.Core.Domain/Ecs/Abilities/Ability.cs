@@ -20,13 +20,13 @@ public class Ability : IAbility, IContainable<IEntity>, IReferrable, IModObject,
 {
     public Ability(IEntity entity)
     {
-        Entity = entity;
+        Container = entity;
         Values = new List<Formula<string>>();
     }
 
     public Ability(IEntity entity, AbilityRule rule, Formula<string>? description, object[] values)
     {
-        Entity = entity;
+        Container = entity;
         Rule = rule;
         Description = description;
         Values = new List<Formula<string>>();
@@ -53,7 +53,7 @@ public class Ability : IAbility, IContainable<IEntity>, IReferrable, IModObject,
     public virtual void Interact(IInteraction interaction) { }
 
     [DoNotCopy]
-    public IEntity Entity { get; internal set; }
+    public IEntity Container { get; internal set; }
 
     public virtual SafeDictionary<string, object> Data
     {
@@ -63,7 +63,7 @@ public class Ability : IAbility, IContainable<IEntity>, IReferrable, IModObject,
             dict[nameof(rule)] = rule;
             dict[nameof(Description)] = Description;
             dict[nameof(Values)] = Values;
-            dict[nameof(Entity)] = Entity;
+            dict[nameof(Container)] = Container;
             dict[nameof(ID)] = ID;
             dict[nameof(IsDisposed)] = IsDisposed;
             dict[nameof(ModID)] = ModID;
@@ -75,7 +75,7 @@ public class Ability : IAbility, IContainable<IEntity>, IReferrable, IModObject,
             rule = value[nameof(rule)].Default<ModReference<AbilityRule>>();
             Description = value[nameof(Description)].Default<Formula<string>>();
             Values = value[nameof(Values)].Default<IList<Formula<string>>>();
-            Entity = value[nameof(Entity)].Default<IEntity>();
+            Container = value[nameof(Container)].Default<IEntity>();
             ID = value[nameof(ID)].Default<long>();
             IsDisposed = value[nameof(IsDisposed)].Default<bool>();
             ModID = value[nameof(ModID)].Default<string>();
@@ -132,8 +132,8 @@ public class Ability : IAbility, IContainable<IEntity>, IReferrable, IModObject,
     {
         get
         {
-            if (Entity is IOwnable)
-                return (Entity as IOwnable).Owner;
+            if (Container is IOwnable)
+                return (Container as IOwnable).Owner;
             return null;
         }
     }

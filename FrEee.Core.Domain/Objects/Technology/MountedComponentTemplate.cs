@@ -27,7 +27,7 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IEntity, I
 {
 	public MountedComponentTemplate(IDesign container, ComponentTemplate ct, Mount mount = null)
 	{
-		Entity = container;
+		Container = container;
 		ComponentTemplate = ct;
 		Mount = mount;
 	}
@@ -111,7 +111,7 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IEntity, I
 	/// </summary>
 	[DoNotSerialize]
 	[Populate<MountedComponentTemplateContainerPopulator>]
-	public IDesign Entity { get; set; }
+	public IDesign Container { get; set; }
 
 	public ResourceQuantity Cost
 	{
@@ -192,7 +192,7 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IEntity, I
 		get
 		{
 			if (IsObsolete)
-				return new MountedComponentTemplate(Entity, ComponentTemplate.LatestVersion, Mount == null ? null : Mount.LatestVersion);
+				return new MountedComponentTemplate(Container, ComponentTemplate.LatestVersion, Mount == null ? null : Mount.LatestVersion);
 			else
 				return this;
 		}
@@ -231,8 +231,8 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IEntity, I
 	{
 		get
 		{
-			if (Entity != null)
-				yield return Entity;
+			if (Container != null)
+				yield return Container;
 		}
 	}
 
@@ -282,8 +282,8 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IEntity, I
 	{
 		get
 		{
-			var design = Entity ?? Design.Create(Mod.Current.Hulls.FirstOrDefault(h => ComponentTemplate.VehicleTypes.HasFlag(h.VehicleType)));
-			var empire = Entity == null ? Empire.Current : Entity.Owner;
+			var design = Container ?? Design.Create(Mod.Current.Hulls.FirstOrDefault(h => ComponentTemplate.VehicleTypes.HasFlag(h.VehicleType)));
+			var empire = Container == null ? Empire.Current : Container.Owner;
 			return new Dictionary<string, object>
 			{
 				{"component", ComponentTemplate},
@@ -353,7 +353,7 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IEntity, I
 			return true;
 		if (t1 is null || t2 is null)
 			return false;
-		return t1.Entity == t2.Entity && t1.ComponentTemplate == t2.ComponentTemplate && t1.mount == t2.mount;
+		return t1.Container == t2.Container && t1.ComponentTemplate == t2.ComponentTemplate && t1.mount == t2.mount;
 	}
 
 	public override bool Equals(object? obj)
@@ -367,7 +367,7 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IEntity, I
 	public override int GetHashCode()
 	{
 		// can't mash the container itself because that would cause a circular dependency on this template
-		return HashCodeMasher.Mash(Entity?.ID, ComponentTemplate, Mount);
+		return HashCodeMasher.Mash(Container?.ID, ComponentTemplate, Mount);
 	}
 
 	/// <summary>

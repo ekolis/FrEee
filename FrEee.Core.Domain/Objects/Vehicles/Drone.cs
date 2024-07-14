@@ -22,7 +22,7 @@ public class Drone : SpaceVehicle, IUnit
 		get { return !Owner?.IsMinorEmpire ?? true; }
 	}
 
-	ICargoContainer IContainable<ICargoContainer>.Entity
+	ICargoContainer IContainable<ICargoContainer>.Container
 	{
 		get { return CommonExtensions.FindContainer(this); }
 	}
@@ -34,7 +34,7 @@ public class Drone : SpaceVehicle, IUnit
 
 	public override IMobileSpaceObject RecycleContainer
 	{
-		get { return (this as IUnit).Entity as IMobileSpaceObject; }
+		get { return (this as IUnit).Container as IMobileSpaceObject; }
 	}
 
 	public override bool RequiresSpaceYardQueue
@@ -50,7 +50,7 @@ public class Drone : SpaceVehicle, IUnit
 	public override Visibility CheckVisibility(Empire emp)
 	{
 		var vis = base.CheckVisibility(emp);
-		var sobj = Entity as ISpaceObject;
+		var sobj = Container as ISpaceObject;
 		if (sobj != null && sobj.HasVisibility(emp, Visibility.Scanned))
 			vis = Visibility.Scanned;
 		return vis;

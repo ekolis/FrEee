@@ -38,7 +38,7 @@ public class CreateFleetCommand : Command<Empire>
 	public override void Execute()
 	{
 		foreach (var v in Fleet.Vehicles)
-			v.Entity = null;
+			v.Container = null;
 		Fleet.Vehicles.Clear(); // no cheating by spawning new vehicles!
 		Fleet.Sector = Sector;
 
