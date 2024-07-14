@@ -35,7 +35,6 @@ namespace FrEee.Ecs.Abilities
 			values[1].ToFormula<int>()
 		)
 		{
-			Size = values[1].ToFormula<int>();
 		}
 
 		public string SizeStatName => $"{Scope} Size";
@@ -53,7 +52,7 @@ namespace FrEee.Ecs.Abilities
 		/// The number of slots or amount of space consumed by this entity
 		/// when it is held by another entity via <see cref="HolderAbility"/>.
 		/// </summary>
-		public IFormula<int> Size { get; private set; }
+		public IFormula<int> Size => size;
 
 		public override void Interact(IInteraction interaction)
 		{
