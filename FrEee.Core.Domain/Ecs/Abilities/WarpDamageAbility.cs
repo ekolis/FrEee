@@ -29,7 +29,6 @@ namespace FrEee.Ecs.Abilities
 		public WarpDamageAbility(
 			IEntity entity,
 			AbilityRule rule,
-			Formula<string>? description,
 			IFormula[] values
 		) : this(entity, rule, damage: values[0].ToFormula<int>())
 		{

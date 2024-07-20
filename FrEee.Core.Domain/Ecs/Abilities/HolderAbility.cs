@@ -28,7 +28,6 @@ public class HolderAbility<THeldAbility>(
 	(
 		IEntity entity,
 		AbilityRule rule,
-		Formula<string>? description,
 		IFormula[] values
 	) : this(
 		entity,

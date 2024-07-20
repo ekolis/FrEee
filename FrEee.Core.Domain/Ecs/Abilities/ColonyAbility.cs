@@ -58,9 +58,4 @@ public class ColonyAbility(
 			base.Data = value;
 		}
 	}
-
-	public override string ToString()
-	{
-		return Name;
-	}
 }

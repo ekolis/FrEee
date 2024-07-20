@@ -33,7 +33,6 @@ namespace FrEee.Ecs.Abilities
 		public ColonyResourceExtractionAbility(
 			IEntity entity,
 			AbilityRule rule,
-			Formula<string>? description,
 			IFormula[] values
 		) : this(entity, rule, operation: null, resource: values[0].ToStringFormula(), values[1].ToFormula<int>())
 		{

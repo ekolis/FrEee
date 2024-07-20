@@ -32,7 +32,6 @@ namespace FrEee.Ecs.Abilities
 		public SpaceYardAbility(
 			IEntity entity,
 			AbilityRule rule,
-			Formula<string>? description,
 			IFormula[] values
 		) : this(entity, rule, resource: values[0].ToStringFormula(), values[1].ToFormula<int>())
 		{

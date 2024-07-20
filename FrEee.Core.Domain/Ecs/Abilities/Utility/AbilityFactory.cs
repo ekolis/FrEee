@@ -14,13 +14,11 @@ namespace FrEee.Ecs.Abilities.Utility
             var constructor = abilityType.GetConstructor([
                 typeof(IEntity),
                 typeof(AbilityRule),
-                typeof(Formula<string>),
                 typeof(Formula<string>[])
             ]);
             var ability = (Ability)constructor.Invoke([
                     container,
                     rule,
-                    description,
                     rule.PrefixValues.Concat(values).ToArray()
                 ]);
             return ability;

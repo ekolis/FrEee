@@ -46,7 +46,6 @@ public class FacilityAbility : SemanticScopeAbility,
 	public FacilityAbility(
 		IEntity entity,
 		AbilityRule rule,
-		Formula<string>? description,
 		IFormula[] values
 	) : this(entity, colony: null, template: null)
 	{
@@ -386,10 +385,5 @@ public class FacilityAbility : SemanticScopeAbility,
 		if (IsDestroyed)
 			Dispose();
 		return damage - nominalDamageSpent;
-	}
-
-	public override string ToString()
-	{
-		return Name;
 	}
 }

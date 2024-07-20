@@ -33,7 +33,6 @@ namespace FrEee.Ecs.Abilities
 		public ResourceRateAbility(
 			IEntity entity,
 			AbilityRule rule,
-			Formula<string>? description,
 			IFormula[] values
 		) : this(entity, rule, null,Operation.Add, values[0].ToStringFormula(), values[1].ToFormula<int>())
 		{
@@ -41,13 +40,30 @@ namespace FrEee.Ecs.Abilities
 
 		public abstract StatType GetStatType(Resource resource);
 
-		public IFormula<string> ResourceFormula => resource;
+		public IFormula<string> ResourceFormula { get; protected set; } = resource;
 
-		public IFormula<int> RateFormula => rate;
+		public IFormula<int> RateFormula { get; protected set; } = rate;
 
 		public Resource Resource => Resource.Find(ResourceFormula.Value);
 
 		public int Rate => RateFormula.Value;
+
+		public override SafeDictionary<string, object> Data
+		{
+			get
+			{
+				var data = base.Data;
+				data[nameof(ResourceFormula)] = ResourceFormula;
+				data[nameof(RateFormula)] = RateFormula;
+				return data;
+			}
+			set
+			{
+				base.Data = value;
+				ResourceFormula = (IFormula<string>)value[nameof(ResourceFormula)];
+				RateFormula = (IFormula<int>)value[nameof(RateFormula)];
+			}
+		}
 
 		public override void Interact(IInteraction interaction)
 		{

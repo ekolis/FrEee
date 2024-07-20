@@ -25,7 +25,6 @@ namespace FrEee.Ecs.Abilities
 		public SemanticScopeAbility(
 			IEntity entity,
 			AbilityRule rule,
-			Formula<string>? description,
 			params IFormula[] values
 		) : this
 		(
