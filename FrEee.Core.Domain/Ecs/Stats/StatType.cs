@@ -17,12 +17,15 @@ namespace FrEee.Ecs.Stats
         string Name
     )
     {
-        public static StatType WarpDamage { get; } = new("Warp Damage");
+		public static StatType Unknown => new("Unknown");
 
-		public static StatType ColonyResourceExtractionMinerals { get; } = new("Colony Resource Extraction Minerals");
-		public static StatType ColonyResourceExtractionOrganics { get; } = new("Colony Resource Extraction Radioactives");
-		public static StatType ColonyResourceExtractionRadioactives { get; } = new("Colony Resource Extraction Radioactives");
+		public static StatType WarpDamage => new("Warp Damage");
+
+		public static StatType ColonyResourceExtractionMinerals => new("Colony Resource Extraction Minerals");
+		public static StatType ColonyResourceExtractionOrganics => new("Colony Resource Extraction Radioactives");
+		public static StatType ColonyResourceExtractionRadioactives => new("Colony Resource Extraction Radioactives");
 		public static StatType ColonyResourceExtraction(Resource resource) => ColonyResourceExtraction(resource.Number);
+		public static StatType ColonyResourceExtraction(string resourceName) => ColonyResourceExtraction(Resource.Find(resourceName));
 		public static StatType ColonyResourceExtraction(int resourceNumber) => resourceNumber switch
 		{
 			1 => ColonyResourceExtractionMinerals,
@@ -31,10 +34,11 @@ namespace FrEee.Ecs.Stats
 			_ => throw new ArgumentException($"Can't get colony resource extraction for resource number {resourceNumber}. Must be between 1 and 3.")
 		};
 
-		public static StatType SpaceYardRateMinerals { get; } = new("Space Yard Rate Minerals");
-		public static StatType SpaceYardRateOrganics { get; } = new("Space Yard Rate Radioactives");
-		public static StatType SpaceYardRateRadioactives { get; } = new("Space Yard Rate Radioactives");
+		public static StatType SpaceYardRateMinerals => new("Space Yard Rate Minerals");
+		public static StatType SpaceYardRateOrganics => new("Space Yard Rate Organics");
+		public static StatType SpaceYardRateRadioactives => new("Space Yard Rate Radioactives");
 		public static StatType SpaceYardRate(Resource resource) => SpaceYardRate(resource.Number);
+		public static StatType SpaceYardRate(string resourceName) => SpaceYardRate(Resource.Find(resourceName));
 		public static StatType SpaceYardRate(int resourceNumber) => resourceNumber switch
 		{
 			1 => SpaceYardRateMinerals,

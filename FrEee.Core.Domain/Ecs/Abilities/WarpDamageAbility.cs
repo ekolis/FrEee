@@ -20,7 +20,11 @@ namespace FrEee.Ecs.Abilities
     /// Damages vehicles that warp through a warp point.
     /// </summary>
 	
-    public class WarpDamageAbility : StatModifierAbility
+    public class WarpDamageAbility(
+		IEntity entity,
+		AbilityRule rule,
+		IFormula<int> damage
+	) : StatModifierAbility(entity, rule, StatType.WarpDamage, Operation.Add, damage.ToFormula<decimal>())
 	{
 		public WarpDamageAbility(
 			IEntity entity,
@@ -31,13 +35,7 @@ namespace FrEee.Ecs.Abilities
 		{
 		}
 
-		public WarpDamageAbility(IEntity entity, AbilityRule rule, IFormula<int> damage)
-			 : base(entity, rule, statName: StatType.WarpDamage.Name, damage.ToFormula<decimal>())
-		{
-			StatName = "Warp Damage";
-		}
-
-		public Formula<int> Damage { get; private set; }
+		public IFormula<int> Damage { get; private set; } = damage;
 
 		public override void Interact(IInteraction interaction)
 		{
@@ -49,7 +47,7 @@ namespace FrEee.Ecs.Abilities
 				var sobj = warp.WarpingVehicle;
 				if (sobj is not null)
 				{
-					sobj.TakeNormalDamage(Damage);
+					sobj.TakeNormalDamage(Damage.Value);
 					if (sobj.IsDestroyed)
 					{
 						sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " was destroyed by turbulence when traversing " + warp.WarpPoint + ".", LogMessageType.Generic));

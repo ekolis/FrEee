@@ -24,16 +24,18 @@ namespace FrEee.Ecs.Abilities
     public class ColonyResourceExtractionAbility(
 		IEntity entity,
 		AbilityRule rule,
+		Operation operation,
 		IFormula<string> resource,
 		IFormula<int> rate
-	) : ResourceRateAbility(entity, rule, resource, rate)
+		// TODO: let formulas pass through to ResourceRateAbility to be evaluated later
+	) : ResourceRateAbility(entity, rule, StatType.ColonyResourceExtraction(resource.Value), operation, resource, rate)
 	{
 		public ColonyResourceExtractionAbility(
 			IEntity entity,
 			AbilityRule rule,
 			Formula<string>? description,
 			IFormula[] values
-		) : this(entity, rule, resource: values[0].ToStringFormula(), values[1].ToFormula<int>())
+		) : this(entity, rule, operation: null, resource: values[0].ToStringFormula(), values[1].ToFormula<int>())
 		{
 		}
 
@@ -48,7 +50,7 @@ namespace FrEee.Ecs.Abilities
 			{
 				produceResources.Resources.TryGetValue(Container, out var resources);
 				resources ??= new();
-				resources += Rate * Resource;
+				resources[Resource] = (int)(Operation ?? Operation.Add).Aggregate(resources[Resource], [(decimal)Rate]);
 				produceResources.Resources[Container] = resources;
 			}
 		}

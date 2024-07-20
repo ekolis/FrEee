@@ -41,7 +41,17 @@ namespace FrEee.Ecs.Stats
 			(@base, nums) => @base / nums.Aggregate((a, b) => a * b),
 			4);
 
-		// TODO: more operations like average, median, mode, min, max, standard deviation, Pythagoras in various dimensions, geometric mean...
+		[Export(typeof(IOperation))]
+		public static readonly Operation Highest = new Operation(
+			(@base, nums) => Math.Max(@base, nums.Max()),
+			5);
+
+		[Export(typeof(IOperation))]
+		public static readonly Operation Lowest = new Operation(
+			(@base, nums) => Math.Min(@base, nums.Min()),
+			6);
+
+		// TODO: more operations like average, median, mode, standard deviation, Pythagoras in various dimensions, geometric mean...
 	}
 
 	public interface IOperation

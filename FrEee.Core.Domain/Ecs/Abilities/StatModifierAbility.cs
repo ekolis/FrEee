@@ -23,20 +23,22 @@ namespace FrEee.Ecs.Abilities
     public class StatModifierAbility(
 		IEntity entity,
 		AbilityRule rule,
-		string statName,
-		IFormula<decimal> modifier
-	) : Ability(entity, rule, values: [modifier])
+		StatType statType,
+		Operation operation,
+		IFormula<decimal> amount
+	) : Ability(entity, rule, values: [amount])
 	{
 		public StatModifierAbility(
 			IEntity entity,
 			AbilityRule rule,
-			Formula<string>? description,
 			IFormula[] values
-		) : this(entity, rule, statName: null, modifier: values[0].ToFormula<decimal>())
+		) : this(entity, rule, statType: StatType.Unknown, operation: Operation.Add, amount: values[0].ToFormula<decimal>())
 		{
 		}
 
-		public string StatName { get; protected set; } = statName;
+		public StatType StatType { get; protected set; } = statType;
+
+		public Operation Operation { get; private set; } = operation;
 
 		public IFormula<decimal> Modifier => Value1.ToFormula<decimal>();
 
@@ -45,12 +47,11 @@ namespace FrEee.Ecs.Abilities
 			base.Interact(interaction);
 			if (interaction is GetStatNamesInteraction statNames)
 			{
-				statNames.StatNames.Add(StatName);
+				statNames.StatNames.Add(StatType.Name);
 			}
-			if (interaction is GetStatValueInteraction getStatValue && getStatValue.Stat.Name == StatName)
+			if (interaction is GetStatValueInteraction getStatValue && getStatValue.Stat.StatType == StatType)
 			{
-				// TODO: support other operations
-				getStatValue.Stat.Modifiers.Add(new Modifier(Container, Operation.Add, Modifier.Value));
+				getStatValue.Stat.Modifiers.Add(new Modifier(Container, Operation, Modifier.Value));
 			}
 		}
 
@@ -59,13 +60,15 @@ namespace FrEee.Ecs.Abilities
 			get
 			{
 				var data = base.Data;
-				data[nameof(StatName)] = StatName;
+				data[nameof(StatType)] = StatType;
+				data[nameof(Operation)] = Operation;
 				return data;
 			}
 			set
 			{
 				base.Data = value;
-				StatName = (string)value[nameof(StatName)];
+				StatType = (StatType)value[nameof(StatType)];
+				Operation = (Operation)value[nameof(Operation)];
 			}
 		}
 	}

@@ -24,24 +24,26 @@ namespace FrEee.Ecs.Abilities
 	public abstract class ResourceRateAbility(
 		IEntity entity,
 		AbilityRule rule,
+		StatType statType,
+		Operation operation,
 		IFormula<string> resource,
 		IFormula<int> rate
-	) : Ability(entity, rule, [resource, rate])
+	) : StatModifierAbility(entity, rule, statType, operation, rate.ToFormula<decimal>())
 	{
 		public ResourceRateAbility(
 			IEntity entity,
 			AbilityRule rule,
 			Formula<string>? description,
 			IFormula[] values
-		) : this(entity, rule, values[0].ToStringFormula(), values[1].ToFormula<int>())
+		) : this(entity, rule, null,Operation.Add, values[0].ToStringFormula(), values[1].ToFormula<int>())
 		{
 		}
 
 		public abstract StatType GetStatType(Resource resource);
 
-		public IFormula<string> ResourceFormula => Value1;
+		public IFormula<string> ResourceFormula => resource;
 
-		public IFormula<int> RateFormula => Value2.ToFormula<int>();
+		public IFormula<int> RateFormula => rate;
 
 		public Resource Resource => Resource.Find(ResourceFormula.Value);
 
@@ -50,15 +52,6 @@ namespace FrEee.Ecs.Abilities
 		public override void Interact(IInteraction interaction)
 		{
 			base.Interact(interaction);
-			if (interaction is GetStatNamesInteraction getStatNames)
-			{
-				getStatNames.StatNames.Add(GetStatType(Resource).Name);
-			}
-			if (interaction is GetStatValueInteraction getStatValue && getStatValue.Stat.StatType == GetStatType(Resource))
-			{
-				// TODO: support other operations
-				getStatValue.Stat.Modifiers.Add(new Modifier(Container, Operation.Add, Rate));
-			}
 		}
 	}
 }
