@@ -245,16 +245,17 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
     public ResourceQuantity Rate
     {
         get
-        {
-            if (Empire.Current != null)
+        {/*
+            if (Empire.Current is not null)
             {
-                // try to use cache, rate can't change client side!
-                if (rate == null)
-                    rate = ComputeRate();
+				// use cache, as the rate can't change client side
+				rate ??= ComputeRate();
                 return rate;
             }
-            else
+            else*/
+            {
                 return ComputeRate();
+            }
         }
     }
 
@@ -298,7 +299,7 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
         }
     }
 
-    private ResourceQuantity rate;
+    private ResourceQuantity? rate;
 
     public void AddOrder(IOrder order)
     {
@@ -559,27 +560,23 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
         return rate;
     }
 
-    private ResourceQuantity ComputeSYAbilityRate()
+    private ResourceQuantity? ComputeSYAbilityRate()
     {
         if (Container.HasSpaceYard())
         {
             var rate = new ResourceQuantity();
-            // TODO - moddable resources?
-            for (int i = 1; i <= 3; i++)
+            // TODO: moddable resources?
+            Resource[] resources = [Resource.Minerals, Resource.Organics, Resource.Radioactives];
+			foreach (var res in resources)
             {
-                Resource res = null;
-                if (i == 1)
-                    res = Resource.Minerals;
-                else if (i == 2)
-                    res = Resource.Organics;
-                else if (i == 3)
-                    res = Resource.Radioactives;
                 var amount = Container.GetStatValue(StatType.SpaceYardRate(res));
-				rate[res] = (int)Math.Round(amount ?? 0);
+                rate[res] = (int)Math.Round(amount ?? 0);
             }
             return rate;
         }
         else
+        {
             return null;
+        }
     }
 }
