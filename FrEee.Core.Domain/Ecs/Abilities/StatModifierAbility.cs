@@ -40,7 +40,7 @@ namespace FrEee.Ecs.Abilities
 
 		public Operation Operation => Operation.Find(OperationName);
 
-		public string OperationName { get; private set; } = operation?.Name;
+		public string OperationName { get; private set; } = (operation ?? Operation.Add).Name;
 
 		public IFormula<decimal> Modifier => Value1.ToFormula<decimal>();
 
