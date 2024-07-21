@@ -24,6 +24,8 @@ namespace FrEee.Ecs.Stats
 		public static StatType ColonyResourceExtractionMinerals => new("Colony Resource Extraction Minerals");
 		public static StatType ColonyResourceExtractionOrganics => new("Colony Resource Extraction Radioactives");
 		public static StatType ColonyResourceExtractionRadioactives => new("Colony Resource Extraction Radioactives");
+		public static StatType ColonyResourceExtractionResearch => new("Colony Resource Extraction Research");
+		public static StatType ColonyResourceExtractionIntelligence => new("Colony Resource Extraction Intelligence");
 		public static StatType ColonyResourceExtraction(Resource resource) => ColonyResourceExtraction(resource.Number);
 		public static StatType ColonyResourceExtraction(string resourceName) => ColonyResourceExtraction(Resource.Find(resourceName));
 		public static StatType ColonyResourceExtraction(int resourceNumber) => resourceNumber switch
@@ -31,7 +33,9 @@ namespace FrEee.Ecs.Stats
 			1 => ColonyResourceExtractionMinerals,
 			2 => ColonyResourceExtractionOrganics,
 			3 => ColonyResourceExtractionRadioactives,
-			_ => throw new ArgumentException($"Can't get colony resource extraction for resource number {resourceNumber}. Must be between 1 and 3.")
+			4 => ColonyResourceExtractionResearch,
+			5 => ColonyResourceExtractionIntelligence,
+			_ => throw new ArgumentException($"Can't get colony resource extraction for resource number {resourceNumber}. Must be between 1 and 5.")
 		};
 
 		public static StatType SpaceYardRateMinerals => new("Space Yard Rate Minerals");

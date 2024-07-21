@@ -133,16 +133,14 @@ Prefix Value := Radioactives
 Description := Extracts {Rate} radioactives at a colony each turn (modified by colony value, population, and happiness).
 
 Name := Point Generation - Research
-Targets := Vehicle, Planet, Component, Facility
-Description := Generates [%Amount1%] research points each turn.
-Value 1 Rule := Add
-Value 2 Rule := Add
+Type := ColonyResourceExtractionAbility
+Prefix Value := Research
+Description := Generates {Rate} research points each turn.
 
 Name := Point Generation - Intelligence
-Targets := Vehicle, Planet, Component, Facility
-Description := Generates [%Amount1%] intelligence points each turn.
-Value 1 Rule := Add
-Value 2 Rule := Add
+Type := ColonyResourceExtractionAbility
+Prefix Value := Intelligence
+Description := Generates {Rate} intelligence points each turn.
 
 Name := Spaceport
 Targets := Planet, Vehicle, StarSystem, Component, Facility
