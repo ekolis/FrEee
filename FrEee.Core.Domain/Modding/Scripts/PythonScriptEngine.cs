@@ -243,7 +243,8 @@ public class PythonScriptEngine : MarshalByRefObject
 		}
 		catch (Exception ex)
 		{
-			if (ex.Data.Values.Count > 0)
+			throw;
+			/*if (ex.Data.Values.Count > 0)
 			{
 				Array info = ex.Data.Values.Cast<dynamic>().First();
 				var debugInfo = info.Cast<dynamic>().FirstOrDefault(o => o.DebugInfo != null)?.DebugInfo;
@@ -257,7 +258,7 @@ public class PythonScriptEngine : MarshalByRefObject
 					throw new ScriptException(ex, "(unknown code)");
 			}
 			else
-				throw new ScriptException(ex, "(unknown code)");
+				throw new ScriptException(ex, "(unknown code)");*/
 		}
 		return result;
 	}

@@ -120,17 +120,17 @@ Value 2 Rule := Add
 Name := Resource Generation - Minerals
 Type := ColonyResourceExtractionAbility
 Prefix Value := Minerals
-Description := Mines [%Amount2%] minerals at a colony each turn (modified by colony value, population, and happiness).
+Description := Mines {Rate} minerals at a colony each turn (modified by colony value, population, and happiness).
 
 Name := Resource Generation - Organics
 Type := ColonyResourceExtractionAbility
 Prefix Value := Organics
-Description := Farms [%Amount2%] organics at a colony each turn (modified by colony value, population, and happiness).
+Description := Farms {Rate} organics at a colony each turn (modified by colony value, population, and happiness).
 
 Name := Resource Generation - Radioactives
 Type := ColonyResourceExtractionAbility
 Prefix Value := Radioactives
-Description := Extracts [%Amount2%] radioactives at a colony each turn (modified by colony value, population, and happiness).
+Description := Extracts {Rate} radioactives at a colony each turn (modified by colony value, population, and happiness).
 
 Name := Point Generation - Research
 Targets := Vehicle, Planet, Component, Facility
@@ -485,11 +485,7 @@ Value 2 Rule := Add
 
 Name := Space Yard
 Type := SpaceYardAbility
-Targets := Vehicle, Planet, Component, Facility
-Description := Can construct with [%Amount2%] [%Amount1%] per turn.
-Value 1 Rule := Group
-Value 2 Rule := TakeHighest
-Value 2 Group Rule := None
+Description := Can construct with {host.Rate} {host.Resource} per turn.
 
 Name := Resource Storage - Mineral
 Targets := Vehicle, Planet, Component, Facility

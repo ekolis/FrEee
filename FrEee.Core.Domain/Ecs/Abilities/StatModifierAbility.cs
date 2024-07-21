@@ -38,13 +38,9 @@ namespace FrEee.Ecs.Abilities
 
 		public StatType StatType { get; protected set; } = statType;
 
-		public Operation Operation { get; private set; } = operation;
+		public Operation Operation => Operation.Find(OperationName);
 
-		public string OperationName
-		{
-			get => Operation.Name;
-			set => Operation = Operation.Find(value);
-		}
+		public string OperationName { get; private set; } = operation?.Name;
 
 		public IFormula<decimal> Modifier => Value1.ToFormula<decimal>();
 
