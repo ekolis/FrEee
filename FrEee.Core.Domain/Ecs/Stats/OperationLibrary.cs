@@ -25,5 +25,7 @@ namespace FrEee.Ecs.Stats
 
 		[ImportMany(typeof(IOperation))]
 		public IEnumerable<Operation> All { get; private set; }
+
+		public Operation Find(string name) => All.Single(q => q.Name == name);
 	}
 }

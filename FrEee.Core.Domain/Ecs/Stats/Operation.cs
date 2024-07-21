@@ -12,10 +12,18 @@ using Svg;
 
 namespace FrEee.Ecs.Stats
 {
+	/// <summary>
+	/// A mathematical operation that can be used to aggregate stat values.
+	/// </summary>
+	/// <param name="Name"></param>
+	/// <param name="Aggregate"></param>
+	/// <param name="Priority"></param>
 	public record Operation(string Name, Func<decimal, IEnumerable<decimal>, decimal> Aggregate, int Priority)
 		: IOperation
 	{
 		public static IEnumerable<Operation> All => OperationLibrary.Instance.All;
+
+		public static Operation Find(string name) => OperationLibrary.Instance.Find(name);
 
 		[Export(typeof(IOperation))]
 		public static readonly Operation Add = new Operation(

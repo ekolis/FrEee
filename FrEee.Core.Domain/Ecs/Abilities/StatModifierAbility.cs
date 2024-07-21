@@ -40,6 +40,12 @@ namespace FrEee.Ecs.Abilities
 
 		public Operation Operation { get; private set; } = operation;
 
+		public string OperationName
+		{
+			get => Operation.Name;
+			set => Operation = Operation.Find(value);
+		}
+
 		public IFormula<decimal> Modifier => Value1.ToFormula<decimal>();
 
 		public override void Interact(IInteraction interaction)
@@ -61,14 +67,14 @@ namespace FrEee.Ecs.Abilities
 			{
 				var data = base.Data;
 				data[nameof(StatType)] = StatType;
-				data[nameof(Operation)] = Operation;
+				data[nameof(OperationName)] = OperationName;
 				return data;
 			}
 			set
 			{
 				base.Data = value;
 				StatType = (StatType)value[nameof(StatType)];
-				Operation = (Operation)value[nameof(Operation)];
+				OperationName = (string)value[nameof(OperationName)];
 			}
 		}
 	}
