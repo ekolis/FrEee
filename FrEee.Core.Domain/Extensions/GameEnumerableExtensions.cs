@@ -291,6 +291,10 @@ public static class GameEnumerableExtensions
 	/// <returns></returns>
 	public static ILookup<Ability, Ability> StackToTree(this IEnumerable<Ability> abilities, IEntity stackTo)
 	{
+		// TODO: fix ability stacking in UI
+		return new List<Ability>().ToLookup(q => q, q => q);
+
+		/*
 		// create result list
 		var stacked = new List<Tuple<Ability, Ability>>();
 
@@ -320,6 +324,7 @@ public static class GameEnumerableExtensions
 
 		// create a lookup from the result list
 		return stacked.ToLookup(t => t.Item1, t => t.Item2);
+		*/
 	}
 
 	/// <summary>
