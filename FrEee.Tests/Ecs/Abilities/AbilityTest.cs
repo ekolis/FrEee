@@ -111,6 +111,7 @@ public class AbilityTest
         facilityTemplate.Abilities = facilityTemplate.Abilities.Append(new ColonyResourceExtractionAbility(
             facilityTemplate,
             AbilityRule.Find("Resource Generation - Organics"),
+            Operation.Add,
             Resource.Organics.Name.ToLiteralFormula(),
             666.ToLiteralFormula()
 		));
@@ -136,6 +137,7 @@ public class AbilityTest
 		facilityTemplate.Abilities = facilityTemplate.Abilities.Append(new ColonyResourceExtractionAbility(
 			facilityTemplate,
 			abilRule,
+            Operation.Add,
 			Resource.Organics.Name.ToLiteralFormula(),
 			666.ToLiteralFormula()
 		));
