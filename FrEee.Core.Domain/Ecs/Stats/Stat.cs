@@ -24,7 +24,7 @@ namespace FrEee.Ecs.Stats
                 if (Modifiers.Any())
                 {
                     var result = 0m;
-					for (var priority = Operation.All.Min(it => it.Priority); priority <= Operation.All.Min(it => it.Priority); priority++)
+					for (var priority = Operation.All.Min(it => it.Priority); priority <= Operation.All.Max(it => it.Priority); priority++)
                     {
                         foreach (var operation in Operation.All.Where(it => it.Priority == priority))
                         {

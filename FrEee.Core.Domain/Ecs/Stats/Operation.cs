@@ -12,51 +12,54 @@ using Svg;
 
 namespace FrEee.Ecs.Stats
 {
-	public class Operation(Func<decimal, IEnumerable<decimal>, decimal> aggregator, int priority)
+	public record Operation(string Name, Func<decimal, IEnumerable<decimal>, decimal> Aggregate, int Priority)
+		: IOperation
 	{
 		public static IEnumerable<Operation> All => OperationLibrary.Instance.All;
 
-		public int Priority => priority;
-
-		public decimal Aggregate(decimal @base, IEnumerable<decimal> modifiers) =>
-			aggregator(@base, modifiers);
-
 		[Export(typeof(IOperation))]
 		public static readonly Operation Add = new Operation(
+			"Add",
 			(@base, nums) => @base + nums.Sum(),
-			1);
+			100);
 
 		[Export(typeof(IOperation))]
 		public static readonly Operation Subtract = new Operation(
+			"Subtract",
 			(@base, nums) => @base - nums.Sum(),
-			2);
+			101);
 
 		[Export(typeof(IOperation))]
 		public static readonly Operation Multiply = new Operation(
-			(@base, nums) => @base * nums.Aggregate((a, b) => a * b),
-			3);
+			"Multiply",
+			(@base, nums) => @base * (nums.Any() ? nums.Aggregate((a, b) => a * b) : 1),
+			200);
 
 		[Export(typeof(IOperation))]
 		public static readonly Operation Divide = new Operation(
-			(@base, nums) => @base / nums.Aggregate((a, b) => a * b),
-			4);
+			"Divide",
+			(@base, nums) => @base / (nums.Any() ? nums.Aggregate((a, b) => a * b) : 1),
+			201);
 
 		[Export(typeof(IOperation))]
-		public static readonly Operation Highest = new Operation(
-			(@base, nums) => Math.Max(@base, nums.Max()),
-			5);
+		public static readonly Operation TakeMaximum = new Operation(
+			"Take Maximum",
+			(@base, nums) => Math.Max(@base, nums.Any() ? nums.Max() : @base),
+			300);
 
 		[Export(typeof(IOperation))]
-		public static readonly Operation Lowest = new Operation(
-			(@base, nums) => Math.Min(@base, nums.Min()),
-			6);
+		public static readonly Operation TakeMinimum = new Operation(
+			"Take Minimum",
+			(@base, nums) => Math.Min(@base, nums.Any() ? nums.Min() : @base),
+			301);
 
 		// TODO: more operations like average, median, mode, standard deviation, Pythagoras in various dimensions, geometric mean...
 	}
 
 	public interface IOperation
 	{
-		Func<decimal, IEnumerable<decimal>, decimal> aggregator { get; }
+		string Name { get; }
+		Func<decimal, IEnumerable<decimal>, decimal> Aggregate { get; }
 		int Priority { get; }
 	}
 }

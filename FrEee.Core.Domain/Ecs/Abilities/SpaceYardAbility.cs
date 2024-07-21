@@ -27,7 +27,7 @@ namespace FrEee.Ecs.Abilities
 		IFormula<string> resource,
 		IFormula<int> rate
 		// TODO: pass in resource formula to ResourceRateAbility
-	) : ResourceRateAbility(entity, rule, StatType.SpaceYardRate(resource.Value), Operation.Highest, resource, rate)
+	) : ResourceRateAbility(entity, rule, StatType.SpaceYardRate(resource.Value), Operation.TakeMaximum, resource, rate)
 	{
 		public SpaceYardAbility(
 			IEntity entity,
