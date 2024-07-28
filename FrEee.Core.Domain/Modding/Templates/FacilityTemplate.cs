@@ -37,7 +37,13 @@ public class FacilityTemplate : IModObject, IResearchable, IEntity, ITemplate<Fa
 		Cost = new ResourceFormula(this);
 	}
 
-	public IEnumerable<Ability> Abilities { get; set; } = [];
+	private IList<Ability> abilities = [];
+
+	public IEnumerable<Ability> Abilities
+	{
+		get => abilities;
+		set => abilities = value.ToList();
+	}
 
 	public AbilityTargets AbilityTarget
 	{

@@ -12,6 +12,7 @@ using FrEee.Ecs;
 using FrEee.Ecs.Abilities.Utility;
 using FrEee.Ecs.Abilities;
 using FrEee.Objects.Civilization.Construction;
+using FrEee.Ecs.Stats;
 
 namespace FrEee.Utility;
 
@@ -157,17 +158,29 @@ public class SerializerTest
 		Mod.Load(null);
 		var ft1 = new FacilityTemplate();
 		ft1.Name = "Mineral Miner Test";
-		ft1.Abilities = [new Ability(ft1, Mod.Current.AbilityRules.FindByName("Resource Generation - Minerals"), [800])];
+		ft1.Abilities = [new ColonyResourceExtractionAbility(
+			ft1,
+			Mod.Current.AbilityRules.FindByName("Resource Generation - Minerals"),
+			Operation.Add,
+			Resource.Minerals.Name.ToLiteralFormula(),
+			800.ToLiteralFormula()
+		)];
 		var ft2 = new FacilityTemplate();
 		ft2.Name = "Organics Farm Test";
-		ft2.Abilities = [new Ability(ft1, Mod.Current.AbilityRules.FindByName("Resource Generation - Organics"), [800])];
+		ft2.Abilities = [new ColonyResourceExtractionAbility(
+			ft2,
+			Mod.Current.AbilityRules.FindByName("Resource Generation - Organics"),
+			Operation.Add,
+			Resource.Organics.Name.ToLiteralFormula(),
+			800.ToLiteralFormula()
+		)];
 		var fts = new List<FacilityTemplate> { ft1, ft2 };
 		var serdata = Serializer.SerializeToString(fts);
 		var deser = Serializer.Deserialize<List<FacilityTemplate>>(serdata);
-		Assert.AreEqual(800, deser.First().GetAbilityValue("Resource Generation - Minerals").ToInt());
-		Assert.AreEqual(0, deser.First().GetAbilityValue("Resource Generation - Organics").ToInt());
-		Assert.AreEqual(0, deser.Last().GetAbilityValue("Resource Generation - Minerals").ToInt());
-		Assert.AreEqual(800, deser.Last().GetAbilityValue("Resource Generation - Organics").ToInt());
+		Assert.AreEqual(800, deser.First().GetStatValue<int>(StatType.ColonyResourceExtractionMinerals));
+		Assert.AreEqual(0, deser.First().GetStatValue<int>(StatType.ColonyResourceExtractionOrganics));
+		Assert.AreEqual(0, deser.Last().GetStatValue<int>(StatType.ColonyResourceExtractionMinerals));
+		Assert.AreEqual(800, deser.Last().GetStatValue<int>(StatType.ColonyResourceExtractionOrganics));
 	}
 
 
