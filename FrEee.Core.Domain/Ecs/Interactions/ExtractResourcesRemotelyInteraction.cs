@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Ecs.Abilities;
 using FrEee.Ecs.Stats;
 using FrEee.Extensions;
 using FrEee.Objects.Civilization;

@@ -51,5 +51,48 @@ namespace FrEee.Ecs.Abilities
         {
             obj.Abilities = obj.Abilities.Append(ability).ToImmutableList();
         }
-    }
+
+		/// <summary>
+		/// Checks if an entity has any abilities of a particular type.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="entity"></param>
+		/// <returns></returns>
+		public static bool HasAbility<T>(this IEntity entity)
+			where T : IAbility
+			=> entity.Abilities.OfType<T>().Any();
+
+		/// <summary>
+		/// Gets the single ability of a particular type belonging to an entity.
+		/// Will throw if there is not exactly one ability of that type.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="entity"></param>
+		/// <returns></returns>
+		public static T GetAbility<T>(this IEntity entity)
+			where T : IAbility
+			=> entity.GetAbilities<T>().Single();
+
+		/// <summary>
+		/// Gets the single ability of a particular type belonging to an entity.
+		/// Will return null if there is no ability of that type
+		/// and throw if there is more than one.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="entity"></param>
+		/// <returns></returns>
+		public static T? GetAbilityOrNull<T>(this IEntity entity)
+			where T : IAbility
+			=> entity.GetAbilities<T>().SingleOrDefault();
+
+		/// <summary>
+		/// Gets the abilities of a particular type belonging to an entity.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="entity"></param>
+		/// <returns></returns>
+		public static IEnumerable<T> GetAbilities<T>(this IEntity entity)
+			where T : IAbility
+			=> entity.Abilities.OfType<T>();
+	}
 }
