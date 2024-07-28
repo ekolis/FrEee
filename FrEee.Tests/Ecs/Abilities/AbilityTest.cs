@@ -21,13 +21,13 @@ namespace FrEee.Ecs.Abilities;
 /// </summary>
 public class AbilityTest
 {
-    StarSystem sys;
-    Empire emp;
-    IDesign<Ship> design;
-    IHull<Ship> hull;
-    Ship ship;
+    // yes these are null, they're being initialized in the SetUp method, stop complaining Visual Studio!
+    StarSystem sys = default!;
+    Empire emp = default!;
+	IDesign<Ship> design = default!;
+	Ship ship = default!;
 
-    [SetUp]
+	[SetUp]
     public void SetUp()
     {
         // set up reflection stuff
@@ -43,7 +43,6 @@ public class AbilityTest
         // create stuff
         emp = TestUtilities.CreateEmpire();
         design = TestUtilities.CreateDesign<Ship>(emp);
-        hull = design.CreateHull();
         ship = TestUtilities.CreateVehicle(design, emp);
     }
 
