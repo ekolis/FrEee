@@ -4,11 +4,12 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Ecs.Abilities.Utility;
 using FrEee.Ecs.Stats;
 using FrEee.Extensions;
 using FrEee.Modding;
 
-namespace FrEee.Ecs.Abilities.Utility
+namespace FrEee.Ecs.Abilities
 {
     /// <summary>
     /// Extensions for managing abilities.
