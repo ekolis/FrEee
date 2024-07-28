@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,32 +17,33 @@ using Microsoft.Scripting.Utils;
 namespace FrEee.Ecs.Abilities
 {
     /// <summary>
-    /// Allows an entity to construct ships, bases, and units.
+    /// Decreases the accuracy of enemy direct fire weapons fired at this combatant.
     /// </summary>
-    public class SpaceYardAbility(
+    public class EvasionAbility(
 		IEntity entity,
 		AbilityRule rule,
-		IFormula<string> resource,
-		IFormula<int> rate,
+		IFormula<int> evasion,
 		IFormula<string>? group = null
-		// TODO: pass in resource formula to ResourceRateAbility
-	) : ResourceRateAbility(entity, rule, StatType.SpaceYardRate(resource.Value), Operation.TakeMaximum, resource, rate, group)
+	) : StatModifierAbility(entity, rule, StatType.Evasion, Operation.Add, evasion.ToFormula<decimal>(), group)
 	{
-		public SpaceYardAbility(
+		public EvasionAbility(
 			IEntity entity,
 			AbilityRule rule,
 			IFormula[] values
-		) : this(entity, rule, resource: values[0].ToStringFormula(), values[1].ToFormula<int>(), values.Length > 2 ? values[2]?.ToStringFormula() : null)
+		) : this(entity, rule, evasion: values[0].ToFormula<int>(), values.Length > 1 ? values[1]?.ToStringFormula() : null)
 		{
 		}
 
-		public override StatType GetStatType(Resource resource) =>
-			StatType.SpaceYardRate(resource);
+		public IFormula<int> Evasion { get; private set; } = evasion;
 
 		public override void Interact(IInteraction interaction)
 		{
 			base.Interact(interaction);
-			// TODO: build interaction
+
+			if (interaction is FireWeaponInteraction fire && (Container == fire.Target || Container.Ancestors().Contains(fire.Target)))
+			{
+				fire.Evasion = Operation.Aggregate(fire.Evasion, [Evasion.Value]).RoundTo<int>();
+			}
 		}
 	}
 }

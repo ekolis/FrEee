@@ -19,6 +19,7 @@ using FrEee.Processes.Combat;
 using FrEee.Ecs;
 using FrEee.Ecs.Abilities;
 using FrEee.Ecs.Abilities.Utility;
+using FrEee.Ecs.Stats;
 
 namespace FrEee.Objects.Vehicles;
 
@@ -42,13 +43,15 @@ public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IF
 	{
 		get
 		{
-			return
-				this.GetAbilityValue("Combat To Hit Offense Plus").ToInt()
-				- this.GetAbilityValue("Combat To Hit Offense Minus").ToInt()
-				+ (Owner == null || Owner.Culture == null ? 0 : Owner.Culture.SpaceCombat)
-				+ Sector.GetEmpireAbilityValue(Owner, "Combat Modifier - Sector").ToInt()
-				+ StarSystem.GetEmpireAbilityValue(Owner, "Combat Modifier - System").ToInt()
-				+ Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
+			return this.GetStatValue<int>(StatType.Accuracy);
+			/*
+			this.GetAbilityValue("Combat To Hit Offense Plus").ToInt()
+			- this.GetAbilityValue("Combat To Hit Offense Minus").ToInt()
+			+ (Owner == null || Owner.Culture == null ? 0 : Owner.Culture.SpaceCombat)
+			+ Sector.GetEmpireAbilityValue(Owner, "Combat Modifier - Sector").ToInt()
+			+ StarSystem.GetEmpireAbilityValue(Owner, "Combat Modifier - System").ToInt()
+			+ Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
+			*/
 		}
 	}
 
@@ -160,13 +163,15 @@ public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IF
 	{
 		get
 		{
-			return
-				this.GetAbilityValue("Combat To Hit Defense Plus").ToInt()
-				- this.GetAbilityValue("Combat To Hit Defense Minus").ToInt()
-				+ (Owner == null || Owner.Culture == null ? 0 : Owner.Culture.SpaceCombat)
-				+ Sector.GetEmpireAbilityValue(Owner, "Combat Modifier - Sector").ToInt()
-				+ StarSystem.GetEmpireAbilityValue(Owner, "Combat Modifier - System").ToInt()
-				+ Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
+			return this.GetStatValue<int>(StatType.Evasion);
+			/*
+			this.GetAbilityValue("Combat To Hit Defense Plus").ToInt()
+			- this.GetAbilityValue("Combat To Hit Defense Minus").ToInt()
+			+ (Owner == null || Owner.Culture == null ? 0 : Owner.Culture.SpaceCombat)
+			+ Sector.GetEmpireAbilityValue(Owner, "Combat Modifier - Sector").ToInt()
+			+ StarSystem.GetEmpireAbilityValue(Owner, "Combat Modifier - System").ToInt()
+			+ Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
+			*/
 		}
 	}
 

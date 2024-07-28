@@ -42,6 +42,10 @@ public class Ability : IAbility, IContainable<IEntity>, IReferrable, IModObject,
                     Values.Add(ff.ToStringFormula());
                 }
             }
+            else if (val is null)
+            {
+                Values.Add(null);
+            }
             else
             {
                 Values.Add(new LiteralFormula<string>(val.ToString()));
@@ -83,24 +87,7 @@ public class Ability : IAbility, IContainable<IEntity>, IReferrable, IModObject,
     /// A description of the ability's effects.
     /// Can use, e.g. [%Amount1%] to specify the amount in the Value 1 field.
     /// </summary>
-    public Formula<string>? Description => Rule.Description;
-
-    /// <summary>
-    /// Key for ability groups.
-    /// </summary>
-    public IEnumerable<string> Group
-    {
-        get
-        {
-            var list = new List<string>();
-            for (int i = 0; i < Rule.ValueRules.Count; i++)
-            {
-                if (Rule.ValueRules.Count > i && Rule.ValueRules[i] == AbilityValueRule.Group)
-                    yield return Values[i];
-                yield return "";
-            }
-        }
-    }
+    public Formula<string>? Description => Rule.Description;   
 
     public long ID
     {

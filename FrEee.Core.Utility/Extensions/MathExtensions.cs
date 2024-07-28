@@ -121,4 +121,13 @@ public static class MathExtensions
 	public static T Sum<T>(this IEnumerable<T> list)
 		where T : IAdditionOperators<T, T, T>
 		=> list.Aggregate((a, b) => a + b);
+
+	public static TRounded RoundTo<TOriginal, TRounded>(this TOriginal value)
+		where TOriginal : IFloatingPoint<TOriginal>
+		where TRounded : IBinaryInteger<TRounded>
+		=> (TRounded)Convert.ChangeType(TOriginal.Round(value), typeof(TRounded));
+
+	public static TRounded RoundTo<TRounded>(this decimal value)
+		where TRounded : IBinaryInteger<TRounded>
+		=> (TRounded)Convert.ChangeType(decimal.Round(value), typeof(TRounded));
 }

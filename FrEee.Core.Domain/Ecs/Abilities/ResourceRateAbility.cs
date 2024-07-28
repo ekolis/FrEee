@@ -27,14 +27,15 @@ namespace FrEee.Ecs.Abilities
 		StatType statType,
 		Operation operation,
 		IFormula<string> resource,
-		IFormula<int> rate
-	) : StatModifierAbility(entity, rule, statType, operation, rate.ToFormula<decimal>())
+		IFormula<int> rate,
+		IFormula<string>? group = null
+	) : StatModifierAbility(entity, rule, statType, operation, rate.ToFormula<decimal>(), group)
 	{
 		public ResourceRateAbility(
 			IEntity entity,
 			AbilityRule rule,
 			IFormula[] values
-		) : this(entity, rule, null,Operation.Add, values[0].ToStringFormula(), values[1].ToFormula<int>())
+		) : this(entity, rule, null,Operation.Add, values[0].ToStringFormula(), values[1].ToFormula<int>(), values.Length > 2 ? values[2]?.ToStringFormula() : null)
 		{
 		}
 

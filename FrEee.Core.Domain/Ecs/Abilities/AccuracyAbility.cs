@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,32 +17,33 @@ using Microsoft.Scripting.Utils;
 namespace FrEee.Ecs.Abilities
 {
     /// <summary>
-    /// Allows an entity to construct ships, bases, and units.
+    /// Increases the accuracy of this combatant's direct fire weapons.
     /// </summary>
-    public class SpaceYardAbility(
+    public class AccuracyAbility(
 		IEntity entity,
 		AbilityRule rule,
-		IFormula<string> resource,
-		IFormula<int> rate,
+		IFormula<int> accuracy,
 		IFormula<string>? group = null
-		// TODO: pass in resource formula to ResourceRateAbility
-	) : ResourceRateAbility(entity, rule, StatType.SpaceYardRate(resource.Value), Operation.TakeMaximum, resource, rate, group)
+	) : StatModifierAbility(entity, rule, StatType.Accuracy, Operation.Add, accuracy.ToFormula<decimal>(), group)
 	{
-		public SpaceYardAbility(
+		public AccuracyAbility(
 			IEntity entity,
 			AbilityRule rule,
 			IFormula[] values
-		) : this(entity, rule, resource: values[0].ToStringFormula(), values[1].ToFormula<int>(), values.Length > 2 ? values[2]?.ToStringFormula() : null)
+		) : this(entity, rule, accuracy: values[0].ToFormula<int>(), group: values.Length > 1 ? values[1]?.ToStringFormula() : null)
 		{
 		}
 
-		public override StatType GetStatType(Resource resource) =>
-			StatType.SpaceYardRate(resource);
+		public IFormula<int> Accuracy { get; private set; } = accuracy;
 
 		public override void Interact(IInteraction interaction)
 		{
 			base.Interact(interaction);
-			// TODO: build interaction
+
+			if (interaction is FireWeaponInteraction fire && (Container == fire.Source || Container.Ancestors().Contains(fire.Source)))
+			{
+				fire.Accuracy = Operation.Aggregate(fire.Accuracy, [Accuracy.Value]).RoundTo<int>();
+			}
 		}
 	}
 }

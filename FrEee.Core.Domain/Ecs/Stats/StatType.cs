@@ -19,7 +19,11 @@ namespace FrEee.Ecs.Stats
     {
 		public static StatType Unknown => new("Unknown");
 
+		#region Cosmic Hazards
 		public static StatType WarpDamage => new("Warp Damage");
+		#endregion
+
+		#region Resource Extraction
 
 		public static StatType ColonyResourceExtractionMinerals => new("Colony Resource Extraction Minerals");
 		public static StatType ColonyResourceExtractionOrganics => new("Colony Resource Extraction Radioactives");
@@ -37,7 +41,9 @@ namespace FrEee.Ecs.Stats
 			5 => ColonyResourceExtractionIntelligence,
 			_ => throw new ArgumentException($"Can't get colony resource extraction for resource number {resourceNumber}. Must be between 1 and 5.")
 		};
+		#endregion
 
+		#region Construction
 		public static StatType SpaceYardRateMinerals => new("Space Yard Rate Minerals");
 		public static StatType SpaceYardRateOrganics => new("Space Yard Rate Organics");
 		public static StatType SpaceYardRateRadioactives => new("Space Yard Rate Radioactives");
@@ -50,7 +56,13 @@ namespace FrEee.Ecs.Stats
 			3 => SpaceYardRateRadioactives,
 			_ => throw new ArgumentException($"Can't get space yard rate for resource number {resourceNumber}. Must be between 1 and 3.")
 		};
+		#endregion
 
 		public static StatType FacilitySize { get; } = new("Facility Size");
+
+		#region Combat
+		public static StatType Accuracy => new("Accuracy");
+		public static StatType Evasion => new("Evasion");
+		#endregion
 	}
 }

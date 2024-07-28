@@ -24,6 +24,7 @@ public class AbilityTest
     // yes these are null, they're being initialized in the SetUp method, stop complaining Visual Studio!
     StarSystem sys = default!;
     Empire emp = default!;
+    IHull<Ship> hull = default!;
 	IDesign<Ship> design = default!;
 	Ship ship = default!;
 
@@ -43,7 +44,8 @@ public class AbilityTest
         // create stuff
         emp = TestUtilities.CreateEmpire();
         design = TestUtilities.CreateDesign<Ship>(emp);
-        ship = TestUtilities.CreateVehicle(design, emp);
+		hull = TestUtilities.CreateHull<Ship>(design);
+		ship = TestUtilities.CreateVehicle(design, emp);
     }
 
     [Test]
@@ -57,7 +59,7 @@ public class AbilityTest
         storm.Sector = ship.Sector;
 
         // assign some abilities
-        design.Hull.AddAbility("Combat To Hit Offense Plus", 1);
+        design.Hull.AddAbility(new AccuracyAbility(design.Hull, AbilityRule.Find("Combat To Hit Offense Plus"), 1.ToLiteralFormula()));
         storm.AddAbility("Combat Modifier - Sector", 2);
         design.Hull.AddAbility("Combat Modifier - System", 4);
         design.Hull.AddAbility("Combat Modifier - Empire", 8);
@@ -112,7 +114,8 @@ public class AbilityTest
             AbilityRule.Find("Resource Generation - Organics"),
             Operation.Add,
             Resource.Organics.Name.ToLiteralFormula(),
-            666.ToLiteralFormula()
+            666.ToLiteralFormula(),
+            null
 		));
         Colony colony = new();
         for (var i = 0; i < 10; i++)
@@ -138,7 +141,8 @@ public class AbilityTest
 			abilRule,
             Operation.Add,
 			Resource.Organics.Name.ToLiteralFormula(),
-			666.ToLiteralFormula()
+			666.ToLiteralFormula(),
+            null
 		));
 		Colony colony = new();
 		for (var i = 0; i < 10; i++)

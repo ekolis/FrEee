@@ -327,18 +327,12 @@ Value 1 Group Rule := Add
 Value 2 Rule := Group
 
 Name := Combat To Hit Offense Plus
-Targets := Vehicle, Planet, Component, Facility
-Description := Accuracy modifier of [%Amount1%]%.
-Value 1 Rule := TakeHighest
-Value 1 Group Rule := Add
-Value 2 Rule := Group
+Type := AccuracyAbility
+Description := Accuracy modifier of {Accuracy}%.
 
 Name := Combat To Hit Defense Plus
-Targets := Vehicle, Planet, Component, Facility
-Description := Evasion modifier of [%Amount1%]%.
-Value 1 Rule := TakeHighest
-Value 1 Group Rule := Add
-Value 2 Rule := Group
+Type := EvasionAbility
+Description := Evasion modifier of {Evasion}%.
 
 Name := Mine Sweeping
 Targets := SpaceVehicle, Component, Fleet

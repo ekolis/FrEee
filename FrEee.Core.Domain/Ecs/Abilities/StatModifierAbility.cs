@@ -25,14 +25,15 @@ namespace FrEee.Ecs.Abilities
 		AbilityRule rule,
 		StatType statType,
 		Operation operation,
-		IFormula<decimal> amount
-	) : Ability(entity, rule, values: [amount])
+		IFormula<decimal> amount,
+		IFormula<string>? group = null
+	) : Ability(entity, rule, values: [amount, group])
 	{
 		public StatModifierAbility(
 			IEntity entity,
 			AbilityRule rule,
 			IFormula[] values
-		) : this(entity, rule, statType: StatType.Unknown, operation: Operation.Add, amount: values[0].ToFormula<decimal>())
+		) : this(entity, rule, statType: StatType.Unknown, operation: Operation.Add, amount: values[0].ToFormula<decimal>(), group: values[1].ToFormula<string>())
 		{
 		}
 
@@ -44,6 +45,8 @@ namespace FrEee.Ecs.Abilities
 
 		public IFormula<decimal> Modifier => Value1.ToFormula<decimal>();
 
+		public IFormula<string> Group => Value2;
+
 		public override void Interact(IInteraction interaction)
 		{
 			base.Interact(interaction);
@@ -53,6 +56,7 @@ namespace FrEee.Ecs.Abilities
 			}
 			if (interaction is GetStatValueInteraction getStatValue && getStatValue.Stat.StatType == StatType)
 			{
+				// TODO: take into account stacking rules from Group and the AbilityRule
 				getStatValue.Stat.Modifiers.Add(new Modifier(Container, Operation, Modifier.Value));
 			}
 		}

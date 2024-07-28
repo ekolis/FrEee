@@ -60,7 +60,8 @@ public class ColonyResourceExtractionAbilityTest
 			AbilityRule.Find("Resource Generation - Organics"),
 			Operation.Add,
 			Resource.Organics.Name.ToLiteralFormula(),
-			500.ToLiteralFormula()
+			500.ToLiteralFormula(),
+			null
 		));
 		Colony colony = new()
 		{

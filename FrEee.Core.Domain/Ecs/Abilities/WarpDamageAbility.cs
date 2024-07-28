@@ -23,14 +23,15 @@ namespace FrEee.Ecs.Abilities
     public class WarpDamageAbility(
 		IEntity entity,
 		AbilityRule rule,
-		IFormula<int> damage
-	) : StatModifierAbility(entity, rule, StatType.WarpDamage, Operation.Add, damage.ToFormula<decimal>())
+		IFormula<int> damage,
+		IFormula<string>? group = null
+	) : StatModifierAbility(entity, rule, StatType.WarpDamage, Operation.Add, damage.ToFormula<decimal>(), group)
 	{
 		public WarpDamageAbility(
 			IEntity entity,
 			AbilityRule rule,
 			IFormula[] values
-		) : this(entity, rule, damage: values[0].ToFormula<int>())
+		) : this(entity, rule, damage: values[0].ToFormula<int>(), values.Length > 1 ? values[1].ToFormula<string>() : null)
 		{
 		}
 

@@ -26,15 +26,16 @@ namespace FrEee.Ecs.Abilities
 		AbilityRule rule,
 		Operation operation,
 		IFormula<string> resource,
-		IFormula<int> rate
+		IFormula<int> rate,
+		IFormula<string>? group = null
 		// TODO: let formulas pass through to ResourceRateAbility to be evaluated later
-	) : ResourceRateAbility(entity, rule, StatType.ColonyResourceExtraction(resource.Value), operation, resource, rate)
+	) : ResourceRateAbility(entity, rule, StatType.ColonyResourceExtraction(resource.Value), operation, resource, rate, group)
 	{
 		public ColonyResourceExtractionAbility(
 			IEntity entity,
 			AbilityRule rule,
 			IFormula[] values
-		) : this(entity, rule, operation: null, resource: values[0].ToStringFormula(), values[1].ToFormula<int>())
+		) : this(entity, rule, operation: null, resource: values[0].ToStringFormula(), values[1].ToFormula<int>(), values.Length > 2 ? values[2]?.ToStringFormula() : null)
 		{
 		}
 
