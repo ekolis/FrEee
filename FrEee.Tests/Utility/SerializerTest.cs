@@ -190,7 +190,9 @@ public class SerializerTest
 		Mod.Load(null);
 		var serdata = Serializer.SerializeToString(Mod.Current);
 		Mod.Current = Serializer.DeserializeFromString<Mod>(serdata);
-		Assert.AreEqual(800, Mod.Current.FacilityTemplates.Single(x => x.Name == "Mineral Miner Facility I").GetAbilityValue("Resource Generation - Minerals").ToInt());
+		Assert.AreEqual(800, Mod.Current.FacilityTemplates
+			.Single(x => x.Name == "Mineral Miner Facility I")
+			.GetStatValue<int>(StatType.ColonyResourceExtractionMinerals));
 	}
 
 	[Test]
