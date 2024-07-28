@@ -93,6 +93,6 @@ namespace FrEee.Ecs.Abilities
 		/// <returns></returns>
 		public static IEnumerable<T> GetAbilities<T>(this IEntity entity)
 			where T : IAbility
-			=> entity.Abilities.OfType<T>();
+			=> entity.Abilities?.OfType<T>() ?? [];
 	}
 }

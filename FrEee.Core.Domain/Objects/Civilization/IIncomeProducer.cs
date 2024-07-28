@@ -7,7 +7,7 @@ namespace FrEee.Objects.Civilization;
 /// <summary>
 /// Something which can produce income for an empire.
 /// </summary>
-public interface IIncomeProducer : IOwnableEntity, ILocated
+public interface IIncomeProducer : IEntity, IOwnable, ILocated
 {
     /// <summary>
     /// Ratio of income from this object that occurs even without a spaceport.

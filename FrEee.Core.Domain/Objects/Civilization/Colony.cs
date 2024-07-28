@@ -20,7 +20,7 @@ namespace FrEee.Objects.Civilization;
 /// A colony on a planet.
 /// </summary>
 [Serializable]
-public class Colony : IEntity, IOwnableEntity, IFoggable, IContainable<Planet>, IIncomeProducer, IReferrable
+public class Colony : IEntity, IOwnable, IFoggable, IContainable<Planet>, IIncomeProducer, IReferrable
 {
 	public Colony()
 	{

@@ -16,7 +16,7 @@ namespace FrEee.Objects.Vehicles;
 /// <summary>
 /// A space or ground vehicle.
 /// </summary>
-public interface IVehicle : IConstructable, IOwnableEntity, IReferrable, IDamageable, ICombatant, IRecyclable, IIncomeProducer, IUpgradeable<IVehicle>, INameable
+public interface IVehicle : IEntity, IConstructable, IOwnable, IReferrable, IDamageable, ICombatant, IRecyclable, IIncomeProducer, IUpgradeable<IVehicle>, INameable
 {
     [DoNotSerialize(false)]
     new IList<Component> Components { get; }

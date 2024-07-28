@@ -14,7 +14,7 @@ namespace FrEee.Objects.Vehicles;
 /// <summary>
 /// A vehicle design.
 /// </summary>
-public interface IDesign : INamed, IPictorial, IOwnableEntity, IConstructionTemplate, IPromotable, IFoggable, IUpgradeable<IDesign>, ICleanable
+public interface IDesign : IEntity, INamed, IPictorial, IOwnable, IConstructionTemplate, IPromotable, IFoggable, IUpgradeable<IDesign>, ICleanable
 {
     int Accuracy { get; }
 

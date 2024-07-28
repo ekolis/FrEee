@@ -31,7 +31,7 @@ public static class ChecksExtensions
 	public static bool HasAbility(this IEntity obj, string abilityName, bool includeShared = true)
 	{
 		IEnumerable<Ability> abils;
-		if (includeShared && obj is IOwnableEntity)
+		if (includeShared)
 			abils = obj.UnstackedAbilities(true).Union(obj.SharedAbilities());
 		else
 			abils = obj.UnstackedAbilities(true);

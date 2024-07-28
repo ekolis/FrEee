@@ -23,7 +23,7 @@ namespace FrEee.Objects.Technology;
 /// </summary>
 [Serializable]
 [Obsolete("Use an IEntity wih a FacilityAbility.")]
-public class Facility : IEntity, IOwnableEntity, IConstructable, IDamageable, IDisposable, IContainable<Planet>, IFormulaHost, IRecyclable, IUpgradeable<Facility>, IDataObject
+public class Facility : IEntity, IOwnable, IConstructable, IDamageable, IDisposable, IContainable<Planet>, IFormulaHost, IRecyclable, IUpgradeable<Facility>, IDataObject
 {
 	public Facility(FacilityTemplate template)
 	{

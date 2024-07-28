@@ -68,7 +68,7 @@ public class Galaxy : ICommonEntity
 		referrables = new Dictionary<long, IReferrable>();
 		AbilityCache = new SafeDictionary<IEntity, IEnumerable<Ability>>();
 		CommonAbilityCache = new SafeDictionary<Tuple<ICommonEntity, Empire>, IEnumerable<Ability>>();
-		SharedAbilityCache = new SafeDictionary<Tuple<IOwnableEntity, Empire>, IEnumerable<Ability>>();
+		SharedAbilityCache = new SafeDictionary<Tuple<IEntity, Empire>, IEnumerable<Ability>>();
 		GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
 		ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
 		Battles = new HashSet<IBattle>();
@@ -356,7 +356,7 @@ public class Galaxy : ICommonEntity
 	/// Cache of abilities that are shared to empires from other objects due to treaties.
 	/// </summary>
 	[DoNotSerialize]
-	internal SafeDictionary<Tuple<IOwnableEntity, Empire>, IEnumerable<Ability>> SharedAbilityCache { get; private set; }
+	internal SafeDictionary<Tuple<IEntity, Empire>, IEnumerable<Ability>> SharedAbilityCache { get; private set; }
 
 	/// <summary>
 	/// Serialized string value of the galaxy at the beginning of the turn.

@@ -239,9 +239,11 @@ public static class Extensions
 	public static IEnumerable<Ability> EmpireCommonAbilities(this IEntity obj, Func<IEntity, bool> sourceFilter = null)
 	{
 		// Unowned objects cannot empire common abilities.
-		var ownable = obj as IOwnableEntity;
-		if (ownable == null || ownable.Owner == null)
+		var owner = obj.GetOwner();
+		if (owner is null)
+		{
 			yield break;
+		}
 
 		// Where are these abilities coming from?
 		// Right now they can only come from ancestors, since sectors and star systems are the only common ability objects.
@@ -251,13 +253,13 @@ public static class Extensions
 		// What abilities do we have?
 		foreach (var ancestor in ancestors)
 		{
-			foreach (var abil in ancestor.EmpireAbilities(ownable.Owner, sourceFilter))
+			foreach (var abil in ancestor.EmpireAbilities(owner, sourceFilter))
 				yield return abil;
 		}
 	}
 
 	[Obsolete("Use ECS scoped abilities instead, once they're added.")]
-	private static IEnumerable<Ability> FindSharedAbilities(this IOwnableEntity obj, ShareAbilityClause clause)
+	private static IEnumerable<Ability> FindSharedAbilities(this IEntity obj, ShareAbilityClause clause)
 	{
 		if (obj == null)
 			yield break;
@@ -401,20 +403,22 @@ public static class Extensions
 	public static IEnumerable<Ability> SharedAbilities(this IEntity obj, Func<IEntity, bool>? sourceFilter = null)
 	{
 		// Unowned objects cannot have abilities shared to them.
-		var ownable = obj as IOwnableEntity;
-		if (ownable == null || ownable.Owner == null)
+		var owner = obj.GetOwner();
+		if (owner is null)
+		{
 			yield break;
+		}	
 
 		// update cache if necessary
-		foreach (var clause in ownable.Owner.ReceivedTreatyClauses.Flatten().OfType<ShareAbilityClause>())
+		foreach (var clause in owner.ReceivedTreatyClauses.Flatten().OfType<ShareAbilityClause>())
 		{
-			var tuple = Tuple.Create(ownable, clause.Owner);
+			var tuple = Tuple.Create(obj, clause.Owner);
 			if (Empire.Current == null || !Galaxy.Current.SharedAbilityCache.ContainsKey(tuple))
-				Galaxy.Current.SharedAbilityCache[tuple] = ownable.FindSharedAbilities(clause).ToArray();
+				Galaxy.Current.SharedAbilityCache[tuple] = obj.FindSharedAbilities(clause).ToArray();
 		}
 
 		// get cached abilities
-		foreach (var keyTuple in Galaxy.Current.SharedAbilityCache.Keys.Where(k => k.Item1 == ownable && (sourceFilter == null || sourceFilter(k.Item2))))
+		foreach (var keyTuple in Galaxy.Current.SharedAbilityCache.Keys.Where(k => k.Item1 == obj && (sourceFilter == null || sourceFilter(k.Item2))))
 		{
 			foreach (var abil in Galaxy.Current.SharedAbilityCache[keyTuple])
 				yield return abil;
