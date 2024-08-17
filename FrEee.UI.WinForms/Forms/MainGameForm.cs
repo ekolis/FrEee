@@ -9,7 +9,6 @@ using FrEee.Extensions;
 using FrEee.UI.WinForms.Controls;
 using FrEee.UI.WinForms.Interfaces;
 using FrEee.UI.WinForms.Objects;
-using FrEee.UI.WinForms.Objects.GalaxyViewModes;
 using FrEee.UI.WinForms.Utility;
 using FrEee.UI.WinForms.Utility.Extensions;
 using System;
@@ -26,8 +25,6 @@ using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.UI.Blazor.Views.GalaxyMapModes;
-using FrEee.Extensions;
-using FrEee.Utility;
 using FrEee.Processes.Combat;
 
 namespace FrEee.UI.WinForms.Forms;

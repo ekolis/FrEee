@@ -14,7 +14,6 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
 
 namespace FrEee.UI.WinForms.Forms;
 

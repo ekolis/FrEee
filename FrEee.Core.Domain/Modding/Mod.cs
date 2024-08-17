@@ -11,8 +11,6 @@ using FrEee.Modding.Templates;
 using FrEee.Utility;
 using FrEee.Extensions;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
 using FrEee.Processes.AI;
 using FrEee.Modding.Abilities;
 

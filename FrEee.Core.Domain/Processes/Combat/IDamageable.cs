@@ -1,6 +1,5 @@
 ﻿using FrEee.Objects.GameState;
 using FrEee.Utility;
-using FrEee.Utility;
 namespace FrEee.Processes.Combat;
 
 /// <summary>

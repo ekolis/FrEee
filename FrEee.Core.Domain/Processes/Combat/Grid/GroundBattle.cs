@@ -8,8 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
-using FrEee.Utility;
-using FrEee.Processes.Combat;
 
 namespace FrEee.Processes.Combat.Grid;
 

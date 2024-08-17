@@ -12,7 +12,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using FrEee.Extensions;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Setup;
 

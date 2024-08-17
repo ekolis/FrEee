@@ -1,6 +1,5 @@
 ﻿using System;
 using FrEee.Utility;
-using FrEee.Utility;
 namespace FrEee.Processes.Combat;
 
 /// <summary>

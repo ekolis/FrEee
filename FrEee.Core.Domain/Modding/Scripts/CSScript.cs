@@ -6,7 +6,6 @@ using Microsoft.CodeAnalysis.Scripting;
 using System;
 using System.Collections.Immutable;
 using System.IO;
-using FrEee.Utility;
 
 namespace FrEee.Modding;
 

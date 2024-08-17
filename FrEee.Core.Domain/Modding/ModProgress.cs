@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FrEee.Utility;
-
-namespace FrEee.Modding
+﻿namespace FrEee.Modding
 {
 	public class ModProgress<T> : Utility.Progress<ModReference<T>, T>
 			where T : IModObject

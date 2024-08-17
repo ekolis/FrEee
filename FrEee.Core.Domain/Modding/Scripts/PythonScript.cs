@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using FrEee.Modding.Scripts;
-using FrEee.Extensions;
-using FrEee.Utility;
 
 namespace FrEee.Modding;
 

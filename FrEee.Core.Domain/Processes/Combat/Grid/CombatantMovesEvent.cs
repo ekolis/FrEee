@@ -1,6 +1,4 @@
-﻿using FrEee.Processes.Combat;
-using FrEee.Utility;
-using FrEee.Utility;
+﻿using FrEee.Utility;
 namespace FrEee.Processes.Combat.Grid;
 
 public class CombatantMovesEvent : BattleEvent

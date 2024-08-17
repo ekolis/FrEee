@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
-using FrEee.Serialization;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 

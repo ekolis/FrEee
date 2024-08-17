@@ -1,7 +1,6 @@
 ﻿using FrEee.UI.Blazor.Views;
 using FrEee.UI.WinForms.Forms;
 using FrEee.UI.WinForms.Utility.Extensions;
-using FrEee.Utility;
 using System;
 using System.ComponentModel;
 using System.Drawing;

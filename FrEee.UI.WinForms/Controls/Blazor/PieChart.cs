@@ -1,11 +1,7 @@
 ﻿using FrEee.UI.Blazor.Views;
 using FrEee.UI.WinForms.Forms;
-using FrEee.UI.WinForms.Utility.Extensions;
-using FrEee.Utility;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BlazorPieChart = FrEee.UI.Blazor.Views.PieChart<int>;

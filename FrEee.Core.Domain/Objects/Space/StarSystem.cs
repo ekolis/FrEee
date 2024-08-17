@@ -10,7 +10,6 @@ using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;
 using FrEee.Objects.GameState;
-using FrEee.Utility;
 using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Space;

@@ -1,18 +1,10 @@
 using FrEee.Utility;
 using System;
 using System.Drawing;
-using System.Windows.Forms;
-using FrEee.UI.Blazor;
-using Microsoft.AspNetCore.Components.WebView.WindowsForms;
-using Microsoft.Extensions.DependencyInjection;
 using BlazorProgressBar = FrEee.UI.Blazor.Views.ProgressBar;
-using System.Collections.Generic;
-using System.Linq;
 using FrEee.UI.Blazor.Views;
 using System.Threading.Tasks;
 using FrEee.UI.WinForms.Forms;
-using FrEee.UI.WinForms.Controls;
-using FrEee.Utility;
 
 namespace FrEee.UI.WinForms.Controls.Blazor;
 

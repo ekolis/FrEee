@@ -5,7 +5,6 @@ using System;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Space;
 using FrEee.Objects.GameState;
-using FrEee.Serialization;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 

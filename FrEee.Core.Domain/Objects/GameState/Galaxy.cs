@@ -18,16 +18,10 @@ using System.Reflection;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.Civilization.Orders;
-using FrEee.Objects.VictoryConditions;
 using FrEee.Objects.Space;
-using FrEee.Objects.Civilization.Diplomacy;
-using FrEee.Objects.Technology;
-using FrEee.Extensions;
-using FrEee.Utility;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 using FrEee.Processes.Setup;
-using FrEee.Processes.Setup.WarpPointPlacementStrategies;
 
 namespace FrEee.Objects.GameState;
 

@@ -5,7 +5,6 @@ using Microsoft.CodeAnalysis.Scripting;
 using System;
 using System.Collections.Generic;
 using FrEee.Objects.GameState;
-using FrEee.Utility;
 
 namespace FrEee.Processes.AI;
 

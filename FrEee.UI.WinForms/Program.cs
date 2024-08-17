@@ -15,7 +15,6 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
-using FrEee.Utility;
 
 namespace FrEee.UI.WinForms;
 

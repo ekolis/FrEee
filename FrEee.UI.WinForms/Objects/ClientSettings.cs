@@ -1,5 +1,6 @@
 using FrEee.Objects.Civilization;
-using FrEee.Utility; using FrEee.Serialization;
+using FrEee.Utility;
+using FrEee.Serialization;
 using FrEee.Extensions;
 using FrEee.UI.WinForms.DataGridView;
 using System;
@@ -7,7 +8,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using FrEee.Utility;
 
 namespace FrEee.UI.WinForms.Objects;
 

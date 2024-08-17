@@ -1,7 +1,5 @@
 ﻿using FrEee.Utility;
 using System.Linq;
-using FrEee.Utility;
-using FrEee.Processes.Combat;
 
 namespace FrEee.Processes.Combat.Grid;
 

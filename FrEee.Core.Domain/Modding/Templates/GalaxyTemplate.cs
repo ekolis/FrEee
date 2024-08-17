@@ -6,8 +6,6 @@ using FrEee.Objects.Space;
 using FrEee.Utility;
 using FrEee.Extensions;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
 using FrEee.Processes.Setup;
 using FrEee.Processes.Setup.StarSystemPlacementStrategies;
 

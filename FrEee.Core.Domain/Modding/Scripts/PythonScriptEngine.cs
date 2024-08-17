@@ -9,8 +9,6 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
 
 namespace FrEee.Modding;
 

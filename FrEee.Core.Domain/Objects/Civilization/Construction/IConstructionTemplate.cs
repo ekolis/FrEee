@@ -1,5 +1,4 @@
-﻿using FrEee.Objects.Civilization;
-using FrEee.Objects.GameState;
+﻿using FrEee.Objects.GameState;
 using FrEee.Objects.Technology;
 using FrEee.Utility;
 namespace FrEee.Objects.Civilization.Construction;

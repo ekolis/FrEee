@@ -13,7 +13,6 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
 using FrEee.Processes.Combat;
 
 namespace FrEee.UI.WinForms.Forms;

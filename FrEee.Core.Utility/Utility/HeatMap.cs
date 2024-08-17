@@ -1,6 +1,4 @@
-﻿using FrEee.Utility;
-using FrEee.Utility;
-namespace FrEee.Utility;
+﻿namespace FrEee.Utility;
 
 /// <summary>
 /// A heatmap, used for pathfinding and the like.

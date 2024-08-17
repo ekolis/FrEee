@@ -19,8 +19,6 @@ using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.Diplomacy;
-using FrEee.Extensions;
-using FrEee.Utility;
 using FrEee.Processes.AI;
 using FrEee.Modding.Abilities;
 using FrEee.Processes.Setup;

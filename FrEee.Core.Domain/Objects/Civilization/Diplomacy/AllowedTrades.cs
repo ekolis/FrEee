@@ -1,5 +1,4 @@
 ﻿using FrEee.Utility;
-using FrEee.Utility;
 namespace FrEee.Objects.Civilization.Diplomacy;
 
 public enum AllowedTrades

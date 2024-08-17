@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Extensions;
-using FrEee.Extensions;
 
 namespace FrEee.UI.WinForms.Controls;
 

@@ -1,5 +1,4 @@
-﻿using FrEee.Objects.Civilization;
-using FrEee.Objects.Space;
+﻿using FrEee.Objects.Space;
 
 namespace FrEee.Objects.Civilization.Orders;
 

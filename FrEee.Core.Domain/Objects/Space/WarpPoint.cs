@@ -5,7 +5,6 @@ using FrEee.Extensions;
 using System;
 using System.Linq;
 using FrEee.Objects.GameState;
-using FrEee.Utility;
 using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Space;

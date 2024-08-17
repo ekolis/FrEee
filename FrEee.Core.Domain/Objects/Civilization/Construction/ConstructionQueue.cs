@@ -12,7 +12,6 @@ using System.Linq;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
-using FrEee.Serialization;
 
 namespace FrEee.Objects.Civilization.Construction;
 

@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
 
 namespace FrEee.Modding.StellarObjectLocations;
 

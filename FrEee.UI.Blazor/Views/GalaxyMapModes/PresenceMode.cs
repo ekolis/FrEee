@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FrEee.Extensions;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
-using FrEee.Extensions;
 
 namespace FrEee.UI.Blazor.Views.GalaxyMapModes
 {

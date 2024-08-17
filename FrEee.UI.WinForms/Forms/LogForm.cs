@@ -13,7 +13,6 @@ using System.Windows.Forms;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
 using FrEee.Processes.Combat;
 
 namespace FrEee.UI.WinForms.Forms;

@@ -10,8 +10,6 @@ using System.Drawing;
 using System.Linq;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 

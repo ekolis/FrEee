@@ -1,15 +1,8 @@
 using FrEee.Utility;
-using FrEee.Extensions;
 using System;
 using System.ComponentModel;
-using System.Drawing;
-using System.Windows.Forms;
 using FrEee.UI.Blazor.Views;
-using Microsoft.Extensions.DependencyInjection;
 using BlazorResourceDisplay = FrEee.UI.Blazor.Views.ResourceDisplay;
-using Microsoft.AspNetCore.Components.WebView.WindowsForms;
-using System.Collections.Generic;
-using FrEee.UI.WinForms.Controls;
 
 namespace FrEee.UI.WinForms.Controls.Blazor;
 

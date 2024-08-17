@@ -16,10 +16,7 @@ using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
 using FrEee.Processes.Combat;
-using FrEee.Processes.Combat.Grid;
 
 namespace FrEee.Processes;
 

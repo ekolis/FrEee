@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
 using FrEee.UI.Blazor.Views.GalaxyMapModes;

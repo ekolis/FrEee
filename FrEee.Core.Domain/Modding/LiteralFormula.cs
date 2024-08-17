@@ -1,11 +1,9 @@
-﻿using FrEee.Utility; using FrEee.Serialization;
+﻿using FrEee.Utility;
+using FrEee.Serialization;
 using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using FrEee.Utility;
-using FrEee.Extensions;
-using FrEee.Serialization;
 
 namespace FrEee.Modding;
 

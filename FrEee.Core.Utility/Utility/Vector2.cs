@@ -1,8 +1,5 @@
-﻿using FrEee.Extensions;
-using System;
+﻿using System;
 using System.Numerics;
-using FrEee.Utility;
-using FrEee.Utility;
 
 namespace FrEee.Utility;
 

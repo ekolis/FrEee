@@ -10,7 +10,6 @@ using System.IO;
 using System.Linq;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
-using FrEee.Serialization;
 using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Technology;

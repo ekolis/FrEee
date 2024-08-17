@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using FrEee.Objects.GameState;
-using FrEee.Utility;
 using FrEee.Modding.Abilities;
 
 namespace FrEee.Modding.Templates;

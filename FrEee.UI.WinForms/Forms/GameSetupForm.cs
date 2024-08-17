@@ -18,11 +18,6 @@ using System.Threading;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.Diplomacy;
-using Microsoft.AspNetCore.Components.WebView.WindowsForms;
-using Microsoft.Extensions.DependencyInjection;
-using FrEee.UI.Blazor;
-using FrEee.Extensions;
-using FrEee.Utility;
 using FrEee.Processes.Setup;
 using FrEee.Processes.Setup.WarpPointPlacementStrategies;
 

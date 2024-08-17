@@ -7,9 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using static System.Math;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
-using FrEee.Processes.Combat;
 
 namespace FrEee.Processes.Combat.Grid;
 
