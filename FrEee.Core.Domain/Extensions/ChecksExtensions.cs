@@ -9,7 +9,6 @@ using System.Linq;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Technology;
 using FrEee.Objects.GameState;
-using FrEee.Modding;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 namespace FrEee.Extensions;
@@ -183,16 +182,6 @@ public static class ChecksExtensions
 	public static bool IsWarhead(this WeaponTypes wt)
 	{
 		return wt == WeaponTypes.Warhead || wt == WeaponTypes.WarheadPointDefense;
-	}
-
-	public static bool StillExists<T>(this T old, IEnumerable<T> oldItems, IEnumerable<T> nuItems)
-		where T : IModObject
-	{
-		var match = nuItems.FindByModID(old.ModID);
-		if (match != null)
-			return true;
-		match = nuItems.FindByTypeNameIndex(old.GetType(), old.Name, oldItems.GetIndex(old));
-		return match != null;
 	}
 
 	/// <summary>
