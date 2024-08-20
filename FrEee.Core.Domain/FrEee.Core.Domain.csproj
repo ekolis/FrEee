@@ -1,9 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net8.0</TargetFrameworks>
+		<TargetFramework>net8.0</TargetFramework>
 		<OutputType>Library</OutputType>
 		<AssemblyName>FrEee.Core</AssemblyName>
-		<ProjectGuid>eca7a08b-992a-43ec-8d98-2ae887897343</ProjectGuid>
 		<Description>Open source Space Empires IV clone</Description>
 	</PropertyGroup>
 	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
