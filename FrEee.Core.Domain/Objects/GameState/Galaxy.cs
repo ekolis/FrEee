@@ -185,23 +185,12 @@ public class Galaxy : ICommonAbilityObject
 		get { return StarSystemLocations.MinOrDefault(ssl => ssl.Location.Y); }
 	}
 
-	private string modPath;
-
 	/// <summary>
 	/// The mod being played.
 	/// </summary>
 	[SerializationPriority(1)]
 	[ForceSerializationWhenDefaultValue]
-	public string ModPath
-	{
-		get => modPath;
-		set
-		{
-			if (Mod.Current == null || Mod.Current.RootPath != value)
-				new ModLoader().Load(value);
-			modPath = value;
-		}
-	}
+	public string ModPath { get; set; }
 
 	/// <summary>
 	/// The game name.
