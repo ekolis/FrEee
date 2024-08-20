@@ -1,10 +1,10 @@
 using FrEee.Objects.Civilization;
-using FrEee.Modding;
 using FrEee.Utility;
 using Microsoft.CodeAnalysis.Scripting;
 using System;
 using System.Collections.Generic;
 using FrEee.Objects.GameState;
+using FrEee.Modding.Scripts;
 
 namespace FrEee.Processes.AI;
 

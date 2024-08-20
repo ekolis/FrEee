@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Utility;
 

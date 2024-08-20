@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Extensions;
 using FrEee.Objects.GameState;
+using FrEee.Serialization;
 
-namespace FrEee.Serialization;
+namespace FrEee.Utility;
 
 public class ReferenceList<TRef, T> : IList<T>, IReferenceEnumerable, IPromotable
 			where TRef : IReference<T>

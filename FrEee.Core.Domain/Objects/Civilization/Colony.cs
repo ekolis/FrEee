@@ -11,6 +11,7 @@ using System.Linq;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
+using FrEee.Modding.Templates;
 
 namespace FrEee.Objects.Civilization;
 

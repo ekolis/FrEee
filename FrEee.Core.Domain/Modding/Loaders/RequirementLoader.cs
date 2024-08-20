@@ -2,6 +2,7 @@
 using FrEee.Objects.Technology;
 using FrEee.Extensions;
 using System.Collections.Generic;
+using FrEee.Modding.Scripts;
 
 namespace FrEee.Modding.Loaders;
 

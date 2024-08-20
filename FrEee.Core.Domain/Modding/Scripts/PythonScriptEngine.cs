@@ -10,7 +10,7 @@ using System.Linq;
 using System.Reflection;
 using FrEee.Objects.GameState;
 
-namespace FrEee.Modding;
+namespace FrEee.Modding.Scripts;
 
 /// <summary>
 /// IronPython scripting engine
@@ -39,7 +39,7 @@ public class PythonScriptEngine : MarshalByRefObject
 
 	private static IDictionary<PythonScript, CompiledCode> compiledScripts = new Dictionary<PythonScript, CompiledCode>();
 
-	private static Microsoft.Scripting.Hosting.ScriptEngine engine;
+	private static ScriptEngine engine;
 
 	private static IDictionary<string, IReferrable> lastReferrables = new SafeDictionary<string, IReferrable>();
 
@@ -173,7 +173,7 @@ public class PythonScriptEngine : MarshalByRefObject
 		var dict = new Dictionary<string, object>();
 		foreach (var varName in variableNames)
 			dict.Add(varName, engine.GetBuiltinModule().GetVariable(varName));
-			//dict.Add(varName, scope.GetVariable(varName));
+		//dict.Add(varName, scope.GetVariable(varName));
 		return dict;
 	}
 
@@ -209,7 +209,7 @@ public class PythonScriptEngine : MarshalByRefObject
 			string.Join("\n", postCommands.ToArray());
 		var external = new List<PythonScript>(script.ExternalScripts);
 		//if (Mod.Current != null)
-			//external.Add(Mod.Current.GlobalScript);
+		//external.Add(Mod.Current.GlobalScript);
 		var sc = new ScriptCode("runner", code, external.ToArray());
 		var runner = GetCodeScript(sc);
 		var compiledScript = GetCompiledScript(runner);
@@ -414,7 +414,7 @@ public class PythonScriptEngine : MarshalByRefObject
 		public override bool Equals(object? obj)
 		{
 			if (obj is CompiledCodeWithVariables c)
-				return this.Equals(c);
+				return Equals(c);
 			return false;
 		}
 

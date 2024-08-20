@@ -13,6 +13,7 @@ using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
+using FrEee.Modding.Templates;
 
 namespace FrEee.Objects.Technology;
 

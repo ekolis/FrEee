@@ -11,6 +11,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.Civilization.Orders;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.UI.WinForms.Controls;
 

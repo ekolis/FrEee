@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Civilization.Orders;
 

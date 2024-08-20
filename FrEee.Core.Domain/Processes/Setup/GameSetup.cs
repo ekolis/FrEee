@@ -15,6 +15,7 @@ using FrEee.Extensions;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.Diplomacy;
 using FrEee.Processes.Setup.WarpPointPlacementStrategies;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Processes.Setup;
 

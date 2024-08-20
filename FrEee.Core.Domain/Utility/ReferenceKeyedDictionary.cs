@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FrEee.Utility;
 using FrEee.Objects.GameState;
+using FrEee.Serialization;
 
-namespace FrEee.Serialization;
+namespace FrEee.Utility;
 
 /// <summary>
 /// A safe dictionary keyed with transparent references.

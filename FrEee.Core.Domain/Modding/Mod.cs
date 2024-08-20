@@ -13,6 +13,7 @@ using FrEee.Extensions;
 using FrEee.Objects.GameState;
 using FrEee.Processes.AI;
 using FrEee.Modding.Abilities;
+using FrEee.Modding.Scripts;
 
 namespace FrEee.Modding;
 

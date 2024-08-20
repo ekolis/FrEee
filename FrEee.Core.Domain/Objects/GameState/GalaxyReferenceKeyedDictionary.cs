@@ -1,5 +1,4 @@
-﻿using FrEee.Serialization;
-using FrEee.Utility;
+﻿using FrEee.Utility;
 
 namespace FrEee.Objects.GameState;
 

@@ -6,6 +6,7 @@ using FrEee.UI.WinForms.Interfaces;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.Civilization.CargoStorage;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.UI.WinForms.Controls;
 

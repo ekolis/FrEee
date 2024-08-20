@@ -3,6 +3,7 @@ using FrEee.Modding;
 using System;
 using System.Drawing;
 using FrEee.Objects.GameState;
+using FrEee.Modding.Scripts;
 
 namespace FrEee.UI.WinForms.Forms;
 

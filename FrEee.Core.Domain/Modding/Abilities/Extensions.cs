@@ -9,8 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
+using FrEee.Extensions;
 
-namespace FrEee.Extensions;
+namespace FrEee.Modding.Abilities;
 
 /// <summary>
 /// Extensions relating to abilities.
@@ -327,7 +328,7 @@ public static class Extensions
 		IEnumerable<Ability> abils;
 		var subabils = obj.GetContainedAbilityObjects(emp).SelectMany(o => o.UnstackedAbilities(true).Where(a => a.Rule.Name == name));
 		if (obj is IAbilityObject)
-			abils = ((IAbilityObject)obj).Abilities().Where(a => a.Rule != null && a.Rule.Name == name).Concat(subabils).Stack(obj);
+			abils = obj.Abilities().Where(a => a.Rule != null && a.Rule.Name == name).Concat(subabils).Stack(obj);
 		else
 			abils = subabils;
 		abils = abils.Where(a => a.Rule != null && a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
@@ -379,7 +380,7 @@ public static class Extensions
 			tuples = tuples.Union(objs.Squash(o => o.SharedAbilities()));
 		if (includeEmpireCommon)
 			tuples = tuples.Union(objs.Squash(o => o.EmpireCommonAbilities()));
-		var abils = tuples.GroupBy(t => new { Rule = t.Item2.Rule, Object = t.Item1 }).Where(g => g.Key.Rule.Matches(name) && g.Key.Rule.CanTarget(g.Key.Object.AbilityTarget)).SelectMany(x => x).Select(t => t.Item2).Where(a => filter == null || filter(a)).Stack(stackTo);
+		var abils = tuples.GroupBy(t => new { t.Item2.Rule, Object = t.Item1 }).Where(g => g.Key.Rule.Matches(name) && g.Key.Rule.CanTarget(g.Key.Object.AbilityTarget)).SelectMany(x => x).Select(t => t.Item2).Where(a => filter == null || filter(a)).Stack(stackTo);
 		if (!abils.Any())
 			return null;
 		return abils.First().Values[index - 1];
@@ -402,7 +403,7 @@ public static class Extensions
 		{
 			var tuple = Tuple.Create(ownable, clause.Owner);
 			if (Empire.Current == null || !Galaxy.Current.SharedAbilityCache.ContainsKey(tuple))
-				Galaxy.Current.SharedAbilityCache[tuple] = FindSharedAbilities(ownable, clause).ToArray();
+				Galaxy.Current.SharedAbilityCache[tuple] = ownable.FindSharedAbilities(clause).ToArray();
 		}
 
 		// get cached abilities

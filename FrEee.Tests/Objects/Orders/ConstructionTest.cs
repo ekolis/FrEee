@@ -1,5 +1,6 @@
 ﻿using FrEee.Extensions;
 using FrEee.Modding;
+using FrEee.Modding.Templates;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;

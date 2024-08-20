@@ -11,8 +11,9 @@ using System.Linq;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
+using FrEee.Objects.Technology;
 
-namespace FrEee.Objects.Technology;
+namespace FrEee.Modding.Templates;
 
 /// <summary>
 /// A template for a facility.
@@ -118,7 +119,7 @@ public class FacilityTemplate : IModObject, IResearchable, IAbilityContainer, IT
 	/// </summary>
 	public bool IsObsolete
 	{
-		get { return this.IsObsolescent; }
+		get { return IsObsolescent; }
 	}
 
 	/// <summary>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FrEee.Modding.Scripts;
 using NUnit.Framework;
 
 namespace FrEee.Modding;

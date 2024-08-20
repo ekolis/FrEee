@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Civilization.CargoStorage;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.UI.WinForms.Controls;
 

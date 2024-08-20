@@ -22,6 +22,7 @@ using FrEee.Objects.Space;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 using FrEee.Processes.Setup;
+using FrEee.Modding.Scripts;
 
 namespace FrEee.Objects.GameState;
 

@@ -17,6 +17,8 @@ using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
+using FrEee.Modding.Abilities;
+using FrEee.Modding.Scripts;
 
 namespace FrEee.Processes;
 

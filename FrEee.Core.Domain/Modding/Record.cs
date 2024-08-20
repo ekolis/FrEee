@@ -1,4 +1,5 @@
-﻿using FrEee.Serialization;
+﻿using FrEee.Modding.Scripts;
+using FrEee.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;

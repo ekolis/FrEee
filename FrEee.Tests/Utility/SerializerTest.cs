@@ -1,5 +1,4 @@
 ﻿using FrEee.Objects.Civilization;
-using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Serialization;
@@ -9,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Modding.Abilities;
+using FrEee.Modding.Templates;
+using FrEee.Modding.Scripts;
 
 namespace FrEee.Utility;
 

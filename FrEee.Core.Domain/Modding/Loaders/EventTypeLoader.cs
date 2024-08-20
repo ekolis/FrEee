@@ -1,4 +1,5 @@
-﻿using FrEee.Objects.GameState;
+﻿using FrEee.Modding.Scripts;
+using FrEee.Objects.GameState;
 using System.Collections.Generic;
 using System.Linq;
 
