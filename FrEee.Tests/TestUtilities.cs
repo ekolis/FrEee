@@ -3,6 +3,7 @@ using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Objects.GameState;
+using FrEee.Modding.Loaders;
 
 namespace FrEee;
 
@@ -11,7 +12,7 @@ public static class TestUtilities
 	public static Galaxy CreateGalaxyWithMod(string? modPath = null)
 	{
 		Galaxy gal = new();
-		Mod.Current = Mod.Load(modPath);
+		Mod.Current = new ModLoader().Load(modPath);
 		return gal;
 	}
 

@@ -2,6 +2,7 @@
 using FrEee.Extensions;
 using FrEee.Modding;
 using FrEee.Modding.Abilities;
+using FrEee.Modding.Loaders;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
@@ -45,7 +46,7 @@ public class CloakingTest
 	{
 		// initialize galaxy
 		new Galaxy();
-		Mod.Load(null);
+		new ModLoader().Load(null);
 
 		// initialize empires
 		seekers = new Empire();

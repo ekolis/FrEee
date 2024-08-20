@@ -23,6 +23,7 @@ using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 using FrEee.Processes.Setup;
 using FrEee.Modding.Scripts;
+using FrEee.Modding.Loaders;
 
 namespace FrEee.Objects.GameState;
 
@@ -197,7 +198,7 @@ public class Galaxy : ICommonAbilityObject
 		set
 		{
 			if (Mod.Current == null || Mod.Current.RootPath != value)
-				Mod.Load(value);
+				new ModLoader().Load(value);
 			modPath = value;
 		}
 	}
@@ -439,7 +440,7 @@ public class Galaxy : ICommonAbilityObject
 		var fs = new FileStream(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory, filename), FileMode.Open);
 		Current = Serializer.Deserialize<Galaxy>(fs);
 		if (Current.ModPath == null)
-			Mod.Load(null); // skipped in deserialization because it is null but the mod needs to be loaded!
+			new ModLoader().Load(null); // skipped in deserialization because it is null but the mod needs to be loaded!
 		if (Empire.Current != null)
 		{
 			// load library of designs, strategies, etc.
@@ -482,7 +483,7 @@ public class Galaxy : ICommonAbilityObject
 
 
 		if (Current.ModPath == null)
-			Mod.Load(null); // skipped in deserialization because it is null but the mod needs to be loaded!
+			new ModLoader().Load(null); // skipped in deserialization because it is null but the mod needs to be loaded!
 
 		if (Empire.Current != null)
 		{

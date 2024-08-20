@@ -1,5 +1,6 @@
 using FrEee.Extensions;
 using FrEee.Modding;
+using FrEee.Modding.Loaders;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Commands;
 using FrEee.Objects.GameState;
@@ -20,7 +21,7 @@ public class TechnologyTest
 	[OneTimeSetUp]
 	public static void ClassInit()
 	{
-		Mod.Load(null);
+		new ModLoader().Load(null);
 	}
 
 	/// <summary>

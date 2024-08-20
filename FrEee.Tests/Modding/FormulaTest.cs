@@ -7,6 +7,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
+using FrEee.Modding.Loaders;
 
 namespace FrEee.Modding;
 
@@ -59,7 +60,7 @@ public class FormulaTest
 	{
 		var gal = new Galaxy();
 		Empire emp = new Empire();
-		Mod.Current = Mod.Load("DynamicFormulaWithParameters");
+		Mod.Current = new ModLoader().Load("DynamicFormulaWithParameters");
 		var ct = Mod.Current.ComponentTemplates.First();
 		Assert.AreEqual(1, ct.WeaponInfo.GetDamage(new Shot(null, new Component(null, new MountedComponentTemplate(null, ct, null)), null, 1)));
 	}

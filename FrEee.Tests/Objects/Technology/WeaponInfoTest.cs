@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using FrEee.Modding;
+using FrEee.Modding.Loaders;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 using NUnit.Framework;
@@ -18,7 +19,7 @@ public class WeaponInfoTest
 	[OneTimeSetUp]
 	public static void ClassInit()
 	{
-		mod = Mod.Load("WeaponInfoTest");
+		mod = new ModLoader().Load("WeaponInfoTest");
 	}
 
 	/// <summary>

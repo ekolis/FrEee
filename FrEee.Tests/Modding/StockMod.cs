@@ -1,4 +1,6 @@
-﻿namespace FrEee.Modding;
+﻿using FrEee.Modding.Loaders;
+
+namespace FrEee.Modding;
 
 /// <summary>
 /// The stock FrEee mod.
@@ -10,7 +12,7 @@ public static class StockMod
 		get
 		{
 			if (instance == null)
-				instance = Mod.Load(null);
+				instance = new ModLoader().Load(null);
 			return instance;
 		}
 	}

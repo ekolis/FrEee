@@ -3,6 +3,7 @@ using System.Linq;
 using FrEee.Extensions;
 using FrEee.Modding;
 using FrEee.Modding.Abilities;
+using FrEee.Modding.Loaders;
 using FrEee.Modding.Templates;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
@@ -40,7 +41,7 @@ public class DamageTest
 	public static void ClassInit()
 	{
 		// initialize galaxy
-		Mod.Load(null);
+		new ModLoader().Load(null);
 		new Galaxy();
 
 		// initialize empire

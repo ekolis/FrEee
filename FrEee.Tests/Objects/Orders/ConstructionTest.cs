@@ -1,5 +1,6 @@
 ﻿using FrEee.Extensions;
 using FrEee.Modding;
+using FrEee.Modding.Loaders;
 using FrEee.Modding.Templates;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
@@ -25,7 +26,7 @@ public class ConstructionTest
 	{
 		// initialize galaxy
 		new Galaxy();
-		Mod.Load(null);
+		new ModLoader().Load(null);
 
 		// initialize empires
 		empire = new Empire();

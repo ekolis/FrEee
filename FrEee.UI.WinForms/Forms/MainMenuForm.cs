@@ -17,6 +17,7 @@ using System.Threading;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Setup;
+using FrEee.Modding.Loaders;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -57,7 +58,7 @@ public partial class MainMenuForm : GameForm
 			if (Mod.Current == null)
 			{
 				status.Message = "Loading mod";
-				Mod.Load(null, true, status, 0.5);
+				new ModLoader().Load(null, true, status, 0.5);
 				if (Mod.Errors.Any())
 				{
 					Action a = delegate ()
@@ -211,7 +212,7 @@ public partial class MainMenuForm : GameForm
 			{
 #endif
 			status.Message = "Loading mod";
-			Mod.Load(modPath, true, status, 1d);
+			new ModLoader().Load(modPath, true, status, 1d);
 			this.Invoke(new Action(delegate ()
 				{
 					if (Mod.Errors.Any())

@@ -20,6 +20,7 @@ using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.Diplomacy;
 using FrEee.Processes.Setup;
 using FrEee.Processes.Setup.WarpPointPlacementStrategies;
+using FrEee.Modding.Loaders;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -30,7 +31,7 @@ public partial class GameSetupForm : GameForm
 		InitializeComponent();
 		setup = new GameSetup();
 		if (Mod.Current == null)
-			Mod.Load(null);
+			new ModLoader().Load(null);
 		Galaxy.Current = null;
 
 		spnSeed.Value = DateTime.Now.Millisecond + 1000 * DateTime.Now.Second + 60000 * DateTime.Now.Minute;

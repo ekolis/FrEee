@@ -107,7 +107,7 @@ public partial class ModPickerForm : GameForm
 			try
 			{
 				status.Message = "Loading mod";
-				Mod.Load(modPath, true, status, 1d);
+				new ModLoader().Load(modPath, true, status, 1d);
 				this.Invoke(new Action(delegate ()
 				{
 					if (Mod.Errors.Any())

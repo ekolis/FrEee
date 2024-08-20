@@ -10,9 +10,9 @@ public class LoaderTest
 	[Test]
 	public void LoadIncludeModWithoutErrors()
 	{
-		var mod = Mod.Load("Include Mod");
+		var mod = new ModLoader().Load("Include Mod");
 		Assert.AreEqual(0, Mod.Errors.Count);
-		var mod2 = Mod.Load("ComponentLoaderTest", false);
+		var mod2 = new ModLoader().Load("ComponentLoaderTest", false);
 		Assert.AreEqual(mod2.ComponentTemplates.Count, mod.ComponentTemplates.Count);
 	}
 
@@ -22,7 +22,7 @@ public class LoaderTest
 	[Test]
 	public void LoadStockModWithoutErrors()
 	{
-		Mod.Load(null);
+		new ModLoader().Load(null);
 		Assert.AreEqual(0, Mod.Errors.Count);
 	}
 }
