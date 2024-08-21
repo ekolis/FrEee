@@ -260,11 +260,11 @@ public class GameSetup
     }
 
     // TODO - status messages for the GUI
-    public void PopulateGalaxy(Game gal, PRNG dice)
+    public void PopulateGame(Game game, PRNG dice)
     {
-        gal.Name = GameName;
+        game.Name = GameName;
 
-        gal.CleanGameState();
+        game.CleanGameState();
 
         // remove forbidden techs
         foreach (var tname in ForbiddenTechnologyNames.Distinct())
@@ -274,7 +274,7 @@ public class GameSetup
         foreach (var et in EmpireTemplates)
         {
             var emp = et.Instantiate();
-            gal.Empires.Add(emp);
+            game.Empires.Add(emp);
         }
 
         // TODO - make sure empires don't reuse colors unless we really have to?
@@ -303,7 +303,7 @@ public class GameSetup
             foreach (var apt in Aptitude.All)
                 et.PrimaryRace.Aptitudes[apt.Name] = 100;
             var emp = et.Instantiate();
-            gal.Empires.Add(emp);
+            game.Empires.Add(emp);
         }
 
         // create minor empires
@@ -331,23 +331,23 @@ public class GameSetup
             foreach (var apt in Aptitude.All)
                 et.PrimaryRace.Aptitudes[apt.Name] = 100;
             var emp = et.Instantiate();
-            gal.Empires.Add(emp);
+            game.Empires.Add(emp);
         }
 
         // place empires
         // don't do them in any particular order, so P1 and P2 don't always wind up on opposite sides of the galaxy when using equidistant placement
-        foreach (var emp in gal.Empires.Shuffle(dice))
-            PlaceEmpire(gal, emp, dice);
+        foreach (var emp in game.Empires.Shuffle(dice))
+            PlaceEmpire(game.Galaxy, emp, dice);
 
 
         //Enabled AI ministers, so the AI's actually can do stuff. 
-        foreach (var emp in gal.Empires.Where(x => !x.IsPlayerEmpire && x.AI != null))
+        foreach (var emp in game.Empires.Where(x => !x.IsPlayerEmpire && x.AI != null))
             emp.EnabledMinisters = emp.AI.MinisterNames;
 
         // remove ruins if they're not allowed
         if (!GenerateRandomRuins)
         {
-            foreach (var p in gal.FindSpaceObjects<Planet>())
+            foreach (var p in game.Galaxy.FindSpaceObjects<Planet>())
             {
                 foreach (var abil in p.IntrinsicAbilities.ToArray())
                 {
@@ -358,7 +358,7 @@ public class GameSetup
         }
         if (!GenerateUniqueRuins)
         {
-            foreach (var p in gal.FindSpaceObjects<Planet>())
+            foreach (var p in game.Galaxy.FindSpaceObjects<Planet>())
             {
                 foreach (var abil in p.IntrinsicAbilities.ToArray())
                 {
@@ -369,7 +369,7 @@ public class GameSetup
         }
 
         // also remove ruins from homeworlds, that's just silly :P
-        foreach (var p in gal.FindSpaceObjects<Planet>().Where(p => p.Colony != null))
+        foreach (var p in game.Galaxy.FindSpaceObjects<Planet>().Where(p => p.Colony != null))
         {
             foreach (var abil in p.IntrinsicAbilities.ToArray())
             {
@@ -381,9 +381,9 @@ public class GameSetup
         // set up omniscient view
         if (OmniscientView)
         {
-            foreach (var emp in gal.Empires)
+            foreach (var emp in game.Empires)
             {
-                foreach (var sys in gal.StarSystemLocations.Select(l => l.Item))
+                foreach (var sys in game.Galaxy.StarSystemLocations.Select(l => l.Item))
                     sys.ExploredByEmpires.Add(emp);
             }
         }
@@ -417,7 +417,7 @@ public class GameSetup
     }
 
     // TODO - status messages for the GUI
-    private void PlaceEmpire(Game gal, Empire emp, PRNG dice)
+    private void PlaceEmpire(Galaxy gal, Empire emp, PRNG dice)
     {
         if (AllSystemsExplored)
         {
@@ -491,9 +491,9 @@ public class GameSetup
 
         // build connectivity graph for computing warp distance
         var graph = new ConnectivityGraph<StarSystem>();
-        foreach (var s in Game.Current.StarSystemLocations.Select(ssl => ssl.Item))
+        foreach (var s in Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item))
             graph.Add(s);
-        foreach (var s in Game.Current.StarSystemLocations.Select(ssl => ssl.Item))
+        foreach (var s in Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item))
         {
             foreach (var wp in s.FindSpaceObjects<WarpPoint>())
                 graph.Connect(s, wp.TargetStarSystemLocation.Item, true);
@@ -540,12 +540,12 @@ public class GameSetup
                 newSys.CopyTo(convertSys);
                 convertSys.ID = sid;
                 convertSys.Name = Mod.Current.StarSystemNames.Except(gal.StarSystemLocations.Select(q => q.Item.Name)).PickRandom(dice);
-                foreach (var l in Game.Current.StarSystemLocations)
+                foreach (var l in Galaxy.Current.StarSystemLocations)
                 {
                     foreach (var wp in l.Item.FindSpaceObjects<WarpPoint>().Where(q => q.Target.StarSystem == convertSys).ToArray())
                     {
                         wp.Dispose();
-                        WarpPointPlacementStrategy.PlaceWarpPoints(Game.Current.StarSystemLocations.Single(q => q.Item == convertSys), l);
+                        WarpPointPlacementStrategy.PlaceWarpPoints(Galaxy.Current.StarSystemLocations.Single(q => q.Item == convertSys), l);
                     }
                 }
                 GalaxyTemplate.NameStellarObjects(convertSys);

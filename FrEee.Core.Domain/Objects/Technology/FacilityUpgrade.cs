@@ -7,6 +7,7 @@ using System.Linq;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Templates;
+using FrEee.Objects.Space;
 
 namespace FrEee.Objects.Technology;
 
@@ -68,7 +69,7 @@ public class FacilityUpgrade : IUpgradeable<FacilityUpgrade>, IPromotable, IName
 
 	public IEnumerable<FacilityUpgrade> NewerVersions
 	{
-		get { return Game.Current.FindSpaceObjects<IConstructor>().Select(o => o.ConstructionQueue).ExceptSingle(null).SelectMany(q => q.Orders).Select(o => o.Item).OfType<FacilityUpgrade>().Where(u => u.New.UpgradesTo(New)); }
+		get { return Galaxy.Current.FindSpaceObjects<IConstructor>().Select(o => o.ConstructionQueue).ExceptSingle(null).SelectMany(q => q.Orders).Select(o => o.Item).OfType<FacilityUpgrade>().Where(u => u.New.UpgradesTo(New)); }
 	}
 
 	[DoNotSerialize]
@@ -76,7 +77,7 @@ public class FacilityUpgrade : IUpgradeable<FacilityUpgrade>, IPromotable, IName
 
 	public IEnumerable<FacilityUpgrade> OlderVersions
 	{
-		get { return Game.Current.FindSpaceObjects<IConstructor>().Select(o => o.ConstructionQueue).ExceptSingle(null).SelectMany(q => q.Orders).Select(o => o.Item).OfType<FacilityUpgrade>().Where(u => New.UpgradesTo(u.New)); }
+		get { return Galaxy.Current.FindSpaceObjects<IConstructor>().Select(o => o.ConstructionQueue).ExceptSingle(null).SelectMany(q => q.Orders).Select(o => o.Item).OfType<FacilityUpgrade>().Where(u => New.UpgradesTo(u.New)); }
 	}
 
 	private ModReference<FacilityTemplate> nu { get; set; }

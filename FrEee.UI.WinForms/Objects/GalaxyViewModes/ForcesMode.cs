@@ -21,7 +21,7 @@ public class ForcesMode : PieMode
 
 	protected override int GetAlpha(StarSystem sys)
 	{
-		var forces = Game.Current.StarSystemLocations.Select(l => new { System = l.Item, Vehicles = l.Item.FindSpaceObjects<SpaceVehicle>() });
+		var forces = Galaxy.Current.StarSystemLocations.Select(l => new { System = l.Item, Vehicles = l.Item.FindSpaceObjects<SpaceVehicle>() });
 		var maxTonnage = forces.Max(f => f.Vehicles.Sum(v => v.Design.Hull.Size));
 		var vehicles = sys.FindSpaceObjects<SpaceVehicle>().ToArray();
 		var tonnageHere = vehicles.Sum(v => v.Design.Hull.Size);

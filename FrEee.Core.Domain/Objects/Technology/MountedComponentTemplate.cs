@@ -12,6 +12,7 @@ using System.Drawing;
 using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
+using FrEee.Objects.Space;
 
 namespace FrEee.Objects.Technology;
 
@@ -210,12 +211,12 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityOb
 
 	public IEnumerable<MountedComponentTemplate> NewerVersions
 	{
-		get { return Game.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Select(c => c.Template).Where(mct => mct.LatestVersion == this).Distinct(); }
+		get { return Galaxy.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Select(c => c.Template).Where(mct => mct.LatestVersion == this).Distinct(); }
 	}
 
 	public IEnumerable<MountedComponentTemplate> OlderVersions
 	{
-		get { return Game.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Select(c => c.Template).Where(mct => LatestVersion == mct).Distinct(); }
+		get { return Galaxy.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Select(c => c.Template).Where(mct => LatestVersion == mct).Distinct(); }
 	}
 
 	public IEnumerable<IAbilityObject> Parents

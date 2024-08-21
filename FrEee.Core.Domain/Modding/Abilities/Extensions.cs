@@ -289,7 +289,7 @@ public static class Extensions
 			{
 				foreach (var emp in Game.Current.Empires.Where(emp => emp != null))
 				{
-					foreach (var abil in Game.Current.EmpireAbilities(emp))
+					foreach (var abil in Galaxy.Current.EmpireAbilities(emp))
 					{
 						if (rule == abil.Rule)
 							yield return abil;
@@ -459,7 +459,7 @@ public static class Extensions
 				{
 					foreach (var emp in Game.Current.Empires.Where(emp => emp != null))
 					{
-						foreach (var abil in Game.Current.EmpireAbilities(emp, sourceFilter))
+						foreach (var abil in Galaxy.Current.EmpireAbilities(emp, sourceFilter))
 						{
 							if (clause.AbilityRule == abil.Rule)
 								yield return abil;

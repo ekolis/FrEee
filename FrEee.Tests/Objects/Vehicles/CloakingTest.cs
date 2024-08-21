@@ -107,7 +107,7 @@ public class CloakingTest
 	{
 		// create star system
 		sys = new StarSystem(0);
-		Game.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(sys, new Point()));
+		Galaxy.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(sys, new Point()));
 
 		// place ships
 		sys.Place(destroyer, new Point());

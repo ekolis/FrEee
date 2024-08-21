@@ -4,6 +4,7 @@ using System;
 using System.Drawing;
 using System.Linq;
 using FrEee.Objects.GameState;
+using FrEee.Objects.Space;
 
 namespace FrEee.Processes.Setup.StarSystemPlacementStrategies;
 
@@ -13,7 +14,7 @@ namespace FrEee.Processes.Setup.StarSystemPlacementStrategies;
 [Serializable]
 public class RandomStarSystemPlacementStrategy : IStarSystemPlacementStrategy
 {
-    public Point? PlaceStarSystem(Game galaxy, int buffer, Rectangle bounds, int starsLeft, PRNG dice)
+    public Point? PlaceStarSystem(Galaxy galaxy, int buffer, Rectangle bounds, int starsLeft, PRNG dice)
     {
         var openPositions = bounds.GetAllPoints();
         foreach (var sspos in galaxy.StarSystemLocations)

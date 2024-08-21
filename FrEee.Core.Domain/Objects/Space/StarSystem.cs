@@ -142,7 +142,7 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 		{
 			try
 			{
-				return Game.Current.StarSystemLocations.Single(l => l.Item == this);
+				return Galaxy.Current.StarSystemLocations.Single(l => l.Item == this);
 			}
 			catch (InvalidOperationException ex)
 			{
@@ -173,7 +173,7 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 	{
 		get
 		{
-			yield return Game.Current;
+			yield return Galaxy.Current;
 		}
 	}
 

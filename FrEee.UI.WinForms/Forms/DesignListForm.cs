@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
+using FrEee.Objects.Space;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -215,7 +216,7 @@ public partial class DesignListForm : GameForm
 	/// <returns></returns>
 	private bool BuildingAnywhere(IConstructionTemplate t)
 	{
-		return Game.Current.FindSpaceObjects<IConstructor>().OwnedBy(Empire.Current).Any(o => o.ConstructionQueue != null && o.ConstructionQueue.Orders.Any(o2 => o2.Template == t));
+		return Galaxy.Current.FindSpaceObjects<IConstructor>().OwnedBy(Empire.Current).Any(o => o.ConstructionQueue != null && o.ConstructionQueue.Orders.Any(o2 => o2.Template == t));
 	}
 
 	private void chkForeign_CheckedChanged(object sender, EventArgs e)

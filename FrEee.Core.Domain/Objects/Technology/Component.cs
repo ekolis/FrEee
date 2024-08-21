@@ -69,7 +69,7 @@ public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IConta
 		get
 		{
 			if (container == null)
-				container = Game.Current.FindSpaceObjects<IVehicle>().SingleOrDefault(q => q.Components.Contains(this)).ReferViaGalaxy();
+				container = Galaxy.Current.FindSpaceObjects<IVehicle>().SingleOrDefault(q => q.Components.Contains(this)).ReferViaGalaxy();
 			return container?.Value;
 		}
 		set
@@ -198,7 +198,7 @@ public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IConta
 
 	public IEnumerable<Component> NewerVersions
 	{
-		get { return Game.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Where(c => Template.UpgradesTo(c.Template)); }
+		get { return Galaxy.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Where(c => Template.UpgradesTo(c.Template)); }
 	}
 
 	/// <summary>
@@ -219,7 +219,7 @@ public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IConta
 
 	public IEnumerable<Component> OlderVersions
 	{
-		get { return Game.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Where(c => c.Template.UpgradesTo(Template)); }
+		get { return Galaxy.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Where(c => c.Template.UpgradesTo(Template)); }
 	}
 
 	public Empire Owner

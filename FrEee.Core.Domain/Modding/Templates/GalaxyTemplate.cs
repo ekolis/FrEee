@@ -97,8 +97,10 @@ public class GalaxyTemplate : ITemplate<Game>, IModObject
 	/// <param name="desiredProgress">How much progress should we report back to the GUI when we're done initializing the galaxy? 1.0 means all done with everything that needs to be done.</param>
 	public Game Instantiate(Status status, double desiredProgress, PRNG dice)
 	{
-		var gal = new Game();
-		gal.GameSetup = GameSetup;
+		var gal = new Galaxy();
+		var game = new Game();
+		game.Galaxy = gal;
+		game.Setup = GameSetup;
 		var bounds = new Rectangle(-GameSetup.GalaxySize.Width / 2, -GameSetup.GalaxySize.Height / 2, GameSetup.GalaxySize.Width, GameSetup.GalaxySize.Height);
 
 		var unusedNames = new List<string>(Mod.Current.StarSystemNames);
@@ -111,7 +113,7 @@ public class GalaxyTemplate : ITemplate<Game>, IModObject
 		{
 			if (status != null)
 				status.Message = "Creating star system " + (i + 1) + " of " + GameSetup.StarSystemCount;
-			var p = StarSystemPlacementStrategy.PlaceStarSystem(gal, MinimumStarSystemDistance, bounds, GameSetup.StarSystemCount - i, dice);
+			var p = StarSystemPlacementStrategy.PlaceStarSystem(game.Galaxy, MinimumStarSystemDistance, bounds, GameSetup.StarSystemCount - i, dice);
 			if (p == null)
 				break; // no more locations available
 
@@ -162,7 +164,7 @@ public class GalaxyTemplate : ITemplate<Game>, IModObject
 		if (status != null)
 			status.Progress = desiredProgress;
 
-		return gal;
+		return game;
 	}
 
 	private (ObjectLocation<StarSystem>, ObjectLocation<StarSystem>) MinDistanceDisconnectedSystemPair(ConnectivityGraph<ObjectLocation<StarSystem>> graph)

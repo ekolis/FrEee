@@ -28,17 +28,16 @@ using FrEee.Modding.Loaders;
 namespace FrEee.Objects.GameState;
 
 /// <summary>
-/// A galaxy in which the game is played.
+/// A game of FrEee.
 /// </summary>
 [Serializable]
-public class Game : ICommonAbilityObject
+public class Game
 {
 	public Game()
 	{
 		Current = this;
 		if (Mod.Current != null)
 			ModPath = Mod.Current.RootPath;
-		StarSystemLocations = new List<ObjectLocation<StarSystem>>();
 		Empires = new List<Empire>();
 		Name = "Unnamed";
 		TurnNumber = 1;
@@ -58,24 +57,19 @@ public class Game : ICommonAbilityObject
 	}
 
 	/// <summary>
-	/// The current galaxy. Shouldn't change except at loading a game or turn processing.
+	/// The current game. Shouldn't change except at loading a game or turn processing.
 	/// </summary>
 	public static Game? Current { get; set; }
 
-	public AbilityTargets AbilityTarget
-	{
-		get { return AbilityTargets.Galaxy; }
-	}
+	/// <summary>
+	/// The galaxy in which this game is played.
+	/// </summary>
+	public Galaxy Galaxy { get; internal set; }
 
 	/// <summary>
 	/// The battles which have taken place this turn.
 	/// </summary>
 	public ICollection<IBattle> Battles { get; private set; }
-
-	public IEnumerable<IAbilityObject> Children
-	{
-		get { return StarSystemLocations.Select(l => l.Item); }
-	}
 
 	public string CommandFileName
 	{
@@ -119,18 +113,6 @@ public class Game : ICommonAbilityObject
 		}
 	}
 
-	public int Height
-	{
-		get;
-		set;
-	}
-
-	public IEnumerable<Ability> IntrinsicAbilities
-	{
-		// TODO - galaxy wide abilities?
-		get { yield break; }
-	}
-
 	/// <summary>
 	/// Is the ability cache enabled?
 	/// Always enabled on the client side; only when a flag is set on the server side.
@@ -148,26 +130,6 @@ public class Game : ICommonAbilityObject
 	/// </summary>
 	public bool IsSinglePlayer { get; set; }
 
-	public int MaxX
-	{
-		get { return StarSystemLocations.MaxOrDefault(ssl => ssl.Location.X); }
-	}
-
-	public int MaxY
-	{
-		get { return StarSystemLocations.MaxOrDefault(ssl => ssl.Location.Y); }
-	}
-
-	public int MinX
-	{
-		get { return StarSystemLocations.MinOrDefault(ssl => ssl.Location.X); }
-	}
-
-	public int MinY
-	{
-		get { return StarSystemLocations.MinOrDefault(ssl => ssl.Location.Y); }
-	}
-
 	/// <summary>
 	/// The path to the mod being played, or null for the stock mod.
 	/// </summary>
@@ -184,14 +146,6 @@ public class Game : ICommonAbilityObject
 	/// The next tick size, for ship movement.
 	/// </summary>
 	public double NextTickSize { get; internal set; }
-
-	public IEnumerable<IAbilityObject> Parents
-	{
-		get
-		{
-			yield break;
-		}
-	}
 
 	/// <summary>
 	/// Events which have been warned of and are pending execution.
@@ -225,11 +179,6 @@ public class Game : ICommonAbilityObject
 	}
 
 	/// <summary>
-	/// The locations of the star systems in the galaxy.
-	/// </summary>
-	public ICollection<ObjectLocation<StarSystem>> StarSystemLocations { get; private set; }
-
-	/// <summary>
 	/// Current time equals turn number plus tick minus 1.
 	/// </summary>
 	public double Timestamp { get { return TurnNumber + CurrentTick - 1; } }
@@ -248,32 +197,6 @@ public class Game : ICommonAbilityObject
 		{
 			// TODO - treaties
 			return 0;
-		}
-	}
-
-	/// <summary>
-	/// Vertical space occupied by star systems.
-	/// </summary>
-	public int UsedHeight
-	{
-		get
-		{
-			if (!StarSystemLocations.Any())
-				return 0;
-			return StarSystemLocations.Max(ssl => ssl.Location.Y) - StarSystemLocations.Min(ssl => ssl.Location.Y) + 1;
-		}
-	}
-
-	/// <summary>
-	/// Horizontal space occuped by star systems.
-	/// </summary>
-	public int UsedWidth
-	{
-		get
-		{
-			if (!StarSystemLocations.Any())
-				return 0;
-			return StarSystemLocations.Max(ssl => ssl.Location.X) - StarSystemLocations.Min(ssl => ssl.Location.X) + 1;
 		}
 	}
 
@@ -316,7 +239,7 @@ public class Game : ICommonAbilityObject
 	internal SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>> SharedAbilityCache { get; private set; }
 
 	/// <summary>
-	/// Serialized string value of the galaxy at the beginning of the turn.
+	/// Serialized string value of the game at the beginning of the turn.
 	/// </summary>
 	[DoNotSerialize]
 	internal string? StringValue
@@ -352,7 +275,7 @@ public class Game : ICommonAbilityObject
 	}
 
 	/// <summary>
-	/// Initializes a new game. Sets Galaxy.Current.
+	/// Initializes a new game. Sets Game.Current.
 	/// </summary>
 	/// <exception cref="InvalidOperationException">if there is no mod loaded.</exception>
 	/// <param name="status">A status object to report status back to the GUI.</param>
@@ -377,11 +300,11 @@ public class Game : ICommonAbilityObject
 		}
 		else
 		{
-			Current.GameSetup = gsu;
+			Current.Setup = gsu;
 		}
 		if (status != null)
 			status.Message = "Populating galaxy";
-		gsu.PopulateGalaxy(Current, dice);
+		gsu.PopulateGame(Current, dice);
 		Current.SaveTechLevelsForUniqueness();
 		if (status != null)
 			status.Progress += progressPerStep;
@@ -504,7 +427,7 @@ public class Game : ICommonAbilityObject
 	/// </summary>
 	internal void SaveTechLevelsForUniqueness()
 	{
-		if (Current.GameSetup.TechnologyUniqueness != 0)
+		if (Current.Setup.TechnologyUniqueness != 0)
 		{
 			foreach (var emp in Current.Empires)
 			{
@@ -523,7 +446,7 @@ public class Game : ICommonAbilityObject
 	}
 
 	/// <summary>
-	/// Saves the master view and all players' views of the galaxy, unless single player, in which case only the first player's view is saved.
+	/// Saves the master view and all players' views of the game, unless single player, in which case only the first player's view is saved.
 	/// </summary>
 	/// <exception cref="InvalidOperationException">if CurrentEmpire is not null.</exception>
 	public static void SaveAll(Status status = null, double desiredProgress = 1d)
@@ -658,10 +581,10 @@ public class Game : ICommonAbilityObject
 			}
 		};
 		parser.Parse(this);
-		foreach (var l in StarSystemLocations.ToArray())
+		foreach (var l in Galaxy.StarSystemLocations.ToArray())
 		{
 			if (l.Item == null)
-				StarSystemLocations.Remove(l);
+				Galaxy.StarSystemLocations.Remove(l);
 			else
 			{
 				foreach (var l2 in l.Item.SpaceObjectLocations.ToArray())
@@ -675,7 +598,7 @@ public class Game : ICommonAbilityObject
 
 	public void ComputeNextTickSize()
 	{
-		var objs = FindSpaceObjects<IMobileSpaceObject>().Where(obj => obj.Orders.Any());
+		var objs = Galaxy.FindSpaceObjects<IMobileSpaceObject>().Where(obj => obj.Orders.Any());
 		objs = objs.Where(obj => !obj.IsMemory);
 		if (objs.Where(v => v.TimeToNextMove > 0).Any() && CurrentTick < 1.0)
 		{
@@ -725,32 +648,16 @@ public class Game : ICommonAbilityObject
 	}
 
 	/// <summary>
-	/// Finds referrable objects in the galaxy.
+	/// Finds referrable objects in the game.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	/// <param name="condition"></param>
 	/// <returns></returns>
-	public IEnumerable<T> Find<T>(Func<T, bool> condition = null) where T : IReferrable
+	public IEnumerable<T> Find<T>(Func<T, bool>? condition = null) where T : IReferrable
 	{
-		if (condition == null)
+		if (condition is null)
 			condition = t => true;
 		return Referrables.OfType<T>().Where(r => condition(r));
-	}
-
-	/// <summary>
-	/// Searches for space objects matching criteria.
-	/// </summary>
-	/// <typeparam name="T">The type of space object.</typeparam>
-	/// <param name="criteria">The criteria.</param>
-	/// <returns>The matching space objects.</returns>
-	public IEnumerable<T> FindSpaceObjects<T>(Func<T, bool> criteria = null)
-	{
-		return StarSystemLocations.SelectMany(l => l.Item.FindSpaceObjects(criteria));
-	}
-
-	public IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp)
-	{
-		return StarSystemLocations.Select(ssl => ssl.Item).Concat(StarSystemLocations.SelectMany(ssl => ssl.Item.GetContainedAbilityObjects(emp)));
 	}
 
 	public string GetEmpireCommandsSavePath(Empire emp)
@@ -836,7 +743,7 @@ public class Game : ICommonAbilityObject
 	/// </summary>
 	public void MoveShips()
 	{
-		var vlist = FindSpaceObjects<IMobileSpaceObject>().Where(sobj => sobj.Container == null && !sobj.IsMemory).Shuffle();
+		var vlist = Galaxy.FindSpaceObjects<IMobileSpaceObject>().Where(sobj => sobj.Container == null && !sobj.IsMemory).Shuffle();
 		foreach (var v in vlist)
 		{
 			// mark system explored if not already
@@ -885,11 +792,6 @@ public class Game : ICommonAbilityObject
 		}
 	}
 
-	public Sector PickRandomSector(PRNG prng = null)
-	{
-		return StarSystemLocations.PickRandom(prng).Item.PickRandomSector(prng);
-	}
-
 	/// <summary>
 	/// Removes any space objects, etc. that the current empire cannot see.
 	/// </summary>
@@ -911,8 +813,8 @@ public class Game : ICommonAbilityObject
 		parser.Parse(this);
 
 		// clean up redacted objects that are not IFoggable
-		foreach (var x in StarSystemLocations.Where(x => x.Item.IsDisposed).ToArray())
-			StarSystemLocations.Remove(x);
+		foreach (var x in Galaxy.StarSystemLocations.Where(x => x.Item.IsDisposed).ToArray())
+			Galaxy.StarSystemLocations.Remove(x);
 
 		// delete memories since they've been copied to "physical" objects already
 		foreach (var kvp in Empire.Current.Memory.ToArray())
@@ -1039,7 +941,7 @@ public class Game : ICommonAbilityObject
 
 	internal void SpaceObjectIDCheck(string when)
 	{
-		foreach (var sobj in FindSpaceObjects<ISpaceObject>().ToArray())
+		foreach (var sobj in Galaxy.FindSpaceObjects<ISpaceObject>().ToArray())
 		{
 			if (!referrables.ContainsKey(sobj.ID))
 				AssignID(sobj);
@@ -1175,5 +1077,5 @@ public class Game : ICommonAbilityObject
 	/// <summary>
 	/// The game setup used to create this galaxy.
 	/// </summary>
-	public GameSetup GameSetup { get; set; }
+	public GameSetup Setup { get; set; }
 }

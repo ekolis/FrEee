@@ -20,7 +20,7 @@ public class RepairMode : ArgbMode
 
 	protected override Color GetColor(StarSystem sys)
 	{
-		var max = Game.Current.StarSystemLocations.Max(l => GetRepair(l.Item));
+		var max = Galaxy.Current.StarSystemLocations.Max(l => GetRepair(l.Item));
 		if (max == 0)
 			return Color.Black;
 		var sat = Weight(GetRepair(sys), max);

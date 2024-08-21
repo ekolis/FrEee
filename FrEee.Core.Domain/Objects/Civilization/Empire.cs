@@ -118,7 +118,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 		get
 		{
 			if (allSystemsExploredFromStart is null)
-				allSystemsExploredFromStart = Game.Current.GameSetup.AllSystemsExplored || this.HasAbility("Galaxy Seen");
+				allSystemsExploredFromStart = Game.Current.Setup.AllSystemsExplored || this.HasAbility("Galaxy Seen");
 			return allSystemsExploredFromStart.Value;
 		}
 	}
@@ -155,7 +155,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	{
 		get
 		{
-			return Game.Current.StarSystemLocations.Select(ssl => ssl.Item).SelectMany(ss => ss.FindSpaceObjects<Planet>(p => p.Owner == this && !p.IsMemoryOfKnownObject()));
+			return Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item).SelectMany(ss => ss.FindSpaceObjects<Planet>(p => p.Owner == this && !p.IsMemoryOfKnownObject()));
 		}
 	}
 
@@ -222,7 +222,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	/// </summary>
 	public IEnumerable<StarSystem> ExploredStarSystems
 	{
-		get { return Game.Current.StarSystemLocations.Select(ssl => ssl.Item).Where(sys => sys.ExploredByEmpires.Contains(this)); }
+		get { return Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item).Where(sys => sys.ExploredByEmpires.Contains(this)); }
 	}
 
 	/// <summary>
@@ -426,7 +426,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	{
 		get
 		{
-			return Game.Current.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == this);
+			return Galaxy.Current.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == this);
 		}
 	}
 
@@ -494,7 +494,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 			if (rawResourceIncome == null || Empire.Current == null)
 			{
 				rawResourceIncome = new ResourceQuantity();
-				foreach (var sobj in Game.Current.FindSpaceObjects<IIncomeProducer>().BelongingTo(this))
+				foreach (var sobj in Galaxy.Current.FindSpaceObjects<IIncomeProducer>().BelongingTo(this))
 					rawResourceIncome += sobj.RawResourceIncome();
 			}
 			return rawResourceIncome;
@@ -525,7 +525,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 			if (remoteMiners == null || Empire.Current == null)
 			{
 				remoteMiners = new SafeDictionary<(ISpaceObject, IMineableSpaceObject), ResourceQuantity>(true);
-				foreach (var miner in Game.Current.FindSpaceObjects<ISpaceObject>().BelongingTo(this))
+				foreach (var miner in Galaxy.Current.FindSpaceObjects<ISpaceObject>().BelongingTo(this))
 				{
 					if (miner.Sector == null)
 						continue; // HACK - shouldn't FindSpaceObjects only be finding objects with sectors?
@@ -865,7 +865,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	{
 		// can we see it?
 		// TODO - rankings too, not just scores
-		var disp = Game.Current.GameSetup.ScoreDisplay;
+		var disp = Game.Current.Setup.ScoreDisplay;
 		bool showit = false;
 		if (viewer == null)
 			showit = true; // host can see everyone's scores

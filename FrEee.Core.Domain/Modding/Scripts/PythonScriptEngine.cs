@@ -9,6 +9,7 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 using FrEee.Objects.GameState;
+using FrEee.Objects.Space;
 
 namespace FrEee.Modding.Scripts;
 
@@ -58,8 +59,8 @@ public class PythonScriptEngine : MarshalByRefObject
 	{
 		var preCode = new List<string>();
 		preCode.Add("from FrEee.Modding import Mod;");
-		preCode.Add("if not galaxy is None:");
-		preCode.Add("\tMod.Current = galaxy.Mod;");
+		preCode.Add("if not game is None:");
+		preCode.Add("\tMod.Current = game.Mod;");
 		var arglist = new List<string>();
 		for (var i = 0; i < args.Length; i++)
 			arglist.Add("arg" + i);
@@ -197,7 +198,8 @@ public class PythonScriptEngine : MarshalByRefObject
 		preCommands.Add("import FrEee.Utility");
 		preCommands.Add("clr.ImportExtensions(FrEee.Extensions)");
 		preCommands.Add("from FrEee.Modding import Mod");
-		preCommands.Add("from FrEee.Objects.GameState import Galaxy");
+		preCommands.Add("from FrEee.Objects.GameState import Game");
+		preCommands.Add("from FrEee.Objects.Space import Galaxy");
 		preCommands.Add("from FrEee.Objects.Civilization import Empire");
 		/*if (variables != null)
 			UpdateScope(variables);
@@ -280,7 +282,8 @@ public class PythonScriptEngine : MarshalByRefObject
 		preCommands.Add("import FrEee.Utility");
 		preCommands.Add("clr.ImportExtensions(FrEee.Extensions)");
 		preCommands.Add("from FrEee.Modding import Mod");
-		preCommands.Add("from FrEee.Objects.GameState import Galaxy");
+		preCommands.Add("from FrEee.Objects.GameState import Game");
+		preCommands.Add("from FrEee.Objects.Space import Galaxy");
 		preCommands.Add("from FrEee.Objects.Civilization import Empire");
 		var code =
 			string.Join("\n", preCommands.ToArray()) + "\n" +
@@ -349,7 +352,8 @@ public class PythonScriptEngine : MarshalByRefObject
 	/// <returns></returns>
 	public static void UpdateScope(IDictionary<string, object> variables)
 	{
-		scope.SetVariable("galaxy", Game.Current);
+		scope.SetVariable("game", Game.Current);
+		scope.SetVariable("galaxy", Galaxy.Current);
 
 		if (variables != null)
 		{

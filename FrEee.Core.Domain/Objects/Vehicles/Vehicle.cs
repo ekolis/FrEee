@@ -386,7 +386,7 @@ public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IF
 	{
 		get
 		{
-			return Game.Current.FindSpaceObjects<IVehicle>().Where(v => Design.UpgradesTo(v.Design));
+			return Galaxy.Current.FindSpaceObjects<IVehicle>().Where(v => Design.UpgradesTo(v.Design));
 		}
 	}
 
@@ -402,7 +402,7 @@ public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IF
 	{
 		get
 		{
-			return Game.Current.FindSpaceObjects<IVehicle>().Where(v => v.Design.UpgradesTo(Design));
+			return Galaxy.Current.FindSpaceObjects<IVehicle>().Where(v => v.Design.UpgradesTo(Design));
 		}
 	}
 

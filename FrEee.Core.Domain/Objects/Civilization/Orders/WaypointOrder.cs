@@ -115,7 +115,7 @@ public class WaypointOrder : IMovementOrder
     {
         if (IsDisposed)
             return;
-        foreach (var v in Game.Current.FindSpaceObjects<IMobileSpaceObject>())
+        foreach (var v in Galaxy.Current.FindSpaceObjects<IMobileSpaceObject>())
             v.RemoveOrder(this);
         Game.Current.UnassignID(this);
     }

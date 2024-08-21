@@ -84,7 +84,7 @@ public abstract class Waypoint : ILocated, IFoggable, IOwnable, INamed, IPromota
 					Owner.NumberedWaypoints[i] = null;
 			}
 		}
-		foreach (var sobj in Game.Current.FindSpaceObjects<IMobileSpaceObject>())
+		foreach (var sobj in Galaxy.Current.FindSpaceObjects<IMobileSpaceObject>())
 		{
 			// check if space object has orders to move to this waypoint
 			// if so, delete that order and any future orders

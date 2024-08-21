@@ -74,7 +74,7 @@ public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>, II
 	{
 		get
 		{
-			return Game.Current.FindSpaceObjects<Planet>().SingleOrDefault(p => p.Colony == this);
+			return Galaxy.Current.FindSpaceObjects<Planet>().SingleOrDefault(p => p.Colony == this);
 		}
 	}
 

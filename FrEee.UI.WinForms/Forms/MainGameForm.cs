@@ -1315,7 +1315,7 @@ public partial class MainGameForm : GameForm
 
 		// load space objects for search box
 		if (!searchBox.IsDisposed)
-			searchBox.ObjectsToSearch = Game.Current.FindSpaceObjects<ISpaceObject>();
+			searchBox.ObjectsToSearch = Galaxy.Current.FindSpaceObjects<ISpaceObject>();
 
 		// compute warp point connectivity
 		galaxyView.ComputeWarpPointConnectivity();
@@ -1513,9 +1513,9 @@ public partial class MainGameForm : GameForm
 				if (sector != null)
 				{
 					var suitablePlanets = sector.SpaceObjects.OfType<Planet>().Where(p => p.Colony == null && v.Abilities().Any(a => a.Rule.Matches("Colonize Planet - " + p.Surface)));
-					if (Game.Current.GameSetup.CanColonizeOnlyBreathable)
+					if (Game.Current.Setup.CanColonizeOnlyBreathable)
 						suitablePlanets = suitablePlanets.Where(p => p.Atmosphere == Empire.Current.PrimaryRace.NativeAtmosphere);
-					if (Game.Current.GameSetup.CanColonizeOnlyHomeworldSurface)
+					if (Game.Current.Setup.CanColonizeOnlyHomeworldSurface)
 						suitablePlanets = suitablePlanets.Where(p => p.Surface == Empire.Current.PrimaryRace.NativeSurface);
 					if (suitablePlanets.Any())
 					{

@@ -1,4 +1,5 @@
 ﻿using FrEee.Objects.GameState;
+using FrEee.Objects.Space;
 using FrEee.Utility;
 using System.Drawing;
 
@@ -17,5 +18,5 @@ public interface IStarSystemPlacementStrategy
     /// <param name="bounds">Where are we allowed to place star systems?</param>
     /// <param name="starsLeft">How many more stars to place?</param>
     /// <returns>The location of the star system, or null if a location could not be found.</returns>
-    Point? PlaceStarSystem(Game galaxy, int buffer, Rectangle bounds, int starsLeft, PRNG dice);
+    Point? PlaceStarSystem(Galaxy galaxy, int buffer, Rectangle bounds, int starsLeft, PRNG dice);
 }

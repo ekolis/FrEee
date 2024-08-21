@@ -438,7 +438,7 @@ public partial class ConstructionQueueForm : GameForm
 	/// <returns></returns>
 	private bool BuildingAnywhere(IConstructionTemplate t)
 	{
-		return Game.Current.FindSpaceObjects<IConstructor>().OwnedBy(Empire.Current).Any(o => o.ConstructionQueue != null && o.ConstructionQueue.Orders.Any(o2 => o2.Template == t));
+		return Galaxy.Current.FindSpaceObjects<IConstructor>().OwnedBy(Empire.Current).Any(o => o.ConstructionQueue != null && o.ConstructionQueue.Orders.Any(o2 => o2.Template == t));
 	}
 
 	private void CancelChanges()

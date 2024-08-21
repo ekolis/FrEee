@@ -157,7 +157,7 @@ public partial class PlanetListForm : GameForm
 		txtBreathableOther.Text = uncolonized.Where(p => otherAtmospheres.Contains(p.Atmosphere)).Count().ToString();
 
 		// show colony ship counts
-		colonizers = Game.Current.FindSpaceObjects<SpaceVehicle>(v =>
+		colonizers = Galaxy.Current.FindSpaceObjects<SpaceVehicle>(v =>
 			v.Owner == Empire.Current &&
 			(
 				v.Abilities().Any(a => a.Rule.Name.StartsWith("Colonize Planet - "))

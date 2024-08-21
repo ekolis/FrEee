@@ -94,8 +94,8 @@ public class MemoryTest
 		// initialize star systems
 		here = new StarSystem(0) { Name = "Here" };
 		there = new StarSystem(0) { Name = "There" };
-		Game.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(here, new Point()));
-		Game.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(there, new Point(1, 1)));
+		Galaxy.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(here, new Point()));
+		Galaxy.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(there, new Point(1, 1)));
 
 		// initialize empires
 		seekers = new Empire();

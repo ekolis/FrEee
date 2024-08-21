@@ -30,7 +30,7 @@ public class AbilityTest
 
 		// create star system
 		sys = new(0);
-		Game.Current.StarSystemLocations.Add(new(sys, new Point()));
+		Galaxy.Current.StarSystemLocations.Add(new(sys, new Point()));
 
 		// create stuff
 		emp = TestUtilities.CreateEmpire();

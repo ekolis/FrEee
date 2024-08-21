@@ -385,7 +385,7 @@ public static class CommonExtensions
 	/// <returns></returns>
 	public static ICargoContainer FindContainer(this IUnit unit)
 	{
-		var containers = Game.Current.FindSpaceObjects<ICargoContainer>().Where(cc => !(cc is Fleet) && cc.Cargo != null && cc.Cargo.Units.Contains(unit));
+		var containers = Galaxy.Current.FindSpaceObjects<ICargoContainer>().Where(cc => !(cc is Fleet) && cc.Cargo != null && cc.Cargo.Units.Contains(unit));
 		if (!containers.Any())
 		{
 			if (unit is IMobileSpaceObject)
@@ -488,7 +488,7 @@ public static class CommonExtensions
 	/// <returns></returns>
 	public static StarSystem FindStarSystem(this ISpaceObject sobj)
 	{
-		var loc = Game.Current.StarSystemLocations.SingleOrDefault(l => l.Item.Contains(sobj));
+		var loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.Contains(sobj));
 		/*if (loc == null)
 		{
 			// search memories too
@@ -1189,7 +1189,7 @@ public static class CommonExtensions
 			var amount = abil.Value1.ToInt();
 
 			if (resource.HasValue)
-				amount = Game.Current.GameSetup.StandardMiningModel.GetRate(amount, o.ResourceValue[resource], pcts[resource] / 100d);
+				amount = Game.Current.Setup.StandardMiningModel.GetRate(amount, o.ResourceValue[resource], pcts[resource] / 100d);
 
 			income.Add(resource, amount);
 		}

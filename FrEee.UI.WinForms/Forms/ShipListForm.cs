@@ -66,7 +66,7 @@ public partial class ShipListForm : GameForm
 			return;
 
 		// show ship/unit/fleet counts
-		sobjs = Game.Current.FindSpaceObjects<IMobileSpaceObject>().Where(o => !(o is Planet) && (!(o is IUnit && ((IUnit)o).Container == null)));
+		sobjs = Galaxy.Current.FindSpaceObjects<IMobileSpaceObject>().Where(o => !(o is Planet) && (!(o is IUnit && ((IUnit)o).Container == null)));
 		var ours = sobjs.Where(o => o.Owner == Empire.Current);
 		var ourShips = ours.OfType<SpaceVehicle>();
 		txtShips.Text = ourShips.Count().ToString();

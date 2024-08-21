@@ -26,7 +26,7 @@ public abstract class MajorSpaceVehicle : SpaceVehicle, ICargoTransferrer, ICons
 
 	public override void Place(ISpaceObject target)
 	{
-		var search = Game.Current.FindSpaceObjects<ISpaceObject>(sobj => sobj == target);
+		var search = Galaxy.Current.FindSpaceObjects<ISpaceObject>(sobj => sobj == target);
 		if (!search.Any())
 			throw new Exception("Can't place newly constructed vehicle near " + target + " because the target is not in any known sector.");
 		var sys = search.First().StarSystem;
