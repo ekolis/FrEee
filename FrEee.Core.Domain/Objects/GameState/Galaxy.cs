@@ -106,9 +106,9 @@ public class Galaxy : ICommonAbilityObject
 	}
 
 	/// <summary>
-	/// The empire whose turn it is.
+	/// The empire whose turn it is, or null if it's not any empire's turn.
 	/// </summary>
-	public Empire CurrentEmpire { get; set; }
+	public Empire? CurrentEmpire { get; set; }
 
 	/// <summary>
 	/// The current tick in turn processing. 0 = start of turn, 1 = end of turn.
@@ -186,11 +186,11 @@ public class Galaxy : ICommonAbilityObject
 	}
 
 	/// <summary>
-	/// The mod being played.
+	/// The path to the mod being played, or null for the stock mod.
 	/// </summary>
 	[SerializationPriority(1)]
 	[ForceSerializationWhenDefaultValue]
-	public string ModPath { get; set; }
+	public string? ModPath { get; set; }
 
 	/// <summary>
 	/// The game name.
@@ -336,7 +336,7 @@ public class Galaxy : ICommonAbilityObject
 	/// Serialized string value of the galaxy at the beginning of the turn.
 	/// </summary>
 	[DoNotSerialize]
-	internal string StringValue
+	internal string? StringValue
 	{
 		get
 		{
@@ -354,7 +354,7 @@ public class Galaxy : ICommonAbilityObject
 
 	private IDictionary<Sector, double> lastBattleTimestamps = new SafeDictionary<Sector, double>();
 
-	private string stringValue;
+	private string? stringValue;
 
 	public static string GetEmpireCommandsSavePath(string gameName, int turnNumber, int empireNumber)
 	{
