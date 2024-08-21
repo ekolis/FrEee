@@ -428,8 +428,7 @@ public class Galaxy : ICommonAbilityObject
 	{
 		var fs = new FileStream(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory, filename), FileMode.Open);
 		Current = Serializer.Deserialize<Galaxy>(fs);
-		if (Current.ModPath == null)
-			new ModLoader().Load(null); // skipped in deserialization because it is null but the mod needs to be loaded!
+		new ModLoader().Load(Current.ModPath);
 		if (Empire.Current != null)
 		{
 			// load library of designs, strategies, etc.
@@ -470,9 +469,7 @@ public class Galaxy : ICommonAbilityObject
 		Current = Serializer.DeserializeFromString<Galaxy>(serializedData);
 		//Current.SpaceObjectIDCheck("after loading from memory");
 
-
-		if (Current.ModPath == null)
-			new ModLoader().Load(null); // skipped in deserialization because it is null but the mod needs to be loaded!
+		new ModLoader().Load(Current.ModPath);
 
 		if (Empire.Current != null)
 		{
