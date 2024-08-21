@@ -21,7 +21,7 @@ public partial class DebugForm : GameForm
 
 			PythonScriptEngine.EvaluateExpression<object>("from FrEee.Objects.GameState import Galaxy");
 			rtbOutput.AppendText("Imported Galaxy.\n");
-			rtbOutput.AppendText("Galaxy.Current is currently: " + OrNil(Galaxy.Current) + "\n");
+			rtbOutput.AppendText("Galaxy.Current is currently: " + OrNil(Game.Current) + "\n");
 
 			PythonScriptEngine.EvaluateExpression<object>("from FrEee.Objects.Civilization import Empire");
 			rtbOutput.AppendText("Imported Empire.\n");

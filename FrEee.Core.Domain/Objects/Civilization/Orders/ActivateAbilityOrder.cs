@@ -88,9 +88,9 @@ public class ActivateAbilityOrder : IOrder
     {
         if (IsDisposed)
             return;
-        foreach (var sobj in Galaxy.Current.Referrables.OfType<IMobileSpaceObject>())
+        foreach (var sobj in Game.Current.Referrables.OfType<IMobileSpaceObject>())
             sobj.RemoveOrder(this);
-        Galaxy.Current.UnassignID(this);
+        Game.Current.UnassignID(this);
     }
 
     public void Execute(IOrderable ord)
@@ -168,7 +168,7 @@ public class ActivateAbilityOrder : IOrder
 
                         // figure out where the warp point goes, according to our game setup's warp point placement strategy
                         // only in the target system - in the source system we get a warp point at the sector where the WP opener was
-                        var toSector = Galaxy.Current.GameSetup.WarpPointPlacementStrategy.GetWarpPointSector(fromSys.Location, toSys.Location);
+                        var toSector = Game.Current.GameSetup.WarpPointPlacementStrategy.GetWarpPointSector(fromSys.Location, toSys.Location);
 
                         // create the warp points
                         var wp1 = wpt1.Instantiate();

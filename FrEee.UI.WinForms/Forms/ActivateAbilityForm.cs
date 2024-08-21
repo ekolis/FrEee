@@ -87,7 +87,7 @@ public partial class ActivateAbilityForm : GameForm
 				{
 					// find systems in range
 					needsTarget = true;
-					targets = Galaxy.Current.StarSystemLocations.Where(l => sobj.StarSystem != l.Item && sobj.StarSystem.Coordinates.EightWayDistance(l.Location) <= abil.Value1.ToInt()).Select(l => l.Item);
+					targets = Game.Current.StarSystemLocations.Where(l => sobj.StarSystem != l.Item && sobj.StarSystem.Coordinates.EightWayDistance(l.Location) <= abil.Value1.ToInt()).Select(l => l.Item);
 					targetType = "star systems within {0} light-years".F(abil.Value1);
 				}
 				else if (abil.Rule.Matches("Close Warp Point"))

@@ -15,7 +15,7 @@ public class Proposal : Command<Empire>, IFoggable, IReferrable
 	public Proposal(Empire recipient)
 		: base(Empire.Current)
 	{
-		Timestamp = Galaxy.Current.TurnNumber;
+		Timestamp = Game.Current.TurnNumber;
 		Recipient = recipient;
 	}
 
@@ -103,7 +103,7 @@ public class Proposal : Command<Empire>, IFoggable, IReferrable
 	{
 		if (IsDisposed)
 			return;
-		Galaxy.Current.UnassignID(this);
+		Game.Current.UnassignID(this);
 	}
 
 	public override void Execute()

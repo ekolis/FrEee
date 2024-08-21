@@ -142,9 +142,9 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
     {
         if (IsDisposed)
             return;
-        foreach (var q in Galaxy.Current.Referrables.OfType<ConstructionQueue>())
+        foreach (var q in Game.Current.Referrables.OfType<ConstructionQueue>())
             q.Orders.Remove(this);
-        Galaxy.Current.UnassignID(this);
+        Game.Current.UnassignID(this);
     }
 
     /// <summary>

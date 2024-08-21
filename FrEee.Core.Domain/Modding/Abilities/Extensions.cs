@@ -28,12 +28,12 @@ public static class Extensions
 		if (obj == null)
 			return Enumerable.Empty<Ability>();
 
-		if (sourceFilter is null && Galaxy.Current is not null && Galaxy.Current.IsAbilityCacheEnabled)
+		if (sourceFilter is null && Game.Current is not null && Game.Current.IsAbilityCacheEnabled)
 		{
 			// use the ability cache
-			if (Galaxy.Current.AbilityCache[obj] is null)
-				Galaxy.Current.AbilityCache[obj] = obj.UnstackedAbilities(true, sourceFilter).Stack(obj).ToArray();
-			return Galaxy.Current.AbilityCache[obj];
+			if (Game.Current.AbilityCache[obj] is null)
+				Game.Current.AbilityCache[obj] = obj.UnstackedAbilities(true, sourceFilter).Stack(obj).ToArray();
+			return Game.Current.AbilityCache[obj];
 		}
 
 		return obj.UnstackedAbilities(true, sourceFilter).Stack(obj);
@@ -167,7 +167,7 @@ public static class Extensions
 
 	public static void ClearAbilityCache(this IAbilityObject o)
 	{
-		Galaxy.Current.AbilityCache.Remove(o);
+		Game.Current.AbilityCache.Remove(o);
 	}
 
 	/// <summary>
@@ -213,12 +213,12 @@ public static class Extensions
 			var subobjs = obj.GetContainedAbilityObjects(emp);
 			Func<IEnumerable<Ability>> getabils = () =>
 				subobjs.SelectMany(o => o.Abilities()).Where(a => a.Rule.CanTarget(obj.AbilityTarget));
-			if (Galaxy.Current.IsAbilityCacheEnabled)
+			if (Game.Current.IsAbilityCacheEnabled)
 			{
 				var tuple = Tuple.Create(obj, emp);
-				if (Galaxy.Current.CommonAbilityCache[tuple] == null)
-					Galaxy.Current.CommonAbilityCache[tuple] = getabils();
-				return Galaxy.Current.CommonAbilityCache[tuple];
+				if (Game.Current.CommonAbilityCache[tuple] == null)
+					Game.Current.CommonAbilityCache[tuple] = getabils();
+				return Game.Current.CommonAbilityCache[tuple];
 			}
 			else
 				return getabils();
@@ -264,7 +264,7 @@ public static class Extensions
 			if (rule.CanTarget(AbilityTargets.Sector) && obj is ILocated locObj)
 			{
 				var sector = locObj.Sector;
-				foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
+				foreach (var emp in Game.Current.Empires.Where(emp => emp != null))
 				{
 					foreach (var abil in sector.EmpireAbilities(emp))
 					{
@@ -276,7 +276,7 @@ public static class Extensions
 			else if (rule.CanTarget(AbilityTargets.StarSystem) && obj is ILocated)
 			{
 				var sys = ((ILocated)obj).StarSystem;
-				foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
+				foreach (var emp in Game.Current.Empires.Where(emp => emp != null))
 				{
 					foreach (var abil in sys.EmpireAbilities(emp))
 					{
@@ -287,9 +287,9 @@ public static class Extensions
 			}
 			else if (rule.CanTarget(AbilityTargets.Galaxy))
 			{
-				foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
+				foreach (var emp in Game.Current.Empires.Where(emp => emp != null))
 				{
-					foreach (var abil in Galaxy.Current.EmpireAbilities(emp))
+					foreach (var abil in Game.Current.EmpireAbilities(emp))
 					{
 						if (rule == abil.Rule)
 							yield return abil;
@@ -312,10 +312,10 @@ public static class Extensions
 		if (obj == null)
 			return null;
 
-		if (filter == null && Galaxy.Current.IsAbilityCacheEnabled)
+		if (filter == null && Game.Current.IsAbilityCacheEnabled)
 		{
 			// use the cache
-			var cached = Galaxy.Current.CommonAbilityCache[Tuple.Create(obj, emp)];
+			var cached = Game.Current.CommonAbilityCache[Tuple.Create(obj, emp)];
 			if (cached != null)
 			{
 				if (cached.Any())
@@ -339,8 +339,8 @@ public static class Extensions
 			result = abils.First().Values[index - 1];
 
 		// cache abilities if we can
-		if (filter == null && Galaxy.Current.IsAbilityCacheEnabled)
-			Galaxy.Current.CommonAbilityCache[Tuple.Create(obj, emp)] = abils.ToArray();
+		if (filter == null && Game.Current.IsAbilityCacheEnabled)
+			Game.Current.CommonAbilityCache[Tuple.Create(obj, emp)] = abils.ToArray();
 
 		return result;
 	}
@@ -402,14 +402,14 @@ public static class Extensions
 		foreach (var clause in ownable.Owner.ReceivedTreatyClauses.Flatten().OfType<ShareAbilityClause>())
 		{
 			var tuple = Tuple.Create(ownable, clause.Owner);
-			if (Empire.Current == null || !Galaxy.Current.SharedAbilityCache.ContainsKey(tuple))
-				Galaxy.Current.SharedAbilityCache[tuple] = ownable.FindSharedAbilities(clause).ToArray();
+			if (Empire.Current == null || !Game.Current.SharedAbilityCache.ContainsKey(tuple))
+				Game.Current.SharedAbilityCache[tuple] = ownable.FindSharedAbilities(clause).ToArray();
 		}
 
 		// get cached abilities
-		foreach (var keyTuple in Galaxy.Current.SharedAbilityCache.Keys.Where(k => k.Item1 == ownable && (sourceFilter == null || sourceFilter(k.Item2))))
+		foreach (var keyTuple in Game.Current.SharedAbilityCache.Keys.Where(k => k.Item1 == ownable && (sourceFilter == null || sourceFilter(k.Item2))))
 		{
-			foreach (var abil in Galaxy.Current.SharedAbilityCache[keyTuple])
+			foreach (var abil in Game.Current.SharedAbilityCache[keyTuple])
 				yield return abil;
 		}
 	}
@@ -434,7 +434,7 @@ public static class Extensions
 				if (rule.CanTarget(AbilityTargets.Sector) && obj is ILocated)
 				{
 					var sector = ((ILocated)obj).Sector;
-					foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
+					foreach (var emp in Game.Current.Empires.Where(emp => emp != null))
 					{
 						foreach (var abil in sector.EmpireAbilities(emp, sourceFilter))
 						{
@@ -446,7 +446,7 @@ public static class Extensions
 				else if (rule.CanTarget(AbilityTargets.StarSystem) && (obj is StarSystem || obj is ILocated))
 				{
 					var sys = ((ILocated)obj).StarSystem;
-					foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
+					foreach (var emp in Game.Current.Empires.Where(emp => emp != null))
 					{
 						foreach (var abil in sys.EmpireAbilities(emp, sourceFilter))
 						{
@@ -457,9 +457,9 @@ public static class Extensions
 				}
 				else if (rule.CanTarget(AbilityTargets.Galaxy))
 				{
-					foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
+					foreach (var emp in Game.Current.Empires.Where(emp => emp != null))
 					{
-						foreach (var abil in Galaxy.Current.EmpireAbilities(emp, sourceFilter))
+						foreach (var abil in Game.Current.EmpireAbilities(emp, sourceFilter))
 						{
 							if (clause.AbilityRule == abil.Rule)
 								yield return abil;

@@ -61,7 +61,7 @@ public class AddOrderCommand : OrderCommand
 				Executor.AddOrder(Order);
 		}
 		else
-			Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Executor + " belonging to " + Executor.Owner + "!", Galaxy.Current.TurnNumber));
+			Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Executor + " belonging to " + Executor.Owner + "!", Game.Current.TurnNumber));
 	}
 
 	public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)

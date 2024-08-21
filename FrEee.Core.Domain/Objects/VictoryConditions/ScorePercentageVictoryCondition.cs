@@ -29,7 +29,7 @@ public class ScorePercentageVictoryCondition : IVictoryCondition
 	{
 		if (emp.IsDefeated)
 			return 0;
-		var secondPlace = Galaxy.Current.Empires.OrderByDescending(e => e.Scores).ElementAtOrDefault(1);
+		var secondPlace = Game.Current.Empires.OrderByDescending(e => e.Scores).ElementAtOrDefault(1);
 		if (secondPlace == null)
 			return double.PositiveInfinity;
 		return (double)(int)(emp.Score) / ((double)(int)secondPlace.Score * (double)Percentage / 100d);

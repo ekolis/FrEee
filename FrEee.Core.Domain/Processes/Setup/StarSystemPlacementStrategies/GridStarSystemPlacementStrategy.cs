@@ -13,7 +13,7 @@ namespace FrEee.Processes.Setup.StarSystemPlacementStrategies;
 [Serializable]
 public class GridStarSystemPlacementStrategy : IStarSystemPlacementStrategy
 {
-    public Point? PlaceStarSystem(Galaxy galaxy, int buffer, Rectangle bounds, int starsLeft, PRNG dice)
+    public Point? PlaceStarSystem(Game galaxy, int buffer, Rectangle bounds, int starsLeft, PRNG dice)
     {
         var openPositions = bounds.GetAllPoints();
         foreach (var sspos in galaxy.StarSystemLocations.Select(sspos => sspos.Location))

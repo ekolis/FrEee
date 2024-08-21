@@ -72,7 +72,7 @@ public class EmpireAILoader : ILoader
 							}
 						}
 					}
-					var ai = new PythonAI<Empire, Galaxy>(Path.GetFileName(empFolder), script, ministers);
+					var ai = new PythonAI<Empire, Game>(Path.GetFileName(empFolder), script, ministers);
 					mod.EmpireAIs.Add(ai);
 					yield return ai;
 				}

@@ -132,9 +132,9 @@ public abstract class PathfindingOrder
     {
         if (IsDisposed)
             return;
-        foreach (var v in Galaxy.Current.FindSpaceObjects<IMobileSpaceObject>())
+        foreach (var v in Game.Current.FindSpaceObjects<IMobileSpaceObject>())
             v.RemoveOrder(this);
-        Galaxy.Current.UnassignID(this);
+        Game.Current.UnassignID(this);
     }
 
     public void Execute(IOrderable ord)

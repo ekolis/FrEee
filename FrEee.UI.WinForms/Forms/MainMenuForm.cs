@@ -93,11 +93,11 @@ public partial class MainMenuForm : GameForm
 					}
 
 					status.Message = "Setting up galaxy";
-					Galaxy.Initialize(setup, null, status, 1.0);
-					var name = Galaxy.Current.Name;
-					var turn = Galaxy.Current.TurnNumber;
+					Game.Initialize(setup, null, status, 1.0);
+					var name = Game.Current.Name;
+					var turn = Game.Current.TurnNumber;
 					status.Message = "Loading game";
-					Galaxy.Load(name + "_" + turn + "_0001.gam");
+					Game.Load(name + "_" + turn + "_0001.gam");
 				}
 			}
 #if RELEASE
@@ -142,8 +142,8 @@ public partial class MainMenuForm : GameForm
 	{
 		Cursor = Cursors.WaitCursor;
 		var plrfile = Path.GetFileNameWithoutExtension(filename) + ".plr";
-		Galaxy.Load(filename);
-		if (Galaxy.Current.CurrentEmpire == null)
+		Game.Load(filename);
+		if (Game.Current.CurrentEmpire == null)
 		{
 			// host view, load host console
 			Cursor = Cursors.WaitCursor;
@@ -161,7 +161,7 @@ public partial class MainMenuForm : GameForm
 				if (loadPlr == null)
 					loadPlr = MessageBox.Show("Player commands file exists for this turn. Resume turn from where you left off?", "Resume Turn", MessageBoxButtons.YesNo) == DialogResult.Yes;
 				if (loadPlr.Value)
-					Galaxy.Current.LoadCommands();
+					Game.Current.LoadCommands();
 			}
 
 			// load library designs

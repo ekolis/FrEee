@@ -292,7 +292,7 @@ public class Seeker : ICombatant
     {
         if (Owner == emp)
             return Visibility.Owned;
-        if (Galaxy.Current.Battles.Any(b =>
+        if (Game.Current.Battles.Any(b =>
             (b.Combatants.Contains(this)
                 || b.StartCombatants.Values.Contains(this)
                 || b.EndCombatants.Values.Contains(this))
@@ -306,7 +306,7 @@ public class Seeker : ICombatant
         if (IsDisposed)
             return;
         Target = null;
-        Galaxy.Current.UnassignID(this);
+        Game.Current.UnassignID(this);
     }
 
     public bool IsHostileTo(Empire emp)
@@ -316,7 +316,7 @@ public class Seeker : ICombatant
 
     public bool IsObsoleteMemory(Empire emp)
     {
-        return Timestamp < Galaxy.Current.Timestamp - 1;
+        return Timestamp < Game.Current.Timestamp - 1;
     }
 
     public void Redact(Empire emp)

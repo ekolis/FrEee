@@ -45,7 +45,7 @@ public class CloakingTest
 	public static void ClassInit()
 	{
 		// initialize galaxy
-		new Galaxy();
+		new Game();
 		new ModLoader().Load(null);
 
 		// initialize empires
@@ -107,7 +107,7 @@ public class CloakingTest
 	{
 		// create star system
 		sys = new StarSystem(0);
-		Galaxy.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(sys, new Point()));
+		Game.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(sys, new Point()));
 
 		// place ships
 		sys.Place(destroyer, new Point());

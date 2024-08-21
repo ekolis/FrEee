@@ -22,7 +22,7 @@ public class Event : IPictorial
 	public Event(EventTemplate t)
 	{
 		Template = t;
-		TurnNumber = Galaxy.Current.TurnNumber + Template.TimeTillCompletion.Value;
+		TurnNumber = Game.Current.TurnNumber + Template.TimeTillCompletion.Value;
 		Dice = new PRNG(GetHashCode());
 	}
 
@@ -34,7 +34,7 @@ public class Event : IPictorial
 		get
 		{
 			// TODO - affected empires only
-			return Galaxy.Current.Empires;
+			return Game.Current.Empires;
 		}
 	}
 

@@ -74,7 +74,7 @@ public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>, II
 	{
 		get
 		{
-			return Galaxy.Current.FindSpaceObjects<Planet>().SingleOrDefault(p => p.Colony == this);
+			return Game.Current.FindSpaceObjects<Planet>().SingleOrDefault(p => p.Colony == this);
 		}
 	}
 
@@ -214,7 +214,7 @@ public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>, II
 		if (Container != null)
 			Container.Colony = null;
 		ConstructionQueue.SafeDispose();
-		Galaxy.Current.UnassignID(this);
+		Game.Current.UnassignID(this);
 		if (!IsMemory)
 			this.UpdateEmpireMemories();
 		IsDisposed = true;
@@ -222,7 +222,7 @@ public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>, II
 
 	public bool IsObsoleteMemory(Empire emp)
 	{
-		return Container == null || Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+		return Container == null || Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Game.Current.Timestamp - 1;
 	}
 
 	public void Redact(Empire emp)

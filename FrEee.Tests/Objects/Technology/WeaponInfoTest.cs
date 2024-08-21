@@ -12,7 +12,7 @@ namespace FrEee.Objects.Technology;
 /// </summary>
 public class WeaponInfoTest
 {
-	private static Galaxy gal = new Galaxy();
+	private static Game gal = new Game();
 
 	private static Mod mod;
 

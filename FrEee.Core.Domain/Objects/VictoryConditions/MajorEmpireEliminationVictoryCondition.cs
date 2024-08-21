@@ -19,7 +19,7 @@ public class MajorEmpireEliminationVictoryCondition : IVictoryCondition
 	{
 		if (emp.IsDefeated)
 			return 0;
-		return (double)Galaxy.Current.Empires.Where(e => e.IsDefeated && !e.IsMinorEmpire).Count() / (double)Galaxy.Current.Empires.Where(e => !e.IsMinorEmpire).Count();
+		return (double)Game.Current.Empires.Where(e => e.IsDefeated && !e.IsMinorEmpire).Count() / (double)Game.Current.Empires.Where(e => !e.IsMinorEmpire).Count();
 	}
 
 	public string GetVictoryMessage(Empire emp)

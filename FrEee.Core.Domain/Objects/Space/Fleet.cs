@@ -28,7 +28,7 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 	{
 		Vehicles = new GameReferenceSet<IMobileSpaceObject>();
 		Orders = new List<IOrder>();
-		Timestamp = Galaxy.Current?.Timestamp ?? 0;
+		Timestamp = Game.Current?.Timestamp ?? 0;
 	}
 
 	public AbilityTargets AbilityTarget
@@ -561,9 +561,9 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 			int spent = 0;
 
 			// sharing supplies should not affect abilities
-			bool wasCacheDisabled = !Galaxy.Current.IsAbilityCacheEnabled;
+			bool wasCacheDisabled = !Game.Current.IsAbilityCacheEnabled;
 			if (wasCacheDisabled)
-				Galaxy.Current.EnableAbilityCache();
+				Game.Current.EnableAbilityCache();
 
 			foreach (var sobj in Vehicles)
 			{
@@ -588,7 +588,7 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 			}
 
 			if (wasCacheDisabled)
-				Galaxy.Current.DisableAbilityCache();
+				Game.Current.DisableAbilityCache();
 		}
 	}
 
@@ -700,7 +700,7 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 		foreach (var v in Vehicles.ExceptSingle(null))
 			v.Container = null;
 		Vehicles.Clear();
-		Galaxy.Current.UnassignID(this);
+		Game.Current.UnassignID(this);
 		Sector = null;
 		Orders.Clear();
 		if (!IsMemory)
@@ -722,8 +722,8 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 	public bool IsObsoleteMemory(Empire emp)
 	{
 		if (StarSystem == null)
-			return Timestamp < Galaxy.Current.Timestamp - 1;
-		return StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+			return Timestamp < Game.Current.Timestamp - 1;
+		return StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Game.Current.Timestamp - 1;
 	}
 
 	public void RearrangeOrder(IOrder order, int delta)

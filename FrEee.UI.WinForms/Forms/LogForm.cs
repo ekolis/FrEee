@@ -46,7 +46,7 @@ public partial class LogForm : GameForm
 		{
 			var item = lstLog.AddItemWithImage(null, message.TurnNumber.ToStardate(), message, message.Picture);
 			item.SubItems.Add(message.Text);
-			if (message.TurnNumber < Galaxy.Current.TurnNumber)
+			if (message.TurnNumber < Game.Current.TurnNumber)
 				item.ForeColor = Color.Gray;
 		}
 	}

@@ -17,7 +17,7 @@ public abstract class Message : IMessage
     {
         Owner = Empire.Current;
         Recipient = recipient;
-        TurnNumber = Galaxy.Current.TurnNumber;
+        TurnNumber = Game.Current.TurnNumber;
     }
 
     public Image Icon
@@ -102,7 +102,7 @@ public abstract class Message : IMessage
     {
         if (IsDisposed)
             return;
-        Galaxy.Current.UnassignID(this);
+        Game.Current.UnassignID(this);
         if (Owner != null)
         {
             // HACK - how could a diplomatic message have no owner?

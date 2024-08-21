@@ -54,7 +54,7 @@ public static class ChecksExtensions
 	/// <returns></returns>
 	public static bool HasValidID(this IReferrable r)
 	{
-		return Galaxy.Current.referrables.ContainsKey(r.ID) && Galaxy.Current.referrables[r.ID] == r;
+		return Game.Current.referrables.ContainsKey(r.ID) && Game.Current.referrables[r.ID] == r;
 	}
 
 	/// <summary>
@@ -154,7 +154,7 @@ public static class ChecksExtensions
 	/// <returns></returns>
 	public static bool IsNew(this IOrder order)
 	{
-		return Galaxy.Current.Referrables.OfType<AddOrderCommand>().Where(cmd => cmd.Order == order).Any();
+		return Game.Current.Referrables.OfType<AddOrderCommand>().Where(cmd => cmd.Order == order).Any();
 	}
 
 	public static bool IsPointDefense(this WeaponTypes wt)
@@ -215,7 +215,7 @@ public static class ChecksExtensions
 	/// <returns>true if it is a memory of a known object, otherwise false.</returns>
 	public static bool IsMemoryOfKnownObject(this ISpaceObject sobj)
 	{
-		return sobj.IsMemory && Empire.Current == null && (sobj.ID == 0 || Galaxy.Current.referrables.ContainsKey(sobj.ID));
+		return sobj.IsMemory && Empire.Current == null && (sobj.ID == 0 || Game.Current.referrables.ContainsKey(sobj.ID));
 	}
 
 	/// <summary>
@@ -251,7 +251,7 @@ public static class ChecksExtensions
 		// You can always scan space objects you are in combat with.
 		// But only their state at the time they were in combat; not for the rest of the turn!
 		// TODO - what about glassed planets, they have no owner...
-		if (Galaxy.Current.Battles.Any(b =>
+		if (Game.Current.Battles.Any(b =>
 		(b.Combatants.OfType<ISpaceObject>().Contains(sobj)
 			|| b.StartCombatants.Values.OfType<ISpaceObject>().Contains(sobj)
 			|| b.EndCombatants.Values.OfType<ISpaceObject>().Contains(sobj))
@@ -265,14 +265,14 @@ public static class ChecksExtensions
 		var seers = sys.FindSpaceObjects<ISpaceObject>(s => s.Owner == emp && !s.IsMemory);
 		if (!seers.Any() || sobj.IsHiddenFrom(emp))
 		{
-			if (Galaxy.Current.GameSetup.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
+			if (Game.Current.GameSetup.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
 				return Visibility.Visible;
 			if (emp.AllSystemsExploredFromStart)
 				return Visibility.Fogged;
 			var known = emp.Memory[sobj.ID];
 			if (known != null && sobj.GetType() == known.GetType())
 				return Visibility.Fogged;
-			else if (Galaxy.Current.Battles.Any(b => b.Combatants.Any(c => c.ID == sobj.ID) && b.Combatants.Any(c => c.Owner == emp)))
+			else if (Game.Current.Battles.Any(b => b.Combatants.Any(c => c.ID == sobj.ID) && b.Combatants.Any(c => c.Owner == emp)))
 				return Visibility.Fogged;
 			else if (hasMemory)
 				return Visibility.Fogged;
@@ -326,7 +326,7 @@ public static class ChecksExtensions
 		// You can always scan space objects you are in combat with.
 		// But only their state at the time they were in combat; not for the rest of the turn!
 		// TODO - what about glassed planets, they have no owner...
-		if (Galaxy.Current.Battles.Any(b =>
+		if (Game.Current.Battles.Any(b =>
 		(b.Combatants.OfType<ISpaceObject>().Contains(sobj)
 			|| b.StartCombatants.Values.OfType<ISpaceObject>().Contains(sobj)
 			|| b.EndCombatants.Values.OfType<ISpaceObject>().Contains(sobj))
@@ -340,14 +340,14 @@ public static class ChecksExtensions
 		var seers = sys.FindSpaceObjects<ISpaceObject>(s => s.Owner == emp && !s.IsMemory);
 		if (!seers.Any() || sobj.IsHiddenFrom(emp))
 		{
-			if (Galaxy.Current.GameSetup.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
+			if (Game.Current.GameSetup.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
 				return Visibility.Visible >= desiredVisibility;
 			if (emp.AllSystemsExploredFromStart)
 				return Visibility.Fogged >= desiredVisibility;
 			var known = emp.Memory[sobj.ID];
 			if (known != null && sobj.GetType() == known.GetType())
 				return Visibility.Fogged >= desiredVisibility;
-			else if (Galaxy.Current.Battles.Any(b => b.Combatants.Any(c => c.ID == sobj.ID) && b.Combatants.Any(c => c.Owner == emp)))
+			else if (Game.Current.Battles.Any(b => b.Combatants.Any(c => c.ID == sobj.ID) && b.Combatants.Any(c => c.Owner == emp)))
 				return Visibility.Fogged >= desiredVisibility;
 			else if (hasMemory)
 				return Visibility.Fogged >= desiredVisibility;

@@ -30,9 +30,9 @@ public class RemoveOrderCommand : OrderCommand
 		else if (Issuer == Executor.Owner)
 		{
 			Executor.RemoveOrder(Order);
-			Galaxy.Current.UnassignID(Order);
+			Game.Current.UnassignID(Order);
 		}
 		else
-			Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Executor + " belonging to " + Executor.Owner + "!", Galaxy.Current.TurnNumber));
+			Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Executor + " belonging to " + Executor.Owner + "!", Game.Current.TurnNumber));
 	}
 }

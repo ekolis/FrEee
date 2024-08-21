@@ -111,7 +111,7 @@ public partial class PlanetListForm : GameForm
 	private void grid_RowEnter(object sender, DataGridViewCellEventArgs e)
 	{
 		var planet = (Planet)grid.SelectedItem;
-		foreach (var sys in Galaxy.Current.CurrentEmpire.ExploredStarSystems)
+		foreach (var sys in Game.Current.CurrentEmpire.ExploredStarSystems)
 		{
 			if (sys.FindSpaceObjects<Planet>().Any(p => p == planet))
 			{
@@ -134,7 +134,7 @@ public partial class PlanetListForm : GameForm
 
 	private void PlanetListForm_Load(object sender, EventArgs e)
 	{
-		if (Galaxy.Current == null)
+		if (Game.Current == null)
 			return;
 
 		// show planet counts
@@ -157,7 +157,7 @@ public partial class PlanetListForm : GameForm
 		txtBreathableOther.Text = uncolonized.Where(p => otherAtmospheres.Contains(p.Atmosphere)).Count().ToString();
 
 		// show colony ship counts
-		colonizers = Galaxy.Current.FindSpaceObjects<SpaceVehicle>(v =>
+		colonizers = Game.Current.FindSpaceObjects<SpaceVehicle>(v =>
 			v.Owner == Empire.Current &&
 			(
 				v.Abilities().Any(a => a.Rule.Name.StartsWith("Colonize Planet - "))

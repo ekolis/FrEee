@@ -67,7 +67,7 @@ public class Facility : IOwnableAbilityObject, IConstructable, IDamageable, IDis
 	{
 		get
 		{
-			return Galaxy.Current.FindSpaceObjects<Planet>().SingleOrDefault(p => p.Colony != null && p.Colony.Facilities.Contains(this));
+			return Game.Current.FindSpaceObjects<Planet>().SingleOrDefault(p => p.Colony != null && p.Colony.Facilities.Contains(this));
 		}
 	}
 
@@ -192,7 +192,7 @@ public class Facility : IOwnableAbilityObject, IConstructable, IDamageable, IDis
 
 	public IEnumerable<Facility> NewerVersions
 	{
-		get { return Galaxy.Current.FindSpaceObjects<Planet>().Where(p => p.HasColony).SelectMany(p => p.Colony.Facilities).Where(f => Template.UpgradesTo(f.Template)); }
+		get { return Game.Current.FindSpaceObjects<Planet>().Where(p => p.HasColony).SelectMany(p => p.Colony.Facilities).Where(f => Template.UpgradesTo(f.Template)); }
 	}
 
 	/// <summary>
@@ -213,7 +213,7 @@ public class Facility : IOwnableAbilityObject, IConstructable, IDamageable, IDis
 
 	public IEnumerable<Facility> OlderVersions
 	{
-		get { return Galaxy.Current.FindSpaceObjects<Planet>().Where(p => p.HasColony).SelectMany(p => p.Colony.Facilities).Where(f => f.Template.UpgradesTo(Template)); }
+		get { return Game.Current.FindSpaceObjects<Planet>().Where(p => p.HasColony).SelectMany(p => p.Colony.Facilities).Where(f => f.Template.UpgradesTo(Template)); }
 	}
 
 	[DoNotSerialize(false)]

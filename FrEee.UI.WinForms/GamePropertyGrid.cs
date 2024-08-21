@@ -172,7 +172,7 @@ public partial class GamePropertyGrid : UserControl, IBindable<object>
 		}
 		else if (TypeMatch<GameReference<IReferrable>>(objectType))
 		{
-			var objs = Galaxy.Current.Referrables.Where(r => objectType.GetGenericArguments()[0].IsAssignableFrom(r.GetType())).ToList();
+			var objs = Game.Current.Referrables.Where(r => objectType.GetGenericArguments()[0].IsAssignableFrom(r.GetType())).ToList();
 			objs.Insert(0, null);
 			var pnl = MakeDropdownPanel(objs, obj, newReferrableHandler);
 			ctl = pnl;
@@ -186,7 +186,7 @@ public partial class GamePropertyGrid : UserControl, IBindable<object>
 		}
 		else if (TypeMatch<IReferrable>(objectType))
 		{
-			var objs = Galaxy.Current.Referrables.Where(r => objectType.IsAssignableFrom(r.GetType())).ToList();
+			var objs = Game.Current.Referrables.Where(r => objectType.IsAssignableFrom(r.GetType())).ToList();
 			objs.Insert(0, null);
 			var pnl = MakeDropdownPanel(objs, obj, newReferrableHandler);
 			ctl = pnl;

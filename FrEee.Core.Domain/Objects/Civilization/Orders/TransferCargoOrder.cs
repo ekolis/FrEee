@@ -70,9 +70,9 @@ public class TransferCargoOrder : IOrder
     {
         if (IsDisposed)
             return;
-        foreach (var v in Galaxy.Current.Referrables.OfType<ICargoTransferrer>())
+        foreach (var v in Game.Current.Referrables.OfType<ICargoTransferrer>())
             v.RemoveOrder(this);
-        Galaxy.Current.UnassignID(this);
+        Game.Current.UnassignID(this);
     }
 
     public void Execute(IOrderable ord)

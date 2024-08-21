@@ -286,7 +286,7 @@ public static class Pathfinder
 		if (emp != null && !emp.HasExplored(sector.StarSystem))
 			return null; // no cheating!
 		if (findWarpIn) // find a warp point leading into the system
-			return Galaxy.Current.FindSpaceObjects<WarpPoint>().Where(wp => wp.Target != null && wp.Target.StarSystem == sector.StarSystem && wp.HasVisibility(emp, Visibility.Fogged)).Select(wp => wp.Target).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault(); // use HasVisibility instead of CheckVisibility, it's faster when all we want is visible/invisible and don't care about scanning
+			return Game.Current.FindSpaceObjects<WarpPoint>().Where(wp => wp.Target != null && wp.Target.StarSystem == sector.StarSystem && wp.HasVisibility(emp, Visibility.Fogged)).Select(wp => wp.Target).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault(); // use HasVisibility instead of CheckVisibility, it's faster when all we want is visible/invisible and don't care about scanning
 		else // find a warp point leading out of the system
 			return sector.StarSystem.FindSpaceObjects<WarpPoint>().Select(wp => new Sector(sector.StarSystem, wp.FindCoordinates())).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault();
 	}
@@ -332,9 +332,9 @@ public static class Pathfinder
 	/// <returns></returns>
 	public static IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors, IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> map)
 	{
-		bool cacheEnabled = Galaxy.Current.IsAbilityCacheEnabled;
+		bool cacheEnabled = Game.Current.IsAbilityCacheEnabled;
 		if (!cacheEnabled)
-			Galaxy.Current.EnableAbilityCache();
+			Game.Current.EnableAbilityCache();
 		if (end == null || end.StarSystem == null || start == end)
 			return Enumerable.Empty<Sector>();
 		if (me != null && me.StrategicSpeed < 1)
@@ -367,7 +367,7 @@ public static class Pathfinder
 			node = node.PreviousNode;
 		}
 		if (!cacheEnabled)
-			Galaxy.Current.DisableAbilityCache();
+			Game.Current.DisableAbilityCache();
 		return nodes.Select(n => n.Location).Where(s => s != start).Reverse();
 	}
 

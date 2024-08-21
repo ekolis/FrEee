@@ -73,7 +73,7 @@ public class WarpPoint : StellarObject, ITemplate<WarpPoint>, IReferrable, IData
 		{
 			if (Target == null)
 				return null;
-			return Galaxy.Current.StarSystemLocations.SingleOrDefault(ssl => ssl.Item == Target.StarSystem);
+			return Game.Current.StarSystemLocations.SingleOrDefault(ssl => ssl.Item == Target.StarSystem);
 		}
 	}
 

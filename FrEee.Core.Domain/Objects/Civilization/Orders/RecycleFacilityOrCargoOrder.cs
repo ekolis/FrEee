@@ -66,9 +66,9 @@ public class RecycleFacilityOrCargoOrder : IOrder
     {
         if (IsDisposed)
             return;
-        foreach (var v in Galaxy.Current.Referrables.OfType<IMobileSpaceObject>())
+        foreach (var v in Game.Current.Referrables.OfType<IMobileSpaceObject>())
             v.RemoveOrder(this);
-        Galaxy.Current.UnassignID(this);
+        Game.Current.UnassignID(this);
     }
 
     public void Execute(IOrderable x)

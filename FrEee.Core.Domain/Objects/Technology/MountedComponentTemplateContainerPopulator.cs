@@ -14,7 +14,7 @@ public class MountedComponentTemplateContainerPopulator
 	{
 		if (context is MountedComponentTemplate mct)
 		{
-			return Galaxy.Current.Referrables.OfType<IDesign>().SingleOrDefault(q => q.Components.Contains(mct));
+			return Game.Current.Referrables.OfType<IDesign>().SingleOrDefault(q => q.Components.Contains(mct));
 		}
 		else
 		{

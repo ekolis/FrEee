@@ -192,7 +192,7 @@ public class Ability : IContainable<IAbilityObject>, IReferrable, IModObject, ID
             return;
         if (Container is IAbilityContainer)
             (Container as IAbilityContainer).Abilities.Remove(this);
-        Galaxy.Current.UnassignID(this);
+        Game.Current.UnassignID(this);
     }
 
     public override string ToString()

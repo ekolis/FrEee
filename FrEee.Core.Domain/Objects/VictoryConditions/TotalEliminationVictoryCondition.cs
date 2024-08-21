@@ -19,9 +19,9 @@ public class TotalEliminationVictoryCondition : IVictoryCondition
 	{
 		if (emp.IsDefeated)
 			return 0;
-		if (Galaxy.Current.Empires.Count == 1)
+		if (Game.Current.Empires.Count == 1)
 			return 1;
-		return (double)Galaxy.Current.Empires.Where(e => e.IsDefeated).Count() / ((double)Galaxy.Current.Empires.Count - 1);
+		return (double)Game.Current.Empires.Where(e => e.IsDefeated).Count() / ((double)Game.Current.Empires.Count - 1);
 	}
 
 	public string GetVictoryMessage(Empire emp)

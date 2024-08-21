@@ -25,7 +25,7 @@ public class ConstructionTest
 	public static void ClassInit()
 	{
 		// initialize galaxy
-		new Galaxy();
+		new Game();
 		new ModLoader().Load(null);
 
 		// initialize empires

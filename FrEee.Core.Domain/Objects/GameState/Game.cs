@@ -31,9 +31,9 @@ namespace FrEee.Objects.GameState;
 /// A galaxy in which the game is played.
 /// </summary>
 [Serializable]
-public class Galaxy : ICommonAbilityObject
+public class Game : ICommonAbilityObject
 {
-	public Galaxy()
+	public Game()
 	{
 		Current = this;
 		if (Mod.Current != null)
@@ -60,7 +60,7 @@ public class Galaxy : ICommonAbilityObject
 	/// <summary>
 	/// The current galaxy. Shouldn't change except at loading a game or turn processing.
 	/// </summary>
-	public static Galaxy? Current { get; set; }
+	public static Game? Current { get; set; }
 
 	public AbilityTargets AbilityTarget
 	{
@@ -410,7 +410,7 @@ public class Galaxy : ICommonAbilityObject
 	public static void Load(string filename)
 	{
 		var fs = new FileStream(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory, filename), FileMode.Open);
-		Current = Serializer.Deserialize<Galaxy>(fs);
+		Current = Serializer.Deserialize<Game>(fs);
 		new ModLoader().Load(Current.ModPath);
 		if (Empire.Current != null)
 		{
@@ -449,7 +449,7 @@ public class Galaxy : ICommonAbilityObject
 	/// <param name="serializedData"></param>
 	public static void LoadFromString(string serializedData)
 	{
-		Current = Serializer.DeserializeFromString<Galaxy>(serializedData);
+		Current = Serializer.DeserializeFromString<Game>(serializedData);
 		//Current.SpaceObjectIDCheck("after loading from memory");
 
 		new ModLoader().Load(Current.ModPath);

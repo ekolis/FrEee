@@ -14,6 +14,6 @@ public class GameSetupTest
 	{
 		var setup = GameSetup.Load(@"..\..\..\..\FrEee\GameSetups\quickstart.gsu");
 		Mod.Current = new ModLoader().Load(null);
-		Galaxy.Initialize(setup, null);
+		Game.Initialize(setup, null);
 	}
 }

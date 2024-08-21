@@ -114,9 +114,9 @@ public class UpgradeFacilityOrder : IConstructionOrder
     {
         if (IsDisposed)
             return;
-        foreach (var v in Galaxy.Current.Referrables.OfType<ConstructionQueue>())
+        foreach (var v in Game.Current.Referrables.OfType<ConstructionQueue>())
             v.Orders.Remove(this);
-        Galaxy.Current.UnassignID(this);
+        Game.Current.UnassignID(this);
     }
 
     /// <summary>

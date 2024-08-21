@@ -386,7 +386,7 @@ public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IF
 	{
 		get
 		{
-			return Galaxy.Current.FindSpaceObjects<IVehicle>().Where(v => Design.UpgradesTo(v.Design));
+			return Game.Current.FindSpaceObjects<IVehicle>().Where(v => Design.UpgradesTo(v.Design));
 		}
 	}
 
@@ -402,7 +402,7 @@ public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IF
 	{
 		get
 		{
-			return Galaxy.Current.FindSpaceObjects<IVehicle>().Where(v => v.Design.UpgradesTo(Design));
+			return Game.Current.FindSpaceObjects<IVehicle>().Where(v => v.Design.UpgradesTo(Design));
 		}
 	}
 
@@ -608,7 +608,7 @@ public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IF
 		if (IsDisposed)
 			return;
 		IsDisposed = true;
-		Galaxy.Current.UnassignID(this);
+		Game.Current.UnassignID(this);
 		if (!IsMemory)
 			this.UpdateEmpireMemories();
 		if (this is IUnit u)

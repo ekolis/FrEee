@@ -361,7 +361,7 @@ public partial class MainGameForm : GameForm
 	{
 		var todos = FindTodos();
 
-		if (Galaxy.Current.IsSinglePlayer && !hostView)
+		if (Game.Current.IsSinglePlayer && !hostView)
 		{
 			var msg = !todos.Any() ? "Process turn after saving your commands?" : "Process turn after saving your commands? You have:\n\n" + string.Join("\n", todos.ToArray());
 			var result = MessageBox.Show(msg, "FrEee", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
@@ -370,7 +370,7 @@ public partial class MainGameForm : GameForm
 				SaveCommands(true);
 
 				// show empire log if there's anything new there
-				if (Empire.Current.Log.Any(m => m.TurnNumber == Galaxy.Current.TurnNumber))
+				if (Empire.Current.Log.Any(m => m.TurnNumber == Game.Current.TurnNumber))
 					this.ShowChildForm(new LogForm(this, Empire.Current.Log));
 			}
 			else if (result == DialogResult.No)
@@ -564,7 +564,7 @@ public partial class MainGameForm : GameForm
 		switch (mode)
 		{
 			case CommandMode.None:
-				Text = "FrEee - " + Galaxy.Current;
+				Text = "FrEee - " + Game.Current;
 				break;
 
 			case CommandMode.Move:
@@ -664,7 +664,7 @@ public partial class MainGameForm : GameForm
 
 	private MusicMood FindMusicMood()
 	{
-		var emps = Galaxy.Current.Empires.ExceptSingle(Empire.Current).ExceptSingle(null);
+		var emps = Game.Current.Empires.ExceptSingle(Empire.Current).ExceptSingle(null);
 		if (Empire.Current == null)
 			return MusicMood.Peaceful; // we are the host
 		else
@@ -763,7 +763,7 @@ public partial class MainGameForm : GameForm
 			todos.Add(unallocatedPct.ToString("0%") + " unallocated research");
 
 		var messages = Empire.Current.IncomingMessages.OfType<ProposalMessage>().Count(m =>
-			m.TurnNumber >= Galaxy.Current.TurnNumber - 1 &&
+			m.TurnNumber >= Game.Current.TurnNumber - 1 &&
 			!Empire.Current.Commands.OfType<SendMessageCommand>().Where(c => c.Message.InReplyTo == m).Any() &&
 			!Empire.Current.Commands.OfType<DeleteMessageCommand>().Where(c => c.Message == m).Any());
 		if (messages == 1)
@@ -812,7 +812,7 @@ public partial class MainGameForm : GameForm
 			switch (MessageBox.Show(msg, "FrEee", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
 			{
 				case DialogResult.Yes:
-					SaveCommands(!Galaxy.Current.IsSinglePlayer || hostView);
+					SaveCommands(!Game.Current.IsSinglePlayer || hostView);
 					break;
 
 				case DialogResult.No:
@@ -1069,7 +1069,7 @@ public partial class MainGameForm : GameForm
 		}
 
 		// show empire log if there's anything new there
-		if (Empire.Current.Log.Any(m => m.TurnNumber == Galaxy.Current.TurnNumber))
+		if (Empire.Current.Log.Any(m => m.TurnNumber == Game.Current.TurnNumber))
 		{
 			var form = new LogForm(this, Empire.Current.Log);
 			form.StartPosition = FormStartPosition.CenterScreen;
@@ -1185,27 +1185,27 @@ public partial class MainGameForm : GameForm
 
 	private void SaveCommands(bool endTurn)
 	{
-		Galaxy.Current.SaveCommands();
+		Game.Current.SaveCommands();
 		if (endTurn)
 		{
-			if (Galaxy.Current.IsSinglePlayer && !hostView)
+			if (Game.Current.IsSinglePlayer && !hostView)
 			{
 				Cursor = Cursors.WaitCursor;
 				Enabled = false;
-				var plrnum = Galaxy.Current.PlayerNumber;
+				var plrnum = Game.Current.PlayerNumber;
 				var status = new Status { Message = "Initializing" };
 				var t = new Thread(new ThreadStart(() =>
 				{
 					status.Message = "Loading game";
-					Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber);
+					Game.Load(Game.Current.Name, Game.Current.TurnNumber);
 					status.Progress = 0.25;
 					status.Message = "Processing turn";
 					var processor = new TurnProcessor();
-					processor.ProcessTurn(Galaxy.Current, false, status, 0.5);
+					processor.ProcessTurn(Game.Current, false, status, 0.5);
 					status.Message = "Saving game";
-					Galaxy.SaveAll(status, 0.75);
+					Game.SaveAll(status, 0.75);
 					status.Message = "Loading game";
-					Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber, plrnum);
+					Game.Load(Game.Current.Name, Game.Current.TurnNumber, plrnum);
 					status.Progress = 1.00;
 					// no need to reload designs from library, they're already loaded
 				}));
@@ -1229,7 +1229,7 @@ public partial class MainGameForm : GameForm
 				}
 			}
 			else if (!hostView)
-				MessageBox.Show("Please send " + Galaxy.Current.CommandFileName + " to the game host.");
+				MessageBox.Show("Please send " + Game.Current.CommandFileName + " to the game host.");
 			else
 				MessageBox.Show("Commands saved for " + Empire.Current + ".");
 		}
@@ -1290,7 +1290,7 @@ public partial class MainGameForm : GameForm
 		Music.Play(MusicMode.Strategic, FindMusicMood());
 
 		// display empire flag
-		picEmpireFlag.Image = Galaxy.Current.CurrentEmpire.Icon;
+		picEmpireFlag.Image = Game.Current.CurrentEmpire.Icon;
 
 		// create homesystem tab
 		foreach (var tab in ListTabs().ToArray())
@@ -1315,7 +1315,7 @@ public partial class MainGameForm : GameForm
 
 		// load space objects for search box
 		if (!searchBox.IsDisposed)
-			searchBox.ObjectsToSearch = Galaxy.Current.FindSpaceObjects<ISpaceObject>();
+			searchBox.ObjectsToSearch = Game.Current.FindSpaceObjects<ISpaceObject>();
 
 		// compute warp point connectivity
 		galaxyView.ComputeWarpPointConnectivity();
@@ -1513,9 +1513,9 @@ public partial class MainGameForm : GameForm
 				if (sector != null)
 				{
 					var suitablePlanets = sector.SpaceObjects.OfType<Planet>().Where(p => p.Colony == null && v.Abilities().Any(a => a.Rule.Matches("Colonize Planet - " + p.Surface)));
-					if (Galaxy.Current.GameSetup.CanColonizeOnlyBreathable)
+					if (Game.Current.GameSetup.CanColonizeOnlyBreathable)
 						suitablePlanets = suitablePlanets.Where(p => p.Atmosphere == Empire.Current.PrimaryRace.NativeAtmosphere);
-					if (Galaxy.Current.GameSetup.CanColonizeOnlyHomeworldSurface)
+					if (Game.Current.GameSetup.CanColonizeOnlyHomeworldSurface)
 						suitablePlanets = suitablePlanets.Where(p => p.Surface == Empire.Current.PrimaryRace.NativeSurface);
 					if (suitablePlanets.Any())
 					{

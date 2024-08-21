@@ -282,7 +282,7 @@ public abstract class StellarObject : IStellarObject, IAbstractDataObject
 		var sys = this.FindStarSystem();
 		if (sys != null)
 			sys.Remove(this);
-		Galaxy.Current.UnassignID(this);
+		Game.Current.UnassignID(this);
 		if (!IsMemory)
 			this.UpdateEmpireMemories();
 	}
@@ -300,8 +300,8 @@ public abstract class StellarObject : IStellarObject, IAbstractDataObject
 	public bool IsObsoleteMemory(Empire emp)
 	{
 		if (StarSystem == null)
-			return Timestamp < Galaxy.Current.Timestamp - 1;
-		return StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+			return Timestamp < Game.Current.Timestamp - 1;
+		return StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Game.Current.Timestamp - 1;
 	}
 
 	/// <summary>

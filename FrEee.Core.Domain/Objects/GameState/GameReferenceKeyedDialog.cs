@@ -15,7 +15,7 @@ public class GameReferenceKeyedDialog<TKey, TValue> : ReferenceKeyedDictionary<l
 	protected override TKey LookUp(long id)
 	{
 		if (!dict.ContainsKey(id))
-			dict[id] = (TKey)Galaxy.Current.GetReferrable(id);
+			dict[id] = (TKey)Game.Current.GetReferrable(id);
 		return dict[id];
 	}
 }

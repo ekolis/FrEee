@@ -25,9 +25,9 @@ public class DamageTypesTest
         mod = new ModLoader().Load(null);
 
         // create a galaxy for referencing things
-        new Galaxy();
+        new Game();
         foreach (var r in mod.Objects.OfType<IReferrable>())
-            Galaxy.Current.AssignID(r);
+            Game.Current.AssignID(r);
     }
 
     [SetUp]

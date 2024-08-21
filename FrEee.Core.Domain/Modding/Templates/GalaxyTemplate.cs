@@ -16,7 +16,7 @@ namespace FrEee.Modding.Templates;
 /// Maps to a record in QuadrantTypes.txt.
 /// </summary>
 [Serializable]
-public class GalaxyTemplate : ITemplate<Galaxy>, IModObject
+public class GalaxyTemplate : ITemplate<Game>, IModObject
 {
 	public GalaxyTemplate()
 	{
@@ -86,7 +86,7 @@ public class GalaxyTemplate : ITemplate<Galaxy>, IModObject
 		IsDisposed = true;
 	}
 
-	public Galaxy Instantiate()
+	public Game Instantiate()
 	{
 		return Instantiate(null, 1.0, new PRNG(RandomSeed));
 	}
@@ -95,9 +95,9 @@ public class GalaxyTemplate : ITemplate<Galaxy>, IModObject
 
 	/// <param name="status">A status object to report status back to the GUI.</param>
 	/// <param name="desiredProgress">How much progress should we report back to the GUI when we're done initializing the galaxy? 1.0 means all done with everything that needs to be done.</param>
-	public Galaxy Instantiate(Status status, double desiredProgress, PRNG dice)
+	public Game Instantiate(Status status, double desiredProgress, PRNG dice)
 	{
-		var gal = new Galaxy();
+		var gal = new Game();
 		gal.GameSetup = GameSetup;
 		var bounds = new Rectangle(-GameSetup.GalaxySize.Width / 2, -GameSetup.GalaxySize.Height / 2, GameSetup.GalaxySize.Width, GameSetup.GalaxySize.Height);
 
@@ -184,7 +184,7 @@ public class GalaxyTemplate : ITemplate<Galaxy>, IModObject
 					if (IntersectsExceptAtEnds(l1.Location, l2.Location, graph))
 						continue;
 					var dist = l1.Location.ManhattanDistance(l2.Location);
-					if (dist < bestDistance && AreWarpPointAnglesOk(l1, l2, Galaxy.Current, MinWarpPointAngle))
+					if (dist < bestDistance && AreWarpPointAnglesOk(l1, l2, Game.Current, MinWarpPointAngle))
 					{
 						bestDistance = dist;
 						best = (l1, l2);
@@ -205,7 +205,7 @@ public class GalaxyTemplate : ITemplate<Galaxy>, IModObject
 						if (graph.AreDirectlyConnected(l1, l2))
 							continue;
 						var dist = l1.Location.ManhattanDistance(l2.Location);
-						if (dist < bestDistance && AreWarpPointAnglesOk(l1, l2, Galaxy.Current, MinWarpPointAngle))
+						if (dist < bestDistance && AreWarpPointAnglesOk(l1, l2, Game.Current, MinWarpPointAngle))
 						{
 							bestDistance = dist;
 							best = (l1, l2);
@@ -323,7 +323,7 @@ public class GalaxyTemplate : ITemplate<Galaxy>, IModObject
 		return false;
 	}
 
-	private bool AreWarpPointAnglesOk(ObjectLocation<StarSystem> start, ObjectLocation<StarSystem> end, Galaxy gal, int minAngle)
+	private bool AreWarpPointAnglesOk(ObjectLocation<StarSystem> start, ObjectLocation<StarSystem> end, Game gal, int minAngle)
 	{
 		var angleOut = NormalizeAngle(start.Location.AngleTo(end.Location));
 		var angleBack = NormalizeAngle(angleOut + 180d);
@@ -345,7 +345,7 @@ public class GalaxyTemplate : ITemplate<Galaxy>, IModObject
 		return true;
 	}
 
-	private IEnumerable<double> GetWarpPointAngles(ObjectLocation<StarSystem> ssl, Galaxy gal)
+	private IEnumerable<double> GetWarpPointAngles(ObjectLocation<StarSystem> ssl, Game gal)
 	{
 		foreach (var wp in ssl.Item.FindSpaceObjects<WarpPoint>())
 		{

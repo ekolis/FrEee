@@ -225,7 +225,7 @@ public class Race : INamed, IAbilityObject, IPictorial, IReferrable
 	{
 		if (IsDisposed)
 			return;
-		Galaxy.Current.UnassignID(this);
+		Game.Current.UnassignID(this);
 	}
 
 	public void Save(string filename)

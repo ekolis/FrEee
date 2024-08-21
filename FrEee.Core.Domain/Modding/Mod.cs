@@ -48,7 +48,7 @@ public class Mod : IDisposable
 		StellarObjectTemplates = new List<StellarObject>();
 		HappinessModels = new List<HappinessModel>();
 		Cultures = new List<Culture>();
-		EmpireAIs = new List<AI<Empire, Galaxy>>();
+		EmpireAIs = new List<AI<Empire, Game>>();
 		EventTypes = new List<EventType>();
 		EventTemplates = new List<EventTemplate>();
 
@@ -101,7 +101,7 @@ public class Mod : IDisposable
 	/// <summary>
 	/// The empire AIs in the game.
 	/// </summary>
-	public ICollection<AI<Empire, Galaxy>> EmpireAIs { get; private set; }
+	public ICollection<AI<Empire, Game>> EmpireAIs { get; private set; }
 
 	/// <summary>
 	/// The script which runs after each turn.

@@ -84,7 +84,7 @@ public abstract class Clause : IOwnable, IFoggable, IPromotable, IReferrable
 	{
 		if (IsDisposed)
 			return;
-		Galaxy.Current.UnassignID(this);
+		Game.Current.UnassignID(this);
 		IsInEffect = false;
 	}
 

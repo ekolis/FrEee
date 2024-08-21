@@ -24,7 +24,7 @@ namespace FrEee.UI.Blazor.Views
 		/// <summary>
 		/// The current galaxy.
 		/// </summary>
-		private Galaxy Galaxy => Galaxy.Current;
+		private Game Galaxy => Game.Current;
 
 		/// <summary>
 		/// Any star systems in the galaxy, along with their locations.

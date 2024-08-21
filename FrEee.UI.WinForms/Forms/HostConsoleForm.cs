@@ -38,8 +38,8 @@ public partial class HostConsoleForm : GameForm
 
 	private void Bind()
 	{
-		empireStatusBindingSource.DataSource = Galaxy.Current.Empires.Select(e => new EmpireStatus(e));
-		Text = "Host Console - " + Galaxy.Current.Name + " turn " + Galaxy.Current.TurnNumber;
+		empireStatusBindingSource.DataSource = Game.Current.Empires.Select(e => new EmpireStatus(e));
+		Text = "Host Console - " + Game.Current.Name + " turn " + Game.Current.TurnNumber;
 	}
 
 	private void btnClose_Click(object sender, EventArgs e)
@@ -67,23 +67,23 @@ public partial class HostConsoleForm : GameForm
 					if (emp.IsPlayerEmpire)
 					{
 						// load GAM file if possible
-						var savefile = Galaxy.Current.GetGameSavePath(emp);
+						var savefile = Game.Current.GetGameSavePath(emp);
 						try
 						{
-							Galaxy.Load(savefile);
+							Game.Load(savefile);
 						}
 						catch (IOException)
 						{
 							MessageBox.Show("Could not load " + savefile + ". Attempting to recreate player view.");
-							Galaxy.Current.CurrentEmpire = emp;
-							Galaxy.Current.Redact();
+							Game.Current.CurrentEmpire = emp;
+							Game.Current.Redact();
 						}
 					}
 					else
 					{
 						// AI empires have no GAM files, so create their views in memory
-						Galaxy.Current.CurrentEmpire = emp;
-						Galaxy.Current.Redact();
+						Game.Current.CurrentEmpire = emp;
+						Game.Current.Redact();
 					}
 					Design.ImportFromLibrary();
 					var form = new MainGameForm(true, false);
@@ -108,7 +108,7 @@ public partial class HostConsoleForm : GameForm
 				return;
 		}
 		ProcessTurn(); 
-		MessageBox.Show("Turn successfully processed. It is now turn " + Galaxy.Current.TurnNumber + " (stardate " + Galaxy.Current.Stardate + ").");
+		MessageBox.Show("Turn successfully processed. It is now turn " + Game.Current.TurnNumber + " (stardate " + Game.Current.Stardate + ").");
 		Cursor = Cursors.Default;
 		CacheGalaxy();
 		Bind();
@@ -122,8 +122,8 @@ public partial class HostConsoleForm : GameForm
 		{
 			status.Message = "Processing turn";
 			var processor = new TurnProcessor();
-			processor.ProcessTurn(Galaxy.Current, false, status, 0.5);
-			Galaxy.SaveAll(status, 1.0);
+			processor.ProcessTurn(Game.Current, false, status, 0.5);
+			Game.SaveAll(status, 1.0);
 		}));
 		this.ShowChildForm(new StatusForm(t, status));
 	}
@@ -144,7 +144,7 @@ public partial class HostConsoleForm : GameForm
 			var t = new Thread(new ThreadStart(() =>
 			{
 				saveStatus.Message = "Saving galaxy";
-				Galaxy.SaveAll(saveStatus, 1.0);
+				Game.SaveAll(saveStatus, 1.0);
 			}));
 			this.ShowChildForm(new StatusForm(t, saveStatus));
 			CacheGalaxy();
@@ -156,12 +156,12 @@ public partial class HostConsoleForm : GameForm
 
 	private void CacheGalaxy()
 	{
-		serializedGalaxy = Serializer.SerializeToString(Galaxy.Current);
+		serializedGalaxy = Serializer.SerializeToString(Game.Current);
 	}
 
 	private void ReloadGalaxy()
 	{
-		Galaxy.LoadFromString(serializedGalaxy);
+		Game.LoadFromString(serializedGalaxy);
 	}
 
 	private void autoProcess_CheckedChanged(object sender, EventArgs e)

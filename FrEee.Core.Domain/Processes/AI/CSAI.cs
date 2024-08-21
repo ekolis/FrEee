@@ -9,7 +9,7 @@ using FrEee.Modding.Scripts;
 namespace FrEee.Processes.AI;
 
 [Serializable]
-public class CSAI<TDomain, TContext> : AI<TDomain, TContext> where TDomain : Empire where TContext : Galaxy
+public class CSAI<TDomain, TContext> : AI<TDomain, TContext> where TDomain : Empire where TContext : Game
 {
     public CSAI(string name, CSScript script, SafeDictionary<string, ICollection<string>> ministerNames)
         : base(name, script, ministerNames)
@@ -58,7 +58,7 @@ public class Globals
 {
     public Empire Domain;
 
-    public Galaxy Context;
+    public Game Context;
 
     public SafeDictionary<string, ICollection<string>> EnabledMinisters;
 }

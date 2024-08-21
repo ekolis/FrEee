@@ -31,7 +31,7 @@ public class TechnologyTest
 	public void PercentageResearch()
 	{
 		var mod = Mod.Current;
-		var gal = Galaxy.Current;
+		var gal = Game.Current;
 
 		var tech = mod.Technologies.FindByName("Ice Planet Colonization");
 		tech.LevelCost = 500000; // in case the mod changes
@@ -64,7 +64,7 @@ public class TechnologyTest
 	{
 		// for convenience
 		var mod = Mod.Current;
-		var gal = Galaxy.Current;
+		var gal = Game.Current;
 
 		// set up techs
 		var t1 = mod.Technologies.FindByName("Planetary Weapons");
@@ -118,9 +118,9 @@ public class TechnologyTest
 	[SetUp]
 	public void TestInit()
 	{
-		new Galaxy();
-		Galaxy.Current.GameSetup.TechnologyCost = TechnologyCost.Low;
+		new Game();
+		Game.Current.GameSetup.TechnologyCost = TechnologyCost.Low;
 		emp = new Empire();
-		Galaxy.Current.Empires.Add(emp);
+		Game.Current.Empires.Add(emp);
 	}
 }

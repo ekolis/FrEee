@@ -21,7 +21,7 @@ public class ConstructionMode : ArgbMode
 
 	protected override Color GetColor(StarSystem sys)
 	{
-		var max = Galaxy.Current.StarSystemLocations.MaxOfAllResources(l => GetSY(l.Item));
+		var max = Game.Current.StarSystemLocations.MaxOfAllResources(l => GetSY(l.Item));
 		foreach (var r in Resource.All)
 			if (max[r] == 0)
 				max[r] = int.MaxValue; // prevent divide by zero

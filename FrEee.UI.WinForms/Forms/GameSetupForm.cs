@@ -32,7 +32,7 @@ public partial class GameSetupForm : GameForm
 		setup = new GameSetup();
 		if (Mod.Current == null)
 			new ModLoader().Load(null);
-		Galaxy.Current = null;
+		Game.Current = null;
 
 		spnSeed.Value = DateTime.Now.Millisecond + 1000 * DateTime.Now.Second + 60000 * DateTime.Now.Minute;
 
@@ -496,13 +496,13 @@ public partial class GameSetupForm : GameForm
 # endif
 			{
 				status.Message = "Setting up galaxy";
-				Galaxy.Initialize(setup, new PRNG((int)spnSeed.Value), status, 1d);
-				if (Galaxy.Current.IsSinglePlayer)
+				Game.Initialize(setup, new PRNG((int)spnSeed.Value), status, 1d);
+				if (Game.Current.IsSinglePlayer)
 				{
-					var name = Galaxy.Current.Name;
-					var turn = Galaxy.Current.TurnNumber;
+					var name = Game.Current.Name;
+					var turn = Game.Current.TurnNumber;
 					status.Message = "Loading game";
-					Galaxy.Load(name + "_" + turn + "_0001.gam");
+					Game.Load(name + "_" + turn + "_0001.gam");
 				}
 			}
 #if RELEASE
@@ -517,19 +517,19 @@ public partial class GameSetupForm : GameForm
 
 		if (status.Exception == null)
 		{
-			if (Galaxy.Current.IsSinglePlayer)
+			if (Game.Current.IsSinglePlayer)
 			{
-				var name = Galaxy.Current.Name;
-				var turn = Galaxy.Current.TurnNumber;
+				var name = Game.Current.Name;
+				var turn = Game.Current.TurnNumber;
 				status.Message = "Loading game";
-				Galaxy.Load(name + "_" + turn + "_0001.gam");
+				Game.Load(name + "_" + turn + "_0001.gam");
 				Design.ImportFromLibrary();
 				Hide();
 				MainMenuForm.GetInstance().ShowChildForm(new MainGameForm(false, true));
 			}
 			else
 			{
-				MessageBox.Show("The game \"" + Galaxy.Current.Name + "\" has been created. Please distribute the GAM files to appropriate players.");
+				MessageBox.Show("The game \"" + Game.Current.Name + "\" has been created. Please distribute the GAM files to appropriate players.");
 				Close();
 			}
 		}
@@ -817,7 +817,7 @@ public partial class GameSetupForm : GameForm
 				// create the galaxy
 				var galtemp = setup.GalaxyTemplate;
 				galtemp.GameSetup = setup;
-				Galaxy.Current = galtemp.Instantiate(status, 1, new PRNG((int)spnSeed.Value));
+				Game.Current = galtemp.Instantiate(status, 1, new PRNG((int)spnSeed.Value));
 			}
 			catch (Exception ex)
 			{

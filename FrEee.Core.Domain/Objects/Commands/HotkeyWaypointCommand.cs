@@ -49,7 +49,7 @@ public class HotkeyWaypointCommand : Command<Waypoint>
 		if (Redirect)
 		{
 			int count = 0;
-			foreach (var sobj in Galaxy.Current.FindSpaceObjects<IMobileSpaceObject>())
+			foreach (var sobj in Game.Current.FindSpaceObjects<IMobileSpaceObject>())
 			{
 				bool found = false;
 				// check if space object has orders to move to this waypoint

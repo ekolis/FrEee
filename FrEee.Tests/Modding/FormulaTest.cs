@@ -22,7 +22,7 @@ public class FormulaTest
 	[Test]
 	public void DynamicFormula()
 	{
-		var gal = new Galaxy();
+		var gal = new Game();
 		Empire emp = new Empire();
 		Mod.Current = new Mod();
 		var armor = new ComponentTemplate();
@@ -41,7 +41,7 @@ public class FormulaTest
 		Mod.Current.Hulls.Add(hull);
 
 		var design = new Design<Ship>();
-		Galaxy.Current.AssignID(design);
+		Game.Current.AssignID(design);
 		var mct = new MountedComponentTemplate(design, armor, mount);
 		design.Hull = hull;
 		design.Components.Add(mct);
@@ -58,7 +58,7 @@ public class FormulaTest
 	[Test]
 	public void DynamicFormulaWithParameters()
 	{
-		var gal = new Galaxy();
+		var gal = new Game();
 		Empire emp = new Empire();
 		Mod.Current = new ModLoader().Load("DynamicFormulaWithParameters");
 		var ct = Mod.Current.ComponentTemplates.First();

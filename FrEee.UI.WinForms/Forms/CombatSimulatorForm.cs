@@ -27,7 +27,7 @@ public partial class CombatSimulatorForm : GameForm
 
 		BindVehicleTypeList();
 		BindDesignList();
-		Empires = new HashSet<SimulatedEmpire>(Galaxy.Current.Empires.ExceptSingle((Empire)null).Select(e => new SimulatedEmpire(e)));
+		Empires = new HashSet<SimulatedEmpire>(Game.Current.Empires.ExceptSingle((Empire)null).Select(e => new SimulatedEmpire(e)));
 		BindEmpireList();
 
 		try { this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); }
@@ -52,7 +52,7 @@ public partial class CombatSimulatorForm : GameForm
 
 	private void BindDesignList()
 	{
-		var emp = Galaxy.Current.CurrentEmpire;
+		var emp = Game.Current.CurrentEmpire;
 		IEnumerable<IDesign> designs = emp.KnownDesigns;
 
 		// filter by vehicle type

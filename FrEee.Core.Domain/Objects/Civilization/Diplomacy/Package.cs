@@ -191,7 +191,7 @@ public class Package : IOwnable, IPromotable
 		if (errors.Any())
 			throw new Exception("Attempting to transfer an invalid package (" + this + "): " + errors.First());
 		foreach (var c in TreatyClauses)
-			Galaxy.Current.GetReferrable(c).IsInEffect = true;
+			Game.Current.GetReferrable(c).IsInEffect = true;
 		foreach (var p in Planets)
 			p.Colony.Owner = target;
 		foreach (var v in Vehicles)

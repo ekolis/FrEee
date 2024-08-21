@@ -34,7 +34,7 @@ public class TurnProcessor
 	/// <returns>Player empires which did not submit commands and are not defeated.</returns>
 	/// <exception cref="InvalidOperationException">if the Galaxy empire is not null, or this galaxy is not the Galaxy galaxy.</exception>
 	// TODO - make non-static so we don't have to say Galaxy. everywhere
-	public IEnumerable<Empire> ProcessTurn(Galaxy galaxy, bool safeMode, Status status = null, double desiredProgress = 1d)
+	public IEnumerable<Empire> ProcessTurn(Game galaxy, bool safeMode, Status status = null, double desiredProgress = 1d)
 	{
 		//galaxy.SpaceObjectIDCheck("at start of turn");
 
@@ -157,8 +157,8 @@ public class TurnProcessor
 			{
 				try
 				{
-					Galaxy.LoadFromString(serializedgalaxy);
-					galaxy = Galaxy.Current;
+					Game.LoadFromString(serializedgalaxy);
+					galaxy = Game.Current;
 					galaxy.CurrentEmpire = galaxy.Empires[i];
 					galaxy.Redact();
 					galaxy.CurrentEmpire.AI.Act(galaxy.CurrentEmpire, galaxy, galaxy.CurrentEmpire.EnabledMinisters);
@@ -178,8 +178,8 @@ public class TurnProcessor
 					notes.Add(i, galaxy.CurrentEmpire.AINotes);
 				}
 			}
-			Galaxy.LoadFromString(serializedgalaxy);
-			galaxy = Galaxy.Current;
+			Game.LoadFromString(serializedgalaxy);
+			galaxy = Game.Current;
 			foreach (var i in galaxy.Empires.Where(e => e.AI != null && (e.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)).Select(e => galaxy.Empires.IndexOf(e)).ToArray())
 			{
 				try
@@ -713,7 +713,7 @@ public class TurnProcessor
 	/// Only public for unit tests. You should probably call ProcessTurn instead.
 	/// </summary>
 	/// <param name="p"></param>
-	private static void ProcessColonyIncome(Galaxy galaxy, Colony c)
+	private static void ProcessColonyIncome(Game galaxy, Colony c)
 	{
 		var p = c.Container;
 		var sys = p.StarSystem;
@@ -802,7 +802,7 @@ public class TurnProcessor
 	/// Only public for unit tests. You should probably call ProcessTurn instead.
 	/// </summary>
 	/// <param name="p"></param>
-	private static void ProcessResourceValueChange(Galaxy galaxy, Planet p)
+	private static void ProcessResourceValueChange(Game galaxy, Planet p)
 	{
 		foreach (var r in Resource.All.Where(r => r.HasValue))
 		{

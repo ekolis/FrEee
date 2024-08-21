@@ -438,7 +438,7 @@ public partial class ConstructionQueueForm : GameForm
 	/// <returns></returns>
 	private bool BuildingAnywhere(IConstructionTemplate t)
 	{
-		return Galaxy.Current.FindSpaceObjects<IConstructor>().OwnedBy(Empire.Current).Any(o => o.ConstructionQueue != null && o.ConstructionQueue.Orders.Any(o2 => o2.Template == t));
+		return Game.Current.FindSpaceObjects<IConstructor>().OwnedBy(Empire.Current).Any(o => o.ConstructionQueue != null && o.ConstructionQueue.Orders.Any(o2 => o2.Template == t));
 	}
 
 	private void CancelChanges()
@@ -984,9 +984,9 @@ public partial class ConstructionQueueForm : GameForm
 	private void SaveCommands()
 	{
 		foreach (var cmd in newCommands)
-			Galaxy.Current.CurrentEmpire.Commands.Add(cmd);
+			Game.Current.CurrentEmpire.Commands.Add(cmd);
 		foreach (var cmd in removedCommands)
-			Galaxy.Current.CurrentEmpire.Commands.Remove(cmd);
+			Game.Current.CurrentEmpire.Commands.Remove(cmd);
 	}
 
 	private void btnHelp_Click(object sender, EventArgs e)

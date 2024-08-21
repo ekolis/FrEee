@@ -9,9 +9,9 @@ namespace FrEee;
 
 public static class TestUtilities
 {
-	public static Galaxy CreateGalaxyWithMod(string? modPath = null)
+	public static Game CreateGalaxyWithMod(string? modPath = null)
 	{
-		Galaxy gal = new();
+		Game gal = new();
 		Mod.Current = new ModLoader().Load(modPath);
 		return gal;
 	}

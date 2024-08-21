@@ -142,7 +142,7 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 		{
 			try
 			{
-				return Galaxy.Current.StarSystemLocations.Single(l => l.Item == this);
+				return Game.Current.StarSystemLocations.Single(l => l.Item == this);
 			}
 			catch (InvalidOperationException ex)
 			{
@@ -173,7 +173,7 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 	{
 		get
 		{
-			yield return Galaxy.Current;
+			yield return Game.Current;
 		}
 	}
 
@@ -256,7 +256,7 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 			return;
 		if (IsDisposed)
 			return;
-		Galaxy.Current.UnassignID(this);
+		Game.Current.UnassignID(this);
 		if (!IsMemory)
 			this.UpdateEmpireMemories();
 	}
@@ -330,7 +330,7 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 
 	public bool IsObsoleteMemory(Empire emp)
 	{
-		return CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+		return CheckVisibility(emp) >= Visibility.Visible && Timestamp < Game.Current.Timestamp - 1;
 	}
 
 	public Sector PickRandomSector(PRNG prng = null)

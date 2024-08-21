@@ -287,7 +287,7 @@ public partial class VehicleDesignForm : GameForm
 				if (MessageBox.Show("Changing the vehicle type requires starting over with your design. Abandon your old design?", "FrEee", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 				{
 					var d = FrEee.Objects.Vehicles.Design.Create(form.Hull.VehicleType);
-					d.TurnNumber = Galaxy.Current.TurnNumber;
+					d.TurnNumber = Game.Current.TurnNumber;
 					d.Owner = Empire.Current;
 					d.Hull = form.Hull;
 					Design = d;
@@ -303,7 +303,7 @@ public partial class VehicleDesignForm : GameForm
 			else
 			{
 				var d = FrEee.Objects.Vehicles.Design.Create(form.Hull.VehicleType);
-				d.TurnNumber = Galaxy.Current.TurnNumber;
+				d.TurnNumber = Game.Current.TurnNumber;
 				d.Owner = Empire.Current;
 				d.Hull = form.Hull;
 				Design = d;

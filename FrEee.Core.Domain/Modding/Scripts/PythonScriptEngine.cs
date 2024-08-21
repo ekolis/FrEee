@@ -349,7 +349,7 @@ public class PythonScriptEngine : MarshalByRefObject
 	/// <returns></returns>
 	public static void UpdateScope(IDictionary<string, object> variables)
 	{
-		scope.SetVariable("galaxy", Galaxy.Current);
+		scope.SetVariable("galaxy", Game.Current);
 
 		if (variables != null)
 		{

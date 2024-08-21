@@ -210,12 +210,12 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityOb
 
 	public IEnumerable<MountedComponentTemplate> NewerVersions
 	{
-		get { return Galaxy.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Select(c => c.Template).Where(mct => mct.LatestVersion == this).Distinct(); }
+		get { return Game.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Select(c => c.Template).Where(mct => mct.LatestVersion == this).Distinct(); }
 	}
 
 	public IEnumerable<MountedComponentTemplate> OlderVersions
 	{
-		get { return Galaxy.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Select(c => c.Template).Where(mct => LatestVersion == mct).Distinct(); }
+		get { return Game.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Select(c => c.Template).Where(mct => LatestVersion == mct).Distinct(); }
 	}
 
 	public IEnumerable<IAbilityObject> Parents

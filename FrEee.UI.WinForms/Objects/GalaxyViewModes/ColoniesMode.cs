@@ -21,7 +21,7 @@ public class ColoniesMode : PieMode
 
 	protected override int GetAlpha(StarSystem sys)
 	{
-		var all = Galaxy.Current.StarSystemLocations.Select(l => new { System = l.Item, Planets = l.Item.FindSpaceObjects<Planet>().Where(p => p.Owner != null || Empire.Current.CanColonize(p)) });
+		var all = Game.Current.StarSystemLocations.Select(l => new { System = l.Item, Planets = l.Item.FindSpaceObjects<Planet>().Where(p => p.Owner != null || Empire.Current.CanColonize(p)) });
 		var maxSlots = all.Max(x => GetSlots(x.Planets));
 		var planets = sys.FindSpaceObjects<Planet>().Owned().ToArray();
 		var slotsHere = GetSlots(planets);

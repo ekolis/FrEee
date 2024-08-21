@@ -258,7 +258,7 @@ public class FacilityTemplate : IModObject, IResearchable, IAbilityContainer, IT
 	{
 		if (IsDisposed)
 			return;
-		Galaxy.Current.UnassignID(this);
+		Game.Current.UnassignID(this);
 		if (Mod.Current != null)
 			Mod.Current.FacilityTemplates.Remove(this);
 	}

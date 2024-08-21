@@ -688,7 +688,7 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 		}
 		if (Colony != null)
 			Colony.Dispose();
-		Galaxy.Current.UnassignID(this);
+		Game.Current.UnassignID(this);
 		if (!IsMemory)
 			this.UpdateEmpireMemories();
 		IsDisposed = true;

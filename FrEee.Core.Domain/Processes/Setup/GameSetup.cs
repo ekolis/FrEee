@@ -260,7 +260,7 @@ public class GameSetup
     }
 
     // TODO - status messages for the GUI
-    public void PopulateGalaxy(Galaxy gal, PRNG dice)
+    public void PopulateGalaxy(Game gal, PRNG dice)
     {
         gal.Name = GameName;
 
@@ -417,7 +417,7 @@ public class GameSetup
     }
 
     // TODO - status messages for the GUI
-    private void PlaceEmpire(Galaxy gal, Empire emp, PRNG dice)
+    private void PlaceEmpire(Game gal, Empire emp, PRNG dice)
     {
         if (AllSystemsExplored)
         {
@@ -427,7 +427,7 @@ public class GameSetup
         }
 
         // give empire starting techs
-        Galaxy.Current.CleanGameState(); // need to know what the techs in the game are!
+        Game.Current.CleanGameState(); // need to know what the techs in the game are!
         foreach (var tech in Mod.Current.Technologies.Where(t => !t.IsRacial || emp.Abilities().Any(a => a.Rule.Matches("Tech Area") && a.Value1 == t.RacialTechID)))
         {
             switch (StartingTechnologyLevel)
@@ -491,9 +491,9 @@ public class GameSetup
 
         // build connectivity graph for computing warp distance
         var graph = new ConnectivityGraph<StarSystem>();
-        foreach (var s in Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item))
+        foreach (var s in Game.Current.StarSystemLocations.Select(ssl => ssl.Item))
             graph.Add(s);
-        foreach (var s in Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item))
+        foreach (var s in Game.Current.StarSystemLocations.Select(ssl => ssl.Item))
         {
             foreach (var wp in s.FindSpaceObjects<WarpPoint>())
                 graph.Connect(s, wp.TargetStarSystemLocation.Item, true);
@@ -540,12 +540,12 @@ public class GameSetup
                 newSys.CopyTo(convertSys);
                 convertSys.ID = sid;
                 convertSys.Name = Mod.Current.StarSystemNames.Except(gal.StarSystemLocations.Select(q => q.Item.Name)).PickRandom(dice);
-                foreach (var l in Galaxy.Current.StarSystemLocations)
+                foreach (var l in Game.Current.StarSystemLocations)
                 {
                     foreach (var wp in l.Item.FindSpaceObjects<WarpPoint>().Where(q => q.Target.StarSystem == convertSys).ToArray())
                     {
                         wp.Dispose();
-                        WarpPointPlacementStrategy.PlaceWarpPoints(Galaxy.Current.StarSystemLocations.Single(q => q.Item == convertSys), l);
+                        WarpPointPlacementStrategy.PlaceWarpPoints(Game.Current.StarSystemLocations.Single(q => q.Item == convertSys), l);
                     }
                 }
                 GalaxyTemplate.NameStellarObjects(convertSys);

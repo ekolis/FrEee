@@ -94,7 +94,7 @@ public class Troop : Vehicle, IUnit
 
 	public override bool IsObsoleteMemory(Empire emp)
 	{
-		return Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+		return Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Game.Current.Timestamp - 1;
 	}
 
 	public override void Place(ISpaceObject target)
