@@ -28,23 +28,6 @@ using FrEee.Modding.Loaders;
 namespace FrEee.Objects.GameState;
 
 /// <summary>
-/// Prevents IDs from being assigned to objects when calling AssignIDs.
-/// TODO - move to utility namespace?
-/// </summary>
-public class DoNotAssignIDAttribute : Attribute
-{
-	public DoNotAssignIDAttribute(bool recurse = true)
-	{
-		Recurse = recurse;
-	}
-
-	/// <summary>
-	/// Should the "don't assign ID" rule be recursive?
-	/// </summary>
-	public bool Recurse { get; private set; }
-}
-
-/// <summary>
 /// A galaxy in which the game is played.
 /// </summary>
 [Serializable]
