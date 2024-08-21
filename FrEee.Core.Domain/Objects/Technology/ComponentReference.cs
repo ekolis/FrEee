@@ -15,7 +15,7 @@ public class ComponentReference : IReference<(long, int), Component>
 {
 	public ComponentReference(long vehicleID, int componentIndex)
 	{
-		vehicle = new GalaxyReference<IVehicle>(vehicleID);
+		vehicle = new GameReference<IVehicle>(vehicleID);
 		ComponentIndex = ComponentIndex;
 	}
 
@@ -37,7 +37,7 @@ public class ComponentReference : IReference<(long, int), Component>
 		
 	}
 
-	private GalaxyReference<IVehicle> vehicle { get; set; }
+	private GameReference<IVehicle> vehicle { get; set; }
 
 	[DoNotSerialize(false)]
 	public IVehicle Vehicle

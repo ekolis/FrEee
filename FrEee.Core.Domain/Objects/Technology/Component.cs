@@ -297,7 +297,7 @@ public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IConta
 	}
 
 	[DoNotCopy]
-	private GalaxyReference<IVehicle> container { get; set; }
+	private GameReference<IVehicle> container { get; set; }
 
 	/// <summary>
 	/// If this is a weapon, returns true if this weapon can target an object at a particular range.

@@ -881,12 +881,12 @@ public static class CommonExtensions
 		return (TRef)typeof(TRef).Instantiate(t);
 	}
 
-	public static GalaxyReference<T> ReferViaGalaxy<T>(this T t)
+	public static GameReference<T> ReferViaGalaxy<T>(this T t)
 		where T : IReferrable
 	{
 		if (t == null)
 			return null;
-		return new GalaxyReference<T>(t);
+		return new GameReference<T>(t);
 	}
 
 	public static ModReference<T> ReferViaMod<T>(this T t) where T : IModObject

@@ -13,7 +13,7 @@ public class CombatantLaunchedEvent : BattleEvent
         Launcher = launcher;
     }
 
-    private GalaxyReference<ICombatant> launcher { get; set; }
+    private GameReference<ICombatant> launcher { get; set; }
 
     [DoNotSerialize]
     public ICombatant Launcher

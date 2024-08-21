@@ -22,7 +22,7 @@ public class Shot : IFormulaHost
         DamageLeft = FullDamage;
     }
 
-    public GalaxyReference<ICombatant> attacker { get; set; }
+    public GameReference<ICombatant> attacker { get; set; }
 
     [DoNotSerialize]
     public ICombatant Attacker { get { return attacker == null ? null : attacker.Value; } set { attacker = value == null ? null : value.ReferViaGalaxy(); } }
@@ -81,7 +81,7 @@ public class Shot : IFormulaHost
 
     public IEnumerable<Hit> Hits { get; private set; }
     public int Range { get; set; }
-    public GalaxyReference<IDamageableReferrable> target { get; set; }
+    public GameReference<IDamageableReferrable> target { get; set; }
     private IDamageable _target { get; set; }
 
     public IDictionary<string, object> Variables

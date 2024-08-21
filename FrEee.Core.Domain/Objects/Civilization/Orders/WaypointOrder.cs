@@ -86,8 +86,8 @@ public class WaypointOrder : IMovementOrder
         }
     }
 
-    private GalaxyReference<Empire> owner { get; set; }
-    private GalaxyReference<Waypoint> target { get; set; }
+    private GameReference<Empire> owner { get; set; }
+    private GameReference<Waypoint> target { get; set; }
 
     public bool CheckCompletion(IOrderable v)
     {

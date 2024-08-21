@@ -175,7 +175,7 @@ public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnab
 	[DoNotSerialize]
 	public StarSystem StarSystem { get { return starSystem; } set { starSystem = value; } }
 
-	private GalaxyReference<StarSystem> starSystem { get; set; }
+	private GameReference<StarSystem> starSystem { get; set; }
 
 	public static bool operator !=(Sector s1, Sector s2)
 	{

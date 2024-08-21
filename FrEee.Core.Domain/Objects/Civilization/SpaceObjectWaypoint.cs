@@ -45,5 +45,5 @@ public class SpaceObjectWaypoint : Waypoint
 		}
 	}
 
-	private GalaxyReference<ISpaceObject> spaceObject { get; set; }
+	private GameReference<ISpaceObject> spaceObject { get; set; }
 }

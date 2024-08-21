@@ -47,7 +47,7 @@ public class EventType : IModObject
 	/// <summary>
 	/// Script to select a target for the event.
 	/// </summary>
-	public ObjectFormula<GalaxyReferenceSet<IReferrable>> TargetSelector { get; set; }
+	public ObjectFormula<GameReferenceSet<IReferrable>> TargetSelector { get; set; }
 
 	/// <summary>
 	/// Parameters from the mod meta templates.

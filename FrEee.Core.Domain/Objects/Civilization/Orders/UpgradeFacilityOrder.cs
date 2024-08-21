@@ -88,7 +88,7 @@ public class UpgradeFacilityOrder : IConstructionOrder
         set;
     }
 
-    private GalaxyReference<Empire> owner { get; set; }
+    private GameReference<Empire> owner { get; set; }
 
     public bool CheckCompletion(IOrderable queue)
     {

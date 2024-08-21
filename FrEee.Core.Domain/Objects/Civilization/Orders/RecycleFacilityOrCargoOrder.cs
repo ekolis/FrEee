@@ -54,8 +54,8 @@ public class RecycleFacilityOrCargoOrder : IOrder
     [DoNotSerialize]
     public IRecyclable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
 
-    private GalaxyReference<Empire> owner { get; set; }
-    private GalaxyReference<IRecyclable> target { get; set; }
+    private GameReference<Empire> owner { get; set; }
+    private GameReference<IRecyclable> target { get; set; }
 
     public bool CheckCompletion(IOrderable executor)
     {

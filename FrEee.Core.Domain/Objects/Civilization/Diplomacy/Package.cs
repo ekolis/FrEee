@@ -23,15 +23,15 @@ public class Package : IOwnable, IPromotable
 		Owner = owner;
 		Recipient = recipient;
 		TreatyClauses = new HashSet<Clause>();
-		Planets = new GalaxyReferenceSet<Planet>();
-		Vehicles = new GalaxyReferenceSet<IVehicle>();
+		Planets = new GameReferenceSet<Planet>();
+		Vehicles = new GameReferenceSet<IVehicle>();
 		Resources = new ResourceQuantity();
 		Technology = new ModReferenceKeyedDictionary<Tech, int>();
-		StarCharts = new GalaxyReferenceSet<StarSystem>();
-		CommunicationChannels = new GalaxyReferenceSet<Empire>();
+		StarCharts = new GameReferenceSet<StarSystem>();
+		CommunicationChannels = new GameReferenceSet<Empire>();
 	}
 
-	public GalaxyReferenceSet<Empire> CommunicationChannels { get; private set; }
+	public GameReferenceSet<Empire> CommunicationChannels { get; private set; }
 
 	/// <summary>
 	/// Errors due to the game settings restricting certain gifts/trades,
@@ -100,19 +100,19 @@ public class Package : IOwnable, IPromotable
 	[DoNotSerialize]
 	public Empire Owner { get { return owner; } set { owner = value; } }
 
-	public GalaxyReferenceSet<Planet> Planets { get; private set; }
+	public GameReferenceSet<Planet> Planets { get; private set; }
 
 	[DoNotSerialize]
 	public Empire Recipient { get { return recipient; } set { recipient = value; } }
 
 	public ResourceQuantity Resources { get; private set; }
-	public GalaxyReferenceSet<StarSystem> StarCharts { get; private set; }
+	public GameReferenceSet<StarSystem> StarCharts { get; private set; }
 	public ModReferenceKeyedDictionary<Tech, int> Technology { get; private set; }
 	public ISet<Clause> TreatyClauses { get; private set; }
-	public GalaxyReferenceSet<IVehicle> Vehicles { get; private set; }
+	public GameReferenceSet<IVehicle> Vehicles { get; private set; }
 
-	private GalaxyReference<Empire> owner { get; set; }
-	private GalaxyReference<Empire> recipient { get; set; }
+	private GameReference<Empire> owner { get; set; }
+	private GameReference<Empire> recipient { get; set; }
 
 	public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{

@@ -22,7 +22,7 @@ public class ClearPrivateNameCommand : Command<Empire>
 	[DoNotSerialize]
 	public INameable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
 
-	private GalaxyReference<INameable> target { get; set; }
+	private GameReference<INameable> target { get; set; }
 
 	public override void Execute()
 	{

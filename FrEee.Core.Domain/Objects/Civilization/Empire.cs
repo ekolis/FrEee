@@ -45,8 +45,8 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 		UniqueTechsFound = new List<string>();
 		Memory = new SafeDictionary<long, IFoggable>();
 		AINotes = new DynamicDictionary();
-		PlayerNotes = new SafeDictionary<GalaxyReference<IReferrable>, string>();
-		PrivateNames = new SafeDictionary<GalaxyReference<INameable>, string>();
+		PlayerNotes = new SafeDictionary<GameReference<IReferrable>, string>();
+		PrivateNames = new SafeDictionary<GameReference<INameable>, string>();
 		EncounteredEmpires = new HashSet<Empire>();
 		EncounteredEmpires.Add(this);
 		IncomingMessages = new HashSet<IMessage>();
@@ -450,7 +450,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	/// <summary>
 	/// Notes set by the player on various game objects.
 	/// </summary>
-	public SafeDictionary<GalaxyReference<IReferrable>, string> PlayerNotes { get; private set; }
+	public SafeDictionary<GameReference<IReferrable>, string> PlayerNotes { get; private set; }
 
 	/// <summary>
 	/// The leader portrait for this empire.
@@ -481,7 +481,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	/// <summary>
 	/// Privately visible names set by the player on various game objects.
 	/// </summary>
-	public SafeDictionary<GalaxyReference<INameable>, string> PrivateNames { get; private set; }
+	public SafeDictionary<GameReference<INameable>, string> PrivateNames { get; private set; }
 
 	/// <summary>
 	/// Income via raw resource generation ("Generate Points") abilities (not standard or remote mining, or standard point generation).

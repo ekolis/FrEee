@@ -67,8 +67,8 @@ public abstract class Clause : IOwnable, IFoggable, IPromotable, IReferrable
 		set;
 	}
 
-	private GalaxyReference<Empire> giver { get; set; }
-	private GalaxyReference<Empire> receiver { get; set; }
+	private GameReference<Empire> giver { get; set; }
+	private GameReference<Empire> receiver { get; set; }
 
 	public Visibility CheckVisibility(Empire emp)
 	{

@@ -103,8 +103,8 @@ public abstract class PathfindingOrder
     /// </summary>
     public abstract string Verb { get; }
 
-    private GalaxyReference<Empire> owner { get; set; }
-    private GalaxyReference<ISpaceObject> target { get; set; }
+    private GameReference<Empire> owner { get; set; }
+    private GameReference<ISpaceObject> target { get; set; }
 
     public bool CheckCompletion(IOrderable v)
     {

@@ -688,7 +688,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 	/// <summary>
 	/// For serialization and client safety
 	/// </summary>
-	private GalaxyReference<Empire> owner { get; set; }
+	private GameReference<Empire> owner { get; set; }
 
 	public void AddComponent(ComponentTemplate ct, Mount m = null)
 	{

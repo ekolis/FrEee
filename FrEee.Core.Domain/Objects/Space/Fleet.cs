@@ -26,7 +26,7 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 {
 	public Fleet()
 	{
-		Vehicles = new GalaxyReferenceSet<IMobileSpaceObject>();
+		Vehicles = new GameReferenceSet<IMobileSpaceObject>();
 		Orders = new List<IOrder>();
 		Timestamp = Galaxy.Current?.Timestamp ?? 0;
 	}
@@ -620,7 +620,7 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 	/// The space objects in the fleet.
 	/// Fleets may contain other fleets, but may not contain themselves.
 	/// </summary>
-	public GalaxyReferenceSet<IMobileSpaceObject> Vehicles { get; private set; }
+	public GameReferenceSet<IMobileSpaceObject> Vehicles { get; private set; }
 
 	public IEnumerable<Component> Weapons
 	{

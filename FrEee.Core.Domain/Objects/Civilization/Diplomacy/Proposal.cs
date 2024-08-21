@@ -87,7 +87,7 @@ public class Proposal : Command<Empire>, IFoggable, IReferrable
 		set;
 	}
 
-	private GalaxyReference<Empire> recipient { get; set; }
+	private GameReference<Empire> recipient { get; set; }
 
 	public Visibility CheckVisibility(Empire emp)
 	{

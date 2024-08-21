@@ -2,8 +2,8 @@
 
 namespace FrEee.Objects.GameState
 {
-	public class GalaxyReferenceList<T>
-		: ReferenceList<GalaxyReference<T>, T>
+	public class GameReferenceList<T>
+		: ReferenceList<GameReference<T>, T>
 		where T : IReferrable
 	{
 	}

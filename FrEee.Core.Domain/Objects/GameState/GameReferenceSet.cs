@@ -5,16 +5,16 @@ using FrEee.Utility;
 namespace FrEee.Objects.GameState
 {
 	[Serializable]
-	public class GalaxyReferenceSet<T>
-		: ReferenceSet<GalaxyReference<T>, T>
+	public class GameReferenceSet<T>
+		: ReferenceSet<GameReference<T>, T>
 		where T : IReferrable
 	{
-		public GalaxyReferenceSet()
+		public GameReferenceSet()
 			: base()
 		{
 		}
 
-		public GalaxyReferenceSet(IEnumerable<T> objs)
+		public GameReferenceSet(IEnumerable<T> objs)
 			: base(objs)
 		{
 		}

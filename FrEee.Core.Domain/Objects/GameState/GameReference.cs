@@ -13,7 +13,7 @@ namespace FrEee.Objects.GameState;
 /// </summary>
 /// <typeparam name="T"></typeparam>
 [Serializable]
-public class GalaxyReference<T> : IReference<long, T>, IPromotable
+public class GameReference<T> : IReference<long, T>, IPromotable
     where T : IReferrable
 {
 
@@ -23,20 +23,20 @@ public class GalaxyReference<T> : IReference<long, T>, IPromotable
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public static GalaxyReference<T> GetGalaxyReference(long id)
+    public static GameReference<T> GetGalaxyReference(long id)
     {
         if (Galaxy.Current.referrables.ContainsKey(id))
-            return new GalaxyReference<T>(id);
+            return new GameReference<T>(id);
 
         return null;
     }
 
-    public GalaxyReference()
+    public GameReference()
     {
         InitializeCache();
     }
 
-    public GalaxyReference(T t)
+    public GameReference(T t)
         : this()
     {
         if (t is IReferrable)
@@ -64,7 +64,7 @@ public class GalaxyReference<T> : IReference<long, T>, IPromotable
         }
     }
 
-    public GalaxyReference(long id)
+    public GameReference(long id)
         : this()
     {
         if (Galaxy.Current == null)
@@ -120,26 +120,26 @@ public class GalaxyReference<T> : IReference<long, T>, IPromotable
     [NonSerialized]
     private ClientSideCache<T> cache;
 
-    public static implicit operator GalaxyReference<T>(T t)
+    public static implicit operator GameReference<T>(T t)
     {
         if (t == null)
             return null;
-        return new GalaxyReference<T>(t);
+        return new GameReference<T>(t);
     }
 
-    public static implicit operator T(GalaxyReference<T> r)
+    public static implicit operator T(GameReference<T> r)
     {
         if (r == null)
             return default;
         return r.Value;
     }
 
-    public static bool operator !=(GalaxyReference<T> r1, GalaxyReference<T> r2)
+    public static bool operator !=(GameReference<T> r1, GameReference<T> r2)
     {
         return !(r1 == r2);
     }
 
-    public static bool operator ==(GalaxyReference<T> r1, GalaxyReference<T> r2)
+    public static bool operator ==(GameReference<T> r1, GameReference<T> r2)
     {
         if (r1 is null && r2 is null)
             return true;
@@ -151,8 +151,8 @@ public class GalaxyReference<T> : IReference<long, T>, IPromotable
     public override bool Equals(object? obj)
     {
         // TODO - upgrade equals to use "as" operator
-        if (obj is GalaxyReference<T>)
-            return this == (GalaxyReference<T>)obj;
+        if (obj is GameReference<T>)
+            return this == (GameReference<T>)obj;
         return false;
     }
 
