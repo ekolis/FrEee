@@ -130,12 +130,25 @@ public class Game
 	/// </summary>
 	public bool IsSinglePlayer { get; set; }
 
+	private string modPath;
+
 	/// <summary>
 	/// The path to the mod being played, or null for the stock mod.
 	/// </summary>
+	/// <remarks>
+	/// Setting this will load the specified mod.
+	/// </remarks>
 	[SerializationPriority(1)]
 	[ForceSerializationWhenDefaultValue]
-	public string? ModPath { get; set; }
+	public string ModPath
+	{
+		get => modPath;
+		set
+		{
+			new ModLoader().Load(value);
+			modPath = value;
+		}
+	}
 
 	/// <summary>
 	/// The game name.
