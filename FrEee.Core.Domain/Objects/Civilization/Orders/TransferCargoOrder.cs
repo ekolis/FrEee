@@ -58,8 +58,8 @@ public class TransferCargoOrder : IOrder
     /// </summary>
     private bool IsLoadOrder { get; set; }
 
-    private GalaxyReference<Empire> owner { get; set; }
-    private GalaxyReference<ICargoTransferrer> target { get; set; }
+    private GameReference<Empire> owner { get; set; }
+    private GameReference<ICargoTransferrer> target { get; set; }
 
     public bool CheckCompletion(IOrderable v)
     {
@@ -70,9 +70,9 @@ public class TransferCargoOrder : IOrder
     {
         if (IsDisposed)
             return;
-        foreach (var v in Galaxy.Current.Referrables.OfType<ICargoTransferrer>())
+        foreach (var v in Game.Current.Referrables.OfType<ICargoTransferrer>())
             v.RemoveOrder(this);
-        Galaxy.Current.UnassignID(this);
+        Game.Current.UnassignID(this);
     }
 
     public void Execute(IOrderable ord)

@@ -11,9 +11,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using FrEee.Objects.GameState;
-using FrEee.Utility;
-using FrEee.Serialization;
 using FrEee.Modding.Abilities;
+using FrEee.Objects.Space;
 
 namespace FrEee.Objects.Technology;
 

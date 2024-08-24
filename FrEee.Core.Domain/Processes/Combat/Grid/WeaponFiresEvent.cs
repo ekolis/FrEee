@@ -2,8 +2,6 @@
 using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;
-using FrEee.Utility;
-using FrEee.Processes.Combat;
 using FrEee.Objects.GameState;
 
 namespace FrEee.Processes.Combat.Grid;
@@ -23,9 +21,9 @@ public class WeaponFiresEvent : BattleEvent
     }
     public bool IsHit { get; set; }
 
-    private GalaxyReference<ICombatant> attacker { get; set; }
+    private GameReference<ICombatant> attacker { get; set; }
 
-    private GalaxyReference<ICombatant> target { get; set; }
+    private GameReference<ICombatant> target { get; set; }
 
     [DoNotSerialize]
     public ICombatant Attacker

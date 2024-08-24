@@ -7,9 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using static System.Math;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
-using FrEee.Processes.Combat;
 
 namespace FrEee.Processes.Combat.Grid;
 
@@ -40,7 +37,7 @@ public class SpaceBattle : Battle
         Empires = Sector.SpaceObjects.OfType<ICombatSpaceObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray();
 
         int moduloID = (int)(Sector.StarSystem.ID % 100000);
-        Dice = new PRNG((int)(moduloID / Galaxy.Current.Timestamp * 10));
+        Dice = new PRNG((int)(moduloID / Game.Current.Timestamp * 10));
     }
 
     public override void PlaceCombatants(SafeDictionary<ICombatant, Vector2<int>> locations)

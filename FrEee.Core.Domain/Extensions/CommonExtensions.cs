@@ -6,12 +6,10 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Objects.Civilization;
 using FrEee.Processes.Combat;
-using FrEee.Processes.Combat.Grid;
 using FrEee.Objects.Commands;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
@@ -23,10 +21,8 @@ using FrEee.Serialization;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
-using FrEee.Processes.Combat;
 using System.Numerics;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Extensions;
 
@@ -295,7 +291,7 @@ public static class CommonExtensions
 	{
 		if (Empire.Current == null)
 		{
-			foreach (var emp in Galaxy.Current.Empires)
+			foreach (var emp in Game.Current.Empires)
 			{
 				if (obj.CheckVisibility(emp) >= Visibility.Visible)
 				{
@@ -362,10 +358,10 @@ public static class CommonExtensions
 			}
 			didStuff = true;
 		}
-		if (Galaxy.Current.NextTickSize == double.PositiveInfinity)
+		if (Game.Current.NextTickSize == double.PositiveInfinity)
 			o.TimeToNextMove = 0;
 		else
-			o.TimeToNextMove -= Galaxy.Current.NextTickSize;
+			o.TimeToNextMove -= Game.Current.NextTickSize;
 		return didStuff;
 	}
 
@@ -438,7 +434,7 @@ public static class CommonExtensions
 
 		// look for the real object
 		if (emp.Memory.Any(kvp => kvp.Value == f))
-			return (IFoggable)Galaxy.Current.referrables[emp.Memory.Single(kvp => kvp.Value == f).Key];
+			return (IFoggable)Game.Current.referrables[emp.Memory.Single(kvp => kvp.Value == f).Key];
 
 		// nothing found?
 		return null;
@@ -624,7 +620,7 @@ public static class CommonExtensions
 	public static void LogAIMessage(this Empire empire, string message)
 	{
 		var sw = new StreamWriter($"{empire.AI.Name}.log", true);
-		sw.WriteLine($"{DateTime.UtcNow} ({Galaxy.Current.Name}-{empire.ID}):{message}");
+		sw.WriteLine($"{DateTime.UtcNow} ({Game.Current.Name}-{empire.ID}):{message}");
 		sw.Close();
 	}
 
@@ -690,7 +686,7 @@ public static class CommonExtensions
 	{
 		if (!f.IsMemory)
 			return null;
-		return Galaxy.Current.Empires.ExceptSingle(null).SingleOrDefault(x => x.Memory.Values.Contains(f));
+		return Game.Current.Empires.ExceptSingle(null).SingleOrDefault(x => x.Memory.Values.Contains(f));
 	}
 
 	/// <summary>
@@ -877,7 +873,7 @@ public static class CommonExtensions
 	public static void ReassignID(this IReferrable r)
 	{
 		r.ID = 0;
-		Galaxy.Current.AssignID(r);
+		Game.Current.AssignID(r);
 	}
 
 	public static TRef Refer<TRef, T>(this T t) where TRef : IReference<T>
@@ -885,12 +881,12 @@ public static class CommonExtensions
 		return (TRef)typeof(TRef).Instantiate(t);
 	}
 
-	public static GalaxyReference<T> ReferViaGalaxy<T>(this T t)
+	public static GameReference<T> ReferViaGalaxy<T>(this T t)
 		where T : IReferrable
 	{
 		if (t == null)
 			return null;
-		return new GalaxyReference<T>(t);
+		return new GameReference<T>(t);
 	}
 
 	public static ModReference<T> ReferViaMod<T>(this T t) where T : IModObject
@@ -1193,7 +1189,7 @@ public static class CommonExtensions
 			var amount = abil.Value1.ToInt();
 
 			if (resource.HasValue)
-				amount = Galaxy.Current.GameSetup.StandardMiningModel.GetRate(amount, o.ResourceValue[resource], pcts[resource] / 100d);
+				amount = Game.Current.Setup.StandardMiningModel.GetRate(amount, o.ResourceValue[resource], pcts[resource] / 100d);
 
 			income.Add(resource, amount);
 		}
@@ -1505,7 +1501,7 @@ public static class CommonExtensions
 	{
 		if (Empire.Current == null)
 		{
-			foreach (var emp in Galaxy.Current.Empires)
+			foreach (var emp in Game.Current.Empires)
 			{
 				var sys = (obj as ILocated)?.StarSystem;
 				if (obj.CheckVisibility(emp) >= Visibility.Visible)

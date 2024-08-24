@@ -10,10 +10,10 @@ using System.IO;
 using System.Linq;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
-using FrEee.Serialization;
 using FrEee.Modding.Abilities;
+using FrEee.Objects.Technology;
 
-namespace FrEee.Objects.Technology;
+namespace FrEee.Modding.Templates;
 
 /// <summary>
 /// A template for a facility.
@@ -119,7 +119,7 @@ public class FacilityTemplate : IModObject, IResearchable, IAbilityContainer, IT
 	/// </summary>
 	public bool IsObsolete
 	{
-		get { return this.IsObsolescent; }
+		get { return IsObsolescent; }
 	}
 
 	/// <summary>
@@ -258,7 +258,7 @@ public class FacilityTemplate : IModObject, IResearchable, IAbilityContainer, IT
 	{
 		if (IsDisposed)
 			return;
-		Galaxy.Current.UnassignID(this);
+		Game.Current.UnassignID(this);
 		if (Mod.Current != null)
 			Mod.Current.FacilityTemplates.Remove(this);
 	}

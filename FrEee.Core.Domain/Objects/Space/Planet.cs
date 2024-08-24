@@ -15,8 +15,6 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 
@@ -690,7 +688,7 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 		}
 		if (Colony != null)
 			Colony.Dispose();
-		Galaxy.Current.UnassignID(this);
+		Game.Current.UnassignID(this);
 		if (!IsMemory)
 			this.UpdateEmpireMemories();
 		IsDisposed = true;

@@ -1,6 +1,5 @@
 using FrEee.Utility;
 using System;
-using FrEee.Utility;
 
 namespace FrEee.Modding.Abilities;
 

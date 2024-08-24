@@ -1,4 +1,4 @@
-﻿namespace FrEee.Modding;
+﻿namespace FrEee.Modding.Scripts;
 
 /// <summary>
 /// A requirement that a script return true.

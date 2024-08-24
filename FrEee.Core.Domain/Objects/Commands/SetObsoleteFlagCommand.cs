@@ -46,7 +46,7 @@ public class SetObsoleteFlagCommand : Command<IDesign>
 		}
 	}
 
-	private GalaxyReference<IDesign> design { get; set; }
+	private GameReference<IDesign> design { get; set; }
 
 	public override void Execute()
 	{

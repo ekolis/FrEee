@@ -54,8 +54,8 @@ public class RecycleFacilityOrCargoOrder : IOrder
     [DoNotSerialize]
     public IRecyclable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
 
-    private GalaxyReference<Empire> owner { get; set; }
-    private GalaxyReference<IRecyclable> target { get; set; }
+    private GameReference<Empire> owner { get; set; }
+    private GameReference<IRecyclable> target { get; set; }
 
     public bool CheckCompletion(IOrderable executor)
     {
@@ -66,9 +66,9 @@ public class RecycleFacilityOrCargoOrder : IOrder
     {
         if (IsDisposed)
             return;
-        foreach (var v in Galaxy.Current.Referrables.OfType<IMobileSpaceObject>())
+        foreach (var v in Game.Current.Referrables.OfType<IMobileSpaceObject>())
             v.RemoveOrder(this);
-        Galaxy.Current.UnassignID(this);
+        Game.Current.UnassignID(this);
     }
 
     public void Execute(IOrderable x)

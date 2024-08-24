@@ -62,7 +62,7 @@ public partial class ShipListForm : GameForm
 
 	private void ShipListForm_Load(object sender, EventArgs e)
 	{
-		if (Galaxy.Current == null)
+		if (Game.Current == null)
 			return;
 
 		// show ship/unit/fleet counts

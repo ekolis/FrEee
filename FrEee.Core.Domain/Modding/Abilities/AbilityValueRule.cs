@@ -1,5 +1,4 @@
 ﻿using FrEee.Utility;
-using FrEee.Utility;
 namespace FrEee.Modding.Abilities;
 
 /// <summary>

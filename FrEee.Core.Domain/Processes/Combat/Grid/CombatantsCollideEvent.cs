@@ -1,8 +1,6 @@
 ﻿using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;
-using FrEee.Utility;
-using FrEee.Processes.Combat;
 using FrEee.Objects.GameState;
 
 namespace FrEee.Processes.Combat.Grid;
@@ -24,7 +22,7 @@ public class CombatantsCollideEvent : BattleEvent
     }
 
 
-    private GalaxyReference<ICombatant> target { get; set; }
+    private GameReference<ICombatant> target { get; set; }
 
     [DoNotSerialize]
     public ICombatant Target

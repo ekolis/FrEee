@@ -80,11 +80,11 @@ public static class ComparisonExtensions
 	/// <returns>The description.</returns>
 	public static string GetMemoryAgeDescription(this double timestamp)
 	{
-		if (timestamp == Galaxy.Current.Timestamp)
+		if (timestamp == Game.Current.Timestamp)
 			return "Current";
-		else if (Galaxy.Current.Timestamp - timestamp <= 1)
+		else if (Game.Current.Timestamp - timestamp <= 1)
 			return "Memory from last turn";
 		else
-			return $"Memory from {Math.Ceiling(Galaxy.Current.Timestamp - timestamp)} turns ago";
+			return $"Memory from {Math.Ceiling(Game.Current.Timestamp - timestamp)} turns ago";
 	}
 }

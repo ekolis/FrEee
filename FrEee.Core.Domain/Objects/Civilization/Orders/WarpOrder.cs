@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Civilization.Orders;
 
@@ -62,8 +63,8 @@ public class WarpOrder : IOrder
     [DoNotSerialize]
     public WarpPoint WarpPoint { get { return warpPoint; } set { warpPoint = value; } }
 
-    private GalaxyReference<Empire> owner { get; set; }
-    private GalaxyReference<WarpPoint> warpPoint { get; set; }
+    private GameReference<Empire> owner { get; set; }
+    private GameReference<WarpPoint> warpPoint { get; set; }
 
     public bool CheckCompletion(IOrderable v)
     {
@@ -91,9 +92,9 @@ public class WarpOrder : IOrder
     {
         if (IsDisposed)
             return;
-        foreach (var v in Galaxy.Current.Referrables.OfType<IMobileSpaceObject>())
+        foreach (var v in Game.Current.Referrables.OfType<IMobileSpaceObject>())
             v.RemoveOrder(this);
-        Galaxy.Current.UnassignID(this);
+        Game.Current.UnassignID(this);
     }
 
     public void Execute(IOrderable ord)

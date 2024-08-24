@@ -1,8 +1,6 @@
 ﻿using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;
-using FrEee.Utility;
-using FrEee.Processes.Combat;
 using FrEee.Objects.GameState;
 
 namespace FrEee.Processes.Combat.Grid;
@@ -20,7 +18,7 @@ public abstract class BattleEvent : IBattleEvent
     [DoNotCopy]
     public IBattle Battle { get; set; }
 
-    private GalaxyReference<ICombatant> combatant { get; set; }
+    private GameReference<ICombatant> combatant { get; set; }
 
     [DoNotSerialize]
     public ICombatant Combatant

@@ -13,7 +13,7 @@ using System.Windows.Forms;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
+using FrEee.Objects.Space;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -30,7 +30,7 @@ public partial class DesignListForm : GameForm
 
 	private void BindDesignList()
 	{
-		var emp = Galaxy.Current.CurrentEmpire;
+		var emp = Game.Current.CurrentEmpire;
 		IEnumerable<IDesign> designs = emp.KnownDesigns.OrderBy(d => d.Role).ThenBy(d => d.Name).ThenBy(d => d.Iteration);
 
 		// filter by vehicle type
@@ -132,7 +132,7 @@ public partial class DesignListForm : GameForm
 			}
 			else
 			{
-				if (d.TurnNumber < Galaxy.Current.TurnNumber)
+				if (d.TurnNumber < Game.Current.TurnNumber)
 				{
 					// TODO - let player edit old designs only if they have never been added to a queue (like in SE4)?
 					MessageBox.Show("You cannot edit a design that was created on a prior turn.");
@@ -232,7 +232,7 @@ public partial class DesignListForm : GameForm
 	private IDesign CopyDesign(IDesign old)
 	{
 		var copy = old.CopyAndAssignNewID();
-		copy.TurnNumber = Galaxy.Current.TurnNumber;
+		copy.TurnNumber = Game.Current.TurnNumber;
 		copy.Owner = Empire.Current;
 		copy.Iteration++;
 		copy.VehiclesBuilt = 0;

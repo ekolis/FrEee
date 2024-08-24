@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
 
 namespace FrEee.Modding.Templates;
 
@@ -85,9 +83,9 @@ public class AsteroidFieldTemplate : ITemplate<AsteroidField>, IModObject
 		if (abil != null)
 			asteroids.IntrinsicAbilities.Add(abil);
 
-		asteroids.ResourceValue[Resource.Minerals] = RandomHelper.Range(Galaxy.Current.GameSetup.MinSpawnedAsteroidValue, Galaxy.Current.GameSetup.MaxSpawnedAsteroidValue);
-		asteroids.ResourceValue[Resource.Organics] = RandomHelper.Range(Galaxy.Current.GameSetup.MinSpawnedAsteroidValue, Galaxy.Current.GameSetup.MaxSpawnedAsteroidValue);
-		asteroids.ResourceValue[Resource.Radioactives] = RandomHelper.Range(Galaxy.Current.GameSetup.MinSpawnedAsteroidValue, Galaxy.Current.GameSetup.MaxSpawnedAsteroidValue);
+		asteroids.ResourceValue[Resource.Minerals] = RandomHelper.Range(Game.Current.Setup.MinSpawnedAsteroidValue, Game.Current.Setup.MaxSpawnedAsteroidValue);
+		asteroids.ResourceValue[Resource.Organics] = RandomHelper.Range(Game.Current.Setup.MinSpawnedAsteroidValue, Game.Current.Setup.MaxSpawnedAsteroidValue);
+		asteroids.ResourceValue[Resource.Radioactives] = RandomHelper.Range(Game.Current.Setup.MinSpawnedAsteroidValue, Game.Current.Setup.MaxSpawnedAsteroidValue);
 
 		return asteroids;
 	}

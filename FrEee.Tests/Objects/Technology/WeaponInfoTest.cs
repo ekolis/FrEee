@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using FrEee.Modding;
+using FrEee.Modding.Loaders;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 using NUnit.Framework;
@@ -11,14 +12,14 @@ namespace FrEee.Objects.Technology;
 /// </summary>
 public class WeaponInfoTest
 {
-	private static Galaxy gal = new Galaxy();
+	private static Game gal = new Game();
 
 	private static Mod mod;
 
 	[OneTimeSetUp]
 	public static void ClassInit()
 	{
-		mod = Mod.Load("WeaponInfoTest");
+		mod = new ModLoader().Load("WeaponInfoTest");
 	}
 
 	/// <summary>

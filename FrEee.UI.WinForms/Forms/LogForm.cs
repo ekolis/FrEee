@@ -13,7 +13,6 @@ using System.Windows.Forms;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
 using FrEee.Processes.Combat;
 
 namespace FrEee.UI.WinForms.Forms;
@@ -47,7 +46,7 @@ public partial class LogForm : GameForm
 		{
 			var item = lstLog.AddItemWithImage(null, message.TurnNumber.ToStardate(), message, message.Picture);
 			item.SubItems.Add(message.Text);
-			if (message.TurnNumber < Galaxy.Current.TurnNumber)
+			if (message.TurnNumber < Game.Current.TurnNumber)
 				item.ForeColor = Color.Gray;
 		}
 	}

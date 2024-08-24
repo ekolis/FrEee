@@ -1,5 +1,4 @@
-﻿using FrEee.Utility;
-namespace FrEee.Utility;
+﻿namespace FrEee.Utility;
 
 /// <summary>
 /// A model for how resources should be mined.

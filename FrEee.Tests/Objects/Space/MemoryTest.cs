@@ -76,8 +76,8 @@ public class MemoryTest
 		HideSubmarine();
 
 		// redact things for the empire
-		Galaxy.Current.CurrentEmpire = seekers;
-		Galaxy.Current.Redact();
+		Game.Current.CurrentEmpire = seekers;
+		Game.Current.Redact();
 
 		// make sure it's still visible as a memory
 		Assert.AreEqual(Visibility.Fogged, submarine.CheckVisibility(seekers), "Ship is not fogged after it's left the star system.");
@@ -88,7 +88,7 @@ public class MemoryTest
 	public void Setup()
 	{
 		// initialize galaxy
-		new Galaxy();
+		new Game();
 		Mod.Current = new Mod();
 
 		// initialize star systems
@@ -102,8 +102,8 @@ public class MemoryTest
 		seekers.Name = "Seekers";
 		hiders = new Empire();
 		hiders.Name = "Hiders";
-		Galaxy.Current.Empires.Add(seekers);
-		Galaxy.Current.Empires.Add(hiders);
+		Game.Current.Empires.Add(seekers);
+		Game.Current.Empires.Add(hiders);
 
 		//. initialize exploration
 		here.ExploredByEmpires.Add(seekers);
@@ -128,7 +128,7 @@ public class MemoryTest
 		submarine.Sector = here.GetSector(0, 0);
 
 		// register objects
-		Galaxy.Current.CleanGameState();
+		Game.Current.CleanGameState();
 	}
 
 	private void HideSubmarine()

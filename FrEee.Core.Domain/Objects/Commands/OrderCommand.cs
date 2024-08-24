@@ -35,7 +35,7 @@ public abstract class OrderCommand : Command<IOrderable>, IOrderCommand
 		}
 	}
 
-	private GalaxyReference<IOrder> order { get; set; }
+	private GameReference<IOrder> order { get; set; }
 
 	public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{

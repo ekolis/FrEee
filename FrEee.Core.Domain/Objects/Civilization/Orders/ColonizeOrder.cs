@@ -10,7 +10,7 @@ using System.Linq;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Civilization.Orders;
 
@@ -53,8 +53,8 @@ public class ColonizeOrder : IOrder
     [DoNotSerialize]
     public Planet Planet { get { return planet; } set { planet = value; } }
 
-    private GalaxyReference<Empire> owner { get; set; }
-    private GalaxyReference<Planet> planet { get; set; }
+    private GameReference<Empire> owner { get; set; }
+    private GameReference<Planet> planet { get; set; }
 
     public bool CheckCompletion(IOrderable v)
     {
@@ -77,7 +77,7 @@ public class ColonizeOrder : IOrder
     {
         if (IsDisposed)
             return;
-        foreach (var v in Galaxy.Current.Referrables.OfType<IMobileSpaceObject>())
+        foreach (var v in Game.Current.Referrables.OfType<IMobileSpaceObject>())
         {
             if (v is SpaceVehicle sv)
                 sv.Orders.Remove(this);
@@ -86,7 +86,7 @@ public class ColonizeOrder : IOrder
             else if (v is Planet p)
                 p.Orders.Remove(this);
         }
-        Galaxy.Current.UnassignID(this);
+        Game.Current.UnassignID(this);
     }
 
     public void Execute(IOrderable ord)
@@ -170,12 +170,12 @@ public class ColonizeOrder : IOrder
                 sobj.Owner.Log.Add(Planet.CreateLogMessage(sobj + " has founded a new colony on " + Planet + ".", LogMessageType.PlanetColonised));
 
                 // update pursue/evade orders to target planet now instead of ship
-                foreach (var o in Galaxy.Current.Referrables.OfType<PursueOrder>().Where(q => q.Target == sobj))
+                foreach (var o in Game.Current.Referrables.OfType<PursueOrder>().Where(q => q.Target == sobj))
                 {
                     if (o.Owner.CanSee(sobj) && o.Owner.CanSee(Planet))
                         o.Target = Planet;
                 }
-                foreach (var o in Galaxy.Current.Referrables.OfType<EvadeOrder>().Where(q => q.Target == sobj))
+                foreach (var o in Game.Current.Referrables.OfType<EvadeOrder>().Where(q => q.Target == sobj))
                 {
                     if (o.Owner.CanSee(sobj) && o.Owner.CanSee(Planet))
                         o.Target = Planet;
@@ -214,12 +214,12 @@ public class ColonizeOrder : IOrder
                 // no such colony module
                 yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because it lacks a " + Planet.Surface + " colony module.", LogMessageType.Warning);
             }
-            if (Galaxy.Current.GameSetup.CanColonizeOnlyBreathable && Planet.Atmosphere != sobj.Owner.PrimaryRace.NativeAtmosphere)
+            if (Game.Current.Setup.CanColonizeOnlyBreathable && Planet.Atmosphere != sobj.Owner.PrimaryRace.NativeAtmosphere)
             {
                 // can only colonize breathable atmosphere (due to game setup option)
                 yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because we can only colonize " + sobj.Owner.PrimaryRace.NativeAtmosphere + " planets.", LogMessageType.Warning);
             }
-            if (Galaxy.Current.GameSetup.CanColonizeOnlyHomeworldSurface && Planet.Surface != sobj.Owner.PrimaryRace.NativeSurface)
+            if (Game.Current.Setup.CanColonizeOnlyHomeworldSurface && Planet.Surface != sobj.Owner.PrimaryRace.NativeSurface)
             {
                 // can only colonize breathable atmosphere (due to game setup option)
                 yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because we can only colonize " + sobj.Owner.PrimaryRace.NativeSurface + " planets.", LogMessageType.Warning);

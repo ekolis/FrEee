@@ -45,7 +45,7 @@ public class CreateFleetCommand : Command<Empire>
 		// HACK - why is the fleet beign disposed?!
 		Fleet.IsDisposed = false;
 		Fleet.ID = 0;
-		Galaxy.Current.AssignID(Fleet);
+		Game.Current.AssignID(Fleet);
 	}
 
 	public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)

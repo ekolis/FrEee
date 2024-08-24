@@ -8,8 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
-using FrEee.Utility;
-using FrEee.Processes.Combat;
 
 namespace FrEee.Processes.Combat.Grid;
 
@@ -52,7 +50,7 @@ public class GroundBattle : Battle
         Empires = Planet.Cargo.Units.OfType<Troop>().Select(t => t.Owner).Distinct();
 
         int moduloID = (int)(Planet.ID % 100000);
-        Dice = new PRNG((int)(moduloID / Galaxy.Current.Timestamp * 10));
+        Dice = new PRNG((int)(moduloID / Game.Current.Timestamp * 10));
     }
 
     public override void PlaceCombatants(SafeDictionary<ICombatant, Vector2<int>> locations)

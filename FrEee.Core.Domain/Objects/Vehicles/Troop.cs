@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
-using FrEee.Serialization;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 
@@ -95,7 +94,7 @@ public class Troop : Vehicle, IUnit
 
 	public override bool IsObsoleteMemory(Empire emp)
 	{
-		return Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+		return Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Game.Current.Timestamp - 1;
 	}
 
 	public override void Place(ISpaceObject target)

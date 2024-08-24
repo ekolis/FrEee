@@ -5,6 +5,7 @@ using FrEee.Extensions;
 using FrEee.UI.WinForms.Interfaces;
 using System;
 using System.Windows.Forms;
+using FrEee.Modding.Templates;
 
 namespace FrEee.UI.WinForms.Controls;
 

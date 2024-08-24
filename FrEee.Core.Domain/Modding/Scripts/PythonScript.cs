@@ -3,11 +3,8 @@ using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using FrEee.Modding.Scripts;
-using FrEee.Extensions;
-using FrEee.Utility;
 
-namespace FrEee.Modding;
+namespace FrEee.Modding.Scripts;
 
 /// <summary>
 /// Encapsulates a game script and any references to external scripts and global variables.
@@ -141,7 +138,7 @@ import " + ModuleName + @";
 		{
 			foreach (var externalScriptPath in File.ReadAllLines(scriptFilename))
 			{
-				var externalScript = PythonScript.Load(externalScriptPath);
+				var externalScript = Load(externalScriptPath);
 				if (externalScript == null)
 					throw new ScriptException("Cannot find script file: " + Path.GetFullPath(externalScriptPath + ".py"));
 				externalScripts.Add(externalScript);

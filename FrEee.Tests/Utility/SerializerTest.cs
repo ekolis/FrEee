@@ -1,5 +1,4 @@
 ﻿using FrEee.Objects.Civilization;
-using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Serialization;
@@ -9,6 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Modding.Abilities;
+using FrEee.Modding.Templates;
+using FrEee.Modding.Scripts;
+using FrEee.Modding.Loaders;
 
 namespace FrEee.Utility;
 
@@ -149,7 +151,7 @@ public class SerializerTest
 	[Test]
 	public void CorrectAbilities()
 	{
-		Mod.Load(null);
+		new ModLoader().Load(null);
 		var ft1 = new FacilityTemplate();
 		ft1.Name = "Mineral Miner Test";
 		ft1.Abilities.Add(new Ability(ft1, Mod.Current.AbilityRules.FindByName("Resource Generation - Minerals"), null, 800));
@@ -169,7 +171,7 @@ public class SerializerTest
 	[Test]
 	public void CorrectAbilities2()
 	{
-		Mod.Load(null);
+		new ModLoader().Load(null);
 		var serdata = Serializer.SerializeToString(Mod.Current);
 		Mod.Current = Serializer.DeserializeFromString<Mod>(serdata);
 		Assert.AreEqual(800, Mod.Current.FacilityTemplates.Single(x => x.Name == "Mineral Miner Facility I").GetAbilityValue("Resource Generation - Minerals").ToInt());

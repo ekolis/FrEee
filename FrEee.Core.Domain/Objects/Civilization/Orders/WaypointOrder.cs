@@ -6,7 +6,6 @@ using FrEee.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
 
 namespace FrEee.Objects.Civilization.Orders;
 
@@ -87,8 +86,8 @@ public class WaypointOrder : IMovementOrder
         }
     }
 
-    private GalaxyReference<Empire> owner { get; set; }
-    private GalaxyReference<Waypoint> target { get; set; }
+    private GameReference<Empire> owner { get; set; }
+    private GameReference<Waypoint> target { get; set; }
 
     public bool CheckCompletion(IOrderable v)
     {
@@ -118,7 +117,7 @@ public class WaypointOrder : IMovementOrder
             return;
         foreach (var v in Galaxy.Current.FindSpaceObjects<IMobileSpaceObject>())
             v.RemoveOrder(this);
-        Galaxy.Current.UnassignID(this);
+        Game.Current.UnassignID(this);
     }
 
     public void Execute(IOrderable ord)

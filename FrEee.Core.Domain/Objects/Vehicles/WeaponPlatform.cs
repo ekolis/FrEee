@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
-using FrEee.Serialization;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 
@@ -89,8 +88,8 @@ public class WeaponPlatform : Vehicle, IUnit
 	public override bool IsObsoleteMemory(Empire emp)
 	{
 		if (Container == null)
-			return this.MemoryOwner() == emp && Timestamp < Galaxy.Current.Timestamp - 1;
-		return Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+			return this.MemoryOwner() == emp && Timestamp < Game.Current.Timestamp - 1;
+		return Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Game.Current.Timestamp - 1;
 	}
 
 	public override void Place(ISpaceObject target)

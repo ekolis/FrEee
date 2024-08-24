@@ -3,7 +3,6 @@ using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;
-using FrEee.Utility;
 using FrEee.Objects.GameState;
 
 namespace FrEee.Processes.Combat;
@@ -69,7 +68,7 @@ public class Hit : IFormulaHost
         }
     }
 
-    private GalaxyReference<IDamageableReferrable> target { get; set; }
+    private GameReference<IDamageableReferrable> target { get; set; }
 
     private IDamageable _target { get; set; }
 }

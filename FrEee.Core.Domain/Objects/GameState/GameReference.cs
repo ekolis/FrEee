@@ -2,7 +2,6 @@ using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 using FrEee.Utility;
-using FrEee.Serialization;
 
 namespace FrEee.Objects.GameState;
 
@@ -14,7 +13,7 @@ namespace FrEee.Objects.GameState;
 /// </summary>
 /// <typeparam name="T"></typeparam>
 [Serializable]
-public class GalaxyReference<T> : IReference<long, T>, IPromotable
+public class GameReference<T> : IReference<long, T>, IPromotable
     where T : IReferrable
 {
 
@@ -24,36 +23,36 @@ public class GalaxyReference<T> : IReference<long, T>, IPromotable
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public static GalaxyReference<T> GetGalaxyReference(long id)
+    public static GameReference<T> GetGalaxyReference(long id)
     {
-        if (Galaxy.Current.referrables.ContainsKey(id))
-            return new GalaxyReference<T>(id);
+        if (Game.Current.referrables.ContainsKey(id))
+            return new GameReference<T>(id);
 
         return null;
     }
 
-    public GalaxyReference()
+    public GameReference()
     {
         InitializeCache();
     }
 
-    public GalaxyReference(T t)
+    public GameReference(T t)
         : this()
     {
         if (t is IReferrable)
         {
             var r = (IReferrable)t;
-            if (Galaxy.Current == null)
+            if (Game.Current == null)
                 throw new ReferenceException<int, T>("Can't create a reference to an IReferrable without a galaxy.");
             else if (t == null)
                 ID = 0;
             else if (r.ID > 0)
                 ID = r.ID;
             else
-                ID = Galaxy.Current.AssignID(r);
+                ID = Game.Current.AssignID(r);
             if (!HasValue)
             {
-                Galaxy.Current.referrables[r.ID] = r;
+                Game.Current.referrables[r.ID] = r;
                 cache = null; // reset cache
                 if (!HasValue)
                     throw new ArgumentException("{0} does not exist in the current galaxy so it cannot be referenced.".F(t));
@@ -65,14 +64,14 @@ public class GalaxyReference<T> : IReference<long, T>, IPromotable
         }
     }
 
-    public GalaxyReference(long id)
+    public GameReference(long id)
         : this()
     {
-        if (Galaxy.Current == null)
+        if (Game.Current == null)
             throw new ReferenceException<int, T>("Can't create a reference to an IReferrable without a galaxy.");
-        else if (!Galaxy.Current.referrables.ContainsKey(id))
+        else if (!Game.Current.referrables.ContainsKey(id))
             throw new IndexOutOfRangeException($"The id of {id} is not currently a valid reference");
-        else if (Galaxy.Current.referrables[id] is T)
+        else if (Game.Current.referrables[id] is T)
             ID = id;
         else
             throw new Exception("Object with ID " + id + " is not a " + typeof(T) + ".");
@@ -84,7 +83,7 @@ public class GalaxyReference<T> : IReference<long, T>, IPromotable
         {
             if (ID <= 0)
                 return value;
-            var obj = (T)Galaxy.Current.GetReferrable(ID);
+            var obj = (T)Game.Current.GetReferrable(ID);
             if (obj == null)
                 return default;
             /*if (obj is IReferrable && (obj as IReferrable).IsDisposed)
@@ -121,26 +120,26 @@ public class GalaxyReference<T> : IReference<long, T>, IPromotable
     [NonSerialized]
     private ClientSideCache<T> cache;
 
-    public static implicit operator GalaxyReference<T>(T t)
+    public static implicit operator GameReference<T>(T t)
     {
         if (t == null)
             return null;
-        return new GalaxyReference<T>(t);
+        return new GameReference<T>(t);
     }
 
-    public static implicit operator T(GalaxyReference<T> r)
+    public static implicit operator T(GameReference<T> r)
     {
         if (r == null)
             return default;
         return r.Value;
     }
 
-    public static bool operator !=(GalaxyReference<T> r1, GalaxyReference<T> r2)
+    public static bool operator !=(GameReference<T> r1, GameReference<T> r2)
     {
         return !(r1 == r2);
     }
 
-    public static bool operator ==(GalaxyReference<T> r1, GalaxyReference<T> r2)
+    public static bool operator ==(GameReference<T> r1, GameReference<T> r2)
     {
         if (r1 is null && r2 is null)
             return true;
@@ -152,8 +151,8 @@ public class GalaxyReference<T> : IReference<long, T>, IPromotable
     public override bool Equals(object? obj)
     {
         // TODO - upgrade equals to use "as" operator
-        if (obj is GalaxyReference<T>)
-            return this == (GalaxyReference<T>)obj;
+        if (obj is GameReference<T>)
+            return this == (GameReference<T>)obj;
         return false;
     }
 

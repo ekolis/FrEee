@@ -9,7 +9,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using FrEee.Objects.GameState;
-using FrEee.Utility;
 using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Civilization;
@@ -226,7 +225,7 @@ public class Race : INamed, IAbilityObject, IPictorial, IReferrable
 	{
 		if (IsDisposed)
 			return;
-		Galaxy.Current.UnassignID(this);
+		Game.Current.UnassignID(this);
 	}
 
 	public void Save(string filename)

@@ -8,8 +8,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using FrEee.Extensions;
-using FrEee.Utility;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Combat.Grid;
 

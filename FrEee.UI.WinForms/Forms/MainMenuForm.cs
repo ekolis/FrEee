@@ -16,9 +16,8 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
 using FrEee.Processes.Setup;
+using FrEee.Modding.Loaders;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -59,7 +58,7 @@ public partial class MainMenuForm : GameForm
 			if (Mod.Current == null)
 			{
 				status.Message = "Loading mod";
-				Mod.Load(null, true, status, 0.5);
+				new ModLoader().Load(null, true, status, 0.5);
 				if (Mod.Errors.Any())
 				{
 					Action a = delegate ()
@@ -94,11 +93,11 @@ public partial class MainMenuForm : GameForm
 					}
 
 					status.Message = "Setting up galaxy";
-					Galaxy.Initialize(setup, null, status, 1.0);
-					var name = Galaxy.Current.Name;
-					var turn = Galaxy.Current.TurnNumber;
+					Game.Initialize(setup, null, status, 1.0);
+					var name = Game.Current.Name;
+					var turn = Game.Current.TurnNumber;
 					status.Message = "Loading game";
-					Galaxy.Load(name + "_" + turn + "_0001.gam");
+					Game.Load(name + "_" + turn + "_0001.gam");
 				}
 			}
 #if RELEASE
@@ -143,8 +142,8 @@ public partial class MainMenuForm : GameForm
 	{
 		Cursor = Cursors.WaitCursor;
 		var plrfile = Path.GetFileNameWithoutExtension(filename) + ".plr";
-		Galaxy.Load(filename);
-		if (Galaxy.Current.CurrentEmpire == null)
+		Game.Load(filename);
+		if (Game.Current.CurrentEmpire == null)
 		{
 			// host view, load host console
 			Cursor = Cursors.WaitCursor;
@@ -162,7 +161,7 @@ public partial class MainMenuForm : GameForm
 				if (loadPlr == null)
 					loadPlr = MessageBox.Show("Player commands file exists for this turn. Resume turn from where you left off?", "Resume Turn", MessageBoxButtons.YesNo) == DialogResult.Yes;
 				if (loadPlr.Value)
-					Galaxy.Current.LoadCommands();
+					Game.Current.LoadCommands();
 			}
 
 			// load library designs
@@ -213,7 +212,7 @@ public partial class MainMenuForm : GameForm
 			{
 #endif
 			status.Message = "Loading mod";
-			Mod.Load(modPath, true, status, 1d);
+			new ModLoader().Load(modPath, true, status, 1d);
 			this.Invoke(new Action(delegate ()
 				{
 					if (Mod.Errors.Any())

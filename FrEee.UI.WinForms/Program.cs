@@ -15,7 +15,6 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
-using FrEee.Utility;
 
 namespace FrEee.UI.WinForms;
 
@@ -165,12 +164,12 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 			{
 				try
 				{
-					Galaxy.Current.LoadCommands();
+					Game.Current.LoadCommands();
 				}
 				catch
 				{
 					MessageBox.Show("An error occurred while loading your commands. You will need to restart your turn from the beginning.");
-					Galaxy.Load(Galaxy.Current.GameFileName); // in case some commands got loaded
+					Game.Load(Game.Current.GameFileName); // in case some commands got loaded
 				}
 			}
 			else
@@ -218,7 +217,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 		}
 
 		// load GAM file, see if it's a host or player view
-		Galaxy.Load(gamfile);
+		Game.Load(gamfile);
 		if (Empire.Current == null)
 		{
 			// host view
@@ -283,16 +282,16 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 
 			Console.WriteLine("Processing turn...");
 			var processor = new TurnProcessor();
-			var emps = processor.ProcessTurn(Galaxy.Current, false, status);
+			var emps = processor.ProcessTurn(Game.Current, false, status);
 			foreach (var emp in emps)
 				Console.WriteLine(emp + " did not submit a PLR file.");
 			if (safe && emps.Any())
 			{
 				Console.Error.WriteLine("Halting turn processing due to missing PLR file(s).");
-				return 101 + Galaxy.Current.Empires.IndexOf(emps.First());
+				return 101 + Game.Current.Empires.IndexOf(emps.First());
 			}
-			Galaxy.SaveAll();
-			Console.WriteLine("Turn processed successfully. It is now turn " + Galaxy.Current.TurnNumber + " (stardate " + Galaxy.Current.Stardate + ").");
+			Game.SaveAll();
+			Console.WriteLine("Turn processed successfully. It is now turn " + Game.Current.TurnNumber + " (stardate " + Game.Current.Stardate + ").");
 			Gui.Exit();
 			return 0;
 		}

@@ -15,8 +15,6 @@ using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
 using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Vehicles;
@@ -109,7 +107,7 @@ public static class Design
 		{
 			d.IsNew = true;
 			d.Owner = Empire.Current;
-			d.TurnNumber = Galaxy.Current.TurnNumber;
+			d.TurnNumber = Game.Current.TurnNumber;
 			d.Iteration = Empire.Current.KnownDesigns.OwnedBy(Empire.Current).Where(x => x.BaseName == d.BaseName && x.IsUnlocked()).MaxOrDefault(x => x.Iteration) + 1; // auto assign nex available iteration
 			d.IsObsolete = d.IsObsolescent;
 			Empire.Current.KnownDesigns.Add(d); // only client side, don't need to worry about other players spying :)
@@ -334,7 +332,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 	{
 		var copy = this.CopyAndAssignNewID();
 		copy.Hull = Hull.LatestVersion;
-		copy.TurnNumber = Galaxy.Current.TurnNumber;
+		copy.TurnNumber = Game.Current.TurnNumber;
 		copy.Owner = Empire.Current;
 		copy.Iteration = Empire.Current.KnownDesigns.OwnedBy(Empire.Current).Where(x => x.BaseName == BaseName && x.IsUnlocked()).MaxOrDefault(x => x.Iteration) + 1; // auto assign nex available iteration
 		copy.VehiclesBuilt = 0;
@@ -409,7 +407,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 		get
 		{
 			// TODO - check design library?
-			return Galaxy.Current.Referrables.OfType<IDesign<T>>().Where(d => d.Owner == Owner && d.BaseName == BaseName && d.Iteration > Iteration);
+			return Game.Current.Referrables.OfType<IDesign<T>>().Where(d => d.Owner == Owner && d.BaseName == BaseName && d.Iteration > Iteration);
 		}
 	}
 
@@ -423,7 +421,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 		get
 		{
 			// TODO - check design library?
-			return Galaxy.Current.Referrables.OfType<IDesign<T>>().Where(d => d.Owner == Owner && d.BaseName == BaseName && d.Iteration < Iteration);
+			return Game.Current.Referrables.OfType<IDesign<T>>().Where(d => d.Owner == Owner && d.BaseName == BaseName && d.Iteration < Iteration);
 		}
 	}
 
@@ -571,7 +569,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 
 	public IEnumerable<T> Vehicles
 	{
-		get { return Galaxy.Current.Referrables.OfType<T>().Where(v => v.Design == this); }
+		get { return Game.Current.Referrables.OfType<T>().Where(v => v.Design == this); }
 	}
 
 	/// <summary>
@@ -690,7 +688,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 	/// <summary>
 	/// For serialization and client safety
 	/// </summary>
-	private GalaxyReference<Empire> owner { get; set; }
+	private GameReference<Empire> owner { get; set; }
 
 	public void AddComponent(ComponentTemplate ct, Mount m = null)
 	{
@@ -703,7 +701,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 			return Visibility.Owned;
 		// do we already know the design? or did we engage in combat with it this turn?
 		// TODO - "battle manager" so we're not tied to a specific combat implementation
-		else if (emp.KnownDesigns.Contains(this) || Galaxy.Current.Battles.Any(b =>
+		else if (emp.KnownDesigns.Contains(this) || Game.Current.Battles.Any(b =>
 			b.Combatants.Any(c => c.Owner == emp) &&
 				(b.Combatants.OfType<IVehicle>().Any(v => v.Design == this)
 				|| b.Combatants.OfType<ICargoContainer>().Any(c => c.Cargo?.Units?.Any(u => u.Design == this) ?? false))))
@@ -737,8 +735,8 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 	{
 		if (IsDisposed)
 			return;
-		Galaxy.Current.UnassignID(this);
-		foreach (var emp in Galaxy.Current.Empires.Where(e => e != null))
+		Game.Current.UnassignID(this);
+		foreach (var emp in Game.Current.Empires.Where(e => e != null))
 			emp.KnownDesigns.Remove(this);
 	}
 

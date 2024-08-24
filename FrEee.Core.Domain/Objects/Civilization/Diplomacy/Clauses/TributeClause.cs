@@ -1,7 +1,6 @@
 ﻿using FrEee.Utility;
 using FrEee.Extensions;
 using System.Linq;
-using FrEee.Extensions;
 
 namespace FrEee.Objects.Civilization.Diplomacy.Clauses;
 

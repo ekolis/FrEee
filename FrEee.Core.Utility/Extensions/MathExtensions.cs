@@ -1,13 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Formats.Asn1;
 using System.Linq;
 using System.Numerics;
 using FrEee.Utility;
-using FrEee.Extensions;
-using FrEee.Extensions;
-using FrEee.Utility;
-using FrEee.Extensions;
 namespace FrEee.Extensions;
 
 public static class MathExtensions

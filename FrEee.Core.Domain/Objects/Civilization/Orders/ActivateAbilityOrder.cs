@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.Technology;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 
@@ -75,10 +74,10 @@ public class ActivateAbilityOrder : IOrder
     [DoNotSerialize]
     public IReferrable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
 
-    private GalaxyReference<Ability> ability { get; set; }
-    private GalaxyReference<Empire> owner { get; set; }
-    private GalaxyReference<IReferrableAbilityObject> source { get; set; }
-    private GalaxyReference<IReferrable> target { get; set; }
+    private GameReference<Ability> ability { get; set; }
+    private GameReference<Empire> owner { get; set; }
+    private GameReference<IReferrableAbilityObject> source { get; set; }
+    private GameReference<IReferrable> target { get; set; }
 
     public bool CheckCompletion(IOrderable executor)
     {
@@ -89,9 +88,9 @@ public class ActivateAbilityOrder : IOrder
     {
         if (IsDisposed)
             return;
-        foreach (var sobj in Galaxy.Current.Referrables.OfType<IMobileSpaceObject>())
+        foreach (var sobj in Game.Current.Referrables.OfType<IMobileSpaceObject>())
             sobj.RemoveOrder(this);
-        Galaxy.Current.UnassignID(this);
+        Game.Current.UnassignID(this);
     }
 
     public void Execute(IOrderable ord)
@@ -169,7 +168,7 @@ public class ActivateAbilityOrder : IOrder
 
                         // figure out where the warp point goes, according to our game setup's warp point placement strategy
                         // only in the target system - in the source system we get a warp point at the sector where the WP opener was
-                        var toSector = Galaxy.Current.GameSetup.WarpPointPlacementStrategy.GetWarpPointSector(fromSys.Location, toSys.Location);
+                        var toSector = Game.Current.Setup.WarpPointPlacementStrategy.GetWarpPointSector(fromSys.Location, toSys.Location);
 
                         // create the warp points
                         var wp1 = wpt1.Instantiate();

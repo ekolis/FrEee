@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -19,11 +18,11 @@ public partial class ScoresForm : GameForm
 	private void ScoresForm_Load(object sender, EventArgs e)
 	{
 		// show graph
-		foreach (var emp in Galaxy.Current.Empires.ExceptSingle(null))
+		foreach (var emp in Game.Current.Empires.ExceptSingle(null))
 		{
 			var dps = new List<double>();
 			int s = 0;
-			for (var i = 0; i <= Galaxy.Current.TurnNumber; i++)
+			for (var i = 0; i <= Game.Current.TurnNumber; i++)
 			{
 				if (emp.Scores[i] == null)
 					dps.Add(s); // carry over score from previous turn
@@ -46,7 +45,7 @@ public partial class ScoresForm : GameForm
 		grid.CurrentGridConfig.Columns.Add(new GridColumnConfig("Icon", "Insignia", typeof(DataGridViewImageColumn), Color.White));
 		grid.CurrentGridConfig.Columns.Add(new GridColumnConfig("Name", "Empire", typeof(DataGridViewTextBoxColumn), Color.White));
 		grid.CurrentGridConfig.Columns.Add(new GridColumnConfig("Score", "Score", typeof(DataGridViewTextBoxColumn), Color.White, DataGridView.Format.UnitsBForBillions, DataGridView.Sort.Descending));
-		grid.Data = Galaxy.Current.Empires;
+		grid.Data = Game.Current.Empires;
 		grid.Initialize();
 	}
 }

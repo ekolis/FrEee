@@ -1,10 +1,9 @@
-﻿using FrEee.Utility;
-using FrEee.Serialization;
+﻿using FrEee.Modding.Scripts;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using FrEee.Utility;
 
 namespace FrEee.Modding;
 

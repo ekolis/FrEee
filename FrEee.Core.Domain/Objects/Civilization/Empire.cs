@@ -19,8 +19,6 @@ using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.Diplomacy;
-using FrEee.Extensions;
-using FrEee.Utility;
 using FrEee.Processes.AI;
 using FrEee.Modding.Abilities;
 using FrEee.Processes.Setup;
@@ -47,8 +45,8 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 		UniqueTechsFound = new List<string>();
 		Memory = new SafeDictionary<long, IFoggable>();
 		AINotes = new DynamicDictionary();
-		PlayerNotes = new SafeDictionary<GalaxyReference<IReferrable>, string>();
-		PrivateNames = new SafeDictionary<GalaxyReference<INameable>, string>();
+		PlayerNotes = new SafeDictionary<GameReference<IReferrable>, string>();
+		PrivateNames = new SafeDictionary<GameReference<INameable>, string>();
 		EncounteredEmpires = new HashSet<Empire>();
 		EncounteredEmpires.Add(this);
 		IncomingMessages = new HashSet<IMessage>();
@@ -66,9 +64,9 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	{
 		get
 		{
-			if (Galaxy.Current == null)
+			if (Game.Current == null)
 				return null;
-			return Galaxy.Current.CurrentEmpire;
+			return Game.Current.CurrentEmpire;
 		}
 	}
 
@@ -95,7 +93,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	/// The AI which controls the behavior of empires of this race.
 	/// </summary>
 	[DoNotSerialize]
-	public AI<Empire, Galaxy> AI { get { return ai; } set { ai = value; } }
+	public AI<Empire, Game> AI { get { return ai; } set { ai = value; } }
 
 	/// <summary>
 	/// Arbitrary data stored by the AI to maintain state between turns.
@@ -120,7 +118,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 		get
 		{
 			if (allSystemsExploredFromStart is null)
-				allSystemsExploredFromStart = Galaxy.Current.GameSetup.AllSystemsExplored || this.HasAbility("Galaxy Seen");
+				allSystemsExploredFromStart = Game.Current.Setup.AllSystemsExplored || this.HasAbility("Galaxy Seen");
 			return allSystemsExploredFromStart.Value;
 		}
 	}
@@ -192,7 +190,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	{
 		get
 		{
-			return Galaxy.Current.Referrables.OfType<ConstructionQueue>().Where(q => q.Owner == this && q.Container.Sector != null && q.Rate.Any(kvp => kvp.Value > 0));
+			return Game.Current.Referrables.OfType<ConstructionQueue>().Where(q => q.Owner == this && q.Container.Sector != null && q.Rate.Any(kvp => kvp.Value > 0));
 		}
 	}
 
@@ -234,11 +232,11 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	{
 		get
 		{
-			if (Galaxy.Current.GivenTreatyClauseCache == null)
-				Galaxy.Current.GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
-			if (!Galaxy.Current.GivenTreatyClauseCache.ContainsKey(this))
-				Galaxy.Current.GivenTreatyClauseCache.Add(this, Galaxy.Current.Referrables.OfType<Clause>().Where(c => c.Giver == this && c.IsInEffect).ToLookup(c => c.Receiver));
-			return Galaxy.Current.GivenTreatyClauseCache[this];
+			if (Game.Current.GivenTreatyClauseCache == null)
+				Game.Current.GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
+			if (!Game.Current.GivenTreatyClauseCache.ContainsKey(this))
+				Game.Current.GivenTreatyClauseCache.Add(this, Game.Current.Referrables.OfType<Clause>().Where(c => c.Giver == this && c.IsInEffect).ToLookup(c => c.Receiver));
+			return Game.Current.GivenTreatyClauseCache[this];
 		}
 	}
 
@@ -452,7 +450,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	/// <summary>
 	/// Notes set by the player on various game objects.
 	/// </summary>
-	public SafeDictionary<GalaxyReference<IReferrable>, string> PlayerNotes { get; private set; }
+	public SafeDictionary<GameReference<IReferrable>, string> PlayerNotes { get; private set; }
 
 	/// <summary>
 	/// The leader portrait for this empire.
@@ -483,7 +481,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	/// <summary>
 	/// Privately visible names set by the player on various game objects.
 	/// </summary>
-	public SafeDictionary<GalaxyReference<INameable>, string> PrivateNames { get; private set; }
+	public SafeDictionary<GameReference<INameable>, string> PrivateNames { get; private set; }
 
 	/// <summary>
 	/// Income via raw resource generation ("Generate Points") abilities (not standard or remote mining, or standard point generation).
@@ -510,11 +508,11 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	{
 		get
 		{
-			if (Galaxy.Current.ReceivedTreatyClauseCache == null)
-				Galaxy.Current.ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
-			if (!Galaxy.Current.ReceivedTreatyClauseCache.ContainsKey(this))
-				Galaxy.Current.ReceivedTreatyClauseCache.Add(this, Galaxy.Current.Referrables.OfType<Clause>().Where(c => c.Receiver == this && c.IsInEffect).ToLookup(c => c.Giver));
-			return Galaxy.Current.ReceivedTreatyClauseCache[this];
+			if (Game.Current.ReceivedTreatyClauseCache == null)
+				Game.Current.ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
+			if (!Game.Current.ReceivedTreatyClauseCache.ContainsKey(this))
+				Game.Current.ReceivedTreatyClauseCache.Add(this, Game.Current.Referrables.OfType<Clause>().Where(c => c.Receiver == this && c.IsInEffect).ToLookup(c => c.Giver));
+			return Game.Current.ReceivedTreatyClauseCache[this];
 		}
 	}
 
@@ -664,7 +662,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 		get
 		{
 			int? s = null;
-			for (var x = Galaxy.Current.TurnNumber; x >= 0 && s == null; x--)
+			for (var x = Game.Current.TurnNumber; x >= 0 && s == null; x--)
 			{
 				s = GetScoreAtTurn(x);
 			}
@@ -760,7 +758,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	/// </summary>
 	public IList<Waypoint> Waypoints { get; private set; }
 
-	private ModReference<AI<Empire, Galaxy>> ai { get; set; }
+	private ModReference<AI<Empire, Game>> ai { get; set; }
 	private ModReference<Culture> culture { get; set; }
 	private ResourceQuantity colonyIncome;
 
@@ -867,7 +865,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	{
 		// can we see it?
 		// TODO - rankings too, not just scores
-		var disp = Galaxy.Current.GameSetup.ScoreDisplay;
+		var disp = Game.Current.Setup.ScoreDisplay;
 		bool showit = false;
 		if (viewer == null)
 			showit = true; // host can see everyone's scores
@@ -883,7 +881,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 		// OK, we can see it, now compute the score
 		// TODO - moddable score weightings
 		int score = 0;
-		score += Galaxy.Current.Referrables.OfType<IVehicle>().OwnedBy(this).Sum(v => v.Cost.Sum(kvp => kvp.Value)); // vehicle cost
+		score += Game.Current.Referrables.OfType<IVehicle>().OwnedBy(this).Sum(v => v.Cost.Sum(kvp => kvp.Value)); // vehicle cost
 		score += ColonizedPlanets.SelectMany(p => p.Colony.Facilities).Sum(f => f.Cost.Sum(kvp => kvp.Value)); // facility cost
 		foreach (var kvp in ResearchedTechnologies)
 		{
@@ -899,9 +897,9 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	{
 		if (IsDisposed)
 			return;
-		Galaxy.Current.UnassignID(this);
-		if (Galaxy.Current.Empires.Contains(this))
-			Galaxy.Current.Empires[Galaxy.Current.Empires.IndexOf(this)] = null;
+		Game.Current.UnassignID(this);
+		if (Game.Current.Empires.Contains(this))
+			Game.Current.Empires[Game.Current.Empires.IndexOf(this)] = null;
 		foreach (var x in OwnedSpaceObjects.OfType<SpaceVehicle>().ToArray())
 			x.Dispose();
 		foreach (var x in ColonizedPlanets.ToArray())
@@ -1114,7 +1112,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 		// eliminate memories of objects that are actually visible
 		foreach (var kvp in Memory.ToArray())
 		{
-			var original = (IFoggable)Galaxy.Current.GetReferrable(kvp.Key);
+			var original = (IFoggable)Game.Current.GetReferrable(kvp.Key);
 			if (original != null && original.CheckVisibility(emp) >= Visibility.Visible)
 			{
 				kvp.Value.Dispose();
@@ -1138,7 +1136,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	{
 		unlockedItems = new List<IUnlockable>(
 			Mod.Current.Objects.OfType<IUnlockable>()
-			.Union(Galaxy.Current.Referrables.OfType<IUnlockable>())
+			.Union(Game.Current.Referrables.OfType<IUnlockable>())
 			.Where(r => CheckUnlockStatus(r)));
 	}
 
@@ -1227,7 +1225,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 			else
 			{
 				var memory = obj.CopyAndAssignNewID();
-				memory.Timestamp = Galaxy.Current.TurnNumber + Galaxy.Current.CurrentTick;
+				memory.Timestamp = Game.Current.TurnNumber + Game.Current.CurrentTick;
 				Memory[obj.ID] = memory;
 			}
 

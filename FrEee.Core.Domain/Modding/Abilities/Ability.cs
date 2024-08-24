@@ -1,5 +1,4 @@
 using FrEee.Objects.Civilization;
-using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;
@@ -7,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
-using FrEee.Utility;
 
 namespace FrEee.Modding.Abilities;
 
@@ -194,7 +192,7 @@ public class Ability : IContainable<IAbilityObject>, IReferrable, IModObject, ID
             return;
         if (Container is IAbilityContainer)
             (Container as IAbilityContainer).Abilities.Remove(this);
-        Galaxy.Current.UnassignID(this);
+        Game.Current.UnassignID(this);
     }
 
     public override string ToString()

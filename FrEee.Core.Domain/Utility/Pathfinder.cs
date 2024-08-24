@@ -6,9 +6,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
 using FrEee.Processes.Combat;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Utility;
 
@@ -333,9 +332,9 @@ public static class Pathfinder
 	/// <returns></returns>
 	public static IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors, IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> map)
 	{
-		bool cacheEnabled = Galaxy.Current.IsAbilityCacheEnabled;
+		bool cacheEnabled = Game.Current.IsAbilityCacheEnabled;
 		if (!cacheEnabled)
-			Galaxy.Current.EnableAbilityCache();
+			Game.Current.EnableAbilityCache();
 		if (end == null || end.StarSystem == null || start == end)
 			return Enumerable.Empty<Sector>();
 		if (me != null && me.StrategicSpeed < 1)
@@ -368,7 +367,7 @@ public static class Pathfinder
 			node = node.PreviousNode;
 		}
 		if (!cacheEnabled)
-			Galaxy.Current.DisableAbilityCache();
+			Game.Current.DisableAbilityCache();
 		return nodes.Select(n => n.Location).Where(s => s != start).Reverse();
 	}
 

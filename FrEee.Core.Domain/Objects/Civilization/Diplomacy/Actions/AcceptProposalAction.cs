@@ -28,7 +28,7 @@ public class AcceptProposalAction : DiplomaticAction
     [DoNotSerialize]
     public Proposal Proposal { get { return proposal; } set { proposal = value; } }
 
-    private GalaxyReference<Proposal> proposal { get; set; }
+    private GameReference<Proposal> proposal { get; set; }
 
     public override void Execute()
     {

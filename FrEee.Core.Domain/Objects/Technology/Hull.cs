@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using FrEee.Objects.GameState;
-using FrEee.Serialization;
 using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Technology;

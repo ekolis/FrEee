@@ -15,7 +15,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
-using FrEee.Extensions;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -111,7 +111,7 @@ public partial class PlanetListForm : GameForm
 	private void grid_RowEnter(object sender, DataGridViewCellEventArgs e)
 	{
 		var planet = (Planet)grid.SelectedItem;
-		foreach (var sys in Galaxy.Current.CurrentEmpire.ExploredStarSystems)
+		foreach (var sys in Game.Current.CurrentEmpire.ExploredStarSystems)
 		{
 			if (sys.FindSpaceObjects<Planet>().Any(p => p == planet))
 			{
@@ -134,7 +134,7 @@ public partial class PlanetListForm : GameForm
 
 	private void PlanetListForm_Load(object sender, EventArgs e)
 	{
-		if (Galaxy.Current == null)
+		if (Game.Current == null)
 			return;
 
 		// show planet counts

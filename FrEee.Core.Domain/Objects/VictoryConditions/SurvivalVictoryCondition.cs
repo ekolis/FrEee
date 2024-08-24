@@ -28,7 +28,7 @@ public class SurvivalVictoryCondition : IVictoryCondition
 	{
 		if (emp.IsDefeated)
 			return 0;
-		return (double)(Galaxy.Current.TurnNumber - 1) / (double)Turns;
+		return (double)(Game.Current.TurnNumber - 1) / (double)Turns;
 	}
 
 	public string GetVictoryMessage(Empire emp)

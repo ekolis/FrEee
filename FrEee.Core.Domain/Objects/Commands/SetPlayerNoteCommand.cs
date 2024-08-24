@@ -22,7 +22,7 @@ public class SetPlayerNoteCommand : Command<Empire>
 	[DoNotSerialize]
 	public IReferrable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
 
-	private GalaxyReference<IReferrable> target { get; set; }
+	private GameReference<IReferrable> target { get; set; }
 
 	public override void Execute()
 	{

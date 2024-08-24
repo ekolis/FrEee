@@ -11,7 +11,6 @@ using System.Windows.Forms;
 using FrEee.Objects.Technology;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.Orders;
-using FrEee.Extensions;
 using FrEee.Modding.Abilities;
 
 namespace FrEee.UI.WinForms.Forms;

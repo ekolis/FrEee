@@ -56,7 +56,7 @@ public class AbilityTest
 		design.Hull.AddAbility("Combat Modifier - Empire", 8);
 
 		// make the testing a bit faster
-		Galaxy.Current.EnableAbilityCache();
+		Game.Current.EnableAbilityCache();
 
 		// make sure the ship picked them all up
 		// TODO - we need to define ability scopes since some abilities should apply only to a single empire and others to everyone (see issue #1015)

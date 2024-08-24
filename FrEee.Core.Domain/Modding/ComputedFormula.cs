@@ -5,9 +5,7 @@ using System.Linq;
 using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;
-using FrEee.Utility;
-using FrEee.Extensions;
-using FrEee.Serialization;
+using FrEee.Modding.Scripts;
 
 namespace FrEee.Modding;
 

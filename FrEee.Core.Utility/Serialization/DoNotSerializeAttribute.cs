@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FrEee.Utility;
-using FrEee.Serialization;
 
 namespace FrEee.Serialization
 {

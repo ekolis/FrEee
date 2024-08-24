@@ -1,4 +1,5 @@
 using FrEee.Extensions;
+using FrEee.Modding.Scripts;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

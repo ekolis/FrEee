@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Civilization.Orders;
 
@@ -68,7 +69,7 @@ public class MoveOrder : IMovementOrder
     [DoNotSerialize]
     public LogMessage PathfindingError { get; private set; }
 
-    private GalaxyReference<Empire> owner { get; set; }
+    private GameReference<Empire> owner { get; set; }
 
     public bool CheckCompletion(IOrderable v)
     {
@@ -102,9 +103,9 @@ public class MoveOrder : IMovementOrder
     {
         if (IsDisposed)
             return;
-        foreach (var v in Galaxy.Current.Referrables.OfType<IMobileSpaceObject>())
+        foreach (var v in Game.Current.Referrables.OfType<IMobileSpaceObject>())
             v.RemoveOrder(this);
-        Galaxy.Current.UnassignID(this);
+        Game.Current.UnassignID(this);
     }
 
     public void Execute(IOrderable ord)

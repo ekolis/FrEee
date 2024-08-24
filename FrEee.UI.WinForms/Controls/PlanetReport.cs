@@ -1,7 +1,6 @@
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Commands;
 using FrEee.Objects.Space;
-using FrEee.Objects.Technology;
 using FrEee.Utility;
 using FrEee.Extensions;
 using FrEee.UI.WinForms.Interfaces;
@@ -11,7 +10,8 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
+using FrEee.Modding.Templates;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.UI.WinForms.Controls;
 

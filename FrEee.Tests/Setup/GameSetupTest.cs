@@ -1,4 +1,5 @@
 ﻿using FrEee.Modding;
+using FrEee.Modding.Loaders;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Setup;
 using NUnit.Framework;
@@ -12,7 +13,7 @@ public class GameSetupTest
 	public void Quickstart()
 	{
 		var setup = GameSetup.Load(@"..\..\..\..\FrEee\GameSetups\quickstart.gsu");
-		Mod.Current = Mod.Load(null);
-		Galaxy.Initialize(setup, null);
+		Mod.Current = new ModLoader().Load(null);
+		Game.Initialize(setup, null);
 	}
 }

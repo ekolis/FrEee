@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.UI.WinForms.Controls;
 
@@ -179,7 +180,7 @@ public partial class StarSystemView : Control
 							sf.LineAlignment = StringAlignment.Far; // bottom align our name
 							var name = largest.Name;
 							Brush nameBrush;
-							if (largest.Timestamp < Galaxy.Current.Timestamp)
+							if (largest.Timestamp < Game.Current.Timestamp)
 								nameBrush = Brushes.Gray;
 							else
 								nameBrush = Brushes.White;

@@ -10,7 +10,6 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
 
 namespace FrEee.UI.WinForms;
 
@@ -171,9 +170,9 @@ public partial class GamePropertyGrid : UserControl, IBindable<object>
 			var pnl = MakeDropdownPanel(objs, obj, newModObjectHandler);
 			ctl = pnl;
 		}
-		else if (TypeMatch<GalaxyReference<IReferrable>>(objectType))
+		else if (TypeMatch<GameReference<IReferrable>>(objectType))
 		{
-			var objs = Galaxy.Current.Referrables.Where(r => objectType.GetGenericArguments()[0].IsAssignableFrom(r.GetType())).ToList();
+			var objs = Game.Current.Referrables.Where(r => objectType.GetGenericArguments()[0].IsAssignableFrom(r.GetType())).ToList();
 			objs.Insert(0, null);
 			var pnl = MakeDropdownPanel(objs, obj, newReferrableHandler);
 			ctl = pnl;
@@ -187,7 +186,7 @@ public partial class GamePropertyGrid : UserControl, IBindable<object>
 		}
 		else if (TypeMatch<IReferrable>(objectType))
 		{
-			var objs = Galaxy.Current.Referrables.Where(r => objectType.IsAssignableFrom(r.GetType())).ToList();
+			var objs = Game.Current.Referrables.Where(r => objectType.IsAssignableFrom(r.GetType())).ToList();
 			objs.Insert(0, null);
 			var pnl = MakeDropdownPanel(objs, obj, newReferrableHandler);
 			ctl = pnl;

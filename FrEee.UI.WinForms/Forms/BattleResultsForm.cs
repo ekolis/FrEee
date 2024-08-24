@@ -11,7 +11,6 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.Vehicles;
-using FrEee.Utility;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Combat.Grid;
 

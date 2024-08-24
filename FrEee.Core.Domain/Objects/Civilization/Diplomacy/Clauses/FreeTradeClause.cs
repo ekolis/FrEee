@@ -2,7 +2,6 @@
 using FrEee.Utility;
 using FrEee.Extensions;
 using System;
-using FrEee.Extensions;
 
 namespace FrEee.Objects.Civilization.Diplomacy.Clauses;
 

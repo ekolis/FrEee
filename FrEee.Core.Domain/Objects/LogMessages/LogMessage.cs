@@ -10,7 +10,7 @@ public abstract class LogMessage
 	protected LogMessage(string text, LogMessageType logMessageType)
 	{
 		Text = text;
-		TurnNumber = Galaxy.Current.TurnNumber;
+		TurnNumber = Game.Current.TurnNumber;
 		LogMessageType = logMessageType;
 	}
 

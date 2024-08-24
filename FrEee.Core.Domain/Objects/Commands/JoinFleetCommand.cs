@@ -39,13 +39,13 @@ public class JoinFleetCommand : Command<IMobileSpaceObject>
 				// HACK - why is the fleet beign disposed?!
 				value.IsDisposed = false;
 				value.ID = 0;
-				Galaxy.Current.AssignID(value);
+				Game.Current.AssignID(value);
 			}
 			fleet = value;
 		}
 	}
 
-	private GalaxyReference<Fleet> fleet { get; set; }
+	private GameReference<Fleet> fleet { get; set; }
 
 	public override void Execute()
 	{

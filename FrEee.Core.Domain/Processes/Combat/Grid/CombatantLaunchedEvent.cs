@@ -1,8 +1,6 @@
 ﻿using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;
-using FrEee.Utility;
-using FrEee.Processes.Combat;
 using FrEee.Objects.GameState;
 
 namespace FrEee.Processes.Combat.Grid;
@@ -15,7 +13,7 @@ public class CombatantLaunchedEvent : BattleEvent
         Launcher = launcher;
     }
 
-    private GalaxyReference<ICombatant> launcher { get; set; }
+    private GameReference<ICombatant> launcher { get; set; }
 
     [DoNotSerialize]
     public ICombatant Launcher

@@ -18,7 +18,7 @@ using FrEee.Objects.Vehicles;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
-using FrEee.Extensions;
+using FrEee.Modding.Templates;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -984,9 +984,9 @@ public partial class ConstructionQueueForm : GameForm
 	private void SaveCommands()
 	{
 		foreach (var cmd in newCommands)
-			Galaxy.Current.CurrentEmpire.Commands.Add(cmd);
+			Game.Current.CurrentEmpire.Commands.Add(cmd);
 		foreach (var cmd in removedCommands)
-			Galaxy.Current.CurrentEmpire.Commands.Remove(cmd);
+			Game.Current.CurrentEmpire.Commands.Remove(cmd);
 	}
 
 	private void btnHelp_Click(object sender, EventArgs e)

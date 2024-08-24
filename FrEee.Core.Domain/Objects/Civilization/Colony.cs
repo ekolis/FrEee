@@ -10,9 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
 using FrEee.Modding.Abilities;
+using FrEee.Modding.Templates;
 
 namespace FrEee.Objects.Civilization;
 
@@ -215,7 +214,7 @@ public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>, II
 		if (Container != null)
 			Container.Colony = null;
 		ConstructionQueue.SafeDispose();
-		Galaxy.Current.UnassignID(this);
+		Game.Current.UnassignID(this);
 		if (!IsMemory)
 			this.UpdateEmpireMemories();
 		IsDisposed = true;
@@ -223,7 +222,7 @@ public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>, II
 
 	public bool IsObsoleteMemory(Empire emp)
 	{
-		return Container == null || Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+		return Container == null || Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Game.Current.Timestamp - 1;
 	}
 
 	public void Redact(Empire emp)

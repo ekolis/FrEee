@@ -1,14 +1,11 @@
-﻿using FrEee.Modding;
-using FrEee.Extensions;
+﻿using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FrEee.Utility;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
+using FrEee.Serialization;
 
-namespace FrEee.Serialization;
+namespace FrEee.Utility;
 
 /// <summary>
 /// A safe dictionary keyed with transparent references.

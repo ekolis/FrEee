@@ -11,7 +11,6 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -154,7 +153,7 @@ public partial class EmpireListForm : GameForm
 	private void BindEmpires()
 	{
 		lstEmpires.Initialize(128, 128);
-		foreach (var emp in Galaxy.Current.Empires.ExceptSingle((Empire)null))
+		foreach (var emp in Game.Current.Empires.ExceptSingle((Empire)null))
 		{
 			var item = lstEmpires.AddItemWithImage(null, emp.Name, emp, emp.Portrait);
 			if (emp == Empire.Current)

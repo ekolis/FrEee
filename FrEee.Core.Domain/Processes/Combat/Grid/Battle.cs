@@ -14,6 +14,7 @@ using System.Linq;
 using static System.Math;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Processes.Combat.Grid;
 
@@ -29,7 +30,7 @@ public abstract class Battle : IBattle, IDisposable
     {
         Log = new List<LogMessage>();
 
-        double stardate = Galaxy.Current.Timestamp;
+        double stardate = Game.Current.Timestamp;
         Timestamp = stardate;
     }
 
@@ -673,7 +674,7 @@ public abstract class Battle : IBattle, IDisposable
                 if (w.Template.ComponentTemplate.WeaponType == WeaponTypes.Seeking || w.Template.ComponentTemplate.WeaponType == WeaponTypes.SeekingPointDefense)
                 {
                     var seeker = new Seeker(Sector, c.Owner, c, w, target);
-                    Galaxy.Current.AssignID(seeker);
+                    Game.Current.AssignID(seeker);
                     Combatants.Add(seeker);
                     StartCombatants[seeker.ID] = seeker.Copy();
                     locations[seeker] = new Vector2<int>(locations[c]);

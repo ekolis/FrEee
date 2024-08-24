@@ -1,6 +1,8 @@
 ﻿using System.Drawing;
 using FrEee.Extensions;
 using FrEee.Modding;
+using FrEee.Modding.Abilities;
+using FrEee.Modding.Loaders;
 using FrEee.Modding.Templates;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
@@ -26,8 +28,8 @@ public class ResupplyTest
 	public static void ClassInit()
 	{
 		// initialize galaxy
-		new Galaxy();
-		Mod.Load(null);
+		new Game();
+		new ModLoader().Load(null);
 		sys = new StarSystem(0);
 		Galaxy.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(sys, new Point()));
 

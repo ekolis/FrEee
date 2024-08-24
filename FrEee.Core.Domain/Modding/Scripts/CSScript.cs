@@ -1,20 +1,18 @@
-﻿using FrEee.Modding.Scripts;
-using FrEee.Utility;
+﻿using FrEee.Utility;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 using System;
 using System.Collections.Immutable;
 using System.IO;
-using FrEee.Utility;
 
-namespace FrEee.Modding;
+namespace FrEee.Modding.Scripts;
 
 [Serializable]
 public class CSScript : IScript
-	{
-		public string ModuleName { get; set; }
-		public string Text { get; set; }
+{
+	public string ModuleName { get; set; }
+	public string Text { get; set; }
 
 	/// <summary>
 	/// The directory that this script is found in. 
@@ -43,20 +41,20 @@ public class CSScript : IScript
 		if (!File.Exists(pythonFilename))
 			return null;
 		var text = File.ReadAllText(pythonFilename);
-		
+
 		return new CSScript(moduleName, text, Path.GetDirectoryName(path));
 	}
 
 
 
-	 
+
 	/// <summary>
 	/// Creates a delegate from which the script can be repeatably called. 
 	/// </summary>
 	/// <typeparam name="TGlobalType">The type that will be passed into the script</typeparam>
 	/// <typeparam name="TReturn">What the script will return</typeparam>
 	/// <returns></returns>
-	public Microsoft.CodeAnalysis.Scripting.ScriptRunner<TReturn> CreateScriptObject<TGlobalType, TReturn>()
+	public ScriptRunner<TReturn> CreateScriptObject<TGlobalType, TReturn>()
 	{
 		//the imports here are a list of usings that the script will have access to by default. 
 		//The script can suggest additional usings and will work fine, as long as they are either system, or in CSScript.Assembly. 

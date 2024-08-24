@@ -9,10 +9,9 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
+using FrEee.Objects.Space;
 
-namespace FrEee.Modding;
+namespace FrEee.Modding.Scripts;
 
 /// <summary>
 /// IronPython scripting engine
@@ -41,7 +40,7 @@ public class PythonScriptEngine : MarshalByRefObject
 
 	private static IDictionary<PythonScript, CompiledCode> compiledScripts = new Dictionary<PythonScript, CompiledCode>();
 
-	private static Microsoft.Scripting.Hosting.ScriptEngine engine;
+	private static ScriptEngine engine;
 
 	private static IDictionary<string, IReferrable> lastReferrables = new SafeDictionary<string, IReferrable>();
 
@@ -60,8 +59,8 @@ public class PythonScriptEngine : MarshalByRefObject
 	{
 		var preCode = new List<string>();
 		preCode.Add("from FrEee.Modding import Mod;");
-		preCode.Add("if not galaxy is None:");
-		preCode.Add("\tMod.Current = galaxy.Mod;");
+		preCode.Add("if not game is None:");
+		preCode.Add("\tMod.Current = game.Mod;");
 		var arglist = new List<string>();
 		for (var i = 0; i < args.Length; i++)
 			arglist.Add("arg" + i);
@@ -175,7 +174,7 @@ public class PythonScriptEngine : MarshalByRefObject
 		var dict = new Dictionary<string, object>();
 		foreach (var varName in variableNames)
 			dict.Add(varName, engine.GetBuiltinModule().GetVariable(varName));
-			//dict.Add(varName, scope.GetVariable(varName));
+		//dict.Add(varName, scope.GetVariable(varName));
 		return dict;
 	}
 
@@ -199,7 +198,8 @@ public class PythonScriptEngine : MarshalByRefObject
 		preCommands.Add("import FrEee.Utility");
 		preCommands.Add("clr.ImportExtensions(FrEee.Extensions)");
 		preCommands.Add("from FrEee.Modding import Mod");
-		preCommands.Add("from FrEee.Objects.GameState import Galaxy");
+		preCommands.Add("from FrEee.Objects.GameState import Game");
+		preCommands.Add("from FrEee.Objects.Space import Galaxy");
 		preCommands.Add("from FrEee.Objects.Civilization import Empire");
 		/*if (variables != null)
 			UpdateScope(variables);
@@ -211,7 +211,7 @@ public class PythonScriptEngine : MarshalByRefObject
 			string.Join("\n", postCommands.ToArray());
 		var external = new List<PythonScript>(script.ExternalScripts);
 		//if (Mod.Current != null)
-			//external.Add(Mod.Current.GlobalScript);
+		//external.Add(Mod.Current.GlobalScript);
 		var sc = new ScriptCode("runner", code, external.ToArray());
 		var runner = GetCodeScript(sc);
 		var compiledScript = GetCompiledScript(runner);
@@ -282,7 +282,8 @@ public class PythonScriptEngine : MarshalByRefObject
 		preCommands.Add("import FrEee.Utility");
 		preCommands.Add("clr.ImportExtensions(FrEee.Extensions)");
 		preCommands.Add("from FrEee.Modding import Mod");
-		preCommands.Add("from FrEee.Objects.GameState import Galaxy");
+		preCommands.Add("from FrEee.Objects.GameState import Game");
+		preCommands.Add("from FrEee.Objects.Space import Galaxy");
 		preCommands.Add("from FrEee.Objects.Civilization import Empire");
 		var code =
 			string.Join("\n", preCommands.ToArray()) + "\n" +
@@ -351,6 +352,7 @@ public class PythonScriptEngine : MarshalByRefObject
 	/// <returns></returns>
 	public static void UpdateScope(IDictionary<string, object> variables)
 	{
+		scope.SetVariable("game", Game.Current);
 		scope.SetVariable("galaxy", Galaxy.Current);
 
 		if (variables != null)
@@ -416,7 +418,7 @@ public class PythonScriptEngine : MarshalByRefObject
 		public override bool Equals(object? obj)
 		{
 			if (obj is CompiledCodeWithVariables c)
-				return this.Equals(c);
+				return Equals(c);
 			return false;
 		}
 

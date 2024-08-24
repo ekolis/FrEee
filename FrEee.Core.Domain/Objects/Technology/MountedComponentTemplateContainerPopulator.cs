@@ -2,7 +2,6 @@ using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Vehicles;
 using FrEee.Utility;
-using FrEee.Utility;
 namespace FrEee.Objects.Technology;
 
 /// <summary>
@@ -15,7 +14,7 @@ public class MountedComponentTemplateContainerPopulator
 	{
 		if (context is MountedComponentTemplate mct)
 		{
-			return Galaxy.Current.Referrables.OfType<IDesign>().SingleOrDefault(q => q.Components.Contains(mct));
+			return Game.Current.Referrables.OfType<IDesign>().SingleOrDefault(q => q.Components.Contains(mct));
 		}
 		else
 		{

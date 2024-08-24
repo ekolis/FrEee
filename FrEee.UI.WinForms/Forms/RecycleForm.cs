@@ -14,7 +14,6 @@ using System.Windows.Forms;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Orders.RecycleBehaviors;
-using FrEee.Extensions;
 
 namespace FrEee.UI.WinForms.Forms;
 

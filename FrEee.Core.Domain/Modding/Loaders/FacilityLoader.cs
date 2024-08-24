@@ -1,3 +1,4 @@
+using FrEee.Modding.Templates;
 using FrEee.Objects.Technology;
 using FrEee.Utility;
 using System;

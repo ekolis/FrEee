@@ -10,7 +10,6 @@ using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;
 using FrEee.Objects.GameState;
-using FrEee.Utility;
 using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Space;
@@ -257,7 +256,7 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 			return;
 		if (IsDisposed)
 			return;
-		Galaxy.Current.UnassignID(this);
+		Game.Current.UnassignID(this);
 		if (!IsMemory)
 			this.UpdateEmpireMemories();
 	}
@@ -331,7 +330,7 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 
 	public bool IsObsoleteMemory(Empire emp)
 	{
-		return CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+		return CheckVisibility(emp) >= Visibility.Visible && Timestamp < Game.Current.Timestamp - 1;
 	}
 
 	public Sector PickRandomSector(PRNG prng = null)

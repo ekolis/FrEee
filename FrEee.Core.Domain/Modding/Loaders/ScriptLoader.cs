@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using FrEee.Modding.Scripts;
 
 namespace FrEee.Modding.Loaders;
 

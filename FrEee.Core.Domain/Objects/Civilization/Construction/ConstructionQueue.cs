@@ -12,7 +12,8 @@ using System.Linq;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
-using FrEee.Serialization;
+using FrEee.Modding.Templates;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Civilization.Construction;
 
@@ -343,7 +344,7 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
             return;
         if (!IsMemory && Mod.Current != null)
             this.UpdateEmpireMemories();
-        Galaxy.Current.UnassignID(this);
+        Game.Current.UnassignID(this);
         Orders.Clear();
         IsDisposed = true;
     }
@@ -456,7 +457,7 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 
     public bool IsObsoleteMemory(Empire emp)
     {
-        return Container == null || Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+        return Container == null || Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Game.Current.Timestamp - 1;
     }
 
     public void RearrangeOrder(IOrder order, int delta)

@@ -29,7 +29,7 @@ public class PeaceVictoryCondition : IVictoryCondition
 	{
 		if (emp.IsDefeated)
 			return 0;
-		return (double)Galaxy.Current.TurnsOfPeace / (double)Turns;
+		return (double)Game.Current.TurnsOfPeace / (double)Turns;
 	}
 
 	public string GetVictoryMessage(Empire emp)

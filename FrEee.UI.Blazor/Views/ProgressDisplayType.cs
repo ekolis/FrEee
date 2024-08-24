@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FrEee.UI.Blazor.Views;
+﻿namespace FrEee.UI.Blazor.Views;
 
 // TODO: put this in a FrEee.UI project?
 [Flags]

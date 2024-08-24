@@ -90,7 +90,7 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
             if (value is IModObject mo)
                 template = GetModReference<TTemplate>(mo.ReferViaMod().ID);
             else if (value is IReferrable r)
-                template = new GalaxyReference<TTemplate>(r.ReferViaGalaxy().ID);
+                template = new GameReference<TTemplate>(r.ReferViaGalaxy().ID);
             else if (value == null)
                 template = null;
             else
@@ -116,7 +116,7 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
         set;
     }
 
-    private GalaxyReference<Empire> owner { get; set; }
+    private GameReference<Empire> owner { get; set; }
     private IReference<TTemplate> template { get; set; }
 
     public bool CheckCompletion(IOrderable q)
@@ -142,9 +142,9 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
     {
         if (IsDisposed)
             return;
-        foreach (var q in Galaxy.Current.Referrables.OfType<ConstructionQueue>())
+        foreach (var q in Game.Current.Referrables.OfType<ConstructionQueue>())
             q.Orders.Remove(this);
-        Galaxy.Current.UnassignID(this);
+        Game.Current.UnassignID(this);
     }
 
     /// <summary>

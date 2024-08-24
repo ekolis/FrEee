@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FrEee.Extensions;
-using FrEee.Properties;
 using FrEee.Utility;
-using Microsoft.AspNetCore.Components;
-using FrEee.Extensions;
 
 namespace FrEee.UI.Blazor.Views
 {

@@ -56,7 +56,7 @@ public abstract class Waypoint : ILocated, IFoggable, IOwnable, INamed, IPromota
 	[DoNotSerialize]
 	internal int AlteredQueuesOnDelete { get; private set; }
 
-	private GalaxyReference<Empire> owner { get; set; }
+	private GameReference<Empire> owner { get; set; }
 
 	/// <summary>
 	/// Only the waypoint's owner can see it.
@@ -104,7 +104,7 @@ public abstract class Waypoint : ILocated, IFoggable, IOwnable, INamed, IPromota
 				AlteredQueuesOnDelete++;
 		}
 		IsDisposed = true;
-		Galaxy.Current.UnassignID(this);
+		Game.Current.UnassignID(this);
 	}
 
 	public bool IsObsoleteMemory(Empire emp)

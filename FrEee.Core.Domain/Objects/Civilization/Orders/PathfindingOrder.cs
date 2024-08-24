@@ -6,7 +6,6 @@ using FrEee.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
 
 namespace FrEee.Objects.Civilization.Orders;
 
@@ -104,8 +103,8 @@ public abstract class PathfindingOrder
     /// </summary>
     public abstract string Verb { get; }
 
-    private GalaxyReference<Empire> owner { get; set; }
-    private GalaxyReference<ISpaceObject> target { get; set; }
+    private GameReference<Empire> owner { get; set; }
+    private GameReference<ISpaceObject> target { get; set; }
 
     public bool CheckCompletion(IOrderable v)
     {
@@ -135,7 +134,7 @@ public abstract class PathfindingOrder
             return;
         foreach (var v in Galaxy.Current.FindSpaceObjects<IMobileSpaceObject>())
             v.RemoveOrder(this);
-        Galaxy.Current.UnassignID(this);
+        Game.Current.UnassignID(this);
     }
 
     public void Execute(IOrderable ord)

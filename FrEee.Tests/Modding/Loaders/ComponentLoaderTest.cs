@@ -11,7 +11,7 @@ public class ComponentLoaderTest
 	[OneTimeSetUp]
 	public static void ClassInit()
 	{
-		Mod.Load("ComponentLoaderTest");
+		new ModLoader().Load("ComponentLoaderTest");
 	}
 
 	/// <summary>

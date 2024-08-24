@@ -4,7 +4,7 @@ using FrEee.Extensions;
 using FrEee.UI.WinForms.Interfaces;
 using System.Drawing;
 using System.Windows.Forms;
-using FrEee.Extensions;
+using FrEee.Modding.Abilities;
 
 namespace FrEee.UI.WinForms.Controls;
 

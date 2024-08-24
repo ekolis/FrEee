@@ -30,7 +30,7 @@ public class EmpireStatus
 			if (!IsPlayerEmpire)
 				return PlrUploadStatus.AI;
 			// TODO - check for PLR files in same folder as GAM?
-			if (File.Exists(Galaxy.Current.GetEmpireCommandsSavePath(Empire)))
+			if (File.Exists(Game.Current.GetEmpireCommandsSavePath(Empire)))
 				return PlrUploadStatus.Uploaded;
 			return PlrUploadStatus.NotUploaded;
 		}

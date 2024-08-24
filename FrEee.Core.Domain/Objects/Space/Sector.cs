@@ -10,8 +10,6 @@ using System.Text.RegularExpressions;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
 using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Space;
@@ -177,7 +175,7 @@ public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnab
 	[DoNotSerialize]
 	public StarSystem StarSystem { get { return starSystem; } set { starSystem = value; } }
 
-	private GalaxyReference<StarSystem> starSystem { get; set; }
+	private GameReference<StarSystem> starSystem { get; set; }
 
 	public static bool operator !=(Sector s1, Sector s2)
 	{

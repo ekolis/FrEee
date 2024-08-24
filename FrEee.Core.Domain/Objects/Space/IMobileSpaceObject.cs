@@ -1,6 +1,5 @@
 ﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
-using FrEee.Objects.Space;
 using FrEee.Processes.Combat;
 using FrEee.Utility;
 using System.Collections.Generic;

@@ -9,8 +9,8 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
+using FrEee.Modding.Abilities;
+using FrEee.Modding.Scripts;
 
 namespace FrEee.Objects.Events;
 
@@ -22,7 +22,7 @@ public class Event : IPictorial
 	public Event(EventTemplate t)
 	{
 		Template = t;
-		TurnNumber = Galaxy.Current.TurnNumber + Template.TimeTillCompletion.Value;
+		TurnNumber = Game.Current.TurnNumber + Template.TimeTillCompletion.Value;
 		Dice = new PRNG(GetHashCode());
 	}
 
@@ -34,7 +34,7 @@ public class Event : IPictorial
 		get
 		{
 			// TODO - affected empires only
-			return Galaxy.Current.Empires;
+			return Game.Current.Empires;
 		}
 	}
 

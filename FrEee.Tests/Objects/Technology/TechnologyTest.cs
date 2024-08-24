@@ -1,5 +1,6 @@
 using FrEee.Extensions;
 using FrEee.Modding;
+using FrEee.Modding.Loaders;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Commands;
 using FrEee.Objects.GameState;
@@ -20,7 +21,7 @@ public class TechnologyTest
 	[OneTimeSetUp]
 	public static void ClassInit()
 	{
-		Mod.Load(null);
+		new ModLoader().Load(null);
 	}
 
 	/// <summary>
@@ -30,7 +31,7 @@ public class TechnologyTest
 	public void PercentageResearch()
 	{
 		var mod = Mod.Current;
-		var gal = Galaxy.Current;
+		var gal = Game.Current;
 
 		var tech = mod.Technologies.FindByName("Ice Planet Colonization");
 		tech.LevelCost = 500000; // in case the mod changes
@@ -63,7 +64,7 @@ public class TechnologyTest
 	{
 		// for convenience
 		var mod = Mod.Current;
-		var gal = Galaxy.Current;
+		var gal = Game.Current;
 
 		// set up techs
 		var t1 = mod.Technologies.FindByName("Planetary Weapons");
@@ -117,9 +118,9 @@ public class TechnologyTest
 	[SetUp]
 	public void TestInit()
 	{
-		new Galaxy();
-		Galaxy.Current.GameSetup.TechnologyCost = TechnologyCost.Low;
+		new Game();
+		Game.Current.Setup.TechnologyCost = TechnologyCost.Low;
 		emp = new Empire();
-		Galaxy.Current.Empires.Add(emp);
+		Game.Current.Empires.Add(emp);
 	}
 }

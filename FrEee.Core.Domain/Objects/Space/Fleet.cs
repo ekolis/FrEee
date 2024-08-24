@@ -14,9 +14,6 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
-using FrEee.Serialization;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 
@@ -29,9 +26,9 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 {
 	public Fleet()
 	{
-		Vehicles = new GalaxyReferenceSet<IMobileSpaceObject>();
+		Vehicles = new GameReferenceSet<IMobileSpaceObject>();
 		Orders = new List<IOrder>();
-		Timestamp = Galaxy.Current?.Timestamp ?? 0;
+		Timestamp = Game.Current?.Timestamp ?? 0;
 	}
 
 	public AbilityTargets AbilityTarget
@@ -564,9 +561,9 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 			int spent = 0;
 
 			// sharing supplies should not affect abilities
-			bool wasCacheDisabled = !Galaxy.Current.IsAbilityCacheEnabled;
+			bool wasCacheDisabled = !Game.Current.IsAbilityCacheEnabled;
 			if (wasCacheDisabled)
-				Galaxy.Current.EnableAbilityCache();
+				Game.Current.EnableAbilityCache();
 
 			foreach (var sobj in Vehicles)
 			{
@@ -591,7 +588,7 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 			}
 
 			if (wasCacheDisabled)
-				Galaxy.Current.DisableAbilityCache();
+				Game.Current.DisableAbilityCache();
 		}
 	}
 
@@ -623,7 +620,7 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 	/// The space objects in the fleet.
 	/// Fleets may contain other fleets, but may not contain themselves.
 	/// </summary>
-	public GalaxyReferenceSet<IMobileSpaceObject> Vehicles { get; private set; }
+	public GameReferenceSet<IMobileSpaceObject> Vehicles { get; private set; }
 
 	public IEnumerable<Component> Weapons
 	{
@@ -703,7 +700,7 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 		foreach (var v in Vehicles.ExceptSingle(null))
 			v.Container = null;
 		Vehicles.Clear();
-		Galaxy.Current.UnassignID(this);
+		Game.Current.UnassignID(this);
 		Sector = null;
 		Orders.Clear();
 		if (!IsMemory)
@@ -725,8 +722,8 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 	public bool IsObsoleteMemory(Empire emp)
 	{
 		if (StarSystem == null)
-			return Timestamp < Galaxy.Current.Timestamp - 1;
-		return StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+			return Timestamp < Game.Current.Timestamp - 1;
+		return StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Game.Current.Timestamp - 1;
 	}
 
 	public void RearrangeOrder(IOrder order, int delta)

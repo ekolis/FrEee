@@ -2,6 +2,7 @@
 using System.Linq;
 using FrEee.Extensions;
 using FrEee.Modding;
+using FrEee.Modding.Loaders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Vehicles;
 using NUnit.Framework;
@@ -21,12 +22,12 @@ public class DamageTypesTest
     public static void ClassInit()
     {
         // load stock mod
-        mod = Mod.Load(null);
+        mod = new ModLoader().Load(null);
 
         // create a galaxy for referencing things
-        new Galaxy();
+        new Game();
         foreach (var r in mod.Objects.OfType<IReferrable>())
-            Galaxy.Current.AssignID(r);
+            Game.Current.AssignID(r);
     }
 
     [SetUp]

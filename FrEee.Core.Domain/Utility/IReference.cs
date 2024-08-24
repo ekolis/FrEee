@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using FrEee.Objects.GameState;
 
-namespace FrEee.Serialization;
+namespace FrEee.Utility;
 
 /// <summary>
 /// A lightweight reference to some object in some context (e.g. the current mod or galaxy).
@@ -12,8 +12,8 @@ namespace FrEee.Serialization;
 /// <typeparam name="TValue"></typeparam>
 public interface IReference<out TValue> : IPromotable
 {
-    bool HasValue { get; }
-    TValue Value { get; }
+	bool HasValue { get; }
+	TValue Value { get; }
 }
 
 /// <summary>
@@ -24,19 +24,19 @@ public interface IReference<out TValue> : IPromotable
 /// <typeparam name="TValue"></typeparam>
 public interface IReference<out TID, out TValue> : IReference<TValue>
 {
-    TID ID { get; }
+	TID ID { get; }
 }
 
 [Serializable]
 public class ReferenceException<TID, TValue> : Exception, ISerializable
 {
-    public ReferenceException(string message, TID id = default)
-        : base(message)
-    {
-        ID = id;
-    }
+	public ReferenceException(string message, TID id = default)
+		: base(message)
+	{
+		ID = id;
+	}
 
-    public TID ID { get; private set; }
+	public TID ID { get; private set; }
 
-    public Type Type { get { return typeof(TValue); } }
+	public Type Type { get { return typeof(TValue); } }
 }

@@ -11,11 +11,9 @@ using System.Linq;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Serialization;
-using FrEee.Utility;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
+using FrEee.Modding.Templates;
 
 namespace FrEee.Objects.Technology;
 

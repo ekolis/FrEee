@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using FrEee.Objects.GameState;
-using FrEee.Utility;
+using FrEee.Modding.Scripts;
 
 namespace FrEee.Modding.Loaders;
 
@@ -72,7 +72,7 @@ public class EmpireAILoader : ILoader
 							}
 						}
 					}
-					var ai = new PythonAI<Empire, Galaxy>(Path.GetFileName(empFolder), script, ministers);
+					var ai = new PythonAI<Empire, Game>(Path.GetFileName(empFolder), script, ministers);
 					mod.EmpireAIs.Add(ai);
 					yield return ai;
 				}

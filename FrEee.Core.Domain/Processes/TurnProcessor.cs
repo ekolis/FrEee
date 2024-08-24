@@ -16,10 +16,9 @@ using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
 using FrEee.Processes.Combat;
-using FrEee.Processes.Combat.Grid;
+using FrEee.Modding.Abilities;
+using FrEee.Modding.Scripts;
 
 namespace FrEee.Processes;
 
@@ -35,7 +34,7 @@ public class TurnProcessor
 	/// <returns>Player empires which did not submit commands and are not defeated.</returns>
 	/// <exception cref="InvalidOperationException">if the Galaxy empire is not null, or this galaxy is not the Galaxy galaxy.</exception>
 	// TODO - make non-static so we don't have to say Galaxy. everywhere
-	public IEnumerable<Empire> ProcessTurn(Galaxy galaxy, bool safeMode, Status status = null, double desiredProgress = 1d)
+	public IEnumerable<Empire> ProcessTurn(Game game, bool safeMode, Status status = null, double desiredProgress = 1d)
 	{
 		//galaxy.SpaceObjectIDCheck("at start of turn");
 
@@ -48,12 +47,12 @@ public class TurnProcessor
 		if (status == null)
 			progressPerOperation = 0d;
 		else // TODO - make a list of operation lambdas and run through them so we don't have to keep count manually & the code is cleaner
-			progressPerOperation = (desiredProgress - status.Progress) / (11 + galaxy.Empires.Count);
+			progressPerOperation = (desiredProgress - status.Progress) / (11 + game.Empires.Count);
 
 		if (status != null)
 			status.Message = "Initializing turn";
 
-		foreach (var e in galaxy.Empires)
+		foreach (var e in game.Empires)
 		{
 			foreach (var m in e.Log.ToArray())
 			{
@@ -61,10 +60,10 @@ public class TurnProcessor
 				{
 					// purge old battle to save space in the savegame
 					var b = bm.Context;
-					if (b.Timestamp < galaxy.Timestamp)
+					if (b.Timestamp < game.Timestamp)
 						b.Dispose();
 				}
-				if (m.TurnNumber < galaxy.TurnNumber - 10)
+				if (m.TurnNumber < game.TurnNumber - 10)
 				{
 					// purge *really* old empire logs too
 					e.Log.Remove(m);
@@ -73,11 +72,11 @@ public class TurnProcessor
 		}
 
 		// old seekers are from old battles
-		foreach (var r in galaxy.Referrables.OfType<Seeker>().ToArray())
+		foreach (var r in game.Referrables.OfType<Seeker>().ToArray())
 			r.Dispose();
 
 		// reset anger deltas for new turn
-		foreach (var p in galaxy.FindSpaceObjects<Planet>().Where(p => p.Colony != null))
+		foreach (var p in game.Galaxy.FindSpaceObjects<Planet>().Where(p => p.Colony != null))
 		{
 			var c = p.Colony;
 			c.AngerDeltas.Clear();
@@ -89,49 +88,49 @@ public class TurnProcessor
 			status.Message = "Triggering events";
 		}
 
-		var dice = new PRNG(HashCodeMasher.Mash(galaxy.Empires.Where(e => !e.IsDefeated)) + galaxy.TurnNumber);
-		if (RandomHelper.PerMilleChance(galaxy.EventFrequency * galaxy.Empires.Where(e => !e.IsDefeated).Count(), dice))
+		var dice = new PRNG(HashCodeMasher.Mash(game.Empires.Where(e => !e.IsDefeated)) + game.TurnNumber);
+		if (RandomHelper.PerMilleChance(game.EventFrequency * game.Empires.Where(e => !e.IsDefeated).Count(), dice))
 		{
 			// trigger a new event
-			var templates = Mod.Current.EventTemplates.Where(t => t.Severity <= galaxy.GameSetup.MaximumEventSeverity);
+			var templates = Mod.Current.EventTemplates.Where(t => t.Severity <= game.Setup.MaximumEventSeverity);
 			if (templates.Any())
 			{
 				var template = templates.PickRandom(dice);
 				var evt = template.Instantiate();
-				galaxy.PendingEvents.Add(evt);
+				game.PendingEvents.Add(evt);
 				evt.Warn();
 			}
 		}
 
 		// take care of pending events
-		foreach (var evt in galaxy.PendingEvents.ToArray())
+		foreach (var evt in game.PendingEvents.ToArray())
 		{
-			if (evt.TurnNumber == galaxy.TurnNumber)
+			if (evt.TurnNumber == game.TurnNumber)
 			{
 				if (evt.Target != null)
 					evt.Execute();
-				galaxy.PendingEvents.Remove(evt);
+				game.PendingEvents.Remove(evt);
 			}
 		}
 
 		// We can enable the ability cache here because space objects aren't changing state yet in any way where order of operations is relevant.
 		// For instance, all construction is supposed to take place simultaneously, so there's no reason to allow one construction order to affect other objects' abilities.
 		// Plus this speeds up turn processing immensely!
-		galaxy.EnableAbilityCache();
+		game.EnableAbilityCache();
 
 		// clear treaty clause cache (empires might have added treaties)
-		galaxy.GivenTreatyClauseCache.Clear();
-		galaxy.ReceivedTreatyClauseCache.Clear();
+		game.GivenTreatyClauseCache.Clear();
+		game.ReceivedTreatyClauseCache.Clear();
 
 		// delete any floating space objects that are unused
 		//galaxy.SpaceObjectCleanup();
 
 		//Battle.Previous.Clear();
-		galaxy.Battles.Clear();
+		game.Battles.Clear();
 		PythonScriptEngine.ClearScope(); // no caching galaxy between turns!
 
-		galaxy.GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
-		galaxy.ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
+		game.GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
+		game.ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
 
 		if (status != null)
 			status.Progress += progressPerOperation;
@@ -139,7 +138,7 @@ public class TurnProcessor
 		// load commands
 		if (status != null)
 			status.Message = "Loading player commands";
-		var missingPlrs = galaxy.LoadCommands();
+		var missingPlrs = game.LoadCommands();
 		if (safeMode && missingPlrs.Any())
 			return missingPlrs;
 		if (status != null)
@@ -148,45 +147,45 @@ public class TurnProcessor
 		// AI/minister commands
 		if (status != null)
 			status.Message = "Playing AI turns";
-		if (galaxy.Empires.Any(e => e.AI != null && (e.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)))
+		if (game.Empires.Any(e => e.AI != null && (e.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)))
 		{
 			// TODO - use existing player gam file if it exists instead of recreating it in memory
-			var serializedgalaxy = galaxy.SaveToString();
+			var serializedgalaxy = game.SaveToString();
 			var cmds = new Dictionary<int, IList<ICommand>>();
 			var notes = new Dictionary<int, DynamicDictionary>();
-			foreach (var i in galaxy.Empires.Where(e => e.AI != null && (e.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)).Select(e => galaxy.Empires.IndexOf(e)).ToArray())
+			foreach (var i in game.Empires.Where(e => e.AI != null && (e.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)).Select(e => game.Empires.IndexOf(e)).ToArray())
 			{
 				try
 				{
-					Galaxy.LoadFromString(serializedgalaxy);
-					galaxy = Galaxy.Current;
-					galaxy.CurrentEmpire = galaxy.Empires[i];
-					galaxy.Redact();
-					galaxy.CurrentEmpire.AI.Act(galaxy.CurrentEmpire, galaxy, galaxy.CurrentEmpire.EnabledMinisters);
+					Game.LoadFromString(serializedgalaxy);
+					game = Game.Current;
+					game.CurrentEmpire = game.Empires[i];
+					game.Redact();
+					game.CurrentEmpire.AI.Act(game.CurrentEmpire, game, game.CurrentEmpire.EnabledMinisters);
 
 				}
 				catch (Exception e)
 				{
 					//log the error in the ai and move on. 
 					//TODO: add in some indication the AI failed. 
-					galaxy.CurrentEmpire.Log.Add(new GenericLogMessage($"AI Error when processing:{e.Message}", LogMessageType.Error));
+					game.CurrentEmpire.Log.Add(new GenericLogMessage($"AI Error when processing:{e.Message}", LogMessageType.Error));
 					e.Log();
 				}
 				finally
 				{
 					//these always need to happen, otherwise the code below will throw an exception as it looks for the missing commands. 
-					cmds.Add(i, galaxy.CurrentEmpire.Commands);
-					notes.Add(i, galaxy.CurrentEmpire.AINotes);
+					cmds.Add(i, game.CurrentEmpire.Commands);
+					notes.Add(i, game.CurrentEmpire.AINotes);
 				}
 			}
-			Galaxy.LoadFromString(serializedgalaxy);
-			galaxy = Galaxy.Current;
-			foreach (var i in galaxy.Empires.Where(e => e.AI != null && (e.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)).Select(e => galaxy.Empires.IndexOf(e)).ToArray())
+			Game.LoadFromString(serializedgalaxy);
+			game = Game.Current;
+			foreach (var i in game.Empires.Where(e => e.AI != null && (e.EnabledMinisters?.SelectMany(kvp => kvp.Value)?.Any() ?? false)).Select(e => game.Empires.IndexOf(e)).ToArray())
 			{
 				try
 				{
-					galaxy.LoadCommands(galaxy.Empires[i], cmds[i]);
-					galaxy.Empires[i].AINotes = notes[i];
+					game.LoadCommands(game.Empires[i], cmds[i]);
+					game.Empires[i].AINotes = notes[i];
 				}
 				catch (Exception e)
 				{
@@ -202,7 +201,7 @@ public class TurnProcessor
 		//galaxy.SpaceObjectIDCheck("after loading commands");
 
 		// advance turn number
-		galaxy.TurnNumber++;
+		game.TurnNumber++;
 
 		//galaxy.SpaceObjectIDCheck("after colony maintenance");
 
@@ -211,12 +210,12 @@ public class TurnProcessor
 			status.Message = "Generating resources";
 
 		// resource generation 1: colony income
-		galaxy.FindSpaceObjects<Planet>().Where(x => !x.IsMemory).Select(p => p.Colony).ExceptSingle(null).SafeForeach(q => ProcessColonyIncome(galaxy, q));
+		game.Galaxy.FindSpaceObjects<Planet>().Where(x => !x.IsMemory).Select(p => p.Colony).ExceptSingle(null).SafeForeach(q => ProcessColonyIncome(game, q));
 
 		// resource generation 2: remote mining
 		// TODO - multithread remote mining once I can figure out where adjustedValue should go
 		var adjustedValue = new SafeDictionary<IMineableSpaceObject, ResourceQuantity>(true);
-		foreach (var emp in galaxy.Empires)
+		foreach (var emp in game.Empires)
 		{
 			foreach (var kvp in emp.RemoteMiners)
 			{
@@ -241,7 +240,7 @@ public class TurnProcessor
 					if (amount > 0 && adjustedValue[mined][r] == 0)
 					{
 						// resource was mined here, but hasn't been adjusted yet
-						adjustedValue[mined][r] = galaxy.GameSetup.RemoteMiningModel.GetDecay(kvp.Value[r], mined.ResourceValue[r]);
+						adjustedValue[mined][r] = game.Setup.RemoteMiningModel.GetDecay(kvp.Value[r], mined.ResourceValue[r]);
 						mined.ResourceValue[r] -= adjustedValue[mined][r];
 					}
 				}
@@ -252,7 +251,7 @@ public class TurnProcessor
 		}
 
 		// resource generation 3: raw resource generation
-		foreach (var emp in galaxy.Empires)
+		foreach (var emp in game.Empires)
 			emp.StoredResources += emp.RawResourceIncome;
 
 		if (status != null)
@@ -262,10 +261,10 @@ public class TurnProcessor
 
 		// empire stuff
 		// TODO - multithread this, we'll need to get rid of the (1 of 4) or whatever after "Maintaining empires" :(
-		foreach (var emp in galaxy.Empires)
+		foreach (var emp in game.Empires)
 		{
 			if (status != null)
-				status.Message = "Maintaining empires (" + (galaxy.Empires.IndexOf(emp) + 1) + " of " + galaxy.Empires.Count + ")";
+				status.Message = "Maintaining empires (" + (game.Empires.IndexOf(emp) + 1) + " of " + game.Empires.Count + ")";
 
 			// pay maintenance on on ships/bases
 			// TODO - allow mod to specify maintenance on units/facilities too?
@@ -365,7 +364,7 @@ public class TurnProcessor
 		}
 
 		// validate fleets and share supplies
-		foreach (var f in galaxy.FindSpaceObjects<Fleet>().ToArray())
+		foreach (var f in game.Galaxy.FindSpaceObjects<Fleet>().ToArray())
 		{
 			f.Validate();
 			f.ShareSupplies();
@@ -374,7 +373,7 @@ public class TurnProcessor
 		// construction queues
 		if (status != null)
 			status.Message = "Constructing objects";
-		galaxy.Referrables.OfType<ConstructionQueue>().Where(q => !q.IsMemory && q.Container.Sector != null).SafeForeach(q => q.ExecuteOrders());
+		game.Referrables.OfType<ConstructionQueue>().Where(q => !q.IsMemory && q.Container.Sector != null).SafeForeach(q => q.ExecuteOrders());
 		if (status != null)
 			status.Progress += progressPerOperation;
 
@@ -383,7 +382,7 @@ public class TurnProcessor
 		// replenish shields
 		if (status != null)
 			status.Message = "Replenishing shields";
-		galaxy.FindSpaceObjects<ICombatSpaceObject>().SafeForeach(o => o.ReplenishShields());
+		game.Galaxy.FindSpaceObjects<ICombatSpaceObject>().SafeForeach(o => o.ReplenishShields());
 		if (status != null)
 			status.Progress += progressPerOperation;
 
@@ -393,35 +392,35 @@ public class TurnProcessor
 		if (status != null)
 			status.Message = "Moving ships";
 		var tick = 0d;
-		galaxy.FindSpaceObjects<IMobileSpaceObject>().SafeForeach(CommonExtensions.RefillMovement);
-		galaxy.DisableAbilityCache(); // ships moving about and fighting can affect abilities!
+		game.Galaxy.FindSpaceObjects<IMobileSpaceObject>().SafeForeach(CommonExtensions.RefillMovement);
+		game.DisableAbilityCache(); // ships moving about and fighting can affect abilities!
 		while (!didLastTick)
 		{
 			// can at least cache abilities for the duration of a tick
 			// seeing as actions within a tick are supposed to be simultaneous
 			// the order of execution is arbitrary
-			galaxy.EnableAbilityCache();
+			game.EnableAbilityCache();
 
-			galaxy.ComputeNextTickSize();
+			game.ComputeNextTickSize();
 
 			// Don't let ships in fleets move separate from their fleets!
-			galaxy.MoveShips();
-			tick += galaxy.NextTickSize;
+			game.MoveShips();
+			tick += game.NextTickSize;
 			if (tick >= 1d)
 			{
 				tick = 1d;
-				galaxy.NextTickSize = 0d;
-				galaxy.MoveShips();
+				game.NextTickSize = 0d;
+				game.MoveShips();
 				didLastTick = true;
 			}
-			foreach (var f in galaxy.Referrables.OfType<IFoggable>().Where(f => !f.IsMemory))
-				f.Timestamp = galaxy.Timestamp;
-			if (status != null && galaxy.NextTickSize != double.PositiveInfinity)
-				status.Progress += progressPerOperation * galaxy.NextTickSize;
+			foreach (var f in game.Referrables.OfType<IFoggable>().Where(f => !f.IsMemory))
+				f.Timestamp = game.Timestamp;
+			if (status != null && game.NextTickSize != double.PositiveInfinity)
+				status.Progress += progressPerOperation * game.NextTickSize;
 
 			//galaxy.SpaceObjectIDCheck("after ship movement at T=" + galaxy.Timestamp);
 
-			galaxy.DisableAbilityCache();
+			game.DisableAbilityCache();
 		}
 
 		if (status != null)
@@ -434,20 +433,20 @@ public class TurnProcessor
 			status.Message = "Resolving ground battles";
 
 		// resolve ground battles
-		foreach (var p in galaxy.FindSpaceObjects<Planet>(p => p.Cargo != null && p.Cargo.Units.Any(u => u.IsHostileTo(p.Owner) || p.IsHostileTo(u.Owner)))
+		foreach (var p in game.Galaxy.FindSpaceObjects<Planet>(p => p.Cargo != null && p.Cargo.Units.Any(u => u.IsHostileTo(p.Owner) || p.IsHostileTo(u.Owner)))
 		)
 		{
 			var battle = new GroundBattle(p);
 			battle.Resolve();
-			galaxy.Battles.Add(battle);
+			game.Battles.Add(battle);
 			foreach (var emp in battle.Empires)
 				emp.Log.Add(battle.CreateLogMessage(battle.NameFor(emp), LogMessageType.Battle));
 		}
 
-		galaxy.EnableAbilityCache();
+		game.EnableAbilityCache();
 
 		// validate fleets again (ships might have been destroyed, consumed supplies, etc...)
-		foreach (var f in galaxy.Referrables.OfType<Fleet>().ToArray())
+		foreach (var f in game.Referrables.OfType<Fleet>().ToArray())
 		{
 			f.Validate();
 			f.ShareSupplies();
@@ -458,10 +457,10 @@ public class TurnProcessor
 		// colony maintenance
 		if (status != null)
 			status.Message = "Maintaining colonies";
-		if (galaxy.TurnNumber.IsDivisibleBy(Mod.Current.Settings.ReproductionFrequency.DefaultTo(1)))
-			galaxy.FindSpaceObjects<Planet>(p => p.HasColony).SafeForeach(ProcessPopulationGrowth);
-		if (galaxy.TurnNumber.IsDivisibleBy(Mod.Current.Settings.ValueChangeFrequency.DefaultTo(1)))
-			galaxy.FindSpaceObjects<Planet>(p => p.HasColony).SafeForeach(q => ProcessResourceValueChange(galaxy, q));
+		if (game.TurnNumber.IsDivisibleBy(Mod.Current.Settings.ReproductionFrequency.DefaultTo(1)))
+			game.Galaxy.FindSpaceObjects<Planet>(p => p.HasColony).SafeForeach(ProcessPopulationGrowth);
+		if (game.TurnNumber.IsDivisibleBy(Mod.Current.Settings.ValueChangeFrequency.DefaultTo(1)))
+			game.Galaxy.FindSpaceObjects<Planet>(p => p.HasColony).SafeForeach(q => ProcessResourceValueChange(game, q));
 		if (status != null)
 			status.Progress += progressPerOperation;
 
@@ -470,7 +469,7 @@ public class TurnProcessor
 
 		// deal with population in cargo again, in case colonies took damage and lost some population
 		// TODO - multithread population cargo maintenance
-		foreach (var p in galaxy.FindSpaceObjects<Planet>().Where(p => p.Colony != null))
+		foreach (var p in game.Galaxy.FindSpaceObjects<Planet>().Where(p => p.Colony != null))
 		{
 			var pop = p.Colony.Population;
 			var ratio = (double)pop.Sum(kvp => kvp.Value) / (double)p.MaxPopulation;
@@ -493,12 +492,12 @@ public class TurnProcessor
 		}
 
 		// replenish shields again, so the players see the full shield amounts in the GUI
-		galaxy.FindSpaceObjects<ICombatSpaceObject>().SafeForeach(o => o.ReplenishShields());
+		game.Galaxy.FindSpaceObjects<ICombatSpaceObject>().SafeForeach(o => o.ReplenishShields());
 
 		// modify colony anger
-		foreach (var ship in galaxy.FindSpaceObjects<MajorSpaceVehicle>().Where(x => !x.IsDestroyed))
+		foreach (var ship in game.Galaxy.FindSpaceObjects<MajorSpaceVehicle>().Where(x => !x.IsDestroyed))
 		{
-			foreach (var emp in galaxy.Empires.Where(e => e.CanSee(ship)))
+			foreach (var emp in game.Empires.Where(e => e.CanSee(ship)))
 			{
 				if (emp == ship.Owner)
 				{
@@ -512,13 +511,13 @@ public class TurnProcessor
 				}
 			}
 		}
-		galaxy.FindSpaceObjects<Planet>().Where(p => p.Colony != null).Select(p => p.Colony).ParallelSafeForeach(c =>
+		game.Galaxy.FindSpaceObjects<Planet>().Where(p => p.Colony != null).Select(p => p.Colony).ParallelSafeForeach(c =>
 		{
 			if (c.Cargo.Units.Any(u => u.IsHostileTo(c.Owner)))
 				c.TriggerHappinessChange(hm => hm.EnemyTroopsOnPlanet);
 			c.TriggerHappinessChange(hm => hm.OurTroopOnPlanet * c.Cargo.Units.OfType<Troop>().Count());
 		});
-		galaxy.FindSpaceObjects<Planet>().Where(p => p.Colony != null).Select(p => p.Colony).ParallelSafeForeach(c =>
+		game.Galaxy.FindSpaceObjects<Planet>().Where(p => p.Colony != null).Select(p => p.Colony).ParallelSafeForeach(c =>
 		{
 			foreach (var race in c.Population.Keys)
 			{
@@ -548,23 +547,23 @@ public class TurnProcessor
 
 		// repair facilities
 		// planets with no population won't repair facilities
-		galaxy.FindSpaceObjects<Planet>().Select(p => p.Colony).Where(c => c != null && c.Population.Any(q => q.Value > 0)).SelectMany(c => c.Facilities).SafeForeach(f => f.Repair());
+		game.Galaxy.FindSpaceObjects<Planet>().Select(p => p.Colony).Where(c => c != null && c.Population.Any(q => q.Value > 0)).SelectMany(c => c.Facilities).SafeForeach(f => f.Repair());
 
 		// repair units
 		// planets with no population won't repair units
-		galaxy.FindSpaceObjects<IMobileSpaceObject>().OfType<IUnit>().SafeForeach(u => u.Repair());
-		galaxy.FindSpaceObjects<ISpaceObject>().OfType<ICargoContainer>().Where(
+		game.Galaxy.FindSpaceObjects<IMobileSpaceObject>().OfType<IUnit>().SafeForeach(u => u.Repair());
+		game.Galaxy.FindSpaceObjects<ISpaceObject>().OfType<ICargoContainer>().Where(
 			p => p.Cargo != null
 			&& (!(p is Planet) || (((Planet)p).Colony?.Population.Any(q => q.Value > 0) ?? false)))
 			.SelectMany(p => p.Cargo.Units).SafeForeach(u => u.Repair());
 
 		// repair ships/bases
 		// TODO - repair priorities
-		foreach (var emp in galaxy.Empires)
+		foreach (var emp in game.Empires)
 		{
 			// component repair is per sector per turn per empire, so we need to track it that way
 			var usedPts = new SafeDictionary<Sector, int>();
-			foreach (var v in galaxy.FindSpaceObjects<IMobileSpaceObject>().Where(v => v.Owner == emp && v.Sector != null && (v is Ship || v is Base || v is Fleet)))
+			foreach (var v in game.Galaxy.FindSpaceObjects<IMobileSpaceObject>().Where(v => v.Owner == emp && v.Sector != null && (v is Ship || v is Base || v is Fleet)))
 			{
 				var pts = v.Sector.GetEmpireAbilityValue(emp, "Component Repair").ToInt() - usedPts[v.Sector];
 				usedPts[v.Sector] += pts - v.Repair(pts).Value;
@@ -572,11 +571,11 @@ public class TurnProcessor
 		}
 
 		// repairs affect abilities
-		galaxy.DisableAbilityCache();
-		galaxy.EnableAbilityCache();
+		game.DisableAbilityCache();
+		game.EnableAbilityCache();
 
 		// get supplies from reactors, solar panels, etc.
-		galaxy.FindSpaceObjects<IMobileSpaceObject>().SafeForeach(v =>
+		game.Galaxy.FindSpaceObjects<IMobileSpaceObject>().SafeForeach(v =>
 		{
 			v.SupplyRemaining += v.GetAbilityValue("Supply Generation Per Turn").ToInt();
 			if (v.StarSystem != null)
@@ -585,7 +584,7 @@ public class TurnProcessor
 		});
 
 		// resupply space vehicles one last time (after weapons fire and repair which could affect supply remaining/storage)
-		galaxy.FindSpaceObjects<ISpaceObject>().Where(s => s.HasAbility("Supply Generation")).SafeForeach(sobj =>
+		game.Galaxy.FindSpaceObjects<ISpaceObject>().Where(s => s.HasAbility("Supply Generation")).SafeForeach(sobj =>
 		{
 			var emp = sobj.Owner;
 			var sector = sobj.Sector;
@@ -593,30 +592,30 @@ public class TurnProcessor
 				v.SupplyRemaining = v.SupplyStorage;
 		});
 		// TODO - multithread this... somehow...
-		foreach (var emp in galaxy.Empires)
+		foreach (var emp in game.Empires)
 		{
-			foreach (var sys in galaxy.StarSystemLocations.Select(l => l.Item).Where(s => s.HasAbility("Supply Generation - System", emp) || s.HasAbility("Supply Generation - System")))
+			foreach (var sys in game.Galaxy.StarSystemLocations.Select(l => l.Item).Where(s => s.HasAbility("Supply Generation - System", emp) || s.HasAbility("Supply Generation - System")))
 			{
 				foreach (var v in sys.FindSpaceObjects<IMobileSpaceObject>().Where(v => v.Owner == emp))
 					v.SupplyRemaining = v.SupplyStorage;
 			}
 		}
 
-		galaxy.Empires.ParallelSafeForeach(emp =>
+		game.Empires.ParallelSafeForeach(emp =>
 		{
 			emp.StoredResources = ResourceQuantity.Min(emp.StoredResources, emp.ResourceStorage);// resource spoilage
 			emp.Commands.Clear(); // clear empire commands
-			emp.Scores[galaxy.TurnNumber] = emp.ComputeScore(null); // update score
+			emp.Scores[game.TurnNumber] = emp.ComputeScore(null); // update score
 		});
 
 		// clear completed orders
-		galaxy.Referrables.OfType<IPathfindingOrder>().Where(o => o.KnownTarget == null).ParallelSafeForeach(o => o.IsComplete = true);
-		galaxy.Referrables.OfType<IOrder>().Where(o => o.IsComplete).SafeForeach(o => o.Dispose());
+		game.Referrables.OfType<IPathfindingOrder>().Where(o => o.KnownTarget == null).ParallelSafeForeach(o => o.IsComplete = true);
+		game.Referrables.OfType<IOrder>().Where(o => o.IsComplete).SafeForeach(o => o.Dispose());
 
 		// update known designs
-		galaxy.Empires.ParallelSafeForeach(emp =>
+		game.Empires.ParallelSafeForeach(emp =>
 		{
-			foreach (var design in galaxy.Referrables.OfType<IDesign>())
+			foreach (var design in game.Referrables.OfType<IDesign>())
 			{
 				if (design.CheckVisibility(emp) >= Visibility.Scanned && !emp.KnownDesigns.Contains(design))
 					emp.KnownDesigns.Add(design);
@@ -625,7 +624,7 @@ public class TurnProcessor
 
 		// clear obsolete sensor ghosts
 		// TODO - multithread this somehow
-		foreach (var emp in galaxy.Empires)
+		foreach (var emp in game.Empires)
 		{
 			foreach (var kvp in emp.Memory.ToArray())
 			{
@@ -638,20 +637,20 @@ public class TurnProcessor
 		}
 
 		// validate fleets and share supplies
-		foreach (var f in galaxy.FindSpaceObjects<Fleet>().ToArray())
+		foreach (var f in game.Galaxy.FindSpaceObjects<Fleet>().ToArray())
 		{
 			f.Validate();
 			f.ShareSupplies();
 		}
 
 		// check for victory/defeat
-		foreach (var vc in galaxy.GameSetup.VictoryConditions)
+		foreach (var vc in game.Setup.VictoryConditions)
 		{
-			if (vc is TotalEliminationVictoryCondition || galaxy.TurnNumber > galaxy.GameSetup.VictoryDelay)
+			if (vc is TotalEliminationVictoryCondition || game.TurnNumber > game.Setup.VictoryDelay)
 			{
 				// find winners
 				var winners = new List<Empire>();
-				foreach (var emp in galaxy.Empires)
+				foreach (var emp in game.Empires)
 				{
 					if (vc.GetProgress(emp) >= 1d)
 					{
@@ -665,7 +664,7 @@ public class TurnProcessor
 				// if there were any winners, everyone else lost :(
 				if (winners.Any())
 				{
-					foreach (var emp in galaxy.Empires.Except(winners))
+					foreach (var emp in game.Empires.Except(winners))
 					{
 						// empire lost because someone else won
 						emp.IsLoser = true;
@@ -679,17 +678,17 @@ public class TurnProcessor
 			status.Progress += progressPerOperation;
 
 		// dispose of invalid waypoints e.g. space object got destroyed
-		foreach (var w in galaxy.Referrables.OfType<Waypoint>().ToArray())
+		foreach (var w in game.Referrables.OfType<Waypoint>().ToArray())
 		{
 			if (w.Sector == null)
 				w.Dispose();
 		}
 
-		foreach (var x in galaxy.FindSpaceObjects<ISpaceObject>().Owned().ToArray())
+		foreach (var x in game.Galaxy.FindSpaceObjects<ISpaceObject>().Owned().ToArray())
 			x.UpdateEmpireMemories();
 
 		// save off tech levels for computing tech uniqueness next turn
-		galaxy.SaveTechLevelsForUniqueness();
+		game.SaveTechLevelsForUniqueness();
 
 		//galaxy.SpaceObjectIDCheck("after cleanup");
 
@@ -705,7 +704,7 @@ public class TurnProcessor
 
 		//galaxy.SpaceObjectIDCheck("at end of turn");
 
-		galaxy.StringValue = null;
+		game.StringValue = null;
 
 		return missingPlrs;
 	}
@@ -714,7 +713,7 @@ public class TurnProcessor
 	/// Only public for unit tests. You should probably call ProcessTurn instead.
 	/// </summary>
 	/// <param name="p"></param>
-	private static void ProcessColonyIncome(Galaxy galaxy, Colony c)
+	private static void ProcessColonyIncome(Game galaxy, Colony c)
 	{
 		var p = c.Container;
 		var sys = p.StarSystem;
@@ -746,7 +745,7 @@ public class TurnProcessor
 		incomeWithoutValue += income[Resource.Intelligence] * Resource.Research;
 		foreach (var kvp in incomeWithoutValue)
 		{
-			p.ResourceValue[kvp.Key] -= galaxy.GameSetup.StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
+			p.ResourceValue[kvp.Key] -= galaxy.Setup.StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
 		}
 	}
 
@@ -803,22 +802,22 @@ public class TurnProcessor
 	/// Only public for unit tests. You should probably call ProcessTurn instead.
 	/// </summary>
 	/// <param name="p"></param>
-	private static void ProcessResourceValueChange(Galaxy galaxy, Planet p)
+	private static void ProcessResourceValueChange(Game galaxy, Planet p)
 	{
 		foreach (var r in Resource.All.Where(r => r.HasValue))
 		{
-			bool wasFull = p.ResourceValue[r] == galaxy.GameSetup.MaxPlanetValue;
-			bool wasEmpty = p.ResourceValue[r] == galaxy.GameSetup.MinPlanetValue;
+			bool wasFull = p.ResourceValue[r] == galaxy.Setup.MaxPlanetValue;
+			bool wasEmpty = p.ResourceValue[r] == galaxy.Setup.MinPlanetValue;
 			var modifier =
 				p.GetAbilityValue("Planet - Change {0} Value".F(r.Name)).ToInt()
 				+ p.GetAbilityValue("Sector - Change {0} Value".F(r.Name)).ToInt()
 				+ p.GetAbilityValue("System - Change {0} Value".F(r.Name)).ToInt()
 				+ p.GetAbilityValue("Empire - Change {0} Value".F(r.Name)).ToInt();
 			p.ResourceValue[r] += modifier;
-			p.ResourceValue[r] = p.ResourceValue[r].LimitToRange(galaxy.GameSetup.MinPlanetValue, galaxy.GameSetup.MaxPlanetValue);
-			if (!wasFull && p.ResourceValue[r] == galaxy.GameSetup.MaxPlanetValue && p.Owner != null)
+			p.ResourceValue[r] = p.ResourceValue[r].LimitToRange(galaxy.Setup.MinPlanetValue, galaxy.Setup.MaxPlanetValue);
+			if (!wasFull && p.ResourceValue[r] == galaxy.Setup.MaxPlanetValue && p.Owner != null)
 				p.Owner.RecordLog(p, "{0}'s {1} have been completely replenished. Its value is at the absolute maximum.".F(p, r), LogMessageType.Generic);
-			if (!wasEmpty && p.ResourceValue[r] == galaxy.GameSetup.MinPlanetValue && p.Owner != null)
+			if (!wasEmpty && p.ResourceValue[r] == galaxy.Setup.MinPlanetValue && p.Owner != null)
 				p.Owner.RecordLog(p, "{0} has been stripped dry of {1}. Its value is at the bare minimum.".F(p, r), LogMessageType.Generic);
 		}
 	}

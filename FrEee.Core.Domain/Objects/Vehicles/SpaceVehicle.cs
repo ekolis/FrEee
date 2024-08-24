@@ -9,9 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
-using FrEee.Extensions;
-using FrEee.Utility;
-using FrEee.Serialization;
 using FrEee.Modding.Abilities;
 
 namespace FrEee.Objects.Vehicles;
@@ -316,8 +313,8 @@ public abstract class SpaceVehicle : Vehicle, IMobileSpaceObject<SpaceVehicle>
 	public override bool IsObsoleteMemory(Empire emp)
 	{
 		if (StarSystem == null)
-			return Timestamp < Galaxy.Current.Timestamp - 1;
-		return StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+			return Timestamp < Game.Current.Timestamp - 1;
+		return StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Game.Current.Timestamp - 1;
 	}
 
 	public void RearrangeOrder(IOrder order, int delta)

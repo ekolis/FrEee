@@ -3,7 +3,6 @@ using FrEee.Modding;
 using FrEee.Serialization;
 using System;
 using FrEee.Objects.GameState;
-using FrEee.Serialization;
 
 namespace FrEee.Objects.Technology;
 
