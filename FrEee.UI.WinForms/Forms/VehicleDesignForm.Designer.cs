@@ -22,858 +22,917 @@ partial class VehicleDesignForm
 
 	protected override string WikiPage => "VehicleDesign";
 
-	#region Windows Form Designer generated code
+    #region Windows Form Designer generated code
 
-	/// <summary>
-	/// Required method for Designer support - do not modify
-	/// the contents of this method with the code editor.
-	/// </summary>
-	private void InitializeComponent()
-	{
-		this.label1 = new System.Windows.Forms.Label();
-		this.label2 = new System.Windows.Forms.Label();
-		this.ddlRole = new System.Windows.Forms.ComboBox();
-		this.label3 = new System.Windows.Forms.Label();
-		this.ddlName = new System.Windows.Forms.ComboBox();
-		this.label4 = new System.Windows.Forms.Label();
-		this.label5 = new System.Windows.Forms.Label();
-		this.label6 = new System.Windows.Forms.Label();
-		this.label7 = new System.Windows.Forms.Label();
-		this.label8 = new System.Windows.Forms.Label();
-		this.chkOnlyLatest = new System.Windows.Forms.CheckBox();
-		this.chkFilterByMount = new System.Windows.Forms.CheckBox();
-		this.btnWeaponsReport = new FrEee.UI.WinForms.Controls.GameButton();
-		this.btnCancel = new FrEee.UI.WinForms.Controls.GameButton();
-		this.btnSave = new FrEee.UI.WinForms.Controls.GameButton();
-		this.pnlStats = new FrEee.UI.WinForms.Controls.GamePanel();
-		this.txtEngines = new System.Windows.Forms.Label();
-		this.label14 = new System.Windows.Forms.Label();
-		this.txtEvasion = new System.Windows.Forms.Label();
-		this.label18 = new System.Windows.Forms.Label();
-		this.txtAccuracy = new System.Windows.Forms.Label();
-		this.label11 = new System.Windows.Forms.Label();
-		this.txtRange = new System.Windows.Forms.Label();
-		this.label22 = new System.Windows.Forms.Label();
-		this.txtHull = new System.Windows.Forms.Label();
-		this.txtArmor = new System.Windows.Forms.Label();
-		this.txtShields = new System.Windows.Forms.Label();
-		this.txtSpeed = new System.Windows.Forms.Label();
-		this.txtSupplyStorage = new System.Windows.Forms.Label();
-		this.label17 = new System.Windows.Forms.Label();
-		this.txtCargo = new System.Windows.Forms.Label();
-		this.label15 = new System.Windows.Forms.Label();
-		this.label13 = new System.Windows.Forms.Label();
-		this.label12 = new System.Windows.Forms.Label();
-		this.txtSpaceFree = new System.Windows.Forms.Label();
-		this.resCostRad = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
-		this.resCostOrg = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
-		this.resCostMin = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
-		this.label10 = new System.Windows.Forms.Label();
-		this.label9 = new System.Windows.Forms.Label();
-		this.gamePanel4 = new FrEee.UI.WinForms.Controls.GamePanel();
-		this.txtDetailDescription = new System.Windows.Forms.Label();
-		this.resDetailRad = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
-		this.resDetailOrg = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
-		this.resDetailMin = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
-		this.txtDetailSize = new System.Windows.Forms.Label();
-		this.txtDetailName = new System.Windows.Forms.Label();
-		this.picDetailIcon = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
-		this.gamePanel3 = new FrEee.UI.WinForms.Controls.GamePanel();
-		this.lstWarnings = new System.Windows.Forms.ListBox();
-		this.gamePanel2 = new FrEee.UI.WinForms.Controls.GamePanel();
-		this.lstComponentsInstalled = new System.Windows.Forms.ListView();
-		this.gamePanel1 = new FrEee.UI.WinForms.Controls.GamePanel();
-		this.lstComponentsAvailable = new System.Windows.Forms.ListView();
-		this.btnHull = new FrEee.UI.WinForms.Controls.GameButton();
-		this.txtIteration = new System.Windows.Forms.Label();
-		this.picPortrait = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
-		this.btnMountInfo = new FrEee.UI.WinForms.Controls.GameButton();
-		this.ddlMount = new System.Windows.Forms.ComboBox();
-		this.btnHelp = new FrEee.UI.WinForms.Controls.GameButton();
-		this.btnMount = new FrEee.UI.WinForms.Controls.GameButton();
-		this.pnlStats.SuspendLayout();
-		this.gamePanel4.SuspendLayout();
-		((System.ComponentModel.ISupportInitialize)(this.picDetailIcon)).BeginInit();
-		this.gamePanel3.SuspendLayout();
-		this.gamePanel2.SuspendLayout();
-		this.gamePanel1.SuspendLayout();
-		((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
-		this.SuspendLayout();
-		// 
-		// label1
-		// 
-		this.label1.AutoSize = true;
-		this.label1.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label1.Location = new System.Drawing.Point(13, 13);
-		this.label1.Name = "label1";
-		this.label1.Size = new System.Drawing.Size(25, 13);
-		this.label1.TabIndex = 0;
-		this.label1.Text = "Hull";
-		// 
-		// label2
-		// 
-		this.label2.AutoSize = true;
-		this.label2.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label2.Location = new System.Drawing.Point(13, 41);
-		this.label2.Name = "label2";
-		this.label2.Size = new System.Drawing.Size(29, 13);
-		this.label2.TabIndex = 3;
-		this.label2.Text = "Role";
-		// 
-		// ddlRole
-		// 
-		this.ddlRole.BackColor = System.Drawing.Color.Black;
-		this.ddlRole.Enabled = false;
-		this.ddlRole.ForeColor = System.Drawing.Color.White;
-		this.ddlRole.FormattingEnabled = true;
-		this.ddlRole.Location = new System.Drawing.Point(80, 38);
-		this.ddlRole.Name = "ddlRole";
-		this.ddlRole.Size = new System.Drawing.Size(167, 21);
-		this.ddlRole.TabIndex = 4;
-		this.ddlRole.TextChanged += new System.EventHandler(this.ddlRole_TextChanged);
-		// 
-		// label3
-		// 
-		this.label3.AutoSize = true;
-		this.label3.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label3.Location = new System.Drawing.Point(13, 70);
-		this.label3.Name = "label3";
-		this.label3.Size = new System.Drawing.Size(35, 13);
-		this.label3.TabIndex = 5;
-		this.label3.Text = "Name";
-		// 
-		// ddlName
-		// 
-		this.ddlName.BackColor = System.Drawing.Color.Black;
-		this.ddlName.Enabled = false;
-		this.ddlName.ForeColor = System.Drawing.Color.White;
-		this.ddlName.FormattingEnabled = true;
-		this.ddlName.Location = new System.Drawing.Point(80, 67);
-		this.ddlName.Name = "ddlName";
-		this.ddlName.Size = new System.Drawing.Size(140, 21);
-		this.ddlName.TabIndex = 6;
-		this.ddlName.TextChanged += new System.EventHandler(this.ddlName_TextChanged);
-		// 
-		// label4
-		// 
-		this.label4.AutoSize = true;
-		this.label4.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label4.Location = new System.Drawing.Point(13, 139);
-		this.label4.Name = "label4";
-		this.label4.Size = new System.Drawing.Size(112, 13);
-		this.label4.TabIndex = 8;
-		this.label4.Text = "Components Available";
-		// 
-		// label5
-		// 
-		this.label5.AutoSize = true;
-		this.label5.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label5.Location = new System.Drawing.Point(254, 139);
-		this.label5.Name = "label5";
-		this.label5.Size = new System.Drawing.Size(108, 13);
-		this.label5.TabIndex = 10;
-		this.label5.Text = "Components Installed";
-		// 
-		// label6
-		// 
-		this.label6.AutoSize = true;
-		this.label6.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label6.Location = new System.Drawing.Point(13, 99);
-		this.label6.Name = "label6";
-		this.label6.Size = new System.Drawing.Size(59, 13);
-		this.label6.TabIndex = 13;
-		this.label6.Text = "Use Mount";
-		// 
-		// label7
-		// 
-		this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-		this.label7.AutoSize = true;
-		this.label7.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label7.Location = new System.Drawing.Point(12, 527);
-		this.label7.Name = "label7";
-		this.label7.Size = new System.Drawing.Size(52, 13);
-		this.label7.TabIndex = 18;
-		this.label7.Text = "Warnings";
-		// 
-		// label8
-		// 
-		this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-		this.label8.AutoSize = true;
-		this.label8.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label8.Location = new System.Drawing.Point(254, 527);
-		this.label8.Name = "label8";
-		this.label8.Size = new System.Drawing.Size(96, 13);
-		this.label8.TabIndex = 20;
-		this.label8.Text = "Component Details";
-		// 
-		// chkOnlyLatest
-		// 
-		this.chkOnlyLatest.AutoSize = true;
-		this.chkOnlyLatest.Checked = true;
-		this.chkOnlyLatest.CheckState = System.Windows.Forms.CheckState.Checked;
-		this.chkOnlyLatest.Location = new System.Drawing.Point(12, 162);
-		this.chkOnlyLatest.Name = "chkOnlyLatest";
-		this.chkOnlyLatest.Size = new System.Drawing.Size(79, 17);
-		this.chkOnlyLatest.TabIndex = 21;
-		this.chkOnlyLatest.Text = "Only Latest";
-		this.chkOnlyLatest.UseVisualStyleBackColor = true;
-		this.chkOnlyLatest.CheckedChanged += new System.EventHandler(this.chkOnlyLatest_CheckedChanged);
-		// 
-		// chkFilterByMount
-		// 
-		this.chkFilterByMount.AutoSize = true;
-		this.chkFilterByMount.Location = new System.Drawing.Point(97, 162);
-		this.chkFilterByMount.Name = "chkFilterByMount";
-		this.chkFilterByMount.Size = new System.Drawing.Size(96, 17);
-		this.chkFilterByMount.TabIndex = 28;
-		this.chkFilterByMount.Text = "Filter By Mount";
-		this.chkFilterByMount.UseVisualStyleBackColor = true;
-		this.chkFilterByMount.CheckedChanged += new System.EventHandler(this.chkFilterByMount_CheckedChanged);
-		// 
-		// btnWeaponsReport
-		// 
-		this.btnWeaponsReport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-		this.btnWeaponsReport.BackColor = System.Drawing.Color.Black;
-		this.btnWeaponsReport.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.btnWeaponsReport.Location = new System.Drawing.Point(551, 155);
-		this.btnWeaponsReport.Name = "btnWeaponsReport";
-		this.btnWeaponsReport.Size = new System.Drawing.Size(146, 29);
-		this.btnWeaponsReport.TabIndex = 26;
-		this.btnWeaponsReport.Text = "Weapons Report";
-		this.btnWeaponsReport.UseVisualStyleBackColor = false;
-		// 
-		// btnCancel
-		// 
-		this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-		this.btnCancel.BackColor = System.Drawing.Color.Black;
-		this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.btnCancel.Location = new System.Drawing.Point(551, 560);
-		this.btnCancel.Name = "btnCancel";
-		this.btnCancel.Size = new System.Drawing.Size(146, 29);
-		this.btnCancel.TabIndex = 24;
-		this.btnCancel.Text = "Cancel";
-		this.btnCancel.UseVisualStyleBackColor = false;
-		this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-		// 
-		// btnSave
-		// 
-		this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-		this.btnSave.BackColor = System.Drawing.Color.Black;
-		this.btnSave.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.btnSave.Location = new System.Drawing.Point(551, 595);
-		this.btnSave.Name = "btnSave";
-		this.btnSave.Size = new System.Drawing.Size(146, 29);
-		this.btnSave.TabIndex = 23;
-		this.btnSave.Text = "Save";
-		this.btnSave.UseVisualStyleBackColor = false;
-		this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-		// 
-		// pnlStats
-		// 
-		this.pnlStats.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-		this.pnlStats.BackColor = System.Drawing.Color.Black;
-		this.pnlStats.BorderColor = System.Drawing.Color.CornflowerBlue;
-		this.pnlStats.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-		this.pnlStats.Controls.Add(this.txtEngines);
-		this.pnlStats.Controls.Add(this.label14);
-		this.pnlStats.Controls.Add(this.txtEvasion);
-		this.pnlStats.Controls.Add(this.label18);
-		this.pnlStats.Controls.Add(this.txtAccuracy);
-		this.pnlStats.Controls.Add(this.label11);
-		this.pnlStats.Controls.Add(this.txtRange);
-		this.pnlStats.Controls.Add(this.label22);
-		this.pnlStats.Controls.Add(this.txtHull);
-		this.pnlStats.Controls.Add(this.txtArmor);
-		this.pnlStats.Controls.Add(this.txtShields);
-		this.pnlStats.Controls.Add(this.txtSpeed);
-		this.pnlStats.Controls.Add(this.txtSupplyStorage);
-		this.pnlStats.Controls.Add(this.label17);
-		this.pnlStats.Controls.Add(this.txtCargo);
-		this.pnlStats.Controls.Add(this.label15);
-		this.pnlStats.Controls.Add(this.label13);
-		this.pnlStats.Controls.Add(this.label12);
-		this.pnlStats.Controls.Add(this.txtSpaceFree);
-		this.pnlStats.Controls.Add(this.resCostRad);
-		this.pnlStats.Controls.Add(this.resCostOrg);
-		this.pnlStats.Controls.Add(this.resCostMin);
-		this.pnlStats.Controls.Add(this.label10);
-		this.pnlStats.Controls.Add(this.label9);
-		this.pnlStats.ForeColor = System.Drawing.Color.White;
-		this.pnlStats.Location = new System.Drawing.Point(257, 8);
-		this.pnlStats.Name = "pnlStats";
-		this.pnlStats.Padding = new System.Windows.Forms.Padding(3);
-		this.pnlStats.Size = new System.Drawing.Size(440, 128);
-		this.pnlStats.TabIndex = 22;
-		// 
-		// txtEngines
-		// 
-		this.txtEngines.AutoSize = true;
-		this.txtEngines.Location = new System.Drawing.Point(84, 100);
-		this.txtEngines.Name = "txtEngines";
-		this.txtEngines.Size = new System.Drawing.Size(30, 13);
-		this.txtEngines.TabIndex = 28;
-		this.txtEngines.Text = "0 / 0";
-		// 
-		// label14
-		// 
-		this.label14.AutoSize = true;
-		this.label14.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label14.Location = new System.Drawing.Point(3, 100);
-		this.label14.Name = "label14";
-		this.label14.Size = new System.Drawing.Size(45, 13);
-		this.label14.TabIndex = 27;
-		this.label14.Text = "Engines";
-		// 
-		// txtEvasion
-		// 
-		this.txtEvasion.AutoSize = true;
-		this.txtEvasion.Location = new System.Drawing.Point(253, 62);
-		this.txtEvasion.Name = "txtEvasion";
-		this.txtEvasion.Size = new System.Drawing.Size(27, 13);
-		this.txtEvasion.TabIndex = 26;
-		this.txtEvasion.Text = "+0%";
-		// 
-		// label18
-		// 
-		this.label18.AutoSize = true;
-		this.label18.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label18.Location = new System.Drawing.Point(179, 61);
-		this.label18.Name = "label18";
-		this.label18.Size = new System.Drawing.Size(45, 13);
-		this.label18.TabIndex = 25;
-		this.label18.Text = "Evasion";
-		// 
-		// txtAccuracy
-		// 
-		this.txtAccuracy.AutoSize = true;
-		this.txtAccuracy.Location = new System.Drawing.Point(253, 49);
-		this.txtAccuracy.Name = "txtAccuracy";
-		this.txtAccuracy.Size = new System.Drawing.Size(27, 13);
-		this.txtAccuracy.TabIndex = 24;
-		this.txtAccuracy.Text = "+0%";
-		// 
-		// label11
-		// 
-		this.label11.AutoSize = true;
-		this.label11.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label11.Location = new System.Drawing.Point(179, 49);
-		this.label11.Name = "label11";
-		this.label11.Size = new System.Drawing.Size(52, 13);
-		this.label11.TabIndex = 23;
-		this.label11.Text = "Accuracy";
-		// 
-		// txtRange
-		// 
-		this.txtRange.AutoSize = true;
-		this.txtRange.Location = new System.Drawing.Point(84, 87);
-		this.txtRange.Name = "txtRange";
-		this.txtRange.Size = new System.Drawing.Size(50, 13);
-		this.txtRange.TabIndex = 22;
-		this.txtRange.Text = "0 sectors";
-		// 
-		// label22
-		// 
-		this.label22.AutoSize = true;
-		this.label22.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label22.Location = new System.Drawing.Point(3, 87);
-		this.label22.Name = "label22";
-		this.label22.Size = new System.Drawing.Size(39, 13);
-		this.label22.TabIndex = 21;
-		this.label22.Text = "Range";
-		// 
-		// txtHull
-		// 
-		this.txtHull.AutoSize = true;
-		this.txtHull.Location = new System.Drawing.Point(253, 32);
-		this.txtHull.Name = "txtHull";
-		this.txtHull.Size = new System.Drawing.Size(32, 13);
-		this.txtHull.TabIndex = 20;
-		this.txtHull.Text = "0 hull";
-		// 
-		// txtArmor
-		// 
-		this.txtArmor.AutoSize = true;
-		this.txtArmor.Location = new System.Drawing.Point(253, 17);
-		this.txtArmor.Name = "txtArmor";
-		this.txtArmor.Size = new System.Drawing.Size(42, 13);
-		this.txtArmor.TabIndex = 19;
-		this.txtArmor.Text = "0 armor";
-		// 
-		// txtShields
-		// 
-		this.txtShields.AutoSize = true;
-		this.txtShields.Location = new System.Drawing.Point(253, 4);
-		this.txtShields.Name = "txtShields";
-		this.txtShields.Size = new System.Drawing.Size(99, 13);
-		this.txtShields.TabIndex = 18;
-		this.txtShields.Text = "0 shields (+0 regen)";
-		// 
-		// txtSpeed
-		// 
-		this.txtSpeed.AutoSize = true;
-		this.txtSpeed.Location = new System.Drawing.Point(84, 62);
-		this.txtSpeed.Name = "txtSpeed";
-		this.txtSpeed.Size = new System.Drawing.Size(73, 13);
-		this.txtSpeed.TabIndex = 17;
-		this.txtSpeed.Text = "0 sectors/turn";
-		// 
-		// txtSupplyStorage
-		// 
-		this.txtSupplyStorage.AutoSize = true;
-		this.txtSupplyStorage.Location = new System.Drawing.Point(84, 75);
-		this.txtSupplyStorage.Name = "txtSupplyStorage";
-		this.txtSupplyStorage.Size = new System.Drawing.Size(13, 13);
-		this.txtSupplyStorage.TabIndex = 16;
-		this.txtSupplyStorage.Text = "0";
-		// 
-		// label17
-		// 
-		this.label17.AutoSize = true;
-		this.label17.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label17.Location = new System.Drawing.Point(3, 74);
-		this.label17.Name = "label17";
-		this.label17.Size = new System.Drawing.Size(47, 13);
-		this.label17.TabIndex = 15;
-		this.label17.Text = "Supplies";
-		// 
-		// txtCargo
-		// 
-		this.txtCargo.AutoSize = true;
-		this.txtCargo.Location = new System.Drawing.Point(254, 87);
-		this.txtCargo.Name = "txtCargo";
-		this.txtCargo.Size = new System.Drawing.Size(26, 13);
-		this.txtCargo.TabIndex = 14;
-		this.txtCargo.Text = "0kT";
-		// 
-		// label15
-		// 
-		this.label15.AutoSize = true;
-		this.label15.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label15.Location = new System.Drawing.Point(179, 87);
-		this.label15.Name = "label15";
-		this.label15.Size = new System.Drawing.Size(75, 13);
-		this.label15.TabIndex = 13;
-		this.label15.Text = "Cargo Storage";
-		// 
-		// label13
-		// 
-		this.label13.AutoSize = true;
-		this.label13.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label13.Location = new System.Drawing.Point(179, 4);
-		this.label13.Name = "label13";
-		this.label13.Size = new System.Drawing.Size(50, 13);
-		this.label13.TabIndex = 11;
-		this.label13.Text = "Durability";
-		// 
-		// label12
-		// 
-		this.label12.AutoSize = true;
-		this.label12.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label12.Location = new System.Drawing.Point(3, 61);
-		this.label12.Name = "label12";
-		this.label12.Size = new System.Drawing.Size(38, 13);
-		this.label12.TabIndex = 10;
-		this.label12.Text = "Speed";
-		// 
-		// txtSpaceFree
-		// 
-		this.txtSpaceFree.AutoSize = true;
-		this.txtSpaceFree.Location = new System.Drawing.Point(84, 3);
-		this.txtSpaceFree.Name = "txtSpaceFree";
-		this.txtSpaceFree.Size = new System.Drawing.Size(56, 13);
-		this.txtSpaceFree.TabIndex = 9;
-		this.txtSpaceFree.Text = "0kT / 0kT";
-		// 
-		// resCostRad
-		// 
-		this.resCostRad.Amount = 0;
-		this.resCostRad.BackColor = System.Drawing.Color.Black;
-		this.resCostRad.Change = null;
-		this.resCostRad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-		this.resCostRad.Location = new System.Drawing.Point(78, 47);
-		this.resCostRad.Margin = new System.Windows.Forms.Padding(0);
-		this.resCostRad.Name = "resCostRad";
-		this.resCostRad.ResourceName = "Radioactives";
-		this.resCostRad.Size = new System.Drawing.Size(79, 15);
-		this.resCostRad.TabIndex = 8;
-		// 
-		// resCostOrg
-		// 
-		this.resCostOrg.Amount = 0;
-		this.resCostOrg.BackColor = System.Drawing.Color.Black;
-		this.resCostOrg.Change = null;
-		this.resCostOrg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-		this.resCostOrg.Location = new System.Drawing.Point(78, 32);
-		this.resCostOrg.Margin = new System.Windows.Forms.Padding(0);
-		this.resCostOrg.Name = "resCostOrg";
-		this.resCostOrg.ResourceName = "Organics";
-		this.resCostOrg.Size = new System.Drawing.Size(79, 15);
-		this.resCostOrg.TabIndex = 7;
-		// 
-		// resCostMin
-		// 
-		this.resCostMin.Amount = 0;
-		this.resCostMin.BackColor = System.Drawing.Color.Black;
-		this.resCostMin.Change = null;
-		this.resCostMin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-		this.resCostMin.Location = new System.Drawing.Point(78, 17);
-		this.resCostMin.Margin = new System.Windows.Forms.Padding(0);
-		this.resCostMin.Name = "resCostMin";
-		this.resCostMin.ResourceName = "Minerals";
-		this.resCostMin.Size = new System.Drawing.Size(79, 15);
-		this.resCostMin.TabIndex = 6;
-		// 
-		// label10
-		// 
-		this.label10.AutoSize = true;
-		this.label10.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label10.Location = new System.Drawing.Point(3, 17);
-		this.label10.Name = "label10";
-		this.label10.Size = new System.Drawing.Size(28, 13);
-		this.label10.TabIndex = 2;
-		this.label10.Text = "Cost";
-		// 
-		// label9
-		// 
-		this.label9.AutoSize = true;
-		this.label9.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.label9.Location = new System.Drawing.Point(3, 4);
-		this.label9.Name = "label9";
-		this.label9.Size = new System.Drawing.Size(62, 13);
-		this.label9.TabIndex = 1;
-		this.label9.Text = "Space Free";
-		// 
-		// gamePanel4
-		// 
-		this.gamePanel4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-		this.gamePanel4.BackColor = System.Drawing.Color.Black;
-		this.gamePanel4.BorderColor = System.Drawing.Color.CornflowerBlue;
-		this.gamePanel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-		this.gamePanel4.Controls.Add(this.txtDetailDescription);
-		this.gamePanel4.Controls.Add(this.resDetailRad);
-		this.gamePanel4.Controls.Add(this.resDetailOrg);
-		this.gamePanel4.Controls.Add(this.resDetailMin);
-		this.gamePanel4.Controls.Add(this.txtDetailSize);
-		this.gamePanel4.Controls.Add(this.txtDetailName);
-		this.gamePanel4.Controls.Add(this.picDetailIcon);
-		this.gamePanel4.ForeColor = System.Drawing.Color.White;
-		this.gamePanel4.Location = new System.Drawing.Point(253, 543);
-		this.gamePanel4.Name = "gamePanel4";
-		this.gamePanel4.Padding = new System.Windows.Forms.Padding(3);
-		this.gamePanel4.Size = new System.Drawing.Size(292, 81);
-		this.gamePanel4.TabIndex = 19;
-		// 
-		// txtDetailDescription
-		// 
-		this.txtDetailDescription.Location = new System.Drawing.Point(3, 46);
-		this.txtDetailDescription.Name = "txtDetailDescription";
-		this.txtDetailDescription.Size = new System.Drawing.Size(197, 30);
-		this.txtDetailDescription.TabIndex = 6;
-		this.txtDetailDescription.Text = "label9";
-		// 
-		// resDetailRad
-		// 
-		this.resDetailRad.Amount = 0;
-		this.resDetailRad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-		this.resDetailRad.BackColor = System.Drawing.Color.Black;
-		this.resDetailRad.Change = null;
-		this.resDetailRad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-		this.resDetailRad.Location = new System.Drawing.Point(206, 61);
-		this.resDetailRad.Margin = new System.Windows.Forms.Padding(0);
-		this.resDetailRad.Name = "resDetailRad";
-		this.resDetailRad.ResourceName = "Radioactives";
-		this.resDetailRad.Size = new System.Drawing.Size(81, 15);
-		this.resDetailRad.TabIndex = 5;
-		// 
-		// resDetailOrg
-		// 
-		this.resDetailOrg.Amount = 0;
-		this.resDetailOrg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-		this.resDetailOrg.BackColor = System.Drawing.Color.Black;
-		this.resDetailOrg.Change = null;
-		this.resDetailOrg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-		this.resDetailOrg.Location = new System.Drawing.Point(206, 45);
-		this.resDetailOrg.Margin = new System.Windows.Forms.Padding(0);
-		this.resDetailOrg.Name = "resDetailOrg";
-		this.resDetailOrg.ResourceName = "Organics";
-		this.resDetailOrg.Size = new System.Drawing.Size(81, 15);
-		this.resDetailOrg.TabIndex = 4;
-		// 
-		// resDetailMin
-		// 
-		this.resDetailMin.Amount = 0;
-		this.resDetailMin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-		this.resDetailMin.BackColor = System.Drawing.Color.Black;
-		this.resDetailMin.Change = null;
-		this.resDetailMin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-		this.resDetailMin.Location = new System.Drawing.Point(206, 30);
-		this.resDetailMin.Margin = new System.Windows.Forms.Padding(0);
-		this.resDetailMin.Name = "resDetailMin";
-		this.resDetailMin.ResourceName = "Minerals";
-		this.resDetailMin.Size = new System.Drawing.Size(81, 15);
-		this.resDetailMin.TabIndex = 3;
-		// 
-		// txtDetailSize
-		// 
-		this.txtDetailSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-		this.txtDetailSize.Location = new System.Drawing.Point(238, 7);
-		this.txtDetailSize.Name = "txtDetailSize";
-		this.txtDetailSize.Size = new System.Drawing.Size(46, 13);
-		this.txtDetailSize.TabIndex = 2;
-		this.txtDetailSize.Text = "(no size)";
-		this.txtDetailSize.TextAlign = System.Drawing.ContentAlignment.TopRight;
-		// 
-		// txtDetailName
-		// 
-		this.txtDetailName.AutoSize = true;
-		this.txtDetailName.Location = new System.Drawing.Point(45, 7);
-		this.txtDetailName.Name = "txtDetailName";
-		this.txtDetailName.Size = new System.Drawing.Size(81, 13);
-		this.txtDetailName.TabIndex = 1;
-		this.txtDetailName.Text = "(no component)";
-		// 
-		// picDetailIcon
-		// 
-		this.picDetailIcon.Location = new System.Drawing.Point(7, 7);
-		this.picDetailIcon.Name = "picDetailIcon";
-		this.picDetailIcon.Size = new System.Drawing.Size(32, 32);
-		this.picDetailIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-		this.picDetailIcon.TabIndex = 0;
-		this.picDetailIcon.TabStop = false;
-		// 
-		// gamePanel3
-		// 
-		this.gamePanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-		this.gamePanel3.BackColor = System.Drawing.Color.Black;
-		this.gamePanel3.BorderColor = System.Drawing.Color.CornflowerBlue;
-		this.gamePanel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-		this.gamePanel3.Controls.Add(this.lstWarnings);
-		this.gamePanel3.ForeColor = System.Drawing.Color.White;
-		this.gamePanel3.Location = new System.Drawing.Point(12, 543);
-		this.gamePanel3.Name = "gamePanel3";
-		this.gamePanel3.Padding = new System.Windows.Forms.Padding(3);
-		this.gamePanel3.Size = new System.Drawing.Size(234, 81);
-		this.gamePanel3.TabIndex = 17;
-		// 
-		// lstWarnings
-		// 
-		this.lstWarnings.BackColor = System.Drawing.Color.Black;
-		this.lstWarnings.BorderStyle = System.Windows.Forms.BorderStyle.None;
-		this.lstWarnings.Dock = System.Windows.Forms.DockStyle.Fill;
-		this.lstWarnings.ForeColor = System.Drawing.Color.Salmon;
-		this.lstWarnings.FormattingEnabled = true;
-		this.lstWarnings.Location = new System.Drawing.Point(3, 3);
-		this.lstWarnings.Name = "lstWarnings";
-		this.lstWarnings.Size = new System.Drawing.Size(226, 73);
-		this.lstWarnings.TabIndex = 16;
-		// 
-		// gamePanel2
-		// 
-		this.gamePanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-		this.gamePanel2.BackColor = System.Drawing.Color.Black;
-		this.gamePanel2.BorderColor = System.Drawing.Color.CornflowerBlue;
-		this.gamePanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-		this.gamePanel2.Controls.Add(this.lstComponentsInstalled);
-		this.gamePanel2.ForeColor = System.Drawing.Color.White;
-		this.gamePanel2.Location = new System.Drawing.Point(253, 155);
-		this.gamePanel2.Name = "gamePanel2";
-		this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
-		this.gamePanel2.Size = new System.Drawing.Size(292, 368);
-		this.gamePanel2.TabIndex = 9;
-		// 
-		// lstComponentsInstalled
-		// 
-		this.lstComponentsInstalled.BackColor = System.Drawing.Color.Black;
-		this.lstComponentsInstalled.BorderStyle = System.Windows.Forms.BorderStyle.None;
-		this.lstComponentsInstalled.Dock = System.Windows.Forms.DockStyle.Fill;
-		this.lstComponentsInstalled.ForeColor = System.Drawing.Color.White;
-		this.lstComponentsInstalled.HoverSelection = true;
-		this.lstComponentsInstalled.Location = new System.Drawing.Point(3, 3);
-		this.lstComponentsInstalled.Name = "lstComponentsInstalled";
-		this.lstComponentsInstalled.Size = new System.Drawing.Size(284, 360);
-		this.lstComponentsInstalled.TabIndex = 0;
-		this.lstComponentsInstalled.UseCompatibleStateImageBehavior = false;
-		this.lstComponentsInstalled.View = System.Windows.Forms.View.Tile;
-		this.lstComponentsInstalled.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstComponentsInstalled_ItemMouseHover);
-		this.lstComponentsInstalled.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstComponentsInstalled_MouseDown);
-		// 
-		// gamePanel1
-		// 
-		this.gamePanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-		this.gamePanel1.BackColor = System.Drawing.Color.Black;
-		this.gamePanel1.BorderColor = System.Drawing.Color.CornflowerBlue;
-		this.gamePanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-		this.gamePanel1.Controls.Add(this.lstComponentsAvailable);
-		this.gamePanel1.ForeColor = System.Drawing.Color.White;
-		this.gamePanel1.Location = new System.Drawing.Point(12, 181);
-		this.gamePanel1.Name = "gamePanel1";
-		this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
-		this.gamePanel1.Size = new System.Drawing.Size(234, 342);
-		this.gamePanel1.TabIndex = 7;
-		// 
-		// lstComponentsAvailable
-		// 
-		this.lstComponentsAvailable.BackColor = System.Drawing.Color.Black;
-		this.lstComponentsAvailable.BorderStyle = System.Windows.Forms.BorderStyle.None;
-		this.lstComponentsAvailable.Dock = System.Windows.Forms.DockStyle.Fill;
-		this.lstComponentsAvailable.ForeColor = System.Drawing.Color.White;
-		this.lstComponentsAvailable.HoverSelection = true;
-		this.lstComponentsAvailable.Location = new System.Drawing.Point(3, 3);
-		this.lstComponentsAvailable.Name = "lstComponentsAvailable";
-		this.lstComponentsAvailable.Size = new System.Drawing.Size(226, 334);
-		this.lstComponentsAvailable.TabIndex = 0;
-		this.lstComponentsAvailable.UseCompatibleStateImageBehavior = false;
-		this.lstComponentsAvailable.View = System.Windows.Forms.View.Tile;
-		this.lstComponentsAvailable.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstComponentsAvailable_ItemMouseHover);
-		this.lstComponentsAvailable.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstComponentsAvailable_MouseDown);
-		// 
-		// btnHull
-		// 
-		this.btnHull.BackColor = System.Drawing.Color.Black;
-		this.btnHull.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.btnHull.Location = new System.Drawing.Point(80, 8);
-		this.btnHull.Name = "btnHull";
-		this.btnHull.Size = new System.Drawing.Size(167, 23);
-		this.btnHull.TabIndex = 2;
-		this.btnHull.Text = "(choose)";
-		this.btnHull.UseVisualStyleBackColor = false;
-		this.btnHull.Click += new System.EventHandler(this.btnHull_Click);
-		// 
-		// txtIteration
-		// 
-		this.txtIteration.AutoSize = true;
-		this.txtIteration.Location = new System.Drawing.Point(223, 70);
-		this.txtIteration.Name = "txtIteration";
-		this.txtIteration.Size = new System.Drawing.Size(22, 13);
-		this.txtIteration.TabIndex = 29;
-		this.txtIteration.Text = "Iter";
-		// 
-		// picPortrait
-		// 
-		this.picPortrait.Location = new System.Drawing.Point(551, 191);
-		this.picPortrait.Name = "picPortrait";
-		this.picPortrait.Size = new System.Drawing.Size(146, 146);
-		this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-		this.picPortrait.TabIndex = 30;
-		this.picPortrait.TabStop = false;
-		this.picPortrait.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picPortrait_MouseDown);
-		// 
-		// btnMountInfo
-		// 
-		this.btnMountInfo.BackColor = System.Drawing.Color.Black;
-		this.btnMountInfo.Enabled = false;
-		this.btnMountInfo.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.btnMountInfo.Location = new System.Drawing.Point(226, 94);
-		this.btnMountInfo.Name = "btnMountInfo";
-		this.btnMountInfo.Size = new System.Drawing.Size(20, 23);
-		this.btnMountInfo.TabIndex = 26;
-		this.btnMountInfo.Text = "?";
-		this.btnMountInfo.UseVisualStyleBackColor = false;
-		this.btnMountInfo.Click += new System.EventHandler(this.btnMountInfo_Click);
-		// 
-		// ddlMount
-		// 
-		this.ddlMount.BackColor = System.Drawing.Color.Black;
-		this.ddlMount.DisplayMember = "ShortName";
-		this.ddlMount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-		this.ddlMount.Enabled = false;
-		this.ddlMount.ForeColor = System.Drawing.Color.White;
-		this.ddlMount.FormattingEnabled = true;
-		this.ddlMount.Location = new System.Drawing.Point(80, 96);
-		this.ddlMount.Name = "ddlMount";
-		this.ddlMount.Size = new System.Drawing.Size(113, 21);
-		this.ddlMount.TabIndex = 31;
-		this.ddlMount.ValueMember = "Mount";
-		this.ddlMount.SelectedIndexChanged += new System.EventHandler(this.ddlMount_SelectedIndexChanged);
-		// 
-		// btnHelp
-		// 
-		this.btnHelp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-		this.btnHelp.BackColor = System.Drawing.Color.Black;
-		this.btnHelp.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.btnHelp.Location = new System.Drawing.Point(551, 494);
-		this.btnHelp.Name = "btnHelp";
-		this.btnHelp.Size = new System.Drawing.Size(146, 29);
-		this.btnHelp.TabIndex = 32;
-		this.btnHelp.Text = "Help";
-		this.btnHelp.UseVisualStyleBackColor = false;
-		this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
-		// 
-		// btnMount
-		// 
-		this.btnMount.BackColor = System.Drawing.Color.Black;
-		this.btnMount.ForeColor = System.Drawing.Color.CornflowerBlue;
-		this.btnMount.Location = new System.Drawing.Point(200, 94);
-		this.btnMount.Name = "btnMount";
-		this.btnMount.Size = new System.Drawing.Size(20, 23);
-		this.btnMount.TabIndex = 33;
-		this.btnMount.Text = "...";
-		this.btnMount.UseVisualStyleBackColor = false;
-		this.btnMount.Click += new System.EventHandler(this.btnMount_Click);
-		// 
-		// VehicleDesignForm
-		// 
-		this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-		this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-		this.BackColor = System.Drawing.Color.Black;
-		this.ClientSize = new System.Drawing.Size(709, 636);
-		this.Controls.Add(this.btnMount);
-		this.Controls.Add(this.btnHelp);
-		this.Controls.Add(this.ddlMount);
-		this.Controls.Add(this.picPortrait);
-		this.Controls.Add(this.txtIteration);
-		this.Controls.Add(this.chkFilterByMount);
-		this.Controls.Add(this.btnMountInfo);
-		this.Controls.Add(this.btnWeaponsReport);
-		this.Controls.Add(this.btnCancel);
-		this.Controls.Add(this.btnSave);
-		this.Controls.Add(this.pnlStats);
-		this.Controls.Add(this.chkOnlyLatest);
-		this.Controls.Add(this.label8);
-		this.Controls.Add(this.gamePanel4);
-		this.Controls.Add(this.label7);
-		this.Controls.Add(this.gamePanel3);
-		this.Controls.Add(this.label6);
-		this.Controls.Add(this.label5);
-		this.Controls.Add(this.gamePanel2);
-		this.Controls.Add(this.label4);
-		this.Controls.Add(this.gamePanel1);
-		this.Controls.Add(this.ddlName);
-		this.Controls.Add(this.label3);
-		this.Controls.Add(this.ddlRole);
-		this.Controls.Add(this.label2);
-		this.Controls.Add(this.btnHull);
-		this.Controls.Add(this.label1);
-		this.MaximumSize = new System.Drawing.Size(725, 9999);
-		this.MinimumSize = new System.Drawing.Size(725, 493);
-		this.Name = "VehicleDesignForm";
-		this.ShowInTaskbar = false;
-		this.Text = "Vehicle Designer";
-		this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.VehicleDesignForm_FormClosing);
-		this.pnlStats.ResumeLayout(false);
-		this.pnlStats.PerformLayout();
-		this.gamePanel4.ResumeLayout(false);
-		this.gamePanel4.PerformLayout();
-		((System.ComponentModel.ISupportInitialize)(this.picDetailIcon)).EndInit();
-		this.gamePanel3.ResumeLayout(false);
-		this.gamePanel2.ResumeLayout(false);
-		this.gamePanel1.ResumeLayout(false);
-		((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
-		this.ResumeLayout(false);
-		this.PerformLayout();
+    /// <summary>
+    /// Required method for Designer support - do not modify
+    /// the contents of this method with the code editor.
+    /// </summary>
+    private void InitializeComponent()
+    {
+        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VehicleDesignForm));
+        label1 = new System.Windows.Forms.Label();
+        label2 = new System.Windows.Forms.Label();
+        ddlRole = new System.Windows.Forms.ComboBox();
+        label3 = new System.Windows.Forms.Label();
+        ddlName = new System.Windows.Forms.ComboBox();
+        label4 = new System.Windows.Forms.Label();
+        label5 = new System.Windows.Forms.Label();
+        label6 = new System.Windows.Forms.Label();
+        label7 = new System.Windows.Forms.Label();
+        label8 = new System.Windows.Forms.Label();
+        chkOnlyLatest = new System.Windows.Forms.CheckBox();
+        chkFilterByMount = new System.Windows.Forms.CheckBox();
+        btnWeaponsReport = new Controls.GameButton();
+        btnCancel = new Controls.GameButton();
+        btnSave = new Controls.GameButton();
+        pnlStats = new Controls.GamePanel();
+        txtEngines = new System.Windows.Forms.Label();
+        label14 = new System.Windows.Forms.Label();
+        txtEvasion = new System.Windows.Forms.Label();
+        label18 = new System.Windows.Forms.Label();
+        txtAccuracy = new System.Windows.Forms.Label();
+        label11 = new System.Windows.Forms.Label();
+        txtRange = new System.Windows.Forms.Label();
+        label22 = new System.Windows.Forms.Label();
+        txtHull = new System.Windows.Forms.Label();
+        txtArmor = new System.Windows.Forms.Label();
+        txtShields = new System.Windows.Forms.Label();
+        txtSpeed = new System.Windows.Forms.Label();
+        txtSupplyStorage = new System.Windows.Forms.Label();
+        label17 = new System.Windows.Forms.Label();
+        txtCargo = new System.Windows.Forms.Label();
+        label15 = new System.Windows.Forms.Label();
+        label13 = new System.Windows.Forms.Label();
+        label12 = new System.Windows.Forms.Label();
+        txtSpaceFree = new System.Windows.Forms.Label();
+        resCostRad = new Controls.Blazor.ResourceDisplay();
+        resCostOrg = new Controls.Blazor.ResourceDisplay();
+        resCostMin = new Controls.Blazor.ResourceDisplay();
+        label10 = new System.Windows.Forms.Label();
+        label9 = new System.Windows.Forms.Label();
+        gamePanel4 = new Controls.GamePanel();
+        txtDetailDescription = new System.Windows.Forms.Label();
+        resDetailRad = new Controls.Blazor.ResourceDisplay();
+        resDetailOrg = new Controls.Blazor.ResourceDisplay();
+        resDetailMin = new Controls.Blazor.ResourceDisplay();
+        txtDetailSize = new System.Windows.Forms.Label();
+        txtDetailName = new System.Windows.Forms.Label();
+        picDetailIcon = new Controls.Blazor.GamePictureBox();
+        gamePanel3 = new Controls.GamePanel();
+        lstWarnings = new System.Windows.Forms.TextBox();
+        gamePanel2 = new Controls.GamePanel();
+        lstComponentsInstalled = new System.Windows.Forms.ListView();
+        gamePanel1 = new Controls.GamePanel();
+        lstComponentsAvailable = new System.Windows.Forms.ListView();
+        btnHull = new Controls.GameButton();
+        txtIteration = new System.Windows.Forms.Label();
+        picPortrait = new Controls.Blazor.GamePictureBox();
+        btnMountInfo = new Controls.GameButton();
+        ddlMount = new System.Windows.Forms.ComboBox();
+        btnHelp = new Controls.GameButton();
+        btnMount = new Controls.GameButton();
+        pnlStats.SuspendLayout();
+        gamePanel4.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)picDetailIcon).BeginInit();
+        gamePanel3.SuspendLayout();
+        gamePanel2.SuspendLayout();
+        gamePanel1.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)picPortrait).BeginInit();
+        SuspendLayout();
+        // 
+        // label1
+        // 
+        label1.AutoSize = true;
+        label1.ForeColor = System.Drawing.Color.CornflowerBlue;
+        label1.Location = new System.Drawing.Point(15, 15);
+        label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label1.Name = "label1";
+        label1.Size = new System.Drawing.Size(29, 15);
+        label1.TabIndex = 0;
+        label1.Text = "Hull";
+        // 
+        // label2
+        // 
+        label2.AutoSize = true;
+        label2.ForeColor = System.Drawing.Color.CornflowerBlue;
+        label2.Location = new System.Drawing.Point(15, 47);
+        label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label2.Name = "label2";
+        label2.Size = new System.Drawing.Size(30, 15);
+        label2.TabIndex = 3;
+        label2.Text = "Role";
+        // 
+        // ddlRole
+        // 
+        ddlRole.BackColor = System.Drawing.Color.Black;
+        ddlRole.Enabled = false;
+        ddlRole.ForeColor = System.Drawing.Color.White;
+        ddlRole.FormattingEnabled = true;
+        ddlRole.Location = new System.Drawing.Point(93, 44);
+        ddlRole.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        ddlRole.Name = "ddlRole";
+        ddlRole.Size = new System.Drawing.Size(194, 23);
+        ddlRole.TabIndex = 4;
+        ddlRole.TextChanged += ddlRole_TextChanged;
+        // 
+        // label3
+        // 
+        label3.AutoSize = true;
+        label3.ForeColor = System.Drawing.Color.CornflowerBlue;
+        label3.Location = new System.Drawing.Point(15, 81);
+        label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label3.Name = "label3";
+        label3.Size = new System.Drawing.Size(39, 15);
+        label3.TabIndex = 5;
+        label3.Text = "Name";
+        // 
+        // ddlName
+        // 
+        ddlName.BackColor = System.Drawing.Color.Black;
+        ddlName.Enabled = false;
+        ddlName.ForeColor = System.Drawing.Color.White;
+        ddlName.FormattingEnabled = true;
+        ddlName.Location = new System.Drawing.Point(93, 77);
+        ddlName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        ddlName.Name = "ddlName";
+        ddlName.Size = new System.Drawing.Size(163, 23);
+        ddlName.TabIndex = 6;
+        ddlName.TextChanged += ddlName_TextChanged;
+        // 
+        // label4
+        // 
+        label4.AutoSize = true;
+        label4.ForeColor = System.Drawing.Color.CornflowerBlue;
+        label4.Location = new System.Drawing.Point(15, 160);
+        label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label4.Name = "label4";
+        label4.Size = new System.Drawing.Size(127, 15);
+        label4.TabIndex = 8;
+        label4.Text = "Components Available";
+        // 
+        // label5
+        // 
+        label5.AutoSize = true;
+        label5.ForeColor = System.Drawing.Color.CornflowerBlue;
+        label5.Location = new System.Drawing.Point(296, 160);
+        label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label5.Name = "label5";
+        label5.Size = new System.Drawing.Size(123, 15);
+        label5.TabIndex = 10;
+        label5.Text = "Components Installed";
+        // 
+        // label6
+        // 
+        label6.AutoSize = true;
+        label6.ForeColor = System.Drawing.Color.CornflowerBlue;
+        label6.Location = new System.Drawing.Point(15, 114);
+        label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label6.Name = "label6";
+        label6.Size = new System.Drawing.Size(65, 15);
+        label6.TabIndex = 13;
+        label6.Text = "Use Mount";
+        // 
+        // label7
+        // 
+        label7.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+        label7.AutoSize = true;
+        label7.ForeColor = System.Drawing.Color.CornflowerBlue;
+        label7.Location = new System.Drawing.Point(14, 608);
+        label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label7.Name = "label7";
+        label7.Size = new System.Drawing.Size(57, 15);
+        label7.TabIndex = 18;
+        label7.Text = "Warnings";
+        // 
+        // label8
+        // 
+        label8.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+        label8.AutoSize = true;
+        label8.ForeColor = System.Drawing.Color.CornflowerBlue;
+        label8.Location = new System.Drawing.Point(296, 608);
+        label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label8.Name = "label8";
+        label8.Size = new System.Drawing.Size(109, 15);
+        label8.TabIndex = 20;
+        label8.Text = "Component Details";
+        // 
+        // chkOnlyLatest
+        // 
+        chkOnlyLatest.AutoSize = true;
+        chkOnlyLatest.Checked = true;
+        chkOnlyLatest.CheckState = System.Windows.Forms.CheckState.Checked;
+        chkOnlyLatest.Location = new System.Drawing.Point(14, 187);
+        chkOnlyLatest.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        chkOnlyLatest.Name = "chkOnlyLatest";
+        chkOnlyLatest.Size = new System.Drawing.Size(85, 19);
+        chkOnlyLatest.TabIndex = 21;
+        chkOnlyLatest.Text = "Only Latest";
+        chkOnlyLatest.UseVisualStyleBackColor = true;
+        chkOnlyLatest.CheckedChanged += chkOnlyLatest_CheckedChanged;
+        // 
+        // chkFilterByMount
+        // 
+        chkFilterByMount.AutoSize = true;
+        chkFilterByMount.Location = new System.Drawing.Point(113, 187);
+        chkFilterByMount.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        chkFilterByMount.Name = "chkFilterByMount";
+        chkFilterByMount.Size = new System.Drawing.Size(107, 19);
+        chkFilterByMount.TabIndex = 28;
+        chkFilterByMount.Text = "Filter By Mount";
+        chkFilterByMount.UseVisualStyleBackColor = true;
+        chkFilterByMount.CheckedChanged += chkFilterByMount_CheckedChanged;
+        // 
+        // btnWeaponsReport
+        // 
+        btnWeaponsReport.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+        btnWeaponsReport.BackColor = System.Drawing.Color.Black;
+        btnWeaponsReport.ForeColor = System.Drawing.Color.CornflowerBlue;
+        btnWeaponsReport.Location = new System.Drawing.Point(643, 179);
+        btnWeaponsReport.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        btnWeaponsReport.Name = "btnWeaponsReport";
+        btnWeaponsReport.Size = new System.Drawing.Size(170, 33);
+        btnWeaponsReport.TabIndex = 26;
+        btnWeaponsReport.Text = "Weapons Report";
+        btnWeaponsReport.UseVisualStyleBackColor = false;
+        // 
+        // btnCancel
+        // 
+        btnCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+        btnCancel.BackColor = System.Drawing.Color.Black;
+        btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
+        btnCancel.Location = new System.Drawing.Point(643, 646);
+        btnCancel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        btnCancel.Name = "btnCancel";
+        btnCancel.Size = new System.Drawing.Size(170, 33);
+        btnCancel.TabIndex = 24;
+        btnCancel.Text = "Cancel";
+        btnCancel.UseVisualStyleBackColor = false;
+        btnCancel.Click += btnCancel_Click;
+        // 
+        // btnSave
+        // 
+        btnSave.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+        btnSave.BackColor = System.Drawing.Color.Black;
+        btnSave.ForeColor = System.Drawing.Color.CornflowerBlue;
+        btnSave.Location = new System.Drawing.Point(643, 687);
+        btnSave.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        btnSave.Name = "btnSave";
+        btnSave.Size = new System.Drawing.Size(170, 33);
+        btnSave.TabIndex = 23;
+        btnSave.Text = "Save";
+        btnSave.UseVisualStyleBackColor = false;
+        btnSave.Click += btnSave_Click;
+        // 
+        // pnlStats
+        // 
+        pnlStats.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+        pnlStats.BackColor = System.Drawing.Color.Black;
+        pnlStats.BorderColor = System.Drawing.Color.CornflowerBlue;
+        pnlStats.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+        pnlStats.Controls.Add(txtEngines);
+        pnlStats.Controls.Add(label14);
+        pnlStats.Controls.Add(txtEvasion);
+        pnlStats.Controls.Add(label18);
+        pnlStats.Controls.Add(txtAccuracy);
+        pnlStats.Controls.Add(label11);
+        pnlStats.Controls.Add(txtRange);
+        pnlStats.Controls.Add(label22);
+        pnlStats.Controls.Add(txtHull);
+        pnlStats.Controls.Add(txtArmor);
+        pnlStats.Controls.Add(txtShields);
+        pnlStats.Controls.Add(txtSpeed);
+        pnlStats.Controls.Add(txtSupplyStorage);
+        pnlStats.Controls.Add(label17);
+        pnlStats.Controls.Add(txtCargo);
+        pnlStats.Controls.Add(label15);
+        pnlStats.Controls.Add(label13);
+        pnlStats.Controls.Add(label12);
+        pnlStats.Controls.Add(txtSpaceFree);
+        pnlStats.Controls.Add(resCostRad);
+        pnlStats.Controls.Add(resCostOrg);
+        pnlStats.Controls.Add(resCostMin);
+        pnlStats.Controls.Add(label10);
+        pnlStats.Controls.Add(label9);
+        pnlStats.ForeColor = System.Drawing.Color.White;
+        pnlStats.Location = new System.Drawing.Point(300, 9);
+        pnlStats.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        pnlStats.Name = "pnlStats";
+        pnlStats.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        pnlStats.Size = new System.Drawing.Size(513, 147);
+        pnlStats.TabIndex = 22;
+        // 
+        // txtEngines
+        // 
+        txtEngines.AutoSize = true;
+        txtEngines.Location = new System.Drawing.Point(98, 115);
+        txtEngines.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        txtEngines.Name = "txtEngines";
+        txtEngines.Size = new System.Drawing.Size(30, 15);
+        txtEngines.TabIndex = 28;
+        txtEngines.Text = "0 / 0";
+        // 
+        // label14
+        // 
+        label14.AutoSize = true;
+        label14.ForeColor = System.Drawing.Color.CornflowerBlue;
+        label14.Location = new System.Drawing.Point(4, 115);
+        label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label14.Name = "label14";
+        label14.Size = new System.Drawing.Size(48, 15);
+        label14.TabIndex = 27;
+        label14.Text = "Engines";
+        // 
+        // txtEvasion
+        // 
+        txtEvasion.AutoSize = true;
+        txtEvasion.Location = new System.Drawing.Point(295, 72);
+        txtEvasion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        txtEvasion.Name = "txtEvasion";
+        txtEvasion.Size = new System.Drawing.Size(31, 15);
+        txtEvasion.TabIndex = 26;
+        txtEvasion.Text = "+0%";
+        // 
+        // label18
+        // 
+        label18.AutoSize = true;
+        label18.ForeColor = System.Drawing.Color.CornflowerBlue;
+        label18.Location = new System.Drawing.Point(209, 70);
+        label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label18.Name = "label18";
+        label18.Size = new System.Drawing.Size(47, 15);
+        label18.TabIndex = 25;
+        label18.Text = "Evasion";
+        // 
+        // txtAccuracy
+        // 
+        txtAccuracy.AutoSize = true;
+        txtAccuracy.Location = new System.Drawing.Point(295, 57);
+        txtAccuracy.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        txtAccuracy.Name = "txtAccuracy";
+        txtAccuracy.Size = new System.Drawing.Size(31, 15);
+        txtAccuracy.TabIndex = 24;
+        txtAccuracy.Text = "+0%";
+        // 
+        // label11
+        // 
+        label11.AutoSize = true;
+        label11.ForeColor = System.Drawing.Color.CornflowerBlue;
+        label11.Location = new System.Drawing.Point(209, 57);
+        label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label11.Name = "label11";
+        label11.Size = new System.Drawing.Size(56, 15);
+        label11.TabIndex = 23;
+        label11.Text = "Accuracy";
+        // 
+        // txtRange
+        // 
+        txtRange.AutoSize = true;
+        txtRange.Location = new System.Drawing.Point(98, 100);
+        txtRange.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        txtRange.Name = "txtRange";
+        txtRange.Size = new System.Drawing.Size(53, 15);
+        txtRange.TabIndex = 22;
+        txtRange.Text = "0 sectors";
+        // 
+        // label22
+        // 
+        label22.AutoSize = true;
+        label22.ForeColor = System.Drawing.Color.CornflowerBlue;
+        label22.Location = new System.Drawing.Point(4, 100);
+        label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label22.Name = "label22";
+        label22.Size = new System.Drawing.Size(40, 15);
+        label22.TabIndex = 21;
+        label22.Text = "Range";
+        // 
+        // txtHull
+        // 
+        txtHull.AutoSize = true;
+        txtHull.Location = new System.Drawing.Point(295, 37);
+        txtHull.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        txtHull.Name = "txtHull";
+        txtHull.Size = new System.Drawing.Size(36, 15);
+        txtHull.TabIndex = 20;
+        txtHull.Text = "0 hull";
+        // 
+        // txtArmor
+        // 
+        txtArmor.AutoSize = true;
+        txtArmor.Location = new System.Drawing.Point(295, 20);
+        txtArmor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        txtArmor.Name = "txtArmor";
+        txtArmor.Size = new System.Drawing.Size(48, 15);
+        txtArmor.TabIndex = 19;
+        txtArmor.Text = "0 armor";
+        // 
+        // txtShields
+        // 
+        txtShields.AutoSize = true;
+        txtShields.Location = new System.Drawing.Point(295, 5);
+        txtShields.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        txtShields.Name = "txtShields";
+        txtShields.Size = new System.Drawing.Size(110, 15);
+        txtShields.TabIndex = 18;
+        txtShields.Text = "0 shields (+0 regen)";
+        // 
+        // txtSpeed
+        // 
+        txtSpeed.AutoSize = true;
+        txtSpeed.Location = new System.Drawing.Point(98, 72);
+        txtSpeed.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        txtSpeed.Name = "txtSpeed";
+        txtSpeed.Size = new System.Drawing.Size(80, 15);
+        txtSpeed.TabIndex = 17;
+        txtSpeed.Text = "0 sectors/turn";
+        // 
+        // txtSupplyStorage
+        // 
+        txtSupplyStorage.AutoSize = true;
+        txtSupplyStorage.Location = new System.Drawing.Point(98, 87);
+        txtSupplyStorage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        txtSupplyStorage.Name = "txtSupplyStorage";
+        txtSupplyStorage.Size = new System.Drawing.Size(13, 15);
+        txtSupplyStorage.TabIndex = 16;
+        txtSupplyStorage.Text = "0";
+        // 
+        // label17
+        // 
+        label17.AutoSize = true;
+        label17.ForeColor = System.Drawing.Color.CornflowerBlue;
+        label17.Location = new System.Drawing.Point(4, 85);
+        label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label17.Name = "label17";
+        label17.Size = new System.Drawing.Size(51, 15);
+        label17.TabIndex = 15;
+        label17.Text = "Supplies";
+        // 
+        // txtCargo
+        // 
+        txtCargo.AutoSize = true;
+        txtCargo.Location = new System.Drawing.Point(296, 100);
+        txtCargo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        txtCargo.Name = "txtCargo";
+        txtCargo.Size = new System.Drawing.Size(25, 15);
+        txtCargo.TabIndex = 14;
+        txtCargo.Text = "0kT";
+        // 
+        // label15
+        // 
+        label15.AutoSize = true;
+        label15.ForeColor = System.Drawing.Color.CornflowerBlue;
+        label15.Location = new System.Drawing.Point(209, 100);
+        label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label15.Name = "label15";
+        label15.Size = new System.Drawing.Size(82, 15);
+        label15.TabIndex = 13;
+        label15.Text = "Cargo Storage";
+        // 
+        // label13
+        // 
+        label13.AutoSize = true;
+        label13.ForeColor = System.Drawing.Color.CornflowerBlue;
+        label13.Location = new System.Drawing.Point(209, 5);
+        label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label13.Name = "label13";
+        label13.Size = new System.Drawing.Size(58, 15);
+        label13.TabIndex = 11;
+        label13.Text = "Durability";
+        // 
+        // label12
+        // 
+        label12.AutoSize = true;
+        label12.ForeColor = System.Drawing.Color.CornflowerBlue;
+        label12.Location = new System.Drawing.Point(4, 70);
+        label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label12.Name = "label12";
+        label12.Size = new System.Drawing.Size(39, 15);
+        label12.TabIndex = 10;
+        label12.Text = "Speed";
+        // 
+        // txtSpaceFree
+        // 
+        txtSpaceFree.AutoSize = true;
+        txtSpaceFree.Location = new System.Drawing.Point(98, 3);
+        txtSpaceFree.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        txtSpaceFree.Name = "txtSpaceFree";
+        txtSpaceFree.Size = new System.Drawing.Size(54, 15);
+        txtSpaceFree.TabIndex = 9;
+        txtSpaceFree.Text = "0kT / 0kT";
+        // 
+        // resCostRad
+        // 
+        resCostRad.Amount = 0;
+        resCostRad.BackColor = System.Drawing.Color.Black;
+        resCostRad.Change = null;
+        resCostRad.ForeColor = System.Drawing.Color.FromArgb(192, 0, 0);
+        resCostRad.Location = new System.Drawing.Point(91, 54);
+        resCostRad.Margin = new System.Windows.Forms.Padding(0);
+        resCostRad.Name = "resCostRad";
+        resCostRad.ResourceName = "Radioactives";
+        resCostRad.Size = new System.Drawing.Size(92, 17);
+        resCostRad.TabIndex = 8;
+        // 
+        // resCostOrg
+        // 
+        resCostOrg.Amount = 0;
+        resCostOrg.BackColor = System.Drawing.Color.Black;
+        resCostOrg.Change = null;
+        resCostOrg.ForeColor = System.Drawing.Color.FromArgb(0, 192, 0);
+        resCostOrg.Location = new System.Drawing.Point(91, 37);
+        resCostOrg.Margin = new System.Windows.Forms.Padding(0);
+        resCostOrg.Name = "resCostOrg";
+        resCostOrg.ResourceName = "Organics";
+        resCostOrg.Size = new System.Drawing.Size(92, 17);
+        resCostOrg.TabIndex = 7;
+        // 
+        // resCostMin
+        // 
+        resCostMin.Amount = 0;
+        resCostMin.BackColor = System.Drawing.Color.Black;
+        resCostMin.Change = null;
+        resCostMin.ForeColor = System.Drawing.Color.FromArgb(128, 128, 255);
+        resCostMin.Location = new System.Drawing.Point(91, 20);
+        resCostMin.Margin = new System.Windows.Forms.Padding(0);
+        resCostMin.Name = "resCostMin";
+        resCostMin.ResourceName = "Minerals";
+        resCostMin.Size = new System.Drawing.Size(92, 17);
+        resCostMin.TabIndex = 6;
+        // 
+        // label10
+        // 
+        label10.AutoSize = true;
+        label10.ForeColor = System.Drawing.Color.CornflowerBlue;
+        label10.Location = new System.Drawing.Point(4, 20);
+        label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label10.Name = "label10";
+        label10.Size = new System.Drawing.Size(31, 15);
+        label10.TabIndex = 2;
+        label10.Text = "Cost";
+        // 
+        // label9
+        // 
+        label9.AutoSize = true;
+        label9.ForeColor = System.Drawing.Color.CornflowerBlue;
+        label9.Location = new System.Drawing.Point(4, 5);
+        label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        label9.Name = "label9";
+        label9.Size = new System.Drawing.Size(63, 15);
+        label9.TabIndex = 1;
+        label9.Text = "Space Free";
+        // 
+        // gamePanel4
+        // 
+        gamePanel4.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+        gamePanel4.BackColor = System.Drawing.Color.Black;
+        gamePanel4.BorderColor = System.Drawing.Color.CornflowerBlue;
+        gamePanel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+        gamePanel4.Controls.Add(txtDetailDescription);
+        gamePanel4.Controls.Add(resDetailRad);
+        gamePanel4.Controls.Add(resDetailOrg);
+        gamePanel4.Controls.Add(resDetailMin);
+        gamePanel4.Controls.Add(txtDetailSize);
+        gamePanel4.Controls.Add(txtDetailName);
+        gamePanel4.Controls.Add(picDetailIcon);
+        gamePanel4.ForeColor = System.Drawing.Color.White;
+        gamePanel4.Location = new System.Drawing.Point(295, 627);
+        gamePanel4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        gamePanel4.Name = "gamePanel4";
+        gamePanel4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        gamePanel4.Size = new System.Drawing.Size(340, 93);
+        gamePanel4.TabIndex = 19;
+        // 
+        // txtDetailDescription
+        // 
+        txtDetailDescription.Location = new System.Drawing.Point(4, 53);
+        txtDetailDescription.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        txtDetailDescription.Name = "txtDetailDescription";
+        txtDetailDescription.Size = new System.Drawing.Size(230, 35);
+        txtDetailDescription.TabIndex = 6;
+        txtDetailDescription.Text = "label9";
+        // 
+        // resDetailRad
+        // 
+        resDetailRad.Amount = 0;
+        resDetailRad.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+        resDetailRad.BackColor = System.Drawing.Color.Black;
+        resDetailRad.Change = null;
+        resDetailRad.ForeColor = System.Drawing.Color.FromArgb(192, 0, 0);
+        resDetailRad.Location = new System.Drawing.Point(240, 70);
+        resDetailRad.Margin = new System.Windows.Forms.Padding(0);
+        resDetailRad.Name = "resDetailRad";
+        resDetailRad.ResourceName = "Radioactives";
+        resDetailRad.Size = new System.Drawing.Size(94, 17);
+        resDetailRad.TabIndex = 5;
+        // 
+        // resDetailOrg
+        // 
+        resDetailOrg.Amount = 0;
+        resDetailOrg.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+        resDetailOrg.BackColor = System.Drawing.Color.Black;
+        resDetailOrg.Change = null;
+        resDetailOrg.ForeColor = System.Drawing.Color.FromArgb(0, 192, 0);
+        resDetailOrg.Location = new System.Drawing.Point(240, 52);
+        resDetailOrg.Margin = new System.Windows.Forms.Padding(0);
+        resDetailOrg.Name = "resDetailOrg";
+        resDetailOrg.ResourceName = "Organics";
+        resDetailOrg.Size = new System.Drawing.Size(94, 17);
+        resDetailOrg.TabIndex = 4;
+        // 
+        // resDetailMin
+        // 
+        resDetailMin.Amount = 0;
+        resDetailMin.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
+        resDetailMin.BackColor = System.Drawing.Color.Black;
+        resDetailMin.Change = null;
+        resDetailMin.ForeColor = System.Drawing.Color.FromArgb(128, 128, 255);
+        resDetailMin.Location = new System.Drawing.Point(240, 35);
+        resDetailMin.Margin = new System.Windows.Forms.Padding(0);
+        resDetailMin.Name = "resDetailMin";
+        resDetailMin.ResourceName = "Minerals";
+        resDetailMin.Size = new System.Drawing.Size(94, 17);
+        resDetailMin.TabIndex = 3;
+        // 
+        // txtDetailSize
+        // 
+        txtDetailSize.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+        txtDetailSize.Location = new System.Drawing.Point(278, 8);
+        txtDetailSize.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        txtDetailSize.Name = "txtDetailSize";
+        txtDetailSize.Size = new System.Drawing.Size(54, 15);
+        txtDetailSize.TabIndex = 2;
+        txtDetailSize.Text = "(no size)";
+        txtDetailSize.TextAlign = System.Drawing.ContentAlignment.TopRight;
+        // 
+        // txtDetailName
+        // 
+        txtDetailName.AutoSize = true;
+        txtDetailName.Location = new System.Drawing.Point(52, 8);
+        txtDetailName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        txtDetailName.Name = "txtDetailName";
+        txtDetailName.Size = new System.Drawing.Size(94, 15);
+        txtDetailName.TabIndex = 1;
+        txtDetailName.Text = "(no component)";
+        // 
+        // picDetailIcon
+        // 
+        picDetailIcon.BackColor = System.Drawing.Color.Black;
+        picDetailIcon.ForeColor = System.Drawing.Color.White;
+        picDetailIcon.Image = (System.Drawing.Image)resources.GetObject("picDetailIcon.Image");
+        picDetailIcon.Location = new System.Drawing.Point(8, 8);
+        picDetailIcon.Margin = new System.Windows.Forms.Padding(0);
+        picDetailIcon.Name = "picDetailIcon";
+        picDetailIcon.Size = new System.Drawing.Size(37, 37);
+        picDetailIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+        picDetailIcon.TabIndex = 0;
+        picDetailIcon.TabStop = false;
+        // 
+        // gamePanel3
+        // 
+        gamePanel3.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+        gamePanel3.BackColor = System.Drawing.Color.Black;
+        gamePanel3.BorderColor = System.Drawing.Color.CornflowerBlue;
+        gamePanel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+        gamePanel3.Controls.Add(lstWarnings);
+        gamePanel3.ForeColor = System.Drawing.Color.White;
+        gamePanel3.Location = new System.Drawing.Point(14, 627);
+        gamePanel3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        gamePanel3.Name = "gamePanel3";
+        gamePanel3.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        gamePanel3.Size = new System.Drawing.Size(273, 93);
+        gamePanel3.TabIndex = 17;
+        // 
+        // lstWarnings
+        // 
+        lstWarnings.BackColor = System.Drawing.Color.Black;
+        lstWarnings.BorderStyle = System.Windows.Forms.BorderStyle.None;
+        lstWarnings.Dock = System.Windows.Forms.DockStyle.Fill;
+        lstWarnings.ForeColor = System.Drawing.Color.Salmon;
+        lstWarnings.Location = new System.Drawing.Point(4, 3);
+        lstWarnings.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        lstWarnings.Multiline = true;
+        lstWarnings.Name = "lstWarnings";
+        lstWarnings.PlaceholderText = "(No warnings)";
+        lstWarnings.ReadOnly = true;
+        lstWarnings.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+        lstWarnings.Size = new System.Drawing.Size(263, 85);
+        lstWarnings.TabIndex = 16;
+        // 
+        // gamePanel2
+        // 
+        gamePanel2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+        gamePanel2.BackColor = System.Drawing.Color.Black;
+        gamePanel2.BorderColor = System.Drawing.Color.CornflowerBlue;
+        gamePanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+        gamePanel2.Controls.Add(lstComponentsInstalled);
+        gamePanel2.ForeColor = System.Drawing.Color.White;
+        gamePanel2.Location = new System.Drawing.Point(295, 179);
+        gamePanel2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        gamePanel2.Name = "gamePanel2";
+        gamePanel2.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        gamePanel2.Size = new System.Drawing.Size(340, 424);
+        gamePanel2.TabIndex = 9;
+        // 
+        // lstComponentsInstalled
+        // 
+        lstComponentsInstalled.BackColor = System.Drawing.Color.Black;
+        lstComponentsInstalled.BorderStyle = System.Windows.Forms.BorderStyle.None;
+        lstComponentsInstalled.Dock = System.Windows.Forms.DockStyle.Fill;
+        lstComponentsInstalled.ForeColor = System.Drawing.Color.White;
+        lstComponentsInstalled.HoverSelection = true;
+        lstComponentsInstalled.Location = new System.Drawing.Point(4, 3);
+        lstComponentsInstalled.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        lstComponentsInstalled.Name = "lstComponentsInstalled";
+        lstComponentsInstalled.Size = new System.Drawing.Size(330, 416);
+        lstComponentsInstalled.TabIndex = 0;
+        lstComponentsInstalled.UseCompatibleStateImageBehavior = false;
+        lstComponentsInstalled.View = System.Windows.Forms.View.Tile;
+        lstComponentsInstalled.ItemMouseHover += lstComponentsInstalled_ItemMouseHover;
+        lstComponentsInstalled.MouseDown += lstComponentsInstalled_MouseDown;
+        // 
+        // gamePanel1
+        // 
+        gamePanel1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
+        gamePanel1.BackColor = System.Drawing.Color.Black;
+        gamePanel1.BorderColor = System.Drawing.Color.CornflowerBlue;
+        gamePanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+        gamePanel1.Controls.Add(lstComponentsAvailable);
+        gamePanel1.ForeColor = System.Drawing.Color.White;
+        gamePanel1.Location = new System.Drawing.Point(14, 209);
+        gamePanel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        gamePanel1.Name = "gamePanel1";
+        gamePanel1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        gamePanel1.Size = new System.Drawing.Size(273, 394);
+        gamePanel1.TabIndex = 7;
+        // 
+        // lstComponentsAvailable
+        // 
+        lstComponentsAvailable.BackColor = System.Drawing.Color.Black;
+        lstComponentsAvailable.BorderStyle = System.Windows.Forms.BorderStyle.None;
+        lstComponentsAvailable.Dock = System.Windows.Forms.DockStyle.Fill;
+        lstComponentsAvailable.ForeColor = System.Drawing.Color.White;
+        lstComponentsAvailable.HoverSelection = true;
+        lstComponentsAvailable.Location = new System.Drawing.Point(4, 3);
+        lstComponentsAvailable.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        lstComponentsAvailable.Name = "lstComponentsAvailable";
+        lstComponentsAvailable.Size = new System.Drawing.Size(263, 386);
+        lstComponentsAvailable.TabIndex = 0;
+        lstComponentsAvailable.UseCompatibleStateImageBehavior = false;
+        lstComponentsAvailable.View = System.Windows.Forms.View.Tile;
+        lstComponentsAvailable.ItemMouseHover += lstComponentsAvailable_ItemMouseHover;
+        lstComponentsAvailable.MouseDown += lstComponentsAvailable_MouseDown;
+        // 
+        // btnHull
+        // 
+        btnHull.BackColor = System.Drawing.Color.Black;
+        btnHull.ForeColor = System.Drawing.Color.CornflowerBlue;
+        btnHull.Location = new System.Drawing.Point(93, 9);
+        btnHull.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        btnHull.Name = "btnHull";
+        btnHull.Size = new System.Drawing.Size(195, 27);
+        btnHull.TabIndex = 2;
+        btnHull.Text = "(choose)";
+        btnHull.UseVisualStyleBackColor = false;
+        btnHull.Click += btnHull_Click;
+        // 
+        // txtIteration
+        // 
+        txtIteration.AutoSize = true;
+        txtIteration.Location = new System.Drawing.Point(260, 81);
+        txtIteration.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+        txtIteration.Name = "txtIteration";
+        txtIteration.Size = new System.Drawing.Size(24, 15);
+        txtIteration.TabIndex = 29;
+        txtIteration.Text = "Iter";
+        // 
+        // picPortrait
+        // 
+        picPortrait.BackColor = System.Drawing.Color.Black;
+        picPortrait.ForeColor = System.Drawing.Color.White;
+        picPortrait.Image = (System.Drawing.Image)resources.GetObject("picPortrait.Image");
+        picPortrait.Location = new System.Drawing.Point(643, 220);
+        picPortrait.Margin = new System.Windows.Forms.Padding(0);
+        picPortrait.Name = "picPortrait";
+        picPortrait.Size = new System.Drawing.Size(170, 168);
+        picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+        picPortrait.TabIndex = 30;
+        picPortrait.TabStop = false;
+        picPortrait.MouseDown += picPortrait_MouseDown;
+        // 
+        // btnMountInfo
+        // 
+        btnMountInfo.BackColor = System.Drawing.Color.Black;
+        btnMountInfo.Enabled = false;
+        btnMountInfo.ForeColor = System.Drawing.Color.CornflowerBlue;
+        btnMountInfo.Location = new System.Drawing.Point(264, 108);
+        btnMountInfo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        btnMountInfo.Name = "btnMountInfo";
+        btnMountInfo.Size = new System.Drawing.Size(23, 27);
+        btnMountInfo.TabIndex = 26;
+        btnMountInfo.Text = "?";
+        btnMountInfo.UseVisualStyleBackColor = false;
+        btnMountInfo.Click += btnMountInfo_Click;
+        // 
+        // ddlMount
+        // 
+        ddlMount.BackColor = System.Drawing.Color.Black;
+        ddlMount.DisplayMember = "ShortName";
+        ddlMount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+        ddlMount.Enabled = false;
+        ddlMount.ForeColor = System.Drawing.Color.White;
+        ddlMount.FormattingEnabled = true;
+        ddlMount.Location = new System.Drawing.Point(93, 111);
+        ddlMount.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        ddlMount.Name = "ddlMount";
+        ddlMount.Size = new System.Drawing.Size(131, 23);
+        ddlMount.TabIndex = 31;
+        ddlMount.ValueMember = "Mount";
+        ddlMount.SelectedIndexChanged += ddlMount_SelectedIndexChanged;
+        // 
+        // btnHelp
+        // 
+        btnHelp.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+        btnHelp.BackColor = System.Drawing.Color.Black;
+        btnHelp.ForeColor = System.Drawing.Color.CornflowerBlue;
+        btnHelp.Location = new System.Drawing.Point(643, 570);
+        btnHelp.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        btnHelp.Name = "btnHelp";
+        btnHelp.Size = new System.Drawing.Size(170, 33);
+        btnHelp.TabIndex = 32;
+        btnHelp.Text = "Help";
+        btnHelp.UseVisualStyleBackColor = false;
+        btnHelp.Click += btnHelp_Click;
+        // 
+        // btnMount
+        // 
+        btnMount.BackColor = System.Drawing.Color.Black;
+        btnMount.ForeColor = System.Drawing.Color.CornflowerBlue;
+        btnMount.Location = new System.Drawing.Point(233, 108);
+        btnMount.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        btnMount.Name = "btnMount";
+        btnMount.Size = new System.Drawing.Size(23, 27);
+        btnMount.TabIndex = 33;
+        btnMount.Text = "...";
+        btnMount.UseVisualStyleBackColor = false;
+        btnMount.Click += btnMount_Click;
+        // 
+        // VehicleDesignForm
+        // 
+        AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+        AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        BackColor = System.Drawing.Color.Black;
+        ClientSize = new System.Drawing.Size(827, 734);
+        Controls.Add(btnMount);
+        Controls.Add(btnHelp);
+        Controls.Add(ddlMount);
+        Controls.Add(picPortrait);
+        Controls.Add(txtIteration);
+        Controls.Add(chkFilterByMount);
+        Controls.Add(btnMountInfo);
+        Controls.Add(btnWeaponsReport);
+        Controls.Add(btnCancel);
+        Controls.Add(btnSave);
+        Controls.Add(pnlStats);
+        Controls.Add(chkOnlyLatest);
+        Controls.Add(label8);
+        Controls.Add(gamePanel4);
+        Controls.Add(label7);
+        Controls.Add(gamePanel3);
+        Controls.Add(label6);
+        Controls.Add(label5);
+        Controls.Add(gamePanel2);
+        Controls.Add(label4);
+        Controls.Add(gamePanel1);
+        Controls.Add(ddlName);
+        Controls.Add(label3);
+        Controls.Add(ddlRole);
+        Controls.Add(label2);
+        Controls.Add(btnHull);
+        Controls.Add(label1);
+        Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        MaximumSize = new System.Drawing.Size(843, 11531);
+        MinimumSize = new System.Drawing.Size(843, 563);
+        Name = "VehicleDesignForm";
+        ShowInTaskbar = false;
+        Text = "Vehicle Designer";
+        FormClosing += VehicleDesignForm_FormClosing;
+        pnlStats.ResumeLayout(false);
+        pnlStats.PerformLayout();
+        gamePanel4.ResumeLayout(false);
+        gamePanel4.PerformLayout();
+        ((System.ComponentModel.ISupportInitialize)picDetailIcon).EndInit();
+        gamePanel3.ResumeLayout(false);
+        gamePanel3.PerformLayout();
+        gamePanel2.ResumeLayout(false);
+        gamePanel1.ResumeLayout(false);
+        ((System.ComponentModel.ISupportInitialize)picPortrait).EndInit();
+        ResumeLayout(false);
+        PerformLayout();
+    }
 
-	}
+    #endregion
 
-	#endregion
-
-	private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.Label label1;
 	private Controls.GameButton btnHull;
 	private System.Windows.Forms.Label label2;
 	private System.Windows.Forms.ComboBox ddlRole;
@@ -887,7 +946,7 @@ partial class VehicleDesignForm
 	private System.Windows.Forms.Label label5;
 	private System.Windows.Forms.Label label6;
 	private Controls.GamePanel gamePanel3;
-	private System.Windows.Forms.ListBox lstWarnings;
+	private System.Windows.Forms.TextBox lstWarnings;
 	private System.Windows.Forms.Label label7;
 	private Controls.GamePanel gamePanel4;
 	private System.Windows.Forms.Label label8;
@@ -934,4 +993,5 @@ partial class VehicleDesignForm
 	private System.Windows.Forms.Label txtEngines;
 	private System.Windows.Forms.Label label14;
 	private Controls.GameButton btnMount;
+    
 }

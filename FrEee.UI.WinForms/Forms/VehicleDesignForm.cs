@@ -253,11 +253,15 @@ public partial class VehicleDesignForm : GameForm
 
 	private void BindWarnings()
 	{
-		lstWarnings.Items.Clear();
+		lstWarnings.Text = "";
 		if (Design != null)
 		{
 			foreach (var w in Design.Warnings)
-				lstWarnings.Items.Add(w);
+				if (string.IsNullOrEmpty(lstWarnings.Text))
+				{
+					lstWarnings.Text += w;
+				}
+				else { lstWarnings.Text += "\r\n" + w; }
 		}
 	}
 
