@@ -22,10 +22,7 @@ using FrEee.Modding.Scripts;
 
 namespace FrEee.Processes;
 
-/// <summary>
-/// Processes turns.
-/// </summary>
-public class TurnProcessor
+public class TurnProcessor : ITurnProcessor
 {
 	/// <summary>
 	/// Processes the turn.
