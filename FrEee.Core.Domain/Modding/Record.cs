@@ -286,6 +286,7 @@ public class Record
 	/// <param name="startIndex">Where to start in the field list.</param>
 	/// <param name="allowSkip">Allow skipping fields to find the one we want?</param>
 	/// <returns>true on success, false on failure</returns>
+	[Obsolete("Use the various Get methods instead (e.g. GetString).")]
 	public bool TryFindFieldValue(string fieldName, out string value, ref int index, ICollection<DataParsingException> log = null, int startIndex = 0, bool allowSkip = true)
 	{
 		return TryFindFieldValue(new string[] { fieldName }, out value, ref index, log, startIndex, allowSkip);
