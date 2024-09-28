@@ -30,7 +30,6 @@ public class TurnProcessor : ITurnProcessor
 	/// <param name="safeMode">Stop processing if PLR files are missing?</param>
 	/// <returns>Player empires which did not submit commands and are not defeated.</returns>
 	/// <exception cref="InvalidOperationException">if the Galaxy empire is not null, or this galaxy is not the Galaxy galaxy.</exception>
-	// TODO - make non-static so we don't have to say Galaxy. everywhere
 	public IEnumerable<Empire> ProcessTurn(Game game, bool safeMode, Status status = null, double desiredProgress = 1d)
 	{
 		//galaxy.SpaceObjectIDCheck("at start of turn");
@@ -706,10 +705,6 @@ public class TurnProcessor : ITurnProcessor
 		return missingPlrs;
 	}
 
-	/// <summary>
-	/// Only public for unit tests. You should probably call ProcessTurn instead.
-	/// </summary>
-	/// <param name="p"></param>
 	private static void ProcessColonyIncome(Game galaxy, Colony c)
 	{
 		var p = c.Container;
@@ -746,10 +741,6 @@ public class TurnProcessor : ITurnProcessor
 		}
 	}
 
-	/// <summary>
-	/// Only public for unit tests. You should probably call ProcessTurn instead.
-	/// </summary>
-	/// <param name="p"></param>
 	private static void ProcessPopulationGrowth(Planet p)
 	{
 		var pop = p.Colony.Population;
@@ -795,10 +786,6 @@ public class TurnProcessor : ITurnProcessor
 		}
 	}
 
-	/// <summary>
-	/// Only public for unit tests. You should probably call ProcessTurn instead.
-	/// </summary>
-	/// <param name="p"></param>
 	private static void ProcessResourceValueChange(Game galaxy, Planet p)
 	{
 		foreach (var r in Resource.All.Where(r => r.HasValue))
