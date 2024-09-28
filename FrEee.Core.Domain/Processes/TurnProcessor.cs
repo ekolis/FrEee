@@ -19,9 +19,13 @@ using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 using FrEee.Modding.Scripts;
+using System.Threading.Tasks;
 
 namespace FrEee.Processes;
 
+/// <summary>
+/// Stock implementation of <see cref="ITurnProcessor"/>.
+/// </summary>
 public class TurnProcessor : ITurnProcessor
 {
 	/// <summary>

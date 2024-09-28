@@ -23,21 +23,24 @@ namespace FrEee.Utility
 		/// <typeparam name="TInterface"></typeparam>
 		/// <typeparam name="TImplementation"></typeparam>
 		/// <returns></returns>
-        public static async Task RegisterSingleton<TInterface, TImplementation>()
+        public static void RegisterSingleton<TInterface, TImplementation>()
             where TInterface : class
 			where TImplementation : class, TInterface
 		{
-            if (host is not null)
-            {
-                await host.StopAsync();
-            }
-
-            builder.Services.AddSingleton<TInterface, TImplementation>();
-
-			if (host is not null)
+			Task.Run(async () =>
 			{
-				await Run();
-			}
+				if (host is not null)
+				{
+					await host.StopAsync();
+				}
+
+				builder.Services.AddSingleton<TInterface, TImplementation>();
+
+				if (host is not null)
+				{
+					await Run();
+				}
+			});
 		}
 
 		/// <summary>
@@ -46,21 +49,24 @@ namespace FrEee.Utility
 		/// <typeparam name="TInterface"></typeparam>
 		/// <typeparam name="TImplementation"></typeparam>
 		/// <returns></returns>
-		public static async Task RegisterTransient<TInterface, TImplementation>()
+		public static void RegisterTransient<TInterface, TImplementation>()
 			where TInterface : class
 			where TImplementation : class, TInterface
 		{
-			if (host is not null)
+			Task.Run(async () =>
 			{
-				await host.StopAsync();
-			}
+				if (host is not null)
+				{
+					await host.StopAsync();
+				}
 
-			builder.Services.AddTransient<TInterface, TImplementation>();
+				builder.Services.AddTransient<TInterface, TImplementation>();
 
-			if (host is not null)
-			{
-				await Run();
-			}
+				if (host is not null)
+				{
+					await Run();
+				}
+			});
 		}
 
 		/// <summary>
@@ -70,7 +76,8 @@ namespace FrEee.Utility
 		public async static Task Run()
         {
             host = builder.Build();
-            await host.RunAsync();
+
+			await host.RunAsync();
         }
 
 		/// <summary>
