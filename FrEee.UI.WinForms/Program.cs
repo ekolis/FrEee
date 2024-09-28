@@ -92,6 +92,9 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 			}
 		};
 
+		// set up dependency injection
+		ConfigureDI();
+
 		// HACK - so many things are based on the working directory...
 		Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
 
@@ -281,7 +284,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 			status.Changed += new Status.ChangedDelegate(status_Changed);
 
 			Console.WriteLine("Processing turn...");
-			var processor = new TurnProcessor();
+			var processor = DI.Get<ITurnProcessor>();
 			var emps = processor.ProcessTurn(Game.Current, false, status);
 			foreach (var emp in emps)
 				Console.WriteLine(emp + " did not submit a PLR file.");
@@ -322,4 +325,13 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 	/// <returns></returns>
 	public static string GetPath(params string[] dirs)
 		=> Path.Combine(new string[] { RootDirectory }.Concat(dirs).ToArray());
+
+	/// <summary>
+	/// Sets up any dependencies which need to be injected
+	/// </summary>
+	private static void ConfigureDI()
+	{
+		DI.RegisterSingleton<ITurnProcessor, TurnProcessor>();
+		DI.Run();
+	}
 }

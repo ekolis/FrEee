@@ -121,7 +121,7 @@ public partial class HostConsoleForm : GameForm
 		var t = new Thread(new ThreadStart(() =>
 		{
 			status.Message = "Processing turn";
-			var processor = new TurnProcessor();
+			var processor = DI.Get<ITurnProcessor>();
 			processor.ProcessTurn(Game.Current, false, status, 0.5);
 			Game.SaveAll(status, 1.0);
 		}));

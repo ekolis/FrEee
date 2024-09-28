@@ -1200,7 +1200,7 @@ public partial class MainGameForm : GameForm
 					Game.Load(Game.Current.Name, Game.Current.TurnNumber);
 					status.Progress = 0.25;
 					status.Message = "Processing turn";
-					var processor = new TurnProcessor();
+					var processor = DI.Get<ITurnProcessor>();
 					processor.ProcessTurn(Game.Current, false, status, 0.5);
 					status.Message = "Saving game";
 					Game.SaveAll(status, 0.75);
