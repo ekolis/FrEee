@@ -42,6 +42,7 @@ public partial class TraitPicker : UserControl
 			foreach (var trait in Traits)
 			{
 				var chk = new CheckBox();
+				chk.AutoSize = true;
 				chk.Text = "(" + trait.Cost + " pts) " + trait.Name;
 				chk.Tag = trait;
 				chk.CheckedChanged += chk_CheckedChanged;

@@ -204,19 +204,6 @@ public partial class EmpireSetupForm : GameForm
 		this.ShowChildForm(new CultureComparisonForm());
 	}
 
-	private void btnLoadRace_Click(object sender, EventArgs e)
-	{
-		var dlg = new OpenFileDialog();
-		dlg.InitialDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Races");
-		dlg.Filter = "Races (*.rac)|*.rac";
-		var result = dlg.ShowDialog();
-		if (result == DialogResult.OK)
-		{
-			EmpireTemplate.PrimaryRace = Race.Load(dlg.FileName);
-			Bind();
-		}
-	}
-
 	private void btnOK_Click(object sender, EventArgs e)
 	{
 		SaveChanges();
@@ -230,17 +217,6 @@ public partial class EmpireSetupForm : GameForm
 			DialogResult = DialogResult.OK;
 			Close();
 		}
-	}
-
-	private void btnSaveRace_Click(object sender, EventArgs e)
-	{
-		SaveChanges();
-		var dlg = new SaveFileDialog();
-		dlg.InitialDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Races");
-		dlg.Filter = "Races (*.rac)|*.rac";
-		var result = dlg.ShowDialog();
-		if (result == DialogResult.OK)
-			EmpireTemplate.PrimaryRace.Save(dlg.FileName);
 	}
 
 	private void ddlCulture_SelectedIndexChanged(object sender, EventArgs e)

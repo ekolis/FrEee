@@ -20,46 +20,47 @@ partial class TraitPicker
 		base.Dispose(disposing);
 	}
 
-	#region Component Designer generated code
+    #region Component Designer generated code
 
-	/// <summary> 
-	/// Required method for Designer support - do not modify 
-	/// the contents of this method with the code editor.
-	/// </summary>
-	private void InitializeComponent()
-	{
-		this.components = new System.ComponentModel.Container();
-		this.pnlTraits = new System.Windows.Forms.FlowLayoutPanel();
-		this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-		this.SuspendLayout();
-		// 
-		// pnlTraits
-		// 
-		this.pnlTraits.AutoScroll = true;
-		this.pnlTraits.Dock = System.Windows.Forms.DockStyle.Fill;
-		this.pnlTraits.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-		this.pnlTraits.Location = new System.Drawing.Point(0, 0);
-		this.pnlTraits.Name = "pnlTraits";
-		this.pnlTraits.Size = new System.Drawing.Size(361, 473);
-		this.pnlTraits.TabIndex = 0;
-		this.pnlTraits.WrapContents = false;
-		this.pnlTraits.SizeChanged += new System.EventHandler(this.pnlTraits_SizeChanged);
-		// 
-		// TraitPicker
-		// 
-		this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-		this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-		this.BackColor = System.Drawing.Color.Black;
-		this.Controls.Add(this.pnlTraits);
-		this.ForeColor = System.Drawing.Color.White;
-		this.Name = "TraitPicker";
-		this.Size = new System.Drawing.Size(361, 473);
-		this.ResumeLayout(false);
+    /// <summary> 
+    /// Required method for Designer support - do not modify 
+    /// the contents of this method with the code editor.
+    /// </summary>
+    private void InitializeComponent()
+    {
+        components = new System.ComponentModel.Container();
+        pnlTraits = new System.Windows.Forms.FlowLayoutPanel();
+        toolTip = new System.Windows.Forms.ToolTip(components);
+        SuspendLayout();
+        // 
+        // pnlTraits
+        // 
+        pnlTraits.AutoScroll = true;
+        pnlTraits.Dock = System.Windows.Forms.DockStyle.Fill;
+        pnlTraits.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+        pnlTraits.Location = new System.Drawing.Point(0, 0);
+        pnlTraits.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        pnlTraits.Name = "pnlTraits";
+        pnlTraits.Size = new System.Drawing.Size(421, 546);
+        pnlTraits.TabIndex = 0;
+        pnlTraits.WrapContents = false;
+        pnlTraits.SizeChanged += pnlTraits_SizeChanged;
+        // 
+        // TraitPicker
+        // 
+        AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+        AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        BackColor = System.Drawing.Color.Black;
+        Controls.Add(pnlTraits);
+        ForeColor = System.Drawing.Color.White;
+        Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+        Name = "TraitPicker";
+        Size = new System.Drawing.Size(421, 546);
+        ResumeLayout(false);
+    }
 
-	}
+    #endregion
 
-	#endregion
-
-	private System.Windows.Forms.FlowLayoutPanel pnlTraits;
+    private System.Windows.Forms.FlowLayoutPanel pnlTraits;
 	private System.Windows.Forms.ToolTip toolTip;
 }
