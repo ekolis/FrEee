@@ -11,7 +11,6 @@ using FrEee.Objects.VictoryConditions;
 using FrEee.Modding;
 using FrEee.Extensions;
 using FrEee.Utility;
-using FrEee.Objects.Commands;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Civilization.CargoStorage;
@@ -20,6 +19,7 @@ using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 using FrEee.Modding.Scripts;
 using System.Threading.Tasks;
+using FrEee.Gameplay.Commands;
 
 namespace FrEee.Processes;
 

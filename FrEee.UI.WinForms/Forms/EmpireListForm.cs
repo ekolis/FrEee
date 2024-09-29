@@ -1,5 +1,4 @@
 ﻿using FrEee.Objects.Civilization;
-using FrEee.Objects.Commands;
 using FrEee.Utility;
 using FrEee.Extensions;
 using FrEee.UI.WinForms.Utility.Extensions;
@@ -11,6 +10,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.GameState;
+using FrEee.Gameplay.Commands;
 
 namespace FrEee.UI.WinForms.Forms;
 

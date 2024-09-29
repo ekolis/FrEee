@@ -1,5 +1,4 @@
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Commands;
 using FrEee.Objects.Technology;
 using FrEee.Utility;
 using FrEee.Extensions;
@@ -14,6 +13,7 @@ using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
+using FrEee.Gameplay.Commands;
 
 namespace FrEee.UI.WinForms.Forms;
 

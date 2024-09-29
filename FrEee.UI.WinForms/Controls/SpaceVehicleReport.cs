@@ -1,5 +1,4 @@
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Commands;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
 using FrEee.Utility;
@@ -14,6 +13,7 @@ using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Modding.Abilities;
+using FrEee.Gameplay.Commands.Orders;
 
 namespace FrEee.UI.WinForms.Controls;
 
@@ -183,11 +183,11 @@ public partial class SpaceVehicleReport : UserControl, IBindable<SpaceVehicle>
 	{
 		foreach (var order in vehicle.Orders.ToArray())
 		{
-			var addCmd = Empire.Current.Commands.OfType<AddOrderCommand>().SingleOrDefault(c => c.Order == order);
+			var addCmd = Empire.Current.Commands.OfType<IAddOrderCommand>().SingleOrDefault(c => c.Order == order);
 			if (addCmd == null)
 			{
 				// not a newly added order, so create a remove command to take it off the server
-				var remCmd = new RemoveOrderCommand(Vehicle, order);
+				var remCmd = DI.Get<IOrderCommandFactory>().RemoveOrder(Vehicle, order);
 				Empire.Current.Commands.Add(remCmd);
 				remCmd.Execute(); // show change locally
 			}
@@ -407,7 +407,9 @@ public partial class SpaceVehicleReport : UserControl, IBindable<SpaceVehicle>
 			Empire.Current.Commands.Add(cmd);
 		}
 		else
-			cmd.AreRepeatOrdersEnabled = chkRepeat.Checked;
+		{
+			cmd.IsToggleEnabled = chkRepeat.Checked;
+		}
 		cmd.Execute();
 	}
 
@@ -420,7 +422,9 @@ public partial class SpaceVehicleReport : UserControl, IBindable<SpaceVehicle>
 			Empire.Current.Commands.Add(cmd);
 		}
 		else
-			cmd.AreOrdersOnHold = chkOnHold.Checked;
+		{
+			cmd.IsToggleEnabled = chkOnHold.Checked;
+		}
 		cmd.Execute();
 	}
 }

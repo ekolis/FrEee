@@ -1,10 +1,10 @@
-﻿using FrEee.Objects.Commands;
-using FrEee.Serialization;
+﻿using FrEee.Serialization;
 using FrEee.Extensions;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using FrEee.Objects.GameState;
+using FrEee.Gameplay.Commands;
 
 namespace FrEee.Objects.Civilization.Diplomacy.Messages;
 

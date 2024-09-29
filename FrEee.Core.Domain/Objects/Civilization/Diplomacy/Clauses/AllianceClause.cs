@@ -1,9 +1,9 @@
-﻿using FrEee.Objects.Commands;
-using FrEee.Extensions;
+﻿using FrEee.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Civilization.Diplomacy.Actions;
+using FrEee.Gameplay.Commands;
 
 namespace FrEee.Objects.Civilization.Diplomacy.Clauses;
 

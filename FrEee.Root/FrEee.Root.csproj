@@ -12,6 +12,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
 		<ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
+		<ProjectReference Include="..\FrEee.Gameplay\FrEee.Gameplay.csproj" />
 		<ProjectReference Include="..\FrEee.Processes\FrEee.Processes.csproj" />
 	</ItemGroup>
 

@@ -1,5 +1,5 @@
-﻿using FrEee.Objects.Civilization;
-using FrEee.Objects.Commands;
+﻿using FrEee.Gameplay.Commands;
+using FrEee.Objects.Civilization;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;

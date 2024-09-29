@@ -1,8 +1,8 @@
 using FrEee.Extensions;
+using FrEee.Gameplay.Commands;
 using FrEee.Modding;
 using FrEee.Modding.Loaders;
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Commands;
 using FrEee.Objects.GameState;
 using FrEee.Processes;
 using FrEee.Utility;

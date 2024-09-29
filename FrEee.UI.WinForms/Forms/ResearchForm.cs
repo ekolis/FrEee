@@ -1,5 +1,4 @@
 ﻿using FrEee.Objects.Civilization;
-using FrEee.Objects.Commands;
 using FrEee.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Utility;
@@ -13,6 +12,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
+using FrEee.Gameplay.Commands;
 
 namespace FrEee.UI.WinForms.Forms;
 

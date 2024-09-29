@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using FrEee.Objects.Civilization;
 using FrEee.Processes.Combat;
-using FrEee.Objects.Commands;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
@@ -23,6 +22,8 @@ using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using System.Numerics;
 using FrEee.Modding.Abilities;
+using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Orders;
 
 namespace FrEee.Extensions;
 
@@ -970,15 +971,15 @@ public static class CommonExtensions
 	/// <param name="obj">The object from which to remove an order.</param>
 	/// <param name="order">The order to remove.</param>
 	/// <returns>The remove-order command created, if any.</returns>
-	public static RemoveOrderCommand RemoveOrderClientSide(this IOrderable obj, IOrder order)
+	public static IRemoveOrderCommand RemoveOrderClientSide(this IOrderable obj, IOrder order)
 	{
 		if (Empire.Current == null)
 			throw new InvalidOperationException("RemoveOrderClientSide is intended for client side use.");
-		var addCmd = Empire.Current.Commands.OfType<AddOrderCommand>().SingleOrDefault(c => c.Order == order);
+		var addCmd = Empire.Current.Commands.OfType<IAddOrderCommand>().SingleOrDefault(c => c.Order == order);
 		if (addCmd == null)
 		{
 			// not a newly added order, so create a remove command to take it off the server
-			var remCmd = new RemoveOrderCommand(obj, order);
+			var remCmd = DI.Get<IOrderCommandFactory>().RemoveOrder(obj, order);
 			Empire.Current.Commands.Add(remCmd);
 			obj.RemoveOrder(order);
 			return remCmd;

@@ -1,5 +1,4 @@
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Commands;
 using FrEee.Objects.Space;
 using FrEee.Utility;
 using FrEee.Extensions;
@@ -12,6 +11,7 @@ using System.Windows.Forms;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Templates;
 using FrEee.Modding.Abilities;
+using FrEee.Gameplay.Commands.Orders;
 
 namespace FrEee.UI.WinForms.Controls;
 
@@ -242,14 +242,14 @@ public partial class PlanetReport : UserControl, IBindable<Planet>
 
 	private void chkRepeat_CheckedChanged(object sender, EventArgs e)
 	{
-		var cmd = Empire.Current.Commands.OfType<ToggleRepeatOrdersCommand>().SingleOrDefault(x => x.Executor == Planet);
+		var cmd = Empire.Current.Commands.OfType<IToggleRepeatOrdersCommand>().SingleOrDefault(x => x.Executor == Planet);
 		if (cmd == null)
 		{
-			cmd = new ToggleRepeatOrdersCommand(Planet, chkRepeat.Checked);
+			cmd = DI.Get<IOrderCommandFactory>().ToggleRepeatOrders(Planet, chkRepeat.Checked);
 			Empire.Current.Commands.Add(cmd);
 		}
 		else
-			cmd.AreRepeatOrdersEnabled = chkRepeat.Checked;
+			cmd.IsToggleEnabled = chkRepeat.Checked;
 		cmd.Execute();
 	}
 
@@ -260,14 +260,14 @@ public partial class PlanetReport : UserControl, IBindable<Planet>
 
 	private void chkOnHold_CheckedChanged(object sender, EventArgs e)
 	{
-		var cmd = Empire.Current.Commands.OfType<ToggleOrdersOnHoldCommand>().SingleOrDefault(x => x.Executor == Planet);
+		var cmd = Empire.Current.Commands.OfType<IToggleOrdersOnHoldCommand>().SingleOrDefault(x => x.Executor == Planet);
 		if (cmd == null)
 		{
-			cmd = new ToggleOrdersOnHoldCommand(Planet, chkOnHold.Checked);
+			cmd = DI.Get<IOrderCommandFactory>().ToggleOrdersOnHold(Planet, chkOnHold.Checked);
 			Empire.Current.Commands.Add(cmd);
 		}
 		else
-			cmd.AreOrdersOnHold = chkOnHold.Checked;
+			cmd.IsToggleEnabled = chkOnHold.Checked;
 		cmd.Execute();
 	}
 }

@@ -1,5 +1,4 @@
 ﻿using FrEee.Objects.Civilization;
-using FrEee.Objects.Commands;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
@@ -14,6 +13,8 @@ using System.Windows.Forms;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Orders.RecycleBehaviors;
+using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Orders;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -109,7 +110,7 @@ public partial class RecycleForm : GameForm
 				{
 					// facilities
 					var fnode = ftnode.AddItemWithImage(f.Name, f, f.Icon);
-					var orders = Empire.Current.Commands.OfType<AddOrderCommand>()
+					var orders = Empire.Current.Commands.OfType<IAddOrderCommand>()
 						.Where(x => x.Order is RecycleFacilityOrCargoOrder o && x.Executor == p && o.Target == f)
 						.Select(x => ((RecycleFacilityOrCargoOrder)x.Order).Behavior.Verb);
 					if (orders.Any())

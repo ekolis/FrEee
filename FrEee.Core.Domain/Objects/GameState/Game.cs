@@ -1,6 +1,5 @@
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
-using FrEee.Objects.Commands;
 using FrEee.Objects.Events;
 using FrEee.Objects.LogMessages;
 using FrEee.Modding;
@@ -22,6 +21,7 @@ using FrEee.Modding.Abilities;
 using FrEee.Processes.Setup;
 using FrEee.Modding.Scripts;
 using FrEee.Modding.Loaders;
+using FrEee.Gameplay.Commands;
 
 namespace FrEee.Objects.GameState;
 

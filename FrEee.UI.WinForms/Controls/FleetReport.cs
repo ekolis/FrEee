@@ -1,5 +1,4 @@
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Commands;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Utility;
@@ -12,6 +11,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Modding.Abilities;
+using FrEee.Gameplay.Commands.Orders;
 
 namespace FrEee.UI.WinForms.Controls;
 
@@ -131,11 +131,11 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 	{
 		foreach (var order in Fleet.Orders.ToArray())
 		{
-			var addCmd = Empire.Current.Commands.OfType<AddOrderCommand>().SingleOrDefault(c => c.Order == order);
+			var addCmd = Empire.Current.Commands.OfType<IAddOrderCommand>().SingleOrDefault(c => c.Order == order);
 			if (addCmd == null)
 			{
 				// not a newly added order, so create a remove command to take it off the server
-				var remCmd = new RemoveOrderCommand(Fleet, order);
+				var remCmd = DI.Get<IOrderCommandFactory>().RemoveOrder(Fleet, order);
 				Empire.Current.Commands.Add(remCmd);
 				remCmd.Execute(); // show change locally
 			}
@@ -158,11 +158,11 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 		var order = (IOrder)lstOrdersDetail.SelectedItem;
 		if (order != null)
 		{
-			var addCmd = Empire.Current.Commands.OfType<AddOrderCommand>().SingleOrDefault(c => c.Order == order);
+			var addCmd = Empire.Current.Commands.OfType<IAddOrderCommand>().SingleOrDefault(c => c.Order == order);
 			if (addCmd == null)
 			{
 				// not a newly added order, so create a remove command to take it off the server
-				var remCmd = new RemoveOrderCommand(Fleet, order);
+				var remCmd = DI.Get<IOrderCommandFactory>().RemoveOrder(Fleet, order);
 				Empire.Current.Commands.Add(remCmd);
 				remCmd.Execute(); // show change locally
 			}
@@ -185,8 +185,7 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 		var order = (IOrder)lstOrdersDetail.SelectedItem;
 		if (order != null && Fleet.Orders.IndexOf(order) < Fleet.Orders.Count - 1)
 		{
-			var cmd = new RearrangeOrdersCommand<Fleet>(
-				Fleet, order, 1);
+			var cmd = DI.Get<IOrderCommandFactory>().RearrangeOrders(Fleet, order, 1);
 			Empire.Current.Commands.Add(cmd);
 			cmd.Execute(); // show change locally
 			Bind();
@@ -341,7 +340,7 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 			Empire.Current.Commands.Add(cmd);
 		}
 		else
-			cmd.AreRepeatOrdersEnabled = chkRepeat.Checked;
+			cmd.IsToggleEnabled = chkRepeat.Checked;
 		cmd.Execute();
 	}
 
@@ -354,7 +353,7 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 			Empire.Current.Commands.Add(cmd);
 		}
 		else
-			cmd.AreOrdersOnHold = chkOnHold.Checked;
+			cmd.IsToggleEnabled = chkOnHold.Checked;
 		cmd.Execute();
 	}
 }

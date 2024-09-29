@@ -1,5 +1,4 @@
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Commands;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
@@ -27,6 +26,8 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.UI.Blazor.Views.GalaxyMapModes;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
+using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Orders;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -1419,7 +1420,7 @@ public partial class MainGameForm : GameForm
 				var order = new MoveOrder(sector, !aggressiveMode);
 				v.AddOrder(order);
 				BindReport();
-				var cmd = new AddOrderCommand(v, order);
+				var cmd = DI.Get<IOrderCommandFactory>().AddOrder(v, order);
 				Empire.Current.Commands.Add(cmd);
 				starSystemView.Invalidate(); // show move lines
 				ChangeCommandMode(CommandMode.None, null);

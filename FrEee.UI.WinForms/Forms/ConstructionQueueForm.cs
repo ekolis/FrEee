@@ -1,5 +1,4 @@
 ﻿using FrEee.Objects.Civilization;
-using FrEee.Objects.Commands;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Modding;
@@ -19,6 +18,8 @@ using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Modding.Templates;
+using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Orders;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -348,7 +349,7 @@ public partial class ConstructionQueueForm : GameForm
 		var sel = SelectedOrders.ToArray();
 		foreach (var item in sel.Select(o => new { Order = o, OldIndex = ConstructionQueue.Orders.IndexOf(o), NewIndex = ConstructionQueue.Orders.Count() }))
 		{
-			var cmd = new RearrangeOrdersCommand<ConstructionQueue>(ConstructionQueue, item.Order, item.NewIndex - item.OldIndex);
+			var cmd = DI.Get<IOrderCommandFactory>().RearrangeOrders(ConstructionQueue, item.Order, item.NewIndex - item.OldIndex);
 			newCommands.Add(cmd);
 			cmd.Execute();
 		}
@@ -1003,7 +1004,7 @@ public partial class ConstructionQueueForm : GameForm
 			newCommands.Add(cmd);
 		}
 		else
-			cmd.AreRepeatOrdersEnabled = chkRepeat.Checked;
+			cmd.IsToggleEnabled = chkRepeat.Checked;
 		cmd.Execute();
 	}
 
@@ -1016,7 +1017,7 @@ public partial class ConstructionQueueForm : GameForm
 			newCommands.Add(cmd);
 		}
 		else
-			cmd.AreOrdersOnHold = chkOnHold.Checked;
+			cmd.IsToggleEnabled = chkOnHold.Checked;
 		cmd.Execute();
 	}
 }

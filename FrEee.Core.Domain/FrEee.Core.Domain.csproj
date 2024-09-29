@@ -26,7 +26,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Remove="Processes\Combat\Simple\Battle.cs" />
-		<Compile Remove="Objects\Commands\EditStrategyCommand.cs" />
+		<Compile Remove="Gameplay\Commands\EditStrategyCommand.cs" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />

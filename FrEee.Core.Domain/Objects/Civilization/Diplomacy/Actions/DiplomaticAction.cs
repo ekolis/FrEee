@@ -1,4 +1,4 @@
-﻿using FrEee.Objects.Commands;
+﻿using FrEee.Gameplay.Commands;
 using FrEee.Objects.GameState;
 using FrEee.Serialization;
 

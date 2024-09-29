@@ -1,5 +1,4 @@
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Commands;
 using FrEee.Objects.Space;
 using System;
 using System.Collections;
@@ -11,6 +10,7 @@ using FrEee.Objects.Technology;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
+using FrEee.Gameplay.Commands.Orders;
 namespace FrEee.Extensions;
 
 public static class ChecksExtensions
@@ -154,7 +154,7 @@ public static class ChecksExtensions
 	/// <returns></returns>
 	public static bool IsNew(this IOrder order)
 	{
-		return Game.Current.Referrables.OfType<AddOrderCommand>().Where(cmd => cmd.Order == order).Any();
+		return Game.Current.Referrables.OfType<IAddOrderCommand>().Where(cmd => cmd.Order == order).Any();
 	}
 
 	public static bool IsPointDefense(this WeaponTypes wt)

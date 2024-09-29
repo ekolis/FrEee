@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Gameplay.Commands.Orders;
 using FrEee.Processes;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Combat.Grid;
@@ -23,6 +24,9 @@ public static class Configuration
 		// processes
 		DI.RegisterSingleton<ITurnProcessor, TurnProcessor>();
 		DI.RegisterSingleton<IBattleFactory, BattleFactory>();
+
+		// gameplay
+		DI.RegisterSingleton<IOrderCommandFactory, OrderCommandFactory>();
 
 		// run this in the background, without awaiting it
 		DI.Run();
