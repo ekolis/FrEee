@@ -15,6 +15,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
+using FrEee.Root;
 
 namespace FrEee.UI.WinForms;
 
@@ -93,7 +94,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 		};
 
 		// set up dependency injection
-		ConfigureDI();
+		Configuration.ConfigureDI();
 
 		// HACK - so many things are based on the working directory...
 		Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
@@ -325,13 +326,4 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 	/// <returns></returns>
 	public static string GetPath(params string[] dirs)
 		=> Path.Combine(new string[] { RootDirectory }.Concat(dirs).ToArray());
-
-	/// <summary>
-	/// Sets up any dependencies which need to be injected
-	/// </summary>
-	private static void ConfigureDI()
-	{
-		DI.RegisterSingleton<ITurnProcessor, TurnProcessor>();
-		DI.Run();
-	}
 }
