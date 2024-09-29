@@ -28,12 +28,6 @@ namespace FrEee.Processes;
 /// </summary>
 public class TurnProcessor : ITurnProcessor
 {
-	/// <summary>
-	/// Processes the turn.
-	/// </summary>
-	/// <param name="safeMode">Stop processing if PLR files are missing?</param>
-	/// <returns>Player empires which did not submit commands and are not defeated.</returns>
-	/// <exception cref="InvalidOperationException">if the Galaxy empire is not null, or this galaxy is not the Galaxy galaxy.</exception>
 	public IEnumerable<Empire> ProcessTurn(Game game, bool safeMode, Status status = null, double desiredProgress = 1d)
 	{
 		//galaxy.SpaceObjectIDCheck("at start of turn");
