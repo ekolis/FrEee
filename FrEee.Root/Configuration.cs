@@ -27,6 +27,7 @@ public static class Configuration
 
 		// gameplay
 		DI.RegisterSingleton<IOrderCommandFactory, OrderCommandFactory>();
+		DI.RegisterSingleton<INoteCommandFactory, NoteCommandFactory>();
 
 		// run this in the background, without awaiting it
 		DI.Run();

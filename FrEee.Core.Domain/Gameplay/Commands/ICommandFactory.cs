@@ -12,9 +12,6 @@ namespace FrEee.Gameplay.Commands;
 public interface ICommandFactory
 {
     // TODO: split these out into separate factories for each category and add parameters
-    ICommand ClearPlayerNote();
-
-    ICommand ClearPrivateName();
 
     ICommand CreateDesign();
 
@@ -41,12 +38,4 @@ public interface ICommandFactory
     ICommand SendMessage();
 
     ICommand SetObsoleteFlag();
-
-    ICommand SetPlayerInfo();
-
-    ICommand SetPlayerNote();
-
-    ICommand SetPrivateName();
-
-    ICommand SetPublicName();
 }

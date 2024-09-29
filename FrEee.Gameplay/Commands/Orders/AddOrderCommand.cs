@@ -14,7 +14,7 @@ namespace FrEee.Gameplay.Commands.Orders;
 /// <typeparam name="T"></typeparam>
 [Serializable]
 public class AddOrderCommand
-	: OrderCommand, IAddOrderCommand
+	: OrderCommand, ISetPlayerInfoCommnad
 {
 	public AddOrderCommand(IOrderable target, IOrder order)
 		: base(target, order)

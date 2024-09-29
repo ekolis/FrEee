@@ -131,7 +131,7 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 	{
 		foreach (var order in Fleet.Orders.ToArray())
 		{
-			var addCmd = Empire.Current.Commands.OfType<IAddOrderCommand>().SingleOrDefault(c => c.Order == order);
+			var addCmd = Empire.Current.Commands.OfType<ISetPlayerInfoCommnad>().SingleOrDefault(c => c.Order == order);
 			if (addCmd == null)
 			{
 				// not a newly added order, so create a remove command to take it off the server
@@ -158,7 +158,7 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 		var order = (IOrder)lstOrdersDetail.SelectedItem;
 		if (order != null)
 		{
-			var addCmd = Empire.Current.Commands.OfType<IAddOrderCommand>().SingleOrDefault(c => c.Order == order);
+			var addCmd = Empire.Current.Commands.OfType<ISetPlayerInfoCommnad>().SingleOrDefault(c => c.Order == order);
 			if (addCmd == null)
 			{
 				// not a newly added order, so create a remove command to take it off the server

@@ -22,6 +22,7 @@ using FrEee.Processes.Setup;
 using FrEee.Modding.Scripts;
 using FrEee.Modding.Loaders;
 using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Orders;
 
 namespace FrEee.Objects.GameState;
 
@@ -881,9 +882,10 @@ public class Game
 		CleanGameState();
 		if (CurrentEmpire == null)
 			throw new InvalidOperationException("Can't save commands without a current empire.");
-		foreach (var c in Empire.Current.Commands.OfType<SetPlayerInfoCommand>().ToArray())
+		foreach (var c in Empire.Current.Commands.OfType<ISetPlayerInfoCommand>().ToArray())
 			Empire.Current.Commands.Remove(c);
-		Empire.Current.Commands.Add(new SetPlayerInfoCommand(Empire.Current) { PlayerInfo = Empire.Current.PlayerInfo });
+		var cmd = DI.Get<INoteCommandFactory>().SetPlayerInfo(Empire.Current, Empire.Current.PlayerInfo);
+		Empire.Current.Commands.Add(cmd);
 		if (!Directory.Exists(FrEeeConstants.SaveGameDirectory))
 			Directory.CreateDirectory(FrEeeConstants.SaveGameDirectory);
 		var filename = GetEmpireCommandsSavePath(CurrentEmpire);

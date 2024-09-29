@@ -1,4 +1,4 @@
-﻿using FrEee.Gameplay.Commands;
+﻿using FrEee.Gameplay.Commands.Notes;
 using FrEee.Objects.Civilization;
 using FrEee.Utility;
 using System;

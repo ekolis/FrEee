@@ -110,7 +110,7 @@ public partial class RecycleForm : GameForm
 				{
 					// facilities
 					var fnode = ftnode.AddItemWithImage(f.Name, f, f.Icon);
-					var orders = Empire.Current.Commands.OfType<IAddOrderCommand>()
+					var orders = Empire.Current.Commands.OfType<ISetPlayerInfoCommnad>()
 						.Where(x => x.Order is RecycleFacilityOrCargoOrder o && x.Executor == p && o.Target == f)
 						.Select(x => ((RecycleFacilityOrCargoOrder)x.Order).Behavior.Verb);
 					if (orders.Any())
