@@ -1,6 +1,5 @@
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
-using FrEee.Processes.Combat.Grid;
 using FrEee.Objects.Commands;
 using FrEee.Objects.Events;
 using FrEee.Objects.LogMessages;
@@ -794,7 +793,7 @@ public class Game
 						&& (!lastBattleTimestamps.ContainsKey(sector) || lastBattleTimestamps[sector] < Timestamp - (v.StrategicSpeed == 0 ? 1d : 1d / v.StrategicSpeed)))) // have we fought here too recently?
 			{
 				// resolve the battle
-				var battle = new SpaceBattle(sector);
+				var battle = DI.Get<IBattleFactory>().BuildSpaceBattle(sector);
 				battle.Resolve();
 				Battles.Add(battle);
 				foreach (var emp in battle.Empires)

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Processes;
+using FrEee.Processes.Combat;
+using FrEee.Processes.Combat.Grid;
 using FrEee.Utility;
 
 namespace FrEee.Root;
@@ -18,7 +20,9 @@ public static class Configuration
 	/// </summary>
 	public static void ConfigureDI()
 	{
+		// processes
 		DI.RegisterSingleton<ITurnProcessor, TurnProcessor>();
+		DI.RegisterSingleton<IBattleFactory, BattleFactory>();
 
 		// run this in the background, without awaiting it
 		DI.Run();
