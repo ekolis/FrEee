@@ -86,6 +86,11 @@ public class EventTemplate : IModObject, ITemplate<Event>
 		return new Event(this);
 	}
 
+	public void Dispose()
+	{
+		// nothing to do here
+	}
+
 	public override string ToString()
 	{
 		return Type.Name;

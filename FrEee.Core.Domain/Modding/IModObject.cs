@@ -1,4 +1,5 @@
 ﻿using FrEee.Objects.GameState;
+using System;
 using System.Collections.Generic;
 
 namespace FrEee.Modding;
@@ -6,7 +7,7 @@ namespace FrEee.Modding;
 /// <summary>
 /// An object which can be stored in mod files.
 /// </summary>
-public interface IModObject : INamed
+public interface IModObject : INamed, IDisposable
 {
     bool IsDisposed { get; }
 
