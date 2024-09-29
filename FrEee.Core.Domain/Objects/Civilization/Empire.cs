@@ -98,7 +98,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	/// <summary>
 	/// Arbitrary data stored by the AI to maintain state between turns.
 	/// </summary>
-	public DynamicDictionary AINotes { get; internal set; }
+	public DynamicDictionary AINotes { get; set; }
 
 	/// <summary>
 	/// The names of any ministers that are enabled, keyed by category.

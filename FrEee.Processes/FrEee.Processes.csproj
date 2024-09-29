@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<OutputType>Library</OutputType>
+		<AssemblyName>FrEee.Processes</AssemblyName>
+		<Description>Stock implementations of processes such as turn processing used by FrEee</Description>
+	</PropertyGroup>
+	
+	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
+
+	<ItemGroup>
+		<ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
+		<ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+		<RootNamespace>FrEee.Processes</RootNamespace>
+	</PropertyGroup>
+
+</Project>

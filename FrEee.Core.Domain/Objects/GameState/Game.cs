@@ -8,7 +8,6 @@ using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;
-using Microsoft.Scripting.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -158,7 +157,7 @@ public class Game
 	/// <summary>
 	/// The next tick size, for ship movement.
 	/// </summary>
-	public double NextTickSize { get; internal set; }
+	public double NextTickSize { get; set; }
 
 	/// <summary>
 	/// Events which have been warned of and are pending execution.
@@ -255,7 +254,7 @@ public class Game
 	/// Serialized string value of the game at the beginning of the turn.
 	/// </summary>
 	[DoNotSerialize]
-	internal string? StringValue
+	public string? StringValue
 	{
 		get
 		{
@@ -438,7 +437,7 @@ public class Game
 	/// <summary>
 	/// Saves all empires' tech levels in the other empires for uniqueness calculations.
 	/// </summary>
-	internal void SaveTechLevelsForUniqueness()
+	public void SaveTechLevelsForUniqueness()
 	{
 		if (Current.Setup.TechnologyUniqueness != 0)
 		{
@@ -989,7 +988,7 @@ public class Game
 		return cmds;
 	}
 
-	internal void LoadCommands(Empire emp, IList<ICommand> cmds)
+	public void LoadCommands(Empire emp, IList<ICommand> cmds)
 	{
 		cmds = cmds.Where(cmd => cmd != null).Distinct().ToList(); // HACK - why would we have null/duplicate commands in a plr file?!
 		emp.Commands.Clear();
@@ -1091,4 +1090,13 @@ public class Game
 	/// The game setup used to create this galaxy.
 	/// </summary>
 	public GameSetup Setup { get; set; }
+
+	/// <summary>
+	/// Resets the treaty clause caches in this game.
+	/// </summary>
+	public void ResetTreatyClauseCaches()
+	{
+		GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
+		ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
+	}
 }

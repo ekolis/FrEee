@@ -113,8 +113,7 @@ public class TurnProcessor : ITurnProcessor
 		game.EnableAbilityCache();
 
 		// clear treaty clause cache (empires might have added treaties)
-		game.GivenTreatyClauseCache.Clear();
-		game.ReceivedTreatyClauseCache.Clear();
+		game.ResetTreatyClauseCaches();
 
 		// delete any floating space objects that are unused
 		//galaxy.SpaceObjectCleanup();
@@ -123,8 +122,7 @@ public class TurnProcessor : ITurnProcessor
 		game.Battles.Clear();
 		PythonScriptEngine.ClearScope(); // no caching galaxy between turns!
 
-		game.GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
-		game.ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
+		game.ResetTreatyClauseCaches();
 
 		if (status != null)
 			status.Progress += progressPerOperation;
