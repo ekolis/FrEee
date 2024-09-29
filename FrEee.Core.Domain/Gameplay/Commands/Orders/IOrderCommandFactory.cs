@@ -13,7 +13,7 @@ namespace FrEee.Gameplay.Commands.Orders;
 /// </summary>
 public interface IOrderCommandFactory
 {
-    ISetPlayerInfoCommnad AddOrder(IOrderable target, IOrder order);
+    IAddOrderCommand AddOrder(IOrderable target, IOrder order);
 
     IOrderCommand RearrangeOrders<T>(T target, IOrder order, int deltaPosition)
         where T : IOrderable;

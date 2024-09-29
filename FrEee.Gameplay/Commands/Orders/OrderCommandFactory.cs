@@ -10,7 +10,7 @@ namespace FrEee.Gameplay.Commands.Orders;
 public class OrderCommandFactory
 	: IOrderCommandFactory
 {
-	public ISetPlayerInfoCommnad AddOrder(IOrderable target, IOrder order)
+	public IAddOrderCommand AddOrder(IOrderable target, IOrder order)
 	{
 		return new AddOrderCommand(target, order);
 	}

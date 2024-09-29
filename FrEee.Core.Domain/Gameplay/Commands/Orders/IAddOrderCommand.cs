@@ -11,7 +11,7 @@ namespace FrEee.Gameplay.Commands.Orders;
 /// <summary>
 /// A command which adds an <see cref="IOrder"/> to an <see cref="IOrderable"/>
 /// </summary>
-public interface ISetPlayerInfoCommnad
+public interface IAddOrderCommand
 	: IOrderCommand
 {
 }

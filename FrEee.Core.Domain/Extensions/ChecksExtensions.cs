@@ -154,7 +154,7 @@ public static class ChecksExtensions
 	/// <returns></returns>
 	public static bool IsNew(this IOrder order)
 	{
-		return Game.Current.Referrables.OfType<ISetPlayerInfoCommnad>().Where(cmd => cmd.Order == order).Any();
+		return Game.Current.Referrables.OfType<IAddOrderCommand>().Where(cmd => cmd.Order == order).Any();
 	}
 
 	public static bool IsPointDefense(this WeaponTypes wt)
