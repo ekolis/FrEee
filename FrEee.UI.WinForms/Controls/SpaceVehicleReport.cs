@@ -187,7 +187,7 @@ public partial class SpaceVehicleReport : UserControl, IBindable<SpaceVehicle>
 			if (addCmd == null)
 			{
 				// not a newly added order, so create a remove command to take it off the server
-				var remCmd = DI.Get<IOrderCommandFactory>().RemoveOrder(Vehicle, order);
+				var remCmd = DIRoot.OrderCommands.RemoveOrder(Vehicle, order);
 				Empire.Current.Commands.Add(remCmd);
 				remCmd.Execute(); // show change locally
 			}

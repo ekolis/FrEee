@@ -245,7 +245,7 @@ public partial class PlanetReport : UserControl, IBindable<Planet>
 		var cmd = Empire.Current.Commands.OfType<IToggleRepeatOrdersCommand>().SingleOrDefault(x => x.Executor == Planet);
 		if (cmd == null)
 		{
-			cmd = DI.Get<IOrderCommandFactory>().ToggleRepeatOrders(Planet, chkRepeat.Checked);
+			cmd = DIRoot.OrderCommands.ToggleRepeatOrders(Planet, chkRepeat.Checked);
 			Empire.Current.Commands.Add(cmd);
 		}
 		else
@@ -263,7 +263,7 @@ public partial class PlanetReport : UserControl, IBindable<Planet>
 		var cmd = Empire.Current.Commands.OfType<IToggleOrdersOnHoldCommand>().SingleOrDefault(x => x.Executor == Planet);
 		if (cmd == null)
 		{
-			cmd = DI.Get<IOrderCommandFactory>().ToggleOrdersOnHold(Planet, chkOnHold.Checked);
+			cmd = DIRoot.OrderCommands.ToggleOrdersOnHold(Planet, chkOnHold.Checked);
 			Empire.Current.Commands.Add(cmd);
 		}
 		else

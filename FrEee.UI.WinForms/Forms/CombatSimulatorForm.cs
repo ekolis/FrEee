@@ -256,7 +256,7 @@ public partial class CombatSimulatorForm : GameForm
 			simPlanet.Sector = new Sector(new StarSystem(0) { Name = "Simulation" }, new Point());
 			foreach (Troop t in Empires.SelectMany(se => se.Troops.Select(ss => ss.Unit)))
 				planet.Cargo.Units.Add(t);
-			battle = DI.Get<IBattleFactory>().BuildGroundBattle(planet);
+			battle = DIRoot.Battles.BuildGroundBattle(planet);
 
 			// simulate the battle
 			battle.Resolve();
@@ -268,7 +268,7 @@ public partial class CombatSimulatorForm : GameForm
 				ispobj.Sector = location;
 			// create battle with all our combatants
 			//var battle = new Battle_Space(Empires.SelectMany(se => se.SpaceObjects.Select(ss => ss.SpaceObject)));
-			battle = DI.Get<IBattleFactory>().BuildSpaceBattle(location);
+			battle = DIRoot.Battles.BuildSpaceBattle(location);
 
 			// simulate the battle
 			battle.Resolve();

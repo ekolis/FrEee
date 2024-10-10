@@ -135,7 +135,7 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 			if (addCmd == null)
 			{
 				// not a newly added order, so create a remove command to take it off the server
-				var remCmd = DI.Get<IOrderCommandFactory>().RemoveOrder(Fleet, order);
+				var remCmd = DIRoot.OrderCommands.RemoveOrder(Fleet, order);
 				Empire.Current.Commands.Add(remCmd);
 				remCmd.Execute(); // show change locally
 			}
@@ -162,7 +162,7 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 			if (addCmd == null)
 			{
 				// not a newly added order, so create a remove command to take it off the server
-				var remCmd = DI.Get<IOrderCommandFactory>().RemoveOrder(Fleet, order);
+				var remCmd = DIRoot.OrderCommands.RemoveOrder(Fleet, order);
 				Empire.Current.Commands.Add(remCmd);
 				remCmd.Execute(); // show change locally
 			}
@@ -185,7 +185,7 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 		var order = (IOrder)lstOrdersDetail.SelectedItem;
 		if (order != null && Fleet.Orders.IndexOf(order) < Fleet.Orders.Count - 1)
 		{
-			var cmd = DI.Get<IOrderCommandFactory>().RearrangeOrders(Fleet, order, 1);
+			var cmd = DIRoot.OrderCommands.RearrangeOrders(Fleet, order, 1);
 			Empire.Current.Commands.Add(cmd);
 			cmd.Execute(); // show change locally
 			Bind();

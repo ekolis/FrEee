@@ -730,7 +730,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 
 	public ICreateDesignCommand CreateCreationCommand()
 	{
-		return DI.Get<IDesignCommandFactory>().CreateDesign(this);
+		return DIRoot.DesignCommands.CreateDesign(this);
 	}
 
 	public void Dispose()

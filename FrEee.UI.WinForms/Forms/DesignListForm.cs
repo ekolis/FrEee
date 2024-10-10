@@ -166,7 +166,7 @@ public partial class DesignListForm : GameForm
 					Empire.Current.Commands.Remove(cmd);
 				if (!Empire.Current.Commands.OfType<ISetObsoleteFlagCommand>().Where(cmd => cmd.Design == d && cmd.IsObsolete == d.IsObsolete).Any())
 				{
-					Empire.Current.Commands.Add(DI.Get<IDesignCommandFactory>().SetObsoleteFlag(d, d.IsObsolete));
+					Empire.Current.Commands.Add(DIRoot.DesignCommands.SetObsoleteFlag(d, d.IsObsolete));
 				}
 			}
 			BindDesignList();

@@ -1201,7 +1201,7 @@ public partial class MainGameForm : GameForm
 					Game.Load(Game.Current.Name, Game.Current.TurnNumber);
 					status.Progress = 0.25;
 					status.Message = "Processing turn";
-					var processor = DI.Get<ITurnProcessor>();
+					var processor = DIRoot.TurnProcessor;
 					processor.ProcessTurn(Game.Current, false, status, 0.5);
 					status.Message = "Saving game";
 					Game.SaveAll(status, 0.75);
@@ -1420,7 +1420,7 @@ public partial class MainGameForm : GameForm
 				var order = new MoveOrder(sector, !aggressiveMode);
 				v.AddOrder(order);
 				BindReport();
-				var cmd = DI.Get<IOrderCommandFactory>().AddOrder(v, order);
+				var cmd = DIRoot.OrderCommands.AddOrder(v, order);
 				Empire.Current.Commands.Add(cmd);
 				starSystemView.Invalidate(); // show move lines
 				ChangeCommandMode(CommandMode.None, null);

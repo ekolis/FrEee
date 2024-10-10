@@ -285,7 +285,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 			status.Changed += new Status.ChangedDelegate(status_Changed);
 
 			Console.WriteLine("Processing turn...");
-			var processor = DI.Get<ITurnProcessor>();
+			var processor = DIRoot.TurnProcessor;
 			var emps = processor.ProcessTurn(Game.Current, false, status);
 			foreach (var emp in emps)
 				Console.WriteLine(emp + " did not submit a PLR file.");

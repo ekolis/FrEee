@@ -350,7 +350,7 @@ public partial class ConstructionQueueForm : GameForm
 		var sel = SelectedOrders.ToArray();
 		foreach (var item in sel.Select(o => new { Order = o, OldIndex = ConstructionQueue.Orders.IndexOf(o), NewIndex = ConstructionQueue.Orders.Count() }))
 		{
-			var cmd = DI.Get<IOrderCommandFactory>().RearrangeOrders(ConstructionQueue, item.Order, item.NewIndex - item.OldIndex);
+			var cmd = DIRoot.OrderCommands.RearrangeOrders(ConstructionQueue, item.Order, item.NewIndex - item.OldIndex);
 			newCommands.Add(cmd);
 			cmd.Execute();
 		}

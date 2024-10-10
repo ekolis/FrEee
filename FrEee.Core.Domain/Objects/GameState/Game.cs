@@ -794,7 +794,7 @@ public class Game
 						&& (!lastBattleTimestamps.ContainsKey(sector) || lastBattleTimestamps[sector] < Timestamp - (v.StrategicSpeed == 0 ? 1d : 1d / v.StrategicSpeed)))) // have we fought here too recently?
 			{
 				// resolve the battle
-				var battle = DI.Get<IBattleFactory>().BuildSpaceBattle(sector);
+				var battle = DIRoot.Battles.BuildSpaceBattle(sector);
 				battle.Resolve();
 				Battles.Add(battle);
 				foreach (var emp in battle.Empires)
@@ -884,7 +884,7 @@ public class Game
 			throw new InvalidOperationException("Can't save commands without a current empire.");
 		foreach (var c in Empire.Current.Commands.OfType<ISetPlayerInfoCommand>().ToArray())
 			Empire.Current.Commands.Remove(c);
-		var cmd = DI.Get<INoteCommandFactory>().SetPlayerInfo(Empire.Current, Empire.Current.PlayerInfo);
+		var cmd = DIRoot.NoteCommands.SetPlayerInfo(Empire.Current, Empire.Current.PlayerInfo);
 		Empire.Current.Commands.Add(cmd);
 		if (!Directory.Exists(FrEeeConstants.SaveGameDirectory))
 			Directory.CreateDirectory(FrEeeConstants.SaveGameDirectory);

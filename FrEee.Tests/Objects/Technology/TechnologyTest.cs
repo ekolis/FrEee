@@ -24,7 +24,7 @@ public class TechnologyTest
 	{
 		DI.RegisterSingleton<ITurnProcessor, TurnProcessor>();
 		DI.Run();
-		processor = DI.Get<ITurnProcessor>();
+		processor = DIRoot.TurnProcessor;
 		new ModLoader().Load(null);
 	}
 
