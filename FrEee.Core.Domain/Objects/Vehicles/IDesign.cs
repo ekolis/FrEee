@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
-using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Designs;
 
 namespace FrEee.Objects.Vehicles;
 

@@ -20,6 +20,7 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Modding.Templates;
 using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Orders;
+using FrEee.Gameplay.Commands.Designs;
 
 namespace FrEee.UI.WinForms.Forms;
 

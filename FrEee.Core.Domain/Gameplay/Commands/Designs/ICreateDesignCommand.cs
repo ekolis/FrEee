@@ -1,7 +1,7 @@
 ﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Vehicles;
 
-namespace FrEee.Gameplay.Commands;
+namespace FrEee.Gameplay.Commands.Designs;
 
 /// <summary>
 /// A command for an empire to create a design.

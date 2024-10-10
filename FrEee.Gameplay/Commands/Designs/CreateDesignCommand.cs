@@ -6,8 +6,9 @@ using System.Linq;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
 using FrEee.Objects.LogMessages;
+using FrEee.Gameplay.Commands.Designs;
 
-namespace FrEee.Gameplay.Commands;
+namespace FrEee.Gameplay.Commands.Designs;
 
 /// <summary>
 /// A command to create a new vehicle design.

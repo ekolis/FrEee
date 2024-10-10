@@ -13,8 +13,6 @@ public interface ICommandFactory
 {
     // TODO: split these out into separate factories for each category and add parameters
 
-    ICommand CreateDesign();
-
     ICommand CreateFleet();
 
     ICommand CreateWaypoint();
@@ -36,6 +34,4 @@ public interface ICommandFactory
     ICommand Research();
 
     ICommand SendMessage();
-
-    ICommand SetObsoleteFlag();
 }

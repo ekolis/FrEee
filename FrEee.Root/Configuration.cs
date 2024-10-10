@@ -26,6 +26,7 @@ public static class Configuration
 		DI.RegisterSingleton<IBattleFactory, BattleFactory>();
 
 		// gameplay
+		DI.RegisterSingleton<IDesignCommandFactory, DesignCommandFactory>();
 		DI.RegisterSingleton<IOrderCommandFactory, OrderCommandFactory>();
 		DI.RegisterSingleton<INoteCommandFactory, NoteCommandFactory>();
 

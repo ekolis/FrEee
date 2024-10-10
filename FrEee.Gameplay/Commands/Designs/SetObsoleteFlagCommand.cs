@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
 
-namespace FrEee.Gameplay.Commands;
+namespace FrEee.Gameplay.Commands.Designs;
 
 /// <summary>
 /// A command to enable or disable the obsolete flag on a design.
 /// </summary>
-public class SetObsoleteFlagCommand : Command<IDesign>
+public class SetObsoleteFlagCommand : Command<IDesign>, ISetObsoleteFlagCommand
 {
     public SetObsoleteFlagCommand(IDesign design, bool isObsolete)
         : base(design)
@@ -21,20 +21,11 @@ public class SetObsoleteFlagCommand : Command<IDesign>
         IsObsolete = isObsolete;
     }
 
-    /// <summary>
-    /// The design to set the flag on if it's already knwon by the server.
-    /// </summary>
     [DoNotSerialize]
     public IDesign Design { get { return design?.Value; } set { design = value.ReferViaGalaxy(); } }
 
-    /// <summary>
-    /// The flag state to set.
-    /// </summary>
     public bool IsObsolete { get; set; }
 
-    /// <summary>
-    /// The design to set the flag on if it's only in the library and not in the game or it's a brand new design.
-    /// </summary>
     public IDesign NewDesign { get; set; }
 
     public override IEnumerable<IReferrable> NewReferrables
