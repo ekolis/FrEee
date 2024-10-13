@@ -67,5 +67,8 @@
 	<PropertyGroup>
 		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
 		<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
+		<!-- hide implementation details of things that are defined in DI-injected projects -->
+		<!-- TODO: uncomment this once implementation details of battles, etc. are removed from the UI -->
+		<!--<DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>-->
 	</PropertyGroup>
 </Project>

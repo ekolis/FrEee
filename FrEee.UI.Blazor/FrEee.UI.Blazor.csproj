@@ -31,6 +31,7 @@
 
 	<PropertyGroup>
 		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+        <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
 	</PropertyGroup>
 
 </Project>
