@@ -1340,10 +1340,10 @@ public partial class MainGameForm : GameForm
 
 		// set the waypoint
 		ICommand cmd;
-		cmd = new CreateWaypointCommand(waypoint);
+		cmd = DIRoot.WaypointCommands.CreateWaypoint(waypoint);
 		Empire.Current.Commands.Add(cmd);
 		cmd.Execute();
-		cmd = new HotkeyWaypointCommand(waypoint, waypointNumber, redirect);
+		cmd = DIRoot.WaypointCommands.HotkeyWaypoint(waypoint, waypointNumber, redirect);
 		Empire.Current.Commands.Add(cmd);
 		cmd.Execute();
 

@@ -13,13 +13,7 @@ public interface ICommandFactory
 {
     // TODO: split these out into separate factories for each category and add parameters
 
-    ICommand CreateWaypoint();
-
     ICommand DeleteMessage();
-
-    ICommand DeleteWaypoint();
-
-    ICommand HotkeyWaypoint();
 
     ICommand MinisterToggle();
 

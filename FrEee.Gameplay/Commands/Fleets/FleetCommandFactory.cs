@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Gameplay.Commands.Designs;
-using FrEee.Gameplay.Commands.Fleets;
 using FrEee.Gameplay.Commands.Notes;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Orders;
@@ -12,7 +11,7 @@ using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 
-namespace FrEee.Gameplay.Commands.Orders.Fleets;
+namespace FrEee.Gameplay.Commands.Fleets;
 public class FleetCommandFactory
 	: IFleetCommandFactory
 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Fleets;
 using FrEee.Gameplay.Commands.Orders;
 using FrEee.Processes;
@@ -44,4 +45,9 @@ public static class DIRoot
 	/// Allows players to issue orders.
 	/// </summary>
 	public static IOrderCommandFactory OrderCommands => DI.Get<IOrderCommandFactory>();
+
+	/// <summary>
+	/// Allows players to manage waypoints.
+	/// </summary>
+	public static IWaypointCommandFactory WaypointCommands => DI.Get<IWaypointCommandFactory>();
 }

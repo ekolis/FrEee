@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Designs;
 using FrEee.Gameplay.Commands.Fleets;
 using FrEee.Gameplay.Commands.Notes;
 using FrEee.Gameplay.Commands.Orders;
-using FrEee.Gameplay.Commands.Orders.Fleets;
+using FrEee.Gameplay.Commands.Waypoints;
 using FrEee.Processes;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Combat.Grid;
@@ -34,6 +35,7 @@ public static class Configuration
 		DI.RegisterSingleton<IFleetCommandFactory, FleetCommandFactory>();
 		DI.RegisterSingleton<IOrderCommandFactory, OrderCommandFactory>();
 		DI.RegisterSingleton<INoteCommandFactory, NoteCommandFactory>();
+		DI.RegisterSingleton<IWaypointCommandFactory, WaypointCommandFactory>();
 
 		// run this in the background, without awaiting it
 		DI.Run();
