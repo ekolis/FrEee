@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Gameplay.Commands.Fleets;
 using FrEee.Gameplay.Commands.Orders;
 using FrEee.Processes;
 using FrEee.Processes.Combat;
@@ -28,6 +29,11 @@ public static class DIRoot
 	/// Allows players to manage designs.
 	/// </summary>
 	public static IDesignCommandFactory DesignCommands => DI.Get<IDesignCommandFactory>();
+
+	/// <summary>
+	/// Allows players to manage fleets.
+	/// </summary>
+	public static IFleetCommandFactory FleetCommands => DI.Get<IFleetCommandFactory>();
 
 	/// <summary>
 	/// Allows players to manage notes.

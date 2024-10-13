@@ -10,7 +10,7 @@ namespace FrEee.Gameplay.Commands.Fleets;
 /// <summary>
 /// A command for a space vehicle to join a fleet.
 /// </summary>
-public class JoinFleetCommand : Command<IMobileSpaceObject>
+public class JoinFleetCommand : Command<IMobileSpaceObject>, IJoinFleetCommand
 {
 	public JoinFleetCommand(IMobileSpaceObject vehicle, Fleet fleet)
 		: base(vehicle)

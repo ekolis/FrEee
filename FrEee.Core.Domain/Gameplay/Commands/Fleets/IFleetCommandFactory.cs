@@ -16,9 +16,9 @@ public interface IFleetCommandFactory
 
     ICommand DisbandFleet(Fleet fleet);
 
-    ICommand JoinFleet(IMobileSpaceObject vehicle, Fleet fleet);
+    IJoinFleetCommand JoinFleet(IMobileSpaceObject vehicle, Fleet fleet);
 
-	ICommand JoinFleet(IMobileSpaceObject vehicle, ICreateFleetCommand command);
+	IJoinFleetCommand JoinFleet(IMobileSpaceObject vehicle, ICreateFleetCommand command);
 
 	ICommand LeaveFleet(IMobileSpaceObject vehicle);
 }

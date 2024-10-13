@@ -26,12 +26,12 @@ public class FleetCommandFactory
 		return new DisbandFleetCommand(fleet);
 	}
 
-	public ICommand JoinFleet(IMobileSpaceObject vehicle, Fleet fleet)
+	public IJoinFleetCommand JoinFleet(IMobileSpaceObject vehicle, Fleet fleet)
 	{
 		return new JoinFleetCommand(vehicle, fleet);
 	}
 
-	public ICommand JoinFleet(IMobileSpaceObject vehicle, ICreateFleetCommand command)
+	public IJoinFleetCommand JoinFleet(IMobileSpaceObject vehicle, ICreateFleetCommand command)
 	{
 		return new JoinFleetCommand(vehicle, command);
 	}
