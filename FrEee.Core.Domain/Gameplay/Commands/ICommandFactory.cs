@@ -13,21 +13,13 @@ public interface ICommandFactory
 {
     // TODO: split these out into separate factories for each category and add parameters
 
-    ICommand CreateFleet();
-
     ICommand CreateWaypoint();
 
     ICommand DeleteMessage();
 
     ICommand DeleteWaypoint();
 
-    ICommand DisbandFleet();
-
     ICommand HotkeyWaypoint();
-
-    ICommand JoinFleet();
-
-    ICommand LeaveFleet();
 
     ICommand MinisterToggle();
 

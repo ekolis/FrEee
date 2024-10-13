@@ -13,6 +13,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Fleets;
 
 namespace FrEee.UI.WinForms.Forms;
 

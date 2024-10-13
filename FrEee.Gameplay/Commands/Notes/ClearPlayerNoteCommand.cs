@@ -3,7 +3,7 @@ using FrEee.Serialization;
 using FrEee.Extensions;
 using FrEee.Objects.GameState;
 
-namespace FrEee.Gameplay.Commands;
+namespace FrEee.Gameplay.Commands.Notes;
 
 /// <summary>
 /// Clears a player note.
