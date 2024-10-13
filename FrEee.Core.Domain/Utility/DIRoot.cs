@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Fleets;
+using FrEee.Gameplay.Commands.Messages;
 using FrEee.Gameplay.Commands.Orders;
 using FrEee.Processes;
 using FrEee.Processes.Combat;
@@ -35,6 +36,11 @@ public static class DIRoot
 	/// Allows players to manage fleets.
 	/// </summary>
 	public static IFleetCommandFactory FleetCommands => DI.Get<IFleetCommandFactory>();
+
+	/// <summary>
+	/// Allows players to manage diplomatic messages.
+	/// </summary>
+	public static IMessageCommandFactory MessageCommands => DI.Get<IMessageCommandFactory>();
 
 	/// <summary>
 	/// Allows players to manage notes.

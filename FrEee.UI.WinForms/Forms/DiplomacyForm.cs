@@ -194,7 +194,7 @@ public partial class DiplomacyForm : GameForm
 		msg.InReplyTo = InReplyTo;
 
 		// create a command to send it
-		var cmd = new SendMessageCommand(msg);
+		var cmd = DIRoot.MessageCommands.SendMessage(msg);
 		Empire.Current.Commands.Add(cmd);
 
 		// all done!

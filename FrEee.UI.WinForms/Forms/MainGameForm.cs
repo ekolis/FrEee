@@ -28,6 +28,7 @@ using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Orders;
+using FrEee.Gameplay.Commands.Messages;
 
 namespace FrEee.UI.WinForms.Forms;
 

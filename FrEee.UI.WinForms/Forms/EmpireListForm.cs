@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.GameState;
 using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Messages;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -194,7 +195,7 @@ public partial class EmpireListForm : GameForm
 				{
 					if (Empire.Current.IncomingMessages.Contains(msg) || Empire.Current.SentMessages.Contains(msg))
 					{
-						var cmd = new DeleteMessageCommand(msg);
+						var cmd = DIRoot.MessageCommands.DeleteMessage(msg);
 						Empire.Current.Commands.Add(cmd);
 						cmd.Execute();
 					}

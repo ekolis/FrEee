@@ -13,11 +13,7 @@ public interface ICommandFactory
 {
     // TODO: split these out into separate factories for each category and add parameters
 
-    ICommand DeleteMessage();
-
     ICommand MinisterToggle();
 
     ICommand Research();
-
-    ICommand SendMessage();
 }
