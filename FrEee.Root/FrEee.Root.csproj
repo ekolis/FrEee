@@ -12,8 +12,14 @@
 	<ItemGroup>
 		<ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
 		<ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
-		<ProjectReference Include="..\FrEee.Gameplay\FrEee.Gameplay.csproj" />
-		<ProjectReference Include="..\FrEee.Processes\FrEee.Processes.csproj" />
+		<ProjectReference Include="..\FrEee.Gameplay\FrEee.Gameplay.csproj">
+		  <!-- TODO: uncomment this once all commands and the like are properly interfaced -->
+		  <!--<PrivateAssets>all</PrivateAssets>-->
+		</ProjectReference>
+		<ProjectReference Include="..\FrEee.Processes\FrEee.Processes.csproj">
+		  <!-- TODO: uncomment this once battles are properly interfaced -->
+		  <!--<PrivateAssets>all</PrivateAssets>-->
+		</ProjectReference>
 	</ItemGroup>
 
 	<PropertyGroup>
