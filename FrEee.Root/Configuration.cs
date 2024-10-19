@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Designs;
 using FrEee.Gameplay.Commands.Fleets;
 using FrEee.Gameplay.Commands.Messages;

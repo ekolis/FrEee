@@ -1,5 +1,4 @@
-﻿using FrEee.Gameplay.Commands.Orders;
-using FrEee.Objects.Civilization;
+﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using System;
 using System.Collections.Generic;

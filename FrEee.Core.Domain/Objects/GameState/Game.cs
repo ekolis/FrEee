@@ -22,7 +22,7 @@ using FrEee.Processes.Setup;
 using FrEee.Modding.Scripts;
 using FrEee.Modding.Loaders;
 using FrEee.Gameplay.Commands;
-using FrEee.Gameplay.Commands.Orders;
+using FrEee.Gameplay.Commands.Notes;
 
 namespace FrEee.Objects.GameState;
 

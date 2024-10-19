@@ -7,7 +7,7 @@ using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 
-namespace FrEee.Gameplay.Commands.Orders;
+namespace FrEee.Gameplay.Commands.Notes;
 
 /// <summary>
 /// Builds various types of commands used for managing notes.

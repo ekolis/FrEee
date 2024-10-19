@@ -1,12 +1,12 @@
 ﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Vehicles;
 
-namespace FrEee.Gameplay.Commands;
+namespace FrEee.Gameplay.Commands.Designs;
 
 /// <summary>
 /// A command to mark a design as obsolete or not obsolete.
 /// </summary>
-public interface ISetObsoleteFlagCommand: ICommand<IDesign>
+public interface ISetObsoleteFlagCommand : ICommand<IDesign>
 {
 	/// <summary>
 	/// The design to set the flag on if it's already knwon by the server.

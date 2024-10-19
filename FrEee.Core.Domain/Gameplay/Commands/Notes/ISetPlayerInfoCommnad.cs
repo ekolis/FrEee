@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Orders;
 
-namespace FrEee.Gameplay.Commands.Orders;
+namespace FrEee.Gameplay.Commands.Notes;
 
 /// <summary>
 /// A command which sets the <see cref="PlayerInfo"/> of an <see cref="Empire"/>.

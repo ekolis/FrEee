@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Gameplay.Commands.Notes;
-using FrEee.Gameplay.Commands.Orders;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;

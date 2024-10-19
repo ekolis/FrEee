@@ -13,8 +13,8 @@ using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
-using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Orders;
+using FrEee.Gameplay.Commands.Designs;
 
 namespace FrEee.UI.WinForms.Forms;
 
