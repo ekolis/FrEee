@@ -12,7 +12,6 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.Vehicles;
 using FrEee.Processes.Combat;
-using FrEee.Processes.Combat.Grid;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -144,13 +143,7 @@ public partial class BattleResultsForm : GameForm, IBindable<IBattle>
 
 	private void btnReplay_Click(object sender, EventArgs e)
 	{
-		Form form;
-		//if (Battle is FrEee.Processes.Combat.Simple.Battle b)
-		//	form = new LogForm(MainGameForm.Instance, b.Log);
-		if (Battle is Battle b2)
-			form = new BattleReplayForm(b2);
-		else
-			throw new Exception($"Unknown battle type {Battle.GetType()}!");
+		BattleReplayForm form = new(Battle);
 		this.ShowChildForm(form);
 	}
 

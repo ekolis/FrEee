@@ -9,7 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Processes.Combat;
-using FrEee.Processes.Combat.Grid;
+using FrEee.Processes.Combat.Events;
 
 namespace FrEee.UI.WinForms.Controls;
 
@@ -39,7 +39,7 @@ public partial class BattleView : Control
 		}
 	}
 
-	public Battle Battle
+	public IBattle Battle
 	{
 		get => battle;
 		set
@@ -134,7 +134,7 @@ public partial class BattleView : Control
 	private const int SectorBorderSize = 1;
 
 	private bool autoZoom;
-	private Battle battle;
+	private IBattle battle;
 	private List<Boom> booms = new List<Boom>();
 	private bool combatPhase = false;
 	private Vector2<int> focusedLocation;

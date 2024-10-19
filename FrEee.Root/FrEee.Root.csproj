@@ -17,8 +17,7 @@
 		  <!--<PrivateAssets>all</PrivateAssets>-->
 		</ProjectReference>
 		<ProjectReference Include="..\FrEee.Processes\FrEee.Processes.csproj">
-		  <!-- TODO: uncomment this once battles are properly interfaced -->
-		  <!--<PrivateAssets>all</PrivateAssets>-->
+		  <PrivateAssets>all</PrivateAssets>
 		</ProjectReference>
 	</ItemGroup>
 

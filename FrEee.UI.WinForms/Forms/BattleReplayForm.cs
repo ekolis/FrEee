@@ -10,20 +10,20 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Processes.Combat;
-using FrEee.Processes.Combat.Grid;
+using FrEee.Processes.Combat.Events;
 
 namespace FrEee.UI.WinForms.Forms;
 
-public partial class BattleReplayForm : GameForm, IBindable<Battle>
+public partial class BattleReplayForm : GameForm, IBindable<IBattle>
 {
-	public BattleReplayForm(Battle b)
+	public BattleReplayForm(IBattle b)
 	{
 		InitializeComponent();
 		Bind(b);
 		reportPanel.Controls.Add(CreateLogListBox());
 	}
 
-	public Battle Battle { get; private set; }
+	public IBattle Battle { get; private set; }
 
 	public ICombatant SelectedCombatant
 	{
@@ -47,7 +47,7 @@ public partial class BattleReplayForm : GameForm, IBindable<Battle>
 
 	private ICombatant selectedCombatant;
 
-	public void Bind(Battle data)
+	public void Bind(IBattle data)
 	{
 		Battle = data;
 		Bind();

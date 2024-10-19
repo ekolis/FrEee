@@ -3,8 +3,9 @@ using FrEee.Serialization;
 using FrEee.Extensions;
 using FrEee.Objects.GameState;
 
-namespace FrEee.Processes.Combat.Grid;
+namespace FrEee.Processes.Combat.Events;
 
+// TODO: make this and its subclassses records
 public abstract class BattleEvent : IBattleEvent
 {
     protected BattleEvent(IBattle battle, ICombatant combatant, Vector2<int> startPosition, Vector2<int> endPosition)
@@ -27,7 +28,9 @@ public abstract class BattleEvent : IBattleEvent
         set => combatant = value.ReferViaGalaxy();
     }
 
+    // HACK: assumes 2D combat
     public Vector2<int> EndPosition { get; set; }
 
-    public Vector2<int> StartPosition { get; set; }
+	// HACK: assumes 2D combat
+	public Vector2<int> StartPosition { get; set; }
 }

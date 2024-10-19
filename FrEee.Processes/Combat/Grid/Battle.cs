@@ -15,6 +15,7 @@ using static System.Math;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
+using FrEee.Processes.Combat.Events;
 
 namespace FrEee.Processes.Combat.Grid;
 

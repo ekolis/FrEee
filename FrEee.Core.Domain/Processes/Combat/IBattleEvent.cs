@@ -1,5 +1,6 @@
 ﻿using FrEee.Utility;
-namespace FrEee.Processes.Combat.Grid;
+
+namespace FrEee.Processes.Combat;
 
 public interface IBattleEvent
 {

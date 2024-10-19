@@ -1,6 +1,5 @@
 ﻿using FrEee.Objects;
 using FrEee.Objects.Civilization;
-using FrEee.Processes.Combat.Grid;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Modding;
