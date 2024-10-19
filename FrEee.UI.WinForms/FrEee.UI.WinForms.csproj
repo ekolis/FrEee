@@ -18,8 +18,7 @@
 		<ProjectReference Include="..\FrEee.Assets\FrEee.Assets.csproj" />
 		<ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
 		<ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
-		<!-- PrivateAssets="all" prevents dependencies on implementation classes from leaking through the DI up to this project -->
-		<ProjectReference Include="..\FrEee.Root\FrEee.Root.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\FrEee.Root\FrEee.Root.csproj" />
 		<ProjectReference Include="..\FrEee.UI.Blazor\FrEee.UI.Blazor.csproj" />
 	</ItemGroup>
 	<ItemGroup>
