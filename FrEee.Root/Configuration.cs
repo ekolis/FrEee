@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FrEee.Gameplay.Commands.Designs;
 using FrEee.Gameplay.Commands.Fleets;
 using FrEee.Gameplay.Commands.Messages;
+using FrEee.Gameplay.Commands.Ministers;
 using FrEee.Gameplay.Commands.Notes;
 using FrEee.Gameplay.Commands.Orders;
 using FrEee.Gameplay.Commands.Waypoints;
@@ -34,6 +35,7 @@ public static class Configuration
 		DI.RegisterSingleton<IDesignCommandFactory, DesignCommandFactory>();
 		DI.RegisterSingleton<IFleetCommandFactory, FleetCommandFactory>();
 		DI.RegisterSingleton<IMessageCommandFactory, MessageCommandFactory>();
+		DI.RegisterSingleton<IMinisterCommandFactory, MinisterCommandFactory>();
 		DI.RegisterSingleton<INoteCommandFactory, NoteCommandFactory>();
 		DI.RegisterSingleton<IOrderCommandFactory, OrderCommandFactory>();
 		DI.RegisterSingleton<IWaypointCommandFactory, WaypointCommandFactory>();
