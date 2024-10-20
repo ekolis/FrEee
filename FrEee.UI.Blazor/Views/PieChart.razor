@@ -5,30 +5,7 @@
 
 @typeparam T where T : INumber<T>, IMultiplyOperators<T, int, T>, IDivisionOperators<T, int, T>
 
-@code {
-	[Parameter]
-	public PieChartViewModel<T> VM { get; set; } = new();
-
-	/// <summary>
-	/// When the view model's properties change, update the UI.
-	/// </summary>
-	/// <param name="sender"></param>
-	/// <param name="e"></param>
-	private void ViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
-	{
-		StateHasChanged();
-	}
-
-	protected override void OnInitialized()
-	{
-		VM.PropertyChanged += ViewModelPropertyChanged;
-	}
-
-	public void Dispose()
-	{
-		VM.PropertyChanged -= ViewModelPropertyChanged;
-	}
-}
+@inherits ViewBase<PieChartViewModel<T>>
 
 <!--TODO: split into multiple divs, one for each pie slice, and add onclick handlers for each-->
 <div style="

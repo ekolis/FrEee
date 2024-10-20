@@ -1,30 +1,6 @@
 ﻿@using System.Drawing
 @using System.ComponentModel
-
-@code {
-	[Parameter]
-	public ProgressBarViewModel VM { get; set; } = new();
-
-	/// <summary>
-	/// When the view model's properties change, update the UI.
-	/// </summary>
-	/// <param name="sender"></param>
-	/// <param name="e"></param>
-	private void ViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
-	{
-		StateHasChanged();
-	}
-
-	protected override void OnInitialized()
-	{
-		VM.PropertyChanged += ViewModelPropertyChanged;
-	}
-
-	public void Dispose()
-	{
-		VM.PropertyChanged -= ViewModelPropertyChanged;
-	}
-}
+@inherits ViewBase<ProgressBarViewModel>
 
 <div @onclick="VM.OnClick" style="display: grid; height: 36px; overflow: hidden">
 	<div class="fill" style="display: flex; flex-direction: row; grid-area: 1/1/1/1;">
