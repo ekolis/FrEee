@@ -9,6 +9,7 @@ using FrEee.Gameplay.Commands.Messages;
 using FrEee.Gameplay.Commands.Ministers;
 using FrEee.Gameplay.Commands.Notes;
 using FrEee.Gameplay.Commands.Orders;
+using FrEee.Gameplay.Commands.Projects;
 using FrEee.Gameplay.Commands.Waypoints;
 using FrEee.Processes;
 using FrEee.Processes.Combat;
@@ -59,6 +60,11 @@ public static class DIRoot
 	/// Allows players to issue orders.
 	/// </summary>
 	public static IOrderCommandFactory OrderCommands => DI.Get<IOrderCommandFactory>();
+
+	/// <summary>
+	/// Allows players to manage empire wide projects such as research and espionage.
+	/// </summary>
+	public static IProjectCommandFactory ProjectCommands => DI.Get<IProjectCommandFactory>();
 
 	/// <summary>
 	/// Allows players to manage waypoints.

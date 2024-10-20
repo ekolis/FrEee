@@ -1,10 +1,12 @@
 using FrEee.Extensions;
 using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Projects;
 using FrEee.Modding;
 using FrEee.Modding.Loaders;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Processes;
+using FrEee.Root;
 using FrEee.Utility;
 using NUnit.Framework;
 
@@ -22,8 +24,7 @@ public class TechnologyTest
 	[OneTimeSetUp]
 	public static void ClassInit()
 	{
-		DI.RegisterSingleton<ITurnProcessor, TurnProcessor>();
-		DI.Run();
+		Configuration.ConfigureDI();
 		processor = DIRoot.TurnProcessor;
 		new ModLoader().Load(null);
 	}
@@ -46,7 +47,7 @@ public class TechnologyTest
 		emp.ResearchedTechnologies[tech] = 0;
 		emp.BonusResearch = tech.GetBaseLevelCost(1) + tech.GetBaseLevelCost(2);
 
-		var cmd = new ResearchCommand();
+		var cmd = DIRoot.ProjectCommands.Research();
 		cmd.Issuer = emp;
 		cmd.Executor = emp;
 		cmd.Spending[tech] = 100;
@@ -85,11 +86,9 @@ public class TechnologyTest
 		emp.BonusResearch = t1.GetBaseLevelCost(1) + 1;
 
 		// create research command
-		var cmd = new ResearchCommand
-		{
-			Issuer = emp,
-			Executor = emp,
-		};
+		var cmd = DIRoot.ProjectCommands.Research();
+		cmd.Issuer = emp;
+		cmd.Executor = emp;
 		cmd.Queue.Add(t1);
 		cmd.Queue.Add(t2);
 

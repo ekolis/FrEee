@@ -17,7 +17,7 @@ public interface ICommand : IPromotable
     /// <summary>
     /// The empire issuing the command.
     /// </summary>
-    Empire Issuer { get; }
+    Empire Issuer { get; set; }
 
     /// <summary>
     /// Any new (from the client) objects referred to by this command.

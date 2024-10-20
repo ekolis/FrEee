@@ -9,6 +9,7 @@ using FrEee.Gameplay.Commands.Messages;
 using FrEee.Gameplay.Commands.Ministers;
 using FrEee.Gameplay.Commands.Notes;
 using FrEee.Gameplay.Commands.Orders;
+using FrEee.Gameplay.Commands.Projects;
 using FrEee.Gameplay.Commands.Waypoints;
 using FrEee.Processes;
 using FrEee.Processes.Combat;
@@ -38,6 +39,7 @@ public static class Configuration
 		DI.RegisterSingleton<IMinisterCommandFactory, MinisterCommandFactory>();
 		DI.RegisterSingleton<INoteCommandFactory, NoteCommandFactory>();
 		DI.RegisterSingleton<IOrderCommandFactory, OrderCommandFactory>();
+		DI.RegisterSingleton<IProjectCommandFactory, ProjectCommandFactory>();
 		DI.RegisterSingleton<IWaypointCommandFactory, WaypointCommandFactory>();
 
 		// run this in the background, without awaiting it
