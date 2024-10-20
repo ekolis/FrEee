@@ -25,5 +25,8 @@ A clear and concise description of what actually happened.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
+**Related issues**
+Any other issues that are related to this one, link them here.
+
 **Additional context**
 Add any other context about the problem here. Maybe upload appropriate savegame files?

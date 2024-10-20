@@ -21,3 +21,6 @@ Please attach any screenshots of current behavior and mockups of desired behavio
 
 **Things to consider**
 What questions need to be addressed in order to implement this feature request?
+
+**Related issues**
+Any other issues that are related to this one, link them here.

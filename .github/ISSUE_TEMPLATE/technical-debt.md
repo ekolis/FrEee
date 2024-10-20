@@ -12,3 +12,6 @@ assignees: ''
 **How will this benefit us?**
 
 **What potential drawbacks are there to making this change?**
+
+**Related issues**
+Any other issues that are related to this one, link them here.
