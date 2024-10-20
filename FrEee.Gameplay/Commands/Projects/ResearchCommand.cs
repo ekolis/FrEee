@@ -3,24 +3,22 @@ using FrEee.Extensions;
 using System.Linq;
 using Tech = FrEee.Objects.Technology.Technology;
 using FrEee.Modding;
-using FrEee.Objects.Technology;
 
-namespace FrEee.Gameplay.Commands;
+namespace FrEee.Gameplay.Commands.Projects;
 
 /// <summary>
 /// Command to set an empire's research priorities.
 /// </summary>
-public class ResearchCommand : Command<Empire>
+public class ResearchCommand
+    : Command<Empire>, IResearchCommand
 {
     public ResearchCommand()
         : base(Empire.Current)
     {
-        Spending = new ModReferenceKeyedDictionary<Tech, int>();
-        Queue = new ModReferenceList<Tech>();
     }
 
-    public ModReferenceList<Tech> Queue { get; private set; }
-    public ModReferenceKeyedDictionary<Tech, int> Spending { get; private set; }
+    public ModReferenceList<Tech> Queue { get; private set; } = new();
+    public ModReferenceKeyedDictionary<Tech, int> Spending { get; private set; } = new();
 
     public override void Execute()
     {
@@ -40,7 +38,7 @@ public class ResearchCommand : Command<Empire>
             if (!Executor.HasUnlocked(kvp.Key))
                 Spending[kvp.Key] = 0;
         }
-        foreach (Technology tech in Queue.ToArray())
+        foreach (Tech tech in Queue.ToArray())
         {
             if (!Executor.HasUnlocked(tech))
                 Queue.Remove(tech);

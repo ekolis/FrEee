@@ -23,6 +23,7 @@ using FrEee.Modding.Abilities;
 using FrEee.Processes.Setup;
 using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Orders;
+using FrEee.Gameplay.Commands.Projects;
 
 namespace FrEee.Objects.Civilization;
 
@@ -582,11 +583,11 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 		}
 	}
 
-	public ResearchCommand ResearchCommand
+	public IResearchCommand ResearchCommand
 	{
 		get
 		{
-			return Commands.OfType<ResearchCommand>().SingleOrDefault();
+			return Commands.OfType<IResearchCommand>().SingleOrDefault();
 		}
 		set
 		{
