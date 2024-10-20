@@ -192,6 +192,11 @@ public class DamageType : IModObject
 	/// </summary>
 	public IDictionary<string, object> TemplateParameters { get; set; }
 
+	public void Dispose()
+	{
+		// nothing to do here
+	}
+
 	public override string ToString()
 	{
 		return Name;

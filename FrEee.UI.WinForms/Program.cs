@@ -15,6 +15,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
+using FrEee.Root;
 
 namespace FrEee.UI.WinForms;
 
@@ -91,6 +92,9 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 				MessageBox.Show("Error logging exception: " + ex.Message);
 			}
 		};
+
+		// set up dependency injection
+		Configuration.ConfigureDI();
 
 		// HACK - so many things are based on the working directory...
 		Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
@@ -281,7 +285,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 			status.Changed += new Status.ChangedDelegate(status_Changed);
 
 			Console.WriteLine("Processing turn...");
-			var processor = new TurnProcessor();
+			var processor = DIRoot.TurnProcessor;
 			var emps = processor.ProcessTurn(Game.Current, false, status);
 			foreach (var emp in emps)
 				Console.WriteLine(emp + " did not submit a PLR file.");

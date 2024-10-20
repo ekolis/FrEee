@@ -1,5 +1,4 @@
 ﻿using FrEee.Objects.Civilization;
-using FrEee.Objects.Commands;
 using FrEee.Objects.Space;
 using FrEee.Extensions;
 using FrEee.UI.WinForms.Utility.Extensions;
@@ -12,6 +11,8 @@ using FrEee.Objects.Technology;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Modding.Abilities;
+using FrEee.Utility;
+using FrEee.Gameplay.Commands.Orders;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -272,7 +273,7 @@ public partial class ActivateAbilityForm : GameForm
 
 				// issue command
 				var order = new ActivateAbilityOrder(sel.Source, sel.Ability, target);
-				var cmd = new AddOrderCommand(sobj, order);
+				var cmd = DIRoot.OrderCommands.AddOrder(sobj, order);
 				cmd.Execute();
 				Empire.Current.Commands.Add(cmd);
 				Close();

@@ -16,6 +16,11 @@ public interface IBattle : INamed, IPictorial, ILocated
     double Timestamp { get; }
     IDictionary<long, ICombatant> StartCombatants { get; }
     IDictionary<long, ICombatant> EndCombatants { get; }
+    int GetDiameter(int round);
+	int Duration { get; }
+	IList<Vector2<int>> UpperLeft { get; } // HACK: this list data structure is specific to turn based battles
+	IList<Vector2<int>> LowerRight { get; } // HACK: this list data structure is specific to turn based battles
+	List<IList<IBattleEvent>> Events { get; } // HACK: this list data structure is specific to turn based battles
 
-    void Resolve();
+	void Resolve();
 }

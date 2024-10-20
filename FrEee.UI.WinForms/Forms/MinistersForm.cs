@@ -1,5 +1,6 @@
-﻿using FrEee.Objects.Civilization;
-using FrEee.Objects.Commands;
+﻿using FrEee.Gameplay.Commands.Messages;
+using FrEee.Gameplay.Commands.Ministers;
+using FrEee.Objects.Civilization;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;
@@ -34,10 +35,10 @@ public partial class MinistersForm : GameForm
 
 	private void btnClose_Click(object sender, EventArgs e)
 	{
-		var cmd = Empire.Current.Commands.OfType<MinisterToggleCommand>().SingleOrDefault();
+		var cmd = Empire.Current.Commands.OfType<IToggleMinistersCommand>().SingleOrDefault();
 		if (cmd == null)
 		{
-			cmd = new MinisterToggleCommand();
+			cmd = DIRoot.MinisterCommands.ToggleMinisters();
 			Empire.Current.Commands.Add(cmd);
 		}
 		var dict = new SafeDictionary<string, ICollection<string>>();

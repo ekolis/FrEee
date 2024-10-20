@@ -1,6 +1,5 @@
 ﻿
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Commands;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
 using FrEee.Utility;
@@ -13,6 +12,8 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Fleets;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -111,23 +112,23 @@ public partial class FleetTransferForm : GameForm
 			CreateNode(treeFleets, f);
 
 		// create any new fleets
-		foreach (var cmd in newCommands.OfType<CreateFleetCommand>())
+		foreach (var cmd in newCommands.OfType<ICreateFleetCommand>())
 			CreateNode(treeFleets, cmd.Fleet);
 
 		// remove vehicles that are being removed from fleets
-		foreach (var cmd in newCommands.OfType<LeaveFleetCommand>())
+		foreach (var cmd in newCommands.OfType<ILeaveFleetCommand>())
 		{
 			var node = FindNode(treeFleets, cmd.Executor);
 			node.Remove();
 		}
-		foreach (var cmd in newCommands.OfType<DisbandFleetCommand>())
+		foreach (var cmd in newCommands.OfType<IDisbandFleetCommand>())
 		{
 			var node = FindNode(treeFleets, cmd.Executor);
 			node.Remove();
 		}
 
 		// add vehicles that are being added to fleets
-		foreach (var cmd in newCommands.OfType<JoinFleetCommand>())
+		foreach (var cmd in newCommands.OfType<IJoinFleetCommand>())
 		{
 			var node = FindNode(treeFleets, cmd.Fleet);
 			CreateNode(node, cmd.Executor);
@@ -149,13 +150,13 @@ public partial class FleetTransferForm : GameForm
 			vehicles.Add(v);
 
 		// add vehicles that are being removed from fleets (but not fleets themselves, those go in the fleets tree)
-		foreach (var v in newCommands.OfType<LeaveFleetCommand>().Select(c => c.Executor).OfType<SpaceVehicle>())
+		foreach (var v in newCommands.OfType<ILeaveFleetCommand>().Select(c => c.Executor).OfType<SpaceVehicle>())
 			vehicles.Add(v);
-		foreach (var v in newCommands.OfType<DisbandFleetCommand>().SelectMany(c => c.Executor.Vehicles.OfType<SpaceVehicle>()))
+		foreach (var v in newCommands.OfType<IDisbandFleetCommand>().SelectMany(c => c.Executor.Vehicles.OfType<SpaceVehicle>()))
 			vehicles.Add(v);
 
 		// remove vehicles that are being added to fleets
-		foreach (var v in newCommands.OfType<JoinFleetCommand>().Select(c => c.Executor).OfType<SpaceVehicle>())
+		foreach (var v in newCommands.OfType<IJoinFleetCommand>().Select(c => c.Executor).OfType<SpaceVehicle>())
 			vehicles.Remove(v);
 
 		// make a tree of vehicles
@@ -205,7 +206,7 @@ public partial class FleetTransferForm : GameForm
 		var fleet = new Fleet();
 		fleet.Name = txtFleetName.Text;
 
-		var cmd = new CreateFleetCommand(fleet, sector);
+		var cmd = DIRoot.FleetCommands.CreateFleet(fleet, sector);
 		newCommands.Add(cmd);
 		newFleets.Add(fleet);
 
@@ -290,17 +291,17 @@ public partial class FleetTransferForm : GameForm
 			if (!newFleets.Contains(fleet))
 			{
 				// create a disband command
-				var cmd = new DisbandFleetCommand(fleet);
+				var cmd = DIRoot.FleetCommands.DisbandFleet(fleet);
 				newCommands.Add(cmd);
 			}
 			else
 			{
 				// delete any create/join/leave commands
-				var cmd = newCommands.OfType<CreateFleetCommand>().Single(c => c.Fleet == fleet);
+				var cmd = newCommands.OfType<ICreateFleetCommand>().Single(c => c.Fleet == fleet);
 				newCommands.Remove(cmd);
-				foreach (var c in newCommands.OfType<JoinFleetCommand>().Where(c => c.Fleet == fleet))
+				foreach (var c in newCommands.OfType<IJoinFleetCommand>().Where(c => c.Fleet == fleet))
 					newCommands.Remove(c);
-				foreach (var c in newCommands.OfType<LeaveFleetCommand>().Where(c => c.Executor.Container == fleet))
+				foreach (var c in newCommands.OfType<ILeaveFleetCommand>().Where(c => c.Executor.Container == fleet))
 					newCommands.Remove(c);
 			}
 
@@ -323,16 +324,16 @@ public partial class FleetTransferForm : GameForm
 		if (fleet == null)
 			return;
 
-		JoinFleetCommand cmd;
+		IJoinFleetCommand cmd;
 		if (!newFleets.Contains(fleet))
 		{
 			// fleet already exists, we can add to it
-			cmd = new JoinFleetCommand(vehicle, fleet);
+			cmd = DIRoot.FleetCommands.JoinFleet(vehicle, fleet);
 		}
 		else
 		{
 			// fleet is new, we need to reference it by its command
-			cmd = new JoinFleetCommand(vehicle, newCommands.OfType<CreateFleetCommand>().Single(c => c.Fleet == fleet));
+			cmd = DIRoot.FleetCommands.JoinFleet(vehicle, newCommands.OfType<ICreateFleetCommand>().Single(c => c.Fleet == fleet));
 		}
 		newCommands.Add(cmd);
 	}
@@ -405,7 +406,7 @@ public partial class FleetTransferForm : GameForm
 		if (vehicle.Container == null)
 			return;
 
-		var cmd = new LeaveFleetCommand(vehicle);
+		var cmd = DIRoot.FleetCommands.LeaveFleet(vehicle);
 		newCommands.Add(cmd);
 		BindVehicles(vehicle);
 		var node = treeFleets.GetAllNodes().Single(x => x.Tag == vehicle);

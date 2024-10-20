@@ -1,14 +1,11 @@
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
-using FrEee.Processes.Combat.Grid;
-using FrEee.Objects.Commands;
 using FrEee.Objects.Events;
 using FrEee.Objects.LogMessages;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;
-using Microsoft.Scripting.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,6 +21,8 @@ using FrEee.Modding.Abilities;
 using FrEee.Processes.Setup;
 using FrEee.Modding.Scripts;
 using FrEee.Modding.Loaders;
+using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Notes;
 
 namespace FrEee.Objects.GameState;
 
@@ -158,7 +157,7 @@ public class Game
 	/// <summary>
 	/// The next tick size, for ship movement.
 	/// </summary>
-	public double NextTickSize { get; internal set; }
+	public double NextTickSize { get; set; }
 
 	/// <summary>
 	/// Events which have been warned of and are pending execution.
@@ -255,7 +254,7 @@ public class Game
 	/// Serialized string value of the game at the beginning of the turn.
 	/// </summary>
 	[DoNotSerialize]
-	internal string? StringValue
+	public string? StringValue
 	{
 		get
 		{
@@ -438,7 +437,7 @@ public class Game
 	/// <summary>
 	/// Saves all empires' tech levels in the other empires for uniqueness calculations.
 	/// </summary>
-	internal void SaveTechLevelsForUniqueness()
+	public void SaveTechLevelsForUniqueness()
 	{
 		if (Current.Setup.TechnologyUniqueness != 0)
 		{
@@ -795,7 +794,7 @@ public class Game
 						&& (!lastBattleTimestamps.ContainsKey(sector) || lastBattleTimestamps[sector] < Timestamp - (v.StrategicSpeed == 0 ? 1d : 1d / v.StrategicSpeed)))) // have we fought here too recently?
 			{
 				// resolve the battle
-				var battle = new SpaceBattle(sector);
+				var battle = DIRoot.Battles.BuildSpaceBattle(sector);
 				battle.Resolve();
 				Battles.Add(battle);
 				foreach (var emp in battle.Empires)
@@ -883,9 +882,10 @@ public class Game
 		CleanGameState();
 		if (CurrentEmpire == null)
 			throw new InvalidOperationException("Can't save commands without a current empire.");
-		foreach (var c in Empire.Current.Commands.OfType<SetPlayerInfoCommand>().ToArray())
+		foreach (var c in Empire.Current.Commands.OfType<ISetPlayerInfoCommand>().ToArray())
 			Empire.Current.Commands.Remove(c);
-		Empire.Current.Commands.Add(new SetPlayerInfoCommand(Empire.Current) { PlayerInfo = Empire.Current.PlayerInfo });
+		var cmd = DIRoot.NoteCommands.SetPlayerInfo(Empire.Current, Empire.Current.PlayerInfo);
+		Empire.Current.Commands.Add(cmd);
 		if (!Directory.Exists(FrEeeConstants.SaveGameDirectory))
 			Directory.CreateDirectory(FrEeeConstants.SaveGameDirectory);
 		var filename = GetEmpireCommandsSavePath(CurrentEmpire);
@@ -989,7 +989,7 @@ public class Game
 		return cmds;
 	}
 
-	internal void LoadCommands(Empire emp, IList<ICommand> cmds)
+	public void LoadCommands(Empire emp, IList<ICommand> cmds)
 	{
 		cmds = cmds.Where(cmd => cmd != null).Distinct().ToList(); // HACK - why would we have null/duplicate commands in a plr file?!
 		emp.Commands.Clear();
@@ -1091,4 +1091,13 @@ public class Game
 	/// The game setup used to create this galaxy.
 	/// </summary>
 	public GameSetup Setup { get; set; }
+
+	/// <summary>
+	/// Resets the treaty clause caches in this game.
+	/// </summary>
+	public void ResetTreatyClauseCaches()
+	{
+		GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
+		ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
+	}
 }

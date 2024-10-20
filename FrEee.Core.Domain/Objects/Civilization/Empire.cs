@@ -1,5 +1,4 @@
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
-using FrEee.Objects.Commands;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 using FrEee.Objects.Vehicles;
@@ -22,6 +21,8 @@ using FrEee.Objects.Civilization.Diplomacy;
 using FrEee.Processes.AI;
 using FrEee.Modding.Abilities;
 using FrEee.Processes.Setup;
+using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Orders;
 
 namespace FrEee.Objects.Civilization;
 
@@ -98,7 +99,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	/// <summary>
 	/// Arbitrary data stored by the AI to maintain state between turns.
 	/// </summary>
-	public DynamicDictionary AINotes { get; internal set; }
+	public DynamicDictionary AINotes { get; set; }
 
 	/// <summary>
 	/// The names of any ministers that are enabled, keyed by category.
@@ -786,7 +787,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 		where T : IOrderable
 	{
 		target.RemoveOrder(order);
-		var cmd = new RemoveOrderCommand(target, order);
+		var cmd = DIRoot.OrderCommands.RemoveOrder(target, order);
 		Commands.Add(cmd);
 	}
 
@@ -1038,7 +1039,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 		where T : IOrderable
 	{
 		target.AddOrder(order);
-		var cmd = new AddOrderCommand(target, order);
+		var cmd = DIRoot.OrderCommands.AddOrder(target, order);
 		Commands.Add(cmd);
 	}
 

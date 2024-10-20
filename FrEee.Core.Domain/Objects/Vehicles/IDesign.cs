@@ -4,9 +4,9 @@ using FrEee.Modding.Templates;
 using FrEee.Utility;
 using System.Collections.Generic;
 using FrEee.Objects.Civilization.Construction;
-using FrEee.Objects.Commands;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
+using FrEee.Gameplay.Commands.Designs;
 
 namespace FrEee.Objects.Vehicles;
 

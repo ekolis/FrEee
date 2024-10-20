@@ -1,10 +1,11 @@
 using FrEee.Extensions;
+using FrEee.Gameplay.Commands;
 using FrEee.Modding;
 using FrEee.Modding.Loaders;
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Commands;
 using FrEee.Objects.GameState;
 using FrEee.Processes;
+using FrEee.Utility;
 using NUnit.Framework;
 
 namespace FrEee.Objects.Technology;
@@ -12,7 +13,7 @@ namespace FrEee.Objects.Technology;
 public class TechnologyTest
 {
 	private Empire emp;
-	private TurnProcessor processor = new();
+	private static ITurnProcessor processor;
 
 	/// <summary>
 	/// Loads the stock mod. Done once before running ALL the tests (not each individually; that would be pointless).
@@ -21,6 +22,9 @@ public class TechnologyTest
 	[OneTimeSetUp]
 	public static void ClassInit()
 	{
+		DI.RegisterSingleton<ITurnProcessor, TurnProcessor>();
+		DI.Run();
+		processor = DIRoot.TurnProcessor;
 		new ModLoader().Load(null);
 	}
 
@@ -119,7 +123,10 @@ public class TechnologyTest
 	public void TestInit()
 	{
 		new Game();
-		Game.Current.Setup.TechnologyCost = TechnologyCost.Low;
+		Game.Current.Setup = new()
+		{
+			TechnologyCost = TechnologyCost.Low
+		};
 		emp = new Empire();
 		Game.Current.Empires.Add(emp);
 	}

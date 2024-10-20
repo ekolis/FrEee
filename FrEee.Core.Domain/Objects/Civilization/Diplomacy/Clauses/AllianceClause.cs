@@ -1,9 +1,10 @@
-﻿using FrEee.Objects.Commands;
-using FrEee.Extensions;
+﻿using FrEee.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Civilization.Diplomacy.Actions;
+using FrEee.Gameplay.Commands;
+using FrEee.Utility;
 
 namespace FrEee.Objects.Civilization.Diplomacy.Clauses;
 
@@ -85,7 +86,7 @@ public class AllianceClause : Clause
 		response.Recipient = emp;
 		response.Text = "Our allies have forced our hand. We must declare war!";
 		response.Action = new DeclareWarAction(emp);
-		var cmd = new SendMessageCommand(response);
+		var cmd = DIRoot.MessageCommands.SendMessage(response);
 		Empire.Current.Commands.Add(cmd);
 		Empire.Current.TriggerHappinessChange(hm => hm.TreatyWar);
 		emp.TriggerHappinessChange(hm => hm.TreatyWar);

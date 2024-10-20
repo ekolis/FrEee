@@ -1,7 +1,6 @@
 ﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Diplomacy;
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
-using FrEee.Objects.Commands;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
@@ -18,6 +17,7 @@ using System.Windows.Forms;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Civilization.Diplomacy.Actions;
 using FrEee.Modding.Abilities;
+using FrEee.Gameplay.Commands;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -194,7 +194,7 @@ public partial class DiplomacyForm : GameForm
 		msg.InReplyTo = InReplyTo;
 
 		// create a command to send it
-		var cmd = new SendMessageCommand(msg);
+		var cmd = DIRoot.MessageCommands.SendMessage(msg);
 		Empire.Current.Commands.Add(cmd);
 
 		// all done!

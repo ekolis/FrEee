@@ -1,5 +1,4 @@
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Commands;
 using FrEee.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
@@ -16,6 +15,9 @@ using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
+using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Designs;
+using FrEee.Gameplay.Commands.Orders;
 
 namespace FrEee.Objects.Vehicles;
 
@@ -728,7 +730,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 
 	public ICreateDesignCommand CreateCreationCommand()
 	{
-		return new CreateDesignCommand<T>(this);
+		return DIRoot.DesignCommands.CreateDesign(this);
 	}
 
 	public void Dispose()

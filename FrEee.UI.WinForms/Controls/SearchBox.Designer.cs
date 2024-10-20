@@ -28,37 +28,38 @@ partial class SearchBox
 	/// </summary>
 	private void InitializeComponent()
 	{
-		this.textBox = new System.Windows.Forms.TextBox();
-		this.SuspendLayout();
+		textBox = new System.Windows.Forms.TextBox();
+		SuspendLayout();
 		// 
 		// textBox
 		// 
-		this.textBox.Dock = System.Windows.Forms.DockStyle.Fill;
-		this.textBox.Location = new System.Drawing.Point(0, 0);
-		this.textBox.Name = "textBox";
-		this.textBox.Size = new System.Drawing.Size(591, 20);
-		this.textBox.TabIndex = 0;
-		this.textBox.SizeChanged += new System.EventHandler(this.textBox_SizeChanged);
-		this.textBox.TextChanged += new System.EventHandler(this.textBox_TextChanged);
-		this.textBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_KeyDown);
-		this.textBox.Leave += new System.EventHandler(this.textBox_Leave);
+		textBox.Dock = System.Windows.Forms.DockStyle.Fill;
+		textBox.Location = new System.Drawing.Point(0, 0);
+		textBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+		textBox.Name = "textBox";
+		textBox.Size = new System.Drawing.Size(690, 23);
+		textBox.TabIndex = 0;
+		textBox.SizeChanged += textBox_SizeChanged;
+		textBox.TextChanged += textBox_TextChanged;
+		textBox.KeyDown += textBox_KeyDown;
+		textBox.Leave += textBox_Leave;
 		// 
 		// SearchBox
 		// 
-		this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-		this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-		this.BackColor = System.Drawing.Color.Black;
-		this.Controls.Add(this.textBox);
-		this.ForeColor = System.Drawing.Color.White;
-		this.Name = "SearchBox";
-		this.Size = new System.Drawing.Size(591, 22);
-		this.Load += new System.EventHandler(this.SearchBox_Load);
-		this.SizeChanged += new System.EventHandler(this.SearchBox_SizeChanged);
-		this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SearchBox_KeyDown);
-		this.Leave += new System.EventHandler(this.SearchBox_Leave);
-		this.ResumeLayout(false);
-		this.PerformLayout();
-
+		AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+		AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+		BackColor = System.Drawing.Color.Black;
+		Controls.Add(textBox);
+		ForeColor = System.Drawing.Color.White;
+		Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+		Name = "SearchBox";
+		Size = new System.Drawing.Size(690, 25);
+		Load += SearchBox_Load;
+		SizeChanged += SearchBox_SizeChanged;
+		KeyDown += SearchBox_KeyDown;
+		Leave += SearchBox_Leave;
+		ResumeLayout(false);
+		PerformLayout();
 	}
 
 	#endregion

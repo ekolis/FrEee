@@ -54,7 +54,7 @@ public abstract class Waypoint : ILocated, IFoggable, IOwnable, INamed, IPromota
 	/// Number of vehicles whose orders were altered when this waypoint was deleted.
 	/// </summary>
 	[DoNotSerialize]
-	internal int AlteredQueuesOnDelete { get; private set; }
+	public int AlteredQueuesOnDelete { get; private set; }
 
 	private GameReference<Empire> owner { get; set; }
 

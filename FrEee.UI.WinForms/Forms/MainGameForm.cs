@@ -1,5 +1,4 @@
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Commands;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Objects.Vehicles;
@@ -27,6 +26,9 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.UI.Blazor.Views.GalaxyMapModes;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
+using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Orders;
+using FrEee.Gameplay.Commands.Messages;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -764,8 +766,8 @@ public partial class MainGameForm : GameForm
 
 		var messages = Empire.Current.IncomingMessages.OfType<ProposalMessage>().Count(m =>
 			m.TurnNumber >= Game.Current.TurnNumber - 1 &&
-			!Empire.Current.Commands.OfType<SendMessageCommand>().Where(c => c.Message.InReplyTo == m).Any() &&
-			!Empire.Current.Commands.OfType<DeleteMessageCommand>().Where(c => c.Message == m).Any());
+			!Empire.Current.Commands.OfType<ISendMessageCommand>().Where(c => c.Message.InReplyTo == m).Any() &&
+			!Empire.Current.Commands.OfType<IDeleteMessageCommand>().Where(c => c.Message == m).Any());
 		if (messages == 1)
 			todos.Add("1 unresolved diplomatic proposal");
 		else if (messages > 1)
@@ -1200,7 +1202,7 @@ public partial class MainGameForm : GameForm
 					Game.Load(Game.Current.Name, Game.Current.TurnNumber);
 					status.Progress = 0.25;
 					status.Message = "Processing turn";
-					var processor = new TurnProcessor();
+					var processor = DIRoot.TurnProcessor;
 					processor.ProcessTurn(Game.Current, false, status, 0.5);
 					status.Message = "Saving game";
 					Game.SaveAll(status, 0.75);
@@ -1339,10 +1341,10 @@ public partial class MainGameForm : GameForm
 
 		// set the waypoint
 		ICommand cmd;
-		cmd = new CreateWaypointCommand(waypoint);
+		cmd = DIRoot.WaypointCommands.CreateWaypoint(waypoint);
 		Empire.Current.Commands.Add(cmd);
 		cmd.Execute();
-		cmd = new HotkeyWaypointCommand(waypoint, waypointNumber, redirect);
+		cmd = DIRoot.WaypointCommands.HotkeyWaypoint(waypoint, waypointNumber, redirect);
 		Empire.Current.Commands.Add(cmd);
 		cmd.Execute();
 
@@ -1419,7 +1421,7 @@ public partial class MainGameForm : GameForm
 				var order = new MoveOrder(sector, !aggressiveMode);
 				v.AddOrder(order);
 				BindReport();
-				var cmd = new AddOrderCommand(v, order);
+				var cmd = DIRoot.OrderCommands.AddOrder(v, order);
 				Empire.Current.Commands.Add(cmd);
 				starSystemView.Invalidate(); // show move lines
 				ChangeCommandMode(CommandMode.None, null);

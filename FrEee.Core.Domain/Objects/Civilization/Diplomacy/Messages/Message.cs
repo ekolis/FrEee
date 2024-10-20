@@ -1,10 +1,11 @@
-﻿using FrEee.Objects.Commands;
-using FrEee.Serialization;
+﻿using FrEee.Serialization;
 using FrEee.Extensions;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using FrEee.Objects.GameState;
+using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Messages;
 
 namespace FrEee.Objects.Civilization.Diplomacy.Messages;
 
@@ -106,7 +107,7 @@ public abstract class Message : IMessage
         if (Owner != null)
         {
             // HACK - how could a diplomatic message have no owner?
-            var cmd = Owner.Commands.OfType<SendMessageCommand>().SingleOrDefault(c => c.Message == this);
+            var cmd = Owner.Commands.OfType<ISendMessageCommand>().SingleOrDefault(c => c.Message == this);
             if (cmd != null)
                 Owner.Commands.Remove(cmd);
         }
