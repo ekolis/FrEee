@@ -7,7 +7,7 @@ namespace FrEee.Gameplay.Commands.Fleets;
 /// <summary>
 /// A command for a space vehicle to leave a fleet.
 /// </summary>
-public class LeaveFleetCommand : Command<IMobileSpaceObject>
+public class LeaveFleetCommand : Command<IMobileSpaceObject>, ILeaveFleetCommand
 {
 	public LeaveFleetCommand(IMobileSpaceObject vehicle)
 		: base(vehicle)

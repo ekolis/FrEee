@@ -200,8 +200,7 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 		var order = (IOrder)lstOrdersDetail.SelectedItem;
 		if (order != null && Fleet.Orders.IndexOf(order) > 0)
 		{
-			var cmd = new RearrangeOrdersCommand<Fleet>(
-				Fleet, order, -1);
+			var cmd = DIRoot.OrderCommands.RearrangeOrders(Fleet, order, -1);
 			Empire.Current.Commands.Add(cmd);
 			cmd.Execute(); // show change locally
 			Bind();
@@ -218,7 +217,7 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 		var order = (IOrder)lstOrdersDetail.SelectedItem;
 		if (order != null)
 		{
-			var cmd = new RearrangeOrdersCommand<Fleet>(
+			var cmd = DIRoot.OrderCommands.RearrangeOrders(
 				Fleet, order, Fleet.Orders.Count - Fleet.Orders.IndexOf(order) - 1);
 			Empire.Current.Commands.Add(cmd);
 			cmd.Execute(); // show change locally
@@ -234,7 +233,7 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 		var order = (IOrder)lstOrdersDetail.SelectedItem;
 		if (order != null)
 		{
-			var cmd = new RearrangeOrdersCommand<Fleet>(
+			var cmd = DIRoot.OrderCommands.RearrangeOrders(
 				Fleet, order, -fleet.Orders.IndexOf(order));
 			Empire.Current.Commands.Add(cmd);
 			cmd.Execute(); // show change locally
@@ -333,10 +332,10 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 
 	private void chkRepeat_CheckedChanged(object sender, EventArgs e)
 	{
-		var cmd = Empire.Current.Commands.OfType<ToggleRepeatOrdersCommand>().SingleOrDefault(x => x.Executor == Fleet);
+		var cmd = Empire.Current.Commands.OfType<IToggleRepeatOrdersCommand>().SingleOrDefault(x => x.Executor == Fleet);
 		if (cmd == null)
 		{
-			cmd = new ToggleRepeatOrdersCommand(Fleet, chkRepeat.Checked);
+			cmd = DIRoot.OrderCommands.ToggleRepeatOrders(Fleet, chkRepeat.Checked);
 			Empire.Current.Commands.Add(cmd);
 		}
 		else
@@ -346,10 +345,10 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 
 	private void chkOnHold_CheckedChanged(object sender, EventArgs e)
 	{
-		var cmd = Empire.Current.Commands.OfType<ToggleOrdersOnHoldCommand>().SingleOrDefault(x => x.Executor == Fleet);
+		var cmd = Empire.Current.Commands.OfType<IToggleOrdersOnHoldCommand>().SingleOrDefault(x => x.Executor == Fleet);
 		if (cmd == null)
 		{
-			cmd = new ToggleOrdersOnHoldCommand(Fleet, chkOnHold.Checked);
+			cmd = DIRoot.OrderCommands.ToggleOrdersOnHold(Fleet, chkOnHold.Checked);
 			Empire.Current.Commands.Add(cmd);
 		}
 		else

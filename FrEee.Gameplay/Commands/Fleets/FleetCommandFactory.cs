@@ -20,7 +20,7 @@ public class FleetCommandFactory
 		return new CreateFleetCommand(fleet, sector);
 	}
 
-	public ICommand DisbandFleet(Fleet fleet)
+	public IDisbandFleetCommand DisbandFleet(Fleet fleet)
 	{
 		return new DisbandFleetCommand(fleet);
 	}
@@ -35,7 +35,7 @@ public class FleetCommandFactory
 		return new JoinFleetCommand(vehicle, command);
 	}
 
-	public ICommand LeaveFleet(IMobileSpaceObject vehicle)
+	public ILeaveFleetCommand LeaveFleet(IMobileSpaceObject vehicle)
 	{
 		return new LeaveFleetCommand(vehicle);
 	}

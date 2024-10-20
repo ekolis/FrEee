@@ -12,9 +12,9 @@
 	<ItemGroup>
 		<ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
 		<ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
+		<!-- PrivateAssets=all prevents transitive dependencies from leaking through the DI container to the UI-->
 		<ProjectReference Include="..\FrEee.Gameplay\FrEee.Gameplay.csproj">
-		  <!-- TODO: uncomment this once all commands and the like are properly interfaced -->
-		  <!--<PrivateAssets>all</PrivateAssets>-->
+		  <PrivateAssets>all</PrivateAssets>
 		</ProjectReference>
 		<ProjectReference Include="..\FrEee.Processes\FrEee.Processes.csproj">
 		  <PrivateAssets>all</PrivateAssets>

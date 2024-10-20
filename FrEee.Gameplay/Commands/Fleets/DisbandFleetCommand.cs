@@ -6,7 +6,7 @@ namespace FrEee.Gameplay.Commands.Fleets;
 /// <summary>
 /// A command to disband a fleet.
 /// </summary>
-public class DisbandFleetCommand : Command<Fleet>
+public class DisbandFleetCommand : Command<Fleet>, IDisbandFleetCommand
 {
 	public DisbandFleetCommand(Fleet fleet)
 		: base(fleet)

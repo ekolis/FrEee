@@ -766,8 +766,8 @@ public partial class MainGameForm : GameForm
 
 		var messages = Empire.Current.IncomingMessages.OfType<ProposalMessage>().Count(m =>
 			m.TurnNumber >= Game.Current.TurnNumber - 1 &&
-			!Empire.Current.Commands.OfType<SendMessageCommand>().Where(c => c.Message.InReplyTo == m).Any() &&
-			!Empire.Current.Commands.OfType<DeleteMessageCommand>().Where(c => c.Message == m).Any());
+			!Empire.Current.Commands.OfType<ISendMessageCommand>().Where(c => c.Message.InReplyTo == m).Any() &&
+			!Empire.Current.Commands.OfType<IDeleteMessageCommand>().Where(c => c.Message == m).Any());
 		if (messages == 1)
 			todos.Add("1 unresolved diplomatic proposal");
 		else if (messages > 1)

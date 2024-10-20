@@ -388,7 +388,7 @@ public partial class ConstructionQueueForm : GameForm
 			delta = FindSameItemsCountBelow(sel.Last()) + sel.Count() - 1;
 		foreach (var order in sel)
 		{
-			var cmd = new RearrangeOrdersCommand<ConstructionQueue>(ConstructionQueue, order, delta);
+			var cmd = DIRoot.OrderCommands.RearrangeOrders(ConstructionQueue, order, delta);
 			newCommands.Add(cmd);
 			cmd.Execute();
 		}
@@ -409,7 +409,7 @@ public partial class ConstructionQueueForm : GameForm
 		var sel = SelectedOrders.ToArray();
 		foreach (var item in sel.Select(o => new { Order = o, OldIndex = ConstructionQueue.Orders.IndexOf(o), NewIndex = sel.IndexOf(o) }))
 		{
-			var cmd = new RearrangeOrdersCommand<ConstructionQueue>(ConstructionQueue, item.Order, item.NewIndex - item.OldIndex);
+			var cmd = DIRoot.OrderCommands.RearrangeOrders(ConstructionQueue, item.Order, item.NewIndex - item.OldIndex);
 			newCommands.Add(cmd);
 			cmd.Execute();
 		}
@@ -426,7 +426,7 @@ public partial class ConstructionQueueForm : GameForm
 			delta = -FindSameItemsCountAbove(sel.First());
 		foreach (var order in sel)
 		{
-			var cmd = new RearrangeOrdersCommand<ConstructionQueue>(ConstructionQueue, order, delta);
+			var cmd = DIRoot.OrderCommands.RearrangeOrders(ConstructionQueue, order, delta);
 			newCommands.Add(cmd);
 			cmd.Execute();
 		}
@@ -448,8 +448,8 @@ public partial class ConstructionQueueForm : GameForm
 		ConstructionQueue.Orders.Clear();
 		foreach (var order in oldQueue)
 			ConstructionQueue.Orders.Add(order);
-		Empire.Current.Commands.Remove(Empire.Current.Commands.OfType<ToggleOrdersOnHoldCommand>().SingleOrDefault(x => x.Executor == ConstructionQueue));
-		Empire.Current.Commands.Remove(Empire.Current.Commands.OfType<ToggleRepeatOrdersCommand>().SingleOrDefault(x => x.Executor == ConstructionQueue));
+		Empire.Current.Commands.Remove(Empire.Current.Commands.OfType<IToggleOrdersOnHoldCommand>().SingleOrDefault(x => x.Executor == ConstructionQueue));
+		Empire.Current.Commands.Remove(Empire.Current.Commands.OfType<IToggleRepeatOrdersCommand>().SingleOrDefault(x => x.Executor == ConstructionQueue));
 		ConstructionQueue.AreOrdersOnHold = wasOnHold;
 		ConstructionQueue.AreRepeatOrdersEnabled = wasRepeat;
 	}
@@ -618,7 +618,7 @@ public partial class ConstructionQueueForm : GameForm
 				{
 					var order = new ConstructionOrder<Facility, FacilityTemplate> { Template = template };
 					ConstructionQueue.Orders.Add(order);
-					var cmd = new AddOrderCommand
+					var cmd = DIRoot.OrderCommands.AddOrder
 					(
 						ConstructionQueue,
 						order
@@ -757,7 +757,7 @@ public partial class ConstructionQueueForm : GameForm
 					// add to queue
 					var order = design.CreateConstructionOrder(ConstructionQueue);
 					ConstructionQueue.Orders.Add(order);
-					var cmd = new AddOrderCommand
+					var cmd = DIRoot.OrderCommands.AddOrder
 					(
 						ConstructionQueue,
 						order
@@ -839,7 +839,7 @@ public partial class ConstructionQueueForm : GameForm
 				{
 					var order = new UpgradeFacilityOrder(upgrade);
 					ConstructionQueue.Orders.Add(order);
-					var cmd = new AddOrderCommand
+					var cmd = DIRoot.OrderCommands.AddOrder
 					(
 						ConstructionQueue,
 						order
@@ -897,7 +897,7 @@ public partial class ConstructionQueueForm : GameForm
 
 	private void RemoveOrder(IConstructionOrder order, bool rebindGui = true)
 	{
-		var cmds = Empire.Current.Commands.OfType<AddOrderCommand>().Where(o => o.Order == order).ToArray();
+		var cmds = Empire.Current.Commands.OfType<IAddOrderCommand>().Where(o => o.Order == order).ToArray();
 		if (cmds.Any())
 		{
 			// remove add-order command since the order is new this turn
@@ -906,7 +906,7 @@ public partial class ConstructionQueueForm : GameForm
 		}
 		else
 		{
-			cmds = newCommands.OfType<AddOrderCommand>().Where(o => o.Order == order).ToArray();
+			cmds = newCommands.OfType<IAddOrderCommand>().Where(o => o.Order == order).ToArray();
 			if (cmds.Any())
 			{
 				// Not only new this turn, but new this instance of this form!
@@ -916,7 +916,7 @@ public partial class ConstructionQueueForm : GameForm
 			else
 			{
 				// add remove-order command
-				var cmd = new RemoveOrderCommand(ConstructionQueue, order);
+				var cmd = DIRoot.OrderCommands.RemoveOrder(ConstructionQueue, order);
 				newCommands.Add(cmd);
 			}
 		}
@@ -998,10 +998,10 @@ public partial class ConstructionQueueForm : GameForm
 
 	private void chkRepeat_CheckedChanged(object sender, EventArgs e)
 	{
-		var cmd = (Empire.Current.Commands.Union(newCommands ?? Enumerable.Empty<ICommand>())).OfType<ToggleRepeatOrdersCommand>().SingleOrDefault(x => x.Executor == ConstructionQueue);
+		var cmd = (Empire.Current.Commands.Union(newCommands ?? Enumerable.Empty<ICommand>())).OfType<IToggleRepeatOrdersCommand>().SingleOrDefault(x => x.Executor == ConstructionQueue);
 		if (cmd == null)
 		{
-			cmd = new ToggleRepeatOrdersCommand(ConstructionQueue, chkRepeat.Checked);
+			cmd = DIRoot.OrderCommands.ToggleRepeatOrders(ConstructionQueue, chkRepeat.Checked);
 			newCommands.Add(cmd);
 		}
 		else
@@ -1011,10 +1011,10 @@ public partial class ConstructionQueueForm : GameForm
 
 	private void chkOnHold_CheckedChanged(object sender, EventArgs e)
 	{
-		var cmd = (Empire.Current.Commands.Union(newCommands ?? Enumerable.Empty<ICommand>())).OfType<ToggleOrdersOnHoldCommand>().SingleOrDefault(x => x.Executor == ConstructionQueue);
+		var cmd = (Empire.Current.Commands.Union(newCommands ?? Enumerable.Empty<ICommand>())).OfType<IToggleOrdersOnHoldCommand>().SingleOrDefault(x => x.Executor == ConstructionQueue);
 		if (cmd == null)
 		{
-			cmd = new ToggleOrdersOnHoldCommand(ConstructionQueue, chkOnHold.Checked);
+			cmd = DIRoot.OrderCommands.ToggleOrdersOnHold(ConstructionQueue, chkOnHold.Checked);
 			newCommands.Add(cmd);
 		}
 		else

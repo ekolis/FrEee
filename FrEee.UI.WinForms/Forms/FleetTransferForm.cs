@@ -112,23 +112,23 @@ public partial class FleetTransferForm : GameForm
 			CreateNode(treeFleets, f);
 
 		// create any new fleets
-		foreach (var cmd in newCommands.OfType<CreateFleetCommand>())
+		foreach (var cmd in newCommands.OfType<ICreateFleetCommand>())
 			CreateNode(treeFleets, cmd.Fleet);
 
 		// remove vehicles that are being removed from fleets
-		foreach (var cmd in newCommands.OfType<LeaveFleetCommand>())
+		foreach (var cmd in newCommands.OfType<ILeaveFleetCommand>())
 		{
 			var node = FindNode(treeFleets, cmd.Executor);
 			node.Remove();
 		}
-		foreach (var cmd in newCommands.OfType<DisbandFleetCommand>())
+		foreach (var cmd in newCommands.OfType<IDisbandFleetCommand>())
 		{
 			var node = FindNode(treeFleets, cmd.Executor);
 			node.Remove();
 		}
 
 		// add vehicles that are being added to fleets
-		foreach (var cmd in newCommands.OfType<JoinFleetCommand>())
+		foreach (var cmd in newCommands.OfType<IJoinFleetCommand>())
 		{
 			var node = FindNode(treeFleets, cmd.Fleet);
 			CreateNode(node, cmd.Executor);
@@ -150,13 +150,13 @@ public partial class FleetTransferForm : GameForm
 			vehicles.Add(v);
 
 		// add vehicles that are being removed from fleets (but not fleets themselves, those go in the fleets tree)
-		foreach (var v in newCommands.OfType<LeaveFleetCommand>().Select(c => c.Executor).OfType<SpaceVehicle>())
+		foreach (var v in newCommands.OfType<ILeaveFleetCommand>().Select(c => c.Executor).OfType<SpaceVehicle>())
 			vehicles.Add(v);
-		foreach (var v in newCommands.OfType<DisbandFleetCommand>().SelectMany(c => c.Executor.Vehicles.OfType<SpaceVehicle>()))
+		foreach (var v in newCommands.OfType<IDisbandFleetCommand>().SelectMany(c => c.Executor.Vehicles.OfType<SpaceVehicle>()))
 			vehicles.Add(v);
 
 		// remove vehicles that are being added to fleets
-		foreach (var v in newCommands.OfType<JoinFleetCommand>().Select(c => c.Executor).OfType<SpaceVehicle>())
+		foreach (var v in newCommands.OfType<IJoinFleetCommand>().Select(c => c.Executor).OfType<SpaceVehicle>())
 			vehicles.Remove(v);
 
 		// make a tree of vehicles
@@ -297,11 +297,11 @@ public partial class FleetTransferForm : GameForm
 			else
 			{
 				// delete any create/join/leave commands
-				var cmd = newCommands.OfType<CreateFleetCommand>().Single(c => c.Fleet == fleet);
+				var cmd = newCommands.OfType<ICreateFleetCommand>().Single(c => c.Fleet == fleet);
 				newCommands.Remove(cmd);
-				foreach (var c in newCommands.OfType<JoinFleetCommand>().Where(c => c.Fleet == fleet))
+				foreach (var c in newCommands.OfType<IJoinFleetCommand>().Where(c => c.Fleet == fleet))
 					newCommands.Remove(c);
-				foreach (var c in newCommands.OfType<LeaveFleetCommand>().Where(c => c.Executor.Container == fleet))
+				foreach (var c in newCommands.OfType<ILeaveFleetCommand>().Where(c => c.Executor.Container == fleet))
 					newCommands.Remove(c);
 			}
 

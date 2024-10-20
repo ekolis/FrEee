@@ -15,6 +15,7 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Orders.RecycleBehaviors;
 using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Orders;
+using FrEee.Utility;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -136,7 +137,7 @@ public partial class RecycleForm : GameForm
 			var vnode = treeVehicles.AddItemWithImage(v.Name, v, v.Icon);
 			if (v is ICargoContainer cc)
 				BindUnitsIn(cc, vnode);
-			var orders = Empire.Current.Commands.OfType<AddOrderCommand>()
+			var orders = Empire.Current.Commands.OfType<IAddOrderCommand>()
 				.Where(x => x.Order is RecycleVehicleInSpaceOrder && x.Executor == v)
 				.Select(x => ((RecycleVehicleInSpaceOrder)x.Order).Behavior.Verb);
 			if (orders.Any())
@@ -172,7 +173,7 @@ public partial class RecycleForm : GameForm
 				{
 					// units
 					var unode = udnode.AddItemWithImage(u.Name, u, u.Icon);
-					var orders = Empire.Current.Commands.OfType<AddOrderCommand>()
+					var orders = Empire.Current.Commands.OfType<IAddOrderCommand>()
 						.Where(x => x.Order is RecycleFacilityOrCargoOrder o && x.Executor == cc && o.Target == u)
 						.Select(x => ((RecycleFacilityOrCargoOrder)x.Order).Behavior.Verb);
 					if (orders.Any())
@@ -246,11 +247,11 @@ public partial class RecycleForm : GameForm
 	private void btnScrap_Click(object sender, EventArgs e)
 	{
 		foreach (var f in SelectedFacilities)
-			AddCommand(new AddOrderCommand(f.Container, new RecycleFacilityOrCargoOrder(new ScrapBehavior(), f)));
+			AddCommand(DIRoot.OrderCommands.AddOrder(f.Container, new RecycleFacilityOrCargoOrder(new ScrapBehavior(), f)));
 		foreach (var v in SelectedVehiclesInSpace)
-			AddCommand(new AddOrderCommand(v, new RecycleVehicleInSpaceOrder(new ScrapBehavior())));
+			AddCommand(DIRoot.OrderCommands.AddOrder(v, new RecycleVehicleInSpaceOrder(new ScrapBehavior())));
 		foreach (var u in SelectedUnitsInCargo)
-			AddCommand(new AddOrderCommand((IMobileSpaceObject)u.Container, new RecycleFacilityOrCargoOrder(new ScrapBehavior(), u)));
+			AddCommand(DIRoot.OrderCommands.AddOrder((IMobileSpaceObject)u.Container, new RecycleFacilityOrCargoOrder(new ScrapBehavior(), u)));
 		Bind();
 	}
 

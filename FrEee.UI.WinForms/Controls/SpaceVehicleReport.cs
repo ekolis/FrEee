@@ -210,11 +210,11 @@ public partial class SpaceVehicleReport : UserControl, IBindable<SpaceVehicle>
 		var order = (IOrder)lstOrdersDetail.SelectedItem;
 		if (order != null)
 		{
-			var addCmd = Empire.Current.Commands.OfType<AddOrderCommand>().SingleOrDefault(c => c.Order == order);
+			var addCmd = Empire.Current.Commands.OfType<IAddOrderCommand>().SingleOrDefault(c => c.Order == order);
 			if (addCmd == null)
 			{
 				// not a newly added order, so create a remove command to take it off the server
-				var remCmd = new RemoveOrderCommand(Vehicle, order);
+				var remCmd = DIRoot.OrderCommands.RemoveOrder(Vehicle, order);
 				Empire.Current.Commands.Add(remCmd);
 				remCmd.Execute(); // show change locally
 			}
@@ -237,7 +237,7 @@ public partial class SpaceVehicleReport : UserControl, IBindable<SpaceVehicle>
 		var order = (IOrder)lstOrdersDetail.SelectedItem;
 		if (order != null && vehicle.Orders.IndexOf(order) < vehicle.Orders.Count() - 1)
 		{
-			var cmd = new RearrangeOrdersCommand<SpaceVehicle>(
+			var cmd = DIRoot.OrderCommands.RearrangeOrders(
 				vehicle, order, 1);
 			Empire.Current.Commands.Add(cmd);
 			cmd.Execute(); // show change locally
@@ -253,7 +253,7 @@ public partial class SpaceVehicleReport : UserControl, IBindable<SpaceVehicle>
 		var order = (IOrder)lstOrdersDetail.SelectedItem;
 		if (order != null && vehicle.Orders.IndexOf(order) > 0)
 		{
-			var cmd = new RearrangeOrdersCommand<SpaceVehicle>(
+			var cmd = DIRoot.OrderCommands.RearrangeOrders(
 				vehicle, order, -1);
 			Empire.Current.Commands.Add(cmd);
 			cmd.Execute(); // show change locally
@@ -271,7 +271,7 @@ public partial class SpaceVehicleReport : UserControl, IBindable<SpaceVehicle>
 		var order = (IOrder)lstOrdersDetail.SelectedItem;
 		if (order != null)
 		{
-			var cmd = new RearrangeOrdersCommand<SpaceVehicle>(
+			var cmd = DIRoot.OrderCommands.RearrangeOrders(
 				vehicle, order, Vehicle.Orders.Count() - vehicle.Orders.IndexOf(order) - 1);
 			Empire.Current.Commands.Add(cmd);
 			cmd.Execute(); // show change locally
@@ -287,7 +287,7 @@ public partial class SpaceVehicleReport : UserControl, IBindable<SpaceVehicle>
 		var order = (IOrder)lstOrdersDetail.SelectedItem;
 		if (order != null)
 		{
-			var cmd = new RearrangeOrdersCommand<SpaceVehicle>(
+			var cmd = DIRoot.OrderCommands.RearrangeOrders(
 				vehicle, order, -vehicle.Orders.IndexOf(order));
 			Empire.Current.Commands.Add(cmd);
 			cmd.Execute(); // show change locally
@@ -400,10 +400,10 @@ public partial class SpaceVehicleReport : UserControl, IBindable<SpaceVehicle>
 
 	private void chkRepeat_CheckedChanged(object sender, EventArgs e)
 	{
-		var cmd = Empire.Current.Commands.OfType<ToggleRepeatOrdersCommand>().SingleOrDefault(x => x.Executor == Vehicle);
+		var cmd = Empire.Current.Commands.OfType<IToggleRepeatOrdersCommand>().SingleOrDefault(x => x.Executor == Vehicle);
 		if (cmd == null)
 		{
-			cmd = new ToggleRepeatOrdersCommand(Vehicle, chkRepeat.Checked);
+			cmd = DIRoot.OrderCommands.ToggleRepeatOrders(Vehicle, chkRepeat.Checked);
 			Empire.Current.Commands.Add(cmd);
 		}
 		else
@@ -415,10 +415,10 @@ public partial class SpaceVehicleReport : UserControl, IBindable<SpaceVehicle>
 
 	private void chkOnHold_CheckedChanged(object sender, EventArgs e)
 	{
-		var cmd = Empire.Current.Commands.OfType<ToggleOrdersOnHoldCommand>().SingleOrDefault(x => x.Executor == Vehicle);
+		var cmd = Empire.Current.Commands.OfType<IToggleOrdersOnHoldCommand>().SingleOrDefault(x => x.Executor == Vehicle);
 		if (cmd == null)
 		{
-			cmd = new ToggleOrdersOnHoldCommand(Vehicle, chkOnHold.Checked);
+			cmd = DIRoot.OrderCommands.ToggleOrdersOnHold(Vehicle, chkOnHold.Checked);
 			Empire.Current.Commands.Add(cmd);
 		}
 		else

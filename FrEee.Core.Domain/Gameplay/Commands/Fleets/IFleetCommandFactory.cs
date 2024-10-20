@@ -14,11 +14,11 @@ public interface IFleetCommandFactory
 {
     ICreateFleetCommand CreateFleet(Fleet fleet, Sector sector);
 
-    ICommand DisbandFleet(Fleet fleet);
+    IDisbandFleetCommand DisbandFleet(Fleet fleet);
 
     IJoinFleetCommand JoinFleet(IMobileSpaceObject vehicle, Fleet fleet);
 
 	IJoinFleetCommand JoinFleet(IMobileSpaceObject vehicle, ICreateFleetCommand command);
 
-	ICommand LeaveFleet(IMobileSpaceObject vehicle);
+	ILeaveFleetCommand LeaveFleet(IMobileSpaceObject vehicle);
 }

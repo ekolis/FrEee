@@ -135,7 +135,11 @@ public partial class EmpireListForm : GameForm
 			lblBudgetWarning.Visible = emp != Empire.Current;
 
 			// message log
-			var msgs = Empire.Current.IncomingMessages.Where(m => m.Owner == emp).Union(Empire.Current.SentMessages.Where(m => m.Recipient == emp)).Union(Empire.Current.Commands.OfType<SendMessageCommand>().Select(cmd => cmd.Message));
+			var msgs = Empire.Current.IncomingMessages
+				.Where(m => m.Owner == emp)
+				.Union(Empire.Current.SentMessages.Where(m => m.Recipient == emp))
+				.Union(Empire.Current.Commands.OfType<ISendMessageCommand>()
+				.Select(cmd => cmd.Message));
 			lstMessages.Initialize(64, 64);
 			foreach (var msg in msgs.OrderByDescending(m => m.TurnNumber))
 				lstMessages.AddItemWithImage(msg.TurnNumber.ToStardate(), "", msg, msg.Owner.Portrait, null, msg.Owner == Empire.Current ? "Us" : msg.Owner.Name, msg.Recipient == Empire.Current ? "Us" : msg.Recipient.Name, msg.Text);
@@ -199,7 +203,9 @@ public partial class EmpireListForm : GameForm
 						Empire.Current.Commands.Add(cmd);
 						cmd.Execute();
 					}
-					var sendCommand = Empire.Current.Commands.OfType<SendMessageCommand>().SingleOrDefault(cmd => cmd.Message == msg);
+					var sendCommand = Empire.Current.Commands
+						.OfType<ISendMessageCommand>()
+						.SingleOrDefault(cmd => cmd.Message == msg);
 					if (sendCommand != null)
 						Empire.Current.Commands.Remove(sendCommand);
 				}
