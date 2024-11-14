@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net9</TargetFramework>
 		<OutputType>Library</OutputType>
 		<AssemblyName>FrEee.Processes</AssemblyName>
 		<Description>Stock implementations of processes such as turn processing used by FrEee</Description>

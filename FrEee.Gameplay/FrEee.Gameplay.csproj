@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net9</TargetFramework>
 		<OutputType>Library</OutputType>
 		<AssemblyName>FrEee.Gameplay</AssemblyName>
 		<Description>Stock implementations of basic game mechanics such as commands for FrEee.</Description>
