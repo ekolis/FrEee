@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net8.0-windows7.0</TargetFramework>
+		<TargetFramework>net9-windows</TargetFramework>
 		<UseWindowsForms>true</UseWindowsForms>
 		<Description>Windows Forms GUI for FrEee</Description>
 		<StartupObject>FrEee.UI.WinForms.Program</StartupObject>

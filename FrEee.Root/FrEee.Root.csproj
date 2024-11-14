@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net9</TargetFramework>
 		<OutputType>Library</OutputType>
 		<AssemblyName>FrEee.Root</AssemblyName>
 		<Description>Root of the FrEee game code. Configures dependency injection.</Description>
