@@ -67,4 +67,10 @@
 		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
 		<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
 	</PropertyGroup>
+	<ItemGroup>
+	  <EditorConfigFiles Remove="R:\vs\FrEee\FrEee.UI.WinForms\.editorconfig" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Include="R:\vs\FrEee\FrEee.UI.WinForms\.editorconfig" />
+	</ItemGroup>
 </Project>
