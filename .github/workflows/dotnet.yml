@@ -15,7 +15,7 @@ jobs:
     - name: Set up .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 9.0.x
     - name: Install dependencies
       run: dotnet restore
     - name: Build
@@ -40,11 +40,11 @@ jobs:
         stringToTruncate: ${{github.sha}}
         maxLength: 10
     - name: List files
-      run: ls -s .\FrEee.UI.WinForms\bin\Release\net6.0-windows7.0
+      run: ls -s .\FrEee.UI.WinForms\bin\Release\net9-windows
     - name: Prepare files for zipping
       run: |
         cd FrEee.UI.WinForms/bin/Release
-        ren net8.0-windows7.0 FrEee
+        ren net9-windows FrEee
       shell: cmd
     - name: Zip assets
       uses: papeloto/action-zip@v1
