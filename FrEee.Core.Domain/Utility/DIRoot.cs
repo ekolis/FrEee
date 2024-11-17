@@ -73,6 +73,11 @@ public static class DIRoot
 	public static IWaypointCommandFactory WaypointCommands => DI.Get<IWaypointCommandFactory>();
 
 	/// <summary>
+	/// Creates vehicle hulls.
+	/// </summary>
+	public static IHullFactory HullFactory => DI.Get<IHullFactory>();
+
+	/// <summary>
 	/// Creates vehicles.
 	/// </summary>
 	public static IVehicleFactory VehicleFactory => DI.Get<IVehicleFactory>();
