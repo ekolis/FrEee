@@ -8,9 +8,8 @@ using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
-using FrEee.Vehicles.Types;
 
-namespace FrEee.Vehicles;
+namespace FrEee.Vehicles.Types;
 
 [Serializable]
 public class WeaponPlatform : Vehicle, IUnit
