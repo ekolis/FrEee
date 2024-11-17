@@ -15,6 +15,7 @@ using FrEee.Processes;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Combat.Grid;
 using FrEee.Utility;
+using FrEee.Vehicles;
 
 namespace FrEee.Root;
 

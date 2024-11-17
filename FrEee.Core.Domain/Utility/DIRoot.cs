@@ -13,6 +13,7 @@ using FrEee.Gameplay.Commands.Projects;
 using FrEee.Gameplay.Commands.Waypoints;
 using FrEee.Processes;
 using FrEee.Processes.Combat;
+using FrEee.Vehicles;
 
 namespace FrEee.Utility;
 

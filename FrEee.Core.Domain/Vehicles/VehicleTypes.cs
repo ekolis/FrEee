@@ -5,6 +5,7 @@ namespace FrEee.Vehicles;
 /// <summary>
 /// Vehicle types. Used for restricting component placement.
 /// </summary>
+// TODO: make this a data file similar to hulls and not an enum
 [Flags]
 public enum VehicleTypes
 {
