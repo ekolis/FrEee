@@ -13,7 +13,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
-using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.UI.WinForms.Forms;
 

@@ -3,7 +3,7 @@ using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 using FrEee.Processes.Combat;
-using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.Objects;
 

@@ -20,6 +20,7 @@ using FrEee.Modding.Scripts;
 using System.Threading.Tasks;
 using FrEee.Gameplay.Commands;
 using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.Processes;
 

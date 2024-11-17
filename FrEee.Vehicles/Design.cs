@@ -18,6 +18,7 @@ using FrEee.Modding.Abilities;
 using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Designs;
 using FrEee.Gameplay.Commands.Orders;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.Vehicles;
 

@@ -9,9 +9,10 @@ using System.Drawing;
 using System.IO;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
-using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
+using FrEee.Objects.Technology;
 
-namespace FrEee.Objects.Technology;
+namespace FrEee.Vehicles;
 
 /// <summary>
 /// A vehicle hull.

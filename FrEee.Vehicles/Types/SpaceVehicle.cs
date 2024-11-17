@@ -11,7 +11,7 @@ using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
 
-namespace FrEee.Vehicles;
+namespace FrEee.Vehicles.Types;
 
 /// <summary>
 /// A vehicle which operates in space.
@@ -19,7 +19,7 @@ namespace FrEee.Vehicles;
 /// <typeparam name="T"></typeparam>
 [Serializable]
 public abstract class SpaceVehicle
-	: Vehicle, ISpaceVehicle 
+	: Vehicle, ISpaceVehicle
 {
 	protected SpaceVehicle()
 	{

@@ -14,6 +14,7 @@ using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 using FrEee.Utility;
 using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.UI.WinForms.Forms;
 

@@ -6,7 +6,7 @@ using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
 using FrEee.Utility;
 
-namespace FrEee.Vehicles;
+namespace FrEee.Vehicles.Types;
 
 /// <summary>
 /// A vehicle that can be in space on its own.

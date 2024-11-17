@@ -10,7 +10,7 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 
-namespace FrEee.Vehicles;
+namespace FrEee.Vehicles.Types;
 
 [Serializable]
 public class Troop : Vehicle, IUnit

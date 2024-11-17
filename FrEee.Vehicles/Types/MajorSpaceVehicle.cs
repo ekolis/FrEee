@@ -10,7 +10,7 @@ using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 
-namespace FrEee.Vehicles;
+namespace FrEee.Vehicles.Types;
 
 public abstract class MajorSpaceVehicle
 	: SpaceVehicle, IMajorSpaceVehicle

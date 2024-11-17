@@ -18,6 +18,7 @@ using FrEee.Objects.Civilization.Diplomacy.Actions;
 using FrEee.Modding.Abilities;
 using FrEee.Gameplay.Commands;
 using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.UI.WinForms.Forms;
 

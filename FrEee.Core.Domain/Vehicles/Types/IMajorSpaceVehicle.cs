@@ -5,7 +5,7 @@ using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Space;
 using FrEee.Processes.Combat;
 
-namespace FrEee.Vehicles;
+namespace FrEee.Vehicles.Types;
 
 /// <summary>
 /// A space vehicle which can contain cargo and build things.

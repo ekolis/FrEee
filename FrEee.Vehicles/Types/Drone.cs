@@ -7,7 +7,7 @@ using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 
-namespace FrEee.Vehicles;
+namespace FrEee.Vehicles.Types;
 
 [Serializable]
 public class Drone : SpaceVehicle, IUnit

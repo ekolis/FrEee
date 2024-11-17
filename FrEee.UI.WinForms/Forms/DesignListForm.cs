@@ -15,6 +15,7 @@ using FrEee.Objects.Space;
 using FrEee.Gameplay.Commands.Orders;
 using FrEee.Gameplay.Commands.Designs;
 using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.UI.WinForms.Forms;
 

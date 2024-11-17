@@ -16,6 +16,7 @@ using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
 using FrEee.Processes.Combat.Events;
 using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.Processes.Combat.Grid;
 

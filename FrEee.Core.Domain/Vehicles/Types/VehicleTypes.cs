@@ -1,6 +1,6 @@
 ﻿using System;
 using FrEee.Utility;
-namespace FrEee.Vehicles;
+namespace FrEee.Vehicles.Types;
 
 /// <summary>
 /// Vehicle types. Used for restricting component placement.

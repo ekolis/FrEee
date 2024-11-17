@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
-using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.Objects.Space;
 

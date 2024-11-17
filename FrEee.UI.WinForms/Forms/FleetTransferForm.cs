@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Fleets;
 using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.UI.WinForms.Forms;
 

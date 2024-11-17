@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using FrEee.Vehicles;
 
 namespace FrEee.UI.WinForms.Forms;
 

@@ -9,7 +9,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Combat.Events;
-using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.UI.WinForms.Controls;
 

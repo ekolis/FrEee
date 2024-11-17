@@ -14,6 +14,7 @@ using System.Reflection;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Setup;
 using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.Utility;
 

@@ -22,7 +22,7 @@ using FrEee.Modding.Scripts;
 using FrEee.Modding.Loaders;
 using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Notes;
-using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.Objects.GameState;
 

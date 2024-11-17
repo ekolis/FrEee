@@ -8,6 +8,7 @@ using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Loaders;
 using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.Modding;
 

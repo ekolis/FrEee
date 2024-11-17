@@ -6,8 +6,8 @@ using FrEee.Modding.Loaders;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
-using FrEee.Objects.Technology;
 using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 using NUnit.Framework;
 
 namespace FrEee.Objects.Vehicles;

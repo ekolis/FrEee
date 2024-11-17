@@ -2,7 +2,7 @@
 using FrEee.Objects.Space;
 using System;
 
-namespace FrEee.Vehicles;
+namespace FrEee.Vehicles.Types;
 
 [Serializable]
 public class Base : MajorSpaceVehicle

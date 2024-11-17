@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using FrEee.Objects.GameState;
 using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.Objects.Civilization.CargoStorage;
 
