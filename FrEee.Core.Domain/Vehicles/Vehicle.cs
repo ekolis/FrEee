@@ -16,7 +16,7 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 
-namespace FrEee.Objects.Vehicles;
+namespace FrEee.Vehicles;
 
 /// <summary>
 /// A ship, base, or unit.
@@ -282,12 +282,12 @@ public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IF
 			if (pct > 0)
 			{
 				if (Sector != null)
-					pct -= this.Sector.GetEmpireAbilityValue(Owner, "Reduced Maintenance Cost - Sector").ToInt();
+					pct -= Sector.GetEmpireAbilityValue(Owner, "Reduced Maintenance Cost - Sector").ToInt();
 				if (StarSystem != null)
-					pct -= this.StarSystem.GetEmpireAbilityValue(Owner, "Reduced Maintenance Cost - System").ToInt();
+					pct -= StarSystem.GetEmpireAbilityValue(Owner, "Reduced Maintenance Cost - System").ToInt();
 				if (Owner != null)
 				{
-					pct -= this.Owner.GetAbilityValue("Reduced Maintenance Cost - Empire").ToInt();
+					pct -= Owner.GetAbilityValue("Reduced Maintenance Cost - Empire").ToInt();
 					pct -= Owner.Culture.MaintenanceReduction;
 					if (Owner.PrimaryRace.Aptitudes.ContainsKey(Aptitude.Maintenance.Name))
 						pct -= Owner.PrimaryRace.Aptitudes[Aptitude.Maintenance.Name] - 100;
@@ -525,7 +525,7 @@ public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IF
 		{
 			// TODO: make these multiplicative, at least some of them?
 			return
-				+ Sector.GetEmpireAbilityValue(Owner, "Shield Modifier - Sector").ToInt()
+				+Sector.GetEmpireAbilityValue(Owner, "Shield Modifier - Sector").ToInt()
 				+ StarSystem.GetEmpireAbilityValue(Owner, "Shield Modifier - System").ToInt()
 				+ Owner.GetAbilityValue("Shield Modifier - Empire").ToInt();
 		}
@@ -681,7 +681,7 @@ public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IF
 		{
 			// repair most-damaged components first
 			// TODO - other repair priorities
-			foreach (var comp in Components.Where(x => x.Hitpoints < x.MaxHitpoints).OrderBy(c => (double)c.Hitpoints / (double)c.MaxHitpoints))
+			foreach (var comp in Components.Where(x => x.Hitpoints < x.MaxHitpoints).OrderBy(c => c.Hitpoints / (double)c.MaxHitpoints))
 			{
 				if (amount <= 0)
 					break;

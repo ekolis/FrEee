@@ -1,7 +1,7 @@
 ﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
+using FrEee.Vehicles;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

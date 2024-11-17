@@ -8,10 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
+using FrEee.Vehicles;
 
 namespace FrEee.Objects.Technology;
 

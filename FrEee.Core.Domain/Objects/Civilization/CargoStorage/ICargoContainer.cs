@@ -1,6 +1,6 @@
 ﻿using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
+using FrEee.Vehicles;
 using System.Collections.Generic;
 
 namespace FrEee.Objects.Civilization.CargoStorage;

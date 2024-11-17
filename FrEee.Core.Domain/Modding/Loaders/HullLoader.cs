@@ -1,6 +1,6 @@
 ﻿using FrEee.Objects.Technology;
-using FrEee.Objects.Vehicles;
 using FrEee.Utility;
+using FrEee.Vehicles;
 using System.Collections.Generic;
 using System.Linq;
 

@@ -1,9 +1,9 @@
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Technology;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Loaders;
+using FrEee.Vehicles;
 
 namespace FrEee;
 

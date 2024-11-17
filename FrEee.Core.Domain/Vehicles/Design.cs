@@ -19,7 +19,7 @@ using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Designs;
 using FrEee.Gameplay.Commands.Orders;
 
-namespace FrEee.Objects.Vehicles;
+namespace FrEee.Vehicles;
 
 /// <summary>
 /// Creates designs.
@@ -153,7 +153,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 
 	public int ArmorHitpoints
 	{
-		get { return this.Components.Where(c => c.ComponentTemplate.HasAbility("Armor")).Sum(c => c.Durability); }
+		get { return Components.Where(c => c.ComponentTemplate.HasAbility("Armor")).Sum(c => c.Durability); }
 	}
 
 	public string BaseName { get; set; }
@@ -233,7 +233,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 
 	public int HullHitpoints
 	{
-		get { return this.Components.Where(c => !c.ComponentTemplate.HasAbility("Armor")).Sum(c => c.Durability); }
+		get { return Components.Where(c => !c.ComponentTemplate.HasAbility("Armor")).Sum(c => c.Durability); }
 	}
 
 	[DoNotSerialize]
@@ -625,7 +625,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 			if (!Owner.HasUnlocked(Hull))
 				yield return "You have not unlocked the " + Hull + ".";
 			var comps = Components.Select(comp => comp.ComponentTemplate);
-			if (Hull.NeedsBridge && (!comps.Any(comp => comp.HasAbility("Ship Bridge")) && !comps.Any(comp => comp.HasAbility("Master Computer"))))
+			if (Hull.NeedsBridge && !comps.Any(comp => comp.HasAbility("Ship Bridge")) && !comps.Any(comp => comp.HasAbility("Master Computer")))
 				yield return "This hull requires a bridge or master computer.";
 			if (comps.Count(comp => comp.HasAbility("Ship Bridge")) > 1)
 				yield return "A vehicle can have no more than one bridge";
@@ -641,11 +641,11 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 				yield return "This hull requires at least " + Hull.MinCrewQuarters + " life support modules or a Master Computer.";
 			if (comps.Count(comp => comp.HasAbility("Ship Crew Quarters")) < Hull.MinCrewQuarters && !comps.Any(comp => comp.HasAbility("Master Computer")))
 				yield return "This hull requires at least " + Hull.MinCrewQuarters + " crew quarters or a Master Computer.";
-			if ((double)Components.Where(comp => comp.HasAbility("Cargo Storage")).Sum(comp => comp.Size) / (double)Hull.Size * 100d < Hull.MinPercentCargoBays)
+			if (Components.Where(comp => comp.HasAbility("Cargo Storage")).Sum(comp => comp.Size) / (double)Hull.Size * 100d < Hull.MinPercentCargoBays)
 				yield return "This hull requires at least " + Hull.MinPercentCargoBays + "% of its space to be used by cargo-class components.";
-			if ((double)Components.Where(comp => comp.HasAbility("Launch/Recover Fighters")).Sum(comp => comp.Size) / (double)Hull.Size * 100d < Hull.MinPercentFighterBays)
+			if (Components.Where(comp => comp.HasAbility("Launch/Recover Fighters")).Sum(comp => comp.Size) / (double)Hull.Size * 100d < Hull.MinPercentFighterBays)
 				yield return "This hull requires at least " + Hull.MinPercentFighterBays + "% of its space to be used by fighter bays.";
-			if ((double)Components.Where(comp => comp.HasAbility("Colonize Planet - Rock") || comp.HasAbility("Colonize Planet - Ice") || comp.HasAbility("Colonize Planet - Gas")).Sum(comp => comp.Size) / (double)Hull.Size * 100d < Hull.MinPercentColonyModules)
+			if (Components.Where(comp => comp.HasAbility("Colonize Planet - Rock") || comp.HasAbility("Colonize Planet - Ice") || comp.HasAbility("Colonize Planet - Gas")).Sum(comp => comp.Size) / (double)Hull.Size * 100d < Hull.MinPercentColonyModules)
 				yield return "This hull requires at least " + Hull.MinPercentColonyModules + "% of its space to be used by colony modules.";
 			foreach (var g in comps.GroupBy(comp => comp.Family))
 			{

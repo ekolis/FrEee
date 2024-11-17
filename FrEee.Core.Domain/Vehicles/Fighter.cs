@@ -8,7 +8,7 @@ using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 
-namespace FrEee.Objects.Vehicles;
+namespace FrEee.Vehicles;
 
 [Serializable]
 public class Fighter : SpaceVehicle, IUnit
@@ -25,7 +25,7 @@ public class Fighter : SpaceVehicle, IUnit
 
 	ICargoContainer IContainable<ICargoContainer>.Container
 	{
-		get { return CommonExtensions.FindContainer(this); }
+		get { return this.FindContainer(); }
 	}
 
 	public override bool ParticipatesInGroundCombat
@@ -64,7 +64,7 @@ public class Fighter : SpaceVehicle, IUnit
 
 	// HACK - until we end our game and this can be purged
 	[DoNotSerialize]
-	private Cargo Cargo { get; set;}
+	private Cargo Cargo { get; set; }
 
 	public override bool FillsCombatTile => false;
 }

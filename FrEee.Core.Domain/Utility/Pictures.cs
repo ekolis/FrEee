@@ -1,7 +1,6 @@
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Extensions;
@@ -14,6 +13,7 @@ using System.Linq;
 using System.Reflection;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Setup;
+using FrEee.Vehicles;
 
 namespace FrEee.Utility;
 

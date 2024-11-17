@@ -1,7 +1,6 @@
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
 using FrEee.Utility;
 using FrEee.Extensions;
 using FrEee.UI.WinForms.DataGridView;
@@ -16,6 +15,7 @@ using System.Windows.Forms;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Modding.Abilities;
+using FrEee.Vehicles;
 
 namespace FrEee.UI.WinForms.Forms;
 

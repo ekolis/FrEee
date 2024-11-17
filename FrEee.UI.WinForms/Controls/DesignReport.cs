@@ -5,8 +5,8 @@ using FrEee.UI.WinForms.Interfaces;
 using FrEee.UI.WinForms.Utility.Extensions;
 using System.Linq;
 using System.Windows.Forms;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding.Abilities;
+using FrEee.Vehicles;
 
 namespace FrEee.UI.WinForms.Controls;
 

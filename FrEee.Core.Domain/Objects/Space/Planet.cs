@@ -1,6 +1,5 @@
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Technology;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
@@ -17,6 +16,7 @@ using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
+using FrEee.Vehicles;
 
 namespace FrEee.Objects.Space;
 

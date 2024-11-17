@@ -1,7 +1,6 @@
 ﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
-using FrEee.Objects.Vehicles;
 using FrEee.Extensions;
 using FrEee.UI.WinForms.Utility.Extensions;
 using System;
@@ -16,6 +15,7 @@ using FrEee.Objects.Civilization.Orders.RecycleBehaviors;
 using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Orders;
 using FrEee.Utility;
+using FrEee.Vehicles;
 
 namespace FrEee.UI.WinForms.Forms;
 

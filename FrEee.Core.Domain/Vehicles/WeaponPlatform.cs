@@ -9,7 +9,7 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 
-namespace FrEee.Objects.Vehicles;
+namespace FrEee.Vehicles;
 
 [Serializable]
 public class WeaponPlatform : Vehicle, IUnit
@@ -23,7 +23,7 @@ public class WeaponPlatform : Vehicle, IUnit
 
 	public ICargoContainer Container
 	{
-		get { return CommonExtensions.FindContainer(this); }
+		get { return this.FindContainer(); }
 	}
 
 	public override int MaxTargets => int.MaxValue;

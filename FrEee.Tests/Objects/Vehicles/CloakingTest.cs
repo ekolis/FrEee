@@ -7,6 +7,7 @@ using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
+using FrEee.Vehicles;
 using NUnit.Framework;
 
 namespace FrEee.Objects.Vehicles;

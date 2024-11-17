@@ -3,7 +3,6 @@ using FrEee.Objects.Civilization.Diplomacy;
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Extensions;
@@ -18,6 +17,7 @@ using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Civilization.Diplomacy.Actions;
 using FrEee.Modding.Abilities;
 using FrEee.Gameplay.Commands;
+using FrEee.Vehicles;
 
 namespace FrEee.UI.WinForms.Forms;
 

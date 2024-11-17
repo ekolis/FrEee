@@ -13,7 +13,6 @@ using FrEee.Processes.Combat;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Serialization;
@@ -24,6 +23,7 @@ using System.Numerics;
 using FrEee.Modding.Abilities;
 using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Orders;
+using FrEee.Vehicles;
 
 namespace FrEee.Extensions;
 

@@ -10,7 +10,7 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 
-namespace FrEee.Objects.Vehicles;
+namespace FrEee.Vehicles;
 
 [Serializable]
 public class Troop : Vehicle, IUnit
@@ -27,7 +27,7 @@ public class Troop : Vehicle, IUnit
 	{
 		get
 		{
-			return CommonExtensions.FindContainer(this);
+			return this.FindContainer();
 		}
 	}
 

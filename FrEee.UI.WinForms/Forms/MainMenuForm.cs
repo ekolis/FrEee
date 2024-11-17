@@ -1,4 +1,3 @@
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Extensions;
@@ -18,6 +17,7 @@ using System.Windows.Forms;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Setup;
 using FrEee.Modding.Loaders;
+using FrEee.Vehicles;
 
 namespace FrEee.UI.WinForms.Forms;
 

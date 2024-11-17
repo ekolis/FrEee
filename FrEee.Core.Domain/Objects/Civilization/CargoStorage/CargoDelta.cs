@@ -3,8 +3,8 @@ using FrEee.Utility;
 using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
-using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
+using FrEee.Vehicles;
 
 namespace FrEee.Objects.Civilization.CargoStorage;
 

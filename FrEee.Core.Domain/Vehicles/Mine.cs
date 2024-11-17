@@ -7,7 +7,7 @@ using FrEee.Objects.Space;
 using FrEee.Processes.Combat;
 using System;
 
-namespace FrEee.Objects.Vehicles;
+namespace FrEee.Vehicles;
 
 [Serializable]
 public class Mine : SpaceVehicle, IUnit
@@ -24,7 +24,7 @@ public class Mine : SpaceVehicle, IUnit
 
 	ICargoContainer IContainable<ICargoContainer>.Container
 	{
-		get { return CommonExtensions.FindContainer(this); }
+		get { return this.FindContainer(); }
 	}
 
 	public override bool ParticipatesInGroundCombat

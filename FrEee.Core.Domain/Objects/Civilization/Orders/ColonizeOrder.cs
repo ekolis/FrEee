@@ -1,6 +1,5 @@
 ﻿using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Serialization;
 using FrEee.Extensions;
@@ -11,6 +10,7 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
+using FrEee.Vehicles;
 
 namespace FrEee.Objects.Civilization.Orders;
 

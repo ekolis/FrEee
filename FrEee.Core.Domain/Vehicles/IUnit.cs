@@ -1,7 +1,7 @@
 ﻿using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
 
-namespace FrEee.Objects.Vehicles;
+namespace FrEee.Vehicles;
 
 /// <summary>
 /// A vehicle which can be contained in cargo.

@@ -1,8 +1,8 @@
 ﻿using FrEee.Objects.GameState;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
 using FrEee.Serialization;
+using FrEee.Vehicles;
 using System.Collections.Generic;
 using System.Linq;
 

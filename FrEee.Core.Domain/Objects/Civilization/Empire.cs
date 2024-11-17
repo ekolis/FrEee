@@ -1,7 +1,6 @@
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Serialization;
@@ -24,6 +23,7 @@ using FrEee.Processes.Setup;
 using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Orders;
 using FrEee.Gameplay.Commands.Projects;
+using FrEee.Vehicles;
 
 namespace FrEee.Objects.Civilization;
 

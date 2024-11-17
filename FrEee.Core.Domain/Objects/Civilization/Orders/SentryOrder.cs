@@ -1,6 +1,5 @@
 ﻿using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
 using FrEee.Serialization;
 using FrEee.Extensions;
 using System;
@@ -8,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
+using FrEee.Vehicles;
 
 namespace FrEee.Objects.Civilization.Orders;
 

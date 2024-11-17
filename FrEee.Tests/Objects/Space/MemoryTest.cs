@@ -3,7 +3,7 @@ using FrEee.Extensions;
 using FrEee.Modding;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
-using FrEee.Objects.Vehicles;
+using FrEee.Vehicles;
 using NUnit.Framework;
 
 namespace FrEee.Objects.Space;

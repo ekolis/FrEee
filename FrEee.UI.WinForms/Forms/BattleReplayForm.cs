@@ -1,6 +1,5 @@
 ﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
 using FrEee.Extensions;
 using FrEee.UI.WinForms.Controls;
 using FrEee.UI.WinForms.Interfaces;
@@ -11,6 +10,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Combat.Events;
+using FrEee.Vehicles;
 
 namespace FrEee.UI.WinForms.Forms;
 

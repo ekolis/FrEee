@@ -1,5 +1,4 @@
 ﻿using FrEee.Objects.Civilization;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Serialization;
 using FrEee.Extensions;
@@ -11,6 +10,7 @@ using FrEee.Modding.Abilities;
 using FrEee.Modding.Templates;
 using FrEee.Modding.Scripts;
 using FrEee.Modding.Loaders;
+using FrEee.Vehicles;
 
 namespace FrEee.Utility;
 

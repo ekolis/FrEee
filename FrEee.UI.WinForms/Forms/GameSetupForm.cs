@@ -1,6 +1,5 @@
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
-using FrEee.Objects.Vehicles;
 using FrEee.Objects.VictoryConditions;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
@@ -21,6 +20,7 @@ using FrEee.Objects.Civilization.Diplomacy;
 using FrEee.Processes.Setup;
 using FrEee.Processes.Setup.WarpPointPlacementStrategies;
 using FrEee.Modding.Loaders;
+using FrEee.Vehicles;
 
 namespace FrEee.UI.WinForms.Forms;
 

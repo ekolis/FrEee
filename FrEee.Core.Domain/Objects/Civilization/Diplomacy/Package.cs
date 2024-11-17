@@ -7,9 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tech = FrEee.Objects.Technology.Technology;
-using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
 using FrEee.Modding;
+using FrEee.Vehicles;
 
 namespace FrEee.Objects.Civilization.Diplomacy;
 

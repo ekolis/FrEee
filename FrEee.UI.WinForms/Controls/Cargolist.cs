@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.Civilization.CargoStorage;
-using FrEee.Objects.Vehicles;
+using FrEee.Vehicles;
 
 namespace FrEee.UI.WinForms.Controls;
 

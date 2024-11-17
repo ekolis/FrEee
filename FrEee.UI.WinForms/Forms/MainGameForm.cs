@@ -1,7 +1,6 @@
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
-using FrEee.Objects.Vehicles;
 using FrEee.Processes;
 using FrEee.Utility;
 using FrEee.Extensions;
@@ -29,6 +28,7 @@ using FrEee.Modding.Abilities;
 using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Orders;
 using FrEee.Gameplay.Commands.Messages;
+using FrEee.Vehicles;
 
 namespace FrEee.UI.WinForms.Forms;
 

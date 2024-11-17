@@ -1,5 +1,4 @@
 ﻿using FrEee.Objects.Civilization;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Serialization;
@@ -10,6 +9,7 @@ using System.Drawing;
 using System.IO;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
+using FrEee.Vehicles;
 
 namespace FrEee.Objects.Technology;
 

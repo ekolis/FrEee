@@ -1,7 +1,6 @@
 ﻿using FrEee.Objects;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Extensions;
 using FrEee.UI.WinForms.Utility.Extensions;
@@ -14,6 +13,7 @@ using System.Windows.Forms;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 using FrEee.Utility;
+using FrEee.Vehicles;
 
 namespace FrEee.UI.WinForms.Forms;
 

@@ -4,7 +4,7 @@ using FrEee.Extensions;
 using FrEee.Modding;
 using FrEee.Modding.Loaders;
 using FrEee.Objects.GameState;
-using FrEee.Objects.Vehicles;
+using FrEee.Vehicles;
 using NUnit.Framework;
 
 namespace FrEee.Processes.Combat;

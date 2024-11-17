@@ -6,7 +6,6 @@ using FrEee.Objects.Civilization;
 using FrEee.Processes.Combat.Grid;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
 using FrEee.Objects.VictoryConditions;
 using FrEee.Modding;
 using FrEee.Extensions;
@@ -20,6 +19,7 @@ using FrEee.Modding.Abilities;
 using FrEee.Modding.Scripts;
 using System.Threading.Tasks;
 using FrEee.Gameplay.Commands;
+using FrEee.Vehicles;
 
 namespace FrEee.Processes;
 

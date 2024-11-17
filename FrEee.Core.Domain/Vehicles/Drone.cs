@@ -2,29 +2,29 @@ using FrEee.Objects.Civilization;
 using FrEee.Extensions;
 using System;
 using FrEee.Objects.Space;
-using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
+using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 
-namespace FrEee.Objects.Vehicles;
+namespace FrEee.Vehicles;
 
 [Serializable]
-public class Satellite : SpaceVehicle, IUnit
+public class Drone : SpaceVehicle, IUnit
 {
 	public override AbilityTargets AbilityTarget
 	{
-		get { return AbilityTargets.Satellite; }
+		get { return AbilityTargets.Drone; }
 	}
 
 	public override bool CanWarp
 	{
-		get { return false; }
+		get { return !Owner?.IsMinorEmpire ?? true; }
 	}
 
 	ICargoContainer IContainable<ICargoContainer>.Container
 	{
-		get { return CommonExtensions.FindContainer(this); }
+		get { return this.FindContainer(); }
 	}
 
 	public override bool ParticipatesInGroundCombat
@@ -44,14 +44,14 @@ public class Satellite : SpaceVehicle, IUnit
 
 	public override WeaponTargets WeaponTargetType
 	{
-		get { return WeaponTargets.Satellite; }
+		get { return WeaponTargets.Drone; }
 	}
 
 	public override Visibility CheckVisibility(Empire emp)
 	{
 		var vis = base.CheckVisibility(emp);
 		var sobj = Container as ISpaceObject;
-		if (vis < Visibility.Scanned && sobj != null && sobj.HasVisibility(emp, Visibility.Scanned))
+		if (sobj != null && sobj.HasVisibility(emp, Visibility.Scanned))
 			vis = Visibility.Scanned;
 		return vis;
 	}

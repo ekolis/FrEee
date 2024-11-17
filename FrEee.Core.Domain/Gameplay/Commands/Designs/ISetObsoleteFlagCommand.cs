@@ -1,5 +1,5 @@
 ﻿using FrEee.Objects.Civilization;
-using FrEee.Objects.Vehicles;
+using FrEee.Vehicles;
 
 namespace FrEee.Gameplay.Commands.Designs;
 
