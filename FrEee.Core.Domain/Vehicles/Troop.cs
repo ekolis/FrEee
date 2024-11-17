@@ -110,7 +110,7 @@ public class Troop : Vehicle, IUnit
 			if (cc2.AddUnit(this))
 				return;
 		}
-		target.Owner.Log.Add(this.CreateLogMessage(this + " could not be placed in cargo at " + target + " because there is not enough cargo space available.", LogMessages.LogMessageType.Generic));
+		target.Owner.Log.Add(this.CreateLogMessage(this + " could not be placed in cargo at " + target + " because there is not enough cargo space available.", Objects.LogMessages.LogMessageType.Generic));
 	}
 
 	public override bool FillsCombatTile => false;

@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrEee.Root", "FrEee.Root\Fr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrEee.Gameplay", "FrEee.Gameplay\FrEee.Gameplay.csproj", "{B79ED9FD-82A2-4806-80EC-CD505CD4A2DC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrEee.Vehicles", "FrEee.Vehicles\FrEee.Vehicles.csproj", "{A048D0D7-7ECE-4FCD-856A-A56A1644104A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -146,6 +148,18 @@ Global
 		{B79ED9FD-82A2-4806-80EC-CD505CD4A2DC}.Release|x64.Build.0 = Release|Any CPU
 		{B79ED9FD-82A2-4806-80EC-CD505CD4A2DC}.Release|x86.ActiveCfg = Release|Any CPU
 		{B79ED9FD-82A2-4806-80EC-CD505CD4A2DC}.Release|x86.Build.0 = Release|Any CPU
+		{A048D0D7-7ECE-4FCD-856A-A56A1644104A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A048D0D7-7ECE-4FCD-856A-A56A1644104A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A048D0D7-7ECE-4FCD-856A-A56A1644104A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A048D0D7-7ECE-4FCD-856A-A56A1644104A}.Debug|x64.Build.0 = Debug|Any CPU
+		{A048D0D7-7ECE-4FCD-856A-A56A1644104A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A048D0D7-7ECE-4FCD-856A-A56A1644104A}.Debug|x86.Build.0 = Debug|Any CPU
+		{A048D0D7-7ECE-4FCD-856A-A56A1644104A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A048D0D7-7ECE-4FCD-856A-A56A1644104A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A048D0D7-7ECE-4FCD-856A-A56A1644104A}.Release|x64.ActiveCfg = Release|Any CPU
+		{A048D0D7-7ECE-4FCD-856A-A56A1644104A}.Release|x64.Build.0 = Release|Any CPU
+		{A048D0D7-7ECE-4FCD-856A-A56A1644104A}.Release|x86.ActiveCfg = Release|Any CPU
+		{A048D0D7-7ECE-4FCD-856A-A56A1644104A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
