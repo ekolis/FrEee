@@ -18,9 +18,9 @@ public class AbilityTest
 {
 	StarSystem sys;
 	Empire emp;
-	IDesign<Ship> design;
-	IHull<Ship> hull;
-	Ship ship;
+	IDesign design;
+	IHull hull;
+	IVehicle ship;
 
 	[SetUp]
 	public void SetUp()
@@ -34,8 +34,8 @@ public class AbilityTest
 
 		// create stuff
 		emp = TestUtilities.CreateEmpire();
-		design = TestUtilities.CreateDesign<Ship>(emp);
-		hull = TestUtilities.CreateHull(design);
+		design = TestUtilities.CreateDesign(emp, VehicleTypes.Ship);
+		hull = TestUtilities.CreateHull(VehicleTypes.Ship, design.Name);
 		ship = TestUtilities.CreateVehicle(design, emp);
 	}
 
