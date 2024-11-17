@@ -29,7 +29,7 @@ public class HullLoader : DataFileLoader
 			var hulltype = rec.Get<string>("Vehicle Type", null);
 			try
 			{
-				hull = DIRoot.HullFactory.Build(Enum.Parse<VehicleTypes>(hulltype));
+				hull = DIRoot.Hulls.Build(Enum.Parse<VehicleTypes>(hulltype));
 			}
 			catch (InvalidOperationException ex)
 			{

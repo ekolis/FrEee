@@ -75,10 +75,15 @@ public static class DIRoot
 	/// <summary>
 	/// Creates vehicle hulls.
 	/// </summary>
-	public static IHullFactory HullFactory => DI.Get<IHullFactory>();
+	public static IHullFactory Hulls => DI.Get<IHullFactory>();
+
+	/// <summary>
+	/// Creates vehicle designs.
+	/// </summary>
+	public static IDesignFactory Designs => DI.Get<IDesignFactory>();
 
 	/// <summary>
 	/// Creates vehicles.
 	/// </summary>
-	public static IVehicleFactory VehicleFactory => DI.Get<IVehicleFactory>();
+	public static IVehicleFactory Vehicles => DI.Get<IVehicleFactory>();
 }

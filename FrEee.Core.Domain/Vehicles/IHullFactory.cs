@@ -17,5 +17,5 @@ public interface IHullFactory
 	/// </summary>
 	/// <param name="vehicleType">The type of hull to build.</param>
 	/// <returns>The built hull.</returns>
-	public IHull Build(VehicleTypes vehicleType);
+	IHull Build(VehicleTypes vehicleType);
 }

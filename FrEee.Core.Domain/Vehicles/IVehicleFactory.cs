@@ -17,5 +17,5 @@ public interface IVehicleFactory
 	/// </summary>
 	/// <param name="vehicleType">The type of vehicle to build.</param>
 	/// <returns>The built vehicle.</returns>
-	public IVehicle Build(VehicleTypes vehicleType);
+	IVehicle Build(VehicleTypes vehicleType);
 }

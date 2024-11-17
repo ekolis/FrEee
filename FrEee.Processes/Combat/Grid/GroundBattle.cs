@@ -29,7 +29,7 @@ public class GroundBattle : Battle
         var combatants = new HashSet<ICombatant>(Planet.Cargo.Units.Where(q => q.CanInvadeAndPoliceColonies));
         for (var i = 0; i < Planet.PopulationFill.Value / Mod.Current.Settings.PopulationFactor / (Mod.Current.Settings.PopulationPerMilitia == 0 ? 20 : Mod.Current.Settings.PopulationPerMilitia); i++)
         {
-            var militia = Design.MilitiaDesign.Instantiate();
+            var militia = DIRoot.Designs.Militia.Instantiate();
             militia.Owner = Planet.Owner;
             combatants.Add(militia);
         }
@@ -47,7 +47,8 @@ public class GroundBattle : Battle
     {
         base.Initialize(combatants);
 
-        Empires = Planet.Cargo.Units.OfType<Troop>().Select(t => t.Owner).Distinct();
+        // TODO: should weapon platforms take part in ground combat like in SE5?
+        Empires = Planet.Cargo.Units.Where(q => q.CanInvadeAndPoliceColonies).Select(t => t.Owner).Distinct();
 
         int moduloID = (int)(Planet.ID % 100000);
         Dice = new PRNG((int)(moduloID / Game.Current.Timestamp * 10));
