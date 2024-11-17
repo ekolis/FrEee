@@ -1,9 +1,9 @@
-﻿using FrEee.Objects.Space;
-using FrEee.Serialization;
+﻿using System.Collections.Generic;
 using FrEee.Extensions;
-using System.Collections.Generic;
 using FrEee.Objects.GameState;
 using FrEee.Objects.LogMessages;
+using FrEee.Objects.Space;
+using FrEee.Serialization;
 
 namespace FrEee.Gameplay.Commands.Fleets;
 

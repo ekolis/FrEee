@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FrEee.Objects.Civilization;
-using FrEee.Objects.Civilization.Orders;
+﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 
 namespace FrEee.Gameplay.Commands.Notes;

@@ -114,4 +114,8 @@ public class Troop : Vehicle, IUnit
 	}
 
 	public override bool FillsCombatTile => false;
+
+	public bool CanInvadeAndPoliceColonies => true;
+
+	public bool CanFireIntoSpaceFromPlanetaryCargo => false;
 }

@@ -215,9 +215,8 @@ public class TurnProcessor : ITurnProcessor
 				// unlike most other operations, miners that are out of supplies still function
 				// because having to resupply miners would be a pain :P
 				var miner = kvp.Key.Item1;
-				if (miner is SpaceVehicle)
+				if (miner is ISpaceVehicle sv)
 				{
-					var sv = miner as SpaceVehicle;
 					var miningComps = sv.Components.Where(c => c.Abilities().Any(a => a.Rule.StartsWith("Remote Resource Generation - ")));
 					var burn = miningComps.Sum(c => c.Template.SupplyUsage);
 					sv.SupplyRemaining -= burn;
@@ -260,8 +259,10 @@ public class TurnProcessor : ITurnProcessor
 
 			// pay maintenance on on ships/bases
 			// TODO - allow mod to specify maintenance on units/facilities too?
-			foreach (var v in emp.OwnedSpaceObjects.OfType<SpaceVehicle>().Where(x => !x.IsMemory))
-				emp.StoredResources -= v.MaintenanceCost;
+			foreach (var v in emp.OwnedSpaceObjects.OfType<ISpaceVehicle>().Where(x => !x.IsMemory))
+			{
+				emp.StoredResources -= ((IVehicle)v).MaintenanceCost;
+			}
 
 			// if not enough funds, lose ships/bases (weighted by maintenance cost)
 			// TODO - if mods allow ground-unit/facility maintenance, lose those too?
@@ -271,7 +272,7 @@ public class TurnProcessor : ITurnProcessor
 			var lostShips = deficit / Mod.Current.Settings.MaintenanceDeficitToDestroyOneShip;
 			for (int i = 0; i < lostShips; i++)
 			{
-				var ship = emp.OwnedSpaceObjects.OfType<SpaceVehicle>().PickWeighted(x => x.MaintenanceCost.Sum(y => y.Value));
+				var ship = emp.OwnedSpaceObjects.OfType<ISpaceVehicle>().PickWeighted(x => ((IVehicle)x).MaintenanceCost.Sum(y => y.Value));
 				if (ship != null)
 				{
 					emp.Log.Add(ship.CreateLogMessage(ship + " fell into disrepair and was scuttled due to lack of funding for maintenance.", LogMessageType.Warning));
@@ -487,7 +488,7 @@ public class TurnProcessor : ITurnProcessor
 		game.Galaxy.FindSpaceObjects<ICombatSpaceObject>().SafeForeach(o => o.ReplenishShields());
 
 		// modify colony anger
-		foreach (var ship in game.Galaxy.FindSpaceObjects<MajorSpaceVehicle>().Where(x => !x.IsDestroyed))
+		foreach (var ship in game.Galaxy.FindSpaceObjects<IMajorSpaceVehicle>().Where(x => !x.IsDestroyed))
 		{
 			foreach (var emp in game.Empires.Where(e => e.CanSee(ship)))
 			{
@@ -507,7 +508,7 @@ public class TurnProcessor : ITurnProcessor
 		{
 			if (c.Cargo.Units.Any(u => u.IsHostileTo(c.Owner)))
 				c.TriggerHappinessChange(hm => hm.EnemyTroopsOnPlanet);
-			c.TriggerHappinessChange(hm => hm.OurTroopOnPlanet * c.Cargo.Units.OfType<Troop>().Count());
+			c.TriggerHappinessChange(hm => hm.OurTroopOnPlanet * c.Cargo.Units.Where(q => q.CanInvadeAndPoliceColonies).Count());
 		});
 		game.Galaxy.FindSpaceObjects<Planet>().Where(p => p.Colony != null).Select(p => p.Colony).ParallelSafeForeach(c =>
 		{
@@ -555,7 +556,7 @@ public class TurnProcessor : ITurnProcessor
 		{
 			// component repair is per sector per turn per empire, so we need to track it that way
 			var usedPts = new SafeDictionary<Sector, int>();
-			foreach (var v in game.Galaxy.FindSpaceObjects<IMobileSpaceObject>().Where(v => v.Owner == emp && v.Sector != null && (v is Ship || v is Base || v is Fleet)))
+			foreach (var v in game.Galaxy.FindSpaceObjects<IMobileSpaceObject>().Where(v => v.Owner == emp && v.Sector != null && (v is IMajorSpaceVehicle || v is Fleet)))
 			{
 				var pts = v.Sector.GetEmpireAbilityValue(emp, "Component Repair").ToInt() - usedPts[v.Sector];
 				usedPts[v.Sector] += pts - v.Repair(pts).Value;

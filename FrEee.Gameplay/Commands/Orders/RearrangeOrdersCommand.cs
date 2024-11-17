@@ -1,8 +1,8 @@
-﻿using FrEee.Objects.Civilization;
+﻿using System;
+using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.LogMessages;
-using System;
 
 namespace FrEee.Gameplay.Commands.Orders;
 

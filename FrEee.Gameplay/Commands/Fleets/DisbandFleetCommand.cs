@@ -1,5 +1,5 @@
-﻿using FrEee.Objects.Space;
-using System.Linq;
+﻿using System.Linq;
+using FrEee.Objects.Space;
 
 namespace FrEee.Gameplay.Commands.Fleets;
 

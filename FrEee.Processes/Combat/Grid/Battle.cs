@@ -266,7 +266,7 @@ public abstract class Battle : IBattle, IDisposable
                     var targetiness = new SafeDictionary<ICombatant, double>();
                     foreach (var target in alives.Where(x =>
                         c.IsHostileTo(x.Owner) &&
-                        (c.CanTarget(x) || x is Planet && c is ICargoContainer cc && cc.Cargo.Units.OfType<Troop>().Any())))
+                        (c.CanTarget(x) || x is Planet && c is ICargoContainer cc && cc.Cargo.Units.Where(q => q.CanInvadeAndPoliceColonies).Any())))
                     {
                         targetiness[target] = 1d / (locations[target] - locations[c]).LengthEightWay;
                     }
@@ -395,14 +395,14 @@ public abstract class Battle : IBattle, IDisposable
             foreach (var c in turnorder)
             {
                 // find launchable units
-                var unitsToLaunch = new List<(ICombatant Launcher, SpaceVehicle Launchee)>();
+                var unitsToLaunch = new List<(ICombatant Launcher, ISpaceVehicle Launchee)>();
                 if (c is Planet)
                 {
                     // planets can launch infinite units per turn
                     var p = (Planet)c;
                     if (p.Cargo != null && p.Cargo.Units != null)
                     {
-                        foreach (var u in p.Cargo.Units.OfType<SpaceVehicle>())
+                        foreach (var u in p.Cargo.Units.OfType<ISpaceVehicle>())
                             unitsToLaunch.Add((p, u));
                     }
                 }
@@ -413,7 +413,7 @@ public abstract class Battle : IBattle, IDisposable
                     foreach (var vt in Enum.GetValues(typeof(VehicleTypes)).Cast<VehicleTypes>().Distinct())
                     {
                         var rate = ct.GetAbilityValue("Launch/Recover " + vt.ToSpacedString() + "s").ToInt();
-                        foreach (var u in ct.Cargo.Units.Where(u => u.Design.VehicleType == vt).OfType<SpaceVehicle>().Take(rate))
+                        foreach (var u in ct.Cargo.Units.Where(u => u.Design.VehicleType == vt).OfType<ISpaceVehicle>().Take(rate))
                             unitsToLaunch.Add((c, u));
                     }
                 }
@@ -491,7 +491,7 @@ public abstract class Battle : IBattle, IDisposable
             // phase 8: drop troops
             foreach (var c in turnorder.Reverse())
             {
-                if (c is ICargoTransferrer cc && cc.AllUnits.OfType<Troop>().Any())
+                if (c is ICargoTransferrer cc && cc.AllUnits.Where(q => q.CanInvadeAndPoliceColonies).Any())
                 {
                     // find enemy planets in the same square
                     var dropTargets = locations.Where(q => q.Key != c && q.Value == locations[c] && q.Key is Planet p && c.IsHostileTo(p.Owner)).Select(q => q.Key).Cast<Planet>();

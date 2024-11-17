@@ -288,20 +288,22 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 	/// <summary>
 	/// All space vehicles in this fleet and subfleets, but not counting the subfleets themselves.
 	/// </summary>
-	public IEnumerable<SpaceVehicle> LeafVehicles
+	public IEnumerable<ISpaceVehicle> LeafVehicles
 	{
 		get
 		{
 			return Vehicles.SelectMany(v =>
 			{
-				var list = new List<SpaceVehicle>();
-				if (v is Fleet)
+				var list = new List<ISpaceVehicle>();
+				if (v is Fleet f)
 				{
-					foreach (var v2 in ((Fleet)v).LeafVehicles)
+					foreach (var v2 in f.LeafVehicles)
 						list.Add(v2);
 				}
-				else if (v is SpaceVehicle)
-					list.Add((SpaceVehicle)v);
+				else if (v is ISpaceVehicle sv)
+				{
+					list.Add(sv);
+				}
 				return list;
 			});
 		}
@@ -899,13 +901,13 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 			yield break;
 
 		string imageName = "Fleet";
-		if (LeafVehicles.All(v => v is Fighter))
+		if (LeafVehicles.All(v => v.VehicleType == VehicleTypes.Fighter))
 			imageName = "FighterGroup";
-		else if (LeafVehicles.All(v => v is Satellite))
+		else if (LeafVehicles.All(v => v.VehicleType == VehicleTypes.Satellite))
 			imageName = "SatelliteGroup";
-		else if (LeafVehicles.All(v => v is Drone))
+		else if (LeafVehicles.All(v => v.VehicleType == VehicleTypes.Drone))
 			imageName = "DroneGroup";
-		else if (LeafVehicles.All(v => v is Mine))
+		else if (LeafVehicles.All(v => v.VehicleType == VehicleTypes.Mine))
 			imageName = "MineGroup";
 
 		if (Mod.Current.RootPath != null)

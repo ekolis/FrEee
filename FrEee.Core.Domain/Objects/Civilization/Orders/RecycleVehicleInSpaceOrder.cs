@@ -57,7 +57,7 @@ public class RecycleVehicleInSpaceOrder : IOrder
     {
         if (IsDisposed)
             return;
-        foreach (var v in Game.Current.Referrables.OfType<SpaceVehicle>())
+        foreach (var v in Game.Current.Referrables.OfType<ISpaceVehicle>())
             v.Orders.Remove(this);
         Game.Current.UnassignID(this);
     }

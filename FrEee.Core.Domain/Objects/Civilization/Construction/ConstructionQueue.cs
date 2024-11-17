@@ -403,7 +403,7 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
                             Orders.Add(copy);
                         }
                         builtThisTurn.Add(order.Item);
-                        if (order.Item is Ship || order.Item is Base)
+                        if (order.Item is IMajorSpaceVehicle)
                         {
                             // trigger ship built happiness changes
                             Owner.TriggerHappinessChange(hm => hm.AnyShipConstructed);

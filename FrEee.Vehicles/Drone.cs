@@ -62,4 +62,8 @@ public class Drone : SpaceVehicle, IUnit
 	}
 
 	public override bool FillsCombatTile => false;
+
+	public bool CanInvadeAndPoliceColonies => false;
+
+	public bool CanFireIntoSpaceFromPlanetaryCargo => false;
 }

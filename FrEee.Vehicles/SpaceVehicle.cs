@@ -18,9 +18,10 @@ namespace FrEee.Vehicles;
 /// </summary>
 /// <typeparam name="T"></typeparam>
 [Serializable]
-public abstract class SpaceVehicle : Vehicle, IMobileSpaceObject<SpaceVehicle>
+public abstract class SpaceVehicle
+	: Vehicle, ISpaceVehicle 
 {
-	public SpaceVehicle()
+	protected SpaceVehicle()
 	{
 		Orders = new List<IOrder>();
 		StoredResources = new ResourceQuantity();
@@ -307,7 +308,7 @@ public abstract class SpaceVehicle : Vehicle, IMobileSpaceObject<SpaceVehicle>
 
 	public bool ExecuteOrders()
 	{
-		return this.ExecuteMobileSpaceObjectOrders();
+		return this.ExecuteMobileSpaceObjectOrders<ISpaceVehicle>();
 	}
 
 	public override bool IsObsoleteMemory(Empire emp)

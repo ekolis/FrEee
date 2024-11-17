@@ -1,10 +1,10 @@
-﻿using FrEee.Serialization;
-using FrEee.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using FrEee.Objects.Civilization.Orders;
+using FrEee.Extensions;
 using FrEee.Objects.Civilization;
+using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
+using FrEee.Serialization;
 
 namespace FrEee.Gameplay.Commands.Orders;
 

@@ -584,7 +584,7 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 		{
 			if (Cargo == null)
 				return Enumerable.Empty<Component>();
-			return Cargo.Units.OfType<WeaponPlatform>().SelectMany(wp => wp.Weapons).Where(x => !x.IsDestroyed);
+			return Cargo.Units.Where(q => q.CanFireIntoSpaceFromPlanetaryCargo).SelectMany(wp => wp.Weapons).Where(x => !x.IsDestroyed);
 		}
 	}
 
@@ -647,7 +647,7 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 		// do nothing
 	}
 
-	public bool CanTarget(ITargetable target) => Cargo?.Units.OfType<WeaponPlatform>().Any(wp => wp.CanTarget(target)) ?? false;
+	public bool CanTarget(ITargetable target) => Cargo?.Units.Where(q => q.CanFireIntoSpaceFromPlanetaryCargo).Any(wp => wp.CanTarget(target)) ?? false;
 
 	/// <summary>
 	/// Deletes this planet and spawns an asteroid field with the same name, sector, size, and value as this planet.
@@ -1041,7 +1041,8 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 
 	public Progress AngerProgress => new Progress(Colony?.AverageAnger ?? 0, Mod.Current.Settings.MaxAnger);
 
-	public IEnumerable<Component> Components => Cargo.Units.OfType<WeaponPlatform>().SelectMany(q => q.Components);
+	// TODO: units that can't fire into space from planetary cargo but still count as components for planets?
+	public IEnumerable<Component> Components => Cargo.Units.Where(q => q.CanFireIntoSpaceFromPlanetaryCargo).SelectMany(q => q.Components);
 
 	public bool FillsCombatTile => true;
 }

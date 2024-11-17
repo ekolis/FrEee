@@ -70,4 +70,9 @@ public static class DIRoot
 	/// Allows players to manage waypoints.
 	/// </summary>
 	public static IWaypointCommandFactory WaypointCommands => DI.Get<IWaypointCommandFactory>();
+
+	/// <summary>
+	/// Creates vehicles.
+	/// </summary>
+	public static IVehicleFactory VehicleFactory => DI.Get<IVehicleFactory>();
 }

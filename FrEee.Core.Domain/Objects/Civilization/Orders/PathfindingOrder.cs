@@ -254,17 +254,15 @@ public abstract class PathfindingOrder
     /// </summary>
     public void UpdateAlternateTarget()
     {
-        if (Target is Fleet)
+        if (Target is Fleet f)
         {
-            var f = (Fleet)Target;
             if (!f.IsDestroyed)
                 AlternateTarget = f.LeafVehicles.Largest();
             else
                 Target = AlternateTarget;
         }
-        else if (Target is IMobileSpaceObject)
+        else if (Target is IMobileSpaceObject sobj)
         {
-            var sobj = (IMobileSpaceObject)Target;
             if (sobj.IsMemory && sobj.FindOriginalObject(Owner) != null)
                 Target = (ISpaceObject)sobj.FindOriginalObject(Owner);
             if (!sobj.IsDestroyed)

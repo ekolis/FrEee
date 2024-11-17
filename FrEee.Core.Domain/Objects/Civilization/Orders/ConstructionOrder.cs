@@ -160,15 +160,14 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
         if (!errors.Any())
         {
             // create item if needed
-            if (Item == null)
+            if (Item is null)
             {
                 Item = Template.Instantiate();
                 if (!(Item is Facility))
                     Item.Owner = queue.Owner;
-                if (Item is SpaceVehicle)
+                if (Item is ISpaceVehicle sv)
                 {
                     // space vehicles need their supplies filled up
-                    var sv = (SpaceVehicle)(IConstructable)Item;
                     sv.SupplyRemaining = sv.SupplyStorage;
                 }
             }

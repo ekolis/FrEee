@@ -42,6 +42,12 @@ public static class Configuration
 		DI.RegisterSingleton<IProjectCommandFactory, ProjectCommandFactory>();
 		DI.RegisterSingleton<IWaypointCommandFactory, WaypointCommandFactory>();
 
+		// technology
+		// TODO: hulls, components, mounts, etc
+
+		// space objects
+		DI.RegisterSingleton<IVehicleFactory, VehicleFactory>();
+
 		// run this in the background, without awaiting it
 		DI.Run();
 	}

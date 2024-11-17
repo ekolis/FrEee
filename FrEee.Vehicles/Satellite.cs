@@ -1,21 +1,20 @@
 using FrEee.Objects.Civilization;
-using FrEee.Serialization;
 using FrEee.Extensions;
 using System;
-using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Space;
 using FrEee.Objects.GameState;
+using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 
 namespace FrEee.Vehicles;
 
 [Serializable]
-public class Fighter : SpaceVehicle, IUnit
+public class Satellite : SpaceVehicle, IUnit
 {
 	public override AbilityTargets AbilityTarget
 	{
-		get { return AbilityTargets.Fighter; }
+		get { return AbilityTargets.Satellite; }
 	}
 
 	public override bool CanWarp
@@ -45,14 +44,14 @@ public class Fighter : SpaceVehicle, IUnit
 
 	public override WeaponTargets WeaponTargetType
 	{
-		get { return WeaponTargets.Fighter; }
+		get { return WeaponTargets.Satellite; }
 	}
 
 	public override Visibility CheckVisibility(Empire emp)
 	{
 		var vis = base.CheckVisibility(emp);
 		var sobj = Container as ISpaceObject;
-		if (sobj != null && sobj.HasVisibility(emp, Visibility.Scanned))
+		if (vis < Visibility.Scanned && sobj != null && sobj.HasVisibility(emp, Visibility.Scanned))
 			vis = Visibility.Scanned;
 		return vis;
 	}
@@ -62,9 +61,9 @@ public class Fighter : SpaceVehicle, IUnit
 		CommonExtensions.Place(this, target);
 	}
 
-	// HACK - until we end our game and this can be purged
-	[DoNotSerialize]
-	private Cargo Cargo { get; set; }
-
 	public override bool FillsCombatTile => false;
+
+	public bool CanInvadeAndPoliceColonies => false;
+
+	public bool CanFireIntoSpaceFromPlanetaryCargo => false;
 }

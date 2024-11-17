@@ -25,6 +25,7 @@ public class HullLoader : DataFileLoader
 			IHull<IVehicle> hull;
 			var hullname = rec.Get<string>("Name", null);
 			var hulltype = rec.Get<string>("Vehicle Type", null);
+			// TODO: put this in an injected HullFactory
 			switch (hulltype)
 			{
 				case "Ship":

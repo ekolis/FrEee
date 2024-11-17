@@ -98,4 +98,8 @@ public class WeaponPlatform : Vehicle, IUnit
 	}
 
 	public override bool FillsCombatTile => false;
+
+	public bool CanInvadeAndPoliceColonies => false;
+
+	public bool CanFireIntoSpaceFromPlanetaryCargo => true;
 }

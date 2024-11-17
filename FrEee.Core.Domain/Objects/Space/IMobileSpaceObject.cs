@@ -36,6 +36,7 @@ public interface IMobileSpaceObject : ICombatSpaceObject, IOrderable, IContainab
 	void SpendTime(double timeElapsed);
 }
 
+// HACK: find a way to get rid of this generic interface, it's stupid...
 public interface IMobileSpaceObject<T> : IMobileSpaceObject where T : IMobileSpaceObject<T>
 {
 	//new IList<IOrder> Orders { get; }

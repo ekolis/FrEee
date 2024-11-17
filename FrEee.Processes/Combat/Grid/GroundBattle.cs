@@ -25,8 +25,8 @@ public class GroundBattle : Battle
         Sector = location.Sector ?? throw new Exception("Ground battles require a sector location.");
 
         // TODO - should weapon platforms participate in ground combat like in SE5?
-        Empires = Planet.Cargo.Units.OfType<Troop>().Select(t => t.Owner).Distinct();
-        var combatants = new HashSet<ICombatant>(Planet.Cargo.Units.OfType<Troop>());
+        Empires = Planet.Cargo.Units.Where(q => q.CanInvadeAndPoliceColonies).Select(t => t.Owner).Distinct();
+        var combatants = new HashSet<ICombatant>(Planet.Cargo.Units.Where(q => q.CanInvadeAndPoliceColonies));
         for (var i = 0; i < Planet.PopulationFill.Value / Mod.Current.Settings.PopulationFactor / (Mod.Current.Settings.PopulationPerMilitia == 0 ? 20 : Mod.Current.Settings.PopulationPerMilitia); i++)
         {
             var militia = Design.MilitiaDesign.Instantiate();
