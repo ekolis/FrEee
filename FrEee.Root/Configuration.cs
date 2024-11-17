@@ -45,6 +45,7 @@ public static class Configuration
 
 		// vehicles
 		DI.RegisterSingleton<IHullFactory, HullFactory>();
+		DI.RegisterSingleton<IDesignFactory, DesignFactory>();
 		DI.RegisterSingleton<IVehicleFactory, VehicleFactory>();
 
 		// run this in the background, without awaiting it

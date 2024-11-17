@@ -1,4 +1,5 @@
-﻿using FrEee.Objects.Technology;
+﻿using FrEee.Extensions;
+using FrEee.Objects.Technology;
 using FrEee.Utility;
 using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
@@ -29,7 +30,7 @@ public class HullLoader : DataFileLoader
 			var hulltype = rec.Get<string>("Vehicle Type", null);
 			try
 			{
-				hull = DIRoot.Hulls.Build(Enum.Parse<VehicleTypes>(hulltype));
+				hull = DIRoot.Hulls.Build(Parser.ParseEnum<VehicleTypes>(hulltype));
 			}
 			catch (InvalidOperationException ex)
 			{
