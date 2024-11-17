@@ -34,8 +34,8 @@ public class AbilityTest
 
 		// create stuff
 		emp = TestUtilities.CreateEmpire();
-		design = TestUtilities.CreateDesign(emp, VehicleTypes.Ship);
 		hull = TestUtilities.CreateHull(VehicleTypes.Ship, design.Name);
+		design = TestUtilities.CreateDesign(emp, hull);
 		ship = TestUtilities.CreateVehicle(design, emp);
 	}
 

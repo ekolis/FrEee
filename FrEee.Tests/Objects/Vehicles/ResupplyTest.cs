@@ -21,7 +21,7 @@ public class ResupplyTest
 {
 	private static Empire empire;
 	private static Fleet fleet;
-	private static Ship ship1, ship2;
+	private static IMajorSpaceVehicle ship1, ship2;
 	private static ComponentTemplate storageComp;
 	private static int supplyPerComp;
 	private static StarSystem sys;
@@ -45,21 +45,21 @@ public class ResupplyTest
 
 		// initialize ships
 		Assert.IsNotNull(Mod.Current);
-		var dsn1 = new Design<Ship>();
+		var hull1 = TestUtilities.CreateHull(VehicleTypes.Ship);
+		var dsn1 = TestUtilities.CreateDesign(empire, hull1);
 		dsn1.BaseName = "Shippy McShipface";
-		dsn1.CreateHull();
 		dsn1.Components.Add(new MountedComponentTemplate(dsn1, storageComp));
 		dsn1.Owner = empire;
-		ship1 = dsn1.Instantiate();
+		ship1 = (IMajorSpaceVehicle)dsn1.Instantiate();
 		ship1.Owner = empire;
-		var dsn2 = new Design<Ship>();
+		var hull2 = TestUtilities.CreateHull(VehicleTypes.Ship);
+		var dsn2 = TestUtilities.CreateDesign(empire, hull2);
 		dsn2.BaseName = "Shippy McShipface Mk2";
-		dsn2.CreateHull();
 		dsn2.Components.Add(new MountedComponentTemplate(dsn1, storageComp));
 		dsn2.Components.Add(new MountedComponentTemplate(dsn1, storageComp));
 		dsn2.Components.Add(new MountedComponentTemplate(dsn1, storageComp));
 		dsn2.Owner = empire;
-		ship2 = dsn2.Instantiate();
+		ship2 = (IMajorSpaceVehicle)dsn2.Instantiate();
 		ship2.Owner = empire;
 
 		// initialize fleet
