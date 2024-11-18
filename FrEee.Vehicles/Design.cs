@@ -18,110 +18,9 @@ using FrEee.Modding.Abilities;
 using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Designs;
 using FrEee.Gameplay.Commands.Orders;
+using FrEee.Vehicles.Types;
 
-namespace FrEee.Objects.Vehicles;
-
-/// <summary>
-/// Creates designs.
-/// </summary>
-public static class Design
-{
-	static Design()
-	{
-		militiaDesign = new Design<Troop>();
-		militiaDesign.BaseName = "Militia";
-		var militiaWeapon = new ComponentTemplate();
-		militiaWeapon.Durability = Mod.Current.Settings.MilitiaHitpoints;
-		militiaWeapon.Name = "Small Arms";
-		militiaWeapon.WeaponInfo = new DirectFireWeaponInfo
-		{
-			Damage = Mod.Current.Settings.MilitiaFirepower,
-			MinRange = 0,
-			MaxRange = 1,
-		};
-		militiaDesign.Components.Add(new MountedComponentTemplate(militiaDesign, militiaWeapon));
-	}
-
-	public static IDesign Create(VehicleTypes vt)
-	{
-		IDesign d;
-		switch (vt)
-		{
-			case VehicleTypes.Ship:
-				d = new Design<Ship>();
-				break;
-
-			case VehicleTypes.Base:
-				d = new Design<Base>();
-				break;
-
-			case VehicleTypes.Fighter:
-				d = new Design<Fighter>();
-				break;
-
-			case VehicleTypes.Troop:
-				d = new Design<Troop>();
-				break;
-
-			case VehicleTypes.Mine:
-				d = new Design<Mine>();
-				break;
-
-			case VehicleTypes.Satellite:
-				d = new Design<Satellite>();
-				break;
-
-			case VehicleTypes.Drone:
-				d = new Design<Drone>();
-				break;
-
-			case VehicleTypes.WeaponPlatform:
-				d = new Design<WeaponPlatform>();
-				break;
-
-			default:
-				throw new Exception("Cannot create a design for vehicle type " + vt + ".");
-		}
-		d.Owner = Empire.Current;
-		return d;
-	}
-
-	public static IDesign Create(IHull hull)
-	{
-		var d = Create(hull.VehicleType);
-		d.Hull = hull;
-		return d;
-	}
-
-	/// <summary>
-	/// Imports designs from the library into the game that aren't already in the game.
-	/// Requires a current empire. Should only be called client side.
-	/// </summary>
-	/// <returns>Copied designs imported.</returns>
-	public static IEnumerable<IDesign> ImportFromLibrary()
-	{
-		if (Empire.Current == null)
-			throw new InvalidOperationException("Can't import designs without a current empire.");
-
-		var designs = Library.Import<IDesign>(d => d.IsValidInMod && !Empire.Current.KnownDesigns.Any(d2 => d2.Equals(d))).ToArray();
-
-		designs.SafeForeach(d =>
-		{
-			d.IsNew = true;
-			d.Owner = Empire.Current;
-			d.TurnNumber = Game.Current.TurnNumber;
-			d.Iteration = Empire.Current.KnownDesigns.OwnedBy(Empire.Current).Where(x => x.BaseName == d.BaseName && x.IsUnlocked()).MaxOrDefault(x => x.Iteration) + 1; // auto assign nex available iteration
-			d.IsObsolete = d.IsObsolescent;
-			Empire.Current.KnownDesigns.Add(d); // only client side, don't need to worry about other players spying :)
-		});
-
-		return designs;
-	}
-
-	public static Design<Troop> militiaDesign;
-
-	public static Design<Troop> MilitiaDesign => militiaDesign;
-}
+namespace FrEee.Vehicles;
 
 /// <summary>
 /// A vehicle design.
@@ -153,7 +52,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 
 	public int ArmorHitpoints
 	{
-		get { return this.Components.Where(c => c.ComponentTemplate.HasAbility("Armor")).Sum(c => c.Durability); }
+		get { return Components.Where(c => c.ComponentTemplate.HasAbility("Armor")).Sum(c => c.Durability); }
 	}
 
 	public string BaseName { get; set; }
@@ -233,7 +132,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 
 	public int HullHitpoints
 	{
-		get { return this.Components.Where(c => !c.ComponentTemplate.HasAbility("Armor")).Sum(c => c.Durability); }
+		get { return Components.Where(c => !c.ComponentTemplate.HasAbility("Armor")).Sum(c => c.Durability); }
 	}
 
 	[DoNotSerialize]
@@ -625,7 +524,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 			if (!Owner.HasUnlocked(Hull))
 				yield return "You have not unlocked the " + Hull + ".";
 			var comps = Components.Select(comp => comp.ComponentTemplate);
-			if (Hull.NeedsBridge && (!comps.Any(comp => comp.HasAbility("Ship Bridge")) && !comps.Any(comp => comp.HasAbility("Master Computer"))))
+			if (Hull.NeedsBridge && !comps.Any(comp => comp.HasAbility("Ship Bridge")) && !comps.Any(comp => comp.HasAbility("Master Computer")))
 				yield return "This hull requires a bridge or master computer.";
 			if (comps.Count(comp => comp.HasAbility("Ship Bridge")) > 1)
 				yield return "A vehicle can have no more than one bridge";
@@ -641,11 +540,11 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 				yield return "This hull requires at least " + Hull.MinCrewQuarters + " life support modules or a Master Computer.";
 			if (comps.Count(comp => comp.HasAbility("Ship Crew Quarters")) < Hull.MinCrewQuarters && !comps.Any(comp => comp.HasAbility("Master Computer")))
 				yield return "This hull requires at least " + Hull.MinCrewQuarters + " crew quarters or a Master Computer.";
-			if ((double)Components.Where(comp => comp.HasAbility("Cargo Storage")).Sum(comp => comp.Size) / (double)Hull.Size * 100d < Hull.MinPercentCargoBays)
+			if (Components.Where(comp => comp.HasAbility("Cargo Storage")).Sum(comp => comp.Size) / (double)Hull.Size * 100d < Hull.MinPercentCargoBays)
 				yield return "This hull requires at least " + Hull.MinPercentCargoBays + "% of its space to be used by cargo-class components.";
-			if ((double)Components.Where(comp => comp.HasAbility("Launch/Recover Fighters")).Sum(comp => comp.Size) / (double)Hull.Size * 100d < Hull.MinPercentFighterBays)
+			if (Components.Where(comp => comp.HasAbility("Launch/Recover Fighters")).Sum(comp => comp.Size) / (double)Hull.Size * 100d < Hull.MinPercentFighterBays)
 				yield return "This hull requires at least " + Hull.MinPercentFighterBays + "% of its space to be used by fighter bays.";
-			if ((double)Components.Where(comp => comp.HasAbility("Colonize Planet - Rock") || comp.HasAbility("Colonize Planet - Ice") || comp.HasAbility("Colonize Planet - Gas")).Sum(comp => comp.Size) / (double)Hull.Size * 100d < Hull.MinPercentColonyModules)
+			if (Components.Where(comp => comp.HasAbility("Colonize Planet - Rock") || comp.HasAbility("Colonize Planet - Ice") || comp.HasAbility("Colonize Planet - Gas")).Sum(comp => comp.Size) / (double)Hull.Size * 100d < Hull.MinPercentColonyModules)
 				yield return "This hull requires at least " + Hull.MinPercentColonyModules + "% of its space to be used by colony modules.";
 			foreach (var g in comps.GroupBy(comp => comp.Family))
 			{
@@ -691,6 +590,11 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 	/// For serialization and client safety
 	/// </summary>
 	private GameReference<Empire> owner { get; set; }
+
+	// TODO: make this an ability
+	public bool CanInvadeAndPoliceColonies => typeof(T).IsAssignableTo(typeof(Troop));
+
+	public bool IsSpaceVehicleDesign => typeof(T).IsAssignableTo(typeof(ISpaceVehicle));
 
 	public void AddComponent(ComponentTemplate ct, Mount m = null)
 	{
@@ -866,6 +770,8 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 		}
 		return paths;
 	}
+
+
 
 	IDesign IDesign.Upgrade()
 		=> Upgrade();

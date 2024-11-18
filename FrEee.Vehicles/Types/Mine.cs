@@ -1,21 +1,20 @@
-using FrEee.Objects.Civilization;
-using FrEee.Serialization;
 using FrEee.Extensions;
-using System;
-using FrEee.Objects.Civilization.CargoStorage;
-using FrEee.Objects.Space;
-using FrEee.Objects.GameState;
-using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Civilization.CargoStorage;
+using FrEee.Objects.GameState;
+using FrEee.Objects.Space;
+using FrEee.Processes.Combat;
+using System;
 
-namespace FrEee.Objects.Vehicles;
+namespace FrEee.Vehicles.Types;
 
 [Serializable]
-public class Fighter : SpaceVehicle, IUnit
+public class Mine : SpaceVehicle, IUnit
 {
 	public override AbilityTargets AbilityTarget
 	{
-		get { return AbilityTargets.Fighter; }
+		get { return AbilityTargets.Mine; }
 	}
 
 	public override bool CanWarp
@@ -25,7 +24,7 @@ public class Fighter : SpaceVehicle, IUnit
 
 	ICargoContainer IContainable<ICargoContainer>.Container
 	{
-		get { return CommonExtensions.FindContainer(this); }
+		get { return this.FindContainer(); }
 	}
 
 	public override bool ParticipatesInGroundCombat
@@ -45,16 +44,20 @@ public class Fighter : SpaceVehicle, IUnit
 
 	public override WeaponTargets WeaponTargetType
 	{
-		get { return WeaponTargets.Fighter; }
+		// mines cannot be targeted in space combat
+		get { return WeaponTargets.Invalid; }
 	}
 
+	/// <summary>
+	/// Mines are invisible to everyone except their owner.
+	/// </summary>
+	/// <param name="emp"></param>
+	/// <returns></returns>
 	public override Visibility CheckVisibility(Empire emp)
 	{
-		var vis = base.CheckVisibility(emp);
-		var sobj = Container as ISpaceObject;
-		if (sobj != null && sobj.HasVisibility(emp, Visibility.Scanned))
-			vis = Visibility.Scanned;
-		return vis;
+		if (emp == Owner)
+			return Visibility.Owned;
+		return Visibility.Unknown;
 	}
 
 	public override void Place(ISpaceObject target)
@@ -62,9 +65,14 @@ public class Fighter : SpaceVehicle, IUnit
 		CommonExtensions.Place(this, target);
 	}
 
-	// HACK - until we end our game and this can be purged
-	[DoNotSerialize]
-	private Cargo Cargo { get; set;}
-
 	public override bool FillsCombatTile => false;
+
+	/// <summary>
+	/// Mines, unlike other vehicles, do detonate when enemies enter their sector.
+	/// </summary>
+	public override bool DetonatesWhenEnemiesEnterSector => true;
+
+	public bool CanInvadeAndPoliceColonies => false;
+
+	public bool CanFireIntoSpaceFromPlanetaryCargo => false;
 }

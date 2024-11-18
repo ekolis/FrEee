@@ -1,10 +1,10 @@
 ﻿
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
 using FrEee.Extensions;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.Objects.Civilization.Orders.RecycleBehaviors;
 
@@ -45,7 +45,7 @@ public class ScrapBehavior : IRecycleBehavior
             yield return target.CreateLogMessage($"{target} cannot be scrapped because it is already destroyed.", LogMessageType.Error);
         if (target.RecycleContainer != executor)
             yield return target.CreateLogMessage(target + " cannot be scrapped by " + executor + " because " + target + " does not belong to " + executor + ".", LogMessageType.Error);
-        if ((target is Ship || target is Base) && !executor.Sector.SpaceObjects.Any(sobj => sobj.Owner == executor.Owner && sobj.HasAbility("Space Yard")))
+        if ((target is IMajorSpaceVehicle) && !executor.Sector.SpaceObjects.Any(sobj => sobj.Owner == executor.Owner && sobj.HasAbility("Space Yard")))
             yield return target.CreateLogMessage(target + " cannot be scrapped at " + executor.Sector + " because there is no space yard present in that sector.", LogMessageType.Error);
         if (target is IUnit && !executor.Sector.SpaceObjects.Any(sobj => sobj.Owner == executor.Owner && (sobj is Planet || sobj.HasAbility("Space Yard"))))
             yield return target.CreateLogMessage(target + " cannot be scrapped at " + executor.Sector + " because there is no space yard or colony present in that sector.", LogMessageType.Error);

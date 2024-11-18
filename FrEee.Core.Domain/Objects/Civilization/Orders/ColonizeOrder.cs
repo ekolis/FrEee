@@ -1,6 +1,5 @@
 ﻿using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Serialization;
 using FrEee.Extensions;
@@ -11,6 +10,7 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.Objects.Civilization.Orders;
 
@@ -79,7 +79,7 @@ public class ColonizeOrder : IOrder
             return;
         foreach (var v in Game.Current.Referrables.OfType<IMobileSpaceObject>())
         {
-            if (v is SpaceVehicle sv)
+            if (v is ISpaceVehicle sv)
                 sv.Orders.Remove(this);
             else if (v is Fleet f)
                 f.Orders.Remove(this);

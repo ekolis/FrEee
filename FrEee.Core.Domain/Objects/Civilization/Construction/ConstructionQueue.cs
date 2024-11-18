@@ -1,6 +1,5 @@
 ﻿using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Serialization;
@@ -14,6 +13,8 @@ using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Templates;
 using FrEee.Modding.Abilities;
+using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.Objects.Civilization.Construction;
 
@@ -403,7 +404,7 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
                             Orders.Add(copy);
                         }
                         builtThisTurn.Add(order.Item);
-                        if (order.Item is Ship || order.Item is Base)
+                        if (order.Item is IMajorSpaceVehicle)
                         {
                             // trigger ship built happiness changes
                             Owner.TriggerHappinessChange(hm => hm.AnyShipConstructed);

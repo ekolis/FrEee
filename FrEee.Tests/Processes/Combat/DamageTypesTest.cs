@@ -4,7 +4,9 @@ using FrEee.Extensions;
 using FrEee.Modding;
 using FrEee.Modding.Loaders;
 using FrEee.Objects.GameState;
-using FrEee.Objects.Vehicles;
+using FrEee.Utility;
+using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 using NUnit.Framework;
 
 namespace FrEee.Processes.Combat;
@@ -13,10 +15,10 @@ public class DamageTypesTest
 {
     private static Mod mod;
 
-    private Ship attacker;
-    private IDesign<Ship> attackerDesign;
-    private Ship defender;
-    private IDesign<Ship> defenderDesign;
+    private IMajorSpaceVehicle attacker;
+    private IDesign<IMajorSpaceVehicle> attackerDesign;
+    private IMajorSpaceVehicle defender;
+    private IDesign<IMajorSpaceVehicle> defenderDesign;
 
     [OneTimeSetUp]
     public static void ClassInit()
@@ -34,13 +36,13 @@ public class DamageTypesTest
     public void Init()
     {
         // create dummy designs
-        attackerDesign = new Design<Ship>();
+        attackerDesign = (IDesign<IMajorSpaceVehicle>)DIRoot.Designs.Build(VehicleTypes.Ship);
         attackerDesign.AddComponent(mod.ComponentTemplates.FindByName("Bridge"));
         attackerDesign.AddComponent(mod.ComponentTemplates.FindByName("Life Support"));
         attackerDesign.AddComponent(mod.ComponentTemplates.FindByName("Crew Quarters"));
         attackerDesign.AddComponent(mod.ComponentTemplates.FindByName("Quantum Reactor"));
-        defenderDesign = new Design<Ship>();
-        defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Bridge"));
+		defenderDesign = (IDesign<IMajorSpaceVehicle>)DIRoot.Designs.Build(VehicleTypes.Ship);
+		defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Bridge"));
         defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Life Support"));
         defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Crew Quarters"));
         defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Quantum Reactor"));
@@ -141,7 +143,7 @@ public class DamageTypesTest
             d.AddComponent(Mod.Current.ComponentTemplates.FindByName(cn));
     }
 
-    private void Heal(Ship ship)
+    private void Heal(IMajorSpaceVehicle ship)
     {
         ship.Repair();
         ship.ReplenishShields();
@@ -153,7 +155,7 @@ public class DamageTypesTest
         Heal(defender);
     }
 
-    private void TestDamage(Ship attacker, IDamageable defender, int dmg, int expectedHullDmg = 0, int expectedArmorDmg = 0, int expectedPhasedShieldDmg = 0, int expectedNormalShieldDmg = 0)
+    private void TestDamage(IMajorSpaceVehicle attacker, IDamageable defender, int dmg, int expectedHullDmg = 0, int expectedArmorDmg = 0, int expectedPhasedShieldDmg = 0, int expectedNormalShieldDmg = 0)
     {
         var hhp = defender.HullHitpoints;
         var ahp = defender.ArmorHitpoints;

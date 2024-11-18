@@ -1,5 +1,4 @@
 ﻿using FrEee.Objects.Civilization;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Serialization;
@@ -10,8 +9,10 @@ using System.Drawing;
 using System.IO;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
+using FrEee.Vehicles.Types;
+using FrEee.Objects.Technology;
 
-namespace FrEee.Objects.Technology;
+namespace FrEee.Vehicles;
 
 /// <summary>
 /// A vehicle hull.

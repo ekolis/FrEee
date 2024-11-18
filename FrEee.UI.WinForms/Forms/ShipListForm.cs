@@ -1,7 +1,6 @@
 
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
 using FrEee.Utility;
 using FrEee.Extensions;
 using FrEee.UI.WinForms.DataGridView;
@@ -14,6 +13,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -68,13 +68,13 @@ public partial class ShipListForm : GameForm
 		// show ship/unit/fleet counts
 		sobjs = Galaxy.Current.FindSpaceObjects<IMobileSpaceObject>().Where(o => !(o is Planet) && (!(o is IUnit && ((IUnit)o).Container == null)));
 		var ours = sobjs.Where(o => o.Owner == Empire.Current);
-		var ourShips = ours.OfType<SpaceVehicle>();
+		var ourShips = ours.OfType<ISpaceVehicle>();
 		txtShips.Text = ourShips.Count().ToString();
 		txtShipsOutsideFleets.Text = ourShips.Where(s => s.Container == null).Count().ToString();
 		var ourFleets = ours.OfType<Fleet>();
 		txtFleets.Text = ourFleets.Count().ToString();
 		txtFleetsOutsideFleets.Text = ourFleets.Where(f => f.Container == null).Count().ToString();
-		var alienShips = sobjs.OfType<SpaceVehicle>();
+		var alienShips = sobjs.OfType<ISpaceVehicle>();
 		txtAlienShips.Text = alienShips.Count().ToString();
 		txtAllyShips.Text = alienShips.Where(s => s.Owner.IsAllyOf(Empire.Current, null)).Count().ToString();
 		txtEnemyShips.Text = alienShips.Where(s => s.Owner.IsEnemyOf(Empire.Current, null)).Count().ToString();

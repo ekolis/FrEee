@@ -1,6 +1,6 @@
-﻿using FrEee.Objects.Civilization;
+﻿using System.Collections.Generic;
 using FrEee.Extensions;
-using System.Collections.Generic;
+using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.GameState;
 using FrEee.Objects.LogMessages;

@@ -1,13 +1,15 @@
 using FrEee.Objects.Civilization;
 using FrEee.Processes.Combat;
 using FrEee.Objects.Technology;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding.Templates;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Loaders;
+using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
+using FrEee.Utility;
 
 namespace FrEee.Modding;
 
@@ -35,15 +37,14 @@ public class FormulaTest
 		mount.DurabilityPercent = 200;
 		mount.SizePercent = new ComputedFormula<int>("design.Hull.Size", mount, true);
 		Mod.Current.Mounts.Add(mount);
-		var hull = new Hull<Ship>();
+		var hull = DIRoot.Hulls.Build(VehicleTypes.Ship);
 		hull.ModID = hull.Name = "Generic Hull";
 		hull.Size = 150;
 		Mod.Current.Hulls.Add(hull);
 
-		var design = new Design<Ship>();
+		var design = DIRoot.Designs.Build(hull);
 		Game.Current.AssignID(design);
 		var mct = new MountedComponentTemplate(design, armor, mount);
-		design.Hull = hull;
 		design.Components.Add(mct);
 		mct.Container = design;
 		design.Owner = emp;

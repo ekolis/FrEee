@@ -1,7 +1,6 @@
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Serialization;
@@ -24,6 +23,8 @@ using FrEee.Processes.Setup;
 using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Orders;
 using FrEee.Gameplay.Commands.Projects;
+using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.Objects.Civilization;
 
@@ -62,7 +63,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	/// <summary>
 	/// The current empire being controlled by the player.
 	/// </summary>
-	public static Empire Current
+	public static Empire? Current
 	{
 		get
 		{
@@ -383,8 +384,8 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 		{
 			// shouldn't change except at turn processing...
 			// TODO - facility/unit maintenance?
-			if (maintenance == null || Empire.Current == null)
-				maintenance = OwnedSpaceObjects.OfType<SpaceVehicle>().Sum(v => v.MaintenanceCost);
+			if (maintenance is null || Current is null)
+				maintenance = OwnedSpaceObjects.OfType<ISpaceVehicle>().Sum(v => ((IVehicle)v).MaintenanceCost);
 			return maintenance;
 		}
 	}
@@ -902,7 +903,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 		Game.Current.UnassignID(this);
 		if (Game.Current.Empires.Contains(this))
 			Game.Current.Empires[Game.Current.Empires.IndexOf(this)] = null;
-		foreach (var x in OwnedSpaceObjects.OfType<SpaceVehicle>().ToArray())
+		foreach (var x in OwnedSpaceObjects.OfType<ISpaceVehicle>().ToArray())
 			x.Dispose();
 		foreach (var x in ColonizedPlanets.ToArray())
 			x.Colony.Dispose();

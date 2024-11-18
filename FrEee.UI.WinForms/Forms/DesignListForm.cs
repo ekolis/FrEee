@@ -10,11 +10,12 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.Civilization.Construction;
-using FrEee.Objects.Vehicles;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
 using FrEee.Gameplay.Commands.Orders;
 using FrEee.Gameplay.Commands.Designs;
+using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.UI.WinForms.Forms;
 

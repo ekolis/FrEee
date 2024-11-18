@@ -1,5 +1,5 @@
-﻿using FrEee.Objects.Civilization;
-using FrEee.Extensions;
+﻿using FrEee.Extensions;
+using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.GameState;
 

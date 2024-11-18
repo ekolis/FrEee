@@ -13,6 +13,7 @@ using FrEee.Gameplay.Commands.Projects;
 using FrEee.Gameplay.Commands.Waypoints;
 using FrEee.Processes;
 using FrEee.Processes.Combat;
+using FrEee.Vehicles;
 
 namespace FrEee.Utility;
 
@@ -70,4 +71,19 @@ public static class DIRoot
 	/// Allows players to manage waypoints.
 	/// </summary>
 	public static IWaypointCommandFactory WaypointCommands => DI.Get<IWaypointCommandFactory>();
+
+	/// <summary>
+	/// Creates vehicle hulls.
+	/// </summary>
+	public static IHullFactory Hulls => DI.Get<IHullFactory>();
+
+	/// <summary>
+	/// Creates vehicle designs.
+	/// </summary>
+	public static IDesignFactory Designs => DI.Get<IDesignFactory>();
+
+	/// <summary>
+	/// Creates vehicles.
+	/// </summary>
+	public static IVehicleFactory Vehicles => DI.Get<IVehicleFactory>();
 }

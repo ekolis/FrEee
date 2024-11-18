@@ -1,6 +1,5 @@
 ﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Extensions;
@@ -8,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
+using FrEee.Vehicles;
 
 namespace FrEee.Processes.Combat.Grid;
 
@@ -25,11 +25,11 @@ public class GroundBattle : Battle
         Sector = location.Sector ?? throw new Exception("Ground battles require a sector location.");
 
         // TODO - should weapon platforms participate in ground combat like in SE5?
-        Empires = Planet.Cargo.Units.OfType<Troop>().Select(t => t.Owner).Distinct();
-        var combatants = new HashSet<ICombatant>(Planet.Cargo.Units.OfType<Troop>());
+        Empires = Planet.Cargo.Units.Where(q => q.CanInvadeAndPoliceColonies).Select(t => t.Owner).Distinct();
+        var combatants = new HashSet<ICombatant>(Planet.Cargo.Units.Where(q => q.CanInvadeAndPoliceColonies));
         for (var i = 0; i < Planet.PopulationFill.Value / Mod.Current.Settings.PopulationFactor / (Mod.Current.Settings.PopulationPerMilitia == 0 ? 20 : Mod.Current.Settings.PopulationPerMilitia); i++)
         {
-            var militia = Design.MilitiaDesign.Instantiate();
+            var militia = DIRoot.Designs.Militia.Instantiate();
             militia.Owner = Planet.Owner;
             combatants.Add(militia);
         }
@@ -47,7 +47,8 @@ public class GroundBattle : Battle
     {
         base.Initialize(combatants);
 
-        Empires = Planet.Cargo.Units.OfType<Troop>().Select(t => t.Owner).Distinct();
+        // TODO: should weapon platforms take part in ground combat like in SE5?
+        Empires = Planet.Cargo.Units.Where(q => q.CanInvadeAndPoliceColonies).Select(t => t.Owner).Distinct();
 
         int moduloID = (int)(Planet.ID % 100000);
         Dice = new PRNG((int)(moduloID / Game.Current.Timestamp * 10));

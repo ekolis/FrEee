@@ -3,7 +3,8 @@ using FrEee.Extensions;
 using FrEee.Modding;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
-using FrEee.Objects.Vehicles;
+using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 using NUnit.Framework;
 
 namespace FrEee.Objects.Space;
@@ -16,7 +17,7 @@ public class MemoryTest
 	/// <summary>
 	/// The ship that is looking for an enemy ship.
 	/// </summary>
-	private Ship destroyer;
+	private IMajorSpaceVehicle destroyer;
 
 	/// <summary>
 	/// Where the ships are.
@@ -36,7 +37,7 @@ public class MemoryTest
 	/// <summary>
 	/// The ship that is hiding.
 	/// </summary>
-	private Ship submarine;
+	private IMajorSpaceVehicle submarine;
 
 	/// <summary>
 	/// Where the submarine is going.
@@ -48,7 +49,7 @@ public class MemoryTest
 	{
 		// make sure a memory is created when the vehicle is seen
 		submarine.UpdateEmpireMemories();
-		var mem = (Ship)seekers.Memory[submarine.ID];
+		var mem = (IMajorSpaceVehicle)seekers.Memory[submarine.ID];
 		Assert.AreEqual(Visibility.Visible, submarine.CheckVisibility(seekers), "Ship is not visible to empire in same star system.");
 		Assert.IsNotNull(mem, "Memory was not created for visible ship.");
 		Assert.IsNotNull(mem.StarSystem, "Memory was not placed in a star system for visible ship.");
@@ -110,17 +111,17 @@ public class MemoryTest
 
 		// initialize ships
 		Assert.IsNotNull(Mod.Current);
-		var dsDesign = new Design<Ship>();
+		var dsHull = TestUtilities.CreateHull(VehicleTypes.Ship, "Destroyer");
+		var dsDesign = TestUtilities.CreateDesign(seekers, dsHull, "Destroyer");
 		dsDesign.BaseName = "Destroyer";
-		dsDesign.CreateHull();
 		dsDesign.Owner = seekers;
-		destroyer = dsDesign.Instantiate();
+		destroyer = (IMajorSpaceVehicle)dsDesign.Instantiate();
 		destroyer.Owner = seekers;
-		var subDesign = new Design<Ship>();
+		var subHull = TestUtilities.CreateHull(VehicleTypes.Ship, "Submarine");
+		var subDesign = TestUtilities.CreateDesign(seekers, dsHull, "Submarine");
 		subDesign.BaseName = "Submarine";
-		subDesign.CreateHull();
 		subDesign.Owner = hiders;
-		submarine = subDesign.Instantiate();
+		submarine = (IMajorSpaceVehicle)subDesign.Instantiate();
 		submarine.Owner = hiders;
 
 		// place ships

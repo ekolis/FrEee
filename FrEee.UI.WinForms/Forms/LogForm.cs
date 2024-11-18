@@ -10,10 +10,11 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using FrEee.Objects.Vehicles;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
+using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.UI.WinForms.Forms;
 

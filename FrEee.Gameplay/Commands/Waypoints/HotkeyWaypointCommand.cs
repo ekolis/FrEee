@@ -1,11 +1,10 @@
 ﻿
-using FrEee.Objects.Civilization;
-using FrEee.Objects.Space;
-using FrEee.Extensions;
 using System;
+using FrEee.Extensions;
+using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Orders;
-using FrEee.Objects.GameState;
 using FrEee.Objects.LogMessages;
+using FrEee.Objects.Space;
 
 namespace FrEee.Gameplay.Commands.Waypoints;
 

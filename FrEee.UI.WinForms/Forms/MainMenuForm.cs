@@ -1,4 +1,3 @@
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Extensions;
@@ -18,6 +17,7 @@ using System.Windows.Forms;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Setup;
 using FrEee.Modding.Loaders;
+using FrEee.Vehicles;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -115,7 +115,7 @@ public partial class MainMenuForm : GameForm
 
 		if (status.Exception == null && !warnings.Any())
 		{
-			Design.ImportFromLibrary();
+			DIRoot.Designs.ImportFromLibrary();
 			var game = new MainGameForm(false, true);
 			this.ShowChildForm(game);
 			game.FormClosed += (s, args) =>
@@ -165,7 +165,7 @@ public partial class MainMenuForm : GameForm
 			}
 
 			// load library designs
-			Design.ImportFromLibrary();
+			DIRoot.Designs.ImportFromLibrary();
 
 			// display game view
 			var form = new MainGameForm(false, true);

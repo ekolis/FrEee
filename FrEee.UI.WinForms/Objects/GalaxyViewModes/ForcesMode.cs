@@ -1,7 +1,7 @@
 ﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
+using FrEee.Vehicles.Types;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -21,9 +21,9 @@ public class ForcesMode : PieMode
 
 	protected override int GetAlpha(StarSystem sys)
 	{
-		var forces = Galaxy.Current.StarSystemLocations.Select(l => new { System = l.Item, Vehicles = l.Item.FindSpaceObjects<SpaceVehicle>() });
+		var forces = Galaxy.Current.StarSystemLocations.Select(l => new { System = l.Item, Vehicles = l.Item.FindSpaceObjects<ISpaceVehicle>() });
 		var maxTonnage = forces.Max(f => f.Vehicles.Sum(v => v.Design.Hull.Size));
-		var vehicles = sys.FindSpaceObjects<SpaceVehicle>().ToArray();
+		var vehicles = sys.FindSpaceObjects<ISpaceVehicle>().ToArray();
 		var tonnageHere = vehicles.Sum(v => v.Design.Hull.Size);
 		return 255 * tonnageHere / maxTonnage;
 	}
@@ -31,7 +31,7 @@ public class ForcesMode : PieMode
 	protected override IEnumerable<Tuple<Color, float>> GetAmounts(StarSystem sys)
 	{
 		// find relative tonnage of friendly, allied, neutral, and and enemy forces
-		var vehicles = sys.FindSpaceObjects<SpaceVehicle>().ToArray();
+		var vehicles = sys.FindSpaceObjects<ISpaceVehicle>().ToArray();
 		var byOwner = vehicles.GroupBy(v => v.Owner);
 		var friendlyTonnage = byOwner.Where(f => f.Key == Empire.Current).SelectMany(f => f).Sum(v => v.Design.Hull.Size);
 		var allyTonnage = byOwner.Where(f => f.Key.IsAllyOf(Empire.Current, sys)).SelectMany(f => f).Sum(v => v.Design.Hull.Size);

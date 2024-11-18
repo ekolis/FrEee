@@ -29,6 +29,9 @@
 		<Compile Remove="Gameplay\Commands\EditStrategyCommand.cs" />
 	</ItemGroup>
 	<ItemGroup>
+	  <None Include="Vehicles\IHullFactory.cs" />
+	</ItemGroup>
+	<ItemGroup>
 	  <ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
 	</ItemGroup>
 	<ItemGroup>

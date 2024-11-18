@@ -1,12 +1,12 @@
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
 using FrEee.Extensions;
 using FrEee.UI.WinForms.Interfaces;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Modding.Abilities;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.UI.WinForms.Controls;
 
@@ -59,7 +59,7 @@ public partial class StarSystemReport : UserControl, IBindable<StarSystem>
 			txtNeutralFacilities.Text = colonies.Where(c => Empire.Current.IsNeutralTo(c.Owner, StarSystem)).Sum(c => c.Facilities.Count).ToString();
 			txtEnemyFacilities.Text = colonies.Where(c => Empire.Current.IsEnemyOf(c.Owner, StarSystem)).Sum(c => c.Facilities.Count).ToString();
 
-			var vehicles = StarSystem.FindSpaceObjects<SpaceVehicle>();
+			var vehicles = StarSystem.FindSpaceObjects<ISpaceVehicle>();
 			txtOurVehicles.Text = vehicles.Where(v => v.Owner == Empire.Current).Sum(v => v.Design.Hull.Size).Kilotons();
 			txtAllyVehicles.Text = vehicles.Where(v => Empire.Current.IsAllyOf(v.Owner, StarSystem)).Sum(v => v.Design.Hull.Size).Kilotons();
 			txtNeutralVehicles.Text = vehicles.Where(v => Empire.Current.IsNeutralTo(v.Owner, StarSystem)).Sum(v => v.Design.Hull.Size).Kilotons();

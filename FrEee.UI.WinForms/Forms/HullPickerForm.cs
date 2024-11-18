@@ -7,8 +7,8 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using FrEee.Objects.Technology;
-using FrEee.Objects.Vehicles;
+using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.UI.WinForms.Forms;
 

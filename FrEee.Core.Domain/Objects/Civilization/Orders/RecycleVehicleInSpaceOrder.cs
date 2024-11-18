@@ -1,8 +1,8 @@
 ﻿using FrEee.Objects.GameState;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
 using FrEee.Serialization;
+using FrEee.Vehicles.Types;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -57,7 +57,7 @@ public class RecycleVehicleInSpaceOrder : IOrder
     {
         if (IsDisposed)
             return;
-        foreach (var v in Game.Current.Referrables.OfType<SpaceVehicle>())
+        foreach (var v in Game.Current.Referrables.OfType<ISpaceVehicle>())
             v.Orders.Remove(this);
         Game.Current.UnassignID(this);
     }

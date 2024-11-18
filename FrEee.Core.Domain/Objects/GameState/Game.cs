@@ -13,7 +13,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using FrEee.Objects.Civilization.Construction;
-using FrEee.Objects.Vehicles;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Space;
 using FrEee.Processes.Combat;
@@ -23,6 +22,7 @@ using FrEee.Modding.Scripts;
 using FrEee.Modding.Loaders;
 using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Notes;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.Objects.GameState;
 

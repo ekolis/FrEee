@@ -13,7 +13,6 @@ using FrEee.Processes.Combat;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Serialization;
@@ -24,6 +23,8 @@ using System.Numerics;
 using FrEee.Modding.Abilities;
 using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Orders;
+using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.Extensions;
 
@@ -170,7 +171,13 @@ public static class CommonExtensions
 				return;
 
 			// shuffle up the mines so they hit in a random order
-			var mines = sector.SpaceObjects.OfType<Mine>().Concat(sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.LeafVehicles.OfType<Mine>())).Where(m => m.IsHostileTo(sobj.Owner)).Shuffle().ToList();
+			var mines = sector.SpaceObjects
+				.OfType<IVehicle>()
+				.Concat(sector.SpaceObjects.OfType<Fleet>().SelectMany(f =>
+					f.LeafVehicles.OfType<IVehicle>()))
+				.Where(m => m.DetonatesWhenEnemiesEnterSector && m.IsHostileTo(sobj.Owner))
+				.Shuffle()
+				.ToList();
 
 			// for log messages
 			var totalDamage = 0;
@@ -231,7 +238,7 @@ public static class CommonExtensions
 			if (minesDetonated.Any() || minesSwept.Any() || minesAttacking.Any())
 				owner.Log.Add(sobj.CreateLogMessage(sobj + " encountered a mine field at " + sector + " and took " + totalDamage + " points of damage, sweeping " + minesSwept.Sum(kvp => kvp.Value) + " mines.", LogMessageType.Generic));
 			foreach (var emp in minesSwept.Keys.Union(minesDetonated.Keys).Union(minesAttacking.Keys))
-				emp.Log.Add(sobj.CreateLogMessage(sobj + " encountered our mine field at " + sector + ". " + minesDetonated[emp] + " of our mines detonated, " + minesAttacking[emp] + " others fired weapons, and " + minesSwept[emp] + " were swept. " + sector.SpaceObjects.OfType<Mine>().Where(m => m.Owner == emp).Count() + " mines remain in the sector.", LogMessageType.Generic));
+				emp.Log.Add(sobj.CreateLogMessage(sobj + " encountered our mine field at " + sector + ". " + minesDetonated[emp] + " of our mines detonated, " + minesAttacking[emp] + " others fired weapons, and " + minesSwept[emp] + " were swept. " + sector.SpaceObjects.OfType<IVehicle>().Where(m => m.DetonatesWhenEnemiesEnterSector && m.Owner == emp).Count() + " mines remain in the sector.", LogMessageType.Generic));
 		}
 	}
 

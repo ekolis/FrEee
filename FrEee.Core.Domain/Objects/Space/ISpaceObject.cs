@@ -1,9 +1,10 @@
 using FrEee.Modding.Abilities;
+using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Utility;
 namespace FrEee.Objects.Space;
 
-public interface ISpaceObject : IOwnableAbilityObject, IPictorial, IReferrable, IFoggable, INamed, ILocated
+public interface ISpaceObject : IOwnableAbilityObject, IPictorial, IReferrable, IFoggable, INameable, ILocated
 {
     /// <summary>
     /// Can this space object be placed in a fleet?
@@ -37,11 +38,6 @@ public interface ISpaceObject : IOwnableAbilityObject, IPictorial, IReferrable, 
     bool IsIdle { get; }
 
     /// <summary>
-    /// The name of this space object.
-    /// </summary>
-    new string Name { get; set; }
-
-    /// <summary>
     /// Resources stored on this space object.
     /// For a ship, this could include supplies.
     /// </summary>
@@ -51,4 +47,13 @@ public interface ISpaceObject : IOwnableAbilityObject, IPictorial, IReferrable, 
     /// Supply storage capacity.
     /// </summary>
     int SupplyStorage { get; }
+
+    /// <summary>
+    /// Resolves ambiguity between INamed and INameable.
+    /// </summary>
+    new string Name
+    {
+        get => ((INameable)this).Name;
+        set => ((INameable)this).Name = value;
+    }
 }

@@ -1,9 +1,10 @@
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Technology;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Loaders;
+using FrEee.Vehicles;
+using FrEee.Utility;
+using FrEee.Vehicles.Types;
 
 namespace FrEee;
 
@@ -19,37 +20,25 @@ public static class TestUtilities
 	public static Empire CreateEmpire(string name = "Galactic Empire")
 	 => new() { Name = name };
 
-	public static IHull<T> CreateHull<T>(string name)
-		where T : IVehicle
+	public static IHull CreateHull(VehicleTypes vehicleType, string name = "Generic Hull")
 	{
-		Hull<T> hull = new()
-		{
-			Name = name,
-			ModID = name,
-			ThrustPerMove = 1
-		};
+		var hull = DIRoot.Hulls.Build(vehicleType);
+		hull.Name = name;
+		hull.ModID = name;
+		hull.ThrustPerMove = 1;
 		Mod.Current.Hulls.Add(hull);
 		return hull;
 	}
 
-	public static IHull<T> CreateHull<T>(this IDesign<T> design, string? name = null)
-		where T : IVehicle
+	public static IDesign CreateDesign(Empire owner, IHull hull, string name = "Generic Design")
 	{
-		var hull = CreateHull<T>(name ?? design.BaseName);
-		design.Hull = hull;
-		return hull;
+		var design = DIRoot.Designs.Build(hull);
+		design.BaseName = name;
+		design.Owner = owner;
+		return design;
 	}
 
-	public static IDesign<T> CreateDesign<T>(Empire owner, string name = "Generic Design")
-		where T : IVehicle
-		=> new Design<T>()
-		{
-			BaseName = name,
-			Owner = owner,
-		};
-
-	public static T CreateVehicle<T>(IDesign<T> design, Empire owner)
-		where T : IVehicle
+	public static IVehicle CreateVehicle(IDesign design, Empire owner)
 	{
 		var vehicle = design.Instantiate();
 		vehicle.Owner = owner;

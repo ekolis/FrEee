@@ -9,7 +9,7 @@ namespace FrEee.Objects.Space;
 /// <summary>
 /// An object that can move about in space and/or receive orders.
 /// </summary>
-public interface IMobileSpaceObject : ICombatSpaceObject, IOrderable, IContainable<Fleet>, IDamageableReferrable
+public interface IMobileSpaceObject : ICombatSpaceObject, IOrderable, IContainable<Fleet>, IDamageableReferrable, IHasMaintenanceCost
 {
 	new Fleet Container { get; set; }
 
@@ -17,8 +17,6 @@ public interface IMobileSpaceObject : ICombatSpaceObject, IOrderable, IContainab
 	/// The Dijkstra map used for pathfinding.
 	/// </summary>
 	IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> DijkstraMap { get; set; }
-
-	ResourceQuantity MaintenanceCost { get; }
 	int MovementRemaining { get; set; }
 	new Sector Sector { get; set; }
 
@@ -36,6 +34,7 @@ public interface IMobileSpaceObject : ICombatSpaceObject, IOrderable, IContainab
 	void SpendTime(double timeElapsed);
 }
 
+// HACK: find a way to get rid of this generic interface, it's stupid...
 public interface IMobileSpaceObject<T> : IMobileSpaceObject where T : IMobileSpaceObject<T>
 {
 	//new IList<IOrder> Orders { get; }

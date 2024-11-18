@@ -1,10 +1,10 @@
-﻿using FrEee.Objects.Civilization;
+﻿using System;
+using System.Collections.Generic;
+using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.LogMessages;
-using System;
-using System.Collections.Generic;
 
 namespace FrEee.Gameplay.Commands.Orders;
 

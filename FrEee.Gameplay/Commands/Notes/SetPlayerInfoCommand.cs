@@ -1,7 +1,7 @@
-﻿using FrEee.Objects.Civilization;
-using FrEee.Objects.GameState;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.GameState;
 
 namespace FrEee.Gameplay.Commands.Notes;
 

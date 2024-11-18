@@ -1,15 +1,15 @@
 ﻿using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Serialization;
 using FrEee.Extensions;
 using System.Collections.Generic;
 using System.Linq;
-using FrEee.Objects.Technology;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
+using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.Objects.Civilization.Orders;
 
@@ -112,15 +112,14 @@ public class ActivateAbilityOrder : IOrder
                 {
                     executor.SupplyRemaining += Ability.Value1.Value.ToInt();
                     // TODO - normalize supplies on other stuff, not just space vehicles
-                    if (executor is SpaceVehicle)
-                        (executor as SpaceVehicle).NormalizeSupplies();
+                    if (executor is ISpaceVehicle sv)
+                        sv.NormalizeSupplies();
                     Owner.RecordLog(executor, executor + " has activated its emergency resupply pod and now has " + executor.SupplyRemaining.ToUnitString(true) + " supplies.", LogMessageType.Generic);
                 }
                 else if (Ability.Rule.Matches("Emergency Energy"))
                 {
-                    if (executor is Vehicle)
+                    if (executor is ISpaceVehicle v)
                     {
-                        var v = executor as Vehicle;
                         v.EmergencySpeed += Ability.Value1.Value.ToInt();
                         Owner.RecordLog(executor, executor + " has activated its emergency propulsion and has had its speed boosted to " + v.StrategicSpeed + " temporarily.", LogMessageType.Generic);
                     }

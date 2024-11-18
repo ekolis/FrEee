@@ -10,12 +10,10 @@ using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 
-namespace FrEee.Objects.Vehicles;
+namespace FrEee.Vehicles.Types;
 
-/// <summary>
-/// A space vehicle which can contain cargo and is not a unit.
-/// </summary>
-public abstract class MajorSpaceVehicle : SpaceVehicle, ICargoTransferrer, IConstructor
+public abstract class MajorSpaceVehicle
+	: SpaceVehicle, IMajorSpaceVehicle
 {
 
 	protected MajorSpaceVehicle() : base()
@@ -151,7 +149,7 @@ public abstract class MajorSpaceVehicle : SpaceVehicle, ICargoTransferrer, ICons
 		}
 	}
 
-	public override bool IsIdle => base.IsIdle || (ConstructionQueue != null && ConstructionQueue.IsIdle);
+	public override bool IsIdle => base.IsIdle || ConstructionQueue != null && ConstructionQueue.IsIdle;
 
 	public override bool FillsCombatTile => true;
 }

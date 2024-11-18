@@ -1,5 +1,4 @@
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Vehicles;
 using FrEee.Processes;
 using FrEee.Utility;
 using FrEee.Extensions;
@@ -16,6 +15,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
 using FrEee.Root;
+using FrEee.Vehicles;
 
 namespace FrEee.UI.WinForms;
 
@@ -180,7 +180,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 				MessageBox.Show(plrfile + " does not exist. You will need to start your turn from the beginning.");
 		}
 
-		Design.ImportFromLibrary();
+		DIRoot.Designs.ImportFromLibrary();
 
 		var form = new MainGameForm(false, true);
 		form.KeyPreview = true;

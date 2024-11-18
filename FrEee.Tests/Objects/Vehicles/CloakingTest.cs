@@ -6,7 +6,8 @@ using FrEee.Modding.Loaders;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
-using FrEee.Objects.Technology;
+using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 using NUnit.Framework;
 
 namespace FrEee.Objects.Vehicles;
@@ -19,7 +20,7 @@ public class CloakingTest
 	/// <summary>
 	/// The ship that is looking for an enemy ship.
 	/// </summary>
-	private static Ship destroyer;
+	private static IMajorSpaceVehicle destroyer;
 
 	/// <summary>
 	/// They're controlling the submarine.
@@ -34,7 +35,7 @@ public class CloakingTest
 	/// <summary>
 	/// The ship that is hiding.
 	/// </summary>
-	private static Ship submarine;
+	private static IMajorSpaceVehicle submarine;
 
 	/// <summary>
 	/// Where the ships are.
@@ -56,17 +57,17 @@ public class CloakingTest
 
 		// initialize ships
 		Assert.IsNotNull(Mod.Current);
-		var dsDesign = new Design<Ship>();
+		var dsHull = TestUtilities.CreateHull(VehicleTypes.Ship);
+		var dsDesign = TestUtilities.CreateDesign(seekers, dsHull);
 		dsDesign.BaseName = "TestDestroyer";
-		dsDesign.CreateHull();
 		dsDesign.Owner = seekers;
-		destroyer = dsDesign.Instantiate();
+		destroyer = (IMajorSpaceVehicle)dsDesign.Instantiate();
 		destroyer.Owner = seekers;
-		var subDesign = new Design<Ship>();
+		var subHull = TestUtilities.CreateHull(VehicleTypes.Ship);
+		var subDesign = TestUtilities.CreateDesign(seekers, subHull);
 		subDesign.BaseName = "TestSubmarine";
-		subDesign.CreateHull();
 		subDesign.Owner = hiders;
-		submarine = subDesign.Instantiate();
+		submarine = (IMajorSpaceVehicle)subDesign.Instantiate();
 		submarine.Owner = hiders;
 	}
 

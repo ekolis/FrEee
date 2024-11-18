@@ -1,7 +1,6 @@
 ﻿
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
 using FrEee.Utility;
 using FrEee.Extensions;
 using FrEee.UI.WinForms.Controls;
@@ -14,6 +13,8 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Fleets;
+using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -146,17 +147,17 @@ public partial class FleetTransferForm : GameForm
 		var vehicles = new HashSet<IVehicle>();
 
 		// find vehicles in sector that are not fleets
-		foreach (var v in sector.SpaceObjects.OfType<SpaceVehicle>().OwnedBy(Empire.Current))
+		foreach (var v in sector.SpaceObjects.OfType<ISpaceVehicle>().OwnedBy(Empire.Current))
 			vehicles.Add(v);
 
 		// add vehicles that are being removed from fleets (but not fleets themselves, those go in the fleets tree)
-		foreach (var v in newCommands.OfType<ILeaveFleetCommand>().Select(c => c.Executor).OfType<SpaceVehicle>())
+		foreach (var v in newCommands.OfType<ILeaveFleetCommand>().Select(c => c.Executor).OfType<ISpaceVehicle>())
 			vehicles.Add(v);
-		foreach (var v in newCommands.OfType<IDisbandFleetCommand>().SelectMany(c => c.Executor.Vehicles.OfType<SpaceVehicle>()))
+		foreach (var v in newCommands.OfType<IDisbandFleetCommand>().SelectMany(c => c.Executor.Vehicles.OfType<ISpaceVehicle>()))
 			vehicles.Add(v);
 
 		// remove vehicles that are being added to fleets
-		foreach (var v in newCommands.OfType<IJoinFleetCommand>().Select(c => c.Executor).OfType<SpaceVehicle>())
+		foreach (var v in newCommands.OfType<IJoinFleetCommand>().Select(c => c.Executor).OfType<ISpaceVehicle>())
 			vehicles.Remove(v);
 
 		// make a tree of vehicles
@@ -444,9 +445,9 @@ public partial class FleetTransferForm : GameForm
 		// show report if you right click
 		if (e.Button == MouseButtons.Right)
 		{
-			if (e.Node.Tag is SpaceVehicle)
+			if (e.Node.Tag is ISpaceVehicle)
 			{
-				var v = e.Node.Tag as SpaceVehicle;
+				var v = e.Node.Tag as ISpaceVehicle;
 				this.ShowPopupForm(new SpaceVehicleReport(v), v.Name);
 			}
 			else if (e.Node.Tag is Fleet)
@@ -464,8 +465,8 @@ public partial class FleetTransferForm : GameForm
 
 	private void treeFleets_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
 	{
-		if (e.Node.Tag is SpaceVehicle)
-			RemoveFromFleet(e.Node.Tag as SpaceVehicle);
+		if (e.Node.Tag is ISpaceVehicle)
+			RemoveFromFleet(e.Node.Tag as ISpaceVehicle);
 		else if (e.Node.Tag is Fleet)
 		{
 			// if it's a root fleet, disband it, otherwise remove it
@@ -482,9 +483,9 @@ public partial class FleetTransferForm : GameForm
 		// show report if you right click
 		if (e.Button == MouseButtons.Right)
 		{
-			if (e.Node.Tag is SpaceVehicle)
+			if (e.Node.Tag is ISpaceVehicle)
 			{
-				var v = e.Node.Tag as SpaceVehicle;
+				var v = e.Node.Tag as ISpaceVehicle;
 				this.ShowPopupForm(new SpaceVehicleReport(v), v.Name);
 			}
 			else if (e.Node.Tag is Fleet)

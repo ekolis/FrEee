@@ -19,6 +19,9 @@
 		<ProjectReference Include="..\FrEee.Processes\FrEee.Processes.csproj">
 		  <PrivateAssets>all</PrivateAssets>
 		</ProjectReference>
+		<ProjectReference Include="..\FrEee.Vehicles\FrEee.Vehicles.csproj">
+		  <PrivateAssets>all</PrivateAssets>
+        </ProjectReference>
 	</ItemGroup>
 
 	<PropertyGroup>

@@ -1,6 +1,5 @@
 ﻿using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
 using FrEee.Extensions;
 using FrEee.UI.WinForms.Controls;
 using FrEee.UI.WinForms.Interfaces;
@@ -11,6 +10,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Combat.Events;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -32,7 +32,7 @@ public partial class BattleReplayForm : GameForm, IBindable<IBattle>
 		{
 			selectedCombatant = value;
 			reportPanel.Controls.Clear();
-			if (value is SpaceVehicle v)
+			if (value is ISpaceVehicle v)
 				reportPanel.Controls.Add(new SpaceVehicleReport(v) { Dock = DockStyle.Fill });
 			else if (value is Planet p)
 				reportPanel.Controls.Add(new PlanetReport(p) { Dock = DockStyle.Fill });

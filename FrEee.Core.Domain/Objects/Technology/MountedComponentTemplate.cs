@@ -1,6 +1,5 @@
 using FrEee.Objects.Civilization;
 using FrEee.Processes.Combat;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
@@ -13,6 +12,7 @@ using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
 using FrEee.Objects.Space;
+using FrEee.Vehicles;
 
 namespace FrEee.Objects.Technology;
 
@@ -274,7 +274,7 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityOb
 	{
 		get
 		{
-			var design = Container ?? Design.Create(Mod.Current.Hulls.FirstOrDefault(h => ComponentTemplate.VehicleTypes.HasFlag(h.VehicleType)));
+			var design = Container ?? DIRoot.Designs.Build(Mod.Current.Hulls.FirstOrDefault(h => ComponentTemplate.VehicleTypes.HasFlag(h.VehicleType)));
 			var empire = Container == null ? Empire.Current : Container.Owner;
 			return new Dictionary<string, object>
 			{

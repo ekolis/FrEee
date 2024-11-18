@@ -2,7 +2,6 @@ using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
 using FrEee.Extensions;
+using FrEee.Vehicles;
 
 namespace FrEee.Modding.Abilities;
 
@@ -49,7 +49,7 @@ public static class Extensions
 	/// </summary>
 	/// <param name="obj"></param>
 	/// <returns></returns>
-	public static IDictionary<Ability, IAbilityObject> ActivatableAbilities(this Vehicle v)
+	public static IDictionary<Ability, IAbilityObject> ActivatableAbilities(this IVehicle v)
 	{
 		var dict = new Dictionary<Ability, IAbilityObject>();
 		foreach (var a in v.Hull.Abilities)
@@ -96,10 +96,10 @@ public static class Extensions
 	/// <returns></returns>
 	public static IDictionary<Ability, IAbilityObject> ActivatableAbilities(this IAbilityObject o)
 	{
-		if (o is Vehicle)
-			return ((Vehicle)o).ActivatableAbilities();
-		if (o is Planet)
-			return ((Planet)o).ActivatableAbilities();
+		if (o is IVehicle v)
+			return v.ActivatableAbilities();
+		if (o is Planet p)
+			return p.ActivatableAbilities();
 
 		var dict = new Dictionary<Ability, IAbilityObject>();
 		foreach (var a in o.Abilities())

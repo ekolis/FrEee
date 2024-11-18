@@ -1,7 +1,7 @@
-﻿using FrEee.Objects.Civilization;
+﻿using System.Collections.Generic;
+using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
-using System.Collections.Generic;
 
 namespace FrEee.Gameplay.Commands.Fleets;
 

@@ -13,7 +13,6 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.Civilization.Construction;
-using FrEee.Objects.Vehicles;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
@@ -21,6 +20,7 @@ using FrEee.Modding.Templates;
 using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Orders;
 using FrEee.Gameplay.Commands.Designs;
+using FrEee.Vehicles;
 
 namespace FrEee.UI.WinForms.Forms;
 

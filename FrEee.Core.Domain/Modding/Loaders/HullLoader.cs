@@ -1,6 +1,9 @@
-﻿using FrEee.Objects.Technology;
-using FrEee.Objects.Vehicles;
+﻿using FrEee.Extensions;
+using FrEee.Objects.Technology;
 using FrEee.Utility;
+using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,46 +25,17 @@ public class HullLoader : DataFileLoader
 	{
 		foreach (var rec in DataFile.Records)
 		{
-			IHull<IVehicle> hull;
+			IHull hull;
 			var hullname = rec.Get<string>("Name", null);
 			var hulltype = rec.Get<string>("Vehicle Type", null);
-			switch (hulltype)
+			try
 			{
-				case "Ship":
-					hull = new Hull<Ship>();
-					break;
-
-				case "Base":
-					hull = new Hull<Base>();
-					break;
-
-				case "Fighter":
-					hull = new Hull<Fighter>();
-					break;
-
-				case "Satellite":
-					hull = new Hull<Satellite>();
-					break;
-
-				case "Troop":
-					hull = new Hull<Troop>();
-					break;
-
-				case "Drone":
-					hull = new Hull<Drone>();
-					break;
-
-				case "Mine":
-					hull = new Hull<Mine>();
-					break;
-
-				case "Weapon Platform":
-					hull = new Hull<WeaponPlatform>();
-					break;
-
-				default:
-					Mod.Errors.Add(new DataParsingException("Invalid vehicle type \"" + hulltype + "\" specified for " + hullname + " hull.", Mod.CurrentFileName, rec));
-					continue;
+				hull = DIRoot.Hulls.Build(Parser.ParseEnum<VehicleTypes>(hulltype));
+			}
+			catch (InvalidOperationException ex)
+			{
+				Mod.Errors.Add(new DataParsingException("Invalid vehicle type \"" + hulltype + "\" specified for " + hullname + " hull.", Mod.CurrentFileName, rec));
+				continue;
 			}
 			hull.TemplateParameters = rec.Parameters;
 			hull.ModID = rec.Get<string>("ID", hull);

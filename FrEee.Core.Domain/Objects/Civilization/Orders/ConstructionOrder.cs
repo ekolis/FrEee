@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Technology;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;
 using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.Objects.Civilization.Orders;
 
@@ -160,15 +160,14 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
         if (!errors.Any())
         {
             // create item if needed
-            if (Item == null)
+            if (Item is null)
             {
                 Item = Template.Instantiate();
                 if (!(Item is Facility))
                     Item.Owner = queue.Owner;
-                if (Item is SpaceVehicle)
+                if (Item is ISpaceVehicle sv)
                 {
                     // space vehicles need their supplies filled up
-                    var sv = (SpaceVehicle)(IConstructable)Item;
                     sv.SupplyRemaining = sv.SupplyStorage;
                 }
             }

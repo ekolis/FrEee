@@ -11,16 +11,17 @@ using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
 
-namespace FrEee.Objects.Vehicles;
+namespace FrEee.Vehicles.Types;
 
 /// <summary>
 /// A vehicle which operates in space.
 /// </summary>
 /// <typeparam name="T"></typeparam>
 [Serializable]
-public abstract class SpaceVehicle : Vehicle, IMobileSpaceObject<SpaceVehicle>
+public abstract class SpaceVehicle
+	: Vehicle, ISpaceVehicle
 {
-	public SpaceVehicle()
+	protected SpaceVehicle()
 	{
 		Orders = new List<IOrder>();
 		StoredResources = new ResourceQuantity();
@@ -255,7 +256,7 @@ public abstract class SpaceVehicle : Vehicle, IMobileSpaceObject<SpaceVehicle>
 	/// </summary>
 	public double TimePerMove
 	{
-		get { return 1.0 / (double)StrategicSpeed; }
+		get { return 1.0 / StrategicSpeed; }
 	}
 
 	/// <summary>
@@ -274,7 +275,7 @@ public abstract class SpaceVehicle : Vehicle, IMobileSpaceObject<SpaceVehicle>
 	{
 		if (!(order is IOrder))
 			throw new Exception("Can't add a " + order.GetType() + " to a space vehicle's orders.");
-		Orders.Add((IOrder)order);
+		Orders.Add(order);
 	}
 
 	/// <summary>
@@ -307,7 +308,7 @@ public abstract class SpaceVehicle : Vehicle, IMobileSpaceObject<SpaceVehicle>
 
 	public bool ExecuteOrders()
 	{
-		return this.ExecuteMobileSpaceObjectOrders();
+		return this.ExecuteMobileSpaceObjectOrders<ISpaceVehicle>();
 	}
 
 	public override bool IsObsoleteMemory(Empire emp)
@@ -321,7 +322,7 @@ public abstract class SpaceVehicle : Vehicle, IMobileSpaceObject<SpaceVehicle>
 	{
 		if (order != null && !(order is IOrder))
 			throw new Exception("Can't rearrange a " + order.GetType() + " in a space vehicle's orders.");
-		var o = (IOrder)order;
+		var o = order;
 		var newpos = Orders.IndexOf(o) + delta;
 		Orders.Remove(o);
 		if (newpos < 0)
@@ -357,7 +358,7 @@ public abstract class SpaceVehicle : Vehicle, IMobileSpaceObject<SpaceVehicle>
 	{
 		if (order != null && !(order is IOrder))
 			return; // order can't exist here anyway
-		Orders.Remove((IOrder)order);
+		Orders.Remove(order);
 	}
 
 	/// <summary>

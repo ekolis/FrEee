@@ -9,9 +9,9 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using FrEee.Objects.GameState;
-using FrEee.Objects.Vehicles;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.Modding.Templates;
 

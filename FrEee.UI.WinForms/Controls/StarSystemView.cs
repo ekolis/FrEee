@@ -1,6 +1,5 @@
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
-using FrEee.Objects.Vehicles;
 using FrEee.Extensions;
 using System;
 using System.Drawing;
@@ -8,6 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.UI.WinForms.Controls;
 
@@ -156,7 +156,7 @@ public partial class StarSystemView : Control
 					if (largest != null)
 					{
 						Image pic;
-						if (largest is SpaceVehicle)
+						if (largest is ISpaceVehicle)
 							pic = largest.Icon.Resize((int)drawsize); // spacecraft get the icon, not the portrait, drawn, since the icon is topdown
 						else
 							pic = largest.Portrait.Resize((int)drawsize);

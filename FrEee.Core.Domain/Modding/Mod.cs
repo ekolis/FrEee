@@ -14,6 +14,7 @@ using FrEee.Objects.GameState;
 using FrEee.Processes.AI;
 using FrEee.Modding.Abilities;
 using FrEee.Modding.Scripts;
+using FrEee.Vehicles;
 
 namespace FrEee.Modding;
 

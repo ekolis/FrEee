@@ -8,6 +8,9 @@ using FrEee.Modding.Templates;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Technology;
+using FrEee.Processes.Combat;
+using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 using NUnit.Framework;
 
 namespace FrEee.Objects.Vehicles;
@@ -35,7 +38,7 @@ public class DamageTest
 	/// <summary>
 	/// The ship that is taking damage.
 	/// </summary>
-	private static Ship ship;
+	private static IMajorSpaceVehicle ship;
 
 	[OneTimeSetUp]
 	public static void ClassInit()
@@ -60,9 +63,9 @@ public class DamageTest
 		engineTemplate.Durability = 10;
 
 		// initialize ship's design
-		var design = new Design<Ship>();
+		var hull = TestUtilities.CreateHull(VehicleTypes.Ship);
+		var design = TestUtilities.CreateDesign(empire, hull);
 		design.BaseName = "Punching Bag";
-		var hull = new Hull<Ship>();
 		Mod.Current.AssignID(hull, new List<string>());
 		design.Hull = hull;
 		design.Hull.ThrustPerMove = 1;
@@ -73,7 +76,7 @@ public class DamageTest
 		// TODO - account for C&C and supply requirements once those are a thing
 
 		// initialize ship
-		ship = design.Instantiate();
+		ship = (IMajorSpaceVehicle)design.Instantiate();
 		ship.Owner = empire;
 	}
 
@@ -98,7 +101,7 @@ public class DamageTest
 		}
 	}
 
-	private int GetExpectedSpeed(Ship ship)
+	private int GetExpectedSpeed(IMajorSpaceVehicle ship)
 	{
 		// add up thrust of all working engines, and divide by hull mass (engines per move, not tonnage)
 		// HACK - assumes standard ability rules!

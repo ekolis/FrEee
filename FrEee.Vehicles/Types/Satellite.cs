@@ -1,20 +1,20 @@
-using FrEee.Extensions;
-using FrEee.Modding.Abilities;
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Civilization.CargoStorage;
-using FrEee.Objects.GameState;
-using FrEee.Objects.Space;
-using FrEee.Processes.Combat;
+using FrEee.Extensions;
 using System;
+using FrEee.Objects.Space;
+using FrEee.Objects.GameState;
+using FrEee.Objects.Civilization.CargoStorage;
+using FrEee.Processes.Combat;
+using FrEee.Modding.Abilities;
 
-namespace FrEee.Objects.Vehicles;
+namespace FrEee.Vehicles.Types;
 
 [Serializable]
-public class Mine : SpaceVehicle, IUnit
+public class Satellite : SpaceVehicle, IUnit
 {
 	public override AbilityTargets AbilityTarget
 	{
-		get { return AbilityTargets.Mine; }
+		get { return AbilityTargets.Satellite; }
 	}
 
 	public override bool CanWarp
@@ -24,7 +24,7 @@ public class Mine : SpaceVehicle, IUnit
 
 	ICargoContainer IContainable<ICargoContainer>.Container
 	{
-		get { return CommonExtensions.FindContainer(this); }
+		get { return this.FindContainer(); }
 	}
 
 	public override bool ParticipatesInGroundCombat
@@ -44,20 +44,16 @@ public class Mine : SpaceVehicle, IUnit
 
 	public override WeaponTargets WeaponTargetType
 	{
-		// mines cannot be targeted in space combat
-		get { return WeaponTargets.Invalid; }
+		get { return WeaponTargets.Satellite; }
 	}
 
-	/// <summary>
-	/// Mines are invisible to everyone except their owner.
-	/// </summary>
-	/// <param name="emp"></param>
-	/// <returns></returns>
 	public override Visibility CheckVisibility(Empire emp)
 	{
-		if (emp == Owner)
-			return Visibility.Owned;
-		return Visibility.Unknown;
+		var vis = base.CheckVisibility(emp);
+		var sobj = Container as ISpaceObject;
+		if (vis < Visibility.Scanned && sobj != null && sobj.HasVisibility(emp, Visibility.Scanned))
+			vis = Visibility.Scanned;
+		return vis;
 	}
 
 	public override void Place(ISpaceObject target)
@@ -66,4 +62,8 @@ public class Mine : SpaceVehicle, IUnit
 	}
 
 	public override bool FillsCombatTile => false;
+
+	public bool CanInvadeAndPoliceColonies => false;
+
+	public bool CanFireIntoSpaceFromPlanetaryCargo => false;
 }

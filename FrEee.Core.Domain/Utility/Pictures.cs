@@ -1,7 +1,6 @@
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
-using FrEee.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Extensions;
@@ -14,6 +13,8 @@ using System.Linq;
 using System.Reflection;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Setup;
+using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.Utility;
 
@@ -261,6 +262,12 @@ public static class Pictures
 		return GetGenericImage(typeof(T), scale);
 	}
 
+	public static Image GetGenericImage(VehicleTypes vt, double scale = 1.0)
+	{
+		// TODO: generic images per vehicle type
+		return GetGenericImage<IVehicle>(scale);
+	}
+
 	/// <summary>
 	/// Gets a generic image for a type of object.
 	/// </summary>
@@ -416,13 +423,13 @@ public static class Pictures
 		var paths = new List<string>();
 
 		string imageName = "Fleet";
-		if (fleet.LeafVehicles.All(v => v is Fighter))
+		if (fleet.LeafVehicles.All(v => v.VehicleType == VehicleTypes.Fighter))
 			imageName = "FighterGroup";
-		else if (fleet.LeafVehicles.All(v => v is Satellite))
+		else if (fleet.LeafVehicles.All(v => v.VehicleType == VehicleTypes.Satellite))
 			imageName = "SatelliteGroup";
-		else if (fleet.LeafVehicles.All(v => v is Drone))
+		else if (fleet.LeafVehicles.All(v => v.VehicleType == VehicleTypes.Drone))
 			imageName = "DroneGroup";
-		else if (fleet.LeafVehicles.All(v => v is Mine))
+		else if (fleet.LeafVehicles.All(v => v.VehicleType == VehicleTypes.Mine))
 			imageName = "MineGroup";
 
 		if (Mod.Current.RootPath != null)
@@ -776,13 +783,13 @@ public static class Pictures
 		var paths = new List<string>();
 
 		string imageName = "Fleet";
-		if (fleet.LeafVehicles.All(v => v is Fighter))
+		if (fleet.LeafVehicles.All(v => v.VehicleType == VehicleTypes.Fighter))
 			imageName = "FighterGroup";
-		else if (fleet.LeafVehicles.All(v => v is Satellite))
+		else if (fleet.LeafVehicles.All(v => v.VehicleType == VehicleTypes.Satellite))
 			imageName = "SatelliteGroup";
-		else if (fleet.LeafVehicles.All(v => v is Drone))
+		else if (fleet.LeafVehicles.All(v => v.VehicleType == VehicleTypes.Drone))
 			imageName = "DroneGroup";
-		else if (fleet.LeafVehicles.All(v => v is Mine))
+		else if (fleet.LeafVehicles.All(v => v.VehicleType == VehicleTypes.Mine))
 			imageName = "MineGroup";
 
 		if (Mod.Current.RootPath != null)
@@ -867,47 +874,38 @@ public static class Pictures
 		{
 			case VehicleTypes.Base:
 				hullname = "BattleStation";
-				hulltype = typeof(Base);
 				break;
 
 			case VehicleTypes.Drone:
 				hullname = "Drone";
-				hulltype = typeof(Drone);
 				break;
 
 			case VehicleTypes.Fighter:
 				hullname = "FighterMedium";
-				hulltype = typeof(Fighter);
 				break;
 
 			case VehicleTypes.Mine:
 				hullname = "Mine";
-				hulltype = typeof(Mine);
 				break;
 
 			case VehicleTypes.Satellite:
 				hullname = "Satellite";
-				hulltype = typeof(Satellite);
 				break;
 
 			case VehicleTypes.Ship:
 				hullname = "Cruiser";
-				hulltype = typeof(Ship);
 				break;
 
 			case VehicleTypes.Troop:
 				hullname = "TroopMedium";
-				hulltype = typeof(Troop);
 				break;
 
 			case VehicleTypes.WeaponPlatform:
 				hullname = "WeapPlatformMedium";
-				hulltype = typeof(WeaponPlatform);
 				break;
 
 			default:
 				hullname = "Fighter";
-				hulltype = typeof(Fighter);
 				break;
 		}
 
@@ -919,7 +917,7 @@ public static class Pictures
 		paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, "Portrait_" + hullname));
 		paths.Add(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + hullname)); // for SE4 shipset compatibility
 
-		return GetCachedImage(paths) ?? GetGenericImage(hulltype);
+		return GetCachedImage(paths) ?? GetGenericImage(vt);
 	}
 
 	/// <summary>

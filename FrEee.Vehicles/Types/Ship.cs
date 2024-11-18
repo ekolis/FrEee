@@ -2,7 +2,7 @@ using FrEee.Modding.Abilities;
 using FrEee.Processes.Combat;
 using System;
 
-namespace FrEee.Objects.Vehicles;
+namespace FrEee.Vehicles.Types;
 
 [Serializable]
 public class Ship : MajorSpaceVehicle

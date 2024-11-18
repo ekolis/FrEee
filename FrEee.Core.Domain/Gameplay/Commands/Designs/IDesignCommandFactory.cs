@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
-using FrEee.Objects.Vehicles;
+using FrEee.Vehicles;
 
 namespace FrEee.Gameplay.Commands.Designs;
 

@@ -227,7 +227,7 @@ public static class ChecksExtensions
 	/// <param name="sobj">The space object to check.</param>
 	/// <param name="emp">The empire to check against.</param>
 	/// <returns>The visibility level.</returns>
-	internal static Visibility CheckSpaceObjectVisibility(this ISpaceObject sobj, Empire emp)
+	public static Visibility CheckSpaceObjectVisibility(this ISpaceObject sobj, Empire emp)
 	{
 		bool hasMemory = false;
 		if (sobj.IsMemory)

@@ -1,7 +1,7 @@
 using System.Linq;
 using FrEee.Objects.GameState;
-using FrEee.Objects.Vehicles;
 using FrEee.Utility;
+using FrEee.Vehicles;
 namespace FrEee.Objects.Technology;
 
 /// <summary>

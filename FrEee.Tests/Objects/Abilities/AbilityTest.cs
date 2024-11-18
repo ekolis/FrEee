@@ -5,8 +5,8 @@ using FrEee.Modding.Templates;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
-using FrEee.Objects.Technology;
-using FrEee.Objects.Vehicles;
+using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 using NUnit.Framework;
 
 namespace FrEee.Objects.Abilities;
@@ -18,9 +18,9 @@ public class AbilityTest
 {
 	StarSystem sys;
 	Empire emp;
-	IDesign<Ship> design;
-	IHull<Ship> hull;
-	Ship ship;
+	IDesign design;
+	IHull hull;
+	IVehicle ship;
 
 	[SetUp]
 	public void SetUp()
@@ -34,8 +34,8 @@ public class AbilityTest
 
 		// create stuff
 		emp = TestUtilities.CreateEmpire();
-		design = TestUtilities.CreateDesign<Ship>(emp);
-		hull = TestUtilities.CreateHull(design);
+		hull = TestUtilities.CreateHull(VehicleTypes.Ship, design.Name);
+		design = TestUtilities.CreateDesign(emp, hull);
 		ship = TestUtilities.CreateVehicle(design, emp);
 	}
 

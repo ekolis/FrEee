@@ -15,6 +15,7 @@ using FrEee.Processes;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Combat.Grid;
 using FrEee.Utility;
+using FrEee.Vehicles;
 
 namespace FrEee.Root;
 
@@ -41,6 +42,11 @@ public static class Configuration
 		DI.RegisterSingleton<IOrderCommandFactory, OrderCommandFactory>();
 		DI.RegisterSingleton<IProjectCommandFactory, ProjectCommandFactory>();
 		DI.RegisterSingleton<IWaypointCommandFactory, WaypointCommandFactory>();
+
+		// vehicles
+		DI.RegisterSingleton<IHullFactory, HullFactory>();
+		DI.RegisterSingleton<IDesignFactory, DesignFactory>();
+		DI.RegisterSingleton<IVehicleFactory, VehicleFactory>();
 
 		// run this in the background, without awaiting it
 		DI.Run();

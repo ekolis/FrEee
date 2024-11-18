@@ -1,5 +1,4 @@
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Vehicles;
 using FrEee.Processes;
 using FrEee.Utility;
 using FrEee.Serialization;
@@ -12,6 +11,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
+using FrEee.Vehicles;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -85,7 +85,7 @@ public partial class HostConsoleForm : GameForm
 						Game.Current.CurrentEmpire = emp;
 						Game.Current.Redact();
 					}
-					Design.ImportFromLibrary();
+					DIRoot.Designs.ImportFromLibrary();
 					var form = new MainGameForm(true, false);
 					Hide();
 					this.ShowChildForm(form);

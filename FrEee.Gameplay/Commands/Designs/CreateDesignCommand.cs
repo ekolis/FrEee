@@ -1,12 +1,11 @@
-﻿using FrEee.Objects.Civilization;
-using FrEee.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FrEee.Objects.Vehicles;
+using FrEee.Extensions;
+using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.LogMessages;
-using FrEee.Gameplay.Commands.Designs;
+using FrEee.Vehicles;
 
 namespace FrEee.Gameplay.Commands.Designs;
 
@@ -16,29 +15,29 @@ namespace FrEee.Gameplay.Commands.Designs;
 [Serializable]
 public class CreateDesignCommand<T> : Command<Empire>, ICreateDesignCommand where T : IVehicle
 {
-    public CreateDesignCommand(IDesign<T> design)
-        : base(Empire.Current)
-    {
-        Design = design;
-    }
+	public CreateDesignCommand(IDesign<T> design)
+		: base(Empire.Current)
+	{
+		Design = design;
+	}
 
-    IDesign ICreateDesignCommand.Design { get { return Design; } }
+	IDesign ICreateDesignCommand.Design { get { return Design; } }
 
-    public IDesign<T> Design { get; set; }
+	public IDesign<T> Design { get; set; }
 
-    public override IEnumerable<IReferrable> NewReferrables
-    {
-        get
-        {
-            yield return Design;
-        }
-    }
+	public override IEnumerable<IReferrable> NewReferrables
+	{
+		get
+		{
+			yield return Design;
+		}
+	}
 
-    public override void Execute()
-    {
-        Design.VehiclesBuilt = 0; // in case it was tested in the simulator
-        if (Design.Warnings.Any())
-            Issuer.Log.Add(Design.CreateLogMessage("The " + Design.Name + " " + Design.VehicleTypeName + " design cannot be saved because it has warnings.", LogMessageType.Warning));
-        Issuer.KnownDesigns.Add(Design);
-    }
+	public override void Execute()
+	{
+		Design.VehiclesBuilt = 0; // in case it was tested in the simulator
+		if (Design.Warnings.Any())
+			Issuer.Log.Add(Design.CreateLogMessage("The " + Design.Name + " " + Design.VehicleTypeName + " design cannot be saved because it has warnings.", LogMessageType.Warning));
+		Issuer.KnownDesigns.Add(Design);
+	}
 }
