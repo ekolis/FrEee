@@ -14,29 +14,30 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Modding.Abilities;
 using FrEee.Gameplay.Commands.Orders;
 using FrEee.Vehicles.Types;
+using FrEee.Vehicles;
 
 namespace FrEee.UI.WinForms.Controls;
 
 /// <summary>
 /// A report on a space vehicle.
 /// </summary>
-public partial class SpaceVehicleReport : UserControl, IBindable<SpaceVehicle>
+public partial class SpaceVehicleReport : UserControl, IBindable<ISpaceVehicle>
 {
 	public SpaceVehicleReport()
 	{
 		InitializeComponent();
 	}
 
-	public SpaceVehicleReport(SpaceVehicle vehicle)
+	public SpaceVehicleReport(ISpaceVehicle vehicle)
 	{
 		InitializeComponent();
 		Vehicle = vehicle;
 	}
 
-	public SpaceVehicle Vehicle { get { return vehicle; } set { vehicle = value; Bind(); } }
-	private SpaceVehicle vehicle;
+	public ISpaceVehicle Vehicle { get { return vehicle; } set { vehicle = value; Bind(); } }
+	private ISpaceVehicle vehicle;
 
-	public void Bind(SpaceVehicle data)
+	public void Bind(ISpaceVehicle data)
 	{
 		Vehicle = data;
 		Bind();
@@ -60,7 +61,7 @@ public partial class SpaceVehicleReport : UserControl, IBindable<SpaceVehicle>
 			txtAge.BackColor = txtAge.Text == "Current" ? Color.Transparent : Color.FromArgb(64, 64, 0);
 
 			// name and stuff
-			txtName.Text = vehicle.Name;
+			txtName.Text = ((INameable)vehicle).Name;
 			txtRole.Text = vehicle.Design.Role;
 			txtClass.Text = vehicle.Design.Name;
 			txtHullSize.Text = vehicle.Design.Hull.Name + " (" + vehicle.Design.Hull.Size.Kilotons() + ")";
@@ -90,7 +91,7 @@ public partial class SpaceVehicleReport : UserControl, IBindable<SpaceVehicle>
 			// income
 			// TODO - research and intel income
 			var remoteMining = vehicle.Owner.RemoteMiners.Where(kvp => kvp.Key.Item1 == vehicle).Sum(kvp => kvp.Value);
-			var maintenance = vehicle.MaintenanceCost;
+			var maintenance = ((IVehicle)vehicle).MaintenanceCost;
 			var rawResources = vehicle.RawResourceIncome();
 			var netIncome = remoteMining + rawResources - maintenance;
 			resIncomeMin.Amount = netIncome[Resource.Minerals];

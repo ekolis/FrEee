@@ -32,7 +32,7 @@ public partial class BattleReplayForm : GameForm, IBindable<IBattle>
 		{
 			selectedCombatant = value;
 			reportPanel.Controls.Clear();
-			if (value is SpaceVehicle v)
+			if (value is ISpaceVehicle v)
 				reportPanel.Controls.Add(new SpaceVehicleReport(v) { Dock = DockStyle.Fill });
 			else if (value is Planet p)
 				reportPanel.Controls.Add(new PlanetReport(p) { Dock = DockStyle.Fill });

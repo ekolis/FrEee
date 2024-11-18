@@ -31,7 +31,7 @@ public partial class PlanetListForm : GameForm
 		//BindTabs();
 	}
 
-	private IEnumerable<SpaceVehicle> colonizers, availableColonizers;
+	private IEnumerable<ISpaceVehicle> colonizers, availableColonizers;
 
 	private IEnumerable<Planet> planets;
 
@@ -56,7 +56,7 @@ public partial class PlanetListForm : GameForm
 			MessageBox.Show("We have no colonizers capable of reaching " + p + ".");
 		}
 		var shortest = paths.WithMin(path => path.Path.Count()).First();
-		var colonizer = (MajorSpaceVehicle)shortest.Colonizer; // HACK - what if units want to colonize?
+		var colonizer = (IMajorSpaceVehicle)shortest.Colonizer; // HACK - what if units want to colonize?
 
 		// load population
 		// prefer population of breathers of target planet's atmosphere - don't load nonbreathers races if breathers are present
@@ -157,7 +157,7 @@ public partial class PlanetListForm : GameForm
 		txtBreathableOther.Text = uncolonized.Where(p => otherAtmospheres.Contains(p.Atmosphere)).Count().ToString();
 
 		// show colony ship counts
-		colonizers = Galaxy.Current.FindSpaceObjects<SpaceVehicle>(v =>
+		colonizers = Galaxy.Current.FindSpaceObjects<ISpaceVehicle>(v =>
 			v.Owner == Empire.Current &&
 			(
 				v.Abilities().Any(a => a.Rule.Name.StartsWith("Colonize Planet - "))

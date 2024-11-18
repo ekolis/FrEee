@@ -23,41 +23,6 @@ using FrEee.Vehicles.Types;
 namespace FrEee.Vehicles;
 
 /// <summary>
-/// Creates designs.
-/// </summary>
-public static class Design
-{
-	/// <summary>
-	/// Imports designs from the library into the game that aren't already in the game.
-	/// Requires a current empire. Should only be called client side.
-	/// </summary>
-	/// <returns>Copied designs imported.</returns>
-	public static IEnumerable<IDesign> ImportFromLibrary()
-	{
-		if (Empire.Current == null)
-			throw new InvalidOperationException("Can't import designs without a current empire.");
-
-		var designs = Library.Import<IDesign>(d => d.IsValidInMod && !Empire.Current.KnownDesigns.Any(d2 => d2.Equals(d))).ToArray();
-
-		designs.SafeForeach(d =>
-		{
-			d.IsNew = true;
-			d.Owner = Empire.Current;
-			d.TurnNumber = Game.Current.TurnNumber;
-			d.Iteration = Empire.Current.KnownDesigns.OwnedBy(Empire.Current).Where(x => x.BaseName == d.BaseName && x.IsUnlocked()).MaxOrDefault(x => x.Iteration) + 1; // auto assign nex available iteration
-			d.IsObsolete = d.IsObsolescent;
-			Empire.Current.KnownDesigns.Add(d); // only client side, don't need to worry about other players spying :)
-		});
-
-		return designs;
-	}
-
-	public static Design<Troop> militiaDesign;
-
-	public static Design<Troop> MilitiaDesign => militiaDesign;
-}
-
-/// <summary>
 /// A vehicle design.
 /// </summary>
 /// <typeparam name="T">The type of vehicle.</typeparam>
@@ -626,6 +591,11 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 	/// </summary>
 	private GameReference<Empire> owner { get; set; }
 
+	// TODO: make this an ability
+	public bool CanInvadeAndPoliceColonies => typeof(T).IsAssignableTo(typeof(Troop));
+
+	public bool IsSpaceVehicleDesign => typeof(T).IsAssignableTo(typeof(ISpaceVehicle));
+
 	public void AddComponent(ComponentTemplate ct, Mount m = null)
 	{
 		Components.Add(new MountedComponentTemplate(this, ct, m));
@@ -800,6 +770,8 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 		}
 		return paths;
 	}
+
+
 
 	IDesign IDesign.Upgrade()
 		=> Upgrade();

@@ -599,24 +599,21 @@ public partial class MainGameForm : GameForm
 	{
 		if (SelectedSpaceObject.Owner == Empire.Current)
 		{
-			if (SelectedSpaceObject is SpaceVehicle)
+			if (SelectedSpaceObject is ISpaceVehicle v)
 			{
-				var v = (SpaceVehicle)SelectedSpaceObject;
 				foreach (var order in v.Orders.ToArray())
 					v.RemoveOrderClientSide(order);
 				BindReport();
 			}
-			else if (SelectedSpaceObject is Fleet)
+			else if (SelectedSpaceObject is Fleet f)
 			{
-				var f = (Fleet)SelectedSpaceObject;
 				foreach (var order in f.Orders.ToArray())
 					f.RemoveOrderClientSide(order);
 				f.Orders.Clear();
 				BindReport();
 			}
-			else if (SelectedSpaceObject is Planet)
+			else if (SelectedSpaceObject is Planet p)
 			{
-				var p = (Planet)SelectedSpaceObject;
 				foreach (var order in p.Orders.ToArray())
 					p.RemoveOrderClientSide(order);
 				p.Orders.Clear();
@@ -639,9 +636,9 @@ public partial class MainGameForm : GameForm
 			return new StormReport((Storm)sobj);
 		if (sobj is WarpPoint)
 			return new WarpPointReport((WarpPoint)sobj);
-		if (sobj is SpaceVehicle)
+		if (sobj is ISpaceVehicle sv)
 		{
-			var r = new SpaceVehicleReport((SpaceVehicle)sobj);
+			var r = new SpaceVehicleReport(sv);
 			r.OrdersChanged += VehicleFleetReport_OrdersChanged;
 			return r;
 		};
@@ -714,7 +711,7 @@ public partial class MainGameForm : GameForm
 	{
 		var todos = new List<string>();
 
-		var ships = Empire.Current.OwnedSpaceObjects.OfType<SpaceVehicle>().Where(v => v.Container == null && v.StrategicSpeed > 0 && !v.Orders.Any()).Count();
+		var ships = Empire.Current.OwnedSpaceObjects.OfType<ISpaceVehicle>().Where(v => v.Container == null && v.StrategicSpeed > 0 && !v.Orders.Any()).Count();
 		if (ships == 1)
 			todos.Add("1 idle ship");
 		else if (ships > 1)
@@ -1303,7 +1300,7 @@ public partial class MainGameForm : GameForm
 			SelectTab(AddTab(highlyPopulated.First()));
 		else
 		{
-			var withManyShips = Empire.Current.OwnedSpaceObjects.OfType<SpaceVehicle>().GroupBy(g => g.StarSystem).WithMax(g => g.Count());
+			var withManyShips = Empire.Current.OwnedSpaceObjects.OfType<ISpaceVehicle>().GroupBy(g => g.StarSystem).WithMax(g => g.Count());
 			if (withManyShips.Any())
 				SelectTab(AddTab(withManyShips.First().Key));
 			else

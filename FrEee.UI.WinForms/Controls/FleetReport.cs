@@ -98,7 +98,7 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 			lstVehicleSummary.Initialize(32, 32);
 			foreach (var f in Fleet.Vehicles.OfType<Fleet>())
 				lstVehicleSummary.AddItemWithImage("Subfleets", f.Name, f, f.Icon);
-			foreach (var g in Fleet.Vehicles.OfType<SpaceVehicle>().GroupBy(v => v.Design))
+			foreach (var g in Fleet.Vehicles.OfType<ISpaceVehicle>().GroupBy(v => v.Design))
 				lstVehicleSummary.AddItemWithImage(g.Key.Role + "s", g.Count() + "x " + g.Key.Name, g.Key, g.Key.Icon);
 
 			// cargo space free
@@ -319,10 +319,10 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 				var f = (Fleet)e.Node.Tag;
 				FindForm().ShowChildForm(new FleetReport(f).CreatePopupForm(f.Name));
 			}
-			else if (e.Node.Tag is SpaceVehicle)
+			else if (e.Node.Tag is ISpaceVehicle)
 			{
-				var v = (SpaceVehicle)e.Node.Tag;
-				FindForm().ShowChildForm(new SpaceVehicleReport(v).CreatePopupForm(v.Name));
+				var v = (ISpaceVehicle)e.Node.Tag;
+				FindForm().ShowChildForm(new SpaceVehicleReport(v).CreatePopupForm(((INameable)v).Name));
 			}
 		}
 	}

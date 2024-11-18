@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Combat.Events;
 using FrEee.Vehicles.Types;
+using FrEee.Vehicles;
 
 namespace FrEee.UI.WinForms.Controls;
 
@@ -210,7 +211,7 @@ public partial class BattleView : Control
 						if (here.OfType<ISpaceObject>().Any())
 						{
 							var largest = here.OfType<ISpaceObject>().Largest();
-							if (largest is SpaceVehicle v)
+							if (largest is ISpaceVehicle v)
 								pic = v.Icon.Resize(drawsize); // spacecraft get the icon, not the portrait, drawn, since the icon is topdown
 							else
 								pic = largest.Portrait.Resize(drawsize);
@@ -226,9 +227,9 @@ public partial class BattleView : Control
 							else
 								pe.Graphics.DrawImage(pic, drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
 						}
-						if (here.OfType<Troop>().Any())
+						if (here.OfType<IUnit>().Any(q => q.CanInvadeAndPoliceColonies))
 						{
-							var largest = here.OfType<Troop>().WithMax(t => t.Hull.Size).First();
+							var largest = here.OfType<IUnit>().Where(q => q.CanInvadeAndPoliceColonies).WithMax(t => t.Hull.Size).First();
 							pic = largest.Icon.Resize(drawsize);
 							if (useSquares)
 								pe.Graphics.FillRectangle(new SolidBrush(largest.Owner?.Color ?? Color.White), drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);

@@ -68,17 +68,17 @@ public partial class RecycleForm : GameForm
 	/// <summary>
 	/// Finds all space vehicles that are selected (including units in space, but not units in cargo).
 	/// </summary>
-	private IEnumerable<SpaceVehicle> SelectedVehiclesInSpace
+	private IEnumerable<ISpaceVehicle> SelectedVehiclesInSpace
 	{
 		get
 		{
 			return treeVehicles.GetAllNodes()
 				.Where(n =>
-					n.Tag is SpaceVehicle && n.Checked)
+					n.Tag is ISpaceVehicle && n.Checked)
 				.Select(n =>
-					n.Tag as SpaceVehicle)
+					n.Tag as ISpaceVehicle)
 				.Where(v =>
-					!(v is IUnit && ((IUnit)v).Container != null))
+					!(v is IUnit unit && unit.Container != null))
 				.ExceptNull();
 		}
 	}
@@ -131,7 +131,7 @@ public partial class RecycleForm : GameForm
 			// cargo of planets
 			BindUnitsIn(p, pnode);
 		}
-		foreach (var v in Sector.SpaceObjects.OfType<SpaceVehicle>().Where(v => v.Owner == Empire.Current))
+		foreach (var v in Sector.SpaceObjects.OfType<ISpaceVehicle>().Where(v => v.Owner == Empire.Current))
 		{
 			// our space vehicles
 			var vnode = treeVehicles.AddItemWithImage(v.Name, v, v.Icon);

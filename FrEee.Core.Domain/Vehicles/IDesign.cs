@@ -25,6 +25,8 @@ public interface IDesign : INamed, IPictorial, IOwnableAbilityObject, IConstruct
 	/// </summary>
 	string BaseName { get; set; }
 
+	bool CanInvadeAndPoliceColonies { get; }
+
 	int CargoCapacity { get; }
 
 	int CargoStorage { get; }
@@ -58,6 +60,8 @@ public interface IDesign : INamed, IPictorial, IOwnableAbilityObject, IConstruct
 	/// Note that foreign designs will never be obsoleted, since you don't know when their owner obsoleted them.
 	/// </summary>
 	new bool IsObsolete { get; set; }
+
+	bool IsSpaceVehicleDesign { get; }
 
 	/// <summary>
 	/// Is this design valid in the current mod? Or is it using techs from other mods?

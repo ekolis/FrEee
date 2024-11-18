@@ -109,8 +109,8 @@ public partial class DiplomacyForm : GameForm
 				package.TreatyClauses.Remove((Clause)node.Tag);
 			else if (node.Tag is Planet)
 				package.Planets.Remove((Planet)node.Tag);
-			else if (node.Tag is Vehicle)
-				package.Vehicles.Remove((Vehicle)node.Tag);
+			else if (node.Tag is IVehicle)
+				package.Vehicles.Remove((IVehicle)node.Tag);
 			else if (node.Tag is KeyValuePair<Resource, int>)
 			{
 				var kvp = (KeyValuePair<Resource, int>)node.Tag;
@@ -389,7 +389,7 @@ public partial class DiplomacyForm : GameForm
 		// sort vehicles descending by size, then alphabetically
 		// no trading units that are in cargo
 		var vehiclesNode = tree.AddItemWithImage("Vehicles", "Vehicles", Pictures.GetVehicleTypeImage(emp.ShipsetPath, VehicleTypes.Ship));
-		foreach (var v in emp.OwnedSpaceObjects.OfType<SpaceVehicle>().Where(v => !package.Vehicles.Contains(v) && !(v is IUnit && ((IUnit)v).Container is ISpaceObject)).OrderByDescending(v => v.Design.Hull.Size).ThenBy(v => v.Name))
+		foreach (var v in emp.OwnedSpaceObjects.OfType<ISpaceVehicle>().Where(v => !package.Vehicles.Contains(v) && !(v is IUnit && ((IUnit)v).Container is ISpaceObject)).OrderByDescending(v => v.Design.Hull.Size).ThenBy(v => v.Name))
 			vehiclesNode.AddItemWithImage(v.Name, v, v.Icon);
 
 		// resources
@@ -478,7 +478,7 @@ public partial class DiplomacyForm : GameForm
 			}
 			else if (type == "Vehicles")
 			{
-				var v = (Vehicle)node.Tag;
+				var v = (IVehicle)node.Tag;
 				package.Vehicles.Add(v);
 			}
 			else if (type == "Resources")

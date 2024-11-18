@@ -15,7 +15,7 @@ namespace FrEee.Vehicles;
 /// <summary>
 /// A space or ground vehicle.
 /// </summary>
-public interface IVehicle : IConstructable, IOwnableAbilityObject, IReferrable, IDamageable, ICombatant, IRecyclable, IIncomeProducer, IUpgradeable<IVehicle>, INameable
+public interface IVehicle : IConstructable, IOwnableAbilityObject, IReferrable, IDamageable, ICombatant, IRecyclable, IIncomeProducer, IUpgradeable<IVehicle>, INameable, IHasMaintenanceCost
 {
 	[DoNotSerialize(false)]
 	new IList<Component> Components { get; }
@@ -36,14 +36,14 @@ public interface IVehicle : IConstructable, IOwnableAbilityObject, IReferrable, 
 	VehicleTypes VehicleType => Hull.VehicleType;
 
 	/// <summary>
-	/// Cost to maintain this vehicle per turn.
-	/// </summary>
-	ResourceQuantity MaintenanceCost { get; }
-
-	/// <summary>
 	/// Does this vehicle detonate to inflict damage on enemies that enter its sector?
 	/// (i.e. in stock, is it a mine?)
 	/// </summary>
 	// TODO: make this an ability on hulls and/or components
 	bool DetonatesWhenEnemiesEnterSector { get; }
+
+	/// <summary>
+	/// Does this vehicle belong to the current empire?
+	/// </summary>
+	bool IsOurs { get; }
 }

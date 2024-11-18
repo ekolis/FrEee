@@ -166,7 +166,8 @@ public partial class CombatSimulatorForm : GameForm
 		}
 		if (IsGroundCombat)
 		{
-			if (!(dsn is IDesign<Troop>))
+			// TODO: weapon platforms in ground combat?
+			if (!(dsn.CanInvadeAndPoliceColonies))
 			{
 				MessageBox.Show("Only troop designs can be added to the vehicle list for ground combat.");
 				return;
@@ -174,7 +175,7 @@ public partial class CombatSimulatorForm : GameForm
 		}
 		else
 		{
-			if (!(dsn is IDesign<SpaceVehicle>))
+			if (!(dsn.IsSpaceVehicleDesign))
 			{
 				MessageBox.Show("Only space vehicle designs can be added to the vehicle list for space combat.");
 				return;
@@ -184,15 +185,15 @@ public partial class CombatSimulatorForm : GameForm
 		// need to set owner *after* copying vehicle!
 		if (IsGroundCombat)
 		{
-			var sv = new SimulatedUnit((Troop)dsn.Instantiate());
-			var v = (Troop)sv.Unit;
+			var sv = new SimulatedUnit((IUnit)dsn.Instantiate());
+			var v = sv.Unit;
 			v.Owner = CurrentEmpire.Empire;
 			CurrentEmpire.Troops.Add(sv);
 		}
 		else
 		{
-			var sv = new SimulatedSpaceObject((SpaceVehicle)dsn.Instantiate());
-			var v = (SpaceVehicle)sv.SpaceObject;
+			var sv = new SimulatedSpaceObject((ISpaceVehicle)dsn.Instantiate());
+			var v = (ISpaceVehicle)sv.SpaceObject;
 			v.Owner = CurrentEmpire.Empire;
 			v.SupplyRemaining = v.SupplyStorage;
 			CurrentEmpire.SpaceObjects.Add(sv);
@@ -254,7 +255,7 @@ public partial class CombatSimulatorForm : GameForm
 			simPlanet.Colony = new Colony();
 			simPlanet.Colony.Owner = Empires.First().Empire;
 			simPlanet.Sector = new Sector(new StarSystem(0) { Name = "Simulation" }, new Point());
-			foreach (Troop t in Empires.SelectMany(se => se.Troops.Select(ss => ss.Unit)))
+			foreach (IUnit t in Empires.SelectMany(se => se.Troops.Select(ss => ss.Unit)))
 				planet.Cargo.Units.Add(t);
 			battle = DIRoot.Battles.BuildGroundBattle(planet);
 

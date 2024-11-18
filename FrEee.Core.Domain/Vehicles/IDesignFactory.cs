@@ -27,6 +27,11 @@ public interface IDesignFactory
 	IDesign Build(IHull hull);
 
 	/// <summary>
+	/// Imports designs from the user's library into the current game.
+	/// </summary>
+	IEnumerable<IDesign> ImportFromLibrary();
+
+	/// <summary>
 	/// The standard militia unit design for use in defending colonies.
 	/// </summary>
 	IDesign<IUnit> Militia { get; }
