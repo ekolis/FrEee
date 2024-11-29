@@ -78,12 +78,12 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 	/// <summary>
 	/// Are this object's orders on hold?
 	/// </summary>
-	public bool AreOrdersOnHold { get; set; }
+	public bool IsOnHold { get; set; }
 
 	/// <summary>
 	/// Should this object's orders repeat once they are completed?
 	/// </summary>
-	public bool AreRepeatOrdersEnabled { get; set; }
+	public bool IsOnRepeat { get; set; }
 
 	public int ArmorHitpoints
 	{
@@ -756,8 +756,8 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 		{
 			Name = Owner + " Fleet";
 			Orders.Clear();
-			AreOrdersOnHold = false;
-			AreRepeatOrdersEnabled = false;
+			IsOnHold = false;
+			IsOnRepeat = false;
 		}
 		if (vis < Visibility.Fogged)
 			Dispose();

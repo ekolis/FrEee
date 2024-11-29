@@ -139,8 +139,8 @@ public partial class SpaceVehicleReport : UserControl, IBindable<ISpaceVehicle>
 			}
 
 			// orders detail
-			chkOnHold.Checked = Vehicle.AreOrdersOnHold;
-			chkRepeat.Checked = Vehicle.AreRepeatOrdersEnabled;
+			chkOnHold.Checked = Vehicle.IsOnHold;
+			chkRepeat.Checked = Vehicle.IsOnRepeat;
 			if (!Vehicle.IsOurs)
 			{
 				chkOnHold.Visible = false;

@@ -18,6 +18,6 @@ public class ToggleOrdersOnHoldCommand
 
 	public override void Execute()
 	{
-		Executor.AreOrdersOnHold = IsToggleEnabled;
+		Executor.IsOnHold = IsToggleEnabled;
 	}
 }

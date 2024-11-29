@@ -23,7 +23,7 @@ namespace FrEee.Processes.Construction;
 /// Something which can construct objects.
 /// </summary>
 [Serializable]
-public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<IConstructor>
+public class ConstructionQueue : IOrderable, IFoggable, IContainable<IConstructor>
 {
 	public ConstructionQueue(IConstructor c)
 	{
@@ -35,12 +35,12 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 	/// <summary>
 	/// Are this object's orders on hold?
 	/// </summary>
-	public bool AreOrdersOnHold { get; set; }
+	public bool IsOnHold { get; set; }
 
 	/// <summary>
 	/// Should this object's orders repeat once they are completed?
 	/// </summary>
-	public bool AreRepeatOrdersEnabled { get; set; }
+	public bool IsOnRepeat { get; set; }
 
 	/// <summary>
 	/// Cargo space free, counting queued items as already constructed and in cargo.
@@ -49,9 +49,17 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 	{
 		get
 		{
-			if (!(Container is ICargoContainer))
+			if (Container is ICargoContainer cc)
+			{
+				return cc.CargoStorageFree() -
+					Orders.Select(o => o.Template)
+					.OfType<IDesign<IUnit>>()
+					.Sum(t => t.Hull.Size);
+			}
+			else
+			{
 				return 0;
-			return ((ICargoContainer)Container).CargoStorageFree() - Orders.Select(o => o.Template).OfType<IDesign<IUnit>>().Sum(t => t.Hull.Size);
+			}
 		}
 	}
 
@@ -62,25 +70,37 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 	{
 		get
 		{
-			var storage = Container.Sector.SpaceObjects.Where(sobj => sobj.Owner == Owner)
-				.OfType<ICargoContainer>().Sum(cc => cc.CargoStorageFree());
-			var queues = Container.Sector.SpaceObjects.OfType<IConstructor>().Where
-				(sobj => sobj.Owner == Owner && sobj.ConstructionQueue != null)
+			var storage = Container.Sector.SpaceObjects
+				.Where(sobj => sobj.Owner == Owner)
+				.OfType<ICargoContainer>()
+				.Sum(cc => cc.CargoStorageFree());
+			var queues = Container.Sector.SpaceObjects
+				.OfType<IConstructor>()
+				.Where(sobj => sobj.Owner == Owner && sobj.ConstructionQueue != null)
 				.Select(sobj => sobj.ConstructionQueue);
-			return storage - queues.Sum(q => q.Orders.Select(o => o.Template).OfType<IDesign<IUnit>>().Sum(t => t.Hull.Size));
+			var queuedSize = queues.Sum(q =>
+				q.Orders.Select(o => o.Template)
+				.OfType<IDesign<IUnit>>()
+				.Sum(t => t.Hull.Size));
+			return storage - queuedSize;
 		}
 	}
 
 	/// <summary>
 	/// The colony (if any) associated with this queue.
 	/// </summary>
-	public Colony Colony
+	public Colony? Colony
 	{
 		get
 		{
-			if (Container is Planet)
-				return ((Planet)Container).Colony;
-			return null;
+			if (Container is Planet p)
+			{
+				return p.Colony;
+			}
+			else
+			{
+				return null;
+			}
 		}
 	}
 
@@ -99,9 +119,9 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 				return null;
 			if (!Rate.Any(kvp => kvp.Value > 0))
 				return double.PositiveInfinity;
-			if (!Orders.Any())
-				return 0d;
-			var remainingCost = Orders.Select(o => o.Cost - (o.Item == null ? new ResourceQuantity() : o.Item.ConstructionProgress)).Aggregate((r1, r2) => r1 + r2);
+			var remainingCost = Orders.Select(o =>
+				o.Cost - (o.Item?.ConstructionProgress ?? []))
+				.Sum();
 			return remainingCost.Max(kvp => kvp.Value / (double)Rate[kvp.Key]);
 		}
 	}
@@ -113,10 +133,15 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 	{
 		get
 		{
-			if (Colony == null)
+			if (Colony is null)
+			{
 				return 0;
-			// TODO - storage racial trait
-			return ((Planet)Container).MaxFacilities - Colony.Facilities.Count - Orders.OfType<ConstructionOrder<Facility, FacilityTemplate>>().Count();
+			}
+			else
+			{
+				// TODO - storage racial trait
+				return ((Planet)Container).MaxFacilities - Colony.Facilities.Count - Orders.OfType<ConstructionOrder<Facility, FacilityTemplate>>().Count();
+			}
 		}
 	}
 
@@ -128,8 +153,10 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 		get
 		{
 			if (!Orders.Any())
+			{
 				return null;
-			var remainingCost = Orders[0].Cost - (Orders[0].Item == null ? new ResourceQuantity() : Orders[0].Item.ConstructionProgress);
+			}
+			var remainingCost = Orders[0].Cost - (Orders[0].Item?.ConstructionProgress ?? []);
 			return remainingCost.Max(kvp => kvp.Value / (double)Rate[kvp.Key]);
 		}
 	}
@@ -141,27 +168,23 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 	{
 		get
 		{
-			if (!Orders.Any())
-				return Pictures.GetSolidColorImage(Color.Transparent);
-			return Orders.First().Template.Icon;
+			return Orders.FirstOrDefault()?.Template.Icon ?? Pictures.GetSolidColorImage(Color.Transparent);
 		}
 	}
 
 	/// <summary>
 	/// The name of the first item.
 	/// </summary>
-	public string FirstItemName
+	public string? FirstItemName
 	{
 		get
 		{
-			if (!Orders.Any())
-				return null;
-			return Orders[0].Template.Name;
+			return Orders.FirstOrDefault()?.Template.Name;
 		}
 	}
 
 	[DoNotSerialize]
-	public Image Icon
+	public Image? Icon
 	{
 		get
 		{
@@ -178,7 +201,7 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 	/// <summary>
 	/// Is this a colony queue?
 	/// </summary>
-	public bool IsColonyQueue { get { return Colony != null; } }
+	public bool IsColonyQueue { get { return Colony is not null; } }
 
 	/// <summary>
 	/// Has construction been delayed this turn due to lack of resources etc?
@@ -193,13 +216,15 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 	{
 		get
 		{
-			var unlockedHulls = Mod.Current.Hulls.OfType<IHull<IUnit>>().Where(h => h.IsUnlocked());
-			return (Eta == null || Eta < 1 && !AreRepeatOrdersEnabled)
+			var unlockedHulls = Mod.Current.Hulls
+				.OfType<IHull<IUnit>>()
+				.Where(h => h.IsUnlocked());
+			return (Eta == null || Eta < 1 && !IsOnRepeat)
 				&& (IsSpaceYardQueue || FacilitySlotsFree > 0 || unlockedHulls.Any() && unlockedHulls.Min(h => h.Size) <= CargoStorageFreeInSector);
 		}
 	}
 
-	// TODO - make this a DoNotSerialize property after the game ends
+	[DoNotSerialize]
 	public bool IsMemory
 	{
 		get
@@ -220,9 +245,7 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 	public bool IsSpaceYardQueue { get { return Container.HasAbility("Space Yard"); } }
 
 	public string Name
-	{
-		get { return Container.Name; }
-	}
+		=> Container.Name;
 
 	public IList<IConstructionOrder> Orders
 	{
@@ -234,9 +257,7 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 		=> Orders;
 
 	public Empire Owner
-	{
-		get { return Container.Owner; }
-	}
+		=> Container.Owner;
 
 	/// <summary>
 	/// The rate at which this queue can construct.
@@ -248,18 +269,18 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 			if (Empire.Current != null)
 			{
 				// try to use cache, rate can't change client side!
-				if (rate == null)
-					rate = ComputeRate();
-				return rate;
+				return rate ??= ComputeRate();
 			}
 			else
 				return ComputeRate();
 		}
 	}
 
+	// TODO: put these rate sub-properties in a view model
 	public int RateMinerals { get { return Rate[Resource.Minerals]; } }
 	public int RateOrganics { get { return Rate[Resource.Organics]; } }
 	public int RateRadioactives { get { return Rate[Resource.Radioactives]; } }
+
 	public double Timestamp { get; set; }
 
 	/// <summary>
@@ -276,8 +297,10 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 		get
 		{
 			var spent = new ResourceQuantity();
-			if (AreOrdersOnHold)
+			if (IsOnHold)
+			{
 				return spent;
+			}
 			do
 			{
 				var spentThisRound = new ResourceQuantity();
@@ -292,12 +315,12 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 				}
 				if (!spentThisRound.Any(kvp => kvp.Value > 0))
 					break;
-			} while (AreRepeatOrdersEnabled);
+			} while (IsOnRepeat);
 			return spent;
 		}
 	}
 
-	private ResourceQuantity rate;
+	private ResourceQuantity? rate;
 
 	public void AddOrder(IOrder order)
 	{
@@ -322,7 +345,7 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 	/// <returns></returns>
 	public bool CanConstruct(IConstructionTemplate item)
 	{
-		return GetReasonForBeingUnableToConstruct(item) == null;
+		return GetReasonForBeingUnableToConstruct(item) is null;
 	}
 
 	/// <summary>
@@ -337,15 +360,22 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 		var vis = Container.CheckVisibility(emp);
 		if (vis == Visibility.Owned)
 			return vis;
+		// TODO: espionage
 		return Visibility.Unknown;
 	}
 
 	public void Dispose()
 	{
 		if (IsDisposed)
+		{
 			return;
-		if (!IsMemory && Mod.Current != null)
+		}
+
+		if (!IsMemory && Mod.Current is not null)
+		{
 			this.UpdateEmpireMemories();
+		}
+
 		Game.Current.UnassignID(this);
 		Orders.Clear();
 		IsDisposed = true;
@@ -358,7 +388,7 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 	{
 		bool didStuff = false;
 
-		if (AreOrdersOnHold)
+		if (IsOnHold)
 			return didStuff;
 
 		UnspentRate = Rate;
@@ -367,10 +397,7 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 		bool done = false;
 		while (!done && Orders.Any() && (Owner.StoredResources > empty || UpcomingSpending.IsEmpty))
 		{
-			var numOrders = Orders.Count;
-			var spentThisRound = new ResourceQuantity();
-
-			foreach (var order in Orders.Cast<IConstructionOrder>().ToArray())
+			foreach (var order in Orders.ToArray())
 			{
 				if (order == null)
 				{
@@ -396,9 +423,11 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 					{
 						// upgrade facility orders place their own facilities
 						if (!(order is UpgradeFacilityOrder))
+						{
 							order.Item.Place(Container);
+						}
 						Orders.Remove(order);
-						if (AreRepeatOrdersEnabled)
+						if (IsOnRepeat)
 						{
 							var copy = order.Copy();
 							copy.Reset();
@@ -410,14 +439,18 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 							// trigger ship built happiness changes
 							Owner.TriggerHappinessChange(hm => hm.AnyShipConstructed);
 							if (Container is Planet p)
+							{
 								p.Colony.TriggerHappinessChange(hm => hm.ShipConstructed);
+							}
 
 						}
 						if (order.Item is Facility)
 						{
 							// trigger facility built happiness changes
 							if (Container is Planet p)
+							{
 								p.Colony.TriggerHappinessChange(hm => hm.FacilityConstructed);
+							}
 
 						}
 					}
@@ -426,7 +459,7 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 
 			didStuff = true;
 
-			if (!AreRepeatOrdersEnabled)
+			if (!IsOnRepeat)
 				done = true;
 		}
 		foreach (var g in builtThisTurn.GroupBy(i => i.Template))
@@ -444,7 +477,7 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 	/// </summary>
 	/// <param name="item"></param>
 	/// <returns></returns>
-	public string GetReasonForBeingUnableToConstruct(IConstructionTemplate item)
+	public string? GetReasonForBeingUnableToConstruct(IConstructionTemplate item)
 	{
 		if (item == null)
 			return "Construction template does not exist.";
@@ -459,22 +492,31 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 
 	public bool IsObsoleteMemory(Empire emp)
 	{
-		return Container == null || Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Game.Current.Timestamp - 1;
+		return Container == null
+			|| Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Game.Current.Timestamp - 1;
 	}
 
 	public void RearrangeOrder(IOrder order, int delta)
 	{
-		if (order != null && !(order is IConstructionOrder))
+		if (order is not null && order is not IConstructionOrder)
+		{
 			throw new Exception("Can't rearrange a " + order.GetType() + " in a construction queue's orders.");
+		}
 		var o = (IConstructionOrder)order;
 		var newpos = Orders.IndexOf(o) + delta;
 		if (newpos < 0)
+		{
 			newpos = 0;
+		}
 		Orders.Remove(o);
 		if (newpos >= Orders.Count)
+		{
 			Orders.Add(o);
+		}
 		else
+		{
 			Orders.Insert(newpos, o);
+		}
 	}
 
 	public void Redact(Empire emp)
@@ -485,21 +527,29 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 		{
 			Orders.DisposeAll();
 			Orders.Clear();
-			AreOrdersOnHold = false;
-			AreRepeatOrdersEnabled = false;
+			IsOnHold = false;
+			IsOnRepeat = false;
 		}
 		if (CheckVisibility(emp) < Visibility.Fogged)
+		{
 			Dispose();
+		}
 	}
 
 	public void RemoveOrder(IOrder order)
 	{
-		if (order == null)
+		if (order is null)
+		{
 			Owner.Log.Add(Container.CreateLogMessage("Attempted to remove a null order from " + this + ". This is likely a game bug.", Objects.LogMessages.LogMessageType.Error));
-		else if (!(order is IConstructionOrder))
-			return; // order can't exist here anyway
+		}
+		else if (order is IConstructionOrder co)
+		{
+			Orders.Remove(co);
+		}
 		else
-			Orders.Remove((IConstructionOrder)order);
+		{
+			// do nothing, non-construction order can't exist here anyway	
+		}
 	}
 
 	public override string ToString()
@@ -507,18 +557,24 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 		return Container + "'s construction queue";
 	}
 
+	// TODO: put this in a utility class that can be DI'd
 	private ResourceQuantity ComputeRate()
 	{
 		var rate = ComputeSYAbilityRate();
 		if (Colony != null)
 		{
-			if (rate == null)
+			if (rate is null)
+			{
 				rate = Mod.Current.Settings.DefaultColonyConstructionRate;
+			}
 
 			// apply population modifier
 			var pop = Colony.Population.Sum(p => p.Value);
 			if (pop == 0)
+			{
+				// colonies without population can't construct
 				return new ResourceQuantity();
+			}
 			rate *= Mod.Current.Settings.GetPopulationConstructionFactor(pop);
 
 			// apply mood modifier
@@ -532,7 +588,9 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 			// TODO - should Planetary SY Rate apply only to planets that have space yards, or to all planetary construction queues?
 			double traitmod = 1d;
 			foreach (var ratio in ratios)
+			{
 				traitmod += ratio.Race.GetAbilityValue("Planetary SY Rate").ToDouble() / 100d * ratio.Ratio;
+			}
 			rate *= traitmod;
 
 			// apply aptitude modifier
@@ -540,16 +598,17 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 			{
 				double aptmod = 0d;
 				foreach (var ratio in ratios)
+				{
 					aptmod += ratio.Race.Aptitudes[Aptitude.Construction.Name] / 100d * ratio.Ratio;
+				}
 				rate *= aptmod;
 
 				// apply culture modifier
 				rate *= (100d + (Owner?.Culture?.Construction ?? 0)) / 100d;
 			}
 		}
-		if (rate == null)
-			rate = new ResourceQuantity();
-		if (Container is IVehicle)
+		rate ??= [];
+		if (Container is IVehicle && Owner is not null)
 		{
 			// apply aptitude modifier for empire's primary race
 			rate *= Owner.PrimaryRace.Aptitudes[Aptitude.Construction.Name] / 100d;
@@ -558,7 +617,8 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 		return rate;
 	}
 
-	private ResourceQuantity ComputeSYAbilityRate()
+	// TODO: put this in a utility class that can be DI'd
+	private ResourceQuantity? ComputeSYAbilityRate()
 	{
 		if (Container.HasAbility("Space Yard"))
 		{
@@ -567,14 +627,17 @@ public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<I
 			for (int i = 1; i <= 3; i++)
 			{
 				var amount = Container.GetAbilityValue("Space Yard", 2, true, true, a => a.Value1 == i.ToString()).ToInt();
-				Resource res = null;
-				if (i == 1)
-					res = Resource.Minerals;
-				else if (i == 2)
-					res = Resource.Organics;
-				else if (i == 3)
-					res = Resource.Radioactives;
-				rate[res] = amount;
+				Resource? res = i switch
+				{
+					1 => Resource.Minerals,
+					2 => Resource.Organics,
+					3 => Resource.Radioactives,
+					_ => null,
+				};
+				if (res is not null)
+				{
+					rate[res] = amount;
+				}
 			}
 			return rate;
 		}

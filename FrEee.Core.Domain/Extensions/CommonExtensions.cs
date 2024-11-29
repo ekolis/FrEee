@@ -342,7 +342,7 @@ public static class CommonExtensions
 	{
 		bool didStuff = false;
 
-		if (o.AreOrdersOnHold)
+		if (o.IsOnHold)
 			return didStuff;
 
 		if (o is Fleet f && !f.Vehicles.ExceptSingle(null).Any())
@@ -356,7 +356,7 @@ public static class CommonExtensions
 			if (order.IsComplete && o.Orders.Contains(order))
 			{
 				o.RemoveOrder(o.Orders.First());
-				if (o.AreRepeatOrdersEnabled)
+				if (o.IsOnRepeat)
 				{
 					order.IsComplete = false;
 					o.AddOrder(order);

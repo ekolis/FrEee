@@ -40,8 +40,8 @@ public partial class ConstructionQueueForm : GameForm
 		newCommands = new List<ICommand>();
 		removedCommands = new List<ICommand>();
 
-		wasOnHold = chkOnHold.Checked = queue.AreOrdersOnHold;
-		wasRepeat = chkRepeat.Checked = queue.AreRepeatOrdersEnabled;
+		wasOnHold = chkOnHold.Checked = queue.IsOnHold;
+		wasRepeat = chkRepeat.Checked = queue.IsOnRepeat;
 		lblSpaceportWarning.Visible = queue.IsColonyQueue && !queue.Colony.Container.StarSystem.HasAbility("Spaceport") && queue.Colony.MerchantsRatio < 1;
 	}
 
@@ -450,8 +450,8 @@ public partial class ConstructionQueueForm : GameForm
 			ConstructionQueue.Orders.Add(order);
 		Empire.Current.Commands.Remove(Empire.Current.Commands.OfType<IToggleOrdersOnHoldCommand>().SingleOrDefault(x => x.Executor == ConstructionQueue));
 		Empire.Current.Commands.Remove(Empire.Current.Commands.OfType<IToggleRepeatOrdersCommand>().SingleOrDefault(x => x.Executor == ConstructionQueue));
-		ConstructionQueue.AreOrdersOnHold = wasOnHold;
-		ConstructionQueue.AreRepeatOrdersEnabled = wasRepeat;
+		ConstructionQueue.IsOnHold = wasOnHold;
+		ConstructionQueue.IsOnRepeat = wasRepeat;
 	}
 
 	private void chkExpanded_CheckedChanged(object sender, EventArgs e)
