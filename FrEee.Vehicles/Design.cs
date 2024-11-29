@@ -622,7 +622,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 			mct.Container = this;
 	}
 
-	public IConstructionOrder CreateConstructionOrder(ConstructionQueue queue)
+	public IConstructionOrder CreateConstructionOrder(IConstructionQueue queue)
 	{
 		var dtype = GetType();
 		var vtype = dtype.GetGenericArguments()[0];

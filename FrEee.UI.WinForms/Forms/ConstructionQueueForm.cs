@@ -26,7 +26,7 @@ namespace FrEee.UI.WinForms.Forms;
 
 public partial class ConstructionQueueForm : GameForm
 {
-	public ConstructionQueueForm(ConstructionQueue queue)
+	public ConstructionQueueForm(IConstructionQueue queue)
 	{
 		InitializeComponent();
 
@@ -45,7 +45,7 @@ public partial class ConstructionQueueForm : GameForm
 		lblSpaceportWarning.Visible = queue.IsColonyQueue && !queue.Colony.Container.StarSystem.HasAbility("Spaceport") && queue.Colony.MerchantsRatio < 1;
 	}
 
-	public ConstructionQueue ConstructionQueue { get; private set; }
+	public IConstructionQueue ConstructionQueue { get; private set; }
 
 	private bool wasRepeat, wasOnHold;
 
@@ -538,13 +538,13 @@ public partial class ConstructionQueueForm : GameForm
 		return sobjs.OfType<IVehicle>().Union(sobjs.OfType<ICargoContainer>().SelectMany(cc => cc.AllUnits)).Where(v => v.Design.BaseName == designBaseName).Count();
 	}
 
-	private int CountQueuedFacilities(IEnumerable<ConstructionQueue> queues, string facilityFamily)
+	private int CountQueuedFacilities(IEnumerable<IConstructionQueue> queues, string facilityFamily)
 	{
 		// facility upgrades don't change the facility family so we don't need to worry about them here
 		return queues.Sum(c => c.Orders.OfType<ConstructionOrder<Facility, FacilityTemplate>>().Where(o => o.Template.Family == facilityFamily).Count());
 	}
 
-	private int CountQueuedUpgrades(IEnumerable<ConstructionQueue> queues, string facilityFamily)
+	private int CountQueuedUpgrades(IEnumerable<IConstructionQueue> queues, string facilityFamily)
 	{
 		return queues.Sum(c => c.Orders.OfType<UpgradeFacilityOrder>().Where(o => o.Upgrade.Family == facilityFamily).Count());
 	}

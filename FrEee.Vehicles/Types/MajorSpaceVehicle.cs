@@ -9,6 +9,7 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Construction;
+using FrEee.Utility;
 
 namespace FrEee.Vehicles.Types;
 
@@ -19,7 +20,7 @@ public abstract class MajorSpaceVehicle
 	protected MajorSpaceVehicle() : base()
 	{
 		Cargo = new Cargo();
-		constructionQueue = new ConstructionQueue(this);
+		constructionQueue = DIRoot.ConstructionQueues.Build(this);
 	}
 
 	public override void Place(ISpaceObject target)
@@ -136,13 +137,13 @@ public abstract class MajorSpaceVehicle
 			u.SpendTime(timeElapsed);
 	}
 
-	private ConstructionQueue constructionQueue { get; set; }
-	public ConstructionQueue ConstructionQueue
+	private IConstructionQueue constructionQueue { get; set; }
+	public IConstructionQueue? ConstructionQueue
 	{
 		get
 		{
 			// only vehicles with a space yard that are not under construction have a construction queue
-			if (this.HasAbility("Space Yard") && Sector != null)
+			if (this.HasAbility("Space Yard") && Sector is not null)
 				return constructionQueue;
 			else
 				return null;

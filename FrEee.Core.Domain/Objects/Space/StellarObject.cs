@@ -58,7 +58,7 @@ public abstract class StellarObject : IStellarObject, IAbstractDataObject
 		get { yield break; }
 	}
 
-	public virtual ConstructionQueue ConstructionQueue
+	public virtual IConstructionQueue? ConstructionQueue
 	{
 		get { return null; }
 	}

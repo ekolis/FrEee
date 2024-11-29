@@ -144,17 +144,17 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 	/// <summary>
 	/// Any construction queues of ships in this fleet and its subfleets.
 	/// </summary>
-	public IEnumerable<ConstructionQueue> ConstructionQueues
+	public IEnumerable<IConstructionQueue> ConstructionQueues
 	{
 		get
 		{
 			return Vehicles.OfType<IConstructor>().SelectMany(sobj =>
 				{
-					var list = new List<ConstructionQueue>();
-					if (sobj.ConstructionQueue != null)
+					var list = new List<IConstructionQueue>();
+					if (sobj.ConstructionQueue is not null)
 						list.Add(sobj.ConstructionQueue);
-					if (sobj is Fleet)
-						list.AddRange(((Fleet)sobj).ConstructionQueues);
+					if (sobj is Fleet f)
+						list.AddRange(f.ConstructionQueues);
 					return list;
 				});
 		}

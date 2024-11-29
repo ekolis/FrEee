@@ -29,9 +29,12 @@ public static class Configuration
 	/// </summary>
 	public static void ConfigureDI()
 	{
+		// TODO: load dependencies from configuration file in mod data so we can really modularize this thing!
+
 		// processes
 		DI.RegisterSingleton<ITurnProcessor, TurnProcessor>();
 		DI.RegisterSingleton<IBattleFactory, BattleFactory>();
+		DI.RegisterSingleton<IConstructionQueueFactory, ConstructionQueueFactory>();
 
 		// gameplay
 		DI.RegisterSingleton<IDesignCommandFactory, DesignCommandFactory>();

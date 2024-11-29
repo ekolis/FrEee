@@ -189,11 +189,11 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	/// <summary>
 	/// All construction queues owned by this empire.
 	/// </summary>
-	public IEnumerable<ConstructionQueue> ConstructionQueues
+	public IEnumerable<IConstructionQueue> ConstructionQueues
 	{
 		get
 		{
-			return Game.Current.Referrables.OfType<ConstructionQueue>().Where(q => q.Owner == this && q.Container.Sector != null && q.Rate.Any(kvp => kvp.Value > 0));
+			return Game.Current.Referrables.OfType<IConstructionQueue>().Where(q => q.Owner == this && q.Container.Sector != null && q.Rate.Any(kvp => kvp.Value > 0));
 		}
 	}
 

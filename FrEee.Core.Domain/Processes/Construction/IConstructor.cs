@@ -11,5 +11,5 @@ public interface IConstructor : ISpaceObject, IOwnable
 	/// <summary>
 	/// This object's construction queue, if any.
 	/// </summary>
-	ConstructionQueue ConstructionQueue { get; }
+	IConstructionQueue ConstructionQueue { get; }
 }

@@ -1080,7 +1080,7 @@ public class Game
 				dispose = false;
 			else if (Mod.Current.StellarObjectTemplates.Contains(sobj as StellarObject))
 				dispose = false; // save stellar objects that are part of the mod templates
-			else if (Referrables.OfType<ConstructionQueue>().Any(q => q.Orders.Any(o => o.Item == sobj as IConstructable)))
+			else if (Referrables.OfType<IConstructionQueue>().Any(q => q.Orders.Any(o => o.Item == sobj as IConstructable)))
 				dispose = false; // save constructable space objects under construction
 			if (dispose)
 				sobj.Dispose();

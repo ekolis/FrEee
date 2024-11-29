@@ -133,7 +133,7 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 
 	public double CombatSpeed => 0;
 
-	public override ConstructionQueue ConstructionQueue => Colony?.ConstructionQueue;
+	public override IConstructionQueue ConstructionQueue => Colony?.ConstructionQueue;
 
 	public Fleet Container { get; set; }
 

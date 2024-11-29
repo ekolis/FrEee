@@ -64,7 +64,7 @@ public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>, II
 	/// <summary>
 	/// This colony's construction queue.
 	/// </summary>
-	public ConstructionQueue ConstructionQueue
+	public IConstructionQueue ConstructionQueue
 	{
 		get;
 		set;

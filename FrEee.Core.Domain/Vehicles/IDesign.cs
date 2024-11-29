@@ -136,7 +136,7 @@ public interface IDesign : INamed, IPictorial, IOwnableAbilityObject, IConstruct
 	/// Creates an order to build this design.
 	/// </summary>
 	/// <returns></returns>
-	IConstructionOrder CreateConstructionOrder(ConstructionQueue queue);
+	IConstructionOrder CreateConstructionOrder(IConstructionQueue queue);
 
 	/// <summary>
 	/// Creates a command to create this design on the server.

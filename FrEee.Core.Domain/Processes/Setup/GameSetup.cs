@@ -579,7 +579,7 @@ public class GameSetup
             hw.Colony = new Colony
             {
                 Owner = emp,
-                ConstructionQueue = new(hw),
+                ConstructionQueue = DIRoot.ConstructionQueues.Build(hw),
                 IsHomeworld = true,
             };
             hw.AddPopulation(emp.PrimaryRace, hw.Size.MaxPopulation);
