@@ -8,13 +8,13 @@ using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Modding.Abilities;
 using FrEee.Gameplay.Commands.Orders;
 using FrEee.Vehicles.Types;
 using FrEee.Vehicles;
+using FrEee.Processes.Construction;
 
 namespace FrEee.UI.WinForms.Controls;
 
@@ -139,8 +139,8 @@ public partial class SpaceVehicleReport : UserControl, IBindable<ISpaceVehicle>
 			}
 
 			// orders detail
-			chkOnHold.Checked = Vehicle.AreOrdersOnHold;
-			chkRepeat.Checked = Vehicle.AreRepeatOrdersEnabled;
+			chkOnHold.Checked = Vehicle.IsOnHold;
+			chkRepeat.Checked = Vehicle.IsOnRepeat;
 			if (!Vehicle.IsOurs)
 			{
 				chkOnHold.Visible = false;

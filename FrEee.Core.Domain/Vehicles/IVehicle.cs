@@ -1,5 +1,4 @@
 using FrEee.Objects.Civilization;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Technology;
 using FrEee.Serialization;
@@ -9,6 +8,7 @@ using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 using FrEee.Objects.GameState;
 using FrEee.Vehicles.Types;
+using FrEee.Processes.Construction;
 
 namespace FrEee.Vehicles;
 

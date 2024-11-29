@@ -30,12 +30,12 @@ public abstract class SpaceVehicle
 	/// <summary>
 	/// Are this object's orders on hold?
 	/// </summary>
-	public bool AreOrdersOnHold { get; set; }
+	public bool IsOnHold { get; set; }
 
 	/// <summary>
 	/// Should this object's orders repeat once they are completed?
 	/// </summary>
-	public bool AreRepeatOrdersEnabled { get; set; }
+	public bool IsOnRepeat { get; set; }
 
 	/// <summary>
 	/// Space vehicles can be placed in fleets.
@@ -343,8 +343,8 @@ public abstract class SpaceVehicle
 		{
 			// can't see orders unless it's your vehicle
 			Orders.Clear();
-			AreOrdersOnHold = false;
-			AreRepeatOrdersEnabled = false;
+			IsOnHold = false;
+			IsOnRepeat = false;
 		}
 
 		if (vis < Visibility.Scanned)

@@ -9,9 +9,15 @@ namespace FrEee.Objects.Civilization;
 /// </summary>
 public interface IOrderable : IReferrable
 {
-    bool AreOrdersOnHold { get; set; }
+    /// <summary>
+    /// Are this object's orders on hold?
+    /// </summary>
+    bool IsOnHold { get; set; }
 
-    bool AreRepeatOrdersEnabled { get; set; }
+	/// <summary>
+	/// Should this object's orders repeat once they are completed?
+	/// </summary>
+	bool IsOnRepeat { get; set; }
 
     /// <summary>
     /// The queued orders.

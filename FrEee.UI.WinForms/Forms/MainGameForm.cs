@@ -17,7 +17,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
@@ -30,6 +29,7 @@ using FrEee.Gameplay.Commands.Orders;
 using FrEee.Gameplay.Commands.Messages;
 using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
+using FrEee.Processes.Construction;
 
 namespace FrEee.UI.WinForms.Forms;
 

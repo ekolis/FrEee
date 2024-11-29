@@ -13,6 +13,7 @@ using FrEee.Gameplay.Commands.Projects;
 using FrEee.Gameplay.Commands.Waypoints;
 using FrEee.Processes;
 using FrEee.Processes.Combat;
+using FrEee.Processes.Combat.Grid;
 using FrEee.Vehicles;
 
 namespace FrEee.Utility;
@@ -86,4 +87,9 @@ public static class DIRoot
 	/// Creates vehicles.
 	/// </summary>
 	public static IVehicleFactory Vehicles => DI.Get<IVehicleFactory>();
+
+	/// <summary>
+	/// Creates construction queues.
+	/// </summary>
+	public static IConstructionQueueFactory ConstructionQueues => DI.Get<IConstructionQueueFactory>();
 }

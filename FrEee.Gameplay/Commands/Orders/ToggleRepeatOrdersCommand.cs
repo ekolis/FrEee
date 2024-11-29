@@ -18,6 +18,6 @@ public class ToggleRepeatOrdersCommand
 
 	public override void Execute()
 	{
-		Executor.AreRepeatOrdersEnabled = IsToggleEnabled;
+		Executor.IsOnRepeat = IsToggleEnabled;
 	}
 }

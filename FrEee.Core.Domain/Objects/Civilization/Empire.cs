@@ -12,7 +12,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Tech = FrEee.Objects.Technology.Technology;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
@@ -25,6 +24,7 @@ using FrEee.Gameplay.Commands.Orders;
 using FrEee.Gameplay.Commands.Projects;
 using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
+using FrEee.Processes.Construction;
 
 namespace FrEee.Objects.Civilization;
 
@@ -189,11 +189,11 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	/// <summary>
 	/// All construction queues owned by this empire.
 	/// </summary>
-	public IEnumerable<ConstructionQueue> ConstructionQueues
+	public IEnumerable<IConstructionQueue> ConstructionQueues
 	{
 		get
 		{
-			return Game.Current.Referrables.OfType<ConstructionQueue>().Where(q => q.Owner == this && q.Container.Sector != null && q.Rate.Any(kvp => kvp.Value > 0));
+			return Game.Current.Referrables.OfType<IConstructionQueue>().Where(q => q.Owner == this && q.Container.Sector != null && q.Rate.Any(kvp => kvp.Value > 0));
 		}
 	}
 

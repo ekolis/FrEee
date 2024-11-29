@@ -10,12 +10,12 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using FrEee.Objects.Civilization.CargoStorage;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 using FrEee.Vehicles.Types;
+using FrEee.Processes.Construction;
 
 namespace FrEee.Objects.Space;
 
@@ -78,12 +78,12 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 	/// <summary>
 	/// Are this object's orders on hold?
 	/// </summary>
-	public bool AreOrdersOnHold { get; set; }
+	public bool IsOnHold { get; set; }
 
 	/// <summary>
 	/// Should this object's orders repeat once they are completed?
 	/// </summary>
-	public bool AreRepeatOrdersEnabled { get; set; }
+	public bool IsOnRepeat { get; set; }
 
 	public int ArmorHitpoints
 	{
@@ -144,17 +144,17 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 	/// <summary>
 	/// Any construction queues of ships in this fleet and its subfleets.
 	/// </summary>
-	public IEnumerable<ConstructionQueue> ConstructionQueues
+	public IEnumerable<IConstructionQueue> ConstructionQueues
 	{
 		get
 		{
 			return Vehicles.OfType<IConstructor>().SelectMany(sobj =>
 				{
-					var list = new List<ConstructionQueue>();
-					if (sobj.ConstructionQueue != null)
+					var list = new List<IConstructionQueue>();
+					if (sobj.ConstructionQueue is not null)
 						list.Add(sobj.ConstructionQueue);
-					if (sobj is Fleet)
-						list.AddRange(((Fleet)sobj).ConstructionQueues);
+					if (sobj is Fleet f)
+						list.AddRange(f.ConstructionQueues);
 					return list;
 				});
 		}
@@ -756,8 +756,8 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 		{
 			Name = Owner + " Fleet";
 			Orders.Clear();
-			AreOrdersOnHold = false;
-			AreRepeatOrdersEnabled = false;
+			IsOnHold = false;
+			IsOnRepeat = false;
 		}
 		if (vis < Visibility.Fogged)
 			Dispose();

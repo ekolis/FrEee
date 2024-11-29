@@ -8,10 +8,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
 using FrEee.Objects.Technology;
+using FrEee.Processes.Construction;
 
 namespace FrEee.Modding.Templates;
 

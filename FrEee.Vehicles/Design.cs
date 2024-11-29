@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
@@ -19,6 +18,7 @@ using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Designs;
 using FrEee.Gameplay.Commands.Orders;
 using FrEee.Vehicles.Types;
+using FrEee.Processes.Construction;
 
 namespace FrEee.Vehicles;
 
@@ -622,7 +622,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 			mct.Container = this;
 	}
 
-	public IConstructionOrder CreateConstructionOrder(ConstructionQueue queue)
+	public IConstructionOrder CreateConstructionOrder(IConstructionQueue queue)
 	{
 		var dtype = GetType();
 		var vtype = dtype.GetGenericArguments()[0];

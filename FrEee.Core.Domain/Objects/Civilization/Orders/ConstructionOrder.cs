@@ -7,9 +7,9 @@ using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Vehicles.Types;
+using FrEee.Processes.Construction;
 
 namespace FrEee.Objects.Civilization.Orders;
 
@@ -121,7 +121,7 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
 
     public bool CheckCompletion(IOrderable q)
     {
-        var queue = (ConstructionQueue)q;
+        var queue = (IConstructionQueue)q;
         isComplete = Item.ConstructionProgress >= Item.Cost || GetErrors(queue).Any();
         return IsComplete;
     }
@@ -142,7 +142,7 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
     {
         if (IsDisposed)
             return;
-        foreach (var q in Game.Current.Referrables.OfType<ConstructionQueue>())
+        foreach (var q in Game.Current.Referrables.OfType<IConstructionQueue>())
             q.Orders.Remove(this);
         Game.Current.UnassignID(this);
     }
@@ -152,7 +152,7 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
     /// </summary>
     public void Execute(IOrderable q)
     {
-        var queue = (ConstructionQueue)q;
+        var queue = (IConstructionQueue)q;
         var errors = GetErrors(queue);
         foreach (var error in errors)
             queue.Owner.Log.Add(error);
@@ -197,7 +197,7 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
 
     public IEnumerable<LogMessage> GetErrors(IOrderable q)
     {
-        var queue = (ConstructionQueue)q;
+        var queue = (IConstructionQueue)q;
 
         // do we have a valid template?
         if (Template == null)

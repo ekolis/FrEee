@@ -9,13 +9,13 @@ using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 using FrEee.Vehicles.Types;
+using FrEee.Processes.Construction;
 
 namespace FrEee.Vehicles;
 

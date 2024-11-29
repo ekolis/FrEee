@@ -8,10 +8,10 @@ using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
 using FrEee.Modding.Templates;
+using FrEee.Processes.Construction;
 
 namespace FrEee.Objects.Civilization;
 
@@ -64,7 +64,7 @@ public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>, II
 	/// <summary>
 	/// This colony's construction queue.
 	/// </summary>
-	public ConstructionQueue ConstructionQueue
+	public IConstructionQueue ConstructionQueue
 	{
 		get;
 		set;

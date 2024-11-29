@@ -158,8 +158,8 @@ public partial class PlanetReport : UserControl, IBindable<Planet>
 			// load orders
 			// TODO - let player adjust orders here
 			lstOrdersDetail.Items.Clear();
-			chkOnHold.Checked = Planet.AreOrdersOnHold;
-			chkRepeat.Checked = Planet.AreRepeatOrdersEnabled;
+			chkOnHold.Checked = Planet.IsOnHold;
+			chkRepeat.Checked = Planet.IsOnRepeat;
 			if (Planet.Owner != Empire.Current)
 			{
 				chkOnHold.Visible = false;

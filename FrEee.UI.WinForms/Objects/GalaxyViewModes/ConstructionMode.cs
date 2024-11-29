@@ -4,8 +4,8 @@ using FrEee.Utility;
 using FrEee.Extensions;
 using System.Drawing;
 using System.Linq;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
+using FrEee.Processes.Construction;
 
 namespace FrEee.UI.WinForms.Objects.GalaxyViewModes;
 

@@ -7,8 +7,8 @@ using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
+using FrEee.Processes.Construction;
 
 namespace FrEee.Objects.Civilization.Orders;
 
@@ -114,7 +114,7 @@ public class UpgradeFacilityOrder : IConstructionOrder
     {
         if (IsDisposed)
             return;
-        foreach (var v in Game.Current.Referrables.OfType<ConstructionQueue>())
+        foreach (var v in Game.Current.Referrables.OfType<IConstructionQueue>())
             v.Orders.Remove(this);
         Game.Current.UnassignID(this);
     }
@@ -124,7 +124,7 @@ public class UpgradeFacilityOrder : IConstructionOrder
     /// </summary>
     public void Execute(IOrderable ord)
     {
-        if (ord is ConstructionQueue queue)
+        if (ord is IConstructionQueue queue)
         {
             var errors = GetErrors(queue);
             foreach (var error in errors)
@@ -161,7 +161,7 @@ public class UpgradeFacilityOrder : IConstructionOrder
 
     public IEnumerable<LogMessage> GetErrors(IOrderable ord)
     {
-        if (ord is ConstructionQueue queue)
+        if (ord is IConstructionQueue queue)
         {
             // validate that new facility is unlocked
             if (!queue.Owner.HasUnlocked(Upgrade.New))

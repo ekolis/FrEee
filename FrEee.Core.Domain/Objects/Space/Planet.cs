@@ -11,12 +11,12 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using FrEee.Objects.Civilization.CargoStorage;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 using FrEee.Vehicles.Types;
+using FrEee.Processes.Construction;
 
 namespace FrEee.Objects.Space;
 
@@ -67,12 +67,12 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 	/// <summary>
 	/// Are this object's orders on hold?
 	/// </summary>
-	public bool AreOrdersOnHold { get; set; }
+	public bool IsOnHold { get; set; }
 
 	/// <summary>
 	/// Should this object's orders repeat once they are completed?
 	/// </summary>
-	public bool AreRepeatOrdersEnabled { get; set; }
+	public bool IsOnRepeat { get; set; }
 
 	/// <summary>
 	/// TODO - planetary "armor" facilities that soak damage first?
@@ -133,7 +133,7 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 
 	public double CombatSpeed => 0;
 
-	public override ConstructionQueue ConstructionQueue => Colony?.ConstructionQueue;
+	public override IConstructionQueue ConstructionQueue => Colony?.ConstructionQueue;
 
 	public Fleet Container { get; set; }
 
@@ -833,8 +833,8 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 		{
 			// TODO - espionage?
 			Orders.Clear();
-			AreOrdersOnHold = false;
-			AreRepeatOrdersEnabled = false;
+			IsOnHold = false;
+			IsOnRepeat = false;
 		}
 	}
 

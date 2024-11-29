@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-using FrEee.Objects.Civilization.Construction;
+using FrEee.Processes.Construction;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -42,7 +42,7 @@ public partial class ConstructionQueueListForm : GameForm
 	{
 		if (e.RowIndex >= 0)
 		{
-			var queue = (ConstructionQueue)gridQueues.Rows[e.RowIndex].DataBoundItem;
+			var queue = (IConstructionQueue)gridQueues.Rows[e.RowIndex].DataBoundItem;
 			var form = new ConstructionQueueForm(queue);
 			this.ShowChildForm(form);
 			if (form.DialogResult == DialogResult.OK)
@@ -84,7 +84,7 @@ public partial class ConstructionQueueListForm : GameForm
 		if (e.RowIndex >= 0 && e.RowIndex < gridQueues.Rows.Count)
 		{
 			var row = gridQueues.Rows[e.RowIndex];
-			var queue = (ConstructionQueue)row.DataBoundItem;
+			var queue = (IConstructionQueue)row.DataBoundItem;
 			var sys = queue.Container.StarSystem;
 			galaxyView.SelectedStarSystem = sys;
 			starSystemView.StarSystem = sys;

@@ -6,6 +6,7 @@ using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
+using FrEee.Utility;
 using NUnit.Framework;
 
 namespace FrEee.Objects.Orders;
@@ -47,7 +48,7 @@ public class ConstructionTest
 		colony = new Colony();
 		colony.Facilities.Add(new Facility(sy));
 		colony.Population.Add(race, (long)1e9); // 1 billion population;
-		colony.ConstructionQueue = new(planet);
+		colony.ConstructionQueue = DIRoot.ConstructionQueues.Build(planet);
 		planet.Colony = colony;
 	}
 

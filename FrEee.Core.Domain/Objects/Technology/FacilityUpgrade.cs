@@ -4,10 +4,10 @@ using FrEee.Serialization;
 using FrEee.Extensions;
 using System.Collections.Generic;
 using System.Linq;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Templates;
 using FrEee.Objects.Space;
+using FrEee.Processes.Construction;
 
 namespace FrEee.Objects.Technology;
 
