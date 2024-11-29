@@ -224,10 +224,10 @@ public class ConstructionQueue : IConstructionQueue
 			if (Empire.Current != null)
 			{
 				// try to use cache, rate can't change client side!
-				return rate ??= ComputeRate();
+				return rate ??= DIRoot.ConstructionQueues.ComputeRate(this);
 			}
 			else
-				return ComputeRate();
+				return DIRoot.ConstructionQueues.ComputeRate(this);
 		}
 	}
 
@@ -492,93 +492,5 @@ public class ConstructionQueue : IConstructionQueue
 	public override string ToString()
 	{
 		return Container + "'s construction queue";
-	}
-
-	// TODO: put this in a utility class that can be DI'd
-	private ResourceQuantity ComputeRate()
-	{
-		var rate = ComputeSYAbilityRate();
-		if (Colony != null)
-		{
-			if (rate is null)
-			{
-				rate = Mod.Current.Settings.DefaultColonyConstructionRate;
-			}
-
-			// apply population modifier
-			var pop = Colony.Population.Sum(p => p.Value);
-			if (pop == 0)
-			{
-				// colonies without population can't construct
-				return new ResourceQuantity();
-			}
-			rate *= Mod.Current.Settings.GetPopulationConstructionFactor(pop);
-
-			// apply mood modifier
-			// TODO - load mood modifier from mod
-			var moodModifier = Colony.Mood == Mood.Rioting ? 0 : 100;
-			rate *= moodModifier / 100d;
-
-			var ratios = Colony.Population.Select(p => new { Race = p.Key, Ratio = p.Value / (double)pop });
-
-			// apply racial trait planetary SY modifier
-			// TODO - should Planetary SY Rate apply only to planets that have space yards, or to all planetary construction queues?
-			double traitmod = 1d;
-			foreach (var ratio in ratios)
-			{
-				traitmod += ratio.Race.GetAbilityValue("Planetary SY Rate").ToDouble() / 100d * ratio.Ratio;
-			}
-			rate *= traitmod;
-
-			// apply aptitude modifier
-			if (IsSpaceYardQueue)
-			{
-				double aptmod = 0d;
-				foreach (var ratio in ratios)
-				{
-					aptmod += ratio.Race.Aptitudes[Aptitude.Construction.Name] / 100d * ratio.Ratio;
-				}
-				rate *= aptmod;
-
-				// apply culture modifier
-				rate *= (100d + (Owner?.Culture?.Construction ?? 0)) / 100d;
-			}
-		}
-		rate ??= [];
-		if (Container is IVehicle && Owner is not null)
-		{
-			// apply aptitude modifier for empire's primary race
-			rate *= Owner.PrimaryRace.Aptitudes[Aptitude.Construction.Name] / 100d;
-		}
-
-		return rate;
-	}
-
-	// TODO: put this in a utility class that can be DI'd
-	private ResourceQuantity? ComputeSYAbilityRate()
-	{
-		if (Container.HasAbility("Space Yard"))
-		{
-			var rate = new ResourceQuantity();
-			// TODO - moddable resources?
-			for (int i = 1; i <= 3; i++)
-			{
-				var amount = Container.GetAbilityValue("Space Yard", 2, true, true, a => a.Value1 == i.ToString()).ToInt();
-				Resource? res = i switch
-				{
-					1 => Resource.Minerals,
-					2 => Resource.Organics,
-					3 => Resource.Radioactives,
-					_ => null,
-				};
-				if (res is not null)
-				{
-					rate[res] = amount;
-				}
-			}
-			return rate;
-		}
-		else
-			return null;
 	}
 }
