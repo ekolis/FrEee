@@ -23,7 +23,7 @@ namespace FrEee.Processes.Construction;
 /// Something which can construct objects.
 /// </summary>
 [Serializable]
-public class ConstructionQueue : IOrderable, IFoggable, IContainable<IConstructor>
+public class ConstructionQueue : IConstructionQueue
 {
 	public ConstructionQueue(IConstructor c)
 	{
@@ -32,19 +32,10 @@ public class ConstructionQueue : IOrderable, IFoggable, IContainable<IConstructo
 		UnspentRate = new ResourceQuantity();
 	}
 
-	/// <summary>
-	/// Are this object's orders on hold?
-	/// </summary>
 	public bool IsOnHold { get; set; }
 
-	/// <summary>
-	/// Should this object's orders repeat once they are completed?
-	/// </summary>
 	public bool IsOnRepeat { get; set; }
 
-	/// <summary>
-	/// Cargo space free, counting queued items as already constructed and in cargo.
-	/// </summary>
 	public int CargoStorageFree
 	{
 		get
@@ -63,9 +54,6 @@ public class ConstructionQueue : IOrderable, IFoggable, IContainable<IConstructo
 		}
 	}
 
-	/// <summary>
-	/// Cargo space free in the entire sector, counting queued items as already constructed and in cargo.
-	/// </summary>
 	public int CargoStorageFreeInSector
 	{
 		get
@@ -86,9 +74,6 @@ public class ConstructionQueue : IOrderable, IFoggable, IContainable<IConstructo
 		}
 	}
 
-	/// <summary>
-	/// The colony (if any) associated with this queue.
-	/// </summary>
 	public Colony? Colony
 	{
 		get
@@ -107,10 +92,6 @@ public class ConstructionQueue : IOrderable, IFoggable, IContainable<IConstructo
 	[DoNotCopy]
 	public IConstructor Container { get; set; }
 
-	/// <summary>
-	/// The ETA for completion of the whole queue, in turns.
-	/// Null if there is nothing being built.
-	/// </summary>
 	public double? Eta
 	{
 		get
@@ -126,9 +107,6 @@ public class ConstructionQueue : IOrderable, IFoggable, IContainable<IConstructo
 		}
 	}
 
-	/// <summary>
-	/// Facility slots free, counting queued items as already constructed and on the colony.
-	/// </summary>
 	public int FacilitySlotsFree
 	{
 		get
@@ -145,9 +123,6 @@ public class ConstructionQueue : IOrderable, IFoggable, IContainable<IConstructo
 		}
 	}
 
-	/// <summary>
-	/// The ETA for completion of the first item, in turns.
-	/// </summary>
 	public double? FirstItemEta
 	{
 		get
@@ -161,9 +136,6 @@ public class ConstructionQueue : IOrderable, IFoggable, IContainable<IConstructo
 		}
 	}
 
-	/// <summary>
-	/// The icon for the item being constructed.
-	/// </summary>
 	public Image FirstItemIcon
 	{
 		get
@@ -172,9 +144,6 @@ public class ConstructionQueue : IOrderable, IFoggable, IContainable<IConstructo
 		}
 	}
 
-	/// <summary>
-	/// The name of the first item.
-	/// </summary>
 	public string? FirstItemName
 	{
 		get
@@ -198,16 +167,8 @@ public class ConstructionQueue : IOrderable, IFoggable, IContainable<IConstructo
 		set;
 	}
 
-	/// <summary>
-	/// Is this a colony queue?
-	/// </summary>
 	public bool IsColonyQueue { get { return Colony is not null; } }
 
-	/// <summary>
-	/// Has construction been delayed this turn due to lack of resources etc?
-	/// For avoiding spamming log messages for every item in the queue.
-	/// </summary>
-	[DoNotSerialize]
 	public bool IsConstructionDelayed { get; set; }
 
 	public bool IsDisposed { get; set; }
@@ -239,9 +200,6 @@ public class ConstructionQueue : IOrderable, IFoggable, IContainable<IConstructo
 		}
 	}
 
-	/// <summary>
-	/// Is this a space yard queue?
-	/// </summary>
 	public bool IsSpaceYardQueue { get { return Container.HasAbility("Space Yard"); } }
 
 	public string Name
@@ -259,9 +217,6 @@ public class ConstructionQueue : IOrderable, IFoggable, IContainable<IConstructo
 	public Empire Owner
 		=> Container.Owner;
 
-	/// <summary>
-	/// The rate at which this queue can construct.
-	/// </summary>
 	public ResourceQuantity Rate
 	{
 		get
@@ -276,22 +231,14 @@ public class ConstructionQueue : IOrderable, IFoggable, IContainable<IConstructo
 		}
 	}
 
-	// TODO: put these rate sub-properties in a view model
 	public int RateMinerals { get { return Rate[Resource.Minerals]; } }
 	public int RateOrganics { get { return Rate[Resource.Organics]; } }
 	public int RateRadioactives { get { return Rate[Resource.Radioactives]; } }
 
 	public double Timestamp { get; set; }
 
-	/// <summary>
-	/// Unspent build rate for this turn.
-	/// Does not update as orders are changed on the client; only during turn processing!
-	/// </summary>
 	public ResourceQuantity UnspentRate { get; set; }
 
-	/// <summary>
-	/// Upcoming spending on construction this turn.
-	/// </summary>
 	public ResourceQuantity UpcomingSpending
 	{
 		get
@@ -338,11 +285,6 @@ public class ConstructionQueue : IOrderable, IFoggable, IContainable<IConstructo
 		}
 	}
 
-	/// <summary>
-	/// Can this queue construct something?
-	/// </summary>
-	/// <param name="item"></param>
-	/// <returns></returns>
 	public bool CanConstruct(IConstructionTemplate item)
 	{
 		return GetReasonForBeingUnableToConstruct(item) is null;
@@ -472,11 +414,6 @@ public class ConstructionQueue : IOrderable, IFoggable, IContainable<IConstructo
 		return didStuff;
 	}
 
-	/// <summary>
-	/// Gets the reason why this queue cannot construct an item, or null if it can be constructed.
-	/// </summary>
-	/// <param name="item"></param>
-	/// <returns></returns>
 	public string? GetReasonForBeingUnableToConstruct(IConstructionTemplate item)
 	{
 		if (item == null)
