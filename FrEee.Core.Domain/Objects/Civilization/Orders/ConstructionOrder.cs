@@ -7,9 +7,9 @@ using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Vehicles.Types;
+using FrEee.Processes.Construction;
 
 namespace FrEee.Objects.Civilization.Orders;
 

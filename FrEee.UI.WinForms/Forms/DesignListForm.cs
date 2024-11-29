@@ -9,13 +9,13 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
 using FrEee.Gameplay.Commands.Orders;
 using FrEee.Gameplay.Commands.Designs;
 using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
+using FrEee.Processes.Construction;
 
 namespace FrEee.UI.WinForms.Forms;
 

@@ -11,12 +11,12 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using FrEee.Objects.Civilization.CargoStorage;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 using FrEee.Vehicles.Types;
+using FrEee.Processes.Construction;
 
 namespace FrEee.Objects.Space;
 

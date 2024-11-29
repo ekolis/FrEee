@@ -10,7 +10,6 @@ using FrEee.Objects.VictoryConditions;
 using FrEee.Modding;
 using FrEee.Extensions;
 using FrEee.Utility;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
@@ -21,6 +20,7 @@ using System.Threading.Tasks;
 using FrEee.Gameplay.Commands;
 using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
+using FrEee.Processes.Construction;
 
 namespace FrEee.Processes;
 

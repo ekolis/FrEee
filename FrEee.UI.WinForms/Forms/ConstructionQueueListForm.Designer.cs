@@ -1,4 +1,4 @@
-﻿using FrEee.Objects.Civilization.Construction;
+﻿using FrEee.Processes.Construction;
 
 namespace FrEee.UI.WinForms.Forms;
 

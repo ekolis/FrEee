@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.Civilization.CargoStorage;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
+using FrEee.Processes.Construction;
 
 namespace FrEee.Vehicles.Types;
 

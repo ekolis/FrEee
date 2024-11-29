@@ -8,12 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 using FrEee.Modding.Templates;
+using FrEee.Processes.Construction;
 
 namespace FrEee.Objects.Technology;
 

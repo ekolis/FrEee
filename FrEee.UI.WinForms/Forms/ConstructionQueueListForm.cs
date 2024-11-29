@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
-using FrEee.Objects.Civilization.Construction;
+using FrEee.Processes.Construction;
 
 namespace FrEee.UI.WinForms.Forms;
 

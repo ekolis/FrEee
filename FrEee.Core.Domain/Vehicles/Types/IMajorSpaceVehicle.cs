@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.CargoStorage;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.Space;
 using FrEee.Processes.Combat;
+using FrEee.Processes.Construction;
 
 namespace FrEee.Vehicles.Types;
 

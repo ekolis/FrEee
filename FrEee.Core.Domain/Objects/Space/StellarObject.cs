@@ -7,9 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using FrEee.Objects.Civilization.Construction;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
+using FrEee.Processes.Construction;
 
 namespace FrEee.Objects.Space;
 
