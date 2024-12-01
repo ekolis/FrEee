@@ -1,10 +1,12 @@
 using System.Drawing;
 using FrEee.Extensions;
+using FrEee.Modding;
 using FrEee.Modding.Abilities;
 using FrEee.Modding.Templates;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
+using FrEee.Root;
 using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
 using NUnit.Framework;
@@ -25,8 +27,11 @@ public class AbilityTest
 	[SetUp]
 	public void SetUp()
 	{
-		// create galaxy
-		TestUtilities.CreateGalaxyWithMod();
+		// configure DI
+		Configuration.ConfigureDI();
+
+		// create game
+		TestUtilities.CreateGame();
 
 		// create star system
 		sys = new(0);
@@ -34,7 +39,7 @@ public class AbilityTest
 
 		// create stuff
 		emp = TestUtilities.CreateEmpire();
-		hull = TestUtilities.CreateHull(VehicleTypes.Ship, design.Name);
+		hull = TestUtilities.CreateHull(VehicleTypes.Ship);
 		design = TestUtilities.CreateDesign(emp, hull);
 		ship = TestUtilities.CreateVehicle(design, emp);
 	}

@@ -63,7 +63,7 @@ public class Game
 	/// <summary>
 	/// The galaxy in which this game is played.
 	/// </summary>
-	public Galaxy Galaxy { get; internal set; }
+	public Galaxy Galaxy { get; set; }
 
 	/// <summary>
 	/// The battles which have taken place this turn.

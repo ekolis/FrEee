@@ -244,60 +244,61 @@ public class Mod : IDisposable
 
 	public void AssignID(IModObject mo, ICollection<string> used)
 	{
-		if (mo.ModID != null)
-			return;
 		lock (locker)
 		{
-			var fullname = mo.GetType().Name + " " + mo.Name;
-			if (mo.Name != null && !used.Contains(fullname))
+			if (mo.ModID is null)
 			{
-				mo.ModID = fullname;
-				used.Add(mo.ModID);
-			}
-			else
-			{
-				// tack a number on
-				int lastnum;
-				string name;
-				if (mo.Name == null)
-					name = "Generic " + mo.GetType().Name;
-				else
-					name = mo.GetType().Name + " " + mo.Name;
-				var lastword = name.LastWord();
-				if (int.TryParse(lastword, out lastnum))
+				var fullname = mo.GetType().Name + " " + mo.Name;
+				if (mo.Name != null && !used.Contains(fullname))
 				{
-					// has a number, count from that number
+					mo.ModID = fullname;
+					used.Add(mo.ModID);
 				}
 				else
 				{
-					lastnum = -1; // no number, start from 1
-				}
-				for (var num = lastnum + 1; num <= int.MaxValue; num++)
-				{
-					string exceptnum;
-					if (lastnum < 0 && num == 0)
-					{
-						exceptnum = name;
-						num = 1;
-					}
-					else if (lastnum < 0)
-						exceptnum = name;
+					// tack a number on
+					int lastnum;
+					string name;
+					if (mo.Name == null)
+						name = "Generic " + mo.GetType().Name;
 					else
-						exceptnum = name.Substring(0, name.Length - lastword.Length - 1);
-					var withnextnum = exceptnum + " " + num;
-					if (!used.Contains(withnextnum))
+						name = mo.GetType().Name + " " + mo.Name;
+					var lastword = name.LastWord();
+					if (int.TryParse(lastword, out lastnum))
 					{
-						mo.ModID = withnextnum;
-						used.Add(withnextnum);
-						break;
+						// has a number, count from that number
 					}
-					if (num == int.MaxValue)
-						throw new Exception("Can't assign mod ID to " + name + "; there's a gazillion other mod objects with that name.");
+					else
+					{
+						lastnum = -1; // no number, start from 1
+					}
+					for (var num = lastnum + 1; num <= int.MaxValue; num++)
+					{
+						string exceptnum;
+						if (lastnum < 0 && num == 0)
+						{
+							exceptnum = name;
+							num = 1;
+						}
+						else if (lastnum < 0)
+							exceptnum = name;
+						else
+							exceptnum = name.Substring(0, name.Length - lastword.Length - 1);
+						var withnextnum = exceptnum + " " + num;
+						if (!used.Contains(withnextnum))
+						{
+							mo.ModID = withnextnum;
+							used.Add(withnextnum);
+							break;
+						}
+						if (num == int.MaxValue)
+							throw new Exception("Can't assign mod ID to " + name + "; there's a gazillion other mod objects with that name.");
+					}
 				}
-			}
 
-			if (mo.ModID == null)
-				throw new Exception("Failed to assign mod ID to {0}: {1}".F(mo.GetType(), mo));
+				if (mo.ModID == null)
+					throw new Exception("Failed to assign mod ID to {0}: {1}".F(mo.GetType(), mo));
+			}
 
 			if (!objects.Contains(mo))
 				objects.Add(mo);

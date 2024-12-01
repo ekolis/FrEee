@@ -5,16 +5,19 @@ using FrEee.Modding.Loaders;
 using FrEee.Vehicles;
 using FrEee.Utility;
 using FrEee.Vehicles.Types;
+using FrEee.Objects.Space;
+using System.Linq;
 
 namespace FrEee;
 
 public static class TestUtilities
 {
-	public static Game CreateGalaxyWithMod(string? modPath = null)
+	public static Game CreateGame(string? modPath = null)
 	{
-		Game gal = new();
+		Game game = new();
 		Mod.Current = new ModLoader().Load(modPath);
-		return gal;
+		game.Galaxy = new Galaxy();
+		return game;
 	}
 
 	public static Empire CreateEmpire(string name = "Galactic Empire")
@@ -27,6 +30,7 @@ public static class TestUtilities
 		hull.ModID = name;
 		hull.ThrustPerMove = 1;
 		Mod.Current.Hulls.Add(hull);
+		Mod.Current.AssignID(hull, Mod.Current.Objects.Select(q => q.ModID).ToList());
 		return hull;
 	}
 
