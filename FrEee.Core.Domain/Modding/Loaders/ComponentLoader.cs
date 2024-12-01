@@ -140,7 +140,7 @@ public class ComponentLoader : DataFileLoader
 							{
 								if (split[i].ToInt() == 0)
 									continue;
-								dict[i + 1] = split[i].ToInt();
+								dict[i + w.MinRange] = split[i].ToInt();
 							}
 
 							// HACK - SE4 doesn't explicitly specify damage at range zero so copy the damage at range one value
