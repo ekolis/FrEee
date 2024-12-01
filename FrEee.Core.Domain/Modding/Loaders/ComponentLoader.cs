@@ -124,7 +124,7 @@ public class ComponentLoader : DataFileLoader
 					else
 						w.Targets = ParseWeaponTargets(rec.Get<string>("Weapon Target", c), @"\", rec);
 
-					w.MinRange = rec.Get<int>(new string[] { "Min Range", "Minimum Range", "Weapon Min Range", "Weapon Minimum Range" }, c) ?? 0;
+					w.MinRange = rec.Get<int>(new string[] { "Min Range", "Minimum Range", "Weapon Min Range", "Weapon Minimum Range" }, c) ?? 1;
 					w.MaxRange = rec.Get<int>(new string[] { "Max Range", "Maximum Range", "Weapon Max Range", "Weapon Maximum Range" }, c) ?? 20;
 					var dmgfield = rec.FindField(new string[] { "Damage", "Weapon Damage", "Damage At Rng", "Weapon Damage At Rng", "Damage At Range", "Weapon Damage At Range" }, ref index);
 					if (dmgfield.Value.StartsWith("="))
@@ -140,7 +140,7 @@ public class ComponentLoader : DataFileLoader
 							{
 								if (split[i].ToInt() == 0)
 									continue;
-								dict[i + 1] = split[i].ToInt();
+								dict[i + w.MinRange] = split[i].ToInt();
 							}
 
 							// HACK - SE4 doesn't explicitly specify damage at range zero so copy the damage at range one value
@@ -150,8 +150,8 @@ public class ComponentLoader : DataFileLoader
 								w.MinRange = 0;
 							}
 
-							w.MinRange = dict.Keys.Min();
-							w.MaxRange = dict.Keys.Max();
+							w.MinRange = dict.Where(q => q.Value != 0).Min(q => q.Key);
+							w.MaxRange = dict.Where(q => q.Value != 0).Max(q => q.Key);
 
 							w.Damage = dict.BuildMultiConditionalLessThanOrEqual(c, "range", 0);
 						}

@@ -5,20 +5,36 @@ using FrEee.Modding.Loaders;
 using FrEee.Vehicles;
 using FrEee.Utility;
 using FrEee.Vehicles.Types;
+using FrEee.Objects.Space;
+using System.Linq;
+using FrEee.Root;
 
 namespace FrEee;
 
 public static class TestUtilities
 {
-	public static Game CreateGalaxyWithMod(string? modPath = null)
+	public static Game Initialize(string? modPath = null)
 	{
-		Game gal = new();
+		Configuration.ConfigureDI();
+		Game game = new();
 		Mod.Current = new ModLoader().Load(modPath);
-		return gal;
+		game.Galaxy = new();
+		game.Setup = new();
+		return game;
 	}
 
-	public static Empire CreateEmpire(string name = "Galactic Empire")
-	 => new() { Name = name };
+	public static Game Initialize(Mod mod)
+	{
+		Configuration.ConfigureDI();
+		Game game = new();
+		Mod.Current = mod;
+		game.Galaxy = new();
+		game.Setup = new();
+		return game;
+	}
+
+	public static Empire CreateEmpire(string name = "Galactic Empire") =>
+		new() { Name = name };
 
 	public static IHull CreateHull(VehicleTypes vehicleType, string name = "Generic Hull")
 	{
@@ -27,6 +43,7 @@ public static class TestUtilities
 		hull.ModID = name;
 		hull.ThrustPerMove = 1;
 		Mod.Current.Hulls.Add(hull);
+		Mod.Current.AssignID(hull, Mod.Current.Objects.Select(q => q.ModID).ToList());
 		return hull;
 	}
 
@@ -44,30 +61,4 @@ public static class TestUtilities
 		vehicle.Owner = owner;
 		return vehicle;
 	}
-
-	///// <summary>
-	///// Use as first line in ad hoc tests (needed by XNA specifically)
-	///// </summary>
-	///// https://stackoverflow.com/questions/4337201/net-nunit-test-assembly-getentryassembly-is-null
-	//public static void SetEntryAssembly()
-	//{
-	//	SetEntryAssembly(Assembly.GetCallingAssembly());
-	//}
-
-	///// <summary>
-	///// Allows setting the Entry Assembly when needed.
-	///// Use AssemblyUtilities.SetEntryAssembly() as first line in XNA ad hoc tests
-	///// </summary>
-	///// <param name="assembly">Assembly to set as entry assembly</param>
-	///// https://stackoverflow.com/questions/4337201/net-nunit-test-assembly-getentryassembly-is-null
-	//public static void SetEntryAssembly(Assembly assembly)
-	//{
-	//	AppDomainManager manager = new AppDomainManager();
-	//	FieldInfo entryAssemblyfield = manager.GetType().GetField("m_entryAssembly", BindingFlags.Instance | BindingFlags.NonPublic);
-	//	entryAssemblyfield.SetValue(manager, assembly);
-
-	//	AppDomain domain = AppDomain.CurrentDomain;
-	//	FieldInfo domainManagerField = domain.GetType().GetField("_domainManager", BindingFlags.Instance | BindingFlags.NonPublic);
-	//	domainManagerField.SetValue(domain, manager);
-	//}
 }

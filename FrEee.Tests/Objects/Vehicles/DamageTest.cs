@@ -44,8 +44,7 @@ public class DamageTest
 	public static void ClassInit()
 	{
 		// initialize galaxy
-		new ModLoader().Load(null);
-		new Game();
+		TestUtilities.Initialize();
 
 		// initialize empire
 		empire = new Empire();

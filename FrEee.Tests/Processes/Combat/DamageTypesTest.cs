@@ -23,13 +23,8 @@ public class DamageTypesTest
     [OneTimeSetUp]
     public static void ClassInit()
     {
-        // load stock mod
-        mod = new ModLoader().Load(null);
-
-        // create a galaxy for referencing things
-        new Game();
-        foreach (var r in mod.Objects.OfType<IReferrable>())
-            Game.Current.AssignID(r);
+        TestUtilities.Initialize();
+        mod = Mod.Current;
     }
 
     [SetUp]

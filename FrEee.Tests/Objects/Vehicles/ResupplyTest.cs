@@ -30,8 +30,7 @@ public class ResupplyTest
 	public static void ClassInit()
 	{
 		// initialize galaxy
-		new Game();
-		new ModLoader().Load(null);
+		TestUtilities.Initialize();
 		sys = new StarSystem(0);
 		Galaxy.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(sys, new Point()));
 

@@ -121,12 +121,12 @@ public class TechnologyTest
 	[SetUp]
 	public void TestInit()
 	{
-		new Game();
-		Game.Current.Setup = new()
+		var game = TestUtilities.Initialize();
+		game.Setup = new()
 		{
 			TechnologyCost = TechnologyCost.Low
 		};
 		emp = new Empire();
-		Game.Current.Empires.Add(emp);
+		game.Empires.Add(emp);
 	}
 }

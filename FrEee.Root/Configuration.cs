@@ -31,6 +31,9 @@ public static class Configuration
 	{
 		// TODO: load dependencies from configuration file in mod data so we can really modularize this thing!
 
+		// reset in case DI as already running (e.g. unit test suite)
+		DI.Reset();
+
 		// processes
 		DI.RegisterSingleton<ITurnProcessor, TurnProcessor>();
 		DI.RegisterSingleton<IBattleFactory, BattleFactory>();

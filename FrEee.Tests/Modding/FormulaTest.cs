@@ -10,6 +10,7 @@ using FrEee.Modding.Loaders;
 using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
 using FrEee.Utility;
+using FrEee.Root;
 
 namespace FrEee.Modding;
 
@@ -24,23 +25,30 @@ public class FormulaTest
 	[Test]
 	public void DynamicFormula()
 	{
+		Configuration.ConfigureDI();
 		var gal = new Game();
 		Empire emp = new Empire();
 		Mod.Current = new Mod();
+
 		var armor = new ComponentTemplate();
 		armor.Name = armor.ModID = "Armor";
 		armor.Size = 10;
 		armor.Durability = new ComputedFormula<int>("self.Size * 3", armor, true);
 		Mod.Current.ComponentTemplates.Add(armor);
+		Mod.Current.AssignID(armor);
+
 		var mount = new Mount();
 		mount.ModID = mount.Name = "Scale Mount";
 		mount.DurabilityPercent = 200;
 		mount.SizePercent = new ComputedFormula<int>("design.Hull.Size", mount, true);
 		Mod.Current.Mounts.Add(mount);
+		Mod.Current.AssignID(mount);
+
 		var hull = DIRoot.Hulls.Build(VehicleTypes.Ship);
 		hull.ModID = hull.Name = "Generic Hull";
 		hull.Size = 150;
 		Mod.Current.Hulls.Add(hull);
+		Mod.Current.AssignID(hull);
 
 		var design = DIRoot.Designs.Build(hull);
 		Game.Current.AssignID(design);
@@ -48,6 +56,7 @@ public class FormulaTest
 		design.Components.Add(mct);
 		mct.Container = design;
 		design.Owner = emp;
+
 		Assert.AreEqual(30, armor.Durability.Value); // 10 * 3
 		Assert.AreEqual(mct.Durability, 60); // 30 * 200%
 		Assert.AreEqual(15, mct.Size); // 10 * 150%
