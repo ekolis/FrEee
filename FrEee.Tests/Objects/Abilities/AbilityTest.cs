@@ -31,7 +31,7 @@ public class AbilityTest
 		Configuration.ConfigureDI();
 
 		// create game
-		TestUtilities.CreateGame();
+		TestUtilities.Initialize();
 
 		// create star system
 		sys = new(0);

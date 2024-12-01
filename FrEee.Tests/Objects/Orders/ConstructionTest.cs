@@ -30,8 +30,7 @@ public class ConstructionTest
 		Configuration.ConfigureDI();
 
 		// initialize galaxy
-		new Game();
-		new ModLoader().Load(null);
+		TestUtilities.Initialize();
 
 		// initialize empires
 		empire = new Empire();

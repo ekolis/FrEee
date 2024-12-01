@@ -3,6 +3,7 @@ using FrEee.Extensions;
 using FrEee.Modding;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
+using FrEee.Root;
 using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
 using NUnit.Framework;
@@ -88,9 +89,11 @@ public class MemoryTest
 	[SetUp]
 	public void Setup()
 	{
+		// initialize DI
+		Configuration.ConfigureDI();
+
 		// initialize galaxy
-		new Game();
-		Mod.Current = new Mod();
+		TestUtilities.Initialize();
 
 		// initialize star systems
 		here = new StarSystem(0) { Name = "Here" };
