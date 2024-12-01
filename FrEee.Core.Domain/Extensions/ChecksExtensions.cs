@@ -131,10 +131,6 @@ public static class ChecksExtensions
 		int obscurationLevel = 0;
 		if (sobj.CanBeObscured)
 		{
-			if (sobj.StarSystem.Name == "Citronelle")
-			{
-
-			}
 			var so = sys.GetEmpireAbilityValue(sobj.Owner, "System - Sight Obscuration");
 			obscurationLevel = new[]
 			{
@@ -144,7 +140,9 @@ public static class ChecksExtensions
 				sec.GetEmpireAbilityValue(sobj.Owner, "Sector - Sight Obscuration"),
 			}.Max(a => a.ToInt());
 		}
-		return (cloaks.Any() || obscurationLevel > 0) && joined.All(j => j.CloakLevel > j.SensorLevel || obscurationLevel > j.SensorLevel);
+		return (cloaks.Any() || obscurationLevel > 0) 
+			&& joined.All(j =>
+				j.CloakLevel > j.SensorLevel || obscurationLevel > j.SensorLevel);
 	}
 
 	/// <summary>

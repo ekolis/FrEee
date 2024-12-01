@@ -46,8 +46,7 @@ public class CloakingTest
 	public static void ClassInit()
 	{
 		// initialize galaxy
-		new Game();
-		new ModLoader().Load(null);
+		TestUtilities.Initialize();
 
 		// initialize empires
 		seekers = new Empire();
@@ -57,13 +56,13 @@ public class CloakingTest
 
 		// initialize ships
 		Assert.IsNotNull(Mod.Current);
-		var dsHull = TestUtilities.CreateHull(VehicleTypes.Ship);
+		var dsHull = TestUtilities.CreateHull(VehicleTypes.Ship, "TestDestroyer");
 		var dsDesign = TestUtilities.CreateDesign(seekers, dsHull);
 		dsDesign.BaseName = "TestDestroyer";
 		dsDesign.Owner = seekers;
 		destroyer = (IMajorSpaceVehicle)dsDesign.Instantiate();
 		destroyer.Owner = seekers;
-		var subHull = TestUtilities.CreateHull(VehicleTypes.Ship);
+		var subHull = TestUtilities.CreateHull(VehicleTypes.Ship, "TestSubmarine");
 		var subDesign = TestUtilities.CreateDesign(seekers, subHull);
 		subDesign.BaseName = "TestSubmarine";
 		subDesign.Owner = hiders;
