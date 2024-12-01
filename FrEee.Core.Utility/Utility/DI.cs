@@ -13,7 +13,7 @@ namespace FrEee.Utility
     /// </summary>
     public static class DI
     {
-        private static readonly HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+        private static HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 
         private static IHost? host;
 
@@ -27,20 +27,11 @@ namespace FrEee.Utility
             where TInterface : class
 			where TImplementation : class, TInterface
 		{
-			Task.Run(async () =>
+			if (host is not null)
 			{
-				if (host is not null)
-				{
-					await host.StopAsync();
-				}
-
-				builder.Services.AddSingleton<TInterface, TImplementation>();
-
-				if (host is not null)
-				{
-					await Run();
-				}
-			});
+				throw new InvalidOperationException("Can't register a service while the service host is running.");
+			}
+			builder.Services.AddSingleton<TInterface, TImplementation>();
 		}
 
 		/// <summary>
@@ -53,20 +44,11 @@ namespace FrEee.Utility
 			where TInterface : class
 			where TImplementation : class, TInterface
 		{
-			Task.Run(async () =>
+			if (host is not null)
 			{
-				if (host is not null)
-				{
-					await host.StopAsync();
-				}
-
-				builder.Services.AddTransient<TInterface, TImplementation>();
-
-				if (host is not null)
-				{
-					await Run();
-				}
-			});
+				throw new InvalidOperationException("Can't register a service while the service host is running.");
+			}
+			builder.Services.AddTransient<TInterface, TImplementation>();
 		}
 
 		/// <summary>
@@ -81,6 +63,21 @@ namespace FrEee.Utility
         }
 
 		/// <summary>
+		/// Resets the dependency injection host.
+		/// Unregisters all services.
+		/// </summary>
+		/// <returns></returns>
+		public async static Task Reset()
+		{
+			if (host is not null)
+			{
+				await host.StopAsync();
+				host = null;
+				builder = new HostApplicationBuilder();
+			}
+		}
+
+		/// <summary>
 		/// Gets an instance of a registered service.
 		/// </summary>
 		/// <typeparam name="TInterface"></typeparam>
@@ -90,9 +87,12 @@ namespace FrEee.Utility
 		{
 			if (host is null)
 			{
-				throw new InvalidOperationException("Can't get items from DI without first calling Run.");
+				// start services (don't await, run in background)
+				Run();
 			}
-			var result = host.Services.GetService<TInterface>();
+
+			TInterface? result = host.Services.GetService<TInterface>();
+
 			return result ?? throw new InvalidOperationException($"No service of type {typeof(TInterface)} is registered.");
 		}
 	}

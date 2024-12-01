@@ -6,6 +6,7 @@ using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
+using FrEee.Root;
 using FrEee.Utility;
 using NUnit.Framework;
 
@@ -25,6 +26,9 @@ public class ConstructionTest
 	[OneTimeSetUp]
 	public static void ClassInit()
 	{
+		// initalize DI
+		Configuration.ConfigureDI();
+
 		// initialize galaxy
 		new Game();
 		new ModLoader().Load(null);
