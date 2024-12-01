@@ -242,12 +242,17 @@ public class Mod : IDisposable
 		}
 	}
 
-	public void AssignID(IModObject mo, ICollection<string> used)
+	public void AssignID(IModObject mo, ICollection<string>? used = null)
 	{
 		lock (locker)
 		{
 			if (mo.ModID is null)
 			{
+				if (used is null)
+				{
+					used = Objects.Select(q => q.ModID).ToList();
+				}
+
 				var fullname = mo.GetType().Name + " " + mo.Name;
 				if (mo.Name != null && !used.Contains(fullname))
 				{
