@@ -32,6 +32,12 @@ public interface IMobileSpaceObject : ICombatSpaceObject, IOrderable, IContainab
 	void BurnMovementSupplies();
 
 	void SpendTime(double timeElapsed);
+
+	/// <summary>
+	/// Can this object ever be mobile? Not "is it mobile right now", can it EVER be mobile?
+	/// If so, we want to display movement commands in the UI.
+	/// </summary>
+	bool CanBeMobile { get; }
 }
 
 // HACK: find a way to get rid of this generic interface, it's stupid...

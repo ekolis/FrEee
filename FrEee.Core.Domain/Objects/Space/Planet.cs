@@ -1045,4 +1045,9 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 	public IEnumerable<Component> Components => Cargo.Units.Where(q => q.CanFireIntoSpaceFromPlanetaryCargo).SelectMany(q => q.Components);
 
 	public bool FillsCombatTile => true;
+
+	/// <summary>
+	/// Sorry Pinocchio, planets can't move.
+	/// </summary>
+	public bool CanBeMobile => false;
 }

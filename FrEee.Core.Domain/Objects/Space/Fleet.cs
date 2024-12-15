@@ -922,4 +922,9 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 	public IEnumerable<Component> Components => Vehicles.SelectMany(q => q.Components);
 
 	public bool FillsCombatTile => Vehicles.Any(q => q.FillsCombatTile);
+
+	/// <summary>
+	/// A fleet can be mobile if all of its constituent vehicles can be mobile.
+	/// </summary>
+	public bool CanBeMobile => Vehicles.All(q => q.CanBeMobile);
 }

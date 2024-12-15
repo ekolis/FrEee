@@ -385,4 +385,10 @@ public abstract class SpaceVehicle
 	{
 		TimeToNextMove += timeElapsed;
 	}
+
+	/// <summary>
+	/// Space vehicles can be mobile if their design's strategic speed is greater than zero.
+	/// Not their current strategic speed; they might be temporarily immobilized by, say, engine damage.
+	/// </summary>
+	public bool CanBeMobile => Design.StrategicSpeed > 0;
 }
