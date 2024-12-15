@@ -120,14 +120,23 @@ public partial class MainGameForm : GameForm
 			else
 			{
 				// determine what commands are appropriate
-				btnMove.Visible = value is IMobileSpaceObject;
-				btnPursue.Visible = value is IMobileSpaceObject;
-				btnEvade.Visible = value is IMobileSpaceObject;
-				btnWarp.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).CanWarp;
+				if (value is IMobileSpaceObject sobj)
 				{
+					btnMove.Visible = sobj.CanBeMobile;
+					btnPursue.Visible = sobj.CanBeMobile;
+					btnEvade.Visible = sobj.CanBeMobile;
+					btnWarp.Visible = sobj.CanBeMobile && sobj.CanWarp;
 					btnColonize.Visible =
-					   value is IMobileSpaceObject sobj && sobj.Abilities().Any(a => a.Rule.Name.StartsWith("Colonize Planet - "))
+						sobj.Abilities().Any(a => a.Rule.Name.StartsWith("Colonize Planet - "))
 					   || value is Fleet f && f.LeafVehicles.Any(v => v.Abilities().Any(a => a.Rule.Name.StartsWith("Colonize Planet - ")));
+				}
+				else
+				{
+					btnMove.Visible = false;
+					btnPursue.Visible = false;
+					btnEvade.Visible = false;
+					btnWarp.Visible = false;
+					btnColonize.Visible = false;
 				}
 				btnSentry.Visible = value is IMobileSpaceObject;
 				btnConstructionQueue.Visible = value is IConstructor c && c.ConstructionQueue != null;
