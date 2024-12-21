@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reflection;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
+using System.Threading;
 
 namespace FrEee.Modding.Scripts;
 
@@ -18,6 +19,9 @@ namespace FrEee.Modding.Scripts;
 /// </summary>
 public class PythonScriptEngine : MarshalByRefObject
 {
+	private static readonly Lock codeScriptLock = new();
+	private static readonly Lock compiledScriptLock = new();
+
 	/// <summary>
 	/// Creates the IronPython scripting engine
 	/// </summary>
@@ -372,9 +376,12 @@ public class PythonScriptEngine : MarshalByRefObject
 	/// <returns>The script.</returns>
 	private static PythonScript GetCodeScript(ScriptCode source)
 	{
-		if (!codeScripts.ContainsKey(source))
-			codeScripts.Add(source, new PythonScript(source.ModuleName, source.Code, source.ExternalScripts));
-		return codeScripts[source];
+		lock (codeScriptLock)
+		{
+			if (!codeScripts.ContainsKey(source))
+				codeScripts.Add(source, new PythonScript(source.ModuleName, source.Code, source.ExternalScripts));
+			return codeScripts[source];
+		}
 	}
 
 	/// <summary>
@@ -384,9 +391,12 @@ public class PythonScriptEngine : MarshalByRefObject
 	/// <returns>The compiled code.</returns>
 	private static CompiledCode GetCompiledScript(PythonScript source)
 	{
-		if (!compiledScripts.ContainsKey(source))
-			compiledScripts.Add(source, Compile(source));
-		return compiledScripts[source];
+		lock (compiledScriptLock)
+		{
+			if (!compiledScripts.ContainsKey(source))
+				compiledScripts.Add(source, Compile(source));
+			return compiledScripts[source];
+		}
 	}
 
 	private class CompiledCodeWithVariables : IEquatable<CompiledCodeWithVariables>
