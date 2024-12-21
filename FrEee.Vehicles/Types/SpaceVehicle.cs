@@ -159,7 +159,7 @@ public abstract class SpaceVehicle
 		get { return 0; }
 	}
 
-	[DoNotCopy(false)]
+	[DoNotSerialize(false)]
 	public override Sector Sector
 	{
 		get
