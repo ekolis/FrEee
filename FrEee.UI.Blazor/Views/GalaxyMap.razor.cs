@@ -32,8 +32,8 @@ public partial class GalaxyMap
 				foreach (var dest in connections.Value)
 				{
 					// TODO: display one way warps differently (arrows, incomplete lines, gradients?)
-					await ctx.MoveToAsync(src.Location.X, src.Location.Y);
-					await ctx.LineToAsync(dest.Location.X, dest.Location.Y);
+					await ctx.MoveToAsync(src.Location.X + 1, src.Location.Y - 1);
+					await ctx.LineToAsync(dest.Location.X + 1, dest.Location.Y - 1);
 					await ctx.StrokeAsync();
 				}
 			}
