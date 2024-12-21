@@ -14,6 +14,7 @@ using FrEee.Gameplay.Commands.Waypoints;
 using FrEee.Processes;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Combat.Grid;
+using FrEee.Processes.Construction;
 using FrEee.Utility;
 using FrEee.Vehicles;
 

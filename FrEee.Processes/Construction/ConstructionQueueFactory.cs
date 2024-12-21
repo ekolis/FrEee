@@ -8,11 +8,11 @@ using FrEee.Extensions;
 using FrEee.Modding;
 using FrEee.Modding.Abilities;
 using FrEee.Objects.Civilization;
-using FrEee.Processes.Construction;
+using FrEee.Processes.Combat.Grid;
 using FrEee.Utility;
 using FrEee.Vehicles;
 
-namespace FrEee.Processes.Combat.Grid;
+namespace FrEee.Processes.Construction;
 
 /// <summary>
 /// Stock implementation of <see cref="IConstructionQueueFactory"/>.
