@@ -20,6 +20,7 @@
 		<ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
 		<ProjectReference Include="..\FrEee.Root\FrEee.Root.csproj" />
 		<ProjectReference Include="..\FrEee.UI.Blazor\FrEee.UI.Blazor.csproj" />
+		<ProjectReference Include="..\FrEee.UI\FrEee.UI.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Update="Controls\Blazor\PieChart.cs">

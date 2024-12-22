@@ -28,7 +28,7 @@ public static class Configuration
 	/// <summary>
 	/// Sets up any dependencies which need to be injected.
 	/// </summary>
-	public static void ConfigureDI()
+	public static void ConfigureDI(Action additionlConfig = null)
 	{
 		// TODO: load dependencies from configuration file in mod data so we can really modularize this thing!
 
@@ -54,6 +54,9 @@ public static class Configuration
 		DI.RegisterSingleton<IHullFactory, HullFactory>();
 		DI.RegisterSingleton<IDesignFactory, DesignFactory>();
 		DI.RegisterSingleton<IVehicleFactory, VehicleFactory>();
+
+		// addtional configuration for the GUI or whatever
+		additionlConfig?.Invoke();
 
 		// run this in the background, without awaiting it
 		DI.Run();

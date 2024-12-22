@@ -94,7 +94,10 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 		};
 
 		// set up dependency injection
-		Configuration.ConfigureDI();
+		Configuration.ConfigureDI(() =>
+		{
+			DI.RegisterSingleton<IGuiController, GuiController>();
+		});
 
 		// HACK - so many things are based on the working directory...
 		Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
