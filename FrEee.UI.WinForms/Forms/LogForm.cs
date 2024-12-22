@@ -39,25 +39,11 @@ public partial class LogForm
 		ShowInTaskbar = !mainGameForm.HasLogBeenShown;
 
 		VM.Messages = log;
-		VM.OnBattleSelected += VM_OnBattleSelected;
-		VM.OnHullSelected += VM_OnHullSelected;
-		VM.OnMessageSelected += VM_OnMessageSelected;
-		VM.OnSpaceObjectSelected += VM_OnSpaceObjectSelected;
-		VM.OnStarSystemSelected += VM_OnStarSystemSelected;
-		VM.OnTechnologySelected += VM_OnTechnologySelected;
-	}
-
-	private void VM_OnTechnologySelected(object? sender, Technology e)
-	{
-		// go to research screen
-		mainGameForm.ShowResearchForm();
-		Close();
 	}
 
 	private void VM_OnStarSystemSelected(object? sender, StarSystem e)
 	{
-		mainGameForm.SelectStarSystem(e);
-		Close();
+		
 	}
 
 	private void VM_OnSpaceObjectSelected(object? sender, ISpaceObject e)

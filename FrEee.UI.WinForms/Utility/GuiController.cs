@@ -4,9 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FrEee.Objects.Civilization.Diplomacy.Messages;
+using FrEee.Objects.Space;
+using FrEee.Objects.Technology;
+using FrEee.Processes.Combat;
 using FrEee.UI.WinForms.Forms;
 using FrEee.UI.WinForms.Objects;
 using FrEee.Utility;
+using FrEee.Vehicles;
 using Screen = FrEee.Utility.Screen;
 
 namespace FrEee.UI.WinForms.Utility;
@@ -34,6 +39,43 @@ public class GuiController
 	public void Exit()
 	{
 		Application.Exit();
+	}
+
+	public void Focus(ISpaceObject context)
+	{
+		MainGameForm.SelectSpaceObject(context);
+		Close(Screen.Log); // if it's open...
+	}
+
+	public void Focus(StarSystem context)
+	{
+		MainGameForm.SelectStarSystem(context);
+		Close(Screen.Log); // if it's open...
+	}
+
+	public void Focus(Technology context)
+	{
+		Show(Screen.Research);
+		// TODO: focus the technology
+		Close(Screen.Log); // if it's open...
+	}
+
+	public void Focus(IHull context)
+	{
+		new VehicleDesignForm(context).Show();
+		Close(Screen.Log); // if it's open...
+	}
+
+	public void Focus(IBattle context)
+	{
+		new BattleResultsForm(context).Show();
+		Close(Screen.Log); // if it's open...
+	}
+
+	public void Focus(IMessage context)
+	{
+		new DiplomacyForm(context).Show();
+		Close(Screen.Log);
 	}
 
 	public void Hide(Screen screen)
@@ -74,6 +116,9 @@ public class GuiController
 
 	private Type GetFormType(Screen screen)
 	{
-		return Type.GetType(screen + "Form");
+		var tn = typeof(MainGameForm).FullName.Replace("MainGame", screen.ToString());
+		return Type.GetType(tn);
 	}
+
+	private MainGameForm MainGameForm => MainGameForm.Instance;
 }

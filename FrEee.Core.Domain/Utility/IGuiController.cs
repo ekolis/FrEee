@@ -1,4 +1,10 @@
-﻿namespace FrEee.Utility;
+﻿using FrEee.Objects.Civilization.Diplomacy.Messages;
+using FrEee.Objects.Space;
+using FrEee.Objects.Technology;
+using FrEee.Processes.Combat;
+using FrEee.Vehicles;
+
+namespace FrEee.Utility;
 
 public interface IGuiController
 {
@@ -34,4 +40,40 @@ public interface IGuiController
 	/// Exits or returns to the main menu, per the player's preference.
 	/// </summary>
 	void CloseGame();
+
+	/// <summary>
+	/// Focuses a space object on the map.
+	/// </summary>
+	/// <param name="sobj"></param>
+	void Focus(ISpaceObject context);
+	
+	/// <summary>
+	/// Focuses a star system on the map.
+	/// </summary>
+	/// <param name="sobj"></param>
+	void Focus(StarSystem context);
+
+	/// <summary>
+	/// Focuses a technology on the research screen.
+	/// </summary>
+	/// <param name="sobj"></param>
+	void Focus(Technology context);
+
+	/// <summary>
+	/// Focuses a hull on the design screen.
+	/// </summary>
+	/// <param name="sobj"></param>
+	void Focus(IHull context);
+
+	/// <summary>
+	/// Focuses a battle on the battle summary screen.
+	/// </summary>
+	/// <param name="sobj"></param>
+	void Focus(IBattle context);
+
+	/// <summary>
+	/// Focuses a message on the diplomacy screen.
+	/// </summary>
+	/// <param name="sobj"></param>
+	void Focus(IMessage context);
 }
