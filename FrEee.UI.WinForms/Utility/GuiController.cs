@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrEee.UI.WinForms.Forms;
 using FrEee.UI.WinForms.Objects;
+using FrEee.Utility;
+using Screen = FrEee.Utility.Screen;
 
 namespace FrEee.UI.WinForms.Utility;
 

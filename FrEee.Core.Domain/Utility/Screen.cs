@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrEee.UI;
+namespace FrEee.Utility;
 
 /// <summary>
 /// The various screens in the UI.
