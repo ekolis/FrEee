@@ -15,6 +15,7 @@ using FrEee.Processes.Combat;
 using FrEee.Vehicles.Types;
 using FrEee.Vehicles;
 using FrEee.Extensions;
+using FrEee.Utility;
 
 namespace FrEee.UI.Blazor.Views;
 
@@ -39,7 +40,7 @@ public class HistoryLogViewModel
 			if (context is ISpaceObject sobj)
 			{
 				// go to space object
-				OnSpaceObjectSelected(this, sobj);
+				DIRoot.Gui.Focus(sobj);
 			}
 			else if (context is IUnit unit)
 			{
@@ -49,11 +50,11 @@ public class HistoryLogViewModel
 				{
 					if (container is Sector)
 					{
-						OnSpaceObjectSelected(this, (ISpaceObject)unit);
+						DIRoot.Gui.Focus((ISpaceObject)unit);
 					}
 					else
 					{
-						OnSpaceObjectSelected(this, (ISpaceObject)container);
+						DIRoot.Gui.Focus((ISpaceObject)container);
 					}
 				}
 			}
@@ -61,37 +62,37 @@ public class HistoryLogViewModel
 			{
 				// go to the planet
 				var container = facility.Container;
-				OnSpaceObjectSelected(this, container);
+				DIRoot.Gui.Focus(container);
 			}
 			else if (context is Technology tech)
 			{
 				// go to research screen
-				OnTechnologySelected(this, tech);
+				DIRoot.Gui.Focus(tech);
 			}
 			else if (context is IHull hull)
 			{
 				// go to design screen and create a new design using this hull
-				OnHullSelected(this, hull);
+				DIRoot.Gui.Focus(hull);
 			}
 			else if (context is ComponentTemplate || context is Mount)
 			{
 				// go to design screen
-				OnHullSelected(this, null);
+				DIRoot.Gui.Show(Screen.VehicleDesign);
 			}
 			else if (context is IBattle battle)
 			{
 				// show battle results
-				OnBattleSelected(this, battle);
+				DIRoot.Gui.Focus(battle);
 			}
 			else if (context is IMessage msg)
 			{
 				// show diplomacy screen
-				OnMessageSelected(this, msg);
+				DIRoot.Gui.Focus(msg);
 			}
 			else if (context is StarSystem sys)
 			{
 				// navigate game form to that system
-				OnStarSystemSelected(this, sys);
+				DIRoot.Gui.Focus(sys);
 			}
 
 			// TODO - more types of goto-messages
@@ -115,16 +116,4 @@ public class HistoryLogViewModel
 		}
 		return false;
 	}
-
-	public event EventHandler<ISpaceObject> OnSpaceObjectSelected = (sender, e) => { };
-
-	public event EventHandler<Technology> OnTechnologySelected = (sender, e) => { };
-
-	public event EventHandler<IHull?> OnHullSelected = (sender, e) => { };
-
-	public event EventHandler<IBattle> OnBattleSelected = (sender, e) => { };
-
-	public event EventHandler<IMessage> OnMessageSelected = (sender, e) => { };
-
-	public event EventHandler<StarSystem> OnStarSystemSelected = (sender, e) => { };
 }

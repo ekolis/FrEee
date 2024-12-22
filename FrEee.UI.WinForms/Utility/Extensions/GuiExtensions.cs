@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 using Microsoft.AspNetCore.Components.WebView.WindowsForms;
 using Microsoft.Extensions.DependencyInjection;
+using WFScreen = System.Windows.Forms.Screen;
 
 using FrEee.Gameplay;
 using FrEee.Gameplay.Commands.Fleets;
@@ -100,10 +101,10 @@ public static class GuiExtensions
 		form.FormBorderStyle = FormBorderStyle.FixedDialog;
 		form.ClientSize = control.Size;
 		// TODO - deal with multiple screens
-		if (form.Width > Screen.PrimaryScreen.WorkingArea.Width)
-			form.Width = Screen.PrimaryScreen.WorkingArea.Width;
-		if (form.Height > Screen.PrimaryScreen.WorkingArea.Height)
-			form.Height = Screen.PrimaryScreen.WorkingArea.Height;
+		if (form.Width > WFScreen.PrimaryScreen.WorkingArea.Width)
+			form.Width = WFScreen.PrimaryScreen.WorkingArea.Width;
+		if (form.Height > WFScreen.PrimaryScreen.WorkingArea.Height)
+			form.Height = WFScreen.PrimaryScreen.WorkingArea.Height;
 		form.StartPosition = FormStartPosition.CenterParent;
 		form.Controls.Add(control);
 		form.KeyPreview = true;

@@ -94,7 +94,10 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 		};
 
 		// set up dependency injection
-		Configuration.ConfigureDI();
+		Configuration.ConfigureDI(() =>
+		{
+			DI.RegisterSingleton<IGuiController, GuiController>();
+		});
 
 		// HACK - so many things are based on the working directory...
 		Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
@@ -296,7 +299,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 			}
 			Game.SaveAll();
 			Console.WriteLine("Turn processed successfully. It is now turn " + Game.Current.TurnNumber + " (stardate " + Game.Current.Stardate + ").");
-			Gui.Exit();
+			DIRoot.Gui.Exit();
 			return 0;
 		}
 		catch (Exception ex)

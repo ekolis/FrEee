@@ -92,4 +92,9 @@ public static class DIRoot
 	/// Creates construction queues.
 	/// </summary>
 	public static IConstructionQueueFactory ConstructionQueues => DI.Get<IConstructionQueueFactory>();
+
+	/// <summary>
+	/// Manages the GUI. Only available when there is a GUI.
+	/// </summary>
+	public static IGuiController Gui => DI.Get<IGuiController>();
 }

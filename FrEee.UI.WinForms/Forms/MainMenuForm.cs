@@ -178,7 +178,7 @@ public partial class MainMenuForm : GameForm
 
 	private void btnQuit_Click(object sender, EventArgs e)
 	{
-		Gui.Exit();
+		DIRoot.Gui.Exit();
 	}
 
 	private void btnMods_Click(object sender, EventArgs e)
@@ -315,6 +315,6 @@ public partial class MainMenuForm : GameForm
 	private void MainMenuForm_FormClosed(object sender, FormClosedEventArgs e)
 	{
 		ClientSettings.Save();
-		Gui.Exit();
+		DIRoot.Gui.Exit();
 	}
 }

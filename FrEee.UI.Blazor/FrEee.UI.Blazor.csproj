@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
