@@ -25,6 +25,9 @@
 		<Compile Update="Controls\Blazor\PieChart.cs">
 		  <SubType>Component</SubType>
 		</Compile>
+		<Compile Update="Forms\BlazorForm.cs">
+		  <SubType>Component</SubType>
+		</Compile>
 		<Compile Update="Properties/Resources.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
