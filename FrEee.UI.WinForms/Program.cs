@@ -299,7 +299,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 			}
 			Game.SaveAll();
 			Console.WriteLine("Turn processed successfully. It is now turn " + Game.Current.TurnNumber + " (stardate " + Game.Current.Stardate + ").");
-			Gui.Exit();
+			DIRoot.Gui.Exit();
 			return 0;
 		}
 		catch (Exception ex)

@@ -807,7 +807,7 @@ public partial class MainGameForm : GameForm
 	{
 		Instance = null;
 		if (QuitOnClose)
-			Gui.CloseGame();
+			DIRoot.Gui.CloseGame();
 	}
 
 	private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
