@@ -1,0 +1,29 @@
+﻿@using FrEee.Extensions
+@inherits ViewBase<HistoryLogViewModel>
+<table>
+	@foreach (var turn in VM.Messages.GroupBy(q => q.TurnNumber).OrderByDescending(q => q.Key))
+	{
+		<tr>
+			<td colspan="3">
+				@turn.Key.ToStardate()
+			</td>
+		</tr>
+		@foreach (var message in turn)
+		{
+			<tr>
+				<td style="width: 32px; height: 32px;">
+					<ImageDisplay VM="VM.CreateImageDisplayViewModel(message.Picture)"/>
+				</td>
+				<td>
+					@message.Text
+				</td>
+				<td>
+					@if (VM.CanNavigate(message))
+					{
+						<button onclick="@(() => VM.Navigate(message))" style="width: 100px; height: 50%">Go</button>
+					}
+				</td>
+			</tr>
+		}
+	}
+</table>

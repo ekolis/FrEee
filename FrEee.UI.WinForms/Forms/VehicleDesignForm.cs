@@ -29,7 +29,7 @@ public partial class VehicleDesignForm : GameForm
 		catch { }
 	}
 
-	public VehicleDesignForm(IHull<IVehicle> hull)
+	public VehicleDesignForm(IHull hull)
 	{
 		InitializeComponent();
 		ShowComponentDetails(null);
