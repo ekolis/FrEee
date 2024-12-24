@@ -16,11 +16,11 @@ public class CargoDelta : IPromotable
 {
     public CargoDelta()
     {
-        RacePopulation = new GameReferenceKeyedDialog<Race, long?>();
+        RacePopulation = new GameReferenceKeyedDictionary<Race, long?>();
         AllPopulation = false;
         AnyPopulation = 0L;
         Units = new GameReferenceSet<IUnit>();
-        UnitDesignTonnage = new GameReferenceKeyedDialog<IDesign<IUnit>, int?>();
+        UnitDesignTonnage = new GameReferenceKeyedDictionary<IDesign<IUnit>, int?>();
         UnitRoleTonnage = new SafeDictionary<string, int?>();
         UnitTypeTonnage = new SafeDictionary<VehicleTypes, int?>();
     }
@@ -65,8 +65,8 @@ public class CargoDelta : IPromotable
         }
     }
 
-    public GameReferenceKeyedDialog<Race, long?> RacePopulation { get; private set; }
-    public GameReferenceKeyedDialog<IDesign<IUnit>, int?> UnitDesignTonnage { get; private set; }
+    public GameReferenceKeyedDictionary<Race, long?> RacePopulation { get; private set; }
+    public GameReferenceKeyedDictionary<IDesign<IUnit>, int?> UnitDesignTonnage { get; private set; }
     public SafeDictionary<string, int?> UnitRoleTonnage { get; private set; }
     public GameReferenceSet<IUnit> Units { get; private set; }
     public SafeDictionary<VehicleTypes, int?> UnitTypeTonnage { get; private set; }
