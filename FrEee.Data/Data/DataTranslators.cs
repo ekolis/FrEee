@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +17,8 @@ public class DataTranslators
 	private DataTranslators()
 	{
 		var catalog = new AggregateCatalog();
-		catalog.Catalogs.Add(new DirectoryCatalog("."));
+		var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+		catalog.Catalogs.Add(new DirectoryCatalog(path));
 		container = new CompositionContainer(catalog);
 		container.ComposeParts(this);
 	}
