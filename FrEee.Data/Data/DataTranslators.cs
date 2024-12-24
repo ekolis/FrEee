@@ -16,7 +16,7 @@ public class DataTranslators
 	private DataTranslators()
 	{
 		var catalog = new AggregateCatalog();
-		catalog.Catalogs.Add(new AssemblyCatalog(typeof(IDataTranslator).Assembly));
+		catalog.Catalogs.Add(new DirectoryCatalog("."));
 		container = new CompositionContainer(catalog);
 		container.ComposeParts(this);
 	}
