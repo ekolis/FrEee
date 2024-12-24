@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using FrEee.Utility;
+using FrEee.Data;
 namespace FrEee.Serialization;
 
 internal static class LegacySerializer
@@ -127,6 +128,9 @@ internal static class LegacySerializer
 		// write some tabs
 		if (type != desiredType)
 			w.Write(tabs);
+
+		// do data object translation
+		o = DataTranslators.ToData(o);
 
 		// serialize the object
 		if (StringifierLibrary.Instance.All?.Any(x => x.SupportedType.IsAssignableFrom(type)) ?? false)
@@ -273,6 +277,9 @@ internal static class LegacySerializer
 			Action<Task> awaitTask = async t => await t;
 			propertySetterTasks.RunTasks(awaitTask);
 		}*/
+
+		// do data object translation
+		o = DataTranslators.FromData(o);
 
 		// return our new object
 		return o;
