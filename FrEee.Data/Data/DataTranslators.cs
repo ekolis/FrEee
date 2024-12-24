@@ -10,17 +10,33 @@ using System.Threading.Tasks;
 namespace FrEee.Data;
 public class DataTranslators
 {
-	private CompositionContainer container;
-
 	private static DataTranslators instance = new DataTranslators();
 
 	private DataTranslators()
 	{
-		var catalog = new AggregateCatalog();
+		// https://stackoverflow.com/questions/4020532/mef-unable-to-load-one-or-more-of-the-requested-types-retrieve-the-loaderexce
 		var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-		catalog.Catalogs.Add(new DirectoryCatalog(path));
-		container = new CompositionContainer(catalog);
-		container.ComposeParts(this);
+		var di = new DirectoryInfo(path);
+
+		var dlls = di.GetFileSystemInfos("FrEee.*.dll");
+		AggregateCatalog agc = new AggregateCatalog();
+
+		foreach (var fi in dlls)
+		{
+			try
+			{
+				var ac = new AssemblyCatalog(Assembly.LoadFile(fi.FullName));
+				var parts = ac.Parts.ToArray(); // throws ReflectionTypeLoadException 
+				agc.Catalogs.Add(ac);
+			}
+			catch (ReflectionTypeLoadException ex)
+			{
+				// do nothing, it was a bad DLL
+			}
+		}
+
+		CompositionContainer cc = new CompositionContainer(agc);
+		cc.ComposeParts(this);
 	}
 
 	[ImportMany(typeof(IDataTranslator))]
@@ -35,6 +51,11 @@ public class DataTranslators
 	/// <returns>The data representation, or the original object if there is no available translator for the object type.</returns>
 	public static object ToData(object obj)
 	{
+		if (obj is null)
+		{
+			return null;
+		}
+
 		var translator = All.SingleOrDefault(q => q.ObjectType == obj.GetType());
 		if (translator is null)
 		{
@@ -54,6 +75,11 @@ public class DataTranslators
 	/// <returns>The object, or the original data if there is no available translator for the data type.</returns>
 	public static object FromData(object obj)
 	{
+		if (obj is null)
+		{
+			return null;
+		}
+
 		var translator = All.SingleOrDefault(q => q.DataType == obj.GetType());
 		if (translator is null)
 		{
