@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrEee.Vehicles", "FrEee.Veh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrEee.Data", "FrEee.Data\FrEee.Data.csproj", "{21FC9522-832E-4E05-9BEC-8708D43EC775}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrEee.Processes.Data", "FrEee.Processes.Data\FrEee.Processes.Data.csproj", "{61CD71C5-8994-4DD2-9B46-570CDB592060}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -174,6 +176,18 @@ Global
 		{21FC9522-832E-4E05-9BEC-8708D43EC775}.Release|x64.Build.0 = Release|Any CPU
 		{21FC9522-832E-4E05-9BEC-8708D43EC775}.Release|x86.ActiveCfg = Release|Any CPU
 		{21FC9522-832E-4E05-9BEC-8708D43EC775}.Release|x86.Build.0 = Release|Any CPU
+		{61CD71C5-8994-4DD2-9B46-570CDB592060}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61CD71C5-8994-4DD2-9B46-570CDB592060}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61CD71C5-8994-4DD2-9B46-570CDB592060}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{61CD71C5-8994-4DD2-9B46-570CDB592060}.Debug|x64.Build.0 = Debug|Any CPU
+		{61CD71C5-8994-4DD2-9B46-570CDB592060}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{61CD71C5-8994-4DD2-9B46-570CDB592060}.Debug|x86.Build.0 = Debug|Any CPU
+		{61CD71C5-8994-4DD2-9B46-570CDB592060}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61CD71C5-8994-4DD2-9B46-570CDB592060}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61CD71C5-8994-4DD2-9B46-570CDB592060}.Release|x64.ActiveCfg = Release|Any CPU
+		{61CD71C5-8994-4DD2-9B46-570CDB592060}.Release|x64.Build.0 = Release|Any CPU
+		{61CD71C5-8994-4DD2-9B46-570CDB592060}.Release|x86.ActiveCfg = Release|Any CPU
+		{61CD71C5-8994-4DD2-9B46-570CDB592060}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
