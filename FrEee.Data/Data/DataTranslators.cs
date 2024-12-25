@@ -102,4 +102,10 @@ public class DataTranslators
 		var translator = All.SingleOrDefault(q => q.ObjectType == objType);
 		return translator?.DataType ?? objType;
 	}
+
+	public static bool CanTranslateToData(Type objType)
+	{
+		var translator = All.SingleOrDefault(q => q.ObjectType == objType);
+		return translator is not null;
+	}
 }

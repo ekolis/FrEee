@@ -59,7 +59,6 @@ public static class Serializer
 				Console.Error.WriteLine(ex2);
 			}
 			throw new Exception("Unable to deserialize. Please check stderr.txt for details.");
-
 		}
 	}
 

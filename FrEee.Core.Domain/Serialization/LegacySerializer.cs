@@ -55,6 +55,13 @@ internal static class LegacySerializer
 
 	internal static void Serialize(object o, TextWriter w, Type desiredType, ObjectGraphContext context = null, int tabLevel = 0)
 	{
+		// do data object translation
+		if (DataTranslators.CanTranslateToData(o?.GetType()))
+		{
+			o = DataTranslators.ToData(o);
+			desiredType = DataTranslators.GetDataType(o?.GetType());
+		}
+
 		var tabs = new string('\t', tabLevel);
 
 		// type checking!
@@ -128,9 +135,6 @@ internal static class LegacySerializer
 		// write some tabs
 		if (type != desiredType)
 			w.Write(tabs);
-
-		// do data object translation
-		o = DataTranslators.ToData(o);
 
 		// serialize the object
 		if (StringifierLibrary.Instance.All?.Any(x => x.SupportedType.IsAssignableFrom(type)) ?? false)
