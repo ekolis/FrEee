@@ -71,24 +71,35 @@ public class DataTranslators
 	/// <summary>
 	/// Attempts to translate data to an object.
 	/// </summary>
-	/// <param name="obj"></param>
+	/// <param name="data"></param>
 	/// <returns>The object, or the original data if there is no available translator for the data type.</returns>
-	public static object FromData(object obj)
+	public static object FromData(object data)
 	{
-		if (obj is null)
+		if (data is null)
 		{
 			return null;
 		}
 
-		var translator = All.SingleOrDefault(q => q.DataType == obj.GetType());
+		var translator = All.SingleOrDefault(q => q.DataType == data.GetType());
 		if (translator is null)
 		{
 			// can't translate, no translator found
-			return obj;
+			return data;
 		}
 		else
 		{
-			return translator.FromData(obj);
+			return translator.FromData(data);
 		}
+	}
+
+	/// <summary>
+	/// Gets the type used to represent a type as data.
+	/// </summary>
+	/// <param name="objType"></param>
+	/// <returns></returns>
+	public static Type GetDataType(Type objType)
+	{
+		var translator = All.SingleOrDefault(q => q.ObjectType == objType);
+		return translator?.DataType ?? objType;
 	}
 }
