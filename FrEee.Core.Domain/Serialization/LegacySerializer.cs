@@ -56,10 +56,12 @@ internal static class LegacySerializer
 	internal static void Serialize(object o, TextWriter w, Type desiredType, ObjectGraphContext context = null, int tabLevel = 0)
 	{
 		// do data object translation
+		bool usingDataTranslator = false;
 		if (DataTranslators.CanTranslateToData(o?.GetType()))
 		{
 			o = DataTranslators.ToData(o);
 			desiredType = DataTranslators.GetDataType(o?.GetType());
+			usingDataTranslator = true;
 		}
 
 		var tabs = new string('\t', tabLevel);
@@ -105,7 +107,8 @@ internal static class LegacySerializer
 		}
 
 		// write the type name if it's not the same as the desired type
-		if (type == desiredType)
+		// also write it if we're using a data translator
+		if (type == desiredType && !usingDataTranslator)
 			w.Write(":");
 		else
 			w.WriteLine(GetShortTypeName(type) + ":");
