@@ -227,9 +227,6 @@ internal static class LegacySerializer
 #endif
 		}
 
-		// find data type
-		type = DataTranslators.GetDataType(type);
-
 		// the object!
 		object o;
 
