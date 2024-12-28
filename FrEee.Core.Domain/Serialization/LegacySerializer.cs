@@ -14,6 +14,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using FrEee.Utility;
 using FrEee.Data;
+using System.Diagnostics;
 namespace FrEee.Serialization;
 
 internal static class LegacySerializer
@@ -214,17 +215,6 @@ internal static class LegacySerializer
 		{
 			// add to known types
 			ObjectGraphContext.KnownTypes.Add(GetShortTypeName(type), type);
-		}
-
-		// check type so we don't bother trying to create an object only to find it's the wrong type later
-		if (!desiredType.IsAssignableFrom(type))
-		{
-#if DEBUG
-			return null;
-#endif
-#if RELEASE
-			throw new SerializationException("Expected " + desiredType + ", got " + type + " when parsing new object.");
-#endif
 		}
 
 		// the object!
@@ -622,6 +612,11 @@ internal static class LegacySerializer
 
 	private static object DeserializeObjectWithProperties(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
 	{
+		Debug.WriteLine(type);
+		if (type.Name.Contains("Cargo"))
+		{
+
+		}
 		// create object and add it to our context
 		var o = type.Instantiate();
 		context.Add(o);
@@ -640,25 +635,26 @@ internal static class LegacySerializer
 		for (int i = 0; i < count; i++)
 		{
 			var pname = r.ReadTo(':', log).Trim();
-			if (type == typeof(Objects.Civilization.Empire) && pname == "StoredResources")
-			{
-
-			}
 			if (props.ContainsKey(pname))
 			{
 				// TODO - get base class recursively, not just derived class and declaring type
 				var prop = type.GetProperty(pname, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance) ?? props[pname]; // get concrete type property in case it has DoNotSerialize and the abstract type doesn't
 				if (prop != null)
 				{
-					if (prop.Name == "StarSystemNames")
+					object? data;
+					if (prop.PropertyType.IsPrimitive || prop.PropertyType == typeof(decimal))
 					{
-
+						data = Deserialize(r, prop.PropertyType, false, context, log);
 					}
-					var data = Deserialize(r, prop.PropertyType, false, context, log);
+					else
+					{
+						data = Deserialize(r, typeof(object), false, context, log);
+					}
+					var propVal = DataTranslators.FromData(data);
 					if (prop.HasAttribute<SerializationPriorityAttribute>())
-						prop.SetValue(o, data); // TODO - use cached reflection lambdas
+						prop.SetValue(o, propVal); // TODO - use cached reflection lambdas
 					if (!prop.HasAttribute<DoNotSerializeAttribute>())
-						dict[pname] = data;
+						dict[pname] = propVal;
 				}
 				else
 					r.ReadToEndOfLine(';', log); // throw away this property, we don't need it
