@@ -6,28 +6,36 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Utility;
 
 namespace FrEee.Data;
 public class DataTranslators
 {
-	private static DataTranslators instance = new DataTranslators();
+	private static DataTranslators? instance;
 
-	private DataTranslators()
+	public static void Load()
 	{
+		instance = new DataTranslators();
+
 		// https://stackoverflow.com/questions/4020532/mef-unable-to-load-one-or-more-of-the-requested-types-retrieve-the-loaderexce
 		var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 		var di = new DirectoryInfo(path);
 
 		var dlls = di.GetFileSystemInfos("FrEee.*.dll");
-		AggregateCatalog agc = new AggregateCatalog();
+		AggregateCatalog agc = new();
 
 		foreach (var fi in dlls)
 		{
 			try
 			{
-				var ac = new AssemblyCatalog(Assembly.LoadFile(fi.FullName));
+				// find the assembly in the file and create a catalog for it
+				var assembly = Assembly.LoadFile(fi.FullName);
+				var ac = new AssemblyCatalog(assembly);
 				var parts = ac.Parts.ToArray(); // throws ReflectionTypeLoadException 
 				agc.Catalogs.Add(ac);
+
+				// formally load the assembly so it can be used later
+				SafeType.RegisterAssembly(assembly);
 			}
 			catch (ReflectionTypeLoadException ex)
 			{
@@ -36,13 +44,23 @@ public class DataTranslators
 		}
 
 		CompositionContainer cc = new CompositionContainer(agc);
-		cc.ComposeParts(this);
+		cc.ComposeParts(instance);
 	}
 
 	[ImportMany(typeof(IDataTranslator))]
 	private IEnumerable<IDataTranslator> all;
 
-	public static IEnumerable<IDataTranslator> All => instance.all;
+	public static IEnumerable<IDataTranslator> All
+	{
+		get
+		{
+			if (instance is null)
+			{
+				Load();
+			}
+			return instance.all;
+		}
+	}
 
 	/// <summary>
 	/// Attempts to translate an object to a data representation.
