@@ -16,7 +16,9 @@
 		<ProjectReference Include="..\FrEee.Gameplay\FrEee.Gameplay.csproj">
 		  <PrivateAssets>all</PrivateAssets>
 		</ProjectReference>
-		<ProjectReference Include="..\FrEee.Processes.Data\FrEee.Processes.Data.csproj" />
+		<ProjectReference Include="..\FrEee.Processes.Data\FrEee.Processes.Data.csproj">
+			<PrivateAssets>all</PrivateAssets>
+        </ProjectReference>
 		<ProjectReference Include="..\FrEee.Processes\FrEee.Processes.csproj">
 		  <PrivateAssets>all</PrivateAssets>
 		</ProjectReference>
