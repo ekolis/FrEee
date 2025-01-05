@@ -10,8 +10,9 @@ using FrEee.Objects.GameState;
 namespace FrEee.Gameplay.Commands.Notes;
 
 /// <summary>
-/// Builds various types of commands used for managing notes.
-public interface INoteCommandFactory
+/// Creates various types of commands used for managing notes.
+/// </summary>
+public interface INoteCommandService
 {
 	ICommand ClearPlayerNote(IReferrable target);
 

@@ -274,7 +274,7 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityOb
 	{
 		get
 		{
-			var design = Container ?? DIRoot.Designs.Build(Mod.Current.Hulls.FirstOrDefault(h => ComponentTemplate.VehicleTypes.HasFlag(h.VehicleType)));
+			var design = Container ?? DIRoot.Designs.CreateDesign(Mod.Current.Hulls.FirstOrDefault(h => ComponentTemplate.VehicleTypes.HasFlag(h.VehicleType)));
 			var empire = Container == null ? Empire.Current : Container.Owner;
 			return new Dictionary<string, object>
 			{

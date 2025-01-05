@@ -44,13 +44,13 @@ public class FormulaTest
 		Mod.Current.Mounts.Add(mount);
 		Mod.Current.AssignID(mount);
 
-		var hull = DIRoot.Hulls.Build(VehicleTypes.Ship);
+		var hull = DIRoot.Hulls.CreateHull(VehicleTypes.Ship);
 		hull.ModID = hull.Name = "Generic Hull";
 		hull.Size = 150;
 		Mod.Current.Hulls.Add(hull);
 		Mod.Current.AssignID(hull);
 
-		var design = DIRoot.Designs.Build(hull);
+		var design = DIRoot.Designs.CreateDesign(hull);
 		Game.Current.AssignID(design);
 		var mct = new MountedComponentTemplate(design, armor, mount);
 		design.Components.Add(mct);

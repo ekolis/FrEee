@@ -33,7 +33,7 @@ public partial class VehicleDesignForm : GameForm
 	{
 		InitializeComponent();
 		ShowComponentDetails(null);
-		Design = DIRoot.Designs.Build(hull);
+		Design = DIRoot.Designs.CreateDesign(hull);
 
 		try { this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon); }
 		catch { }
@@ -290,7 +290,7 @@ public partial class VehicleDesignForm : GameForm
 				// Changing vehicle types requires starting over, so warn the user
 				if (MessageBox.Show("Changing the vehicle type requires starting over with your design. Abandon your old design?", "FrEee", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 				{
-					var d = DIRoot.Designs.Build(form.Hull.VehicleType);
+					var d = DIRoot.Designs.CreateDesign(form.Hull.VehicleType);
 					d.TurnNumber = Game.Current.TurnNumber;
 					d.Owner = Empire.Current;
 					d.Hull = form.Hull;
@@ -306,7 +306,7 @@ public partial class VehicleDesignForm : GameForm
 			}
 			else
 			{
-				var d = DIRoot.Designs.Build(form.Hull.VehicleType);
+				var d = DIRoot.Designs.CreateDesign(form.Hull.VehicleType);
 				d.TurnNumber = Game.Current.TurnNumber;
 				d.Owner = Empire.Current;
 				d.Hull = form.Hull;

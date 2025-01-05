@@ -502,7 +502,7 @@ public abstract class Battle : IBattle, IDisposable
                         var cd = new CargoDelta();
                         cd.UnitTypeTonnage.Add(VehicleTypes.Troop, null);
                         cc.TransferCargo(cd, dropTarget, cc.Owner, true);
-                        var groundBattle = DIRoot.Battles.BuildGroundBattle(dropTarget);
+                        var groundBattle = DIRoot.Battles.CreateGroundBattle(dropTarget);
                         groundBattle.Resolve();
                     }
                 }

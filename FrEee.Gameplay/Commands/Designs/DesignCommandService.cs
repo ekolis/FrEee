@@ -1,8 +1,8 @@
 ﻿using FrEee.Vehicles;
 
 namespace FrEee.Gameplay.Commands.Designs;
-public class DesignCommandFactory
-	: IDesignCommandFactory
+public class DesignCommandService
+	: IDesignCommandService
 {
 	public ICreateDesignCommand CreateDesign<T>(IDesign<T> design)
 		where T : IVehicle

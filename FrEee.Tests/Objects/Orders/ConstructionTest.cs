@@ -51,7 +51,7 @@ public class ConstructionTest
 		colony = new Colony();
 		colony.Facilities.Add(new Facility(sy));
 		colony.Population.Add(race, (long)1e9); // 1 billion population;
-		colony.ConstructionQueue = DIRoot.ConstructionQueues.Build(planet);
+		colony.ConstructionQueue = DIRoot.ConstructionQueues.CreateConstructionQueue(planet);
 		planet.Colony = colony;
 	}
 

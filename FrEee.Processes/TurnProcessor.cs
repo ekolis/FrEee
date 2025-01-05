@@ -430,7 +430,7 @@ public class TurnProcessor : ITurnProcessor
 		foreach (var p in game.Galaxy.FindSpaceObjects<Planet>(p => p.Cargo != null && p.Cargo.Units.Any(u => u.IsHostileTo(p.Owner) || p.IsHostileTo(u.Owner)))
 		)
 		{
-			var battle = DIRoot.Battles.BuildGroundBattle(p);
+			var battle = DIRoot.Battles.CreateGroundBattle(p);
 			battle.Resolve();
 			game.Battles.Add(battle);
 			foreach (var emp in battle.Empires)

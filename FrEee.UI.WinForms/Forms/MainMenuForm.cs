@@ -115,7 +115,7 @@ public partial class MainMenuForm : GameForm
 
 		if (status.Exception == null && !warnings.Any())
 		{
-			DIRoot.Designs.ImportFromLibrary();
+			DIRoot.Designs.ImportDesignsFromLibrary();
 			var game = new MainGameForm(false, true);
 			this.ShowChildForm(game);
 			game.FormClosed += (s, args) =>
@@ -165,7 +165,7 @@ public partial class MainMenuForm : GameForm
 			}
 
 			// load library designs
-			DIRoot.Designs.ImportFromLibrary();
+			DIRoot.Designs.ImportDesignsFromLibrary();
 
 			// display game view
 			var form = new MainGameForm(false, true);

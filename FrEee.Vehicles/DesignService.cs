@@ -13,10 +13,10 @@ using FrEee.Utility;
 using FrEee.Vehicles.Types;
 
 namespace FrEee.Vehicles;
-public class DesignFactory
-	: IDesignFactory
+public class DesignService
+	: IDesignService
 {
-	public IDesign<IUnit> Militia { get; } = BuildMilitia();
+	public IDesign<IUnit> MilitiaDesign { get; } = BuildMilitia();
 
 	private static IDesign<IUnit> BuildMilitia()
 	{
@@ -36,7 +36,7 @@ public class DesignFactory
 		return militiaDesign;
 	}
 
-	public IDesign Build(VehicleTypes vehicleType)
+	public IDesign CreateDesign(VehicleTypes vehicleType)
 	{
 		return vehicleType switch
 		{
@@ -52,9 +52,9 @@ public class DesignFactory
 		};
 	}
 
-	public IDesign Build(IHull hull)
+	public IDesign CreateDesign(IHull hull)
 	{
-		var design = Build(hull.VehicleType);
+		var design = CreateDesign(hull.VehicleType);
 		design.Hull = hull;
 		return design;
 	}
@@ -64,7 +64,7 @@ public class DesignFactory
 	/// Requires a current empire. Should only be called client side.
 	/// </summary>
 	/// <returns>Copied designs imported.</returns>
-	public IEnumerable<IDesign> ImportFromLibrary()
+	public IEnumerable<IDesign> ImportDesignsFromLibrary()
 	{
 		if (Empire.Current == null)
 			throw new InvalidOperationException("Can't import designs without a current empire.");

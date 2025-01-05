@@ -15,12 +15,12 @@ using FrEee.Vehicles;
 namespace FrEee.Processes.Construction;
 
 /// <summary>
-/// Stock implementation of <see cref="IConstructionQueueFactory"/>.
+/// Stock implementation of <see cref="IConstructionQueueService"/>.
 /// </summary>
-public class ConstructionQueueFactory
-	: IConstructionQueueFactory
+public class ConstructionQueueService
+	: IConstructionQueueService
 {
-	public IConstructionQueue Build(IConstructor constructor)
+	public IConstructionQueue CreateConstructionQueue(IConstructor constructor)
 	{
 		return new ConstructionQueue(constructor);
 	}

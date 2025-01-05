@@ -20,7 +20,7 @@ public abstract class MajorSpaceVehicle
 	protected MajorSpaceVehicle() : base()
 	{
 		Cargo = new Cargo();
-		constructionQueue = DIRoot.ConstructionQueues.Build(this);
+		constructionQueue = DIRoot.ConstructionQueues.CreateConstructionQueue(this);
 	}
 
 	public override void Place(ISpaceObject target)

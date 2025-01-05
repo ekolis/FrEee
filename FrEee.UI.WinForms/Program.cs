@@ -183,7 +183,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 				MessageBox.Show(plrfile + " does not exist. You will need to start your turn from the beginning.");
 		}
 
-		DIRoot.Designs.ImportFromLibrary();
+		DIRoot.Designs.ImportDesignsFromLibrary();
 
 		var form = new MainGameForm(false, true);
 		form.KeyPreview = true;

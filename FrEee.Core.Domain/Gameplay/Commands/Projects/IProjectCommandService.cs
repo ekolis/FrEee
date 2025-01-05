@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace FrEee.Gameplay.Commands.Projects;
 
 /// <summary>
-/// Builds commands for empire wide projects such as research and espionage.
+/// Creates commands for empire wide projects such as research and espionage.
 /// </summary>
-public interface IProjectCommandFactory
+public interface IProjectCommandService
 {
     /// <summary>
     /// Creates an <see cref="IResearchCommand"/> to assign research spending.

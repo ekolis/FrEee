@@ -8,21 +8,21 @@ using FrEee.Objects.Space;
 namespace FrEee.Processes.Combat;
 
 /// <summary>
-/// Builds battles.
+/// Manages battles.
 /// </summary>
-public interface IBattleFactory
+public interface IBattleService
 {
 	/// <summary>
-	/// Builds a space battle.
+	/// Creates a space battle.
 	/// </summary>
 	/// <param name="location"></param>
 	/// <returns></returns>
-	IBattle BuildSpaceBattle(Sector location);
+	IBattle CreateSpaceBattle(Sector location);
 
 	/// <summary>
-	/// Builds a ground battle.
+	/// Creates a ground battle.
 	/// </summary>
 	/// <param name="location"></param>
 	/// <returns></returns>
-	IBattle BuildGroundBattle(Planet location);
+	IBattle CreateGroundBattle(Planet location);
 }

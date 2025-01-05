@@ -8,9 +8,9 @@ using FrEee.Objects.Civilization;
 namespace FrEee.Gameplay.Commands.Waypoints;
 
 /// <summary>
-/// Builds commands to manage waypoints.
+/// Creates commands to manage waypoints.
 /// </summary>
-public interface IWaypointCommandFactory
+public interface IWaypointCommandService
 {
 	ICommand<Empire> CreateWaypoint(Waypoint waypoint);
 

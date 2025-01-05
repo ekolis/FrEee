@@ -37,23 +37,23 @@ public static class Configuration
 
 		// processes
 		DI.RegisterSingleton<ITurnProcessor, TurnProcessor>();
-		DI.RegisterSingleton<IBattleFactory, BattleFactory>();
-		DI.RegisterSingleton<IConstructionQueueFactory, ConstructionQueueFactory>();
+		DI.RegisterSingleton<IBattleService, BattleService>();
+		DI.RegisterSingleton<IConstructionQueueService, ConstructionQueueService>();
 
 		// gameplay
-		DI.RegisterSingleton<IDesignCommandFactory, DesignCommandFactory>();
-		DI.RegisterSingleton<IFleetCommandFactory, FleetCommandFactory>();
-		DI.RegisterSingleton<IMessageCommandFactory, MessageCommandFactory>();
-		DI.RegisterSingleton<IMinisterCommandFactory, MinisterCommandFactory>();
-		DI.RegisterSingleton<INoteCommandFactory, NoteCommandFactory>();
-		DI.RegisterSingleton<IOrderCommandFactory, OrderCommandFactory>();
-		DI.RegisterSingleton<IProjectCommandFactory, ProjectCommandFactory>();
-		DI.RegisterSingleton<IWaypointCommandFactory, WaypointCommandFactory>();
+		DI.RegisterSingleton<IDesignCommandService, DesignCommandService>();
+		DI.RegisterSingleton<IFleetCommandService, FleetCommandService>();
+		DI.RegisterSingleton<IMessageCommandService, MessageCommandService>();
+		DI.RegisterSingleton<IMinisterCommandService, MinisterCommandService>();
+		DI.RegisterSingleton<INoteCommandService, NoteCommandService>();
+		DI.RegisterSingleton<IOrderCommandService, OrderCommandService>();
+		DI.RegisterSingleton<IProjectCommandService, ProjectCommandService>();
+		DI.RegisterSingleton<IWaypointCommandService, WaypointCommandService>();
 
 		// vehicles
-		DI.RegisterSingleton<IHullFactory, HullFactory>();
-		DI.RegisterSingleton<IDesignFactory, DesignFactory>();
-		DI.RegisterSingleton<IVehicleFactory, VehicleFactory>();
+		DI.RegisterSingleton<IHullService, HullService>();
+		DI.RegisterSingleton<IDesignService, DesignService>();
+		DI.RegisterSingleton<IVehicleService, VehicleService>();
 
 		// addtional configuration for the GUI or whatever
 		additionlConfig?.Invoke();

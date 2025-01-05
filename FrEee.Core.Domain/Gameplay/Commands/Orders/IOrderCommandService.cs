@@ -9,9 +9,9 @@ using FrEee.Objects.Civilization.Orders;
 namespace FrEee.Gameplay.Commands.Orders;
 
 /// <summary>
-/// Builds various types of commands used for managing <see cref="IOrder">s.
+/// Creates various types of commands used for managing <see cref="IOrder">s.
 /// </summary>
-public interface IOrderCommandFactory
+public interface IOrderCommandService
 {
     IAddOrderCommand AddOrder(IOrderable target, IOrder order);
 
