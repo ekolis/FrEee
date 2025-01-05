@@ -1,6 +1,6 @@
 ﻿namespace FrEee.Gameplay.Commands.Ministers;
-public class MinisterCommandFactory
-	: IMinisterCommandFactory
+public class MinisterCommandService
+	: IMinisterCommandService
 {
 	public IToggleMinistersCommand ToggleMinisters()
 	{

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using FrEee.Vehicles.Types;
 
 namespace FrEee.Vehicles;
-public class HullFactory
-	: IHullFactory
+public class HullService
+	: IHullService
 {
-	public IHull Build(VehicleTypes vehicleType)
+	public IHull CreateHull(VehicleTypes vehicleType)
 	{
 		return vehicleType switch
 		{

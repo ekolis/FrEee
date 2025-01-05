@@ -2,8 +2,8 @@
 using FrEee.Objects.GameState;
 
 namespace FrEee.Gameplay.Commands.Notes;
-public class NoteCommandFactory
-	: INoteCommandFactory
+public class NoteCommandService
+	: INoteCommandService
 {
 	public ICommand ClearPlayerNote(IReferrable target)
 	{

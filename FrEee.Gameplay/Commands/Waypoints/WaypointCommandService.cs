@@ -1,8 +1,8 @@
 ﻿using FrEee.Objects.Civilization;
 
 namespace FrEee.Gameplay.Commands.Waypoints;
-public class WaypointCommandFactory
-	: IWaypointCommandFactory
+public class WaypointCommandService
+	: IWaypointCommandService
 {
 	public ICommand<Empire> CreateWaypoint(Waypoint Waypoint)
 	{

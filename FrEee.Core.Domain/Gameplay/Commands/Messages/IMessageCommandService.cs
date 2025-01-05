@@ -9,9 +9,9 @@ using FrEee.Objects.Civilization.Diplomacy.Messages;
 namespace FrEee.Gameplay.Commands.Messages;
 
 /// <summary>
-/// Builds commands allowing players to manage diplomatic messages.
+/// Creates commands allowing players to manage diplomatic messages.
 /// </summary>
-public interface IMessageCommandFactory
+public interface IMessageCommandService
 {
     IDeleteMessageCommand DeleteMessage(IMessage message);
 

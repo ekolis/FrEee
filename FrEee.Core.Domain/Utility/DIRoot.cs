@@ -31,67 +31,67 @@ public static class DIRoot
 	/// <summary>
 	/// Manages battles.
 	/// </summary>
-	public static IBattleFactory Battles => DI.Get<IBattleFactory>();
+	public static IBattleService Battles => DI.Get<IBattleService>();
 
 	/// <summary>
 	/// Allows players to manage designs.
 	/// </summary>
-	public static IDesignCommandFactory DesignCommands => DI.Get<IDesignCommandFactory>();
+	public static IDesignCommandService DesignCommands => DI.Get<IDesignCommandService>();
 
 	/// <summary>
 	/// Allows players to manage fleets.
 	/// </summary>
-	public static IFleetCommandFactory FleetCommands => DI.Get<IFleetCommandFactory>();
+	public static IFleetCommandService FleetCommands => DI.Get<IFleetCommandService>();
 
 	/// <summary>
 	/// Allows players to manage diplomatic messages.
 	/// </summary>
-	public static IMessageCommandFactory MessageCommands => DI.Get<IMessageCommandFactory>();
+	public static IMessageCommandService MessageCommands => DI.Get<IMessageCommandService>();
 
 	/// <summary>
 	/// Allows players to manage AI ministers.
 	/// </summary>
-	public static IMinisterCommandFactory MinisterCommands => DI.Get<IMinisterCommandFactory>();
+	public static IMinisterCommandService MinisterCommands => DI.Get<IMinisterCommandService>();
 
 	/// <summary>
 	/// Allows players to manage notes.
 	/// </summary>
-	public static INoteCommandFactory NoteCommands => DI.Get<INoteCommandFactory>();
+	public static INoteCommandService NoteCommands => DI.Get<INoteCommandService>();
 	
 	/// <summary>
 	/// Allows players to issue orders.
 	/// </summary>
-	public static IOrderCommandFactory OrderCommands => DI.Get<IOrderCommandFactory>();
+	public static IOrderCommandService OrderCommands => DI.Get<IOrderCommandService>();
 
 	/// <summary>
 	/// Allows players to manage empire wide projects such as research and espionage.
 	/// </summary>
-	public static IProjectCommandFactory ProjectCommands => DI.Get<IProjectCommandFactory>();
+	public static IProjectCommandService ProjectCommands => DI.Get<IProjectCommandService>();
 
 	/// <summary>
 	/// Allows players to manage waypoints.
 	/// </summary>
-	public static IWaypointCommandFactory WaypointCommands => DI.Get<IWaypointCommandFactory>();
+	public static IWaypointCommandService WaypointCommands => DI.Get<IWaypointCommandService>();
 
 	/// <summary>
 	/// Creates vehicle hulls.
 	/// </summary>
-	public static IHullFactory Hulls => DI.Get<IHullFactory>();
+	public static IHullService Hulls => DI.Get<IHullService>();
 
 	/// <summary>
 	/// Creates vehicle designs.
 	/// </summary>
-	public static IDesignFactory Designs => DI.Get<IDesignFactory>();
+	public static IDesignService Designs => DI.Get<IDesignService>();
 
 	/// <summary>
 	/// Creates vehicles.
 	/// </summary>
-	public static IVehicleFactory Vehicles => DI.Get<IVehicleFactory>();
+	public static IVehicleService Vehicles => DI.Get<IVehicleService>();
 
 	/// <summary>
 	/// Creates construction queues.
 	/// </summary>
-	public static IConstructionQueueFactory ConstructionQueues => DI.Get<IConstructionQueueFactory>();
+	public static IConstructionQueueService ConstructionQueues => DI.Get<IConstructionQueueService>();
 
 	/// <summary>
 	/// Manages the GUI. Only available when there is a GUI.

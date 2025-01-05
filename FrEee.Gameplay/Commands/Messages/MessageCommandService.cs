@@ -1,8 +1,8 @@
 ﻿using FrEee.Objects.Civilization.Diplomacy.Messages;
 
 namespace FrEee.Gameplay.Commands.Messages;
-public class MessageCommandFactory
-	: IMessageCommandFactory
+public class MessageCommandService
+	: IMessageCommandService
 {
 	public ISendMessageCommand SendMessage(IMessage message)
 	{

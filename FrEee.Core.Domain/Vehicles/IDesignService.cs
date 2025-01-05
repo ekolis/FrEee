@@ -8,31 +8,31 @@ using FrEee.Vehicles.Types;
 namespace FrEee.Vehicles;
 
 /// <summary>
-/// Build vehicle designs.
+/// Manages vehicle designs.
 /// </summary>
-public interface IDesignFactory
+public interface IDesignService
 {
 	/// <summary>
-	/// Builds a design with a specific vehicle type.
+	/// Creates a design with a specific vehicle type.
 	/// </summary>
 	/// <param name="vehicleType">The vehicle type to build.</param>
-	/// <returns>The built design, with no hull or components.</returns>
-	IDesign Build(VehicleTypes vehicleType);
+	/// <returns>The new design, with no hull or components.</returns>
+	IDesign CreateDesign(VehicleTypes vehicleType);
 
 	/// <summary>
-	/// Builds a design with a specific hull.
+	/// Creates a design with a specific hull.
 	/// </summary>
 	/// <param name="hull">The hull to use on the design.</param>
-	/// <returns>The built design, with a hull but no components.</returns>
-	IDesign Build(IHull hull);
+	/// <returns>The new design, with a hull but no components.</returns>
+	IDesign CreateDesign(IHull hull);
 
 	/// <summary>
 	/// Imports designs from the user's library into the current game.
 	/// </summary>
-	IEnumerable<IDesign> ImportFromLibrary();
+	IEnumerable<IDesign> ImportDesignsFromLibrary();
 
 	/// <summary>
 	/// The standard militia unit design for use in defending colonies.
 	/// </summary>
-	IDesign<IUnit> Militia { get; }
+	IDesign<IUnit> MilitiaDesign { get; }
 }

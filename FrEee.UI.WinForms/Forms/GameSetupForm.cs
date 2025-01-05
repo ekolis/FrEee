@@ -523,7 +523,7 @@ public partial class GameSetupForm : GameForm
 				var turn = Game.Current.TurnNumber;
 				status.Message = "Loading game";
 				Game.Load(name + "_" + turn + "_0001.gam");
-				DIRoot.Designs.ImportFromLibrary();
+				DIRoot.Designs.ImportDesignsFromLibrary();
 				Hide();
 				MainMenuForm.GetInstance().ShowChildForm(new MainGameForm(false, true));
 			}

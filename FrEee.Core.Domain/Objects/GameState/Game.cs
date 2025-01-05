@@ -794,7 +794,7 @@ public class Game
 						&& (!lastBattleTimestamps.ContainsKey(sector) || lastBattleTimestamps[sector] < Timestamp - (v.StrategicSpeed == 0 ? 1d : 1d / v.StrategicSpeed)))) // have we fought here too recently?
 			{
 				// resolve the battle
-				var battle = DIRoot.Battles.BuildSpaceBattle(sector);
+				var battle = DIRoot.Battles.CreateSpaceBattle(sector);
 				battle.Resolve();
 				Battles.Add(battle);
 				foreach (var emp in battle.Empires)

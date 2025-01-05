@@ -85,7 +85,7 @@ public partial class HostConsoleForm : GameForm
 						Game.Current.CurrentEmpire = emp;
 						Game.Current.Redact();
 					}
-					DIRoot.Designs.ImportFromLibrary();
+					DIRoot.Designs.ImportDesignsFromLibrary();
 					var form = new MainGameForm(true, false);
 					Hide();
 					this.ShowChildForm(form);

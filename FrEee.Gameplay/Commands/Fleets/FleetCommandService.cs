@@ -1,8 +1,8 @@
 ﻿using FrEee.Objects.Space;
 
 namespace FrEee.Gameplay.Commands.Fleets;
-public class FleetCommandFactory
-	: IFleetCommandFactory
+public class FleetCommandService
+	: IFleetCommandService
 {
 	public ICreateFleetCommand CreateFleet(Fleet fleet, Sector sector)
 	{

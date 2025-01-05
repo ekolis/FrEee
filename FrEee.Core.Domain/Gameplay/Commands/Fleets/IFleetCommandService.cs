@@ -8,9 +8,9 @@ using FrEee.Objects.Space;
 namespace FrEee.Gameplay.Commands.Fleets;
 
 /// <summary>
-/// Builds various types of commands used for managing fleets.
+/// Creates various types of commands used for managing fleets.
 /// </summary>
-public interface IFleetCommandFactory
+public interface IFleetCommandService
 {
     ICreateFleetCommand CreateFleet(Fleet fleet, Sector sector);
 

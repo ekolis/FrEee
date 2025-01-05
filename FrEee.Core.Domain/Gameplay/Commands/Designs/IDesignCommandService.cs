@@ -11,8 +11,9 @@ using FrEee.Vehicles;
 namespace FrEee.Gameplay.Commands.Designs;
 
 /// <summary>
-/// Builds various types of commands used for managing vehicle designs.
-public interface IDesignCommandFactory
+/// Creates various types of commands used for managing vehicle designs.
+/// </summary>
+public interface IDesignCommandService
 {
 	ICreateDesignCommand CreateDesign<T>(IDesign<T> design)
 		where T : IVehicle;

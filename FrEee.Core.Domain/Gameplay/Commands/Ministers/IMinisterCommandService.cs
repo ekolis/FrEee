@@ -8,9 +8,9 @@ using FrEee.Gameplay.Commands.Messages;
 namespace FrEee.Gameplay.Commands.Ministers;
 
 /// <summary>
-/// Builds commands used to manage AI ministers for an empire.
+/// Creates commands used to manage AI ministers for an empire.
 /// </summary>
-public interface IMinisterCommandFactory
+public interface IMinisterCommandService
 {
 	IToggleMinistersCommand ToggleMinisters();
 }
