@@ -5,23 +5,24 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Gameplay.Commands;
 using FrEee.Objects.GameState;
 using static Community.CsharpSqlite.Sqlite3;
 
 namespace FrEee.Persistence;
 
 /// <summary>
-/// Persists game state, either for the host or for a player, depending on the <see cref="GameID"/>.
+/// Persists player commands.
 /// </summary>
-public class GamePersister
-	: IGamePersister
+public class CommandPersister
+	: ICommandPersister
 {
-	public Game Load(GameID id)
+	public IList<ICommand> Load(GameID id)
 	{
 		return LoadFromFile(id.GameStateFilename);
 	}
 
-	public Game LoadFromFile(string filename)
+	public IList<ICommand> LoadFromFile(string filename)
 	{
 		using FileStream fs = new(
 			Path.Combine(
@@ -29,34 +30,39 @@ public class GamePersister
 				FrEeeConstants.SaveGameDirectory,
 				filename),
 			FileMode.Open);
-		return Serializer.Deserialize<Game>(fs);
+		return LoadFromStream(fs);
 	}
+
+	public IList<ICommand> LoadFromStream(Stream stream)
+	{
+		return Serializer.Deserialize<IList<ICommand>>(stream);
+	}
+
+	// TODO: remove unused methods below if they are really unused
 
 	public Game LoadFromString(string data)
 	{
 		return Serializer.DeserializeFromString<Game>(data);
 	}
 
-	public GameID Save(Game obj)
+	public void Save(IList<ICommand> commands, GameID id)
 	{
-		var gameID = new GameID(obj.Name, obj.TurnNumber, obj.PlayerNumber);
 		using FileStream fs = new(
 			Path.Combine(
 				Path.GetDirectoryName(Assembly.GetEntryAssembly().Location),
 				FrEeeConstants.SaveGameDirectory,
-				gameID.GameStateFilename),
+				id.CommandFilename),
 			FileMode.Open);
-		Serializer.Serialize(obj, fs);
-		return gameID;
+		Serializer.Serialize(commands, fs);
 	}
 
-	public void SaveToStream(Game game, Stream stream)
+	public void SaveToStream(IList<ICommand> commands, Stream stream)
 	{
-		Serializer.Serialize(game, stream);
+		Serializer.Serialize(commands, stream);
 	}
 
-	public string SaveToString(Game game)
+	public string SaveToString(IList<ICommand> commands)
 	{
-		return Serializer.SerializeToString(game);
+		return Serializer.SerializeToString(commands);
 	}
 }

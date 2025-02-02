@@ -20,7 +20,7 @@ public record GameID(string Name, int TurnNumber, int PlayerNumber)
 	/// <summary>
 	/// The filename used to store the game state.
 	/// </summary>
-	public string Filename
+	public string GameStateFilename
 	{
 		get
 		{
@@ -33,6 +33,26 @@ public record GameID(string Name, int TurnNumber, int PlayerNumber)
 			{
 				// player gam file: ABarefootJaywalk_42_0007.gam
 				return Name + "_" + TurnNumber + "_" + PlayerNumber.ToString("d4") + FrEeeConstants.SaveGameExtension;
+			}
+		}
+	}
+
+	/// <summary>
+	/// The filename used to store the player commands.
+	/// </summary>
+	public string CommandFilename
+	{
+		get
+		{
+			if (PlayerNumber == 0)
+			{
+				// host plr file: ABarefootJaywalk_42.plr (not currently used by game)
+				return Name + "_" + TurnNumber + FrEeeConstants.PlayerCommandsSaveGameExtension;
+			}
+			else
+			{
+				// player plr file: ABarefootJaywalk_42_0007.plr
+				return Name + "_" + TurnNumber + "_" + PlayerNumber.ToString("d4") + FrEeeConstants.PlayerCommandsSaveGameExtension;
 			}
 		}
 	}

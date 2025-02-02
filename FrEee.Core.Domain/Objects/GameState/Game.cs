@@ -882,6 +882,7 @@ public class Game
 	/// <exception cref="InvalidOperationException">if there is no current empire.</exception>
 	public string SaveCommands()
 	{
+		// TODO: move this code to CommandPersister
 		CleanGameState();
 		if (CurrentEmpire == null)
 			throw new InvalidOperationException("Can't save commands without a current empire.");
@@ -981,8 +982,9 @@ public class Game
 	/// <returns></returns>
 	private static IList<ICommand> DeserializeCommands(Stream stream)
 	{
-		var cmds = Serializer.Deserialize<IList<ICommand>>(stream);
+		var cmds = DIRoot.CommandPersister.LoadFromStream(stream);
 
+		// TODO: put code below in CommandPersister
 		// check for client safety
 		foreach (var cmd in cmds.Where(cmd => cmd != null))
 		{
@@ -1066,7 +1068,7 @@ public class Game
 		if (CurrentEmpire == null)
 			throw new InvalidOperationException("Can't serialize commands if there is no current empire.");
 
-		Serializer.Serialize(CurrentEmpire.Commands, stream);
+		DIRoot.CommandPersister.SaveToStream(CurrentEmpire.Commands, stream);
 	}
 
 	/// <summary>

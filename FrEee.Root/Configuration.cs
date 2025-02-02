@@ -58,7 +58,8 @@ public static class Configuration
 
 		// persistence
 		DI.RegisterSingleton<IGamePersister, GamePersister>();
-		// TODO: persisters for commands, design library, client settings, game setups, empires...
+		DI.RegisterSingleton<ICommandPersister, CommandPersister>();
+		// TODO: persisters for design library, client settings, game setups, empires...
 
 		// addtional configuration for the GUI or whatever
 		additionlConfig?.Invoke();
