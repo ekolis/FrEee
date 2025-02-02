@@ -11,6 +11,7 @@ using FrEee.Gameplay.Commands.Notes;
 using FrEee.Gameplay.Commands.Orders;
 using FrEee.Gameplay.Commands.Projects;
 using FrEee.Gameplay.Commands.Waypoints;
+using FrEee.Persistence;
 using FrEee.Processes;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Combat.Grid;
@@ -21,6 +22,9 @@ namespace FrEee.Utility;
 /// <summary>
 /// Wrapper for <see cref="DI"/> that exposes various services used by FrEee.
 /// </summary>
+/// <remarks>
+/// TODO: Really this is just a service locator, maybe call it Services?
+/// </remarks>
 public static class DIRoot
 {
 	/// <summary>
@@ -92,6 +96,11 @@ public static class DIRoot
 	/// Creates construction queues.
 	/// </summary>
 	public static IConstructionQueueService ConstructionQueues => DI.Get<IConstructionQueueService>();
+
+	/// <summary>
+	/// Saves and loads game state.
+	/// </summary>
+	public static IGamePersister GamePersister => DI.Get<IGamePersister>();
 
 	/// <summary>
 	/// Manages the GUI. Only available when there is a GUI.

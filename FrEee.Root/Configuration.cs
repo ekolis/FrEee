@@ -11,6 +11,7 @@ using FrEee.Gameplay.Commands.Notes;
 using FrEee.Gameplay.Commands.Orders;
 using FrEee.Gameplay.Commands.Projects;
 using FrEee.Gameplay.Commands.Waypoints;
+using FrEee.Persistence;
 using FrEee.Processes;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Combat.Grid;
@@ -54,6 +55,10 @@ public static class Configuration
 		DI.RegisterSingleton<IHullService, HullService>();
 		DI.RegisterSingleton<IDesignService, DesignService>();
 		DI.RegisterSingleton<IVehicleService, VehicleService>();
+
+		// persistence
+		DI.RegisterSingleton<IGamePersister, GamePersister>();
+		// TODO: persisters for commands, design library, client settings, game setups, empires...
 
 		// addtional configuration for the GUI or whatever
 		additionlConfig?.Invoke();

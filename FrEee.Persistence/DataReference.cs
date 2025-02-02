@@ -4,8 +4,9 @@ using System;
 using System.Collections.Generic;
 using FrEee.Objects.GameState;
 using FrEee.Utility;
+using FrEee.Serialization;
 
-namespace FrEee.Serialization;
+namespace FrEee.Persistence;
 
 [Serializable]
 public class DataReference<T> : IDataReference, IReference<T>
@@ -15,7 +16,7 @@ public class DataReference<T> : IDataReference, IReference<T>
 		Context = new ObjectGraphContext();
 	}
 
-	public DataReference(ObjectGraphContext ctx, T t = default(T))
+	public DataReference(ObjectGraphContext ctx, T t = default)
 	{
 		Context = ctx;
 		Value = t;
