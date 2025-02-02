@@ -27,7 +27,7 @@
 
 	<PropertyGroup>
 		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
-		<RootNamespace>FrEee.Processes</RootNamespace>
+		<RootNamespace>FrEee.Root</RootNamespace>
 	</PropertyGroup>
 
 </Project>
