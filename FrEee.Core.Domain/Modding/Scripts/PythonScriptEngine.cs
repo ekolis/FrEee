@@ -341,15 +341,6 @@ public class PythonScriptEngine : MarshalByRefObject
 		}
 	}
 
-	public static IDictionary<string, string> SerializeScriptVariables(IDictionary<string, object> variables)
-	{
-		// TODO: make a script variable persister that can handle at least simple objects as a hack for this
-		return variables.Select(kvp => new KeyValuePair<string, string>(
-			kvp.Key,
-			Serializer.SerializeToString(kvp.Value)))
-			.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-	}
-
 	/// <summary>
 	/// Creates a script scope containing user defined variables.
 	/// </summary>

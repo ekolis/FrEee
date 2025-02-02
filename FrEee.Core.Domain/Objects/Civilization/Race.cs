@@ -202,14 +202,6 @@ public class Race : INamed, IAbilityObject, IPictorial, IReferrable
 
 	private ModReference<HappinessModel> happinessModel { get; set; }
 
-	public static Race Load(string filename)
-	{
-		var fs = new FileStream(filename, FileMode.Open);
-		var race = Serializer.Deserialize<Race>(fs);
-		fs.Close(); fs.Dispose();
-		return race;
-	}
-
 	/// <summary>
 	/// Races are known to everyone, though they really should be hidden until first contact...
 	/// </summary>
@@ -226,13 +218,6 @@ public class Race : INamed, IAbilityObject, IPictorial, IReferrable
 		if (IsDisposed)
 			return;
 		Game.Current.UnassignID(this);
-	}
-
-	public void Save(string filename)
-	{
-		var fs = new FileStream(filename, FileMode.Create);
-		Serializer.Serialize(this, fs);
-		fs.Close(); fs.Dispose();
 	}
 
 	public override string ToString()
