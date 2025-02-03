@@ -2,6 +2,7 @@
 using FrEee.Modding.Loaders;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Setup;
+using FrEee.Utility;
 using NUnit.Framework;
 
 namespace FrEee.Setup;
@@ -12,7 +13,7 @@ public class GameSetupTest
 	[Ignore("quickstart needs to be rebuilt in new version")]
 	public void Quickstart()
 	{
-		var setup = GameSetup.Load(@"..\..\..\..\FrEee\GameSetups\quickstart.gsu");
+		var setup = DIRoot.GameSetupPersister.LoadFromFile(@"..\..\..\..\FrEee\GameSetups\quickstart.gsu");
 		Mod.Current = new ModLoader().Load(null);
 		Game.Initialize(setup, null);
 	}

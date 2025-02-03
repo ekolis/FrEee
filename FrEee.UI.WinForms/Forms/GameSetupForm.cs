@@ -422,7 +422,7 @@ public partial class GameSetupForm : GameForm
 		var result = dlg.ShowDialog();
 		if (result == DialogResult.OK)
 		{
-			setup = GameSetup.Load(dlg.FileName);
+			setup = DIRoot.GameSetupPersister.LoadFromFile(dlg.FileName);
 			Bind();
 		}
 	}
@@ -467,7 +467,9 @@ public partial class GameSetupForm : GameForm
 		dlg.Filter = "Game Setups (*.gsu)|*.gsu";
 		var result = dlg.ShowDialog();
 		if (result == DialogResult.OK)
-			setup.Save(dlg.FileName);
+		{
+			DIRoot.GameSetupPersister.SaveToFile(setup, dlg.FileName);
+		}
 	}
 
 	private void btnStart_Click(object sender, EventArgs e)

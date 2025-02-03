@@ -251,12 +251,6 @@ public class GameSetup
     /// </summary>
     public WarpPointPlacementStrategy WarpPointPlacementStrategy { get; set; }
 
-    [Obsolete("Use IGameSetupPersister.LoadFromFile.")]
-    public static GameSetup Load(string filename)
-    {
-        return DIRoot.GameSetupPersister.LoadFromFile(filename);
-    }
-
     // TODO - status messages for the GUI
     public void PopulateGame(Game game, PRNG dice)
     {
@@ -385,12 +379,6 @@ public class GameSetup
                     sys.ExploredByEmpires.Add(emp);
             }
         }
-    }
-
-    [Obsolete("Use IGameSetupPersister.SaveToFile.")]
-    public void Save(string filename)
-    {
-        DIRoot.GameSetupPersister.SaveToFile(this, filename);
     }
 
     /// <summary>

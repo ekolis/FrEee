@@ -71,7 +71,8 @@ public partial class MainMenuForm : GameForm
 			if (doOrDie)
 			{
 				status.Message = "Setting up game";
-				var setup = GameSetup.Load(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "GameSetups", "Quickstart.gsu"));
+				var setup = DIRoot.GameSetupPersister.LoadFromFile(
+					Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "GameSetups", "Quickstart.gsu"));
 				warnings = setup.Warnings.ToArray();
 				if (warnings.Any())
 					MessageBox.Show(warnings.First(), "Game Setup Error");
