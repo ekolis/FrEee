@@ -108,6 +108,11 @@ public static class DIRoot
 	public static ICommandPersister CommandPersister => DI.Get<ICommandPersister>();
 
 	/// <summary>
+	/// Saves and loads game setups.
+	/// </summary>
+	public static IGameSetupPersister GameSetupPersister => DI.Get<IGameSetupPersister>();
+
+	/// <summary>
 	/// Manages the GUI. Only available when there is a GUI.
 	/// </summary>
 	public static IGuiController Gui => DI.Get<IGuiController>();

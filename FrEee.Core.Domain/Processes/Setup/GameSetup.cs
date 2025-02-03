@@ -251,12 +251,10 @@ public class GameSetup
     /// </summary>
     public WarpPointPlacementStrategy WarpPointPlacementStrategy { get; set; }
 
+    [Obsolete("Use IGameSetupPersister.LoadFromFile.")]
     public static GameSetup Load(string filename)
     {
-        var fs = new FileStream(filename, FileMode.Open);
-        var gsu = Serializer.Deserialize<GameSetup>(fs);
-        fs.Close(); fs.Dispose();
-        return gsu;
+        return DIRoot.GameSetupPersister.LoadFromFile(filename);
     }
 
     // TODO - status messages for the GUI
@@ -389,11 +387,10 @@ public class GameSetup
         }
     }
 
+    [Obsolete("Use IGameSetupPersister.SaveToFile.")]
     public void Save(string filename)
     {
-        var fs = new FileStream(filename, FileMode.Create);
-        Serializer.Serialize(this, fs);
-        fs.Close(); fs.Dispose();
+        DIRoot.GameSetupPersister.SaveToFile(this, filename);
     }
 
     /// <summary>
