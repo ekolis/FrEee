@@ -29,7 +29,7 @@ public static class Configuration
 	/// <summary>
 	/// Sets up any dependencies which need to be injected.
 	/// </summary>
-	public static void ConfigureDI(Action additionlConfig = null)
+	public static void ConfigureDI(Action? additionalConfig = null)
 	{
 		// TODO: load dependencies from configuration file in mod data so we can really modularize this thing!
 
@@ -64,7 +64,7 @@ public static class Configuration
 		// TODO: persisters for design library, client settings...
 
 		// addtional configuration for the GUI or whatever
-		additionlConfig?.Invoke();
+		additionalConfig?.Invoke();
 
 		// run this in the background, without awaiting it
 		DI.Run();
