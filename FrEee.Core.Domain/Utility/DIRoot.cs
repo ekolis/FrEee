@@ -113,6 +113,11 @@ public static class DIRoot
 	public static IGameSetupPersister GameSetupPersister => DI.Get<IGameSetupPersister>();
 
 	/// <summary>
+	/// Saves and loads empire templates
+	/// </summary>
+	public static IEmpireTemplatePersister EmpireTemplatePersister => DI.Get<IEmpireTemplatePersister>();
+
+	/// <summary>
 	/// Manages the GUI. Only available when there is a GUI.
 	/// </summary>
 	public static IGuiController Gui => DI.Get<IGuiController>();

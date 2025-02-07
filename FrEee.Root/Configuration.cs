@@ -60,7 +60,8 @@ public static class Configuration
 		DI.RegisterSingleton<IGamePersister, GamePersister>();
 		DI.RegisterSingleton<ICommandPersister, CommandPersister>();
 		DI.RegisterSingleton<IGameSetupPersister, GameSetupPersister>();
-		// TODO: persisters for design library, client settings, empire templates...
+		DI.RegisterSingleton<IEmpireTemplatePersister, EmpireTemplatePersister>();
+		// TODO: persisters for design library, client settings...
 
 		// addtional configuration for the GUI or whatever
 		additionlConfig?.Invoke();

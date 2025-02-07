@@ -118,14 +118,6 @@ public class EmpireTemplate : ITemplate<Empire>
     /// </summary>
     public string DesignNamesFile { get; set; }
 
-    public static EmpireTemplate Load(string filename)
-    {
-        var fs = new FileStream(filename, FileMode.Open);
-        var race = Serializer.Deserialize<EmpireTemplate>(fs);
-        fs.Close(); fs.Dispose();
-        return race;
-    }
-
     public IEnumerable<string> GetWarnings(int maxPoints)
     {
         if (PrimaryRace == null)
@@ -175,13 +167,6 @@ public class EmpireTemplate : ITemplate<Empire>
         emp.DesignNamesFile = DesignNamesFile;
 
         return emp;
-    }
-
-    public void Save(string filename)
-    {
-        var fs = new FileStream(filename, FileMode.Create);
-        Serializer.Serialize(this, fs);
-        fs.Close(); fs.Dispose();
     }
 
     public override string ToString()
