@@ -20,8 +20,6 @@ using FrEee.Objects.Civilization.Diplomacy;
 using FrEee.Processes.Setup;
 using FrEee.Processes.Setup.WarpPointPlacementStrategies;
 using FrEee.Modding.Loaders;
-using FrEee.Vehicles;
-using static Community.CsharpSqlite.Sqlite3;
 
 namespace FrEee.UI.WinForms.Forms;
 
