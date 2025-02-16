@@ -85,7 +85,7 @@ public partial class MainMenuForm : GameForm
 					if (result == DialogResult.OK)
 					{
 						// replace existing first player with selected empire
-						var et = EmpireTemplate.Load(dlg.FileName);
+						var et = DIRoot.EmpireTemplatePersister.LoadFromFile(dlg.FileName);
 						setup.EmpireTemplates.RemoveAt(0);
 						setup.EmpireTemplates.Insert(0, et);
 
