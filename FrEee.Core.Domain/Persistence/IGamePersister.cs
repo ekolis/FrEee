@@ -55,4 +55,9 @@ public interface IGamePersister
 	/// <param name="game"></param>
 	/// <returns></returns>
 	string SaveToString(Game game);
+
+	/// <summary>
+	/// Is this persister currently deserializing some data?
+	/// </summary>
+	public bool IsDeserializing { get; }
 }

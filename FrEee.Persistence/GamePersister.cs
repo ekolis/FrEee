@@ -59,4 +59,7 @@ public class GamePersister
 	{
 		return Serializer.SerializeToString(game);
 	}
+
+	// HACK: for preventing mines from detonating when deserializing a game
+	public bool IsDeserializing => Serializer.IsDeserializing;
 }

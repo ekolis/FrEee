@@ -354,9 +354,7 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 		MarkAsExploredBy(sobj.Owner);
 
 		// see if we got hit by a minefield
-		// TODO: find another way to determine if this method is being called from the serializer
-		// (why would it be? is it being called from the setter of a serialized property?)
-		if (!Serializer.IsDeserializing)
+		if (!DIRoot.GamePersister.IsDeserializing)
 			sobj.DealWithMines();
 	}
 
