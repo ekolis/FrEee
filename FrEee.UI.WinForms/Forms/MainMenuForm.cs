@@ -300,13 +300,13 @@ public partial class MainMenuForm : GameForm
 	{
 		try
 		{
-			ClientSettings.Load();
+			DIRoot.Gui.LoadClientSettings();
 		}
 		catch (Exception)
 		{
 			MessageBox.Show("Error loading client settings. Resetting to defaults.");
-			ClientSettings.Initialize();
-			ClientSettings.Save();
+			DIRoot.Gui.InitializeClientSettings();
+			DIRoot.Gui.SaveClientSettings();
 		}
 		// set the default music volume according to the settings
 		// volume values are 0-100, so scale appropriately to the 0-1 range
@@ -315,7 +315,7 @@ public partial class MainMenuForm : GameForm
 
 	private void MainMenuForm_FormClosed(object sender, FormClosedEventArgs e)
 	{
-		ClientSettings.Save();
+		DIRoot.Gui.SaveClientSettings();
 		DIRoot.Gui.Exit();
 	}
 }

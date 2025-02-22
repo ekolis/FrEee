@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using FrEee.UI.WinForms.Persistence;
 
 namespace FrEee.UI.WinForms.Objects;
 
@@ -18,21 +19,10 @@ public class ClientSettings
 {
 	static ClientSettings()
 	{
-		Load();
+		DIRoot.Gui.LoadClientSettings();
 	}
 
-	/// <summary>
-	/// The full path to the client settings file.
-	/// </summary>
-	public static string FilePath
-	{
-		get
-		{
-			return Path.Combine(ClientUtilities.ApplicationDataPath, "ClientSettings.dat");
-		}
-	}
-
-	public static ClientSettings Instance { get; private set; }
+	public static ClientSettings Instance { get; internal set; }
 
 	/// <summary>
 	/// Current planet list config.
@@ -247,79 +237,23 @@ public class ClientSettings
 		return cfg;
 	}
 
-	public static void Initialize()
-	{
-		// create instance
-		Instance = new ClientSettings();
-
-		Instance.MasterVolume = 100;
-		Instance.MusicVolume = 100;
-		Instance.EffectsVolume = 100;
-
-		InitializePlanetList();
-		InitializeShipList();
-	}
-
-	public static void Load()
-	{
-		if (File.Exists(FilePath))
-		{
-			FileStream fs = null;
-			try
-			{
-				fs = new FileStream(FilePath, FileMode.Open);
-				Instance = Serializer.Deserialize<ClientSettings>(fs);
-			}
-			catch (Exception ex)
-			{
-				Initialize();
-				Console.Error.WriteLine(ex);
-			}
-			finally
-			{
-				if (fs != null)
-				{
-					fs.Close(); fs.Dispose();
-				}
-			}
-
-			// initialize anything that wasn't there
-			if (Instance.PlanetListConfigs == null)
-				InitializePlanetList();
-			if (Instance.ShipListConfigs == null)
-				InitializeShipList();
-		}
-		else
-			Initialize();
-	}
-
-	public static void Save()
-	{
-		var path = Path.GetDirectoryName(FilePath);
-		if (!Directory.Exists(path))
-			Directory.CreateDirectory(path);
-		var fs = new FileStream(FilePath, FileMode.Create);
-		Serializer.Serialize(Instance, fs);
-		fs.Close(); fs.Dispose();
-	}
-
-	private static void InitializePlanetList()
+	public void InitializePlanetList()
 	{
 		// create default planet list config
 		var cfg = CreateDefaultPlanetListConfig();
-		Instance.CurrentPlanetListConfig = cfg;
-		Instance.PlanetListConfigs = new List<GridConfig>();
-		Instance.PlanetListConfigs.Add(cfg);
-		Instance.PlanetListConfigs.Add(CreateDefaultColonyPlanetListConfig());
+		CurrentPlanetListConfig = cfg;
+		PlanetListConfigs = new List<GridConfig>();
+		PlanetListConfigs.Add(cfg);
+		PlanetListConfigs.Add(CreateDefaultColonyPlanetListConfig());
 	}
 
-	private static void InitializeShipList()
+	public void InitializeShipList()
 	{
 		// create default ship list config
 		var cfg = CreateDefaultShipListConfig();
-		Instance.CurrentShipListConfig = cfg;
-		Instance.ShipListConfigs = new List<GridConfig>();
-		Instance.ShipListConfigs.Add(cfg);
-		Instance.ShipListConfigs.Add(CreateDefaultAlienShipListConfig());
+		CurrentShipListConfig = cfg;
+		ShipListConfigs = new List<GridConfig>();
+		ShipListConfigs.Add(cfg);
+		ShipListConfigs.Add(CreateDefaultAlienShipListConfig());
 	}
 }
