@@ -237,6 +237,19 @@ public class ClientSettings
 		return cfg;
 	}
 
+	public static void Initialize()
+	{
+		// create instance
+		Instance = new ClientSettings();
+
+		Instance.MasterVolume = 100;
+		Instance.MusicVolume = 100;
+		Instance.EffectsVolume = 100;
+
+		Instance.InitializePlanetList();
+		Instance.InitializeShipList();
+	}
+
 	public void InitializePlanetList()
 	{
 		// create default planet list config
