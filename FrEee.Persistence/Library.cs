@@ -78,7 +78,15 @@ public abstract class Library<T>
 			}
 
 			using var fs = File.OpenRead(FilePath);
-			Items = Serializer.Deserialize<ISet<T>>(fs);
+			try
+			{
+				Items = Serializer.Deserialize<ISet<T>>(fs);
+			}
+			catch
+			{
+				// HACK: load old library that can store anything
+				Items = Serializer.Deserialize<ISet<object>>(fs).OfType<T>().ToHashSet();
+			}
 		}
 		catch (IOException)
 		{
