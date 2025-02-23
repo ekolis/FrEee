@@ -20,7 +20,6 @@ using FrEee.Objects.Civilization.Diplomacy;
 using FrEee.Processes.Setup;
 using FrEee.Processes.Setup.WarpPointPlacementStrategies;
 using FrEee.Modding.Loaders;
-using FrEee.Vehicles;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -345,7 +344,7 @@ public partial class GameSetupForm : GameForm
 		var result = dlg.ShowDialog();
 		if (result == DialogResult.OK)
 		{
-			var et = EmpireTemplate.Load(dlg.FileName);
+			var et = DIRoot.EmpireTemplatePersister.LoadFromFile(dlg.FileName);
 			setup.EmpireTemplates.Add(et);
 			BindEmpires();
 		}
@@ -422,7 +421,7 @@ public partial class GameSetupForm : GameForm
 		var result = dlg.ShowDialog();
 		if (result == DialogResult.OK)
 		{
-			setup = GameSetup.Load(dlg.FileName);
+			setup = DIRoot.GameSetupPersister.LoadFromFile(dlg.FileName);
 			Bind();
 		}
 	}
@@ -454,7 +453,7 @@ public partial class GameSetupForm : GameForm
 			if (result == DialogResult.OK)
 			{
 				var et = (EmpireTemplate)lstEmpires.SelectedItems[0].Tag;
-				et.Save(dlg.FileName);
+				DIRoot.EmpireTemplatePersister.SaveToFile(et, dlg.FileName);
 			}
 		}
 	}
@@ -467,7 +466,9 @@ public partial class GameSetupForm : GameForm
 		dlg.Filter = "Game Setups (*.gsu)|*.gsu";
 		var result = dlg.ShowDialog();
 		if (result == DialogResult.OK)
-			setup.Save(dlg.FileName);
+		{
+			DIRoot.GameSetupPersister.SaveToFile(setup, dlg.FileName);
+		}
 	}
 
 	private void btnStart_Click(object sender, EventArgs e)

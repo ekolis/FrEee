@@ -1,4 +1,5 @@
 using FrEee.Extensions;
+using FrEee.Serialization;
 using FrEee.Utility;
 using System;
 using System.Collections;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace FrEee.Serialization;
+namespace FrEee.Persistence;
 
 /// <summary>
 /// Context for object graph operations.
@@ -111,11 +112,11 @@ public class ObjectGraphContext
 				var newprops = t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(f =>
 					type.IsGenericType && type.GetGenericTypeDefinition() == typeof(KeyValuePair<,>)
 					||
-					(
+
 						// hopefully put "quicker to check" and "easier to fail" conditions up top
 						f.GetIndexParameters().Length == 0 // we don't support indexed properties
-						&& (f.GetGetMethod(true) != null && f.GetSetMethod(true) != null)
-					)
+						&& f.GetGetMethod(true) != null && f.GetSetMethod(true) != null
+
 				);
 				foreach (var prop in newprops)
 					props.Add(prop, i);
@@ -168,8 +169,8 @@ public class ObjectGraphContext
 			KnownTypes.Add(type.AssemblyQualifiedName, type);
 		if (!KnownObjects.ContainsKey(type))
 			KnownObjects.Add(type, new List<object>());
-//			if (!KnownObjects[type].Contains(o))
-			KnownObjects[type].Add(o);
+		//			if (!KnownObjects[type].Contains(o))
+		KnownObjects[type].Add(o);
 		if (!KnownIDs.ContainsKey(type))
 			KnownIDs.Add(type, new SafeDictionary<object, int>());
 		var id = KnownObjects[type].Count - 1;

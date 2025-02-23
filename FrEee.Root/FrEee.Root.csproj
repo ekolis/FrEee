@@ -16,6 +16,7 @@
 		<ProjectReference Include="..\FrEee.Gameplay\FrEee.Gameplay.csproj">
 		  <PrivateAssets>all</PrivateAssets>
 		</ProjectReference>
+		<ProjectReference Include="..\FrEee.Persistence\FrEee.Persistence.csproj" />
 		<ProjectReference Include="..\FrEee.Processes\FrEee.Processes.csproj">
 		  <PrivateAssets>all</PrivateAssets>
 		</ProjectReference>
@@ -26,7 +27,7 @@
 
 	<PropertyGroup>
 		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
-		<RootNamespace>FrEee.Processes</RootNamespace>
+		<RootNamespace>FrEee.Root</RootNamespace>
 	</PropertyGroup>
 
 </Project>

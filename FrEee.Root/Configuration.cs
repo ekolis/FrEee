@@ -11,6 +11,7 @@ using FrEee.Gameplay.Commands.Notes;
 using FrEee.Gameplay.Commands.Orders;
 using FrEee.Gameplay.Commands.Projects;
 using FrEee.Gameplay.Commands.Waypoints;
+using FrEee.Persistence;
 using FrEee.Processes;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Combat.Grid;
@@ -28,7 +29,7 @@ public static class Configuration
 	/// <summary>
 	/// Sets up any dependencies which need to be injected.
 	/// </summary>
-	public static void ConfigureDI(Action additionlConfig = null)
+	public static void ConfigureDI(Action? additionalConfig = null)
 	{
 		// TODO: load dependencies from configuration file in mod data so we can really modularize this thing!
 
@@ -55,8 +56,17 @@ public static class Configuration
 		DI.RegisterSingleton<IDesignService, DesignService>();
 		DI.RegisterSingleton<IVehicleService, VehicleService>();
 
+		// persistence
+		DI.RegisterSingleton<IGamePersister, GamePersister>();
+		DI.RegisterSingleton<ICommandPersister, CommandPersister>();
+		DI.RegisterSingleton<IGameSetupPersister, GameSetupPersister>();
+		DI.RegisterSingleton<IEmpireTemplatePersister, EmpireTemplatePersister>();
+
+		// libraries
+		DI.RegisterSingleton<ILibrary<IDesign>, DesignLibrary>();
+
 		// addtional configuration for the GUI or whatever
-		additionlConfig?.Invoke();
+		additionalConfig?.Invoke();
 
 		// run this in the background, without awaiting it
 		DI.Run();

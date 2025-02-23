@@ -76,4 +76,19 @@ public interface IGuiController
 	/// </summary>
 	/// <param name="sobj"></param>
 	void Focus(IMessage context);
+
+	/// <summary>
+	/// Initializes fresh client settings.
+	/// </summary>
+	void InitializeClientSettings();
+
+	/// <summary>
+	/// Saves the current client settings.
+	/// </summary>
+	void SaveClientSettings();
+
+	/// <summary>
+	/// Loads previously saved client settings.
+	/// </summary>
+	void LoadClientSettings();
 }

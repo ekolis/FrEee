@@ -251,14 +251,6 @@ public class GameSetup
     /// </summary>
     public WarpPointPlacementStrategy WarpPointPlacementStrategy { get; set; }
 
-    public static GameSetup Load(string filename)
-    {
-        var fs = new FileStream(filename, FileMode.Open);
-        var gsu = Serializer.Deserialize<GameSetup>(fs);
-        fs.Close(); fs.Dispose();
-        return gsu;
-    }
-
     // TODO - status messages for the GUI
     public void PopulateGame(Game game, PRNG dice)
     {
@@ -387,13 +379,6 @@ public class GameSetup
                     sys.ExploredByEmpires.Add(emp);
             }
         }
-    }
-
-    public void Save(string filename)
-    {
-        var fs = new FileStream(filename, FileMode.Create);
-        Serializer.Serialize(this, fs);
-        fs.Close(); fs.Dispose();
     }
 
     /// <summary>

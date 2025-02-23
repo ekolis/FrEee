@@ -13,7 +13,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using FrEee.Utility;
-namespace FrEee.Serialization;
+using FrEee.Serialization;
+namespace FrEee.Persistence;
 
 internal static class LegacySerializer
 {
@@ -36,7 +37,7 @@ internal static class LegacySerializer
 
 	internal static T Deserialize<T>(TextReader r, ObjectGraphContext context = null)
 	{
-		return (T)LegacySerializer.Deserialize(r, typeof(T), true, context);
+		return (T)Deserialize(r, typeof(T), true, context);
 	}
 
 	internal static void Serialize<T>(T o, TextWriter w, ObjectGraphContext context = null, int tabLevel = 0)

@@ -1,10 +1,11 @@
 using FrEee.Extensions;
+using FrEee.Serialization;
 using FrEee.Utility;
 using Newtonsoft.Json;
 using System;
 using static FrEee.Extensions.CommonExtensions;
 
-namespace FrEee.Serialization;
+namespace FrEee.Persistence;
 
 public interface ISimpleDataObject : IDataObject
 {

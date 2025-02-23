@@ -3,11 +3,12 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 
-namespace FrEee.Serialization;
+namespace FrEee.Persistence;
 
 /// <summary>
 /// Serializes and deserializes objects.
 /// </summary>
+// TODO: make this internal if possible
 public static class Serializer
 {
 	private const bool EnableJsonSerializer = false;
@@ -122,27 +123,5 @@ public static class Serializer
 			LegacySerializer.Serialize(o, sw, typeof(object));
 			return sw.ToString();
 		}
-	}
-}
-
-[AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
-public sealed class SerializationPriorityAttribute : Attribute
-{
-	public SerializationPriorityAttribute(int priority)
-	{
-		Priority = priority;
-	}
-
-	public int Priority { get; private set; }
-}
-
-/// <summary>
-/// Forces serialization of a property even when it has a default value, e.g. null or zero.
-/// </summary>
-[AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
-public sealed class ForceSerializationWhenDefaultValueAttribute : Attribute
-{
-	public ForceSerializationWhenDefaultValueAttribute()
-	{
 	}
 }

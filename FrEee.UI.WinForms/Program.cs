@@ -16,6 +16,8 @@ using System.Windows.Forms;
 using FrEee.Objects.GameState;
 using FrEee.Root;
 using FrEee.Vehicles;
+using FrEee.UI.WinForms.Persistence;
+using FrEee.Persistence;
 
 namespace FrEee.UI.WinForms;
 
@@ -97,6 +99,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 		Configuration.ConfigureDI(() =>
 		{
 			DI.RegisterSingleton<IGuiController, GuiController>();
+			DI.RegisterSingleton<IClientSettingsPersister, ClientSettingsPersister>();
 		});
 
 		// HACK - so many things are based on the working directory...

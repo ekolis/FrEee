@@ -10,6 +10,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
+using FrEee.Persistence;
 
 namespace FrEee.UI.WinForms;
 

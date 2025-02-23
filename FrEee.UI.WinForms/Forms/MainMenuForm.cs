@@ -71,7 +71,8 @@ public partial class MainMenuForm : GameForm
 			if (doOrDie)
 			{
 				status.Message = "Setting up game";
-				var setup = GameSetup.Load(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "GameSetups", "Quickstart.gsu"));
+				var setup = DIRoot.GameSetupPersister.LoadFromFile(
+					Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "GameSetups", "Quickstart.gsu"));
 				warnings = setup.Warnings.ToArray();
 				if (warnings.Any())
 					MessageBox.Show(warnings.First(), "Game Setup Error");
@@ -84,7 +85,7 @@ public partial class MainMenuForm : GameForm
 					if (result == DialogResult.OK)
 					{
 						// replace existing first player with selected empire
-						var et = EmpireTemplate.Load(dlg.FileName);
+						var et = DIRoot.EmpireTemplatePersister.LoadFromFile(dlg.FileName);
 						setup.EmpireTemplates.RemoveAt(0);
 						setup.EmpireTemplates.Insert(0, et);
 
@@ -299,13 +300,13 @@ public partial class MainMenuForm : GameForm
 	{
 		try
 		{
-			ClientSettings.Load();
+			DIRoot.Gui.LoadClientSettings();
 		}
 		catch (Exception)
 		{
 			MessageBox.Show("Error loading client settings. Resetting to defaults.");
-			ClientSettings.Initialize();
-			ClientSettings.Save();
+			DIRoot.Gui.InitializeClientSettings();
+			DIRoot.Gui.SaveClientSettings();
 		}
 		// set the default music volume according to the settings
 		// volume values are 0-100, so scale appropriately to the 0-1 range
@@ -314,7 +315,7 @@ public partial class MainMenuForm : GameForm
 
 	private void MainMenuForm_FormClosed(object sender, FormClosedEventArgs e)
 	{
-		ClientSettings.Save();
+		DIRoot.Gui.SaveClientSettings();
 		DIRoot.Gui.Exit();
 	}
 }

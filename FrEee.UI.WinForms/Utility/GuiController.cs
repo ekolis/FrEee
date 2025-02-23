@@ -10,6 +10,7 @@ using FrEee.Objects.Technology;
 using FrEee.Processes.Combat;
 using FrEee.UI.WinForms.Forms;
 using FrEee.UI.WinForms.Objects;
+using FrEee.UI.WinForms.Persistence;
 using FrEee.Utility;
 using FrEee.Vehicles;
 using Screen = FrEee.Utility.Screen;
@@ -118,6 +119,29 @@ public class GuiController
 	{
 		var tn = typeof(MainGameForm).FullName.Replace("MainGame", screen.ToString());
 		return Type.GetType(tn);
+	}
+
+	public void InitializeClientSettings()
+	{
+		// create instance
+		ClientSettings.Instance = new()
+		{
+			MasterVolume = 100,
+			MusicVolume = 100,
+			EffectsVolume = 100
+		};
+		ClientSettings.Instance.InitializePlanetList();
+		ClientSettings.Instance.InitializeShipList();
+	}
+
+	public void SaveClientSettings()
+	{
+		DI.Get<IClientSettingsPersister>().Save(ClientSettings.Instance);
+	}
+
+	public void LoadClientSettings()
+	{
+		ClientSettings.Instance = DI.Get<IClientSettingsPersister>().Load();
 	}
 
 	private MainGameForm MainGameForm => MainGameForm.Instance;

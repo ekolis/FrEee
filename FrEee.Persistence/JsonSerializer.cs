@@ -1,10 +1,11 @@
 using FrEee.Extensions;
+using FrEee.Serialization;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FrEee.Serialization;
+namespace FrEee.Persistence;
 
 public class JsonSerializer
 {
@@ -86,16 +87,16 @@ public class JsonSerializer
 	}
 
 
-	static JsonSerializerSettings SimpleConverterSettings =  new JsonSerializerSettings
-		{
-			ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
-			Formatting = Formatting.Indented,
-			MissingMemberHandling = MissingMemberHandling.Ignore,
-			ObjectCreationHandling = ObjectCreationHandling.Auto,
-			TypeNameHandling = TypeNameHandling.None,
-			TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
-			ContractResolver = new JsonContractResolver()
-		};
+	static JsonSerializerSettings SimpleConverterSettings = new JsonSerializerSettings
+	{
+		ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
+		Formatting = Formatting.Indented,
+		MissingMemberHandling = MissingMemberHandling.Ignore,
+		ObjectCreationHandling = ObjectCreationHandling.Auto,
+		TypeNameHandling = TypeNameHandling.None,
+		TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
+		ContractResolver = new JsonContractResolver()
+	};
 
 	/// <summary>
 	/// Simple Json serializer access. Use this for Script Json serialization. 
@@ -104,7 +105,7 @@ public class JsonSerializer
 	/// <returns></returns>
 	public static string SerializeObject(object obj)
 	{
-		return JsonConvert.SerializeObject(obj,SimpleConverterSettings); 
+		return JsonConvert.SerializeObject(obj, SimpleConverterSettings);
 	}
 	/// <summary>
 	/// Simple json deserializer access. Use this for Script Json serialization. 
@@ -114,6 +115,6 @@ public class JsonSerializer
 	/// <returns></returns>
 	public static T DeserializeObject<T>(string json)
 	{
-		return JsonConvert.DeserializeObject<T>(json, SimpleConverterSettings); 
+		return JsonConvert.DeserializeObject<T>(json, SimpleConverterSettings);
 	}
 }

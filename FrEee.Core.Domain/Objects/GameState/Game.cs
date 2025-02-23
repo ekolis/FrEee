@@ -23,6 +23,7 @@ using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Notes;
 using FrEee.Vehicles.Types;
 using FrEee.Processes.Construction;
+using FrEee.Persistence;
 
 namespace FrEee.Objects.GameState;
 
@@ -344,16 +345,17 @@ public class Game
 	/// <param name="filename"></param>
 	public static void Load(string filename)
 	{
-		var fs = new FileStream(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory, filename), FileMode.Open);
-		Current = Serializer.Deserialize<Game>(fs);
+		Current = DIRoot.GamePersister.LoadFromFile(filename);
+
+		// TODO: put all this code in GamePersister
 		new ModLoader().Load(Current.ModPath);
 		if (Empire.Current != null)
 		{
-			// load library of designs, strategies, etc.
-			Library.Load();
+			// load library of designs
+			DIRoot.DesignLibrary.Load();
+
+			// TODO: load libraries of strategies, etc once we have those
 		}
-		fs.Close();
-		fs.Dispose();
 		Current.PopulatePropertyValues();
 	}
 
@@ -384,9 +386,9 @@ public class Game
 	/// <param name="serializedData"></param>
 	public static void LoadFromString(string serializedData)
 	{
-		Current = Serializer.DeserializeFromString<Game>(serializedData);
-		//Current.SpaceObjectIDCheck("after loading from memory");
+		Current = DIRoot.GamePersister.LoadFromString(serializedData);
 
+		// TODO: put all this code in GamePersister
 		new ModLoader().Load(Current.ModPath);
 
 		if (Empire.Current != null)
@@ -396,8 +398,10 @@ public class Game
 			var formula = new ComputedFormula<int>("Galaxy.Current.TurnNumber", null, true);
 			var turn = formula.Value;
 
-			// load library of designs, strategies, etc.
-			Library.Load();
+			// load library of designs
+			DIRoot.DesignLibrary.Load();
+
+			// TODO: load libraries of strategies, etc once we have those
 		}
 
 		Current.PopulatePropertyValues();
@@ -838,11 +842,13 @@ public class Game
 
 	public void Save(Stream stream, bool assignIDs = true)
 	{
+		// TODO: put all this code in GamePersister
 		if (assignIDs)
 			CleanGameState();
 		foreach (var kvp in referrables.Where(kvp => kvp.Value.IsDisposed).ToArray())
 			referrables.Remove(kvp);
-		Serializer.Serialize(this, stream);
+
+		DIRoot.GamePersister.SaveToStream(this, stream);
 	}
 
 	/// <summary>
@@ -853,6 +859,7 @@ public class Game
 	/// <returns>The filename saved to without the folder name (which is Savegame).</returns>
 	public string Save(bool assignIDs = true)
 	{
+		// TODO: put all this code in GamePersister
 		if (assignIDs)
 			CleanGameState();
 		foreach (var kvp in referrables.Where(kvp => kvp.Value.ID < 0).ToArray())
@@ -864,9 +871,9 @@ public class Game
 			filename = Name + "_" + TurnNumber + "_" + (Empires.IndexOf(CurrentEmpire) + 1).ToString("d4") + ".gam";
 		if (!Directory.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory)))
 			Directory.CreateDirectory(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory));
-		var fs = new FileStream(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory, filename), FileMode.Create);
-		Serializer.Serialize(this, fs);
-		fs.Close(); fs.Dispose();
+		using FileStream fs = new(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory, filename), FileMode.Create);
+
+		DIRoot.GamePersister.SaveToStream(this, fs);
 		return filename;
 	}
 
@@ -879,6 +886,7 @@ public class Game
 	/// <exception cref="InvalidOperationException">if there is no current empire.</exception>
 	public string SaveCommands()
 	{
+		// TODO: move this code to CommandPersister
 		CleanGameState();
 		if (CurrentEmpire == null)
 			throw new InvalidOperationException("Can't save commands without a current empire.");
@@ -893,8 +901,8 @@ public class Game
 		SerializeCommands(fs);
 		fs.Close(); fs.Dispose();
 
-		// save library of designs, commands, etc.
-		Library.Save();
+		// save library of designs
+		DIRoot.DesignLibrary.Save();
 
 		return filename;
 	}
@@ -903,7 +911,7 @@ public class Game
 	{
 		if (assignIDs)
 			CleanGameState();
-		return Serializer.SerializeToString(this);
+		return DIRoot.GamePersister.SaveToString(this);
 	}
 
 	public override string ToString()
@@ -978,8 +986,9 @@ public class Game
 	/// <returns></returns>
 	private static IList<ICommand> DeserializeCommands(Stream stream)
 	{
-		var cmds = Serializer.Deserialize<IList<ICommand>>(stream);
+		var cmds = DIRoot.CommandPersister.LoadFromStream(stream);
 
+		// TODO: put code below in CommandPersister
 		// check for client safety
 		foreach (var cmd in cmds.Where(cmd => cmd != null))
 		{
@@ -1063,7 +1072,7 @@ public class Game
 		if (CurrentEmpire == null)
 			throw new InvalidOperationException("Can't serialize commands if there is no current empire.");
 
-		Serializer.Serialize(CurrentEmpire.Commands, stream);
+		DIRoot.CommandPersister.SaveToStream(CurrentEmpire.Commands, stream);
 	}
 
 	/// <summary>

@@ -523,7 +523,7 @@ public partial class VehicleDesignForm : GameForm
 			}
 
 			// save design to library (delete old design with same name first, and set owner of library design to null)
-			Library.Export(Design, d => { d.Owner = null; d.TurnNumber = 0; d.Iteration = 0; });
+			DIRoot.DesignLibrary.Add(Design);
 
 			// check lockedness
 			Empire.Current.CheckUnlockStatus(Design);

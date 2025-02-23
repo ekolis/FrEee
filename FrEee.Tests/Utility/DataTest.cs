@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using FrEee.Extensions;
+using FrEee.Persistence;
 using FrEee.Serialization;
 using NUnit.Framework;
 
