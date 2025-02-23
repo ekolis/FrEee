@@ -110,7 +110,7 @@ public partial class DesignListForm : GameForm
 			else if (MessageBox.Show("Delete " + design + " from your library?", "Delete Design", MessageBoxButtons.YesNo) == DialogResult.Yes)
 			{
 				// design in the library is just a copy so we need to search for it
-				Library.Delete<IDesign>(d =>
+				DIRoot.DesignLibrary.Delete(d =>
 						d.BaseName == design.BaseName &&
 						d.Hull == design.Hull &&
 						d.Components.SequenceEqual(design.Components, new MountedComponentTemplate.SimpleEqualityComparer())
@@ -273,17 +273,17 @@ public partial class DesignListForm : GameForm
 	private void btnExportAll_Click(object sender, EventArgs e)
 	{
 		var designs = Empire.Current.KnownDesigns.OwnedBy(Empire.Current);
-		var lib = Library.Import<IDesign>(d => d.IsValidInMod);
+		var lib = DIRoot.DesignLibrary.Get(d => d.IsValidInMod);
 		var count = 0;
 		foreach (var d in designs)
 		{
 			if (!lib.Any(ld => ld.Equals(d)))
 			{
 				count++;
-				Library.Export(d);
+				DIRoot.DesignLibrary.Add(d);
 			}
 		}
-		Library.Save();
+		DIRoot.DesignLibrary.Save();
 		MessageBox.Show($"{designs.Count()} designs exported to library ({count} new).");
 	}
 }

@@ -351,8 +351,10 @@ public class Game
 		new ModLoader().Load(Current.ModPath);
 		if (Empire.Current != null)
 		{
-			// load library of designs, strategies, etc.
-			Library.Load();
+			// load library of designs
+			DIRoot.DesignLibrary.Load();
+
+			// TODO: load libraries of strategies, etc once we have those
 		}
 		Current.PopulatePropertyValues();
 	}
@@ -396,8 +398,10 @@ public class Game
 			var formula = new ComputedFormula<int>("Galaxy.Current.TurnNumber", null, true);
 			var turn = formula.Value;
 
-			// load library of designs, strategies, etc.
-			Library.Load();
+			// load library of designs
+			DIRoot.DesignLibrary.Load();
+
+			// TODO: load libraries of strategies, etc once we have those
 		}
 
 		Current.PopulatePropertyValues();
@@ -897,8 +901,8 @@ public class Game
 		SerializeCommands(fs);
 		fs.Close(); fs.Dispose();
 
-		// save library of designs, commands, etc.
-		Library.Save();
+		// save library of designs
+		DIRoot.DesignLibrary.Save();
 
 		return filename;
 	}

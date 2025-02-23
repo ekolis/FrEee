@@ -8,6 +8,7 @@ namespace FrEee.Persistence;
 /// <summary>
 /// Serializes and deserializes objects.
 /// </summary>
+// TODO: make this internal if possible
 public static class Serializer
 {
 	private const bool EnableJsonSerializer = false;

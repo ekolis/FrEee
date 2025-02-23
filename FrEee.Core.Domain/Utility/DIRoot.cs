@@ -121,4 +121,9 @@ public static class DIRoot
 	/// Manages the GUI. Only available when there is a GUI.
 	/// </summary>
 	public static IGuiController Gui => DI.Get<IGuiController>();
+
+	/// <summary>
+	/// Stores vehicle designs for the player across multiple games.
+	/// </summary>
+	public static ILibrary<IDesign> DesignLibrary => DI.Get<ILibrary<IDesign>>();
 }
