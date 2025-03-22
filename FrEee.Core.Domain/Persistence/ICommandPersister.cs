@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FrEee.Gameplay.Commands;
 using FrEee.Objects.GameState;
+using FrEee.Plugins;
 
 namespace FrEee.Persistence;
 
@@ -13,6 +14,7 @@ namespace FrEee.Persistence;
 /// Saves and loads player commands.
 /// </summary>
 public interface ICommandPersister
+	: IPlugin<ICommandPersister>
 {
 	/// <summary>
 	/// Loads commands.

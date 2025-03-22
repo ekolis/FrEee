@@ -1,4 +1,3 @@
-@echo off
 REM concatenate all arguments except the first with spaces between them
 for /f "tokens=1,* delims= " %%a in ("%*") do set ALL_BUT_FIRST=%%b
 
@@ -12,3 +11,5 @@ ren "%%~fG" "%%~nxG.temp"
 findstr /V "../../../bin/Debug/FrEee.Core.dll" "%%G.temp" > "%%~fG"
 del "%%G.temp"
 )
+echo Copying plugins from %1 to %2
+xcopy "%1\Plugins\" "%2\Plugins\" /Y /R /I

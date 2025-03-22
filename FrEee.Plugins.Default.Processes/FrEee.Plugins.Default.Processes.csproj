@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9</TargetFramework>
+		<OutputType>Library</OutputType>
+		<AssemblyName>FrEee.Plugins.Processes.Default</AssemblyName>
+		<Description>Stock implementations of processes such as turn processing used by FrEee</Description>
+	</PropertyGroup>
+	
+	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
+
+	<ItemGroup>
+		<ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
+		<ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+		<RootNamespace>FrEee.Plugins.Processes.Default</RootNamespace>
+	</PropertyGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="xcopy &quot;$(TargetDir)\FrEee.Plugins.Processes.Default.dll&quot; &quot;$(SolutionDir)\Plugins\&quot; /Y /R /I" />
+	</Target>
+
+</Project>

@@ -7,7 +7,7 @@ using FrEee.Utility;
 using FrEee.Vehicles.Types;
 using FrEee.Objects.Space;
 using System.Linq;
-using FrEee.Root;
+using FrEee.Plugins;
 
 namespace FrEee;
 
@@ -15,7 +15,7 @@ public static class TestUtilities
 {
 	public static Game Initialize(string? modPath = null)
 	{
-		Configuration.ConfigureDI();
+		PluginLibrary.Instance.LoadDefaultPlugins();
 		Game game = new();
 		Mod.Current = new ModLoader().Load(modPath);
 		game.Galaxy = new();
@@ -25,7 +25,7 @@ public static class TestUtilities
 
 	public static Game Initialize(Mod mod)
 	{
-		Configuration.ConfigureDI();
+		PluginLibrary.Instance.LoadDefaultPlugins();
 		Game game = new();
 		Mod.Current = mod;
 		game.Galaxy = new();

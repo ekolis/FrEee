@@ -18,11 +18,11 @@
 		<ProjectReference Include="..\FrEee.Assets\FrEee.Assets.csproj" />
 		<ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
 		<ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
-		<ProjectReference Include="..\FrEee.Root\FrEee.Root.csproj" />
+		<ProjectReference Include="..\FrEee.Plugins\FrEee.Plugins.csproj" />
 		<ProjectReference Include="..\FrEee.UI.Blazor\FrEee.UI.Blazor.csproj" />
 
 		<!-- HACK: we don't have UI plugins yet and we need direct access to the serializer to implemnet the ClientSettingsPersister -->
-		<ProjectReference Include="..\FrEee.Plugins.Persistence.Default\FrEee.Plugins.Persistence.Default.csproj" />
+		<ProjectReference Include="..\FrEee.Plugins.Default.Persistence\FrEee.Plugins.Default.Persistence.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Update="Controls\Blazor\PieChart.cs">
@@ -67,7 +67,7 @@
 	  </None>
 	</ItemGroup>
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="post-build.bat" />
+	  <Exec Command="post-build.bat $(SolutionDir) $(TargetDir)" />
 	</Target>
 	<PropertyGroup>
 		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>

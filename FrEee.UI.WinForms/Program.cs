@@ -14,10 +14,9 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using FrEee.Objects.GameState;
-using FrEee.Root;
+using FrEee.Plugins;
 using FrEee.Vehicles;
 using FrEee.UI.WinForms.Persistence;
-using FrEee.Persistence;
 
 namespace FrEee.UI.WinForms;
 
@@ -96,7 +95,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 		};
 
 		// set up dependency injection
-		Configuration.ConfigureDI(() =>
+		PluginLibrary.Instance.LoadDefaultPlugins(() =>
 		{
 			DI.RegisterSingleton<IGuiController, GuiController>();
 			DI.RegisterSingleton<IClientSettingsPersister, ClientSettingsPersister>();

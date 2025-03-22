@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Gameplay.Commands.Messages;
+using FrEee.Plugins;
 
 namespace FrEee.Gameplay.Commands.Ministers;
 
@@ -11,6 +12,7 @@ namespace FrEee.Gameplay.Commands.Ministers;
 /// Creates commands used to manage AI ministers for an empire.
 /// </summary>
 public interface IMinisterCommandService
+	: IPlugin<IMinisterCommandService>
 {
 	IToggleMinistersCommand ToggleMinisters();
 }

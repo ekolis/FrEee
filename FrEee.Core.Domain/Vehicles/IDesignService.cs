@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Plugins;
 using FrEee.Vehicles.Types;
 
 namespace FrEee.Vehicles;
@@ -11,6 +12,7 @@ namespace FrEee.Vehicles;
 /// Manages vehicle designs.
 /// </summary>
 public interface IDesignService
+	: IPlugin<IDesignService>
 {
 	/// <summary>
 	/// Creates a design with a specific vehicle type.

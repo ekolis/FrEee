@@ -16,3 +16,4 @@ packages/
 *.orig
 .vs
 *.Backup.MuProject
+*.dll

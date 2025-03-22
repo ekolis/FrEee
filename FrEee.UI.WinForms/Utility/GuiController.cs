@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using System.Windows.Forms;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
+using FrEee.Plugins;
 using FrEee.Processes.Combat;
 using FrEee.UI.WinForms.Forms;
 using FrEee.UI.WinForms.Objects;
@@ -17,9 +19,14 @@ using Screen = FrEee.Utility.Screen;
 
 namespace FrEee.UI.WinForms.Utility;
 
+[Export(typeof(IPlugin))]
 public class GuiController
-	: IGuiController
+	: Plugin<IGuiController>, IGuiController
 {
+	public override string Name { get; } = "GuiController";
+
+	public override IGuiController Implementation => this;
+
 	public void Close(Screen screen)
 	{
 		GetForm(screen)?.Close();

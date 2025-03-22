@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Plugins;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -23,7 +24,8 @@ namespace FrEee.Utility
 		/// <typeparam name="TInterface"></typeparam>
 		/// <typeparam name="TImplementation"></typeparam>
 		/// <returns></returns>
-        public static void RegisterSingleton<TInterface, TImplementation>()
+		/// <exception cref="InvalidOperationException"></exception>
+		public static void RegisterSingleton<TInterface, TImplementation>()
             where TInterface : class
 			where TImplementation : class, TInterface
 		{
@@ -32,6 +34,21 @@ namespace FrEee.Utility
 				throw new InvalidOperationException("Can't register a service while the service host is running.");
 			}
 			builder.Services.AddSingleton<TInterface, TImplementation>();
+		}
+
+		/// <summary>
+		/// Registers a singleton service.
+		/// </summary>
+		/// <param name="extensionPoint"></param>
+		/// <param name="implementation"></param>
+		/// <exception cref="InvalidOperationException"></exception>
+		public static void RegisterSingleton(Type extensionPoint, IPlugin implementation)
+		{
+			if (host is not null)
+			{
+				throw new InvalidOperationException("Can't register a service while the service host is running.");
+			}
+			builder.Services.AddSingleton(extensionPoint, implementation);
 		}
 
 		/// <summary>

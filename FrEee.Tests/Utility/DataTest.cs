@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FrEee.Extensions;
 using FrEee.Persistence;
-using FrEee.Plugins.Persistence.Default;
+using FrEee.Plugins.Default.Persistence;
 using FrEee.Serialization;
 using NUnit.Framework;
 

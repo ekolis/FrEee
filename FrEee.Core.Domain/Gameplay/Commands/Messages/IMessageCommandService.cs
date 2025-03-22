@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
+using FrEee.Plugins;
 
 namespace FrEee.Gameplay.Commands.Messages;
 
@@ -12,6 +13,7 @@ namespace FrEee.Gameplay.Commands.Messages;
 /// Creates commands allowing players to manage diplomatic messages.
 /// </summary>
 public interface IMessageCommandService
+    : IPlugin<IMessageCommandService>
 {
     IDeleteMessageCommand DeleteMessage(IMessage message);
 

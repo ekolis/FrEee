@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
+using FrEee.Plugins;
 
 namespace FrEee.Gameplay.Commands.Notes;
 
@@ -13,6 +14,7 @@ namespace FrEee.Gameplay.Commands.Notes;
 /// Creates various types of commands used for managing notes.
 /// </summary>
 public interface INoteCommandService
+	: IPlugin<INoteCommandService>
 {
 	ICommand ClearPlayerNote(IReferrable target);
 

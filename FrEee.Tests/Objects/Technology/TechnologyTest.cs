@@ -6,7 +6,7 @@ using FrEee.Modding.Loaders;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Processes;
-using FrEee.Root;
+using FrEee.Plugins;
 using FrEee.Utility;
 using NUnit.Framework;
 
@@ -24,7 +24,7 @@ public class TechnologyTest
 	[OneTimeSetUp]
 	public static void ClassInit()
 	{
-		Configuration.ConfigureDI();
+		PluginLibrary.Instance.LoadDefaultPlugins();
 		processor = DIRoot.TurnProcessor;
 		new ModLoader().Load(null);
 	}

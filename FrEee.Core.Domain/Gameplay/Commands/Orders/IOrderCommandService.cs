@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Orders;
+using FrEee.Plugins;
 
 namespace FrEee.Gameplay.Commands.Orders;
 
@@ -12,6 +13,7 @@ namespace FrEee.Gameplay.Commands.Orders;
 /// Creates various types of commands used for managing <see cref="IOrder">s.
 /// </summary>
 public interface IOrderCommandService
+    : IPlugin<IOrderCommandService>
 {
     IAddOrderCommand AddOrder(IOrderable target, IOrder order);
 

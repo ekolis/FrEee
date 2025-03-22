@@ -10,7 +10,7 @@ using FrEee.Modding.Loaders;
 using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
 using FrEee.Utility;
-using FrEee.Root;
+using FrEee.Plugins;
 
 namespace FrEee.Modding;
 
@@ -25,7 +25,7 @@ public class FormulaTest
 	[Test]
 	public void DynamicFormula()
 	{
-		Configuration.ConfigureDI();
+		PluginLibrary.Instance.LoadDefaultPlugins();
 		var gal = new Game();
 		Empire emp = new Empire();
 		Mod.Current = new Mod();

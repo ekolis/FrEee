@@ -31,7 +31,7 @@ using FrEee.Processes.Combat.Grid;
 using FrEee.Utility;
 using FrEee.Vehicles;
 
-namespace FrEee.Root;
+namespace FrEee.Plugins;
 
 /// <summary>
 /// Configures FrEee.

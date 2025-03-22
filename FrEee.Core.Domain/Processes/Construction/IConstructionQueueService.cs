@@ -1,4 +1,5 @@
-﻿using FrEee.Processes.Construction;
+﻿using FrEee.Plugins;
+using FrEee.Processes.Construction;
 using FrEee.Utility;
 
 namespace FrEee.Processes.Combat.Grid;
@@ -8,6 +9,7 @@ namespace FrEee.Processes.Combat.Grid;
 /// and serves as a utility class for <see cref=IConstructionQueue"/>s.
 /// </summary>
 public interface IConstructionQueueService
+	: IPlugin<IConstructionQueueService>
 {
 	/// <summary>
 	/// Creates a construction queue for a constructor.

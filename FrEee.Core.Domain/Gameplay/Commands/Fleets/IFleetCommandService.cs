@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Objects.Space;
+using FrEee.Plugins;
 
 namespace FrEee.Gameplay.Commands.Fleets;
 
@@ -11,6 +12,7 @@ namespace FrEee.Gameplay.Commands.Fleets;
 /// Creates various types of commands used for managing fleets.
 /// </summary>
 public interface IFleetCommandService
+    : IPlugin<IFleetCommandService>
 {
     ICreateFleetCommand CreateFleet(Fleet fleet, Sector sector);
 

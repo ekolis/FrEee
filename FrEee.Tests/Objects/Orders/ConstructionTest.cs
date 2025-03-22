@@ -6,7 +6,7 @@ using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
-using FrEee.Root;
+using FrEee.Plugins;
 using FrEee.Utility;
 using NUnit.Framework;
 
@@ -27,7 +27,7 @@ public class ConstructionTest
 	public static void ClassInit()
 	{
 		// initalize DI
-		Configuration.ConfigureDI();
+		PluginLibrary.Instance.LoadDefaultPlugins();
 
 		// initialize galaxy
 		TestUtilities.Initialize();

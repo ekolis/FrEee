@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Plugins;
 using FrEee.Processes.Setup;
 
 namespace FrEee.Persistence;
@@ -11,6 +12,7 @@ namespace FrEee.Persistence;
 /// Saves and loads empire templates.
 /// </summary>
 public interface IEmpireTemplatePersister
+	: IPlugin<IEmpireTemplatePersister>
 {
 	/// <summary>
 	/// Loads an empire template from a file.

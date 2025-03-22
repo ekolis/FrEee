@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9</TargetFramework>
+		<OutputType>Library</OutputType>
+		<AssemblyName>FrEee.Plugins</AssemblyName>
+		<Description>Plugin manager for FrEee.</Description>
+	</PropertyGroup>
+	
+	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
+
+	<ItemGroup>
+		<ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
+		<ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+		<RootNamespace>FrEee.Plugins</RootNamespace>
+	</PropertyGroup>
+
+</Project>
