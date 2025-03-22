@@ -15,10 +15,10 @@
 		<ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
 		<ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
 		<ProjectReference Include="..\FrEee.Plugins\FrEee.Plugins.csproj" />
-		<ProjectReference Include="..\FrEee.Plugins.Commands.Default\FrEee.Plugins.Commands.Default.csproj" />
-		<ProjectReference Include="..\FrEee.Plugins.Persistence.Default\FrEee.Plugins.Persistence.Default.csproj" />
-		<ProjectReference Include="..\FrEee.Plugins.Processes.Default\FrEee.Plugins.Processes.Default.csproj" />
-		<ProjectReference Include="..\FrEee.Plugins.Vehicles.Default\FrEee.Plugins.Vehicles.Default.csproj" />
+		<ProjectReference Include="..\FrEee.Plugins.Default.Commands\FrEee.Plugins.Default.Commands.csproj" />
+		<ProjectReference Include="..\FrEee.Plugins.Default.Persistence\FrEee.Plugins.Default.Persistence.csproj" />
+		<ProjectReference Include="..\FrEee.Plugins.Default.Processes\FrEee.Plugins.Default.Processes.csproj" />
+		<ProjectReference Include="..\FrEee.Plugins.Default.Vehicles\FrEee.Plugins.Default.Vehicles.csproj" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
 		<PackageReference Include="NUnit" Version="3.14.0" />
 		<PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />

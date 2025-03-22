@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Plugins;
-using FrEee.Plugins.Persistence.Default;
+using FrEee.Plugins.Default.Persistence;
 using FrEee.UI.WinForms.Objects;
 using FrEee.Utility;
 

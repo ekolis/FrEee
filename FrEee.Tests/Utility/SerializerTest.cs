@@ -12,7 +12,7 @@ using FrEee.Modding.Scripts;
 using FrEee.Modding.Loaders;
 using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
-using FrEee.Plugins.Persistence.Default;
+using FrEee.Plugins.Default.Persistence;
 
 namespace FrEee.Utility;
 
