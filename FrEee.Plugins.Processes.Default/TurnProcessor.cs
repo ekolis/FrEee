@@ -30,6 +30,10 @@ namespace FrEee.Plugins.Processes.Default;
 /// </summary>
 public class TurnProcessor : ITurnProcessor
 {
+	public string Package { get; } = IPlugin.DefaultPackage;
+	public string Name { get; } = "TurnProcessor";
+	public Version Version { get; } = IPlugin.DefaultVersion;
+
 	public IEnumerable<Empire> ProcessTurn(Game game, bool safeMode, Status status = null, double desiredProgress = 1d)
 	{
 		//galaxy.SpaceObjectIDCheck("at start of turn");

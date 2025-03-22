@@ -15,6 +15,10 @@ namespace FrEee.Plugins.Persistence.Default;
 public class EmpireTemplatePersister
 	: IEmpireTemplatePersister
 {
+	public string Package { get; } = IPlugin.DefaultPackage;
+	public string Name { get; } = "EmpireTemplatePersister";
+	public Version Version { get; } = IPlugin.DefaultVersion;
+
 	public EmpireTemplate LoadFromFile(string filename)
 	{
 		using FileStream fs = new(filename, FileMode.Open);

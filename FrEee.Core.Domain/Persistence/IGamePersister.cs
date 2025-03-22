@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Objects.GameState;
+using FrEee.Plugins;
 
 namespace FrEee.Persistence;
 
@@ -13,6 +14,7 @@ namespace FrEee.Persistence;
 /// Saves and loads game state.
 /// </summary>
 public interface IGamePersister
+	: IPlugin
 {
 	/// <summary>
 	/// Loads a game.

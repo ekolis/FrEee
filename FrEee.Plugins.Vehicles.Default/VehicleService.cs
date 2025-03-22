@@ -11,6 +11,10 @@ namespace FrEee.Plugins.Vehicles.Default;
 public class VehicleService
 	: IVehicleService
 {
+	public string Package { get; } = IPlugin.DefaultPackage;
+	public string Name { get; } = "VehicleService";
+	public Version Version { get; } = IPlugin.DefaultVersion;
+
 	public IVehicle CreateVehicle(VehicleTypes vehicleType)
 	{
 		return vehicleType switch

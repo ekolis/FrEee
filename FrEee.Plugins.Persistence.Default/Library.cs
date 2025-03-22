@@ -14,6 +14,10 @@ namespace FrEee.Plugins.Persistence.Default;
 public abstract class Library<T>
 	: ILibrary<T>
 {
+	public abstract string Package { get; }
+	public abstract string Name { get; }
+	public abstract Version Version { get; }
+
 	public static readonly string RootPath = ClientUtilities.ApplicationDataPath;
 
 	public abstract string FilePath { get; }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
+using FrEee.Plugins;
 using FrEee.Utility;
 
 namespace FrEee.Processes;
@@ -9,6 +10,7 @@ namespace FrEee.Processes;
 /// Processes turns.
 /// </summary>
 public interface ITurnProcessor
+	: IPlugin
 {
 	/// <summary>
 	/// Processes the turn.

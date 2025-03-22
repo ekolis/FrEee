@@ -15,6 +15,10 @@ namespace FrEee.Plugins.Processes.Default.Combat.Grid;
 public class BattleService
 	: IBattleService
 {
+	public string Package { get; } = IPlugin.DefaultPackage;
+	public string Name { get; } = "BattleService";
+	public Version Version { get; } = IPlugin.DefaultVersion;
+
 	public IBattle CreateGroundBattle(Planet location)
 	{
 		return new GroundBattle(location);

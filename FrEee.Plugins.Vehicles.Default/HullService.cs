@@ -11,6 +11,10 @@ namespace FrEee.Plugins.Vehicles.Default;
 public class HullService
 	: IHullService
 {
+	public string Package { get; } = IPlugin.DefaultPackage;
+	public string Name { get; } = "HullService";
+	public Version Version { get; } = IPlugin.DefaultVersion;
+
 	public IHull CreateHull(VehicleTypes vehicleType)
 	{
 		return vehicleType switch

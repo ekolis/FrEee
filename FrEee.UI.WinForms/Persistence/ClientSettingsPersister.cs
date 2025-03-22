@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Plugins;
 using FrEee.Plugins.Persistence.Default;
 using FrEee.UI.WinForms.Objects;
 using FrEee.UI.WinForms.Persistence;
@@ -14,6 +15,10 @@ namespace FrEee.Persistence;
 public class ClientSettingsPersister
 	: IClientSettingsPersister
 {
+	public string Package { get; } = IPlugin.DefaultPackage;
+	public string Name { get; } = "ClientSettingsPersister";
+	public Version Version { get; } = IPlugin.DefaultVersion;
+
 	/// <summary>
 	/// The full path to the client settings file.
 	/// </summary>

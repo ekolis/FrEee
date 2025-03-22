@@ -1,4 +1,5 @@
-﻿using FrEee.Gameplay.Commands;
+﻿using System;
+using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Notes;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
@@ -7,6 +8,10 @@ namespace FrEee.Plugins.Commands.Default.Notes;
 public class NoteCommandService
 	: INoteCommandService
 {
+	public string Package { get; } = IPlugin.DefaultPackage;
+	public string Name { get; } = "NoteCommandService";
+	public Version Version { get; } = IPlugin.DefaultVersion;
+
 	public ICommand ClearPlayerNote(IReferrable target)
 	{
 		return new ClearPlayerNoteCommand(target);

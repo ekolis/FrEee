@@ -1,12 +1,14 @@
 ﻿using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
+using FrEee.Plugins;
 using FrEee.Processes.Combat;
 using FrEee.Vehicles;
 
 namespace FrEee.Utility;
 
 public interface IGuiController
+	: IPlugin
 {
 	/// <summary>
 	/// Shows a particular screen.

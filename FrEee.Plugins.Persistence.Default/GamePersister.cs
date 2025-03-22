@@ -17,6 +17,10 @@ namespace FrEee.Plugins.Persistence.Default;
 public class GamePersister
 	: IGamePersister
 {
+	public string Package { get; } = IPlugin.DefaultPackage;
+	public string Name { get; } = "GamePerister";
+	public Version Version { get; } = IPlugin.DefaultVersion;
+
 	public Game Load(GameID id)
 	{
 		return LoadFromFile(id.GameStateFilename);

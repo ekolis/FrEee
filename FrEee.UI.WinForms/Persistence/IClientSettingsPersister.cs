@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Plugins;
 using FrEee.UI.WinForms.Objects;
 
 namespace FrEee.UI.WinForms.Persistence;
@@ -11,6 +12,7 @@ namespace FrEee.UI.WinForms.Persistence;
 /// Saves and loads client settings.
 /// </summary>
 public interface IClientSettingsPersister
+	: IPlugin
 {
 	/// <summary>
 	/// Saves client settings.

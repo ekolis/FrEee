@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Objects.Space;
+using FrEee.Plugins;
 
 namespace FrEee.Processes.Combat;
 
@@ -11,6 +12,7 @@ namespace FrEee.Processes.Combat;
 /// Manages battles.
 /// </summary>
 public interface IBattleService
+	: IPlugin
 {
 	/// <summary>
 	/// Creates a space battle.

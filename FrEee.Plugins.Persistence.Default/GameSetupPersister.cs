@@ -15,6 +15,10 @@ namespace FrEee.Plugins.Persistence.Default;
 public class GameSetupPersister
 	: IGameSetupPersister
 {
+	public string Package { get; } = IPlugin.DefaultPackage;
+	public string Name { get; } = "GameSetupPersister";
+	public Version Version { get; } = IPlugin.DefaultVersion;
+
 	public GameSetup LoadFromFile(string filename)
 	{
 		using FileStream fs = new(filename, FileMode.Open);

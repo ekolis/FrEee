@@ -21,6 +21,10 @@ namespace FrEee.Plugins.Processes.Default.Construction;
 public class ConstructionQueueService
 	: IConstructionQueueService
 {
+	public string Package { get; } = IPlugin.DefaultPackage;
+	public string Name { get; } = "ConstructionQueueService";
+	public Version Version { get; } = IPlugin.DefaultVersion;
+
 	public IConstructionQueue CreateConstructionQueue(IConstructor constructor)
 	{
 		return new ConstructionQueue(constructor);

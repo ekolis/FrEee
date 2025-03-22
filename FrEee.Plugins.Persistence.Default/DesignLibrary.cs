@@ -15,6 +15,10 @@ namespace FrEee.Plugins.Persistence.Default
 	public class DesignLibrary
 		: Library<IDesign>
 	{
+		public override string Package { get; } = IPlugin.DefaultPackage;
+		public override string Name { get; } = "DesignLibrary";
+		public override Version Version { get; } = IPlugin.DefaultVersion;
+
 		public override string FilePath { get; } = Path.Combine(RootPath, "DesignLibrary.dat");
 
 		public override void Clean(IDesign design)

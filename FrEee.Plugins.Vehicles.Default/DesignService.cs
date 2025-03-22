@@ -18,6 +18,10 @@ namespace FrEee.Plugins.Vehicles.Default;
 public class DesignService
 	: IDesignService
 {
+	public string Package { get; } = IPlugin.DefaultPackage;
+	public string Name { get; } = "DesignService";
+	public Version Version { get; } = IPlugin.DefaultVersion;
+
 	public IDesign<IUnit> MilitiaDesign { get; } = BuildMilitia();
 
 	private static IDesign<IUnit> BuildMilitia()

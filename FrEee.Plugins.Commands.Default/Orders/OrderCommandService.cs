@@ -1,4 +1,5 @@
-﻿using FrEee.Gameplay.Commands.Orders;
+﻿using System;
+using FrEee.Gameplay.Commands.Orders;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Orders;
 
@@ -6,6 +7,10 @@ namespace FrEee.Plugins.Commands.Default.Orders;
 public class OrderCommandService
 	: IOrderCommandService
 {
+	public string Package { get; } = IPlugin.DefaultPackage;
+	public string Name { get; } = "OrderCommandService";
+	public Version Version { get; } = IPlugin.DefaultVersion;
+
 	public IAddOrderCommand AddOrder(IOrderable target, IOrder order)
 	{
 		return new AddOrderCommand(target, order);

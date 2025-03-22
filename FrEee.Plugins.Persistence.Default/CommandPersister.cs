@@ -18,6 +18,10 @@ namespace FrEee.Plugins.Persistence.Default;
 public class CommandPersister
 	: ICommandPersister
 {
+	public string Package { get; } = IPlugin.DefaultPackage;
+	public string Name { get; } = "CommandPersister";
+	public Version Version { get; } = IPlugin.DefaultVersion;
+
 	public IList<ICommand> Load(GameID id)
 	{
 		return LoadFromFile(id.GameStateFilename);

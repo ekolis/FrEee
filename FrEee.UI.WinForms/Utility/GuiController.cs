@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
+using FrEee.Plugins;
 using FrEee.Processes.Combat;
 using FrEee.UI.WinForms.Forms;
 using FrEee.UI.WinForms.Objects;
@@ -20,6 +21,10 @@ namespace FrEee.UI.WinForms.Utility;
 public class GuiController
 	: IGuiController
 {
+	public string Package { get; } = IPlugin.DefaultPackage;
+	public string Name { get; } = "GuiController";
+	public Version Version { get; } = IPlugin.DefaultVersion;
+
 	public void Close(Screen screen)
 	{
 		GetForm(screen)?.Close();

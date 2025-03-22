@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Objects.Civilization;
+using FrEee.Plugins;
 
 namespace FrEee.Gameplay.Commands.Waypoints;
 
@@ -11,6 +12,7 @@ namespace FrEee.Gameplay.Commands.Waypoints;
 /// Creates commands to manage waypoints.
 /// </summary>
 public interface IWaypointCommandService
+	: IPlugin
 {
 	ICommand<Empire> CreateWaypoint(Waypoint waypoint);
 

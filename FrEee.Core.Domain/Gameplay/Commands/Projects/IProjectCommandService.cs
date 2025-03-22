@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Plugins;
 
 namespace FrEee.Gameplay.Commands.Projects;
 
@@ -10,6 +11,7 @@ namespace FrEee.Gameplay.Commands.Projects;
 /// Creates commands for empire wide projects such as research and espionage.
 /// </summary>
 public interface IProjectCommandService
+    : IPlugin
 {
     /// <summary>
     /// Creates an <see cref="IResearchCommand"/> to assign research spending.

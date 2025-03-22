@@ -1,10 +1,15 @@
-﻿using FrEee.Gameplay.Commands.Fleets;
+﻿using System;
+using FrEee.Gameplay.Commands.Fleets;
 using FrEee.Objects.Space;
 
 namespace FrEee.Plugins.Commands.Default.Fleets;
 public class FleetCommandService
 	: IFleetCommandService
 {
+	public string Package { get; } = IPlugin.DefaultPackage;
+	public string Name { get; } = "FleetCommandService";
+	public Version Version { get; } = IPlugin.DefaultVersion;
+
 	public ICreateFleetCommand CreateFleet(Fleet fleet, Sector sector)
 	{
 		return new CreateFleetCommand(fleet, sector);
