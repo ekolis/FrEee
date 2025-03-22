@@ -12,7 +12,6 @@ using FrEee.Utility;
 
 namespace FrEee.Plugins.Persistence.Default;
 
-[Export(typeof(IPlugin))]
 public abstract class Library<T>
 	: Plugin<ILibrary<T>>, ILibrary<T>
 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace FrEee.Plugins.Persistence.Default
 	/// <summary>
 	/// <see cref="ILibrary{T}"> which stores <see cref="IDesign"/>s.
 	/// </summary>
+	[Export(typeof(IPlugin))]
 	public class DesignLibrary
 		: Library<IDesign>
 	{
