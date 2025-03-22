@@ -14,8 +14,10 @@
 		<ProjectReference Include="..\FrEee.Assets\FrEee.Assets.csproj" />
 		<ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
 		<ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
-		<ProjectReference Include="..\FrEee.Persistence\FrEee.Persistence.csproj" />
-		<ProjectReference Include="..\FrEee.Processes\FrEee.Processes.csproj" />
+		<ProjectReference Include="..\FrEee.Plugins.Commands.Default\FrEee.Plugins.Commands.Default.csproj" />
+		<ProjectReference Include="..\FrEee.Plugins.Persistence.Default\FrEee.Plugins.Persistence.Default.csproj" />
+		<ProjectReference Include="..\FrEee.Plugins.Processes.Default\FrEee.Plugins.Processes.Default.csproj" />
+		<ProjectReference Include="..\FrEee.Plugins.Vehicles.Default\FrEee.Plugins.Vehicles.Default.csproj" />
 		<ProjectReference Include="..\FrEee.Root\FrEee.Root.csproj" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
 		<PackageReference Include="NUnit" Version="3.14.0" />
