@@ -34,14 +34,14 @@ using FrEee.Vehicles;
 namespace FrEee.Plugins;
 
 /// <summary>
-/// Configures FrEee.
+/// Configures FrEee's plugins.
 /// </summary>
-public static class Configuration
+public static class PluginConfiguration
 {
 	/// <summary>
-	/// Sets up any dependencies which need to be injected.
+	/// Loads the default plugins into the game.
 	/// </summary>
-	public static void ConfigureDI(Action? additionalConfig = null)
+	public static void LoadDefaultPlugins(Action? additionalConfig = null)
 	{
 		// TODO: load dependencies from configuration file in mod data so we can really modularize this thing!
 

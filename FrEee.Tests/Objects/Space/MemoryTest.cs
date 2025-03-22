@@ -3,7 +3,7 @@ using FrEee.Extensions;
 using FrEee.Modding;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
-using FrEee.Root;
+using FrEee.Plugins;
 using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
 using NUnit.Framework;
@@ -90,7 +90,7 @@ public class MemoryTest
 	public void Setup()
 	{
 		// initialize DI
-		Configuration.ConfigureDI();
+		PluginConfiguration.LoadDefaultPlugins();
 
 		// initialize galaxy
 		TestUtilities.Initialize();

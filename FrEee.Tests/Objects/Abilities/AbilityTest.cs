@@ -6,7 +6,7 @@ using FrEee.Modding.Templates;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
-using FrEee.Root;
+using FrEee.Plugins;
 using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
 using NUnit.Framework;
@@ -28,7 +28,7 @@ public class AbilityTest
 	public void SetUp()
 	{
 		// configure DI
-		Configuration.ConfigureDI();
+		PluginConfiguration.LoadDefaultPlugins();
 
 		// create game
 		TestUtilities.Initialize();
