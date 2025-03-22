@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Gameplay.Commands.Designs;
 using FrEee.Persistence;
 using FrEee.Vehicles;
 
@@ -15,9 +16,7 @@ namespace FrEee.Plugins.Persistence.Default
 	public class DesignLibrary
 		: Library<IDesign>
 	{
-		public override string Package { get; } = IPlugin.DefaultPackage;
 		public override string Name { get; } = "DesignLibrary";
-		public override Version Version { get; } = IPlugin.DefaultVersion;
 
 		public override string FilePath { get; } = Path.Combine(RootPath, "DesignLibrary.dat");
 

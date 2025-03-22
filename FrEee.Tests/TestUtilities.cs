@@ -15,7 +15,7 @@ public static class TestUtilities
 {
 	public static Game Initialize(string? modPath = null)
 	{
-		PluginConfiguration.LoadDefaultPlugins();
+		PluginLibrary.Instance.LoadDefaultPlugins();
 		Game game = new();
 		Mod.Current = new ModLoader().Load(modPath);
 		game.Galaxy = new();
@@ -25,7 +25,7 @@ public static class TestUtilities
 
 	public static Game Initialize(Mod mod)
 	{
-		PluginConfiguration.LoadDefaultPlugins();
+		PluginLibrary.Instance.LoadDefaultPlugins();
 		Game game = new();
 		Mod.Current = mod;
 		game.Galaxy = new();

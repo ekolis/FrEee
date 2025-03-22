@@ -12,7 +12,7 @@ namespace FrEee.Vehicles;
 /// Creates vehicles.
 /// </summary>
 public interface IVehicleService
-	: IPlugin
+	: IPlugin<IVehicleService>
 {
 	/// <summary>
 	/// Creates a vehicle of a specific type.

@@ -1,15 +1,19 @@
 ﻿using System;
+using System.ComponentModel.Composition;
+using FrEee.Gameplay.Commands.Designs;
 using FrEee.Gameplay.Commands.Orders;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Orders;
 
 namespace FrEee.Plugins.Commands.Default.Orders;
+
+[Export(typeof(IPlugin))]
 public class OrderCommandService
-	: IOrderCommandService
+	: Plugin<IOrderCommandService>, IOrderCommandService
 {
-	public string Package { get; } = IPlugin.DefaultPackage;
-	public string Name { get; } = "OrderCommandService";
-	public Version Version { get; } = IPlugin.DefaultVersion;
+	public override string Name { get; } = "OrderCommandService";
+
+	public override IOrderCommandService Implementation => this;
 
 	public IAddOrderCommand AddOrder(IOrderable target, IOrder order)
 	{

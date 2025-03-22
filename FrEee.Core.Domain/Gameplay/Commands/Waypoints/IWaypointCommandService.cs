@@ -12,7 +12,7 @@ namespace FrEee.Gameplay.Commands.Waypoints;
 /// Creates commands to manage waypoints.
 /// </summary>
 public interface IWaypointCommandService
-	: IPlugin
+	: IPlugin<IWaypointCommandService>
 {
 	ICommand<Empire> CreateWaypoint(Waypoint waypoint);
 

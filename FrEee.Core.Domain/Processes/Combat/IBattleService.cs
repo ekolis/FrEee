@@ -12,7 +12,7 @@ namespace FrEee.Processes.Combat;
 /// Manages battles.
 /// </summary>
 public interface IBattleService
-	: IPlugin
+	: IPlugin<IBattleService>
 {
 	/// <summary>
 	/// Creates a space battle.

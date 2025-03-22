@@ -25,7 +25,7 @@ public class FormulaTest
 	[Test]
 	public void DynamicFormula()
 	{
-		PluginConfiguration.LoadDefaultPlugins();
+		PluginLibrary.Instance.LoadDefaultPlugins();
 		var gal = new Game();
 		Empire emp = new Empire();
 		Mod.Current = new Mod();

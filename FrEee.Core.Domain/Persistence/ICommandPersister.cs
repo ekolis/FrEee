@@ -14,7 +14,7 @@ namespace FrEee.Persistence;
 /// Saves and loads player commands.
 /// </summary>
 public interface ICommandPersister
-	: IPlugin
+	: IPlugin<ICommandPersister>
 {
 	/// <summary>
 	/// Loads commands.

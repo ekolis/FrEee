@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Objects.Space;
+using FrEee.Persistence;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Combat.Grid;
 
@@ -12,12 +14,13 @@ namespace FrEee.Plugins.Processes.Default.Combat.Grid;
 /// <summary>
 /// Implementation of <see cref="IBattleService"/> for the grid-based combat engine.
 /// </summary>
+[Export(typeof(IPlugin))]
 public class BattleService
-	: IBattleService
+	: Plugin<IBattleService>, IBattleService
 {
-	public string Package { get; } = IPlugin.DefaultPackage;
-	public string Name { get; } = "BattleService";
-	public Version Version { get; } = IPlugin.DefaultVersion;
+	public override string Name { get; } = "BattleService";
+
+	public override IBattleService Implementation => this;
 
 	public IBattle CreateGroundBattle(Planet location)
 	{

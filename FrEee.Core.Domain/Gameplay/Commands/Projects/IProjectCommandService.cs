@@ -11,7 +11,7 @@ namespace FrEee.Gameplay.Commands.Projects;
 /// Creates commands for empire wide projects such as research and espionage.
 /// </summary>
 public interface IProjectCommandService
-    : IPlugin
+    : IPlugin<IProjectCommandService>
 {
     /// <summary>
     /// Creates an <see cref="IResearchCommand"/> to assign research spending.

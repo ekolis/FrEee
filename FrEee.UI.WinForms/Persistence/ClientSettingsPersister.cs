@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -7,17 +8,17 @@ using System.Threading.Tasks;
 using FrEee.Plugins;
 using FrEee.Plugins.Persistence.Default;
 using FrEee.UI.WinForms.Objects;
-using FrEee.UI.WinForms.Persistence;
 using FrEee.Utility;
 
-namespace FrEee.Persistence;
+namespace FrEee.UI.WinForms.Persistence;
 
+[Export(typeof(IPlugin))]
 public class ClientSettingsPersister
-	: IClientSettingsPersister
+	: Plugin<IClientSettingsPersister>, IClientSettingsPersister
 {
-	public string Package { get; } = IPlugin.DefaultPackage;
-	public string Name { get; } = "ClientSettingsPersister";
-	public Version Version { get; } = IPlugin.DefaultVersion;
+	public override string Name { get; } = "ClientSettingsPersister";
+
+	public override IClientSettingsPersister Implementation => this;
 
 	/// <summary>
 	/// The full path to the client settings file.

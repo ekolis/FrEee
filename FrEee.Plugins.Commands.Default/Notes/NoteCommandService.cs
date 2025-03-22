@@ -1,16 +1,20 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Designs;
 using FrEee.Gameplay.Commands.Notes;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 
 namespace FrEee.Plugins.Commands.Default.Notes;
+
+[Export(typeof(IPlugin))]
 public class NoteCommandService
-	: INoteCommandService
+	: Plugin<INoteCommandService>, INoteCommandService
 {
-	public string Package { get; } = IPlugin.DefaultPackage;
-	public string Name { get; } = "NoteCommandService";
-	public Version Version { get; } = IPlugin.DefaultVersion;
+	public override string Name { get; } = "NoteCommandService";
+
+	public override INoteCommandService Implementation => this;
 
 	public ICommand ClearPlayerNote(IReferrable target)
 	{

@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net9</TargetFramework>
 		<OutputType>Library</OutputType>
-		<AssemblyName>FrEee.Vehicles</AssemblyName>
+		<AssemblyName>FrEee.Plugins.Vehicles.Default</AssemblyName>
 		<Description>Stock implementations of vehicles for FrEee.</Description>
 	</PropertyGroup>
 	
@@ -18,5 +18,9 @@
 		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
 		<RootNamespace>FrEee.Plugins.Vehicles.Default</RootNamespace>
 	</PropertyGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="xcopy &quot;$(TargetDir)\FrEee.Plugins.Vehicles.Default.dll&quot; &quot;$(SolutionDir)\Plugins\&quot; /Y /R /I" />
+	</Target>
 
 </Project>

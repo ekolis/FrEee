@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using FrEee.Extensions;
 using FrEee.Modding;
 using FrEee.Modding.Abilities;
 using FrEee.Objects.Civilization;
+using FrEee.Processes.Combat;
 using FrEee.Processes.Combat.Grid;
 using FrEee.Processes.Construction;
 using FrEee.Utility;
@@ -18,12 +20,13 @@ namespace FrEee.Plugins.Processes.Default.Construction;
 /// <summary>
 /// Stock implementation of <see cref="IConstructionQueueService"/>.
 /// </summary>
+[Export(typeof(IPlugin))]
 public class ConstructionQueueService
-	: IConstructionQueueService
+	: Plugin<IConstructionQueueService>, IConstructionQueueService
 {
-	public string Package { get; } = IPlugin.DefaultPackage;
-	public string Name { get; } = "ConstructionQueueService";
-	public Version Version { get; } = IPlugin.DefaultVersion;
+	public override string Name { get; } = "ConstructionQueueService";
+
+	public override IConstructionQueueService Implementation => this;
 
 	public IConstructionQueue CreateConstructionQueue(IConstructor constructor)
 	{

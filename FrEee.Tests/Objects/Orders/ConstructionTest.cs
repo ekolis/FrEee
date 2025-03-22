@@ -27,7 +27,7 @@ public class ConstructionTest
 	public static void ClassInit()
 	{
 		// initalize DI
-		PluginConfiguration.LoadDefaultPlugins();
+		PluginLibrary.Instance.LoadDefaultPlugins();
 
 		// initialize galaxy
 		TestUtilities.Initialize();

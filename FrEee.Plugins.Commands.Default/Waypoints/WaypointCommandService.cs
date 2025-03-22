@@ -1,15 +1,19 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Designs;
 using FrEee.Gameplay.Commands.Waypoints;
 using FrEee.Objects.Civilization;
 
 namespace FrEee.Plugins.Commands.Default.Waypoints;
+
+[Export(typeof(IPlugin))]
 public class WaypointCommandService
-	: IWaypointCommandService
+	: Plugin<IWaypointCommandService>, IWaypointCommandService
 {
-	public string Package { get; } = IPlugin.DefaultPackage;
-	public string Name { get; } = "WaypointCommandService";
-	public Version Version { get; } = IPlugin.DefaultVersion;
+	public override string Name { get; } = "WaypointCommandService";
+
+	public override IWaypointCommandService Implementation => this;
 
 	public ICommand<Empire> CreateWaypoint(Waypoint Waypoint)
 	{

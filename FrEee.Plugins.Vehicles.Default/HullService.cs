@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Plugins.Vehicles.Default.Types;
+using FrEee.Processes.Combat;
 using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
 
 namespace FrEee.Plugins.Vehicles.Default;
+
+[Export(typeof(IPlugin))]
 public class HullService
-	: IHullService
+	: Plugin<IHullService>, IHullService
 {
-	public string Package { get; } = IPlugin.DefaultPackage;
-	public string Name { get; } = "HullService";
-	public Version Version { get; } = IPlugin.DefaultVersion;
+	public override string Name { get; } = "HullService";
+
+	public override IHullService Implementation => this;
 
 	public IHull CreateHull(VehicleTypes vehicleType)
 	{

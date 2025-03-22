@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,12 +19,13 @@ using Screen = FrEee.Utility.Screen;
 
 namespace FrEee.UI.WinForms.Utility;
 
+[Export(typeof(IPlugin))]
 public class GuiController
-	: IGuiController
+	: Plugin<IGuiController>, IGuiController
 {
-	public string Package { get; } = IPlugin.DefaultPackage;
-	public string Name { get; } = "GuiController";
-	public Version Version { get; } = IPlugin.DefaultVersion;
+	public override string Name { get; } = "GuiController";
+
+	public override IGuiController Implementation => this;
 
 	public void Close(Screen screen)
 	{

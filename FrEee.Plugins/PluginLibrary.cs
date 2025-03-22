@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition.Hosting;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,27 +30,75 @@ using FrEee.Plugins.Vehicles.Default;
 using FrEee.Processes;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Combat.Grid;
+using FrEee.Serialization.Stringifiers;
 using FrEee.Utility;
 using FrEee.Vehicles;
+using System.Reflection;
+using System.IO;
 
 namespace FrEee.Plugins;
 
 /// <summary>
-/// Configures FrEee's plugins.
+/// Manages FrEee's plugins.
 /// </summary>
-public static class PluginConfiguration
+public class PluginLibrary
 {
+	private CompositionContainer container;
+
+	private PluginLibrary()
+	{
+		// load plugins from DLLs in Plugins folder
+		var catalog = new AggregateCatalog();
+		var pluginsDir = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Plugins");
+		catalog.Catalogs.Add(new DirectoryCatalog(pluginsDir));
+		container = new CompositionContainer(catalog);
+		container.ComposeParts(this);
+	}
+
+	public static PluginLibrary Instance { get; } = new PluginLibrary();
+
+	/// <summary>
+	/// All available plugins.
+	/// </summary>
+	[ImportMany(typeof(IPlugin))]
+	public IEnumerable<IPlugin> All { get; private set; }
+
+	private IList<IPlugin> loaded = [];
+
+	/// <summary>
+	/// Any plugins that are loaded.
+	/// </summary>
+	public IEnumerable<IPlugin> Loaded => loaded;
+
+	public void Load(IPlugin plugin)
+	{
+		DI.RegisterSingleton(plugin.ExtensionPoint, plugin);
+		loaded.Add(plugin);
+	}
+
 	/// <summary>
 	/// Loads the default plugins into the game.
 	/// </summary>
-	public static void LoadDefaultPlugins(Action? additionalConfig = null)
+	public void LoadDefaultPlugins(Action? additionalConfig = null)
 	{
 		// TODO: load dependencies from configuration file in mod data so we can really modularize this thing!
 
 		// reset in case DI was already running (e.g. unit test suite)
 		DI.Reset();
 
-		// processes
+		// load the latest verion of all default plugins
+		foreach (var group in All
+			.Where(q => q.Package == Plugin.DefaultPackage)
+			.GroupBy(q => q.Name))
+		{
+			var plugin = group.MaxBy(q => q.Version);
+			if (plugin is not null)
+			{
+				Load(plugin);
+			}
+		}
+
+		/*// processes
 		DI.RegisterSingleton<ITurnProcessor, TurnProcessor>();
 		DI.RegisterSingleton<IBattleService, BattleService>();
 		DI.RegisterSingleton<IConstructionQueueService, ConstructionQueueService>();
@@ -75,7 +125,7 @@ public static class PluginConfiguration
 		DI.RegisterSingleton<IEmpireTemplatePersister, EmpireTemplatePersister>();
 
 		// libraries
-		DI.RegisterSingleton<ILibrary<IDesign>, DesignLibrary>();
+		DI.RegisterSingleton<ILibrary<IDesign>, DesignLibrary>();*/
 
 		// addtional configuration for the GUI or whatever
 		additionalConfig?.Invoke();

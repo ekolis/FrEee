@@ -13,7 +13,7 @@ namespace FrEee.Gameplay.Commands.Orders;
 /// Creates various types of commands used for managing <see cref="IOrder">s.
 /// </summary>
 public interface IOrderCommandService
-    : IPlugin
+    : IPlugin<IOrderCommandService>
 {
     IAddOrderCommand AddOrder(IOrderable target, IOrder order);
 

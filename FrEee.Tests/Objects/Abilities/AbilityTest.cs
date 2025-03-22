@@ -28,7 +28,7 @@ public class AbilityTest
 	public void SetUp()
 	{
 		// configure DI
-		PluginConfiguration.LoadDefaultPlugins();
+		PluginLibrary.Instance.LoadDefaultPlugins();
 
 		// create game
 		TestUtilities.Initialize();

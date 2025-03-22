@@ -14,7 +14,7 @@ namespace FrEee.Persistence;
 /// Saves and loads game state.
 /// </summary>
 public interface IGamePersister
-	: IPlugin
+	: IPlugin<IGamePersister>
 {
 	/// <summary>
 	/// Loads a game.

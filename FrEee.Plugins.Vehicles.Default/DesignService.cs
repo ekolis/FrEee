@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,17 +11,20 @@ using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Technology;
 using FrEee.Plugins.Vehicles.Default.Types;
+using FrEee.Processes.Combat;
 using FrEee.Utility;
 using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
 
 namespace FrEee.Plugins.Vehicles.Default;
+
+[Export(typeof(IPlugin))]
 public class DesignService
-	: IDesignService
+	: Plugin<IDesignService>, IDesignService
 {
-	public string Package { get; } = IPlugin.DefaultPackage;
-	public string Name { get; } = "DesignService";
-	public Version Version { get; } = IPlugin.DefaultVersion;
+	public override string Name { get; } = "DesignService";
+
+	public override IDesignService Implementation => this;
 
 	public IDesign<IUnit> MilitiaDesign { get; } = BuildMilitia();
 

@@ -12,7 +12,7 @@ namespace FrEee.Persistence;
 /// Saves and loads game setups.
 /// </summary>
 public interface IGameSetupPersister
-	: IPlugin
+	: IPlugin<IGameSetupPersister>
 {
 	/// <summary>
 	/// Loads a game setup from a file.

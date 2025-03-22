@@ -90,7 +90,7 @@ public class MemoryTest
 	public void Setup()
 	{
 		// initialize DI
-		PluginConfiguration.LoadDefaultPlugins();
+		PluginLibrary.Instance.LoadDefaultPlugins();
 
 		// initialize galaxy
 		TestUtilities.Initialize();

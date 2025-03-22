@@ -12,7 +12,7 @@ namespace FrEee.Gameplay.Commands.Ministers;
 /// Creates commands used to manage AI ministers for an empire.
 /// </summary>
 public interface IMinisterCommandService
-	: IPlugin
+	: IPlugin<IMinisterCommandService>
 {
 	IToggleMinistersCommand ToggleMinisters();
 }

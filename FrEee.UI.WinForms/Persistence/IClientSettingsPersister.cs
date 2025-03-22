@@ -12,7 +12,7 @@ namespace FrEee.UI.WinForms.Persistence;
 /// Saves and loads client settings.
 /// </summary>
 public interface IClientSettingsPersister
-	: IPlugin
+	: IPlugin<IClientSettingsPersister>
 {
 	/// <summary>
 	/// Saves client settings.

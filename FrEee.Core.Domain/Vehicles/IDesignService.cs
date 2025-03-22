@@ -12,7 +12,7 @@ namespace FrEee.Vehicles;
 /// Manages vehicle designs.
 /// </summary>
 public interface IDesignService
-	: IPlugin
+	: IPlugin<IDesignService>
 {
 	/// <summary>
 	/// Creates a design with a specific vehicle type.

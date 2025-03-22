@@ -24,7 +24,7 @@ public class TechnologyTest
 	[OneTimeSetUp]
 	public static void ClassInit()
 	{
-		PluginConfiguration.LoadDefaultPlugins();
+		PluginLibrary.Instance.LoadDefaultPlugins();
 		processor = DIRoot.TurnProcessor;
 		new ModLoader().Load(null);
 	}

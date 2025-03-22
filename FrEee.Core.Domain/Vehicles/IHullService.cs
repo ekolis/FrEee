@@ -12,7 +12,7 @@ namespace FrEee.Vehicles;
 /// Creates vehicle hulls.
 /// </summary>
 public interface IHullService
-	: IPlugin
+	: IPlugin<IHullService>
 {
 	/// <summary>
 	/// Creates a hull of a specific type.

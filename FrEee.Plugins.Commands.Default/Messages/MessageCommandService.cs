@@ -1,14 +1,18 @@
 ﻿using System;
+using System.ComponentModel.Composition;
+using FrEee.Gameplay.Commands.Designs;
 using FrEee.Gameplay.Commands.Messages;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 
 namespace FrEee.Plugins.Commands.Default.Messages;
+
+[Export(typeof(IPlugin))]
 public class MessageCommandService
-	: IMessageCommandService
+	: Plugin<IMessageCommandService>, IMessageCommandService
 {
-	public string Package { get; } = IPlugin.DefaultPackage;
-	public string Name { get; } = "MessageCommandService";
-	public Version Version { get; } = IPlugin.DefaultVersion;
+	public override string Name { get; } = "MessageCommandService";
+
+	public override IMessageCommandService Implementation => this;
 
 	public ISendMessageCommand SendMessage(IMessage message)
 	{

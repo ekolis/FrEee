@@ -1,14 +1,18 @@
 ﻿using System;
+using System.ComponentModel.Composition;
+using FrEee.Gameplay.Commands.Designs;
 using FrEee.Gameplay.Commands.Fleets;
 using FrEee.Objects.Space;
 
 namespace FrEee.Plugins.Commands.Default.Fleets;
+
+[Export(typeof(IPlugin))]
 public class FleetCommandService
-	: IFleetCommandService
+	: Plugin<IFleetCommandService>, IFleetCommandService
 {
-	public string Package { get; } = IPlugin.DefaultPackage;
-	public string Name { get; } = "FleetCommandService";
-	public Version Version { get; } = IPlugin.DefaultVersion;
+	public override string Name { get; } = "FleetCommandService";
+
+	public override IFleetCommandService Implementation => this;
 
 	public ICreateFleetCommand CreateFleet(Fleet fleet, Sector sector)
 	{

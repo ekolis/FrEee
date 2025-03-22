@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,12 +13,13 @@ namespace FrEee.Plugins.Persistence.Default;
 /// <summary>
 /// Saves and loads game setups.
 /// </summary>
+[Export(typeof(IPlugin))]
 public class GameSetupPersister
-	: IGameSetupPersister
+	: Plugin<IGameSetupPersister>, IGameSetupPersister
 {
-	public string Package { get; } = IPlugin.DefaultPackage;
-	public string Name { get; } = "GameSetupPersister";
-	public Version Version { get; } = IPlugin.DefaultVersion;
+	public override string Name { get; } = "GameSetupPersister";
+
+	public override IGameSetupPersister Implementation => this;
 
 	public GameSetup LoadFromFile(string filename)
 	{

@@ -10,7 +10,7 @@ namespace FrEee.Processes;
 /// Processes turns.
 /// </summary>
 public interface ITurnProcessor
-	: IPlugin
+	: IPlugin<ITurnProcessor>
 {
 	/// <summary>
 	/// Processes the turn.

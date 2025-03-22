@@ -12,7 +12,7 @@ namespace FrEee.Gameplay.Commands.Fleets;
 /// Creates various types of commands used for managing fleets.
 /// </summary>
 public interface IFleetCommandService
-    : IPlugin
+    : IPlugin<IFleetCommandService>
 {
     ICreateFleetCommand CreateFleet(Fleet fleet, Sector sector);
 

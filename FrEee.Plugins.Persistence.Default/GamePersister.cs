@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -14,12 +15,13 @@ namespace FrEee.Plugins.Persistence.Default;
 /// <summary>
 /// Persists game state, either for the host or for a player, depending on the <see cref="GameID"/>.
 /// </summary>
+[Export(typeof(IPlugin))]
 public class GamePersister
-	: IGamePersister
+	: Plugin<IGamePersister>, IGamePersister
 {
-	public string Package { get; } = IPlugin.DefaultPackage;
-	public string Name { get; } = "GamePerister";
-	public Version Version { get; } = IPlugin.DefaultVersion;
+	public override string Name { get; } = "GamePerister";
+
+	public override IGamePersister Implementation => this;
 
 	public Game Load(GameID id)
 	{

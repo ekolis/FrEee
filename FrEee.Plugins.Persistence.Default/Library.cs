@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,12 +12,13 @@ using FrEee.Utility;
 
 namespace FrEee.Plugins.Persistence.Default;
 
+[Export(typeof(IPlugin))]
 public abstract class Library<T>
-	: ILibrary<T>
+	: Plugin<ILibrary<T>>, ILibrary<T>
 {
-	public abstract string Package { get; }
-	public abstract string Name { get; }
-	public abstract Version Version { get; }
+	public override string Name { get; } = $"Library<{typeof(T).Name}>";
+
+	public override ILibrary<T> Implementation => this;
 
 	public static readonly string RootPath = ClientUtilities.ApplicationDataPath;
 

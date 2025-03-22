@@ -12,7 +12,7 @@ namespace FrEee.Persistence;
 /// </summary>
 /// <typeparam name="T">The type of objets which can be stored in this library.</typeparam>
 public interface ILibrary<T>
-	: IPlugin
+	: IPlugin<ILibrary<T>>
 {
 	/// <summary>
 	/// The path to the file where this library should be stored.

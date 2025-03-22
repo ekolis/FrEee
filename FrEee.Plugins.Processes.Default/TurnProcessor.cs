@@ -22,17 +22,20 @@ using FrEee.Vehicles.Types;
 using FrEee.Plugins.Processes.Default.Construction;
 using FrEee.Processes;
 using FrEee.Plugins.Processes.Default.Combat.Grid;
+using System.ComponentModel.Composition;
 
 namespace FrEee.Plugins.Processes.Default;
 
 /// <summary>
 /// Stock implementation of <see cref="ITurnProcessor"/>.
 /// </summary>
-public class TurnProcessor : ITurnProcessor
+[Export(typeof(IPlugin))]
+public class TurnProcessor
+	: Plugin<ITurnProcessor>, ITurnProcessor
 {
-	public string Package { get; } = IPlugin.DefaultPackage;
-	public string Name { get; } = "TurnProcessor";
-	public Version Version { get; } = IPlugin.DefaultVersion;
+	public override string Name { get; } = "TurnProcessor";
+
+	public override ITurnProcessor Implementation => this;
 
 	public IEnumerable<Empire> ProcessTurn(Game game, bool safeMode, Status status = null, double desiredProgress = 1d)
 	{

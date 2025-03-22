@@ -14,7 +14,7 @@ namespace FrEee.Gameplay.Commands.Notes;
 /// Creates various types of commands used for managing notes.
 /// </summary>
 public interface INoteCommandService
-	: IPlugin
+	: IPlugin<INoteCommandService>
 {
 	ICommand ClearPlayerNote(IReferrable target);
 

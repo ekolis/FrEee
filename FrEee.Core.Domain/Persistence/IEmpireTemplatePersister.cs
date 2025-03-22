@@ -12,7 +12,7 @@ namespace FrEee.Persistence;
 /// Saves and loads empire templates.
 /// </summary>
 public interface IEmpireTemplatePersister
-	: IPlugin
+	: IPlugin<IEmpireTemplatePersister>
 {
 	/// <summary>
 	/// Loads an empire template from a file.

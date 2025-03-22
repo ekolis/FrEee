@@ -1,14 +1,17 @@
 ﻿using System;
+using System.ComponentModel.Composition;
+using FrEee.Gameplay.Commands.Designs;
 using FrEee.Gameplay.Commands.Projects;
 
 namespace FrEee.Plugins.Commands.Default.Projects;
 
+[Export(typeof(IPlugin))]
 public class ProjectCommandService
-	: IProjectCommandService
+	: Plugin<IProjectCommandService>, IProjectCommandService
 {
-	public string Package { get; } = IPlugin.DefaultPackage;
-	public string Name { get; } = "ProjectCommandService";
-	public Version Version { get; } = IPlugin.DefaultVersion;
+	public override string Name { get; } = "ProjectCommandService";
+
+	public override IProjectCommandService Implementation => this;
 
 	public IResearchCommand Research()
 	{

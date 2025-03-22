@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net9</TargetFramework>
 		<OutputType>Library</OutputType>
-		<AssemblyName>FrEee.Gameplay</AssemblyName>
+		<AssemblyName>FrEee.Plugins.Commands.Default</AssemblyName>
 		<Description>Stock implementations of basic game mechanics such as commands for FrEee.</Description>
 	</PropertyGroup>
 	
@@ -18,5 +18,9 @@
 		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
 		<RootNamespace>FrEee.Plugins.Commands.Default</RootNamespace>
 	</PropertyGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="xcopy &quot;$(TargetDir)\FrEee.Plugins.Commands.Default.dll&quot; &quot;$(SolutionDir)\Plugins\&quot; /Y /R /I" />
+	</Target>
 
 </Project>

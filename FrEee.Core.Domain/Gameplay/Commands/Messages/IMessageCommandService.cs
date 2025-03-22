@@ -13,7 +13,7 @@ namespace FrEee.Gameplay.Commands.Messages;
 /// Creates commands allowing players to manage diplomatic messages.
 /// </summary>
 public interface IMessageCommandService
-    : IPlugin
+    : IPlugin<IMessageCommandService>
 {
     IDeleteMessageCommand DeleteMessage(IMessage message);
 

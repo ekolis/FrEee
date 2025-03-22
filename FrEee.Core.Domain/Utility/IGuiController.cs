@@ -8,7 +8,7 @@ using FrEee.Vehicles;
 namespace FrEee.Utility;
 
 public interface IGuiController
-	: IPlugin
+	: IPlugin<IGuiController>
 {
 	/// <summary>
 	/// Shows a particular screen.
