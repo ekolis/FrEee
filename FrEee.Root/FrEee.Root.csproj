@@ -12,16 +12,19 @@
 	<ItemGroup>
 		<ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
 		<ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
+
 		<!-- PrivateAssets=all prevents transitive dependencies from leaking through the DI container to the UI-->
-		<ProjectReference Include="..\FrEee.Gameplay\FrEee.Gameplay.csproj">
-		  <PrivateAssets>all</PrivateAssets>
-		</ProjectReference>
-		<ProjectReference Include="..\FrEee.Persistence\FrEee.Persistence.csproj" />
-		<ProjectReference Include="..\FrEee.Processes\FrEee.Processes.csproj">
-		  <PrivateAssets>all</PrivateAssets>
-		</ProjectReference>
-		<ProjectReference Include="..\FrEee.Vehicles\FrEee.Vehicles.csproj">
-		  <PrivateAssets>all</PrivateAssets>
+		<ProjectReference Include="..\FrEee.Plugins.Commands.Default\FrEee.Plugins.Commands.Default.csproj">
+			<PrivateAssets>all</PrivateAssets>
+        </ProjectReference>
+		<ProjectReference Include="..\FrEee.Plugins.Persistence.Default\FrEee.Plugins.Persistence.Default.csproj">
+			<PrivateAssets>all</PrivateAssets>
+        </ProjectReference>
+		<ProjectReference Include="..\FrEee.Plugins.Processes.Default\FrEee.Plugins.Processes.Default.csproj">
+			<PrivateAssets>all</PrivateAssets>
+        </ProjectReference>
+		<ProjectReference Include="..\FrEee.Plugins.Vehicles.Default\FrEee.Plugins.Vehicles.Default.csproj">
+			<PrivateAssets>all</PrivateAssets>
         </ProjectReference>
 	</ItemGroup>
 
