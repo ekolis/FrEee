@@ -26,7 +26,19 @@ public class DesignService
 
 	public override IDesignService Implementation => this;
 
-	public IDesign<IUnit> MilitiaDesign { get; } = BuildMilitia();
+	private IDesign<IUnit>? militiaDesign = null;
+
+	public IDesign<IUnit> MilitiaDesign
+	{
+		get
+		{
+			if (militiaDesign is null)
+			{
+				militiaDesign = BuildMilitia();
+			}
+			return militiaDesign;
+		}
+	}
 
 	private static IDesign<IUnit> BuildMilitia()
 	{
