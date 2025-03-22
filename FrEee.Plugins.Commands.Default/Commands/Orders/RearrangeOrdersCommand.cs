@@ -4,7 +4,7 @@ using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.LogMessages;
 
-namespace FrEee.Gameplay.Commands.Orders;
+namespace FrEee.Plugins.Commands.Default.Commands.Orders;
 
 /// <summary>
 /// Moves an order to another location in the queue.

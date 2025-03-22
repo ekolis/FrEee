@@ -10,8 +10,9 @@ using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Construction;
 using FrEee.Utility;
+using FrEee.Vehicles.Types;
 
-namespace FrEee.Vehicles.Types;
+namespace FrEee.Plugins.Vehicles.Default.Types;
 
 public abstract class MajorSpaceVehicle
 	: SpaceVehicle, IMajorSpaceVehicle

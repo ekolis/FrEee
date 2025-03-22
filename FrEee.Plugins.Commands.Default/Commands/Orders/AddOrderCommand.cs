@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using FrEee.Gameplay.Commands.Orders;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.LogMessages;
 using FrEee.Processes.Construction;
 
-namespace FrEee.Gameplay.Commands.Orders;
+namespace FrEee.Plugins.Commands.Default.Commands.Orders;
 
 /// <summary>
 /// Adds an order to the end of the queue.

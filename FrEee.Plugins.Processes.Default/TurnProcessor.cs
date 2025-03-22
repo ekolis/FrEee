@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Objects.Civilization;
-using FrEee.Processes.Combat.Grid;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 using FrEee.Objects.VictoryConditions;
@@ -20,9 +19,11 @@ using System.Threading.Tasks;
 using FrEee.Gameplay.Commands;
 using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
-using FrEee.Processes.Construction;
+using FrEee.Plugins.Processes.Default.Construction;
+using FrEee.Processes;
+using FrEee.Plugins.Processes.Default.Combat.Grid;
 
-namespace FrEee.Processes;
+namespace FrEee.Plugins.Processes.Default;
 
 /// <summary>
 /// Stock implementation of <see cref="ITurnProcessor"/>.
@@ -262,7 +263,7 @@ public class TurnProcessor : ITurnProcessor
 			// TODO - allow mod to specify maintenance on units/facilities too?
 			foreach (var v in emp.OwnedSpaceObjects.OfType<ISpaceVehicle>().Where(x => !x.IsMemory))
 			{
-				emp.StoredResources -= ((IVehicle)v).MaintenanceCost;
+				emp.StoredResources -= v.MaintenanceCost;
 			}
 
 			// if not enough funds, lose ships/bases (weighted by maintenance cost)
@@ -273,7 +274,7 @@ public class TurnProcessor : ITurnProcessor
 			var lostShips = deficit / Mod.Current.Settings.MaintenanceDeficitToDestroyOneShip;
 			for (int i = 0; i < lostShips; i++)
 			{
-				var ship = emp.OwnedSpaceObjects.OfType<ISpaceVehicle>().PickWeighted(x => ((IVehicle)x).MaintenanceCost.Sum(y => y.Value));
+				var ship = emp.OwnedSpaceObjects.OfType<ISpaceVehicle>().PickWeighted(x => x.MaintenanceCost.Sum(y => y.Value));
 				if (ship != null)
 				{
 					emp.Log.Add(ship.CreateLogMessage(ship + " fell into disrepair and was scuttled due to lack of funding for maintenance.", LogMessageType.Warning));
@@ -466,7 +467,7 @@ public class TurnProcessor : ITurnProcessor
 		foreach (var p in game.Galaxy.FindSpaceObjects<Planet>().Where(p => p.Colony != null))
 		{
 			var pop = p.Colony.Population;
-			var ratio = (double)pop.Sum(kvp => kvp.Value) / (double)p.MaxPopulation;
+			var ratio = pop.Sum(kvp => kvp.Value) / (double)p.MaxPopulation;
 			if (ratio < 1)
 			{
 				var cargo = p.Cargo;
@@ -750,7 +751,7 @@ public class TurnProcessor : ITurnProcessor
 		}
 
 		// deal with overpopulation
-		var ratio = (double)pop.Sum(kvp => kvp.Value) / (double)p.MaxPopulation;
+		var ratio = pop.Sum(kvp => kvp.Value) / (double)p.MaxPopulation;
 		if (ratio > 1)
 		{
 			foreach (var race in pop.Keys.ToArray())
@@ -765,7 +766,7 @@ public class TurnProcessor : ITurnProcessor
 		}
 
 		// deal with population in cargo
-		ratio = (double)pop.Sum(kvp => kvp.Value) / (double)p.MaxPopulation;
+		ratio = pop.Sum(kvp => kvp.Value) / (double)p.MaxPopulation;
 		if (ratio < 1)
 		{
 			var cargo = p.Cargo;

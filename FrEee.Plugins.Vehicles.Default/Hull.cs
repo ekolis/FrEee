@@ -11,8 +11,10 @@ using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
 using FrEee.Vehicles.Types;
 using FrEee.Objects.Technology;
+using FrEee.Plugins.Vehicles.Default.Types;
+using FrEee.Vehicles;
 
-namespace FrEee.Vehicles;
+namespace FrEee.Plugins.Vehicles.Default;
 
 /// <summary>
 /// A vehicle hull.

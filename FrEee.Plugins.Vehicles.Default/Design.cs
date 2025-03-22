@@ -19,8 +19,10 @@ using FrEee.Gameplay.Commands.Designs;
 using FrEee.Gameplay.Commands.Orders;
 using FrEee.Vehicles.Types;
 using FrEee.Processes.Construction;
+using FrEee.Plugins.Vehicles.Default.Types;
+using FrEee.Vehicles;
 
-namespace FrEee.Vehicles;
+namespace FrEee.Plugins.Vehicles.Default;
 
 /// <summary>
 /// A vehicle design.

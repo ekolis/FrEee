@@ -1,6 +1,7 @@
-﻿using FrEee.Vehicles;
+﻿using FrEee.Gameplay.Commands.Designs;
+using FrEee.Vehicles;
 
-namespace FrEee.Gameplay.Commands.Designs;
+namespace FrEee.Plugins.Commands.Default.Commands.Designs;
 public class DesignCommandService
 	: IDesignCommandService
 {

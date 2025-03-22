@@ -1,7 +1,8 @@
-﻿using FrEee.Objects.Civilization;
+﻿using FrEee.Gameplay.Commands.Orders;
+using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Orders;
 
-namespace FrEee.Gameplay.Commands.Orders;
+namespace FrEee.Plugins.Commands.Default.Commands.Orders;
 public class OrderCommandService
 	: IOrderCommandService
 {

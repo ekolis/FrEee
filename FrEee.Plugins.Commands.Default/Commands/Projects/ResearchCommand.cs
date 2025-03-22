@@ -1,10 +1,12 @@
 ﻿using System.Linq;
 using FrEee.Extensions;
+using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Projects;
 using FrEee.Modding;
 using FrEee.Objects.Civilization;
 using Tech = FrEee.Objects.Technology.Technology;
 
-namespace FrEee.Gameplay.Commands.Projects;
+namespace FrEee.Plugins.Commands.Default.Commands.Projects;
 
 /// <summary>
 /// Command to set an empire's research priorities.

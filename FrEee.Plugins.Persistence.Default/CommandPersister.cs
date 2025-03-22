@@ -7,9 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using FrEee.Gameplay.Commands;
 using FrEee.Objects.GameState;
+using FrEee.Persistence;
 using static Community.CsharpSqlite.Sqlite3;
 
-namespace FrEee.Persistence;
+namespace FrEee.Plugins.Persistence.Default;
 
 /// <summary>
 /// Persists player commands.

@@ -6,9 +6,10 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Extensions;
+using FrEee.Persistence;
 using FrEee.Utility;
 
-namespace FrEee.Persistence;
+namespace FrEee.Plugins.Persistence.Default;
 
 public abstract class Library<T>
 	: ILibrary<T>

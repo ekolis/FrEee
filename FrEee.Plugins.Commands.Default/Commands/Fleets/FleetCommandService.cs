@@ -1,6 +1,7 @@
-﻿using FrEee.Objects.Space;
+﻿using FrEee.Gameplay.Commands.Fleets;
+using FrEee.Objects.Space;
 
-namespace FrEee.Gameplay.Commands.Fleets;
+namespace FrEee.Plugins.Commands.Default.Commands.Fleets;
 public class FleetCommandService
 	: IFleetCommandService
 {

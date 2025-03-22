@@ -9,10 +9,11 @@ using FrEee.Modding;
 using FrEee.Modding.Abilities;
 using FrEee.Objects.Civilization;
 using FrEee.Processes.Combat.Grid;
+using FrEee.Processes.Construction;
 using FrEee.Utility;
 using FrEee.Vehicles;
 
-namespace FrEee.Processes.Construction;
+namespace FrEee.Plugins.Processes.Default.Construction;
 
 /// <summary>
 /// Stock implementation of <see cref="IConstructionQueueService"/>.

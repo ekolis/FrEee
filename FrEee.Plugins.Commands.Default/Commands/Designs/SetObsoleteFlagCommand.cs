@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using FrEee.Extensions;
+using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Designs;
 using FrEee.Objects.GameState;
 using FrEee.Serialization;
 using FrEee.Vehicles;
 
-namespace FrEee.Gameplay.Commands.Designs;
+namespace FrEee.Plugins.Commands.Default.Commands.Designs;
 
 /// <summary>
 /// A command to enable or disable the obsolete flag on a design.

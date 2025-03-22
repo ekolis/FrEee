@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Plugins.Persistence.Default;
 using FrEee.UI.WinForms.Objects;
 using FrEee.UI.WinForms.Persistence;
 using FrEee.Utility;

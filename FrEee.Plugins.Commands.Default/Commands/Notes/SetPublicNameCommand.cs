@@ -1,6 +1,7 @@
-﻿using FrEee.Objects.Civilization;
+﻿using FrEee.Gameplay.Commands;
+using FrEee.Objects.Civilization;
 
-namespace FrEee.Gameplay.Commands.Notes;
+namespace FrEee.Plugins.Commands.Default.Commands.Notes;
 
 /// <summary>
 /// Sets the name of an object.

@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Ministers;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.LogMessages;
 using FrEee.Utility;
 
-namespace FrEee.Gameplay.Commands.Ministers;
+namespace FrEee.Plugins.Commands.Default.Commands.Ministers;
 
 /// <summary>
 /// Toggles AI ministers.

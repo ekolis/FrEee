@@ -8,8 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
 using FrEee.Vehicles;
+using FrEee.Processes.Combat;
 
-namespace FrEee.Processes.Combat.Grid;
+namespace FrEee.Plugins.Processes.Default.Combat.Grid;
 
 /// <summary>
 /// A battle which takes place on a planet's surface.

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Extensions;
+using FrEee.Persistence;
 using FrEee.Serialization;
 using FrEee.Utility;
 
-namespace FrEee.Persistence;
+namespace FrEee.Plugins.Persistence.Default;
 public static class PersistenceExtensions
 {
 	public static SafeDictionary<string, object> GetData(this object o, ObjectGraphContext context)

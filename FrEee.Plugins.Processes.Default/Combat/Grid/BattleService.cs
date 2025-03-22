@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Objects.Space;
+using FrEee.Processes.Combat;
+using FrEee.Processes.Combat.Grid;
 
-namespace FrEee.Processes.Combat.Grid;
+namespace FrEee.Plugins.Processes.Default.Combat.Grid;
 
 /// <summary>
 /// Implementation of <see cref="IBattleService"/> for the grid-based combat engine.

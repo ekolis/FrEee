@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 
-namespace FrEee.Persistence;
+namespace FrEee.Plugins.Persistence.Default;
 
 /// <summary>
 /// Serializes and deserializes objects.

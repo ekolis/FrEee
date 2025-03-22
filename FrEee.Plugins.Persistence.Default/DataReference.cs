@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using FrEee.Objects.GameState;
 using FrEee.Utility;
 using FrEee.Serialization;
+using FrEee.Persistence;
 
-namespace FrEee.Persistence;
+namespace FrEee.Plugins.Persistence.Default;
 
 [Serializable]
 public class DataReference<T> : IDataReference, IReference<T>

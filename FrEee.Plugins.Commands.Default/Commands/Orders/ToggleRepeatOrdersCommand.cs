@@ -1,6 +1,8 @@
-﻿using FrEee.Objects.Civilization;
+﻿using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Orders;
+using FrEee.Objects.Civilization;
 
-namespace FrEee.Gameplay.Commands.Orders;
+namespace FrEee.Plugins.Commands.Default.Commands.Orders;
 
 public class ToggleRepeatOrdersCommand
 	: Command<IOrderable>, IToggleRepeatOrdersCommand

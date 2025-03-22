@@ -1,6 +1,7 @@
-﻿using FrEee.Objects.Civilization.Diplomacy.Messages;
+﻿using FrEee.Gameplay.Commands.Messages;
+using FrEee.Objects.Civilization.Diplomacy.Messages;
 
-namespace FrEee.Gameplay.Commands.Messages;
+namespace FrEee.Plugins.Commands.Default.Commands.Messages;
 public class MessageCommandService
 	: IMessageCommandService
 {

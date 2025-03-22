@@ -5,9 +5,10 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
 using FrEee.Processes.Combat;
+using FrEee.Vehicles.Types;
 using System;
 
-namespace FrEee.Vehicles.Types;
+namespace FrEee.Plugins.Vehicles.Default.Types;
 
 [Serializable]
 public class Mine : SpaceVehicle, IUnit

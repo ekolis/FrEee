@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Fleets;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
 
-namespace FrEee.Gameplay.Commands.Fleets;
+namespace FrEee.Plugins.Commands.Default.Commands.Fleets;
 
 /// <summary>
 /// A command to create a new fleet.

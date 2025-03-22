@@ -9,10 +9,12 @@ using FrEee.Modding.Templates;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Technology;
+using FrEee.Plugins.Vehicles.Default.Types;
 using FrEee.Utility;
+using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
 
-namespace FrEee.Vehicles;
+namespace FrEee.Plugins.Vehicles.Default;
 public class DesignService
 	: IDesignService
 {

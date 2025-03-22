@@ -16,7 +16,7 @@
 
 	<PropertyGroup>
 		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
-		<RootNamespace>FrEee.Gameplay</RootNamespace>
+		<RootNamespace>FrEee.Plugins.Commands.Default</RootNamespace>
 	</PropertyGroup>
 
 </Project>

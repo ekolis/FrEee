@@ -1,4 +1,6 @@
-﻿namespace FrEee.Gameplay.Commands.Ministers;
+﻿using FrEee.Gameplay.Commands.Ministers;
+
+namespace FrEee.Plugins.Commands.Default.Commands.Ministers;
 public class MinisterCommandService
 	: IMinisterCommandService
 {

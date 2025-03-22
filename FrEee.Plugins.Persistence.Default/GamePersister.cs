@@ -6,9 +6,10 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Objects.GameState;
+using FrEee.Persistence;
 using static Community.CsharpSqlite.Sqlite3;
 
-namespace FrEee.Persistence;
+namespace FrEee.Plugins.Persistence.Default;
 
 /// <summary>
 /// Persists game state, either for the host or for a player, depending on the <see cref="GameID"/>.

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using FrEee.Gameplay.Commands;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 
-namespace FrEee.Gameplay.Commands.Waypoints;
+namespace FrEee.Plugins.Commands.Default.Commands.Waypoints;
 
 /// <summary>
 /// A command to create a new waypoint.

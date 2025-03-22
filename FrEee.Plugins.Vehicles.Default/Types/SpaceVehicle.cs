@@ -10,8 +10,9 @@ using System.Linq;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
+using FrEee.Vehicles.Types;
 
-namespace FrEee.Vehicles.Types;
+namespace FrEee.Plugins.Vehicles.Default.Types;
 
 /// <summary>
 /// A vehicle which operates in space.

@@ -11,7 +11,7 @@
 
 	<PropertyGroup>
 		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
-		<RootNamespace>FrEee.Persistence</RootNamespace>
+		<RootNamespace>FrEee.Plugins.Persistence.Default</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>

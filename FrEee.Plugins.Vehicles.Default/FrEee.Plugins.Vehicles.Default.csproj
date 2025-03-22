@@ -16,7 +16,7 @@
 
 	<PropertyGroup>
 		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
-		<RootNamespace>FrEee.Vehicles</RootNamespace>
+		<RootNamespace>FrEee.Plugins.Vehicles.Default</RootNamespace>
 	</PropertyGroup>
 
 </Project>

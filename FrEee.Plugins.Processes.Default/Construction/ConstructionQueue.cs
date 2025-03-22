@@ -16,8 +16,9 @@ using FrEee.Modding.Abilities;
 using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
 using FrEee.Objects.Civilization;
+using FrEee.Processes.Construction;
 
-namespace FrEee.Processes.Construction;
+namespace FrEee.Plugins.Processes.Default.Construction;
 
 /// <summary>
 /// Something which can construct objects.

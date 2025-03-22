@@ -17,8 +17,9 @@ using FrEee.Modding.Abilities;
 using FrEee.Processes.Combat.Events;
 using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
+using FrEee.Processes.Combat;
 
-namespace FrEee.Processes.Combat.Grid;
+namespace FrEee.Plugins.Processes.Default.Combat.Grid;
 
 public abstract class Battle : IBattle, IDisposable
 {

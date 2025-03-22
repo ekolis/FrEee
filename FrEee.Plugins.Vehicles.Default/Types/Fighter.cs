@@ -7,8 +7,9 @@ using FrEee.Objects.Space;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
+using FrEee.Vehicles.Types;
 
-namespace FrEee.Vehicles.Types;
+namespace FrEee.Plugins.Vehicles.Default.Types;
 
 [Serializable]
 public class Fighter : SpaceVehicle, IUnit

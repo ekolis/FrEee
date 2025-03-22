@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Plugins.Vehicles.Default.Types;
+using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
 
-namespace FrEee.Vehicles;
+namespace FrEee.Plugins.Vehicles.Default;
 public class VehicleService
 	: IVehicleService
 {

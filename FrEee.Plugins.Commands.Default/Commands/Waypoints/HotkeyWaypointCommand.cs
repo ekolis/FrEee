@@ -1,12 +1,13 @@
 ﻿
 using System;
 using FrEee.Extensions;
+using FrEee.Gameplay.Commands;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 
-namespace FrEee.Gameplay.Commands.Waypoints;
+namespace FrEee.Plugins.Commands.Default.Commands.Waypoints;
 
 /// <summary>
 /// A command to set a waypoint to a hotkey.

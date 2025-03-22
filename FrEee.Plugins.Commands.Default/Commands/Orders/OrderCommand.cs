@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using FrEee.Extensions;
+using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Orders;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Serialization;
 
-namespace FrEee.Gameplay.Commands.Orders;
+namespace FrEee.Plugins.Commands.Default.Commands.Orders;
 
 /// <summary>
 /// A command to manipulate an object's order queue.

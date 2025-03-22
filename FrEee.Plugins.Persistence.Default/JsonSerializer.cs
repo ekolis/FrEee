@@ -1,11 +1,12 @@
 using FrEee.Extensions;
+using FrEee.Persistence;
 using FrEee.Serialization;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FrEee.Persistence;
+namespace FrEee.Plugins.Persistence.Default;
 
 public class JsonSerializer
 {

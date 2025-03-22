@@ -16,8 +16,10 @@ using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 using FrEee.Vehicles.Types;
 using FrEee.Processes.Construction;
+using FrEee.Plugins.Vehicles.Default.Types;
+using FrEee.Vehicles;
 
-namespace FrEee.Vehicles;
+namespace FrEee.Plugins.Vehicles.Default;
 
 /// <summary>
 /// A ship, base, or unit.

@@ -1,9 +1,10 @@
 ﻿using FrEee.Extensions;
+using FrEee.Gameplay.Commands;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Serialization;
 
-namespace FrEee.Gameplay.Commands.Notes;
+namespace FrEee.Plugins.Commands.Default.Commands.Notes;
 
 /// <summary>
 /// Clears the private name for an object.

@@ -16,7 +16,7 @@
 
 	<PropertyGroup>
 		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
-		<RootNamespace>FrEee.Processes</RootNamespace>
+		<RootNamespace>FrEee.Plugins.Processes.Default</RootNamespace>
 	</PropertyGroup>
 
 </Project>

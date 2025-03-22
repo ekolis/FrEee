@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Notes;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 
-namespace FrEee.Gameplay.Commands.Notes;
+namespace FrEee.Plugins.Commands.Default.Commands.Notes;
 
 /// <summary>
 /// Sets the player info for an empire.

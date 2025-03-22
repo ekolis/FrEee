@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using FrEee.Extensions;
+using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Messages;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.GameState;
 using FrEee.Objects.LogMessages;
 
-namespace FrEee.Gameplay.Commands.Messages;
+namespace FrEee.Plugins.Commands.Default.Commands.Messages;
 
 /// <summary>
 /// A command to send a diplomatic message.

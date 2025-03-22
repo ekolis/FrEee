@@ -7,8 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using static System.Math;
 using FrEee.Objects.GameState;
+using FrEee.Processes.Combat;
 
-namespace FrEee.Processes.Combat.Grid;
+namespace FrEee.Plugins.Processes.Default.Combat.Grid;
 
 /// <summary>
 /// A battle which takes place... IIIN... SPAAACE!!!

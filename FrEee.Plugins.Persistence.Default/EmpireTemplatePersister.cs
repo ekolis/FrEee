@@ -4,9 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Persistence;
 using FrEee.Processes.Setup;
 
-namespace FrEee.Persistence;
+namespace FrEee.Plugins.Persistence.Default;
 
 /// <summary>
 /// Saves and loads empire templates.

@@ -1,8 +1,9 @@
 ﻿using FrEee.Extensions;
+using FrEee.Gameplay.Commands;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.LogMessages;
 
-namespace FrEee.Gameplay.Commands.Waypoints;
+namespace FrEee.Plugins.Commands.Default.Commands.Waypoints;
 
 /// <summary>
 /// A command to delete a waypoint.

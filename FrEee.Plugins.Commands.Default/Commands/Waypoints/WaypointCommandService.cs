@@ -1,6 +1,8 @@
-﻿using FrEee.Objects.Civilization;
+﻿using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Waypoints;
+using FrEee.Objects.Civilization;
 
-namespace FrEee.Gameplay.Commands.Waypoints;
+namespace FrEee.Plugins.Commands.Default.Commands.Waypoints;
 public class WaypointCommandService
 	: IWaypointCommandService
 {

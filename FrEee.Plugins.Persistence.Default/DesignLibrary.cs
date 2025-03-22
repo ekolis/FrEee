@@ -4,9 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Persistence;
 using FrEee.Vehicles;
 
-namespace FrEee.Persistence
+namespace FrEee.Plugins.Persistence.Default
 {
 	/// <summary>
 	/// <see cref="ILibrary{T}"> which stores <see cref="IDesign"/>s.

@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Extensions;
+using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Designs;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
 using FrEee.Objects.LogMessages;
 using FrEee.Vehicles;
 
-namespace FrEee.Gameplay.Commands.Designs;
+namespace FrEee.Plugins.Commands.Default.Commands.Designs;
 
 /// <summary>
 /// A command to create a new vehicle design.

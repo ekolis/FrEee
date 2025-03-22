@@ -14,7 +14,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using FrEee.Utility;
 using FrEee.Serialization;
-namespace FrEee.Persistence;
+using FrEee.Persistence;
+
+namespace FrEee.Plugins.Persistence.Default;
 
 internal static class LegacySerializer
 {

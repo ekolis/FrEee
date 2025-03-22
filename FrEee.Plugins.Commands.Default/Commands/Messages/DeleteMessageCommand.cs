@@ -1,9 +1,11 @@
 ﻿using FrEee.Extensions;
+using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Messages;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.GameState;
 
-namespace FrEee.Gameplay.Commands.Messages;
+namespace FrEee.Plugins.Commands.Default.Commands.Messages;
 
 /// <summary>
 /// A command to delete a message from an empire's inbox or sentbox.
