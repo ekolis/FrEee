@@ -98,39 +98,61 @@ public class PluginLibrary
 			}
 		}
 
-		/*// processes
-		DI.RegisterSingleton<ITurnProcessor, TurnProcessor>();
-		DI.RegisterSingleton<IBattleService, BattleService>();
-		DI.RegisterSingleton<IConstructionQueueService, ConstructionQueueService>();
-
-		// gameplay
-		DI.RegisterSingleton<IDesignCommandService, DesignCommandService>();
-		DI.RegisterSingleton<IFleetCommandService, FleetCommandService>();
-		DI.RegisterSingleton<IMessageCommandService, MessageCommandService>();
-		DI.RegisterSingleton<IMinisterCommandService, MinisterCommandService>();
-		DI.RegisterSingleton<INoteCommandService, NoteCommandService>();
-		DI.RegisterSingleton<IOrderCommandService, OrderCommandService>();
-		DI.RegisterSingleton<IProjectCommandService, ProjectCommandService>();
-		DI.RegisterSingleton<IWaypointCommandService, WaypointCommandService>();
-
-		// vehicles
-		DI.RegisterSingleton<IHullService, HullService>();
-		DI.RegisterSingleton<IDesignService, DesignService>();
-		DI.RegisterSingleton<IVehicleService, VehicleService>();
-
-		// persistence
-		DI.RegisterSingleton<IGamePersister, GamePersister>();
-		DI.RegisterSingleton<ICommandPersister, CommandPersister>();
-		DI.RegisterSingleton<IGameSetupPersister, GameSetupPersister>();
-		DI.RegisterSingleton<IEmpireTemplatePersister, EmpireTemplatePersister>();
-
-		// libraries
-		DI.RegisterSingleton<ILibrary<IDesign>, DesignLibrary>();*/
-
 		// addtional configuration for the GUI or whatever
 		additionalConfig?.Invoke();
 
 		// run this in the background, without awaiting it
 		DI.Run();
+
+		// verify that all plugins are loaded
+		VerifyAll();
+	}
+
+	/// <summary>
+	/// Verifies that a particular extension point has a plugin loaded.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public void Verify<T>()
+	{
+		var plugin = DI.Get<T>();
+		if (plugin is null)
+		{
+			throw new NullReferenceException($"Plugin for extension point {typeof(T)} was not found.");
+		}
+	}
+
+	/// <summary>
+	/// Verifies that all standard extension points have plugins loaded.
+	/// </summary>
+	public void VerifyAll()
+	{
+		// processes
+		Verify<ITurnProcessor>();
+		Verify<IBattleService>();
+		Verify<IConstructionQueueService>();
+
+		// gameplay
+		Verify<IDesignCommandService>();
+		Verify<IFleetCommandService>();
+		Verify<IMessageCommandService>();
+		Verify<IMinisterCommandService>();
+		Verify<INoteCommandService>();
+		Verify<IOrderCommandService>();
+		Verify<IProjectCommandService>();
+		Verify<IWaypointCommandService>();
+
+		// vehicles
+		Verify<IHullService>();
+		Verify<IDesignService>();
+		Verify<IVehicleService>();
+
+		// persistence
+		Verify<IGamePersister>();
+		Verify<ICommandPersister>();
+		Verify<IGameSetupPersister>();
+		Verify<IEmpireTemplatePersister>();
+
+		// libraries
+		Verify<ILibrary<IDesign>>();
 	}
 }
