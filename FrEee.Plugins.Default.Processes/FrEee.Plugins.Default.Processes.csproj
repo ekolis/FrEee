@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net9</TargetFramework>
 		<OutputType>Library</OutputType>
-		<AssemblyName>FrEee.Plugins.Processes.Default</AssemblyName>
+		<AssemblyName>FrEee.Plugins.Default.Processes</AssemblyName>
 		<Description>Stock implementations of processes such as turn processing used by FrEee</Description>
 	</PropertyGroup>
 	
@@ -16,11 +16,11 @@
 
 	<PropertyGroup>
 		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
-		<RootNamespace>FrEee.Plugins.Processes.Default</RootNamespace>
+		<RootNamespace>FrEee.Plugins.Default.Processes</RootNamespace>
 	</PropertyGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="xcopy &quot;$(TargetDir)\FrEee.Plugins.Processes.Default.dll&quot; &quot;$(SolutionDir)\Plugins\&quot; /Y /R /I" />
+	  <Exec Command="xcopy &quot;$(TargetDir)\FrEee.Plugins.Default.Processes.dll&quot; &quot;$(SolutionDir)\Plugins\&quot; /Y /R /I" />
 	</Target>
 
 </Project>

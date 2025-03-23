@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net9</TargetFramework>
 		<OutputType>Library</OutputType>
-		<AssemblyName>FrEee.Plugins.Persistence.Default</AssemblyName>
+		<AssemblyName>FrEee.Plugins.Default.Persistence</AssemblyName>
 		<Description>Serialization and persistence code for FrEee.</Description>
 	</PropertyGroup>
 	
@@ -11,7 +11,7 @@
 
 	<PropertyGroup>
 		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
-		<RootNamespace>FrEee.Plugins.Persistence.Default</RootNamespace>
+		<RootNamespace>FrEee.Plugins.Default.Persistence</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -19,7 +19,7 @@
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="xcopy &quot;$(TargetDir)\FrEee.Plugins.Persistence.Default.dll&quot; &quot;$(SolutionDir)\Plugins\&quot; /Y /R /I" />
+	  <Exec Command="xcopy &quot;$(TargetDir)\FrEee.Plugins.Default.Persistence.dll&quot; &quot;$(SolutionDir)\Plugins\&quot; /Y /R /I" />
 	</Target>
 
 </Project>
