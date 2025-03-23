@@ -10,7 +10,6 @@
 	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
 
 	<ItemGroup>
-		<ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
 		<ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
 	</ItemGroup>
 

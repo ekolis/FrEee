@@ -1,0 +1,116 @@
+[
+	{
+		"Package": "Default",
+		"Name": "WaypointCommandService",
+		"MinVersion": null,
+		"MaxVersion": null
+	},
+	{
+		"Package": "Default",
+		"Name": "ProjectCommandService",
+		"MinVersion": null,
+		"MaxVersion": null
+	},
+	{
+		"Package": "Default",
+		"Name": "OrderCommandService",
+		"MinVersion": null,
+		"MaxVersion": null
+	},
+	{
+		"Package": "Default",
+		"Name": "NoteCommandService",
+		"MinVersion": null,
+		"MaxVersion": null
+	},
+	{
+		"Package": "Default",
+		"Name": "MinisterCommandService",
+		"MinVersion": null,
+		"MaxVersion": null
+	},
+	{
+		"Package": "Default",
+		"Name": "MessageCommandService",
+		"MinVersion": null,
+		"MaxVersion": null
+	},
+	{
+		"Package": "Default",
+		"Name": "FleetCommandService",
+		"MinVersion": null,
+		"MaxVersion": null
+	},
+	{
+		"Package": "Default",
+		"Name": "DesignCommandService",
+		"MinVersion": null,
+		"MaxVersion": null
+	},
+	{
+		"Package": "Default",
+		"Name": "CommandPersister",
+		"MinVersion": null,
+		"MaxVersion": null
+	},
+	{
+		"Package": "Default",
+		"Name": "DesignLibrary",
+		"MinVersion": null,
+		"MaxVersion": null
+	},
+	{
+		"Package": "Default",
+		"Name": "EmpireTemplatePersister",
+		"MinVersion": null,
+		"MaxVersion": null
+	},
+	{
+		"Package": "Default",
+		"Name": "GamePerister",
+		"MinVersion": null,
+		"MaxVersion": null
+	},
+	{
+		"Package": "Default",
+		"Name": "GameSetupPersister",
+		"MinVersion": null,
+		"MaxVersion": null
+	},
+	{
+		"Package": "Default",
+		"Name": "TurnProcessor",
+		"MinVersion": null,
+		"MaxVersion": null
+	},
+	{
+		"Package": "Default",
+		"Name": "ConstructionQueueService",
+		"MinVersion": null,
+		"MaxVersion": null
+	},
+	{
+		"Package": "Default",
+		"Name": "BattleService",
+		"MinVersion": null,
+		"MaxVersion": null
+	},
+	{
+		"Package": "Default",
+		"Name": "DesignService",
+		"MinVersion": null,
+		"MaxVersion": null
+	},
+	{
+		"Package": "Default",
+		"Name": "HullService",
+		"MinVersion": null,
+		"MaxVersion": null
+	},
+	{
+		"Package": "Default",
+		"Name": "VehicleService",
+		"MinVersion": null,
+		"MaxVersion": null
+	},
+]

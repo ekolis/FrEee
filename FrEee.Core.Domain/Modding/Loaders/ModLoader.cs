@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrEee.Extensions;
+using FrEee.Plugins;
 using FrEee.Utility;
+using Newtonsoft.Json;
 
 namespace FrEee.Modding.Loaders;
 
@@ -86,6 +88,19 @@ public class ModLoader
 		var dupes = mod.Objects.GroupBy(o => o.ModID).Where(g => g.Count() > 1);
 		if (dupes.Any())
 			throw new Exception("Multiple objects with mod ID {0} found ({1} total IDs with duplicates)".F(dupes.First().Key, dupes.Count()));
+
+		// load plugins
+		string fullPath;
+		if (path is null)
+		{
+			fullPath = Path.Combine("Data", "Plugins.json");
+		}
+		else
+		{
+			fullPath = Path.Combine("Mods", path, "Data", "Plugins.json");
+		}
+		var pluginConfigs = JsonConvert.DeserializeObject<List<PluginConfig>>(File.ReadAllText(fullPath));
+		PluginLibrary.Instance.LoadConfiguredPlugins(pluginConfigs);
 
 		return mod;
 	}
