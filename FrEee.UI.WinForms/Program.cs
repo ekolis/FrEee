@@ -94,7 +94,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 			}
 		};
 
-		// set up dependency injection
+		// HACK: set up dependency injection for GUI before we load the main set of plugins
 		PluginLibrary.Instance.LoadDefaultPlugins(() =>
 		{
 			DI.RegisterSingleton<IGuiController, GuiController>();

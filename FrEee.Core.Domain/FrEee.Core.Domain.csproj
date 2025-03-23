@@ -33,6 +33,7 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
+	  <ProjectReference Include="..\FrEee.Plugins\FrEee.Plugins.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Compile Update="Properties\Settings.Designer.cs">
