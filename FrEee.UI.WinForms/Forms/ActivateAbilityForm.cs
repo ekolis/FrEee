@@ -273,7 +273,7 @@ public partial class ActivateAbilityForm : GameForm
 
 				// issue command
 				var order = new ActivateAbilityOrder(sel.Source, sel.Ability, target);
-				var cmd = DIRoot.OrderCommands.AddOrder(sobj, order);
+				var cmd = Services.Commands.Orders.AddOrder(sobj, order);
 				cmd.Execute();
 				Empire.Current.Commands.Add(cmd);
 				Close();

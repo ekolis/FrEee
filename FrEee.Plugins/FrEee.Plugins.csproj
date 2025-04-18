@@ -9,13 +9,14 @@
 	
 	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
 
-	<ItemGroup>
-		<ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
-	</ItemGroup>
-
 	<PropertyGroup>
 		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
 		<RootNamespace>FrEee.Plugins</RootNamespace>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
+	  <PackageReference Include="System.ComponentModel.Composition" Version="9.0.0" />
+	</ItemGroup>
 
 </Project>

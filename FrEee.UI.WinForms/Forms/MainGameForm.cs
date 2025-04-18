@@ -807,7 +807,7 @@ public partial class MainGameForm : GameForm
 	{
 		Instance = null;
 		if (QuitOnClose)
-			DIRoot.Gui.CloseGame();
+			Services.Gui.CloseGame();
 	}
 
 	private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -1209,7 +1209,7 @@ public partial class MainGameForm : GameForm
 					Game.Load(Game.Current.Name, Game.Current.TurnNumber);
 					status.Progress = 0.25;
 					status.Message = "Processing turn";
-					var processor = DIRoot.TurnProcessor;
+					var processor = Services.TurnProcessor;
 					processor.ProcessTurn(Game.Current, false, status, 0.5);
 					status.Message = "Saving game";
 					Game.SaveAll(status, 0.75);
@@ -1348,10 +1348,10 @@ public partial class MainGameForm : GameForm
 
 		// set the waypoint
 		ICommand cmd;
-		cmd = DIRoot.WaypointCommands.CreateWaypoint(waypoint);
+		cmd = Services.Commands.Waypoints.CreateWaypoint(waypoint);
 		Empire.Current.Commands.Add(cmd);
 		cmd.Execute();
-		cmd = DIRoot.WaypointCommands.HotkeyWaypoint(waypoint, waypointNumber, redirect);
+		cmd = Services.Commands.Waypoints.HotkeyWaypoint(waypoint, waypointNumber, redirect);
 		Empire.Current.Commands.Add(cmd);
 		cmd.Execute();
 
@@ -1428,7 +1428,7 @@ public partial class MainGameForm : GameForm
 				var order = new MoveOrder(sector, !aggressiveMode);
 				v.AddOrder(order);
 				BindReport();
-				var cmd = DIRoot.OrderCommands.AddOrder(v, order);
+				var cmd = Services.Commands.Orders.AddOrder(v, order);
 				Empire.Current.Commands.Add(cmd);
 				starSystemView.Invalidate(); // show move lines
 				ChangeCommandMode(CommandMode.None, null);

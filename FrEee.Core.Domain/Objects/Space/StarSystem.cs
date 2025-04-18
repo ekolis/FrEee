@@ -354,7 +354,7 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 		MarkAsExploredBy(sobj.Owner);
 
 		// see if we got hit by a minefield
-		if (!DIRoot.GamePersister.IsDeserializing)
+		if (!Services.Persistence.Game.IsDeserializing)
 			sobj.DealWithMines();
 	}
 

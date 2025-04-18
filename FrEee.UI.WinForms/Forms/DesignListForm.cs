@@ -110,7 +110,7 @@ public partial class DesignListForm : GameForm
 			else if (MessageBox.Show("Delete " + design + " from your library?", "Delete Design", MessageBoxButtons.YesNo) == DialogResult.Yes)
 			{
 				// design in the library is just a copy so we need to search for it
-				DIRoot.DesignLibrary.Delete(d =>
+				Services.DesignLibrary.Delete(d =>
 						d.BaseName == design.BaseName &&
 						d.Hull == design.Hull &&
 						d.Components.SequenceEqual(design.Components, new MountedComponentTemplate.SimpleEqualityComparer())
@@ -167,7 +167,7 @@ public partial class DesignListForm : GameForm
 					Empire.Current.Commands.Remove(cmd);
 				if (!Empire.Current.Commands.OfType<ISetObsoleteFlagCommand>().Where(cmd => cmd.Design == d && cmd.IsObsolete == d.IsObsolete).Any())
 				{
-					Empire.Current.Commands.Add(DIRoot.DesignCommands.SetObsoleteFlag(d, d.IsObsolete));
+					Empire.Current.Commands.Add(Services.Commands.Designs.SetObsoleteFlag(d, d.IsObsolete));
 				}
 			}
 			BindDesignList();
@@ -273,17 +273,17 @@ public partial class DesignListForm : GameForm
 	private void btnExportAll_Click(object sender, EventArgs e)
 	{
 		var designs = Empire.Current.KnownDesigns.OwnedBy(Empire.Current);
-		var lib = DIRoot.DesignLibrary.Get(d => d.IsValidInMod);
+		var lib = Services.DesignLibrary.Get(d => d.IsValidInMod);
 		var count = 0;
 		foreach (var d in designs)
 		{
 			if (!lib.Any(ld => ld.Equals(d)))
 			{
 				count++;
-				DIRoot.DesignLibrary.Add(d);
+				Services.DesignLibrary.Add(d);
 			}
 		}
-		DIRoot.DesignLibrary.Save();
+		Services.DesignLibrary.Save();
 		MessageBox.Show($"{designs.Count()} designs exported to library ({count} new).");
 	}
 }

@@ -789,7 +789,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 		where T : IOrderable
 	{
 		target.RemoveOrder(order);
-		var cmd = DIRoot.OrderCommands.RemoveOrder(target, order);
+		var cmd = Services.Commands.Orders.RemoveOrder(target, order);
 		Commands.Add(cmd);
 	}
 
@@ -1041,7 +1041,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 		where T : IOrderable
 	{
 		target.AddOrder(order);
-		var cmd = DIRoot.OrderCommands.AddOrder(target, order);
+		var cmd = Services.Commands.Orders.AddOrder(target, order);
 		Commands.Add(cmd);
 	}
 

@@ -5,7 +5,6 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FrEee.Utility;
 using System.Reflection;
 using System.IO;
 
@@ -124,9 +123,6 @@ public class PluginLibrary
 
 		// run this in the background, without awaiting it
 		DI.Run();
-
-		// TODO: verify that all plugins are loaded
-		//VerifyAll();
 	}
 
 	/// <summary>
@@ -140,53 +136,4 @@ public class PluginLibrary
 	{
 		return Loaded.Select(q => new PluginConfig(q.Package, q.Name));
 	}
-
-	/// <summary>
-	/// Verifies that a particular extension point has a plugin loaded.
-	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	public void Verify<T>()
-	{
-		var plugin = DI.Get<T>();
-		if (plugin is null)
-		{
-			throw new NullReferenceException($"Plugin for extension point {typeof(T)} was not found.");
-		}
-	}
-
-	// TODO: move plugin interfaces to FrEee.Plugins project so they can be verified here
-	///// <summary>
-	///// Verifies that all standard extension points have plugins loaded.
-	///// </summary>
-	//public void VerifyAll()
-	//{
-	//	// processes
-	//	Verify<ITurnProcessor>();
-	//	Verify<IBattleService>();
-	//	Verify<IConstructionQueueService>();
-
-	//	// gameplay
-	//	Verify<IDesignCommandService>();
-	//	Verify<IFleetCommandService>();
-	//	Verify<IMessageCommandService>();
-	//	Verify<IMinisterCommandService>();
-	//	Verify<INoteCommandService>();
-	//	Verify<IOrderCommandService>();
-	//	Verify<IProjectCommandService>();
-	//	Verify<IWaypointCommandService>();
-
-	//	// vehicles
-	//	Verify<IHullService>();
-	//	Verify<IDesignService>();
-	//	Verify<IVehicleService>();
-
-	//	// persistence
-	//	Verify<IGamePersister>();
-	//	Verify<ICommandPersister>();
-	//	Verify<IGameSetupPersister>();
-	//	Verify<IEmpireTemplatePersister>();
-
-	//	// libraries
-	//	Verify<ILibrary<IDesign>>();
-	//}
 }

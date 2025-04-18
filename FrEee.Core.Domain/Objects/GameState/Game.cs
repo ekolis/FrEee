@@ -345,14 +345,14 @@ public class Game
 	/// <param name="filename"></param>
 	public static void Load(string filename)
 	{
-		Current = DIRoot.GamePersister.LoadFromFile(filename);
+		Current = Services.Persistence.Game.LoadFromFile(filename);
 
 		// TODO: put all this code in GamePersister
 		new ModLoader().Load(Current.ModPath);
 		if (Empire.Current != null)
 		{
 			// load library of designs
-			DIRoot.DesignLibrary.Load();
+			Services.DesignLibrary.Load();
 
 			// TODO: load libraries of strategies, etc once we have those
 		}
@@ -386,7 +386,7 @@ public class Game
 	/// <param name="serializedData"></param>
 	public static void LoadFromString(string serializedData)
 	{
-		Current = DIRoot.GamePersister.LoadFromString(serializedData);
+		Current = Services.Persistence.Game.LoadFromString(serializedData);
 
 		// TODO: put all this code in GamePersister
 		new ModLoader().Load(Current.ModPath);
@@ -399,7 +399,7 @@ public class Game
 			var turn = formula.Value;
 
 			// load library of designs
-			DIRoot.DesignLibrary.Load();
+			Services.DesignLibrary.Load();
 
 			// TODO: load libraries of strategies, etc once we have those
 		}
@@ -798,7 +798,7 @@ public class Game
 						&& (!lastBattleTimestamps.ContainsKey(sector) || lastBattleTimestamps[sector] < Timestamp - (v.StrategicSpeed == 0 ? 1d : 1d / v.StrategicSpeed)))) // have we fought here too recently?
 			{
 				// resolve the battle
-				var battle = DIRoot.Battles.CreateSpaceBattle(sector);
+				var battle = Services.Battles.CreateSpaceBattle(sector);
 				battle.Resolve();
 				Battles.Add(battle);
 				foreach (var emp in battle.Empires)
@@ -848,7 +848,7 @@ public class Game
 		foreach (var kvp in referrables.Where(kvp => kvp.Value.IsDisposed).ToArray())
 			referrables.Remove(kvp);
 
-		DIRoot.GamePersister.SaveToStream(this, stream);
+		Services.Persistence.Game.SaveToStream(this, stream);
 	}
 
 	/// <summary>
@@ -873,7 +873,7 @@ public class Game
 			Directory.CreateDirectory(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory));
 		using FileStream fs = new(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory, filename), FileMode.Create);
 
-		DIRoot.GamePersister.SaveToStream(this, fs);
+		Services.Persistence.Game.SaveToStream(this, fs);
 		return filename;
 	}
 
@@ -892,7 +892,7 @@ public class Game
 			throw new InvalidOperationException("Can't save commands without a current empire.");
 		foreach (var c in Empire.Current.Commands.OfType<ISetPlayerInfoCommand>().ToArray())
 			Empire.Current.Commands.Remove(c);
-		var cmd = DIRoot.NoteCommands.SetPlayerInfo(Empire.Current, Empire.Current.PlayerInfo);
+		var cmd = Services.Commands.Notes.SetPlayerInfo(Empire.Current, Empire.Current.PlayerInfo);
 		Empire.Current.Commands.Add(cmd);
 		if (!Directory.Exists(FrEeeConstants.SaveGameDirectory))
 			Directory.CreateDirectory(FrEeeConstants.SaveGameDirectory);
@@ -902,7 +902,7 @@ public class Game
 		fs.Close(); fs.Dispose();
 
 		// save library of designs
-		DIRoot.DesignLibrary.Save();
+		Services.DesignLibrary.Save();
 
 		return filename;
 	}
@@ -911,7 +911,7 @@ public class Game
 	{
 		if (assignIDs)
 			CleanGameState();
-		return DIRoot.GamePersister.SaveToString(this);
+		return Services.Persistence.Game.SaveToString(this);
 	}
 
 	public override string ToString()
@@ -986,7 +986,7 @@ public class Game
 	/// <returns></returns>
 	private static IList<ICommand> DeserializeCommands(Stream stream)
 	{
-		var cmds = DIRoot.CommandPersister.LoadFromStream(stream);
+		var cmds = Services.Persistence.Commands.LoadFromStream(stream);
 
 		// TODO: put code below in CommandPersister
 		// check for client safety
@@ -1072,7 +1072,7 @@ public class Game
 		if (CurrentEmpire == null)
 			throw new InvalidOperationException("Can't serialize commands if there is no current empire.");
 
-		DIRoot.CommandPersister.SaveToStream(CurrentEmpire.Commands, stream);
+		Services.Persistence.Commands.SaveToStream(CurrentEmpire.Commands, stream);
 	}
 
 	/// <summary>

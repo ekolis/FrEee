@@ -85,7 +85,7 @@ public partial class HostConsoleForm : GameForm
 						Game.Current.CurrentEmpire = emp;
 						Game.Current.Redact();
 					}
-					DIRoot.Designs.ImportDesignsFromLibrary();
+					Services.Designs.ImportDesignsFromLibrary();
 					var form = new MainGameForm(true, false);
 					Hide();
 					this.ShowChildForm(form);
@@ -121,7 +121,7 @@ public partial class HostConsoleForm : GameForm
 		var t = new Thread(new ThreadStart(() =>
 		{
 			status.Message = "Processing turn";
-			var processor = DIRoot.TurnProcessor;
+			var processor = Services.TurnProcessor;
 			processor.ProcessTurn(Game.Current, false, status, 0.5);
 			Game.SaveAll(status, 1.0);
 		}));
@@ -156,7 +156,7 @@ public partial class HostConsoleForm : GameForm
 
 	private void CacheGalaxy()
 	{
-		serializedGalaxy = DIRoot.GamePersister.SaveToString(Game.Current);
+		serializedGalaxy = Services.Persistence.Game.SaveToString(Game.Current);
 	}
 
 	private void ReloadGalaxy()

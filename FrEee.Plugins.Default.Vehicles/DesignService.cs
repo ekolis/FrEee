@@ -91,7 +91,7 @@ public class DesignService
 		if (Empire.Current == null)
 			throw new InvalidOperationException("Can't import designs without a current empire.");
 
-		var designs = DIRoot.DesignLibrary.Get(d =>
+		var designs = Services.DesignLibrary.Get(d =>
 			d.IsValidInMod && !Empire.Current.KnownDesigns.Any(d2 => d2.Equals(d))
 			).ToArray();
 

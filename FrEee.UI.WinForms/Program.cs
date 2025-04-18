@@ -185,7 +185,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 				MessageBox.Show(plrfile + " does not exist. You will need to start your turn from the beginning.");
 		}
 
-		DIRoot.Designs.ImportDesignsFromLibrary();
+		Services.Designs.ImportDesignsFromLibrary();
 
 		var form = new MainGameForm(false, true);
 		form.KeyPreview = true;
@@ -290,7 +290,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 			status.Changed += new Status.ChangedDelegate(status_Changed);
 
 			Console.WriteLine("Processing turn...");
-			var processor = DIRoot.TurnProcessor;
+			var processor = Services.TurnProcessor;
 			var emps = processor.ProcessTurn(Game.Current, false, status);
 			foreach (var emp in emps)
 				Console.WriteLine(emp + " did not submit a PLR file.");
@@ -301,7 +301,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 			}
 			Game.SaveAll();
 			Console.WriteLine("Turn processed successfully. It is now turn " + Game.Current.TurnNumber + " (stardate " + Game.Current.Stardate + ").");
-			DIRoot.Gui.Exit();
+			Services.Gui.Exit();
 			return 0;
 		}
 		catch (Exception ex)

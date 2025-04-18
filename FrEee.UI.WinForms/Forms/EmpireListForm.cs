@@ -199,7 +199,7 @@ public partial class EmpireListForm : GameForm
 				{
 					if (Empire.Current.IncomingMessages.Contains(msg) || Empire.Current.SentMessages.Contains(msg))
 					{
-						var cmd = DIRoot.MessageCommands.DeleteMessage(msg);
+						var cmd = Services.Commands.Messages.DeleteMessage(msg);
 						Empire.Current.Commands.Add(cmd);
 						cmd.Execute();
 					}

@@ -225,10 +225,10 @@ public class ConstructionQueue : IConstructionQueue
 			if (Empire.Current != null)
 			{
 				// try to use cache, rate can't change client side!
-				return rate ??= DIRoot.ConstructionQueues.ComputeRate(this);
+				return rate ??= Services.ConstructionQueues.ComputeRate(this);
 			}
 			else
-				return DIRoot.ConstructionQueues.ComputeRate(this);
+				return Services.ConstructionQueues.ComputeRate(this);
 		}
 	}
 
