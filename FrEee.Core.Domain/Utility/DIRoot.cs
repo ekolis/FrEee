@@ -12,6 +12,7 @@ using FrEee.Gameplay.Commands.Orders;
 using FrEee.Gameplay.Commands.Projects;
 using FrEee.Gameplay.Commands.Waypoints;
 using FrEee.Persistence;
+using FrEee.Plugins;
 using FrEee.Processes;
 using FrEee.Processes.Combat;
 using FrEee.Processes.Combat.Grid;

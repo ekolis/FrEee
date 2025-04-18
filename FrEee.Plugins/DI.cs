@@ -7,7 +7,7 @@ using FrEee.Plugins;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace FrEee.Utility
+namespace FrEee.Plugins
 {
     /// <summary>
     /// Manages dependency injection for the game.
