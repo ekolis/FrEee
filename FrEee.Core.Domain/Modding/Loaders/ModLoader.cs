@@ -101,6 +101,9 @@ public class ModLoader
 		}
 		var pluginConfigs = JsonConvert.DeserializeObject<List<PluginConfig>>(File.ReadAllText(fullPath));
 		PluginLibrary.Instance.LoadConfiguredPlugins(pluginConfigs);
+		
+		// verify that all services have plugins loaded
+		Services.VerifyAll();
 
 		return mod;
 	}

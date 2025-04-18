@@ -109,6 +109,21 @@ public static class Services
 		/// Allows players to manage waypoints.
 		/// </summary>
 		public static IWaypointCommandService Waypoints => DI.Get<IWaypointCommandService>();
+
+		/// <summary>
+		/// Verifies that all standard extension points have plugins loaded.
+		/// </summary>
+		public static void VerifyAll()
+		{
+			Verify(Designs);
+			Verify(Fleets);
+			Verify(Messages);
+			Verify(Ministers);
+			Verify(Notes);
+			Verify(Orders);
+			Verify(Projects);
+			Verify(Waypoints);
+		}
 	}
 
 	/// <summary>
@@ -135,5 +150,41 @@ public static class Services
 		/// Saves and loads empire templates
 		/// </summary>
 		public static IEmpireTemplatePersister EmpireTemplates => DI.Get<IEmpireTemplatePersister>();
+
+		/// <summary>
+		/// Verifies that all standard extension points have plugins loaded.
+		/// </summary>
+		public static void VerifyAll()
+		{
+			Verify(Game);
+			Verify(Commands);
+			Verify(GameSetup);
+			Verify(EmpireTemplates);
+		}
+	}
+
+	private static void Verify<T>(T? plugin)
+	{
+		if (plugin is null)
+		{
+			throw new ArgumentNullException(nameof(plugin), $"Plugin of type {typeof(T)} has not been loaded. Please check Plugins.json in the current mod's Data folder.");
+		}
+	}
+
+	/// <summary>
+	/// Verifies that all standard extension points have plugins loaded.
+	/// </summary>
+	public static void VerifyAll()
+	{
+		Verify(TurnProcessor);
+		Verify(Battles);
+		Verify(Hulls);
+		Verify(Designs);
+		Verify(Vehicles);
+		Verify(ConstructionQueues);
+		Verify(Gui);
+		Verify(DesignLibrary);
+		Commands.VerifyAll();
+		Persistence.VerifyAll();
 	}
 }
