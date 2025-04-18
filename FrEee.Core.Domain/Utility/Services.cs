@@ -35,7 +35,6 @@ public static class Services
 	/// </summary>
 	public static IBattleService Battles => DI.Get<IBattleService>();
 
-
 	/// <summary>
 	/// Creates vehicle hulls.
 	/// </summary>
