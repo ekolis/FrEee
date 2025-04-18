@@ -156,7 +156,7 @@ public partial class HostConsoleForm : GameForm
 
 	private void CacheGalaxy()
 	{
-		serializedGalaxy = Services.Persisters.Game.SaveToString(Game.Current);
+		serializedGalaxy = Services.Persistence.Game.SaveToString(Game.Current);
 	}
 
 	private void ReloadGalaxy()

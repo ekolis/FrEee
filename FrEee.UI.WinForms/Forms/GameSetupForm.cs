@@ -344,7 +344,7 @@ public partial class GameSetupForm : GameForm
 		var result = dlg.ShowDialog();
 		if (result == DialogResult.OK)
 		{
-			var et = Services.Persisters.EmpireTemplates.LoadFromFile(dlg.FileName);
+			var et = Services.Persistence.EmpireTemplates.LoadFromFile(dlg.FileName);
 			setup.EmpireTemplates.Add(et);
 			BindEmpires();
 		}
@@ -421,7 +421,7 @@ public partial class GameSetupForm : GameForm
 		var result = dlg.ShowDialog();
 		if (result == DialogResult.OK)
 		{
-			setup = Services.Persisters.GameSetup.LoadFromFile(dlg.FileName);
+			setup = Services.Persistence.GameSetup.LoadFromFile(dlg.FileName);
 			Bind();
 		}
 	}
@@ -453,7 +453,7 @@ public partial class GameSetupForm : GameForm
 			if (result == DialogResult.OK)
 			{
 				var et = (EmpireTemplate)lstEmpires.SelectedItems[0].Tag;
-				Services.Persisters.EmpireTemplates.SaveToFile(et, dlg.FileName);
+				Services.Persistence.EmpireTemplates.SaveToFile(et, dlg.FileName);
 			}
 		}
 	}
@@ -467,7 +467,7 @@ public partial class GameSetupForm : GameForm
 		var result = dlg.ShowDialog();
 		if (result == DialogResult.OK)
 		{
-			Services.Persisters.GameSetup.SaveToFile(setup, dlg.FileName);
+			Services.Persistence.GameSetup.SaveToFile(setup, dlg.FileName);
 		}
 	}
 

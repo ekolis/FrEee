@@ -115,7 +115,7 @@ public static class Services
 	/// <summary>
 	/// Services for persisting data.
 	/// </summary>
-	public static class Persisters
+	public static class Persistence
 	{
 		/// <summary>
 		/// Saves and loads game state.

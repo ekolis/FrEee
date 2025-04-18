@@ -71,7 +71,7 @@ public partial class MainMenuForm : GameForm
 			if (doOrDie)
 			{
 				status.Message = "Setting up game";
-				var setup = Services.Persisters.GameSetup.LoadFromFile(
+				var setup = Services.Persistence.GameSetup.LoadFromFile(
 					Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "GameSetups", "Quickstart.gsu"));
 				warnings = setup.Warnings.ToArray();
 				if (warnings.Any())
@@ -85,7 +85,7 @@ public partial class MainMenuForm : GameForm
 					if (result == DialogResult.OK)
 					{
 						// replace existing first player with selected empire
-						var et = Services.Persisters.EmpireTemplates.LoadFromFile(dlg.FileName);
+						var et = Services.Persistence.EmpireTemplates.LoadFromFile(dlg.FileName);
 						setup.EmpireTemplates.RemoveAt(0);
 						setup.EmpireTemplates.Insert(0, et);
 

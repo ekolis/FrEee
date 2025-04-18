@@ -345,7 +345,7 @@ public class Game
 	/// <param name="filename"></param>
 	public static void Load(string filename)
 	{
-		Current = Services.Persisters.Game.LoadFromFile(filename);
+		Current = Services.Persistence.Game.LoadFromFile(filename);
 
 		// TODO: put all this code in GamePersister
 		new ModLoader().Load(Current.ModPath);
@@ -386,7 +386,7 @@ public class Game
 	/// <param name="serializedData"></param>
 	public static void LoadFromString(string serializedData)
 	{
-		Current = Services.Persisters.Game.LoadFromString(serializedData);
+		Current = Services.Persistence.Game.LoadFromString(serializedData);
 
 		// TODO: put all this code in GamePersister
 		new ModLoader().Load(Current.ModPath);
@@ -848,7 +848,7 @@ public class Game
 		foreach (var kvp in referrables.Where(kvp => kvp.Value.IsDisposed).ToArray())
 			referrables.Remove(kvp);
 
-		Services.Persisters.Game.SaveToStream(this, stream);
+		Services.Persistence.Game.SaveToStream(this, stream);
 	}
 
 	/// <summary>
@@ -873,7 +873,7 @@ public class Game
 			Directory.CreateDirectory(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory));
 		using FileStream fs = new(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory, filename), FileMode.Create);
 
-		Services.Persisters.Game.SaveToStream(this, fs);
+		Services.Persistence.Game.SaveToStream(this, fs);
 		return filename;
 	}
 
@@ -911,7 +911,7 @@ public class Game
 	{
 		if (assignIDs)
 			CleanGameState();
-		return Services.Persisters.Game.SaveToString(this);
+		return Services.Persistence.Game.SaveToString(this);
 	}
 
 	public override string ToString()
@@ -986,7 +986,7 @@ public class Game
 	/// <returns></returns>
 	private static IList<ICommand> DeserializeCommands(Stream stream)
 	{
-		var cmds = Services.Persisters.Commands.LoadFromStream(stream);
+		var cmds = Services.Persistence.Commands.LoadFromStream(stream);
 
 		// TODO: put code below in CommandPersister
 		// check for client safety
@@ -1072,7 +1072,7 @@ public class Game
 		if (CurrentEmpire == null)
 			throw new InvalidOperationException("Can't serialize commands if there is no current empire.");
 
-		Services.Persisters.Commands.SaveToStream(CurrentEmpire.Commands, stream);
+		Services.Persistence.Commands.SaveToStream(CurrentEmpire.Commands, stream);
 	}
 
 	/// <summary>
