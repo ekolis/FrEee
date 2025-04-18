@@ -40,7 +40,7 @@ public class HistoryLogViewModel
 			if (context is ISpaceObject sobj)
 			{
 				// go to space object
-				DIRoot.Gui.Focus(sobj);
+				Services.Gui.Focus(sobj);
 			}
 			else if (context is IUnit unit)
 			{
@@ -50,11 +50,11 @@ public class HistoryLogViewModel
 				{
 					if (container is Sector)
 					{
-						DIRoot.Gui.Focus((ISpaceObject)unit);
+						Services.Gui.Focus((ISpaceObject)unit);
 					}
 					else
 					{
-						DIRoot.Gui.Focus((ISpaceObject)container);
+						Services.Gui.Focus((ISpaceObject)container);
 					}
 				}
 			}
@@ -62,37 +62,37 @@ public class HistoryLogViewModel
 			{
 				// go to the planet
 				var container = facility.Container;
-				DIRoot.Gui.Focus(container);
+				Services.Gui.Focus(container);
 			}
 			else if (context is Technology tech)
 			{
 				// go to research screen
-				DIRoot.Gui.Focus(tech);
+				Services.Gui.Focus(tech);
 			}
 			else if (context is IHull hull)
 			{
 				// go to design screen and create a new design using this hull
-				DIRoot.Gui.Focus(hull);
+				Services.Gui.Focus(hull);
 			}
 			else if (context is ComponentTemplate || context is Mount)
 			{
 				// go to design screen
-				DIRoot.Gui.Show(Screen.VehicleDesign);
+				Services.Gui.Show(Screen.VehicleDesign);
 			}
 			else if (context is IBattle battle)
 			{
 				// show battle results
-				DIRoot.Gui.Focus(battle);
+				Services.Gui.Focus(battle);
 			}
 			else if (context is IMessage msg)
 			{
 				// show diplomacy screen
-				DIRoot.Gui.Focus(msg);
+				Services.Gui.Focus(msg);
 			}
 			else if (context is StarSystem sys)
 			{
 				// navigate game form to that system
-				DIRoot.Gui.Focus(sys);
+				Services.Gui.Focus(sys);
 			}
 
 			// TODO - more types of goto-messages

@@ -19,7 +19,7 @@ public class ClientSettings
 {
 	static ClientSettings()
 	{
-		DIRoot.Gui.LoadClientSettings();
+		Services.Gui.LoadClientSettings();
 	}
 
 	public static ClientSettings Instance { get; internal set; }

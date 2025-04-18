@@ -129,7 +129,7 @@ public partial class PlanetListForm : GameForm
 	private void PlanetListForm_FormClosed(object sender, FormClosedEventArgs e)
 	{
 		// save client settings
-		DIRoot.Gui.SaveClientSettings();
+		Services.Gui.SaveClientSettings();
 	}
 
 	private void PlanetListForm_Load(object sender, EventArgs e)

@@ -207,7 +207,7 @@ public partial class FleetTransferForm : GameForm
 		var fleet = new Fleet();
 		fleet.Name = txtFleetName.Text;
 
-		var cmd = DIRoot.FleetCommands.CreateFleet(fleet, sector);
+		var cmd = Services.FleetCommands.CreateFleet(fleet, sector);
 		newCommands.Add(cmd);
 		newFleets.Add(fleet);
 
@@ -292,7 +292,7 @@ public partial class FleetTransferForm : GameForm
 			if (!newFleets.Contains(fleet))
 			{
 				// create a disband command
-				var cmd = DIRoot.FleetCommands.DisbandFleet(fleet);
+				var cmd = Services.FleetCommands.DisbandFleet(fleet);
 				newCommands.Add(cmd);
 			}
 			else
@@ -329,12 +329,12 @@ public partial class FleetTransferForm : GameForm
 		if (!newFleets.Contains(fleet))
 		{
 			// fleet already exists, we can add to it
-			cmd = DIRoot.FleetCommands.JoinFleet(vehicle, fleet);
+			cmd = Services.FleetCommands.JoinFleet(vehicle, fleet);
 		}
 		else
 		{
 			// fleet is new, we need to reference it by its command
-			cmd = DIRoot.FleetCommands.JoinFleet(vehicle, newCommands.OfType<ICreateFleetCommand>().Single(c => c.Fleet == fleet));
+			cmd = Services.FleetCommands.JoinFleet(vehicle, newCommands.OfType<ICreateFleetCommand>().Single(c => c.Fleet == fleet));
 		}
 		newCommands.Add(cmd);
 	}
@@ -407,7 +407,7 @@ public partial class FleetTransferForm : GameForm
 		if (vehicle.Container == null)
 			return;
 
-		var cmd = DIRoot.FleetCommands.LeaveFleet(vehicle);
+		var cmd = Services.FleetCommands.LeaveFleet(vehicle);
 		newCommands.Add(cmd);
 		BindVehicles(vehicle);
 		var node = treeFleets.GetAllNodes().Single(x => x.Tag == vehicle);

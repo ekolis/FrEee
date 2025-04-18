@@ -31,12 +31,12 @@ public class DamageTypesTest
     public void Init()
     {
         // create dummy designs
-        attackerDesign = (IDesign<IMajorSpaceVehicle>)DIRoot.Designs.CreateDesign(VehicleTypes.Ship);
+        attackerDesign = (IDesign<IMajorSpaceVehicle>)Services.Designs.CreateDesign(VehicleTypes.Ship);
         attackerDesign.AddComponent(mod.ComponentTemplates.FindByName("Bridge"));
         attackerDesign.AddComponent(mod.ComponentTemplates.FindByName("Life Support"));
         attackerDesign.AddComponent(mod.ComponentTemplates.FindByName("Crew Quarters"));
         attackerDesign.AddComponent(mod.ComponentTemplates.FindByName("Quantum Reactor"));
-		defenderDesign = (IDesign<IMajorSpaceVehicle>)DIRoot.Designs.CreateDesign(VehicleTypes.Ship);
+		defenderDesign = (IDesign<IMajorSpaceVehicle>)Services.Designs.CreateDesign(VehicleTypes.Ship);
 		defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Bridge"));
         defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Life Support"));
         defenderDesign.AddComponent(mod.ComponentTemplates.FindByName("Crew Quarters"));

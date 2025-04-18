@@ -71,7 +71,7 @@ public partial class MainMenuForm : GameForm
 			if (doOrDie)
 			{
 				status.Message = "Setting up game";
-				var setup = DIRoot.GameSetupPersister.LoadFromFile(
+				var setup = Services.GameSetupPersister.LoadFromFile(
 					Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "GameSetups", "Quickstart.gsu"));
 				warnings = setup.Warnings.ToArray();
 				if (warnings.Any())
@@ -85,7 +85,7 @@ public partial class MainMenuForm : GameForm
 					if (result == DialogResult.OK)
 					{
 						// replace existing first player with selected empire
-						var et = DIRoot.EmpireTemplatePersister.LoadFromFile(dlg.FileName);
+						var et = Services.EmpireTemplatePersister.LoadFromFile(dlg.FileName);
 						setup.EmpireTemplates.RemoveAt(0);
 						setup.EmpireTemplates.Insert(0, et);
 
@@ -116,7 +116,7 @@ public partial class MainMenuForm : GameForm
 
 		if (status.Exception == null && !warnings.Any())
 		{
-			DIRoot.Designs.ImportDesignsFromLibrary();
+			Services.Designs.ImportDesignsFromLibrary();
 			var game = new MainGameForm(false, true);
 			this.ShowChildForm(game);
 			game.FormClosed += (s, args) =>
@@ -166,7 +166,7 @@ public partial class MainMenuForm : GameForm
 			}
 
 			// load library designs
-			DIRoot.Designs.ImportDesignsFromLibrary();
+			Services.Designs.ImportDesignsFromLibrary();
 
 			// display game view
 			var form = new MainGameForm(false, true);
@@ -179,7 +179,7 @@ public partial class MainMenuForm : GameForm
 
 	private void btnQuit_Click(object sender, EventArgs e)
 	{
-		DIRoot.Gui.Exit();
+		Services.Gui.Exit();
 	}
 
 	private void btnMods_Click(object sender, EventArgs e)
@@ -300,13 +300,13 @@ public partial class MainMenuForm : GameForm
 	{
 		try
 		{
-			DIRoot.Gui.LoadClientSettings();
+			Services.Gui.LoadClientSettings();
 		}
 		catch (Exception)
 		{
 			MessageBox.Show("Error loading client settings. Resetting to defaults.");
-			DIRoot.Gui.InitializeClientSettings();
-			DIRoot.Gui.SaveClientSettings();
+			Services.Gui.InitializeClientSettings();
+			Services.Gui.SaveClientSettings();
 		}
 		// set the default music volume according to the settings
 		// volume values are 0-100, so scale appropriately to the 0-1 range
@@ -315,7 +315,7 @@ public partial class MainMenuForm : GameForm
 
 	private void MainMenuForm_FormClosed(object sender, FormClosedEventArgs e)
 	{
-		DIRoot.Gui.SaveClientSettings();
-		DIRoot.Gui.Exit();
+		Services.Gui.SaveClientSettings();
+		Services.Gui.Exit();
 	}
 }

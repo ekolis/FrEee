@@ -636,7 +636,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 
 	public ICreateDesignCommand CreateCreationCommand()
 	{
-		return DIRoot.DesignCommands.CreateDesign(this);
+		return Services.DesignCommands.CreateDesign(this);
 	}
 
 	public void Dispose()

@@ -65,7 +65,7 @@ public partial class OptionsForm : GameForm
 		ClientSettings.Instance.PlayerInfo.Notes = txtNotes.Text;
 		ClientSettings.Instance.PlayerInfo.Website = txtWebsite.Text;
 		ClientSettings.Instance.QuitToMainMenu = chkQuitToMainMenu.Checked;
-		DIRoot.Gui.SaveClientSettings();
+		Services.Gui.SaveClientSettings();
 		Music.setVolume(ClientSettings.Instance.MasterVolume * ClientSettings.Instance.MusicVolume * 1.0e-4f);
 		Music.StartNewTrack();
 		Close();

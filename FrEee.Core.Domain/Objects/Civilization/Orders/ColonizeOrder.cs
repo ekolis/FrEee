@@ -108,7 +108,7 @@ public class ColonizeOrder : IOrder
                 // colonize now!!!
                 Planet.Colony = new Colony { Owner = sobj.Owner };
                 Owner.TriggerHappinessChange(hm => hm.PlanetColonized);
-                Planet.Colony.ConstructionQueue = DIRoot.ConstructionQueues.CreateConstructionQueue(Planet);
+                Planet.Colony.ConstructionQueue = Services.ConstructionQueues.CreateConstructionQueue(Planet);
                 if (sobj is ICargoContainer cc)
                 {
                     foreach (var kvp in cc.Cargo.Population)

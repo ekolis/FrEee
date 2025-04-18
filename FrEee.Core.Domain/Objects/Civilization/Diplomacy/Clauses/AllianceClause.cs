@@ -86,7 +86,7 @@ public class AllianceClause : Clause
 		response.Recipient = emp;
 		response.Text = "Our allies have forced our hand. We must declare war!";
 		response.Action = new DeclareWarAction(emp);
-		var cmd = DIRoot.MessageCommands.SendMessage(response);
+		var cmd = Services.MessageCommands.SendMessage(response);
 		Empire.Current.Commands.Add(cmd);
 		Empire.Current.TriggerHappinessChange(hm => hm.TreatyWar);
 		emp.TriggerHappinessChange(hm => hm.TreatyWar);

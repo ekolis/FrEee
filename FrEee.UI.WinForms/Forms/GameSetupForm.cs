@@ -344,7 +344,7 @@ public partial class GameSetupForm : GameForm
 		var result = dlg.ShowDialog();
 		if (result == DialogResult.OK)
 		{
-			var et = DIRoot.EmpireTemplatePersister.LoadFromFile(dlg.FileName);
+			var et = Services.EmpireTemplatePersister.LoadFromFile(dlg.FileName);
 			setup.EmpireTemplates.Add(et);
 			BindEmpires();
 		}
@@ -421,7 +421,7 @@ public partial class GameSetupForm : GameForm
 		var result = dlg.ShowDialog();
 		if (result == DialogResult.OK)
 		{
-			setup = DIRoot.GameSetupPersister.LoadFromFile(dlg.FileName);
+			setup = Services.GameSetupPersister.LoadFromFile(dlg.FileName);
 			Bind();
 		}
 	}
@@ -453,7 +453,7 @@ public partial class GameSetupForm : GameForm
 			if (result == DialogResult.OK)
 			{
 				var et = (EmpireTemplate)lstEmpires.SelectedItems[0].Tag;
-				DIRoot.EmpireTemplatePersister.SaveToFile(et, dlg.FileName);
+				Services.EmpireTemplatePersister.SaveToFile(et, dlg.FileName);
 			}
 		}
 	}
@@ -467,7 +467,7 @@ public partial class GameSetupForm : GameForm
 		var result = dlg.ShowDialog();
 		if (result == DialogResult.OK)
 		{
-			DIRoot.GameSetupPersister.SaveToFile(setup, dlg.FileName);
+			Services.GameSetupPersister.SaveToFile(setup, dlg.FileName);
 		}
 	}
 
@@ -524,7 +524,7 @@ public partial class GameSetupForm : GameForm
 				var turn = Game.Current.TurnNumber;
 				status.Message = "Loading game";
 				Game.Load(name + "_" + turn + "_0001.gam");
-				DIRoot.Designs.ImportDesignsFromLibrary();
+				Services.Designs.ImportDesignsFromLibrary();
 				Hide();
 				MainMenuForm.GetInstance().ShowChildForm(new MainGameForm(false, true));
 			}

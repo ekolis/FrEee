@@ -964,7 +964,7 @@ public static class CommonExtensions
 		if (addCmd == null)
 		{
 			// not a newly added order, so create a remove command to take it off the server
-			var remCmd = DIRoot.OrderCommands.RemoveOrder(obj, order);
+			var remCmd = Services.OrderCommands.RemoveOrder(obj, order);
 			Empire.Current.Commands.Add(remCmd);
 			obj.RemoveOrder(order);
 			return remCmd;

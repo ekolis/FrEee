@@ -23,10 +23,7 @@ namespace FrEee.Utility;
 /// <summary>
 /// Wrapper for <see cref="DI"/> that exposes various services used by FrEee.
 /// </summary>
-/// <remarks>
-/// TODO: Really this is just a service locator, maybe call it Services?
-/// </remarks>
-public static class DIRoot
+public static class Services
 {
 	/// <summary>
 	/// Processes turns.

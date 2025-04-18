@@ -25,7 +25,7 @@ public class TechnologyTest
 	public static void ClassInit()
 	{
 		PluginLibrary.Instance.LoadDefaultPlugins();
-		processor = DIRoot.TurnProcessor;
+		processor = Services.TurnProcessor;
 		new ModLoader().Load(null);
 	}
 
@@ -47,7 +47,7 @@ public class TechnologyTest
 		emp.ResearchedTechnologies[tech] = 0;
 		emp.BonusResearch = tech.GetBaseLevelCost(1) + tech.GetBaseLevelCost(2);
 
-		var cmd = DIRoot.ProjectCommands.Research();
+		var cmd = Services.ProjectCommands.Research();
 		cmd.Issuer = emp;
 		cmd.Executor = emp;
 		cmd.Spending[tech] = 100;
@@ -86,7 +86,7 @@ public class TechnologyTest
 		emp.BonusResearch = t1.GetBaseLevelCost(1) + 1;
 
 		// create research command
-		var cmd = DIRoot.ProjectCommands.Research();
+		var cmd = Services.ProjectCommands.Research();
 		cmd.Issuer = emp;
 		cmd.Executor = emp;
 		cmd.Queue.Add(t1);

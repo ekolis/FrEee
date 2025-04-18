@@ -643,7 +643,7 @@ public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IF
 			if (Design.CheckVisibility(emp) < Visibility.Scanned)
 			{
 				// create fake design
-				var d = DIRoot.Designs.CreateDesign(Design.VehicleType);
+				var d = Services.Designs.CreateDesign(Design.VehicleType);
 				d.Hull = Design.Hull;
 				d.Owner = Design.Owner;
 				Design = d;

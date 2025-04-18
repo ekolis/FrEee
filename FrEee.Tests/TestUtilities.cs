@@ -38,7 +38,7 @@ public static class TestUtilities
 
 	public static IHull CreateHull(VehicleTypes vehicleType, string name = "Generic Hull")
 	{
-		var hull = DIRoot.Hulls.CreateHull(vehicleType);
+		var hull = Services.Hulls.CreateHull(vehicleType);
 		hull.Name = name;
 		hull.ModID = name;
 		hull.ThrustPerMove = 1;
@@ -49,7 +49,7 @@ public static class TestUtilities
 
 	public static IDesign CreateDesign(Empire owner, IHull hull, string name = "Generic Design")
 	{
-		var design = DIRoot.Designs.CreateDesign(hull);
+		var design = Services.Designs.CreateDesign(hull);
 		design.BaseName = name;
 		design.Owner = owner;
 		return design;

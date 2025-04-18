@@ -57,7 +57,7 @@ public partial class ShipListForm : GameForm
 	private void PlanetListForm_FormClosed(object sender, FormClosedEventArgs e)
 	{
 		// save client settings
-		DIRoot.Gui.SaveClientSettings();
+		Services.Gui.SaveClientSettings();
 	}
 
 	private void ShipListForm_Load(object sender, EventArgs e)

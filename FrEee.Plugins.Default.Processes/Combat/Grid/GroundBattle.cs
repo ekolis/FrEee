@@ -30,7 +30,7 @@ public class GroundBattle : Battle
         var combatants = new HashSet<ICombatant>(Planet.Cargo.Units.Where(q => q.CanInvadeAndPoliceColonies));
         for (var i = 0; i < Planet.PopulationFill.Value / Mod.Current.Settings.PopulationFactor / (Mod.Current.Settings.PopulationPerMilitia == 0 ? 20 : Mod.Current.Settings.PopulationPerMilitia); i++)
         {
-            var militia = DIRoot.Designs.MilitiaDesign.Instantiate();
+            var militia = Services.Designs.MilitiaDesign.Instantiate();
             militia.Owner = Planet.Owner;
             combatants.Add(militia);
         }
