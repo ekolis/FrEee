@@ -136,7 +136,7 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 			if (addCmd == null)
 			{
 				// not a newly added order, so create a remove command to take it off the server
-				var remCmd = Services.OrderCommands.RemoveOrder(Fleet, order);
+				var remCmd = Services.Commands.Orders.RemoveOrder(Fleet, order);
 				Empire.Current.Commands.Add(remCmd);
 				remCmd.Execute(); // show change locally
 			}
@@ -163,7 +163,7 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 			if (addCmd == null)
 			{
 				// not a newly added order, so create a remove command to take it off the server
-				var remCmd = Services.OrderCommands.RemoveOrder(Fleet, order);
+				var remCmd = Services.Commands.Orders.RemoveOrder(Fleet, order);
 				Empire.Current.Commands.Add(remCmd);
 				remCmd.Execute(); // show change locally
 			}
@@ -186,7 +186,7 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 		var order = (IOrder)lstOrdersDetail.SelectedItem;
 		if (order != null && Fleet.Orders.IndexOf(order) < Fleet.Orders.Count - 1)
 		{
-			var cmd = Services.OrderCommands.RearrangeOrders(Fleet, order, 1);
+			var cmd = Services.Commands.Orders.RearrangeOrders(Fleet, order, 1);
 			Empire.Current.Commands.Add(cmd);
 			cmd.Execute(); // show change locally
 			Bind();
@@ -201,7 +201,7 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 		var order = (IOrder)lstOrdersDetail.SelectedItem;
 		if (order != null && Fleet.Orders.IndexOf(order) > 0)
 		{
-			var cmd = Services.OrderCommands.RearrangeOrders(Fleet, order, -1);
+			var cmd = Services.Commands.Orders.RearrangeOrders(Fleet, order, -1);
 			Empire.Current.Commands.Add(cmd);
 			cmd.Execute(); // show change locally
 			Bind();
@@ -218,7 +218,7 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 		var order = (IOrder)lstOrdersDetail.SelectedItem;
 		if (order != null)
 		{
-			var cmd = Services.OrderCommands.RearrangeOrders(
+			var cmd = Services.Commands.Orders.RearrangeOrders(
 				Fleet, order, Fleet.Orders.Count - Fleet.Orders.IndexOf(order) - 1);
 			Empire.Current.Commands.Add(cmd);
 			cmd.Execute(); // show change locally
@@ -234,7 +234,7 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 		var order = (IOrder)lstOrdersDetail.SelectedItem;
 		if (order != null)
 		{
-			var cmd = Services.OrderCommands.RearrangeOrders(
+			var cmd = Services.Commands.Orders.RearrangeOrders(
 				Fleet, order, -fleet.Orders.IndexOf(order));
 			Empire.Current.Commands.Add(cmd);
 			cmd.Execute(); // show change locally
@@ -336,7 +336,7 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 		var cmd = Empire.Current.Commands.OfType<IToggleRepeatOrdersCommand>().SingleOrDefault(x => x.Executor == Fleet);
 		if (cmd == null)
 		{
-			cmd = Services.OrderCommands.ToggleRepeatOrders(Fleet, chkRepeat.Checked);
+			cmd = Services.Commands.Orders.ToggleRepeatOrders(Fleet, chkRepeat.Checked);
 			Empire.Current.Commands.Add(cmd);
 		}
 		else
@@ -349,7 +349,7 @@ public partial class FleetReport : UserControl, IBindable<Fleet>
 		var cmd = Empire.Current.Commands.OfType<IToggleOrdersOnHoldCommand>().SingleOrDefault(x => x.Executor == Fleet);
 		if (cmd == null)
 		{
-			cmd = Services.OrderCommands.ToggleOrdersOnHold(Fleet, chkOnHold.Checked);
+			cmd = Services.Commands.Orders.ToggleOrdersOnHold(Fleet, chkOnHold.Checked);
 			Empire.Current.Commands.Add(cmd);
 		}
 		else

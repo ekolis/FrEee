@@ -1348,10 +1348,10 @@ public partial class MainGameForm : GameForm
 
 		// set the waypoint
 		ICommand cmd;
-		cmd = Services.WaypointCommands.CreateWaypoint(waypoint);
+		cmd = Services.Commands.Waypoints.CreateWaypoint(waypoint);
 		Empire.Current.Commands.Add(cmd);
 		cmd.Execute();
-		cmd = Services.WaypointCommands.HotkeyWaypoint(waypoint, waypointNumber, redirect);
+		cmd = Services.Commands.Waypoints.HotkeyWaypoint(waypoint, waypointNumber, redirect);
 		Empire.Current.Commands.Add(cmd);
 		cmd.Execute();
 
@@ -1428,7 +1428,7 @@ public partial class MainGameForm : GameForm
 				var order = new MoveOrder(sector, !aggressiveMode);
 				v.AddOrder(order);
 				BindReport();
-				var cmd = Services.OrderCommands.AddOrder(v, order);
+				var cmd = Services.Commands.Orders.AddOrder(v, order);
 				Empire.Current.Commands.Add(cmd);
 				starSystemView.Invalidate(); // show move lines
 				ChangeCommandMode(CommandMode.None, null);

@@ -47,7 +47,7 @@ public class TechnologyTest
 		emp.ResearchedTechnologies[tech] = 0;
 		emp.BonusResearch = tech.GetBaseLevelCost(1) + tech.GetBaseLevelCost(2);
 
-		var cmd = Services.ProjectCommands.Research();
+		var cmd = Services.Commands.Projects.Research();
 		cmd.Issuer = emp;
 		cmd.Executor = emp;
 		cmd.Spending[tech] = 100;
@@ -86,7 +86,7 @@ public class TechnologyTest
 		emp.BonusResearch = t1.GetBaseLevelCost(1) + 1;
 
 		// create research command
-		var cmd = Services.ProjectCommands.Research();
+		var cmd = Services.Commands.Projects.Research();
 		cmd.Issuer = emp;
 		cmd.Executor = emp;
 		cmd.Queue.Add(t1);

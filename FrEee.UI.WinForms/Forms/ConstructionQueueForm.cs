@@ -350,7 +350,7 @@ public partial class ConstructionQueueForm : GameForm
 		var sel = SelectedOrders.ToArray();
 		foreach (var item in sel.Select(o => new { Order = o, OldIndex = ConstructionQueue.Orders.IndexOf(o), NewIndex = ConstructionQueue.Orders.Count() }))
 		{
-			var cmd = Services.OrderCommands.RearrangeOrders(ConstructionQueue, item.Order, item.NewIndex - item.OldIndex);
+			var cmd = Services.Commands.Orders.RearrangeOrders(ConstructionQueue, item.Order, item.NewIndex - item.OldIndex);
 			newCommands.Add(cmd);
 			cmd.Execute();
 		}
@@ -388,7 +388,7 @@ public partial class ConstructionQueueForm : GameForm
 			delta = FindSameItemsCountBelow(sel.Last()) + sel.Count() - 1;
 		foreach (var order in sel)
 		{
-			var cmd = Services.OrderCommands.RearrangeOrders(ConstructionQueue, order, delta);
+			var cmd = Services.Commands.Orders.RearrangeOrders(ConstructionQueue, order, delta);
 			newCommands.Add(cmd);
 			cmd.Execute();
 		}
@@ -409,7 +409,7 @@ public partial class ConstructionQueueForm : GameForm
 		var sel = SelectedOrders.ToArray();
 		foreach (var item in sel.Select(o => new { Order = o, OldIndex = ConstructionQueue.Orders.IndexOf(o), NewIndex = sel.IndexOf(o) }))
 		{
-			var cmd = Services.OrderCommands.RearrangeOrders(ConstructionQueue, item.Order, item.NewIndex - item.OldIndex);
+			var cmd = Services.Commands.Orders.RearrangeOrders(ConstructionQueue, item.Order, item.NewIndex - item.OldIndex);
 			newCommands.Add(cmd);
 			cmd.Execute();
 		}
@@ -426,7 +426,7 @@ public partial class ConstructionQueueForm : GameForm
 			delta = -FindSameItemsCountAbove(sel.First());
 		foreach (var order in sel)
 		{
-			var cmd = Services.OrderCommands.RearrangeOrders(ConstructionQueue, order, delta);
+			var cmd = Services.Commands.Orders.RearrangeOrders(ConstructionQueue, order, delta);
 			newCommands.Add(cmd);
 			cmd.Execute();
 		}
@@ -618,7 +618,7 @@ public partial class ConstructionQueueForm : GameForm
 				{
 					var order = new ConstructionOrder<Facility, FacilityTemplate> { Template = template };
 					ConstructionQueue.Orders.Add(order);
-					var cmd = Services.OrderCommands.AddOrder
+					var cmd = Services.Commands.Orders.AddOrder
 					(
 						ConstructionQueue,
 						order
@@ -757,7 +757,7 @@ public partial class ConstructionQueueForm : GameForm
 					// add to queue
 					var order = design.CreateConstructionOrder(ConstructionQueue);
 					ConstructionQueue.Orders.Add(order);
-					var cmd = Services.OrderCommands.AddOrder
+					var cmd = Services.Commands.Orders.AddOrder
 					(
 						ConstructionQueue,
 						order
@@ -839,7 +839,7 @@ public partial class ConstructionQueueForm : GameForm
 				{
 					var order = new UpgradeFacilityOrder(upgrade);
 					ConstructionQueue.Orders.Add(order);
-					var cmd = Services.OrderCommands.AddOrder
+					var cmd = Services.Commands.Orders.AddOrder
 					(
 						ConstructionQueue,
 						order
@@ -916,7 +916,7 @@ public partial class ConstructionQueueForm : GameForm
 			else
 			{
 				// add remove-order command
-				var cmd = Services.OrderCommands.RemoveOrder(ConstructionQueue, order);
+				var cmd = Services.Commands.Orders.RemoveOrder(ConstructionQueue, order);
 				newCommands.Add(cmd);
 			}
 		}
@@ -1001,7 +1001,7 @@ public partial class ConstructionQueueForm : GameForm
 		var cmd = (Empire.Current.Commands.Union(newCommands ?? Enumerable.Empty<ICommand>())).OfType<IToggleRepeatOrdersCommand>().SingleOrDefault(x => x.Executor == ConstructionQueue);
 		if (cmd == null)
 		{
-			cmd = Services.OrderCommands.ToggleRepeatOrders(ConstructionQueue, chkRepeat.Checked);
+			cmd = Services.Commands.Orders.ToggleRepeatOrders(ConstructionQueue, chkRepeat.Checked);
 			newCommands.Add(cmd);
 		}
 		else
@@ -1014,7 +1014,7 @@ public partial class ConstructionQueueForm : GameForm
 		var cmd = (Empire.Current.Commands.Union(newCommands ?? Enumerable.Empty<ICommand>())).OfType<IToggleOrdersOnHoldCommand>().SingleOrDefault(x => x.Executor == ConstructionQueue);
 		if (cmd == null)
 		{
-			cmd = Services.OrderCommands.ToggleOrdersOnHold(ConstructionQueue, chkOnHold.Checked);
+			cmd = Services.Commands.Orders.ToggleOrdersOnHold(ConstructionQueue, chkOnHold.Checked);
 			newCommands.Add(cmd);
 		}
 		else

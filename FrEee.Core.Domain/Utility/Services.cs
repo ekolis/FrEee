@@ -35,45 +35,6 @@ public static class Services
 	/// </summary>
 	public static IBattleService Battles => DI.Get<IBattleService>();
 
-	/// <summary>
-	/// Allows players to manage designs.
-	/// </summary>
-	public static IDesignCommandService DesignCommands => DI.Get<IDesignCommandService>();
-
-	/// <summary>
-	/// Allows players to manage fleets.
-	/// </summary>
-	public static IFleetCommandService FleetCommands => DI.Get<IFleetCommandService>();
-
-	/// <summary>
-	/// Allows players to manage diplomatic messages.
-	/// </summary>
-	public static IMessageCommandService MessageCommands => DI.Get<IMessageCommandService>();
-
-	/// <summary>
-	/// Allows players to manage AI ministers.
-	/// </summary>
-	public static IMinisterCommandService MinisterCommands => DI.Get<IMinisterCommandService>();
-
-	/// <summary>
-	/// Allows players to manage notes.
-	/// </summary>
-	public static INoteCommandService NoteCommands => DI.Get<INoteCommandService>();
-	
-	/// <summary>
-	/// Allows players to issue orders.
-	/// </summary>
-	public static IOrderCommandService OrderCommands => DI.Get<IOrderCommandService>();
-
-	/// <summary>
-	/// Allows players to manage empire wide projects such as research and espionage.
-	/// </summary>
-	public static IProjectCommandService ProjectCommands => DI.Get<IProjectCommandService>();
-
-	/// <summary>
-	/// Allows players to manage waypoints.
-	/// </summary>
-	public static IWaypointCommandService WaypointCommands => DI.Get<IWaypointCommandService>();
 
 	/// <summary>
 	/// Creates vehicle hulls.
@@ -96,26 +57,6 @@ public static class Services
 	public static IConstructionQueueService ConstructionQueues => DI.Get<IConstructionQueueService>();
 
 	/// <summary>
-	/// Saves and loads game state.
-	/// </summary>
-	public static IGamePersister GamePersister => DI.Get<IGamePersister>();
-
-	/// <summary>
-	/// Saves and loads player commands.
-	/// </summary>
-	public static ICommandPersister CommandPersister => DI.Get<ICommandPersister>();
-
-	/// <summary>
-	/// Saves and loads game setups.
-	/// </summary>
-	public static IGameSetupPersister GameSetupPersister => DI.Get<IGameSetupPersister>();
-
-	/// <summary>
-	/// Saves and loads empire templates
-	/// </summary>
-	public static IEmpireTemplatePersister EmpireTemplatePersister => DI.Get<IEmpireTemplatePersister>();
-
-	/// <summary>
 	/// Manages the GUI. Only available when there is a GUI.
 	/// </summary>
 	public static IGuiController Gui => DI.Get<IGuiController>();
@@ -124,4 +65,76 @@ public static class Services
 	/// Stores vehicle designs for the player across multiple games.
 	/// </summary>
 	public static ILibrary<IDesign> DesignLibrary => DI.Get<ILibrary<IDesign>>();
+
+	/// <summary>
+	/// Services for managing player commands.
+	/// </summary>
+	public static class Commands
+	{
+		/// <summary>
+		/// Allows players to manage designs.
+		/// </summary>
+		public static IDesignCommandService Designs => DI.Get<IDesignCommandService>();
+
+		/// <summary>
+		/// Allows players to manage fleets.
+		/// </summary>
+		public static IFleetCommandService Fleets => DI.Get<IFleetCommandService>();
+
+		/// <summary>
+		/// Allows players to manage diplomatic messages.
+		/// </summary>
+		public static IMessageCommandService Messages => DI.Get<IMessageCommandService>();
+
+		/// <summary>
+		/// Allows players to manage AI ministers.
+		/// </summary>
+		public static IMinisterCommandService Ministers => DI.Get<IMinisterCommandService>();
+
+		/// <summary>
+		/// Allows players to manage notes.
+		/// </summary>
+		public static INoteCommandService Notes => DI.Get<INoteCommandService>();
+
+		/// <summary>
+		/// Allows players to issue orders.
+		/// </summary>
+		public static IOrderCommandService Orders => DI.Get<IOrderCommandService>();
+
+		/// <summary>
+		/// Allows players to manage empire wide projects such as research and espionage.
+		/// </summary>
+		public static IProjectCommandService Projects => DI.Get<IProjectCommandService>();
+
+		/// <summary>
+		/// Allows players to manage waypoints.
+		/// </summary>
+		public static IWaypointCommandService Waypoints => DI.Get<IWaypointCommandService>();
+	}
+
+	/// <summary>
+	/// Services for persisting data.
+	/// </summary>
+	public static class Persisters
+	{
+		/// <summary>
+		/// Saves and loads game state.
+		/// </summary>
+		public static IGamePersister Game => DI.Get<IGamePersister>();
+
+		/// <summary>
+		/// Saves and loads player commands.
+		/// </summary>
+		public static ICommandPersister Commands => DI.Get<ICommandPersister>();
+
+		/// <summary>
+		/// Saves and loads game setups.
+		/// </summary>
+		public static IGameSetupPersister GameSetup => DI.Get<IGameSetupPersister>();
+
+		/// <summary>
+		/// Saves and loads empire templates
+		/// </summary>
+		public static IEmpireTemplatePersister EmpireTemplates => DI.Get<IEmpireTemplatePersister>();
+	}
 }

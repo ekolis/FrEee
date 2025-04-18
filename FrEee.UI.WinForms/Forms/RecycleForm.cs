@@ -247,11 +247,11 @@ public partial class RecycleForm : GameForm
 	private void btnScrap_Click(object sender, EventArgs e)
 	{
 		foreach (var f in SelectedFacilities)
-			AddCommand(Services.OrderCommands.AddOrder(f.Container, new RecycleFacilityOrCargoOrder(new ScrapBehavior(), f)));
+			AddCommand(Services.Commands.Orders.AddOrder(f.Container, new RecycleFacilityOrCargoOrder(new ScrapBehavior(), f)));
 		foreach (var v in SelectedVehiclesInSpace)
-			AddCommand(Services.OrderCommands.AddOrder(v, new RecycleVehicleInSpaceOrder(new ScrapBehavior())));
+			AddCommand(Services.Commands.Orders.AddOrder(v, new RecycleVehicleInSpaceOrder(new ScrapBehavior())));
 		foreach (var u in SelectedUnitsInCargo)
-			AddCommand(Services.OrderCommands.AddOrder((IMobileSpaceObject)u.Container, new RecycleFacilityOrCargoOrder(new ScrapBehavior(), u)));
+			AddCommand(Services.Commands.Orders.AddOrder((IMobileSpaceObject)u.Container, new RecycleFacilityOrCargoOrder(new ScrapBehavior(), u)));
 		Bind();
 	}
 

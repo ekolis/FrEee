@@ -13,7 +13,7 @@ public class GameSetupTest
 	[Ignore("quickstart needs to be rebuilt in new version")]
 	public void Quickstart()
 	{
-		var setup = Services.GameSetupPersister.LoadFromFile(@"..\..\..\..\FrEee\GameSetups\quickstart.gsu");
+		var setup = Services.Persisters.GameSetup.LoadFromFile(@"..\..\..\..\FrEee\GameSetups\quickstart.gsu");
 		Mod.Current = new ModLoader().Load(null);
 		Game.Initialize(setup, null);
 	}

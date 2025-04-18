@@ -418,7 +418,7 @@ public partial class ResearchForm : GameForm
 
 	private void Save()
 	{
-		var cmd = Services.ProjectCommands.Research();
+		var cmd = Services.Commands.Projects.Research();
 		cmd.Spending.Clear();
 		foreach (var kvp in Empire.Current.ResearchSpending)
 			cmd.Spending[kvp.Key] = kvp.Value;

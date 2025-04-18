@@ -38,7 +38,7 @@ public partial class MinistersForm : GameForm
 		var cmd = Empire.Current.Commands.OfType<IToggleMinistersCommand>().SingleOrDefault();
 		if (cmd == null)
 		{
-			cmd = Services.MinisterCommands.ToggleMinisters();
+			cmd = Services.Commands.Ministers.ToggleMinisters();
 			Empire.Current.Commands.Add(cmd);
 		}
 		var dict = new SafeDictionary<string, ICollection<string>>();
