@@ -15,112 +15,75 @@ namespace FrEee.Objects.GameState;
 /// <typeparam name="T">The type of the <see cref="IReferrable"/> being referenced.</typeparam>
 [Serializable]
 public record GameReference<T>(long ID)
-    : IReference<long, T>
-    where T : IReferrable
+	: IReference<long, T>
+	where T : IReferrable
 {
-    private GameReference()
-        : this(0)
-    {
-        InitializeCache();
-    }
+	public GameReference(T? t)
+		: this(t?.ID ?? 0)
+	{
+		if (Game.Current is null)
+			throw new ReferenceException<int, T>("Can't create a reference to an IReferrable without a current game.");
+		else if (t is null)
+			ID = 0;
+		else if (t.ID > 0)
+			ID = t.ID;
+		else
+			ID = Game.Current.AssignID(t);
+		if (!HasValue)
+		{
+			Game.Current.referrables[t.ID] = t;
+			if (!HasValue)
+				throw new ArgumentException("{0} does not exist in the current game so it cannot be referenced.".F(t));
+		}
+	}
+	/// <summary>
+	/// Does the reference have a valid value?
+	/// </summary>
+	public bool HasValue => Value is not null;
 
-    public GameReference(T t)
-        : this()
-    {
-        if (t is IReferrable r)
-        {
-            if (Game.Current is null)
-                throw new ReferenceException<int, T>("Can't create a reference to an IReferrable without a current game.");
-            else if (t is null)
-                ID = 0;
-            else if (r.ID > 0)
-                ID = r.ID;
-            else
-                ID = Game.Current.AssignID(r);
-            if (!HasValue)
-            {
-                Game.Current.referrables[r.ID] = r;
-                cache = null; // reset cache
-                if (!HasValue)
-                    throw new ArgumentException("{0} does not exist in the current game so it cannot be referenced.".F(t));
-            }
-        }
-        else
-        {
-            value = t;
-        }
-    }
+	/// <summary>
+	/// Resolves the reference.
+	/// </summary>
+	/// <returns></returns>
+	public T Value
+	{
+		get
+		{
+			return (T)Game.Current.GetReferrable(ID);
+		}
+	}
 
-    private void InitializeCache()
-    {
-        cache = new ClientSideCache<T>(() =>
-        {
-            if (ID <= 0)
-                return value;
-            var obj = (T)Game.Current.GetReferrable(ID);
-            if (obj is null)
-                return default;
-            return obj;
-        }
-        );
-    }
+	public static implicit operator GameReference<T>?(T t)
+	{
+		if (t is null)
+			return default;
+		return new GameReference<T>(t);
+	}
 
-    /// <summary>
-    /// Does the reference have a valid value?
-    /// </summary>
-    public bool HasValue => Value is not null;
+	public static implicit operator T?(GameReference<T> r)
+	{
+		if (r is null)
+			return default;
+		return r.Value;
+	}
 
-    /// <summary>
-    /// Resolves the reference.
-    /// </summary>
-    /// <returns></returns>
-    public T Value
-    {
-        get
-        {
-            if (cache is null)
-                InitializeCache();
-            return cache.Value;
-        }
-    }
+	public GameReference<T> ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	{
+		var result = this;
+		if (done == null)
+			done = new HashSet<IPromotable>();
+		if (!done.Contains(this))
+		{
+			done.Add(this);
+			if (idmap.ContainsKey(ID))
+				result = result with { ID = idmap[ID] };
+			if (HasValue && Value is IPromotable)
+				((IPromotable)Value).ReplaceClientIDs(idmap, done);
+		}
+		return result;
+	}
 
-    [NonSerialized]
-    private T value;
-
-    [NonSerialized]
-    private ClientSideCache<T>? cache;
-
-    public static implicit operator GameReference<T>?(T t)
-    {
-        if (t is null)
-            return default;
-        return new GameReference<T>(t);
-    }
-
-    public static implicit operator T?(GameReference<T> r)
-    {
-        if (r is null)
-            return default;
-        return r.Value;
-    }
-
-    public GameReference<T> ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
-    {
-        var result = this;
-        if (done == null)
-            done = new HashSet<IPromotable>();
-        if (!done.Contains(this))
-        {
-            done.Add(this);
-            if (idmap.ContainsKey(ID))
-                result = result with { ID = idmap[ID] };
-            if (HasValue && Value is IPromotable)
-                ((IPromotable)Value).ReplaceClientIDs(idmap, done);
-        }
-        return result;
-    }
-
-    IPromotable IPromotable.ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done)
+	IPromotable IPromotable.ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done)
 	{
 		return ReplaceClientIDs(idmap, done);
 	}
