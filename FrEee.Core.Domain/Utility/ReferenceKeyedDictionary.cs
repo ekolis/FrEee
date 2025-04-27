@@ -123,7 +123,7 @@ public abstract class ReferenceKeyedDictionary<TID, TRef, TKey, TValue> : IDicti
 		return dict.Remove(ExtractID(item.Key));
 	}
 
-	public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{
 		InitDict();
 		if (done == null)
@@ -137,6 +137,7 @@ public abstract class ReferenceKeyedDictionary<TID, TRef, TKey, TValue> : IDicti
 					(r as IPromotable).ReplaceClientIDs(idmap, done);
 			}
 		}
+		return this;
 	}
 
 	public bool TryGetValue(TKey key, out TValue value)

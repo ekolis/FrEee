@@ -46,7 +46,7 @@ public class SendMessageCommand
 		}
 	}
 
-	public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public override IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{
 		if (done == null)
 			done = new HashSet<IPromotable>();
@@ -56,5 +56,6 @@ public class SendMessageCommand
 			base.ReplaceClientIDs(idmap, done);
 			Message.ReplaceClientIDs(idmap, done);
 		}
+		return this;
 	}
 }

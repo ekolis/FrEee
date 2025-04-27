@@ -99,9 +99,10 @@ public class DataReference<T> : IDataReference, IReference<T>
 		return reference.Value;
 	}
 
-	public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{
 		// nothing to do here, this is just used for serialization and such
+		return this;
 	}
 
 	// can't implicitly convert objects to references because we need a object graph context

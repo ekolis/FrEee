@@ -32,9 +32,9 @@ public class ComponentReference : IReference<(long, int), Component>
 	public bool HasValue => Value != null;
 	public Component Value => Vehicle?.Components?[ComponentIndex];
 
-	public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{
-		
+		return this;
 	}
 
 	private GameReference<IVehicle> vehicle { get; set; }

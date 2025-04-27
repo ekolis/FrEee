@@ -118,9 +118,10 @@ public abstract class Waypoint : ILocated, IFoggable, IOwnable, INamed, IPromota
 			Dispose();
 	}
 
-	public virtual void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public virtual IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{
 		// doesn't use client objects, nothing to do here
+		return this;
 	}
 
 	public override string ToString()

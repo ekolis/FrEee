@@ -38,8 +38,9 @@ public class ActionMessage : Message
         }
     }
 
-    public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+    public override IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
     {
         Action.ReplaceClientIDs(idmap);
-    }
+		return this;
+	}
 }

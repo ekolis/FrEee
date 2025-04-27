@@ -44,7 +44,7 @@ public class CreateFleetCommand : Command<Empire>, ICreateFleetCommand
 		Game.Current.AssignID(Fleet);
 	}
 
-	public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public override IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{
 		if (done == null)
 			done = new HashSet<IPromotable>();
@@ -54,5 +54,6 @@ public class CreateFleetCommand : Command<Empire>, ICreateFleetCommand
 			base.ReplaceClientIDs(idmap, done);
 			Fleet.ReplaceClientIDs(idmap, done);
 		}
+		return this;
 	}
 }

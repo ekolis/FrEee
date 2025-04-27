@@ -115,7 +115,7 @@ public class Package : IOwnable, IPromotable
 	private GameReference<Empire> owner { get; set; }
 	private GameReference<Empire> recipient { get; set; }
 
-	public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{
 		if (done == null)
 			done = new HashSet<IPromotable>();
@@ -125,6 +125,7 @@ public class Package : IOwnable, IPromotable
 			foreach (var clause in TreatyClauses)
 				clause.ReplaceClientIDs(idmap, done);
 		}
+		return this;
 	}
 
 	public override string ToString()

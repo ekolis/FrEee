@@ -126,7 +126,7 @@ public class ModReference<T> : IReference<string, T> where T : IModObject
 		return ID == null || ID == "" ? 0 : ID.GetHashCode();
 	}
 
-	public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{
 		if (done == null)
 			done = new HashSet<IPromotable>();
@@ -136,6 +136,7 @@ public class ModReference<T> : IReference<string, T> where T : IModObject
 			if (HasValue && Value is IPromotable)
 				((IPromotable)Value).ReplaceClientIDs(idmap, done);
 		}
+		return this;
 	}
 
 	public override string ToString()

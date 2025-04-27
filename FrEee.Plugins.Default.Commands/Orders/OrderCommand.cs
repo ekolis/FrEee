@@ -39,7 +39,7 @@ public abstract class OrderCommand : Command<IOrderable>, IOrderCommand
 
 	private GameReference<IOrder> order { get; set; }
 
-	public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public override IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{
 		if (done == null)
 			done = new HashSet<IPromotable>();
@@ -47,7 +47,8 @@ public abstract class OrderCommand : Command<IOrderable>, IOrderCommand
 		{
 			done.Add(this);
 			base.ReplaceClientIDs(idmap, done);
-			order.ReplaceClientIDs(idmap, done);
+			order = order.ReplaceClientIDs(idmap, done);
 		}
+		return this;
 	}
 }

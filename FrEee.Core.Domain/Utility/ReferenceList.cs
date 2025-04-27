@@ -97,7 +97,7 @@ public class ReferenceList<TRef, T> : IList<T>, IReferenceEnumerable, IPromotabl
 		list.RemoveAt(index);
 	}
 
-	public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{
 		if (done == null)
 			done = new HashSet<IPromotable>();
@@ -110,6 +110,7 @@ public class ReferenceList<TRef, T> : IList<T>, IReferenceEnumerable, IPromotabl
 					(r as IPromotable).ReplaceClientIDs(idmap, done);
 			}
 		}
+		return this;
 	}
 
 	private static TRef MakeReference(T item)

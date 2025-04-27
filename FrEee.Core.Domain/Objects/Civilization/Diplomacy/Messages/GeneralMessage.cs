@@ -29,8 +29,9 @@ public class GeneralMessage : Message
         }
     }
 
-    public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done)
+    public override IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done)
     {
-        // nothing to do
-    }
+		// nothing to do
+		return this;
+	}
 }

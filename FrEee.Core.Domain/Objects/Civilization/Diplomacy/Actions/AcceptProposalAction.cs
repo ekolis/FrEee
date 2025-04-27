@@ -41,7 +41,7 @@ public class AcceptProposalAction : DiplomaticAction
         }
     }
 
-    public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+    public override IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
     {
         if (done == null)
             done = new HashSet<IPromotable>();
@@ -49,7 +49,8 @@ public class AcceptProposalAction : DiplomaticAction
         {
             done.Add(this);
             base.ReplaceClientIDs(idmap, done);
-            proposal.ReplaceClientIDs(idmap, done);
+            proposal = proposal.ReplaceClientIDs(idmap, done);
         }
-    }
+		return this;
+	}
 }

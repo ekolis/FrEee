@@ -66,7 +66,7 @@ public class AddOrderCommand
 			Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Executor + " belonging to " + Executor.Owner + "!", Game.Current.TurnNumber));
 	}
 
-	public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public override IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{
 		if (done == null)
 			done = new HashSet<IPromotable>();
@@ -76,5 +76,6 @@ public class AddOrderCommand
 			base.ReplaceClientIDs(idmap, done);
 			NewOrder.ReplaceClientIDs(idmap, done);
 		}
+		return this;
 	}
 }

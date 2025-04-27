@@ -106,7 +106,7 @@ public class FacilityUpgrade : IUpgradeable<FacilityUpgrade>, IPromotable, IName
 		return HashCodeMasher.Mash(Old, New);
 	}
 
-	public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{
 		if (done == null)
 			done = new HashSet<IPromotable>();
@@ -116,6 +116,7 @@ public class FacilityUpgrade : IUpgradeable<FacilityUpgrade>, IPromotable, IName
 			old.ReplaceClientIDs(idmap, done);
 			nu.ReplaceClientIDs(idmap, done);
 		}
+		return this;
 	}
 
 	/*public bool RequiresColonyQueue

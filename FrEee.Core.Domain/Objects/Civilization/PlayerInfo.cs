@@ -22,8 +22,9 @@ public class PlayerInfo : IPromotable
 
 	public string Notes { get; set; }
 
-	public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{
 		// nothing to do here
+		return this;
 	}
 }

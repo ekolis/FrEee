@@ -208,7 +208,7 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
             yield return Template.CreateLogMessage(Template + " cannot be built at " + queue.Container + " because we have not yet researched it.", LogMessageType.Warning);
     }
 
-    public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+    public IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
     {
         if (done == null)
             done = new HashSet<IPromotable>();
@@ -217,7 +217,8 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
             done.Add(this);
             template.ReplaceClientIDs(idmap, done);
         }
-    }
+		return this;
+	}
 
     public void Reset()
     {

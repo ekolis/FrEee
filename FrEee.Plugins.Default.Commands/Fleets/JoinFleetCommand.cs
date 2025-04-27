@@ -76,7 +76,7 @@ public class JoinFleetCommand : Command<IMobileSpaceObject>, IJoinFleetCommand
 		}
 	}
 
-	public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public override IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{
 		if (done == null)
 			done = new HashSet<IPromotable>();
@@ -84,7 +84,8 @@ public class JoinFleetCommand : Command<IMobileSpaceObject>, IJoinFleetCommand
 		{
 			done.Add(this);
 			base.ReplaceClientIDs(idmap, done);
-			fleet.ReplaceClientIDs(idmap, done);
+			fleet = fleet.ReplaceClientIDs(idmap, done);
 		}
+		return this;
 	}
 }

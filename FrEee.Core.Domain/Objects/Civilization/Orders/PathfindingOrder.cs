@@ -232,10 +232,11 @@ public abstract class PathfindingOrder
     /// <returns></returns>
     public abstract IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start);
 
-    public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done)
+    public IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done)
     {
-        // This type does not use client objects, so nothing to do here.
-    }
+		// This type does not use client objects, so nothing to do here.
+		return this;
+	}
 
     public override string ToString()
     {

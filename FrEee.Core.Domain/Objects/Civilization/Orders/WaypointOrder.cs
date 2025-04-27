@@ -195,10 +195,11 @@ public class WaypointOrder : IMovementOrder
         return Pathfinder.Pathfind(me, start, Destination, AvoidEnemies, true, me.DijkstraMap);
     }
 
-    public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done)
+    public IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done)
     {
-        target.ReplaceClientIDs(idmap, done);
-    }
+        target = target.ReplaceClientIDs(idmap, done);
+		return this;
+	}
 
     public override string ToString()
     {

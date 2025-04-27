@@ -39,7 +39,7 @@ public class ProposalMessage : Message
     /// </summary>
     public Proposal Proposal { get; set; }
 
-    public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+    public override IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
     {
         if (done == null)
             done = new HashSet<IPromotable>();
@@ -48,5 +48,6 @@ public class ProposalMessage : Message
             done.Add(this);
             Proposal.ReplaceClientIDs(idmap, done);
         }
-    }
+		return this;
+	}
 }

@@ -734,7 +734,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 			Dispose();
 	}
 
-	public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{
 		if (done == null)
 			done = new HashSet<IPromotable>();
@@ -744,6 +744,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 			foreach (var mct in Components)
 				mct.ReplaceClientIDs(idmap, done);
 		}
+		return this;
 	}
 
 	public override string ToString()

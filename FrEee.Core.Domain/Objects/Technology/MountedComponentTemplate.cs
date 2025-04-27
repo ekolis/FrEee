@@ -382,7 +382,7 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityOb
 		return new Component(null, this);
 	}
 
-	public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{
 		if (done == null)
 			done = new HashSet<IPromotable>();
@@ -393,6 +393,7 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityOb
 			// and it will be sanitized for itself anyway
 			//Container.ReplaceClientIDs(idmap, done);
 		}
+		return this;
 	}
 
 	public override string ToString()

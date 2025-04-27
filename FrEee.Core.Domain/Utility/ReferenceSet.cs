@@ -148,7 +148,7 @@ public class ReferenceSet<TRef, T> : ISet<T>, IPromotable, IReferenceEnumerable
 			return set.Remove(MakeReference(item));
 	}
 
-	public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{
 		if (done == null)
 			done = new HashSet<IPromotable>();
@@ -158,6 +158,7 @@ public class ReferenceSet<TRef, T> : ISet<T>, IPromotable, IReferenceEnumerable
 			foreach (var r in set.OfType<IPromotable>())
 				r.ReplaceClientIDs(idmap, done);
 		}
+		return this;
 	}
 
 	public bool SetEquals(IEnumerable<T> other)
