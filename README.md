@@ -7,6 +7,6 @@ How do you pronounce it? Let me count the ways!
 - Free Eee
 - Furry
 
-Discuss FrEee on Disord:
+Discuss FrEee on Discord:
 - [Space Empires](https://discord.gg/TTEyC5CBQH)
 - [Red Alien Gaming](https://discord.gg/TEFW2JvHbH)
