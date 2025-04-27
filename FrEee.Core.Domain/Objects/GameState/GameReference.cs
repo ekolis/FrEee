@@ -100,8 +100,8 @@ public record GameReference<T>
         }
     }
 
-    [field: NonSerialized]
-    private T value { get; set; }
+    [NonSerialized]
+    private T value;
 
     [NonSerialized]
     private ClientSideCache<T>? cache;
@@ -140,9 +140,4 @@ public record GameReference<T>
 	{
 		return ReplaceClientIDs(idmap, done);
 	}
-
-	public override string ToString()
-    {
-        return "ID=" + ID + ", Value=" + Value;
-    }
 }
