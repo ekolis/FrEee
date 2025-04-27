@@ -313,8 +313,9 @@ public class ActivateAbilityOrder : IOrder
         if (Source is IDamageable && (Source as IDamageable).IsDestroyed)
             yield return executor.CreateLogMessage(executor + " cannot activate " + Source + "'s ability because " + Source + " is destroyed.", LogMessageType.Error);
     }
-    public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+    public IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
     {
-        // no new client objects here, nothing to do
-    }
+		// no new client objects here, nothing to do
+		return this;
+	}
 }

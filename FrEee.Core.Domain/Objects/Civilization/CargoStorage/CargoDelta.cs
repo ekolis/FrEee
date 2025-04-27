@@ -71,7 +71,7 @@ public class CargoDelta : IPromotable
     public GameReferenceSet<IUnit> Units { get; private set; }
     public SafeDictionary<VehicleTypes, int?> UnitTypeTonnage { get; private set; }
 
-    public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+    public IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
     {
         if (done == null)
             done = new HashSet<IPromotable>();
@@ -82,7 +82,8 @@ public class CargoDelta : IPromotable
             UnitDesignTonnage.ReplaceClientIDs(idmap, done);
             Units.ReplaceClientIDs(idmap, done);
         }
-    }
+		return this;
+	}
 
     public override string ToString()
     {

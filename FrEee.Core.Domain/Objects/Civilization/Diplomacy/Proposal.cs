@@ -134,7 +134,7 @@ public class Proposal : Command<Empire>, IFoggable, IReferrable
 			Dispose();
 	}
 
-	public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public override IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{
 		if (done == null)
 			done = new HashSet<IPromotable>();
@@ -142,8 +142,9 @@ public class Proposal : Command<Empire>, IFoggable, IReferrable
 		if (!done.Contains(this))
 		{
 			done.Add(this);
-			recipient.ReplaceClientIDs(idmap, done);
+			recipient = recipient.ReplaceClientIDs(idmap, done);
 		}
+		return this;
 	}
 
 	public override string ToString()

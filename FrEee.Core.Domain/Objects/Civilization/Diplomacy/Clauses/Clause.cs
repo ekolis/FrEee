@@ -104,9 +104,10 @@ public abstract class Clause : IOwnable, IFoggable, IPromotable, IReferrable
 			Dispose();
 	}
 
-	public virtual void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public virtual IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{
 		// nothing to do here...
+		return this;
 	}
 
 	public override string ToString()

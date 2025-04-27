@@ -38,7 +38,7 @@ public class RejectProposalAction : DiplomaticAction
             Target.Log.Add(Executor.CreateLogMessage("The " + Executor + " has rejected our proposal (" + Proposal + ").", LogMessages.LogMessageType.Diplomacy));
     }
 
-    public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+    public override IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
     {
         if (done == null)
             done = new HashSet<IPromotable>();
@@ -46,7 +46,8 @@ public class RejectProposalAction : DiplomaticAction
         if (!done.Contains(this))
         {
             done.Add(this);
-            proposal.ReplaceClientIDs(idmap, done);
+            proposal = proposal.ReplaceClientIDs(idmap, done);
         }
-    }
+		return this;
+	}
 }

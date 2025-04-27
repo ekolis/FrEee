@@ -230,10 +230,11 @@ public class ColonizeOrder : IOrder
             yield return o.CreateLogMessage($"{o} cannot colonize {Planet} because it is not a mobile space object.", LogMessageType.Error);
     }
 
-    public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+    public IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
     {
-        // This type does not use client objects, so nothing to do here.
-    }
+		// This type does not use client objects, so nothing to do here.
+		return this;
+	}
 
     public override string ToString()
     {

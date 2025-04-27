@@ -108,17 +108,18 @@ public class TransferCargoOrder : IOrder
             yield return executor.CreateLogMessage($"{executor} cannot transfer cargo.", LogMessageType.Warning);
     }
 
-    public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+    public IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
     {
         if (done == null)
             done = new HashSet<IPromotable>();
         if (!done.Contains(this))
         {
             done.Add(this);
-            target?.ReplaceClientIDs(idmap, done);
-            owner.ReplaceClientIDs(idmap, done);
+            target = target?.ReplaceClientIDs(idmap, done);
+            owner = owner.ReplaceClientIDs(idmap, done);
         }
-    }
+		return this;
+	}
 
     public override string ToString()
     {

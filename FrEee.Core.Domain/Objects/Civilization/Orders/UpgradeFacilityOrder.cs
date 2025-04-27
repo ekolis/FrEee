@@ -181,7 +181,7 @@ public class UpgradeFacilityOrder : IConstructionOrder
             yield return ord.CreateLogMessage($"{ord} cannot upgrade facilities because it is not a construction queue.", LogMessageType.Error);
     }
 
-    public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+    public IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
     {
         if (done == null)
             done = new HashSet<IPromotable>();
@@ -190,7 +190,8 @@ public class UpgradeFacilityOrder : IConstructionOrder
             done.Add(this);
             Upgrade.ReplaceClientIDs(idmap, done);
         }
-    }
+		return this;
+	}
 
     public void Reset()
     {

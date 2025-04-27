@@ -129,5 +129,5 @@ public abstract class Message : IMessage
             Dispose();
     }
 
-    public abstract void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null);
+    public abstract IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null);
 }

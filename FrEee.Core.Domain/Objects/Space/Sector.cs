@@ -316,15 +316,16 @@ public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnab
 		return false;
 	}
 
-	public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{
 		if (done == null)
 			done = new HashSet<IPromotable>();
 		if (!done.Contains(this))
 		{
 			done.Add(this);
-			starSystem.ReplaceClientIDs(idmap, done);
+			starSystem = starSystem.ReplaceClientIDs(idmap, done);
 		}
+		return this;
 	}
 
 	public override string ToString()

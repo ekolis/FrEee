@@ -52,7 +52,7 @@ public class SetObsoleteFlagCommand : Command<IDesign>, ISetObsoleteFlagCommand
 		Design.IsObsolete = IsObsolete;
 	}
 
-	public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+	public override IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{
 		if (done == null)
 			done = new HashSet<IPromotable>();
@@ -61,9 +61,10 @@ public class SetObsoleteFlagCommand : Command<IDesign>, ISetObsoleteFlagCommand
 			done.Add(this);
 			base.ReplaceClientIDs(idmap, done);
 			if (design != null)
-				design.ReplaceClientIDs(idmap, done);
+				design = design.ReplaceClientIDs(idmap, done);
 			if (NewDesign != null)
 				NewDesign.ReplaceClientIDs(idmap, done);
 		}
+		return this;
 	}
 }

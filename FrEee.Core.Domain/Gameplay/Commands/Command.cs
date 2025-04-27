@@ -50,17 +50,18 @@ public abstract class Command<T> : ICommand<T>
 
     public abstract void Execute();
 
-    public virtual void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+    public virtual IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
     {
         if (done == null)
             done = new HashSet<IPromotable>();
         if (!done.Contains(this))
         {
             done.Add(this);
-            issuer.ReplaceClientIDs(idmap, done);
-            executor.ReplaceClientIDs(idmap, done);
+            issuer = issuer.ReplaceClientIDs(idmap, done);
+            executor = executor.ReplaceClientIDs(idmap, done);
             foreach (var r in NewReferrables.OfType<IPromotable>())
                 r.ReplaceClientIDs(idmap, done);
         }
+        return this;
     }
 }
