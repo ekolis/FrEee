@@ -11,13 +11,15 @@ namespace FrEee.Objects.GameState;
 /// This class should be used when referencing a server side object from the client.
 /// It is not necessary to use GalaxyReference when entirely within either the client or the server.
 /// </summary>
-/// <typeparam name="T"></typeparam>
+/// <param name="ID">The ID of the <see cref="IReferrable"/> being referenced.</param>
+/// <typeparam name="T">The type of the <see cref="IReferrable"/> being referenced.</typeparam>
 [Serializable]
-public record GameReference<T>
+public record GameReference<T>(long ID)
     : IReference<long, T>
     where T : IReferrable
 {
     private GameReference()
+        : this(0)
     {
         InitializeCache();
     }
@@ -49,19 +51,6 @@ public record GameReference<T>
         }
     }
 
-    public GameReference(long id)
-        : this()
-    {
-        if (Game.Current is null)
-            throw new ReferenceException<int, T>("Can't create a reference to an IReferrable without a current game.");
-        else if (!Game.Current.referrables.ContainsKey(id))
-            throw new IndexOutOfRangeException($"The id of {id} is not currently a valid reference");
-        else if (Game.Current.referrables[id] is T)
-            ID = id;
-        else
-            throw new Exception("Object with ID " + id + " is not a " + typeof(T) + ".");
-    }
-
     private void InitializeCache()
     {
         cache = new ClientSideCache<T>(() =>
@@ -80,11 +69,6 @@ public record GameReference<T>
     /// Does the reference have a valid value?
     /// </summary>
     public bool HasValue => Value is not null;
-
-    /// <summary>
-    /// The ID of the referenced <see cref="T"/>.
-    /// </summary>
-    public long ID { get; init; }
 
     /// <summary>
     /// Resolves the reference.
