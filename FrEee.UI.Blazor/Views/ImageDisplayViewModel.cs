@@ -27,6 +27,8 @@ namespace FrEee.UI.Blazor.Views
 			}
 		}
 
+		public Color BackgroundColor { get; set; }
+
 		public double AspectRatio =>
 			Image == null ? 1 : ((double)Image.Width / (double)Image.Height);
 
