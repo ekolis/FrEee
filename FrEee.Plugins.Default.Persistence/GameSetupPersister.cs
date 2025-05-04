@@ -30,6 +30,6 @@ public class GameSetupPersister
 	public void SaveToFile(GameSetup gameSetup, string filename)
 	{
 		using FileStream fs = new(filename, FileMode.Create);
-		Serializer.Serialize(this, fs);
+		Serializer.Serialize(gameSetup, fs);
 	}
 }
