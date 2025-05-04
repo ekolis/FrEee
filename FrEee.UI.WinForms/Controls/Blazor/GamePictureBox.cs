@@ -62,4 +62,14 @@ public partial class GamePictureBox : BlazorControl, ISupportInitialize
 
 	[Obsolete]
 	public PictureBoxSizeMode SizeMode { get; set; }
+
+	public override Color BackColor
+	{
+		get => base.BackColor;
+		set
+		{
+			base.BackColor = value;
+			VM.BackgroundColor = value;
+		}
+	}
 }
