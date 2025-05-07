@@ -31,6 +31,6 @@ public class EmpireTemplatePersister
 	public void SaveToFile(EmpireTemplate empireTemplate, string filename)
 	{
 		using FileStream fs = new(filename, FileMode.Create);
-		Serializer.Serialize(this, fs);
+		Serializer.Serialize(empireTemplate, fs);
 	}
 }
