@@ -2,6 +2,7 @@ using FrEee.Serialization;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -177,7 +178,8 @@ public class SafeType
 		}
 		catch (Exception ex)
 		{
-			throw new ArgumentException("Could not find assembly named " + n + ".", ex);
+			// check plugins
+			return Assembly.LoadFile(Path.GetFullPath(Path.Combine("Plugins", n + ".dll")));
 		}
 	}
 
