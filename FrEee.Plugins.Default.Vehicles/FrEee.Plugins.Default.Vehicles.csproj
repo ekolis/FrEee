@@ -8,6 +8,10 @@
 	</PropertyGroup>
 	
 	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
+	
+	<ItemGroup>
+	  <PackageReference Include="System.IO.Ports" Version="9.0.4" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
