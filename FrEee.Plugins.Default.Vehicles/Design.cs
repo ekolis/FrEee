@@ -119,8 +119,8 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 		get { return Hull; }
 		set
 		{
-			if (value is Hull<T>)
-				Hull = (Hull<T>)value;
+			if (value is IHull<T> h)
+				Hull = h;
 			else
 				throw new Exception("Can't use a " + value.VehicleType + " hull on a " + VehicleType + " design.");
 		}
@@ -130,7 +130,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 	/// The hull used in this design.
 	/// </summary>
 	[DoNotSerialize]
-	public IHull<T> Hull { get { return hull == null ? null : hull.Value; } set { hull = new ModReference<IHull<T>>(value); } }
+	public IHull Hull { get { return hull?.Value; } set { hull = new ModReference<IHull>(value); } }
 
 	public int HullHitpoints
 	{
@@ -586,7 +586,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 		}
 	}
 
-	private ModReference<IHull<T>> hull { get; set; }
+	private ModReference<IHull> hull { get; set; }
 
 	/// <summary>
 	/// For serialization and client safety

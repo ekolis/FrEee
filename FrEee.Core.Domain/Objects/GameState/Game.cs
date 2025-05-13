@@ -1021,12 +1021,24 @@ public class Game
 						throw new InvalidOperationException($"Adding {r} with ID {serverid} to client ID {clientid} for {emp} when that client ID is already mapped to server ID {idmap[clientid]}.");
 					// else do nothing
 				}
-				else
+				else if (clientid != serverid)
+				{
 					idmap.Add(clientid, serverid);
+				}
+				else
+				{
+					// no need to change ID if it's not changing
+					idmap.Remove(clientid);
+				}
 			}
 		}
-		foreach (var cmd in cmds)
-			cmd.ReplaceClientIDs(idmap); // convert client IDs to server IDs
+		if (idmap.Any())
+		{
+			foreach (var cmd in cmds)
+			{
+				cmd.ReplaceClientIDs(idmap); // convert client IDs to server IDs
+			}
+		}
 	}
 
 	private void redactParser_StartObject(object o)

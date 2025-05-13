@@ -185,7 +185,7 @@ internal static class LegacySerializer
 
 					type = new SafeType(typename).Type;
 				}
-				catch
+				catch (Exception ex)
 				{
 					try
 					{
