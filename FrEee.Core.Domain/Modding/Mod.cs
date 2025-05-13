@@ -15,6 +15,7 @@ using FrEee.Processes.AI;
 using FrEee.Modding.Abilities;
 using FrEee.Modding.Scripts;
 using FrEee.Vehicles;
+using System.Collections.Concurrent;
 
 namespace FrEee.Modding;
 
@@ -159,7 +160,7 @@ public class Mod : IDisposable
 	/// </summary>
 	public ICollection<Mount> Mounts { get; private set; }
 
-	private IList<IModObject> objects = new List<IModObject>() { FacilityTemplate.Unknown };
+	private ConcurrentBag<IModObject> objects = [ FacilityTemplate.Unknown ];
 
 	/// <summary>
 	/// All mod objects.

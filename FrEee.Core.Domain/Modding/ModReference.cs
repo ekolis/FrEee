@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Objects.GameState;
+using System.Threading;
 
 namespace FrEee.Modding;
 
@@ -57,7 +58,9 @@ public record ModReference<T>(string ID)
 	{
 		get
 		{
-			return (T)Mod.Current.Objects.FindByModID(ID);
+			var objs = Mod.Current.Objects.OfType<T>().ToDictionary(q => q.ModID, q => q);
+			var obj = objs[ID];
+			return obj;
 		}
 	}
 
