@@ -57,6 +57,18 @@ public class SafeType
 				var aname = match.Groups[3].Captures[0].Value.Trim(); // assembly name
 				if (aname.Contains(","))
 					aname = aname.Substring(0, aname.IndexOf(",")); // strip legacy junk
+																	// check plugins
+				try
+				{
+					// try to load plugin assembly
+					var assembly = Assembly.LoadFile(Path.GetFullPath(Path.Combine("Plugins", aname + ".dll")));
+					ReferencedAssemblies.Add(assembly.GetName().Name, assembly);
+				}
+				catch
+				{
+					// not a plugin assembly
+				}
+
 				var t = FindType(tname);
 				var gtparmnameslist = gtparmnames.Trim('[', ']').Split(',');
 				var gtparmnameslist2 = new List<string>();
@@ -179,7 +191,9 @@ public class SafeType
 		catch (Exception ex)
 		{
 			// check plugins
-			return Assembly.LoadFile(Path.GetFullPath(Path.Combine("Plugins", n + ".dll")));
+			var assembly = Assembly.LoadFile(Path.GetFullPath(Path.Combine("Plugins", n + ".dll")));
+			ReferencedAssemblies.Add(assembly.GetName().Name, assembly);
+			return assembly;
 		}
 	}
 
