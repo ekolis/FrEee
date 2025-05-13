@@ -130,7 +130,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 	/// The hull used in this design.
 	/// </summary>
 	[DoNotSerialize]
-	public IHull<T> Hull { get { return hull == null ? null : hull.Value; } set { hull = new ModReference<IHull<T>>(value); } }
+	public IHull<T> Hull { get { return hull?.Value; } set { hull = new ModReference<IHull<T>>(value); } }
 
 	public int HullHitpoints
 	{
