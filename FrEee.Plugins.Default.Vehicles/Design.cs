@@ -119,8 +119,8 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 		get { return Hull; }
 		set
 		{
-			if (value is Hull<T>)
-				Hull = (Hull<T>)value;
+			if (value is IHull<T> h)
+				Hull = h;
 			else
 				throw new Exception("Can't use a " + value.VehicleType + " hull on a " + VehicleType + " design.");
 		}
