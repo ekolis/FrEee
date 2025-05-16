@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FrEee.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
@@ -19,10 +18,10 @@ using System.Threading.Tasks;
 using FrEee.Gameplay.Commands;
 using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
-using FrEee.Plugins.Default.Processes.Construction;
 using FrEee.Processes;
 using FrEee.Plugins.Default.Processes.Combat.Grid;
 using System.ComponentModel.Composition;
+using FrEee.Processes.Construction;
 
 namespace FrEee.Plugins.Default.Processes;
 
@@ -375,7 +374,7 @@ public class TurnProcessor
 		// construction queues
 		if (status != null)
 			status.Message = "Constructing objects";
-		game.Referrables.OfType<ConstructionQueue>().Where(q => !q.IsMemory && q.Container.Sector != null).SafeForeach(q => q.ExecuteOrders());
+		game.Referrables.OfType<IConstructionQueue>().Where(q => !q.IsMemory && q.Container.Sector != null).SafeForeach(q => q.ExecuteOrders());
 		if (status != null)
 			status.Progress += progressPerOperation;
 
