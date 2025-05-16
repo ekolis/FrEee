@@ -941,8 +941,11 @@ public class Game
 				referrables.Remove(r.ID);
 			else
 			{
-				var galaxyThinksTheIDIs = referrables.SingleOrDefault(kvp => kvp.Value == r);
-				referrables.Remove(galaxyThinksTheIDIs);
+				var galaxyThinksTheIDIs = referrables.Where(kvp => kvp.Value == r);
+				foreach (var wrongID in galaxyThinksTheIDIs)
+				{
+					referrables.Remove(wrongID);
+				}
 			}
 		}
 		else if (referrables.Values.Contains(r))
