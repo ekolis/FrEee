@@ -10,8 +10,7 @@ assignees: ''
 **Describe the bug**
 A clear and concise description of what the bug is.
 
-**To Reproduce**
-Steps to reproduce the behavior:
+**Steps to reproduce**
 1. Do this
 2. Do that
 3. Do the other thing
@@ -27,6 +26,10 @@ If applicable, add screenshots to help explain your problem.
 
 **Related issues**
 Any other issues that are related to this one, link them here.
+
+**Testing plan**
+What tests need to be written to verify that the bug is fixed?
+If you don't know what this is, just leave it blank, I'll fill it in later.
 
 **Additional context**
 Add any other context about the problem here. Maybe upload appropriate savegame files?
