@@ -102,8 +102,7 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
     {
         // since T is not guaranteed to be a compile time IModObject implementation
         var type = typeof(ModReference<>).MakeGenericType(typeof(U));
-        var r = (IReference<U>)Activator.CreateInstance(type);
-        r.SetPropertyValue("ID", id);
+        var r = (IReference<U>)Activator.CreateInstance(type, id);
         return r;
     }
 
