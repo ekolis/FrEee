@@ -30,4 +30,7 @@
 		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
 		<RootNamespace>FrEee</RootNamespace>
 	</PropertyGroup>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="post-build.bat $(SolutionDir) $(TargetDir)" />
+	</Target>
 </Project>

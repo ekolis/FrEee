@@ -70,7 +70,7 @@ public class FormulaTest
 	{
 		var gal = new Game();
 		Empire emp = new Empire();
-		Mod.Current = new ModLoader().Load("DynamicFormulaWithParameters");
+		Mod.Current = new ModLoader().Load("DynamicFormulaWithParameters", includeGuiPlugins: false);
 		var ct = Mod.Current.ComponentTemplates.First();
 		Assert.AreEqual(1, ct.WeaponInfo.GetDamage(new Shot(null, new Component(null, new MountedComponentTemplate(null, ct, null)), null, 1)));
 	}

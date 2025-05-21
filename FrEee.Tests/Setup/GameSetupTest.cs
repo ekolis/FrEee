@@ -14,7 +14,7 @@ public class GameSetupTest
 	public void Quickstart()
 	{
 		var setup = Services.Persistence.GameSetup.LoadFromFile(@"..\..\..\..\FrEee\GameSetups\quickstart.gsu");
-		Mod.Current = new ModLoader().Load(null);
+		Mod.Current = new ModLoader().Load(null, includeGuiPlugins: false);
 		Game.Initialize(setup, null);
 	}
 }
