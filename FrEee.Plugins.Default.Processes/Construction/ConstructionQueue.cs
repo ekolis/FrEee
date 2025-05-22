@@ -394,7 +394,6 @@ public class ConstructionQueue : IConstructionQueue
 							{
 								p.Colony.TriggerHappinessChange(hm => hm.FacilityConstructed);
 							}
-
 						}
 					}
 				}
