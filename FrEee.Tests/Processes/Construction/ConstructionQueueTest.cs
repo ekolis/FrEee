@@ -41,8 +41,8 @@ public class ConstructionQueueTest
 	{
 		// TODO: mock construction queue rate calculations so we don't need a race, population, etc...
 		template = mod.FacilityTemplates.FindByName("Mineral Miner Facility I");
-		order1 = new ConstructionOrder<Facility, FacilityTemplate> { Template = template, Item = new Facility(template) };
-		order2 = new ConstructionOrder<Facility, FacilityTemplate> { Template = template, Item = new Facility(template) };
+		order1 = new ConstructionOrder<Facility, FacilityTemplate> { Template = template };
+		order2 = new ConstructionOrder<Facility, FacilityTemplate> { Template = template };
 		empire = TestUtilities.CreateEmpire();
 		empire.StoredResources += 10000 * Resource.Minerals;
 		empire.ResearchedTechnologies.Add(mod.Technologies.FindByName("Minerals Extraction"), 1);
