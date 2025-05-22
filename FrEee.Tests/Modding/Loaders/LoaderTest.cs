@@ -10,9 +10,9 @@ public class LoaderTest
 	[Test]
 	public void LoadIncludeModWithoutErrors()
 	{
-		var mod = new ModLoader().Load("Include Mod");
+		var mod = new ModLoader().Load("Include Mod", includeGuiPlugins: false);
 		Assert.AreEqual(0, Mod.Errors.Count);
-		var mod2 = new ModLoader().Load("ComponentLoaderTest", false);
+		var mod2 = new ModLoader().Load("ComponentLoaderTest", false, includeGuiPlugins: false);
 		Assert.AreEqual(mod2.ComponentTemplates.Count, mod.ComponentTemplates.Count);
 	}
 

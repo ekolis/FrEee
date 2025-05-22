@@ -145,7 +145,7 @@ public class Game
 		get => modPath;
 		set
 		{
-			new ModLoader().Load(value);
+			new ModLoader().Load(value, includeGuiPlugins: Empire.Current != null);
 			modPath = value;
 		}
 	}

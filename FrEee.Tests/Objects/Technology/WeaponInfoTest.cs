@@ -19,7 +19,7 @@ public class WeaponInfoTest
 	[OneTimeSetUp]
 	public static void ClassInit()
 	{
-		mod = new ModLoader().Load("WeaponInfoTest");
+		mod = new ModLoader().Load("WeaponInfoTest", includeGuiPlugins: false);
 	}
 
 	/// <summary>

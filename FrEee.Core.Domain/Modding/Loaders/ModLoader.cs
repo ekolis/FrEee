@@ -23,7 +23,7 @@ public class ModLoader
 	/// <param name="setCurrent">Set the current mod to the new mod?</param>
 	/// <param name="status">A status object to report status back to the GUI.</param>
 	/// <param name="desiredProgress">How much progress should we report back to the GUI when we're done loading the mod? 1.0 means all done with everything that needs to be done.</param>
-	public Mod Load(string? path, bool setCurrent = true, Status? status = null, double desiredProgress = 1.0)
+	public Mod Load(string? path, bool setCurrent = true, Status? status = null, double desiredProgress = 1.0, bool includeGuiPlugins = true)
 	{
 		var mod = new Mod();
 		mod.RootPath = path;
@@ -91,19 +91,29 @@ public class ModLoader
 
 		// load plugins
 		string fullPath;
+		IEnumerable<PluginConfig> pluginConfigs;
 		if (path is null)
 		{
 			fullPath = Path.Combine("Data", "Plugins.json");
+			pluginConfigs = JsonConvert.DeserializeObject<List<PluginConfig>>(File.ReadAllText(fullPath));
 		}
 		else
 		{
 			fullPath = Path.Combine("Mods", path, "Data", "Plugins.json");
+			try
+			{
+				pluginConfigs = JsonConvert.DeserializeObject<List<PluginConfig>>(File.ReadAllText(fullPath));
+			}
+			catch (FileNotFoundException ex)
+			{
+				fullPath = Path.Combine("Data", "Plugins.json");
+				pluginConfigs = JsonConvert.DeserializeObject<List<PluginConfig>>(File.ReadAllText(fullPath));
+			}
 		}
-		var pluginConfigs = JsonConvert.DeserializeObject<List<PluginConfig>>(File.ReadAllText(fullPath));
 		PluginLibrary.Instance.LoadConfiguredPlugins(pluginConfigs);
 		
 		// verify that all services have plugins loaded
-		Services.VerifyAll();
+		Services.VerifyAll(includeGuiPlugins);
 
 		return mod;
 	}

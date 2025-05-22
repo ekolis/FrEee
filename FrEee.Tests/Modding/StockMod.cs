@@ -12,7 +12,7 @@ public static class StockMod
 		get
 		{
 			if (instance == null)
-				instance = new ModLoader().Load(null);
+				instance = new ModLoader().Load(null, includeGuiPlugins: false);
 			return instance;
 		}
 	}

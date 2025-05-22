@@ -17,7 +17,7 @@ public static class TestUtilities
 	{
 		PluginLibrary.Instance.LoadDefaultPlugins();
 		Game game = new();
-		Mod.Current = new ModLoader().Load(modPath);
+		Mod.Current = new ModLoader().Load(modPath, includeGuiPlugins: false);
 		game.Galaxy = new();
 		game.Setup = new();
 		return game;

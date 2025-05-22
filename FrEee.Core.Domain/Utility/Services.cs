@@ -174,7 +174,7 @@ public static class Services
 	/// <summary>
 	/// Verifies that all standard extension points have plugins loaded.
 	/// </summary>
-	public static void VerifyAll()
+	public static void VerifyAll(bool includeGuiPlugins)
 	{
 		Verify(TurnProcessor);
 		Verify(Battles);
@@ -182,7 +182,10 @@ public static class Services
 		Verify(Designs);
 		Verify(Vehicles);
 		Verify(ConstructionQueues);
-		Verify(Gui);
+		if (includeGuiPlugins)
+		{
+			Verify(Gui);
+		}
 		Verify(DesignLibrary);
 		Commands.VerifyAll();
 		Persistence.VerifyAll();

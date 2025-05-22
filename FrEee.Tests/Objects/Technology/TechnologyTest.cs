@@ -26,7 +26,7 @@ public class TechnologyTest
 	{
 		PluginLibrary.Instance.LoadDefaultPlugins();
 		processor = Services.TurnProcessor;
-		new ModLoader().Load(null);
+		new ModLoader().Load(null, includeGuiPlugins: false);
 	}
 
 	/// <summary>
