@@ -68,6 +68,6 @@ public class ConstructionQueueTest
 	{
 		queue.ExecuteOrders();
 		Assert.AreEqual(1000, order1.Item.ConstructionProgress[Resource.Minerals]);
-		Assert.AreEqual(0, order1.Item.ConstructionProgress[Resource.Minerals]);
+		Assert.AreEqual(0, order2.Item.ConstructionProgress[Resource.Minerals]);
 	}
 }
