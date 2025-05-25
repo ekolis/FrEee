@@ -646,6 +646,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 		Game.Current.UnassignID(this);
 		foreach (var emp in Game.Current.Empires.Where(e => e != null))
 			emp.KnownDesigns.Remove(this);
+		IsDisposed = true;
 	}
 
 	public override bool Equals(object? obj)
