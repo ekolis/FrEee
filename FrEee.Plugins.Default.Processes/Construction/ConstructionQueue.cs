@@ -320,6 +320,7 @@ public class ConstructionQueue : IConstructionQueue
 		}
 
 		Game.Current.UnassignID(this);
+		Orders.DisposeAll();
 		Orders.Clear();
 		IsDisposed = true;
 	}
