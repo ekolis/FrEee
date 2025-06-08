@@ -106,7 +106,7 @@ public class UpgradeFacilityOrder : IConstructionOrder
     public Visibility CheckVisibility(Empire emp)
     {
         if (emp == Owner)
-            return Visibility.Visible;
+            return Visibility.Owned;
         return Visibility.Unknown;
     }
 
@@ -197,4 +197,22 @@ public class UpgradeFacilityOrder : IConstructionOrder
     {
         NewFacility = null;
     }
+
+    public bool IsMemory { get; set; }
+
+    public double Timestamp { get; set; }
+
+	public bool IsObsoleteMemory(Empire emp)
+	{
+		return false;
+	}
+
+	public void Redact(Empire emp)
+	{
+		if (CheckVisibility(emp) < Visibility.Owned)
+		{
+			// TODO: intel projects to see alien orders
+			Dispose();
+		}
+	}
 }
