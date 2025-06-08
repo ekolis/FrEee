@@ -3,7 +3,8 @@ using FrEee.Objects.GameState;
 using FrEee.Utility;
 namespace FrEee.Processes.Construction;
 
-public interface IConstructionOrder : IOrder, INamed
+// TODO: IOrder itself should implement IFoggable
+public interface IConstructionOrder : IOrder, INamed, IFoggable
 {
 	/// <summary>
 	/// The cost of the construction.

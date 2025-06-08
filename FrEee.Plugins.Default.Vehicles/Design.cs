@@ -646,6 +646,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 		Game.Current.UnassignID(this);
 		foreach (var emp in Game.Current.Empires.Where(e => e != null))
 			emp.KnownDesigns.Remove(this);
+		IsDisposed = true;
 	}
 
 	public override bool Equals(object? obj)
@@ -654,6 +655,8 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 		{
 			if (d.BaseName != BaseName)
 				return false;
+			if (d.Hull is null)
+				return false; // HACK: design is leaking from another player's game state
 			if (d.Hull.ModID != Hull.ModID)
 				return false;
 			if (d.Components.Count != Components.Count)

@@ -117,8 +117,10 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
 
     private GameReference<Empire> owner { get; set; }
     private IReference<TTemplate> template { get; set; }
+	public bool IsMemory { get; set; }
+	public double Timestamp { get; set; }
 
-    public bool CheckCompletion(IOrderable q)
+	public bool CheckCompletion(IOrderable q)
     {
         var queue = (IConstructionQueue)q;
         isComplete = Item.ConstructionProgress >= Item.Cost || GetErrors(queue).Any();
@@ -133,7 +135,7 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
     public Visibility CheckVisibility(Empire emp)
     {
         if (emp == Owner)
-            return Visibility.Visible;
+            return Visibility.Owned;
         return Visibility.Unknown;
     }
 
@@ -223,4 +225,18 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
     {
         Item = default;
     }
+
+	public bool IsObsoleteMemory(Empire emp)
+	{
+        return false;
+	}
+
+	public void Redact(Empire emp)
+	{
+		if (CheckVisibility(emp) < Visibility.Owned)
+        {
+            // TODO: intel projects to see alien orders
+            Dispose();
+        }
+	}
 }
