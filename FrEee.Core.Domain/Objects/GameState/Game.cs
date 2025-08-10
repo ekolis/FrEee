@@ -528,9 +528,10 @@ public class Game
 			return r.ID; // no need to reassign ID
 		else if (referrables.ContainsKey(r.ID))
 		{
-			// HACK - already exists, just log an error but don't overwrite anything
+			// HACK - already exists, fix referrables list
 			// we need to fix start combatants having the same IDs as the real objects...
 			Console.Error.WriteLine("The galaxy thinks that " + referrables[r.ID] + " has the ID " + r.ID + " but " + r + " claims to have that ID as well.");
+			referrables[r.ID] = r;
 			return r.ID;
 		}
 
