@@ -823,15 +823,6 @@ public class Game
 		}
 	}
 
-	public void Save(Stream stream, bool assignIDs = true)
-	{
-		// TODO: put all this code in GamePersister
-		if (assignIDs)
-			CleanGameState();
-
-		Services.Persistence.Game.SaveToStream(this, stream);
-	}
-
 	/// <summary>
 	/// Saves the game to an appropriately named file in the Savegame folder.
 	/// Files are named GameName_TurnNumber_PlayerNumber.gam for players (PlayerNumber is 1-indexed)

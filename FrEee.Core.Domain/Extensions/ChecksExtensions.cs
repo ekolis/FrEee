@@ -54,8 +54,7 @@ public static class ChecksExtensions
 	/// <returns></returns>
 	public static bool HasValidID(this IReferrable r)
 	{
-		// TODO: eliminate this function
-		return true;
+		return r.ID > 0;
 	}
 
 	/// <summary>
