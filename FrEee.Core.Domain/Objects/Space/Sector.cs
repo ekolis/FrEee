@@ -11,6 +11,7 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
 using FrEee.Vehicles.Types;
+using System.Diagnostics;
 
 namespace FrEee.Objects.Space;
 
@@ -173,7 +174,26 @@ public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnab
 	}
 
 	[DoNotSerialize]
-	public StarSystem StarSystem { get { return starSystem; } set { starSystem = value; } }
+	public StarSystem StarSystem
+	{
+		get => starSystemField;
+		set
+		{
+			starSystemField = value;
+			try
+			{
+				starSystem = value;
+			}
+			catch (Exception ex)
+			{
+				Console.Error.WriteLine("Error setting star system reference for sector " + this + " to " + value + ": " + ex.Message);
+			}
+		}
+	}
+
+	// a cache so we can decouple the game model from the data model
+	// TODO: set the game reference to the correct value once everything is registered
+	private StarSystem starSystemField;
 
 	private GameReference<StarSystem> starSystem { get; set; }
 
@@ -339,7 +359,7 @@ public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnab
 		// From here on, largestObject and StarSystem are defined
 
 		// Don't display the star system name, if the space object's name contains it, to avoid repetition
-		bool objectNameContainsStarName = Regex.IsMatch(largestObject.Name, string.Format(@"\b{0}\b", Regex.Escape(StarSystem.Name ?? "(unexplored)")));
+		bool objectNameContainsStarName = Regex.IsMatch(largestObject.Name ?? "(unnamed)", string.Format(@"\b{0}\b", Regex.Escape(StarSystem.Name ?? "(unexplored)")));
 		if (objectNameContainsStarName)
 			return largestObject + " (" + Coordinates.X + ", " + Coordinates.Y + ")";
 		else
