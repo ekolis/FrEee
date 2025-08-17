@@ -176,7 +176,7 @@ public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnab
 	[DoNotSerialize]
 	public StarSystem StarSystem
 	{
-		get => starSystemField;
+		get => starSystemField ?? starSystem;
 		set
 		{
 			starSystemField = value;
