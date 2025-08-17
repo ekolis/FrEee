@@ -36,10 +36,12 @@ public class Seeker : ICombatant
         CombatSpeed = WeaponInfo.SeekerSpeed;
     }
 
-    /// <summary>
-    /// Seekers don't fire so it doesn't really matter...
-    /// </summary>
-    public int Accuracy
+	public IEnumerable<IReferrable> Referrables => [];
+
+	/// <summary>
+	/// Seekers don't fire so it doesn't really matter...
+	/// </summary>
+	public int Accuracy
     {
         get { return 0; }
     }

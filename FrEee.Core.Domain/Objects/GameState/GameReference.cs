@@ -31,9 +31,7 @@ public record GameReference<T>(long ID)
 			ID = Game.Current.AssignID(t);
 		if (!HasValue)
 		{
-			Game.Current.referrables[t.ID] = t;
-			if (!HasValue)
-				throw new ArgumentException("{0} does not exist in the current game so it cannot be referenced.".F(t));
+			throw new ArgumentException("{0} does not exist in the current game so it cannot be referenced.".F(t));
 		}
 	}
 	/// <summary>

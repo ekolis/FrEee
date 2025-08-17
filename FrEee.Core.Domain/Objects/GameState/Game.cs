@@ -24,6 +24,7 @@ using FrEee.Gameplay.Commands.Notes;
 using FrEee.Vehicles.Types;
 using FrEee.Processes.Construction;
 using FrEee.Persistence;
+using FrEee.Vehicles;
 
 namespace FrEee.Objects.GameState;
 
@@ -41,7 +42,6 @@ public class Game
 		Empires = new List<Empire>();
 		Name = "Unnamed";
 		TurnNumber = 1;
-		referrables = new Dictionary<long, IReferrable>();
 		AbilityCache = new SafeDictionary<IAbilityObject, IEnumerable<Ability>>();
 		CommonAbilityCache = new SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>>();
 		SharedAbilityCache = new SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>>();
@@ -173,7 +173,15 @@ public class Game
 		get { return Empires.IndexOf(CurrentEmpire) + 1; }
 	}
 
-	public IEnumerable<IReferrable> Referrables { get { return referrables.Values; } }
+	/// <summary>
+	/// Any referrable objects contained within the game.
+	/// </summary>
+	public IEnumerable<IReferrable> Referrables =>
+		[
+		.. Galaxy.IntrinsicAbilities,
+		.. Galaxy.StarSystems.SelectMany(sys => sys.ReferrableTree()),
+		.. Empires.SelectMany(emp => emp.ReferrableTree())
+		];
 
 	/// <summary>
 	/// Notes that mod scripts can play with.
@@ -236,14 +244,6 @@ public class Game
 	/// </summary>
 	[DoNotSerialize]
 	internal SafeDictionary<Empire, ILookup<Empire, Clause>> ReceivedTreatyClauseCache { get; set; }
-
-	/// <summary>
-	/// Anything in the game that can be referenced from the client side
-	/// using a Reference object instead of passing whole objects around.
-	/// Stuff needs to be registered to be found though!
-	/// </summary>
-	[SerializationPriority(2)]
-	internal IDictionary<long, IReferrable> referrables { get; set; }
 
 	/// <summary>
 	/// Cache of abilities that are shared to empires from other objects due to treaties.
@@ -525,29 +525,18 @@ public class Game
 		}
 
 		if (r.HasValidID())
-			return r.ID; // no need to reassign ID
-		else if (referrables.ContainsKey(r.ID))
 		{
-			// HACK - already exists, fix referrables list
-			// we need to fix start combatants having the same IDs as the real objects...
-			Console.Error.WriteLine("The galaxy thinks that " + referrables[r.ID] + " has the ID " + r.ID + " but " + r + " claims to have that ID as well.");
-			referrables[r.ID] = r;
-			return r.ID;
+			return r.ID; // no need to reassign ID
 		}
 
 		var oldid = r.ID;
 		long newid = oldid <= 0 ? id : oldid;
 
-		while (newid <= 0 || referrables.ContainsKey(newid))
+		while (newid <= 0 || Referrables.Any(q => q.ID == newid))
 		{
 			newid = RandomHelper.Range(1L, long.MaxValue);
 		}
 		r.ID = newid;
-		referrables.Add(newid, r);
-
-		// clean up old IDs
-		if (oldid > 0 && referrables.ContainsKey(oldid) && oldid != newid)
-			referrables.Remove(oldid);
 
 		return newid;
 	}
@@ -560,11 +549,6 @@ public class Game
 	{
 		var parser = new ObjectGraphParser();
 		bool canAssign = true;
-		foreach (var kvp in referrables.ToArray())
-		{
-			if (kvp.Value.IsDisposed)
-				referrables.Remove(kvp.Key);
-		}
 		parser.Property += (pname, o, val) =>
 			{
 				var prop = o.GetType().FindProperty(pname);
@@ -689,11 +673,9 @@ public class Game
 		return GetGameSavePath(Name, TurnNumber, emp == null ? 0 : Empires.IndexOf(emp) + 1);
 	}
 
-	public IReferrable GetReferrable(long key)
+	public IReferrable? GetReferrable(long key)
 	{
-		if (!referrables.ContainsKey(key))
-			return null;
-		return referrables[key];
+		return Referrables.FirstOrDefault(q => q.ID == key);
 	}
 
 	/// <summary>
@@ -702,10 +684,10 @@ public class Game
 	/// <typeparam name="T"></typeparam>
 	/// <param name="fakeobj">The fake referrable.</param>
 	/// <returns></returns>
-	public T GetReferrable<T>(T fakeobj)
+	public T? GetReferrable<T>(T fakeobj)
 		where T : IReferrable
 	{
-		return (T)GetReferrable(fakeobj.ID);
+		return (T?)GetReferrable(fakeobj.ID);
 	}
 
 	/// <summary>
@@ -846,8 +828,6 @@ public class Game
 		// TODO: put all this code in GamePersister
 		if (assignIDs)
 			CleanGameState();
-		foreach (var kvp in referrables.Where(kvp => kvp.Value.IsDisposed).ToArray())
-			referrables.Remove(kvp);
 
 		Services.Persistence.Game.SaveToStream(this, stream);
 	}
@@ -863,8 +843,6 @@ public class Game
 		// TODO: put all this code in GamePersister
 		if (assignIDs)
 			CleanGameState();
-		foreach (var kvp in referrables.Where(kvp => kvp.Value.ID < 0).ToArray())
-			referrables.Remove(kvp);
 		string filename;
 		if (CurrentEmpire == null)
 			filename = Name + "_" + TurnNumber + ".gam";
@@ -922,65 +900,9 @@ public class Game
 		return Name + " - " + CurrentEmpire.Name + " - " + CurrentEmpire.LeaderName + " - " + Stardate;
 	}
 
-	public void UnassignID(long id)
-	{
-		if (referrables.ContainsKey(id))
-		{
-			var r = referrables[id];
-			r.ID = -1;
-			referrables.Remove(id);
-		}
-	}
-
 	public void UnassignID(IReferrable r)
 	{
-		if (r == null || r.ID < 0)
-			return; // nothing to do
-		if (referrables.ContainsKey(r.ID))
-		{
-			if (referrables[r.ID] == r)
-				referrables.Remove(r.ID);
-			else
-			{
-				var galaxyThinksTheIDIs = referrables.Where(kvp => kvp.Value == r);
-				foreach (var wrongID in galaxyThinksTheIDIs)
-				{
-					referrables.Remove(wrongID);
-				}
-			}
-		}
-		else if (referrables.Values.Contains(r))
-		{
-			try
-			{
-				referrables.Remove(referrables.Single(kvp => kvp.Value == r));
-			}
-			catch (InvalidOperationException ex)
-			{
-				// HACK - why is the item not being found? sequence contains no matching element? it's right there!
-				Console.Error.WriteLine(ex);
-			}
-		}
-		//r.ID = -1;
-	}
-
-	internal void SpaceObjectIDCheck(string when)
-	{
-		foreach (var sobj in Galaxy.FindSpaceObjects<ISpaceObject>().ToArray())
-		{
-			if (!referrables.ContainsKey(sobj.ID))
-				AssignID(sobj);
-			if (sobj.ID > 0)
-			{
-				var r = referrables[sobj.ID];
-				if (r != sobj)
-				{
-					// HACK - assume the space object that's actually in space is "real"
-					referrables[sobj.ID] = sobj;
-					Console.Error.WriteLine("Space object identity mismatch " + when + " for ID=" + sobj.ID + ". " + sobj + " is actually in space so it is replacing " + r + " in the referrables collection.");
-				}
-			}
-		}
+		// TODO: anything to do here? maybe remove referrable from game?
 	}
 
 	/// <summary>

@@ -32,6 +32,8 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 		Orders = new List<IOrder>();
 	}
 
+	public override IEnumerable<IReferrable> Referrables => [..base.Referrables, Colony];
+
 	public override AbilityTargets AbilityTarget => AbilityTargets.Planet;
 
 	public int Accuracy

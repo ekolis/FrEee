@@ -33,6 +33,9 @@ public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IF
 		ConstructionProgress = new ResourceQuantity();
 	}
 
+	// components can't be directly referenced, only by index
+	public IEnumerable<IReferrable> Referrables => [];
+
 	public abstract AbilityTargets AbilityTarget { get; }
 
 	public int Accuracy

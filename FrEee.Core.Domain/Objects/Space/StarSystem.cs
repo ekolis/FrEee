@@ -33,6 +33,8 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 		ExploredByEmpires = new HashSet<Empire>();
 	}
 
+	public IEnumerable<IReferrable> Referrables => [..SpaceObjects, ..IntrinsicAbilities];
+
 	/// <summary>
 	/// Any special abilities possessed by this star system.
 	/// </summary>

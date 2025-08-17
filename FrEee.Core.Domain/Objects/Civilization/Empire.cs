@@ -60,6 +60,13 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 		EnabledMinisters = new SafeDictionary<string, ICollection<string>>(); 
 	}
 
+	public IEnumerable<IReferrable> Referrables => 
+		[
+		PrimaryRace,
+		..KnownDesigns.Where(q => q.Owner == Owner),
+		..Waypoints,
+	];
+
 	/// <summary>
 	/// The current empire being controlled by the player.
 	/// </summary>

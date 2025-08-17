@@ -26,10 +26,12 @@ public class ActivateAbilityOrder : IOrder
         Target = target;
     }
 
-    /// <summary>
-    /// What ability to activate?
-    /// </summary>
-    [DoNotSerialize]
+	public IEnumerable<IReferrable> Referrables => [];
+
+	/// <summary>
+	/// What ability to activate?
+	/// </summary>
+	[DoNotSerialize]
     public Ability Ability { get { return ability.Value; } set { ability = value.ReferViaGalaxy(); } }
 
     public bool ConsumesMovement

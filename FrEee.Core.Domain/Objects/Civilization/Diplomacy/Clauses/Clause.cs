@@ -15,6 +15,8 @@ public abstract class Clause : IOwnable, IFoggable, IPromotable, IReferrable
 		Receiver = receiver;
 	}
 
+	public IEnumerable<IReferrable> Referrables => [];
+
 	/// <summary>
 	/// A description of the effects of this clause.
 	/// </summary>

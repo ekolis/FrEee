@@ -21,7 +21,9 @@ public abstract class Message : IMessage
         TurnNumber = Game.Current.TurnNumber;
     }
 
-    public Image Icon
+	public IEnumerable<IReferrable> Referrables => [];
+
+	public Image Icon
     {
         get
         {

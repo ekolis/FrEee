@@ -23,10 +23,12 @@ public class WaypointOrder : IMovementOrder
         // TODO - add flag for "avoid damaging sectors"? but how to specify in UI?
     }
 
-    /// <summary>
-    /// Should pathfinding avoid enemies?
-    /// </summary>
-    public bool AvoidEnemies { get; set; }
+	public IEnumerable<IReferrable> Referrables => [];
+
+	/// <summary>
+	/// Should pathfinding avoid enemies?
+	/// </summary>
+	public bool AvoidEnemies { get; set; }
 
     public bool ConsumesMovement
     {

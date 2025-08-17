@@ -26,7 +26,9 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
         Owner = Empire.Current;
     }
 
-    public bool ConsumesMovement
+	public IEnumerable<IReferrable> Referrables => [Item as IReferrable];
+
+	public bool ConsumesMovement
     {
         get { return false; }
     }

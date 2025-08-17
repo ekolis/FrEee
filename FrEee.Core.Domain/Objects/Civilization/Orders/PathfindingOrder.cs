@@ -24,10 +24,12 @@ public abstract class PathfindingOrder
         // TODO - add flag for "avoid damaging sectors"? but how to specify in UI?
     }
 
-    /// <summary>
-    /// Alternate target. This should be the largest ship in a fleet when a fleet is being pursued.
-    /// </summary>
-    [DoNotSerialize]
+	public IEnumerable<IReferrable> Referrables => [];
+
+	/// <summary>
+	/// Alternate target. This should be the largest ship in a fleet when a fleet is being pursued.
+	/// </summary>
+	[DoNotSerialize]
     public ISpaceObject AlternateTarget
     {
         get;

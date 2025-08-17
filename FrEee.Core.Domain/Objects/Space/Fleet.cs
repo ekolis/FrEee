@@ -31,6 +31,8 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 		Timestamp = Game.Current?.Timestamp ?? 0;
 	}
 
+	public IEnumerable<IReferrable> Referrables => [..Vehicles, ..Orders];
+
 	public AbilityTargets AbilityTarget
 	{
 		get { return AbilityTargets.Fleet; }

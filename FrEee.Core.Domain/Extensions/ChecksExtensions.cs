@@ -54,7 +54,8 @@ public static class ChecksExtensions
 	/// <returns></returns>
 	public static bool HasValidID(this IReferrable r)
 	{
-		return Game.Current.referrables.ContainsKey(r.ID) && Game.Current.referrables[r.ID] == r;
+		// TODO: eliminate this function
+		return true;
 	}
 
 	/// <summary>
@@ -213,7 +214,7 @@ public static class ChecksExtensions
 	/// <returns>true if it is a memory of a known object, otherwise false.</returns>
 	public static bool IsMemoryOfKnownObject(this ISpaceObject sobj)
 	{
-		return sobj.IsMemory && Empire.Current == null && (sobj.ID == 0 || Game.Current.referrables.ContainsKey(sobj.ID));
+		return sobj.IsMemory && Empire.Current == null && (sobj.ID == 0 || Game.Current.GetReferrable(sobj.ID) is not null);
 	}
 
 	/// <summary>

@@ -17,6 +17,8 @@ public abstract class Waypoint : ILocated, IFoggable, IOwnable, INamed, IPromota
 		Owner = Empire.Current;
 	}
 
+	public IEnumerable<IReferrable> Referrables => [];
+
 	public long ID
 	{
 		get;

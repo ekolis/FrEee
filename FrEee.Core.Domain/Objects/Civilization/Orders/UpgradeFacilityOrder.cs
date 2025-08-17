@@ -24,7 +24,9 @@ public class UpgradeFacilityOrder : IConstructionOrder
         Upgrade = fu;
     }
 
-    public bool ConsumesMovement
+	public IEnumerable<IReferrable> Referrables => [];
+
+	public bool ConsumesMovement
     {
         get { return false; }
     }

@@ -241,6 +241,7 @@ public class FacilityTemplate : IModObject, IResearchable, IAbilityContainer, IT
 	/// The technology requirements for this facility.
 	/// </summary>
 	public IList<Requirement<Empire>> UnlockRequirements { get; private set; }
+	public IEnumerable<IReferrable> Referrables => [];
 
 	public static readonly FacilityTemplate Unknown = new FacilityTemplate { Name = "Unknown", ModID = "*UNKNOWN*" };
 

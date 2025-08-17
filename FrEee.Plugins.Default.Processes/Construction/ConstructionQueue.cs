@@ -33,6 +33,8 @@ public class ConstructionQueue : IConstructionQueue
 		UnspentRate = new ResourceQuantity();
 	}
 
+	public IEnumerable<IReferrable> Referrables => Orders;
+
 	public bool IsOnHold { get; set; }
 
 	public bool IsOnRepeat { get; set; }
