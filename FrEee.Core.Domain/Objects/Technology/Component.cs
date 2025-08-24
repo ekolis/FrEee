@@ -64,19 +64,7 @@ public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IConta
 	}
 
 	[DoNotSerialize]
-	public IVehicle Container
-	{
-		get
-		{
-			if (container == null)
-				container = Galaxy.Current.FindSpaceObjects<IVehicle>().SingleOrDefault(q => q.Components.Contains(this)).ReferViaGalaxy();
-			return container?.Value;
-		}
-		set
-		{
-			container = value.ReferViaGalaxy();
-		}
-	}
+	public IVehicle Container { get; set; }
 
 	/// <summary>
 	/// Component hit chances are normally determined by their maximum hitpoints.
@@ -297,7 +285,11 @@ public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IConta
 	}
 
 	[DoNotCopy]
-	private GameReference<IVehicle> container { get; set; }
+	private GameReference<IVehicle> container
+	{
+		get => Container.ReferViaGalaxy();
+		set => Container = value.Value;
+	}
 
 	/// <summary>
 	/// If this is a weapon, returns true if this weapon can target an object at a particular range.
