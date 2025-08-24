@@ -420,10 +420,10 @@ public class Game
 	{
 		// TODO: cache list of properties to populate when deserializing?
 		// enumerate all referrables
-		foreach (var referrable in Referrables)
+		foreach (var typeGroup in Referrables.GroupBy(q => q.GetType()))
 		{
-			// find referrable's properties
-			var props = referrable.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+			// find type's properties
+			var props = typeGroup.Key.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 			foreach (var prop in props)
 			{
 				// search property's attributes for PopulateAttribute<T>
@@ -436,8 +436,11 @@ public class Game
 						var populatorType = att.GetType().GetGenericArguments()[0];
 						var populator = (IPopulator)populatorType.Instantiate();
 
-						// get value from populator and save it into the referrable's property
-						prop.SetValue(referrable, populator.Populate(referrable));
+						foreach (var referrable in typeGroup)
+						{
+							// get value from populator and save it into the referrable's property
+							prop.SetValue(referrable, populator.Populate(referrable));
+						}
 					}
 				}
 			}
