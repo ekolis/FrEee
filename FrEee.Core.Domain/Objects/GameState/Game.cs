@@ -420,7 +420,9 @@ public class Game
 	{
 		// TODO: cache list of properties to populate when deserializing?
 		// enumerate all referrables
-		foreach (var typeGroup in Referrables.GroupBy(q => q.GetType()))
+		var referrables = Referrables.ToArray();
+		var typeGroups = referrables.GroupBy(q => q.GetType()).ToArray();
+		foreach (var typeGroup in typeGroups)
 		{
 			// find type's properties
 			var props = typeGroup.Key.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
