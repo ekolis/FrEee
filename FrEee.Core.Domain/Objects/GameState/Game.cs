@@ -811,6 +811,11 @@ public class Game
 	/// </summary>
 	public void Redact()
 	{
+		if (CurrentEmpire is null)
+		{
+			throw new InvalidOperationException("Can't redact the Game while the CurrentEmpire is null.");
+		}
+
 		// save off empire scores first, before data is removed
 		foreach (var emp in Empires)
 		{
@@ -822,10 +827,10 @@ public class Game
 			ScriptNotes.Clear();
 
 		// redact sub objects
-		// TODO: we could just use the referrables list if IFoggable inherited from IReferrable
-		var parser = new ObjectGraphParser();
-		parser.StartObject += redactParser_StartObject;
-		parser.Parse(this);
+		foreach (var foggable in Referrables.OfType<IFoggable>())
+		{
+			foggable.Redact(CurrentEmpire);
+		}
 
 		// clean up redacted objects that are not IFoggable
 		foreach (var x in Galaxy.StarSystemLocations.Where(x => x.Item.IsDisposed).ToArray())
