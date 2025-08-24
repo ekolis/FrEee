@@ -63,7 +63,6 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	public IEnumerable<IReferrable> Referrables => 
 		[
 		PrimaryRace,
-		..KnownDesigns.Where(q => q.Owner == Owner),
 		..Waypoints,
 	];
 

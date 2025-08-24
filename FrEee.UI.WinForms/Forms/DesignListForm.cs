@@ -115,6 +115,7 @@ public partial class DesignListForm : GameForm
 						d.Hull == design.Hull &&
 						d.Components.SequenceEqual(design.Components, new MountedComponentTemplate.SimpleEqualityComparer())
 					);
+				Game.Current.Designs.Remove(design);
 				Empire.Current.KnownDesigns.Remove(design);
 				design.Dispose();
 				BindDesignList();

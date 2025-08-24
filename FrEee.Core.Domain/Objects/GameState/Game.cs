@@ -180,7 +180,8 @@ public class Game
 		[
 		.. Galaxy.IntrinsicAbilities,
 		.. Galaxy.StarSystems.SelectMany(sys => sys.ReferrableTree()),
-		.. Empires.SelectMany(emp => emp.ReferrableTree())
+		.. Empires.SelectMany(emp => emp.ReferrableTree()),
+		.. Designs.SelectMany(emp => emp.ReferrableTree())
 		];
 
 	/// <summary>
@@ -274,6 +275,11 @@ public class Game
 	private IDictionary<Sector, double> lastBattleTimestamps = new SafeDictionary<Sector, double>();
 
 	private string? stringValue;
+
+	/// <summary>
+	/// Any vehicle designs which exist in this game.
+	/// </summary>
+	public ISet<IDesign> Designs { get; } = new HashSet<IDesign>();
 
 	public static string GetEmpireCommandsSavePath(string gameName, int turnNumber, int empireNumber)
 	{

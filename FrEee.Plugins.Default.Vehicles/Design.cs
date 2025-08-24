@@ -647,6 +647,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 		if (IsDisposed)
 			return;
 		Game.Current.UnassignID(this);
+		Game.Current.Designs.Remove(this);
 		foreach (var emp in Game.Current.Empires.Where(e => e != null))
 			emp.KnownDesigns.Remove(this);
 		IsDisposed = true;
