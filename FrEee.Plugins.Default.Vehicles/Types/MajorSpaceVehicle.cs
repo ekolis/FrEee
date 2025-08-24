@@ -154,5 +154,7 @@ public abstract class MajorSpaceVehicle
 	public override bool IsIdle => base.IsIdle || ConstructionQueue != null && ConstructionQueue.IsIdle;
 
 	public override bool FillsCombatTile => true;
+
+	public override IEnumerable<IReferrable> Referrables => [..base.Referrables, ConstructionQueue];
 }
 

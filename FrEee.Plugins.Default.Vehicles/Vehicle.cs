@@ -34,7 +34,7 @@ public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IF
 	}
 
 	// components can't be directly referenced, only by index
-	public IEnumerable<IReferrable> Referrables => [];
+	public virtual IEnumerable<IReferrable> Referrables => [];
 
 	public abstract AbilityTargets AbilityTarget { get; }
 

@@ -260,5 +260,5 @@ public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>, II
 		}
 	}
 
-	public IEnumerable<IReferrable> Referrables => [..Facilities, ..Cargo.Units];
+	public IEnumerable<IReferrable> Referrables => [..Facilities, ..Cargo.Units, ConstructionQueue];
 }
