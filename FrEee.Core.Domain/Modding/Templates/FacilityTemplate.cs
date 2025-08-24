@@ -278,16 +278,6 @@ public class FacilityTemplate : IModObject, IResearchable, IAbilityContainer, IT
 		return new Facility(this);
 	}
 
-	public bool IsObsoleteMemory(Empire emp)
-	{
-		return false;
-	}
-
-	public void Redact(Empire emp)
-	{
-		// TODO - tech items that aren't visible until some requirements are met
-	}
-
 	public override string ToString()
 	{
 		return Name;

@@ -822,6 +822,7 @@ public class Game
 			ScriptNotes.Clear();
 
 		// redact sub objects
+		// TODO: we could just use the referrables list if IFoggable inherited from IReferrable
 		var parser = new ObjectGraphParser();
 		parser.StartObject += redactParser_StartObject;
 		parser.Parse(this);

@@ -6,7 +6,7 @@ namespace FrEee.Objects.GameState;
 /// <summary>
 /// Something that can be obscured by fog of war.
 /// </summary>
-public interface IFoggable : IDisposable
+public interface IFoggable : IDisposable, IReferrable
 {
     /// <summary>
     /// Is this object just a memory, or a real object?

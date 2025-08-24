@@ -259,16 +259,6 @@ public class Mount : IResearchable, IModObject, IUpgradeable<Mount>
 			Mod.Current.Mounts.Remove(this);
 	}
 
-	public bool IsObsoleteMemory(Empire emp)
-	{
-		return false;
-	}
-
-	public void Redact(Empire emp)
-	{
-		// TODO - tech items that aren't visible until some requirements are met
-	}
-
 	public override string ToString()
 	{
 		return Name;

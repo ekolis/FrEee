@@ -303,16 +303,6 @@ public class ComponentTemplate : IModObject, IResearchable, IAbilityContainer, I
 		return new Component(null, new MountedComponentTemplate(null, this, null));
 	}
 
-	public bool IsObsoleteMemory(Empire emp)
-	{
-		return false;
-	}
-
-	public void Redact(Empire emp)
-	{
-		// TODO - tech items that aren't visible until some requirements are met
-	}
-
 	public override string ToString()
 	{
 		return Name;
