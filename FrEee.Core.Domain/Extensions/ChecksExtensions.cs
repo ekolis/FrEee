@@ -23,11 +23,7 @@ public static class ChecksExtensions
 	/// <returns></returns>
 	public static bool HasAbility(this IAbilityObject obj, string abilityName, bool includeShared = true)
 	{
-		IEnumerable<Ability> abils;
-		if (includeShared && obj is IOwnableAbilityObject)
-			abils = obj.UnstackedAbilities(true).Union(obj.SharedAbilities());
-		else
-			abils = obj.UnstackedAbilities(true);
+		var abils = obj.UnstackedAbilities(includeShared);
 		return abils.Any(abil => abil.Rule != null && abil.Rule.Matches(abilityName));
 	}
 

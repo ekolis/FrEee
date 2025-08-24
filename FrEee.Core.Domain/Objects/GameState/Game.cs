@@ -413,11 +413,14 @@ public class Game
 		Current.PopulatePropertyValues();
 	}
 
+	public bool IsPopulatingPropertyValues { get; private set; }
+
 	/// <summary>
 	/// Populates property values specified by <see cref="PopulateAttribute{T}"/>.
 	/// </summary>
 	private void PopulatePropertyValues()
 	{
+		IsPopulatingPropertyValues = true;
 		// TODO: cache list of properties to populate when deserializing?
 		// enumerate all referrables
 		var referrables = Referrables.ToArray();
@@ -447,6 +450,7 @@ public class Game
 				}
 			}
 		}
+		IsPopulatingPropertyValues = false;
 	}
 
 	/// <summary>
