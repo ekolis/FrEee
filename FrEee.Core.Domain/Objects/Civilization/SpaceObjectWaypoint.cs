@@ -35,7 +35,7 @@ public class SpaceObjectWaypoint : Waypoint
 	}
 
 	[DoNotSerialize]
-	public ISpaceObject SpaceObject { get { return spaceObject.Value; } set { spaceObject = value.ReferViaGalaxy(); } }
+	public ISpaceObject SpaceObject { get; set; }
 
 	public override StarSystem StarSystem
 	{
@@ -45,5 +45,9 @@ public class SpaceObjectWaypoint : Waypoint
 		}
 	}
 
-	private GameReference<ISpaceObject> spaceObject { get; set; }
+	private GameReference<ISpaceObject> spaceObject
+	{
+		get => SpaceObject.ReferViaGalaxy();
+		set => SpaceObject = value.Value;
+	}
 }

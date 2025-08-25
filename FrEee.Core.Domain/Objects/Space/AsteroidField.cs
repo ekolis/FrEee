@@ -84,14 +84,18 @@ public class AsteroidField : StellarObject, ITemplate<AsteroidField>, IMineableS
 	/// The PlanetSize.txt entry for this asteroid field's size.
 	/// </summary>
 	[DoNotSerialize]
-	public StellarObjectSize Size { get { return size; } set { size = value; } }
+	public StellarObjectSize Size { get; set; }
 
 	/// <summary>
 	/// The surface composition (e.g. rock, ice, gas) of this asteroid field.
 	/// </summary>
 	public string Surface { get; set; }
 
-	private ModReference<StellarObjectSize> size { get; set; }
+	private ModReference<StellarObjectSize> size
+	{
+		get => Size;
+		set => Size = value;
+	}
 
 	/// <summary>
 	/// Just copy the asteroid field's data.

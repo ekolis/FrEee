@@ -40,7 +40,7 @@ public abstract class Waypoint : ILocated, IFoggable, IOwnable, INamed, IPromota
 	public abstract string Name { get; }
 
 	[DoNotSerialize]
-	public Empire Owner { get { return owner; } set { owner = value; } }
+	public Empire Owner { get; set; }
 
 	public abstract Sector Sector { get; set; }
 
@@ -58,7 +58,11 @@ public abstract class Waypoint : ILocated, IFoggable, IOwnable, INamed, IPromota
 	[DoNotSerialize]
 	public int AlteredQueuesOnDelete { get; private set; }
 
-	private GameReference<Empire> owner { get; set; }
+	private GameReference<Empire> owner
+	{
+		get => Owner;
+		set => Owner = value;
+	}
 
 	/// <summary>
 	/// Only the waypoint's owner can see it.

@@ -74,7 +74,7 @@ public class ActivateAbilityOrder : IOrder
     /// What are we activating the ability "against"? Like, what warp point are we destroying, or whatever? Or null if there's no relevant target
     /// </summary>
     [DoNotSerialize]
-    public IReferrable Target { get; set; } }
+    public IReferrable Target { get; set; }
 
     private GameReference<Ability> ability
     {
