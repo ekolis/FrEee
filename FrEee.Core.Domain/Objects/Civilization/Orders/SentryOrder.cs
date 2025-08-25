@@ -43,11 +43,15 @@ public class SentryOrder : IOrder
     /// The empire which issued the order.
     /// </summary>
     [DoNotSerialize]
-    public Empire Owner { get { return owner; } set { owner = value; } }
+    public Empire Owner { get; set; }
 
-    private GameReference<Empire> owner { get; set; }
+	private GameReference<Empire> owner
+	{
+		get => Owner;
+		set => Owner = value;
+	}
 
-    public bool CheckCompletion(IOrderable v)
+	public bool CheckCompletion(IOrderable v)
     {
         return IsComplete;
     }

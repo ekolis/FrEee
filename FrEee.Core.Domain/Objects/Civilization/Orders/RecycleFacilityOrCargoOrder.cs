@@ -48,16 +48,24 @@ public class RecycleFacilityOrCargoOrder : IOrder
     /// The empire which issued the order.
     /// </summary>
     [DoNotSerialize]
-    public Empire Owner { get { return owner; } set { owner = value; } }
+    public Empire Owner { get; set; }
 
     /// <summary>
     /// The facility or unit in cargo to recycle.
     /// </summary>
     [DoNotSerialize]
-    public IRecyclable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
+    public IRecyclable Target { get; set; }
 
-    private GameReference<Empire> owner { get; set; }
-    private GameReference<IRecyclable> target { get; set; }
+    private GameReference<Empire> owner
+    {
+        get => Owner;
+        set => Owner = value;
+	}
+    private GameReference<IRecyclable> target
+    {
+        get => Target.ReferViaGalaxy();
+        set => Target = value.Value;
+	}
 
     public bool CheckCompletion(IOrderable executor)
     {

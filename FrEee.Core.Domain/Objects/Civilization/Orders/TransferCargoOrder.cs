@@ -43,25 +43,33 @@ public class TransferCargoOrder : IOrder
 
     public bool IsDisposed { get; set; }
 
-    /// <summary>
-    /// The empire which issued the order.
-    /// </summary>
-    [DoNotSerialize]
-    public Empire Owner { get { return owner; } set { owner = value; } }
+	/// <summary>
+	/// The empire which issued the order.
+	/// </summary>
+	[DoNotSerialize]
+	public Empire Owner { get; set; }
 
-    /// <summary>
-    /// The cargo transferrer to which the cargo will be transferred, or null to launch/recover to/from space.
-    /// </summary>
-    [DoNotSerialize]
-    public ICargoTransferrer Target { get { return target?.Value; } set { target = value.ReferViaGalaxy(); } }
+	/// <summary>
+	/// The cargo transferrer to which the cargo will be transferred, or null to launch/recover to/from space.
+	/// </summary>
+	[DoNotSerialize]
+    public ICargoTransferrer Target { get; set; }
 
     /// <summary>
     /// True if this is a load order, false if it is a drop order.
     /// </summary>
     private bool IsLoadOrder { get; set; }
 
-    private GameReference<Empire> owner { get; set; }
-    private GameReference<ICargoTransferrer> target { get; set; }
+	private GameReference<Empire> owner
+	{
+		get => Owner;
+		set => Owner = value;
+	}
+	private GameReference<ICargoTransferrer> target
+    {
+        get => Target.ReferViaGalaxy();
+        set => Target = value.Value;
+	}
 
     public bool CheckCompletion(IOrderable v)
     {

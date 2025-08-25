@@ -22,7 +22,7 @@ public abstract class Command<T> : ICommand<T>
     }
 
     [DoNotSerialize]
-    public T Executor { get { return executor; } set { executor = value; } }
+    public T Executor { get; set; }
 
     IReferrable ICommand.Executor
     {
@@ -34,7 +34,7 @@ public abstract class Command<T> : ICommand<T>
     public bool IsDisposed { get; set; }
 
     [DoNotSerialize]
-    public Empire Issuer { get { return issuer; } set { issuer = value; } }
+    public Empire Issuer { get; set; }
 
     public virtual IEnumerable<IReferrable> NewReferrables
     {
@@ -44,9 +44,17 @@ public abstract class Command<T> : ICommand<T>
         }
     }
 
-    protected GameReference<T> executor { get; set; }
+    protected GameReference<T> executor
+    {
+        get => Executor;
+        set => Executor = value;
+    }
 
-    private GameReference<Empire> issuer { get; set; }
+    private GameReference<Empire> issuer
+    {
+        get => Issuer;
+        set => Issuer = value;
+	}
 
     public abstract void Execute();
 

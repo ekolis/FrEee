@@ -81,7 +81,7 @@ public class Proposal : Command<Empire>, IFoggable, IReferrable
 	/// The empire that the proposal is being sent to.
 	/// </summary>
 	[DoNotSerialize]
-	public Empire Recipient { get { return recipient; } set { recipient = value; } }
+	public Empire Recipient { get; set; }
 
 	public double Timestamp
 	{
@@ -89,7 +89,11 @@ public class Proposal : Command<Empire>, IFoggable, IReferrable
 		set;
 	}
 
-	private GameReference<Empire> recipient { get; set; }
+	private GameReference<Empire> recipient
+	{
+		get => Recipient;
+		set => Recipient = value;
+	}
 
 	public Visibility CheckVisibility(Empire emp)
 	{

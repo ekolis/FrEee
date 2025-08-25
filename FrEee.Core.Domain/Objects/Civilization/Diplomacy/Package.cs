@@ -99,12 +99,12 @@ public class Package : IOwnable, IPromotable
 	}
 
 	[DoNotSerialize]
-	public Empire Owner { get { return owner; } set { owner = value; } }
+	public Empire Owner { get; set; }
 
 	public GameReferenceSet<Planet> Planets { get; private set; }
 
 	[DoNotSerialize]
-	public Empire Recipient { get { return recipient; } set { recipient = value; } }
+	public Empire Recipient { get; set; }
 
 	public ResourceQuantity Resources { get; private set; }
 	public GameReferenceSet<StarSystem> StarCharts { get; private set; }
@@ -112,8 +112,16 @@ public class Package : IOwnable, IPromotable
 	public ISet<Clause> TreatyClauses { get; private set; }
 	public GameReferenceSet<IVehicle> Vehicles { get; private set; }
 
-	private GameReference<Empire> owner { get; set; }
-	private GameReference<Empire> recipient { get; set; }
+	private GameReference<Empire> owner
+	{
+		get => Owner;
+		set => Owner = value;
+	}
+	private GameReference<Empire> recipient
+	{
+		get => Recipient;
+		set => Recipient = value;
+	}
 
 	public IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{

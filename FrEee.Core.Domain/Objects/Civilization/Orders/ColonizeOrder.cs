@@ -48,16 +48,24 @@ public class ColonizeOrder : IOrder
     /// The empire which issued the order.
     /// </summary>
     [DoNotSerialize]
-    public Empire Owner { get { return owner; } set { owner = value; } }
+    public Empire Owner { get; set; }
 
     /// <summary>
     /// The planet we are colonizing.
     /// </summary>
     [DoNotSerialize]
-    public Planet Planet { get { return planet; } set { planet = value; } }
+    public Planet Planet { get; set; }
 
-    private GameReference<Empire> owner { get; set; }
-    private GameReference<Planet> planet { get; set; }
+    private GameReference<Empire> owner
+    {
+        get => Owner;
+        set => Owner = value;
+	}
+    private GameReference<Planet> planet
+    {
+        get => Planet;
+        set => Planet = value;
+	}
 
     public bool CheckCompletion(IOrderable v)
     {

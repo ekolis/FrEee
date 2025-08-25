@@ -32,7 +32,7 @@ public class ComputedFormula<T> : Formula<T>, IEquatable<ComputedFormula<T>>
 	}
 
 	[DoNotSerialize(false)]
-	public override object Context { get { return context; } set { context = value; } }
+	public override object Context { get; set; }
 
 	/// <summary>
 	/// Is this a dynamic formula? Dynamic formulas cannot be cached.
@@ -69,7 +69,11 @@ public class ComputedFormula<T> : Formula<T>, IEquatable<ComputedFormula<T>>
 	}
 
 	[DoNotCopy]
-	private object context { get; set; }
+	private object context
+	{
+		get { return Context; }
+		set { Context = value; }
+	}
 
 	private bool isDynamic;
 

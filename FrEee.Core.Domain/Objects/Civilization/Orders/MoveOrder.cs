@@ -63,7 +63,7 @@ public class MoveOrder : IMovementOrder
     /// The empire which issued the order.
     /// </summary>
     [DoNotSerialize]
-    public Empire Owner { get { return owner; } set { owner = value; } }
+    public Empire Owner { get; set; }
 
     /// <summary>
     /// Any pathfinding error that we might have found.
@@ -71,7 +71,11 @@ public class MoveOrder : IMovementOrder
     [DoNotSerialize]
     public LogMessage PathfindingError { get; private set; }
 
-    private GameReference<Empire> owner { get; set; }
+    private GameReference<Empire> owner
+    {
+        get => Owner;
+        set => Owner = value;
+    }
 
     public bool CheckCompletion(IOrderable v)
     {

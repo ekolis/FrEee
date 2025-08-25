@@ -52,7 +52,7 @@ public class Race : INamed, IAbilityObject, IPictorial, IReferrable
 	/// The race's happiness model.
 	/// </summary>
 	[DoNotSerialize]
-	public HappinessModel HappinessModel { get { return happinessModel; } set { happinessModel = value; } }
+	public HappinessModel HappinessModel { get; set; }
 
 	/// <summary>
 	/// The population icon.
@@ -202,7 +202,11 @@ public class Race : INamed, IAbilityObject, IPictorial, IReferrable
 		}
 	}
 
-	private ModReference<HappinessModel> happinessModel { get; set; }
+	private ModReference<HappinessModel> happinessModel
+	{
+		get => HappinessModel;
+		set => HappinessModel = value;
+	}
 
 	/// <summary>
 	/// Races are known to everyone, though they really should be hidden until first contact...

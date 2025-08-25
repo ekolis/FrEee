@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Extensions;
+using FrEee.Modding;
+using FrEee.Objects.GameState;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Technology;
-using FrEee.Modding;
-using FrEee.Utility;
-using FrEee.Serialization;
-using FrEee.Extensions;
-using FrEee.Objects.GameState;
-using FrEee.Vehicles.Types;
 using FrEee.Processes.Construction;
+using FrEee.Serialization;
+using FrEee.Utility;
+using FrEee.Vehicles.Types;
+using Newtonsoft.Json.Linq;
 
 namespace FrEee.Objects.Civilization.Orders;
 
@@ -78,27 +79,13 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
     /// The empire which issued the order.
     /// </summary>
     [DoNotSerialize]
-    public Empire Owner { get { return owner; } set { owner = value; } }
+    public Empire Owner { get; set; }
 
     /// <summary>
     /// The construction template.
     /// </summary>
     [DoNotSerialize]
-    public TTemplate Template
-    {
-        get { return template.Value; }
-        set
-        {
-            if (value is IModObject mo)
-                template = GetModReference<TTemplate>(mo.ReferViaMod().ID);
-            else if (value is IReferrable r)
-                template = new GameReference<TTemplate>(r.ReferViaGalaxy().ID);
-            else if (value == null)
-                template = null;
-            else
-                throw new Exception($"{value} is not referrable in the galaxy or the mod.");
-        }
-    }
+    public TTemplate Template { get; set; }
 
     private IReference<U> GetModReference<U>(string id)
     {
@@ -117,8 +104,21 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
         set;
     }
 
-    private GameReference<Empire> owner { get; set; }
-    private IReference<TTemplate> template { get; set; }
+    private GameReference<Empire> owner
+    {
+        get { return Owner?.ReferViaGalaxy(); }
+        set { Owner = value?.Value; }
+	}
+    private IReference<TTemplate>? template
+    {
+        get => Template switch
+        {
+            IModObject mo => GetModReference<TTemplate>(mo.ReferViaMod().ID),
+            IReferrable r => new GameReference<TTemplate>(r.ReferViaGalaxy().ID),
+            null => null
+        };
+        set => Template = value.Value;
+    }
 	public bool IsMemory { get; set; }
 	public double Timestamp { get; set; }
 

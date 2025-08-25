@@ -26,11 +26,15 @@ public class RejectProposalAction : DiplomaticAction
     /// The proposal in question.
     /// </summary>
     [DoNotSerialize]
-    public Proposal Proposal { get { return proposal; } set { proposal = value; } }
+    public Proposal Proposal { get; set; }
 
-    private GameReference<Proposal> proposal { get; set; }
+    private GameReference<Proposal> proposal
+    {
+        get => Proposal;
+        set => Proposal = value;
+	}
 
-    public override void Execute()
+	public override void Execute()
     {
         if (Proposal.IsResolved)
             Executor.Log.Add(Target.CreateLogMessage("The proposal \"" + Proposal + "\" has already been resolved and cannot be rejected now.", LogMessages.LogMessageType.Error));

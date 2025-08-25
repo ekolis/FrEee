@@ -32,7 +32,7 @@ public class ActivateAbilityOrder : IOrder
 	/// What ability to activate?
 	/// </summary>
 	[DoNotSerialize]
-    public Ability Ability { get { return ability.Value; } set { ability = value.ReferViaGalaxy(); } }
+    public Ability Ability { get; set; }
 
     public bool ConsumesMovement
     {
@@ -61,25 +61,41 @@ public class ActivateAbilityOrder : IOrder
     /// The empire which issued the order.
     /// </summary>
     [DoNotSerialize]
-    public Empire Owner { get { return owner; } set { owner = value; } }
+    public Empire Owner { get; set; }
 
     /// <summary>
     /// The source of the ability. Probably a component, facility, or hull.
     /// TODO - fix this now that Component/Facility/Hull are no longer referrable
     /// </summary>
     [DoNotSerialize]
-    public IReferrableAbilityObject Source { get { return source.Value; } set { source = value.ReferViaGalaxy(); } }
+    public IReferrableAbilityObject Source { get; set; }
 
     /// <summary>
     /// What are we activating the ability "against"? Like, what warp point are we destroying, or whatever? Or null if there's no relevant target
     /// </summary>
     [DoNotSerialize]
-    public IReferrable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
+    public IReferrable Target { get; set; } }
 
-    private GameReference<Ability> ability { get; set; }
-    private GameReference<Empire> owner { get; set; }
-    private GameReference<IReferrableAbilityObject> source { get; set; }
-    private GameReference<IReferrable> target { get; set; }
+    private GameReference<Ability> ability
+    {
+        get => Ability;
+        set => Ability = value;
+	}
+    private GameReference<Empire> owner
+    {
+        get => Owner;
+        set => Owner = value;
+	}
+    private GameReference<IReferrableAbilityObject> source
+    {
+        get => Source.ReferViaGalaxy();
+        set => Source = value.Value;
+	}
+    private GameReference<IReferrable> target
+    {
+        get => Target.ReferViaGalaxy();
+        set => Target = value.Value;
+	}
 
     public bool CheckCompletion(IOrderable executor)
     {

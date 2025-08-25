@@ -60,7 +60,7 @@ public class WaypointOrder : IMovementOrder
     /// The empire which issued the order.
     /// </summary>
     [DoNotSerialize]
-    public Empire Owner { get { return owner; } set { owner = value; } }
+    public Empire Owner { get; set; }
 
     /// <summary>
     /// Any pathfinding error that we might have found.
@@ -72,7 +72,7 @@ public class WaypointOrder : IMovementOrder
     /// The target we are pursuing.
     /// </summary>
     [DoNotSerialize]
-    public Waypoint Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
+    public Waypoint Target { get; set; }
 
     /// <summary>
     /// A verb used to describe this order.
@@ -88,8 +88,16 @@ public class WaypointOrder : IMovementOrder
         }
     }
 
-    private GameReference<Empire> owner { get; set; }
-    private GameReference<Waypoint> target { get; set; }
+    private GameReference<Empire> owner
+    {
+        get => Owner;
+        set => Owner = value;
+	}
+    private GameReference<Waypoint> target
+    {
+        get => Target;
+        set => Target = value;
+	}
 
     public bool CheckCompletion(IOrderable v)
     {

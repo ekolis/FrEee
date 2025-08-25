@@ -57,7 +57,7 @@ public abstract class Message : IMessage
     /// The empire sending this message.
     /// </summary>
     [DoNotSerialize]
-    public Empire Owner { get { return owner; } set { owner = value; } }
+    public Empire Owner { get; set; }
 
     public Image Portrait
     {
@@ -73,7 +73,7 @@ public abstract class Message : IMessage
     /// The empire receiving the message.
     /// </summary>
     [DoNotSerialize]
-    public Empire Recipient { get { return recipient; } set { recipient = value; } }
+    public Empire Recipient { get; set; }
 
     /// <summary>
     /// The text of the message.
@@ -87,9 +87,17 @@ public abstract class Message : IMessage
 
     public int TurnNumber { get; set; }
 
-    private GameReference<Empire> owner { get; set; }
+    private GameReference<Empire> owner
+    {
+        get => Owner;
+        set => Owner = value;
+	}
 
-    private GameReference<Empire> recipient { get; set; }
+    private GameReference<Empire> recipient
+    {
+        get => Recipient;
+        set => Recipient = value;
+	}
 
     public Visibility CheckVisibility(Empire emp)
     {

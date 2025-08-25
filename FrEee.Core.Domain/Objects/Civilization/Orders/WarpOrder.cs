@@ -57,16 +57,24 @@ public class WarpOrder : IOrder
     /// The empire which issued the order.
     /// </summary>
     [DoNotSerialize]
-    public Empire Owner { get { return owner; } set { owner = value; } }
+    public Empire Owner { get; set; }
 
     /// <summary>
     /// The warp point we are using.
     /// </summary>
     [DoNotSerialize]
-    public WarpPoint WarpPoint { get { return warpPoint; } set { warpPoint = value; } }
+    public WarpPoint WarpPoint { get; set; }
 
-    private GameReference<Empire> owner { get; set; }
-    private GameReference<WarpPoint> warpPoint { get; set; }
+    private GameReference<Empire> owner
+    {
+        get => Owner;
+        set => Owner = value;
+	}
+    private GameReference<WarpPoint> warpPoint
+    {
+        get => WarpPoint;
+        set => WarpPoint = value;
+	}
 
     public bool CheckCompletion(IOrderable v)
     {

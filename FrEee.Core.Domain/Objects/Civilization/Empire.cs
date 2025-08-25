@@ -102,7 +102,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	/// The AI which controls the behavior of empires of this race.
 	/// </summary>
 	[DoNotSerialize]
-	public AI<Empire, Game> AI { get { return ai; } set { ai = value; } }
+	public AI<Empire, Game> AI { get; set; }
 
 	/// <summary>
 	/// Arbitrary data stored by the AI to maintain state between turns.
@@ -218,7 +218,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	/// The empire's culture.
 	/// </summary>
 	[DoNotSerialize]
-	public Culture Culture { get { return culture; } set { culture = value; } }
+	public Culture Culture { get; set; }
 
 	/// <summary>
 	/// Any empires that this empire has encountered.
@@ -767,8 +767,16 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	/// </summary>
 	public IList<Waypoint> Waypoints { get; private set; }
 
-	private ModReference<AI<Empire, Game>> ai { get; set; }
-	private ModReference<Culture> culture { get; set; }
+	private ModReference<AI<Empire, Game>> ai
+	{
+		get => AI;
+		set => AI = value;
+	}
+	private ModReference<Culture> culture
+	{
+		get => Culture;
+		set => Culture = value;
+	}
 	private ResourceQuantity colonyIncome;
 
 	private ResourceQuantity grossDomesticIncome;

@@ -74,7 +74,7 @@ public class UpgradeFacilityOrder : IConstructionOrder
     /// The empire which issued the order.
     /// </summary>
     [DoNotSerialize]
-    public Empire Owner { get { return owner; } set { owner = value; } }
+    public Empire Owner { get; set; }
 
     IConstructionTemplate IConstructionOrder.Template { get { return Upgrade.New; } }
 
@@ -90,7 +90,11 @@ public class UpgradeFacilityOrder : IConstructionOrder
         set;
     }
 
-    private GameReference<Empire> owner { get; set; }
+    private GameReference<Empire> owner
+    {
+        get => Owner;
+        set => Owner = value;
+	}
 
     public bool CheckCompletion(IOrderable queue)
     {

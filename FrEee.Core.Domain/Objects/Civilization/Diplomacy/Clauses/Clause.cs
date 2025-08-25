@@ -31,7 +31,7 @@ public abstract class Clause : IOwnable, IFoggable, IPromotable, IReferrable
 	/// The empire that is offering something in this clause.
 	/// </summary>
 	[DoNotSerialize]
-	public Empire Giver { get { return giver; } set { giver = value; } }
+	public Empire Giver { get; set; }
 
 	public long ID
 	{
@@ -61,7 +61,7 @@ public abstract class Clause : IOwnable, IFoggable, IPromotable, IReferrable
 	/// The empire that is receiving a benefit from this clause.
 	/// </summary>
 	[DoNotSerialize]
-	public Empire Receiver { get { return receiver; } set { receiver = value; } }
+	public Empire Receiver { get; set; }
 
 	public double Timestamp
 	{
@@ -69,8 +69,17 @@ public abstract class Clause : IOwnable, IFoggable, IPromotable, IReferrable
 		set;
 	}
 
-	private GameReference<Empire> giver { get; set; }
-	private GameReference<Empire> receiver { get; set; }
+	// giver and receiver are serialized, they are used to populate Giver and Recevier when deserialized
+	private GameReference<Empire> giver
+	{
+		get => Giver;
+		set => Giver = value;
+	}
+	private GameReference<Empire> receiver
+	{
+		get => Receiver;
+		set => Receiver = value;
+	}
 
 	public Visibility CheckVisibility(Empire emp)
 	{
