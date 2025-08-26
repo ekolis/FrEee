@@ -292,7 +292,7 @@ public class Facility : IOwnableAbilityObject, IConstructable, IDamageable, IDis
 	/// Specifies the basic stats of the facility and its abilities.
 	/// </summary>
 	[DoNotSerialize]
-	public FacilityTemplate Template { get { return template; } private set { template = value; } }
+	public FacilityTemplate Template { get; set; }
 
 	IConstructionTemplate IConstructable.Template
 	{
@@ -318,7 +318,11 @@ public class Facility : IOwnableAbilityObject, IConstructable, IDamageable, IDis
 	}
 
 	[SerializationPriority(1)]
-	private ModReference<FacilityTemplate> template { get; set; }
+	private ModReference<FacilityTemplate> template
+	{
+		get => Template;
+		set => Template = value;
+	}
 
 	public SafeDictionary<string, object> Data
 	{

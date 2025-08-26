@@ -22,10 +22,14 @@ public class Shot : IFormulaHost
         DamageLeft = FullDamage;
     }
 
-    public GameReference<ICombatant> attacker { get; set; }
+    public GameReference<ICombatant> attacker
+    {
+        get => Attacker.ReferViaGalaxy();
+        set => Attacker = value.Value;
+	}
 
     [DoNotSerialize]
-    public ICombatant Attacker { get { return attacker == null ? null : attacker.Value; } set { attacker = value == null ? null : value.ReferViaGalaxy(); } }
+    public ICombatant Attacker { get; set; }
 
     public int DamageLeft { get; private set; }
 
@@ -43,17 +47,7 @@ public class Shot : IFormulaHost
     /// The specific target of this hit.
     /// </summary>
     [DoNotSerialize]
-    public IDamageable Defender
-    {
-        get { return target?.Value ?? _target; }
-        set
-        {
-            if (value is IDamageableReferrable dr)
-                target = dr.ReferViaGalaxy();
-            else
-                _target = value;
-        }
-    }
+    public IDamageable Defender { get; set; }
 
     /// <summary>
     /// Effective range for damage purposes, due to mount range modifiers
@@ -81,8 +75,25 @@ public class Shot : IFormulaHost
 
     public IEnumerable<Hit> Hits { get; private set; }
     public int Range { get; set; }
-    public GameReference<IDamageableReferrable> target { get; set; }
-    private IDamageable _target { get; set; }
+	private GameReference<IDamageableReferrable> target
+	{
+		get
+		{
+			if (Defender is IDamageableReferrable dr)
+				return dr.ReferViaGalaxy();
+			else
+				return null;
+		}
+		set
+		{
+			Defender = value?.Value;
+			if (Defender is IDamageableReferrable dr)
+				_target = null;
+			else
+				_target = Defender;
+		}
+	}
+	private IDamageable _target { get; set; }
 
     public IDictionary<string, object> Variables
     {

@@ -542,7 +542,7 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 	/// The PlanetSize.txt entry for this asteroid field's size.
 	/// </summary>
 	[DoNotSerialize]
-	public StellarObjectSize Size { get => size; set => size = value; }
+	public StellarObjectSize Size { get; set; }
 
 	int ICombatant.Size => int.MaxValue;
 
@@ -598,7 +598,11 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 	[DoNotSerialize]
 	internal Planet MoonOf { get; set; }
 
-	private ModReference<StellarObjectSize> size { get; set; }
+	private ModReference<StellarObjectSize> size
+	{
+		get => Size;
+		set => Size = value;
+	}
 
 	public void AddOrder(IOrder order)
 	{

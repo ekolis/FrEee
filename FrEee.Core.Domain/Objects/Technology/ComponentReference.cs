@@ -37,14 +37,14 @@ public class ComponentReference : IReference<(long, int), Component>
 		return this;
 	}
 
-	private GameReference<IVehicle> vehicle { get; set; }
+	private GameReference<IVehicle> vehicle
+	{
+		get => Vehicle.ReferViaGalaxy();
+		set => Vehicle = value.Value;
+	}
 
 	[DoNotSerialize(false)]
-	public IVehicle Vehicle
-	{
-		get => vehicle.Value;
-		set => vehicle = value.ReferViaGalaxy();
-	}
+	public IVehicle Vehicle { get; set; }
 
 	public int ComponentIndex { get; set; }
 }

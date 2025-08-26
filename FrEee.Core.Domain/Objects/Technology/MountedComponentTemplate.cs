@@ -96,7 +96,7 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityOb
 	/// The component template used.
 	/// </summary>
 	[DoNotSerialize]
-	public ComponentTemplate ComponentTemplate { get { return componentTemplate; } set { componentTemplate = value; } }
+	public ComponentTemplate ComponentTemplate { get; set; }
 
 	/// <summary>
 	/// The design which contains this mounted component template.
@@ -194,7 +194,7 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityOb
 	/// The mount used.
 	/// </summary>
 	[DoNotSerialize]
-	public Mount? Mount { get { return mount; } set { mount = value; } }
+	public Mount? Mount { get; set; }
 
 	/// <summary>
 	/// The name of the component, prefixed with the short name of the mount (if any).
@@ -331,8 +331,16 @@ public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityOb
 		}
 	}
 
-	private ModReference<ComponentTemplate> componentTemplate { get; set; }
-	private ModReference<Mount> mount { get; set; }
+	private ModReference<ComponentTemplate> componentTemplate
+	{
+		get => ComponentTemplate;
+		set => ComponentTemplate = value;
+	}
+	private ModReference<Mount> mount
+	{
+		get => Mount;
+		set => Mount = value;
+	}
 
 	public static bool operator !=(MountedComponentTemplate t1, MountedComponentTemplate t2)
 	{

@@ -19,14 +19,14 @@ public abstract class BattleEvent : IBattleEvent
     [DoNotCopy]
     public IBattle Battle { get; set; }
 
-    private GameReference<ICombatant> combatant { get; set; }
+    private GameReference<ICombatant> combatant
+    {
+        get => Combatant.ReferViaGalaxy();
+        set => Combatant = value?.Value ?? Battle?.StartCombatants?[value.ID];
+	}
 
     [DoNotSerialize]
-    public ICombatant Combatant
-    {
-        get => combatant?.Value ?? Battle?.StartCombatants?[combatant.ID];
-        set => combatant = value.ReferViaGalaxy();
-    }
+    public ICombatant Combatant { get; set; }
 
     // HACK: assumes 2D combat
     public Vector2<int> EndPosition { get; set; }

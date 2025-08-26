@@ -54,13 +54,6 @@ public class Seeker : ICombatant
         get { return 0; }
     }
 
-    /// <summary>
-    /// The battle in which this seeker was fired.
-    /// </summary>
-    [DoNotSerialize(false)]
-    [Obsolete("Seekers don't need to know what battle they're in; this property is obsolete.")]
-    public IBattle Battle { get; set; }
-
     public double CombatSpeed { get; set; }
 
     public Formula<int> Damage

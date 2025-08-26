@@ -224,9 +224,13 @@ public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObje
 	/// Abilities for random warp points that appear in this system.
 	/// </summary>
 	[DoNotSerialize]
-	public RandomAbilityTemplate WarpPointAbilities { get { return warpPointAbilities; } set { warpPointAbilities = value; } }
+	public RandomAbilityTemplate WarpPointAbilities { get; set; }
 
-	private ModReference<RandomAbilityTemplate> warpPointAbilities { get; set; }
+	private ModReference<RandomAbilityTemplate> warpPointAbilities
+	{
+		get => WarpPointAbilities;
+		set => WarpPointAbilities = value;
+	}
 
 	public bool AreCoordsInBounds(int x, int y)
 	{

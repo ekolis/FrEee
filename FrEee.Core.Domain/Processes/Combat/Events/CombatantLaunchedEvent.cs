@@ -13,13 +13,13 @@ public class CombatantLaunchedEvent : BattleEvent
 		Launcher = launcher;
 	}
 
-	private GameReference<ICombatant> launcher { get; set; }
+	private GameReference<ICombatant> launcher
+	{
+		get => Launcher.ReferViaGalaxy();
+		set => Launcher = value.Value ?? Battle?.StartCombatants?[value.ID];
+	}
 
 	[DoNotSerialize]
-	public ICombatant Launcher
-	{
-		get => launcher?.Value ?? Battle?.StartCombatants?[launcher.ID];
-		set => launcher = value.ReferViaGalaxy();
-	}
+	public ICombatant Launcher { get; set; }
 
 }

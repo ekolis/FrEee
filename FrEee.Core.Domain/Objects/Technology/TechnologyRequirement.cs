@@ -42,13 +42,17 @@ public class TechnologyRequirement : Requirement<Empire>, IContainable<IResearch
 	/// </summary>
 	public Formula<int> Level { get; set; }
 
-	private ModReference<Technology> technology { get; set; }
+	private ModReference<Technology> technology
+	{
+		get => Technology;
+		set => Technology = value;
+	}
 
 	/// <summary>
 	/// The technology to be researched.
 	/// </summary>
 	[DoNotSerialize(false)]
-	public Technology Technology { get => technology; set => technology = value; }
+	public Technology Technology { get; set; }
 
 	/// <summary>
 	/// Is this technology requirement met by a particular empire?

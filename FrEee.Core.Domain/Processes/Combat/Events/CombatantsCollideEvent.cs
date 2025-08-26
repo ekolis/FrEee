@@ -22,14 +22,14 @@ public class CombatantsCollideEvent : BattleEvent
 	}
 
 
-	private GameReference<ICombatant> target { get; set; }
+	private GameReference<ICombatant> target
+	{
+		get => Target.ReferViaGalaxy();
+		set => Target = value.Value ?? Battle?.StartCombatants?[value.ID];
+	}
 
 	[DoNotSerialize]
-	public ICombatant Target
-	{
-		get => target?.Value ?? Battle?.StartCombatants?[target.ID];
-		set => target = value.ReferViaGalaxy();
-	}
+	public ICombatant Target { get; set; }
 
 	public int CombatantDamage { get; set; }
 	public int TargetDamage { get; set; }

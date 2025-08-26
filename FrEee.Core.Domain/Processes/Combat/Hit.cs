@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using FrEee.Modding;
-using FrEee.Utility;
-using FrEee.Serialization;
 using FrEee.Extensions;
+using FrEee.Modding;
 using FrEee.Objects.GameState;
+using FrEee.Serialization;
+using FrEee.Utility;
+using Newtonsoft.Json.Linq;
 
 namespace FrEee.Processes.Combat;
 
@@ -43,17 +44,7 @@ public class Hit : IFormulaHost
     /// The specific target of this hit.
     /// </summary>
     [DoNotSerialize]
-    public IDamageable Target
-    {
-        get { return target?.Value ?? _target; }
-        set
-        {
-            if (value is IDamageableReferrable dr)
-                target = dr.ReferViaGalaxy();
-            else
-                _target = value;
-        }
-    }
+    public IDamageable Target { get; set; }
 
     public IDictionary<string, object> Variables
     {
@@ -68,7 +59,24 @@ public class Hit : IFormulaHost
         }
     }
 
-    private GameReference<IDamageableReferrable> target { get; set; }
+	private GameReference<IDamageableReferrable> target
+	{
+		get
+        {
+            if (Target is IDamageableReferrable dr)
+                return dr.ReferViaGalaxy();
+            else
+                return null;
+		}
+        set
+        {
+            Target = value?.Value;
+            if (Target is IDamageableReferrable dr)
+                _target = null;
+            else
+                _target = Target;
+		}
+	}
 
-    private IDamageable _target { get; set; }
+	private IDamageable _target { get; set; }
 }

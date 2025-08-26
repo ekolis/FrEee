@@ -65,7 +65,7 @@ public class FacilityUpgrade : IUpgradeable<FacilityUpgrade>, IPromotable, IName
 	}
 
 	[DoNotSerialize]
-	public FacilityTemplate New { get { return nu; } private set { nu = value; } }
+	public FacilityTemplate New { get; set; }
 
 	public IEnumerable<FacilityUpgrade> NewerVersions
 	{
@@ -73,15 +73,23 @@ public class FacilityUpgrade : IUpgradeable<FacilityUpgrade>, IPromotable, IName
 	}
 
 	[DoNotSerialize]
-	public FacilityTemplate Old { get { return old; } private set { old = value; } }
+	public FacilityTemplate Old { get; set; }
 
 	public IEnumerable<FacilityUpgrade> OlderVersions
 	{
 		get { return Galaxy.Current.FindSpaceObjects<IConstructor>().Select(o => o.ConstructionQueue).ExceptSingle(null).SelectMany(q => q.Orders).Select(o => o.Item).OfType<FacilityUpgrade>().Where(u => New.UpgradesTo(u.New)); }
 	}
 
-	private ModReference<FacilityTemplate> nu { get; set; }
-	private ModReference<FacilityTemplate> old { get; set; }
+	private ModReference<FacilityTemplate> nu
+	{
+		get => New;
+		set => New = value;
+	}
+	private ModReference<FacilityTemplate> old
+	{
+		get => Old;
+		set => Old = value;
+	}
 
 	public static bool operator !=(FacilityUpgrade x, FacilityUpgrade y)
 	{

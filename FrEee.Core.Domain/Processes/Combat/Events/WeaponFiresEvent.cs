@@ -21,23 +21,23 @@ public class WeaponFiresEvent : BattleEvent
 	}
 	public bool IsHit { get; set; }
 
-	private GameReference<ICombatant> attacker { get; set; }
-
-	private GameReference<ICombatant> target { get; set; }
-
-	[DoNotSerialize]
-	public ICombatant Attacker
+	private GameReference<ICombatant> attacker
 	{
-		get => attacker?.Value ?? Battle?.StartCombatants?[attacker.ID];
-		set => attacker = value.ReferViaGalaxy();
+		get => Attacker.ReferViaGalaxy();
+		set => Attacker = value.Value ?? Battle?.StartCombatants?[value.ID];
+	}
+
+	private GameReference<ICombatant> target
+	{
+		get => Target.ReferViaGalaxy();
+		set => Target = value.Value ?? Battle?.StartCombatants?[value.ID];
 	}
 
 	[DoNotSerialize]
-	public ICombatant Target
-	{
-		get => target?.Value ?? Battle?.StartCombatants?[target.ID];
-		set => target = value.ReferViaGalaxy();
-	}
+	public ICombatant Attacker { get; set; }
+
+	[DoNotSerialize]
+	public ICombatant Target { get; set; }
 
 	// TODO - make this some sort of reference?
 	public Component Weapon { get; set; }

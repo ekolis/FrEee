@@ -174,28 +174,13 @@ public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnab
 	}
 
 	[DoNotSerialize]
-	public StarSystem StarSystem
+	public StarSystem StarSystem { get; set; }
+
+	private GameReference<StarSystem> starSystem
 	{
-		get => starSystemField ?? starSystem;
-		set
-		{
-			starSystemField = value;
-			try
-			{
-				starSystem = value;
-			}
-			catch (Exception ex)
-			{
-				Console.Error.WriteLine("Error setting star system reference for sector " + this + " to " + value + ": " + ex.Message);
-			}
-		}
+		get => starSystem;
+		set => starSystem = value;
 	}
-
-	// a cache so we can decouple the game model from the data model
-	// TODO: set the game reference to the correct value once everything is registered
-	private StarSystem starSystemField;
-
-	private GameReference<StarSystem> starSystem { get; set; }
 
 	public static bool operator !=(Sector s1, Sector s2)
 	{
