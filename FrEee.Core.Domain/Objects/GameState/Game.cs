@@ -176,13 +176,19 @@ public class Game
 	/// <summary>
 	/// Any referrable objects contained within the game.
 	/// </summary>
-	public IEnumerable<IReferrable> Referrables =>
-		[
-		.. Galaxy?.IntrinsicAbilities ?? Enumerable.Empty<Ability>(),
-		.. Galaxy?.StarSystems?.SelectMany(sys => sys.ReferrableTree()) ?? Enumerable.Empty<IReferrable>(),
-		.. Empires.SelectMany(emp => emp.ReferrableTree()),
-		.. Designs.SelectMany(emp => emp.ReferrableTree())
-		];
+	public IEnumerable<IReferrable> Referrables
+	{
+		get
+		{
+			IEnumerable<IReferrable> result = [
+				.. Galaxy?.IntrinsicAbilities ?? Enumerable.Empty<Ability>(),
+				.. Galaxy?.StarSystems?.SelectMany(sys => sys.ReferrableTree()) ?? Enumerable.Empty<IReferrable>(),
+				.. Empires.SelectMany(emp => emp.ReferrableTree()),
+				.. Designs.SelectMany(emp => emp.ReferrableTree())
+			];
+			return result.ExceptNull();
+		}
+	}
 
 	/// <summary>
 	/// Notes that mod scripts can play with.
