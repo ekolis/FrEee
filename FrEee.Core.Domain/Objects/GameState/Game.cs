@@ -180,15 +180,31 @@ public class Game
 	{
 		get
 		{
-			IEnumerable<IReferrable> result = [
-				.. Galaxy?.IntrinsicAbilities ?? Enumerable.Empty<Ability>(),
-				.. Galaxy?.StarSystems?.SelectMany(sys => sys.ReferrableTree()) ?? Enumerable.Empty<IReferrable>(),
-				.. Empires.SelectMany(emp => emp.ReferrableTree()),
-				.. Designs.SelectMany(emp => emp.ReferrableTree()),
-				.. NewReferrables
-			];
-			return result.Distinct().ExceptNull();
+			if (referrables is null)
+			{
+				LoadReferrables();
+			}
+			return referrables;
 		}
+	}
+
+	private IEnumerable<IReferrable>? referrables;
+
+	public void RefreshReferrables()
+	{
+		referrables = null;
+	}
+
+	private void LoadReferrables()
+	{
+		IReferrable[] result = [
+			.. Galaxy?.IntrinsicAbilities ?? Enumerable.Empty<Ability>(),
+			.. Galaxy?.StarSystems?.SelectMany(sys => sys.ReferrableTree()) ?? Enumerable.Empty<IReferrable>(),
+			.. Empires.SelectMany(emp => emp.ReferrableTree()),
+			.. Designs.SelectMany(emp => emp.ReferrableTree()),
+			.. NewReferrables
+		];
+		referrables = result.Distinct().ExceptNull();
 	}
 
 	/// <summary>
@@ -566,6 +582,7 @@ public class Game
 		r.ID = newid;
 
 		Game.Current.NewReferrables.Add(r);
+		Game.Current.RefreshReferrables();
 
 		return newid;
 	}
@@ -931,7 +948,8 @@ public class Game
 
 	public void UnassignID(IReferrable r)
 	{
-		// TODO: anything to do here? maybe remove referrable from game?
+		// referrable has probably already been removed from the game, so refresh the main list to take that into account
+		RefreshReferrables();
 	}
 
 	/// <summary>
