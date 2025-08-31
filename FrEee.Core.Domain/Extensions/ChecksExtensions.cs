@@ -50,6 +50,7 @@ public static class ChecksExtensions
 	/// <returns></returns>
 	public static bool HasValidID(this IReferrable r)
 	{
+		// TODO: what if two clients assign the same ID to newly created referrables?
 		return r.ID > 0;
 	}
 
