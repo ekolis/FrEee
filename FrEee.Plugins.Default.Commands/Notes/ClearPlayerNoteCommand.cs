@@ -18,13 +18,13 @@ public class ClearPlayerNoteCommand : Command<Empire>
 	}
 
 	[DoNotSerialize]
-	public IReferrable Target { get; set; }
-
-	private GameReference<IReferrable> target
+	public IReferrable Target
 	{
-		get => Target?.ReferViaGalaxy();
-		set => Target = value?.Value;
+		get => target?.Value;
+		set => target = value?.ReferViaGalaxy();
 	}
+
+	private GameReference<IReferrable> target { get; set; }
 
 	public override void Execute()
 	{

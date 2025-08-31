@@ -25,13 +25,13 @@ public abstract class OrderCommand : Command<IOrderable>, IOrderCommand
 	}
 
 	[DoNotSerialize]
-	public IOrder Order { get; set; }
-
-	protected virtual GameReference<IOrder> order
+	public virtual IOrder Order
 	{
-		get => Order?.ReferViaGalaxy();
-		set => Order = value?.Value;
+		get => order.Value;
+		set => order = value.ReferViaGalaxy();
 	}
+
+	protected virtual GameReference<IOrder> order { get; set; }
 
 	public override IPromotable ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 	{

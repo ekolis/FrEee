@@ -36,8 +36,14 @@ public class AddOrderCommand
 	/// </summary>
 	private IOrder NewOrder
 	{
-		get => Order;
-		set => Order = value;
+		get;
+		set;
+	}
+
+	public override IOrder Order
+	{
+		get => NewOrder;
+		set => NewOrder = value;
 	}
 
 	/// <summary>

@@ -6,7 +6,6 @@ using FrEee.Objects.GameState;
 using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 using FrEee.Serialization;
-using Newtonsoft.Json.Linq;
 
 namespace FrEee.Plugins.Default.Commands.Fleets;
 
@@ -30,33 +29,33 @@ public class JoinFleetCommand : Command<IMobileSpaceObject>, IJoinFleetCommand
 	public ICreateFleetCommand CreateFleetCommand { get; set; }
 
 	[DoNotSerialize]
-	public Fleet Fleet { get; set; }
-
-	private GameReference<Fleet> fleet
+	public Fleet Fleet
 	{
 		get
 		{
-			if (!Fleet.HasValidID())
+			if (fleet is null || fleet.ID <= 0)
 			{
-				// HACK - why is the fleet beign disposed?!
-				Fleet.IsDisposed = false;
-				Fleet.ID = 0;
-				Game.Current.AssignID(Fleet);
-			}
-			return Fleet;
-		}
-		set
-		{
-			if (value is null || value.ID <= 0)
-			{
-				Fleet = CreateFleetCommand.Fleet;
+				return CreateFleetCommand.Fleet;
 			}
 			else
 			{
-				Fleet = value;
+				return fleet.Value;
 			}
 		}
+		set
+		{
+			if (!value.HasValidID())
+			{
+				// HACK - why is the fleet beign disposed?!
+				value.IsDisposed = false;
+				value.ID = 0;
+				Game.Current.AssignID(value);
+			}
+			fleet = value;
+		}
 	}
+
+	private GameReference<Fleet> fleet { get; set; }
 
 	public override void Execute()
 	{
