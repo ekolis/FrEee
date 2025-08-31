@@ -847,6 +847,9 @@ public class Game
 			throw new InvalidOperationException("Can't redact the Game while the CurrentEmpire is null.");
 		}
 
+		// reset referrables cache before redacting to make sure we've got an up to date list of what needs to be redacted
+		RefreshReferrables();
+
 		// save off empire scores first, before data is removed
 		foreach (var emp in Empires)
 		{
@@ -873,6 +876,9 @@ public class Game
 			kvp.Value.Dispose();
 			Empire.Current.Memory.Remove(kvp);
 		}
+
+		// reset referrables cache after redacting to make sure we don't have any lingering references
+		RefreshReferrables();
 	}
 
 	/// <summary>
