@@ -307,7 +307,7 @@ public class Game
 	/// <summary>
 	/// Any vehicle designs which exist in this game.
 	/// </summary>
-	public ISet<IDesign> Designs { get; } = new HashSet<IDesign>();
+	public ISet<IDesign> Designs { get; set; } = new HashSet<IDesign>();
 
 	public static string GetEmpireCommandsSavePath(string gameName, int turnNumber, int empireNumber)
 	{
