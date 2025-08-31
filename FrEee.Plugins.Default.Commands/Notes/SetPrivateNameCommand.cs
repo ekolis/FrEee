@@ -26,9 +26,13 @@ public class SetPrivateNameCommand : Command<Empire>
 	/// What are we clearing the name on?
 	/// </summary>
 	[DoNotSerialize]
-	public INameable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
+	public INameable Target { get; set; }
 
-	private GameReference<INameable> target { get; set; }
+	private GameReference<INameable> target
+	{
+		get => Target?.ReferViaGalaxy();
+		set => Target = value?.Value;
+	}
 
 	public override void Execute()
 	{

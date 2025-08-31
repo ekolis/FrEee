@@ -14,9 +14,7 @@ using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
 using FrEee.Modding.Abilities;
-using FrEee.Gameplay.Commands;
 using FrEee.Gameplay.Commands.Designs;
-using FrEee.Gameplay.Commands.Orders;
 using FrEee.Vehicles.Types;
 using FrEee.Processes.Construction;
 using FrEee.Plugins.Default.Vehicles.Types;
@@ -133,7 +131,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 	/// The hull used in this design.
 	/// </summary>
 	[DoNotSerialize]
-	public IHull Hull { get { return hull?.Value; } set { hull = new ModReference<IHull>(value); } }
+	public IHull Hull { get; set; }
 
 	public int HullHitpoints
 	{
@@ -335,7 +333,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 	/// The empire which created this design.
 	/// </summary>
 	[DoNotSerialize]
-	public Empire Owner { get { return owner; } set { owner = value; } }
+	public Empire Owner { get; set; }
 
 	public IEnumerable<Ability> ParentAbilities
 	{
@@ -589,12 +587,20 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 		}
 	}
 
-	private ModReference<IHull> hull { get; set; }
+	private ModReference<IHull> hull
+	{
+		get => Hull.ReferViaMod();
+		set => Hull = value.Value;
+	}
 
 	/// <summary>
 	/// For serialization and client safety
 	/// </summary>
-	private GameReference<Empire> owner { get; set; }
+	private GameReference<Empire> owner
+	{
+		get => Owner;
+		set => Owner = value;
+	}
 
 	// TODO: make this an ability
 	public bool CanInvadeAndPoliceColonies => typeof(T).IsAssignableTo(typeof(Troop));
@@ -780,8 +786,6 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 		}
 		return paths;
 	}
-
-
 
 	IDesign IDesign.Upgrade()
 		=> Upgrade();

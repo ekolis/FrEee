@@ -24,7 +24,7 @@ public class SetObsoleteFlagCommand : Command<IDesign>, ISetObsoleteFlagCommand
 	}
 
 	[DoNotSerialize]
-	public IDesign Design { get { return design?.Value; } set { design = value.ReferViaGalaxy(); } }
+	public IDesign Design { get; set; }
 
 	public bool IsObsolete { get; set; }
 
@@ -39,7 +39,11 @@ public class SetObsoleteFlagCommand : Command<IDesign>, ISetObsoleteFlagCommand
 		}
 	}
 
-	private GameReference<IDesign> design { get; set; }
+	private GameReference<IDesign> design
+	{
+		get => Design?.ReferViaGalaxy();
+		set => Design = value?.Value;
+	}
 
 	public override void Execute()
 	{
