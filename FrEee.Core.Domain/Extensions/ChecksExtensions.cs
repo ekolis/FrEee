@@ -51,7 +51,7 @@ public static class ChecksExtensions
 	public static bool HasValidID(this IReferrable r)
 	{
 		// TODO: what if two clients assign the same ID to newly created referrables?
-		return r.ID > 0;
+		return r.ID > 0 && Game.Current.Referrables.Contains(r);
 	}
 
 	/// <summary>

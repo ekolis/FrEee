@@ -184,11 +184,17 @@ public class Game
 				.. Galaxy?.IntrinsicAbilities ?? Enumerable.Empty<Ability>(),
 				.. Galaxy?.StarSystems?.SelectMany(sys => sys.ReferrableTree()) ?? Enumerable.Empty<IReferrable>(),
 				.. Empires.SelectMany(emp => emp.ReferrableTree()),
-				.. Designs.SelectMany(emp => emp.ReferrableTree())
+				.. Designs.SelectMany(emp => emp.ReferrableTree()),
+				.. NewReferrables
 			];
-			return result.ExceptNull();
+			return result.Distinct().ExceptNull();
 		}
 	}
+
+	/// <summary>
+	/// Newly added referrables created by player commands.
+	/// </summary>
+	public IList<IReferrable> NewReferrables { get; } = [];
 
 	/// <summary>
 	/// Notes that mod scripts can play with.
@@ -558,6 +564,8 @@ public class Game
 			newid = RandomHelper.Range(1L, long.MaxValue);
 		}
 		r.ID = newid;
+
+		Game.Current.NewReferrables.Add(r);
 
 		return newid;
 	}
