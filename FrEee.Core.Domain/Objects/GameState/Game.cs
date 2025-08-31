@@ -178,8 +178,8 @@ public class Game
 	/// </summary>
 	public IEnumerable<IReferrable> Referrables =>
 		[
-		.. Galaxy.IntrinsicAbilities,
-		.. Galaxy.StarSystems.SelectMany(sys => sys.ReferrableTree()),
+		.. Galaxy?.IntrinsicAbilities ?? Enumerable.Empty<Ability>(),
+		.. Galaxy?.StarSystems?.SelectMany(sys => sys.ReferrableTree()) ?? Enumerable.Empty<IReferrable>(),
 		.. Empires.SelectMany(emp => emp.ReferrableTree()),
 		.. Designs.SelectMany(emp => emp.ReferrableTree())
 		];

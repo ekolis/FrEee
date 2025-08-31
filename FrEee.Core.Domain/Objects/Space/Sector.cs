@@ -178,8 +178,8 @@ public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnab
 
 	private GameReference<StarSystem> starSystem
 	{
-		get => starSystem;
-		set => starSystem = value;
+		get => StarSystem;
+		set => StarSystem = value;
 	}
 
 	public static bool operator !=(Sector s1, Sector s2)
@@ -193,7 +193,7 @@ public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnab
 			return true;
 		if (s1 is null || s2 is null)
 			return false;
-		return s1.starSystem == s2.starSystem && s1.Coordinates == s2.Coordinates;
+		return s1.StarSystem == s2.StarSystem && s1.Coordinates == s2.Coordinates;
 	}
 
 	public long AddPopulation(Race race, long amount)
@@ -245,7 +245,7 @@ public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnab
 
 	public override int GetHashCode()
 	{
-		return HashCodeMasher.Mash(starSystem, Coordinates);
+		return HashCodeMasher.Mash(StarSystem, Coordinates);
 	}
 
 	/// <summary>
