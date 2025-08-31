@@ -6,6 +6,7 @@ using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.LogMessages;
 using FrEee.Processes.Construction;
+using FrEee.Serialization;
 
 namespace FrEee.Plugins.Default.Commands.Orders;
 
@@ -30,23 +31,23 @@ public class AddOrderCommand
 		}
 	}
 
-	public override IOrder Order
-	{
-		get
-		{
-			return NewOrder;
-		}
-		set
-		{
-			base.Order = value;
-			NewOrder = value;
-		}
-	}
-
+	/// <summary>
+	/// To force the order to be serialized, since in the base class it's marked DoNotSerialize.
+	/// </summary>
 	private IOrder NewOrder
 	{
-		get;
-		set;
+		get => Order;
+		set => Order = value;
+	}
+
+	/// <summary>
+	/// Don't serialize the order as a reference; it won't exist because it is new.
+	/// </summary>
+	[DoNotSerialize]
+	protected override GameReference<IOrder> order
+	{
+		get => null;
+		set { }
 	}
 
 	public override void Execute()
@@ -74,7 +75,7 @@ public class AddOrderCommand
 		{
 			done.Add(this);
 			base.ReplaceClientIDs(idmap, done);
-			NewOrder.ReplaceClientIDs(idmap, done);
+			Order.ReplaceClientIDs(idmap, done);
 		}
 		return this;
 	}
