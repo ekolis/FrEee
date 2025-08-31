@@ -85,7 +85,16 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
     /// The construction template.
     /// </summary>
     [DoNotSerialize]
-    public TTemplate Template { get; set; }
+    public TTemplate Template
+    {
+        get => template.Value;
+        set => template = value switch
+        {
+            IModObject mo => GetModReference<TTemplate>(mo.ReferViaMod().ID),
+            IReferrable r => new GameReference<TTemplate>(r.ReferViaGalaxy().ID),
+            null => null
+        };
+	}
 
     private IReference<U> GetModReference<U>(string id)
     {
@@ -109,16 +118,7 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
         get { return Owner?.ReferViaGalaxy(); }
         set { Owner = value?.Value; }
 	}
-    private IReference<TTemplate>? template
-    {
-        get => Template switch
-        {
-            IModObject mo => GetModReference<TTemplate>(mo.ReferViaMod().ID),
-            IReferrable r => new GameReference<TTemplate>(r.ReferViaGalaxy().ID),
-            null => null
-        };
-        set => Template = value.Value;
-    }
+    private IReference<TTemplate>? template { get; set; }
 	public bool IsMemory { get; set; }
 	public double Timestamp { get; set; }
 
