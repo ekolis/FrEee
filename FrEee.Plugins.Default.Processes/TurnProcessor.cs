@@ -299,6 +299,9 @@ public class TurnProcessor
 						cmd.Issuer.Log.Add(cmd.Issuer.CreateLogMessage("We cannot issue commands to " + cmd.Executor + " because it does not belong to us!", LogMessageType.Error));
 					else
 						cmd.Execute();
+
+					// in case executing the command created/deleted any referrables
+					game.RefreshReferrables();
 				}
 				else if (cmd.Issuer == null)
 				{
@@ -314,6 +317,9 @@ public class TurnProcessor
 			// perform treaty actions
 			foreach (var clause in emp.GivenTreatyClauses.Flatten())
 				clause.PerformAction();
+
+			// in case treaty actions created/deleted any referrables
+			game.RefreshReferrables();
 
 			// don't let stored resources actually fall below zero
 			foreach (var r in emp.StoredResources.Keys.Where(r => emp.StoredResources[r] < 0).ToArray())
@@ -378,6 +384,9 @@ public class TurnProcessor
 		if (status != null)
 			status.Progress += progressPerOperation;
 
+		// in case anything was built
+		game.RefreshReferrables();
+
 		//galaxy.SpaceObjectIDCheck("after construction");
 
 		// replenish shields
@@ -422,16 +431,18 @@ public class TurnProcessor
 			//galaxy.SpaceObjectIDCheck("after ship movement at T=" + galaxy.Timestamp);
 
 			game.DisableAbilityCache();
+
+			// in case anything was destroyed in combat or by hazards
+			game.RefreshReferrables();
 		}
 
 		if (status != null)
+		{
 			status.Progress += progressPerOperation;
-
-		//galaxy.SpaceObjectIDCheck("after shield replenishment");
-
-		// ship movement
-		if (status != null)
 			status.Message = "Resolving ground battles";
+		}
+		
+		//galaxy.SpaceObjectIDCheck("after shield replenishment");
 
 		// resolve ground battles
 		foreach (var p in game.Galaxy.FindSpaceObjects<Planet>(p => p.Cargo != null && p.Cargo.Units.Any(u => u.IsHostileTo(p.Owner) || p.IsHostileTo(u.Owner)))
@@ -442,6 +453,9 @@ public class TurnProcessor
 			game.Battles.Add(battle);
 			foreach (var emp in battle.Empires)
 				emp.Log.Add(battle.CreateLogMessage(battle.NameFor(emp), LogMessageType.Battle));
+
+			// in case anything was destroyed in combat
+			game.RefreshReferrables();
 		}
 
 		game.EnableAbilityCache();
