@@ -204,7 +204,7 @@ public class Game
 			.. Designs.SelectMany(emp => emp.ReferrableTree()),
 			.. NewReferrables
 		];
-		referrables = result.Distinct().ExceptNull();
+		referrables = result.Distinct().ExceptNull().ToArray();
 	}
 
 	/// <summary>
