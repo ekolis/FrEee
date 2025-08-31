@@ -624,6 +624,9 @@ public class Game
 				}
 			}
 		}
+
+		// new referrables should have been properly integrated into the game by now
+		NewReferrables.Clear();
 	}
 
 	public void ComputeNextTickSize()
