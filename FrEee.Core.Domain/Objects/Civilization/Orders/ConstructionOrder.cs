@@ -95,7 +95,7 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
         return r;
     }
 
-    IConstructionTemplate IConstructionOrder.Template { get { return template.Value; } }
+    IConstructionTemplate IConstructionOrder.Template => Template;
 
     [DoNotSerialize]
     private bool? isComplete
