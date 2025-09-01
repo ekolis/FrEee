@@ -387,22 +387,18 @@ public static class GameEnumerableExtensions
 
 	public static IEnumerable<IReferrable> DescendantReferrables(this IReferrable root)
 	{
+		var result = new List<IReferrable>();
 		if (root is not null)
 		{
-			foreach (var child in root.Referrables)
+			foreach (var child in root.Referrables.ExceptNull())
 			{
-				if (child is not null)
+				result.Add(child);
+				foreach (var desc in child.DescendantReferrables())
 				{
-					yield return child;
-					foreach (var desc in child.DescendantReferrables())
-					{
-						if (desc is not null)
-						{
-							yield return desc;
-						}
-					}
+					result.Add(desc);
 				}
 			}
 		}
+		return result.ExceptNull();
 	}
 }

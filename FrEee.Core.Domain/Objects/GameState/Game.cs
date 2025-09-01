@@ -194,12 +194,14 @@ public class Game
 
 	private IReferrable[] LoadReferrables()
 	{
+		AreAbilitiesFrozen = true;
 		List<IReferrable> list = new();
 		list.AddRange(Galaxy?.IntrinsicAbilities ?? []);
 		list.AddRange(Galaxy?.StarSystems?.SelectMany(sys => sys.ReferrableTree()) ?? []);
 		list.AddRange(Empires.SelectMany(emp => emp.ReferrableTree()));
 		list.AddRange(Designs.SelectMany(emp => emp.ReferrableTree()));
 		list.AddRange(NewReferrables);
+		AreAbilitiesFrozen = false;
 		return list.Distinct().ExceptNull().ToArray();
 	}
 
@@ -437,14 +439,18 @@ public class Game
 		Current.PopulatePropertyValues();
 	}
 
-	public bool IsPopulatingPropertyValues { get; private set; }
+	/// <summary>
+	/// Abiltiies need to be frozen sometimes to prevent infinite recursion.
+	/// When abilities are frozen, shared abilities are not counted.
+	/// </summary>
+	public bool AreAbilitiesFrozen { get; private set; }
 
 	/// <summary>
 	/// Populates property values specified by <see cref="PopulateAttribute{T}"/>.
 	/// </summary>
 	private void PopulatePropertyValues()
 	{
-		IsPopulatingPropertyValues = true;
+		AreAbilitiesFrozen = true;
 		// TODO: cache list of properties to populate when deserializing?
 		// enumerate all referrables
 		var referrables = Referrables.ToArray();
@@ -474,7 +480,7 @@ public class Game
 				}
 			}
 		}
-		IsPopulatingPropertyValues = false;
+		AreAbilitiesFrozen = false;
 	}
 
 	/// <summary>

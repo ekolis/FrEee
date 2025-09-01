@@ -144,8 +144,8 @@ public abstract class MajorSpaceVehicle
 		get
 		{
 			// only vehicles with a space yard that are not under construction have a construction queue
-			// ignore shared abilities when populating property values though, to avoid infinite recursion
-			bool includeSharedAbilities = !Game.Current.IsPopulatingPropertyValues;
+			// ignore shared abilities when abilities are frozen though, to avoid infinite recursion
+			bool includeSharedAbilities = !Game.Current.AreAbilitiesFrozen;
 			if (this.HasAbility("Space Yard", includeSharedAbilities) && Sector is not null)
 				return constructionQueue;
 			else
