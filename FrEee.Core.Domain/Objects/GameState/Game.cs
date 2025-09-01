@@ -180,31 +180,27 @@ public class Game
 	{
 		get
 		{
-			if (referrables is null)
-			{
-				LoadReferrables();
-			}
+			referrables ??= LoadReferrables();
 			return referrables;
 		}
 	}
 
-	private IEnumerable<IReferrable>? referrables;
+	private IReferrable[]? referrables;
 
 	public void RefreshReferrables()
 	{
 		referrables = null;
 	}
 
-	private void LoadReferrables()
+	private IReferrable[] LoadReferrables()
 	{
-		IReferrable[] result = [
-			.. Galaxy?.IntrinsicAbilities ?? Enumerable.Empty<Ability>(),
-			.. Galaxy?.StarSystems?.SelectMany(sys => sys.ReferrableTree()) ?? Enumerable.Empty<IReferrable>(),
-			.. Empires.SelectMany(emp => emp.ReferrableTree()),
-			.. Designs.SelectMany(emp => emp.ReferrableTree()),
-			.. NewReferrables
-		];
-		referrables = result.Distinct().ExceptNull().ToArray();
+		List<IReferrable> list = new();
+		list.AddRange(Galaxy?.IntrinsicAbilities ?? []);
+		list.AddRange(Galaxy?.StarSystems?.SelectMany(sys => sys.ReferrableTree()) ?? []);
+		list.AddRange(Empires.SelectMany(emp => emp.ReferrableTree()));
+		list.AddRange(Designs.SelectMany(emp => emp.ReferrableTree()));
+		list.AddRange(NewReferrables);
+		return list.Distinct().ExceptNull().ToArray();
 	}
 
 	/// <summary>
