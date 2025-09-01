@@ -110,6 +110,13 @@ public abstract class MajorSpaceVehicle
 			// can only see cargo size if scanned but unowed
 			Cargo.SetFakeSize(true);
 		}
+
+		// ships that don't have a space yard or are not built yet can't use their construction queues
+		// so hide them from tehe player
+		if (!this.HasAbility("Space Yard", false) || Sector is null)
+		{
+			constructionQueue = null;
+		}
 	}
 
 	public long RemovePopulation(Race race, long amount)
@@ -138,20 +145,10 @@ public abstract class MajorSpaceVehicle
 			u.SpendTime(timeElapsed);
 	}
 
+	// TODO: eliminate duplicate property once game is over
 	private IConstructionQueue constructionQueue { get; set; }
-	public IConstructionQueue? ConstructionQueue
-	{
-		get
-		{
-			// only vehicles with a space yard that are not under construction have a construction queue
-			// ignore shared abilities when abilities are frozen though, to avoid infinite recursion
-			bool includeSharedAbilities = !Game.Current.AreAbilitiesFrozen;
-			if (this.HasAbility("Space Yard", includeSharedAbilities) && Sector is not null)
-				return constructionQueue;
-			else
-				return null;
-		}
-	}
+
+	public IConstructionQueue? ConstructionQueue => constructionQueue;
 
 	public override bool IsIdle => base.IsIdle || ConstructionQueue != null && ConstructionQueue.IsIdle;
 
