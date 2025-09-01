@@ -52,7 +52,7 @@ public record GameReference<T>(long ID)
 		{
 			if (typeof(T).IsAssignableTo(typeof(Empire)))
 			{
-				return (T)(object)Game.Current.Empires.SingleOrDefault(q => q.ID == ID);
+				return (T)(object)Game.Current.Empires.ExceptNull().SingleOrDefault(q => q.ID == ID);
 			}
 			if (typeof(T).IsAssignableTo(typeof(IDesign)))
 			{
