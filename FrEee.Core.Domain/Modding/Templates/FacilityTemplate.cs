@@ -241,6 +241,7 @@ public class FacilityTemplate : IModObject, IResearchable, IAbilityContainer, IT
 	/// The technology requirements for this facility.
 	/// </summary>
 	public IList<Requirement<Empire>> UnlockRequirements { get; private set; }
+	public IEnumerable<IReferrable> Referrables => [];
 
 	public static readonly FacilityTemplate Unknown = new FacilityTemplate { Name = "Unknown", ModID = "*UNKNOWN*" };
 
@@ -275,16 +276,6 @@ public class FacilityTemplate : IModObject, IResearchable, IAbilityContainer, IT
 	public Facility Instantiate()
 	{
 		return new Facility(this);
-	}
-
-	public bool IsObsoleteMemory(Empire emp)
-	{
-		return false;
-	}
-
-	public void Redact(Empire emp)
-	{
-		// TODO - tech items that aren't visible until some requirements are met
 	}
 
 	public override string ToString()

@@ -22,7 +22,9 @@ public class SentryOrder : IOrder
         Owner = Empire.Current;
     }
 
-    public bool ConsumesMovement
+	public IEnumerable<IReferrable> Referrables => [];
+
+	public bool ConsumesMovement
     {
         get { return true; }
     }

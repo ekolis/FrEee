@@ -17,7 +17,9 @@ public class RecycleFacilityOrCargoOrder : IOrder
         Target = target;
     }
 
-    public IRecycleBehavior Behavior { get; private set; }
+	public IEnumerable<IReferrable> Referrables => [];
+
+	public IRecycleBehavior Behavior { get; private set; }
 
     public bool ConsumesMovement
     {

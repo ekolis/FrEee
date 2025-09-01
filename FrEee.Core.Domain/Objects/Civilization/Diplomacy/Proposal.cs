@@ -19,6 +19,8 @@ public class Proposal : Command<Empire>, IFoggable, IReferrable
 		Recipient = recipient;
 	}
 
+	public IEnumerable<IReferrable> Referrables => [];
+
 	public string Description
 	{
 		get

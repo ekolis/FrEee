@@ -442,7 +442,7 @@ public static class CommonExtensions
 
 		// look for the real object
 		if (emp.Memory.Any(kvp => kvp.Value == f))
-			return (IFoggable)Game.Current.referrables[emp.Memory.Single(kvp => kvp.Value == f).Key];
+			return (IFoggable)Game.Current.GetReferrable(emp.Memory.Single(kvp => kvp.Value == f).Key);
 
 		// nothing found?
 		return null;

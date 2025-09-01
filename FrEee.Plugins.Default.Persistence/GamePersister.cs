@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using FrEee.Extensions;
 using FrEee.Objects.GameState;
 using FrEee.Persistence;
 using static Community.CsharpSqlite.Sqlite3;
@@ -46,6 +47,10 @@ public class GamePersister
 
 	public GameID Save(Game obj)
 	{
+		foreach (var referrable in obj.Referrables.Where(q => !q.HasValidID()))
+		{
+			obj.AssignID(referrable);
+		}
 		var gameID = new GameID(obj.Name, obj.TurnNumber, obj.PlayerNumber);
 		using FileStream fs = new(
 			Path.Combine(

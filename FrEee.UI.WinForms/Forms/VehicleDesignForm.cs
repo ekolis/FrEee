@@ -513,6 +513,7 @@ public partial class VehicleDesignForm : GameForm
 				Design.IsNew = true;
 
 				// add design here
+				Game.Current.Designs.Add(Design);
 				Empire.Current.KnownDesigns.Add(Design);
 			}
 

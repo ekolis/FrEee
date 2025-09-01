@@ -60,6 +60,12 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 		EnabledMinisters = new SafeDictionary<string, ICollection<string>>(); 
 	}
 
+	public IEnumerable<IReferrable> Referrables => 
+		[
+		PrimaryRace,
+		..Waypoints,
+	];
+
 	/// <summary>
 	/// The current empire being controlled by the player.
 	/// </summary>
@@ -878,14 +884,14 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 			showit = true; // see allies' score if ally score flag enabled
 		else if (disp.HasFlag(ScoreDisplay.All))
 			showit = true; // see all players' score if all score flag enabled
-		if (showit == false)
+		if (!showit)
 			return null; // can't see score
 
 		// OK, we can see it, now compute the score
 		// TODO - moddable score weightings
 		int score = 0;
-		score += Game.Current.Referrables.OfType<IVehicle>().OwnedBy(this).Sum(v => v.Cost.Sum(kvp => kvp.Value)); // vehicle cost
-		score += ColonizedPlanets.SelectMany(p => p.Colony.Facilities).Sum(f => f.Cost.Sum(kvp => kvp.Value)); // facility cost
+		score += Game.Current.Galaxy.FindSpaceObjects<IVehicle>().OwnedBy(this).Sum(v => v.Cost.Values.Sum()); // vehicle cost
+		score += ColonizedPlanets.SelectMany(p => p.Colony.Facilities).Sum(f => f.Cost.Values.Sum()); // facility cost
 		foreach (var kvp in ResearchedTechnologies)
 		{
 			// researched tech cost

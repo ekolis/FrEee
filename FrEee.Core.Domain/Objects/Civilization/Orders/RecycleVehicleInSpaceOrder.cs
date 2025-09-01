@@ -15,7 +15,9 @@ public class RecycleVehicleInSpaceOrder : IOrder
         Behavior = behavior;
     }
 
-    public IRecycleBehavior Behavior { get; private set; }
+	public IEnumerable<IReferrable> Referrables => [];
+
+	public IRecycleBehavior Behavior { get; private set; }
 
     public bool ConsumesMovement
     {

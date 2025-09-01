@@ -25,6 +25,8 @@ public class Race : INamed, IAbilityObject, IPictorial, IReferrable
 		Aptitudes = new SafeDictionary<string, int>();
 	}
 
+	public IEnumerable<IReferrable> Referrables => IntrinsicAbilities;
+
 	public IEnumerable<Ability> Abilities
 	{
 		get { return Traits.SelectMany(t => t.Abilities); }

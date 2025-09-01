@@ -386,16 +386,6 @@ public class Hull<T> : IHull<T> where T : IVehicle
 		return Pictures.GetPortrait(this, shipsetPath);
 	}
 
-	public bool IsObsoleteMemory(Empire emp)
-	{
-		return false;
-	}
-
-	public void Redact(Empire emp)
-	{
-		// TODO - tech items that aren't visible until some requirements are met
-	}
-
 	public override string ToString()
 	{
 		return Name;

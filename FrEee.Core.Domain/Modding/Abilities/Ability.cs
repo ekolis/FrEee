@@ -184,7 +184,8 @@ public class Ability : IContainable<IAbilityObject>, IReferrable, IModObject, ID
         }
     }
 
-    private ModReference<AbilityRule> rule { get; set; }
+    public IEnumerable<IReferrable> Referrables => [];
+	private ModReference<AbilityRule> rule { get; set; }
 
     public void Dispose()
     {

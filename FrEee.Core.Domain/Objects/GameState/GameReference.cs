@@ -2,6 +2,9 @@ using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 using FrEee.Utility;
+using FrEee.Vehicles;
+using System.Linq;
+using FrEee.Objects.Civilization;
 
 namespace FrEee.Objects.GameState;
 
@@ -31,9 +34,7 @@ public record GameReference<T>(long ID)
 			ID = Game.Current.AssignID(t);
 		if (!HasValue)
 		{
-			Game.Current.referrables[t.ID] = t;
-			if (!HasValue)
-				throw new ArgumentException("{0} does not exist in the current game so it cannot be referenced.".F(t));
+			throw new ArgumentException("{0} does not exist in the current game so it cannot be referenced.".F(t));
 		}
 	}
 	/// <summary>
@@ -49,7 +50,19 @@ public record GameReference<T>(long ID)
 	{
 		get
 		{
-			return (T)Game.Current.GetReferrable(ID);
+			if (typeof(T).IsAssignableTo(typeof(Empire)))
+			{
+				return (T)(object)Game.Current.Empires.SingleOrDefault(q => q.ID == ID);
+			}
+			if (typeof(T).IsAssignableTo(typeof(IDesign)))
+			{
+				return (T)Game.Current.Designs.SingleOrDefault(q => q.ID == ID);
+			}
+			else
+			{
+				// general referrables with no specific lookup
+				return (T)Game.Current.GetReferrable(ID);
+			}
 		}
 	}
 

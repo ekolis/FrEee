@@ -375,4 +375,18 @@ public static class GameEnumerableExtensions
 	{
 		return list.BelongingTo(null);
 	}
+
+	public static IEnumerable<IReferrable> ReferrableTree(this IReferrable root)
+	{
+		if (root is null)
+		{
+			return Enumerable.Empty<IReferrable>();
+		}
+
+		IReferrable[] result = [
+			root,
+			.. root.Referrables.ExceptNull().SelectMany(q => q.ReferrableTree())
+		];
+		return result;
+	}
 }

@@ -259,4 +259,6 @@ public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>, II
 				AngerDeltas[race] += trigger(race.HappinessModel);
 		}
 	}
+
+	public IEnumerable<IReferrable> Referrables => [..Facilities, ..Cargo.Units, ConstructionQueue];
 }

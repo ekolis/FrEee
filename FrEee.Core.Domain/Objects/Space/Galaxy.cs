@@ -76,6 +76,11 @@ public class Galaxy
 	public ICollection<ObjectLocation<StarSystem>> StarSystemLocations { get; private set; } = new List<ObjectLocation<StarSystem>>();
 
 	/// <summary>
+	/// The star systems in the galaxy.
+	/// </summary>
+	public IEnumerable<StarSystem> StarSystems => StarSystemLocations.Select(q => q.Item);
+
+	/// <summary>
 	/// Vertical space occupied by star systems.
 	/// </summary>
 	public int UsedHeight

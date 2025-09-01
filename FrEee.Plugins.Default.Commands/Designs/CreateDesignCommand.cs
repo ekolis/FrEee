@@ -38,8 +38,10 @@ public class CreateDesignCommand<T> : Command<Empire>, ICreateDesignCommand wher
 	public override void Execute()
 	{
 		Design.VehiclesBuilt = 0; // in case it was tested in the simulator
+		Design.Owner = Issuer;
 		if (Design.Warnings.Any())
 			Issuer.Log.Add(Design.CreateLogMessage("The " + Design.Name + " " + Design.VehicleTypeName + " design cannot be saved because it has warnings.", LogMessageType.Warning));
+		Game.Current.Designs.Add(Design);
 		Issuer.KnownDesigns.Add(Design);
 	}
 }

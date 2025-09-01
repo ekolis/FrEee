@@ -25,6 +25,8 @@ public abstract class StellarObject : IStellarObject, IAbstractDataObject
 		StoredResources = new ResourceQuantity();
 	}
 
+	public virtual IEnumerable<IReferrable> Referrables => IntrinsicAbilities;
+
 	// TODO - rename to IntrinsicAbilities in IAbilityContainer and remove DoNotSerialize
 	[DoNotSerialize]
 	public IList<Ability> Abilities

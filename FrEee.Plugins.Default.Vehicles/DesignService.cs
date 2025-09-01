@@ -102,6 +102,7 @@ public class DesignService
 			d.TurnNumber = Game.Current.TurnNumber;
 			d.Iteration = Empire.Current.KnownDesigns.OwnedBy(Empire.Current).Where(x => x.BaseName == d.BaseName && x.IsUnlocked()).MaxOrDefault(x => x.Iteration) + 1; // auto assign nex available iteration
 			d.IsObsolete = d.IsObsolescent;
+			Game.Current.Designs.Add(d);
 			Empire.Current.KnownDesigns.Add(d); // only client side, don't need to worry about other players spying :)
 		});
 

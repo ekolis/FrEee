@@ -27,7 +27,9 @@ public class ColonizeOrder : IOrder
         Planet = planet;
     }
 
-    public bool ConsumesMovement
+	public IEnumerable<IReferrable> Referrables => [];
+
+	public bool ConsumesMovement
     {
         get { return true; }
     }

@@ -351,16 +351,6 @@ public class Technology : IModObject, IResearchable
 		return GetLevelCost(emp.ResearchedTechnologies[this] + 1, emp);
 	}
 
-	public bool IsObsoleteMemory(Empire emp)
-	{
-		return false;
-	}
-
-	public void Redact(Empire emp)
-	{
-		// TODO - tech items that aren't visible until some requirements are met
-	}
-
 	public override string ToString()
 	{
 		return Name;

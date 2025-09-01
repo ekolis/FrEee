@@ -24,6 +24,7 @@ using FrEee.Gameplay.Commands.Notes;
 using FrEee.Vehicles.Types;
 using FrEee.Processes.Construction;
 using FrEee.Persistence;
+using FrEee.Vehicles;
 
 namespace FrEee.Objects.GameState;
 
@@ -41,7 +42,6 @@ public class Game
 		Empires = new List<Empire>();
 		Name = "Unnamed";
 		TurnNumber = 1;
-		referrables = new Dictionary<long, IReferrable>();
 		AbilityCache = new SafeDictionary<IAbilityObject, IEnumerable<Ability>>();
 		CommonAbilityCache = new SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>>();
 		SharedAbilityCache = new SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>>();
@@ -173,7 +173,42 @@ public class Game
 		get { return Empires.IndexOf(CurrentEmpire) + 1; }
 	}
 
-	public IEnumerable<IReferrable> Referrables { get { return referrables.Values; } }
+	/// <summary>
+	/// Any referrable objects contained within the game.
+	/// </summary>
+	public IEnumerable<IReferrable> Referrables
+	{
+		get
+		{
+			referrables ??= LoadReferrables();
+			return referrables;
+		}
+	}
+
+	private IReferrable[]? referrables;
+
+	public void RefreshReferrables()
+	{
+		referrables = null;
+	}
+
+	private IReferrable[] LoadReferrables()
+	{
+		AreAbilitiesFrozen = true;
+		List<IReferrable> list = new();
+		list.AddRange(Galaxy?.IntrinsicAbilities ?? []);
+		list.AddRange(Galaxy?.StarSystems?.SelectMany(sys => sys.ReferrableTree()) ?? []);
+		list.AddRange(Empires.SelectMany(emp => emp.ReferrableTree()));
+		list.AddRange(Designs.SelectMany(emp => emp.ReferrableTree()));
+		list.AddRange(NewReferrables);
+		AreAbilitiesFrozen = false;
+		return list.Distinct().ExceptNull().ToArray();
+	}
+
+	/// <summary>
+	/// Newly added referrables created by player commands.
+	/// </summary>
+	public IList<IReferrable> NewReferrables { get; } = [];
 
 	/// <summary>
 	/// Notes that mod scripts can play with.
@@ -238,14 +273,6 @@ public class Game
 	internal SafeDictionary<Empire, ILookup<Empire, Clause>> ReceivedTreatyClauseCache { get; set; }
 
 	/// <summary>
-	/// Anything in the game that can be referenced from the client side
-	/// using a Reference object instead of passing whole objects around.
-	/// Stuff needs to be registered to be found though!
-	/// </summary>
-	[SerializationPriority(2)]
-	internal IDictionary<long, IReferrable> referrables { get; set; }
-
-	/// <summary>
 	/// Cache of abilities that are shared to empires from other objects due to treaties.
 	/// </summary>
 	[DoNotSerialize]
@@ -274,6 +301,11 @@ public class Game
 	private IDictionary<Sector, double> lastBattleTimestamps = new SafeDictionary<Sector, double>();
 
 	private string? stringValue;
+
+	/// <summary>
+	/// Any vehicle designs which exist in this game.
+	/// </summary>
+	public ISet<IDesign> Designs { get; set; } = new HashSet<IDesign>();
 
 	public static string GetEmpireCommandsSavePath(string gameName, int turnNumber, int empireNumber)
 	{
@@ -408,16 +440,25 @@ public class Game
 	}
 
 	/// <summary>
+	/// Abiltiies need to be frozen sometimes to prevent infinite recursion.
+	/// When abilities are frozen, shared abilities are not counted.
+	/// </summary>
+	public bool AreAbilitiesFrozen { get; private set; }
+
+	/// <summary>
 	/// Populates property values specified by <see cref="PopulateAttribute{T}"/>.
 	/// </summary>
 	private void PopulatePropertyValues()
 	{
+		AreAbilitiesFrozen = true;
 		// TODO: cache list of properties to populate when deserializing?
 		// enumerate all referrables
-		foreach (var referrable in Referrables)
+		var referrables = Referrables.ToArray();
+		var typeGroups = referrables.GroupBy(q => q.GetType()).ToArray();
+		foreach (var typeGroup in typeGroups)
 		{
-			// find referrable's properties
-			var props = referrable.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+			// find type's properties
+			var props = typeGroup.Key.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 			foreach (var prop in props)
 			{
 				// search property's attributes for PopulateAttribute<T>
@@ -430,12 +471,16 @@ public class Game
 						var populatorType = att.GetType().GetGenericArguments()[0];
 						var populator = (IPopulator)populatorType.Instantiate();
 
-						// get value from populator and save it into the referrable's property
-						prop.SetValue(referrable, populator.Populate(referrable));
+						foreach (var referrable in typeGroup)
+						{
+							// get value from populator and save it into the referrable's property
+							prop.SetValue(referrable, populator.Populate(referrable));
+						}
 					}
 				}
 			}
 		}
+		AreAbilitiesFrozen = false;
 	}
 
 	/// <summary>
@@ -525,29 +570,21 @@ public class Game
 		}
 
 		if (r.HasValidID())
-			return r.ID; // no need to reassign ID
-		else if (referrables.ContainsKey(r.ID))
 		{
-			// HACK - already exists, fix referrables list
-			// we need to fix start combatants having the same IDs as the real objects...
-			Console.Error.WriteLine("The galaxy thinks that " + referrables[r.ID] + " has the ID " + r.ID + " but " + r + " claims to have that ID as well.");
-			referrables[r.ID] = r;
-			return r.ID;
+			return r.ID; // no need to reassign ID
 		}
 
 		var oldid = r.ID;
 		long newid = oldid <= 0 ? id : oldid;
 
-		while (newid <= 0 || referrables.ContainsKey(newid))
+		while (newid <= 0 || Referrables.Any(q => q.ID == newid))
 		{
 			newid = RandomHelper.Range(1L, long.MaxValue);
 		}
 		r.ID = newid;
-		referrables.Add(newid, r);
 
-		// clean up old IDs
-		if (oldid > 0 && referrables.ContainsKey(oldid) && oldid != newid)
-			referrables.Remove(oldid);
+		Game.Current.NewReferrables.Add(r);
+		Game.Current.RefreshReferrables();
 
 		return newid;
 	}
@@ -560,11 +597,6 @@ public class Game
 	{
 		var parser = new ObjectGraphParser();
 		bool canAssign = true;
-		foreach (var kvp in referrables.ToArray())
-		{
-			if (kvp.Value.IsDisposed)
-				referrables.Remove(kvp.Key);
-		}
 		parser.Property += (pname, o, val) =>
 			{
 				var prop = o.GetType().FindProperty(pname);
@@ -689,11 +721,9 @@ public class Game
 		return GetGameSavePath(Name, TurnNumber, emp == null ? 0 : Empires.IndexOf(emp) + 1);
 	}
 
-	public IReferrable GetReferrable(long key)
+	public IReferrable? GetReferrable(long key)
 	{
-		if (!referrables.ContainsKey(key))
-			return null;
-		return referrables[key];
+		return Referrables.FirstOrDefault(q => q.ID == key);
 	}
 
 	/// <summary>
@@ -702,10 +732,10 @@ public class Game
 	/// <typeparam name="T"></typeparam>
 	/// <param name="fakeobj">The fake referrable.</param>
 	/// <returns></returns>
-	public T GetReferrable<T>(T fakeobj)
+	public T? GetReferrable<T>(T fakeobj)
 		where T : IReferrable
 	{
-		return (T)GetReferrable(fakeobj.ID);
+		return (T?)GetReferrable(fakeobj.ID);
 	}
 
 	/// <summary>
@@ -814,6 +844,14 @@ public class Game
 	/// </summary>
 	public void Redact()
 	{
+		if (CurrentEmpire is null)
+		{
+			throw new InvalidOperationException("Can't redact the Game while the CurrentEmpire is null.");
+		}
+
+		// reset referrables cache before redacting to make sure we've got an up to date list of what needs to be redacted
+		RefreshReferrables();
+
 		// save off empire scores first, before data is removed
 		foreach (var emp in Empires)
 		{
@@ -825,9 +863,10 @@ public class Game
 			ScriptNotes.Clear();
 
 		// redact sub objects
-		var parser = new ObjectGraphParser();
-		parser.StartObject += redactParser_StartObject;
-		parser.Parse(this);
+		foreach (var foggable in Referrables.OfType<IFoggable>())
+		{
+			foggable.Redact(CurrentEmpire);
+		}
 
 		// clean up redacted objects that are not IFoggable
 		foreach (var x in Galaxy.StarSystemLocations.Where(x => x.Item.IsDisposed).ToArray())
@@ -839,17 +878,9 @@ public class Game
 			kvp.Value.Dispose();
 			Empire.Current.Memory.Remove(kvp);
 		}
-	}
 
-	public void Save(Stream stream, bool assignIDs = true)
-	{
-		// TODO: put all this code in GamePersister
-		if (assignIDs)
-			CleanGameState();
-		foreach (var kvp in referrables.Where(kvp => kvp.Value.IsDisposed).ToArray())
-			referrables.Remove(kvp);
-
-		Services.Persistence.Game.SaveToStream(this, stream);
+		// reset referrables cache after redacting to make sure we don't have any lingering references
+		RefreshReferrables();
 	}
 
 	/// <summary>
@@ -863,8 +894,6 @@ public class Game
 		// TODO: put all this code in GamePersister
 		if (assignIDs)
 			CleanGameState();
-		foreach (var kvp in referrables.Where(kvp => kvp.Value.ID < 0).ToArray())
-			referrables.Remove(kvp);
 		string filename;
 		if (CurrentEmpire == null)
 			filename = Name + "_" + TurnNumber + ".gam";
@@ -922,65 +951,10 @@ public class Game
 		return Name + " - " + CurrentEmpire.Name + " - " + CurrentEmpire.LeaderName + " - " + Stardate;
 	}
 
-	public void UnassignID(long id)
-	{
-		if (referrables.ContainsKey(id))
-		{
-			var r = referrables[id];
-			r.ID = -1;
-			referrables.Remove(id);
-		}
-	}
-
 	public void UnassignID(IReferrable r)
 	{
-		if (r == null || r.ID < 0)
-			return; // nothing to do
-		if (referrables.ContainsKey(r.ID))
-		{
-			if (referrables[r.ID] == r)
-				referrables.Remove(r.ID);
-			else
-			{
-				var galaxyThinksTheIDIs = referrables.Where(kvp => kvp.Value == r);
-				foreach (var wrongID in galaxyThinksTheIDIs)
-				{
-					referrables.Remove(wrongID);
-				}
-			}
-		}
-		else if (referrables.Values.Contains(r))
-		{
-			try
-			{
-				referrables.Remove(referrables.Single(kvp => kvp.Value == r));
-			}
-			catch (InvalidOperationException ex)
-			{
-				// HACK - why is the item not being found? sequence contains no matching element? it's right there!
-				Console.Error.WriteLine(ex);
-			}
-		}
-		//r.ID = -1;
-	}
-
-	internal void SpaceObjectIDCheck(string when)
-	{
-		foreach (var sobj in Galaxy.FindSpaceObjects<ISpaceObject>().ToArray())
-		{
-			if (!referrables.ContainsKey(sobj.ID))
-				AssignID(sobj);
-			if (sobj.ID > 0)
-			{
-				var r = referrables[sobj.ID];
-				if (r != sobj)
-				{
-					// HACK - assume the space object that's actually in space is "real"
-					referrables[sobj.ID] = sobj;
-					Console.Error.WriteLine("Space object identity mismatch " + when + " for ID=" + sobj.ID + ". " + sobj + " is actually in space so it is replacing " + r + " in the referrables collection.");
-				}
-			}
-		}
+		// referrable has probably already been removed from the game, so refresh the main list to take that into account
+		RefreshReferrables();
 	}
 
 	/// <summary>

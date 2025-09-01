@@ -21,10 +21,12 @@ public class TransferCargoOrder : IOrder
         Target = target;
     }
 
-    /// <summary>
-    /// The cargo delta, which specifies what cargo is to be transferred.
-    /// </summary>
-    public CargoDelta CargoDelta { get; set; }
+	public IEnumerable<IReferrable> Referrables => [];
+
+	/// <summary>
+	/// The cargo delta, which specifies what cargo is to be transferred.
+	/// </summary>
+	public CargoDelta CargoDelta { get; set; }
 
     public bool ConsumesMovement
     {

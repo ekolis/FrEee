@@ -24,7 +24,9 @@ public class WarpOrder : IOrder
         WarpPoint = warpPoint;
     }
 
-    public bool ConsumesMovement
+	public IEnumerable<IReferrable> Referrables => [];
+
+	public bool ConsumesMovement
     {
         get { return true; }
     }

@@ -30,6 +30,8 @@ public class Facility : IOwnableAbilityObject, IConstructable, IDamageable, IDis
 		Hitpoints = MaxHitpoints;
 	}
 
+	public IEnumerable<IReferrable> Referrables => [];
+
 	public IEnumerable<Ability> Abilities
 	{
 		get { return Template.Abilities; }

@@ -37,6 +37,9 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 		Iteration = 1;
 	}
 
+	// hull is a mod object, mounted component templates can't be referenced directly, only by index
+	public IEnumerable<IReferrable> Referrables => [..IntrinsicAbilities];
+
 	public IEnumerable<Ability> Abilities
 	{
 		get { return Hull.Abilities.Concat(Components.SelectMany(c => c.UnstackedAbilities)).Stack(this); }
@@ -644,6 +647,7 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 		if (IsDisposed)
 			return;
 		Game.Current.UnassignID(this);
+		Game.Current.Designs.Remove(this);
 		foreach (var emp in Game.Current.Empires.Where(e => e != null))
 			emp.KnownDesigns.Remove(this);
 		IsDisposed = true;
