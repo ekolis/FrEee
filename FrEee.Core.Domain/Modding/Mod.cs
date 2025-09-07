@@ -160,7 +160,7 @@ public class Mod : IDisposable
 	/// </summary>
 	public ICollection<Mount> Mounts { get; private set; }
 
-	private ConcurrentBag<IModObject> objects = [ FacilityTemplate.Unknown ];
+	private ConcurrentQueue<IModObject> objects = new([ FacilityTemplate.Unknown ]);
 
 	/// <summary>
 	/// All mod objects.
@@ -307,7 +307,7 @@ public class Mod : IDisposable
 			}
 
 			if (!objects.Contains(mo))
-				objects.Add(mo);
+				objects.Enqueue(mo);
 		}
 	}
 
