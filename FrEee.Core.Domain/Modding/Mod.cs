@@ -392,75 +392,75 @@ public class Mod : IDisposable
 			// try to filter mod objects quickly
 			if (typeof(T).IsAssignableTo(typeof(AbilityRule)))
 			{
-				list = Mod.Current.AbilityRules;
+				list = AbilityRules;
 			}
 			else if (typeof(T).IsAssignableTo(typeof(Trait)))
 			{
-				list = Mod.Current.Traits;
+				list = Traits;
 			}
 			else if (typeof(T).IsAssignableTo(typeof(Technology)))
 			{
-				list = Mod.Current.Technologies;
+				list = Technologies;
 			}
 			else if (typeof(T).IsAssignableTo(typeof(FacilityTemplate)))
 			{
-				list = Mod.Current.FacilityTemplates;
+				list = FacilityTemplates;
 			}
 			else if (typeof(T).IsAssignableTo(typeof(IHull)))
 			{
-				list = Mod.Current.Hulls;
+				list = Hulls;
 			}
 			else if (typeof(T).IsAssignableTo(typeof(DamageType)))
 			{
-				list = Mod.Current.DamageTypes;
+				list = DamageTypes;
 			}
 			else if (typeof(T).IsAssignableTo(typeof(ComponentTemplate)))
 			{
-				list = Mod.Current.ComponentTemplates;
+				list = ComponentTemplates;
 			}
 			else if (typeof(T).IsAssignableTo(typeof(Mount)))
 			{
-				list = Mod.Current.Mounts;
+				list = Mounts;
 			}
 			else if (typeof(T).IsAssignableTo(typeof(StellarObjectSize)))
 			{
-				list = Mod.Current.StellarObjectSizes;
+				list = StellarObjectSizes;
 			}
 			else if (typeof(T).IsAssignableTo(typeof(StarSystemTemplate)))
 			{
-				list = Mod.Current.StarSystemTemplates;
+				list = StarSystemTemplates;
 			}
 			else if (typeof(T).IsAssignableTo(typeof(RandomAbilityTemplate)))
 			{
-				list = Mod.Current.StellarAbilityTemplates;
+				list = StellarAbilityTemplates;
 			}
 			else if (typeof(T).IsAssignableTo(typeof(GalaxyTemplate)))
 			{
-				list = Mod.Current.GalaxyTemplates;
+				list = GalaxyTemplates;
 			}
 			else if (typeof(T).IsAssignableTo(typeof(StellarObject)))
 			{
-				list = Mod.Current.StellarObjectTemplates;
+				list = StellarObjectTemplates;
 			}
 			else if (typeof(T).IsAssignableTo(typeof(HappinessModel)))
 			{
-				list = Mod.Current.HappinessModels;
+				list = HappinessModels;
 			}
 			else if (typeof(T).IsAssignableTo(typeof(Culture)))
 			{
-				list = Mod.Current.Cultures;
+				list = Cultures;
 			}
 			else if (typeof(T).IsAssignableTo(typeof(AI<Empire, Game>)))
 			{
-				list = Mod.Current.EmpireAIs;
+				list = EmpireAIs;
 			}
 			else if (typeof(T).IsAssignableTo(typeof(EventType)))
 			{
-				list = Mod.Current.EventTypes;
+				list = EventTypes;
 			}
 			else if (typeof(T).IsAssignableTo(typeof(EventTemplate)))
 			{
-				list = Mod.Current.EventTemplates;
+				list = EventTemplates;
 			}
 
 			// find the mod object searched for
