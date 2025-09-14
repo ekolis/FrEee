@@ -1,10 +1,9 @@
-using FrEee.Utility;
-using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Extensions;
 using FrEee.Objects.GameState;
-using System.Threading;
+using FrEee.Utility;
 
 namespace FrEee.Modding;
 
@@ -54,15 +53,7 @@ public record ModReference<T>(string ID)
 	/// Resolves the reference.
 	/// </summary>
 	/// <returns></returns>
-	public T Value
-	{
-		get
-		{
-			var objs = Mod.Current.Objects.OfType<T>().ToDictionary(q => q.ModID, q => q);
-			var obj = objs[ID];
-			return obj;
-		}
-	}
+	public T Value => Mod.Current.Find<T>(ID);
 
 	public static implicit operator ModReference<T>?(T? t)
 	{

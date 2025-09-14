@@ -1,21 +1,20 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using FrEee.Objects.Civilization;
-using FrEee.Objects.Space;
-using FrEee.Objects.Technology;
-using FrEee.Modding.Loaders;
-using FrEee.Modding.Templates;
-using FrEee.Utility;
+using System.Threading;
 using FrEee.Extensions;
-using FrEee.Objects.GameState;
-using FrEee.Processes.AI;
 using FrEee.Modding.Abilities;
 using FrEee.Modding.Scripts;
+using FrEee.Modding.Templates;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.GameState;
+using FrEee.Objects.Space;
+using FrEee.Objects.Technology;
+using FrEee.Processes.AI;
 using FrEee.Vehicles;
-using System.Collections.Concurrent;
 
 namespace FrEee.Modding;
 
@@ -58,7 +57,7 @@ public class Mod : IDisposable
 		FacilityTemplates.Add(FacilityTemplate.Unknown);
 	}
 
-	private object locker = new object();
+	private readonly Lock locker = new();
 
 	/// <summary>
 	/// The currently loaded mod.
@@ -387,7 +386,85 @@ public class Mod : IDisposable
 		T? result = default;
 		lock (locker)
 		{
-			result = Objects.OfType<T>().SingleOrDefault(q => q.ModID == modid);
+			// fallback: scan all mod objects
+			IEnumerable<IModObject> list = Objects;
+
+			// try to filter mod objects quickly
+			if (typeof(T).IsAssignableTo(typeof(AbilityRule)))
+			{
+				list = Mod.Current.AbilityRules;
+			}
+			else if (typeof(T).IsAssignableTo(typeof(Trait)))
+			{
+				list = Mod.Current.Traits;
+			}
+			else if (typeof(T).IsAssignableTo(typeof(Technology)))
+			{
+				list = Mod.Current.Technologies;
+			}
+			else if (typeof(T).IsAssignableTo(typeof(FacilityTemplate)))
+			{
+				list = Mod.Current.FacilityTemplates;
+			}
+			else if (typeof(T).IsAssignableTo(typeof(IHull)))
+			{
+				list = Mod.Current.Hulls;
+			}
+			else if (typeof(T).IsAssignableTo(typeof(DamageType)))
+			{
+				list = Mod.Current.DamageTypes;
+			}
+			else if (typeof(T).IsAssignableTo(typeof(ComponentTemplate)))
+			{
+				list = Mod.Current.ComponentTemplates;
+			}
+			else if (typeof(T).IsAssignableTo(typeof(Mount)))
+			{
+				list = Mod.Current.Mounts;
+			}
+			else if (typeof(T).IsAssignableTo(typeof(StellarObjectSize)))
+			{
+				list = Mod.Current.StellarObjectSizes;
+			}
+			else if (typeof(T).IsAssignableTo(typeof(StarSystemTemplate)))
+			{
+				list = Mod.Current.StarSystemTemplates;
+			}
+			else if (typeof(T).IsAssignableTo(typeof(RandomAbilityTemplate)))
+			{
+				list = Mod.Current.StellarAbilityTemplates;
+			}
+			else if (typeof(T).IsAssignableTo(typeof(GalaxyTemplate)))
+			{
+				list = Mod.Current.GalaxyTemplates;
+			}
+			else if (typeof(T).IsAssignableTo(typeof(StellarObject)))
+			{
+				list = Mod.Current.StellarObjectTemplates;
+			}
+			else if (typeof(T).IsAssignableTo(typeof(HappinessModel)))
+			{
+				list = Mod.Current.HappinessModels;
+			}
+			else if (typeof(T).IsAssignableTo(typeof(Culture)))
+			{
+				list = Mod.Current.Cultures;
+			}
+			else if (typeof(T).IsAssignableTo(typeof(AI<Empire, Game>)))
+			{
+				list = Mod.Current.EmpireAIs;
+			}
+			else if (typeof(T).IsAssignableTo(typeof(EventType)))
+			{
+				list = Mod.Current.EventTypes;
+			}
+			else if (typeof(T).IsAssignableTo(typeof(EventTemplate)))
+			{
+				list = Mod.Current.EventTemplates;
+			}
+
+			// find the mod object searched for
+			result = list.OfType<T>().FirstOrDefault(q => q.ModID == modid);
 		}
 		return result;
 	}
