@@ -14,14 +14,16 @@ public partial class GalaxyMap
 	private ElementReference normal_canvas;
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
-		var size = VM.Scale + 1;
-		var xoffset = VM.Width / 2d;
-		var yoffset = VM.Height / 2d;
+		var size = VM.Scale;
+
+		// location of map tile (0,0) relative to the upper left corner of the map
+		var xoffset = -VM.MinX;
+		var yoffset = -VM.MinY;
 
 		await using (var ctx = await helper_canvas.GetContext2DAsync())
 		{
 			await ctx.ClearRectAsync(0, 0, VM.Width, VM.Height);
-			await ctx.SetTransformAsync(size, 0, 0, size, (xoffset + 0.5) * size, (yoffset + 0.5) * size);
+			await ctx.SetTransformAsync(size, 0, 0, size, xoffset * size, yoffset * size);
 			await ctx.RestoreAsync();
 			await ctx.SaveAsync();
 			await ctx.StrokeStyleAsync("white");
@@ -32,8 +34,8 @@ public partial class GalaxyMap
 				foreach (var dest in connections.Value)
 				{
 					// TODO: display one way warps differently (arrows, incomplete lines, gradients?)
-					await ctx.MoveToAsync(src.Location.X + 1, src.Location.Y - 1);
-					await ctx.LineToAsync(dest.Location.X + 1, dest.Location.Y - 1);
+					await ctx.MoveToAsync(src.Location.X + 0.5, src.Location.Y + 0.5);
+					await ctx.LineToAsync(dest.Location.X + 0.5, dest.Location.Y + 0.5);
 					await ctx.StrokeAsync();
 				}
 			}
