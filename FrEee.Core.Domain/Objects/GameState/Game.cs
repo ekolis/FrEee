@@ -718,8 +718,17 @@ public class Game
 		}
 		else if (typeof(T).IsAssignableTo(typeof(ISpaceObject)))
 		{
-			list = (IEnumerable<IReferrable>)(Galaxy?.FindSpaceObjects<T>() ?? []);
+			// find space objects both in space and under construction
+			list = (Galaxy?.SpaceObjects ?? []).OfType<T>()
+				.Union((Galaxy?.ConstructionQueues ?? []).SelectMany(q =>
+					q.Orders.Select(w => w.Item).OfType<T>()))
+				.Cast<IReferrable>();
 		}
+		else if (typeof(T).IsAssignableTo(typeof(IConstructionQueue)))
+		{
+			list = Galaxy?.ConstructionQueues ?? [];
+		}
+		// TODO: construction orders, ship orders, commands, ???
 		else if (typeof(T).IsAssignableTo(typeof(IDesign)))
 		{
 			list = Designs;

@@ -7,6 +7,7 @@ using FrEee.Extensions;
 using FrEee.Modding.Abilities;
 using FrEee.Objects.Civilization;
 using FrEee.Objects.GameState;
+using FrEee.Processes.Construction;
 using FrEee.Utility;
 
 namespace FrEee.Objects.Space;
@@ -126,4 +127,15 @@ public class Galaxy
 	{
 		return StarSystemLocations.PickRandom(prng).Item.PickRandomSector(prng);
 	}
+
+	/// <summary>
+	/// All space objects, except ones being constructed.
+	/// </summary>
+	public IEnumerable<ISpaceObject> SpaceObjects => FindSpaceObjects<ISpaceObject>();
+
+	/// <summary>
+	/// All construction queues belonging to space objects, except ones being constructed.
+	/// </summary>
+	public IEnumerable<IConstructionQueue> ConstructionQueues =>
+		FindSpaceObjects<IConstructor>().Select(q => q.ConstructionQueue).ExceptNull();
 }
