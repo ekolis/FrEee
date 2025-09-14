@@ -7,7 +7,6 @@ using System.Reflection;
 using System.Threading;
 using FrEee.Extensions;
 using FrEee.Modding.Abilities;
-using FrEee.Modding.Loaders;
 using FrEee.Modding.Scripts;
 using FrEee.Modding.Templates;
 using FrEee.Objects.Civilization;
@@ -15,9 +14,7 @@ using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Processes.AI;
-using FrEee.Utility;
 using FrEee.Vehicles;
-using static IronPython.Modules._ast;
 
 namespace FrEee.Modding;
 
