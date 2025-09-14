@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 using FrEee.Extensions;
 using FrEee.Modding.Abilities;
 using FrEee.Objects.Civilization;
+using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.GameState;
 using FrEee.Processes.Construction;
 using FrEee.Utility;
+using FrEee.Vehicles;
+using FrEee.Vehicles.Types;
 
 namespace FrEee.Objects.Space;
 
@@ -128,14 +131,30 @@ public class Galaxy
 		return StarSystemLocations.PickRandom(prng).Item.PickRandomSector(prng);
 	}
 
-	/// <summary>
-	/// All space objects, except ones being constructed.
-	/// </summary>
-	public IEnumerable<ISpaceObject> SpaceObjects => FindSpaceObjects<ISpaceObject>();
+	// define a bunch of rules for how objects are linked together
+	// TODO: put all this in a database
 
 	/// <summary>
-	/// All construction queues belonging to space objects, except ones being constructed.
+	/// All space objects that are in space.
+	/// </summary>
+	/// <remarks>
+	/// Does not include space objects that are under construction or in cargo.
+	/// </remarks>
+	public IEnumerable<ISpaceObject> SpaceObjects =>
+		FindSpaceObjects<ISpaceObject>();
+
+	/// <summary>
+	/// All construction queues belonging to space objects that are in space.
 	/// </summary>
 	public IEnumerable<IConstructionQueue> ConstructionQueues =>
 		FindSpaceObjects<IConstructor>().Select(q => q.ConstructionQueue).ExceptNull();
+
+	public IEnumerable<IConstructionOrder> ConstructionOrders =>
+		ConstructionQueues.SelectMany(q => q.Orders);
+
+	public IEnumerable<IConstructable> ObjectsUnderConstruction =>
+		ConstructionOrders.Select(q => q.Item).ExceptNull();
+
+	public IEnumerable<ICargoContainer> CargoContainers =>
+		FindSpaceObjects<ICargoContainer>();
 }
