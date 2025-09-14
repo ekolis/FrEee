@@ -25,6 +25,8 @@ using FrEee.Vehicles.Types;
 using FrEee.Processes.Construction;
 using FrEee.Persistence;
 using FrEee.Vehicles;
+using FrEee.Objects.Civilization.CargoStorage;
+using FrEee.Objects.Civilization.Diplomacy.Messages;
 
 namespace FrEee.Objects.GameState;
 
@@ -95,7 +97,7 @@ public class Game
 	/// <summary>
 	/// The empires participating in the game.
 	/// </summary>
-	public IList<Empire> Empires { get; private set; }
+	public IList<Empire?> Empires { get; private set; }
 
 	/// <summary>
 	/// Per mille chance of a random event occurring, per turn, per player.
@@ -697,16 +699,104 @@ public class Game
 	}
 
 	/// <summary>
-	/// Finds referrable objects in the game.
+	/// Finds a referrable object in the game.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	/// <param name="condition"></param>
+	/// <typeparam name="T">The type of object being searched for.</typeparam>
+	/// <param name="id">The ID of the object to search for.</param>
 	/// <returns></returns>
-	public IEnumerable<T> Find<T>(Func<T, bool>? condition = null) where T : IReferrable
+	/// <remarks>
+	/// Does not search for mod objects. Use <see cref="Mod.Find{T}(string)"/> for that.
+	/// </remarks>
+	public T? Find<T>(long id)
+		where T : IReferrable
 	{
-		if (condition is null)
-			condition = t => true;
-		return Referrables.OfType<T>().Where(r => condition(r));
+		// fall back to scanning all referrables
+		IEnumerable<IReferrable>? list = Referrables;
+
+		// try to filter based on type
+		if (typeof(T).IsAssignableTo(typeof(Empire)))
+		{
+			list = Empires.ExceptNull();
+		}
+		else if (typeof(T).IsAssignableTo(typeof(Race)))
+		{
+			list = Empires.ExceptNull().Select(q => q.PrimaryRace);
+		}
+		else if (typeof(T).IsAssignableTo(typeof(Clause)))
+		{
+			list = Empires.ExceptNull().SelectMany(emp => emp.GivenTreatyClauses.SelectMany(g => g));
+		}
+		else if (typeof(T).IsAssignableTo(typeof(Message)))
+		{
+			list = Empires.ExceptNull().SelectMany(emp => emp.SentMessages);
+		}
+		else if (typeof(T).IsAssignableTo(typeof(Waypoint)))
+		{
+			list = Empires.ExceptNull().SelectMany(emp => emp.Waypoints);
+		}
+		else if (typeof(T).IsAssignableTo(typeof(StarSystem)))
+		{
+			list = Galaxy?.StarSystems;
+		}
+		else if (typeof(T).IsAssignableTo(typeof(IStellarObject)))
+		{
+			list = Galaxy?.SpaceObjects;
+		}
+		else if (typeof(T).IsAssignableTo(typeof(IVehicle)))
+		{
+			// find vehicles in space, under construction, and in cargo
+			IEnumerable<IVehicle> list2 = 
+			[
+				..(Galaxy?.SpaceObjects ?? []).OfType<IVehicle>(),
+				..(Galaxy?.ObjectsUnderConstruction?.OfType<IVehicle>() ?? []),
+				..(Galaxy?.CargoContainers?.SelectMany(c => c.Cargo.Units) ?? [])
+			];
+			list = list2.Cast<IReferrable>();
+		}
+		else if (typeof(T).IsAssignableTo(typeof(Colony)))
+		{
+			list = Galaxy?.SpaceObjects.OfType<Planet>().Select(q => q.Colony).ExceptNull();
+		}
+		else if (typeof(T).IsAssignableTo(typeof(IConstructionQueue)))
+		{
+			list = Galaxy?.ConstructionQueues;
+		}
+		else if (typeof(T).IsAssignableTo(typeof(IConstructionOrder)))
+		{
+			list = Galaxy?.ConstructionQueues?.SelectMany(q => q.Orders);
+		}
+		else if (typeof(T).IsAssignableTo(typeof(IMovementOrder)))
+		{
+			list = Galaxy?.SpaceObjects?.OfType<IMobileSpaceObject>().SelectMany(q => q.Orders);
+		}
+		else if (typeof(T).IsAssignableTo(typeof(IOrder)))
+		{
+			list = Galaxy?.SpaceObjects?.OfType<IOrderable>().SelectMany(q => q.Orders);
+		}
+		else if (typeof(T).IsAssignableTo(typeof(IDesign)))
+		{
+			list = Designs;
+		}
+		else
+		{
+			// log a message so we know to fix this in the future
+			Console.WriteLine($"Using inefficient referrable list lookup for object: type={typeof(T)}, ID={id}");
+		}
+
+		// just about anything can have abilities, so we can't filter those down much
+		// however when converting to a database, we could put them all in a table
+		// or store them in a separate list with its own reference mechanics,
+		// similar to game objects (referrables) and mod objects
+
+
+		// make sure list is not null
+		list ??= [];
+
+		// add new referrables to list
+		list = [..list, ..NewReferrables.OfType<T>()];
+
+		// perform the search
+		return list.OfType<T>().FirstOrDefault(q => q.ID == id);
 	}
 
 	public string GetEmpireCommandsSavePath(Empire emp)

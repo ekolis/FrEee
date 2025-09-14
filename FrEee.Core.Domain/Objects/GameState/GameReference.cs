@@ -46,25 +46,7 @@ public record GameReference<T>(long ID)
 	/// Resolves the reference.
 	/// </summary>
 	/// <returns></returns>
-	public T Value
-	{
-		get
-		{
-			if (typeof(T).IsAssignableTo(typeof(Empire)))
-			{
-				return (T)(object)Game.Current.Empires.ExceptNull().SingleOrDefault(q => q.ID == ID);
-			}
-			if (typeof(T).IsAssignableTo(typeof(IDesign)))
-			{
-				return (T)Game.Current.Designs.SingleOrDefault(q => q.ID == ID);
-			}
-			else
-			{
-				// general referrables with no specific lookup
-				return (T)Game.Current.GetReferrable(ID);
-			}
-		}
-	}
+	public T Value => Game.Current.Find<T>(ID);
 
 	public static implicit operator GameReference<T>?(T t)
 	{
