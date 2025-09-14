@@ -462,6 +462,11 @@ public class Mod : IDisposable
 			{
 				list = EventTemplates;
 			}
+			else
+			{
+				// log a message so we know to fix this in the future
+				Console.WriteLine($"Using inefficient mod object list lookup for object: type={typeof(T)}, modID={modid}");
+			}
 
 			// find the mod object searched for
 			result = list.OfType<T>().FirstOrDefault(q => q.ModID == modid);

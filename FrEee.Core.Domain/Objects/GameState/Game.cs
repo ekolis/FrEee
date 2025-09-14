@@ -777,13 +777,17 @@ public class Game
 		{
 			list = Designs;
 		}
-		
+		else
+		{
+			// log a message so we know to fix this in the future
+			Console.WriteLine($"Using inefficient referrable list lookup for object: type={typeof(T)}, ID={id}");
+		}
+
 		// just about anything can have abilities, so we can't filter those down much
 		// however when converting to a database, we could put them all in a table
 		// or store them in a separate list with its own reference mechanics,
 		// similar to game objects (referrables) and mod objects
 
-		// TODO: log a message to the console or someplace if we have to fall back to scanning all referrables, plus for mods too
 
 		// make sure list is not null
 		list ??= [];
