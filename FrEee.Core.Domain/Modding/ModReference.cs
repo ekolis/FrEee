@@ -1,10 +1,18 @@
-using FrEee.Utility;
-using FrEee.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using FrEee.Objects.GameState;
 using System.Threading;
+using FrEee.Extensions;
+using FrEee.Modding.Abilities;
+using FrEee.Modding.Templates;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.GameState;
+using FrEee.Objects.Space;
+using FrEee.Objects.Technology;
+using FrEee.Processes.AI;
+using FrEee.Properties;
+using FrEee.Utility;
+using FrEee.Vehicles;
 
 namespace FrEee.Modding;
 
@@ -54,15 +62,7 @@ public record ModReference<T>(string ID)
 	/// Resolves the reference.
 	/// </summary>
 	/// <returns></returns>
-	public T Value
-	{
-		get
-		{
-			var objs = Mod.Current.Objects.OfType<T>().ToDictionary(q => q.ModID, q => q);
-			var obj = objs[ID];
-			return obj;
-		}
-	}
+	public T Value => Mod.Current.Find<T>(ID);
 
 	public static implicit operator ModReference<T>?(T? t)
 	{
