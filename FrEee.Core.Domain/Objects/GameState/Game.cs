@@ -700,13 +700,33 @@ public class Game
 	/// Finds referrable objects in the game.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	/// <param name="condition"></param>
 	/// <returns></returns>
-	public IEnumerable<T> Find<T>(Func<T, bool>? condition = null) where T : IReferrable
+	public T? Find<T>(long id)
+		where T : IReferrable
 	{
-		if (condition is null)
-			condition = t => true;
-		return Referrables.OfType<T>().Where(r => condition(r));
+		// fall back to scanning all referrables
+		IEnumerable<IReferrable> list = Referrables;
+
+		// try to filter based on type
+		if (typeof(T).IsAssignableTo(typeof(Empire)))
+		{
+			list = Empires.ExceptNull();
+		}
+		else if (typeof(T).IsAssignableTo(typeof(StarSystem)))
+		{
+			list = Galaxy?.StarSystems ?? [];
+		}
+		else if (typeof(T).IsAssignableTo(typeof(ISpaceObject)))
+		{
+			list = (IEnumerable<IReferrable>)(Galaxy?.FindSpaceObjects<T>() ?? []);
+		}
+		else if (typeof(T).IsAssignableTo(typeof(IDesign)))
+		{
+			list = Designs;
+		}
+
+		// perform the search
+		return list.OfType<T>().FirstOrDefault(q => q.ID == id);
 	}
 
 	public string GetEmpireCommandsSavePath(Empire emp)
