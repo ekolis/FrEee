@@ -459,6 +459,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	/// <summary>
 	/// Notes set by the player on various game objects.
 	/// </summary>
+	// TODO: make this a ReferenceKeyedDictionary?
 	public SafeDictionary<GameReference<IReferrable>, string> PlayerNotes { get; private set; }
 
 	/// <summary>
