@@ -1,4 +1,6 @@
-﻿using FrEee.Objects.GameState;
+﻿using FrEee.Modding;
+using FrEee.Objects.GameState;
+using FrEee.Serialization;
 using System;
 using System.Drawing;
 
@@ -26,7 +28,59 @@ public class PictorialLogMessage<T> : LogMessage, IPictorialLogMessage<T>
 	/// <summary>
 	/// The context for the log message.
 	/// </summary>
-	public T Context { get; set; }
+	[DoNotSerialize]
+	public T Context
+	{
+		get
+		{
+			if (typeof(T).IsAssignableTo(typeof(IReferrable)))
+			{
+				return (T)gameContext?.Value;
+			}
+			else if (typeof(T).IsAssignableTo(typeof(IModObject)))
+			{
+				return (T)modContext?.Value;
+			}
+			else
+			{
+				return context;
+			}
+		}
+		set
+		{
+			if (value is null)
+			{
+				context = default;
+				gameContext = null;
+				modContext = null;
+			}
+			else if (value is IReferrable r)
+			{
+				context = default;
+				gameContext = new GameReference<IReferrable>(r);
+				modContext = null;
+			}
+			else if (value is IModObject m)
+			{
+				context = default;
+				gameContext = null;
+				modContext = new ModReference<IModObject>(m);
+			}
+			else
+			{
+				context = value;
+				gameContext = null;
+				modContext = null;
+			}
+		}
+
+	}
+
+
+	// TODO: a discriminated union would be nice about now...
+	public T? context { get; set; }
+	public GameReference<IReferrable>? gameContext { get; set; }
+	public ModReference<IModObject>? modContext { get; set; }
 
 	public override Image Picture
 	{
