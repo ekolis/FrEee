@@ -90,9 +90,9 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
         set
         {
             if (value is IModObject mo)
-                template = GetModReference<TTemplate>(mo.ReferViaMod().ID);
+                template = GetModReference<TTemplate>(mo.ModID);
             else if (value is IReferrable r)
-                template = new GameReference<TTemplate>(r.ReferViaGalaxy().ID);
+                template = new GameReference<TTemplate>(r.ID);
             else if (value == null)
                 template = null;
             else
