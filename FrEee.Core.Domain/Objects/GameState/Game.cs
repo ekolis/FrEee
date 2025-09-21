@@ -968,7 +968,29 @@ public class Game
 		// redact sub objects
 		foreach (var foggable in Referrables.OfType<IFoggable>())
 		{
-			foggable.Redact(CurrentEmpire);
+			if (!foggable.IsMemory)
+			{
+				var id = foggable.ID;
+				var vis = foggable.CheckVisibility(CurrentEmpire);
+				if (vis < Visibility.Fogged)
+					foggable.Dispose();
+				if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
+				{
+					var mem = (IReferrable)CurrentEmpire.Memory[id];
+					mem.CopyToExceptID(foggable, IDCopyBehavior.PreserveDestination); // memory sight!
+					if (mem is ILocated l1 && foggable is ILocated l2)
+						l2.Sector = l1.Sector; // hack to copy location just now without always copying it when an object is copied
+					foggable.IsMemory = true;
+				}
+				foggable.Redact(CurrentEmpire);
+			}
+			else
+			{
+				// memories are only visible to the empire which is seeing them!
+				// well unless we add some sort of intel project to see them or something...
+				if (!CurrentEmpire.Memory.Values.Contains(foggable))
+					foggable.Dispose();
+			}
 		}
 
 		// clean up redacted objects that are not IFoggable
@@ -1120,39 +1142,6 @@ public class Game
 				cmd.ReplaceClientIDs(idmap); // convert client IDs to server IDs
 			}
 		}
-	}
-
-	private void redactParser_StartObject(object o)
-	{
-		if (o is IReferrable)
-			AssignID(o as IReferrable);
-		if (o is IFoggable obj && o is IReferrable r)
-		{
-			if (!obj.IsMemory)
-			{
-				var id = r.ID;
-				var vis = obj.CheckVisibility(CurrentEmpire);
-				if (vis < Visibility.Fogged)
-					obj.Dispose();
-				if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
-				{
-					var mem = (IReferrable)CurrentEmpire.Memory[id];
-					mem.CopyToExceptID(r, IDCopyBehavior.PreserveDestination); // memory sight!
-					if (mem is ILocated l1 && r is ILocated l2)
-						l2.Sector = l1.Sector; // hack to copy location just now without always copying it when an object is copied
-					obj.IsMemory = true;
-				}
-				obj.Redact(Empire.Current);
-			}
-			else
-			{
-				// memories are only visible to the empire which is seeing them!
-				// well unless we add some sort of intel project to see them or something...
-				if (!CurrentEmpire.Memory.Values.Contains(obj))
-					obj.Dispose();
-			}
-		}
-		//SpaceObjectIDCheck("when redacting " + o);
 	}
 
 	/// <summary>
