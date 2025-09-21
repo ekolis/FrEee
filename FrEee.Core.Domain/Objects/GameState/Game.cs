@@ -753,13 +753,26 @@ public class Game
 			];
 			list = list2.Cast<IReferrable>();
 		}
+		else if (typeof(T).IsAssignableTo(typeof(ISpaceObject)))
+		{
+			list = Galaxy?.SpaceObjects;
+		}
 		else if (typeof(T).IsAssignableTo(typeof(Colony)))
 		{
 			list = Galaxy?.SpaceObjects.OfType<Planet>().Select(q => q.Colony).ExceptNull();
 		}
-		else if (typeof(T).IsAssignableTo(typeof(IConstructionQueue)))
+		else if (typeof(T).IsAssignableTo(typeof(IOrderable)))
 		{
-			list = Galaxy?.ConstructionQueues;
+			// space objects (in space) and construction queues can be issued orders
+			list = [
+				..Galaxy?.SpaceObjects,
+				..Galaxy?.ConstructionQueues
+			];
+		}
+		else if (typeof(T).IsAssignableTo(typeof(ICargoTransferrer)))
+		{
+			// space objects (in space) can transfer cargo
+			list = Galaxy?.SpaceObjects;
 		}
 		else if (typeof(T).IsAssignableTo(typeof(IConstructionOrder)))
 		{
