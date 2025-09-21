@@ -4,10 +4,10 @@
 
 <div @onclick="VM.OnClick" style="display: grid; height: 36px; overflow: hidden">
 	<div class="fill" style="display: flex; flex-direction: row; grid-area: 1/1/1/1;">
-		<div style="width: @(100 * VM.Value / Math.Max(1, VM.Maximum))%; height: 100%; padding: 0; background-color: #@VM.BarColor.ToRgba()" />
-		<div style="width: @(100 * VM.Increment / Math.Max(1, VM.Maximum))%; height: 100%; padding: 0; background-color: #@VM.IncrementColor1.ToRgba()" />
-		<div style="width: @(100 * VM.Increment / Math.Max(1, VM.Maximum))%; height: 100%; padding: 0; background-color: #@VM.IncrementColor2.ToRgba()" />
-		<div style="width: @(100 * VM.Increment / Math.Max(1, VM.Maximum))%; height: 100%; padding: 0; background-color: #@VM.IncrementColor3.ToRgba()" />
+		<div style="width: @VM.GetProgressPercentage(0)%; height: 100%; padding: 0; background-color: #@VM.BarColor.ToRgba()" />
+		<div style="width: @VM.GetProgressPercentage(1)%; height: 100%; padding: 0; background-color: #@VM.IncrementColor1.ToRgba()" />
+		<div style="width: @VM.GetProgressPercentage(2)%; height: 100%; padding: 0; background-color: #@VM.IncrementColor2.ToRgba()" />
+		<div style="width: @VM.GetProgressPercentage(3)%; height: 100%; padding: 0; background-color: #@VM.IncrementColor3.ToRgba()" />
 	</div>
 	<div class="fill overlay" style="display: flex; flex-direction: row; justify-content: space-between; grid-area: 1/1/1/1; margin: 5px">
 		<span style="width: 33%; text-align: left">
