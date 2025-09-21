@@ -1,0 +1,4 @@
+The Empires folder contains any saved empire files that players create when setting up games.
+These files store information about the player's empire, including its name, colors, racial traits, and other settings.
+When a player creates a new empire in the game, they can customize various aspects of their empire and then save it to this folder. The saved empire files can be loaded later when starting a new game, allowing players to quickly select and reuse their preferred empire without having to reconfigure its settings each time they play.
+These empire files also need to be sent to the game host in multiplayer games so that the host can set up the game with all players' empires included.

@@ -1,0 +1,5 @@
+The Savegame folder contains saved game files and player command files for FrEee.
+There are three types of files in this folder:
+- Master game files (e.g. MyGame_1.gam) - these are the main save files for a game, containing the full state of the game at a particular turn. The 1 in this example indicates the turn number.
+- Player game files (e.g. MyGame_1_0001.gam) - these files contain the state of the game as seen by a particular player, including their own empire's information and anything else visible in the fog of war. The 1 in this example indicates the turn number, and 0001 is the player number.
+- Player command files (e.g. MyGame_1_0001.plr) - these files contain the commands issued by a particular player during a turn, including any orders given to their vehicles, colonies, or construction queues. The 1 in this example indicates the turn number, and 0001 is the player number.
