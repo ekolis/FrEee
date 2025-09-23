@@ -1157,6 +1157,9 @@ public partial class MainGameForm : GameForm
 	private void progResearch_Click(object sender, EventArgs e)
 	{
 		ShowResearchForm();
+
+		// re-enable keyboard input
+		Focus();
 	}
 
 	/// <summary>
