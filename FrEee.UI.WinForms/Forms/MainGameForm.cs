@@ -791,6 +791,9 @@ public partial class MainGameForm : GameForm
 				btnNewTab_Click(this, new EventArgs());
 			sender.SelectedStarSystem = starSystem;
 		}
+
+		// re-enable keyboard input
+		Focus();
 	}
 
 	private void galaxyView_StarSystemSelected(GalaxyView sender, StarSystem starSystem)
