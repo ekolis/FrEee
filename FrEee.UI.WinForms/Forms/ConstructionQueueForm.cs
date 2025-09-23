@@ -1,26 +1,26 @@
-﻿using FrEee.Objects.Civilization;
-using FrEee.Objects.Space;
-using FrEee.Objects.Technology;
-using FrEee.Modding;
-using FrEee.Utility;
-using FrEee.Extensions;
-using FrEee.UI.WinForms.Controls;
-using FrEee.UI.WinForms.Utility.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using FrEee.Extensions;
+using FrEee.Gameplay.Commands;
+using FrEee.Gameplay.Commands.Designs;
+using FrEee.Gameplay.Commands.Orders;
+using FrEee.Modding;
+using FrEee.Modding.Templates;
+using FrEee.Objects.Civilization;
+using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
-using FrEee.Objects.Civilization.CargoStorage;
-using FrEee.Modding.Templates;
-using FrEee.Gameplay.Commands;
-using FrEee.Gameplay.Commands.Orders;
-using FrEee.Gameplay.Commands.Designs;
-using FrEee.Vehicles;
+using FrEee.Objects.Space;
+using FrEee.Objects.Technology;
 using FrEee.Processes.Construction;
+using FrEee.UI.WinForms.Controls;
+using FrEee.UI.WinForms.Utility.Extensions;
+using FrEee.Utility;
+using FrEee.Vehicles;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -749,8 +749,15 @@ public partial class ConstructionQueueForm : GameForm
 					amount *= 100;
 
 				// is this a new design we've never built before? then tell the server about it
+				if (design.ID <= 0)
+				{
+					Game.Current.AssignID(design);
+					design.IsNew = true;
+				}
 				if (design.IsNew && !BuildingAnywhere(design))
+				{
 					Empire.Current.Commands.Add(design.CreateCreationCommand());
+				}
 
 				for (int i = 0; i < amount; i++)
 				{
