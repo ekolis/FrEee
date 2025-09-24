@@ -21,4 +21,7 @@ jobs:
         username: FrEee Release Bot
         # String url to webhook avatar picture.
         #avatar_url: # optional, default is https://cdn.discordapp.com/avatars/487431320314576937/bd64361e4ba6313d561d54e78c9e7171.png
+        content: >
+            FrEee release published: **${{ github.event.release.name }}**
+            ${{ github.event.release.body }
               
