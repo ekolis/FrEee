@@ -121,12 +121,24 @@ public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>, II
 	/// <summary>
 	/// The overall mood of the population of this colony.
 	/// </summary>
-	public Mood Mood => Mod.Current.Settings.MoodThresholds.Where(kvp => kvp.Value <= AverageAnger).WithMax(kvp => kvp.Value).Single().Key;
+	public Mood Mood => GetMoodForAnger(AverageAnger);
 
-	/// <summary>
-	/// The mood of each race on this colony.
-	/// </summary>
-	public IReadOnlyDictionary<Race, Mood> Moods => Anger.Select(kvp => new KeyValuePair<Race, Mood>(kvp.Key, Mod.Current.Settings.MoodThresholds.Where(kvp2 => kvp2.Value <= Anger[kvp.Key]).WithMax(kvp2 => kvp2.Value).Single().Key)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+    /// <summary>
+    /// The mood of each race on this colony.
+    /// </summary>
+    public IReadOnlyDictionary<Race, Mood> Moods =>
+		Anger.Select(kvp =>
+			new KeyValuePair<Race, Mood>(
+				kvp.Key,
+				GetMoodForAnger(Anger[kvp.Key])))
+		.ToDictionary();
+
+	private static Mood GetMoodForAnger(int anger)
+	{
+		return Mod.Current.Settings.MoodThresholds
+			.Where(kvp2 => kvp2.Value <= anger)
+			.MaxBy(kvp2 => kvp2.Value).Key;
+	}
 
 	/// <summary>
 	/// The empire which owns this colony.

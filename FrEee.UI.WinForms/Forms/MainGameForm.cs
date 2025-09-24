@@ -76,6 +76,12 @@ public partial class MainGameForm : GameForm
 		get { return selectedSpaceObject; }
 		set
 		{
+			if (value == selectedSpaceObject)
+			{
+				// no need to refresh if object is already selected
+				return;
+			}
+
 			selectedSpaceObject = value;
 
 			// for movement lines
