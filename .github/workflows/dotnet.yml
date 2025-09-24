@@ -61,3 +61,4 @@ jobs:
         name: Auto-Build Release ${{steps.createReleaseTag.outputs.string}}
         fail_on_unmatched_files: true
         token: ${{ secrets.RELEASE_TOKEN }}
+        generate_release_notes: true
