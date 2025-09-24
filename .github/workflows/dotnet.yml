@@ -51,12 +51,6 @@ jobs:
       with:
         files: ./FrEee.UI.WinForms/bin/Release
         dest: FrEee-binary-${{steps.createReleaseTag.outputs.string}}.zip
-    - name: Generate changelog
-      id: changelog # Give this step an ID to reference its outputs if needed
-      uses: TriPSs/conventional-changelog-action@latest
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        output-file: CHANGELOG.md # Save the changelog to this file
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
@@ -67,4 +61,3 @@ jobs:
         name: Auto-Build Release ${{steps.createReleaseTag.outputs.string}}
         fail_on_unmatched_files: true
         token: ${{ secrets.RELEASE_TOKEN }}
-        body_path: CHANGELOG.md
