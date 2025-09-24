@@ -61,17 +61,3 @@ jobs:
         name: Auto-Build Release ${{steps.createReleaseTag.outputs.string}}
         fail_on_unmatched_files: true
         token: ${{ secrets.GITHUB_TOKEN }}
-    - name: Discord release notification
-      # You may pin to the exact commit or the version.
-      # uses: sillyangel/releases-to-discord@1a0c192eb86d6ea67d38b1a7645faa928e53b102
-      uses: sillyangel/releases-to-discord@v1
-      with:
-        # Discord's webhook url. Use GH repo secrets.
-        webhook_url: ${{ secrets.DISCORD_RELEASE_WEBHOOK }}
-        # Decimal color value for embed.
-        #color: # optional, default is 2105893
-        # String username for webhook.
-        username: FrEee Release Bot
-        # String url to webhook avatar picture.
-        #avatar_url: # optional, default is https://cdn.discordapp.com/avatars/487431320314576937/bd64361e4ba6313d561d54e78c9e7171.png
-              
