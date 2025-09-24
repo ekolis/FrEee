@@ -117,7 +117,10 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 	/// <summary>
 	/// The environmental conditions of this planet. Affects reproduction rate of populations.
 	/// </summary>
-	public Conditions Conditions => Mod.Current.Settings.ConditionsThresholds.Where(x => x.Value <= ConditionsAmount).WithMax(x => x.Value).Single().Key;
+	public Conditions Conditions =>
+		Mod.Current.Settings.ConditionsThresholds
+			.Where(x => x.Value <= ConditionsAmount)
+			.MaxBy(x => x.Value).Key;
 
 	public Progress ConditionsProgress => new Progress(ConditionsAmount, Mod.Current.Settings.MaxConditions);
 
