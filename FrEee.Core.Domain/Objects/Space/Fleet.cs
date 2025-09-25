@@ -475,6 +475,7 @@ public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, 
 		get { return new ResourceQuantity(); }
 	}
 
+	[DoNotSerialize(false)]
 	public Sector Sector
 	{
 		get

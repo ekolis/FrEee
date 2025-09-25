@@ -186,11 +186,18 @@ public static class CommonExtensions
 			var minesAttacking = new SafeDictionary<Empire, int>();
 
 			// can we sweep any?
-			int sweeping;
+			int sweeping = 0;
 			if (sobj is Fleet f2)
-				sweeping = f2.LeafVehicles.Sum(v => v.GetAbilityValue("Mine Sweeping").ToInt());
+			{
+				if (f2.Vehicles.Any())
+				{
+					sweeping = f2.LeafVehicles.Sum(v => v.GetAbilityValue("Mine Sweeping").ToInt());
+				}
+			}
 			else
+			{
 				sweeping = sobj.GetAbilityValue("Mine Sweeping").ToInt();
+			}
 
 			// go through the minefield!
 			while (mines.Any() && !d.IsDestroyed)
