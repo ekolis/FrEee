@@ -44,14 +44,17 @@ public partial class GameForm : Form
 
 	private void GameForm_Load(object sender, EventArgs e)
 	{
-		if (ClientSettings.Instance.WindowStates.ContainsKey(GetType().Name))
-			WindowState = ClientSettings.Instance.WindowStates[GetType().Name];
-		if (WindowState == FormWindowState.Normal)
+		if (!DesignMode)
 		{
-			if (ClientSettings.Instance.WindowSizes.ContainsKey(GetType().Name))
-				Size = ClientSettings.Instance.WindowSizes[GetType().Name];
-			if (ClientSettings.Instance.WindowLocations.ContainsKey(GetType().Name))
-				Location = ClientSettings.Instance.WindowLocations[GetType().Name];
+			if (ClientSettings.Instance.WindowStates.ContainsKey(GetType().Name))
+				WindowState = ClientSettings.Instance.WindowStates[GetType().Name];
+			if (WindowState == FormWindowState.Normal)
+			{
+				if (ClientSettings.Instance.WindowSizes.ContainsKey(GetType().Name))
+					Size = ClientSettings.Instance.WindowSizes[GetType().Name];
+				if (ClientSettings.Instance.WindowLocations.ContainsKey(GetType().Name))
+					Location = ClientSettings.Instance.WindowLocations[GetType().Name];
+			}
 		}
 	}
 }

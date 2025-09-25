@@ -28,6 +28,7 @@ partial class GameOverForm
 	/// </summary>
 	private void InitializeComponent()
 	{
+		base.InitializeComponent();
 		this.btnOk = new FrEee.UI.WinForms.Controls.GameButton();
 		this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 		this.pic = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
