@@ -178,7 +178,11 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
             // apply build rate
             var costLeft = Item.Cost - Item.ConstructionProgress;
             var spending = ResourceQuantity.Min(costLeft, queue.UnspentRate);
-            if (spending > queue.Owner.StoredResources)
+            var spendingMap = spending.Join(
+                queue.Owner.StoredResources, a => a.Key, b => b.Key,
+                (a, b) => new {Spending = a, Available = b});
+            if (spendingMap.Any(q =>
+                q.Spending.Value > q.Available.Value))
             {
                 spending = ResourceQuantity.Min(spending, queue.Owner.StoredResources);
                 if (spending.IsEmpty)
