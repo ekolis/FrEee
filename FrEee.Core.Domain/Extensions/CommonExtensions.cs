@@ -162,6 +162,12 @@ public static class CommonExtensions
 
 	public static void DealWithMines(this ISpaceObject sobj)
 	{
+		// if this is a brand new fleet with no vehicles in it yet, it shouldn't be able to hit mines
+		if (sobj is Fleet f && !f.Vehicles.Any())
+		{
+			return;
+		}
+
 		if (sobj is IDamageable && sobj is IOwnable)
 		{
 			var owner = sobj.Owner;
@@ -186,11 +192,18 @@ public static class CommonExtensions
 			var minesAttacking = new SafeDictionary<Empire, int>();
 
 			// can we sweep any?
-			int sweeping;
+			int sweeping = 0;
 			if (sobj is Fleet f2)
-				sweeping = f2.LeafVehicles.Sum(v => v.GetAbilityValue("Mine Sweeping").ToInt());
+			{
+				if (f2.Vehicles.Any())
+				{
+					sweeping = f2.LeafVehicles.Sum(v => v.GetAbilityValue("Mine Sweeping").ToInt());
+				}
+			}
 			else
+			{
 				sweeping = sobj.GetAbilityValue("Mine Sweeping").ToInt();
+			}
 
 			// go through the minefield!
 			while (mines.Any() && !d.IsDestroyed)

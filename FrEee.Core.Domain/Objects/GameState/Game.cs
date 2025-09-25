@@ -710,11 +710,10 @@ public class Game
 	public T? Find<T>(long id)
 		where T : IReferrable
 	{
-		// fall back to scanning all referrables
-		IEnumerable<IReferrable>? list = Referrables;
+		IEnumerable<IReferrable>? list;
 
-		// try to filter based on type
-		if (typeof(T).IsAssignableTo(typeof(Empire)))
+        // try to filter based on type
+        if (typeof(T).IsAssignableTo(typeof(Empire)))
 		{
 			list = Empires.ExceptNull();
 		}
@@ -792,8 +791,11 @@ public class Game
 		}
 		else
 		{
-			// log a message so we know to fix this in the future
-			Console.WriteLine($"Using inefficient referrable list lookup for object: type={typeof(T)}, ID={id}");
+            // fall back to scanning all referrables
+            list = Referrables;
+
+            // log a message so we know to fix this in the future
+            Console.WriteLine($"Using inefficient referrable list lookup for object: type={typeof(T)}, ID={id}");
 		}
 
 		// just about anything can have abilities, so we can't filter those down much
