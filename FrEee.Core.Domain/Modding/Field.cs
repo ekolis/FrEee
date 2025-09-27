@@ -76,7 +76,7 @@ public class Field
 			// string interpolation formula
 			var isDynamic = txt.Contains("{{") && txt.Substring(txt.IndexOf("{{")).Contains("}}");
 			var replacedText = txt;
-			replacedText = "'" + replacedText + "'"; // make it a string
+			replacedText = "'" + replacedText.Replace("'", "\\'") + "'"; // make it a string
 			replacedText = replacedText.Replace("{{", "' + str(");
 			replacedText = replacedText.Replace("}}", ").strip('\"') + '"); // strip to trim start/end quotes that get added by str
 			replacedText = replacedText.Replace("{", "' + str(");
