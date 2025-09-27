@@ -180,7 +180,13 @@ public class ConstructionQueue : IConstructionQueue
 	{
 		get
 		{
-			var unlockedHulls = Mod.Current.Hulls
+            if (!Rate.Any(q => q.Value > 0))
+            {
+                // construction queue isn't idle if it can't build anything
+                return false;
+            }
+
+            var unlockedHulls = Mod.Current.Hulls
 				.OfType<IHull<IUnit>>()
 				.Where(h => h.IsUnlocked());
 			return (Eta == null || Eta < 1 && !IsOnRepeat)
