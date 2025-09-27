@@ -70,7 +70,7 @@ Pic Num             := 60
 Cost Minerals       := =1000 + 500 * level
 Cost Organics       := 0
 Cost Radioactives   := 0
-Tech Area Req       := Minerals Extraction
+Tech Area Req       := Organics Extraction
 Tech Level Req      := =level
 Ability Type        := Resource Generation - Organics
 Ability Val         := =700 + 100 * level
@@ -87,7 +87,7 @@ Pic Num             := 61
 Cost Minerals       := =1000 + 500 * level
 Cost Organics       := 0
 Cost Radioactives   := 0
-Tech Area Req       := Minerals Extraction
+Tech Area Req       := Radioactives Extraction
 Tech Level Req      := =level
 Ability Type        := Resource Generation - Radioactives
 Ability Val         := =700 + 100 * level
