@@ -24,18 +24,12 @@ public record GameReference<T>(long ID)
 	public GameReference(T? t)
 		: this(t?.ID ?? 0)
 	{
-		if (Game.Current is null)
-			throw new ReferenceException<int, T>("Can't create a reference to an IReferrable without a current game.");
-		else if (t is null)
+		if (t is null)
 			ID = 0;
 		else if (t.ID > 0)
 			ID = t.ID;
 		else
 			ID = Game.Current.AssignID(t);
-		if (!HasValue)
-		{
-			throw new ArgumentException("{0} does not exist in the current game so it cannot be referenced.".F(t));
-		}
 	}
 	/// <summary>
 	/// Does the reference have a valid value?

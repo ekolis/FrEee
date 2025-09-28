@@ -25,16 +25,12 @@ public record ModReference<T>(string ID)
 		: this(t?.ModID)
 	{
 		var mobj = (IModObject)t;
-		if (Mod.Current == null)
-			throw new ReferenceException<int, T>("Can't create a reference to an IModObject without a mod.");
-		else if (t == null)
+		if (t == null)
 			ID = ""; // dictionaries don't like null keys
 		else if (mobj.ModID != null)
 			ID = mobj.ModID;
 		else
 			throw new ReferenceException<string, T>("Can't create a reference to {0} because it has no ID in the current mod.".F(mobj));
-		if (!HasValue)
-			throw new ArgumentException("{0} does not exist in the current mod so it cannot be referenced.".F(t));
 	}
 
 	/// <summary>
