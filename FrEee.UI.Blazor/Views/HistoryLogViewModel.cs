@@ -101,7 +101,7 @@ public class HistoryLogViewModel
 
 	public bool CanNavigate(LogMessage message)
 	{
-		if (message is PictorialLogMessage<IPictorial> pm)
+		if (message is IPictorialLogMessage<IPictorial> pm)
 		{
 			return pm.Context is ISpaceObject
 				|| pm.Context is IUnit
