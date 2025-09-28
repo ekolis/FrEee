@@ -28,24 +28,12 @@ public class PictorialLogMessage<T> : LogMessage, IPictorialLogMessage<T>
 	/// <summary>
 	/// The context for the log message.
 	/// </summary>
-	[DoNotSerialize]
 	public T Context
 	{
 		get
 		{
-			if (typeof(T).IsAssignableTo(typeof(IReferrable)))
-			{
-				return (T)gameContext?.Value;
-			}
-			else if (typeof(T).IsAssignableTo(typeof(IModObject)))
-			{
-				return (T)modContext?.Value;
-			}
-			else
-			{
-				return context;
-			}
-		}
+			return (T)gameContext?.Value ?? (T)modContext?.Value ?? context;
+        }
 		set
 		{
 			if (value is null)
@@ -78,9 +66,14 @@ public class PictorialLogMessage<T> : LogMessage, IPictorialLogMessage<T>
 
 
 	// TODO: a discriminated union would be nice about now...
+	[DoNotSerialize]
 	public T? context { get; set; }
-	public GameReference<IReferrable>? gameContext { get; set; }
-	public ModReference<IModObject>? modContext { get; set; }
+
+    [DoNotSerialize]
+    public GameReference<IReferrable>? gameContext { get; set; }
+
+    [DoNotSerialize]
+    public ModReference<IModObject>? modContext { get; set; }
 
 	public override Image Picture
 	{
