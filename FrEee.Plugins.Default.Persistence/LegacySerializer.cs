@@ -1,5 +1,3 @@
-using FrEee.Extensions;
-using FrEee.Serialization.Stringifiers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,9 +10,11 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using FrEee.Utility;
-using FrEee.Serialization;
+using FrEee.Extensions;
 using FrEee.Persistence;
+using FrEee.Serialization;
+using FrEee.Serialization.Stringifiers;
+using FrEee.Utility;
 
 namespace FrEee.Plugins.Default.Persistence;
 
@@ -536,7 +536,13 @@ internal static class LegacySerializer
 
 			// found it!
 			o = (IEnumerable)context.KnownObjects[type][id];
-		}
+
+            // HACK: if it's a ResourceQuantity, we actually want to clone it since they should behave like value types
+            if (o is ResourceQuantity q)
+            {
+                o = new ResourceQuantity(q);
+            }
+        }
 		else if (fin == 'n')
 		{
 			// null object!
@@ -679,7 +685,15 @@ internal static class LegacySerializer
 			throw new SerializationException("No known object of type " + type + " has an ID of " + id + ".");
 
 		// found it!
-		return context.KnownObjects[type][id];
+		var result = context.KnownObjects[type][id];
+
+		// HACK: if it's a ResourceQuantity, we actually want to clone it since they should behave like value types
+		if (result is ResourceQuantity q)
+		{
+			result = new ResourceQuantity(q);
+		}
+
+		return result;
 	}
 
 	private static object DeserializeObject(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
