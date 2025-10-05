@@ -20,10 +20,13 @@ public interface IVehicle : IConstructable, IOwnableAbilityObject, IReferrable, 
 	[DoNotSerialize(false)]
 	new IList<Component> Components { get; }
 
-	/// <summary>
-	/// Damage that has been applied to this vehicle's components.
-	/// </summary>
-	SafeDictionary<MountedComponentTemplate, IList<int>> Damage { get; set; }
+    /// <summary>
+    /// Damage that has been applied to this vehicle's components.
+    /// </summary>
+    /// <remarks>
+    /// The damage values are stored in order of the components on the vehicle's design.
+    /// </remarks>
+    List<int> DamageList { get; set; }
 
 	/// <summary>
 	/// The design of this vehicle.
