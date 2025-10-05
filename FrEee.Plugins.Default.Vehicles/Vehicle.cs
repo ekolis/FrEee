@@ -104,47 +104,78 @@ public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IF
 		}
 	}
 
-	/// <summary>
-	/// Damage that has been applied to this vehicle's components.
-	/// </summary>
-	/// <remarks>
-	/// <see cref="MountedComponentTemplate"/> and <see cref="Component"/>
-	/// don't implement <see cref="IReferrable"/> or <see cref="IModObject"/>
-	/// so we can't use a <see cref="GameReferenceKeyedDictionary{TKey, TValue}"/>
-	/// or <see cref="ModReferenceKeyedDictionary{TKey, TValue}"/> here.
-	/// </remarks>
+    /// <summary>
+    /// Damage that has been applied to this vehicle's components.
+    /// </summary>
+    /// <remarks>
+    /// <see cref="MountedComponentTemplate"/> and <see cref="Component"/>
+    /// don't implement <see cref="IReferrable"/> or <see cref="IModObject"/>
+    /// so we can't use a <see cref="GameReferenceKeyedDictionary{TKey, TValue}"/>
+    /// or <see cref="ModReferenceKeyedDictionary{TKey, TValue}"/> here.
+    /// </remarks>
+    // TODO: remove this property in favor of DamageList after game is over
+	[Obsolete("Use DamageList instead.")]
     public SafeDictionary<MountedComponentTemplate, IList<int>> Damage
+    {
+        get
+        {
+            var dict = new SafeDictionary<MountedComponentTemplate, IList<int>>();
+            foreach (var c in Components)
+            {
+                if (c.Hitpoints != c.MaxHitpoints)
+                {
+                    if (!dict.ContainsKey(c.Template))
+                        dict.Add(c.Template, new List<int>());
+                    dict[c.Template].Add(c.MaxHitpoints - c.Hitpoints);
+                }
+            }
+            return dict;
+        }
+        set
+        {
+			// this crashes, use DamageList instead
+			/*
+            Components = new List<Component>();
+            foreach (var template in Design.Components)
+            {
+                var component = template.Instantiate();
+                Components.Add(component);
+            }
+            foreach (var kvp in value)
+            {
+                var template = kvp.Key;
+                var damages = kvp.Value;
+                for (var i = 0; i < damages.Count; i++)
+                {
+                    var component = Components.Where(c => c.Template == template).ElementAt(i);
+                    component.Hitpoints = component.MaxHitpoints - damages[i];
+                }
+            }*/
+        }
+    }
+
+    public List<int> DamageList
 	{
 		get
 		{
-			var dict = new SafeDictionary<MountedComponentTemplate, IList<int>>();
+			List<int> result = [];
 			foreach (var c in Components)
 			{
-				if (c.Hitpoints != c.MaxHitpoints)
-				{
-					if (!dict.ContainsKey(c.Template))
-						dict.Add(c.Template, new List<int>());
-					dict[c.Template].Add(c.MaxHitpoints - c.Hitpoints);
-				}
+				result.Add(c.MaxHitpoints - c.Hitpoints);
 			}
-			return dict;
+			return result;
 		}
 		set
 		{
-			Components = new List<Component>();
-			foreach (var template in Design.Components)
+			// rebuild component list
+			Components = [.. Design.Components.Select(q => q.Instantiate())];
+
+			if (value is not null)
 			{
-				var component = template.Instantiate();
-				Components.Add(component);
-			}
-			foreach (var kvp in value)
-			{
-				var template = kvp.Key;
-				var damages = kvp.Value;
-				for (var i = 0; i < damages.Count; i++)
+                // apply damage to components
+                foreach ((Component component, int damage) in Components.Zip(value))
 				{
-					var component = Components.Where(c => c.Template == template).ElementAt(i);
-					component.Hitpoints = component.MaxHitpoints - damages[i];
+					component.Hitpoints = component.MaxHitpoints - damage;
 				}
 			}
 		}

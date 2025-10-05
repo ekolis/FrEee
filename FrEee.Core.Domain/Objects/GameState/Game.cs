@@ -381,6 +381,11 @@ public class Game
 	{
 		Current = Services.Persistence.Game.LoadFromFile(filename);
 
+		if (Current is null)
+		{
+			throw new InvalidOperationException($"Failed to load game from file {filename}.");
+        }
+
 		// TODO: put all this code in GamePersister
 		new ModLoader().Load(Current.ModPath);
 		if (Empire.Current != null)
