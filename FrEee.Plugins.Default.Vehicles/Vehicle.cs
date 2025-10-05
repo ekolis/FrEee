@@ -107,7 +107,13 @@ public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IF
 	/// <summary>
 	/// Damage that has been applied to this vehicle's components.
 	/// </summary>
-	public SafeDictionary<MountedComponentTemplate, IList<int>> Damage
+	/// <remarks>
+	/// <see cref="MountedComponentTemplate"/> and <see cref="Component"/>
+	/// don't implement <see cref="IReferrable"/> or <see cref="IModObject"/>
+	/// so we can't use a <see cref="GameReferenceKeyedDictionary{TKey, TValue}"/>
+	/// or <see cref="ModReferenceKeyedDictionary{TKey, TValue}"/> here.
+	/// </remarks>
+    public SafeDictionary<MountedComponentTemplate, IList<int>> Damage
 	{
 		get
 		{
