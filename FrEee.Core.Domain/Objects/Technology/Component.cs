@@ -285,10 +285,10 @@ public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IConta
 	}
 
 	[DoNotCopy]
-	private GameReference<IVehicle> container
+	private GameReference<IVehicle>? container
 	{
-		get => Container.ReferViaGalaxy();
-		set => Container = value.Value;
+		get => Container?.ReferViaGalaxy();
+		set => Container = value?.Value;
 	}
 
 	/// <summary>
