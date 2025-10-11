@@ -10,11 +10,19 @@ namespace FrEee.Utility;
 public interface IGuiController
 	: IPlugin<IGuiController>
 {
-	/// <summary>
-	/// Shows a particular screen.
-	/// </summary>
-	/// <param name="screen"></param>
-	void Show(Screen screen);
+    /// <summary>
+    /// Shows a particular screen.
+    /// </summary>
+    /// <param name="screen"></param>
+    void Show(Screen screen);
+
+    /// <summary>
+    /// Shows a particular screen.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="screen"></param>
+    /// <param name="context"></param>
+    void Show<T>(Screen screen, T? context);
 
 	/// <summary>
 	/// Hides a particular screen.

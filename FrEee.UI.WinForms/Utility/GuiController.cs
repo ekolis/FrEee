@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -11,8 +12,10 @@ using FrEee.Objects.Technology;
 using FrEee.Plugins;
 using FrEee.Processes.Combat;
 using FrEee.UI.WinForms.Forms;
+using FrEee.UI.WinForms.Interfaces;
 using FrEee.UI.WinForms.Objects;
 using FrEee.UI.WinForms.Persistence;
+using FrEee.UI.WinForms.Utility.Extensions;
 using FrEee.Utility;
 using FrEee.Vehicles;
 using Screen = FrEee.Utility.Screen;
@@ -52,38 +55,40 @@ public class GuiController
 	public void Focus(ISpaceObject context)
 	{
 		MainGameForm.SelectSpaceObject(context);
-		Close(Screen.Log); // if it's open...
+		Close(Screen.Log); // if it's open, it will be in the way
 	}
 
 	public void Focus(StarSystem context)
 	{
 		MainGameForm.SelectStarSystem(context);
-		Close(Screen.Log); // if it's open...
+		Close(Screen.Log); // if it's open, it will be in the way
 	}
 
 	public void Focus(Technology context)
 	{
-		Show(Screen.Research);
-		// TODO: focus the technology
-		Close(Screen.Log); // if it's open...
+		Show(Screen.Research, context);
 	}
 
 	public void Focus(IHull context)
 	{
-		new VehicleDesignForm(context).Show();
-		Close(Screen.Log); // if it's open...
+		Show(Screen.VehicleDesign, context);
+		var form = GetForm(Screen.VehicleDesign) as VehicleDesignForm;
+		if (form is not null)
+		{
+			form.Design = Services.Designs.CreateDesign(context);
+		}
 	}
 
 	public void Focus(IBattle context)
 	{
-		new BattleResultsForm(context).Show();
-		Close(Screen.Log); // if it's open...
+		Show(Screen.BattleResults, context);
+		var form = GetForm(Screen.BattleResults) as BattleResultsForm;
+		form?.Bind(context);
 	}
 
 	public void Focus(IMessage context)
 	{
-		new DiplomacyForm(context).Show();
-		Close(Screen.Log);
+		Show(Screen.Diplomacy, context);
 	}
 
 	public void Hide(Screen screen)
@@ -108,12 +113,24 @@ public class GuiController
 
 	public void Show(Screen screen)
 	{
-		var form = GetForm(screen);
-		if (form is null)
+		var form = GetForm(screen) ?? (Form)Activator.CreateInstance(GetFormType(screen));
+		if (form is not null)
 		{
-			form = (Form)Activator.CreateInstance(GetFormType(screen));
+			MainGameForm.ShowChildForm(form);
 		}
-		form.Show();
+	}
+
+	public void Show<T>(Screen screen, T? context)
+	{
+		var form = GetForm(screen) ?? (Form)Activator.CreateInstance(GetFormType(screen));
+		if (form is not null)
+		{
+			if (form is IBindable<T> bindable && context is not null)
+			{
+				bindable.Bind(context);
+			}
+			MainGameForm.ShowChildForm(form);
+		}
 	}
 
 	private Form? GetForm(Screen screen)
