@@ -17,19 +17,21 @@ namespace FrEee.UI.WinForms.Forms;
 
 public partial class BattleResultsForm : GameForm, IBindable<IBattle>
 {
-	public BattleResultsForm(IBattle battle)
+	public BattleResultsForm()
 	{
 		InitializeComponent();
-
-		Bind(battle);
 
 		try
 		{
 			this.Icon = new Icon(FrEee.UI.WinForms.Properties.Resources.FrEeeIcon);
 		}
 		catch { }
+	}
 
-		Text = Battle.NameFor(Empire.Current);
+	public BattleResultsForm(IBattle battle)
+		: this()
+	{
+		Bind(battle);
 	}
 
 	/// <summary>
@@ -91,6 +93,8 @@ public partial class BattleResultsForm : GameForm, IBindable<IBattle>
 		}
 		grid.Data = data;
 		grid.Initialize();
+
+		Text = Battle.NameFor(Empire.Current);
 	}
 
 	/// <summary>
