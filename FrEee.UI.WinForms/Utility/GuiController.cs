@@ -55,20 +55,18 @@ public class GuiController
 	public void Focus(ISpaceObject context)
 	{
 		MainGameForm.SelectSpaceObject(context);
-		Close(Screen.Log); // if it's open...
+		Close(Screen.Log); // if it's open, it will be in the way
 	}
 
 	public void Focus(StarSystem context)
 	{
 		MainGameForm.SelectStarSystem(context);
-		Close(Screen.Log); // if it's open...
+		Close(Screen.Log); // if it's open, it will be in the way
 	}
 
 	public void Focus(Technology context)
 	{
 		Show(Screen.Research, context);
-		// TODO: focus the technology
-		Close(Screen.Log); // if it's open...
 	}
 
 	public void Focus(IHull context)
@@ -79,7 +77,6 @@ public class GuiController
 		{
 			form.Design = Services.Designs.CreateDesign(context);
 		}
-		Close(Screen.Log); // if it's open...
 	}
 
 	public void Focus(IBattle context)
@@ -87,13 +84,11 @@ public class GuiController
 		Show(Screen.BattleResults, context);
 		var form = GetForm(Screen.BattleResults) as BattleResultsForm;
 		form?.Bind(context);
-		Close(Screen.Log); // if it's open...
 	}
 
 	public void Focus(IMessage context)
 	{
 		Show(Screen.Diplomacy, context);
-		Close(Screen.Log);
 	}
 
 	public void Hide(Screen screen)
