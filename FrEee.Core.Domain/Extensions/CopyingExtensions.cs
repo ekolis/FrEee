@@ -151,10 +151,10 @@ public static class CopyingExtensions
 						bool doit = true;
 						bool regen = false;
 						if ( source is Component && ((Component)source).Hitpoints == 0) { }
-						if (source is IReferrable && sp.Name == "ID")
+                        var behavior = source == Root ? RootBehavior : SubordinateBehavior;
+                        if (source is IReferrable && sp.Name == "ID")
 						{
 							// do special things for IDs
-							var behavior = source == Root ? RootBehavior : SubordinateBehavior;
 							if (behavior == IDCopyBehavior.PreserveSource)
 								doit = true;
 							else if (behavior == IDCopyBehavior.PreserveDestination)
@@ -176,7 +176,7 @@ public static class CopyingExtensions
 							else if (!knownObjects.ContainsKey(sv))
 							{
 								// copy object and use the copy
-								var tv = CopyObject(source, sv);
+								var tv = CopyObject(source, sv, behavior);
 								sp.SetValue(target, tv, null);
 							}
 							else
@@ -214,12 +214,15 @@ public static class CopyingExtensions
 			source.DeclaringType!.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(p => PropertyMatches(p, target.Name)) &&
 			target.DeclaringType!.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(p => PropertyMatches(p, target.Name));
 
-		private object CopyObject(object parent, object sv)
+		private object CopyObject(object parent, object sv, IDCopyBehavior idCopyBehavior)
 		{
 			if (sv == null)
 				return null;
+
+			// TODO: what if we need multiple copies of the same object (e.g. memories of the same ship for multiple empires)?
 			if (knownObjects.ContainsKey(sv))
 				return knownObjects[sv];
+
 			var type = sv.GetType();
 
 			if (sv.GetType().IsValueType || sv is string)
@@ -235,7 +238,7 @@ public static class CopyingExtensions
 					var sitem = sa.Cast<object>().ElementAt(i);
 					if (sitem != null)
 					{
-						var titem = CopyObject(sv, sitem);
+						var titem = CopyObject(sv, sitem, idCopyBehavior);
 						if (ta.Rank == 1)
 							ta.SetValue(titem, i);
 						else if (ta.Rank == 2)
@@ -260,7 +263,7 @@ public static class CopyingExtensions
 					foreach (var si in sc)
 					{
 						// copy object and add to collection
-						var ti = CopyObject(sv, si);
+						var ti = CopyObject(sv, si, idCopyBehavior);
 						adder.Invoke(tc, new object[] { ti });
 					}
 				}
@@ -273,8 +276,8 @@ public static class CopyingExtensions
 						// copy key-value pair and add to collection
 						var sk = skvp.GetPropertyValue("Key");
 						var skv = skvp.GetPropertyValue("Value");
-						var tk = CopyObject(sv, sk);
-						var tkv = CopyObject(sv, skv);
+						var tk = CopyObject(sv, sk, idCopyBehavior);
+						var tkv = CopyObject(sv, skv, idCopyBehavior);
 						adder.Invoke(tc, new object[] { tk, tkv });
 					}
 				}
@@ -290,10 +293,15 @@ public static class CopyingExtensions
 				var tv = sv.GetType().Instantiate();
 				if (!knownObjects.ContainsKey(sv))
 					knownObjects.Add(sv, tv);
-				// TODO: determine if the default ID copying behaviors are appropriate here
-				sv.CopyTo(tv);
-				//knownObjects.Remove(parent);
-				return tv;
+				sv.CopyTo(tv, idCopyBehavior, SubordinateBehavior);
+
+				// reassign ID
+				if (idCopyBehavior == IDCopyBehavior.Regenerate && tv is IReferrable r)
+				{
+					r.ReassignID();
+				}
+
+                return tv;
 			}
 		}
 
