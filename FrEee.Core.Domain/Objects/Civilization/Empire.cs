@@ -1250,21 +1250,24 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 			}
 
 			// update pursue/evade orders' alternate targets and set memory flag on ships if object is fleet
-			if (obj is Fleet)
+			if (obj is Fleet f)
 			{
 				foreach (var order in this.OwnedSpaceObjects.OfType<IMobileSpaceObject>().SelectMany(sobj => sobj.Orders))
 				{
-					if (order is PursueOrder)
-						((PursueOrder)order).UpdateAlternateTarget();
-					if (order is EvadeOrder)
-						((EvadeOrder)order).UpdateAlternateTarget();
+					if (order is PursueOrder po)
+						po.UpdateAlternateTarget();
+					if (order is EvadeOrder eo)
+						eo.UpdateAlternateTarget();
 				}
 
-				foreach (var v in ((Fleet)Memory[obj.ID]).LeafVehicles) // TODO - go through subfleets too
+                // TODO: go through subfleets too, not just leaf vehicles
+                var realVehicles = f.LeafVehicles;
+				var memoryVehicles = ((Fleet)Memory[f.ID]).LeafVehicles;
+				var vehicleMap = realVehicles.Zip(memoryVehicles);
+                foreach (var (realVehicle, memoryVehicle) in vehicleMap)
 				{
-					v.IsMemory = true;
-					Memory[v.ID] = v;
-					v.ReassignID();
+					memoryVehicle.IsMemory = true;
+					Memory[realVehicle.ID] = memoryVehicle;
 				}
 			}
 		}
