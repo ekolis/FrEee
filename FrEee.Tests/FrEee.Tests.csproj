@@ -30,7 +30,11 @@
 		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
 		<RootNamespace>FrEee</RootNamespace>
 	</PropertyGroup>
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="post-build.bat $(SolutionDir) $(TargetDir)" />
-	</Target>
+    <ItemGroup>
+        <!-- Include all files and subdirectories recursively from the source directory -->
+        <_CopyItems Include="$(SolutionDir)Plugins/**/*.*" />
+    </ItemGroup>
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Copy SourceFiles="@(_CopyItems)" DestinationFolder="$(TargetDir)/Plugins" />
+    </Target>
 </Project>

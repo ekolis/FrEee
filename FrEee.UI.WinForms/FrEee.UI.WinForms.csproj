@@ -67,8 +67,12 @@
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
+    <ItemGroup>
+        <!-- Include all files and subdirectories recursively from the source directory -->
+        <_CopyItems Include="$(SolutionDir)Plugins/**/*.*" />
+    </ItemGroup>
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="post-build.bat $(SolutionDir) $(TargetDir)" />
+        <Copy SourceFiles="@(_CopyItems)" DestinationFolder="$(TargetDir)/Plugins" />
 	</Target>
 	<PropertyGroup>
 		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
