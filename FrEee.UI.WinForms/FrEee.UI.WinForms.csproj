@@ -5,6 +5,7 @@
 		<UseWindowsForms>true</UseWindowsForms>
 		<Description>Windows Forms GUI for FrEee</Description>
 		<StartupObject>FrEee.UI.WinForms.Program</StartupObject>
+        <EnableWindowsTargeting>true</EnableWindowsTargeting>
 	</PropertyGroup>
 	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
 	<ItemGroup>
