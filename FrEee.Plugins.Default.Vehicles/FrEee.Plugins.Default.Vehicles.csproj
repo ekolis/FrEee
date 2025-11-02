@@ -24,7 +24,7 @@
 	</PropertyGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="xcopy &quot;$(TargetDir)\FrEee.Plugins.Default.Vehicles.dll&quot; &quot;$(SolutionDir)\Plugins\&quot; /Y /R /I" />
+        <Copy SourceFiles="$(TargetDir)\FrEee.Plugins.Default.Vehicles.dll" DestinationFolder="(SolutionDir)\Plugins" />
 	</Target>
 
 </Project>
