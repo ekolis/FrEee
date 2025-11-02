@@ -23,7 +23,7 @@
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-        <Copy SourceFiles="$(TargetDir)\FrEee.Plugins.Default.Persistence.dll" DestinationFolder="(SolutionDir)\Plugins" />
+	  <Exec Command="xcopy &quot;$(TargetDir)\FrEee.Plugins.Default.Persistence.dll&quot; &quot;$(SolutionDir)\Plugins\&quot; /Y /R /I" />
 	</Target>
 
 </Project>

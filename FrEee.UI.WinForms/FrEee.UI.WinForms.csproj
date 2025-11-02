@@ -5,7 +5,6 @@
 		<UseWindowsForms>true</UseWindowsForms>
 		<Description>Windows Forms GUI for FrEee</Description>
 		<StartupObject>FrEee.UI.WinForms.Program</StartupObject>
-        <EnableWindowsTargeting>true</EnableWindowsTargeting>
 	</PropertyGroup>
 	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
 	<ItemGroup>
@@ -67,12 +66,8 @@
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
-    <ItemGroup>
-        <!-- Include all files and subdirectories recursively from the source directory -->
-        <_CopyItems Include="$(SolutionDir)Plugins/**/*.*" />
-    </ItemGroup>
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-        <Copy SourceFiles="@(_CopyItems)" DestinationFolder="$(TargetDir)/Plugins" />
+	  <Exec Command="post-build.bat $(SolutionDir) $(TargetDir)" />
 	</Target>
 	<PropertyGroup>
 		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
