@@ -3,7 +3,7 @@ bin
 obj
 *.suo
 Thumbs.db
-*.csproj.user
+*.user
 *.userprefs
 packages/
 *.psess
