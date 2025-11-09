@@ -15,5 +15,6 @@ packages/
 *.etl
 *.orig
 .vs
+.idea
 *.Backup.MuProject
 *.dll
