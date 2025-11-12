@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net9</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<Description>Unit tests for FrEee</Description>
 	</PropertyGroup>
 	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />

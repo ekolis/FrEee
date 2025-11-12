@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net9</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
 		<OutputType>Library</OutputType>
 		<AssemblyName>FrEee.Core.Utility</AssemblyName>
 		<Description>Utility code for FrEee. This is low level utility code that doesn't need to know about any game objects.</Description>
