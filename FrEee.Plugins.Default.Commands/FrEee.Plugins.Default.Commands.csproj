@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net9</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<OutputType>Library</OutputType>
 		<AssemblyName>FrEee.Plugins.Default.Commands</AssemblyName>
 		<Description>Stock implementations of basic game mechanics such as commands for FrEee.</Description>
