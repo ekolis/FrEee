@@ -1,8 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<OutputType>WinExe</OutputType>
-		<TargetFramework>net10.0-windows</TargetFramework>
-		<UseWindowsForms>true</UseWindowsForms>
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net10.0-windows</TargetFramework>
+        <UseWindowsForms>true</UseWindowsForms>
+        <!-- FrEee doesn't actually use WPF right now, but this is required to cross commpile
+        for Windows on Linux because the WebView control has a WPF component in it. -->
+        <UseWPF>true</UseWPF>
 		<Description>Windows Forms GUI for FrEee</Description>
 		<StartupObject>FrEee.UI.WinForms.Program</StartupObject>
         <EnableWindowsTargeting>true</EnableWindowsTargeting>
@@ -23,65 +26,65 @@
 		<ProjectReference Include="..\FrEee.UI.Blazor\FrEee.UI.Blazor.csproj" />
 
 		<!-- HACK: we don't have UI plugins yet and we need direct access to the serializer to implemnet the ClientSettingsPersister -->
-		<ProjectReference Include="..\FrEee.Plugins.Default.Persistence\FrEee.Plugins.Default.Persistence.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-		<Compile Update="Controls\Blazor\PieChart.cs">
-		  <SubType>Component</SubType>
-		</Compile>
-		<Compile Update="Forms\BlazorForm.cs">
-		  <SubType>Component</SubType>
-		</Compile>
-		<Compile Update="Properties/Resources.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>Resources.resx</DependentUpon>
-		</Compile>
-		<Compile Update="Properties\Settings.Designer.cs">
-		  <DesignTimeSharedInput>True</DesignTimeSharedInput>
-		  <AutoGen>True</AutoGen>
-		  <DependentUpon>Settings.settings</DependentUpon>
-		</Compile>
-	</ItemGroup>
-	<ItemGroup>
-		<EmbeddedResource Update="Properties/Resources.resx">
-			<Generator>ResXFileCodeGenerator</Generator>
-			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-	</ItemGroup>
-	<ItemGroup>
-	  <None Update="Properties\Settings.settings">
-	    <Generator>SettingsSingleFileGenerator</Generator>
-	    <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-	  </None>
-	  <None Update="Assets\css\app.css">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Assets\fonts\kwajong-readme.txt">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="Assets\fonts\Kwajong.otf">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="index.html">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	</ItemGroup>
+        <ProjectReference Include="..\FrEee.Plugins.Default.Persistence\FrEee.Plugins.Default.Persistence.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Update="Controls\Blazor\PieChart.cs">
+            <SubType>Component</SubType>
+        </Compile>
+        <Compile Update="Forms\BlazorForm.cs">
+            <SubType>Component</SubType>
+        </Compile>
+        <Compile Update="Properties/Resources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Properties\Settings.Designer.cs">
+            <DesignTimeSharedInput>True</DesignTimeSharedInput>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Settings.settings</DependentUpon>
+        </Compile>
+    </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Update="Properties/Resources.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+        <None Update="Properties\Settings.settings">
+            <Generator>SettingsSingleFileGenerator</Generator>
+            <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+        </None>
+        <None Update="Assets\css\app.css">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Assets\fonts\kwajong-readme.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Assets\fonts\Kwajong.otf">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="index.html">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
     <ItemGroup>
         <!-- Include all files and subdirectories recursively from the source directory -->
-        <_CopyItems Include="$(SolutionDir)Plugins/**/*.*" />
+        <_CopyItems Include="$(SolutionDir)Plugins/**/*.*"/>
     </ItemGroup>
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-        <Copy SourceFiles="@(_CopyItems)" DestinationFolder="$(TargetDir)/Plugins" />
-	</Target>
-	<PropertyGroup>
-		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
-		<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
-	</PropertyGroup>
-	<ItemGroup>
-	  <EditorConfigFiles Remove="R:\vs\FrEee\FrEee.UI.WinForms\.editorconfig" />
-	</ItemGroup>
-	<ItemGroup>
-	  <None Include="R:\vs\FrEee\FrEee.UI.WinForms\.editorconfig" />
-	</ItemGroup>
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Copy SourceFiles="@(_CopyItems)" DestinationFolder="$(TargetDir)/Plugins"/>
+    </Target>
+    <PropertyGroup>
+        <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+        <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
+    </PropertyGroup>
+    <ItemGroup>
+        <EditorConfigFiles Remove="R:\vs\FrEee\FrEee.UI.WinForms\.editorconfig"/>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="R:\vs\FrEee\FrEee.UI.WinForms\.editorconfig"/>
+    </ItemGroup>
 </Project>
