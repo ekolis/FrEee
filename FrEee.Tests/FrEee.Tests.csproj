@@ -19,7 +19,7 @@
 		<ProjectReference Include="..\FrEee.Plugins.Default.Persistence\FrEee.Plugins.Default.Persistence.csproj" />
 		<ProjectReference Include="..\FrEee.Plugins.Default.Processes\FrEee.Plugins.Default.Processes.csproj" />
 		<ProjectReference Include="..\FrEee.Plugins.Default.Vehicles\FrEee.Plugins.Default.Vehicles.csproj" />
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
 		<PackageReference Include="NUnit" Version="3.14.0" />
 		<PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
 	</ItemGroup>
