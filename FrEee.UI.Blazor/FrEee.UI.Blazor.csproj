@@ -1,37 +1,40 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
-  <PropertyGroup>
-    <TargetFramework>net10.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net10.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    </PropertyGroup>
 
-  <Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
+    <Import Project="../FrEee.Assets/CommonProjectProperties.xml"/>
 
-  <ItemGroup>
-    <SupportedPlatform Include="browser" />
-  </ItemGroup>
+    <ItemGroup>
+        <SupportedPlatform Include="browser"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Excubo.Blazor.Canvas" Version="3.2.96" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.0" />
-    <PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Excubo.Blazor.Canvas" Version="3.2.96"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.0" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.0"/>
+        <PackageReference Include="PropertyChanged.Fody" Version="4.1.0"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\FrEee.Assets\FrEee.Assets.csproj" />
-    <ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
-    <ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\FrEee.Assets\FrEee.Assets.csproj"/>
+        <ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj"/>
+        <ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj"/>
+        <ProjectReference Include="..\FrEee.Plugins\FrEee.Plugins.csproj"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <Content Update="Views\ImageDisplay.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-  </ItemGroup>
+    <ItemGroup>
+        <Content Update="Views\ImageDisplay.razor">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        </Content>
+    </ItemGroup>
 
-	<PropertyGroup>
-		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
-	</PropertyGroup>
+    <PropertyGroup>
+        <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    </PropertyGroup>
 
 </Project>
