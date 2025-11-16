@@ -1,3 +1,13 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using FrEee.UI.Console;
 
-Console.WriteLine("Hello, World!");
+ConsoleCommandLine commandLine = new();
+
+try
+{
+	return (int)commandLine.Run(args);
+}
+catch (Exception ex)
+{
+	commandLine.Log(ex);
+	return (int)CommandLine.ReturnValue.Crash;
+}

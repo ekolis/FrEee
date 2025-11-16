@@ -27,6 +27,7 @@
 
 		<!-- HACK: we don't have UI plugins yet and we need direct access to the serializer to implemnet the ClientSettingsPersister -->
         <ProjectReference Include="..\FrEee.Plugins.Default.Persistence\FrEee.Plugins.Default.Persistence.csproj"/>
+        <ProjectReference Include="..\FrEee.UI.Console\FrEee.UI.Console.csproj" />
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Controls\Blazor\PieChart.cs">

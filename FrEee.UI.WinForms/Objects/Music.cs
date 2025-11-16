@@ -9,6 +9,8 @@ using System.Linq;
 
 namespace FrEee.UI.WinForms.Objects;
 
+using Console = System.Console;
+
 /// <summary>
 /// Music support for the game.
 /// </summary>

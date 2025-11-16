@@ -6,6 +6,8 @@ using System.Windows.Forms;
 
 namespace FrEee.UI.WinForms.Forms;
 
+using Console = System.Console;
+
 public partial class StatusForm : GameForm
 {
 	public StatusForm(Thread thread, Status status)
