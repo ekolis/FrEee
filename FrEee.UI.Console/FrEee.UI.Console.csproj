@@ -7,4 +7,6 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
+
 </Project>
