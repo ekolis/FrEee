@@ -7,17 +7,21 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
-      <ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
-      <ProjectReference Include="..\FrEee.Plugins\FrEee.Plugins.csproj" />
-    </ItemGroup>
-
     <Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
+
+    <ItemGroup>
+        <ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
+        <ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
+        <ProjectReference Include="..\FrEee.Plugins\FrEee.Plugins.csproj" />
+    </ItemGroup>
 
     <ItemGroup>
         <!-- Include all files and subdirectories recursively from the source directory -->
         <_CopyItems Include="$(SolutionDir)Plugins/**/*.*"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FrEee.UI\FrEee.UI.csproj" />
     </ItemGroup>
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
         <Copy SourceFiles="@(_CopyItems)" DestinationFolder="$(TargetDir)/Plugins"/>

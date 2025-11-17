@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Forms;
+using FrEee.UI;
 
 namespace FrEee.UI.WinForms;
 

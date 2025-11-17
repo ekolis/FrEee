@@ -1,4 +1,3 @@
-using System.Net.Mime;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using FrEee.Extensions;
@@ -7,10 +6,7 @@ using FrEee.Objects.GameState;
 using FrEee.Plugins;
 using FrEee.Utility;
 
-namespace FrEee.UI.Console;
-
-// this needs to come after the namespace declaration to properly reference the system console inside the namespace
-using Console = System.Console;
+namespace FrEee.UI;
 
 /// <summary>
 /// Command line utility for FrEee.
@@ -26,7 +22,7 @@ public abstract class CommandLine
 		SyntaxError = 1,
 		MissingRequestedFile = 2,
 		Crash = 3,
-		UnsupoprtedFeature = 4,
+		UnsupportedFeature = 4,
 		MissingPlr1File = 101,
 		// MissingPlr2File is 102, etc.
 	}

@@ -54,13 +54,13 @@ FrEee.UI.Console --process-safe gamename_turnnumber.gam: process turn, halting i
 	{
 		// TODO: add a text based host console
 		DisplayMessage("Host console is not supported by this command line. Use FrEee.UI.WinForms instead.");
-		return ReturnValue.UnsupoprtedFeature;
+		return ReturnValue.UnsupportedFeature;
 	}
 
 	public override ReturnValue PlayTurn(string? plrfile = null)
 	{
 		DisplayMessage("Playing a turn is not suported by this command line. Use FrEee.UI.WinForms instead.");
-		return ReturnValue.UnsupoprtedFeature;
+		return ReturnValue.UnsupportedFeature;
 	}
 
 	public override bool PromptYesNo(string prompt, string title)

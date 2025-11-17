@@ -1,4 +1,5 @@
-﻿using FrEee.UI.Console;
+﻿using FrEee.UI;
+using FrEee.UI.Console;
 
 ConsoleCommandLine commandLine = new();
 

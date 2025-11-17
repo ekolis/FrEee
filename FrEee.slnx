@@ -28,6 +28,7 @@
     <BuildDependency Project="FrEee.Plugins.Default.Vehicles/FrEee.Plugins.Default.Vehicles.csproj" />
     <BuildDependency Project="FrEee.Plugins/FrEee.Plugins.csproj" />
   </Project>
+  <Project Path="FrEee.UI/FrEee.UI.csproj" />
   <Properties Name="MonoDevelopProperties">
     <Property Name="StartupItem" Value="FrEee.WinForms\FrEee.WinForms.csproj" />
   </Properties>
