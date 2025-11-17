@@ -15,4 +15,12 @@
 
     <Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
 
+    <ItemGroup>
+        <!-- Include all files and subdirectories recursively from the source directory -->
+        <_CopyItems Include="$(SolutionDir)Plugins/**/*.*"/>
+    </ItemGroup>
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Copy SourceFiles="@(_CopyItems)" DestinationFolder="$(TargetDir)/Plugins"/>
+    </Target>
+
 </Project>
