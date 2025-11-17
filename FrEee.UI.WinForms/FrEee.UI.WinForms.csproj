@@ -2,15 +2,28 @@
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net10.0-windows</TargetFramework>
+        <Description>Windows Forms GUI for FrEee</Description>
+        <StartupObject>FrEee.UI.WinForms.Program</StartupObject>
         <UseWindowsForms>true</UseWindowsForms>
+        
         <!-- FrEee doesn't actually use WPF right now, but this is required to cross commpile
         for Windows on Linux because the WebView control has a WPF component in it. -->
         <UseWPF>true</UseWPF>
-		<Description>Windows Forms GUI for FrEee</Description>
-		<StartupObject>FrEee.UI.WinForms.Program</StartupObject>
+        
+        <!-- Allow cross compiling for Windows on Linux -->
         <EnableWindowsTargeting>true</EnableWindowsTargeting>
+        
         <!-- Suppress WinForms property serialization errors -->
         <NoWarn>$(NoWarn);WFO1000</NoWarn>
+        
+        <!-- Suppress weird source control errors -->
+        <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+        
+        <!-- Use the DPI-unaware WinForms designer -->
+        <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
+
+        <!-- Suppress errors when publishing due to FrEee.Assets being referenced multiple times -->
+        <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
 	</PropertyGroup>
 	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
 	<ItemGroup>
@@ -80,10 +93,6 @@
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
         <Copy SourceFiles="@(_CopyItems)" DestinationFolder="$(TargetDir)/Plugins"/>
     </Target>
-    <PropertyGroup>
-        <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
-        <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
-    </PropertyGroup>
     <ItemGroup>
         <EditorConfigFiles Remove="R:\vs\FrEee\FrEee.UI.WinForms\.editorconfig"/>
     </ItemGroup>

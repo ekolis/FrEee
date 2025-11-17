@@ -1,56 +1,56 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-		<OutputType>Library</OutputType>
-		<AssemblyName>FrEee.Assets</AssemblyName>
-		<Description>Art, music, data files, and scripts that are included with FrEee</Description>
-  </PropertyGroup>
-	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
-  <ItemGroup>
-    <Content Include="Data\**">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-		<Content Include="Docs\**">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<Content Include="Dsgnname\**">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<Content Include="GameSetups\**">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<Content Include="Licenses\**">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<Content Include="Mods\**">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<Content Include="Music\**">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<Content Include="Pictures\**">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<Content Include="Scripts\**">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Fonts\kwajong-readme.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Fonts\Kwajong.otf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Empires\" />
-    <Folder Include="Savegame\" />
-  </ItemGroup>
-	<PropertyGroup>
-		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
-	</PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <OutputType>Library</OutputType>
+        <AssemblyName>FrEee.Assets</AssemblyName>
+        <Description>Art, music, data files, and scripts that are included with FrEee</Description>
+    </PropertyGroup>
+    <Import Project="../FrEee.Assets/CommonProjectProperties.xml"/>
+    <ItemGroup>
+        <Folder Include="Data">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Folder>
+        <Folder Include="Docs">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Folder>
+        <Folder Include="Dsgnname">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Folder>
+        <Folder Include="GameSetups">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Folder>
+        <Folder Include="Licenses">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Folder>
+        <Folder Include="Mods">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Folder>
+        <Folder Include="Music">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Folder>
+        <Folder Include="Pictures">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Folder>
+        <Folder Include="Scripts">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Folder>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="..\.editorconfig" Link=".editorconfig"/>
+    </ItemGroup>
+    <ItemGroup>
+        <None Update="Fonts\kwajong-readme.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Fonts\Kwajong.otf">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Empires\"/>
+        <Folder Include="Savegame\"/>
+    </ItemGroup>
+    <PropertyGroup>
+        <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    </PropertyGroup>
 </Project>
