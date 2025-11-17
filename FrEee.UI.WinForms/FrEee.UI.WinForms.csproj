@@ -9,6 +9,8 @@
 		<Description>Windows Forms GUI for FrEee</Description>
 		<StartupObject>FrEee.UI.WinForms.Program</StartupObject>
         <EnableWindowsTargeting>true</EnableWindowsTargeting>
+        <!-- Suppress WinForms property serialization errors -->
+        <NoWarn>$(NoWarn);WFO1000</NoWarn>
 	</PropertyGroup>
 	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
 	<ItemGroup>
