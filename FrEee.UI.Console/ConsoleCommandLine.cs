@@ -31,12 +31,12 @@ public class ConsoleCommandLine
 		DisplayMessage(
 			@"Syntax:
 
-FrEee: display this help
+FrEee.UI.Console: display this help
 
-FrEee --help: display this help
+FrEee.UI.Console --help: display this help
 
-FrEee --process gamename_turnnumber.gam: process turn
-FrEee --process-safe gamename_turnnumber.gam: process turn, halting if any plr files are missing");
+FrEee.UI.Console --process gamename_turnnumber.gam: process turn
+FrEee.UI.Console --process-safe gamename_turnnumber.gam: process turn, halting if any plr files are missing");
 		return ReturnValue.SyntaxError;
 	}
 

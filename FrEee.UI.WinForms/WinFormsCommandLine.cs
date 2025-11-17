@@ -29,21 +29,21 @@ public class WinFormsCommandLine
 		DisplayMessage(
 			@"Syntax:
 
-FrEee: display main menu
+FrEee.UI.WinForms: display main menu
 
-FrEee --help: display this help
+FrEee.UI.WinForms --help: display this help
 
-FrEee --host gamename_turnnumber.gam: load host console
-	Shortcut: FrEee gamename_turnnumber.gam
-FrEee --process gamename_turnnumber.gam: process turn
-FrEee --process-safe gamename_turnnumber.gam: process turn, halting if any plr files are missing
+FrEee.UI.WinForms --host gamename_turnnumber.gam: load host console
+	Shortcut: FrEee.UI.WinForms gamename_turnnumber.gam
+FrEee.UI.WinForms --process gamename_turnnumber.gam: process turn
+FrEee.UI.WinForms --process-safe gamename_turnnumber.gam: process turn, halting if any plr files are missing
 
-FrEee --play gamename_turnnumber_playernumber.gam: play a turn, resuming from where you left off if a plr file is present
-	Shortcut: FrEee gamename_turnnumber_playernumber.gam
-FrEee --play gamename_turnnumber_playernumber.plr: play a turn, resuming from where you left off
-	Shortcut: FrEee gamename_turnnumber_playernumber.plr
-FrEee --load gamename_turnnumber_playernumber.gam: play a turn, prompting to resume if plr file is present
-FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting from the beginning of the turn");
+FrEee.UI.WinForms --play gamename_turnnumber_playernumber.gam: play a turn, resuming from where you left off if a plr file is present
+	Shortcut: FrEee.UI.WinForms gamename_turnnumber_playernumber.gam
+FrEee.UI.WinForms --play gamename_turnnumber_playernumber.plr: play a turn, resuming from where you left off
+	Shortcut: FrEee.UI.WinForms gamename_turnnumber_playernumber.plr
+FrEee.UI.WinForms --load gamename_turnnumber_playernumber.gam: play a turn, prompting to resume if plr file is present
+FrEee.UI.WinForms --restart gamename_turnnumber_playernumber.gam: play a turn, restarting from the beginning of the turn");
 		return ReturnValue.SyntaxError;
 	}
 
