@@ -28,6 +28,6 @@ internal static class Program
 		Application.EnableVisualStyles();
 		Application.SetCompatibleTextRenderingDefault(false);
 
-		return (int)commandLine.Run(args);
+		return (int)commandLine.Run(args, true);
 	}
 }

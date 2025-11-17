@@ -4,7 +4,7 @@ ConsoleCommandLine commandLine = new();
 
 try
 {
-	return (int)commandLine.Run(args);
+	return (int)commandLine.Run(args, false);
 }
 catch (Exception ex)
 {

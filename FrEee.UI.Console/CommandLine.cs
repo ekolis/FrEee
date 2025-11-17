@@ -41,38 +41,41 @@ public abstract class CommandLine
 	/// 4 for unsupported feature (e.g. playing a turn in the command line interface)
 	/// 1xx for missing PLR file for player xx when running in "safe processing" mode
 	/// </summary>
-	public ReturnValue Run(string[] args)
+	public ReturnValue Run(string[] args, bool redirectConsole)
 	{
 		// HACK: set up dependency injection for GUI before we load the main set of plugins
 		PluginLibrary.Instance.LoadDefaultPlugins(LoadUIPlugins);
 
 		// HACK - so many things are based on the working directory...
 		Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
-		
-		try
+
+		if (redirectConsole)
 		{
-			var stdout = new FileStream("stdout.txt", FileMode.Create);
-			var swOut = new StreamWriter(stdout);
-			swOut.AutoFlush = true;
-			Console.SetOut(swOut);
+			try
+			{
+				var stdout = new FileStream("stdout.txt", FileMode.Create);
+				var swOut = new StreamWriter(stdout);
+				swOut.AutoFlush = true;
+				Console.SetOut(swOut);
+			}
+			catch (IOException)
+			{
+				Console.Error.WriteLine("Cannot open stdout.txt.");
+			}
+
+			try
+			{
+				var stderr = new FileStream("stderr.txt", FileMode.Create);
+				var swErr = new StreamWriter(stderr);
+				swErr.AutoFlush = true;
+				Console.SetError(swErr);
+			}
+			catch (IOException)
+			{
+				Console.Error.WriteLine("Cannot open stderr.txt.");
+			}
 		}
-		catch (IOException)
-		{
-			Console.Error.WriteLine("Cannot open stdout.txt.");
-		}
-		
-		try
-		{
-			var stderr = new FileStream("stderr.txt", FileMode.Create);
-			var swErr = new StreamWriter(stderr);
-			swErr.AutoFlush = true;
-			Console.SetError(swErr);
-		}
-		catch (IOException)
-		{
-			Console.Error.WriteLine("Cannot open stderr.txt.");
-		}
-		
+
 		if (args.Length == 0)
 		{
 			return PerformDefaultAction();
