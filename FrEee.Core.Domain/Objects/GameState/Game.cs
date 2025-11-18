@@ -377,7 +377,8 @@ public class Game
 	/// Note that if it was renamed, it might have different game name, turn number, player number, etc. than the filename indicates.
 	/// </summary>
 	/// <param name="filename"></param>
-	public static void Load(string filename)
+	/// <param name="includeGuiPlugins">Whether to load GUI plugins alongside the standard game plugins.</param>
+	public static void Load(string filename, bool includeGuiPlugins = true)
 	{
 		Current = Services.Persistence.Game.LoadFromFile(filename);
 
@@ -387,7 +388,7 @@ public class Game
         }
 
 		// TODO: put all this code in GamePersister
-		new ModLoader().Load(Current.ModPath);
+		new ModLoader().Load(Current.ModPath, includeGuiPlugins: includeGuiPlugins);
 		if (Empire.Current != null)
 		{
 			// load library of designs
@@ -517,7 +518,7 @@ public class Game
 	/// Saves the master view and all players' views of the game, unless single player, in which case only the first player's view is saved.
 	/// </summary>
 	/// <exception cref="InvalidOperationException">if CurrentEmpire is not null.</exception>
-	public static void SaveAll(Status status = null, double desiredProgress = 1d)
+	public static void SaveAll(Status status = null, double desiredProgress = 1d, bool includeGuiPlugins = true)
 	{
 		if (Current.CurrentEmpire != null)
 			throw new InvalidOperationException("Can only save player galaxy views from the master galaxy view.");
@@ -536,7 +537,7 @@ public class Game
 		// save player views
 		for (int i = 0; i < Current.Empires.Count; i++)
 		{
-			Load(gamname);
+			Load(gamname, includeGuiPlugins);
 			if (Current.Empires[i].IsPlayerEmpire)
 			{
 				if (status != null)
@@ -553,7 +554,7 @@ public class Game
 		// TODO - only reload master view if we really need to
 		if (status != null)
 			status.Message = "Saving game";
-		Load(gamname);
+		Load(gamname, includeGuiPlugins);
 		if (status != null)
 			status.Progress += progressPerSaveLoad;
 

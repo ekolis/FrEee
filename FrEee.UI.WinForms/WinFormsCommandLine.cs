@@ -75,4 +75,6 @@ FrEee.UI.WinForms --restart gamename_turnnumber_playernumber.gam: play a turn, r
 
 		return key == 'y';
 	}
+	
+	protected override bool IncludeGuiPlugins { get; } = false;
 }

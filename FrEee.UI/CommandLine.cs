@@ -174,7 +174,7 @@ public abstract class CommandLine
 		}
 
 		// load GAM file, see if it's a host or player view
-		Game.Load(gamfile);
+		Game.Load(gamfile, IncludeGuiPlugins);
 		if (Empire.Current == null)
 		{
 			// host view
@@ -225,6 +225,8 @@ public abstract class CommandLine
 	public abstract ReturnValue PlayTurn(string? plrfile = null);
 
 	public abstract bool PromptYesNo(string prompt, string title);
+	
+	protected abstract bool IncludeGuiPlugins { get; }
 
 	public ReturnValue ProcessTurn(bool safe)
 	{
@@ -249,7 +251,7 @@ public abstract class CommandLine
 				Console.Error.WriteLine("Halting turn processing due to missing PLR file(s).");
 				return ReturnValue.MissingPlr1File + Game.Current.Empires.IndexOf(emps.First());
 			}
-			Game.SaveAll();
+			Game.SaveAll(includeGuiPlugins: IncludeGuiPlugins);
 			Console.WriteLine("Turn processed successfully. It is now turn " + Game.Current.TurnNumber + " (stardate " + Game.Current.Stardate + ").");
 			Services.Gui.Exit();
 			return ReturnValue.Success;

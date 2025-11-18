@@ -73,4 +73,6 @@ FrEee.UI.Console --process-safe gamename_turnnumber.gam: process turn, halting i
 		} while (!"yn".Contains(key.Value));
 		return key == 'y';
 	}
+
+	protected override bool IncludeGuiPlugins { get; } = false;
 }
