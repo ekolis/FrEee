@@ -101,8 +101,6 @@
         <Savegame Include="$(SolutionDir)/FrEee.Assets/Savegame/**/*" />
         <Scripts Include="$(SolutionDir)/FrEee.Assets/Scripts/**/*" />
     </ItemGroup>
-    <ItemGroup>
-    </ItemGroup>
     <Target Name="CopyAssetsAndPlugins" AfterTargets="PostBuildEvent">
         <Copy SourceFiles="@(Data)" DestinationFolder="$(TargetDir)/Data" SkipUnchangedFiles="true" />
         <Copy SourceFiles="@(Docs)" DestinationFolder="$(TargetDir)/Docs" SkipUnchangedFiles="true" />

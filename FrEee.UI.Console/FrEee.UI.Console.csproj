@@ -13,18 +13,38 @@
         <ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
         <ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
         <ProjectReference Include="..\FrEee.Plugins\FrEee.Plugins.csproj" />
+        <ProjectReference Include="..\FrEee.UI\FrEee.UI.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <!-- Include all files and subdirectories recursively from the source directory -->
-        <_CopyItems Include="$(SolutionDir)Plugins/**/*.*"/>
+        <Data Include="$(SolutionDir)/FrEee.Assets/Data/**/*" />
+        <Docs Include="$(SolutionDir)/FrEee.Assets/Docs/**/*" />
+        <Dsgnname Include="$(SolutionDir)/FrEee.Assets/Dsgnname/**/*" />
+        <Empires Include="$(SolutionDir)/FrEee.Assets/Empires/**/*" />
+        <Fonts Include="F$(SolutionDir)/FrEee.Assets/onts/**/*" />
+        <GameSetups Include="$(SolutionDir)/FrEee.Assets/GameSetups/**/*" />
+        <Licenses Include="$(SolutionDir)/FrEee.Assets/Licenses/**/*" />
+        <Mods Include="$(SolutionDir)/FrEee.Assets/Mods/**/*" />
+        <Music Include="$(SolutionDir)/FrEee.Assets/Music/**/*" />
+        <Pictures Include="$(SolutionDir)/FrEee.Assets/Pictures/**/*" />
+        <Plugins Include="$(SolutionDir)/Plugins/**/*"/>
+        <Savegame Include="$(SolutionDir)/FrEee.Assets/Savegame/**/*" />
+        <Scripts Include="$(SolutionDir)/FrEee.Assets/Scripts/**/*" />
     </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\FrEee.UI\FrEee.UI.csproj" />
-    </ItemGroup>
-    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-        <Copy SourceFiles="@(_CopyItems)" DestinationFolder="$(TargetDir)/Plugins"/>
+    <Target Name="CopyAssetsAndPlugins" AfterTargets="PostBuildEvent">
+        <Copy SourceFiles="@(Data)" DestinationFolder="$(TargetDir)/Data" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Docs)" DestinationFolder="$(TargetDir)/Docs" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Dsgnname)" DestinationFolder="$(TargetDir)/Dsgnname" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Empires)" DestinationFolder="$(TargetDir)/Empires" SkipUnchangedFiles="true" />
+        <!--<Copy SourceFiles="@(Fonts)" DestinationFolder="$(TargetDir)/Fonts" SkipUnchangedFiles="true" />-->
+        <Copy SourceFiles="@(GameSetups)" DestinationFolder="$(TargetDir)/GameSetups" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Licenses)" DestinationFolder="$(TargetDir)/Licenses" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Mods)" DestinationFolder="$(TargetDir)/Mods" SkipUnchangedFiles="true" />
+        <!--<Copy SourceFiles="@(Music)" DestinationFolder="$(TargetDir)/Music" SkipUnchangedFiles="true" />-->
+        <!--<Copy SourceFiles="@(Pictures)" DestinationFolder="$(TargetDir)/Pictures" SkipUnchangedFiles="true" />-->
+        <Copy SourceFiles="@(Plugins)" DestinationFolder="$(TargetDir)/Plugins" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Savegame)" DestinationFolder="$(TargetDir)/Savegame" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Scripts)" DestinationFolder="$(TargetDir)/Scripts" SkipUnchangedFiles="true" />
     </Target>
 
 </Project>
