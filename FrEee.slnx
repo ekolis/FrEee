@@ -21,12 +21,14 @@
     <BuildDependency Project="FrEee.Plugins/FrEee.Plugins.csproj" />
   </Project>
   <Project Path="FrEee.UI.Blazor/FrEee.UI.Blazor.csproj" />
+  <Project Path="FrEee.UI.Console/FrEee.UI.Console.csproj" />
   <Project Path="FrEee.UI.WinForms/FrEee.UI.WinForms.csproj">
     <BuildDependency Project="FrEee.Plugins.Default.Commands/FrEee.Plugins.Default.Commands.csproj" />
     <BuildDependency Project="FrEee.Plugins.Default.Processes/FrEee.Plugins.Default.Processes.csproj" />
     <BuildDependency Project="FrEee.Plugins.Default.Vehicles/FrEee.Plugins.Default.Vehicles.csproj" />
     <BuildDependency Project="FrEee.Plugins/FrEee.Plugins.csproj" />
   </Project>
+  <Project Path="FrEee.UI/FrEee.UI.csproj" />
   <Properties Name="MonoDevelopProperties">
     <Property Name="StartupItem" Value="FrEee.WinForms\FrEee.WinForms.csproj" />
   </Properties>

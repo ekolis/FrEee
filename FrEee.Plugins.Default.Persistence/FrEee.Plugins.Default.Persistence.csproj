@@ -1,30 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>net10.0</TargetFramework>
-		<OutputType>Library</OutputType>
-		<AssemblyName>FrEee.Plugins.Default.Persistence</AssemblyName>
-		<Description>Serialization and persistence code for FrEee.</Description>
-	</PropertyGroup>
-	
-	<Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <OutputType>Library</OutputType>
+        <AssemblyName>FrEee.Plugins.Default.Persistence</AssemblyName>
+        <Description>Serialization and persistence code for FrEee.</Description>
+    </PropertyGroup>
 
-	<PropertyGroup>
-		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
-		<RootNamespace>FrEee.Plugins.Default.Persistence</RootNamespace>
-	</PropertyGroup>
+    <Import Project="../FrEee.Assets/CommonProjectProperties.xml"/>
 
-	<ItemGroup>
-	  <PackageReference Include="System.Collections.Immutable" Version="10.0.0" />
-	  <PackageReference Include="System.IO.Ports" Version="10.0.0" />
-	</ItemGroup>
+    <PropertyGroup>
+        <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+        <RootNamespace>FrEee.Plugins.Default.Persistence</RootNamespace>
+    </PropertyGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
-	</ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="System.Collections.Immutable" Version="10.0.0"/>
+        <PackageReference Include="System.IO.Ports" Version="10.0.0"/>
+    </ItemGroup>
 
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-        <Copy SourceFiles="$(TargetDir)\FrEee.Plugins.Default.Persistence.dll" DestinationFolder="(SolutionDir)\Plugins" />
-	</Target>
+    <ItemGroup>
+        <ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj"/>
+        <ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj"/>
+        <ProjectReference Include="..\FrEee.Plugins\FrEee.Plugins.csproj"/>
+    </ItemGroup>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Copy SourceFiles="$(TargetDir)\FrEee.Plugins.Default.Persistence.dll" DestinationFolder="(SolutionDir)\Plugins"/>
+    </Target>
 
 </Project>

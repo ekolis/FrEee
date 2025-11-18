@@ -21,6 +21,8 @@ using FrEee.Vehicles;
 
 namespace FrEee.UI.WinForms.Forms;
 
+using Console = System.Console;
+
 public partial class MainMenuForm : GameForm
 {
 	private static MainMenuForm _instance;
@@ -236,7 +238,7 @@ public partial class MainMenuForm : GameForm
 
 	private void btnResume_Click(object sender, EventArgs e)
 	{
-		string savegameDir = Program.GetPath(FrEeeConstants.SaveGameDirectory);
+		string savegameDir = ClientUtilities.GetPath(FrEeeConstants.SaveGameDirectory);
 		string noSavesMessage = "No games to resume; please create a new game.";
 
 		if (Directory.Exists(savegameDir))

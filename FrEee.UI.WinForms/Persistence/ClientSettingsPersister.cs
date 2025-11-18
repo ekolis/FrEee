@@ -12,6 +12,8 @@ using FrEee.Utility;
 
 namespace FrEee.UI.WinForms.Persistence;
 
+using Console = System.Console;
+
 [Export(typeof(IPlugin))]
 public class ClientSettingsPersister
 	: Plugin<IClientSettingsPersister>, IClientSettingsPersister

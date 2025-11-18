@@ -3,8 +3,8 @@
 @using System.Numerics
 @using FrEee.Extensions
 
+@namespace FrEee.UI.Blazor.Views
 @typeparam T where T : INumber<T>, IMultiplyOperators<T, int, T>, IDivisionOperators<T, int, T>
-
 @inherits ViewBase<PieChartViewModel<T>>
 
 <!--TODO: split into multiple divs, one for each pie slice, and add onclick handlers for each-->

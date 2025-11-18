@@ -1,15 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
+    </PropertyGroup>
 
-  <Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
+    <Import Project="../FrEee.Assets/CommonProjectProperties.xml"/>
 
-  <PropertyGroup>
-		<EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
-	</PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
+        <ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
+        <ProjectReference Include="..\FrEee.Plugins\FrEee.Plugins.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <!-- Include all files and subdirectories recursively from the source directory -->
+        <_CopyItems Include="$(SolutionDir)Plugins/**/*.*"/>
+    </ItemGroup>
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Copy SourceFiles="@(_CopyItems)" DestinationFolder="$(TargetDir)/Plugins"/>
+    </Target>
 
 </Project>

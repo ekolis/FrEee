@@ -16,6 +16,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
 		<ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
+        <ProjectReference Include="..\FrEee.Plugins\FrEee.Plugins.csproj" />
 	</ItemGroup>
 
 	<PropertyGroup>

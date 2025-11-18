@@ -10,7 +10,7 @@ public class Status
 	/// <summary>
 	/// Any exception that may have occurred.
 	/// </summary>
-	public Exception Exception
+	public Exception? Exception
 	{
 		get { return exception; }
 		set
