@@ -91,7 +91,7 @@
         <Docs Include="$(SolutionDir)/FrEee.Assets/Docs/**/*" />
         <Dsgnname Include="$(SolutionDir)/FrEee.Assets/Dsgnname/**/*" />
         <Empires Include="$(SolutionDir)/FrEee.Assets/Empires/**/*" />
-        <Fonts Include="F$(SolutionDir)/FrEee.Assets/onts/**/*" />
+        <Fonts Include="$(SolutionDir)/FrEee.Assets/Fonts/**/*" />
         <GameSetups Include="$(SolutionDir)/FrEee.Assets/GameSetups/**/*" />
         <Licenses Include="$(SolutionDir)/FrEee.Assets/Licenses/**/*" />
         <Mods Include="$(SolutionDir)/FrEee.Assets/Mods/**/*" />
