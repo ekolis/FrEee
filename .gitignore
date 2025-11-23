@@ -19,3 +19,4 @@ packages/
 *.Backup.MuProject
 *.dll
 *.dotsettings
+publish

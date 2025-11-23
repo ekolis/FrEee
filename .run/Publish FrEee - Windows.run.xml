@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Publish FrEee - Windows" type="CompoundRunConfigurationType">
+    <toRun name="Publish FrEee.Assets - Windows" type="DotNetFolderPublish" />
+    <toRun name="Publish FrEee.UI.Console - Windows" type="DotNetFolderPublish" />
+    <toRun name="Publish FrEee.UI.WinForms - Windows" type="DotNetFolderPublish" />
+    <method v="2" />
+  </configuration>
+</component>

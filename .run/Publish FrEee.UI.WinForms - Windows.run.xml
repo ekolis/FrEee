@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Publish FrEee.UI.WinForms - Windows" type="DotNetFolderPublish" factoryName="Publish to folder">
+    <riderPublish configuration="Debug" platform="Any CPU" target_folder="$PROJECT_DIR$/publish" target_framework="net10.0-windows" uuid_high="5688216411910566001" uuid_low="5041349754755034861">
+      <runtimes>
+        <item value="win-x64" />
+      </runtimes>
+    </riderPublish>
+    <method v="2" />
+  </configuration>
+</component>
