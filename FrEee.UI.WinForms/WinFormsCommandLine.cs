@@ -1,9 +1,15 @@
 using System;
+using System.IO;
+using System.Windows.Forms;
+using FrEee.Objects.GameState;
+using FrEee.Plugins;
+using FrEee.UI.WinForms.Forms;
+using FrEee.UI.WinForms.Persistence;
+using FrEee.UI.WinForms.Utility;
+using FrEee.UI.WinForms.Utility.Extensions;
+using FrEee.Utility;
 
 namespace FrEee.UI.WinForms;
-
-// this needs to come after the namespace declaration to properly reference the system console inside the namespace
-using Console = System.Console;
 
 /// <summary>
 /// Command line utility for FrEee for use by the Windows Forms UI.
@@ -13,12 +19,13 @@ public class WinFormsCommandLine
 {
 	public override void LoadUIPlugins()
 	{
-		// do nothing here
+		DI.RegisterSingleton<IGuiController, GuiController>();
+		DI.RegisterSingleton<IClientSettingsPersister, ClientSettingsPersister>();
 	}
 
 	public override void DisplayMessage(string message)
 	{
-		Console.WriteLine(message);
+		MessageBox.Show(message);
 	}
 
 	public override ReturnValue DisplaySyntax()
@@ -43,25 +50,51 @@ FrEee.UI.WinForms --load gamename_turnnumber_playernumber.gam: play a turn, prom
 FrEee.UI.WinForms --restart gamename_turnnumber_playernumber.gam: play a turn, restarting from the beginning of the turn");
 		return ReturnValue.SyntaxError;
 	}
-
-	/// <summary>
-	/// Performs the default action for the current UI.
-	/// The default implementation displays the syntax help text.
-	/// Can be overridden to perform a different action, e.g. load a GUI.
-	/// </summary>
+	
 	public override ReturnValue PerformDefaultAction()
 	{
-		return DisplaySyntax();
+		Application.Run(MainMenuForm.GetInstance());
+		return ReturnValue.Success;
 	}
 
 	public override ReturnValue DisplayHostConsole()
 	{
-		throw new NotImplementedException();
+		HostConsoleForm form = new();
+		form.StartPosition = FormStartPosition.CenterScreen;
+		Application.Run(form);
+		return ReturnValue.Success;
 	}
 
 	public override ReturnValue PlayTurn(string? plrfile = null)
 	{
-		throw new NotImplementedException();
+		if (plrfile is not null)
+		{
+			if (File.Exists(plrfile))
+			{
+				try
+				{
+					Game.Current.LoadCommands();
+				}
+				catch
+				{
+					DisplayMessage("An error occurred while loading your commands. You will need to restart your turn from the beginning.");
+					Game.Load(Game.Current.GameFileName); // in case some commands got loaded
+				}
+			}
+			else
+			{
+				DisplayMessage(plrfile + " does not exist. You will need to start your turn from the beginning.");
+			}
+		}
+
+		Services.Designs.ImportDesignsFromLibrary();
+
+		MainGameForm form = new(false, true);
+		form.KeyPreview = true;
+		form.StartPosition = FormStartPosition.CenterScreen;
+		form.KeyDown += GuiExtensions.childForm_KeyDown_forDebugConsole;
+		Application.Run(form);
+		return ReturnValue.Success;
 	}
 
 	public override bool PromptYesNo(string prompt, string title)
@@ -76,5 +109,5 @@ FrEee.UI.WinForms --restart gamename_turnnumber_playernumber.gam: play a turn, r
 		return key == 'y';
 	}
 	
-	protected override bool IncludeGuiPlugins { get; } = false;
+	protected override bool IncludeGuiPlugins => true;
 }
