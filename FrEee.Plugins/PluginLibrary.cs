@@ -21,7 +21,7 @@ public class PluginLibrary
 	{
 		// load plugins from DLLs in Plugins folder
 		var catalog = new AggregateCatalog();
-		var pluginsDir = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Plugins");
+		var pluginsDir = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) ?? ".", "Plugins");
 		catalog.Catalogs.Add(new DirectoryCatalog(pluginsDir));
 		container = new CompositionContainer(catalog);
 		container.ComposeParts(this);

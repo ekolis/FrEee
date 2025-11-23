@@ -10,6 +10,7 @@
     <Import Project="../FrEee.Assets/CommonProjectProperties.xml" />
 
     <ItemGroup>
+        <ProjectReference Include="..\FrEee.Assets\FrEee.Assets.csproj" Private="true" />
         <ProjectReference Include="..\FrEee.Core.Domain\FrEee.Core.Domain.csproj" />
         <ProjectReference Include="..\FrEee.Core.Utility\FrEee.Core.Utility.csproj" />
         <ProjectReference Include="..\FrEee.Plugins\FrEee.Plugins.csproj" />
@@ -17,34 +18,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Data Include="$(SolutionDir)/FrEee.Assets/Data/**/*" />
-        <Docs Include="$(SolutionDir)/FrEee.Assets/Docs/**/*" />
-        <Dsgnname Include="$(SolutionDir)/FrEee.Assets/Dsgnname/**/*" />
-        <Empires Include="$(SolutionDir)/FrEee.Assets/Empires/**/*" />
-        <Fonts Include="F$(SolutionDir)/FrEee.Assets/onts/**/*" />
-        <GameSetups Include="$(SolutionDir)/FrEee.Assets/GameSetups/**/*" />
-        <Licenses Include="$(SolutionDir)/FrEee.Assets/Licenses/**/*" />
-        <Mods Include="$(SolutionDir)/FrEee.Assets/Mods/**/*" />
-        <Music Include="$(SolutionDir)/FrEee.Assets/Music/**/*" />
-        <Pictures Include="$(SolutionDir)/FrEee.Assets/Pictures/**/*" />
-        <Plugins Include="$(SolutionDir)/Plugins/**/*"/>
-        <Savegame Include="$(SolutionDir)/FrEee.Assets/Savegame/**/*" />
-        <Scripts Include="$(SolutionDir)/FrEee.Assets/Scripts/**/*" />
+        <Common Include="$(SolutionDir)bin/$(Configuration)/net10.0/**/*" />
     </ItemGroup>
-    <Target Name="CopyAssetsAndPlugins" AfterTargets="PostBuildEvent">
-        <Copy SourceFiles="@(Data)" DestinationFolder="$(TargetDir)/Data/%(RecursiveDir)" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(Docs)" DestinationFolder="$(TargetDir)/Docs/%(RecursiveDir)" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(Dsgnname)" DestinationFolder="$(TargetDir)/Dsgnname/%(RecursiveDir)" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(Empires)" DestinationFolder="$(TargetDir)/Empires/%(RecursiveDir)" SkipUnchangedFiles="true" />
-        <!--<Copy SourceFiles="@(Fonts)" DestinationFolder="$(TargetDir)/Fonts/%(RecursiveDir)" SkipUnchangedFiles="true" />-->
-        <Copy SourceFiles="@(GameSetups)" DestinationFolder="$(TargetDir)/GameSetups/%(RecursiveDir)" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(Licenses)" DestinationFolder="$(TargetDir)/Licenses/%(RecursiveDir)" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(Mods)" DestinationFolder="$(TargetDir)/Mods/%(RecursiveDir)" SkipUnchangedFiles="true" />
-        <!--<Copy SourceFiles="@(Music)" DestinationFolder="$(TargetDir)/Music/%(RecursiveDir)" SkipUnchangedFiles="true" />-->
-        <!--<Copy SourceFiles="@(Pictures)" DestinationFolder="$(TargetDir)/Pictures/%(RecursiveDir)" SkipUnchangedFiles="true" />-->
-        <Copy SourceFiles="@(Plugins)" DestinationFolder="$(TargetDir)/Plugins/%(RecursiveDir)" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(Savegame)" DestinationFolder="$(TargetDir)/Savegame/%(RecursiveDir)" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(Scripts)" DestinationFolder="$(TargetDir)/Scripts/%(RecursiveDir)" SkipUnchangedFiles="true" />
+    <Target Name="CopyCommonFiles" AfterTargets="PostBuildEvent">
+        <Copy SourceFiles="@(Common)" DestinationFolder="$(TargetDir)/%(RecursiveDir)" SkipUnchangedFiles="true" />
     </Target>
-
+    <Target Name="PublishCommonFiles" AfterTargets="Publish">
+        <Copy SourceFiles="@(Common)" DestinationFolder="$(PublishDir)/%(RecursiveDir)" SkipUnchangedFiles="true" />
+    </Target>
 </Project>
