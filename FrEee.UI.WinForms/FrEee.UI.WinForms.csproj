@@ -101,19 +101,19 @@
         <Scripts Include="$(SolutionDir)/FrEee.Assets/Scripts/**/*" />
     </ItemGroup>
     <Target Name="CopyAssetsAndPlugins" AfterTargets="PostBuildEvent">
-        <Copy SourceFiles="@(Data)" DestinationFolder="$(TargetDir)/Data" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(Docs)" DestinationFolder="$(TargetDir)/Docs" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(Dsgnname)" DestinationFolder="$(TargetDir)/Dsgnname" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(Empires)" DestinationFolder="$(TargetDir)/Empires" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(Fonts)" DestinationFolder="$(TargetDir)/Fonts" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(GameSetups)" DestinationFolder="$(TargetDir)/GameSetups" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(Licenses)" DestinationFolder="$(TargetDir)/Licenses" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(Mods)" DestinationFolder="$(TargetDir)/Mods" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(Music)" DestinationFolder="$(TargetDir)/Music" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(Pictures)" DestinationFolder="$(TargetDir)/Pictures" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(Plugins)" DestinationFolder="$(TargetDir)/Plugins" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(Savegame)" DestinationFolder="$(TargetDir)/Savegame" SkipUnchangedFiles="true" />
-        <Copy SourceFiles="@(Scripts)" DestinationFolder="$(TargetDir)/Scripts" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Data)" DestinationFolder="$(TargetDir)/Data/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Docs)" DestinationFolder="$(TargetDir)/Docs/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Dsgnname)" DestinationFolder="$(TargetDir)/Dsgnname/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Empires)" DestinationFolder="$(TargetDir)/Empires/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Fonts)" DestinationFolder="$(TargetDir)/Fonts/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(GameSetups)" DestinationFolder="$(TargetDir)/GameSetups/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Licenses)" DestinationFolder="$(TargetDir)/Licenses/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Mods)" DestinationFolder="$(TargetDir)/Mods/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Music)" DestinationFolder="$(TargetDir)/Music/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Pictures)" DestinationFolder="$(TargetDir)/Pictures/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Plugins)" DestinationFolder="$(TargetDir)/Plugins/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Savegame)" DestinationFolder="$(TargetDir)/Savegame/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Scripts)" DestinationFolder="$(TargetDir)/Scripts/%(RecursiveDir)" SkipUnchangedFiles="true" />
     </Target>
     <ItemGroup>
         <EditorConfigFiles Remove="R:\vs\FrEee\FrEee.UI.WinForms\.editorconfig"/>
