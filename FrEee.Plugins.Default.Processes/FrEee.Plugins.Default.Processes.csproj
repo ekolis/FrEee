@@ -24,8 +24,8 @@
 		<RootNamespace>FrEee.Plugins.Default.Processes</RootNamespace>
 	</PropertyGroup>
 
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-        <Copy SourceFiles="$(TargetDir)\FrEee.Plugins.Default.Processes.dll" DestinationFolder="(SolutionDir)\Plugins" />
-	</Target>
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Copy SourceFiles="$(TargetDir)\FrEee.Plugins.Default.Processes.dll" DestinationFolder="$(TargetDir)\Plugins" />
+    </Target>
 
 </Project>

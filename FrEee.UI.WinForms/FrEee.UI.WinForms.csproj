@@ -86,6 +86,7 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
+    
     <ItemGroup>
         <Common Include="$(SolutionDir)bin/$(Configuration)/net10.0/**/*" />
     </ItemGroup>
@@ -95,6 +96,7 @@
     <Target Name="PublishCommonFiles" AfterTargets="Publish">
         <Copy SourceFiles="@(Common)" DestinationFolder="$(PublishDir)/%(RecursiveDir)" SkipUnchangedFiles="true" />
     </Target>
+    
     <ItemGroup>
         <EditorConfigFiles Remove="R:\vs\FrEee\FrEee.UI.WinForms\.editorconfig"/>
     </ItemGroup>

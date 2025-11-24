@@ -24,8 +24,8 @@
 		<RootNamespace>FrEee.Plugins.Default.Vehicles</RootNamespace>
 	</PropertyGroup>
 
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-        <Copy SourceFiles="$(TargetDir)\FrEee.Plugins.Default.Vehicles.dll" DestinationFolder="(SolutionDir)\Plugins" />
-	</Target>
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Copy SourceFiles="$(TargetDir)\FrEee.Plugins.Default.Vehicles.dll" DestinationFolder="$(TargetDir)\Plugins" />
+    </Target>
 
 </Project>
