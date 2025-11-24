@@ -493,6 +493,7 @@ internal static class LegacySerializer
         for (int i = 0; i < size; i++)
         {
             var item = Deserialize(r, itemType, false, context, log);
+            Console.WriteLine($"Deserialized list item {i}: {item}");
             lambdaAdder.DynamicInvoke(coll, item);
         }
         o = (IEnumerable)coll;

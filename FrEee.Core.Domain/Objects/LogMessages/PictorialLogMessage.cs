@@ -85,4 +85,6 @@ public class PictorialLogMessage<T> : LogMessage, IPictorialLogMessage<T>
 				return null;
 		}
 	}
+	
+	public override string ToString() => $"{GetType().Name}<{typeof(T).Name}>: {Text} ({Context})";
 }
