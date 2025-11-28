@@ -196,7 +196,7 @@ internal static class LegacySerializer
                     }
                     catch (Exception ex2)
                     {
-                        throw new SerializationException("Unknown data type '" + typename + "'. Perhaps this data was serialized with an incompatible version of the application?", ex2);
+                        throw new SerializationException($"Unknown data type '{typename}' for object of desired type {desiredType}. Perhaps this data was serialized with an incompatible version of the application?", ex2);
                     }
                 }
             }
