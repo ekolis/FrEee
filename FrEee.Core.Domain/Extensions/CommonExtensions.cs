@@ -586,11 +586,12 @@ public static class CommonExtensions
 	}
 
 	/// <summary>
-	/// Logs an exception in fatalerrorlog.txt. Overwrites the old fatalerrorlog.txt.
+	/// Logs an exception in fatalerrorlog.txt, and logs a note to the console. Overwrites the old fatalerrorlog.txt.
 	/// </summary>
 	/// <param name="ex"></param>
 	public static void LogFatal(this Exception ex)
 	{
+		Console.WriteLine($"{ex.GetType().Name} occurred ({ex.Message}): check fatalerrorlog.txt for details.");
 		var sw = new StreamWriter("fatalerrorlog.txt");
 		sw.WriteLine(ex.GetType().Name + " occurred at " + DateTime.Now + ":");
 		sw.WriteLine(ex.ToString());
@@ -598,11 +599,12 @@ public static class CommonExtensions
 	}
 
 	/// <summary>
-	/// Appends the exception to the end of errorlog.txt. 
+	/// Appends the exception to the end of errorlog.txt, and logs a note to the console.
 	/// </summary>
 	/// <param name="ex"></param>
 	public static void Log(this Exception ex)
 	{
+		Console.WriteLine($"{ex.GetType().Name} occurred ({ex.Message}): check errorlog.txt for details.");
 		var sw = new StreamWriter("errorlog.txt", true);
 		sw.WriteLine(ex.GetType().Name + " occurred at " + DateTime.Now + ":");
 		sw.WriteLine(ex.ToString());

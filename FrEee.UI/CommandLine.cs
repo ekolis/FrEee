@@ -258,7 +258,6 @@ public abstract class CommandLine
 		}
 		catch (Exception ex)
 		{
-			Console.Error.WriteLine("Exception occurred (" + ex.Message + "): check errorlog.txt for details.");
 			ex.LogFatal();
 			return ReturnValue.Crash;
 		}
