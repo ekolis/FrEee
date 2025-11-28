@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FrEee.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Utility;
@@ -95,8 +96,14 @@ public class Shot : IFormulaHost
         }
     }
 
-    // TODO - make this some sort of reference?
-    public Component Weapon { get; set; }
+    public int WeaponComponentIndex { get; set; }
+
+    [DoNotSerialize]
+    public Component Weapon
+    {
+        get => Attacker.Components.ElementAt(WeaponComponentIndex);
+        set => WeaponComponentIndex = Attacker.Components.IndexOf(value);
+    }
 
     public int InflictDamage(IDamageable target, PRNG dice = null)
     {
