@@ -240,6 +240,6 @@ public class ColonizeOrder : IOrder
 
     public override string ToString()
     {
-        return "Colonize " + Planet.Name;
+        return $"Colonize {Planet?.Name ?? "Unknown Planet"}";
     }
 }
