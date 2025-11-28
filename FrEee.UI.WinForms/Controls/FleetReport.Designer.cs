@@ -38,7 +38,7 @@ partial class FleetReport
 		this.txtAge = new System.Windows.Forms.Label();
 		this.txtCargoSpaceFree = new System.Windows.Forms.Label();
 		this.label1 = new System.Windows.Forms.Label();
-		this.picPortrait = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
 		this.resMaintMin = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
 		this.lblComponents = new System.Windows.Forms.Label();
 		this.resMaintOrg = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();

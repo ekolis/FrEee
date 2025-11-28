@@ -47,7 +47,7 @@ partial class SpaceVehicleReport
 		this.pageDetail = new System.Windows.Forms.TabPage();
 		this.panel1 = new System.Windows.Forms.Panel();
 		this.txtAge = new System.Windows.Forms.Label();
-		this.picPortrait = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
 		this.txtConstructionTime = new System.Windows.Forms.Label();
 		this.lblConstructionTime = new System.Windows.Forms.Label();
 		this.txtConstructionItem = new System.Windows.Forms.Label();

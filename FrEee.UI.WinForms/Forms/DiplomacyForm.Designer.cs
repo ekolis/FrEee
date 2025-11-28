@@ -50,7 +50,7 @@ partial class DiplomacyForm
 		this.btnGive = new FrEee.UI.WinForms.Controls.GameButton();
 		this.btnCancel = new FrEee.UI.WinForms.Controls.GameButton();
 		this.btnSend = new FrEee.UI.WinForms.Controls.GameButton();
-		this.picPortrait = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
 		this.pnlQuantityLevel.SuspendLayout();
 		((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 		this.SuspendLayout();
@@ -372,7 +372,7 @@ partial class DiplomacyForm
 
 	private System.Windows.Forms.Label label1;
 	private System.Windows.Forms.TextBox txtInReplyTo;
-	private FrEee.UI.WinForms.Controls.Blazor.GamePictureBox picPortrait;
+	private FrEee.UI.WinForms.Controls.GamePictureBox picPortrait;
 	private System.Windows.Forms.Label label2;
 	private System.Windows.Forms.TextBox txtMessage;
 	private Controls.GameButton btnCancel;

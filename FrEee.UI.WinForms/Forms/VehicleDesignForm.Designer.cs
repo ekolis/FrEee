@@ -78,7 +78,7 @@ partial class VehicleDesignForm
         resDetailMin = new Controls.Blazor.ResourceDisplay();
         txtDetailSize = new System.Windows.Forms.Label();
         txtDetailName = new System.Windows.Forms.Label();
-        picDetailIcon = new Controls.Blazor.GamePictureBox();
+        picDetailIcon = new Controls.GamePictureBox();
         gamePanel3 = new Controls.GamePanel();
         lstWarnings = new System.Windows.Forms.TextBox();
         gamePanel2 = new Controls.GamePanel();
@@ -87,7 +87,7 @@ partial class VehicleDesignForm
         lstComponentsAvailable = new System.Windows.Forms.ListView();
         btnHull = new Controls.GameButton();
         txtIteration = new System.Windows.Forms.Label();
-        picPortrait = new Controls.Blazor.GamePictureBox();
+        picPortrait = new Controls.GamePictureBox();
         btnMountInfo = new Controls.GameButton();
         ddlMount = new System.Windows.Forms.ComboBox();
         btnHelp = new Controls.GameButton();
@@ -950,7 +950,7 @@ partial class VehicleDesignForm
 	private System.Windows.Forms.Label label7;
 	private Controls.GamePanel gamePanel4;
 	private System.Windows.Forms.Label label8;
-	private FrEee.UI.WinForms.Controls.Blazor.GamePictureBox picDetailIcon;
+	private FrEee.UI.WinForms.Controls.GamePictureBox picDetailIcon;
 	private System.Windows.Forms.Label txtDetailName;
 	private System.Windows.Forms.Label txtDetailSize;
 	private FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay resDetailRad;
@@ -986,7 +986,7 @@ partial class VehicleDesignForm
 	private Controls.GameButton btnWeaponsReport;
 	private System.Windows.Forms.CheckBox chkFilterByMount;
 	private System.Windows.Forms.Label txtIteration;
-	private FrEee.UI.WinForms.Controls.Blazor.GamePictureBox picPortrait;
+	private FrEee.UI.WinForms.Controls.GamePictureBox picPortrait;
 	private Controls.GameButton btnMountInfo;
 	private System.Windows.Forms.ComboBox ddlMount;
 	private Controls.GameButton btnHelp;
