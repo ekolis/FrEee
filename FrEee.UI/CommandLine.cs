@@ -253,7 +253,10 @@ public abstract class CommandLine
 			}
 			Game.SaveAll(includeGuiPlugins: IncludeGuiPlugins);
 			Console.WriteLine("Turn processed successfully. It is now turn " + Game.Current.TurnNumber + " (stardate " + Game.Current.Stardate + ").");
-			Services.Gui.Exit();
+			if (IncludeGuiPlugins)
+			{
+				Services.Gui.Exit();
+			}
 			return ReturnValue.Success;
 		}
 		catch (Exception ex)
