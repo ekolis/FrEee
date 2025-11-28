@@ -156,6 +156,8 @@ internal static class LegacySerializer
 
     private static object Deserialize(TextReader r, Type desiredType, bool isRoot, ObjectGraphContext context = null, StringBuilder log = null)
     {
+        Console.WriteLine($"Deserializing object of type {desiredType}.");
+        
         // set up our serialization context if we haven't already
         if (context == null)
             context = new ObjectGraphContext();
@@ -285,6 +287,7 @@ internal static class LegacySerializer
         }
 
         // return our new object
+        Console.WriteLine($"Deserialized object of type {desiredType} (real type {o?.GetType()?.Name ?? "null"}): {o}.");
         return o;
     }
 
@@ -493,7 +496,6 @@ internal static class LegacySerializer
         for (int i = 0; i < size; i++)
         {
             var item = Deserialize(r, itemType, false, context, log);
-            Console.WriteLine($"Deserialized list item {i}: {item}");
             lambdaAdder.DynamicInvoke(coll, item);
         }
         o = (IEnumerable)coll;
