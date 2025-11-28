@@ -30,6 +30,7 @@ using FrEee.Gameplay.Commands.Messages;
 using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
 using FrEee.Processes.Construction;
+using FrEee.UI.WinForms.Objects.GalaxyViewModes;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -48,7 +49,7 @@ public partial class MainGameForm : GameForm
 		QuitOnClose = quitOnClose;
 		SetMouseDownHandler(this, GameForm_MouseDown);
 		RemoveMouseDownHandler(searchBox, GameForm_MouseDown);
-		foreach (var mode in GalaxyMapModeLibrary.All)
+		foreach (var mode in GalaxyViewModes.All)
 			ddlGalaxyViewMode.Items.Add(mode);
 		ddlGalaxyViewMode.SelectedIndex = 0;
 		Instance = this;
@@ -674,7 +675,7 @@ public partial class MainGameForm : GameForm
 	private void ddlGalaxyViewMode_SelectedIndexChanged(object sender, EventArgs e)
 	{
 		// TODO: switch galaxy *map* mode
-		galaxyView.Mode = (IGalaxyMapMode)ddlGalaxyViewMode.SelectedItem;
+		galaxyView.Mode = (IGalaxyViewMode)ddlGalaxyViewMode.SelectedItem;
 	}
 
 	private MusicMood FindMusicMood()
