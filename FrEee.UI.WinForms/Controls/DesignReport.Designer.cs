@@ -53,9 +53,9 @@ partial class DesignReport
 		this.txtSupplyStorage = new System.Windows.Forms.Label();
 		this.label17 = new System.Windows.Forms.Label();
 		this.label12 = new System.Windows.Forms.Label();
-		this.resCostRad = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
-		this.resCostOrg = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
-		this.resCostMin = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
+		this.resCostRad = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resCostOrg = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resCostMin = new FrEee.UI.WinForms.Controls.ResourceDisplay();
 		this.label10 = new System.Windows.Forms.Label();
 		this.txtDate = new System.Windows.Forms.Label();
 		this.lblDate = new System.Windows.Forms.Label();
@@ -70,9 +70,9 @@ partial class DesignReport
 		this.txtName = new System.Windows.Forms.Label();
 		this.tabPage2 = new System.Windows.Forms.TabPage();
 		this.lstComponents = new System.Windows.Forms.ListView();
-		this.resMaintRad = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
-		this.resMaintOrg = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
-		this.resMaintMin = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
+		this.resMaintRad = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resMaintOrg = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resMaintMin = new FrEee.UI.WinForms.Controls.ResourceDisplay();
 		this.tabs.SuspendLayout();
 		this.tabPage1.SuspendLayout();
 		this.pnlStats.SuspendLayout();

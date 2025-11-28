@@ -48,8 +48,8 @@ partial class PlanetReport
 		this.lblConstructionTime = new System.Windows.Forms.Label();
 		this.txtConstructionItem = new System.Windows.Forms.Label();
 		this.lblConstructionItem = new System.Windows.Forms.Label();
-		this.resIntel = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
-		this.resResearch = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
+		this.resIntel = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resResearch = new FrEee.UI.WinForms.Controls.ResourceDisplay();
 		this.label1 = new System.Windows.Forms.Label();
 		this.txtMood = new System.Windows.Forms.Label();
 		this.lblMood = new System.Windows.Forms.Label();
@@ -57,9 +57,9 @@ partial class PlanetReport
 		this.lblPopulation = new System.Windows.Forms.Label();
 		this.txtColonyType = new System.Windows.Forms.Label();
 		this.lblColonyType = new System.Windows.Forms.Label();
-		this.resIncomeMinerals = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
-		this.resIncomeOrganics = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
-		this.resIncomeRadioactives = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
+		this.resIncomeMinerals = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resIncomeOrganics = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resIncomeRadioactives = new FrEee.UI.WinForms.Controls.ResourceDisplay();
 		this.lblIncome = new System.Windows.Forms.Label();
 		this.txtDescription = new System.Windows.Forms.Label();
 		this.txtValueRadioactives = new System.Windows.Forms.Label();

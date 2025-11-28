@@ -53,10 +53,10 @@ partial class SpaceVehicleReport
 		this.txtConstructionItem = new System.Windows.Forms.Label();
 		this.lblConstructionItem = new System.Windows.Forms.Label();
 		this.txtComponentsFunctional = new System.Windows.Forms.Label();
-		this.resIncomeMin = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
+		this.resIncomeMin = new FrEee.UI.WinForms.Controls.ResourceDisplay();
 		this.lblComponents = new System.Windows.Forms.Label();
-		this.resIncomeOrg = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
-		this.resIncomeRad = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
+		this.resIncomeOrg = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resIncomeRad = new FrEee.UI.WinForms.Controls.ResourceDisplay();
 		this.lblIncome = new System.Windows.Forms.Label();
 		this.txtFleet = new System.Windows.Forms.Label();
 		this.lblFleet = new System.Windows.Forms.Label();

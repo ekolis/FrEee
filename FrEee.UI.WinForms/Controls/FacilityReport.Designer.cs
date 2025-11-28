@@ -31,9 +31,9 @@ partial class FacilityReport
 	/// </summary>
 	private void InitializeComponent()
 	{
-		this.resRad = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
-		this.resOrg = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
-		this.resMin = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
+		this.resRad = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resOrg = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resMin = new FrEee.UI.WinForms.Controls.ResourceDisplay();
 		this.label2 = new System.Windows.Forms.Label();
 		this.txtDescription = new System.Windows.Forms.Label();
 		this.txtName = new System.Windows.Forms.Label();

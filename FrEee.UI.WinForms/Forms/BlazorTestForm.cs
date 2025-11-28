@@ -31,7 +31,7 @@ namespace FrEee.UI.WinForms.Forms
 
         private void btnResourceDisplay_Click(object sender, EventArgs e)
         {
-            ShowControl<Controls.Blazor.ResourceDisplay>();
+            ShowControl<Controls.ResourceDisplay>();
         }
 
         private void btnPieChart_Click(object sender, EventArgs e)

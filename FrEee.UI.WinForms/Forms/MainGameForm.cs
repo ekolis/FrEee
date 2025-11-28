@@ -1344,9 +1344,9 @@ public partial class MainGameForm : GameForm
 
 	private void SetUpResourceDisplay()
 	{
-		rqdInventory.ResourcesToShow = [Resource.Minerals, Resource.Organics, Resource.Radioactives, Resource.Research, Resource.Intelligence];
-		rqdInventory.Amounts = Empire.Current.StoredResources;
-		rqdInventory.Changes = Empire.Current.NetIncomeLessConstruction;
+		//rqdInventory.ResourcesToShow = [Resource.Minerals, Resource.Organics, Resource.Radioactives, Resource.Research, Resource.Intelligence];
+		rqdInventory.ResourceQuantity = Empire.Current.StoredResources;
+		//rqdInventory.Changes = Empire.Current.NetIncomeLessConstruction;
 	}
 
 	private void SetWaypoint(int waypointNumber, bool redirect)

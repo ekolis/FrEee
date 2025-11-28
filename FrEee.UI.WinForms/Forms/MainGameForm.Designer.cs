@@ -765,12 +765,7 @@ partial class MainGameForm
 		rqdInventory.Location = new System.Drawing.Point(49, 3);
 		rqdInventory.Margin = new System.Windows.Forms.Padding(0);
 		rqdInventory.Name = "rqdInventory";
-		rqdInventory.ResourcesToShow = new FrEee.Utility.Resource[]
-{
-	(FrEee.Utility.Resource)resources.GetObject("rqdInventory.ResourcesToShow"),
-	(FrEee.Utility.Resource)resources.GetObject("rqdInventory.ResourcesToShow1"),
-	(FrEee.Utility.Resource)resources.GetObject("rqdInventory.ResourcesToShow2")
-};
+		//rqdInventory.ResourcesToShow = new FrEee.Utility.Resource[]
 		rqdInventory.Size = new System.Drawing.Size(798, 24);
 		rqdInventory.TabIndex = 1;
 		rqdInventory.Text = "resourceQuantityDisplay1";
