@@ -21,7 +21,6 @@ using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
-using FrEee.UI.Blazor.Views.GalaxyMapModes;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 using FrEee.Gameplay.Commands;
