@@ -26,6 +26,7 @@
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
         <Copy SourceFiles="$(TargetDir)\FrEee.Plugins.Default.Processes.dll" DestinationFolder="$(TargetDir)\Plugins" />
+        <Copy SourceFiles="$(TargetDir)\FrEee.Plugins.Default.Processes.pdb" DestinationFolder="$(TargetDir)\Plugins" />
     </Target>
 
 </Project>
