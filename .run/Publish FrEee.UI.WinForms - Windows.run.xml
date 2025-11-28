@@ -5,6 +5,8 @@
         <item value="win-x64" />
       </runtimes>
     </riderPublish>
-    <method v="2" />
+    <method v="2">
+      <option name="Build" default="false" projectName="FrEee.UI.WinForms" projectPath="$PROJECT_DIR$/FrEee.UI.WinForms/FrEee.UI.WinForms.csproj" />
+    </method>
   </configuration>
 </component>

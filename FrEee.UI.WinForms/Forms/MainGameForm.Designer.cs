@@ -531,7 +531,7 @@ partial class MainGameForm
 		progResearch.Maximum = 500000L;
 		progResearch.Name = "progResearch";
 		progResearch.Padding = new System.Windows.Forms.Padding(5);
-		progResearch.ProgressDisplayType = Blazor.Views.ProgressDisplayType.Numeric;
+		progResearch.ProgressDisplayType = ProgressDisplayType.Numeric;
 		progResearch.RightText = "0.2 years";
 		progResearch.Size = new System.Drawing.Size(411, 38);
 		progResearch.TabIndex = 11;

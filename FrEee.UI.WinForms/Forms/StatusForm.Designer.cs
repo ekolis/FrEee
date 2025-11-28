@@ -29,7 +29,7 @@ partial class StatusForm
 	private void InitializeComponent()
 	{
 		this.components = new System.ComponentModel.Container();
-		this.progressBar = new FrEee.UI.WinForms.Controls.Blazor.GameProgressBar();
+		this.progressBar = new FrEee.UI.WinForms.Controls.GameProgressBar();
 		this.timer1 = new System.Windows.Forms.Timer(this.components);
 		this.SuspendLayout();
 		// 
@@ -80,6 +80,6 @@ partial class StatusForm
 
 	#endregion
 
-	private FrEee.UI.WinForms.Controls.Blazor.GameProgressBar progressBar;
+	private FrEee.UI.WinForms.Controls.GameProgressBar progressBar;
 	private System.Windows.Forms.Timer timer1;
 }

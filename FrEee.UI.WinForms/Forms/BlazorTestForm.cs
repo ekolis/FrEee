@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using FrEee.UI.Blazor.Views;
+using FrEee.UI.WinForms.Controls;
 using FrEee.UI.WinForms.Controls.Blazor;
 
 namespace FrEee.UI.WinForms.Forms
