@@ -287,7 +287,14 @@ internal static class LegacySerializer
         }
 
         // return our new object
-        Console.WriteLine($"Deserialized object of type {desiredType} (real type {o?.GetType()?.Name ?? "null"}): {o}.");
+        try
+        {
+            Console.WriteLine($"Deserialized object of type {desiredType} (real type {o?.GetType()?.Name ?? "null"}): {o}.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Deserialized object of type {desiredType} (real type {o?.GetType()?.Name ?? "null"}): (ToString evaluation failed: {ex}).");
+        }
         return o;
     }
 
