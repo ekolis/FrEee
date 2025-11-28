@@ -104,6 +104,10 @@ public class SpaceBattle : Battle
     {
         get
         {
+            if (Sector is null)
+            {
+                return "Battle at Unknown Sector";
+            }
             if (Sector.SpaceObjects.OfType<StellarObject>().Any())
                 return "Battle at " + Sector.SpaceObjects.OfType<StellarObject>().Largest();
             var coords = Sector.Coordinates;
