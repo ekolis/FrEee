@@ -111,8 +111,8 @@ internal static class LegacySerializer
             context.Add(o);
         }
 
-        // deal with refs
-        if (id != null)
+        // deal with refs (but not for game/mod references)
+        if (id != null && !(o is IReference<object>))
         {
             // already seen this object, just write an ID
             if (type != desiredType)
@@ -156,6 +156,8 @@ internal static class LegacySerializer
 
     private static object Deserialize(TextReader r, Type desiredType, bool isRoot, ObjectGraphContext context = null, StringBuilder log = null)
     {
+        Console.WriteLine($"Deserializing object of type {desiredType}.");
+        
         // set up our serialization context if we haven't already
         if (context == null)
             context = new ObjectGraphContext();
@@ -194,7 +196,7 @@ internal static class LegacySerializer
                     }
                     catch (Exception ex2)
                     {
-                        throw new SerializationException("Unknown data type '" + typename + "'. Perhaps this data was serialized with an incompatible version of the application?", ex2);
+                        throw new SerializationException($"Unknown data type '{typename}' for object of desired type {desiredType}. Perhaps this data was serialized with an incompatible version of the application?", ex2);
                     }
                 }
             }
@@ -285,6 +287,21 @@ internal static class LegacySerializer
         }
 
         // return our new object
+        if (o is null)
+        {
+            Console.WriteLine($"Deserialized object of type {desiredType} (real type null).");
+        }
+        else
+        {
+            try
+            {
+                Console.WriteLine($"Deserialized object of type {desiredType} (real type {o.GetType().Name}): {o}.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Deserialized object of type {desiredType} (real type {o?.GetType().Name ?? "null"}): (ToString evaluation failed: {ex}).");
+            }
+        }
         return o;
     }
 

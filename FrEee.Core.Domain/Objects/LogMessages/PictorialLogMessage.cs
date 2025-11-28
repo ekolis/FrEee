@@ -28,6 +28,7 @@ public class PictorialLogMessage<T> : LogMessage, IPictorialLogMessage<T>
 	/// <summary>
 	/// The context for the log message.
 	/// </summary>
+	[DoNotSerialize]
 	public T Context
 	{
 		get
@@ -66,13 +67,10 @@ public class PictorialLogMessage<T> : LogMessage, IPictorialLogMessage<T>
 
 
 	// TODO: a discriminated union would be nice about now...
-	[DoNotSerialize]
 	public T? context { get; set; }
 
-    [DoNotSerialize]
     public GameReference<IReferrable>? gameContext { get; set; }
 
-    [DoNotSerialize]
     public ModReference<IModObject>? modContext { get; set; }
 
 	public override Image Picture
@@ -85,4 +83,6 @@ public class PictorialLogMessage<T> : LogMessage, IPictorialLogMessage<T>
 				return null;
 		}
 	}
+	
+	public override string ToString() => $"{GetType().Name}<{typeof(T).Name}>: {Text} ({Context})";
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 
 namespace FrEee.Utility;
@@ -108,12 +109,19 @@ public class SafeType
 			}
 			else
 			{
-				var regex = new Regex(@"(.*?), (.*)");
-				var match = regex.Match(Name);
-				var tname = match.Groups[1].Captures[0].Value.Trim(); // type name
-				var aname = match.Groups[2].Captures[0].Value.Trim().Trim('[', ']'); // assembly name
-				var t = FindType(FindAssembly(aname), tname);
-				return t;
+				try
+				{
+					var regex = new Regex(@"(.*?), (.*)");
+					var match = regex.Match(Name);
+					var tname = match.Groups[1].Captures[0].Value.Trim(); // type name
+					var aname = match.Groups[2].Captures[0].Value.Trim().Trim('[', ']'); // assembly name
+					var t = FindType(FindAssembly(aname), tname);
+					return t;
+				}
+				catch (Exception ex)
+				{
+					throw new SerializationException($"Could not load SafeType: {Name}", ex);
+				}
 			}
 		}
 		set

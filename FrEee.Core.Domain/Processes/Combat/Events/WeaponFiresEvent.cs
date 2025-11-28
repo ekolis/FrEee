@@ -1,4 +1,5 @@
-﻿using FrEee.Objects.Technology;
+﻿using System.Linq;
+using FrEee.Objects.Technology;
 using FrEee.Utility;
 using FrEee.Serialization;
 using FrEee.Extensions;
@@ -39,8 +40,14 @@ public class WeaponFiresEvent : BattleEvent
 		set => target = value.ReferViaGalaxy();
 	}
 
-	// TODO - make this some sort of reference?
-	public Component Weapon { get; set; }
+	public int WeaponComponentIndex { get; set; }
+
+	[DoNotSerialize]
+	public Component Weapon
+	{
+		get => Attacker.Components.ElementAt(WeaponComponentIndex);
+		set => WeaponComponentIndex = Attacker.Components.IndexOf(value);
+	}
 
 	public Hit Hit { get; set; }
 	public int Damage { get; set; }

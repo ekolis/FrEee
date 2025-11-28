@@ -178,7 +178,7 @@ public class Ability : IContainable<IAbilityObject>, IReferrable, IModObject, ID
             var dict = new Dictionary<string, object>();
             for (var i = 0; i < Values.Count; i++)
                 dict.Add("Amount" + (i + 1), Values[i]);
-            if (Rule.Matches("Shield Generation") || Rule.Matches("Phased Shield Generation") || Rule.Matches("Planet - Shield Generation"))
+            if (Rule is not null && (Rule.Matches("Shield Generation") || Rule.Matches("Phased Shield Generation") || Rule.Matches("Planet - Shield Generation")))
                 dict.Add("ShieldPointsGenerated", Value1.ToInt()); // TODO - take into account mounts that affect shields
             return dict;
         }

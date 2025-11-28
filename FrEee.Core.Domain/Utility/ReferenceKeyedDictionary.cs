@@ -98,11 +98,10 @@ public abstract class ReferenceKeyedDictionary<TID, TRef, TKey, TValue> : IDicti
 	{
 		InitDict();
 		var objs = dict.Select(kvp => new { kvp.Key, KeyValue = LookUp(kvp.Key), kvp.Value });
-		foreach (var obj in objs)
-		{
-			if (obj.KeyValue == null)
-				throw new Exception("Key {0} is an invalid reference.".F(obj.Key));
-		}
+		
+		// dictionaries can't have null keys
+		objs = objs.Where(q => q.KeyValue is not null);
+		
 		return objs.Select(obj => new KeyValuePair<TKey, TValue>(obj.KeyValue, obj.Value)).GetEnumerator();
 	}
 
