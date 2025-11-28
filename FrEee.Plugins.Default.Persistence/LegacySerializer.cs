@@ -111,8 +111,8 @@ internal static class LegacySerializer
             context.Add(o);
         }
 
-        // deal with refs
-        if (id != null)
+        // deal with refs (but not for game/mod references)
+        if (id != null && !(o is IReference<object>))
         {
             // already seen this object, just write an ID
             if (type != desiredType)
