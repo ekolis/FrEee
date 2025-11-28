@@ -1,4 +1,3 @@
-using FrEee.UI.WinForms.Controls.Blazor;
 using FrEee.UI.WinForms.Controls;
 
 namespace FrEee.UI.WinForms.Controls;
@@ -32,7 +31,7 @@ partial class StormReport
 	private void InitializeComponent()
 	{
 		this.abilityTreeView = new FrEee.UI.WinForms.Controls.AbilityTreeView();
-		this.picPortrait = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
 		this.txtDescription = new System.Windows.Forms.Label();
 		this.txtSize = new System.Windows.Forms.Label();
 		this.txtName = new System.Windows.Forms.Label();

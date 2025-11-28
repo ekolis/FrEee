@@ -1,4 +1,3 @@
-using FrEee.UI.WinForms.Controls.Blazor;
 using FrEee.UI.WinForms.Controls;
 
 namespace FrEee.UI.WinForms.Controls;
@@ -47,16 +46,16 @@ partial class SpaceVehicleReport
 		this.pageDetail = new System.Windows.Forms.TabPage();
 		this.panel1 = new System.Windows.Forms.Panel();
 		this.txtAge = new System.Windows.Forms.Label();
-		this.picPortrait = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
 		this.txtConstructionTime = new System.Windows.Forms.Label();
 		this.lblConstructionTime = new System.Windows.Forms.Label();
 		this.txtConstructionItem = new System.Windows.Forms.Label();
 		this.lblConstructionItem = new System.Windows.Forms.Label();
 		this.txtComponentsFunctional = new System.Windows.Forms.Label();
-		this.resIncomeMin = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
+		this.resIncomeMin = new FrEee.UI.WinForms.Controls.ResourceDisplay();
 		this.lblComponents = new System.Windows.Forms.Label();
-		this.resIncomeOrg = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
-		this.resIncomeRad = new FrEee.UI.WinForms.Controls.Blazor.ResourceDisplay();
+		this.resIncomeOrg = new FrEee.UI.WinForms.Controls.ResourceDisplay();
+		this.resIncomeRad = new FrEee.UI.WinForms.Controls.ResourceDisplay();
 		this.lblIncome = new System.Windows.Forms.Label();
 		this.txtFleet = new System.Windows.Forms.Label();
 		this.lblFleet = new System.Windows.Forms.Label();
@@ -75,19 +74,19 @@ partial class SpaceVehicleReport
 		this.pnlStats = new System.Windows.Forms.TableLayoutPanel();
 		this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 		this.lblSupplies = new System.Windows.Forms.Label();
-		this.progSupplies = new FrEee.UI.WinForms.Controls.Blazor.GameProgressBar();
+		this.progSupplies = new FrEee.UI.WinForms.Controls.GameProgressBar();
 		this.lblAmmunition = new System.Windows.Forms.Label();
-		this.progAmmunition = new FrEee.UI.WinForms.Controls.Blazor.GameProgressBar();
+		this.progAmmunition = new FrEee.UI.WinForms.Controls.GameProgressBar();
 		this.label3 = new System.Windows.Forms.Label();
-		this.progFuel = new FrEee.UI.WinForms.Controls.Blazor.GameProgressBar();
+		this.progFuel = new FrEee.UI.WinForms.Controls.GameProgressBar();
 		this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-		this.progHull = new FrEee.UI.WinForms.Controls.Blazor.GameProgressBar();
-		this.progArmor = new FrEee.UI.WinForms.Controls.Blazor.GameProgressBar();
+		this.progHull = new FrEee.UI.WinForms.Controls.GameProgressBar();
+		this.progArmor = new FrEee.UI.WinForms.Controls.GameProgressBar();
 		this.lblShields = new System.Windows.Forms.Label();
-		this.progShields = new FrEee.UI.WinForms.Controls.Blazor.GameProgressBar();
+		this.progShields = new FrEee.UI.WinForms.Controls.GameProgressBar();
 		this.lblArmor = new System.Windows.Forms.Label();
 		this.lblHull = new System.Windows.Forms.Label();
-		this.progMovement = new FrEee.UI.WinForms.Controls.Blazor.GameProgressBar();
+		this.progMovement = new FrEee.UI.WinForms.Controls.GameProgressBar();
 		this.lblMovement = new System.Windows.Forms.Label();
 		this.txtHullSize = new System.Windows.Forms.Label();
 		this.lblHullSize = new System.Windows.Forms.Label();
@@ -583,7 +582,7 @@ partial class SpaceVehicleReport
 		this.progSupplies.Maximum = ((long)(3000));
 		this.progSupplies.Name = "progSupplies";
 		this.progSupplies.Padding = new System.Windows.Forms.Padding(5);
-		this.progSupplies.ProgressDisplayType = FrEee.UI.Blazor.Views.ProgressDisplayType.Numeric;
+		this.progSupplies.ProgressDisplayType = FrEee.UI.WinForms.Controls.ProgressDisplayType.Numeric;
 		this.progSupplies.RightText = "";
 		this.progSupplies.Size = new System.Drawing.Size(134, 19);
 		this.progSupplies.TabIndex = 18;
@@ -614,7 +613,7 @@ partial class SpaceVehicleReport
 		this.progAmmunition.Maximum = ((long)(500));
 		this.progAmmunition.Name = "progAmmunition";
 		this.progAmmunition.Padding = new System.Windows.Forms.Padding(5);
-		this.progAmmunition.ProgressDisplayType = FrEee.UI.Blazor.Views.ProgressDisplayType.Numeric;
+		this.progAmmunition.ProgressDisplayType = FrEee.UI.WinForms.Controls.ProgressDisplayType.Numeric;
 		this.progAmmunition.RightText = "";
 		this.progAmmunition.Size = new System.Drawing.Size(134, 19);
 		this.progAmmunition.TabIndex = 20;
@@ -645,7 +644,7 @@ partial class SpaceVehicleReport
 		this.progFuel.Maximum = ((long)(2000));
 		this.progFuel.Name = "progFuel";
 		this.progFuel.Padding = new System.Windows.Forms.Padding(5);
-		this.progFuel.ProgressDisplayType = FrEee.UI.Blazor.Views.ProgressDisplayType.Numeric;
+		this.progFuel.ProgressDisplayType = FrEee.UI.WinForms.Controls.ProgressDisplayType.Numeric;
 		this.progFuel.RightText = "";
 		this.progFuel.Size = new System.Drawing.Size(134, 19);
 		this.progFuel.TabIndex = 22;
@@ -692,7 +691,7 @@ partial class SpaceVehicleReport
 		this.progHull.Maximum = ((long)(200));
 		this.progHull.Name = "progHull";
 		this.progHull.Padding = new System.Windows.Forms.Padding(5);
-		this.progHull.ProgressDisplayType = FrEee.UI.Blazor.Views.ProgressDisplayType.Numeric;
+		this.progHull.ProgressDisplayType = FrEee.UI.WinForms.Controls.ProgressDisplayType.Numeric;
 		this.progHull.RightText = "";
 		this.progHull.Size = new System.Drawing.Size(135, 19);
 		this.progHull.TabIndex = 30;
@@ -712,7 +711,7 @@ partial class SpaceVehicleReport
 		this.progArmor.Maximum = ((long)(300));
 		this.progArmor.Name = "progArmor";
 		this.progArmor.Padding = new System.Windows.Forms.Padding(5);
-		this.progArmor.ProgressDisplayType = FrEee.UI.Blazor.Views.ProgressDisplayType.Numeric;
+		this.progArmor.ProgressDisplayType = FrEee.UI.WinForms.Controls.ProgressDisplayType.Numeric;
 		this.progArmor.RightText = "";
 		this.progArmor.Size = new System.Drawing.Size(135, 19);
 		this.progArmor.TabIndex = 29;
@@ -743,7 +742,7 @@ partial class SpaceVehicleReport
 		this.progShields.Maximum = ((long)(200));
 		this.progShields.Name = "progShields";
 		this.progShields.Padding = new System.Windows.Forms.Padding(5);
-		this.progShields.ProgressDisplayType = FrEee.UI.Blazor.Views.ProgressDisplayType.Numeric;
+		this.progShields.ProgressDisplayType = FrEee.UI.WinForms.Controls.ProgressDisplayType.Numeric;
 		this.progShields.RightText = "";
 		this.progShields.Size = new System.Drawing.Size(135, 19);
 		this.progShields.TabIndex = 24;
@@ -784,7 +783,7 @@ partial class SpaceVehicleReport
 		this.progMovement.Maximum = ((long)(6));
 		this.progMovement.Name = "progMovement";
 		this.progMovement.Padding = new System.Windows.Forms.Padding(5);
-		this.progMovement.ProgressDisplayType = FrEee.UI.Blazor.Views.ProgressDisplayType.Numeric;
+		this.progMovement.ProgressDisplayType = FrEee.UI.WinForms.Controls.ProgressDisplayType.Numeric;
 		this.progMovement.RightText = "";
 		this.progMovement.Size = new System.Drawing.Size(103, 19);
 		this.progMovement.TabIndex = 98;

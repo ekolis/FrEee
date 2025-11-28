@@ -545,6 +545,6 @@ public partial class OptionsForm : GameForm
 
 	private void btnBlazorTest_Click(object sender, EventArgs e)
 	{
-		this.ShowChildForm(new BlazorTestForm());
+		//this.ShowChildForm(new BlazorTestForm());
 	}
 }

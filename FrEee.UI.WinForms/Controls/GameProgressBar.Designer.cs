@@ -1,7 +1,6 @@
-﻿using FrEee.UI.WinForms.Controls;
-namespace FrEee.UI.WinForms.Controls.Blazor;
+namespace FrEee.UI.WinForms.Controls;
 
-partial class ResourceQuantityDisplay
+partial class GameProgressBar
 {
 	/// <summary> 
 	/// Required designer variable.
@@ -21,6 +20,8 @@ partial class ResourceQuantityDisplay
 		base.Dispose(disposing);
 	}
 
+	#region Component Designer generated code
+
 	/// <summary> 
 	/// Required method for Designer support - do not modify 
 	/// the contents of this method with the code editor.
@@ -36,17 +37,24 @@ partial class ResourceQuantityDisplay
 		blazorView.Location = new System.Drawing.Point(0, 0);
 		blazorView.Margin = new System.Windows.Forms.Padding(0);
 		blazorView.Name = "blazorView";
-		blazorView.Size = new System.Drawing.Size(150, 150);
+		blazorView.Size = new System.Drawing.Size(429, 37);
 		blazorView.StartPath = "/";
-		blazorView.TabIndex = 1;
+		blazorView.TabIndex = 0;
 		blazorView.Text = "blazorWebView1";
 		// 
-		// ResourceQuantityDisplay
+		// GameProgressBar
 		// 
+		BackColor = System.Drawing.Color.Black;
 		Controls.Add(blazorView);
-		Name = "ResourceQuantityDisplay";
+		ForeColor = System.Drawing.Color.White;
+		Margin = new System.Windows.Forms.Padding(0);
+		Name = "GameProgressBar";
+		Size = new System.Drawing.Size(429, 37);
 		ResumeLayout(false);
 	}
+
+	#endregion
+
 
 	private Microsoft.AspNetCore.Components.WebView.WindowsForms.BlazorWebView blazorView;
 }

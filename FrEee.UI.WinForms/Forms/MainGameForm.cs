@@ -21,7 +21,6 @@ using FrEee.Objects.Civilization.Diplomacy.Messages;
 using FrEee.Objects.Civilization.Orders;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Civilization.CargoStorage;
-using FrEee.UI.Blazor.Views.GalaxyMapModes;
 using FrEee.Processes.Combat;
 using FrEee.Modding.Abilities;
 using FrEee.Gameplay.Commands;
@@ -30,6 +29,7 @@ using FrEee.Gameplay.Commands.Messages;
 using FrEee.Vehicles;
 using FrEee.Vehicles.Types;
 using FrEee.Processes.Construction;
+using FrEee.UI.WinForms.Objects.GalaxyViewModes;
 
 namespace FrEee.UI.WinForms.Forms;
 
@@ -48,7 +48,7 @@ public partial class MainGameForm : GameForm
 		QuitOnClose = quitOnClose;
 		SetMouseDownHandler(this, GameForm_MouseDown);
 		RemoveMouseDownHandler(searchBox, GameForm_MouseDown);
-		foreach (var mode in GalaxyMapModeLibrary.All)
+		foreach (var mode in GalaxyViewModes.All)
 			ddlGalaxyViewMode.Items.Add(mode);
 		ddlGalaxyViewMode.SelectedIndex = 0;
 		Instance = this;
@@ -674,7 +674,7 @@ public partial class MainGameForm : GameForm
 	private void ddlGalaxyViewMode_SelectedIndexChanged(object sender, EventArgs e)
 	{
 		// TODO: switch galaxy *map* mode
-		galaxyView.Mode = (IGalaxyMapMode)ddlGalaxyViewMode.SelectedItem;
+		galaxyView.Mode = (IGalaxyViewMode)ddlGalaxyViewMode.SelectedItem;
 	}
 
 	private MusicMood FindMusicMood()
@@ -1344,9 +1344,9 @@ public partial class MainGameForm : GameForm
 
 	private void SetUpResourceDisplay()
 	{
-		rqdInventory.ResourcesToShow = [Resource.Minerals, Resource.Organics, Resource.Radioactives, Resource.Research, Resource.Intelligence];
-		rqdInventory.Amounts = Empire.Current.StoredResources;
-		rqdInventory.Changes = Empire.Current.NetIncomeLessConstruction;
+		//rqdInventory.ResourcesToShow = [Resource.Minerals, Resource.Organics, Resource.Radioactives, Resource.Research, Resource.Intelligence];
+		rqdInventory.ResourceQuantity = Empire.Current.StoredResources;
+		//rqdInventory.Changes = Empire.Current.NetIncomeLessConstruction;
 	}
 
 	private void SetWaypoint(int waypointNumber, bool redirect)

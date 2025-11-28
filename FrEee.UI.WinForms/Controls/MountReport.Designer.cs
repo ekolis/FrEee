@@ -1,5 +1,4 @@
-﻿using FrEee.UI.WinForms.Controls.Blazor;
-using FrEee.UI.WinForms.Controls;
+﻿using FrEee.UI.WinForms.Controls;
 
 namespace FrEee.UI.WinForms.Controls;
 
@@ -62,7 +61,7 @@ partial class MountReport
 		this.lstAbilities = new System.Windows.Forms.ListView();
 		this.colAbility = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 		this.colModifier = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-		this.picPortrait = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
 		this.gamePanel1.SuspendLayout();
 		((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 		this.SuspendLayout();

@@ -1,4 +1,3 @@
-using FrEee.UI.WinForms.Controls.Blazor;
 using FrEee.UI.WinForms.Controls;
 
 namespace FrEee.UI.WinForms.Controls;
@@ -37,7 +36,7 @@ partial class AsteroidFieldReport
 		this.txtValueRadioactives = new System.Windows.Forms.Label();
 		this.txtValueOrganics = new System.Windows.Forms.Label();
 		this.txtValueMinerals = new System.Windows.Forms.Label();
-		this.picPortrait = new FrEee.UI.WinForms.Controls.Blazor.GamePictureBox();
+		this.picPortrait = new FrEee.UI.WinForms.Controls.GamePictureBox();
 		this.txtDescription = new System.Windows.Forms.Label();
 		this.lblValue = new System.Windows.Forms.Label();
 		this.txtConditions = new System.Windows.Forms.Label();

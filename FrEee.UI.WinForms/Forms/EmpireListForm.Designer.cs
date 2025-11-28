@@ -53,20 +53,20 @@ partial class EmpireListForm
 		this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 		this.report = new FrEee.UI.WinForms.Controls.EmpireReport();
 		this.tabBudget = new System.Windows.Forms.TabPage();
-		this.rqdSpoiledDeficit = new FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay();
+		this.rqdSpoiledDeficit = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
 		this.label14 = new System.Windows.Forms.Label();
 		this.lblBudgetWarning = new System.Windows.Forms.Label();
-		this.rqdStorage = new FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay();
-		this.rqdStored = new FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay();
-		this.rqdNet = new FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay();
-		this.rqdTributesOut = new FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay();
-		this.rqdMaintenance = new FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay();
-		this.rqdConstruction = new FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay();
-		this.rqExpenses = new FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay();
-		this.rqdTributesIn = new FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay();
-		this.rqdTrade = new FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay();
-		this.rqdExtraction = new FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay();
-		this.rqdIncome = new FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay();
+		this.rqdStorage = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqdStored = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqdNet = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqdTributesOut = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqdMaintenance = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqdConstruction = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqExpenses = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqdTributesIn = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqdTrade = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqdExtraction = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
+		this.rqdIncome = new FrEee.UI.WinForms.Controls.ResourceQuantityDisplay();
 		this.label12 = new System.Windows.Forms.Label();
 		this.label11 = new System.Windows.Forms.Label();
 		this.label10 = new System.Windows.Forms.Label();
@@ -421,7 +421,7 @@ partial class EmpireListForm
 		this.rqdSpoiledDeficit.ForeColor = System.Drawing.Color.White;
 		this.rqdSpoiledDeficit.Location = new System.Drawing.Point(177, 360);
 		this.rqdSpoiledDeficit.Name = "rqdSpoiledDeficit";
-		this.rqdSpoiledDeficit.Amounts = null;
+		this.rqdSpoiledDeficit.ResourceQuantity = null;
 		this.rqdSpoiledDeficit.Size = new System.Drawing.Size(413, 24);
 		this.rqdSpoiledDeficit.TabIndex = 26;
 		// 
@@ -453,7 +453,7 @@ partial class EmpireListForm
 		this.rqdStorage.ForeColor = System.Drawing.Color.White;
 		this.rqdStorage.Location = new System.Drawing.Point(177, 330);
 		this.rqdStorage.Name = "rqdStorage";
-		this.rqdStorage.Amounts = null;
+		this.rqdStorage.ResourceQuantity = null;
 		this.rqdStorage.Size = new System.Drawing.Size(413, 24);
 		this.rqdStorage.TabIndex = 23;
 		// 
@@ -464,7 +464,7 @@ partial class EmpireListForm
 		this.rqdStored.ForeColor = System.Drawing.Color.White;
 		this.rqdStored.Location = new System.Drawing.Point(177, 300);
 		this.rqdStored.Name = "rqdStored";
-		this.rqdStored.Amounts = null;
+		this.rqdStored.ResourceQuantity = null;
 		this.rqdStored.Size = new System.Drawing.Size(413, 24);
 		this.rqdStored.TabIndex = 22;
 		// 
@@ -475,7 +475,7 @@ partial class EmpireListForm
 		this.rqdNet.ForeColor = System.Drawing.Color.White;
 		this.rqdNet.Location = new System.Drawing.Point(177, 270);
 		this.rqdNet.Name = "rqdNet";
-		this.rqdNet.Amounts = null;
+		this.rqdNet.ResourceQuantity = null;
 		this.rqdNet.Size = new System.Drawing.Size(413, 24);
 		this.rqdNet.TabIndex = 21;
 		// 
@@ -486,7 +486,7 @@ partial class EmpireListForm
 		this.rqdTributesOut.ForeColor = System.Drawing.Color.White;
 		this.rqdTributesOut.Location = new System.Drawing.Point(177, 228);
 		this.rqdTributesOut.Name = "rqdTributesOut";
-		this.rqdTributesOut.Amounts = null;
+		this.rqdTributesOut.ResourceQuantity = null;
 		this.rqdTributesOut.Size = new System.Drawing.Size(413, 24);
 		this.rqdTributesOut.TabIndex = 20;
 		// 
@@ -497,7 +497,7 @@ partial class EmpireListForm
 		this.rqdMaintenance.ForeColor = System.Drawing.Color.White;
 		this.rqdMaintenance.Location = new System.Drawing.Point(177, 198);
 		this.rqdMaintenance.Name = "rqdMaintenance";
-		this.rqdMaintenance.Amounts = null;
+		this.rqdMaintenance.ResourceQuantity = null;
 		this.rqdMaintenance.Size = new System.Drawing.Size(413, 24);
 		this.rqdMaintenance.TabIndex = 19;
 		// 
@@ -508,7 +508,7 @@ partial class EmpireListForm
 		this.rqdConstruction.ForeColor = System.Drawing.Color.White;
 		this.rqdConstruction.Location = new System.Drawing.Point(177, 168);
 		this.rqdConstruction.Name = "rqdConstruction";
-		this.rqdConstruction.Amounts = null;
+		this.rqdConstruction.ResourceQuantity = null;
 		this.rqdConstruction.Size = new System.Drawing.Size(413, 24);
 		this.rqdConstruction.TabIndex = 18;
 		// 
@@ -519,7 +519,7 @@ partial class EmpireListForm
 		this.rqExpenses.ForeColor = System.Drawing.Color.White;
 		this.rqExpenses.Location = new System.Drawing.Point(177, 138);
 		this.rqExpenses.Name = "rqExpenses";
-		this.rqExpenses.Amounts = null;
+		this.rqExpenses.ResourceQuantity = null;
 		this.rqExpenses.Size = new System.Drawing.Size(413, 24);
 		this.rqExpenses.TabIndex = 17;
 		// 
@@ -530,7 +530,7 @@ partial class EmpireListForm
 		this.rqdTributesIn.ForeColor = System.Drawing.Color.White;
 		this.rqdTributesIn.Location = new System.Drawing.Point(177, 93);
 		this.rqdTributesIn.Name = "rqdTributesIn";
-		this.rqdTributesIn.Amounts = null;
+		this.rqdTributesIn.ResourceQuantity = null;
 		this.rqdTributesIn.Size = new System.Drawing.Size(413, 24);
 		this.rqdTributesIn.TabIndex = 16;
 		// 
@@ -541,7 +541,7 @@ partial class EmpireListForm
 		this.rqdTrade.ForeColor = System.Drawing.Color.White;
 		this.rqdTrade.Location = new System.Drawing.Point(177, 63);
 		this.rqdTrade.Name = "rqdTrade";
-		this.rqdTrade.Amounts = null;
+		this.rqdTrade.ResourceQuantity = null;
 		this.rqdTrade.Size = new System.Drawing.Size(413, 24);
 		this.rqdTrade.TabIndex = 15;
 		// 
@@ -552,7 +552,7 @@ partial class EmpireListForm
 		this.rqdExtraction.ForeColor = System.Drawing.Color.White;
 		this.rqdExtraction.Location = new System.Drawing.Point(177, 33);
 		this.rqdExtraction.Name = "rqdExtraction";
-		this.rqdExtraction.Amounts = null;
+		this.rqdExtraction.ResourceQuantity = null;
 		this.rqdExtraction.Size = new System.Drawing.Size(413, 24);
 		this.rqdExtraction.TabIndex = 14;
 		// 
@@ -563,7 +563,7 @@ partial class EmpireListForm
 		this.rqdIncome.ForeColor = System.Drawing.Color.White;
 		this.rqdIncome.Location = new System.Drawing.Point(177, 3);
 		this.rqdIncome.Name = "rqdIncome";
-		this.rqdIncome.Amounts = null;
+		this.rqdIncome.ResourceQuantity = null;
 		this.rqdIncome.Size = new System.Drawing.Size(413, 24);
 		this.rqdIncome.TabIndex = 12;
 		// 
@@ -1010,17 +1010,17 @@ partial class EmpireListForm
 	private System.Windows.Forms.Label label12;
 	private System.Windows.Forms.Label label11;
 	private System.Windows.Forms.Label label10;
-	private FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay rqdIncome;
-	private FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay rqdStored;
-	private FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay rqdNet;
-	private FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay rqdTributesOut;
-	private FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay rqdMaintenance;
-	private FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay rqdConstruction;
-	private FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay rqExpenses;
-	private FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay rqdTributesIn;
-	private FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay rqdTrade;
-	private FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay rqdExtraction;
-	private FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay rqdStorage;
+	private FrEee.UI.WinForms.Controls.ResourceQuantityDisplay rqdIncome;
+	private FrEee.UI.WinForms.Controls.ResourceQuantityDisplay rqdStored;
+	private FrEee.UI.WinForms.Controls.ResourceQuantityDisplay rqdNet;
+	private FrEee.UI.WinForms.Controls.ResourceQuantityDisplay rqdTributesOut;
+	private FrEee.UI.WinForms.Controls.ResourceQuantityDisplay rqdMaintenance;
+	private FrEee.UI.WinForms.Controls.ResourceQuantityDisplay rqdConstruction;
+	private FrEee.UI.WinForms.Controls.ResourceQuantityDisplay rqExpenses;
+	private FrEee.UI.WinForms.Controls.ResourceQuantityDisplay rqdTributesIn;
+	private FrEee.UI.WinForms.Controls.ResourceQuantityDisplay rqdTrade;
+	private FrEee.UI.WinForms.Controls.ResourceQuantityDisplay rqdExtraction;
+	private FrEee.UI.WinForms.Controls.ResourceQuantityDisplay rqdStorage;
 	private System.Windows.Forms.ListView lstMessages;
 	private System.Windows.Forms.Label label13;
 	private System.Windows.Forms.TabPage tabIntel;
@@ -1044,7 +1044,7 @@ partial class EmpireListForm
 	private Controls.GameButton btnMinisters;
 	private Controls.GameButton btnAvoidSystems;
 	private Controls.GameButton btnWaypoints;
-	private FrEee.UI.WinForms.Controls.Blazor.ResourceQuantityDisplay rqdSpoiledDeficit;
+	private FrEee.UI.WinForms.Controls.ResourceQuantityDisplay rqdSpoiledDeficit;
 	private System.Windows.Forms.Label label14;
 	private Controls.GameButton btnScores;
 	private System.Windows.Forms.TabPage tabPlayerInfo;
