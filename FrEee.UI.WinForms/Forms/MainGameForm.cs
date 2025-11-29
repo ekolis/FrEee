@@ -1418,14 +1418,16 @@ public partial class MainGameForm : GameForm
 		}
 	}
 
-	private void SpaceObjectListReport_MouseClick(object sender, MouseEventArgs e)
+	private void SpaceObjectListReport_MouseDown(object sender, MouseEventArgs e)
 	{
 		if (e.Button == MouseButtons.Left)
 		{
 			var lv = (ListView)sender;
 			var item = lv.GetItemAt(e.X, e.Y);
 			if (item != null)
+			{
 				SelectedSpaceObject = (ISpaceObject)item.Tag;
+			}
 		}
 	}
 
@@ -1657,7 +1659,7 @@ public partial class MainGameForm : GameForm
 					i++;
 					lv.Items.Add(item);
 				}
-				lv.MouseClick += SpaceObjectListReport_MouseClick;
+				lv.MouseDown += SpaceObjectListReport_MouseDown;
 				SelectedSpaceObject = null;
 			}
 
