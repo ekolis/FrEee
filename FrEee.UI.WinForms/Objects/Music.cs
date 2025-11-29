@@ -1,11 +1,13 @@
 using FrEee.Extensions;
-using NAudio.Vorbis;
-using NAudio.Wave;
-using NAudio.Wave.SampleProviders;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using SoundFlow.Abstracts.Devices;
+using SoundFlow.Backends.MiniAudio;
+using SoundFlow.Components;
+using SoundFlow.Providers;
+using SoundFlow.Structs;
 
 namespace FrEee.UI.WinForms.Objects;
 
@@ -20,21 +22,11 @@ public static class Music
 	{
 		try
 		{
-			OperatingSystem os = Environment.OSVersion;
-			PlatformID pid = os.Platform;
-			if (pid == PlatformID.Unix)
-			{
-				Console.WriteLine("Linux detected, disabling Music");
-				disableMusic = true;
-				return;
-			}
-
-			waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(48000, 2);
-			mixer = new MixingSampleProvider(waveFormat);
-
-			waveout.Init(mixer);
-			waveout.PlaybackStopped += waveout_PlaybackStopped;
-			waveout.Play();
+			engine = new MiniAudioEngine();
+			engine.UpdateAudioDevicesInfo();
+			var defaultDevice = engine.PlaybackDevices.FirstOrDefault(x => x.IsDefault);
+			playbackDevice = engine.InitializePlaybackDevice(defaultDevice, format);
+			playbackDevice.Start();
 		}
 		catch (Exception ex)
 		{
@@ -44,8 +36,7 @@ public static class Music
 			ex.Log();
 		}
 	}
-
-	// milliseconds
+	
 	public static MusicMode CurrentMode
 	{
 		get
@@ -84,18 +75,20 @@ public static class Music
 	private const int FadeDuration = 5000;
 	private static MusicMode currentMode;
 	private static MusicMood currentMood;
-	private static FadeInOutSampleProvider curTrack, prevTrack;
-	private static MixingSampleProvider mixer;
 	private static float musicVolume = 1.0f;
-	private static WaveFormat waveFormat;
-	private static WaveOutEvent waveout = new WaveOutEvent();
 	private static bool disableMusic = false;
+
+	// SoundFlow implementation variables
+	private static MiniAudioEngine engine;
+	private static AudioFormat format = AudioFormat.DvdHq;
+	private static AudioPlaybackDevice playbackDevice;
+	private static SoundPlayer player;
 
 	public static void Play(MusicMode mode, MusicMood mood)
 	{
 		if (mode == CurrentMode && mood == CurrentMood)
 			return;
-		if (disableMusic) 
+		if (disableMusic)
 			return;
 
 		currentMode = mode;
@@ -106,14 +99,14 @@ public static class Music
 	public static void setVolume(float volume)
 	{
 		if (disableMusic)
-                return;
+			return;
 		musicVolume = volume;
 	}
 
 	public static void StartNewTrack()
 	{
 		if (disableMusic)
-                return;
+			return;
 		// find out what to play
 		var tracks = FindTracks().ToArray();
 		var track = tracks.Where(t => t.Mode == CurrentMode && t.Mood == CurrentMood).PickRandom();
@@ -124,11 +117,13 @@ public static class Music
 			if (others.Any())
 				track = others.PickRandom();
 		}
+
 		if (track == null)
 		{
 			// still no music? try another mode!
 			track = tracks.PickRandom();
 		}
+
 		if (track == null)
 		{
 			// no music at all :(
@@ -136,38 +131,20 @@ public static class Music
 		}
 
 		// prepare the new track
-		var tl = track.Path.ToLower();
-		WaveChannel32 wc = null;
-		if (tl.EndsWith("ogg"))
-			wc = new WaveChannel32(new VorbisWaveReader(track.Path));
-		else if (tl.EndsWith("mp3"))
-			wc = new WaveChannel32(new Mp3FileReader(track.Path));
-		else if (tl.EndsWith("wav"))
-			wc = new WaveChannel32(new WaveFileReader(track.Path));
-		else if (tl.EndsWith("aiff") || tl.EndsWith("aif"))
-			wc = new WaveChannel32(new AiffFileReader(track.Path));
-		else
-			throw new Exception("Unknown audio format for file " + track.Path);
-
-		// convert to a standard format so we can mix them (e.g. a mp3 with an ogg)
-		var resampler = new MediaFoundationResampler(wc, waveFormat);
-		var sp = resampler.ToSampleProvider();
-
-		// setup our track
-		wc.Volume = musicVolume;
-		wc.PadWithZeroes = false; // to allow PlaybackStopped event to fire
-		if (CurrentMode == MusicMode.None)
-			return; // no music!
-
-		// fade between the two tracks
-		mixer.RemoveMixerInput(prevTrack);
-		prevTrack = curTrack;
-		if (prevTrack != null)
-			prevTrack.BeginFadeOut(FadeDuration);
-		curTrack = new FadeInOutSampleProvider(sp, true);
-		curTrack.BeginFadeIn(FadeDuration);
-		mixer.AddMixerInput(curTrack);
-		waveout.Play();
+		using var dataProvider = new StreamDataProvider(engine, format, File.OpenRead(track.Path));
+		var newPlayer = new SoundPlayer(engine, format, dataProvider);
+		newPlayer.IsLooping = true;
+		newPlayer.Volume = musicVolume;
+		
+		// stop old track
+		// TODO: fade music
+		player.Stop();
+		playbackDevice.MasterMixer.RemoveComponent(player);
+		
+		// start new track
+		player = newPlayer;
+		playbackDevice.MasterMixer.AddComponent(player);
+		player.Play();
 		IsPlaying = true;
 	}
 
@@ -193,17 +170,12 @@ public static class Music
 					{
 						Console.Error.WriteLine("Cannot find music folder " + folder + ".");
 					}
+
 					foreach (var file in files)
 						yield return new Track(mode, mood, file);
 				}
 			}
 		}
-	}
-
-	private static void waveout_PlaybackStopped(object sender, StoppedEventArgs e)
-	{
-		// play another song
-		StartNewTrack();
 	}
 
 	private class Track
