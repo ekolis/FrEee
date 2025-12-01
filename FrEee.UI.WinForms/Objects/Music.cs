@@ -150,8 +150,7 @@ public static class Music
 			throw new Exception("Unknown audio format for file " + track.Path);
 
 		// convert to a standard format so we can mix them (e.g. a mp3 with an ogg)
-		var resampler = new MediaFoundationResampler(wc, waveFormat);
-		var sp = resampler.ToSampleProvider();
+		var sp = new WdlResamplingSampleProvider(wc.ToSampleProvider(), 48000);
 
 		// setup our track
 		wc.Volume = musicVolume;
