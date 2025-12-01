@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using SoundFlow.Abstracts.Devices;
 using SoundFlow.Backends.MiniAudio;
+using SoundFlow.Codecs.FFMpeg;
 using SoundFlow.Components;
 using SoundFlow.Providers;
 using SoundFlow.Structs;
@@ -23,6 +24,7 @@ public static class Music
 		try
 		{
 			engine = new MiniAudioEngine();
+			engine.RegisterCodecFactory(new FFmpegCodecFactory());
 			engine.UpdateAudioDevicesInfo();
 			var defaultDevice = engine.PlaybackDevices.FirstOrDefault(x => x.IsDefault);
 			playbackDevice = engine.InitializePlaybackDevice(defaultDevice, format);
@@ -82,7 +84,7 @@ public static class Music
 	private static MiniAudioEngine engine;
 	private static AudioFormat format = AudioFormat.DvdHq;
 	private static AudioPlaybackDevice playbackDevice;
-	private static SoundPlayer player;
+	private static SoundPlayer? player;
 
 	public static void Play(MusicMode mode, MusicMood mood)
 	{
@@ -138,9 +140,12 @@ public static class Music
 		
 		// stop old track
 		// TODO: fade music
-		player.Stop();
-		playbackDevice.MasterMixer.RemoveComponent(player);
-		
+		if (player is not null)
+		{
+			player.Stop();
+			playbackDevice.MasterMixer.RemoveComponent(player);
+		}
+
 		// start new track
 		player = newPlayer;
 		playbackDevice.MasterMixer.AddComponent(player);
