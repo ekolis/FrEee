@@ -19,6 +19,7 @@
 
     <ItemGroup>
         <Common Include="$(SolutionDir)bin/$(Configuration)/net10.0/**/*" />
+        <Common Remove="$(SolutionDir)bin/$(Configuration)/net10.0/win-x64/**/*" />
     </ItemGroup>
     <Target Name="CopyCommonFiles" AfterTargets="PostBuildEvent">
         <Copy SourceFiles="@(Common)" DestinationFolder="$(TargetDir)/%(RecursiveDir)" SkipUnchangedFiles="true" />
