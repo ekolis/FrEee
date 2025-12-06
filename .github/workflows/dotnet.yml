@@ -43,7 +43,7 @@ jobs:
       uses: KageKirin/get-csproj-version@v0
       id: get_versions
       with:
-        file: 'FrEee.UI.WinForms/FrEee.UI.WinForms.csproj'
+        file: 'FrEee.Assets/CommonProjectProperties.xml'
     - name: List files
       run: ls -s .\bin\Release\net10.0-windows
     - name: Prepare files for zipping
