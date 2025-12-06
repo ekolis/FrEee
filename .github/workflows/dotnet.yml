@@ -55,7 +55,7 @@ jobs:
       uses: papeloto/action-zip@v1
       with:
         files: ./bin/Release
-        dest: FrEee-binary-${{steps.get_versions.outputs.assembly-version}}-${{steps.createReleaseTag.outputs.string}}.zip
+        dest: FrEee-binary-${{steps.get_versions.outputs.version}}-${{steps.createReleaseTag.outputs.string}}.zip
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
@@ -63,6 +63,6 @@ jobs:
         files: FrEee-binary-*.zip
         draft: false
         prerelease: true
-        name: Auto-Build Release ${{steps.get_versions.outputs.assembly-version}}-${{steps.createReleaseTag.outputs.string}}
+        name: Auto-Build Release ${{steps.get_versions.outputs.version}}-${{steps.createReleaseTag.outputs.string}}
         fail_on_unmatched_files: true
         token: ${{ secrets.RELEASE_TOKEN }}
