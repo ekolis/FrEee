@@ -38,7 +38,12 @@ jobs:
       uses: 2428392/gh-truncate-string-action@v1.0.0
       with:
         stringToTruncate: ${{github.sha}}
-        maxLength: 10
+        maxLength: 8
+    - name: Get assembly version
+      uses: actions/get-net-sdk-project-versions-action@v1
+      id: get_versions
+      with:
+        proj-path: 'FrEee.UI.WinForms/FrEee.UI.WinForms.csproj'
     - name: List files
       run: ls -s .\bin\Release\net10.0-windows
     - name: Prepare files for zipping
@@ -50,7 +55,7 @@ jobs:
       uses: papeloto/action-zip@v1
       with:
         files: ./bin/Release
-        dest: FrEee-binary-${{steps.createReleaseTag.outputs.string}}.zip
+        dest: FrEee-binary-${{steps.get_versions.outputs.assembly-version}}-${{steps.createReleaseTag.outputs.string}}.zip
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
@@ -58,6 +63,6 @@ jobs:
         files: FrEee-binary-*.zip
         draft: false
         prerelease: true
-        name: Auto-Build Release ${{steps.createReleaseTag.outputs.string}}
+        name: Auto-Build Release ${{steps.get_versions.outputs.assembly-version}}-${{steps.createReleaseTag.outputs.string}}
         fail_on_unmatched_files: true
         token: ${{ secrets.RELEASE_TOKEN }}
