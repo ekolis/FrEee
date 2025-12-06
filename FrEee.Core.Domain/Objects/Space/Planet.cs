@@ -1025,6 +1025,11 @@ public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpace
 		for (int i = 0; i < damage; i++)
 		{
 			// pick a race and kill some population
+			if (!Colony.Population.Any())
+			{
+				// they're all dead, Dave... every last one of them... even Rimmer... yes, even Kochanski...
+				break;
+			}
 			var race = Colony.Population.PickWeighted(dice);
 			if (race == null)
 				break; // no more population
