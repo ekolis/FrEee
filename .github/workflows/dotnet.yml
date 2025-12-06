@@ -40,10 +40,10 @@ jobs:
         stringToTruncate: ${{github.sha}}
         maxLength: 8
     - name: Get assembly version
-      uses: actions/get-net-sdk-project-versions-action@v1
+      uses: KageKirin/get-csproj-version@v0
       id: get_versions
       with:
-        proj-path: 'FrEee.UI.WinForms/FrEee.UI.WinForms.csproj'
+        file: 'FrEee.UI.WinForms/FrEee.UI.WinForms.csproj'
     - name: List files
       run: ls -s .\bin\Release\net10.0-windows
     - name: Prepare files for zipping
