@@ -14,7 +14,7 @@ namespace FrEee.Processes.Combat;
 /// </summary>
 public class Shot : IFormulaHost
 {
-    public Shot(ICombatant attacker, Component weapon, IDamageable defender, int range)
+    public Shot(ICombatant? attacker, Component? weapon, IDamageable defender, int range)
     {
         Attacker = attacker;
         Weapon = weapon;
@@ -23,10 +23,14 @@ public class Shot : IFormulaHost
         DamageLeft = FullDamage;
     }
 
-    public GameReference<ICombatant> attacker { get; set; }
+    public GameReference<ICombatant>? attacker { get; set; }
 
     [DoNotSerialize]
-    public ICombatant Attacker { get { return attacker == null ? null : attacker.Value; } set { attacker = value == null ? null : value.ReferViaGalaxy(); } }
+    public ICombatant? Attacker
+    {
+        get => attacker?.Value;
+        set => attacker = value?.ReferViaGalaxy();
+    }
 
     public int DamageLeft { get; private set; }
 
@@ -99,10 +103,10 @@ public class Shot : IFormulaHost
     public int WeaponComponentIndex { get; set; }
 
     [DoNotSerialize]
-    public Component Weapon
+    public Component? Weapon
     {
-        get => Attacker.Components.ElementAt(WeaponComponentIndex);
-        set => WeaponComponentIndex = Attacker.Components.IndexOf(value);
+        get => Attacker?.Components.ElementAt(WeaponComponentIndex);
+        set => WeaponComponentIndex = Attacker?.Components.IndexOf(value) ?? -1;
     }
 
     public int InflictDamage(IDamageable target, PRNG dice = null)
