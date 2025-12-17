@@ -196,13 +196,12 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	/// All construction queues owned by this empire.
 	/// </summary>
 	public IEnumerable<IConstructionQueue> ConstructionQueues
-	{
-		get
-		{
-			return Game.Current.Referrables.OfType<IConstructionQueue>().Where(q => q.Owner == this && q.Container.Sector != null && q.Rate.Any(kvp => kvp.Value > 0));
-		}
-	}
-
+		=> OwnedSpaceObjects
+			.OfType<IConstructor>()
+			.Select(q => q.ConstructionQueue)
+			.ExceptNull()
+			.Where(q => q.Container.Sector is not null && q.Rate.Any(kvp => kvp.Value > 0));
+	
 	/// <summary>
 	/// Spending on construction this turn.
 	/// </summary>
