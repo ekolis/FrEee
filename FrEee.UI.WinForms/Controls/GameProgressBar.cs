@@ -17,48 +17,48 @@ public partial class GameProgressBar : UserControl
 
 	public Color BarColor
 	{
-		get { return barColor; }
+		get;
 		set
 		{
-			barColor = value;
+			field = value;
 			Invalidate();
 		}
-	}
+	} = Color.Blue;
 
 	/// <summary>
 	/// Color of the border for BorderStyle.FixedSingle mode.
 	/// </summary>
 	public Color BorderColor
 	{
-		get { return borderColor; }
+		get;
 		set
 		{
-			borderColor = value;
+			field = value;
 			Invalidate();
 		}
 	}
 
 	public long IncrementalProgress
 	{
-		get { return incrementalProgress; }
+		get;
 		set
 		{
-			incrementalProgress = value;
+			field = value;
 			Invalidate();
 		}
-	}
+	} = 0;
 
-	public string LeftText { get { return leftText; } set { leftText = value; Invalidate(); } }
+	public string LeftText { get; set { field = value; Invalidate(); } }
 
 	public long Maximum
 	{
-		get { return maximum; }
+		get;
 		set
 		{
-			maximum = value;
+			field = value;
 			Invalidate();
 		}
-	}
+	} = 100;
 
 	public Progress Progress
 	{
@@ -76,39 +76,25 @@ public partial class GameProgressBar : UserControl
 
 	public ProgressDisplayType ProgressDisplayType
 	{
-		get { return displayType; }
+		get;
 		set
 		{
-			displayType = value;
+			field = value;
 			Invalidate();
 		}
-	}
+	} = ProgressDisplayType.Percentage;
 
-	public string RightText { get { return rightText; } set { rightText = value; Invalidate(); } }
+	public string RightText { get; set { field = value; Invalidate(); } }
 
 	public long Value
 	{
-		get { return value; }
+		get;
 		set
 		{
-			this.value = value;
+			field = value;
 			Invalidate();
 		}
-	}
-
-	private Color barColor = Color.Blue;
-
-	private Color borderColor;
-
-	private ProgressDisplayType displayType = ProgressDisplayType.Percentage;
-
-	private long incrementalProgress = 0;
-
-	private string leftText, rightText;
-
-	private long maximum = 100;
-
-	private long value = 0;
+	} = 0;
 
 	protected override void OnPaint(PaintEventArgs e)
 	{
