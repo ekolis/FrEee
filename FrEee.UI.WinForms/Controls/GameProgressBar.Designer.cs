@@ -28,24 +28,11 @@ partial class GameProgressBar
 	/// </summary>
 	private void InitializeComponent()
 	{
-		blazorView = new Microsoft.AspNetCore.Components.WebView.WindowsForms.BlazorWebView();
 		SuspendLayout();
-		// 
-		// blazorView
-		// 
-		blazorView.Dock = System.Windows.Forms.DockStyle.Fill;
-		blazorView.Location = new System.Drawing.Point(0, 0);
-		blazorView.Margin = new System.Windows.Forms.Padding(0);
-		blazorView.Name = "blazorView";
-		blazorView.Size = new System.Drawing.Size(429, 37);
-		blazorView.StartPath = "/";
-		blazorView.TabIndex = 0;
-		blazorView.Text = "blazorWebView1";
 		// 
 		// GameProgressBar
 		// 
 		BackColor = System.Drawing.Color.Black;
-		Controls.Add(blazorView);
 		ForeColor = System.Drawing.Color.White;
 		Margin = new System.Windows.Forms.Padding(0);
 		Name = "GameProgressBar";
@@ -54,7 +41,4 @@ partial class GameProgressBar
 	}
 
 	#endregion
-
-
-	private Microsoft.AspNetCore.Components.WebView.WindowsForms.BlazorWebView blazorView;
 }
