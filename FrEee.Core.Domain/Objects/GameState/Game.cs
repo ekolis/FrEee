@@ -789,7 +789,12 @@ public class Game
 		}
 		else if (typeof(T).IsAssignableTo(typeof(IOrder)))
 		{
-			list = Galaxy?.SpaceObjects?.OfType<IOrderable>().SelectMany(q => q.Orders);
+			IEnumerable<IOrderable> orderables =
+			[
+				..Galaxy?.SpaceObjects?.OfType<IOrderable>(),
+				..Galaxy?.ConstructionQueues
+			];
+			list = orderables.SelectMany(q => q.Orders);
 		}
 		else if (typeof(T).IsAssignableTo(typeof(IDesign)))
 		{
