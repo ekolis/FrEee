@@ -58,11 +58,13 @@ public partial class ConstructionQueueForm : GameForm
 		{
 			foreach (ListViewItem item in lstQueue.SelectedItems)
 			{
-				if (item.Tag is IConstructionOrder)
-					yield return (IConstructionOrder)item.Tag;
-				else if (item.Tag is IEnumerable<IConstructionOrder>)
+				if (item.Tag is IConstructionOrder order)
 				{
-					foreach (var o in (IEnumerable<IConstructionOrder>)item.Tag)
+					yield return order;
+				}
+				else if (item.Tag is IEnumerable<IConstructionOrder> orders)
+				{
+					foreach (var o in orders)
 						yield return o;
 				}
 			}

@@ -27,14 +27,8 @@ public abstract class OrderCommand : Command<IOrderable>, IOrderCommand
 	[DoNotSerialize]
 	public virtual IOrder Order
 	{
-		get
-		{
-			return order.Value;
-		}
-		set
-		{
-			order = value.ReferViaGalaxy();
-		}
+		get => order.Value;
+		set => order = value.ReferViaGalaxy();
 	}
 
 	private GameReference<IOrder> order { get; set; }

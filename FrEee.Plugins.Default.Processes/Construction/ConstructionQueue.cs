@@ -444,11 +444,14 @@ public class ConstructionQueue : IConstructionQueue
 
 	public void RearrangeOrder(IOrder order, int delta)
 	{
-		if (order is not null && order is not IConstructionOrder)
+		if (order is null)
 		{
-			throw new Exception("Can't rearrange a " + order.GetType() + " in a construction queue's orders.");
+			throw new NullReferenceException("Can't rearrange a null order in a construction queue's orders.");
 		}
-		var o = (IConstructionOrder)order;
+		if (order is not IConstructionOrder o)
+		{
+			throw new ArgumentException("Can't rearrange a " + order.GetType() + " in a construction queue's orders.");
+		}
 		var newpos = Orders.IndexOf(o) + delta;
 		if (newpos < 0)
 		{
