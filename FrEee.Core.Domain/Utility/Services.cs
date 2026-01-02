@@ -15,7 +15,7 @@ using FrEee.Persistence;
 using FrEee.Plugins;
 using FrEee.Processes;
 using FrEee.Processes.Combat;
-using FrEee.Processes.Combat.Grid;
+using FrEee.Processes.Construction;
 using FrEee.Vehicles;
 
 namespace FrEee.Utility;

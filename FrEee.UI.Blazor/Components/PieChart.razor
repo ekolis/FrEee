@@ -1,0 +1,15 @@
+﻿@using System.Numerics
+
+@namespace FrEee.UI.Blazor.Components
+@typeparam T where T : INumber<T>, IMultiplyOperators<T, int, T>, IDivisionOperators<T, int, T>
+@inherits ViewBase<PieChartViewModel<T>>
+
+<!--TODO: split into multiple divs, one for each pie slice, and add onclick handlers for each-->
+<div style="
+	aspect-ratio: 1;
+	max-width: 100%;
+	max-height: 100%;
+	border-radius: 50%;
+	background-image: conic-gradient(@VM.GradientString)"
+	@onclick="VM.OnClick"
+/>

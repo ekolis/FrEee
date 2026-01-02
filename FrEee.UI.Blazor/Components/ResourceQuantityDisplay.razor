@@ -1,0 +1,11 @@
+﻿@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<ResourceQuantityDisplayViewModel>
+
+<div style="display: flex; flex-direction: row">
+	@foreach (var resourceVM in VM.ResourceViewModels)
+	{
+		<div style="width: 200px">
+			<ResourceDisplay VM="resourceVM"/>
+		</div>
+	}
+</div>

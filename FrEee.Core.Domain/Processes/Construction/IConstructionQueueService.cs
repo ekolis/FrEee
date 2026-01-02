@@ -1,8 +1,7 @@
 ﻿using FrEee.Plugins;
-using FrEee.Processes.Construction;
 using FrEee.Utility;
 
-namespace FrEee.Processes.Combat.Grid;
+namespace FrEee.Processes.Construction;
 
 /// <summary>
 /// Creates <see cref="IConstructionQueue">s for <see cref="IConstructor"/>s

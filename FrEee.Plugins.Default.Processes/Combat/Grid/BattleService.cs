@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using FrEee.Objects.Space;
 using FrEee.Persistence;
 using FrEee.Processes.Combat;
-using FrEee.Processes.Combat.Grid;
 
 namespace FrEee.Plugins.Default.Processes.Combat.Grid;
 
