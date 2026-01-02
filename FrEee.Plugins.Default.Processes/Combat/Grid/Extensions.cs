@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 
+namespace FrEee.Plugins.Default.Processes.Combat.Grid;
+
 public static class Extensions
 {
     public static HashSet<T> ToHashSet<T>(

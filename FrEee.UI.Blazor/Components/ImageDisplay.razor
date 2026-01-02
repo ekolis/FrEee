@@ -1,0 +1,7 @@
+﻿@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<ImageDisplayViewModel>
+
+<img
+	src="@VM.ImageSource"
+	@onclick="VM.OnClick"
+	style="overflow: hidden; aspect-ratio: @(VM.AspectRatio); width: 100%; max-width: 100%; max-height: 100%; background-color: #@(VM.BackgroundColor.ToRgba())" />

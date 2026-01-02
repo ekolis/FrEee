@@ -1,10 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net10.0-windows</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <EnableWindowsTargeting>true</EnableWindowsTargeting>
+        <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
+        <RequireAspNetWebAssets>true</RequireAspNetWebAssets>
     </PropertyGroup>
 
     <Import Project="../FrEee.Assets/CommonProjectProperties.xml"/>
@@ -15,8 +16,6 @@
 
     <ItemGroup>
         <PackageReference Include="Excubo.Blazor.Canvas" Version="3.2.96"/>
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.0" PrivateAssets="all" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.0"/>
         <PackageReference Include="PropertyChanged.Fody" Version="4.1.0"/>
     </ItemGroup>
 
@@ -28,9 +27,17 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Update="Views\ImageDisplay.razor">
-            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-        </Content>
+      <AdditionalFiles Include="Components\App.razor" />
+      <AdditionalFiles Include="Components\Layout\MainLayout.razor" />
+      <AdditionalFiles Include="Components\Layout\NavMenu.razor" />
+      <AdditionalFiles Include="Components\Layout\ReconnectModal.razor" />
+      <AdditionalFiles Include="Components\Pages\Counter.razor" />
+      <AdditionalFiles Include="Components\Pages\Error.razor" />
+      <AdditionalFiles Include="Components\Pages\Home.razor" />
+      <AdditionalFiles Include="Components\Pages\NotFound.razor" />
+      <AdditionalFiles Include="Components\Pages\Weather.razor" />
+      <AdditionalFiles Include="Components\Routes.razor" />
+      <AdditionalFiles Include="Components\_Imports.razor" />
     </ItemGroup>
 
     <PropertyGroup>

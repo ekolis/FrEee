@@ -10,7 +10,6 @@ using FrEee.Modding;
 using FrEee.Modding.Abilities;
 using FrEee.Objects.Civilization;
 using FrEee.Processes.Combat;
-using FrEee.Processes.Combat.Grid;
 using FrEee.Processes.Construction;
 using FrEee.Utility;
 using FrEee.Vehicles;
