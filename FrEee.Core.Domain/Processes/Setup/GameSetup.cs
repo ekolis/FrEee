@@ -80,17 +80,13 @@ public class GameSetup
     /// The galaxy template to use.
     /// </summary>
     [DoNotSerialize]
-    public GalaxyTemplate GalaxyTemplate
+    public GalaxyTemplate? GalaxyTemplate
     {
-        get { return Mod.Current.GalaxyTemplates.FindByName(GalaxyTemplateName); }
-        set { GalaxyTemplateName = value.Name; }
+        get => Mod.Current.GalaxyTemplates.FindByName(GalaxyTemplateName);
+        set => GalaxyTemplateName = value?.Name;
     }
 
-    public string GalaxyTemplateName
-    {
-        get;
-        private set;
-    }
+    public string? GalaxyTemplateName { get; private set; }
 
     /// <summary>
     /// The name of the game. Used in save file names.

@@ -63,7 +63,7 @@ public static class GameEnumerableExtensions
 		return result;
 	}
 
-	public static T FindByName<T>(this IEnumerable<T> stuff, string name) where T : INamed
+	public static T? FindByName<T>(this IEnumerable<T> stuff, string? name) where T : INamed
 	{
 		return stuff.FirstOrDefault(item => item.Name == name);
 	}
