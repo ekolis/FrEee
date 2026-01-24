@@ -2,7 +2,6 @@
 @using FrEee.UI.Blazor.Components.Screens
 @using Microsoft.JSInterop
 @inherits ViewBase<MainMenuViewModel>
-@inject IJSRuntime JSRuntime
 
 <div class="main-menu container-fluid h-100">
     <div class="row h-100">
@@ -10,25 +9,18 @@
             <img src="images/main-menu-splash.png" alt="FrEee" class="img-fluid splash-image" />
         </div>
         <div class="col-4 d-flex flex-column justify-content-center align-items-center button-panel">
-            <button class="btn btn-outline-primary mb-2 w-75" @onclick='() => Alert("Mods")'>Mods</button>
-            <button class="btn btn-outline-primary mb-2 w-75" @onclick='() => Alert("New Game")'>New Game</button>
-            <button class="btn btn-outline-primary mb-2 w-75" @onclick='() => Alert("Quick Start")'>Quick Start</button>
-            <button class="btn btn-outline-primary mb-2 w-75" @onclick='() => Alert("Resume Game")'>Resume Game</button>
-            <button class="btn btn-outline-primary mb-2 w-75" @onclick='() => Alert("Load Game")'>Load Game</button>
-            <button class="btn btn-outline-primary mb-2 w-75" @onclick='() => Alert("Scenario")'>Scenario</button>
-            <button class="btn btn-outline-primary mb-2 w-75" @onclick='() => Alert("Options")'>Options</button>
-            <button class="btn btn-outline-primary mb-2 w-75" @onclick='() => Alert("Credits")'>Credits</button>
-            <button class="btn btn-outline-danger mt-4 w-75" @onclick='() => Alert("Quit")'>Quit</button>
+            <button class="btn btn-outline-primary mb-2 w-75" @onclick='() => AlertStub("Mods")'>Mods</button>
+            <button class="btn btn-outline-primary mb-2 w-75" @onclick='() => AlertStub("New Game")'>New Game</button>
+            <button class="btn btn-outline-primary mb-2 w-75" @onclick='() => AlertStub("Quick Start")'>Quick Start</button>
+            <button class="btn btn-outline-primary mb-2 w-75" @onclick='() => AlertStub("Resume Game")'>Resume Game</button>
+            <button class="btn btn-outline-primary mb-2 w-75" @onclick='() => AlertStub("Load Game")'>Load Game</button>
+            <button class="btn btn-outline-primary mb-2 w-75" @onclick='() => AlertStub("Scenario")'>Scenario</button>
+            <button class="btn btn-outline-primary mb-2 w-75" @onclick='() => AlertStub("Options")'>Options</button>
+            <button class="btn btn-outline-primary mb-2 w-75" @onclick='() => AlertStub("Credits")'>Credits</button>
+            <button class="btn btn-outline-danger mt-4 w-75" @onclick='() => AlertStub("Quit")'>Quit</button>
         </div>
     </div>
 </div>
-
-@code {
-    private async Task Alert(string functionality)
-    {
-        await JSRuntime.InvokeVoidAsync("alert", $"Stub: {functionality} functionality is not yet implemented.");
-    }
-}
 
 <style>
     .main-menu {
