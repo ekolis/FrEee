@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace FrEee.UI.Blazor.Components;
 
@@ -16,6 +17,9 @@ public class ViewBase<TVM>
 	/// </summary>
 	[Parameter]
 	public TVM VM { get; set; } = new();
+
+	[Inject]
+	private IJSRuntime JSRuntime { get; set; }
 
 	/// <summary>
 	/// When the view model's properties change, update the UI.
@@ -35,5 +39,23 @@ public class ViewBase<TVM>
 	public void Dispose()
 	{
 		VM.PropertyChanged -= ViewModelPropertyChanged;
+	}
+	
+	/// <summary>
+	/// Displays an alert message for unimplemented functionality.
+	/// </summary>
+	/// <param name="functionality"></param>
+	protected async Task AlertStub(string functionality)
+	{
+		await Alert($"Stub: {functionality} functionality is not yet implemented.");
+	}
+
+	/// <summary>
+	/// Displays an alert message.
+	/// </summary>
+	/// <param name="message"></param>
+	protected async Task Alert(string message)
+	{
+		await JSRuntime.InvokeVoidAsync("alert", message);
 	}
 }

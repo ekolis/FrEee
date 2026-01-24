@@ -40,6 +40,36 @@
       <AdditionalFiles Include="Components\_Imports.razor" />
     </ItemGroup>
 
+    <ItemGroup>
+        <Assets Include="$(SolutionDir)/FrEee.Assets/**/*" />
+        <Data Include="$(SolutionDir)/FrEee.Assets/Data/**/*" />
+        <Docs Include="$(SolutionDir)/FrEee.Assets/Docs/**/*" />
+        <Dsgnname Include="$(SolutionDir)/FrEee.Assets/Dsgnname/**/*" />
+        <Empires Include="$(SolutionDir)/FrEee.Assets/Empires/**/*" />
+        <Fonts Include="$(SolutionDir)/FrEee.Assets/Fonts/**/*" />
+        <GameSetups Include="$(SolutionDir)/FrEee.Assets/GameSetups/**/*" />
+        <Licenses Include="$(SolutionDir)/FrEee.Assets/Licenses/**/*" />
+        <Mods Include="$(SolutionDir)/FrEee.Assets/Mods/**/*" />
+        <Music Include="$(SolutionDir)/FrEee.Assets/Music/**/*" />
+        <Pictures Include="$(SolutionDir)/FrEee.Assets/Pictures/**/*" />
+        <Savegame Include="$(SolutionDir)/FrEee.Assets/Savegame/**/*" />
+        <Scripts Include="$(SolutionDir)/FrEee.Assets/Scripts/**/*" />
+    </ItemGroup>
+    <Target Name="CopyAssetsAndPlugins" AfterTargets="PostBuildEvent">
+        <Copy SourceFiles="@(Data)" DestinationFolder="$(ProjectDir)/wwwroot/wwwroot/Data/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Docs)" DestinationFolder="$(ProjectDir)/wwwroot/Docs/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Dsgnname)" DestinationFolder="$(ProjectDir)/wwwroot/Dsgnname/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Empires)" DestinationFolder="$(ProjectDir)/wwwroot/Empires/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Fonts)" DestinationFolder="$(ProjectDir)/wwwroot/Fonts/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(GameSetups)" DestinationFolder="$(ProjectDir)/wwwroot/GameSetups/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Licenses)" DestinationFolder="$(ProjectDir)/wwwroot/Licenses/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Mods)" DestinationFolder="$(ProjectDir)/wwwroot/Mods/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Music)" DestinationFolder="$(ProjectDir)/wwwroot/Music/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Pictures)" DestinationFolder="$(ProjectDir)/wwwroot/Pictures/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Savegame)" DestinationFolder="$(ProjectDir)/wwwroot/Savegame/%(RecursiveDir)" SkipUnchangedFiles="true" />
+        <Copy SourceFiles="@(Scripts)" DestinationFolder="$(ProjectDir)/wwwroot/Scripts/%(RecursiveDir)" SkipUnchangedFiles="true" />
+    </Target>
+
     <PropertyGroup>
         <EnableSourceControlManagerQueries>false</EnableSourceControlManagerQueries>
     </PropertyGroup>
