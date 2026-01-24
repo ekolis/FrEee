@@ -20,3 +20,20 @@ packages/
 *.dll
 *.dotsettings
 publish
+
+# these folders are automatically copied from the Assets project and don't need to be included twice 
+*/wwwroot/Data
+*/wwwroot/Docs
+*/wwwroot/Dsgnname
+*/wwwroot/Empires
+*/wwwroot/Fonts
+*/wwwroot/GameSetups
+*/wwwroot/Licenses
+*/wwwroot/Mods
+*/wwwroot/Music
+*/wwwroot/Pictures
+*/wwwroot/Savegame
+*/wwwroot/Scripts
+
+# not sure why this exists...
+*/wwwroot/wwwroot
