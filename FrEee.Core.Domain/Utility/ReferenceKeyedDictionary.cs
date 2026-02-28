@@ -10,8 +10,7 @@ namespace FrEee.Utility;
 /// <summary>
 /// A safe dictionary keyed with transparent references.
 /// </summary>
-public abstract class ReferenceKeyedDictionary<TID, TRef, TKey, TValue> : IDictionary<TKey, TValue>, IPromotable, IReferenceEnumerable
-	where TRef : IReference<TKey>
+public abstract class ReferenceKeyedDictionary<TID, TKey, TValue> : IDictionary<TKey, TValue>, IPromotable, IReferenceEnumerable
 {
 	public ReferenceKeyedDictionary()
 	{
@@ -38,7 +37,7 @@ public abstract class ReferenceKeyedDictionary<TID, TRef, TKey, TValue> : IDicti
 		get { InitDict(); return dict.Values; }
 	}
 
-	private SafeDictionary<TID, TValue> dict { get; set; }
+	protected SafeDictionary<TID, TValue> dict { get; set; }
 
 	public TValue this[TKey key]
 	{
