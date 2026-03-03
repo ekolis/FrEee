@@ -231,7 +231,7 @@ public partial class ConstructionQueueForm : GameForm
 					fore = lstQueue.BackColor;
 				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, firstEta.CeilingString(1) + "(" + eta.CeilingString(1) + ")", fore, back, lstQueue.Font));
 				item.ImageIndex = i;
-				il.Images.Add(order.Template.Icon);
+				il.Images.Add(order.Template?.Icon ?? Pictures.GetSolidColorImage(Color.Transparent));
 				lstQueue.Items.Add(item);
 				i++;
 			}

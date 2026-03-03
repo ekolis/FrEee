@@ -143,7 +143,16 @@ public class ConstructionQueue : IConstructionQueue
 	{
 		get
 		{
-			return Orders.FirstOrDefault()?.Template.Icon ?? Pictures.GetSolidColorImage(Color.Transparent);
+			var blankImage = Pictures.GetSolidColorImage(Color.Transparent);
+			try
+			{
+				return Orders?.FirstOrDefault()?.Template?.Icon ?? blankImage;
+			}
+			catch (Exception ex)
+			{
+				Console.Error.WriteLine(ex);
+				return blankImage;
+			}
 		}
 	}
 
@@ -151,7 +160,15 @@ public class ConstructionQueue : IConstructionQueue
 	{
 		get
 		{
-			return Orders.FirstOrDefault()?.Template.Name;
+			try
+			{
+				return Orders?.FirstOrDefault()?.Template?.Name;
+			}
+			catch (Exception ex)
+			{
+				Console.Error.WriteLine(ex);
+				return null;
+			}
 		}
 	}
 
