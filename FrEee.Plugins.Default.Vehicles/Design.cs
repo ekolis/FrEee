@@ -629,11 +629,8 @@ public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 
 	public IConstructionOrder CreateConstructionOrder(IConstructionQueue queue)
 	{
-		var dtype = GetType();
-		var vtype = dtype.GetGenericArguments()[0];
-		var ordertype = typeof(ConstructionOrder<,>).MakeGenericType(vtype, dtype);
-		var o = (IConstructionOrder)Activator.CreateInstance(ordertype);
-		o.GetType().GetProperty("Template").SetValue(o, this, new object[] { });
+		var o = new ConstructionOrder<T, Design<T>>();
+		o.Template = this;
 		return o;
 	}
 
