@@ -70,7 +70,7 @@ public class ConstructionOrder<T, TTemplate> : IConstructionOrder
     {
         get
         {
-            return Template.Name;
+            return Template?.Name ?? "(no template)";
         }
     }
 
