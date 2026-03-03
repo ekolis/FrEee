@@ -751,12 +751,18 @@ public partial class ConstructionQueueForm : GameForm
 					amount *= 100;
 
 				// is this a new design we've never built before? then tell the server about it
+				var isNewDesign = false;
 				if (design.ID <= 0)
 				{
 					Game.Current.AssignID(design);
-					design.IsNew = true;
+					design.IsNew = isNewDesign = true;
 				}
-				if (design.IsNew && !BuildingAnywhere(design))
+				if (!Game.Current.Designs.Contains(design))
+				{
+					Game.Current.Designs.Add(design);
+					design.IsNew = isNewDesign = true;
+				}
+				if (isNewDesign)
 				{
 					Empire.Current.Commands.Add(design.CreateCreationCommand());
 				}
