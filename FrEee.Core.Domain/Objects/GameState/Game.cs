@@ -754,7 +754,7 @@ public class Game
 			[
 				..(Galaxy?.SpaceObjects ?? []).OfType<IVehicle>(),
 				..(Galaxy?.ObjectsUnderConstruction?.OfType<IVehicle>() ?? []),
-				..(Galaxy?.CargoContainers?.SelectMany(c => c.Cargo.Units) ?? [])
+				..(Galaxy?.CargoContainers?.SelectMany(c => c?.Cargo?.Units) ?? []).ExceptNull()
 			];
 			list = list2.Cast<IReferrable>();
 		}
