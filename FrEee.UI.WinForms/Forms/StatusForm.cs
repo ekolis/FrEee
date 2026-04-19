@@ -10,6 +10,7 @@ using Console = System.Console;
 
 public partial class StatusForm : GameForm
 {
+	// TODO: replace the Thread parameter with a Task so it can be cancelled using a CancellationToken
 	public StatusForm(Thread thread, Status status)
 	{
 		InitializeComponent();
@@ -54,7 +55,8 @@ public partial class StatusForm : GameForm
 			Enabled = true;
 			progressBar.Value = 0;
 			status.Exception.LogFatal();
-			thread.Abort();
+			// TODO: don't leak a thread, but there really isn't any better way to halt it without converting it to a Task
+			//thread.Abort();
 			Close();
 		}
 		else
