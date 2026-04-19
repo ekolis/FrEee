@@ -74,12 +74,20 @@ public class ModLoader
 
 			loaders.Where(q => q.Value == p).ParallelSafeForeach(loader =>
 			{
-				foreach (var mo in loader.Key.Load(mod).ToArray())
+				try
 				{
-					mod.AssignID(mo, used);
+					foreach (var mo in loader.Key.Load(mod).ToArray())
+					{
+						mod.AssignID(mo, used);
+					}
+					if (status != null)
+						status.Progress += progressPerFile;
 				}
-				if (status != null)
-					status.Progress += progressPerFile;
+				catch (Exception e)
+				{
+					Console.WriteLine(e);
+					throw;
+				}
 			});
 		}
 
