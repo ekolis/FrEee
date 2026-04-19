@@ -136,11 +136,13 @@ public class Seeker : ICombatant
     /// <summary>
     /// The combatant which launched the seeker.
     /// </summary>
+    [DoNotCopy]
     public ICombatant LaunchingCombatant { get; private set; }
 
     /// <summary>
     /// The component which launched this seeker.
     /// </summary>
+    [DoNotCopy]
     public Component LaunchingComponent { get; private set; }
 
     public int MaxArmorHitpoints
@@ -202,6 +204,7 @@ public class Seeker : ICombatant
     /// <summary>
     /// The owner of the seeker.
     /// </summary>
+    [DoNotCopy]
     public Empire Owner { get; set; }
 
     /// <summary>
@@ -263,6 +266,7 @@ public class Seeker : ICombatant
     /// <summary>
     /// The target of the seeker.
     /// </summary>
+    [DoNotCopy]
     public ICombatant Target { get; private set; }
 
     public double Timestamp { get; set; }
