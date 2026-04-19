@@ -11,6 +11,7 @@ using System.Reflection;
 using FrEee.Objects.GameState;
 using FrEee.Objects.Space;
 using System.Threading;
+using Microsoft.Scripting.Runtime;
 
 namespace FrEee.Modding.Scripts;
 
@@ -249,16 +250,19 @@ public class PythonScriptEngine : MarshalByRefObject
 		{
 			if (ex.Data.Values.Count > 0)
 			{
-				Array info = ex.Data.Values.Cast<dynamic>().First();
-				var debugInfo = info.Cast<dynamic>().FirstOrDefault(o => o.DebugInfo != null)?.DebugInfo;
-				if (debugInfo != null)
+				IEnumerable<object> info = ex.Data.Values.Cast<dynamic>().First();
+				var frame = info.Cast<DynamicStackFrame>().FirstOrDefault();
+				if (frame is not null)
 				{
-					int startLine = debugInfo.StartLine;
-					int endLine = debugInfo.StartLine;
-					throw new ScriptException(ex, string.Join("\n", runner.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
+					var file = frame.GetFileName();
+					var method = frame.GetMethodName();
+					var line = frame.GetFileLineNumber();
+					throw new ScriptException(ex, $"{file}:{method}(line {line})\n{runner.FullText.Split('\n').Skip(line - 1).First()}");
 				}
 				else
+				{
 					throw new ScriptException(ex, "(unknown code)");
+				}
 			}
 			else
 				throw new ScriptException(ex, "(unknown code)");
