@@ -49,8 +49,8 @@ jobs:
     - name: Prepare files for zipping
       run: |
         cd bin/Release
-        robocopy net10.0 FrEee /E /MOVE
-        robocopy net10.0-windows FrEee /E /MOVE
+        robocopy net10.0 FrEee /E
+        robocopy net10.0-windows FrEee /E
         rmdir /S /Q net10.0
         rmdir /S /Q net10.0-windows
       shell: cmd
