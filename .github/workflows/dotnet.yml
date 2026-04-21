@@ -49,9 +49,10 @@ jobs:
     - name: Prepare files for zipping
       run: |
         cd bin/Release
-        ren net10.0-windows FrEee
         robocopy net10.0 FrEee /E /MOVE
+        robocopy net10.0-windows FrEee /E /MOVE
         rmdir net10.0
+        rmdir net10.0-windows
       shell: cmd
     - name: Zip assets
       uses: papeloto/action-zip@v1
