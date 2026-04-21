@@ -50,7 +50,8 @@ jobs:
       run: |
         cd bin/Release
         robocopy net10.0 FrEee /E
-        if not errorlevel 8 (call ) rem errorlevel less than 8 is not actually an error for robocopy so reset the errorlevel to zero
+        rem errorlevel less than 8 is not actually an error for robocopy so reset the errorlevel to zero
+        if not errorlevel 8 (call )
         robocopy net10.0-windows FrEee /E
         if not errorlevel 8 (call )
         rmdir /S /Q net10.0
