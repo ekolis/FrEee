@@ -337,10 +337,22 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	public bool IsDefeated
 	{
 		get
-		{ 
-			return !OwnedSpaceObjects.Any(sobj => !sobj.IsDisposed && !sobj.IsMemory);
+		{
+			if (DefeatedTurnNumber is not null)
+			{
+				return true;
+			}
+			var result = !OwnedSpaceObjects.Any(sobj => !sobj.IsDisposed && !sobj.IsMemory);
+			if (result && DefeatedTurnNumber is null)
+			{
+				DefeatedTurnNumber = Game.Current.TurnNumber;
+			}
+
+			return result;
 		}
 	}
+
+	public int? DefeatedTurnNumber { get; private set; }
 
 	public bool IsDisposed { get; set; }
 
