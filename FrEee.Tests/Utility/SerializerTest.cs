@@ -121,7 +121,7 @@ public class SerializerTest
 			Assert.AreEqual(typeof(Dictionary<AbilityRule, Formula<int>>), st.Type);
 		}
 		{
-			var tname = "System.Collections.Generic.IDictionary`2[[FrEee.Modding.Abilities.AbilityRule, FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null],[System.Collections.Generic.IDictionary`2[[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[FrEee.Modding.Formula`1[[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]";
+			var tname = "System.Collections.Generic.IDictionary`2[[FrEee.Modding.Abilities.AbilityRule, FrEee.Core, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null],[System.Collections.Generic.IDictionary`2[[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[FrEee.Modding.Formula`1[[System.Int32, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], FrEee.Core, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]";
 			var st = new SafeType(tname);
 			Assert.AreEqual(typeof(IDictionary<AbilityRule, IDictionary<int, Formula<int>>>), st.Type);
 		}
@@ -131,12 +131,12 @@ public class SerializerTest
 	public void LegacyLookUpComplexType()
 	{
 		{
-			var tname = "System.Collections.Generic.List`1[[FrEee.Modding.Abilities.AbilityRule, FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089";
+			var tname = "System.Collections.Generic.List`1[[FrEee.Modding.Abilities.AbilityRule, FrEee.Core, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089";
 			var st = new SafeType(tname);
 			Assert.AreEqual(typeof(List<AbilityRule>), st.Type);
 		}
 		{
-			var tname = "System.Collections.Generic.List`1[[FrEee.Modding.Formula`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089";
+			var tname = "System.Collections.Generic.List`1[[FrEee.Modding.Formula`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], FrEee.Core, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089";
 			var st = new SafeType(tname);
 			Assert.AreEqual(typeof(List<Formula<string>>), st.Type);
 		}
@@ -146,7 +146,7 @@ public class SerializerTest
 	[Ignore("Script type no longer in existence")]
 	public void LegacyLookUpArrays()
 	{
-		var tname = "FrEee.Modding.Script[], FrEee.Core, Version=0.0.9.0, Culture=neutral, PublicKeyToken=null";
+		var tname = "FrEee.Modding.Script[], FrEee.Core, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null";
 		var st = new SafeType(tname);
 		Assert.AreEqual(typeof(PythonScript[]), st.Type);
 	}

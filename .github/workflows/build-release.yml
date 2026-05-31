@@ -1,0 +1,68 @@
+name: Build Release
+
+on:
+  push:
+    branches: [ release/** ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 10.0.x
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Test
+      uses: zyborg/dotnet-tests-report@v1.3.0
+      with:
+        project_path: FrEee.Tests/FrEee.Tests.csproj
+        no_restore: true # we already restored above
+        msbuild_configuration: Release
+        msbuild_verbosity: normal # q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic].
+        report_name: TestReport_${{github.sha}}_$NOW
+        report_title: Test Report
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        skip_check_run: false
+        set_check_status_from_test_outcome: false # true = fail the build if tests fail
+        #trx_xsl_path: # optional
+    - name: Get assembly version
+      uses: KageKirin/get-csproj-version@v0
+      id: get_versions
+      with:
+        file: 'FrEee.Assets/CommonProjectProperties.xml'
+    - name: List files
+      run: ls -s .\bin\Release\net10.0-windows
+    - name: Prepare files for zipping
+      run: |
+        cd bin/Release
+        robocopy net10.0 FrEee /E
+        rem errorlevel less than 8 is not actually an error for robocopy so reset the errorlevel to zero
+        if not errorlevel 8 (call )
+        robocopy net10.0-windows FrEee /E
+        if not errorlevel 8 (call )
+        rmdir /S /Q net10.0
+        rmdir /S /Q net10.0-windows
+      shell: cmd
+    - name: Zip assets
+      uses: papeloto/action-zip@v1
+      with:
+        files: ./bin/Release
+        dest: FrEee-binary-${{steps.get_versions.outputs.version}}.zip
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{steps.get_versions.outputs.version}}
+        files: FrEee-binary-*.zip
+        draft: false
+        prerelease: false
+        name: Release ${{steps.get_versions.outputs.version}}
+        fail_on_unmatched_files: true
+        token: ${{ secrets.RELEASE_TOKEN }}
