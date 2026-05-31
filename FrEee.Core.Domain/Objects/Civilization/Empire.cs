@@ -338,7 +338,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 	{
 		get
 		{ 
-			return !OwnedSpaceObjects.Any(sobj => !sobj.IsDisposed);
+			return !OwnedSpaceObjects.Any(sobj => !sobj.IsDisposed && !sobj.IsMemory);
 		}
 	}
 
