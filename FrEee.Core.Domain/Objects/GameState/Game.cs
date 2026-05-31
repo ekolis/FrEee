@@ -396,6 +396,7 @@ public class Game
 
 			// TODO: load libraries of strategies, etc once we have those
 		}
+
 		Current.PopulatePropertyValues();
 	}
 
@@ -538,14 +539,15 @@ public class Game
 		for (int i = 0; i < Current.Empires.Count; i++)
 		{
 			Load(gamname, includeGuiPlugins);
-			if (Current.Empires[i].IsPlayerEmpire)
+			var empire = Current.Empires[i];
+			// give human players GAM files while their empires are not defeated and for one turn afterward
+			if (empire.IsPlayerEmpire && (!empire.IsDefeated || empire.DefeatedTurnNumber == Current.TurnNumber))
 			{
-				if (status != null)
-					status.Message = "Saving game (player " + (i + 1) + ")";
-				Current.CurrentEmpire = Current.Empires[i];
+				status?.Message = "Saving game (player " + (i + 1) + ")";
+				Current.CurrentEmpire = empire;
 				Current.Redact();
 				//Current.SpaceObjectIDCheck("after creating player view for " + Current.Empires[i]);
-				Current.Save(false); // already asssigned IDs in the redact phase
+				Current.Save(false); // already assigned IDs in the redact phase
 				if (status != null)
 					status.Progress += progressPerSaveLoad;
 			}
