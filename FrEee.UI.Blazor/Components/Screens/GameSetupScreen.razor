@@ -1,0 +1,55 @@
+@page "/game-setup"
+@using FrEee.UI.Blazor.Components
+@using FrEee.UI.Blazor.Components.Screens
+@using FrEee.Objects.Civilization
+@inherits ScreenBase<GameSetupViewModel>
+
+<div class="game-setup-screen" style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; width: 100%; height: 100%; overflow-y: auto;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="color: cornflowerblue; margin: 0;">Game Setup</h3>
+        <div style="display: flex; gap: 8px;">
+            <button class="btn btn-outline-secondary" @onclick="() => VM.Close()">Cancel</button>
+            <button class="btn btn-primary" @onclick="() => VM.StartGame()">Start Game</button>
+        </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div style="border: 1px solid #333; padding: 12px;">
+            <h5 style="color: cornflowerblue;">Galaxy Parameters</h5>
+            <div class="mb-2">
+                <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Game Name</label>
+                <input class="form-control form-control-sm bg-dark text-white border-secondary" @bind="VM.GameName" />
+            </div>
+            <div class="mb-2">
+                <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Star Systems</label>
+                <input type="number" class="form-control form-control-sm bg-dark text-white border-secondary" @bind="VM.StarSystems" />
+            </div>
+            <div class="mb-2">
+                <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Width</label>
+                <input type="number" class="form-control form-control-sm bg-dark text-white border-secondary" @bind="VM.GalaxyWidth" />
+            </div>
+            <div class="mb-2">
+                <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Height</label>
+                <input type="number" class="form-control form-control-sm bg-dark text-white border-secondary" @bind="VM.GalaxyHeight" />
+            </div>
+        </div>
+
+        <div style="border: 1px solid #333; padding: 12px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <h5 style="color: cornflowerblue; margin: 0;">Empires (@VM.Empires.Count)</h5>
+                <button class="btn btn-sm btn-outline-primary" @onclick="() => VM.AddEmpire()">Add Empire</button>
+            </div>
+            <div style="max-height: 250px; overflow-y: auto;">
+                <ul style="list-style: none; padding-left: 0;">
+                    @foreach (var emp in VM.Empires)
+                    {
+                        <li style="display: flex; justify-content: space-between; align-items: center; padding: 4px 8px; border-bottom: 1px solid #222;">
+                            <span style="color: #fff; font-size: 13px;">@emp.Name</span>
+                            <button class="btn btn-sm btn-outline-danger" @onclick="() => VM.RemoveEmpire(emp)">Remove</button>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

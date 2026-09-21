@@ -1,0 +1,41 @@
+@page "/hull-picker"
+@using FrEee.UI.Blazor.Components
+@using FrEee.UI.Blazor.Components.Screens
+@using FrEee.Vehicles.Types
+@using FrEee.Extensions
+@inherits ScreenBase<HullPickerViewModel>
+
+<div class="hull-picker-screen" style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; max-width: 700px; margin: 0 auto; display: flex; flex-direction: column;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="color: cornflowerblue; margin: 0;">Select Hull</h3>
+        <button class="btn btn-outline-secondary" @onclick="() => VM.Close()">Cancel</button>
+    </div>
+
+    <div style="max-height: 400px; overflow-y: auto; border: 1px solid #333; margin-bottom: 16px;">
+        <table class="table table-dark table-hover table-sm" style="font-size: 13px; margin-bottom: 0;">
+            <thead>
+                <tr style="color: cornflowerblue;">
+                    <th>Name</th>
+                    <th>Size</th>
+                    <th>Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var hull in VM.Hulls)
+                {
+                    var isSelected = hull == VM.SelectedHull;
+                    <tr @onclick="() => VM.SelectedHull = hull"
+                        style="cursor: pointer; background-color: @(isSelected ? "#003366" : "inherit");">
+                        <td>@hull.Name</td>
+                        <td>@hull.Size.Kilotons()</td>
+                        <td>@hull.Cost</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; gap: 8px;">
+        <button class="btn btn-primary" disabled="@(VM.SelectedHull == null)" @onclick="() => VM.Select()">Select Hull</button>
+    </div>
+</div>

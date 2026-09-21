@@ -1,0 +1,39 @@
+@using FrEee.Objects.Technology
+@using FrEee.Extensions
+@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<MountReportViewModel>
+
+<div class="mount-report" style="background-color: black; color: white; border: 1px solid cornflowerblue; padding: 8px;">
+    @if (VM.Mount is not null)
+    {
+        var m = VM.Mount;
+        <div style="display: flex; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 100px; height: 100px; border: 1px solid #444;">
+                <ImageDisplay VM="@(new ImageDisplayViewModel { Image = m.Portrait })" />
+            </div>
+            <div style="flex: 1;">
+                <h4 style="color: cornflowerblue; margin-bottom: 4px;">@m.Code: @m.Name</h4>
+                <div style="font-size: 13px; color: #aaa; margin-bottom: 6px;">@m.Description</div>
+                <div style="font-size: 13px; color: #fff;">Vehicle Types: @m.VehicleTypes</div>
+                <div style="font-size: 13px; color: #fff;">Component Family: @(m.RequiredComponentFamily?.Value ?? "Any")</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+            <h6 style="color: cornflowerblue;">Modifiers</h6>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; font-size: 13px;">
+                <div>Cost: @m.CostPercent.Value%</div>
+                <div>Size: @m.SizePercent.Value%</div>
+                <div>Durability: @m.DurabilityPercent.Value%</div>
+                <div>Weapon Damage: @m.WeaponDamagePercent.Value%</div>
+                <div>Weapon Range: @(m.WeaponRangeModifier.Value > 0 ? $"+{m.WeaponRangeModifier.Value}" : m.WeaponRangeModifier.Value.ToString())</div>
+                <div>Weapon Accuracy: @(m.WeaponAccuracyModifier.Value > 0 ? $"+{m.WeaponAccuracyModifier.Value}" : m.WeaponAccuracyModifier.Value.ToString())%</div>
+                <div>Supply Usage: @m.SupplyUsagePercent.Value%</div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div style="color: #666; font-style: italic;">No mount selected</div>
+    }
+</div>

@@ -1,0 +1,36 @@
+@using FrEee.Objects.Space
+@using FrEee.Objects.Civilization
+@using FrEee.Extensions
+@using FrEee.Vehicles.Types
+@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<StarSystemReportViewModel>
+
+<div class="star-system-report" style="background-color: black; color: white; border: 1px solid cornflowerblue; padding: 8px;">
+    @if (VM.StarSystem is not null)
+    {
+        var sys = VM.StarSystem;
+        var planets = sys.FindSpaceObjects<Planet>().ToList();
+        var colonies = planets.Select(p => p.Colony).Where(c => c != null).ToList();
+        var vehicles = sys.FindSpaceObjects<ISpaceVehicle>().ToList();
+
+        <div style="display: flex; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 100px; height: 100px; border: 1px solid #444;">
+                <ImageDisplay VM="@(new ImageDisplayViewModel { Image = sys.Portrait })" />
+            </div>
+            <div style="flex: 1;">
+                <h4 style="color: cornflowerblue; margin-bottom: 4px;">@sys.Name</h4>
+                <div style="font-size: 13px; color: #aaa; margin-bottom: 6px;">@sys.Description</div>
+                <div style="font-size: 13px; color: #fff;">Planets: @planets.Count | Colonies: @colonies.Count | Vehicles: @vehicles.Count</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+            <h6 style="color: cornflowerblue;">Abilities</h6>
+            <AbilityTreeView VM="@(new AbilityTreeViewModel { Abilities = sys.AbilityTree(), IntrinsicAbilities = sys.IntrinsicAbilities })" />
+        </div>
+    }
+    else
+    {
+        <div style="color: #666; font-style: italic;">No star system selected</div>
+    }
+</div>

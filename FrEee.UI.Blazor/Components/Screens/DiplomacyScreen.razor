@@ -1,0 +1,54 @@
+@page "/diplomacy"
+@using FrEee.UI.Blazor.Components
+@using FrEee.UI.Blazor.Components.Screens
+@using FrEee.Objects.Civilization
+@inherits ScreenBase<DiplomacyViewModel>
+
+<div class="diplomacy-screen" style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; width: 100%; height: 100%; display: flex; flex-direction: column;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="color: cornflowerblue; margin: 0;">Diplomatic Relations</h3>
+        <button class="btn btn-outline-secondary" @onclick="() => VM.Close()">Close</button>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 260px 1fr; gap: 16px; flex: 1; overflow: hidden;">
+        <div style="border: 1px solid #333; padding: 8px; overflow-y: auto;">
+            <ul style="list-style: none; padding-left: 0;">
+                @foreach (var emp in VM.OtherEmpires)
+                {
+                    var isSelected = emp == VM.SelectedEmpire;
+                    <li @onclick="() => VM.SelectedEmpire = emp"
+                        style="padding: 6px 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; background-color: @(isSelected ? "#003366" : "transparent"); border-bottom: 1px solid #222;">
+                        <div style="width: 20px; height: 20px;">
+                            <ImageDisplay VM="@(new ImageDisplayViewModel { Image = emp.Icon })" />
+                        </div>
+                        <span style="color: @(isSelected ? "white" : "cornflowerblue"); font-size: 13px;">@emp.Name</span>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <div style="border: 1px solid #333; padding: 12px; display: flex; flex-direction: column; overflow-y: auto;">
+            @if (VM.SelectedEmpire is not null)
+            {
+                <h4 style="color: cornflowerblue;">@VM.SelectedEmpire.Name</h4>
+                <div style="margin-bottom: 12px; font-size: 13px;">
+                    Leader: @VM.SelectedEmpire.LeaderName | Primary Race: @(VM.SelectedEmpire.PrimaryRace?.Name ?? "None")
+                </div>
+
+                <div style="flex: 1; border: 1px solid #222; padding: 8px; margin-bottom: 12px; background-color: #111;">
+                    <h6 style="color: cornflowerblue;">Treaties &amp; Status</h6>
+                    <p style="color: #ccc; font-size: 13px;">Currently at Peace.</p>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" class="form-control bg-dark text-white border-secondary" placeholder="Diplomatic message / proposal..." @bind="VM.MessageText" />
+                    <button class="btn btn-primary" @onclick="() => VM.SendMessage()">Send</button>
+                </div>
+            }
+            else
+            {
+                <div style="color: #666; font-style: italic; padding: 12px;">Select an empire to communicate.</div>
+            }
+        </div>
+    </div>
+</div>

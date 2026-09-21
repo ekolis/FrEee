@@ -1,0 +1,33 @@
+@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<CargoListViewModel>
+
+<div class="cargo-list" style="background-color: black; color: white; border: 1px solid cornflowerblue; padding: 4px; max-height: 250px; overflow-y: auto;">
+    <table class="table table-dark table-sm table-hover" style="margin-bottom: 0;">
+        <thead>
+            <tr style="color: cornflowerblue; font-size: 13px;">
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Size</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (VM.Items.Any())
+            {
+                @foreach (var item in VM.Items)
+                {
+                    <tr style="font-size: 13px;">
+                        <td>@item.Name</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.Size</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3" style="color: #666; font-style: italic;">No cargo</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

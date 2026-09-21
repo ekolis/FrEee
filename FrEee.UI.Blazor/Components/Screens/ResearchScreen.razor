@@ -1,0 +1,43 @@
+@page "/research"
+@using FrEee.UI.Blazor.Components
+@using FrEee.UI.Blazor.Components.Screens
+@using FrEee.Objects.Technology
+@inherits ScreenBase<ResearchViewModel>
+
+<div class="research-screen" style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; width: 100%; height: 100%; display: flex; flex-direction: column;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="color: cornflowerblue; margin: 0;">Empire Research</h3>
+        <button class="btn btn-outline-secondary" @onclick="() => VM.Close()">Close</button>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 300px 1fr; gap: 16px; flex: 1; overflow: hidden;">
+        <div style="border: 1px solid #333; padding: 8px; overflow-y: auto;">
+            <ul style="list-style: none; padding-left: 0;">
+                @foreach (var tech in VM.AvailableTechs)
+                {
+                    var isSelected = tech == VM.SelectedTech;
+                    <li @onclick="() => VM.SelectedTech = tech"
+                        style="padding: 6px 8px; cursor: pointer; background-color: @(isSelected ? "#003366" : "transparent"); border-bottom: 1px solid #222;">
+                        <span style="color: @(isSelected ? "white" : "cornflowerblue"); font-size: 13px;">@tech.Name</span>
+                        <div style="font-size: 11px; color: #888;">Level: @(VM.Empire?.ResearchedTechnologies[tech] ?? 0)</div>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <div style="border: 1px solid #333; padding: 12px; overflow-y: auto;">
+            @if (VM.SelectedTech is not null)
+            {
+                <h4 style="color: cornflowerblue;">@VM.SelectedTech.Name</h4>
+                <p style="color: #ccc; font-size: 13px;">@VM.SelectedTech.Description</p>
+                <div style="margin-top: 16px;">
+                    <button class="btn btn-primary" @onclick="() => VM.SetPrimaryResearch(VM.SelectedTech)">Research This Tech</button>
+                </div>
+            }
+            else
+            {
+                <div style="color: #666; font-style: italic; padding: 12px;">Select a technology to view details.</div>
+            }
+        </div>
+    </div>
+</div>

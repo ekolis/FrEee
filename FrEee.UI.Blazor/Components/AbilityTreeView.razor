@@ -1,0 +1,36 @@
+@using FrEee.Modding.Abilities
+@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<AbilityTreeViewModel>
+
+<div class="ability-tree-view" style="background-color: black; color: white; border: 1px solid #333; padding: 6px; font-size: 13px; max-height: 250px; overflow-y: auto;">
+    @if (VM.Abilities is not null && VM.Abilities.Any())
+    {
+        <ul style="list-style-type: none; padding-left: 0; margin-bottom: 0;">
+            @foreach (var group in VM.Abilities)
+            {
+                var isIntrinsicGroup = group.All(abil => VM.IntrinsicAbilities != null && VM.IntrinsicAbilities.Contains(abil));
+                <li style="margin-bottom: 4px;">
+                    <span style="@(isIntrinsicGroup ? "" : "font-style: italic; color: #aaa;") font-weight: bold;">
+                        @group.Key.ToString()
+                    </span>
+                    @if (group.Count() > 1)
+                    {
+                        <ul style="list-style-type: disc; padding-left: 20px; margin-top: 2px;">
+                            @foreach (var sub in group)
+                            {
+                                var isSubIntrinsic = VM.IntrinsicAbilities != null && VM.IntrinsicAbilities.Contains(sub);
+                                <li style="@(isSubIntrinsic ? "" : "font-style: italic; color: #aaa;")">
+                                    @sub.Description
+                                </li>
+                            }
+                        </ul>
+                    }
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <span style="color: #666; font-style: italic;">(None)</span>
+    }
+</div>

@@ -1,0 +1,32 @@
+@page "/space-object-picker"
+@using FrEee.UI.Blazor.Components
+@using FrEee.UI.Blazor.Components.Screens
+@using FrEee.Objects.Space
+@inherits ScreenBase<SpaceObjectPickerViewModel>
+
+<div class="space-object-picker-screen" style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; max-width: 600px; margin: 0 auto; display: flex; flex-direction: column;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="color: cornflowerblue; margin: 0;">@VM.Title</h3>
+        <button class="btn btn-outline-secondary" @onclick="() => VM.Close()">Cancel</button>
+    </div>
+
+    <div style="max-height: 350px; overflow-y: auto; border: 1px solid #333; margin-bottom: 16px;">
+        <ul style="list-style: none; padding-left: 0; margin-bottom: 0;">
+            @foreach (var obj in VM.Objects)
+            {
+                var isSelected = obj == VM.SelectedObject;
+                <li @onclick="() => VM.SelectedObject = obj"
+                    style="padding: 6px 12px; cursor: pointer; background-color: @(isSelected ? "#003366" : "transparent"); display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #222;">
+                    <div style="width: 20px; height: 20px;">
+                        <ImageDisplay VM="@(new ImageDisplayViewModel { Image = obj.Icon })" />
+                    </div>
+                    <span style="color: @(isSelected ? "white" : "cornflowerblue"); font-size: 13px;">@obj.Name (@obj.Sector?.StarSystem?.Name)</span>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; gap: 8px;">
+        <button class="btn btn-primary" disabled="@(VM.SelectedObject == null)" @onclick="() => VM.Select()">Select</button>
+    </div>
+</div>

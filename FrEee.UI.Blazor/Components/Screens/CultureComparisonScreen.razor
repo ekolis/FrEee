@@ -1,0 +1,54 @@
+@page "/culture-comparison"
+@using FrEee.UI.Blazor.Components
+@using FrEee.UI.Blazor.Components.Screens
+@using FrEee.Modding
+@using FrEee.Objects.Civilization
+@inherits ScreenBase<CultureComparisonViewModel>
+
+<div class="culture-comparison-screen" style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; width: 100%; height: 100%; display: flex; flex-direction: column;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="color: cornflowerblue; margin: 0;">Culture Comparison</h3>
+        <button class="btn btn-outline-secondary" @onclick="() => VM.Close()">Close</button>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 250px 1fr; gap: 16px; flex: 1; overflow: hidden;">
+        <div style="border: 1px solid #333; padding: 8px; overflow-y: auto;">
+            <h5 style="color: cornflowerblue;">Cultures</h5>
+            <ul style="list-style: none; padding-left: 0;">
+                @foreach (var c in VM.Cultures)
+                {
+                    var isSelected = c == VM.SelectedCulture;
+                    <li @onclick="() => VM.SelectedCulture = c"
+                        style="padding: 4px 8px; cursor: pointer; background-color: @(isSelected ? "#003366" : "transparent"); color: @(isSelected ? "white" : "cornflowerblue");">
+                        @c.Name
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <div style="border: 1px solid #333; padding: 12px; overflow-y: auto;">
+            @if (VM.SelectedCulture is not null)
+            {
+                var cult = VM.SelectedCulture;
+                <h4 style="color: cornflowerblue;">@cult.Name</h4>
+                <p style="color: #ccc; font-size: 13px;">@cult.Description</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 13px; color: #fff;">
+                    <div>Production: @cult.Production%</div>
+                    <div>Research: @cult.Research%</div>
+                    <div>Intelligence: @cult.Intelligence%</div>
+                    <div>Trade: @cult.Trade%</div>
+                    <div>Space Combat: @cult.SpaceCombat%</div>
+                    <div>Ground Combat: @cult.GroundCombat%</div>
+                    <div>Construction: @cult.Construction%</div>
+                    <div>Repair: @cult.Repair%</div>
+                    <div>Maintenance Reduction: @cult.MaintenanceReduction%</div>
+                    <div>Happiness: @cult.Happiness%</div>
+                </div>
+            }
+            else
+            {
+                <div style="color: #666; font-style: italic;">Select a culture to view details.</div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+@page "/empires"
+@using FrEee.UI.Blazor.Components
+@using FrEee.UI.Blazor.Components.Screens
+@using FrEee.Objects.Civilization
+@inherits ScreenBase<EmpireListViewModel>
+
+<div class="empire-list-screen" style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; width: 100%; height: 100%; display: flex; flex-direction: column;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="color: cornflowerblue; margin: 0;">Empires</h3>
+        <button class="btn btn-outline-secondary" @onclick="() => VM.Close()">Close</button>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 250px 1fr; gap: 16px; flex: 1;">
+        <div style="border: 1px solid #333; padding: 8px; overflow-y: auto;">
+            <ul style="list-style: none; padding-left: 0;">
+                @foreach (var emp in VM.Empires)
+                {
+                    var isSelected = emp == VM.SelectedEmpire;
+                    <li @onclick="() => VM.SelectedEmpire = emp"
+                        style="padding: 6px 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; background-color: @(isSelected ? "#003366" : "transparent");">
+                        <div style="width: 20px; height: 20px;">
+                            <ImageDisplay VM="@(new ImageDisplayViewModel { Image = emp.Icon })" />
+                        </div>
+                        <span style="color: @(isSelected ? "white" : "cornflowerblue"); font-size: 13px;">@emp.Name</span>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <div style="border: 1px solid #333; padding: 8px; overflow-y: auto;">
+            <EmpireReport VM="@(new EmpireReportViewModel { Empire = VM.SelectedEmpire })" />
+        </div>
+    </div>
+</div>

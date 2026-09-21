@@ -1,0 +1,37 @@
+@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<GameGridViewModel>
+
+<div class="game-grid-view table-responsive" style="background-color: #@VM.BackColor.ToRgba(); color: #@VM.ForeColor.ToRgba(); width: 100%; height: 100%; overflow: auto;">
+    <table class="table table-dark table-hover table-sm table-bordered" style="margin-bottom: 0;">
+        <thead>
+            <tr>
+                @foreach (var col in VM.Columns)
+                {
+                    <th style="@(col.Width is not null ? $"width: {col.Width};" : "") color: cornflowerblue;">@col.Header</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in VM.Data)
+            {
+                var isSelected = item == VM.SelectedItem;
+                <tr @onclick="() => SelectRow(item)"
+                    style="cursor: pointer; background-color: @(isSelected ? $"#{VM.SelectedRowColor.ToRgba()}" : "inherit");">
+                    @foreach (var col in VM.Columns)
+                    {
+                        var val = col.ValueGetter != null ? col.ValueGetter(item) : item?.GetType().GetProperty(col.PropertyName)?.GetValue(item);
+                        <td>@val</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    private void SelectRow(object item)
+    {
+        VM.SelectedItem = item;
+        VM.SelectedItemChanged?.Invoke(item);
+    }
+}

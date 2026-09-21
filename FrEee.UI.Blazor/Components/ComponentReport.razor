@@ -1,0 +1,49 @@
+@using FrEee.Objects.Technology
+@using FrEee.Objects.Civilization
+@using FrEee.Extensions
+@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<ComponentReportViewModel>
+
+<div class="component-report" style="background-color: black; color: white; border: 1px solid cornflowerblue; padding: 8px;">
+    @if (VM.EffectiveTemplate is not null)
+    {
+        var template = VM.EffectiveTemplate;
+        var mount = VM.EffectiveMount;
+        var cost = template.Cost;
+        var size = template.Size.Value;
+        var dur = template.Durability.Value;
+        var supply = template.SupplyUsage.Value;
+
+        <div style="display: flex; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 100px; height: 100px; border: 1px solid #444;">
+                <ImageDisplay VM="@(new ImageDisplayViewModel { Image = template.Portrait })" />
+            </div>
+            <div style="flex: 1;">
+                <h4 style="color: cornflowerblue; margin-bottom: 4px;">
+                    @(mount != null ? $"{mount.Name} {template.Name}" : template.Name)
+                </h4>
+                <div style="font-size: 13px; color: #aaa; margin-bottom: 6px;">@template.Description.Value</div>
+                <div style="font-size: 13px; color: #fff;">Family: @template.Family.Value | Group: @template.Group.Value</div>
+                <div style="font-size: 13px; color: #fff;">Size: @size.Kilotons() | Durability: @dur HP | Supply: @supply</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+            <h6 style="color: cornflowerblue;">Cost</h6>
+            <div style="display: flex; gap: 16px; font-size: 13px;">
+                <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Minerals, Amount = cost[Resource.Minerals] })" />
+                <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Organics, Amount = cost[Resource.Organics] })" />
+                <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Radioactives, Amount = cost[Resource.Radioactives] })" />
+            </div>
+        </div>
+
+        <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+            <h6 style="color: cornflowerblue;">Abilities</h6>
+            <AbilityTreeView VM="@(new AbilityTreeViewModel { Abilities = template.Abilities.StackToTree(template), IntrinsicAbilities = template.Abilities })" />
+        </div>
+    }
+    else
+    {
+        <div style="color: #666; font-style: italic;">No component selected</div>
+    }
+</div>

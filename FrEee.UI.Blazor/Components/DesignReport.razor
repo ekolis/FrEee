@@ -1,0 +1,70 @@
+@using FrEee.Vehicles.Types
+@using FrEee.Vehicles
+@using FrEee.Objects.Civilization
+@using FrEee.Extensions
+@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<DesignReportViewModel>
+
+<div class="design-report" style="background-color: black; color: white; border: 1px solid cornflowerblue; padding: 8px;">
+    @if (VM.Design is not null)
+    {
+        var d = VM.Design;
+        var hull = d.Hull;
+        var cost = d.Cost;
+
+        <div style="display: flex; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 100px; height: 100px; border: 1px solid #444;">
+                <ImageDisplay VM="@(new ImageDisplayViewModel { Image = d.Portrait })" />
+            </div>
+            <div style="flex: 1;">
+                <h4 style="color: cornflowerblue; margin-bottom: 4px;">@d.Name</h4>
+                <div style="font-size: 13px; color: #fff;">Role: @d.Role | Class: @hull.Name</div>
+                <div style="font-size: 13px; color: #fff;">Size: @d.Hull.Size.Kilotons() | Strategic Speed: @d.StrategicSpeed</div>
+                <div style="font-size: 13px; color: #fff;">Shields: @d.ShieldHitpoints | Armor: @d.ArmorHitpoints | Hull: @d.HullHitpoints</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+            <h6 style="color: cornflowerblue;">Cost</h6>
+            <div style="display: flex; gap: 16px; font-size: 13px;">
+                <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Minerals, Amount = cost[Resource.Minerals] })" />
+                <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Organics, Amount = cost[Resource.Organics] })" />
+                <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Radioactives, Amount = cost[Resource.Radioactives] })" />
+            </div>
+        </div>
+
+        <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+            <h6 style="color: cornflowerblue;">Components (@d.Components.Count)</h6>
+            <div style="max-height: 150px; overflow-y: auto;">
+                <table class="table table-dark table-sm" style="font-size: 12px; margin-bottom: 0;">
+                    <thead>
+                        <tr style="color: cornflowerblue;">
+                            <th>Component</th>
+                            <th>Mount</th>
+                            <th>Size</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var c in d.Components)
+                        {
+                            <tr>
+                                <td>@c.ComponentTemplate.Name</td>
+                                <td>@(c.Mount?.Name ?? "None")</td>
+                                <td>@c.Size.Kilotons()</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+            <h6 style="color: cornflowerblue;">Abilities</h6>
+            <AbilityTreeView VM="@(new AbilityTreeViewModel { Abilities = d.AbilityTree(), IntrinsicAbilities = d.IntrinsicAbilities })" />
+        </div>
+    }
+    else
+    {
+        <div style="color: #666; font-style: italic;">No design selected</div>
+    }
+</div>

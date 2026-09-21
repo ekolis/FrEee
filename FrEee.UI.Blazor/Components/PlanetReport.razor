@@ -1,0 +1,59 @@
+@using FrEee.Objects.Space
+@using FrEee.Objects.Civilization
+@using FrEee.Extensions
+@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<PlanetReportViewModel>
+
+<div class="planet-report" style="background-color: black; color: white; border: 1px solid cornflowerblue; padding: 8px;">
+    @if (VM.Planet is not null)
+    {
+        var p = VM.Planet;
+        var col = p.Colony;
+
+        <div style="display: flex; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 100px; height: 100px; border: 1px solid #444;">
+                <ImageDisplay VM="@(new ImageDisplayViewModel { Image = p.Portrait })" />
+            </div>
+            <div style="flex: 1;">
+                <h4 style="color: cornflowerblue; margin-bottom: 4px;">@p.Name</h4>
+                <div style="font-size: 13px; color: #fff;">Size: @(p.Size?.Name ?? "Normal") | Atmosphere: @p.Atmosphere | Surface: @p.Surface</div>
+                <div style="font-size: 13px; color: #fff;">Owner: @(col?.Owner?.Name ?? "Uncolonized")</div>
+                @if (col is not null)
+                {
+                    <div style="font-size: 13px; color: #aaa;">Population: @col.Population.Values.Sum().ToUnitString()</div>
+                }
+            </div>
+        </div>
+
+        <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+            <h6 style="color: cornflowerblue;">Resource Value</h6>
+            <div style="display: flex; gap: 16px; font-size: 13px;">
+                <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Minerals, Amount = p.ResourceValue[Resource.Minerals] })" />
+                <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Organics, Amount = p.ResourceValue[Resource.Organics] })" />
+                <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Radioactives, Amount = p.ResourceValue[Resource.Radioactives] })" />
+            </div>
+        </div>
+
+        @if (col is not null && col.Facilities.Any())
+        {
+            <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+                <h6 style="color: cornflowerblue;">Facilities (@col.Facilities.Count)</h6>
+                <div style="max-height: 120px; overflow-y: auto;">
+                    @foreach (var f in col.Facilities)
+                    {
+                        <div style="font-size: 12px; color: #fff;">@f.Name</div>
+                    }
+                </div>
+            </div>
+        }
+
+        <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+            <h6 style="color: cornflowerblue;">Abilities</h6>
+            <AbilityTreeView VM="@(new AbilityTreeViewModel { Abilities = p.Abilities.StackToTree(p), IntrinsicAbilities = p.Abilities })" />
+        </div>
+    }
+    else
+    {
+        <div style="color: #666; font-style: italic;">No planet selected</div>
+    }
+</div>

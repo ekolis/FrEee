@@ -1,0 +1,12 @@
+@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<GamePanelViewModel>
+
+<div class="game-panel"
+     style="background-color: #@VM.BackColor.ToRgba(); color: #@VM.ForeColor.ToRgba(); border: @(VM.HasBorder ? $"1px solid #{VM.BorderColor.ToRgba()}" : "none"); padding: @(VM.Padding)px; box-sizing: border-box;">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

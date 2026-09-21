@@ -1,0 +1,20 @@
+@using FrEee.Objects.Civilization
+@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<TraitPickerViewModel>
+
+<div class="trait-picker" style="background-color: black; color: white; padding: 6px; max-height: 300px; overflow-y: auto;">
+    @foreach (var trait in VM.Traits)
+    {
+        var isChecked = VM.IsTraitChecked(trait);
+        <div class="form-check" title="@trait.Description" style="margin-bottom: 4px;">
+            <input class="form-check-input bg-dark border-secondary"
+                   type="checkbox"
+                   id="trait_@trait.Name.Replace(" ", "_")"
+                   checked="@isChecked"
+                   @onchange="(e) => VM.SetTraitChecked(trait, (bool)(e.Value ?? false))" />
+            <label class="form-check-label" for="trait_@trait.Name.Replace(" ", "_")" style="color: cornflowerblue; font-size: 13px;">
+                (@(trait.Cost) pts) @trait.Name
+            </label>
+        </div>
+    }
+</div>

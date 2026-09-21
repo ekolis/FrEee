@@ -1,0 +1,47 @@
+@using FrEee.Vehicles.Types
+@using FrEee.Objects.Civilization
+@using FrEee.Extensions
+@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<SpaceVehicleReportViewModel>
+
+<div class="space-vehicle-report" style="background-color: black; color: white; border: 1px solid cornflowerblue; padding: 8px;">
+    @if (VM.Vehicle is not null)
+    {
+        var v = VM.Vehicle;
+        var d = v.Design;
+
+        <div style="display: flex; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 100px; height: 100px; border: 1px solid #444;">
+                <ImageDisplay VM="@(new ImageDisplayViewModel { Image = v.Portrait })" />
+            </div>
+            <div style="flex: 1;">
+                <h4 style="color: cornflowerblue; margin-bottom: 4px;">@v.Name</h4>
+                <div style="font-size: 13px; color: #fff;">Role: @d.Role | Class: @d.Name</div>
+                <div style="font-size: 13px; color: #fff;">Owner: @(v.Owner?.Name ?? "None") | Fleet: @(v.Container?.Name ?? "None")</div>
+                <div style="font-size: 13px; color: #fff;">Shields: @v.ShieldHitpoints / @d.ShieldHitpoints | Armor: @v.ArmorHitpoints / @d.ArmorHitpoints | Hull: @v.HullHitpoints / @d.HullHitpoints</div>
+                <div style="font-size: 13px; color: #aaa;">Movement: @v.MovementRemaining / @d.StrategicSpeed | Supplies: @v.SupplyRemaining / @v.SupplyStorage</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+            <h6 style="color: cornflowerblue;">Components (@v.Components.Count)</h6>
+            <div style="max-height: 120px; overflow-y: auto;">
+                @foreach (var c in v.Components)
+                {
+                    <div style="font-size: 12px; color: #fff;">
+                        @(c.Template.Name) - HP: @c.Hitpoints / @c.MaxHitpoints
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+            <h6 style="color: cornflowerblue;">Abilities</h6>
+            <AbilityTreeView VM="@(new AbilityTreeViewModel { Abilities = v.AbilityTree(), IntrinsicAbilities = v.IntrinsicAbilities })" />
+        </div>
+    }
+    else
+    {
+        <div style="color: #666; font-style: italic;">No vehicle selected</div>
+    }
+</div>

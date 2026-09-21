@@ -1,0 +1,20 @@
+@page "/game-over"
+@using FrEee.UI.Blazor.Components
+@using FrEee.UI.Blazor.Components.Screens
+@inherits ScreenBase<GameOverViewModel>
+
+<div class="game-over-screen" style="background-color: black; color: white; padding: 24px; border: 2px solid cornflowerblue; max-width: 600px; margin: 40px auto; text-align: center;">
+    <h2 style="color: cornflowerblue; margin-bottom: 16px;">GAME OVER</h2>
+    @if (VM.Winner is not null)
+    {
+        <h4 style="color: yellow; margin-bottom: 12px;">@VM.Winner.Name has Won!</h4>
+        <div style="width: 100px; height: 100px; margin: 0 auto 16px auto; border: 1px solid #444;">
+            <ImageDisplay VM="@(new ImageDisplayViewModel { Image = VM.Winner.Portrait })" />
+        </div>
+    }
+    <p style="font-size: 14px; color: #ccc;">@VM.Reason</p>
+
+    <div style="margin-top: 24px;">
+        <button class="btn btn-primary" @onclick="() => VM.Close()">Return to Main Menu</button>
+    </div>
+</div>

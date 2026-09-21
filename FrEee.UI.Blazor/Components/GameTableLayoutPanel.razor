@@ -1,0 +1,12 @@
+@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<GameTableLayoutPanelViewModel>
+
+<div class="game-table-layout-panel"
+     style="display: grid; grid-template-columns: @VM.ColumnWidths; grid-template-rows: @VM.RowHeights; gap: @(VM.Gap)px; background-color: #@VM.BackColor.ToRgba(); width: 100%;">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

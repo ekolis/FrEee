@@ -1,0 +1,24 @@
+@page "/battle-results"
+@using FrEee.UI.Blazor.Components
+@using FrEee.UI.Blazor.Components.Screens
+@inherits ScreenBase<BattleResultsViewModel>
+
+<div class="battle-results-screen" style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; max-width: 600px; margin: 0 auto; display: flex; flex-direction: column;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="color: cornflowerblue; margin: 0;">Battle Results</h3>
+        <button class="btn btn-outline-secondary" @onclick="() => VM.Close()">Close</button>
+    </div>
+
+    @if (VM.Battle is not null)
+    {
+        <div style="border: 1px solid #333; padding: 12px; margin-bottom: 16px;">
+            <h5 style="color: cornflowerblue;">Combat Summary</h5>
+            <p style="font-size: 13px; color: #fff;">Duration: @VM.Battle.Duration rounds</p>
+            <p style="font-size: 13px; color: #fff;">Combatants: @VM.Battle.Combatants.Count()</p>
+        </div>
+    }
+    else
+    {
+        <div style="color: #666; font-style: italic; padding: 12px;">No battle loaded.</div>
+    }
+</div>

@@ -1,0 +1,26 @@
+@page "/cargo-transfer"
+@using FrEee.UI.Blazor.Components
+@using FrEee.UI.Blazor.Components.Screens
+@inherits ScreenBase<CargoTransferViewModel>
+
+<div class="cargo-transfer-screen" style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; width: 100%; height: 100%; display: flex; flex-direction: column;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="color: cornflowerblue; margin: 0;">Cargo Transfer</h3>
+        <button class="btn btn-outline-secondary" @onclick="() => VM.Close()">Close</button>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1;">
+        <div style="border: 1px solid #333; padding: 8px;">
+            <h5 style="color: cornflowerblue;">Source: @(VM.Source?.Name ?? "None")</h5>
+            <CargoList VM="@(new CargoListViewModel { Cargo = VM.Source?.Cargo })" />
+        </div>
+        <div style="border: 1px solid #333; padding: 8px;">
+            <h5 style="color: cornflowerblue;">Destination: @(VM.Destination?.Name ?? "None")</h5>
+            <CargoList VM="@(new CargoListViewModel { Cargo = VM.Destination?.Cargo })" />
+        </div>
+    </div>
+
+    <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 8px;">
+        <button class="btn btn-primary" @onclick="() => VM.Transfer()">Apply Transfer</button>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+@using FrEee.Objects.Space
+@using FrEee.Objects.Civilization
+@using FrEee.Extensions
+@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<AsteroidFieldReportViewModel>
+
+<div class="asteroid-field-report" style="background-color: black; color: white; border: 1px solid cornflowerblue; padding: 8px;">
+    @if (VM.AsteroidField is not null)
+    {
+        <div style="display: flex; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 120px; height: 120px; border: 1px solid #444;">
+                <ImageDisplay VM="@(new ImageDisplayViewModel { Image = VM.AsteroidField.Portrait })" />
+            </div>
+            <div style="flex: 1;">
+                <h4 style="color: cornflowerblue; margin-bottom: 4px;">@VM.AsteroidField.Name</h4>
+                <div style="font-size: 13px; color: #aaa; margin-bottom: 6px;">@VM.AsteroidField.Description</div>
+                <div style="font-size: 13px; color: #fff;">Surface Composition: @VM.AsteroidField.Surface</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+            <h6 style="color: cornflowerblue;">Resource Value</h6>
+            <div style="display: flex; gap: 16px; font-size: 13px;">
+                <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Minerals, Amount = VM.AsteroidField.ResourceValue[Resource.Minerals] })" />
+                <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Organics, Amount = VM.AsteroidField.ResourceValue[Resource.Organics] })" />
+                <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Radioactives, Amount = VM.AsteroidField.ResourceValue[Resource.Radioactives] })" />
+            </div>
+        </div>
+
+        <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+            <h6 style="color: cornflowerblue;">Abilities</h6>
+            <AbilityTreeView VM="@(new AbilityTreeViewModel { Abilities = VM.AsteroidField.Abilities.StackToTree(VM.AsteroidField), IntrinsicAbilities = VM.AsteroidField.Abilities })" />
+        </div>
+    }
+    else
+    {
+        <div style="color: #666; font-style: italic;">No asteroid field selected</div>
+    }
+</div>

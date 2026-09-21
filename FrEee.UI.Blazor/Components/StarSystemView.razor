@@ -1,0 +1,54 @@
+@using FrEee.Objects.Space
+@using FrEee.Extensions
+@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<StarSystemViewModel>
+
+<div class="star-system-view" style="background-color: black; color: white; border: 1px solid cornflowerblue; padding: 6px; width: 100%; height: 100%; min-height: 400px; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: auto;">
+    @if (VM.StarSystem is not null)
+    {
+        var radius = VM.StarSystem.Radius;
+        var diameter = VM.StarSystem.Diameter;
+        <div style="display: grid; grid-template-columns: repeat(@diameter, 40px); grid-template-rows: repeat(@diameter, 40px); gap: 2px; background-color: #111; padding: 4px; border: 1px solid #333;">
+            @for (int y = -radius; y <= radius; y++)
+            {
+                @for (int x = -radius; x <= radius; x++)
+                {
+                    var curX = x;
+                    var curY = y;
+                    var sector = VM.StarSystem.GetSector(curX, curY);
+                    var isSelected = VM.SelectedSector == sector && sector != null;
+                    var sobjs = sector?.SpaceObjects.ToList() ?? new List<ISpaceObject>();
+                    var firstObj = sobjs.FirstOrDefault();
+
+                    <div @onclick="() => VM.SelectSector(sector)"
+                         style="width: 40px; height: 40px; border: 1px solid @(isSelected ? "yellow" : "#222"); background-color: @(isSelected ? "#002244" : "#050505"); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;"
+                         title="@(sector != null ? $"Sector ({curX}, {curY}): {sobjs.Count} objects" : "")">
+                        @if (firstObj is not null)
+                        {
+                            <div style="width: 24px; height: 24px; pointer-events: none;">
+                                <ImageDisplay VM="@(new ImageDisplayViewModel { Image = firstObj.Icon })" />
+                            </div>
+                            @if (sobjs.Count > 1)
+                            {
+                                <span style="position: absolute; bottom: 0; right: 2px; font-size: 9px; color: yellow; font-weight: bold;">
+                                    @sobjs.Count
+                                </span>
+                            }
+                        }
+                    </div>
+                }
+            }
+        </div>
+        <div style="margin-top: 8px; font-size: 13px; color: cornflowerblue;">
+            @VM.StarSystem.Name (Radius @radius)
+            @if (VM.SelectedSector is not null)
+            {
+                <span> - Selected: (@VM.SelectedSector.Coordinates.X, @VM.SelectedSector.Coordinates.Y)</span>
+            }
+        </div>
+    }
+    else
+    {
+        <div style="color: #666; font-style: italic;">No star system selected</div>
+    }
+</div>

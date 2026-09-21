@@ -1,0 +1,92 @@
+@page "/vehicle-design"
+@using FrEee.UI.Blazor.Components
+@using FrEee.UI.Blazor.Components.Screens
+@using FrEee.Modding
+@using FrEee.Objects.Technology
+@using FrEee.Vehicles.Types
+@using FrEee.Extensions
+@inherits ScreenBase<VehicleDesignViewModel>
+
+<div class="vehicle-design-screen" style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; width: 100%; height: 100%; overflow-y: auto;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="color: cornflowerblue; margin: 0;">Vehicle Design</h3>
+        <div style="display: flex; gap: 8px;">
+            <button class="btn btn-outline-secondary" @onclick="() => VM.Close()">Cancel</button>
+            <button class="btn btn-primary" @onclick="() => VM.SaveDesign()">Save Design</button>
+        </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+        <div style="border: 1px solid #333; padding: 12px;">
+            <h5 style="color: cornflowerblue;">Design Specifications</h5>
+            <div class="mb-2">
+                <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Design Name</label>
+                <input class="form-control form-control-sm bg-dark text-white border-secondary" @bind="VM.DesignName" />
+            </div>
+            <div class="mb-2">
+                <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Role</label>
+                <input class="form-control form-control-sm bg-dark text-white border-secondary" @bind="VM.Role" />
+            </div>
+            <div class="mb-2">
+                <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Hull</label>
+                <select class="form-select form-select-sm bg-dark text-white border-secondary"
+                        @onchange="(e) => VM.SelectedHull = Mod.Current?.Hulls.FirstOrDefault(h => h.Name == e.Value?.ToString())">
+                    @if (Mod.Current is not null)
+                    {
+                        @foreach (var h in Mod.Current.Hulls)
+                        {
+                            <option value="@h.Name">@h.Name (@h.Size.Kilotons())</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div style="border: 1px solid #333; padding: 12px;">
+            <h5 style="color: cornflowerblue;">Available Components</h5>
+            <div style="max-height: 180px; overflow-y: auto;">
+                <ul style="list-style: none; padding-left: 0;">
+                    @if (Mod.Current is not null)
+                    {
+                        @foreach (var ct in Mod.Current.ComponentTemplates)
+                        {
+                            <li style="display: flex; justify-content: space-between; align-items: center; padding: 3px 0; border-bottom: 1px solid #222;">
+                                <span style="font-size: 13px; color: #fff;">@ct.Name (@ct.Size.Value.Kilotons())</span>
+                                <button class="btn btn-sm btn-outline-primary" @onclick="() => VM.AddComponent(ct)">+ Add</button>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div style="border: 1px solid #333; padding: 12px;">
+        <h5 style="color: cornflowerblue;">Installed Components (@VM.Components.Count)</h5>
+        <div style="max-height: 200px; overflow-y: auto;">
+            <table class="table table-dark table-sm" style="font-size: 13px; margin-bottom: 0;">
+                <thead>
+                    <tr style="color: cornflowerblue;">
+                        <th>Component</th>
+                        <th>Mount</th>
+                        <th>Size</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var comp in VM.Components)
+                    {
+                        <tr>
+                            <td>@comp.ComponentTemplate.Name</td>
+                            <td>@(comp.Mount?.Name ?? "None")</td>
+                            <td>@comp.Size.Kilotons()</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-danger" @onclick="() => VM.RemoveComponent(comp)">Remove</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

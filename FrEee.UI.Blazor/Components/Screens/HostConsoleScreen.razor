@@ -1,0 +1,20 @@
+@page "/host-console"
+@using FrEee.UI.Blazor.Components
+@using FrEee.UI.Blazor.Components.Screens
+@inherits ScreenBase<HostConsoleViewModel>
+
+<div class="host-console-screen" style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; max-width: 600px; margin: 0 auto;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="color: cornflowerblue; margin: 0;">Host Console</h3>
+        <button class="btn btn-outline-secondary" @onclick="() => VM.Close()">Close</button>
+    </div>
+
+    <div style="border: 1px solid #333; padding: 16px; margin-bottom: 16px;">
+        <h5 style="color: #fff;">Turn: @VM.TurnNumber</h5>
+        <p style="color: cornflowerblue; margin-bottom: 0;">Status: @VM.Status</p>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; gap: 8px;">
+        <button class="btn btn-primary" @onclick="() => VM.ProcessTurn()">Process Turn</button>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+@page "/mod-picker"
+@using FrEee.UI.Blazor.Components
+@using FrEee.UI.Blazor.Components.Screens
+@inherits ScreenBase<ModPickerViewModel>
+
+<div class="mod-picker-screen" style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; max-width: 500px; margin: 0 auto; display: flex; flex-direction: column;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="color: cornflowerblue; margin: 0;">Select Mod</h3>
+        <button class="btn btn-outline-secondary" @onclick="() => VM.Close()">Cancel</button>
+    </div>
+
+    <div style="max-height: 300px; overflow-y: auto; border: 1px solid #333; margin-bottom: 16px;">
+        <ul style="list-style: none; padding-left: 0; margin-bottom: 0;">
+            @foreach (var mod in VM.Mods)
+            {
+                var isSelected = mod == VM.SelectedMod;
+                <li @onclick="() => VM.SelectedMod = mod"
+                    style="padding: 8px 12px; cursor: pointer; background-color: @(isSelected ? "#003366" : "transparent"); color: @(isSelected ? "white" : "cornflowerblue"); font-size: 14px; border-bottom: 1px solid #222;">
+                    @mod.Name
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; gap: 8px;">
+        <button class="btn btn-primary" disabled="@(VM.SelectedMod == null)" @onclick="() => VM.Select()">Load Mod</button>
+    </div>
+</div>

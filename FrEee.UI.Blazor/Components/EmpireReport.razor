@@ -1,0 +1,34 @@
+@using FrEee.Objects.Civilization
+@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<EmpireReportViewModel>
+
+<div class="empire-report" style="background-color: black; color: white; border: 1px solid cornflowerblue; padding: 8px;">
+    @if (VM.Empire is not null)
+    {
+        var emp = VM.Empire;
+        <div style="display: flex; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 100px; height: 100px; border: 1px solid #444;">
+                <ImageDisplay VM="@(new ImageDisplayViewModel { Image = emp.Portrait })" />
+            </div>
+            <div style="width: 50px; height: 50px; border: 1px solid #444;">
+                <ImageDisplay VM="@(new ImageDisplayViewModel { Image = emp.Icon })" />
+            </div>
+            <div style="flex: 1;">
+                <h4 style="color: cornflowerblue; margin-bottom: 4px;">@emp.Name</h4>
+                <div style="font-size: 13px; color: #fff;">Leader: @emp.LeaderName</div>
+                <div style="font-size: 13px; color: #fff;">Culture: @(emp.Culture?.Name ?? "Unknown")</div>
+                <div style="font-size: 13px; color: #fff;">Primary Race: @(emp.PrimaryRace?.Name ?? "Unknown")</div>
+                <div style="font-size: 13px; color: #aaa;">Shipset: @emp.ShipsetPath</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+            <h6 style="color: cornflowerblue;">Empire Abilities</h6>
+            <AbilityTreeView VM="@(new AbilityTreeViewModel { Abilities = emp.AbilityTree(), IntrinsicAbilities = emp.IntrinsicAbilities })" />
+        </div>
+    }
+    else
+    {
+        <div style="color: #666; font-style: italic;">No empire selected</div>
+    }
+</div>

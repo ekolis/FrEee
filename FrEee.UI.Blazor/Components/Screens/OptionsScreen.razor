@@ -1,0 +1,26 @@
+@page "/options"
+@using FrEee.UI.Blazor.Components
+@using FrEee.UI.Blazor.Components.Screens
+@inherits ScreenBase<OptionsViewModel>
+
+<div class="options-screen" style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; max-width: 500px; margin: 0 auto;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="color: cornflowerblue; margin: 0;">Game Options</h3>
+        <button class="btn btn-outline-secondary" @onclick="() => VM.Close()">Cancel</button>
+    </div>
+
+    <div style="border: 1px solid #333; padding: 16px; margin-bottom: 16px;">
+        <div class="mb-3">
+            <label class="form-label text-white">Audio Volume: @VM.Volume%</label>
+            <input type="range" class="form-range" min="0" max="100" @bind="VM.Volume" />
+        </div>
+        <div class="form-check mb-2">
+            <input class="form-check-input bg-dark border-secondary" type="checkbox" id="chkAutoSave" @bind="VM.AutoSave" />
+            <label class="form-check-label text-white" for="chkAutoSave">Enable Auto-Save</label>
+        </div>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; gap: 8px;">
+        <button class="btn btn-primary" @onclick="() => VM.Save()">Save Options</button>
+    </div>
+</div>

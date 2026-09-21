@@ -1,0 +1,43 @@
+@using FrEee.Objects.Civilization
+@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<AptitudePickerViewModel>
+
+<div class="aptitude-picker" style="background-color: black; color: white; padding: 6px;">
+    <div style="display: grid; grid-template-columns: 200px 120px 80px; gap: 8px; align-items: center;">
+        @if (VM.Values is not null)
+        {
+            @foreach (var kvp in VM.Values)
+            {
+                var apt = kvp.Key;
+                var val = kvp.Value;
+                <div title="@apt.Description" style="color: cornflowerblue; font-weight: bold; font-size: 13px;">
+                    @apt.Name
+                </div>
+                <div>
+                    <input type="number"
+                           class="form-control form-control-sm bg-dark text-white border-secondary"
+                           min="@apt.MinPercent"
+                           max="@apt.MaxPercent"
+                           value="@val"
+                           @onchange="(e) => OnValueChanged(apt, e)" />
+                </div>
+                <div style="color: #aaa; font-size: 13px;">
+                    @(apt.GetCost(val)) pts
+                </div>
+            }
+        }
+    </div>
+    <div style="margin-top: 10px; font-weight: bold; color: cornflowerblue; text-align: right;">
+        Total Cost: @VM.Cost pts
+    </div>
+</div>
+
+@code {
+    private void OnValueChanged(Aptitude apt, ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out var newVal))
+        {
+            VM.SetValue(apt, newVal);
+        }
+    }
+}

@@ -1,0 +1,41 @@
+@page "/status"
+@using FrEee.UI.Blazor.Components
+@using FrEee.UI.Blazor.Components.Screens
+@using FrEee.Objects.Civilization
+@using FrEee.Extensions
+@inherits ScreenBase<StatusViewModel>
+
+<div class="status-screen" style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; width: 100%; height: 100%; display: flex; flex-direction: column;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="color: cornflowerblue; margin: 0;">Empire Status</h3>
+        <button class="btn btn-outline-secondary" @onclick="() => VM.Close()">Close</button>
+    </div>
+
+    @if (VM.Empire is not null)
+    {
+        var emp = VM.Empire;
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; flex: 1;">
+            <div style="border: 1px solid #333; padding: 12px;">
+                <h5 style="color: cornflowerblue;">Empire Overview</h5>
+                <p style="color: #fff; font-size: 13px;">Name: @emp.Name</p>
+                <p style="color: #fff; font-size: 13px;">Leader: @emp.LeaderName</p>
+                <p style="color: #fff; font-size: 13px;">Primary Race: @(emp.PrimaryRace?.Name ?? "None")</p>
+                <p style="color: #fff; font-size: 13px;">Colonized Planets: @emp.ColonizedPlanets.Count()</p>
+                <p style="color: #fff; font-size: 13px;">Owned Vehicles: @emp.OwnedSpaceObjects.Count()</p>
+            </div>
+
+            <div style="border: 1px solid #333; padding: 12px;">
+                <h5 style="color: cornflowerblue;">Resource Stored</h5>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Minerals, Amount = emp.StoredResources[Resource.Minerals] })" />
+                    <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Organics, Amount = emp.StoredResources[Resource.Organics] })" />
+                    <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Radioactives, Amount = emp.StoredResources[Resource.Radioactives] })" />
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div style="color: #666; font-style: italic;">No current empire found.</div>
+    }
+</div>

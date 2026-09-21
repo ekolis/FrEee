@@ -1,0 +1,29 @@
+@using FrEee.Objects.Space
+@using FrEee.Extensions
+@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<StormReportViewModel>
+
+<div class="storm-report" style="background-color: black; color: white; border: 1px solid cornflowerblue; padding: 8px;">
+    @if (VM.Storm is not null)
+    {
+        var s = VM.Storm;
+        <div style="display: flex; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 100px; height: 100px; border: 1px solid #444;">
+                <ImageDisplay VM="@(new ImageDisplayViewModel { Image = s.Portrait })" />
+            </div>
+            <div style="flex: 1;">
+                <h4 style="color: cornflowerblue; margin-bottom: 4px;">@s.Name</h4>
+                <div style="font-size: 13px; color: #aaa; margin-bottom: 6px;">@s.Description</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+            <h6 style="color: cornflowerblue;">Abilities</h6>
+            <AbilityTreeView VM="@(new AbilityTreeViewModel { Abilities = s.AbilityTree(), IntrinsicAbilities = s.IntrinsicAbilities })" />
+        </div>
+    }
+    else
+    {
+        <div style="color: #666; font-style: italic;">No storm selected</div>
+    }
+</div>

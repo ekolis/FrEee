@@ -1,0 +1,36 @@
+@page "/picker"
+@using FrEee.UI.Blazor.Components
+@using FrEee.UI.Blazor.Components.Screens
+@inherits ScreenBase<GenericPickerViewModel>
+
+<div class="generic-picker-screen" style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; max-height: 80vh;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h4 style="color: cornflowerblue; margin: 0;">@VM.Title</h4>
+        <button class="btn btn-outline-secondary btn-sm" @onclick="() => VM.Close()">Cancel</button>
+    </div>
+
+    <div class="mb-2">
+        <input type="text"
+               class="form-control form-control-sm bg-dark text-white border-secondary"
+               placeholder="Filter..."
+               @bind="VM.SearchFilter"
+               @bind:event="oninput" />
+    </div>
+
+    <div style="flex: 1; overflow-y: auto; border: 1px solid #333; margin-bottom: 12px; max-height: 300px;">
+        <ul style="list-style: none; padding-left: 0; margin-bottom: 0;">
+            @foreach (var item in VM.FilteredItems)
+            {
+                var isSelected = item == VM.SelectedItem;
+                <li @onclick="() => VM.SelectedItem = item"
+                    style="padding: 6px 10px; cursor: pointer; background-color: @(isSelected ? "#003366" : "transparent"); color: @(isSelected ? "white" : "#ccc"); font-size: 13px; border-bottom: 1px solid #222;">
+                    @item.ToString()
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; gap: 8px;">
+        <button class="btn btn-primary" disabled="@(VM.SelectedItem == null)" @onclick="() => VM.Select()">Select</button>
+    </div>
+</div>

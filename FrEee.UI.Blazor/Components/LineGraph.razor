@@ -1,0 +1,65 @@
+@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<LineGraphViewModel>
+
+<div class="line-graph" style="background-color: black; color: white; border: 1px solid cornflowerblue; padding: 8px; width: 100%; max-width: @(VM.Width)px;">
+    @if (!string.IsNullOrEmpty(VM.Title))
+    {
+        <div style="text-align: center; font-weight: bold; margin-bottom: 6px; color: white;">@VM.Title</div>
+    }
+
+    @{
+        var allPoints = VM.Series.SelectMany(s => s.DataPoints).ToList();
+        var maxVal = allPoints.Any() ? allPoints.Max() : 1d;
+        if (maxVal <= 0) maxVal = 1d;
+        var maxPointsCount = VM.Series.Any() ? VM.Series.Max(s => s.DataPoints.Count()) : 0;
+        var svgWidth = VM.Width > 0 ? VM.Width : 400;
+        var svgHeight = VM.Height > 0 ? VM.Height : 200;
+        var margin = 40;
+        var plotWidth = Math.Max(10, svgWidth - margin * 2);
+        var plotHeight = Math.Max(10, svgHeight - margin * 2);
+    }
+
+    <svg width="100%" height="@(svgHeight)" viewBox="0 0 @svgWidth @svgHeight" style="overflow: visible;">
+        <!-- Axes -->
+        <line x1="@margin" y1="@(margin + plotHeight)" x2="@(margin + plotWidth)" y2="@(margin + plotHeight)" stroke="#888" stroke-width="1" />
+        <line x1="@margin" y1="@margin" x2="@margin" y2="@(margin + plotHeight)" stroke="#888" stroke-width="1" />
+
+        <!-- Y labels -->
+        @for (int i = 0; i <= 4; i++)
+        {
+            var frac = i / 4.0;
+            var yPos = margin + plotHeight - (frac * plotHeight);
+            var val = frac * maxVal;
+            @((MarkupString)$"<text x=\"{margin - 6}\" y=\"{yPos + 4}\" fill=\"#aaa\" font-size=\"10\" text-anchor=\"end\">{val:0.#}</text>")
+            <line x1="@margin" y1="@yPos" x2="@(margin + plotWidth)" y2="@yPos" stroke="#333" stroke-dasharray="2,2" stroke-width="1" />
+        }
+
+        <!-- Series Lines -->
+        @foreach (var s in VM.Series)
+        {
+            var pointsList = s.DataPoints.ToList();
+            if (pointsList.Count > 0)
+            {
+                var count = pointsList.Count;
+                var polylinePoints = new System.Text.StringBuilder();
+                for (int idx = 0; idx < count; idx++)
+                {
+                    var xFrac = count > 1 ? (double)idx / (count - 1) : 0;
+                    var x = margin + (xFrac * plotWidth);
+                    var y = margin + plotHeight - ((pointsList[idx] / maxVal) * plotHeight);
+                    polylinePoints.Append($"{x:F1},{y:F1} ");
+                }
+                <polyline fill="none" stroke="#@s.Color.ToRgba()" stroke-width="2" points="@polylinePoints.ToString().Trim()" />
+            }
+        }
+    </svg>
+    <div style="display: flex; gap: 12px; justify-content: center; margin-top: 4px; font-size: 11px;">
+        @foreach (var s in VM.Series)
+        {
+            <div style="display: flex; align-items: center; gap: 4px;">
+                <span style="display: inline-block; width: 10px; height: 10px; background-color: #@s.Color.ToRgba();"></span>
+                <span>@s.Name</span>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,32 @@
+@page "/activate-ability"
+@using FrEee.UI.Blazor.Components
+@using FrEee.UI.Blazor.Components.Screens
+@using FrEee.Modding.Abilities
+@inherits ScreenBase<ActivateAbilityViewModel>
+
+<div class="activate-ability-screen" style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; max-width: 600px; margin: 0 auto;">
+    <h3 style="color: cornflowerblue; margin-bottom: 12px;">Activate Ability</h3>
+    @if (VM.AbilityObject is not null)
+    {
+        <div style="margin-bottom: 12px;">
+            <label style="color: cornflowerblue; font-weight: bold;">Select Ability:</label>
+            <select class="form-select bg-dark text-white border-secondary"
+                    @onchange="(e) => VM.SelectedAbility = VM.AbilityObject.Abilities().FirstOrDefault(a => a.Rule.Name == e.Value?.ToString())">
+                @foreach (var abil in VM.AbilityObject.Abilities())
+                {
+                    <option value="@abil.Rule.Name">@abil.Description</option>
+                }
+            </select>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px;">
+            <button class="btn btn-outline-secondary" @onclick="() => VM.Close()">Cancel</button>
+            <button class="btn btn-primary" @onclick="() => VM.Activate()">Activate</button>
+        </div>
+    }
+    else
+    {
+        <div style="color: #666; font-style: italic;">No ability target available.</div>
+        <button class="btn btn-outline-secondary mt-2" @onclick="() => VM.Close()">Close</button>
+    }
+</div>

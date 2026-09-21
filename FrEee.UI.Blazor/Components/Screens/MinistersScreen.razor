@@ -1,0 +1,30 @@
+@page "/ministers"
+@using FrEee.UI.Blazor.Components
+@using FrEee.UI.Blazor.Components.Screens
+@inherits ScreenBase<MinistersViewModel>
+
+<div class="ministers-screen" style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; max-width: 500px; margin: 0 auto;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="color: cornflowerblue; margin: 0;">AI Ministers</h3>
+        <button class="btn btn-outline-secondary" @onclick="() => VM.Close()">Cancel</button>
+    </div>
+
+    <div style="border: 1px solid #333; padding: 16px; margin-bottom: 16px;">
+        <div class="form-check mb-2">
+            <input class="form-check-input bg-dark border-secondary" type="checkbox" id="chkColonize" @bind="VM.AutoColonize" />
+            <label class="form-check-label text-white" for="chkColonize">Colonization Minister</label>
+        </div>
+        <div class="form-check mb-2">
+            <input class="form-check-input bg-dark border-secondary" type="checkbox" id="chkBuild" @bind="VM.AutoBuild" />
+            <label class="form-check-label text-white" for="chkBuild">Construction Minister</label>
+        </div>
+        <div class="form-check mb-2">
+            <input class="form-check-input bg-dark border-secondary" type="checkbox" id="chkResearch" @bind="VM.AutoResearch" />
+            <label class="form-check-label text-white" for="chkResearch">Research Minister</label>
+        </div>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; gap: 8px;">
+        <button class="btn btn-primary" @onclick="() => VM.Save()">Save Settings</button>
+    </div>
+</div>

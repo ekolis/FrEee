@@ -1,0 +1,80 @@
+@page "/game"
+@using FrEee.UI.Blazor.Components
+@using FrEee.UI.Blazor.Components.Screens
+@using FrEee.Objects.Civilization
+@using FrEee.Objects.Space
+@using FrEee.Vehicles.Types
+@inherits ScreenBase<MainGameViewModel>
+
+<div class="main-game-screen" style="background-color: black; color: white; width: 100%; height: 100vh; display: flex; flex-direction: column; overflow: hidden;">
+    <!-- Top Resource & Navigation Bar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background-color: #0b0b0b; border-bottom: 1px solid cornflowerblue;">
+        <div style="display: flex; gap: 16px; align-items: center;">
+            <span style="color: cornflowerblue; font-weight: bold; font-size: 15px;">@(VM.Empire?.Name ?? "FrEee")</span>
+            @if (VM.Empire is not null)
+            {
+                <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Minerals, Amount = VM.Empire.StoredResources[Resource.Minerals] })" />
+                <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Organics, Amount = VM.Empire.StoredResources[Resource.Organics] })" />
+                <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Radioactives, Amount = VM.Empire.StoredResources[Resource.Radioactives] })" />
+            }
+        </div>
+
+        <div style="display: flex; gap: 6px; align-items: center;">
+            <SearchBox VM="VM.SearchBoxVM" />
+            <a href="/planets" class="btn btn-sm btn-outline-primary">Planets</a>
+            <a href="/ships" class="btn btn-sm btn-outline-primary">Ships</a>
+            <a href="/queues" class="btn btn-sm btn-outline-primary">Queues</a>
+            <a href="/designs" class="btn btn-sm btn-outline-primary">Designs</a>
+            <a href="/research" class="btn btn-sm btn-outline-primary">Research</a>
+            <a href="/diplomacy" class="btn btn-sm btn-outline-primary">Diplomacy</a>
+            <button class="btn btn-sm btn-primary" @onclick="() => VM.EndTurn()">End Turn</button>
+        </div>
+    </div>
+
+    <!-- Main Content Area: Map and Object Report -->
+    <div style="display: grid; grid-template-columns: 1fr 380px; flex: 1; overflow: hidden;">
+        <div style="padding: 8px; display: flex; flex-direction: column; overflow: hidden;">
+            <StarSystemView VM="@(new StarSystemViewModel { StarSystem = VM.SelectedStarSystem, SelectedSector = VM.SelectedSector })" />
+        </div>
+
+        <div style="border-left: 1px solid cornflowerblue; background-color: #0d0d0d; padding: 8px; overflow-y: auto;">
+            @if (VM.SelectedSpaceObject is Planet p)
+            {
+                <PlanetReport VM="@(new PlanetReportViewModel { Planet = p })" />
+            }
+            else if (VM.SelectedSpaceObject is ISpaceVehicle v)
+            {
+                <SpaceVehicleReport VM="@(new SpaceVehicleReportViewModel { Vehicle = v })" />
+            }
+            else if (VM.SelectedSpaceObject is Star s)
+            {
+                <StarReport VM="@(new StarReportViewModel { Star = s })" />
+            }
+            else if (VM.SelectedSpaceObject is AsteroidField a)
+            {
+                <AsteroidFieldReport VM="@(new AsteroidFieldReportViewModel { AsteroidField = a })" />
+            }
+            else if (VM.SelectedSpaceObject is Storm st)
+            {
+                <StormReport VM="@(new StormReportViewModel { Storm = st })" />
+            }
+            else if (VM.SelectedSpaceObject is WarpPoint wp)
+            {
+                <WarpPointReport VM="@(new WarpPointReportViewModel { WarpPoint = wp })" />
+            }
+            else if (VM.SelectedStarSystem is not null)
+            {
+                <StarSystemReport VM="@(new StarSystemReportViewModel { StarSystem = VM.SelectedStarSystem })" />
+            }
+            else
+            {
+                <div style="color: #666; font-style: italic; padding: 12px;">No object selected</div>
+            }
+        </div>
+    </div>
+
+    <!-- Bottom Message Log Bar -->
+    <div style="height: 120px; border-top: 1px solid cornflowerblue; background-color: #050505;">
+        <HistoryLog VM="VM.HistoryLogVM" />
+    </div>
+</div>

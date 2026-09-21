@@ -1,0 +1,36 @@
+@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<GameButtonViewModel>
+
+<button class="btn game-button @(VM.Enabled ? "" : "disabled")"
+        disabled="@(!VM.Enabled)"
+        @onclick="HandleClick"
+        style="background-color: #@VM.BackColor.ToRgba(); color: #@VM.ForeColor.ToRgba(); border: 1px solid #6495ED; border-radius: 4px; padding: 4px 8px; display: inline-flex; align-items: center; justify-content: center; gap: 4px;">
+    @if (VM.Image is not null)
+    {
+        <div style="width: 16px; height: 16px; display: inline-block;">
+            <ImageDisplay VM="VM.ImageVM" />
+        </div>
+    }
+    <span>@VM.Text</span>
+    @ChildContent
+</button>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+
+    private async Task HandleClick()
+    {
+        if (VM.Enabled)
+        {
+            VM.OnClick?.Invoke();
+            if (OnClick.HasDelegate)
+            {
+                await OnClick.InvokeAsync();
+            }
+        }
+    }
+}

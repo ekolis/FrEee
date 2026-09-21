@@ -1,0 +1,24 @@
+@namespace FrEee.UI.Blazor.Components
+@inherits ViewBase<SearchBoxViewModel>
+
+<div class="search-box input-group input-group-sm" style="max-width: 300px;">
+    <input type="text"
+           class="form-control bg-dark text-white border-secondary"
+           placeholder="@VM.Placeholder"
+           @bind="VM.Query"
+           @bind:event="oninput"
+           @onkeyup="HandleKeyUp" />
+    <button class="btn btn-outline-primary" type="button" @onclick="() => VM.Search()">
+        Search
+    </button>
+</div>
+
+@code {
+    private void HandleKeyUp(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            VM.Search();
+        }
+    }
+}
