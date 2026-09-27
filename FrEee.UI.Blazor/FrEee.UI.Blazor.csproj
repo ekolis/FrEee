@@ -27,17 +27,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <AdditionalFiles Include="Components\App.razor" />
-      <AdditionalFiles Include="Components\Layout\MainLayout.razor" />
-      <AdditionalFiles Include="Components\Layout\NavMenu.razor" />
-      <AdditionalFiles Include="Components\Layout\ReconnectModal.razor" />
-      <AdditionalFiles Include="Components\Pages\Counter.razor" />
-      <AdditionalFiles Include="Components\Pages\Error.razor" />
-      <AdditionalFiles Include="Components\Pages\Home.razor" />
-      <AdditionalFiles Include="Components\Pages\NotFound.razor" />
-      <AdditionalFiles Include="Components\Pages\Weather.razor" />
-      <AdditionalFiles Include="Components\Routes.razor" />
-      <AdditionalFiles Include="Components\_Imports.razor" />
+      <AdditionalFiles Include="Components\*.razor" />
+      <AdditionalFiles Include="Components\Layout\*.razor" />
+      <AdditionalFiles Include="Components\Pages\*.razor" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,14 +1,25 @@
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: black;
+    color: white;
+}
+
+.navbar-brand {
+    font-size: 1.1rem;
+    font-family: Silicon, sans-serif;
 }
 
 a, .btn-link {
     color: #006bb7;
 }
 
+.btn {
+    font-family: Silicon, sans-serif;
+}
+
 .btn-primary {
     color: #fff;
-    background-color: #1b6ec2;
+    background-color: cornflowerblue;
     border-color: #1861ac;
 }
 
@@ -42,9 +53,9 @@ h1:focus {
     color: white;
 }
 
-    .blazor-error-boundary::after {
-        content: "An error has occurred."
-    }
+.blazor-error-boundary::after {
+    content: "An error has occurred."
+}
 
 .darker-border-checkbox.form-check-input {
     border-color: #929292;

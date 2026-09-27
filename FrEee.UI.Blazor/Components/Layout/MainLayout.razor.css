@@ -13,8 +13,9 @@ main {
 }
 
 .top-row {
-    background-color: #f7f7f7;
+    background-color: black;
     border-bottom: 1px solid #d6d5d5;
+    font-family: Silicon, sans-serif;
     justify-content: flex-end;
     height: 3.5rem;
     display: flex;
