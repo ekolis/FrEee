@@ -17,7 +17,7 @@ public class ComponentReportViewModel : ViewModelBase
 				return MountedComponentTemplate.ComponentTemplate;
 			if (ComponentTemplate != null)
 				return ComponentTemplate;
-			return Component?.Template;
+			return Component?.Template.ComponentTemplate;
 		}
 	}
 
