@@ -1,7 +1,6 @@
 using FrEee.Objects.Space;
-using FrEee.Objects.Civilization;
 
-namespace FrEee.UI.Blazor.Components;
+namespace FrEee.UI.Blazor.Components.Reports;
 
 public class PlanetReportViewModel : ViewModelBase
 {

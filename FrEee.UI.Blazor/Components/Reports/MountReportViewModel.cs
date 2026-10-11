@@ -1,6 +1,6 @@
 using FrEee.Objects.Technology;
 
-namespace FrEee.UI.Blazor.Components;
+namespace FrEee.UI.Blazor.Components.Reports;
 
 public class MountReportViewModel : ViewModelBase
 {

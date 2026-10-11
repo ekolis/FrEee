@@ -1,6 +1,6 @@
 using FrEee.Vehicles;
 
-namespace FrEee.UI.Blazor.Components;
+namespace FrEee.UI.Blazor.Components.Reports;
 
 public class DesignReportViewModel : ViewModelBase
 {

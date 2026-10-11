@@ -1,6 +1,6 @@
 using FrEee.Objects.Space;
 
-namespace FrEee.UI.Blazor.Components;
+namespace FrEee.UI.Blazor.Components.Reports;
 
 public class StarSystemReportViewModel : ViewModelBase
 {

@@ -1,7 +1,7 @@
-using FrEee.Objects.Technology;
 using FrEee.Modding.Templates;
+using FrEee.Objects.Technology;
 
-namespace FrEee.UI.Blazor.Components;
+namespace FrEee.UI.Blazor.Components.Reports;
 
 public class ComponentReportViewModel : ViewModelBase
 {
