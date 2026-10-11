@@ -17,6 +17,9 @@ public class ViewBase<TVM>
 	/// </summary>
 	[Parameter]
 	public TVM VM { get; set; } = new();
+	
+	[Inject]
+	public NavigationManager Navigation { get; set; }
 
 	[Inject]
 	private IJSRuntime JSRuntime { get; set; }

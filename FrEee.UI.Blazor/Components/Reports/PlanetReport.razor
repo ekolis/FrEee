@@ -1,4 +1,6 @@
 @namespace FrEee.UI.Blazor.Components.Reports
+@using FrEee.Extensions
+@using FrEee.Utility
 @inherits ViewBase<PlanetReportViewModel>
 
 <div class="planet-report" style="background-color: black; color: white; border: 1px solid cornflowerblue; padding: 8px;">
@@ -17,6 +19,7 @@
                 <div style="font-size: 13px; color: #fff;">Owner: @(col?.Owner?.Name ?? "Uncolonized")</div>
                 @if (col is not null)
                 {
+                    <div style="font-size: 13px; color: #aaa;">Population: @col.Population.Values.Sum().ToUnitString()</div>
                     <div style="font-size: 13px; color: #aaa;">Population: @col.Population.Values.Sum().ToUnitString()</div>
                 }
             </div>

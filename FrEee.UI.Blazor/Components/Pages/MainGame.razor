@@ -1,4 +1,4 @@
-@page "/game"
+@attribute [Route(PagePaths.MainGame)]
 @using FrEee.UI.Blazor.Components
 @using FrEee.Objects.Civilization
 @using FrEee.Objects.Space
@@ -21,12 +21,12 @@
 
         <div style="display: flex; gap: 6px; align-items: center;">
             <SearchBox VM="VM.SearchBoxVM" />
-            <a href="/planets" class="btn btn-sm btn-outline-primary">Planets</a>
-            <a href="/ships" class="btn btn-sm btn-outline-primary">Ships</a>
-            <a href="/queues" class="btn btn-sm btn-outline-primary">Queues</a>
-            <a href="/designs" class="btn btn-sm btn-outline-primary">Designs</a>
-            <a href="/research" class="btn btn-sm btn-outline-primary">Research</a>
-            <a href="/diplomacy" class="btn btn-sm btn-outline-primary">Diplomacy</a>
+            <a href="@PagePaths.PlanetList" class="btn btn-sm btn-outline-primary">Planets</a>
+            <a href="@PagePaths.ShipList" class="btn btn-sm btn-outline-primary">Ships</a>
+            <a href="@PagePaths.ConstructionQueueList" class="btn btn-sm btn-outline-primary">Queues</a>
+            <a href="@PagePaths.DesignList" class="btn btn-sm btn-outline-primary">Designs</a>
+            <a href="@PagePaths.Research" class="btn btn-sm btn-outline-primary">Research</a>
+            <a href="@PagePaths.Diplomacy" class="btn btn-sm btn-outline-primary">Diplomacy</a>
             <button class="btn btn-sm btn-primary" @onclick="() => VM.EndTurn()">End Turn</button>
         </div>
     </div>
@@ -38,37 +38,39 @@
         </div>
 
         <div style="border-left: 1px solid cornflowerblue; background-color: #0d0d0d; padding: 8px; overflow-y: auto;">
-            @if (VM.SelectedSpaceObject is Planet p)
+            @switch (VM.SelectedSpaceObject)
             {
-                <PlanetReport VM="@(new PlanetReportViewModel { Planet = p })" />
-            }
-            else if (VM.SelectedSpaceObject is ISpaceVehicle v)
-            {
-                <SpaceVehicleReport VM="@(new SpaceVehicleReportViewModel { Vehicle = v })" />
-            }
-            else if (VM.SelectedSpaceObject is Star s)
-            {
-                <StarReport VM="@(new StarReportViewModel { Star = s })" />
-            }
-            else if (VM.SelectedSpaceObject is AsteroidField a)
-            {
-                <AsteroidFieldReport VM="@(new AsteroidFieldReportViewModel { AsteroidField = a })" />
-            }
-            else if (VM.SelectedSpaceObject is Storm st)
-            {
-                <StormReport VM="@(new StormReportViewModel { Storm = st })" />
-            }
-            else if (VM.SelectedSpaceObject is WarpPoint wp)
-            {
-                <WarpPointReport VM="@(new WarpPointReportViewModel { WarpPoint = wp })" />
-            }
-            else if (VM.SelectedStarSystem is not null)
-            {
-                <StarSystemReport VM="@(new StarSystemReportViewModel { StarSystem = VM.SelectedStarSystem })" />
-            }
-            else
-            {
-                <div style="color: #666; font-style: italic; padding: 12px;">No object selected</div>
+                case Planet p:
+                    <PlanetReport VM="@(new PlanetReportViewModel { Planet = p })" />
+                    break;
+                case ISpaceVehicle v:
+                    <SpaceVehicleReport VM="@(new SpaceVehicleReportViewModel { Vehicle = v })" />
+                    break;
+                case Star s:
+                    <StarReport VM="@(new StarReportViewModel { Star = s })" />
+                    break;
+                case AsteroidField a:
+                    <AsteroidFieldReport VM="@(new AsteroidFieldReportViewModel { AsteroidField = a })" />
+                    break;
+                case Storm st:
+                    <StormReport VM="@(new StormReportViewModel { Storm = st })" />
+                    break;
+                case WarpPoint wp:
+                    <WarpPointReport VM="@(new WarpPointReportViewModel { WarpPoint = wp })" />
+                    break;
+                default:
+                {
+                    if (VM.SelectedStarSystem is not null)
+                    {
+                        <StarSystemReport VM="@(new StarSystemReportViewModel { StarSystem = VM.SelectedStarSystem })" />
+                    }
+                    else
+                    {
+                        <div style="color: #666; font-style: italic; padding: 12px;">No object selected</div>
+                    }
+
+                    break;
+                }
             }
         </div>
     </div>

@@ -1,6 +1,7 @@
-@page "/commands"
+@attribute [Route(PagePaths.Commands)]
 @using FrEee.UI.Blazor.Components
 @using FrEee.Gameplay.Commands
+@using Microsoft.AspNetCore.Mvc.RazorPages
 @inherits PageBase<CommandsViewModel>
 
 <div class="commands" style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; width: 100%; height: 100%; display: flex; flex-direction: column;">

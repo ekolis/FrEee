@@ -3,10 +3,8 @@ using System.Drawing;
 
 namespace FrEee.UI.Blazor.Components
 {
-	public class ImageDisplayViewModel : INotifyPropertyChanged
+	public class ImageDisplayViewModel : ViewModelBase
 	{
-		public event PropertyChangedEventHandler PropertyChanged;
-
 		public Image Image { get; set; } = new Bitmap(1, 1);
 
 		public string ImageSource

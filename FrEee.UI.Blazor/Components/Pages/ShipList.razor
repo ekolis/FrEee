@@ -1,4 +1,4 @@
-@page "/ships"
+@attribute [Route(PagePaths.ShipList)]
 @using FrEee.UI.Blazor.Components
 @using FrEee.UI.Blazor.Components.Reports
 @using FrEee.Vehicles.Types
@@ -28,7 +28,8 @@
         <div style="border: 1px solid #333; padding: 8px; overflow-y: auto;">
             @if (VM.SelectedVehicle is not null)
             {
-                <SpaceVehicleReport VM="@(new SpaceVehicleReportViewModel { Vehicle = VM.SelectedVehicle })" />
+                @* TODO: figure out why this breaks the Razor compiler *@
+                @*<SpaceVehicleReport VM="VM.SpaceVehicleReportViewModel" />*@
             }
             else
             {

@@ -1,4 +1,4 @@
-@page "/designs"
+@attribute [Route(PagePaths.DesignList)]
 @using FrEee.UI.Blazor.Components.Reports
 @inherits PageBase<DesignListViewModel>
 
@@ -6,7 +6,7 @@
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
         <h3 style="color: cornflowerblue; margin: 0;">Vehicle Designs</h3>
         <div style="display: flex; gap: 8px;">
-            <a href="/vehicle-design" class="btn btn-sm btn-primary">Create Design</a>
+            <a href="@PagePaths.VehicleDesign" class="btn btn-sm btn-primary">Create Design</a>
             <button class="btn btn-outline-secondary btn-sm" @onclick="() => VM.Close()">Close</button>
         </div>
     </div>
