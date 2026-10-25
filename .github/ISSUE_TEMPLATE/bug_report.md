@@ -2,8 +2,9 @@
 name: Bug report
 about: A wild BUG appears! What do you do?!
 title: ''
-labels: bug
+labels: bug, technical debt
 assignees: ''
+type: Bug
 
 ---
 

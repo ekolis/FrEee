@@ -5,6 +5,7 @@ about: Something needs to be implemented for this game to be feature complete as
 title: ''
 labels: task
 assignees: ''
+type: Task
 
 ---
 

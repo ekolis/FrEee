@@ -4,6 +4,7 @@ about: The code needs to be cleaned up or refactored.
 title: ''
 labels: technical debt
 assignees: ''
+type: Technical Debt
 
 ---
 
