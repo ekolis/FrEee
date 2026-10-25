@@ -6,7 +6,7 @@ using FrEee.Utility;
 
 namespace FrEee.UI.Blazor.Components
 {
-	public class GalaxyMapViewModel : INotifyPropertyChanged
+	public class GalaxyMapViewModel : ViewModelBase
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 

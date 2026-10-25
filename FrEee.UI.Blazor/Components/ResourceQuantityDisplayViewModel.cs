@@ -3,7 +3,7 @@ using FrEee.Utility;
 
 namespace FrEee.UI.Blazor.Components
 {
-	public class ResourceQuantityDisplayViewModel : INotifyPropertyChanged
+	public class ResourceQuantityDisplayViewModel : ViewModelBase
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 

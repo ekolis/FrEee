@@ -5,7 +5,7 @@ using FrEee.Extensions;
 
 namespace FrEee.UI.Blazor.Components
 {
-	public class PieChartViewModel<T> : INotifyPropertyChanged
+	public class PieChartViewModel<T> : ViewModelBase
 		where T : INumber<T>, IMultiplyOperators<T, int, T>, IDivisionOperators<T, int, T>
 	{
 		public event PropertyChangedEventHandler PropertyChanged;

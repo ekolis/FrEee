@@ -25,6 +25,7 @@ public static class PagePaths
 	public const string Home = "/";
 	public const string HostConsole = "/host-console";
 	public const string HullPicker = "/hull-picker";
+	public const string LoadGame = "/load-game";
 	public const string MainGame = "/game";
 	public const string Ministers = "/ministers";
 	public const string ModErrors = "/mod-errors";
@@ -41,4 +42,9 @@ public static class PagePaths
 	public const string SpaceObjectPicker = "/space-object-picker";
 	public const string Status = "/status";
 	public const string VehicleDesign = "/vehicle-design";
+	
+	public static string CreateMainGame(string gameName, int turnNumber, int playerNumber)
+	{
+		return $"{MainGame}/{gameName}/{turnNumber}/{playerNumber}";
+	}
 }

@@ -5,7 +5,7 @@ using FrEee.Utility;
 
 namespace FrEee.UI.Blazor.Components
 {
-	public class ResourceDisplayViewModel : INotifyPropertyChanged
+	public class ResourceDisplayViewModel : ViewModelBase
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 

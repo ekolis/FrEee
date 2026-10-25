@@ -10,7 +10,7 @@ namespace FrEee.UI.Blazor.Components;
 /// <typeparam name="TVM"></typeparam>
 public class ViewBase<TVM>
 	: ComponentBase
-	where TVM : INotifyPropertyChanged, new()
+	where TVM : ViewModelBase, new()
 {
 	/// <summary>
 	/// The view model for this view.
@@ -37,6 +37,7 @@ public class ViewBase<TVM>
 	protected override void OnInitialized()
 	{
 		VM.PropertyChanged += ViewModelPropertyChanged;
+		VM.Navigation = Navigation;
 	}
 
 	public void Dispose()

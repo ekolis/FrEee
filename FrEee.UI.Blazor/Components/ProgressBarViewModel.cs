@@ -5,7 +5,7 @@ using FrEee.Utility;
 
 namespace FrEee.UI.Blazor.Components
 {
-	public class ProgressBarViewModel : INotifyPropertyChanged
+	public class ProgressBarViewModel : ViewModelBase
     {
 		public event PropertyChangedEventHandler PropertyChanged;
 
