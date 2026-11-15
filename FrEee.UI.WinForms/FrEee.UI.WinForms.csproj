@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net10.0-windows</TargetFramework>
+        <TargetFramework>net11.0-windows</TargetFramework>
         <Description>Windows Forms GUI for FrEee</Description>
         <StartupObject>FrEee.UI.WinForms.Program</StartupObject>
         <UseWindowsForms>true</UseWindowsForms>
@@ -84,8 +84,8 @@
     </ItemGroup>
     
     <ItemGroup>
-        <Common Include="$(SolutionDir)bin/$(Configuration)/net10.0/**/*" />
-        <Common Remove="$(SolutionDir)bin/$(Configuration)/net10.0/win-x64/**/*" />
+        <Common Include="$(SolutionDir)bin/$(Configuration)/net11.0/**/*" />
+        <Common Remove="$(SolutionDir)bin/$(Configuration)/net11.0/win-x64/**/*" />
     </ItemGroup>
     <Target Name="CopyCommonFiles" AfterTargets="PostBuildEvent">
         <Copy SourceFiles="@(Common)" DestinationFolder="$(TargetDir)/%(RecursiveDir)" SkipUnchangedFiles="true" />

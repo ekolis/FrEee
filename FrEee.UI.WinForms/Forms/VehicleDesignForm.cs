@@ -568,4 +568,6 @@ public partial class VehicleDesignForm : GameForm
 		public Mount Mount { get; set; }
 		public string ShortName { get { return Mount == null ? "(No Mount)" : Mount.ShortName.Value; } }
 	}
+
+	protected override string WikiPage => "VehicleDesign";
 }

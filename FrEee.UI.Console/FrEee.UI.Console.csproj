@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net10.0</TargetFramework>
+        <TargetFramework>net11.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
@@ -18,8 +18,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Common Include="$(SolutionDir)bin/$(Configuration)/net10.0/**/*" />
-        <Common Remove="$(SolutionDir)bin/$(Configuration)/net10.0/win-x64/**/*" />
+        <Common Include="$(SolutionDir)bin/$(Configuration)/net11.0/**/*" />
+        <Common Remove="$(SolutionDir)bin/$(Configuration)/net11.0/win-x64/**/*" />
     </ItemGroup>
     <Target Name="CopyCommonFiles" AfterTargets="PostBuildEvent">
         <Copy SourceFiles="@(Common)" DestinationFolder="$(TargetDir)/%(RecursiveDir)" SkipUnchangedFiles="true" />
