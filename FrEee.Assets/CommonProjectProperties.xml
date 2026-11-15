@@ -6,5 +6,6 @@
 		<Copyright>Copyright © 2013-2026</Copyright>
 		<ApplicationIcon>../FrEee.Assets/FrEee.ico</ApplicationIcon>
 		<Nullable>enable</Nullable>
+        <Features>runtime-async=on</Features>
 	</PropertyGroup>
 </Project>
