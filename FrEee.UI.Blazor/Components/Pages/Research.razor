@@ -1,42 +1,125 @@
 @attribute [Route(PagePaths.Research)]
 @using FrEee.UI.Blazor.Components
 @using FrEee.Objects.Technology
+@using FrEee.Objects.Civilization
 @inherits PageBase<ResearchViewModel>
 
-<div class="research-screen" style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; width: 100%; height: 100%; display: flex; flex-direction: column;">
+<div class="research-screen"
+     style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; width: 100%; min-height: 100%; display: flex; flex-direction: column; gap: 12px;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
         <h3 style="color: cornflowerblue; margin: 0;">Empire Research</h3>
         <button class="btn btn-outline-secondary" @onclick="() => VM.Close()">Close</button>
     </div>
 
-    <div style="display: grid; grid-template-columns: 300px 1fr; gap: 16px; flex: 1; overflow: hidden;">
-        <div style="border: 1px solid #333; padding: 8px; overflow-y: auto;">
-            <ul style="list-style: none; padding-left: 0;">
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; border: 1px solid #333; padding: 10px;">
+        <strong style="color: cornflowerblue;">Research Points Available:</strong>
+        <span>@(VM.Empire?.NetIncome[Resource.Research] ?? 0)</span>
+        <span style="color: #aaa;">Bonus Research: @(VM.Empire?.BonusResearch ?? 0)</span>
+        <div style="margin-left: auto; display: flex; gap: 8px; align-items: center;">
+            <label for="research-group" style="color: cornflowerblue;">Group</label>
+            <select id="research-group" class="form-select form-select-sm bg-dark text-white border-secondary" disabled
+                    style="width: 180px;">
+                <option>All</option>
+                <option>In Progress</option>
+                @foreach (var group in VM.AvailableTechs.Select(t => t.Group).Distinct())
+                {
+                    <option>@group</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div
+        style="display: grid; grid-template-columns: minmax(300px, 1.3fr) minmax(260px, 1fr) minmax(220px, 0.8fr); gap: 12px; flex: 1; min-height: 420px;">
+        <section style="border: 1px solid #333; padding: 8px; overflow: auto;">
+            <table class="table table-dark table-sm table-hover" style="font-size: 13px;">
+                <thead>
+                <tr style="color: cornflowerblue;">
+                    <th>Name</th>
+                    <th>Level</th>
+                    <th>Cost</th>
+                    <th>Progress</th>
+                    <th>Spending</th>
+                </tr>
+                </thead>
+                <tbody>
                 @foreach (var tech in VM.AvailableTechs)
                 {
                     var isSelected = tech == VM.SelectedTech;
-                    <li @onclick="() => VM.SelectedTech = tech"
-                        style="padding: 6px 8px; cursor: pointer; background-color: @(isSelected ? "#003366" : "transparent"); border-bottom: 1px solid #222;">
-                        <span style="color: @(isSelected ? "white" : "cornflowerblue"); font-size: 13px;">@tech.Name</span>
-                        <div style="font-size: 11px; color: #888;">Level: @(VM.Empire?.ResearchedTechnologies[tech] ?? 0)</div>
-                    </li>
+                    <tr @onclick="() => VM.SelectedTech = tech"
+                        style="cursor: pointer; background-color: @(isSelected ? "#003366" : "transparent");">
+                        <td>@tech.Name</td>
+                        <td>@(VM.Empire?.ResearchedTechnologies[tech] ?? 0) / @tech.MaximumLevel</td>
+                        <td>@tech.NextLevelCost</td>
+                        <td>—</td>
+                        <td>—</td>
+                    </tr>
                 }
-            </ul>
-        </div>
+                </tbody>
+            </table>
+        </section>
 
-        <div style="border: 1px solid #333; padding: 12px; overflow-y: auto;">
+        <section style="border: 1px solid #333; padding: 12px; overflow: auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+                <h4 style="color: cornflowerblue; margin: 0;">@(VM.SelectedTech?.Name ?? "Technology Details")</h4>
+                <button type="button" class="btn btn-sm btn-outline-primary" disabled>Tree</button>
+            </div>
             @if (VM.SelectedTech is not null)
             {
-                <h4 style="color: cornflowerblue;">@VM.SelectedTech.Name</h4>
-                <p style="color: #ccc; font-size: 13px;">@VM.SelectedTech.Description</p>
-                <div style="margin-top: 16px;">
-                    <button class="btn btn-primary" @onclick="() => VM.SetPrimaryResearch(VM.SelectedTech)">Research This Tech</button>
+                <p style="color: #ccc; font-size: 13px; margin-top: 12px;">@VM.SelectedTech.Description</p>
+                <div style="border-top: 1px solid #333; padding-top: 10px;">
+                    <label class="form-label" style="color: cornflowerblue;">Spending (percentage)</label>
+                    <input type="range" class="form-range" min="0" max="100" value="0" disabled/>
+                    <div style="display: flex; justify-content: space-between; color: #888; font-size: 12px;">
+                        <span>0%</span><span>100%</span></div>
+                </div>
+                <div style="border-top: 1px solid #333; padding-top: 10px; margin-top: 10px;">
+                    <strong style="color: cornflowerblue;">Expected Results</strong>
+                    <div style="color: #888; font-size: 13px; margin-top: 6px;">Expected completion and result details
+                        are not connected in this view.
+                    </div>
+                </div>
+                <div style="display: flex; gap: 6px; margin-top: 12px;">
+                    <button class="btn btn-sm btn-primary" @onclick="() => VM.SetPrimaryResearch(VM.SelectedTech)">
+                        Research This Tech
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-primary" disabled>Add to Queue</button>
                 </div>
             }
             else
             {
                 <div style="color: #666; font-style: italic; padding: 12px;">Select a technology to view details.</div>
             }
-        </div>
+        </section>
+
+        <section style="border: 1px solid #333; padding: 8px; display: flex; flex-direction: column; min-width: 0;">
+            <strong style="color: cornflowerblue; padding: 4px 4px 8px;">Research Queue</strong>
+            <div style="overflow: auto; flex: 1; border: 1px solid #222; padding: 6px;">
+                @if (VM.Empire?.ResearchQueue.Any() == true)
+                {
+                    <ol style="padding-left: 24px;">
+                        @foreach (var tech in VM.Empire.ResearchQueue)
+                        {
+                            <li style="padding: 4px 0;">@tech.Name</li>
+                        }
+                    </ol>
+                }
+                else
+                {
+                    <div style="color: #666; font-style: italic; padding: 8px;">Queue is empty.</div>
+                }
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 8px;">
+                <button type="button" class="btn btn-sm btn-outline-primary" disabled>Top</button>
+                <button type="button" class="btn btn-sm btn-outline-primary" disabled>Up</button>
+                <button type="button" class="btn btn-sm btn-outline-primary" disabled>Down</button>
+                <button type="button" class="btn btn-sm btn-outline-primary" disabled>Bottom</button>
+                <button type="button" class="btn btn-sm btn-outline-danger" disabled>Delete</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Clear</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Save</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary" @onclick="() => VM.Close()">Cancel
+                </button>
+            </div>
+        </section>
     </div>
 </div>

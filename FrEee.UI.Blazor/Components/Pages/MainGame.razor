@@ -9,87 +9,162 @@
 @code{
 
     // TODO: move these parameters to session state so they don't need to be passed into every page
-    [Parameter]
-    public string GameName { get; set; }
+    [Parameter] public string GameName { get; set; }
+
+    [Parameter] public int TurnNumber { get; set; }
     
-    [Parameter]
-    public int TurnNumber { get; set; }
-    
-    [Parameter]
-    public int PlayerNumber { get; set; }
+    [Parameter] public int PlayerNumber { get; set; }
 }
 
-<div class="main-game-screen" style="background-color: black; color: white; width: 100%; height: 100vh; display: flex; flex-direction: column; overflow: hidden;">
+<div class="main-game-screen"
+     style="background-color: black; color: white; width: 100%; min-height: 100vh; display: flex; flex-direction: column; overflow: hidden;">
     <!-- Top Resource & Navigation Bar -->
-    <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background-color: #0b0b0b; border-bottom: 1px solid cornflowerblue;">
-        <div style="display: flex; gap: 16px; align-items: center;">
-            <span style="color: cornflowerblue; font-weight: bold; font-size: 15px;">@(VM.Empire?.Name ?? "FrEee")</span>
+    <div
+        style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; padding: 6px 12px; background-color: #0b0b0b; border-bottom: 1px solid cornflowerblue;">
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center;">
+            <div class="border border-secondary d-flex align-items-center justify-content-center"
+                 style="width: 36px; height: 36px; color: #888;" aria-label="Empire flag">Flag
+            </div>
+            <span
+                style="color: cornflowerblue; font-weight: bold; font-size: 15px;">@(VM.Empire?.Name ?? "FrEee")</span>
             @if (VM.Empire is not null)
             {
-                <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Minerals, Amount = VM.Empire.StoredResources[Resource.Minerals] })" />
-                <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Organics, Amount = VM.Empire.StoredResources[Resource.Organics] })" />
-                <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Radioactives, Amount = VM.Empire.StoredResources[Resource.Radioactives] })" />
+                <ResourceDisplay
+                    VM="@(new ResourceDisplayViewModel { Resource = Resource.Minerals, Amount = VM.Empire.StoredResources[Resource.Minerals] })"/>
+                <ResourceDisplay
+                    VM="@(new ResourceDisplayViewModel { Resource = Resource.Organics, Amount = VM.Empire.StoredResources[Resource.Organics] })"/>
+                <ResourceDisplay
+                    VM="@(new ResourceDisplayViewModel { Resource = Resource.Radioactives, Amount = VM.Empire.StoredResources[Resource.Radioactives] })"/>
             }
         </div>
 
-        <div style="display: flex; gap: 6px; align-items: center;">
-            <SearchBox VM="VM.SearchBoxVM" />
+        <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center;">
+            <SearchBox VM="VM.SearchBoxVM"/>
             <a href="@PagePaths.PlanetList" class="btn btn-sm btn-outline-primary">Planets</a>
             <a href="@PagePaths.ShipList" class="btn btn-sm btn-outline-primary">Ships</a>
             <a href="@PagePaths.ConstructionQueueList" class="btn btn-sm btn-outline-primary">Queues</a>
             <a href="@PagePaths.DesignList" class="btn btn-sm btn-outline-primary">Designs</a>
             <a href="@PagePaths.Research" class="btn btn-sm btn-outline-primary">Research</a>
             <a href="@PagePaths.Diplomacy" class="btn btn-sm btn-outline-primary">Diplomacy</a>
+            <button type="button" class="btn btn-sm btn-outline-primary" disabled>Empires</button>
+            <button type="button" class="btn btn-sm btn-outline-primary" disabled>Log</button>
+            <button type="button" class="btn btn-sm btn-outline-primary" disabled>Menu</button>
             <button class="btn btn-sm btn-primary" @onclick="() => VM.EndTurn()">End Turn</button>
         </div>
     </div>
 
-    <!-- Main Content Area: Map and Object Report -->
-    <div style="display: grid; grid-template-columns: 1fr 380px; flex: 1; overflow: hidden;">
-        <div style="padding: 8px; display: flex; flex-direction: column; overflow: hidden;">
-            <StarSystemView VM="@(new StarSystemViewModel { StarSystem = VM.SelectedStarSystem, SelectedSector = VM.SelectedSector })" />
+    <!-- Main Content Area: Map, Commands and Object Reports -->
+    <div
+        style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 380px); flex: 1; min-height: 520px; overflow: hidden;">
+        <div style="padding: 8px; display: flex; flex-direction: column; gap: 8px; overflow: hidden;">
+            <section
+                style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; border: 1px solid #333; padding: 6px;">
+                <strong style="color: cornflowerblue; margin-right: 4px;">System Tabs</strong>
+                <button type="button" class="btn btn-sm btn-outline-primary active"
+                        disabled>@(VM.SelectedStarSystem?.Name ?? "No System")</button>
+                <button type="button" class="btn btn-sm btn-outline-primary" disabled>New Tab</button>
+                <span
+                    style="margin-left: auto; color: #888;">Selected sector: @(VM.SelectedSector?.ToString() ?? "—")</span>
+            </section>
+
+            <div style="flex: 1; min-height: 260px; overflow: hidden;">
+                <StarSystemView
+                    VM="@(new StarSystemViewModel { StarSystem = VM.SelectedStarSystem, SelectedSector = VM.SelectedSector })"/>
+            </div>
+
+            <section style="border: 1px solid #333; padding: 8px;">
+                <div style="color: cornflowerblue; font-weight: bold; margin-bottom: 6px;">Object Commands</div>
+                <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                    <button type="button" class="btn btn-sm btn-outline-primary" disabled>Move</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary" disabled>Pursue</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary" disabled>Evade</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary" disabled>Warp</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary" disabled>Colonize</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary" disabled>Construction Queue</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary" disabled>Transfer Cargo</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary" disabled>Fleet Transfer</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Sentry</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Clear Orders</button>
+                </div>
+            </section>
         </div>
 
-        <div style="border-left: 1px solid cornflowerblue; background-color: #0d0d0d; padding: 8px; overflow-y: auto;">
-            @switch (VM.SelectedSpaceObject)
-            {
-                case Planet p:
-                    <PlanetReport VM="@(new PlanetReportViewModel { Planet = p })" />
-                    break;
-                case ISpaceVehicle v:
-                    <SpaceVehicleReport VM="@(new SpaceVehicleReportViewModel { Vehicle = v })" />
-                    break;
-                case Star s:
-                    <StarReport VM="@(new StarReportViewModel { Star = s })" />
-                    break;
-                case AsteroidField a:
-                    <AsteroidFieldReport VM="@(new AsteroidFieldReportViewModel { AsteroidField = a })" />
-                    break;
-                case Storm st:
-                    <StormReport VM="@(new StormReportViewModel { Storm = st })" />
-                    break;
-                case WarpPoint wp:
-                    <WarpPointReport VM="@(new WarpPointReportViewModel { WarpPoint = wp })" />
-                    break;
-                default:
-                {
-                    if (VM.SelectedStarSystem is not null)
-                    {
-                        <StarSystemReport VM="@(new StarSystemReportViewModel { StarSystem = VM.SelectedStarSystem })" />
-                    }
-                    else
-                    {
-                        <div style="color: #666; font-style: italic; padding: 12px;">No object selected</div>
-                    }
+        <div
+            style="border-left: 1px solid cornflowerblue; background-color: #0d0d0d; padding: 8px; display: flex; flex-direction: column; gap: 8px; overflow-y: auto;">
+            <section style="border: 1px solid #333; min-height: 150px; display: flex; flex-direction: column;">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 6px 8px; border-bottom: 1px solid #333;">
+                    <strong style="color: cornflowerblue;">Galaxy Map</strong>
+                    <select class="form-select form-select-sm bg-dark text-white border-secondary" disabled
+                            style="width: auto;">
+                        <option>View Mode</option>
+                    </select>
+                </div>
+                <div
+                    style="flex: 1; min-height: 95px; display: flex; align-items: center; justify-content: center; color: #666; font-style: italic;">
+                    Galaxy map display is not connected in this view.
+                </div>
+            </section>
 
-                    break;
+            <section style="border: 1px solid #333; flex: 1; padding: 6px; overflow: auto;">
+                @switch (VM.SelectedSpaceObject)
+                {
+                    case Planet p:
+                        <PlanetReport VM="@(new PlanetReportViewModel { Planet = p })"/>
+                        break;
+                    case ISpaceVehicle v:
+                        <SpaceVehicleReport VM="@(new SpaceVehicleReportViewModel { Vehicle = v })"/>
+                        break;
+                    case Star s:
+                        <StarReport VM="@(new StarReportViewModel { Star = s })"/>
+                        break;
+                    case AsteroidField a:
+                        <AsteroidFieldReport VM="@(new AsteroidFieldReportViewModel { AsteroidField = a })"/>
+                        break;
+                    case Storm st:
+                        <StormReport VM="@(new StormReportViewModel { Storm = st })"/>
+                        break;
+                    case WarpPoint wp:
+                        <WarpPointReport VM="@(new WarpPointReportViewModel { WarpPoint = wp })"/>
+                        break;
+                    default:
+                    {
+                        if (VM.SelectedStarSystem is not null)
+                        {
+                            <StarSystemReport
+                                VM="@(new StarSystemReportViewModel { StarSystem = VM.SelectedStarSystem })"/>
+                        }
+                        else
+                        {
+                            <div style="color: #666; font-style: italic; padding: 12px;">No object selected</div>
+                        }
+
+                        break;
+                    }
                 }
-            }
+            </section>
         </div>
     </div>
 
+    <section
+        style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 6px 8px; border-top: 1px solid #333; background: #080808;">
+        <strong style="color: cornflowerblue; margin-right: 4px;">Game Commands</strong>
+        <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Next Idle</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Previous Idle</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Repeat Orders</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Repair</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Resupply</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Recycle</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Rename</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Toggle Minister</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Activate</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Cloak</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Decloak</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Waypoint</button>
+    </section>
+
     <!-- Bottom Message Log Bar -->
     <div style="height: 120px; border-top: 1px solid cornflowerblue; background-color: #050505;">
-        <HistoryLog VM="VM.HistoryLogVM" />
+        <HistoryLog VM="VM.HistoryLogVM"/>
     </div>
 </div>

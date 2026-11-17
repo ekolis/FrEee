@@ -1,40 +1,146 @@
 @namespace FrEee.UI.Blazor.Components.Reports
+@using FrEee.Objects.Civilization.CargoStorage
+@using FrEee.Utility
 @inherits ViewBase<SpaceVehicleReportViewModel>
 
-<div class="space-vehicle-report" style="background-color: black; color: white; border: 1px solid cornflowerblue; padding: 8px;">
+<div class="space-vehicle-report"
+     style="background-color: black; color: white; border: 1px solid cornflowerblue; padding: 8px;">
     @if (VM.Vehicle is not null)
     {
         var v = VM.Vehicle;
         var d = v.Design;
 
-        <div style="display: flex; gap: 12px; margin-bottom: 8px;">
-            <div style="width: 100px; height: 100px; border: 1px solid #444;">
-                <ImageDisplay VM="VM.PortraitViewModel" />
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 100px; height: 100px; border: 1px solid #444; flex-shrink: 0;">
+                <ImageDisplay VM="VM.PortraitViewModel"/>
             </div>
             <div style="flex: 1;">
                 <h4 style="color: cornflowerblue; margin-bottom: 4px;">@v.Name</h4>
                 <div style="font-size: 13px; color: #fff;">Role: @d.Role | Class: @d.Name</div>
-                <div style="font-size: 13px; color: #fff;">Owner: @(v.Owner?.Name ?? "None") | Fleet: @(v.Container?.Name ?? "None")</div>
-                <div style="font-size: 13px; color: #fff;">Shields: @v.ShieldHitpoints / @d.ShieldHitpoints | Armor: @v.ArmorHitpoints / @d.ArmorHitpoints | Hull: @v.HullHitpoints / @d.HullHitpoints</div>
-                <div style="font-size: 13px; color: #aaa;">Movement: @v.MovementRemaining / @d.StrategicSpeed | Supplies: @v.SupplyRemaining / @v.SupplyStorage</div>
+                <div style="font-size: 13px; color: #fff;">Hull: @d.Hull.Name |
+                    Age: @v.Timestamp.GetMemoryAgeDescription()</div>
+                <div style="font-size: 13px; color: #fff;">Owner: @(v.Owner?.Name ?? "None") |
+                    Fleet: @(v.Container?.Name ?? "None")</div>
+                <div style="font-size: 13px; color: #fff;">Shields: @v.ShieldHitpoints / @d.ShieldHitpoints |
+                    Armor: @v.ArmorHitpoints / @d.ArmorHitpoints | Hull: @v.HullHitpoints / @d.HullHitpoints</div>
+                <div style="font-size: 13px; color: #aaa;">Movement: @v.MovementRemaining / @d.StrategicSpeed |
+                    Supplies: @v.SupplyRemaining / @v.SupplyStorage</div>
+                <div style="font-size: 13px; color: #aaa;">First
+                    Order: @(v.Orders.FirstOrDefault()?.ToString() ?? "None")</div>
+            </div>
+        </div>
+
+        <div
+            style="display: flex; flex-wrap: wrap; gap: 4px; border-bottom: 1px solid #333; padding-bottom: 6px; margin-bottom: 6px;">
+            <span class="badge bg-primary">Detail</span>
+            <span class="badge bg-secondary">Orders</span>
+            <span class="badge bg-secondary">Components</span>
+            <span class="badge bg-secondary">Cargo</span>
+            <span class="badge bg-secondary">Ability</span>
+        </div>
+
+        <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+            <h6 style="color: cornflowerblue;">Condition</h6>
+            <div class="row g-2" style="font-size: 12px;">
+                <div class="col-6">Movement:
+                    <progress max="@(Math.Max(d.StrategicSpeed, 1))"
+                              value="@Math.Clamp(v.MovementRemaining, 0, Math.Max(d.StrategicSpeed, 1))"
+                              style="width: 100%;"></progress>
+                </div>
+                <div class="col-6">Supplies:
+                    <progress max="@(Math.Max(v.SupplyStorage, 1))"
+                              value="@Math.Clamp(v.SupplyRemaining, 0, Math.Max(v.SupplyStorage, 1))"
+                              style="width: 100%;"></progress>
+                </div>
+                <div class="col-4">Shields: @v.ShieldHitpoints / @d.ShieldHitpoints</div>
+                <div class="col-4">Armor: @v.ArmorHitpoints / @d.ArmorHitpoints</div>
+                <div class="col-4">Hull: @v.HullHitpoints / @d.HullHitpoints</div>
             </div>
         </div>
 
         <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
-            <h6 style="color: cornflowerblue;">Components (@v.Components.Count)</h6>
+            <h6 style="color: cornflowerblue;">Components <span
+                    style="font-size: 12px; color: #aaa;">(@v.Components.Count(c => !c.IsDestroyed) / @v.Components.Count functional)</span>
+            </h6>
             <div style="max-height: 120px; overflow-y: auto;">
-                @foreach (var c in v.Components)
+                @foreach (var componentGroup in v.Components.GroupBy(component => component.Template))
                 {
                     <div style="font-size: 12px; color: #fff;">
-                        @(c.Template.Name) - HP: @c.Hitpoints / @c.MaxHitpoints
+                        @componentGroup.Count() x @componentGroup.Key.Name — @(componentGroup.Count(component => !component.IsDestroyed)) / @componentGroup.Count() functional
                     </div>
                 }
             </div>
         </div>
 
         <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+            <h6 style="color: cornflowerblue;">Orders</h6>
+            <div style="display: flex; gap: 12px; color: #aaa; font-size: 12px; margin-bottom: 4px;">
+                <label><input type="checkbox" checked="@v.IsOnRepeat" disabled/> Repeat</label>
+                <label><input type="checkbox" checked="@v.IsOnHold" disabled/> On Hold</label>
+            </div>
+            @if (v.Orders.Any())
+            {
+                <ol style="padding-left: 24px;">
+                    @foreach (var order in v.Orders)
+                    {
+                        <li style="font-size: 12px;">@order</li>
+                    }
+                </ol>
+                <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Up</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Down</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Delete</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Clear</button>
+                </div>
+            }
+            else
+            {
+                <div style="font-size: 12px; color: #888; font-style: italic;">No orders</div>
+            }
+        </div>
+
+        @if (v is ICargoContainer cargoContainer)
+        {
+            <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+                <h6 style="color: cornflowerblue;">Cargo <span
+                        style="font-size: 12px; color: #aaa;">(@((v.CargoStorage - (cargoContainer.Cargo?.Size ?? 0)).Kilotons()) / @v.CargoStorage.Kilotons() free)</span>
+                </h6>
+                @if (cargoContainer.Cargo is not null)
+                {
+                    @foreach (var unitGroup in cargoContainer.Cargo.Units.GroupBy(unit => unit.Design))
+                    {
+                        <div style="font-size: 12px; color: #fff;">@unitGroup.Count() x @unitGroup.Key.Name</div>
+                    }
+
+                    @foreach (var population in cargoContainer.Cargo.Population)
+                    {
+                        <div
+                            style="font-size: 12px; color: #fff;">@population.Value.ToString("N0") @population.Key.Name</div>
+                    }
+
+                    @if (!cargoContainer.Cargo.Units.Any() && !cargoContainer.Cargo.Population.Any())
+                    {
+                        <div style="font-size: 12px; color: #888; font-style: italic;">No cargo</div>
+                    }
+                }
+                else
+                {
+                    <div style="font-size: 12px; color: #888; font-style: italic;">No cargo</div>
+                }
+            </div>
+        }
+
+        <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+            <h6 style="color: cornflowerblue;">Resource Income</h6>
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px;">
+                <span>Minerals: —</span><span>Organics: —</span><span>Radioactives: —</span>
+            </div>
+        </div>
+
+        <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
             <h6 style="color: cornflowerblue;">Abilities</h6>
-            <AbilityTreeView VM="@(new AbilityTreeViewModel { Abilities = v.AbilityTree(), IntrinsicAbilities = v.IntrinsicAbilities })" />
+            <AbilityTreeView
+                VM="@(new AbilityTreeViewModel { Abilities = v.AbilityTree(), IntrinsicAbilities = v.IntrinsicAbilities })"/>
         </div>
     }
     else

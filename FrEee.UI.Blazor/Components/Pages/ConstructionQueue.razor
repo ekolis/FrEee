@@ -1,47 +1,149 @@
 @attribute [Route(PagePaths.ConstructionQueue)]
 @inherits PageBase<ConstructionQueueViewModel>
 
-<div class="construction-queue-screen" style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; width: 100%; height: 100%; display: flex; flex-direction: column;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+<div class="construction-queue-screen"
+     style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; width: 100%; min-height: 100%; display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
         <h3 style="color: cornflowerblue; margin: 0;">Construction Queue: @(VM.Queue?.Container?.Name ?? "None")</h3>
-        <button class="btn btn-outline-secondary" @onclick="() => VM.Close()">Close</button>
+        <div style="display: flex; gap: 8px;">
+            <button type="button" class="btn btn-outline-info" disabled>Help</button>
+            <button type="button" class="btn btn-outline-secondary" @onclick="() => VM.Close()">Close</button>
+        </div>
     </div>
 
-    <div style="flex: 1; overflow-y: auto; border: 1px solid #333; padding: 8px;">
-        @if (VM.Queue is not null && VM.Queue.Orders.Any())
-        {
-            <table class="table table-dark table-sm table-hover" style="font-size: 13px;">
-                <thead>
+    <section
+        style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; border: 1px solid #333; padding: 10px;">
+        <strong style="color: cornflowerblue;">Construction Rate:</strong>
+        <span>Minerals: —</span>
+        <span>Organics: —</span>
+        <span>Radioactives: —</span>
+        <span style="margin-left: auto; color: #aaa;">Available rates are not connected in this view.</span>
+    </section>
+
+    <div
+        style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 1.15fr); gap: 12px; flex: 1; min-height: 420px;">
+        <section style="display: flex; flex-direction: column; border: 1px solid #333; min-width: 0;">
+            <div style="display: flex; flex-wrap: wrap; gap: 4px; padding: 8px; border-bottom: 1px solid #333;">
+                <button type="button" class="btn btn-sm btn-outline-primary active" disabled>Vehicles</button>
+                <button type="button" class="btn btn-sm btn-outline-primary" disabled>Facilities</button>
+                <button type="button" class="btn btn-sm btn-outline-primary" disabled>Upgrades</button>
+            </div>
+            <div style="padding: 8px; overflow: auto; flex: 1;">
+                <table class="table table-dark table-sm table-hover" style="font-size: 13px;">
+                    <thead>
                     <tr style="color: cornflowerblue;">
-                        <th>#</th>
                         <th>Item</th>
                         <th>Cost</th>
-                        <th>Actions</th>
+                        <th>ETA</th>
                     </tr>
-                </thead>
-                <tbody>
-                    @{
-                        var idx = 1;
-                        foreach (var order in VM.Queue.Orders)
-                        {
-                            <tr>
-                                <td>@(idx++)</td>
-                                <td>@order.Template.Name</td>
-                                <td>@order.Template.Cost</td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-primary" @onclick="() => VM.MoveUp(order)">▲</button>
-                                    <button class="btn btn-sm btn-outline-primary" @onclick="() => VM.MoveDown(order)">▼</button>
-                                    <button class="btn btn-sm btn-outline-danger" @onclick="() => VM.Delete(order)">✕</button>
-                                </td>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td colspan="3" style="color: #888; font-style: italic;">Available construction items are not
+                            connected in this view.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div style="border-top: 1px solid #333; padding-top: 10px;">
+                    <strong style="color: cornflowerblue;">Selected Item Cost</strong>
+                    <div style="display: flex; gap: 16px; color: #aaa; margin-top: 6px;">
+                        <span>Minerals: —</span><span>Organics: —</span><span>Radioactives: —</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section style="display: flex; flex-direction: column; border: 1px solid #333; min-width: 0;">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; padding: 8px; border-bottom: 1px solid #333;">
+                <strong style="color: cornflowerblue;">Build Queue</strong>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <label class="form-check-label"><input class="form-check-input" type="checkbox" disabled/> Only
+                        Latest</label>
+                    <label class="form-check-label"><input class="form-check-input" type="checkbox" disabled/> Emergency
+                        Build</label>
+                    <label class="form-check-label"><input class="form-check-input" type="checkbox" disabled/> Repeat
+                        Build</label>
+                    <label class="form-check-label"><input class="form-check-input" type="checkbox" disabled/> On
+                        Hold</label>
+                </div>
+            </div>
+            <div
+                style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; padding: 8px; flex: 1; min-height: 0;">
+                <div style="overflow: auto; border: 1px solid #222; padding: 6px;">
+                    @if (VM.Queue is not null && VM.Queue.Orders.Any())
+                    {
+                        <table class="table table-dark table-sm table-hover" style="font-size: 13px;">
+                            <thead>
+                            <tr style="color: cornflowerblue;">
+                                <th>#</th>
+                                <th>Item</th>
+                                <th>Cost</th>
+                                <th>ETA</th>
+                                <th>Actions</th>
                             </tr>
-                        }
+                            </thead>
+                            <tbody>
+                            @{
+                                var idx = 1;
+                                foreach (var order in VM.Queue.Orders)
+                                {
+                                    <tr>
+                                        <td>@(idx++)</td>
+                                        <td>@order.Template.Name</td>
+                                        <td>@order.Template.Cost</td>
+                                        <td>—</td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-outline-primary"
+                                                    aria-label="Move up" @onclick="() => VM.MoveUp(order)">▲
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-outline-primary"
+                                                    aria-label="Move down" @onclick="() => VM.MoveDown(order)">▼
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-outline-danger"
+                                                    aria-label="Delete" @onclick="() => VM.Delete(order)">✕
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            </tbody>
+                        </table>
                     }
-                </tbody>
-            </table>
-        }
-        else
-        {
-            <div style="color: #666; font-style: italic; padding: 12px;">Queue is empty.</div>
-        }
+                    else
+                    {
+                        <div style="color: #666; font-style: italic; padding: 12px;">Queue is empty.</div>
+                    }
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <button type="button" class="btn btn-sm btn-outline-primary" disabled>Top</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary" disabled>Up</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary" disabled>Down</button>
+                    <button type="button" class="btn btn-sm btn-outline-primary" disabled>Bottom</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger" disabled>Delete</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Clear</button>
+                </div>
+            </div>
+            <div
+                style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; border-top: 1px solid #333; padding: 8px; color: #aaa; font-size: 13px;">
+                <span>Local: —</span><span>Sector: —</span><span>System: —</span><span>Empire: —</span>
+                <span>Free cargo storage: —</span><span>Free facility slots: —</span>
+            </div>
+            <div
+                style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 8px; border-top: 1px solid #333;">
+                <div style="display: flex; gap: 6px;">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Save Queue</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Load Queue</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Set Move To</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" disabled>Clear Move To</button>
+                </div>
+                <div style="display: flex; gap: 6px;">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" @onclick="() => VM.Close()">Cancel
+                    </button>
+                    <button type="button" class="btn btn-sm btn-primary" @onclick="() => VM.Close()">OK</button>
+                </div>
+            </div>
+        </section>
     </div>
 </div>

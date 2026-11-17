@@ -1,9 +1,11 @@
 @attribute [Route(PagePaths.EmpireSetup)]
 @using FrEee.UI.Blazor.Components
 @using FrEee.Modding
+@using FrEee.Objects.Space
 @inherits PageBase<EmpireSetupViewModel>
 
-<div class="empire-setup" style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; width: 100%; height: 100%; overflow-y: auto;">
+<div class="empire-setup"
+     style="background-color: black; color: white; padding: 16px; border: 1px solid cornflowerblue; width: 100%; height: 100%; overflow-y: auto;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
         <h3 style="color: cornflowerblue; margin: 0;">Empire Setup</h3>
         <div style="display: flex; gap: 8px;">
@@ -12,18 +14,85 @@
         </div>
     </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-        <div style="border: 1px solid #333; padding: 12px;">
-            <h5 style="color: cornflowerblue;">General Info</h5>
-            <div class="mb-2">
+    <div class="d-flex flex-wrap gap-2 mb-3" style="border-bottom: 1px solid #333; padding-bottom: 8px;">
+        <button type="button" class="btn btn-sm btn-outline-primary active" disabled>General</button>
+        <button type="button" class="btn btn-sm btn-outline-primary" disabled>Traits</button>
+        <button type="button" class="btn btn-sm btn-outline-primary" disabled>Aptitudes</button>
+        <span class="ms-auto align-self-center" style="color: #aaa;">Points Available: — / —</span>
+    </div>
+
+    <section style="border: 1px solid #333; padding: 12px; margin-bottom: 16px;">
+        <h5 style="color: cornflowerblue;">General</h5>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px;">
+            <div>
                 <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Empire Name</label>
-                <input class="form-control form-control-sm bg-dark text-white border-secondary" @bind="VM.EmpireName" />
+                <input class="form-control form-control-sm bg-dark text-white border-secondary" @bind="VM.EmpireName"/>
             </div>
-            <div class="mb-2">
+            <div>
                 <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Leader Name</label>
-                <input class="form-control form-control-sm bg-dark text-white border-secondary" @bind="VM.LeaderName" />
+                <input class="form-control form-control-sm bg-dark text-white border-secondary" @bind="VM.LeaderName"/>
             </div>
-            <div class="mb-2">
+            <div>
+                <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Leader Portrait</label>
+                <div class="input-group input-group-sm">
+                    <select class="form-select bg-dark text-white border-secondary" disabled>
+                        <option>Portrait selection unavailable</option>
+                    </select>
+                    <div class="border border-secondary d-flex align-items-center justify-content-center px-2"
+                         style="min-width: 72px; color: #888;">Preview
+                    </div>
+                </div>
+            </div>
+            <div>
+                <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Empire AI</label>
+                <select class="form-select form-select-sm bg-dark text-white border-secondary" disabled>
+                    <option>AI selection unavailable</option>
+                </select>
+            </div>
+            <div>
+                <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Empire Color (RGB)</label>
+                <div class="d-flex gap-2 align-items-center">
+                    <input class="form-control form-control-sm bg-dark text-white border-secondary" type="number"
+                           placeholder="R" disabled/>
+                    <input class="form-control form-control-sm bg-dark text-white border-secondary" type="number"
+                           placeholder="G" disabled/>
+                    <input class="form-control form-control-sm bg-dark text-white border-secondary" type="number"
+                           placeholder="B" disabled/>
+                    <span class="border border-secondary" style="width: 30px; height: 30px; background: #333;"
+                          aria-label="Empire color preview"></span>
+                </div>
+            </div>
+            <div>
+                <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Insignia</label>
+                <div class="input-group input-group-sm">
+                    <select class="form-select bg-dark text-white border-secondary" disabled>
+                        <option>Insignia selection unavailable</option>
+                    </select>
+                    <div class="border border-secondary d-flex align-items-center justify-content-center px-2"
+                         style="min-width: 72px; color: #888;">Preview
+                    </div>
+                </div>
+            </div>
+            <div>
+                <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Shipset</label>
+                <div class="input-group input-group-sm">
+                    <select class="form-select bg-dark text-white border-secondary" disabled>
+                        <option>Shipset selection unavailable</option>
+                    </select>
+                    <div class="border border-secondary d-flex align-items-center justify-content-center px-2"
+                         style="min-width: 72px; color: #888;">Preview
+                    </div>
+                </div>
+            </div>
+            <div>
+                <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Design Names</label>
+                <select class="form-select form-select-sm bg-dark text-white border-secondary" disabled>
+                    <option>Design names selection unavailable</option>
+                </select>
+            </div>
+        </div>
+        <div class="d-flex flex-wrap align-items-start gap-2 mt-3">
+            <div style="min-width: 230px; flex: 1;">
                 <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Culture</label>
                 <select class="form-select form-select-sm bg-dark text-white border-secondary"
                         @onchange="(e) => VM.SelectedCulture = Mod.Current?.Cultures.FirstOrDefault(c => c.Name == e.Value?.ToString())">
@@ -31,34 +100,81 @@
                     {
                         @foreach (var c in Mod.Current.Cultures)
                         {
-                            <option value="@c.Name">@c.Name</option>
+                            <option value="@c.Name" selected="@(c == VM.SelectedCulture)">@c.Name</option>
+                        }
+                    }
+                </select>
+                <div
+                    style="color: #aaa; font-size: 13px; margin-top: 4px;">@(VM.SelectedCulture?.Description ?? "Please choose a culture.")</div>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-primary align-self-end" disabled>Compare Cultures
+            </button>
+            <label class="form-check-label align-self-end pb-2"><input class="form-check-input" type="checkbox"
+                                                                       disabled/> AI Empires Can Use</label>
+        </div>
+    </section>
+
+    <section style="border: 1px solid #333; padding: 12px; margin-bottom: 16px;">
+        <h5 style="color: cornflowerblue;">Primary Race</h5>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
+            <div>
+                <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Race Name</label>
+                <input class="form-control form-control-sm bg-dark text-white border-secondary"
+                       @bind="VM.PrimaryRace.Name"/>
+            </div>
+            <div>
+                <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Native Surface</label>
+                <select class="form-select form-select-sm bg-dark text-white border-secondary"
+                        @bind="VM.PrimaryRace.NativeSurface">
+                    @if (Mod.Current is not null)
+                    {
+                        @foreach (var surface in Mod.Current.StellarObjectTemplates.OfType<Planet>().Select(p => p.Surface).Distinct())
+                        {
+                            <option value="@surface">@surface</option>
                         }
                     }
                 </select>
             </div>
-        </div>
-
-        <div style="border: 1px solid #333; padding: 12px;">
-            <h5 style="color: cornflowerblue;">Race Setup</h5>
-            <div class="mb-2">
-                <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Race Name</label>
-                <input class="form-control form-control-sm bg-dark text-white border-secondary" @bind="VM.PrimaryRace.Name" />
-            </div>
-            <div class="mb-2">
+            <div>
                 <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Native Atmosphere</label>
-                <input class="form-control form-control-sm bg-dark text-white border-secondary" @bind="VM.PrimaryRace.NativeAtmosphere" />
+                <select class="form-select form-select-sm bg-dark text-white border-secondary"
+                        @bind="VM.PrimaryRace.NativeAtmosphere">
+                    @if (Mod.Current is not null)
+                    {
+                        @foreach (var atmosphere in Mod.Current.StellarObjectTemplates.OfType<Planet>().Select(p => p.Atmosphere).Distinct())
+                        {
+                            <option value="@atmosphere">@atmosphere</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div>
+                <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Population Icon</label>
+                <div class="input-group input-group-sm">
+                    <input class="form-control bg-dark text-white border-secondary"
+                           @bind="VM.PrimaryRace.PopulationIconName"/>
+                    <div class="border border-secondary d-flex align-items-center justify-content-center px-2"
+                         style="min-width: 72px; color: #888;">Preview
+                    </div>
+                </div>
+            </div>
+            <div>
+                <label class="form-label" style="color: cornflowerblue; font-size: 13px;">Happiness</label>
+                <select class="form-select form-select-sm bg-dark text-white border-secondary" disabled>
+                    <option>@(VM.PrimaryRace.HappinessModel?.Description ?? "Please choose a happiness model.")</option>
+                </select>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
         <div style="border: 1px solid #333; padding: 12px;">
             <h5 style="color: cornflowerblue;">Aptitudes</h5>
-            <AptitudePicker VM="VM.AptitudePickerVM" />
+            <AptitudePicker VM="VM.AptitudePickerVM"/>
         </div>
         <div style="border: 1px solid #333; padding: 12px;">
             <h5 style="color: cornflowerblue;">Traits</h5>
-            <TraitPicker VM="VM.TraitPickerVM" />
+            <TraitPicker VM="VM.TraitPickerVM"/>
         </div>
     </div>
 </div>

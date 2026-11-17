@@ -1,55 +1,186 @@
 @namespace FrEee.UI.Blazor.Components.Reports
 @using FrEee.Extensions
 @using FrEee.Utility
+@using FrEee.Objects.Civilization
+@using FrEee.Objects.GameState
 @inherits ViewBase<PlanetReportViewModel>
 
-<div class="planet-report" style="background-color: black; color: white; border: 1px solid cornflowerblue; padding: 8px;">
+<div class="planet-report"
+     style="background-color: black; color: white; border: 1px solid cornflowerblue; padding: 8px;">
     @if (VM.Planet is not null)
     {
         var p = VM.Planet;
         var col = p.Colony;
 
-        <div style="display: flex; gap: 12px; margin-bottom: 8px;">
-            <div style="width: 100px; height: 100px; border: 1px solid #444;">
-                <ImageDisplay VM="@(new ImageDisplayViewModel { Image = p.Portrait })" />
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 8px;">
+            <div style="width: 100px; height: 100px; border: 1px solid #444; flex-shrink: 0;">
+                <ImageDisplay VM="@(new ImageDisplayViewModel { Image = p.Portrait })"/>
             </div>
             <div style="flex: 1;">
                 <h4 style="color: cornflowerblue; margin-bottom: 4px;">@p.Name</h4>
-                <div style="font-size: 13px; color: #fff;">Size: @(p.Size?.Name ?? "Normal") | Atmosphere: @p.Atmosphere | Surface: @p.Surface</div>
+                <div style="font-size: 13px; color: #fff;">Size: @(p.Size?.Name ?? "Normal") | Surface: @p.Surface |
+                    Atmosphere: @p.Atmosphere</div>
+                <div style="font-size: 13px; color: #aaa;">Conditions: @p.Conditions (@p.ConditionsAmount) |
+                    Age: @p.Timestamp.GetMemoryAgeDescription()</div>
                 <div style="font-size: 13px; color: #fff;">Owner: @(col?.Owner?.Name ?? "Uncolonized")</div>
+                @if (p.Owner is not null)
+                {
+                    <div style="display: flex; align-items: center; gap: 8px; margin-top: 6px;">
+                        <div style="width: 36px; height: 36px; border: 1px solid #444;">
+                            <ImageDisplay VM="@(new ImageDisplayViewModel { Image = p.Owner.Icon })"/>
+                        </div>
+                        <span style="color: #aaa; font-size: 12px;">Colony of @p.Owner.Name</span>
+                    </div>
+                }
                 @if (col is not null)
                 {
-                    <div style="font-size: 13px; color: #aaa;">Population: @col.Population.Values.Sum().ToUnitString()</div>
-                    <div style="font-size: 13px; color: #aaa;">Population: @col.Population.Values.Sum().ToUnitString()</div>
+                    var population = col.Population.Values.Sum();
+                    var showPopulationChange = Empire.Current is not null && col.CheckVisibility(Empire.Current) >= Visibility.Scanned;
+                    <div style="font-size: 13px; color: #aaa;">
+                        Population: @population.ToUnitString(true) / @p.MaxPopulation.ToUnitString(true)
+                        @if (showPopulationChange)
+                        {
+                            if (p.PopulationChangePerTurn > 0)
+                            {
+                                <span>(+@p.PopulationChangePerTurn.ToUnitString(true) per turn)</span>
+                            }
+                            else if (p.PopulationChangePerTurn < 0)
+                            {
+                                <span>(@p.PopulationChangePerTurn.ToUnitString(true) per turn)</span>
+                            }
+                            else
+                            {
+                                <span>(stagnant)</span>
+                            }
+                        }
+                    </div>
+                    <div style="font-size: 13px; color: #aaa;">Mood: @col.Mood (Average anger: @col.AverageAnger)</div>
                 }
             </div>
         </div>
 
+        @if (!string.IsNullOrWhiteSpace(p.Description))
+        {
+            <p style="font-size: 13px; color: #ccc; border-top: 1px solid #333; padding-top: 6px;">@p.Description</p>
+        }
+
         <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
             <h6 style="color: cornflowerblue;">Resource Value</h6>
             <div style="display: flex; gap: 16px; font-size: 13px;">
-                <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Minerals, Amount = p.ResourceValue[Resource.Minerals] })" />
-                <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Organics, Amount = p.ResourceValue[Resource.Organics] })" />
-                <ResourceDisplay VM="@(new ResourceDisplayViewModel { Resource = Resource.Radioactives, Amount = p.ResourceValue[Resource.Radioactives] })" />
+                <ResourceDisplay
+                    VM="@(new ResourceDisplayViewModel { Resource = Resource.Minerals, Amount = p.ResourceValue[Resource.Minerals] })"/>
+                <ResourceDisplay
+                    VM="@(new ResourceDisplayViewModel { Resource = Resource.Organics, Amount = p.ResourceValue[Resource.Organics] })"/>
+                <ResourceDisplay
+                    VM="@(new ResourceDisplayViewModel { Resource = Resource.Radioactives, Amount = p.ResourceValue[Resource.Radioactives] })"/>
             </div>
         </div>
 
-        @if (col is not null && col.Facilities.Any())
+        @if (p.Owner is not null)
         {
             <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
-                <h6 style="color: cornflowerblue;">Facilities (@col.Facilities.Count)</h6>
+                <h6 style="color: cornflowerblue;">Resource Income</h6>
+                @{ var income = p.GrossIncome(); }
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px;">
+                    <ResourceDisplay
+                        VM="@(new ResourceDisplayViewModel { Resource = Resource.Minerals, Amount = income[Resource.Minerals] })"/>
+                    <ResourceDisplay
+                        VM="@(new ResourceDisplayViewModel { Resource = Resource.Organics, Amount = income[Resource.Organics] })"/>
+                    <ResourceDisplay
+                        VM="@(new ResourceDisplayViewModel { Resource = Resource.Radioactives, Amount = income[Resource.Radioactives] })"/>
+                    <ResourceDisplay
+                        VM="@(new ResourceDisplayViewModel { Resource = Resource.Research, Amount = income[Resource.Research] })"/>
+                    <ResourceDisplay
+                        VM="@(new ResourceDisplayViewModel { Resource = Resource.Intelligence, Amount = income[Resource.Intelligence] })"/>
+                </div>
+            </div>
+        }
+
+        <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+            <h6 style="color: cornflowerblue;">Construction</h6>
+            <div style="font-size: 13px;">Item: @(p.ConstructionQueue?.FirstItemName ?? "(None)")</div>
+            <div style="font-size: 12px; color: #aaa;">Next item
+                ETA: @(p.ConstructionQueue?.FirstItemEta?.ToString() ?? "—") | Queue
+                ETA: @(p.ConstructionQueue?.Eta?.ToString() ?? "—")</div>
+        </div>
+
+        @if (col is not null)
+        {
+            <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+                <h6 style="color: cornflowerblue;">Facilities (@col.Facilities.Count) <span
+                        style="font-size: 12px; color: #aaa;">(@(p.MaxFacilities - col.Facilities.Count) / @p.MaxFacilities slots free)</span>
+                </h6>
                 <div style="max-height: 120px; overflow-y: auto;">
-                    @foreach (var f in col.Facilities)
+                    @foreach (var facility in col.Facilities)
                     {
-                        <div style="font-size: 12px; color: #fff;">@f.Name</div>
+                        <div style="font-size: 12px; color: #fff;">@facility.Name</div>
+                    }
+                </div>
+            </div>
+            <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+                <h6 style="color: cornflowerblue;">Races</h6>
+                <div style="max-height: 100px; overflow-y: auto;">
+                    @foreach (var race in p.AllPopulation.Keys)
+                    {
+                        <div style="font-size: 12px; color: #fff;">@race.Name</div>
                     }
                 </div>
             </div>
         }
 
         <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+            <h6 style="color: cornflowerblue;">Cargo <span
+                    style="font-size: 12px; color: #aaa;">(@((p.Cargo?.Size ?? 0).Kilotons()) / @p.CargoStorage.Kilotons())</span>
+            </h6>
+            <div style="max-height: 120px; overflow-y: auto;">
+                @if (p.Cargo is not null)
+                {
+                    @foreach (var unitGroup in p.Cargo.Units.GroupBy(unit => unit.Design))
+                    {
+                        <div style="font-size: 12px; color: #fff;">@unitGroup.Count() x @unitGroup.Key.Name</div>
+                    }
+
+                    @foreach (var population in p.Cargo.Population)
+                    {
+                        <div
+                            style="font-size: 12px; color: #fff;">@population.Value.ToUnitString(true) @population.Key.Name</div>
+                    }
+
+                    @if (!p.Cargo.Units.Any() && !p.Cargo.Population.Any())
+                    {
+                        <div style="font-size: 12px; color: #888; font-style: italic;">No cargo</div>
+                    }
+                }
+                else
+                {
+                    <div style="font-size: 12px; color: #888; font-style: italic;">No cargo</div>
+                }
+            </div>
+        </div>
+
+        <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
+            <h6 style="color: cornflowerblue;">Orders</h6>
+            <div style="display: flex; gap: 12px; color: #aaa; font-size: 12px; margin-bottom: 4px;">
+                <label><input type="checkbox" checked="@p.IsOnRepeat" disabled/> Repeat</label>
+                <label><input type="checkbox" checked="@p.IsOnHold" disabled/> On Hold</label>
+            </div>
+            @if (p.Orders.Any())
+            {
+                @foreach (var order in p.Orders)
+                {
+                    <div style="font-size: 12px; color: #fff;">@order</div>
+                }
+            }
+            else
+            {
+                <div style="font-size: 12px; color: #888; font-style: italic;">No orders</div>
+            }
+        </div>
+
+        <div style="margin-top: 8px; border-top: 1px solid #333; padding-top: 6px;">
             <h6 style="color: cornflowerblue;">Abilities</h6>
-            <AbilityTreeView VM="@(new AbilityTreeViewModel { Abilities = p.Abilities.StackToTree(p), IntrinsicAbilities = p.Abilities })" />
+            <AbilityTreeView
+                VM="@(new AbilityTreeViewModel { Abilities = p.Abilities.StackToTree(p), IntrinsicAbilities = p.Abilities })"/>
         </div>
     }
     else
