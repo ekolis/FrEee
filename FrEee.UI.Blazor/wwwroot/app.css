@@ -1,3 +1,11 @@
+@font-face {
+    font-family: Kwajong;
+    src: url('Fonts/Kwajong.otf');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-color: black;
@@ -5,8 +13,8 @@ html, body {
 }
 
 .navbar-brand {
-    font-size: 1.1rem;
-    font-family: Silicon, sans-serif;
+    font-size: 1.2rem;
+    font-family: Kwajong, sans-serif;
 }
 
 a, .btn-link {
@@ -14,7 +22,8 @@ a, .btn-link {
 }
 
 .btn {
-    font-family: Silicon, sans-serif;
+    font-size: 1.2rem;
+    font-family: Kwajong, sans-serif;
 }
 
 .btn-primary {
