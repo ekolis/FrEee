@@ -1,5 +1,0 @@
-<Project>
-    <PropertyGroup>
-        <BaseOutputPath>$(SolutionDir)/bin/</BaseOutputPath>
-    </PropertyGroup>
-</Project>
