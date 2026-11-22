@@ -55,7 +55,7 @@ public class Record
 	/// <param name="startIndex"></param>
 	/// <param name="allowSkip"></param>
 	/// <returns></returns>
-	public Field FindField(IEnumerable<string> fieldNames, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = true)
+	public Field? FindField(IEnumerable<string> fieldNames, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = true)
 	{
 		for (var i = startIndex; i < Fields.Count; i++)
 		{
@@ -72,27 +72,27 @@ public class Record
 		return null;
 	}
 
-	public Formula<T> Get<T>(string fieldName, object context = null, bool allowNulls = true)
+	public Formula<T>? Get<T>(string fieldName, object? context = null, bool allowNulls = true)
 		where T : IConvertible, IComparable
 	{
 		int index = 0;
 		return Get<T>(fieldName, context, ref index, allowNulls);
 	}
 
-	public Formula<T> Get<T>(IEnumerable<string> fieldNames, object context = null, bool allowNulls = true)
+	public Formula<T>? Get<T>(IEnumerable<string> fieldNames, object? context = null, bool allowNulls = true)
 		where T : IConvertible, IComparable
 	{
 		int index = 0;
 		return Get<T>(fieldNames, context, ref index, allowNulls);
 	}
 
-	public Formula<T> Get<T>(string fieldName, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
+	public Formula<T>? Get<T>(string fieldName, object? context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
 		where T : IConvertible, IComparable
 	{
 		return Get<T>(new string[] { fieldName }, context, ref index, allowNulls, startIndex = 0, allowSkip = true);
 	}
 
-	public Formula<T> Get<T>(IEnumerable<string> fieldNames, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
+	public Formula<T>? Get<T>(IEnumerable<string> fieldNames, object? context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
 		where T : IConvertible, IComparable
 	{
 		var f = FindField(fieldNames, ref index, !allowNulls, startIndex, allowSkip);
