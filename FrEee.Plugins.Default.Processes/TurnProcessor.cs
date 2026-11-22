@@ -208,6 +208,15 @@ public class TurnProcessor
 		// resource generation
 		if (status != null)
 			status.Message = "Generating resources";
+		
+		// resource generation 0: basic income
+		foreach (var emp in game.Empires)
+		{
+			if (emp?.IsDefeated == false)
+			{
+				emp.StoredResources += Mod.Current.Settings.EmpireBasicIncome;
+			}
+		}
 
 		// resource generation 1: colony income
 		game.Galaxy.FindSpaceObjects<Planet>().Where(x => !x.IsMemory).Select(p => p.Colony).ExceptSingle(null).SafeForeach(q => ProcessColonyIncome(game, q));
