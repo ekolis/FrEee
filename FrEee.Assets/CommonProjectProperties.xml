@@ -4,7 +4,7 @@
 		<Product>FrEee</Product>
 		<Version>0.1.0</Version>
 		<Copyright>Copyright © 2013-2026</Copyright>
-		<ApplicationIcon>../FrEee.Assets/FrEee.ico</ApplicationIcon>
+		<ApplicationIcon>../FrEee.Assets/Pictures/FrEee.ico</ApplicationIcon>
 		<Nullable>enable</Nullable>
         <Features>runtime-async=on</Features>
 	</PropertyGroup>
