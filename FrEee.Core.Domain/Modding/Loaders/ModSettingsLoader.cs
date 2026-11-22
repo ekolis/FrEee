@@ -1,6 +1,7 @@
 ﻿using FrEee.Objects.Civilization;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Utility;
 
 namespace FrEee.Modding.Loaders;
 
@@ -69,6 +70,24 @@ public class ModSettingsLoader : DataFileLoader
 		settings.ReproductionMultiplier = rec.Get<double>("Reproduction Multiplier", null) ?? 0.1;
 
 		// TODO - load more settings
+
+		settings.DefaultColonyConstructionRate = new ResourceQuantity();
+		// TODO: dynamically select resources that can be used for construction
+		// but they're singular in the field names, not plural as usual
+		settings.DefaultColonyConstructionRate.Add(Resource.Minerals, rec.Get<int>($"Empire Base Planet Mineral Usage Rate", null) ?? 2000);
+		settings.DefaultColonyConstructionRate.Add(Resource.Organics, rec.Get<int>($"Empire Base Planet Organic Usage Rate", null) ?? 2000);
+		settings.DefaultColonyConstructionRate.Add(Resource.Radioactives, rec.Get<int>($"Empire Base Planet Radioactive Usage Rate", null) ?? 2000);
+		
+		settings.EmpireBasicIncome = new ResourceQuantity();
+		foreach (var resource in Resource.All)
+		{
+			settings.EmpireBasicIncome.Add(
+				resource,
+				rec.Get<int>($"Empire Basic Income {resource.Name}", null)
+				?? settings.DefaultColonyConstructionRate[resource]);
+		}
+		
+		// TODO: load more settings
 
 		settings.PopulationFactor = rec.Get<int>("Population Factor", null) ?? (int)1e6; // specifies unit of population for other settings
 		settings.PopulationHitpoints = (rec.Get<double>("Damage Points To Kill One Population", null) ?? 10).Value / settings.PopulationFactor;

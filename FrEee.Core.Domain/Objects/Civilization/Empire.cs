@@ -260,7 +260,7 @@ public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable
 			// shouldn't change except at turn processing...
 			if (grossDomesticIncome == null || Empire.Current == null)
 			{
-				grossDomesticIncome = ColonyIncome + RemoteMiningIncome + RawResourceIncome;
+				grossDomesticIncome = Mod.Current.Settings.EmpireBasicIncome + ColonyIncome + RemoteMiningIncome + RawResourceIncome;
 
 				if (this != Empire.Current)
 				{

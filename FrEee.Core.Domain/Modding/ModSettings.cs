@@ -34,11 +34,11 @@ public class ModSettings
 		MoodReproductionModifiers.Add(Mood.Indifferent, 0);
 		MoodReproductionModifiers.Add(Mood.Happy, 2);
 		MoodReproductionModifiers.Add(Mood.Jubilant, 5);
-            MoodReproductionModifiers.Add(Mood.Emotionless, 2);
+		MoodReproductionModifiers.Add(Mood.Emotionless, 2);
 
 		// TODO - moddable mood construction modifiers
 		MoodConstructionModifiers = new Dictionary<Mood, int>();
-		MoodConstructionModifiers.Add(Mood.Rioting,  0);
+		MoodConstructionModifiers.Add(Mood.Rioting, 0);
 		MoodConstructionModifiers.Add(Mood.Angry, 100);
 		MoodConstructionModifiers.Add(Mood.Unhappy, 100);
 		MoodConstructionModifiers.Add(Mood.Indifferent, 100);
@@ -55,8 +55,8 @@ public class ModSettings
 		MoodThresholds.Add(Mood.Happy, 150);
 		MoodThresholds.Add(Mood.Jubilant, 0);
 
-            // TODO - moddable planetary conditions thresholds
-            ConditionsThresholds = new Dictionary<Conditions, int>();
+		// TODO - moddable planetary conditions thresholds
+		ConditionsThresholds = new Dictionary<Conditions, int>();
 		ConditionsThresholds.Add(Conditions.Deadly, 0);
 		ConditionsThresholds.Add(Conditions.Harsh, 20);
 		ConditionsThresholds.Add(Conditions.Unpleasant, 35);
@@ -90,7 +90,10 @@ public class ModSettings
 	/// <summary>
 	/// Racial aptitudes.
 	/// </summary>
-	public IEnumerable<Aptitude> Aptitudes { get { return Aptitude.All; } }
+	public IEnumerable<Aptitude> Aptitudes
+	{
+		get { return Aptitude.All; }
+	}
 
 	/// <summary>
 	/// Population of the colony ship crew's race to spawn on colonization.
@@ -151,6 +154,17 @@ public class ModSettings
 	/// The construction rate for colonies lacking a spaceyard.
 	/// </summary>
 	public ResourceQuantity DefaultColonyConstructionRate { get; set; }
+	
+	/// <summary>
+	/// Basic income for all empires, regardless of their resource extraction abilities.
+	/// </summary>
+	/// <remarks>
+	/// This is designed to prevent softlocks when empires lose all their resource extraction abilities
+	/// and spend all their remaining resources.
+	/// Unlike in SE4, this amount is added to the empire's income each turn,
+	/// rather than being a minimum threshold for income.
+	/// </remarks>
+	public ResourceQuantity EmpireBasicIncome { get; set; }
 
 	/// <summary>
 	/// Pictures for defeat.
@@ -254,7 +268,7 @@ public class ModSettings
 
 	// TODO - moddable min/max anger values
 	public int MaxAnger => 1000;
-	
+
 	// TODO - moddable min/max conditions values
 	public int MaxConditions => 100;
 
@@ -562,6 +576,7 @@ public class ModSettings
 			else
 				break;
 		}
+
 		if (MoodProductivityModifiers.ContainsKey(mood))
 			return MoodProductivityModifiers[mood] / 100d;
 		return 1d;
@@ -578,6 +593,7 @@ public class ModSettings
 			if (pm.Key > population)
 				break;
 		}
+
 		return result;
 	}
 
@@ -590,6 +606,7 @@ public class ModSettings
 			if (pm.Key > population)
 				break;
 		}
+
 		return result;
 	}
 }
