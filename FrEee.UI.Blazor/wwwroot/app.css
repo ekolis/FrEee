@@ -1,6 +1,6 @@
 @font-face {
-    font-family: Kwajong;
-    src: url('Fonts/Kwajong.otf');
+    font-family: FrEee Header;
+    src: url('Fonts/Minne Petat.otf');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -14,7 +14,7 @@ html, body {
 
 .navbar-brand {
     font-size: 1.2rem;
-    font-family: Kwajong, sans-serif;
+    font-family: FrEee Header, sans-serif;
 }
 
 a, .btn-link {
@@ -23,7 +23,7 @@ a, .btn-link {
 
 .btn {
     font-size: 1.2rem;
-    font-family: Kwajong, sans-serif;
+    font-family: FrEee Header, sans-serif;
 }
 
 .btn-primary {
