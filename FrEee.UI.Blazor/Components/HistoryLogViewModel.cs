@@ -7,6 +7,7 @@ using FrEee.Objects.LogMessages;
 using FrEee.Objects.Space;
 using FrEee.Objects.Technology;
 using FrEee.Processes.Combat;
+using FrEee.UI.Blazor.Models;
 using FrEee.Utility;
 using FrEee.Vehicles;
 using FrEee.Vehicles.Types;

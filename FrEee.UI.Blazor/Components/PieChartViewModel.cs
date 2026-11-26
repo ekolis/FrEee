@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Numerics;
 using FrEee.Extensions;
+using FrEee.UI.Blazor.Models;
 
 namespace FrEee.UI.Blazor.Components
 {

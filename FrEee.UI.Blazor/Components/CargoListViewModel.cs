@@ -2,6 +2,7 @@ using FrEee.Objects.Civilization.CargoStorage;
 using FrEee.Objects.Civilization;
 using FrEee.Vehicles.Types;
 using FrEee.Extensions;
+using FrEee.UI.Blazor.Models;
 
 namespace FrEee.UI.Blazor.Components;
 

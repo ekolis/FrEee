@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
 using FrEee.Extensions;
+using FrEee.UI.Blazor.Models;
 using FrEee.Utility;
 
 namespace FrEee.UI.Blazor.Components

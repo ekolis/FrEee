@@ -1,20 +1,10 @@
-@attribute [Route($"{PagePaths.MainGame}/{{GameName}}/{{TurnNumber:int}}/{{PlayerNumber:int}}")]
+@attribute [Route(PagePaths.MainGame)]
 @using FrEee.UI.Blazor.Components
 @using FrEee.Objects.Civilization
 @using FrEee.Objects.Space
 @using FrEee.UI.Blazor.Components.Reports
 @using FrEee.Vehicles.Types
 @inherits PageBase<MainGameViewModel>
-
-@code{
-
-    // TODO: move these parameters to session state so they don't need to be passed into every page
-    [Parameter] public string GameName { get; set; }
-
-    [Parameter] public int TurnNumber { get; set; }
-    
-    [Parameter] public int PlayerNumber { get; set; }
-}
 
 <div class="main-game-screen"
      style="background-color: black; color: white; width: 100%; min-height: 100vh; display: flex; flex-direction: column; overflow: hidden;">

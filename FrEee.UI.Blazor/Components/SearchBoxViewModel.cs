@@ -1,3 +1,5 @@
+using FrEee.UI.Blazor.Models;
+
 namespace FrEee.UI.Blazor.Components;
 
 public class SearchBoxViewModel : ViewModelBase

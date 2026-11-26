@@ -2,6 +2,7 @@
 using System.Drawing;
 using FrEee.Objects.Space;
 using FrEee.UI.Blazor.Components.GalaxyMapModes;
+using FrEee.UI.Blazor.Models;
 using FrEee.Utility;
 
 namespace FrEee.UI.Blazor.Components

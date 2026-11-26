@@ -1,4 +1,5 @@
 using FrEee.Modding.Abilities;
+using FrEee.UI.Blazor.Models;
 
 namespace FrEee.UI.Blazor.Components;
 

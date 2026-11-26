@@ -1,3 +1,4 @@
+using FrEee.UI.Blazor.Models;
 using FrEee.Vehicles.Types;
 
 namespace FrEee.UI.Blazor.Components.Reports;

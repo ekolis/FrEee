@@ -1,3 +1,4 @@
+using FrEee.UI.Blazor.Models;
 using Microsoft.AspNetCore.Components;
 
 namespace FrEee.UI.Blazor.Components.Pages;

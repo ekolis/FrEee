@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
+using FrEee.UI.Blazor.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using Microsoft.JSInterop;
 
 namespace FrEee.UI.Blazor.Components;
@@ -22,6 +24,9 @@ public class ViewBase<TVM>
 	public NavigationManager Navigation { get; set; }
 
 	[Inject]
+	public ProtectedSessionStorage Session { get; set; }
+
+	[Inject]
 	private IJSRuntime JSRuntime { get; set; }
 
 	/// <summary>
@@ -36,8 +41,10 @@ public class ViewBase<TVM>
 
 	protected override void OnInitialized()
 	{
+		base.OnInitialized();
 		VM.PropertyChanged += ViewModelPropertyChanged;
 		VM.Navigation = Navigation;
+		VM.Session = Session;
 	}
 
 	public void Dispose()

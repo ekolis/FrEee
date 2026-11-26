@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Components.Routing;
+using FrEee.UI.Blazor.Models;
 
 namespace FrEee.UI.Blazor.Components.Pages;
 
@@ -19,9 +19,10 @@ public class LoadGameViewModel
 		SelectedGameName = gameName;
 	}
 
-	public void LoadTurn(LoadableTurn turn)
+	public async Task LoadTurn(LoadableTurn turn)
 	{
-		Navigation.NavigateTo(PagePaths.CreateMainGame(turn.Name, turn.TurnNumber, turn.PlayerNumber));
+		await Session.SetCurrentTurn(turn);
+		Navigation.NavigateTo(PagePaths.MainGame);
 	}
 
 	private ILookup<string, LoadableTurn> FindGameTurns()
@@ -29,7 +30,8 @@ public class LoadGameViewModel
 		// find all turns in the Savegame directory
 		// TODO: since this is a web app, we'll need to filter by player for online play, which will require user accounts
 		var turns = new List<LoadableTurn>();
-		foreach (var gamFile in Directory.GetFiles("wwwroot/" + FrEeeConstants.SaveGameDirectory, "*" + FrEeeConstants.SaveGameExtension))
+		foreach (var gamFile in Directory.GetFiles("wwwroot/" + FrEeeConstants.SaveGameDirectory,
+			         "*" + FrEeeConstants.SaveGameExtension))
 		{
 			// skip files that aren't formatted like "game_1_0001.gam"
 			// TODO: include host gam files
@@ -41,12 +43,10 @@ public class LoadGameViewModel
 			var turn = new LoadableTurn(splitFileName[0], turnNumber, playerNumber);
 			turns.Add(turn);
 		}
-		
+
 		// group turns by game
 		var games = turns.ToLookup(t => t.Name);
-		
+
 		return games;
 	}
-	
-	public record LoadableTurn(string Name, int TurnNumber, int PlayerNumber);
 }

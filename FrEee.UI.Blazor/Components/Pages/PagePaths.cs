@@ -42,9 +42,4 @@ public static class PagePaths
 	public const string SpaceObjectPicker = "/space-object-picker";
 	public const string Status = "/status";
 	public const string VehicleDesign = "/vehicle-design";
-	
-	public static string CreateMainGame(string gameName, int turnNumber, int playerNumber)
-	{
-		return $"{MainGame}/{gameName}/{turnNumber}/{playerNumber}";
-	}
 }

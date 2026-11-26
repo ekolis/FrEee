@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using FrEee.UI.Blazor.Models;
 using FrEee.Utility;
 
 namespace FrEee.UI.Blazor.Components
